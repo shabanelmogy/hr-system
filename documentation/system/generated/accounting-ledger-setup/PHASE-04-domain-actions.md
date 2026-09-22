@@ -57,12 +57,12 @@ invalidation, success test, and failure test. Use `N/A` only with a reason.
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
 | accounting-ledger-setup-master | 3 | `dca7efc3933fbfad21faec4412e0f5fbce8747b3881d5af2b14bb3210b1cbe45` |
-| accounting-ledger-setup-master | 4 | `52db952c75365317c7bc8a2f43e41985c03640eb53c415bea2c6fcb31478eb30` |
-| accounting-ledger-setup-master | 6 | `d74ddf1245aabb0329a3dfbd0a886a1fdcf078c5c3a72d290d789e6793a4d434` |
+| accounting-ledger-setup-master | 4 | `53f38a770f4b9c229d5f924b56a2be70be0db253054c0b998b0c21ec8c2ca0ca` |
+| accounting-ledger-setup-master | 6 | `4c420eef9bb4f80999de2e4e4bebf23f4d9b3934746b134431e3cd97be170dbe` |
 | accounting-ledger-setup-master | 7 | `530c84fc6ad3ba2299961c837d2bd3af3f2693292a7893dc1e27a7636b0c9290` |
-| accounting-ledger-setup-master | 8 | `ba380ad637a7a499170084d624ed6bfda318ca5317a1ee93a61f4a625ae71187` |
-| accounting-ledger-setup-api | 6 | `9fef499f177a2fef224c09d387e1715e008d221cfb24d257af2b814102a816b0` |
-| accounting-ledger-setup-api | 7 | `a2a2e3f1cb7851f0d63e87e155617bd3c84fd60cec38021114b59dc1ff8bc4c6` |
+| accounting-ledger-setup-master | 8 | `b107d766147b00e60075b4139735ade0dcfd81d944180947a13ae4b998832a8a` |
+| accounting-ledger-setup-api | 6 | `d92b8334e847d6072d4b74e175d17a3445a288147d12d978a0439be0a73cb03b` |
+| accounting-ledger-setup-api | 7 | `bdfa4a51832c8c7dafbb42106330d18ab2c5a6089ee4c4999f857e1e720154bd` |
 | accounting-ledger-setup-api | 8 | `41d4b1feca011b953fd8e9854d130b9845ec2a231d006bca531ba8ee5120bcb3` |
 | accounting-ledger-setup-web | 6 | `caa25114c13584f5c63a0d62adfe0f841af2efa070a8a061acae55ae860b3dae` |
 | accounting-ledger-setup-web | 7 | `ee4dbb8fbf48ca96c8344cbd4bbf822e11232f1468c8e3f41b1a87d9a23448af` |

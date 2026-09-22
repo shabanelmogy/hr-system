@@ -1,4 +1,4 @@
-export const organizationalResources = ['branches', 'departments', 'divisions', 'job-titles', 'job-levels', 'positions', 'job-descriptions', 'cost-centers', 'currencies'] as const;
+export const organizationalResources = ['branches', 'departments', 'divisions', 'job-titles', 'job-levels', 'positions', 'job-descriptions', 'cost-centers'] as const;
 export type OrganizationalResource = (typeof organizationalResources)[number];
 export type OrganizationalStatus = 'active' | 'archived' | 'all' | 'draft' | 'approved' | 'rejected' | 'expired';
 export type OrganizationalSearchField = 'all' | 'nameAr' | 'nameEn' | 'code' | 'parent';
@@ -48,9 +48,6 @@ export interface OrganizationalStructureRequest {
   skills?: JobSkillItem[];
   educationRequirements?: JobEducationRequirement[];
   parentCostCenterId?: number;
-  symbol?: string;
-  exchangeRateToDefault?: number;
-  isDefault?: boolean;
 }
 export interface OrganizationalStructureItem extends OrganizationalStructureRequest {
   id: number; resource: OrganizationalResource; isDeleted: boolean; createdOn: string; updatedOn?: string;

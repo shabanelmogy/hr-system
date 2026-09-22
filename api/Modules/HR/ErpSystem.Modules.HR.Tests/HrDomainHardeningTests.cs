@@ -3,7 +3,6 @@ using ErpSystem.Modules.HR.Domain.Employees.Entities;
 using ErpSystem.Modules.HR.Domain.Employees.Enums;
 using ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities;
 using ErpSystem.Modules.HR.Domain.OrganizationalStructure.Enums;
-using Newtonsoft.Json;
 
 namespace ErpSystem.Modules.HR.Tests;
 
@@ -112,38 +111,4 @@ public sealed class HrDomainHardeningTests
             description.UpdatePreferredQualifications(null, null, "Changed"));
     }
 
-    [Theory]
-    [InlineData("en-US.json")]
-    [InlineData("ar-EG.json")]
-    public void LocalizationResources_ParseWithApplicationJsonReader(string fileName)
-    {
-        var assemblyRoot = Path.GetDirectoryName(typeof(ErpSystem.Modules.HR.Infrastructure.AssemblyReference).Assembly.Location)!;
-        var directory = new DirectoryInfo(assemblyRoot);
-        while (directory is not null
-               && !Directory.Exists(Path.Combine(
-                   directory.FullName,
-                   "Modules",
-                   "HR",
-                   "ErpSystem.Modules.HR.Infrastructure")))
-        {
-            directory = directory.Parent;
-        }
-
-        Assert.NotNull(directory);
-        var path = Path.Combine(
-            directory!.FullName,
-            "Modules",
-            "HR",
-            "ErpSystem.Modules.HR.Infrastructure",
-            "Localization",
-            "Resources",
-            fileName);
-
-        using var stream = File.OpenRead(path);
-        using var textReader = new StreamReader(stream);
-        using var jsonReader = new JsonTextReader(textReader);
-        while (jsonReader.Read())
-        {
-        }
-    }
 }

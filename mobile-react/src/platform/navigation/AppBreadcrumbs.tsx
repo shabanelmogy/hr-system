@@ -50,6 +50,17 @@ const administrationItem: BreadcrumbItem = {
   route: ROUTES.administration.root,
 };
 
+const financeItem: BreadcrumbItem = {
+  key: 'finance',
+  labelKey: 'navigation.finance',
+  route: ROUTES.finance.root,
+};
+
+const ledgerSetupItem: BreadcrumbItem = {
+  key: 'ledger-setup',
+  labelKey: 'navigation.ledgerSetup',
+};
+
 const breadcrumbsByPath: Record<string, readonly BreadcrumbItem[]> = {
   [ROUTES.home]: [homeItem],
   [ROUTES.settings]: [
@@ -81,6 +92,19 @@ const breadcrumbsByPath: Record<string, readonly BreadcrumbItem[]> = {
     { key: 'modal', labelKey: 'modal.title' },
   ],
   [ROUTES.basicData.root]: [homeItem, basicDataItem],
+  [ROUTES.finance.root]: [homeItem, financeItem],
+  [ROUTES.finance.fiscalYears]: [
+    homeItem,
+    financeItem,
+    { key: 'fiscal-years', labelKey: 'fiscalYears.title' },
+  ],
+  [ROUTES.finance.ledgerSetup]: [homeItem, financeItem, ledgerSetupItem],
+  [ROUTES.finance.currencies]: [
+    homeItem,
+    financeItem,
+    ledgerSetupItem,
+    { key: 'currencies', labelKey: 'currencies.title' },
+  ],
   [ROUTES.workforcePlanning.index]: [homeItem, workforcePlanningItem],
   [ROUTES.workforcePlanning.plans]: [homeItem, workforcePlanningItem, { key: 'workforce-plans', labelKey: 'workforcePlanning.plans' }],
   [ROUTES.workforcePlanning.budgets]: [homeItem, workforcePlanningItem, { key: 'workforce-budgets', labelKey: 'workforcePlanning.budgets' }],

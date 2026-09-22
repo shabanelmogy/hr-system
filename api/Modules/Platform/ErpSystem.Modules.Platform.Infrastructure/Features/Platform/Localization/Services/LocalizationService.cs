@@ -42,7 +42,7 @@ public sealed class LocalizationEffects(
         string key,
         CancellationToken cancellationToken = default)
     {
-        var cacheKey = $"locale_{Thread.CurrentThread.CurrentCulture.Name}_{key}";
+        var cacheKey = $"locale_{language}_{key}";
         return cache.RemoveAsync(cacheKey, cancellationToken);
     }
 

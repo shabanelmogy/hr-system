@@ -9,6 +9,8 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using System.Text;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using ErpSystem.Api.Hosting.Localization;
+using Microsoft.Extensions.Localization;
 
 namespace ErpSystem.Api.Hosting;
 
@@ -44,6 +46,13 @@ public static class HostInfrastructureServiceCollectionExtensions
         Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
         services.AddHttpContextAccessor();
         services.AddLocalization();
+        services.AddSingleton<IStringLocalizerFactory, HostJsonStringLocalizerFactory>();
+        services.AddControllers()
+            .AddDataAnnotationsLocalization(options =>
+            {
+                options.DataAnnotationLocalizerProvider = (_, factory) =>
+                    factory.Create(typeof(HostJsonStringLocalizerFactory));
+            });
         services.AddScoped<HttpCurrentExecutionContext>();
         services.AddScoped<ICurrentExecutionContext>(provider =>
             provider.GetRequiredService<HttpCurrentExecutionContext>());

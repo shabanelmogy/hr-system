@@ -50,7 +50,9 @@ public sealed class PlatformLocalizationOwnershipTests
         Assert.Equal("After", store.Values["en-US"]["Existing"]);
         Assert.DoesNotContain("Added", store.Values["en-US"].Keys);
         Assert.Equal(["Update:en-US", "Update:en-US:Existing", "Delete:en-US:Added"], effects.Changes);
-        Assert.Equal([("en-US", "Existing")], effects.Invalidations);
+        Assert.Equal(
+            [("en-US", "Added"), ("en-US", "Existing"), ("en-US", "Added")],
+            effects.Invalidations);
     }
 
     [Fact]

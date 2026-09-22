@@ -193,6 +193,14 @@ describe("route access policies", () => {
     })).toBe(true);
   });
 
+  it("requires AccountingSetup:View for the Ledger Setup currencies route", () => {
+    expect(canAccessRoute(appRoutes.modules.accounting.ledgerSetup.currencies, session)).toBe(false);
+    expect(canAccessRoute(appRoutes.modules.accounting.ledgerSetup.currencies, {
+      ...session,
+      permissions: [permissions.ViewAccountingSetup],
+    })).toBe(true);
+  });
+
   it("allows the Workforce Planning workspace for any module view permission", () => {
     const staffingViewer = {
       ...session,

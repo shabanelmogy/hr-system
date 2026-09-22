@@ -1,5 +1,6 @@
 import AccountBalanceRoundedIcon from "@mui/icons-material/AccountBalanceRounded";
 import CalendarMonthRoundedIcon from "@mui/icons-material/CalendarMonthRounded";
+import PaidRoundedIcon from "@mui/icons-material/PaidRounded";
 import { appRoutes } from "@/config/routes";
 import { permissions } from "@/lib/auth/permissions";
 import type { FrontendModuleDefinition } from "@/platform/modules";
@@ -26,8 +27,25 @@ const fiscalYearsNavigation = createNavSection(
   [permissions.ViewFiscalYears],
 );
 
+const ledgerSetupNavigation = createNavSection(
+  "ledger-setup",
+  "menu.ledgerSetup",
+  createColoredIcon(<AccountBalanceRoundedIcon />, "#059669"),
+  [
+    createNavItem(
+      "menu.currencies",
+      createColoredIcon(<PaidRoundedIcon />, "#10b981"),
+      appRoutes.modules.accounting.ledgerSetup.currencies,
+      undefined,
+      [permissions.ViewAccountingSetup],
+    ),
+  ],
+  undefined,
+  [permissions.ViewAccountingSetup],
+);
+
 export const accountingModuleDefinition: FrontendModuleDefinition = {
-  navigation: [fiscalYearsNavigation],
+  navigation: [fiscalYearsNavigation, ledgerSetupNavigation],
   code: "acc",
   name: "Accounting",
   icon: <AccountBalanceRoundedIcon />,
@@ -59,6 +77,24 @@ export const accountingModuleDefinition: FrontendModuleDefinition = {
         }],
       }],
       routePrefixes: [appRoutes.modules.accounting.fiscalYears],
+    },
+    {
+      code: "ledger-setup",
+      name: "Ledger setup",
+      icon: <PaidRoundedIcon />,
+      tone: "success",
+      requiredPermissions: [permissions.ViewAccountingSetup],
+      entryCandidates: [appRoutes.modules.accounting.ledgerSetup.currencies],
+      navigation: [{
+        id: ledgerSetupNavigation.id,
+        titleKey: ledgerSetupNavigation.title,
+        entries: [{
+          titleKey: "menu.currencies",
+          path: appRoutes.modules.accounting.ledgerSetup.currencies,
+          requiredPermissions: [permissions.ViewAccountingSetup],
+        }],
+      }],
+      routePrefixes: [appRoutes.modules.accounting.ledgerSetup.currencies],
     },
   ],
 };

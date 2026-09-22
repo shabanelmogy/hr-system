@@ -1,5 +1,6 @@
 export const enFiscalYears = {
   fiscalYears: {
+    title: 'Fiscal years',
     empty: 'No fiscal years match the current search and filters.',
     fields: { code: 'Code', nameAr: 'Arabic name', nameEn: 'English name', startDate: 'Start date', endDate: 'End date', frequency: 'Period frequency', status: 'Status' },
     frequency: { monthly: 'Monthly', quarterly: 'Quarterly' },

@@ -12,6 +12,7 @@ import { crystalReports } from './crystalReports';
 import { attendanceDevices } from './attendanceDevices';
 import { recruitment } from './recruitment';
 import { fiscalYears } from './fiscalYears';
+import { currencies } from './currencies';
 import { workforcePlanning } from './workforcePlanning';
 import { modules } from './modules';
 import { offlineOperations } from './offlineOperations';
@@ -42,6 +43,7 @@ export const apiRoutes = {
   attendanceDevices,
   recruitment,
   fiscalYears,
+  currencies,
   workforcePlanning,
   modules,
   offlineOperations,

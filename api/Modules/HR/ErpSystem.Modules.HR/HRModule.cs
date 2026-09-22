@@ -3,7 +3,6 @@ using ErpSystem.Modules.HR.Application;
 using ErpSystem.Modules.HR.Infrastructure;
 using ErpSystem.Modules.HR.Infrastructure.Common.Observability;
 using ErpSystem.Modules.HR.Infrastructure.Common.Settings;
-using ErpSystem.Modules.HR.Infrastructure.Localization;
 using ErpSystem.Modules.HR.Infrastructure.Persistence;
 using ErpSystem.Modules.HR.Presentation;
 using Microsoft.AspNetCore.Builder;

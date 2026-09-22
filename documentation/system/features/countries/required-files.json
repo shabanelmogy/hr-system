@@ -213,14 +213,14 @@
     {
       "id": "api-localization-en",
       "layer": "api",
-      "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Localization/Resources/en-US.json",
-      "purpose": "Stable English errors and notifications"
+      "path": "api/ErpSystem.Api/Localization/Resources/en-US.json",
+      "purpose": "Host-owned shared English errors and notifications"
     },
     {
       "id": "api-localization-ar",
       "layer": "api",
-      "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Localization/Resources/ar-EG.json",
-      "purpose": "Stable Arabic errors and notifications"
+      "path": "api/ErpSystem.Api/Localization/Resources/ar-EG.json",
+      "purpose": "Host-owned shared Arabic errors and notifications"
     },
     {
       "id": "api-handler-tests",

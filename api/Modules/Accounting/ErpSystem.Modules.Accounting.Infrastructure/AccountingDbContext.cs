@@ -8,6 +8,7 @@ using ErpSystem.Modules.Accounting.Application.Abstractions.Persistence;
 using ErpSystem.Modules.Accounting.Infrastructure.Messaging;
 using ErpSystem.Modules.Accounting.Infrastructure.Parties;
 using ErpSystem.Modules.Accounting.Domain.Finance.FiscalYears.Entities;
+using ErpSystem.Modules.Accounting.Domain.Finance.LedgerSetup.Entities;
 
 namespace ErpSystem.Modules.Accounting.Infrastructure;
 
@@ -50,6 +51,32 @@ public sealed class AccountingDbContext : DbContext, IAccountingUnitOfWork
     public DbSet<FiscalYear> FiscalYears => Set<FiscalYear>();
 
     public DbSet<FiscalPeriod> FiscalPeriods => Set<FiscalPeriod>();
+
+    public DbSet<Currency> Currencies => Set<Currency>();
+
+    public DbSet<AccountingCompanySettings> AccountingCompanySettings => Set<AccountingCompanySettings>();
+
+    public DbSet<AccountHierarchyLevel> AccountHierarchyLevels => Set<AccountHierarchyLevel>();
+
+    public DbSet<Account> Accounts => Set<Account>();
+
+    public DbSet<DimensionDefinition> DimensionDefinitions => Set<DimensionDefinition>();
+
+    public DbSet<DimensionValue> DimensionValues => Set<DimensionValue>();
+
+    public DbSet<AccountDimensionPolicy> AccountDimensionPolicies => Set<AccountDimensionPolicy>();
+
+    public DbSet<Book> Books => Set<Book>();
+
+    public DbSet<JournalDefinition> JournalDefinitions => Set<JournalDefinition>();
+
+    public DbSet<ExchangeRateType> ExchangeRateTypes => Set<ExchangeRateType>();
+
+    public DbSet<ExchangeRate> ExchangeRates => Set<ExchangeRate>();
+
+    public DbSet<AccountMapping> AccountMappings => Set<AccountMapping>();
+
+    public DbSet<PostingProfile> PostingProfiles => Set<PostingProfile>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

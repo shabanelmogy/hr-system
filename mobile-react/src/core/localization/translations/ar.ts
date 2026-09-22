@@ -9,6 +9,7 @@ import { arFiscalYears } from './ar-fiscal-years';
 import { arWorkforcePlanning } from './ar-workforce-planning';
 import { arModules } from './ar-modules';
 import { arOfflineOperations } from './ar-offline-operations';
+import { arCurrencies } from './ar-currencies';
 
 export const ar = {
   ...arCommon,
@@ -22,4 +23,5 @@ export const ar = {
   ...arWorkforcePlanning,
   ...arModules,
   ...arOfflineOperations,
+  ...arCurrencies,
 };

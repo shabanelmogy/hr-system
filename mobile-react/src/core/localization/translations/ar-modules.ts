@@ -11,6 +11,10 @@ export const arModules = {
     genericEmpty: 'تم تثبيت التطبيق، ولا توجد وحدات متاحة بعد.',
     noAvailableFeatures: 'هذه الوحدة مفعلة، لكن لا توجد شاشة متاحة حاليًا تتوافق مع صلاحياتك.',
     submodules: {
+      acc: {
+        'fiscal-years': 'السنوات المالية',
+        'ledger-setup': 'إعداد دفتر الأستاذ',
+      },
       hr: {
         'basic-data': 'البيانات الأساسية',
         recruitment: 'التوظيف',

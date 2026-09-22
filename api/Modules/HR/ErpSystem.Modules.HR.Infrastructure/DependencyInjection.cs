@@ -13,7 +13,6 @@ public static class DependencyInjection
         services.AddGlobalService(configuration);
         services.AddDatabaseservice(configuration);
         services.AddErrorsService();
-        services.AddCultureService();
         services.AddEntitiesService();
         services.AddFluentValidationService();
         services.AddMapsterService();

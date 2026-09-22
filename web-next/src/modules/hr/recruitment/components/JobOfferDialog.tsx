@@ -10,6 +10,7 @@ import { showToast } from "@/shared/components/feedback/transient/showToast";
 import { jobOfferSchema, type JobOfferFormData, type JobOfferFormInput } from "../validation/recruitmentValidation";
 import { PayFrequency } from "../types";
 import { useApplication, useCreateJobOffer, useJobOpening, useRecruitmentSettingsQuery, useSubmitJobOffer } from "../hooks/useRecruitment";
+import { useCurrencyLookup } from "@/modules/accounting/public";
 
 interface JobOfferDialogProps {
   open: boolean;
@@ -28,6 +29,7 @@ export default function JobOfferDialog({
   const applicationQuery = useApplication(applicationId ?? 0);
   const openingQuery = useJobOpening(applicationQuery.data?.jobOpeningId ?? 0);
   const settingsQuery = useRecruitmentSettingsQuery();
+  const currencies = useCurrencyLookup(open);
 
   const {
     control,
@@ -102,7 +104,7 @@ export default function JobOfferDialog({
       open={open}
       title={t("recruitment.offers.createTitle", "إصدار عرض عمل رسمي / Make Job Offer")}
       subtitle={t("recruitment.offers.createSubtitle", "تحديد الراتب الأساسي وتاريخ بدء العمل والشروط")}
-      isSubmitting={createOfferMutation.isPending || submitOfferMutation.isPending || applicationQuery.isFetching || openingQuery.isFetching || settingsQuery.isFetching}
+      isSubmitting={createOfferMutation.isPending || submitOfferMutation.isPending || applicationQuery.isFetching || openingQuery.isFetching || settingsQuery.isFetching || currencies.isFetching}
       onSubmit={handleSubmit(onSubmit)}
       onClose={onClose}
     >
@@ -122,11 +124,15 @@ export default function JobOfferDialog({
             />
           </Grid>
           <Grid size={{ xs: 12, sm: 4 }}>
-            <MyTextField
+            <MySelect
               control={control}
               errors={errors}
-              fieldName="currencyCode"
+              name="currencyCode"
               label={t("recruitment.offers.currency", "العملة / Currency")}
+              dataSource={(currencies.data ?? []).map(currency => ({ id: currency.currencyCode, name: `${currency.currencyCode} — ${currency.nameEn} (${currency.nameAr})` }))}
+              valueMember="id"
+              displayMember="name"
+              loading={currencies.isLoading}
               required
             />
           </Grid>

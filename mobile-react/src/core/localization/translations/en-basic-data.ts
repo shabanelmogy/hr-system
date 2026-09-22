@@ -76,7 +76,7 @@ export const enBasicData = {
     resources: {
       branches: 'Branches', departments: 'Departments', divisions: 'Divisions',
       'job-titles': 'Job titles', 'job-levels': 'Job levels', positions: 'Positions',
-      'job-descriptions': 'Job descriptions', 'cost-centers': 'Cost Centers', currencies: 'Currencies',
+      'job-descriptions': 'Job descriptions', 'cost-centers': 'Cost Centers',
     },
     status: { active: 'Active', archived: 'Archived', all: 'All' },
     yes: 'Yes',
@@ -85,7 +85,7 @@ export const enBasicData = {
       code: 'Code', nameEn: 'English name', nameAr: 'Arabic name', parent: 'Parent', status: 'Status',
       version: 'Version', timeZone: 'Time zone', openedOn: 'Opened on', email: 'Email', phone: 'Phone', headquarters: 'Headquarters',
       parentDepartment: 'Parent department', parentCostCenter: 'Parent cost center', centralized: 'Centralized (All branches)', isCentralized: 'Centralized department', costCenter: 'Cost center',
-      symbol: 'Currency symbol', exchangeRate: 'Exchange rate', defaultCurrency: 'Default currency', descriptionAr: 'Arabic description', descriptionEn: 'English description',
+      descriptionAr: 'Arabic description', descriptionEn: 'English description',
       levelOrder: 'Level order', minSalary: 'Minimum salary', maxSalary: 'Maximum salary', currency: 'Currency', canManageOthers: 'Can manage others', managementLevel: 'Management level',
       targetHeadcount: 'Target headcount', purposeAr: 'Purpose (Arabic)', purposeEn: 'Purpose (English)',
       responsibilitiesAr: 'Responsibilities (Arabic)', responsibilitiesEn: 'Responsibilities (English)', requirementsAr: 'Requirements (Arabic)', requirementsEn: 'Requirements (English)',

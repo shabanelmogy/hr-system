@@ -52,7 +52,13 @@ export function RecruitmentSettingsViewMobile() {
 
   const handleResetDefaults = async () => {
     try {
-      await updateSettingsMutation.mutateAsync(DEFAULT_RECRUITMENT_SETTINGS);
+      await updateSettingsMutation.mutateAsync({
+        ...DEFAULT_RECRUITMENT_SETTINGS,
+        general: {
+          ...DEFAULT_RECRUITMENT_SETTINGS.general,
+          defaultCurrency: general.defaultCurrency,
+        },
+      });
       showToast.success(t('recruitment.settings.resetSuccess'));
     } catch (e) {
       showToast.error(e, t('common.error'));
@@ -279,7 +285,7 @@ export function RecruitmentSettingsViewMobile() {
                 {t('recruitment.settings.defaultCurrency')}
               </AppText>
               <AppText variant="body" weight="800" style={{ color: theme.colors.primary }}>
-                {general?.defaultCurrency || 'EGP'}
+                {general?.defaultCurrency || '—'}
               </AppText>
             </View>
 

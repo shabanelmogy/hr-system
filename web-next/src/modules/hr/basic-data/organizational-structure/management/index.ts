@@ -7,6 +7,5 @@ export { default as JobLevelsPage } from "./pages/JobLevelsPage";
 export { default as PositionsPage } from "./pages/PositionsPage";
 export { default as JobDescriptionsPage } from "./pages/JobDescriptionsPage";
 export { default as CostCentersPage } from "./pages/CostCentersPage";
-export { default as CurrenciesPage } from "./pages/CurrenciesPage";
 export { organizationalStructureKeys } from "./hooks/useOrganizationalStructure";
 export { useOrganizationalLookup } from "./hooks/useOrganizationalStructure";

@@ -81,6 +81,7 @@ describe('mobile module registration', () => {
       ROUTES.advancedTools.localizationApi,
       ROUTES.advancedTools.trackChanges,
       ROUTES.administration.offlineOperations,
+      ROUTES.finance.currencies,
     ]) {
       expect(requiredModuleForPath(route)).toEqual(findMobileRouteOwner(route));
     }
@@ -92,5 +93,6 @@ describe('mobile module registration', () => {
     expect(findMobileRouteOwner(ROUTES.advancedTools.healthCheck)).toEqual({ moduleCode: 'platform', submoduleCode: 'operations' });
     expect(findMobileRouteOwner(ROUTES.extras.appointments)).toEqual({ moduleCode: 'crm', submoduleCode: 'appointments' });
     expect(findMobileRouteOwner(ROUTES.workforcePlanning.plans)).toEqual({ moduleCode: 'hr', submoduleCode: 'workforce' });
+    expect(findMobileRouteOwner(ROUTES.finance.currencies)).toEqual({ moduleCode: 'acc', submoduleCode: 'ledger-setup' });
   });
 });

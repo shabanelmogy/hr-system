@@ -397,46 +397,6 @@ export const getOrganizationalStructureColumns = ({ t, resource, language, getAc
         return parent ? <AppChip label={parent} colorKey="primary" variant="outlined" size="small" /> : "-";
       },
     });
-  } else if (resource === "currencies") {
-    columns.push(
-      {
-        field: "symbol",
-        headerName: t("organizationalStructure.fields.symbol"),
-        flex: 0.6,
-        minWidth: 80,
-        align: "center",
-        headerAlign: "center",
-        sortable: false,
-        renderCell: ({ value }) => <Typography variant="body2" sx={{ fontWeight: 700 }}>{value ?? "-"}</Typography>,
-      },
-      {
-        field: "exchangeRateToDefault",
-        headerName: t("organizationalStructure.fields.exchangeRate"),
-        flex: 0.9,
-        minWidth: 120,
-        align: "center",
-        headerAlign: "center",
-        sortable: false,
-        renderCell: ({ value }) => <AppChip label={String(value ?? 1)} colorKey="secondary" variant="outlined" size="small" />,
-      },
-      {
-        field: "isDefault",
-        headerName: t("organizationalStructure.fields.defaultCurrency"),
-        flex: 0.8,
-        minWidth: 100,
-        align: "center",
-        headerAlign: "center",
-        sortable: false,
-        renderCell: ({ value }) => (
-          <AppChip
-            label={value ? t("organizationalStructure.yes") : t("organizationalStructure.no")}
-            colorKey={value ? "success" : "secondary"}
-            variant={value ? "filled" : "outlined"}
-            size="small"
-          />
-        ),
-      },
-    );
   }
 
   columns.push(

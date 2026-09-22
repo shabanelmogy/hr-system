@@ -12,7 +12,7 @@
 | Review owner | Accounting Product + Architecture + implementation agent |
 | Implementation request | `documentation/system/features/accounting-ledger-setup/IMPLEMENTATION-REQUEST.md` |
 | Evidence manifest | `documentation/system/features/accounting-ledger-setup/required-files.json` |
-| Documentation state | Phase 00 complete — Ready for Coding |
+| Documentation state | Phase 01 Domain/API and persistence migration implemented — client/final verification in progress |
 | Applied implementation reference | `fiscal-years` — same-module pattern only |
 | Import | Web Deferred; Mobile Excluded |
 | Reporting | N/A Slice 1 — GL/TB are later |
@@ -32,7 +32,7 @@
 | R-07 | Typed Link Accounts | Required | Required | Required | Contract frozen |
 | R-08 | Posting Profiles + resolve preview | Required | Required | Required | Contract frozen |
 | R-09 | Existing Fiscal Years reused unchanged | Reuse | Reuse | Reuse | Verified current |
-| R-10 | Currency ownership cutover removes HR duplicate | Required migration | HR consumer switch | HR consumer switch | Contract frozen |
+| R-10 | Clean baseline has Accounting-only writable Currency ownership | Required baseline | HR consumes catalog | HR consumes catalog | Contract frozen |
 | R-11 | JournalEntry/posting/GL/TB/Month Close absent in Slice 1 | Excluded now | Excluded now | Excluded now | Scope guard frozen |
 
 ## Platform capability decisions
@@ -58,13 +58,15 @@
 | E-03 | VERIFIED CURRENT | FiscalYear domain/controller/tests | calendar/period authority is implemented; no independent month-close API |
 | E-04 | VERIFIED CURRENT | Web Accounting Fiscal Years | current shared Web pattern exists |
 | E-05 | VERIFIED CURRENT | Mobile Accounting Fiscal Years | current layered Mobile pattern exists |
-| E-06 | VERIFIED CURRENT | HR `Currency.cs` + Organizational Structure UI | Currency master currently lives in HR with ExchangeRateToDefault/IsDefault |
+| E-06 | HISTORICAL PHASE-00 DISCOVERY | Pre-rebaseline HR Currency model | Phase 00 found HR Currency with ExchangeRateToDefault/IsDefault; final clean baseline deliberately does not preserve that owner or authority |
 | E-07 | VERIFIED CURRENT | HR Workforce/Recruitment scan | financial facts predominantly persist CurrencyCode, not CurrencyId |
 | E-08 | VERIFIED CURRENT | Geography/Countries canonical guides | financial Currency master was reserved for Finance/Payroll ownership |
 | E-09 | VERIFIED CURRENT | Contacts Party/events | Party exists; ContactGroup/PartyRole do not |
 | E-10 | VERIFIED CURRENT | repository master scan | no BankAccount/PaymentMethod/Cashbox/Safe runtime masters |
 | E-11 | VERIFIED CURRENT | shared Web/Mobile component scan | required tree/list/form primitives already exist |
 | E-12 | AUTHORIZED TARGET | Core GL plan/decisions | Slice 1 G0–G3 pass; G4 remains production/release only |
+| E-13 | VERIFIED CURRENT | Ledger Setup Domain/Application/Infrastructure/Presentation and focused tests | Phase 01 API exists with complete master lifecycle matrix, shared atomic resources and Accounting-owned localized errors |
+| E-14 | VERIFIED CURRENT | `20260922091842_InitialAccounting.cs` + Designer/Snapshot + clean SQL Server migration test | The complete clean `acc` baseline is represented by one EF-generated migration; composite tenant/company keys, RowVersion, unique indexes and Restrict FKs are applied successfully and the second migration run is idempotent |
 
 ## Read and list contract
 
@@ -87,8 +89,11 @@ All create/update forms use typed controls, bilingual text, RowVersion on protec
 updates, explicit policies/enums and server field-error mapping. Company/tenant
 scope is not editable or sent by clients.
 
-Currency cutover is coordinated: Accounting becomes writable owner, HR selectors
-switch to Accounting catalog, then HR Currency management/persistence is removed.
+Currency starts with one writable owner: Accounting. `InitialAccounting` creates the
+Currency store and `InitialHr` never creates one. HR CurrencyCode snapshots use the
+Accounting catalog for validation. There is no demo-data copy/cutover and no
+`IsDefault`/`ExchangeRateToDefault` backfill. Functional Currency is configured later
+through normal Accounting settings together with Primary Book.
 
 ## Permission and lifecycle matrix
 
@@ -96,7 +101,7 @@ switch to Accounting catalog, then HR Currency management/persistence is removed
 | --- | --- | --- | --- |
 | Accounts | `Accounts:View` | `Accounts:Manage` | archive/restore subject to dependency/history rules |
 | Dimensions | `Dimensions:View` | `Dimensions:Manage` | archive/restore |
-| Currency/Settings/Books/Journals/FX/Mapping/Profile | authorized Accounting setup read | `AccountingSetup:Manage` | archive/version/effective-date rules by aggregate |
+| Currency/Settings/Books/Journals/FX/Mapping/Profile | `AccountingSetup:View` | `AccountingSetup:Manage` | archive/version/effective-date rules by aggregate |
 
 Clients hide/block mutations in read-only mode; API remains authoritative.
 
@@ -126,12 +131,14 @@ separate plan.
 
 | ID | Severity | Finding | Resolution |
 | --- | --- | --- | --- |
-| F-01 | High | Currency currently owned by HR conflicts with long-term Finance ownership and Core GL functional-currency needs | D-020: move one master to Accounting in Slice 1 |
+| F-01 | High | Phase 00 found transitional HR Currency ownership conflicting with long-term Finance ownership | D-020 clean rebaseline: Accounting owns Currency from `InitialAccounting`; HR never persists a writable master |
 | F-02 | High | Plan had functional currency/primary book but no explicit company policy holder | D-021: `AccountingCompanySettings` singleton |
 | F-03 | High | Long-term Link Account design names source masters that do not exist | D-022: enable typed source only when real Contract exists; company-purpose default works now |
 | F-04 | Medium | Accounting architecture attributed Branch ownership to Platform | corrected to HR Branch/CostCenter ownership |
 | F-05 | Medium | Web AGENTS had absolute G0–G4-before-code wording | corrected to bounded slice authorization rule |
 | F-06 | Medium | Original scaffold lifecycle implied recipe registration only after runtime | system workflow corrected: Phase 00 contracts/manifest/recipe are registered before coding |
+| F-07 | High | Initial Phase 01 review proved create/update but did not enumerate lifecycle evidence per mutable entity | fixed with archive/restore/status/dependency guards, entity completion matrix, generated future-module quality gate and architecture tests |
+| F-08 | High | Process-wide JSON localization factory/resources were owned and registered by HR | moved global composition/resources to ErpSystem.Api; Ledger Setup uses Accounting-owned embedded resources; architecture test blocks future module registration |
 
 ## Verification
 
@@ -146,7 +153,37 @@ Phase 00 checks:
 - `git diff --check` has no non-warning finding.
 - no active manifest references `documentation/old files`.
 
-Runtime verification is intentionally **not** claimed here. Phase 06 owns that.
+Bounded Currency ownership cutover verification on 2026-09-21:
+
+- Accounting Currency tests: 40/40 PASS.
+- Currency ownership architecture guards: 2/2 PASS.
+- Currency baseline/module-metadata integration guards: 4/4 PASS.
+- Web current-tree gates: type-check, lint, architecture and i18n PASS; focused
+  Currency/navigation/HR-consumer coverage: 39/39 PASS.
+- Mobile current-tree gates: typecheck, lint, architecture, i18n, contract matrix,
+  foundation and release source gates PASS; full Jest suite: 446/446 PASS across
+  150 suites.
+- Mobile contract matrix covers 74 routes, 28 endpoint files and 197 endpoint
+  members, including `/finance/ledger-setup/currencies` and the Currency endpoint
+  family with `AccountingSetup:View` for reads and `AccountingSetup:Manage` for
+  mutations.
+
+Accounting Ledger Setup persistence verification on 2026-09-22:
+
+- `dotnet ef migrations has-pending-model-changes` for `AccountingDbContext`:
+  PASS — no model changes remain outside migrations.
+- `ModulePersistenceFoundationTests.EveryModuleDbContext_HasBaselineMigrationAndNoPendingModelChanges`:
+  1/1 PASS.
+- `ModuleMigrationIntegrationTests.InstalledModuleMigrations_ApplyOnCleanDatabase_AndSecondRunIsIdempotent`:
+  1/1 PASS against an ephemeral clean SQL Server database.
+- Generated `20260922091842_InitialAccounting` contains all 18 current Accounting
+  tables and their indexes/FKs in `acc`, including Currency before its dependents.
+  It contains no raw SQL or compatibility branch. Development databases carrying
+  the superseded Accounting migration history require a clean reset.
+
+This verifies the completed Currency ownership/cutover foundation and Accounting
+Ledger Setup persistence. Full Ledger Setup client/runtime reconciliation is
+intentionally **not** claimed here; Phase 06 owns that.
 
 ## Final reconciliation
 

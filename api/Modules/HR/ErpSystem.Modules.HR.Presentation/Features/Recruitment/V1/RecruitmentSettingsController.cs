@@ -26,9 +26,9 @@ public sealed class RecruitmentSettingsController(ISender sender) : ControllerBa
     [ProducesResponseType(typeof(RecruitmentSettingsDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> UpdateSettings([FromBody] RecruitmentSettingsDto updatedSettings, CancellationToken cancellationToken)
     {
-        var settings = await sender.Send(
+        var result = await sender.Send(
             new UpdateRecruitmentSettingsCommand(updatedSettings),
             cancellationToken);
-        return Ok(settings);
+        return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
     }
 }

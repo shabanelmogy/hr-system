@@ -4,6 +4,7 @@ import { StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 import { toFormErrorMap, useZodForm } from '@/src/core/validation';
+import { useCurrencyLookup } from '@/src/modules/accounting';
 import { AppForm, AppFormSection, AppSelectField, AppSwitchField, AppTextField } from '@/src/shared/components';
 import { useOrganizationalLookup } from '../queries/use-organizational-structure';
 import type { OrganizationalResource, OrganizationalStructureItem, OrganizationalStructureRequest } from '../../domain/models/organizational-structure';
@@ -28,7 +29,7 @@ export function OrganizationalStructureForm({ resource, item, mode, loading, onC
     costCenterCode: item?.costCenterCode ?? '', timeZoneId: item?.timeZoneId ?? 'UTC', openedOn: item?.openedOn ?? new Date().toISOString().slice(0, 10), email: item?.email ?? '', phone: item?.phone ?? '',
     isHeadquarters: item?.isHeadquarters ?? false, isCentralized: item?.isCentralized ?? (resource === 'departments' ? !item?.branchId : false), levelOrder: numberText(item?.levelOrder), minSalary: numberText(item?.minSalary), maxSalary: numberText(item?.maxSalary), currencyCode: item?.currencyCode ?? '',
     canManageOthers: item?.canManageOthers ?? false, isManagementLevel: item?.isManagementLevel ?? false, targetHeadcount: numberText(item?.targetHeadcount ?? 0), version: item?.version ?? (resource === 'job-descriptions' ? item?.code ?? '' : ''),
-    parentCostCenterId: item?.parentCostCenterId ?? 0, symbol: item?.symbol ?? '', exchangeRateToDefault: numberText(item?.exchangeRateToDefault ?? 1), isDefault: item?.isDefault ?? false,
+    parentCostCenterId: item?.parentCostCenterId ?? 0,
     purposeEn: item?.purposeEn ?? '', purposeAr: item?.purposeAr ?? '', responsibilitiesEn: item?.responsibilitiesEn ?? '', responsibilitiesAr: item?.responsibilitiesAr ?? '',
     requirementsEn: item?.requirementsEn ?? '', requirementsAr: item?.requirementsAr ?? '', requiredSkills: item?.requiredSkills ?? '', requiredEducation: item?.requiredEducation ?? '', minExperienceYears: numberText(item?.minExperienceYears),
     preferredQualificationsEn: item?.preferredQualificationsEn ?? '', preferredQualificationsAr: item?.preferredQualificationsAr ?? '', revisionNotes: item?.revisionNotes ?? '',
@@ -48,7 +49,7 @@ export function OrganizationalStructureForm({ resource, item, mode, loading, onC
   const jobLevels = useOrganizationalLookup('job-levels', undefined, resource === 'positions');
   const positions = useOrganizationalLookup('positions', undefined, resource === 'job-descriptions');
   const costCenters = useOrganizationalLookup('cost-centers', undefined, resource === 'departments' || resource === 'divisions' || resource === 'cost-centers');
-  const currencies = useOrganizationalLookup('currencies', undefined, resource === 'job-levels');
+  const currencies = useCurrencyLookup(resource === 'job-levels');
   const usedMockIndexes = useRef(new Set<number>());
   const mockLookups = {
     branches: branches.data ?? [],
@@ -58,6 +59,18 @@ export function OrganizationalStructureForm({ resource, item, mode, loading, onC
     'job-levels': jobLevels.data ?? [],
     positions: positions.data ?? [],
   };
+  const currencyOptions = useMemo(() => {
+    const values = (currencies.data ?? []).map((currency) => ({
+      value: currency.currencyCode,
+      label: `${currency.currencyCode} — ${currency.nameEn} (${currency.nameAr})`,
+      icon: 'cash-outline' as const,
+    }));
+    const currentCode = item?.currencyCode?.trim().toUpperCase();
+    if (currentCode && !values.some((option) => option.value === currentCode)) {
+      values.unshift({ value: currentCode, label: currentCode, icon: 'cash-outline' as const });
+    }
+    return values;
+  }, [currencies.data, item?.currencyCode]);
   const options = (values = [] as { id: number; code: string; nameEn: string; nameAr: string }[]) => values.map((value) => ({ value: value.id, label: `${value.code} — ${value.nameEn} (${value.nameAr})`, icon: 'business-outline' as const }));
   const disabled = readOnly || loading;
   const field = (name: keyof FormValues, label: string, props: Record<string, unknown> = {}) => <Controller control={control} name={name} render={({ field: current }) => <AppTextField editable={!disabled} label={label} name={current.name} onBlur={current.onBlur} onChangeText={current.onChange} ref={current.ref} value={String(current.value ?? '')} {...props} />} />;
@@ -66,7 +79,7 @@ export function OrganizationalStructureForm({ resource, item, mode, loading, onC
     ...values, code: (resource === 'job-descriptions' ? values.version : values.code).trim().toUpperCase(), nameEn: values.nameEn.trim(), nameAr: values.nameAr.trim(),
     branchId: values.isCentralized ? undefined : (values.branchId || undefined), parentDepartmentId: values.parentDepartmentId || undefined, departmentId: values.departmentId || undefined,
     divisionId: values.divisionId || undefined, jobTitleId: values.jobTitleId || undefined, jobLevelId: values.jobLevelId || undefined, positionId: values.positionId || undefined,
-    parentCostCenterId: values.parentCostCenterId || undefined, symbol: values.symbol?.trim() || undefined, exchangeRateToDefault: optionalNumber(values.exchangeRateToDefault || ''), isDefault: values.isDefault,
+    parentCostCenterId: values.parentCostCenterId || undefined,
     levelOrder: optionalNumber(values.levelOrder), minSalary: optionalNumber(values.minSalary), maxSalary: optionalNumber(values.maxSalary),
     targetHeadcount: optionalNumber(values.targetHeadcount), minExperienceYears: optionalNumber(values.minExperienceYears),
     version: values.version.trim() || undefined,
@@ -103,7 +116,7 @@ export function OrganizationalStructureForm({ resource, item, mode, loading, onC
       setValue('levelOrder', String(sample.levelOrder ?? 0), options);
       setValue('minSalary', String(sample.minSalary ?? 0), options);
       setValue('maxSalary', String(sample.maxSalary ?? 0), options);
-      setValue('currencyCode', sample.currencyCode ?? 'EGP', options);
+      setValue('currencyCode', currencies.data?.[0]?.currencyCode ?? '', options);
       setValue('canManageOthers', sample.canManageOthers ?? false, options);
       setValue('isManagementLevel', sample.isManagementLevel ?? false, options);
       setValue('descriptionAr', sample.descriptionAr ?? '', options);
@@ -191,16 +204,9 @@ export function OrganizationalStructureForm({ resource, item, mode, loading, onC
       {select('parentCostCenterId', t('organizationalStructure.fields.parentCostCenter'), options(costCenters.data?.filter((val) => val.id !== item?.id)), false)}
       {field('descriptionAr', t('organizationalStructure.fields.descriptionAr'), { multiline: true })}{field('descriptionEn', t('organizationalStructure.fields.descriptionEn'), { multiline: true })}
     </AppFormSection> : null}
-    {resource === 'currencies' ? <AppFormSection icon="cash-outline" title={t('organizationalStructure.resources.currencies')}>
-      {field('symbol', t('organizationalStructure.fields.symbol'))}
-      {field('exchangeRateToDefault', t('organizationalStructure.fields.exchangeRate'), { keyboardType: 'decimal-pad' })}
-      <Controller control={control} name="isDefault" render={({ field: current }) => <AppSwitchField disabled={disabled} label={t('organizationalStructure.fields.defaultCurrency')} name={current.name} onValueChange={current.onChange} value={Boolean(current.value)} />} />
-    </AppFormSection> : null}
     {resource === 'job-levels' ? <AppFormSection icon="layers-outline" title={t('organizationalStructure.levelDetails')}>
       {field('levelOrder', t('organizationalStructure.fields.levelOrder'), { keyboardType: 'number-pad' })}{field('minSalary', t('organizationalStructure.fields.minSalary'), { keyboardType: 'decimal-pad' })}{field('maxSalary', t('organizationalStructure.fields.maxSalary'), { keyboardType: 'decimal-pad' })}
-      {currencies.data && currencies.data.length > 0 ? (
-        <Controller control={control} name="currencyCode" render={({ field: current }) => <AppSelectField disabled={disabled} label={t('organizationalStructure.fields.currency')} leadingIcon="cash-outline" name={current.name} onChange={(v) => current.onChange(String(v))} options={currencies.data.map(c => ({ value: c.code, label: `${c.code} — ${c.nameEn} (${c.nameAr})`, icon: 'cash-outline' as const }))} placeholder={t('organizationalStructure.fields.currency')} required={false} value={current.value} />} />
-      ) : field('currencyCode', t('organizationalStructure.fields.currency'), { autoCapitalize: 'characters' })}
+      <Controller control={control} name="currencyCode" render={({ field: current }) => <AppSelectField disabled={disabled || currencies.isLoading} label={t('organizationalStructure.fields.currency')} leadingIcon="cash-outline" name={current.name} onChange={(v) => current.onChange(String(v))} options={currencyOptions} placeholder={t('organizationalStructure.fields.currency')} required={false} value={current.value} />} />
       <Controller control={control} name="canManageOthers" render={({ field: current }) => <AppSwitchField disabled={disabled} label={t('organizationalStructure.fields.canManageOthers')} name={current.name} onValueChange={current.onChange} value={current.value} />} />
       <Controller control={control} name="isManagementLevel" render={({ field: current }) => <AppSwitchField disabled={disabled} label={t('organizationalStructure.fields.managementLevel')} name={current.name} onValueChange={current.onChange} value={current.value} />} />
     </AppFormSection> : null}

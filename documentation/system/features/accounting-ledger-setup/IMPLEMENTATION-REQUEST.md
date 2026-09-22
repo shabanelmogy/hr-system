@@ -1,7 +1,7 @@
 # Accounting Ledger Setup Implementation Request
 
-Status: **Phase 00 — READY FOR CODING (2026-09-20); no Ledger Setup runtime code
-has been written yet.**
+Status: **Phase 01 Domain/API and persistence migration implemented; Web/Mobile
+Slice 1 and final Phase 06 verification remain gated (2026-09-21).**
 
 ## Request metadata
 
@@ -56,7 +56,7 @@ exception.
 | Posting Profiles | Effective/versioned deterministic rules + resolve-preview; zero/ambiguous result blocks |
 | External source types | Expose only when owning Contract/master exists; do not invent BankAccount/PaymentMethod/Cashbox/ContactGroup/PartyRole |
 | Fiscal Years | Reuse existing Accounting authority unchanged |
-| Permissions | Accounts:View, Accounts:Manage, Dimensions:View, Dimensions:Manage, AccountingSetup:Manage |
+| Permissions | Accounts:View, Accounts:Manage, Dimensions:View, Dimensions:Manage; Accounting setup reads/lookups use `AccountingSetup:View`, setup mutations use `AccountingSetup:Manage` |
 | Web | COA tree + setup lists/forms Required; Cards/Import/Bulk Deferred |
 | Mobile | COA tree + setup lists/forms Required; offline writes/import Excluded |
 | Reporting | N/A for Slice 1; GL/TB later |
@@ -67,10 +67,10 @@ exception.
 | Concern | Decision |
 | --- | --- |
 | Owning capability | Existing Accounting bounded context: `api/Modules/Accounting` |
-| Primary relationship | Extend existing owner + Change transitional Currency ownership + Add new Accounting setup aggregates |
+| Primary relationship | Extend existing Accounting owner + cleanly rebaseline Currency ownership + add new Accounting setup aggregates |
 | Existing behavior retained | Fiscal Years, acc schema, Accounting UoW, Inbox/Outbox, PartyReference, tenant/company isolation, RowVersion patterns |
-| Existing behavior changed | HR-owned writable Currency management moves to Accounting; HR currency consumers use Accounting catalog |
-| Existing path disposition | Fiscal Years remains canonical; HR Currency path is replaced after coordinated migration; Branch/CostCenter remain HR-owned |
+| Existing behavior changed | Accounting owns writable Currency from baseline; HR currency consumers validate CurrencyCode snapshots through Accounting catalog; Web/Mobile Currency management is routed under Accounting Ledger Setup |
+| Existing path disposition | Fiscal Years remains canonical; `/finance/ledger-setup/currencies` is the only Web/Mobile Currency management path; HR has no Currency persistence/management owner and no legacy Currency client route; Branch/CostCenter remain HR-owned |
 | Evidence inspected | Accounting module/domain/DbContext/migration/tests, HR Currency/Organizational Structure, Contacts Party contracts, Web/Mobile Fiscal Years, shared UI, central plan/evidence/decisions |
 
 ### Ownership, contracts, and reuse inventory
@@ -79,7 +79,7 @@ exception.
 | --- | --- | --- |
 | Accounting domain/persistence | Accounting six-project module + `AccountingDbContext` | Extend; all new financial setup stays in `acc` |
 | Currency catalog contract | Accounting Contracts | Add stable active-currency lookup/validation contract for HR/other consumers |
-| HR currency master | HR Organizational Structure | Replace through one migration; remove writable HR owner after cutover |
+| Currency master | Accounting | Own from `InitialAccounting`; `InitialHr` never creates Currency; no cutover/data-copy path |
 | Branch/CostCenter | HR Organizational Structure | Reuse by stable Contract/projection only when enabled as typed source |
 | Party | Contacts; current Accounting PartyReference projection | Reuse existing projection; no Party master duplication |
 | Fiscal calendar | Accounting Fiscal Years | Reuse unchanged |
@@ -97,7 +97,7 @@ exception.
 | --- | --- | --- | --- | --- |
 | BR-001 | Current tenant/company is mandatory and server-authoritative | Application + DbContext filters | Missing scope fails closed | company-isolation tests |
 | BR-002 | Currency code is normalized ISO 3-letter and unique/company | Domain + database | Validation/duplicate conflict | Currency domain + unique-race tests |
-| BR-003 | Exactly one Accounting Currency master exists after migration | Migration + architecture | No HR writable duplicate remains | migration + architecture test |
+| BR-003 | Exactly one writable Currency master exists and it is Accounting-owned from baseline | Baseline persistence + architecture | `acc.Currencies` exists; HR owns no Currency table/entity/management surface | baseline migration + architecture test |
 | BR-004 | Company settings is one row/company | Domain/application + unique DB key | deterministic singleton conflict | persistence/concurrency tests |
 | BR-005 | Functional currency references active same-company Currency | Application + DB integrity | invalid/inactive reference rejected | handler tests |
 | BR-006 | V1 company has one Primary Book selected by settings | Domain/application | invalid/missing primary setup rejected | company-settings tests |
@@ -131,17 +131,17 @@ exception.
 | Hierarchy lifecycle | add child beneath posting account or enable posting while children exist | reject | hierarchy conflict | Domain/Application | account tests |
 | Concurrency | stale RowVersion update/settings switch | reject and client reloads authoritative state | 409 | EF/Application | concurrency tests |
 | Idempotency | repeated identical setup request | no duplicate business record; uniqueness is authoritative | existing/conflict per route contract | Application/DB | retry tests |
-| Rollback | Currency migration or multi-row settings mutation fails | transaction rolls back; no dual partial owner | operation fails | Infrastructure | migration/transaction tests |
+| Rollback | Multi-row Accounting settings mutation fails | transaction rolls back; no partial setup state | operation fails | Infrastructure | transaction tests |
 | Post-commit effects | notifications/realtime unavailable | setup commit remains authoritative | no correctness loss | N/A/Deferred effects | explicit absence test |
 | Archive/dependency | archive used account/book/currency | block or archive only when allowed; never orphan history | conflict | Application | dependency tests |
 | Paging/query | large accounts/rates/profiles | server filters/sorts/pages deterministically | bounded response | Read store | query tests |
 | Money/FX | rate <=0, duplicate effective version, invalid pair | reject | validation/conflict | Domain/DB | FX tests |
 | Dates | overlapping/equal effective mappings/rates | deterministic validity/ambiguity rules | conflict/diagnostic | Domain/Application | effective-date tests |
 | Bulk/import | setup import requested in Slice 1 | no reachable endpoint/UI | Deferred | Scope | architecture/UI absence test |
-| Integration | HR currency selector during ownership cutover | consumes Accounting catalog after cutover; historical CurrencyCode remains | no broken historical row | Contracts/migration | integration tests |
+| Integration | HR accepts a new/changed user-supplied CurrencyCode | validate through `IAccountingCurrencyCatalog`; derived/existing snapshots remain code values | invalid/inactive code fails closed; no HR Currency persistence | Contracts/Application | integration/handler tests |
 | Missing source master | BankAccount/PaymentMethod/etc mapping requested | type unavailable/rejected; no fake record | validation | Application/clients | capability test |
 | Security-sensitive files | no file upload in Slice 1 | no file surface | N/A | Scope | N/A — no file capability |
-| Compatibility | existing hr.Currencies rows | migrate by tenant/company+ISO code, preserve metadata, then retire HR owner | migration verified | Migration | data-preservation test |
+| Baseline ownership | development schema starts clean | `InitialAccounting` creates `acc.Currencies`; `InitialHr` never creates `hr.Currencies`; no demo-data preservation/backfill | one owner from first migration | Migration/Architecture | clean-database schema test |
 | Cancellation/failure | request cancelled before commit | no partial mutation | cancelled/failed | Application/Infrastructure | cancellation/fault test |
 | Scale/operability | COA/rate/profile lists grow | indexed server queries; production load measurement remains RISK-007 | bounded query, G4 still gated | DB/read store | query-plan/scale evidence later |
 
@@ -149,19 +149,19 @@ exception.
 
 | Area | Decision | Existing owner/artifact | Required change | Evidence / required test |
 | --- | --- | --- | --- | --- |
-| Domain | Add + Change | Accounting Domain; HR Currency | add setup aggregates; move Currency owner | domain + architecture tests |
+| Domain | Add + Change | Accounting Domain; historical HR Currency design | add setup aggregates; Currency exists only in Accounting | domain + architecture tests |
 | Application/CQRS | Add | Accounting Application | feature commands/queries/ports/errors | handler/validator tests |
-| Infrastructure | Extend | AccountingDbContext/UoW | tables/config/stores + Currency migration | migration/model tests |
+| Infrastructure | Extend | AccountingDbContext/UoW + clean baselines | tables/config/stores; Currency in Accounting initial baseline only | baseline migration/model tests |
 | Presentation/API | Add | Accounting Presentation | thin versioned controllers per route family | controller contract tests |
 | Permissions | Extend | AccountingPermissions | Slice 1 permissions only | permission catalog/parity tests |
 | Tenant/company scope | Reuse | AccountingDbContext/current actor | apply existing fail-closed scope to all new entities | isolation tests |
-| Migration/data compatibility | Change | hr.Currencies + acc schema | one ownership cutover; preserve ISO/company data | migration preservation tests |
+| Migration/data compatibility | Rebaseline | Accounting + HR initial migrations | no Currency cutover/data copy; no HR Currency table; no `IsDefault`/`ExchangeRateToDefault` backfill | clean-database + no-pending-model tests |
 | Integration contracts | Add/Reuse | Accounting Contracts, HR Contracts, Contacts events | Accounting Currency contract; optional HR reference adapters; keep Party projection | integration tests |
 | Jobs/realtime/cache | N/A/Deferred | existing platform systems | no correctness dependency in Slice 1 | absence documented |
 | Module tests | Extend | ErpSystem.Modules.Accounting.Tests | domain/handler/persistence/controller/migration tests | focused suite |
 | Architecture tests | Extend | ErpSystem.ArchitectureTests | owner/dependency/no-duplicate/no-runtime-scope guards | architecture suite |
-| Web | Add + Change | Accounting Fiscal Years + HR Currency UI | setup workspace + retire HR Currency management/consume Accounting lookup | type/architecture/component/route tests |
-| Mobile | Add + Change | Accounting Fiscal Years + HR Currency UI | setup screens + retire HR Currency management/consume Accounting lookup | type/architecture/API/route tests |
+| Web | Add + Change | Accounting Fiscal Years + historical HR Currency UI | Accounting setup workspace; HR consumers use Accounting lookup only | type/architecture/component/route tests |
+| Mobile | Add + Change | Accounting Fiscal Years + historical HR Currency UI | Accounting setup screens; HR consumers use Accounting lookup only | type/architecture/API/route tests |
 | Documentation | Extend | plan/module/system/applied profiles | keep current-vs-target and actual evidence synchronized | generator/planning checks |
 
 ## Import contract
@@ -174,7 +174,7 @@ duplicates, dependency resolution, limits and rejected-row handling.
 ## Required implementation
 
 API:
-1. Currency ownership migration and Accounting Currency catalog Contract.
+1. Accounting-owned Currency in the clean baseline plus stable Accounting Currency catalog Contract; no HR Currency persistence or cutover migration.
 2. AccountingCompanySettings.
 3. AccountHierarchyLevel + Account.
 4. DimensionDefinition/DimensionValue and typed-source policy.
@@ -188,8 +188,8 @@ Web/Mobile:
 2. COA tree/detail/create/edit/archive;
 3. setup pages/forms for currency, dimensions, books, journals, rates, Link Accounts,
    Posting Profiles and company accounting settings;
-4. switch HR currency consumers to Accounting catalog and retire HR Currency
-   management surface;
+4. keep HR free of Currency management/persistence and make its currency consumers
+   use the Accounting catalog;
 5. permission/read-only/localization/RTL/accessibility/responsive tests.
 
 Explicitly not implemented in Slice 1: JournalEntry posting workflow, GL/TB,
@@ -209,6 +209,20 @@ payment/cashbox masters, realtime/notification dependency, bulk/import.
 
 ## Verification and handoff
 
+Phase 01 now applies an entity-by-entity completion gate. Each mutable setup
+entity is reviewed separately for create/read/update, archive or an explicit
+domain alternative, restore, archived discovery, dependency guards, shared
+atomic resources, RowVersion, permissions, localized stable errors and tests.
+`AccountingCompanySettings` is update-only singleton configuration;
+`AccountDimensionPolicy` is an upserted relationship; ExchangeRate,
+AccountMapping and PostingProfile use effective/versioned history instead of a
+destructive lifecycle route. All other setup masters expose archive/restore and
+`RecordStatus` discovery.
+
+The same gate is now generated for every future module by
+`api/scripts/New-ErpModule.ps1`, and solution architecture tests prevent modules
+from replacing host-wide localization registration.
+
 Phase 00 is **Ready for Coding** because:
 
 - this file and review artifact contain no unresolved placeholders;
@@ -226,3 +240,9 @@ non-warning findings.
 Phases 01–05 then update the books/manifest with actual runtime paths. Phase 06
 records only `Verified` or `Not Verified`. Customer education starts only after
 `Verified`.
+
+Persistence checkpoint recorded on 2026-09-22: the EF-generated
+`20260922091842_InitialAccounting` clean baseline is registered in the required-file
+manifest, has no pending model changes, and passes the clean SQL Server
+apply/idempotency integration test. A development database carrying the superseded
+Accounting migration history must be reset before this baseline is applied.

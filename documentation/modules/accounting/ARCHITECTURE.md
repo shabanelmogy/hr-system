@@ -30,15 +30,40 @@ missing, extend it at its owning platform/module boundary and expose a Contract;
 do not copy it into Accounting. Validate this reuse boundary in Phase 00 before
 Phase 01 implementation.
 
-The company Currency master is a deliberate ownership transition for Core GL
-Slice 1. It currently exists under HR Organizational Structure, but the earlier
-canonical Geography/Countries design reserved financial Currency ownership for
-Finance/Payroll once that bounded context existed. Slice 1 therefore migrates the
-single writable Currency master into Accounting, introduces company accounting
-settings for Functional Currency/Primary Book, and replaces
-`ExchangeRateToDefault` as financial authority with historical Accounting FX.
-HR retains CurrencyCode snapshots and consumes the Accounting currency Contract;
-there is no permanent duplicate Currency master.
+The company Currency master is Accounting-owned from the development baseline.
+`InitialAccounting` owns `acc.Currencies`; HR never owns or persists a writable
+Currency master and its baseline must not create `hr.Currencies`. The earlier
+Geography/Countries design already reserved financial Currency ownership for
+Finance/Payroll once that bounded context existed.
+
+HR retains CurrencyCode snapshots and validates new or changed values through the
+stable Accounting `IAccountingCurrencyCatalog`. Former HR `IsDefault` and
+`ExchangeRateToDefault` semantics are not migrated or backfilled. Functional
+Currency is selected later through normal `AccountingCompanySettings` setup with a
+valid Primary Book, while historical rates are owned by Accounting FX. There is no
+Currency cutover/data-copy path and no duplicate writable master.
+
+Client ownership follows the same boundary. Web and Mobile expose Currency
+management only at `/finance/ledger-setup/currencies`; the former HR
+`/basic-data/organizational-structure/currencies` route is not retained. Currency
+page/read/lookup access uses `AccountingSetup:View`, while create, update, archive,
+and restore use `AccountingSetup:Manage`. HR forms that accept a user-selected
+`CurrencyCode` consume the Accounting active-currency lookup instead of maintaining
+an HR list, free-text master, or client-side default-currency authority.
+
+Ledger Setup masters use an explicit entity completion matrix. Hierarchy levels,
+accounts, dimension definitions/values, currencies, books, journal definitions
+and exchange-rate types expose archive/restore, RowVersion and archived discovery.
+Settings and relationship policies are configuration/upsert identities;
+ExchangeRate, AccountMapping and PostingProfile preserve effective/versioned
+history. Parent/dependency lifecycle checks and competing child mutations acquire
+the same company-scoped atomic resources.
+
+Ledger Setup error text is owned by Accounting through an Application port and
+embedded Accounting EN/AR resources. Process-wide localization composition and
+the shared legacy JSON resource catalog are host-owned; Accounting never replaces
+`IStringLocalizerFactory`. This boundary remains valid when Accounting is moved to
+its own service host.
 
 ## Persistence and boundaries
 

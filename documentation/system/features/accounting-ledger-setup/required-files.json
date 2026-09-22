@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "status": "final-preflight",
+  "status": "phase-01-api-implemented",
   "feature": "accounting-ledger-setup",
   "featureName": "Accounting Ledger Setup",
   "referenceFeature": "fiscal-years",
@@ -8,7 +8,7 @@
   "sliceId": "Slice 1 — Ledger setup spine",
   "canonicalPlan": "documentation/plans/business/accounting-core-gl/PLAN.md",
   "plannedCustomerEducation": "documentation/plans/business/accounting-core-gl/education/accounting-ledger-setup.md",
-  "purpose": "Phase 00 evidence manifest. It proves planning authority, current runtime boundaries and frozen implementation contracts before Ledger Setup runtime coding. Phases 01-05 extend this manifest with actual runtime evidence.",
+  "purpose": "Phase 00 planning evidence plus the implemented Phase 01 Accounting Ledger Setup Domain/API surface, lifecycle matrix, localization ownership and executable tests. Client phases and final verification extend this manifest with their actual runtime evidence.",
   "reviewArtifact": "documentation/system/features/accounting-ledger-setup/ACCOUNTING_LEDGER_SETUP-REVIEW-ARTIFACTS.md",
   "implementationRequest": "documentation/system/features/accounting-ledger-setup/IMPLEMENTATION-REQUEST.md",
   "sourceCollections": [],
@@ -71,7 +71,7 @@
       "id": "hr-architecture",
       "layer": "documentation",
       "path": "documentation/modules/hr/ARCHITECTURE.md",
-      "purpose": "Branch/CostCenter ownership and Currency transition boundary"
+      "purpose": "Branch/CostCenter ownership and HR CurrencyCode consumer boundary"
     },
     {
       "id": "shared-reuse-catalog",
@@ -142,8 +142,14 @@
     {
       "id": "accounting-initial-migration",
       "layer": "api-infrastructure",
-      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Infrastructure/Migrations/20260914181049_InitialAccounting.cs",
-      "purpose": "Current Accounting persisted baseline"
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Infrastructure/Migrations/20260922091842_InitialAccounting.cs",
+      "purpose": "EF-generated clean baseline for the complete current acc model"
+    },
+    {
+      "id": "accounting-initial-migration-designer",
+      "layer": "api-infrastructure",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Infrastructure/Migrations/20260922091842_InitialAccounting.Designer.cs",
+      "purpose": "EF target model metadata for the clean Accounting baseline"
     },
     {
       "id": "fiscal-year-domain",
@@ -160,8 +166,92 @@
     {
       "id": "currency-current-owner",
       "layer": "api-domain",
-      "path": "api/Modules/HR/ErpSystem.Modules.HR.Domain/OrganizationalStructure/Entities/Currency.cs",
-      "purpose": "Transitional HR Currency master to move into Accounting"
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Domain/Finance/LedgerSetup/Entities/Currency.cs",
+      "purpose": "Canonical Accounting-owned Currency master for the clean development baseline"
+    },
+    {
+      "id": "currency-public-catalog-contract",
+      "layer": "api-contracts",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Contracts/CurrencyCatalogContracts.cs",
+      "purpose": "Stable Accounting-owned active Currency lookup and validation contract for cross-module consumers"
+    },
+    {
+      "id": "currency-application-contracts",
+      "layer": "api-application",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Application/Features/Finance/LedgerSetup/Currencies/Contracts/CurrencyContracts.cs",
+      "purpose": "Currency API mutation, response, lookup and concurrency contracts"
+    },
+    {
+      "id": "currency-commands",
+      "layer": "api-application",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Application/Features/Finance/LedgerSetup/Currencies/Commands/CurrencyCommands.cs",
+      "purpose": "Company-scoped Currency create/update/archive/restore CQRS rules"
+    },
+    {
+      "id": "currency-queries",
+      "layer": "api-application",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Application/Features/Finance/LedgerSetup/Currencies/Queries/CurrencyQueries.cs",
+      "purpose": "Currency management list, detail and active lookup CQRS queries"
+    },
+    {
+      "id": "currency-persistence",
+      "layer": "api-infrastructure",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Infrastructure/Features/Finance/LedgerSetup/Persistence/CurrencyStores.cs",
+      "purpose": "Accounting Currency persistence, isolation and archive dependency checks"
+    },
+    {
+      "id": "currency-catalog-adapter",
+      "layer": "api-infrastructure",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Infrastructure/Features/Finance/LedgerSetup/Persistence/AccountingCurrencyCatalog.cs",
+      "purpose": "Read-only Accounting Contracts adapter for active company Currency validation"
+    },
+    {
+      "id": "currency-controller",
+      "layer": "api-presentation",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Presentation/Features/Finance/LedgerSetup/Currencies/V1/CurrenciesController.cs",
+      "purpose": "Thin versioned ISender Currency management API"
+    },
+    {
+      "id": "currency-tests",
+      "layer": "tests",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Tests/CurrencyOwnershipTests.cs",
+      "purpose": "Currency scope, catalog, lifecycle and controller contract verification"
+    },
+    {
+      "id": "hr-currency-snapshot-validation",
+      "layer": "api-application",
+      "path": "api/Modules/HR/ErpSystem.Modules.HR.Application/Features/CurrencySnapshots/AccountingCurrencySnapshotValidation.cs",
+      "purpose": "Stable HR CurrencyCode snapshot validation errors and trusted company-scope helper"
+    },
+    {
+      "id": "hr-organizational-currency-consumer",
+      "layer": "api-infrastructure",
+      "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Features/OrganizationalStructure/Management/OrganizationalStructureManagement.cs",
+      "purpose": "JobLevel CurrencyCode validation through Accounting Contracts with no HR Currency master"
+    },
+    {
+      "id": "hr-accounting-module-dependency",
+      "layer": "api-bootstrap",
+      "path": "api/Modules/HR/ErpSystem.Modules.HR/HrModuleDefinition.cs",
+      "purpose": "Lifecycle dependency that places Accounting before HR Contract consumers"
+    },
+    {
+      "id": "hr-initial-migration",
+      "layer": "api-infrastructure",
+      "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Migrations/20260914181112_InitialHr.cs",
+      "purpose": "Clean HR baseline with no Currency persistence table"
+    },
+    {
+      "id": "currency-baseline-migration-tests",
+      "layer": "tests",
+      "path": "api/Tests/ErpSystem.IntegrationTests/CurrencyBaselineMigrationTests.cs",
+      "purpose": "Baseline migration ownership guard for acc.Currencies and absence of hr.Currencies"
+    },
+    {
+      "id": "currency-ownership-architecture-tests",
+      "layer": "tests",
+      "path": "api/Tests/ErpSystem.ArchitectureTests/CurrencyOwnershipArchitectureTests.cs",
+      "purpose": "Architecture guard preventing HR Currency master or Accounting implementation dependencies from returning"
     },
     {
       "id": "contacts-party",
@@ -182,6 +272,18 @@
       "purpose": "Current Accounting Web module/navigation owner"
     },
     {
+      "id": "web-accounting-currency-page",
+      "layer": "web-next",
+      "path": "web-next/src/modules/accounting/currencies/pages/CurrenciesPage.tsx",
+      "purpose": "Canonical Accounting Ledger Setup Currency page with View/Manage permission split"
+    },
+    {
+      "id": "web-accounting-currency-route-access",
+      "layer": "web-next",
+      "path": "web-next/src/lib/auth/route-access.ts",
+      "purpose": "Web Currency route read access through AccountingSetup:View"
+    },
+    {
       "id": "web-fiscal-years-page",
       "layer": "web-next",
       "path": "web-next/src/modules/accounting/fiscal-years/pages/FiscalYearsPage.tsx",
@@ -200,6 +302,24 @@
       "purpose": "Current Accounting Mobile module/route owner"
     },
     {
+      "id": "mobile-accounting-currency-screen",
+      "layer": "mobile-react",
+      "path": "mobile-react/src/modules/accounting/currencies/presentation/screens/CurrenciesScreen.tsx",
+      "purpose": "Canonical Accounting Ledger Setup Currency screen with read/manage action separation"
+    },
+    {
+      "id": "mobile-accounting-currency-rbac",
+      "layer": "mobile-react",
+      "path": "mobile-react/src/platform/auth/presentation/rbac/route-manifest.ts",
+      "purpose": "Mobile Currency and Accounting shell access through AccountingSetup:View"
+    },
+    {
+      "id": "mobile-api-compatibility-matrix",
+      "layer": "documentation",
+      "path": "documentation/mobile-react/MOBILE_API_COMPATIBILITY_MATRIX.json",
+      "purpose": "Canonical Mobile route/endpoint ownership matrix covering Accounting Currency View/Manage contracts"
+    },
+    {
       "id": "mobile-fiscal-years-screen",
       "layer": "mobile-react",
       "path": "mobile-react/src/modules/accounting/fiscal-years/presentation/screens/FiscalYearsScreen.tsx",
@@ -210,6 +330,186 @@
       "layer": "mobile-react",
       "path": "mobile-react/src/shared/components/tree-view/AppHierarchicalTree.tsx",
       "purpose": "Shared touch-friendly COA hierarchy candidate"
+    },
+    {
+      "id": "ledger-setup-domain",
+      "layer": "api-domain",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Domain/Finance/LedgerSetup/Entities/Account.cs",
+      "purpose": "Accounting-owned Ledger Setup entities, policies and deterministic account resolver"
+    },
+    {
+      "id": "ledger-setup-application-contracts",
+      "layer": "api-application",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Application/Features/Finance/LedgerSetup/Contracts/LedgerSetupContracts.cs",
+      "purpose": "Typed Slice 1 setup request and response contracts"
+    },
+    {
+      "id": "ledger-setup-application-ports",
+      "layer": "api-application",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Application/Features/Finance/LedgerSetup/Abstractions/ILedgerSetupStores.cs",
+      "purpose": "Narrow company-scoped persistence ports"
+    },
+    {
+      "id": "ledger-setup-application-cqrs",
+      "layer": "api-application",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Application/Features/Finance/LedgerSetup/Commands/SettingsAndAccountsCommands.cs",
+      "purpose": "Typed commands, queries, validators and handlers for Slice 1"
+    },
+    {
+      "id": "ledger-setup-infrastructure-stores",
+      "layer": "api-infrastructure",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Infrastructure/Features/Finance/LedgerSetup/Persistence/LedgerSetupStores.cs",
+      "purpose": "Accounting DbContext projections, stores and company-scoped persistence"
+    },
+    {
+      "id": "ledger-setup-presentation",
+      "layer": "api-presentation",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Presentation/Features/Finance/LedgerSetup/V1/AccountsController.cs",
+      "purpose": "Thin versioned setup controllers"
+    },
+    {
+      "id": "ledger-setup-domain-settings-book",
+      "layer": "api-domain",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Domain/Finance/LedgerSetup/Entities/AccountingCompanySettings.cs",
+      "purpose": "Company settings singleton and primary-book ownership"
+    },
+    {
+      "id": "ledger-setup-domain-hierarchy-level",
+      "layer": "api-domain",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Domain/Finance/LedgerSetup/Entities/AccountHierarchyLevel.cs",
+      "purpose": "Configurable chart hierarchy levels"
+    },
+    {
+      "id": "ledger-setup-domain-dimensions",
+      "layer": "api-domain",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Domain/Finance/LedgerSetup/Entities/Dimensions.cs",
+      "purpose": "Typed Accounting-owned dimensions and account policies"
+    },
+    {
+      "id": "ledger-setup-domain-book",
+      "layer": "api-domain",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Domain/Finance/LedgerSetup/Entities/Book.cs",
+      "purpose": "Primary Book V1 aggregate"
+    },
+    {
+      "id": "ledger-setup-domain-journal-definition",
+      "layer": "api-domain",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Domain/Finance/LedgerSetup/Entities/JournalDefinition.cs",
+      "purpose": "Journal definition/category/numbering setup only"
+    },
+    {
+      "id": "ledger-setup-domain-fx",
+      "layer": "api-domain",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Domain/Finance/LedgerSetup/Entities/ExchangeRates.cs",
+      "purpose": "Accounting-owned FX types and effective/versioned rates"
+    },
+    {
+      "id": "ledger-setup-domain-account-determination",
+      "layer": "api-domain",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Domain/Finance/LedgerSetup/Entities/AccountDetermination.cs",
+      "purpose": "Direct mappings and deterministic posting profiles"
+    },
+    {
+      "id": "ledger-setup-lifecycle-commands",
+      "layer": "api-application",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Application/Features/Finance/LedgerSetup/Commands/LedgerSetupLifecycleCommands.cs",
+      "purpose": "Archive/restore, dependency guards, RowVersion and shared atomic resources"
+    },
+    {
+      "id": "ledger-setup-mutation-commands",
+      "layer": "api-application",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Application/Features/Finance/LedgerSetup/Commands/LedgerSetupMutationCommands.cs",
+      "purpose": "Dimension, Book and Journal mutations"
+    },
+    {
+      "id": "ledger-setup-resolution-rate-commands",
+      "layer": "api-application",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Application/Features/Finance/LedgerSetup/Commands/ResolutionAndRatesCommands.cs",
+      "purpose": "FX, mapping and posting-profile mutations"
+    },
+    {
+      "id": "ledger-setup-queries",
+      "layer": "api-application",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Application/Features/Finance/LedgerSetup/Queries/LedgerSetupQueries.cs",
+      "purpose": "Bounded/status-aware reads and deterministic resolution preview"
+    },
+    {
+      "id": "ledger-setup-localization-port",
+      "layer": "api-application",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Application/Features/Finance/LedgerSetup/Abstractions/ILedgerSetupLocalizer.cs",
+      "purpose": "Extraction-safe Accounting-owned error localization boundary"
+    },
+    {
+      "id": "ledger-setup-configurations",
+      "layer": "api-infrastructure",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Infrastructure/Features/Finance/LedgerSetup/Persistence/LedgerSetupConfigurations.cs",
+      "purpose": "acc schema mappings, constraints, composite foreign keys and indexes"
+    },
+    {
+      "id": "ledger-setup-localization-adapter",
+      "layer": "api-infrastructure",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Infrastructure/Features/Finance/LedgerSetup/Localization/AccountingLedgerSetupJsonLocalizer.cs",
+      "purpose": "Accounting-owned embedded EN/AR resource adapter"
+    },
+    {
+      "id": "ledger-setup-dimensions-controller",
+      "layer": "api-presentation",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Presentation/Features/Finance/LedgerSetup/V1/DimensionsController.cs",
+      "purpose": "Dimension lifecycle and policy HTTP surface"
+    },
+    {
+      "id": "ledger-setup-books-journals-controller",
+      "layer": "api-presentation",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Presentation/Features/Finance/LedgerSetup/V1/BooksAndJournalsControllers.cs",
+      "purpose": "Book and Journal setup lifecycle HTTP surface"
+    },
+    {
+      "id": "ledger-setup-fx-controller",
+      "layer": "api-presentation",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Presentation/Features/Finance/LedgerSetup/V1/ExchangeRatesController.cs",
+      "purpose": "FX type lifecycle and effective-rate HTTP surface"
+    },
+    {
+      "id": "ledger-setup-determination-controller",
+      "layer": "api-presentation",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Presentation/Features/Finance/LedgerSetup/V1/AccountDeterminationControllers.cs",
+      "purpose": "Mapping, profile and resolution-preview HTTP surface"
+    },
+    {
+      "id": "ledger-setup-domain-tests",
+      "layer": "tests",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Tests/LedgerSetupDomainTests.cs",
+      "purpose": "Domain invariants and deterministic resolution tests"
+    },
+    {
+      "id": "ledger-setup-lifecycle-tests",
+      "layer": "tests",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Tests/LedgerSetupLifecycleTests.cs",
+      "purpose": "Lifecycle dependency, archived discovery, reserved business keys and module localization tests"
+    },
+    {
+      "id": "host-localization-owner",
+      "layer": "api-host",
+      "path": "api/ErpSystem.Api/Hosting/Localization/HostJsonStringLocalizer.cs",
+      "purpose": "Process-wide localization composition outside business modules"
+    },
+    {
+      "id": "localization-ownership-architecture-test",
+      "layer": "tests",
+      "path": "api/Tests/ErpSystem.ArchitectureTests/LocalizationOwnershipArchitectureTests.cs",
+      "purpose": "Guard preventing current/future modules from replacing host localization"
+    },
+    {
+      "id": "host-localization-runtime-test",
+      "layer": "tests",
+      "path": "api/Tests/ErpSystem.IntegrationTests/HostLocalizationOwnershipTests.cs",
+      "purpose": "Runtime proof that the host reads the shared English and Arabic resource catalogs"
+    },
+    {
+      "id": "future-module-generator-quality-gate",
+      "layer": "tooling",
+      "path": "api/scripts/New-ErpModule.ps1",
+      "purpose": "Generates the lifecycle/concurrency/localization feature gate for every new module"
     }
   ]
 }

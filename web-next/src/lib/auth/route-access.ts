@@ -152,6 +152,10 @@ export const routePolicies: readonly RoutePolicy[] = [
     permissions: [permissions.ViewFiscalYears],
   },
   {
+    path: appRoutes.modules.accounting.ledgerSetup.currencies,
+    permissions: [permissions.ViewAccountingSetup],
+  },
+  {
     path: appRoutes.modules.hr.workforcePlanning.plans,
     permissions: [permissions.ViewWorkforcePlans],
   },

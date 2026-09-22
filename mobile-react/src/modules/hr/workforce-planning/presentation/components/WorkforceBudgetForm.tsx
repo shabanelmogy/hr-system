@@ -4,6 +4,7 @@ import { StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 import { applyApiFieldErrors, toFormErrorMap, useZodForm } from '@/src/core/validation';
+import { useCurrencyLookup } from '@/src/modules/accounting';
 import { AppButton, AppCard, AppForm, AppFormSection, AppIconButton, AppSelectField, AppStatusBadge, AppText, AppTextField, type AppSelectOption } from '@/src/shared/components';
 import { useAppTheme } from '@/src/core/theme';
 import { createWorkforceBudgetSchema } from '../validation/workforce-budget-schema';
@@ -13,7 +14,7 @@ import type { BudgetSourcePlan, WorkforceBudgetDetail, WorkforceBudgetRequest } 
 type Values = z.infer<ReturnType<typeof createWorkforceBudgetSchema>>;
 interface Props { item: WorkforceBudgetDetail | null; mode: 'create' | 'edit' | 'view'; loading: boolean; detailLoading?: boolean; detailError?: string | null; onRetryDetail?: () => void; onClose: () => void; onSave: (request: WorkforceBudgetRequest) => Promise<void>; }
 const emptyAllocation = () => ({ fiscalPeriodId: 0, targetHeadcount: 0, allocatedSalaryCost: 0, allocatedRecruitmentCost: 0 });
-const emptyValues = (): Values => ({ budgetCode: '', workforcePlanId: 0, currencyCode: 'EGP', lines: [] });
+const emptyValues = (): Values => ({ budgetCode: '', workforcePlanId: 0, currencyCode: '', lines: [] });
 
 function NumberField({ control, name, label, disabled }: { control: Control<Values>; name: FieldPath<Values>; label: string; disabled: boolean }) {
   return <Controller control={control} name={name} render={({ field, fieldState }) => <AppTextField name={field.name} label={label} value={field.value === null || field.value === undefined ? '' : String(field.value)} onChangeText={value => field.onChange(value === '' ? 0 : Number(value))} onBlur={field.onBlur} editable={!disabled} keyboardType="numeric" numeric error={fieldState.error?.message} />} />;
@@ -53,8 +54,9 @@ export function WorkforceBudgetForm({ item, mode, loading, detailLoading = false
   const form = useZodForm<Values>(schema, { defaultValues: emptyValues() });
   const [submitError, setSubmitError] = useState<string | null>(null);
   const planId = useWatch({ control: form.control, name: 'workforcePlanId' });
-  const currency = useWatch({ control: form.control, name: 'currencyCode' }) || 'EGP';
+  const currency = useWatch({ control: form.control, name: 'currencyCode' }) || '';
   const isArabic = i18n.language.startsWith('ar');
+  const currencies = useCurrencyLookup();
   const planSelector = useBudgetSourcePlanSelector(Number(planId) || 0, mode === 'create');
   const activePlan: BudgetSourcePlan | null = useMemo(() => {
     if (mode !== 'create') return null;
@@ -62,6 +64,18 @@ export function WorkforceBudgetForm({ item, mode, loading, detailLoading = false
     return planSelector.plans.find(plan => plan.id === Number(planId)) ?? null;
   }, [mode, planId, planSelector.plans, planSelector.selected]);
   const planOptions: AppSelectOption<number>[] = useMemo(() => planSelector.plans.map(plan => ({ value: plan.id, label: `${plan.planCode} — ${isArabic ? plan.titleAr : plan.titleEn}`, icon: 'document-text-outline' })), [planSelector.plans, isArabic]);
+  const currencyOptions: AppSelectOption<string>[] = useMemo(() => {
+    const values = (currencies.data ?? []).map((item) => ({
+      value: item.currencyCode,
+      label: `${item.currencyCode} — ${isArabic ? item.nameAr : item.nameEn}`,
+      icon: 'cash-outline' as const,
+    }));
+    const currentCode = item?.currencyCode?.trim().toUpperCase();
+    if (currentCode && !values.some((option) => option.value === currentCode)) {
+      values.unshift({ value: currentCode, label: currentCode, icon: 'cash-outline' as const });
+    }
+    return values;
+  }, [currencies.data, isArabic, item?.currencyCode]);
   const periodOptions: AppSelectOption<number>[] = useMemo(() => (activePlan?.fiscalPeriodIds ?? []).map(id => ({ value: id, label: `${t('workforceBudget.fields.fiscalPeriod')} ${id}`, icon: 'calendar-outline' })), [activePlan, t]);
 
   useEffect(() => {
@@ -69,7 +83,7 @@ export function WorkforceBudgetForm({ item, mode, loading, detailLoading = false
       form.reset({
         budgetCode: form.getValues('budgetCode'),
         workforcePlanId: activePlan.id,
-        currencyCode: form.getValues('currencyCode') || 'EGP',
+        currencyCode: form.getValues('currencyCode'),
         lines: activePlan.lines.map(planLine => ({
           workforcePlanLineId: planLine.id,
           authorizedHeadcount: planLine.plannedHiringSlots,
@@ -101,7 +115,8 @@ export function WorkforceBudgetForm({ item, mode, loading, detailLoading = false
     const next = { shouldDirty: true, shouldValidate: true };
     form.setValue('budgetCode', `WB-${new Date().getFullYear() + 1}-001`, next);
     form.setValue('workforcePlanId', plan.id, next);
-    form.setValue('currencyCode', 'EGP', next);
+    const firstActiveCurrency = currencies.data?.[0]?.currencyCode;
+    if (firstActiveCurrency) form.setValue('currencyCode', firstActiveCurrency, next);
     form.setValue('lines', plan.lines.map((planLine, lineIndex) => {
       const salaryPerSlot = 60000 * (lineIndex + 1);
       const recruitmentPerSlot = 5000 * (lineIndex + 1);
@@ -158,7 +173,7 @@ export function WorkforceBudgetForm({ item, mode, loading, detailLoading = false
     <AppFormSection title={t('workforceBudget.form.identity')} icon="document-text-outline">
       <Controller control={form.control} name="budgetCode" render={({ field, fieldState }) => <AppTextField name={field.name} label={t('workforceBudget.fields.budgetCode')} value={field.value} onChangeText={field.onChange} onBlur={field.onBlur} editable={!disabled && mode === 'create'} error={fieldState.error?.message} required />} />
       <Controller control={form.control} name="workforcePlanId" render={({ field, fieldState }) => <AppSelectField name={field.name} label={t('workforceBudget.fields.plan')} options={planOptions} value={field.value} onChange={field.onChange} disabled={disabled || mode !== 'create'} required error={fieldState.error?.message} leadingIcon="document-text-outline" searchable={mode === 'create'} searchValue={planSelector.search} onSearchChange={planSelector.setSearch} searchPlaceholder={t('workforceBudget.search.placeholder')} hasMore={planSelector.hasMore} loadingMore={planSelector.loadingMore} onLoadMore={() => { void planSelector.loadMore(); }} optionsLoading={planSelector.loading} optionsError={planSelector.error ? t('workforceBudget.messages.fetchError') : undefined} onRetryOptions={() => { void planSelector.retry(); }} />} />
-      <Controller control={form.control} name="currencyCode" render={({ field, fieldState }) => <AppTextField name={field.name} label={t('workforceBudget.fields.currency')} value={field.value} onChangeText={field.onChange} onBlur={field.onBlur} editable={!disabled && (mode === 'create' || (item ? [1, 4].includes(item.status) : true))} error={fieldState.error?.message} required />} />
+      <Controller control={form.control} name="currencyCode" render={({ field, fieldState }) => <AppSelectField name={field.name} label={t('workforceBudget.fields.currency')} value={field.value} onChange={field.onChange} options={currencyOptions} disabled={disabled || currencies.isLoading || !(mode === 'create' || (item ? [1, 4].includes(item.status) : true))} error={fieldState.error?.message} required leadingIcon="cash-outline" searchable optionsLoading={currencies.isLoading} optionsError={currencies.error ? t('workforceBudget.messages.fetchError') : undefined} onRetryOptions={() => { void currencies.refetch(); }} />} />
     </AppFormSection>
     <AppFormSection title={t('workforceBudget.lines.title')} icon="list-outline">
       {lines.map((line, index) => {

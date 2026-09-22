@@ -2,12 +2,14 @@ using FluentValidation;
 using ErpSystem.BuildingBlocks.Context.Authentication;
 using ErpSystem.BuildingBlocks.Application.Abstractions.Messaging;
 using ErpSystem.BuildingBlocks.Application.Abstractions.Persistence;
+using ErpSystem.Modules.HR.Application.Features.CurrencySnapshots;
 using ErpSystem.Modules.HR.Application.Features.WorkforcePlanning.Abstractions;
 using ErpSystem.Modules.HR.Application.Features.WorkforcePlanning.Contracts;
 using ErpSystem.Modules.HR.Application.Features.WorkforcePlanning.Errors;
 using ErpSystem.BuildingBlocks.Domain.Exceptions;
 using ErpSystem.Modules.HR.Domain.WorkforcePlanning.Entities;
 using ErpSystem.Modules.HR.Domain.WorkforcePlanning.Enums;
+using IAccountingCurrencyCatalog = ErpSystem.Modules.Accounting.Contracts.IAccountingCurrencyCatalog;
 
 namespace ErpSystem.Modules.HR.Application.Features.WorkforcePlanning.Commands;
 
@@ -125,6 +127,7 @@ public sealed class CreateWorkforceBudgetCommandHandler(
     IWorkforceBudgetReadStore readStore,
     IUnitOfWork unitOfWork,
     ICurrentActor actor,
+    IAccountingCurrencyCatalog currencyCatalog,
     WorkforceBudgetEffects effects,
     WorkforceBudgetErrors errors)
     : ICommandHandler<CreateWorkforceBudgetCommand, Result<WorkforceBudgetDetailResponse>>
@@ -135,6 +138,10 @@ public sealed class CreateWorkforceBudgetCommandHandler(
             return Result.Failure<WorkforceBudgetDetailResponse>(errors.CompanyContextRequired);
 
         var request = command.Request;
+        if (await currencyCatalog.FindActiveByCodeAsync(
+                tenantId, companyId, request.CurrencyCode, cancellationToken) is null)
+            return Result.Failure<WorkforceBudgetDetailResponse>(HrCurrencySnapshotErrors.InvalidOrInactive);
+
         var result = await unitOfWork.ExecuteAtomicallyAsync(
             [WorkforcePlanLocks.Company(tenantId, companyId)],
             async token =>
@@ -174,6 +181,7 @@ public sealed class UpdateWorkforceBudgetCommandHandler(
     IWorkforceBudgetReadStore readStore,
     IUnitOfWork unitOfWork,
     ICurrentActor actor,
+    IAccountingCurrencyCatalog currencyCatalog,
     WorkforceBudgetEffects effects,
     WorkforceBudgetErrors errors)
     : ICommandHandler<UpdateWorkforceBudgetCommand, Result<WorkforceBudgetDetailResponse>>
@@ -182,6 +190,10 @@ public sealed class UpdateWorkforceBudgetCommandHandler(
     {
         if (!BudgetScope.TryGet(actor, out var tenantId, out var companyId))
             return Result.Failure<WorkforceBudgetDetailResponse>(errors.CompanyContextRequired);
+
+        if (await currencyCatalog.FindActiveByCodeAsync(
+                tenantId, companyId, command.Request.CurrencyCode, cancellationToken) is null)
+            return Result.Failure<WorkforceBudgetDetailResponse>(HrCurrencySnapshotErrors.InvalidOrInactive);
 
         var result = await unitOfWork.ExecuteAtomicallyAsync(
             [WorkforcePlanLocks.Company(tenantId, companyId)],

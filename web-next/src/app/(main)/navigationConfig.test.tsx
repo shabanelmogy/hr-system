@@ -73,16 +73,26 @@ describe("application navigation configuration", () => {
     ]);
   });
 
+  it("gets Ledger Setup currencies from Accounting, not Basic Data", () => {
+    const config = getNavigationConfig([], [permissions.ViewAccountingSetup]);
+    const pathsForAccounting = paths(config);
+    expect(pathsForAccounting).toContain(appRoutes.modules.accounting.ledgerSetup.currencies);
+    expect(pathsForAccounting).not.toContain("/basic-data/organizational-structure/currencies");
+  });
+
   it("scopes the sidebar to the module that owns the active business route", () => {
     const config = getNavigationConfig([], [
       permissions.ViewFiscalYears,
+      permissions.ViewAccountingSetup,
       permissions.ViewOrganizationalStructure,
       permissions.ViewRecruitment,
     ], "acc");
 
-    expect(paths(config)).toEqual([appRoutes.modules.accounting.fiscalYears]);
-    expect(config).toHaveLength(1);
-    expect(config[0]?.id).toBe(NavigationSectionId.FINANCE);
+    expect(paths(config)).toEqual([
+      appRoutes.modules.accounting.fiscalYears,
+      appRoutes.modules.accounting.ledgerSetup.currencies,
+    ]);
+    expect(config).toHaveLength(2);
   });
 
   it("keeps Crystal Reports only when Reporting analytics is accessible", () => {

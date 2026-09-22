@@ -39,7 +39,7 @@
       "id": "infrastructure-organizational-configurations",
       "layer": "infrastructure",
       "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Persistence/Configurations/OrganizationalStructure",
-      "minimumFiles": 9,
+      "minimumFiles": 8,
       "purpose": "EF mappings and composite company relationships"
     },
     {

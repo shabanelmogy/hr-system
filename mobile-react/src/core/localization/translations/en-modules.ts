@@ -11,6 +11,10 @@ export const enModules = {
     genericEmpty: 'This application is installed but no areas are available yet.',
     noAvailableFeatures: 'This area is enabled, but no screen matching your current permissions is available yet.',
     submodules: {
+      acc: {
+        'fiscal-years': 'Fiscal years',
+        'ledger-setup': 'Ledger setup',
+      },
       hr: {
         'basic-data': 'Basic data',
         recruitment: 'Recruitment',

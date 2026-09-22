@@ -230,6 +230,19 @@ registry covers each one exactly once, so no test update is needed for the new
 module itself. Complete a reuse inventory and record it in the module package
 before creating the first feature slice.
 
+The generator also creates `FEATURE-QUALITY-GATE.md`. Every mutable entity must
+receive one completed lifecycle row before a feature is called implemented.
+The row separately proves CRUD or its domain alternative, archived discovery,
+dependency guards, shared transaction resources, optimistic concurrency,
+permissions, stable localized errors, and executable tests. This prevents a
+green build from hiding an incomplete archive/restore or concurrency surface.
+
+Process-wide localization is host-owned. Modules consume the host factory for
+shared legacy resources or implement a module-owned localization port with
+module-owned resources; a module must never replace `IStringLocalizerFactory`
+or register MVC localization globally. `LocalizationOwnershipArchitectureTests`
+enforces the rule for all current and future module directories.
+
 Generic uploads remain a Platform capability even while the HTTP compatibility
 controller is HR-owned. `IFileOperationsService` calls
 `IFileUploadInspectionService` before writing any binary or metadata record;

@@ -439,6 +439,20 @@ Do not hand-build an alternative module shape.
 
 ## 17. Required review before handoff
 
+Before this review, complete one lifecycle row per mutable entity using the
+owning module's `FEATURE-QUALITY-GATE.md`. Existing modules may use the same
+matrix directly in the feature book. A successful build does not close a row:
+Create/Read/Update, archive or its approved domain alternative, restore,
+archived discovery, dependency guards, shared atomic resources, concurrency,
+permissions, localized stable errors, and tests must each have evidence or an
+explicit reasoned `N/A`.
+
+Global localization composition belongs to `ErpSystem.Api`. Modules may consume
+`IStringLocalizer` or expose a module-owned localization port and resources, but
+must never register `IStringLocalizerFactory`, `AddLocalization`, or
+`AddDataAnnotationsLocalization`. The solution architecture tests enforce this
+boundary so extracting one module cannot depend on another module's resources.
+
 Review the completed change against these questions:
 
 ### Existing-system relationship

@@ -129,5 +129,74 @@
       "reopenTitle": "Reopen fiscal year?",
       "reopenDescription": "This returns either a Closed or Locked year and all its periods to Open while preserving the audit history."
     }
+  },
+  "currencies": {
+    "title": "Currencies",
+    "subtitle": "Manage the company currency catalog used by Accounting and validated HR currency snapshots.",
+    "totalLabel": "currencies",
+    "fields": {
+      "currencyCode": "Currency code",
+      "symbol": "Symbol"
+    },
+    "recordStatus": {
+      "active": "Active records",
+      "archived": "Archived records",
+      "all": "All records"
+    },
+    "filters": {
+      "recordStatus": "Record status"
+    },
+    "search": {
+      "placeholder": "Search currencies...",
+      "column": "Search column",
+      "condition": "Condition",
+      "fields": {
+        "all": "All columns",
+        "currencyCode": "Currency code",
+        "nameAr": "Arabic name",
+        "nameEn": "English name",
+        "symbol": "Symbol"
+      },
+      "operators": {
+        "contains": "Contains",
+        "doesNotContain": "Does not contain",
+        "equals": "Equals",
+        "doesNotEqual": "Does not equal",
+        "startsWith": "Starts with",
+        "endsWith": "Ends with"
+      }
+    },
+    "actions": {
+      "add": "Add currency"
+    },
+    "form": {
+      "addTitle": "Add Currency",
+      "editTitle": "Edit Currency",
+      "viewTitle": "Currency Details",
+      "subtitle": "Maintain the Accounting-owned currency master. Exchange rates and functional currency are configured separately."
+    },
+    "validation": {
+      "code": "Enter exactly three English letters.",
+      "name": "Enter a valid name from 2 to 100 characters.",
+      "symbol": "Enter a symbol up to 10 characters."
+    },
+    "messages": {
+      "created": "Currency {{code}} was created.",
+      "updated": "Currency {{code}} was updated.",
+      "archived": "Currency archived.",
+      "restored": "Currency restored.",
+      "fetchError": "Unable to load currencies.",
+      "createError": "Unable to create the currency.",
+      "updateError": "Unable to update the currency.",
+      "archiveError": "Unable to archive the currency.",
+      "restoreError": "Unable to restore the currency.",
+      "conflictReloaded": "This currency was changed by another operation. The latest server version has been reloaded."
+    },
+    "confirm": {
+      "archiveTitle": "Archive currency?",
+      "archiveDescription": "The currency will stop appearing in active selectors. Accounting blocks archiving while it is still referenced.",
+      "restoreTitle": "Restore currency?",
+      "restoreDescription": "The currency will become available in active selectors again."
+    }
   }
 }

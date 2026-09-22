@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
+import { useCurrencyLookup } from '@/src/modules/accounting';
 import {
   AppDateTimeField,
   AppForm,
   AppFormSection,
+  AppSelectField,
   AppTextField,
   showToast,
 } from '@/src/shared/components';
@@ -31,17 +33,23 @@ export function JobOfferModal({ visible, applicationId, onClose, onSuccess }: Jo
   const { t } = useTranslation();
   const createOfferMutation = useCreateJobOffer();
   const submitOfferMutation = useSubmitJobOffer();
+  const currencies = useCurrencyLookup(visible);
   const [initialStartDate, setInitialStartDate] = useState(defaultStartDate);
   const [salary, setSalary] = useState('25000');
-  const [currency, setCurrency] = useState('EGP');
+  const [currency, setCurrency] = useState('');
   const [proposedStartDate, setProposedStartDate] = useState(initialStartDate);
   const [errors, setErrors] = useState<OfferErrors>({});
   const [focusErrorRequestId, setFocusErrorRequestId] = useState(0);
+  const currencyOptions = useMemo(() => (currencies.data ?? []).map((item) => ({
+    value: item.currencyCode,
+    label: `${item.currencyCode} — ${item.nameEn} (${item.nameAr})`,
+    icon: 'cash-outline' as const,
+  })), [currencies.data]);
 
   const reset = () => {
     const nextStartDate = defaultStartDate();
     setSalary('25000');
-    setCurrency('EGP');
+    setCurrency('');
     setInitialStartDate(nextStartDate);
     setProposedStartDate(nextStartDate);
     setErrors({});
@@ -110,7 +118,7 @@ export function JobOfferModal({ visible, applicationId, onClose, onSuccess }: Jo
       submitLabel={t('recruitment.offers.submitForApproval')}
       submitting={isPending}
       isDirty={
-        salary !== '25000' || currency !== 'EGP' || proposedStartDate !== initialStartDate
+        salary !== '25000' || currency !== '' || proposedStartDate !== initialStartDate
       }
       contentContainerStyle={styles.content}
     >
@@ -126,13 +134,18 @@ export function JobOfferModal({ visible, applicationId, onClose, onSuccess }: Jo
             required
             style={styles.salaryInput}
           />
-          <AppTextField
+          <AppSelectField
             name="currency"
             label={t('recruitment.offers.currency')}
             value={currency}
-            onChangeText={setCurrency}
-            autoCapitalize="characters"
-            maxLength={3}
+            onChange={setCurrency}
+            options={currencyOptions}
+            disabled={currencies.isLoading}
+            optionsLoading={currencies.isLoading}
+            optionsError={currencies.error ? t('common.error') : undefined}
+            onRetryOptions={() => { void currencies.refetch(); }}
+            leadingIcon="cash-outline"
+            searchable
             required
             style={styles.currencyInput}
           />

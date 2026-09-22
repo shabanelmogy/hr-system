@@ -3,6 +3,7 @@ using ErpSystem.BuildingBlocks.Application.Abstractions.Persistence;
 using ErpSystem.BuildingBlocks.Context.Authentication;
 using ErpSystem.BuildingBlocks.Domain.Exceptions;
 using ErpSystem.Modules.Accounting.Contracts;
+using ErpSystem.Modules.HR.Application.Features.CurrencySnapshots;
 using ErpSystem.Modules.HR.Application.Features.Recruitment.Abstractions;
 using ErpSystem.Modules.HR.Application.Features.Recruitment.Contracts;
 using ErpSystem.Modules.HR.Application.Features.Recruitment.Errors;
@@ -29,12 +30,20 @@ public sealed class CreateJobOfferCommandHandler(
     IJobOfferRepository repository,
     IJobOfferReadStore readStore,
     IUnitOfWork unitOfWork,
+    ICurrentActor actor,
+    IAccountingCurrencyCatalog currencyCatalog,
     TimeProvider clock)
     : ICommandHandler<CreateJobOfferCommand, Result<JobOfferDto>>
 {
     public async Task<Result<JobOfferDto>> Handle(CreateJobOfferCommand command, CancellationToken cancellationToken)
     {
         var mutation = command.Mutation;
+        if (!AccountingCurrencySnapshotValidation.TryGetScope(actor, out var tenantId, out var companyId))
+            return Result.Failure<JobOfferDto>(RecruitmentErrors.CompanyContextRequired);
+        if (await currencyCatalog.FindActiveByCodeAsync(
+                tenantId, companyId, mutation.CurrencyCode, cancellationToken) is null)
+            return Result.Failure<JobOfferDto>(HrCurrencySnapshotErrors.InvalidOrInactive);
+
         var application = await repository.GetApplicationSnapshotAsync(mutation.EmploymentApplicationId, cancellationToken);
         if (application is null)
             return Result.Failure<JobOfferDto>(RecruitmentErrors.EmploymentApplicationNotFound);

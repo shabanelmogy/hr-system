@@ -1,24 +1,36 @@
 using ErpSystem.BuildingBlocks.Application.Abstractions.Messaging;
+using ErpSystem.BuildingBlocks.Context.Authentication;
+using ErpSystem.Modules.Accounting.Contracts;
+using ErpSystem.Modules.HR.Application.Features.CurrencySnapshots;
 using ErpSystem.Modules.HR.Application.Features.Recruitment.Contracts;
+using ErpSystem.Modules.HR.Application.Features.Recruitment.Errors;
 using ErpSystem.Modules.HR.Application.Features.Recruitment.Settings.Abstractions;
 using ErpSystem.Modules.HR.Domain.Recruitment.Entities;
 
 namespace ErpSystem.Modules.HR.Application.Features.Recruitment.Settings;
 
 public sealed record UpdateRecruitmentSettingsCommand(RecruitmentSettingsDto Settings)
-    : ICommand<RecruitmentSettingsDto>;
+    : ICommand<Result<RecruitmentSettingsDto>>;
 
 public sealed class UpdateRecruitmentSettingsCommandHandler(
     IRecruitmentSettingsRepository repository,
-    IRecruitmentSettingsReadStore readStore)
-    : ICommandHandler<UpdateRecruitmentSettingsCommand, RecruitmentSettingsDto>
+    IRecruitmentSettingsReadStore readStore,
+    ICurrentActor actor,
+    IAccountingCurrencyCatalog currencyCatalog)
+    : ICommandHandler<UpdateRecruitmentSettingsCommand, Result<RecruitmentSettingsDto>>
 {
-    public async Task<RecruitmentSettingsDto> Handle(
+    public async Task<Result<RecruitmentSettingsDto>> Handle(
         UpdateRecruitmentSettingsCommand command,
         CancellationToken cancellationToken)
     {
-        await GetRecruitmentSettingsQueryHandler.EnsureSeededAsync(repository, cancellationToken);
         var settings = command.Settings;
+        if (!AccountingCurrencySnapshotValidation.TryGetScope(actor, out var tenantId, out var companyId))
+            return Result.Failure<RecruitmentSettingsDto>(RecruitmentErrors.CompanyContextRequired);
+        if (await currencyCatalog.FindActiveByCodeAsync(
+                tenantId, companyId, settings.General.DefaultCurrency, cancellationToken) is null)
+            return Result.Failure<RecruitmentSettingsDto>(HrCurrencySnapshotErrors.InvalidOrInactive);
+
+        await GetRecruitmentSettingsQueryHandler.EnsureSeededAsync(repository, cancellationToken);
 
         var stages = await repository.GetStagesAsync(cancellationToken);
         foreach (var dto in settings.Stages)
@@ -110,6 +122,6 @@ public sealed class UpdateRecruitmentSettingsCommandHandler(
         }
 
         await repository.SaveChangesAsync(cancellationToken);
-        return await readStore.GetAsync(cancellationToken);
+        return Result.Success(await readStore.GetAsync(cancellationToken));
     }
 }

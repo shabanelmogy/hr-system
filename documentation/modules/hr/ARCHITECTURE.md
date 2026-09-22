@@ -45,11 +45,18 @@ contract. Reporting owns report definitions and Crystal metadata. These
 boundaries are implemented and covered by module dependency tests; do not add
 platform or reference-data persistence back to HR.
 
-Currency is transitional current-state data inside HR Organizational Structure.
-Accounting Core GL Slice 1 is the approved ownership migration point: the single
-company Currency master moves to Accounting, HR continues to persist financial
-facts as CurrencyCode snapshots, and HR currency selectors/validation consume the
-Accounting Contracts surface. Branch and CostCenter remain HR-owned.
+Currency is not an HR-owned master. In the clean development baseline, HR never
+persists or exposes a writable Currency catalog and `InitialHr` does not create a
+Currency table. HR continues to persist business/financial CurrencyCode snapshots;
+new or changed user-supplied codes are validated through Accounting
+`IAccountingCurrencyCatalog`. HR does not interpret or retain former `IsDefault` or
+`ExchangeRateToDefault` authority. Branch and CostCenter remain HR-owned.
+
+Web and Mobile therefore do not expose Currency management under HR Organizational
+Structure. HR Job Level, Recruitment, and Workforce Planning inputs that let a user
+choose a `CurrencyCode` use the Accounting active-currency lookup. Snapshot values
+remain HR business data, but HR clients do not own a hardcoded Currency catalog or
+invent a default Currency when Accounting has not established one.
 
 ## Reuse-first workflow
 

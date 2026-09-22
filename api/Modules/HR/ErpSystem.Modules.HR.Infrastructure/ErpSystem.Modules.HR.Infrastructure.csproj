@@ -55,10 +55,5 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <TargetPath>Templates\%(Filename)%(Extension)</TargetPath>
     </Content>
-    <Content Include="Localization\Resources\*.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-      <TargetPath>Localization\Resources\%(Filename)%(Extension)</TargetPath>
-    </Content>
   </ItemGroup>
 </Project>

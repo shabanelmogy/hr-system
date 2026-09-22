@@ -33,6 +33,7 @@ export const arNavigationSettings = {
     recruitment: 'التعيينات والتوظيف',
     workforcePlanning: 'تخطيط القوى العاملة',
     finance: 'المالية',
+    ledgerSetup: 'إعداد دفتر الأستاذ',
     development: 'تطوير',
     developmentRole: 'دور التطوير: {{role}}',
   },

@@ -291,7 +291,7 @@ export const DEFAULT_CRITERIA: EvaluationCriterionConfig[] = [
 ];
 
 export const DEFAULT_GENERAL_SETTINGS: RecruitmentGeneralSettings = {
-  defaultCurrency: 'EGP',
+  defaultCurrency: '',
   offerExpiryDays: 7,
   autoPublishOpening: true,
   enforceHeadcountCapacity: true,

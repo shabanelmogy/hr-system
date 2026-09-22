@@ -45,8 +45,8 @@ public static class DomainGuard
     public static string NormalizeCurrencyCode(string value, string parameterName)
     {
         var normalized = Required(value, parameterName).ToUpperInvariant();
-        if (normalized.Length != 3)
-            throw new ArgumentException("Currency codes must contain three characters.", parameterName);
+        if (normalized.Length != 3 || normalized.Any(character => character is < 'A' or > 'Z'))
+            throw new ArgumentException("Currency codes must contain exactly three ASCII letters.", parameterName);
 
         return normalized;
     }

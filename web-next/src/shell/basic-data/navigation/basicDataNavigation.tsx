@@ -3,7 +3,6 @@ import MapIcon from "@mui/icons-material/Map";
 import PublicIcon from "@mui/icons-material/Public";
 import BusinessRoundedIcon from "@mui/icons-material/BusinessRounded";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
-import PaidIcon from "@mui/icons-material/Paid";
 import type { ReactElement } from "react";
 import { appRoutes, type AppPath } from "@/config/routes";
 import { isAuthorized } from "@/lib/auth/authorization";
@@ -87,14 +86,6 @@ const organizationalStructureItems: readonly BasicDataNavigationItem[] = [
     descriptionKey: "organizationalStructure.routeDescriptions.cost-centers",
     href: appRoutes.modules.hr.organizationalStructure.costCenters,
     icon: <AccountBalanceWalletIcon fontSize="small" />,
-    permissions: [permissions.ViewOrganizationalStructure],
-  },
-  {
-    id: "organizational-structure-currencies",
-    titleKey: "organizationalStructure.resources.currencies",
-    descriptionKey: "organizationalStructure.routeDescriptions.currencies",
-    href: appRoutes.modules.hr.organizationalStructure.currencies,
-    icon: <PaidIcon fontSize="small" />,
     permissions: [permissions.ViewOrganizationalStructure],
   },
   {

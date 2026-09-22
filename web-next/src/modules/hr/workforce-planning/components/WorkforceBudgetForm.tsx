@@ -1,6 +1,6 @@
 "use client";
 
-import { useFiscalYearLookup } from "@/modules/accounting/public";
+import { useCurrencyLookup, useFiscalYearLookup } from "@/modules/accounting/public";
 import { MyForm, MySelect, MyTextField, toFormErrorMessages } from "@/shared/components/forms";
 import { applyApiFieldErrors } from "@/shared/utils/formErrors";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -31,7 +31,7 @@ const emptyAllocation = () => ({ fiscalPeriodId: 0, targetHeadcount: 0, allocate
 const emptyValues = (): WorkforceBudgetFormValues => ({
   budgetCode: "",
   workforcePlanId: 0,
-  currencyCode: "EGP",
+  currencyCode: "",
   lines: [],
 });
 
@@ -100,7 +100,7 @@ export default function WorkforceBudgetForm({ open, mode, item, loading = false,
     mode: "onSubmit",
   });
   const selectedPlanId = useWatch({ control: form.control, name: "workforcePlanId" });
-  const currency = useWatch({ control: form.control, name: "currencyCode" }) || "EGP";
+  const currency = useWatch({ control: form.control, name: "currencyCode" }) || "";
   const isArabic = i18n.language.startsWith("ar");
   const sourcePlans = useBudgetSourcePlans({ pageNumber: 1, pageSize: 50 }, open && mode === "add");
   const sourcePlan = useBudgetSourcePlan(mode === "add" ? selectedPlanId : undefined, open && mode === "add" && Boolean(selectedPlanId));
@@ -111,6 +111,7 @@ export default function WorkforceBudgetForm({ open, mode, item, loading = false,
     return (sourcePlans.data?.items ?? []).find(plan => plan.id === Number(selectedPlanId)) ?? null;
   }, [mode, sourcePlan.data, sourcePlans.data, selectedPlanId]);
   const fiscalYears = useFiscalYearLookup();
+  const currencies = useCurrencyLookup(open && mode !== "view");
   void fiscalYears;
   const planOptions = useMemo<LookupOption[]>(() => {
     const items = sourcePlans.data?.items ?? [];
@@ -127,7 +128,7 @@ export default function WorkforceBudgetForm({ open, mode, item, loading = false,
       form.reset({
         budgetCode: "",
         workforcePlanId: Number(selectedPlanId) || 0,
-        currencyCode: "EGP",
+        currencyCode: "",
         lines: (seed && seed.id === Number(selectedPlanId) ? seed.lines : []).map(planLine => ({
           workforcePlanLineId: planLine.id,
           authorizedHeadcount: planLine.plannedHiringSlots,
@@ -170,7 +171,7 @@ export default function WorkforceBudgetForm({ open, mode, item, loading = false,
     const next = { shouldDirty: true, shouldValidate: true };
     form.setValue("budgetCode", `WB-${new Date().getFullYear() + 1}-001`, next);
     form.setValue("workforcePlanId", plan.id, next);
-    form.setValue("currencyCode", "EGP", next);
+    form.setValue("currencyCode", currencies.data?.[0]?.currencyCode ?? "", next);
     form.setValue("lines", plan.lines.map((planLine, lineIndex) => {
       const salaryPerSlot = 60000 * (lineIndex + 1);
       const recruitmentPerSlot = 5000 * (lineIndex + 1);
@@ -252,7 +253,7 @@ export default function WorkforceBudgetForm({ open, mode, item, loading = false,
     <Stack direction={{ xs: "column", md: "row" }} spacing={2}>
       <Box sx={{ flex: 1 }}>{field("budgetCode", t("workforceBudget.fields.budgetCode"), "text", identityReadOnly)}</Box>
       <Box sx={{ flex: 1 }}><MySelect name="workforcePlanId" label={t("workforceBudget.fields.plan")} control={form.control} dataSource={planOptions} valueMember="id" displayMember="displayName" errors={form.formState.errors} actualFieldName="workforcePlanId" loading={loading || sourcePlans.isLoading} required isViewMode={readOnly || identityReadOnly} /></Box>
-      <Box sx={{ flex: 1 }}>{field("currencyCode", t("workforceBudget.fields.currency"), "text", readOnly || (identityReadOnly && item != null && ![1, 4].includes(item.status)))}</Box>
+      <Box sx={{ flex: 1 }}><MySelect name="currencyCode" label={t("workforceBudget.fields.currency")} control={form.control} dataSource={(currencies.data ?? []).map(item => ({ id: item.currencyCode, displayName: `${item.currencyCode} — ${isArabic ? item.nameAr : item.nameEn}` }))} valueMember="id" displayMember="displayName" errors={form.formState.errors} loading={loading || currencies.isLoading} required isViewMode={readOnly || (identityReadOnly && item != null && ![1, 4].includes(item.status))} /></Box>
     </Stack>
     <Divider sx={{ my: 1 }} />
     <Stack direction="row" sx={{ alignItems: "center", justifyContent: "space-between" }}>

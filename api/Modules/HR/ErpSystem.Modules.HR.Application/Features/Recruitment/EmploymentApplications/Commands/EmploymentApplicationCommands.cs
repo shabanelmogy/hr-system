@@ -2,6 +2,8 @@ using ErpSystem.BuildingBlocks.Application.Abstractions.Messaging;
 using ErpSystem.BuildingBlocks.Application.Abstractions.Persistence;
 using ErpSystem.BuildingBlocks.Context.Authentication;
 using ErpSystem.BuildingBlocks.Domain.Exceptions;
+using ErpSystem.Modules.Accounting.Contracts;
+using ErpSystem.Modules.HR.Application.Features.CurrencySnapshots;
 using ErpSystem.Modules.HR.Application.Features.Recruitment.Abstractions;
 using ErpSystem.Modules.HR.Application.Features.Recruitment.Contracts;
 using ErpSystem.Modules.HR.Application.Features.Recruitment.EmploymentApplications.Abstractions;
@@ -37,6 +39,8 @@ public sealed record HireEmploymentApplicationCommand(int Id, HireCandidateMutat
 public sealed class SubmitEmploymentApplicationCommandHandler(
     IEmploymentApplicationRepository repository,
     IEmploymentApplicationReadStore readStore,
+    ICurrentActor actor,
+    IAccountingCurrencyCatalog currencyCatalog,
     TimeProvider clock)
     : ICommandHandler<SubmitEmploymentApplicationCommand, Result<EmploymentApplicationDto>>
 {
@@ -45,6 +49,15 @@ public sealed class SubmitEmploymentApplicationCommandHandler(
         CancellationToken cancellationToken)
     {
         var mutation = command.Mutation;
+        if (!AccountingCurrencySnapshotValidation.TryGetScope(actor, out var tenantId, out var companyId))
+            return Result.Failure<EmploymentApplicationDto>(RecruitmentErrors.CompanyContextRequired);
+        if (!string.IsNullOrWhiteSpace(mutation.ExpectedSalaryCurrencyCode) &&
+            await currencyCatalog.FindActiveByCodeAsync(
+                tenantId, companyId, mutation.ExpectedSalaryCurrencyCode, cancellationToken) is null)
+        {
+            return Result.Failure<EmploymentApplicationDto>(HrCurrencySnapshotErrors.InvalidOrInactive);
+        }
+
         var openingStatus = await repository.GetOpeningStatusAsync(mutation.JobOpeningId, cancellationToken);
         if (!openingStatus.HasValue)
             return Result.Failure<EmploymentApplicationDto>(RecruitmentErrors.JobOpeningNotFound);

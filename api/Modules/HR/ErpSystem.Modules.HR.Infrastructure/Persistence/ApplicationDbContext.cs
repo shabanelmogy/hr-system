@@ -38,7 +38,6 @@ public sealed class ApplicationDbContext(
     public DbSet<Position> Positions => Set<Position>();
     public DbSet<JobDescription> JobDescriptions => Set<JobDescription>();
     public DbSet<CostCenter> CostCenters => Set<CostCenter>();
-    public DbSet<Currency> Currencies => Set<Currency>();
 
     public DbSet<Employee> Employees => Set<Employee>();
     public DbSet<EmployeeAssignment> EmployeeAssignments => Set<EmployeeAssignment>();

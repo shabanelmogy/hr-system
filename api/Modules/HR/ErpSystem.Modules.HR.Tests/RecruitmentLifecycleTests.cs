@@ -54,6 +54,44 @@ public sealed class RecruitmentLifecycleTests
         int? CompanyId) : ICurrentActor;
 
     [Fact]
+    public async Task SubmitApplication_RejectsCurrencyOutsideAccountingCatalog()
+    {
+        var actor = new TestCurrentActor("user-1", "tenant-1", 1);
+        await using var context = CreateInMemoryDbContext(Guid.NewGuid().ToString(), actor);
+        var service = new RecruitmentHarness(context, actor);
+
+        var result = await service.SubmitApplicationAsync(new SubmitApplicationMutation(
+            CandidateId: 999,
+            JobOpeningId: 999,
+            Source: ApplicationSource.CareersPortal,
+            ExpectedSalary: 1000m,
+            ExpectedSalaryCurrencyCode: "USD"));
+
+        Assert.False(result.IsSuccess);
+        Assert.Equal("HR.Currency.InvalidOrInactive", result.Error.Code);
+    }
+
+    [Fact]
+    public async Task CreateJobOffer_RejectsCurrencyOutsideAccountingCatalog()
+    {
+        var actor = new TestCurrentActor("user-1", "tenant-1", 1);
+        await using var context = CreateInMemoryDbContext(Guid.NewGuid().ToString(), actor);
+        var service = new RecruitmentHarness(context, actor);
+
+        var result = await service.CreateJobOfferAsync(new JobOfferMutation(
+            EmploymentApplicationId: 999,
+            BaseSalary: 1000m,
+            CurrencyCode: "USD",
+            PayFrequency: PayFrequency.Monthly,
+            EmploymentType: EmploymentType.FullTime,
+            WorkArrangement: WorkArrangement.OnSite,
+            ProposedStartDate: new DateOnly(2026, 10, 1)));
+
+        Assert.False(result.IsSuccess);
+        Assert.Equal("HR.Currency.InvalidOrInactive", result.Error.Code);
+    }
+
+    [Fact]
     public async Task PagedRecruitmentReads_NormalizeInvalidClientPaging()
     {
         var actor = new TestCurrentActor("user-1", "tenant-1", 1);
@@ -753,6 +791,7 @@ public sealed class RecruitmentLifecycleTests
         private readonly JobOfferReadStore _offerReads = new(context, MappingConfig);
         private readonly JobOfferRepository _offerRepository = new(context);
         private readonly RecruitmentSettingsRepository _settingsRepository = new(context);
+        private readonly TestAccountingCurrencyCatalog _currencyCatalog = new("EGP");
         private readonly JobRequisitionReadStore _requisitionReads = new(context, MappingConfig);
         private readonly JobRequisitionRepository _requisitionRepository = new(context);
         private readonly RecruitmentDashboardReadStore _dashboardReads = new(context);
@@ -818,7 +857,8 @@ public sealed class RecruitmentLifecycleTests
                 .Handle(new GetJobOpeningByIdQuery(id), CancellationToken.None);
 
         public Task<Result<EmploymentApplicationDto>> SubmitApplicationAsync(SubmitApplicationMutation mutation) =>
-            new SubmitEmploymentApplicationCommandHandler(_applicationRepository, _applicationReads, Clock)
+            new SubmitEmploymentApplicationCommandHandler(
+                    _applicationRepository, _applicationReads, actor, _currencyCatalog, Clock)
                 .Handle(new SubmitEmploymentApplicationCommand(mutation), CancellationToken.None);
 
         public Task<Result<EmploymentApplicationDto>> MoveApplicationStageAsync(
@@ -873,7 +913,8 @@ public sealed class RecruitmentLifecycleTests
                 .Handle(new GetInterviewScorecardTemplateQuery(interviewId), CancellationToken.None);
 
         public Task<Result<JobOfferDto>> CreateJobOfferAsync(JobOfferMutation mutation) =>
-            new CreateJobOfferCommandHandler(_offerRepository, _offerReads, context, Clock)
+            new CreateJobOfferCommandHandler(
+                    _offerRepository, _offerReads, context, actor, _currencyCatalog, Clock)
                 .Handle(new CreateJobOfferCommand(mutation), CancellationToken.None);
 
         public Task<Result<JobOfferDto>> SubmitJobOfferAsync(int id) =>

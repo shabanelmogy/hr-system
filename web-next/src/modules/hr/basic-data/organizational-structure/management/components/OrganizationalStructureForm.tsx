@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 import { MyForm, MySelect, MyTextField, toFormErrorMessages } from "@/shared/components/forms";
 import { showToast } from "@/shared/components/feedback/transient";
 import { applyApiFieldErrors } from "@/shared/utils/formErrors";
+import { useCurrencyLookup } from "@/modules/accounting/public";
 import { useOrganizationalLookup } from "../hooks/useOrganizationalStructure";
 import type {
   OrganizationalResource,
@@ -91,9 +92,6 @@ const toFormValues = (item?: OrganizationalStructureItem | null, initialValues?:
     requiredEducation: item.requiredEducation ?? "",
     minExperienceYears: item.minExperienceYears ?? undefined,
     revisionNotes: item.revisionNotes ?? "",
-    symbol: item.symbol ?? "",
-    exchangeRateToDefault: item.exchangeRateToDefault ?? 1,
-    isDefault: Boolean(item.isDefault),
     dutySections: item.dutySections ?? [],
     skills: item.skills ?? [],
     educationRequirements: item.educationRequirements ?? [],
@@ -125,7 +123,7 @@ export default function OrganizationalStructureForm({
   const jobLevels = useOrganizationalLookup("job-levels", undefined, open && resource === "positions");
   const positions = useOrganizationalLookup("positions", undefined, open && resource === "job-descriptions");
   const costCenters = useOrganizationalLookup("cost-centers", undefined, open && (resource === "departments" || resource === "divisions" || resource === "cost-centers"));
-  const currencies = useOrganizationalLookup("currencies", undefined, open && resource === "job-levels");
+  const currencies = useCurrencyLookup(open && resource === "job-levels");
 
   const mockLookups = {
     branches: branches.data ?? [],
@@ -225,7 +223,7 @@ export default function OrganizationalStructureForm({
       setValue("levelOrder", sample.levelOrder ?? 0, options);
       setValue("minSalary", sample.minSalary ?? 0, options);
       setValue("maxSalary", sample.maxSalary ?? 0, options);
-      setValue("currencyCode", sample.currencyCode ?? "EGP", options);
+      setValue("currencyCode", currencies.data?.[0]?.currencyCode ?? "", options);
       setValue("canManageOthers", sample.canManageOthers ?? false, options);
       setValue("isManagementLevel", sample.isManagementLevel ?? false, options);
       setValue("descriptionAr", sample.descriptionAr ?? "", options);
@@ -373,29 +371,6 @@ export default function OrganizationalStructureForm({
           {text("descriptionEn", t("organizationalStructure.fields.descriptionEn"), { multiline: true, rows: 3, maxLength: 2000 })}
         </>}
 
-        {resource === "currencies" && <>
-          {text("symbol", t("organizationalStructure.fields.symbol"), { maxLength: 10 })}
-          {text("exchangeRateToDefault", t("organizationalStructure.fields.exchangeRate"), { type: "number", minValue: 0.0001, showCounter: false })}
-          <Controller
-            name="isDefault"
-            control={control}
-            render={({ field }) => (
-              <FormControlLabel
-                control={
-                  <Switch
-                    checked={Boolean(field.value)}
-                    disabled={isView || loading}
-                    onChange={(e) => field.onChange(e.target.checked)}
-                    color="primary"
-                  />
-                }
-                label={t("organizationalStructure.fields.defaultCurrency")}
-                sx={{ mb: 1.5 }}
-              />
-            )}
-          />
-        </>}
-
         {resource === "job-levels" && <>
           {text("levelOrder", t("organizationalStructure.fields.levelOrder"), { type: "number", minValue: 0, showCounter: false })}
           {text("minSalary", t("organizationalStructure.fields.minSalary"), { type: "number", minValue: 0, showCounter: false })}
@@ -406,8 +381,8 @@ export default function OrganizationalStructureForm({
               label={t("organizationalStructure.fields.currency")}
               control={control}
               dataSource={currencies.data.map((c) => ({
-                value: c.code,
-                label: `${c.code} — ${c.nameEn} (${c.nameAr})`,
+                value: c.currencyCode,
+                label: `${c.currencyCode} — ${c.nameEn} (${c.nameAr})`,
               }))}
               valueMember="value"
               displayMember="label"

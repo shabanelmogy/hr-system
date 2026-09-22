@@ -38,7 +38,6 @@ export const ROUTES = {
     organizationalStructurePositions: '/basic-data/organizational-structure/positions',
     organizationalStructureJobDescriptions: '/basic-data/organizational-structure/job-descriptions',
     organizationalStructureCostCenters: '/basic-data/organizational-structure/cost-centers',
-    organizationalStructureCurrencies: '/basic-data/organizational-structure/currencies',
     companyGeographicScope: '/basic-data/organizational-structure/geographic-scope',
   },
   extras: {
@@ -70,6 +69,8 @@ export const ROUTES = {
   finance: {
     root: '/finance',
     fiscalYears: '/finance/fiscal-years',
+    ledgerSetup: '/finance/ledger-setup',
+    currencies: '/finance/ledger-setup/currencies',
   },
   workforcePlanning: {
     index: '/workforce-planning',

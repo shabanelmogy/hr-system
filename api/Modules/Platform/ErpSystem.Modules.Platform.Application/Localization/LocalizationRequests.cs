@@ -61,6 +61,8 @@ public sealed class SaveLocalizationCommandHandler(
             existing[entry.Key] = entry.Value;
 
         await store.WriteAsync(command.Language, existing, cancellationToken).ConfigureAwait(false);
+        foreach (var key in command.Values.Keys)
+            await effects.InvalidateKeyAsync(command.Language, key, cancellationToken).ConfigureAwait(false);
         effects.DispatchChange("Update", command.Language);
         return Result.Success();
     }
@@ -112,6 +114,7 @@ public sealed class DeleteLocalizationKeyCommandHandler(
             return Result.Failure(errors.LocalizationKeyNotFound);
 
         await store.WriteAsync(command.Language, existing, cancellationToken).ConfigureAwait(false);
+        await effects.InvalidateKeyAsync(command.Language, command.Key, cancellationToken).ConfigureAwait(false);
         effects.DispatchChange("Delete", $"{command.Language}:{command.Key}");
         return Result.Success();
     }

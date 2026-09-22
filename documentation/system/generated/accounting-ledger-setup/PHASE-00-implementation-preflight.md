@@ -75,13 +75,13 @@ or feature-local document.
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| accounting-ledger-setup-master | 1 | `e9650cded47b5bf93234a8644af5322e2483f0a2513eda29e3c4e91be9806da7` |
+| accounting-ledger-setup-master | 1 | `5b73e353ec94c99bbf2f74f18662bb1ec9791d359ac7b0fdce6618013e2f82e3` |
 | accounting-ledger-setup-master | 2 | `ba74f8d48e16a3250ea09da5dca94fd96d8060a1801484679bf473110211c694` |
 | accounting-ledger-setup-master | 5 | `87f60e757fef7a4b41105347f7ce21ce3a142761a1508c3cbea45625d4ea7557` |
-| accounting-ledger-setup-master | 8 | `ba380ad637a7a499170084d624ed6bfda318ca5317a1ee93a61f4a625ae71187` |
+| accounting-ledger-setup-master | 8 | `b107d766147b00e60075b4139735ade0dcfd81d944180947a13ae4b998832a8a` |
 | accounting-ledger-setup-master | 9 | `4614badb58c2768d465aac681ad22c3f2fa4c16ee17cc05a8fe62177d99374a7` |
 | accounting-ledger-setup-api | 1 | `c17a4b5e92cd12468b6759103ae1148006b2d9089453e32211d497d9f21ef987` |
-| accounting-ledger-setup-api | 10 | `64036fe6cbe6fdf951737688b0a782b317968fbbfa9fadc83066973ac550f0ef` |
+| accounting-ledger-setup-api | 10 | `6c7e7b50ee5365b6105ecdfe2f7cb77290a4222a0ea767cae96acb5ce46021ae` |
 | accounting-ledger-setup-api | 11 | `bacf9dc76718244f38220ef882f14c48d62caeba700a4ce2b78f979a641037fd` |
 | accounting-ledger-setup-web | 1 | `a2917b800982d2ab738dd4c6d2207f5f323a3eac604fa4169f879a4dde91d544` |
 | accounting-ledger-setup-web | 2 | `3ae47163facb78589b0d905e77eabfef8c91549bdf086af1a39397aa4900a3d2` |

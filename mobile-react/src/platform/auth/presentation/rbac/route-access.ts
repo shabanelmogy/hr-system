@@ -36,7 +36,11 @@ export function requiredModuleForPath(pathname: string): { moduleCode: string; s
   }
   if (matchesRoute(pathname, ROUTES.recruitment.root)) return { moduleCode: 'hr', submoduleCode: 'recruitment' };
   if (matchesRoute(pathname, ROUTES.workforcePlanning.index)) return { moduleCode: 'hr', submoduleCode: 'workforce' };
-  if (matchesRoute(pathname, ROUTES.finance.root)) return { moduleCode: 'acc', submoduleCode: 'fiscal-years' };
+  if (matchesRoute(pathname, ROUTES.finance.currencies) || matchesRoute(pathname, ROUTES.finance.ledgerSetup)) {
+    return { moduleCode: 'acc', submoduleCode: 'ledger-setup' };
+  }
+  if (matchesRoute(pathname, ROUTES.finance.fiscalYears)) return { moduleCode: 'acc', submoduleCode: 'fiscal-years' };
+  if (pathname === ROUTES.finance.root) return { moduleCode: 'acc' };
   if ([ROUTES.advancedTools.trackChanges, ROUTES.advancedTools.localizationApi]
     .some((route) => matchesRoute(pathname, route))) {
     return { moduleCode: 'platform', submoduleCode: 'tenant-administration' };

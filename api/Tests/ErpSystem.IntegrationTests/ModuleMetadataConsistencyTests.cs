@@ -43,6 +43,23 @@ public sealed class ModuleMetadataConsistencyTests
             "Platform must enter lifecycle before HR once HR consumes Platform contracts.");
     }
 
+    [Fact]
+    public void HrAccountingCurrencyContractDependency_IsRequiredTechnicalLifecycleDependency()
+    {
+        var catalog = new ModuleCatalog(ErpModuleRegistry.Create());
+        var hr = catalog.FindDefinition("hr");
+        var accounting = catalog.FindDefinition("acc");
+
+        Assert.NotNull(hr);
+        Assert.NotNull(accounting);
+        Assert.Contains("acc", hr!.RequiredModuleDependencies, StringComparer.OrdinalIgnoreCase);
+
+        var lifecycleCodes = catalog.LifecycleModules.Select(module => module.Definition.Code).ToArray();
+        Assert.True(
+            Array.IndexOf(lifecycleCodes, "acc") < Array.IndexOf(lifecycleCodes, "hr"),
+            "Accounting must enter lifecycle before HR because HR validates CurrencyCode snapshots through Accounting.Contracts.");
+    }
+
     private static IReadOnlyList<string> ReadStringArray(JsonElement root, string propertyName) =>
         root.GetProperty(propertyName)
             .EnumerateArray()

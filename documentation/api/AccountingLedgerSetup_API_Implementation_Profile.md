@@ -1,6 +1,6 @@
 # Accounting Ledger Setup — API Implementation Contract
 
-Status: **Phase 00 target contract; Ledger Setup runtime is not implemented yet.**
+Status: **Phase 01 API/Domain and persistence migration implemented; client slices and final verification remain in progress.**
 
 ## 1. Scope and current baseline
 
@@ -11,7 +11,7 @@ Accounting service stack or generic CRUD service.
 
 ## 2. Domain model
 
-Add Accounting-owned `Currency`, `AccountingCompanySettings`,
+Accounting-owned `Currency`, `AccountingCompanySettings`,
 `AccountHierarchyLevel`, `Account`, `DimensionDefinition`,
 `DimensionValue`, `Book`, Journal definition/numbering configuration,
 `ExchangeRateType`, `ExchangeRate`, `AccountMapping`, and `PostingProfile`.
@@ -29,6 +29,7 @@ Slice 1 permissions:
 - `Accounts:Manage`
 - `Dimensions:View`
 - `Dimensions:Manage`
+- `AccountingSetup:View`
 - `AccountingSetup:Manage`
 
 Journal definition setup uses `AccountingSetup:Manage`; Slice 2 lifecycle
@@ -39,7 +40,7 @@ permissions are not activated merely because their names exist in the master pla
 Each route family has dedicated commands/queries, validators, ports and thin
 `ISender` controllers:
 
-- accounting-currencies
+- currencies
 - accounting-settings
 - accounts
 - accounting-dimensions
@@ -73,16 +74,40 @@ Update/archive/restore/configuration writes use RowVersion. Posting accounts can
 gain children. Used configuration archives or versions; destructive history
 mutation is forbidden. Company settings remains a singleton.
 
+Lifecycle completeness is explicit per entity:
+
+| Entity | Lifecycle contract |
+| --- | --- |
+| AccountHierarchyLevel, Account, DimensionDefinition, DimensionValue, Currency, Book, JournalDefinition, ExchangeRateType | archive/restore, RowVersion and archived discovery; parent/dependency references block archive |
+| AccountingCompanySettings | singleton save/update only; archive is not a valid business operation |
+| AccountDimensionPolicy | upserted account/definition relationship; no independent archive identity |
+| ExchangeRate | effective/versioned financial history; no destructive archive endpoint |
+| AccountMapping, PostingProfile | effective-dated/versioned determination rules; no destructive archive endpoint |
+
+All mutations that can race over a parent, dependency or business key acquire the
+same company-scoped atomic resource as the competing mutation. This includes
+account/level/dimension policy, book/settings/journal/determination, and
+currency/FX paths.
+
+Archived master-data business keys remain reserved. Command-side duplicate
+checks therefore match the database unique constraints and prevent historical
+accounting identities from being reassigned.
+
 ## 7. Persistence and migration
 
 Use `AccountingDbContext` and `acc` only. Add company-scoped unique/composite
 indexes and RowVersion to mutable roots. No cross-module FK/navigation is allowed.
+The EF-generated `20260922091842_InitialAccounting` migration is the clean
+development baseline for the complete current Accounting model under `acc`. It has
+passed no-pending-model plus clean SQL Server apply/idempotency verification. Any
+development database carrying the superseded Accounting migration history must be
+reset before this baseline is applied; no compatibility SQL is maintained.
 
-Move the existing HR company Currency master into `acc.Currencies` through a
-coordinated data migration preserving company + ISO code and metadata. Introduce
-`AccountingCompanySettings` for FunctionalCurrencyId/PrimaryBookId. Do not keep
-HR `ExchangeRateToDefault` or `IsDefault` as parallel financial policy after
-cutover.
+The clean development baseline creates `acc.Currencies`; HR has no Currency
+table/entity and retains only CurrencyCode snapshots validated through the
+Accounting catalog. `AccountingCompanySettings` owns
+FunctionalCurrencyId/PrimaryBookId. There is no HR `ExchangeRateToDefault` or
+`IsDefault` financial policy.
 
 ## 8. Integration boundaries
 
@@ -101,17 +126,26 @@ parent conflict, invalid currency policy, missing/inactive currency, invalid
 dimension source, duplicate/effective FX, missing/ambiguous account mapping,
 invalid company settings and concurrency conflict.
 
+Ledger Setup user-facing errors are localized through an Accounting-owned port
+and embedded EN/AR resources. Process-wide `IStringLocalizerFactory` composition
+is owned by `ErpSystem.Api`; no business module may replace it. The architecture
+suite enforces this extraction-safe boundary.
+
 Race-safe uniqueness maps to deterministic conflict outcomes. Setup correctness
 does not depend on realtime/notifications; those are Deferred for this slice.
 
 ## 10. Verification
 
-Required API evidence includes domain invariant tests, company-isolation tests,
+Required API evidence includes domain invariant tests, lifecycle/dependency tests,
+company-isolation tests,
 permission/controller contract tests, CQRS handler tests, migration/model tests,
 Currency migration preservation tests, concurrency/uniqueness tests, account
 resolution tests, module-definition tests and no-pending-model verification.
 
 Build/test commands and exact counts are recorded in Phase 06, not invented here.
+
+Every new feature/module must complete the generated entity lifecycle matrix in
+`FEATURE-QUALITY-GATE.md`; a successful build alone is not completion evidence.
 
 ## 11. Deferred and excluded API work
 
@@ -119,4 +153,3 @@ Deferred/excluded from Slice 1: JournalEntry create/submit/approve/post,
 PostingReceipt runtime, GL/TB queries, independent period close/reopen,
 opening balances, AP/AR, bank/payment master creation, bulk setup import,
 realtime/notifications and statutory/localization-specific accounting behavior.
-

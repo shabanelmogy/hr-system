@@ -12,7 +12,7 @@ export const createOrganizationalStructureSchema = (resource: OrganizationalReso
   costCenterCode: z.string().max(50), timeZoneId: z.string().max(128), openedOn: z.string(), email: z.string(), phone: z.string().max(50),
   isHeadquarters: z.boolean(), isCentralized: z.boolean(), levelOrder: z.string(), minSalary: z.string(), maxSalary: z.string(), currencyCode: z.string().max(3),
   canManageOthers: z.boolean(), isManagementLevel: z.boolean(), targetHeadcount: z.string(), version: z.string().max(30),
-  parentCostCenterId: z.number().int().nonnegative().optional(), symbol: z.string().max(10).optional(), exchangeRateToDefault: z.string().optional(), isDefault: z.boolean().optional(),
+  parentCostCenterId: z.number().int().nonnegative().optional(),
   purposeEn: z.string().max(4000), purposeAr: z.string().max(4000), responsibilitiesEn: z.string().max(8000), responsibilitiesAr: z.string().max(8000),
   requirementsEn: z.string().max(8000).optional(), requirementsAr: z.string().max(8000).optional(),
   requiredSkills: z.string().max(4000).optional(), requiredEducation: z.string().max(2000).optional(),

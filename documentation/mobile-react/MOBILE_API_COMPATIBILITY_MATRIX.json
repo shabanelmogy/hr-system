@@ -1186,35 +1186,35 @@
       }
     },
     {
-      "source": "app/(main)/basic-data/organizational-structure/currencies.tsx",
-      "path": "/basic-data/organizational-structure/currencies",
+      "source": "app/(main)/finance/ledger-setup/currencies.tsx",
+      "path": "/finance/ledger-setup/currencies",
       "kind": "auth",
-      "currentOwner": "HR/basic-data",
-      "targetOwner": "HR/basic-data",
+      "currentOwner": "Accounting/ledger-setup",
+      "targetOwner": "Accounting/ledger-setup",
       "scope": "tenant/company",
       "offlineMode": "online-only",
       "apiSurface": "route adapter",
       "status": "aligned",
-      "note": "Baseline entry; verify ownership and permissions against the API catalog in Phase 01.",
+      "note": "Ledger Setup currencies are owned by the Accounting module (acc/ledger-setup).",
       "currentRoutePolicy": {
         "kind": "permissions",
         "permissions": [
-          "ViewOrganizationalStructure"
+          "ViewAccountingSetup"
         ]
       },
       "targetRoutePolicy": {
         "kind": "permissions",
         "permissions": [
-          "ViewOrganizationalStructure"
+          "ViewAccountingSetup"
         ]
       },
       "currentModuleRequirement": {
-        "moduleCode": "hr",
-        "submoduleCode": "basic-data"
+        "moduleCode": "acc",
+        "submoduleCode": "ledger-setup"
       },
       "targetModuleRequirement": {
-        "moduleCode": "hr",
-        "submoduleCode": "basic-data"
+        "moduleCode": "acc",
+        "submoduleCode": "ledger-setup"
       }
     },
     {
@@ -1663,13 +1663,13 @@
       "source": "app/(main)/finance/_layout.tsx",
       "path": "layout:/finance",
       "kind": "layout",
-      "currentOwner": "Accounting/fiscal-years",
-      "targetOwner": "Accounting/fiscal-years",
+      "currentOwner": "Shell/composite",
+      "targetOwner": "Shell/composite",
       "scope": "tenant/company",
       "offlineMode": "online-only",
       "apiSurface": "none",
       "status": "aligned",
-      "note": "Fiscal years are owned by the Accounting module (acc/fiscal-years).",
+      "note": "Aggregate Accounting shell route; Fiscal Years and Ledger Setup own their child routes.",
       "currentRoutePolicy": {
         "kind": "inherited"
       },
@@ -1719,33 +1719,45 @@
       "source": "app/(main)/finance/index.tsx",
       "path": "/finance",
       "kind": "auth",
-      "currentOwner": "Accounting/fiscal-years",
-      "targetOwner": "Accounting/fiscal-years",
+      "currentOwner": "Shell/composite",
+      "targetOwner": "Shell/composite",
       "scope": "tenant/company",
       "offlineMode": "online-only",
       "apiSurface": "route adapter",
       "status": "aligned",
-      "note": "Fiscal years are owned by the Accounting module (acc/fiscal-years).",
+      "note": "Aggregate Accounting shell route; Fiscal Years and Ledger Setup own their child routes.",
       "currentRoutePolicy": {
-        "kind": "permissions",
-        "permissions": [
-          "ViewFiscalYears"
+        "kind": "anyOf",
+        "anyOf": [
+          {
+            "permissions": [
+              "ViewFiscalYears"
+            ]
+          },
+          {
+            "permissions": [
+              "ViewAccountingSetup"
+            ]
+          }
         ]
       },
       "targetRoutePolicy": {
-        "kind": "permissions",
-        "permissions": [
-          "ViewFiscalYears"
+        "kind": "anyOf",
+        "anyOf": [
+          {
+            "permissions": [
+              "ViewFiscalYears"
+            ]
+          },
+          {
+            "permissions": [
+              "ViewAccountingSetup"
+            ]
+          }
         ]
       },
-      "currentModuleRequirement": {
-        "moduleCode": "acc",
-        "submoduleCode": "fiscal-years"
-      },
-      "targetModuleRequirement": {
-        "moduleCode": "acc",
-        "submoduleCode": "fiscal-years"
-      }
+      "currentModuleRequirement": null,
+      "targetModuleRequirement": null
     },
     {
       "source": "app/(main)/modal.tsx",
@@ -2330,6 +2342,142 @@
           "offlineMode": "online-only",
           "status": "aligned",
           "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Platform authenticated SignalR hub connection and tenant/company claims."
+        }
+      ]
+    },
+    {
+      "source": "src/modules/accounting/currencies/data/remote/currency-endpoints.ts",
+      "family": "currency",
+      "members": [
+        {
+          "key": "base",
+          "pattern": "'currencies'",
+          "verb": [
+            "GET",
+            "POST"
+          ],
+          "operations": [
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/modules/accounting/currencies/data/remote/currency-remote-data-source.ts#getPage",
+              "requestBoundary": "none",
+              "responseBoundary": "currencyPageSchema",
+              "permissionAuthority": "Accounting CurrenciesController and AccountingPermissions.ViewAccountingSetup (AccountingSetup:View)"
+            },
+            {
+              "verb": [
+                "POST"
+              ],
+              "caller": "src/modules/accounting/currencies/data/remote/currency-remote-data-source.ts#create",
+              "requestBoundary": "request",
+              "responseBoundary": "currencySchema",
+              "permissionAuthority": "Accounting CurrenciesController and AccountingPermissions.ManageAccountingSetup (AccountingSetup:Manage)"
+            }
+          ],
+          "currentOwner": "Accounting/ledger-setup",
+          "targetOwner": "Accounting/ledger-setup",
+          "permissionAuthority": "Accounting CurrenciesController uses AccountingSetup:View for GET reads and AccountingSetup:Manage for mutations",
+          "scope": "tenant/company",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Accounting CurrenciesController uses AccountingSetup:View for GET reads and AccountingSetup:Manage for mutations."
+        },
+        {
+          "key": "lookup",
+          "pattern": "'currencies/lookup'",
+          "verb": [
+            "GET"
+          ],
+          "operations": [
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/modules/accounting/currencies/data/remote/currency-remote-data-source.ts#getLookup",
+              "requestBoundary": "none",
+              "responseBoundary": "currencyLookupSchema",
+              "permissionAuthority": "Accounting CurrenciesController and AccountingPermissions.ViewAccountingSetup (AccountingSetup:View)"
+            }
+          ],
+          "currentOwner": "Accounting/ledger-setup",
+          "targetOwner": "Accounting/ledger-setup",
+          "permissionAuthority": "Accounting CurrenciesController uses AccountingSetup:View for GET reads and AccountingSetup:Manage for mutations",
+          "scope": "tenant/company",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Accounting CurrenciesController uses AccountingSetup:View for GET reads and AccountingSetup:Manage for mutations."
+        },
+        {
+          "key": "byId",
+          "pattern": "(id: number) => `currencies/${id}`",
+          "verb": [
+            "GET",
+            "PUT",
+            "DELETE"
+          ],
+          "operations": [
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/modules/accounting/currencies/data/remote/currency-remote-data-source.ts#getById",
+              "requestBoundary": "none",
+              "responseBoundary": "currencySchema",
+              "permissionAuthority": "Accounting CurrenciesController and AccountingPermissions.ViewAccountingSetup (AccountingSetup:View)"
+            },
+            {
+              "verb": [
+                "PUT"
+              ],
+              "caller": "src/modules/accounting/currencies/data/remote/currency-remote-data-source.ts#update",
+              "requestBoundary": "{ ...request, rowVersion }",
+              "responseBoundary": "currencySchema",
+              "permissionAuthority": "Accounting CurrenciesController and AccountingPermissions.ManageAccountingSetup (AccountingSetup:Manage)"
+            },
+            {
+              "verb": [
+                "DELETE"
+              ],
+              "caller": "src/modules/accounting/currencies/data/remote/currency-remote-data-source.ts#archive",
+              "requestBoundary": "request config: { data: { rowVersion } }",
+              "responseBoundary": "unknown",
+              "permissionAuthority": "Accounting CurrenciesController and AccountingPermissions.ManageAccountingSetup (AccountingSetup:Manage)"
+            }
+          ],
+          "currentOwner": "Accounting/ledger-setup",
+          "targetOwner": "Accounting/ledger-setup",
+          "permissionAuthority": "Accounting CurrenciesController uses AccountingSetup:View for GET reads and AccountingSetup:Manage for mutations",
+          "scope": "tenant/company",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Accounting CurrenciesController uses AccountingSetup:View for GET reads and AccountingSetup:Manage for mutations."
+        },
+        {
+          "key": "restore",
+          "pattern": "(id: number) => `currencies/${id}/restore`",
+          "verb": [
+            "POST"
+          ],
+          "operations": [
+            {
+              "verb": [
+                "POST"
+              ],
+              "caller": "src/modules/accounting/currencies/data/remote/currency-remote-data-source.ts#restore",
+              "requestBoundary": "{ rowVersion }",
+              "responseBoundary": "currencySchema",
+              "permissionAuthority": "Accounting CurrenciesController and AccountingPermissions.ManageAccountingSetup (AccountingSetup:Manage)"
+            }
+          ],
+          "currentOwner": "Accounting/ledger-setup",
+          "targetOwner": "Accounting/ledger-setup",
+          "permissionAuthority": "Accounting CurrenciesController uses AccountingSetup:View for GET reads and AccountingSetup:Manage for mutations",
+          "scope": "tenant/company",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Accounting CurrenciesController uses AccountingSetup:View for GET reads and AccountingSetup:Manage for mutations."
         }
       ]
     },

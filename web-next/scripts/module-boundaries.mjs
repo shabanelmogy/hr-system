@@ -74,6 +74,7 @@ export const sharedMainRouteRoots = Object.freeze([
  */
 export const documentedRouteOwnership = Object.freeze({
   "/finance/fiscal-years": "accounting",
+  "/finance/ledger-setup/currencies": "accounting",
   "/appointments": "crm",
   "/super-admin/geography/countries": "reference-data",
   "/super-admin/geography/states": "reference-data",

@@ -17,6 +17,34 @@ namespace ErpSystem.Modules.HR.Tests;
 public sealed class WorkforceBudgetHandlerTests
 {
     [Fact]
+    public async Task Create_RejectsCurrencyOutsideAccountingCatalog()
+    {
+        var harness = CreateHarness();
+        var request = ValidRequest() with { CurrencyCode = "USD" };
+
+        var result = await harness.Create.Handle(new CreateWorkforceBudgetCommand(request), CancellationToken.None);
+
+        Assert.False(result.IsSuccess);
+        Assert.Equal("HR.Currency.InvalidOrInactive", result.Error.Code);
+        Assert.Empty(harness.Write.Added);
+    }
+
+    [Fact]
+    public async Task Update_RejectsCurrencyOutsideAccountingCatalogBeforeMutation()
+    {
+        var harness = CreateHarness();
+        var request = new UpdateWorkforceBudgetRequest("USD", [ValidLine()], RowVersion());
+
+        var result = await harness.Update.Handle(
+            new UpdateWorkforceBudgetCommand(3, request),
+            CancellationToken.None);
+
+        Assert.False(result.IsSuccess);
+        Assert.Equal("HR.Currency.InvalidOrInactive", result.Error.Code);
+        Assert.Equal(0, harness.Unit.Saves);
+    }
+
+    [Fact]
     public async Task Create_RejectsBudgetsThatExceedPlanDemand()
     {
         var harness = CreateHarness();
@@ -146,11 +174,15 @@ public sealed class WorkforceBudgetHandlerTests
         var errors = new WorkforceBudgetErrors(new EchoLocalizer<CreateWorkforceBudgetRequest>());
         var effects = new WorkforceBudgetEffects(actor, dispatcher, NullLogger<WorkforceBudgetEffects>.Instance);
         var read = new StubBudgetReadStore();
+        var currencies = new TestAccountingCurrencyCatalog("EGP");
         return new Harness(
             write,
             unit,
             dispatcher.Dispatched,
-            new CreateWorkforceBudgetCommandHandler(write, read, unit, actor, effects, errors),
+            new CreateWorkforceBudgetCommandHandler(
+                write, read, unit, actor, currencies, effects, errors),
+            new UpdateWorkforceBudgetCommandHandler(
+                write, read, unit, actor, currencies, effects, errors),
             new ApproveWorkforceBudgetCommandHandler(write, read, unit, actor, TimeProvider.System, effects, errors));
     }
 
@@ -229,6 +261,7 @@ public sealed class WorkforceBudgetHandlerTests
         RecordingUnitOfWork Unit,
         List<RealtimeChangeRequest> Dispatched,
         CreateWorkforceBudgetCommandHandler Create,
+        UpdateWorkforceBudgetCommandHandler Update,
         ApproveWorkforceBudgetCommandHandler Approve);
 
     private sealed class RecordingBudgetWriteStore : IWorkforceBudgetWriteStore

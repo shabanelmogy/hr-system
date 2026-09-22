@@ -46,10 +46,7 @@ public sealed record OrganizationalStructureMutation(
     IEnumerable<JobDutySection>? DutySections = null,
     IEnumerable<JobSkillItem>? Skills = null,
     IEnumerable<JobEducationRequirement>? EducationRequirements = null,
-    int? ParentCostCenterId = null,
-    string? Symbol = null,
-    decimal? ExchangeRateToDefault = null,
-    bool IsDefault = false);
+    int? ParentCostCenterId = null);
 
 public sealed record OrganizationalStructureItem
 {
@@ -123,9 +120,6 @@ public sealed record OrganizationalStructureItem
     public IReadOnlyList<JobSkillItem> Skills { get; init; } = [];
     public IReadOnlyList<JobEducationRequirement> EducationRequirements { get; init; } = [];
     public int? ParentCostCenterId { get; init; }
-    public string? Symbol { get; init; }
-    public decimal? ExchangeRateToDefault { get; init; }
-    public bool IsDefault { get; init; }
 }
 
 public sealed record OrganizationalStructureLookup(int Id, string Code, string NameEn, string NameAr);

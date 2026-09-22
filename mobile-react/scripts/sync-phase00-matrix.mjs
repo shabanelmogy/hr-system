@@ -285,7 +285,12 @@ function policy(pathname) {
   if (pathname === '/advanced-tools/hangfire-dashboard') return permission(['ViewHangfireDashboard']);
   if (pathname === '/advanced-tools') return anyOf([{ permissions: ['ViewChangeLogs'] }, { permissions: ['ViewLocalizations'] }, { roles: ['admin'] }, { permissions: ['ViewHangfireDashboard'] }]);
   if (pathname === '/recruitment') return permission(['ViewRecruitment']);
-  if (pathname === '/finance/fiscal-years' || pathname === '/finance') return permission(['ViewFiscalYears']);
+  if (pathname === '/finance/ledger-setup/currencies' || pathname === '/finance/ledger-setup') return permission(['ViewAccountingSetup']);
+  if (pathname === '/finance/fiscal-years') return permission(['ViewFiscalYears']);
+  if (pathname === '/finance') return anyOf([
+    { permissions: ['ViewFiscalYears'] },
+    { permissions: ['ViewAccountingSetup'] },
+  ]);
   const workforce = new Map([['/workforce-planning/plans', 'ViewWorkforcePlans'], ['/workforce-planning/budgets', 'ViewWorkforceBudgets'], ['/workforce-planning/position-envelopes', 'ViewPositionEnvelopes'], ['/workforce-planning/staffing-requests', 'ViewStaffingRequests'], ['/workforce-planning/envelope-amendments', 'ViewEnvelopeAmendments'], ['/workforce-planning/trace', 'ViewWorkforceTrace']]);
   if (workforce.has(pathname)) return permission([workforce.get(pathname)]);
   if (pathname === '/workforce-planning') return anyOf([...workforce.values()].map((item) => ({ permissions: [item] })));
@@ -323,7 +328,9 @@ function moduleRequirement(pathname) {
   if (pathname.startsWith('/basic-data')) return { moduleCode: 'hr', submoduleCode: 'basic-data' };
   if (pathname.startsWith('/recruitment')) return { moduleCode: 'hr', submoduleCode: 'recruitment' };
   if (pathname.startsWith('/workforce-planning')) return { moduleCode: 'hr', submoduleCode: 'workforce' };
-  if (pathname.startsWith('/finance')) return { moduleCode: 'acc', submoduleCode: 'fiscal-years' };
+  if (pathname.startsWith('/finance/ledger-setup')) return { moduleCode: 'acc', submoduleCode: 'ledger-setup' };
+  if (pathname === '/finance/fiscal-years') return { moduleCode: 'acc', submoduleCode: 'fiscal-years' };
+  if (pathname === '/finance') return null;
   if (pathname.startsWith('/advanced-tools/track-changes') || pathname.startsWith('/advanced-tools/localization-api')) return { moduleCode: 'platform', submoduleCode: 'tenant-administration' };
   if (pathname === '/advanced-tools' || pathname === '/extras') return null;
   if (pathname.startsWith('/administration')) return { moduleCode: 'platform', submoduleCode: 'tenant-administration' };
@@ -387,7 +394,17 @@ function routeProfile(route, pathname) {
       note: 'Company geographic scope is a Platform tenancy capability.',
     };
   }
-  if (effectivePath.startsWith('/finance')) {
+  if (effectivePath === '/finance') {
+    return {
+      ...profile,
+      currentOwner: 'Shell/composite',
+      targetOwner: 'Shell/composite',
+      scope: 'tenant/company',
+      status: 'aligned',
+      note: 'Aggregate Accounting shell route; Fiscal Years and Ledger Setup own their child routes.',
+    };
+  }
+  if (effectivePath === '/finance/fiscal-years') {
     return {
       ...profile,
       currentOwner: 'Accounting/fiscal-years',
@@ -395,6 +412,16 @@ function routeProfile(route, pathname) {
       scope: 'tenant/company',
       status: 'aligned',
       note: 'Fiscal years are owned by the Accounting module (acc/fiscal-years).',
+    };
+  }
+  if (effectivePath.startsWith('/finance/ledger-setup')) {
+    return {
+      ...profile,
+      currentOwner: 'Accounting/ledger-setup',
+      targetOwner: 'Accounting/ledger-setup',
+      scope: 'tenant/company',
+      status: 'aligned',
+      note: 'Ledger Setup currencies are owned by the Accounting module (acc/ledger-setup).',
     };
   }
   if (effectivePath.startsWith('/administration')) {
@@ -498,6 +525,7 @@ function targetModuleRequirement(_pathname, currentModule, _profile) {
 function endpointProfile(source) {
   if (source.includes('/core/realtime/')) return { currentOwner: 'Platform/realtime', targetOwner: 'Platform/realtime', scope: 'session/tenant/company', status: 'aligned', permissionSource: 'Platform authenticated realtime policy' };
   if (source.includes('/hr/recruitment/')) return { currentOwner: 'HR/recruitment', targetOwner: 'HR/recruitment', scope: 'tenant/company', status: 'aligned', permissionSource: 'HR API endpoint policy backed by HrPermissions.Recruitment' };
+  if (source.includes('/accounting/currencies/')) return { currentOwner: 'Accounting/ledger-setup', targetOwner: 'Accounting/ledger-setup', scope: 'tenant/company', status: 'aligned', permissionSource: 'Accounting CurrenciesController uses AccountingSetup:View for GET reads and AccountingSetup:Manage for mutations' };
   if (source.includes('/accounting/fiscal-years/')) return { currentOwner: 'Accounting/fiscal-years', targetOwner: 'Accounting/fiscal-years', scope: 'tenant/company', status: 'aligned', permissionSource: 'Accounting FiscalYearsController and AccountingPermissions.FiscalYears' };
   if (source.includes('/reference-data/addresses/address-types/')) return { currentOwner: 'ReferenceData/addresses', targetOwner: 'ReferenceData/addresses', scope: 'tenant/company', status: 'aligned', permissionSource: 'ReferenceData AddressTypesController and ReferenceDataPermissions.TenantReferenceData' };
   if (source.includes('/reference-data/geography/countries/') || source.includes('/reference-data/geography/states/') || source.includes('/reference-data/geography/districts/')) return { currentOwner: 'ReferenceData/geography', targetOwner: 'ReferenceData/geography', scope: 'platform-global', status: 'aligned', permissionSource: 'ReferenceData geography controllers and ReferenceDataPermissions.GlobalGeography' };
@@ -515,6 +543,13 @@ function endpointProfile(source) {
   if (source.includes('/platform/notifications/')) return { currentOwner: 'Platform/notifications', targetOwner: 'Platform/notifications', scope: 'tenant/company', status: 'aligned', permissionSource: 'Platform notification endpoint policy' };
   if (source.includes('/platform/tools/file-manager/')) return { currentOwner: 'Platform/files', targetOwner: 'Platform/files', scope: 'tenant/company', status: 'aligned', permissionSource: 'Platform file endpoint policy' };
   return { currentOwner: 'UNREVIEWED', targetOwner: 'UNREVIEWED', scope: 'unreviewed', status: 'deferred', permissionSource: 'UNREVIEWED endpoint ownership and permission policy' };
+}
+
+function operationPermissionAuthority(source, operation, fallback) {
+  if (!source.includes('/accounting/currencies/')) return fallback;
+  return operation.verb.includes('GET')
+    ? 'Accounting CurrenciesController and AccountingPermissions.ViewAccountingSetup (AccountingSetup:View)'
+    : 'Accounting CurrenciesController and AccountingPermissions.ManageAccountingSetup (AccountingSetup:Manage)';
 }
 
 for (const route of matrix.routes) {
@@ -556,7 +591,10 @@ for (const endpointFile of matrix.endpointFiles) {
   endpointFile.members = parsed.members.map(({ key, pattern }) => {
     const ops = operations.get(key) ?? [];
     const permissionAuthority = endpointPermissionOverrides.get(`${endpointFile.source}#${key}`) ?? profile.permissionSource;
-    const tracedOperations = ops.map((operation) => ({ ...operation, permissionAuthority }));
+    const tracedOperations = ops.map((operation) => ({
+      ...operation,
+      permissionAuthority: operationPermissionAuthority(endpointFile.source, operation, permissionAuthority),
+    }));
     return {
       key,
       pattern,

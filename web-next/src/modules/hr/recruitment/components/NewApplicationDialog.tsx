@@ -10,6 +10,7 @@ import { showToast } from "@/shared/components/feedback/transient/showToast";
 import { newApplicationSchema, type NewApplicationFormData, type NewApplicationFormInput } from "../validation/recruitmentValidation";
 import { ApplicationSource, JobOpeningStatus } from "../types";
 import { useCreateCandidate, useJobOpenings, useRecruitmentSettingsQuery, useSubmitApplication } from "../hooks/useRecruitment";
+import { useCurrencyLookup } from "@/modules/accounting/public";
 
 interface NewApplicationDialogProps {
   open: boolean;
@@ -27,6 +28,7 @@ export default function NewApplicationDialog({
   const submitAppMutation = useSubmitApplication();
   const openingsQuery = useJobOpenings({ pageNumber: 1, pageSize: 100, status: JobOpeningStatus.Open });
   const settingsQuery = useRecruitmentSettingsQuery();
+  const currencies = useCurrencyLookup(open);
 
   const {
     control,
@@ -172,11 +174,15 @@ export default function NewApplicationDialog({
             />
           </Grid>
           <Grid size={{ xs: 12, sm: 6 }}>
-            <MyTextField
+            <MySelect
               control={control}
               errors={errors}
-              fieldName="expectedSalaryCurrencyCode"
+              name="expectedSalaryCurrencyCode"
               label={t("recruitment.offers.currency", "العملة / Currency")}
+              dataSource={(currencies.data ?? []).map(currency => ({ id: currency.currencyCode, name: `${currency.currencyCode} — ${currency.nameEn} (${currency.nameAr})` }))}
+              valueMember="id"
+              displayMember="name"
+              loading={currencies.isLoading}
               required
             />
           </Grid>

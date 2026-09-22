@@ -18,7 +18,8 @@ public sealed class AccountingModule : IModule
         "Accounting",
         [
             new SubmoduleDefinition("fiscal-years", "Fiscal years", AccountingPermissions.FiscalYears),
-            new SubmoduleDefinition("invoicing", "Invoicing", AccountingPermissions.Invoicing)
+            new SubmoduleDefinition("invoicing", "Invoicing", AccountingPermissions.Invoicing),
+            new SubmoduleDefinition("ledger-setup", "Ledger setup", AccountingPermissions.LedgerSetup)
         ])
     {
         Version = "1.0.0",

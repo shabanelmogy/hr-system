@@ -134,6 +134,7 @@ function Get-ModuleDocumentationFiles([string]$Name, [string]$Slug, [string]$Sch
             mobileReact = "$documentationRoot/mobile-react/README.md"
             features = "$documentationRoot/features/README.md"
             phases = "$documentationRoot/phases/README.md"
+            featureQualityGate = "$documentationRoot/FEATURE-QUALITY-GATE.md"
         }
     } | ConvertTo-Json -Depth 5
 
@@ -258,6 +259,41 @@ single source for the documentation workflow.
 The scaffold currently contains no implemented business feature. Add entries
 only when the corresponding runtime and verification evidence exists, and mark
 future ideas as Planned or Deferred.
+
+Every feature must complete [FEATURE-QUALITY-GATE.md](../FEATURE-QUALITY-GATE.md)
+before it can be marked implemented.
+"@
+        'FEATURE-QUALITY-GATE.md' = @"
+# $Name feature quality gate
+
+Copy the matrix below into every feature book and complete it before runtime
+implementation. A blank cell is a failed gate. Use @@N/A — <reason>@@ only when
+the capability truly does not apply; do not infer completion from a successful
+build.
+
+| Entity / aggregate | Create | Detail/List | Update | Archive or domain alternative | Restore | Archived discovery / RecordStatus | Dependency guards | Shared atomic resource | RowVersion / concurrency | Permission | Stable localized errors | Domain + handler + API tests |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| _Add one row per mutable entity_ |  |  |  |  |  |  |  |  |  |  |  |  |
+
+## Mandatory evidence
+
+- Ownership and tenant/company scope are explicit.
+- Every active/archived transition is an explicit use case, or the approved
+  domain alternative (effective dating, reversal, immutable history) is named.
+- Parent archive and child create/update/restore use the same transaction-owned
+  resource or an equivalent database guarantee.
+- Collection queries are bounded and expose archived records when restore is
+  supported.
+- Error codes are stable; user-facing messages come from the owning module or
+  the host localization boundary. A module never replaces
+  @@IStringLocalizerFactory@@.
+- Controller -> ISender -> handler -> Application port -> Infrastructure ->
+  Domain -> commit is preserved.
+- Tests cover missing scope, stale RowVersion, duplicate, invalid reference,
+  archive-in-use, restore conflict, and one competing-write case where relevant.
+
+The feature cannot move to Verified until every row is complete and its evidence
+paths are registered in the feature's required-file manifest.
 "@
         'phases/README.md' = @"
 # $Name delivery phases

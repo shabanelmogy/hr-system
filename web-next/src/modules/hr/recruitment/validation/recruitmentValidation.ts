@@ -123,10 +123,7 @@ export const createRejectionReasonSettingsSchema = (t: TFunction) => z.object({
 export type RejectionReasonSettingsFormData = z.infer<ReturnType<typeof createRejectionReasonSettingsSchema>>;
 
 export const createGeneralSettingsSchema = (t: TFunction) => z.object({
-  defaultCurrency: z.string().refine(
-    (value) => ["EGP", "SAR", "AED", "USD", "EUR"].includes(value),
-    t("recruitment.settings.validation.required"),
-  ),
+  defaultCurrency: z.string().trim().regex(/^[A-Za-z]{3}$/, t("recruitment.settings.validation.required")),
   offerExpiryDays: z.coerce
     .number()
     .int()

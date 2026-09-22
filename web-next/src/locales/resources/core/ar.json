@@ -365,6 +365,8 @@
     "closeWorkforcePlanningNavigation": "إغلاق تنقل تخطيط القوى العاملة",
     "finance": "المالية",
     "fiscalYears": "السنوات المالية",
+    "ledgerSetup": "إعدادات الأستاذ العام",
+    "currencies": "العملات",
     "workforcePlans": "خطط القوى العاملة",
     "workforceBudgets": "موازنات القوى العاملة",
     "positionEnvelopes": "مظاريف الوظائف",
@@ -895,8 +897,7 @@
       "job-levels": "المستويات الوظيفية",
       "positions": "الوظائف المعتمدة",
       "job-descriptions": "الوصف الوظيفي",
-      "cost-centers": "مراكز التكلفة",
-      "currencies": "العملات"
+      "cost-centers": "مراكز التكلفة"
     },
     "routeDescriptions": {
       "branches": "إدارة فروع الشركة والمقرات الرئيسية.",
@@ -906,8 +907,7 @@
       "job-levels": "إدارة المستويات ونطاقات الرواتب والخصائص الإدارية.",
       "positions": "إدارة الوظائف المعتمدة والعدد الوظيفي المستهدف.",
       "job-descriptions": "إدارة إصدارات الوصف الوظيفي للوظائف واعتمادها.",
-      "cost-centers": "إدارة مراكز التكلفة الشجرية وتوزيعها الهرمي.",
-      "currencies": "إدارة العملات المعتمدة ورموزها وأسعار الصرف."
+      "cost-centers": "إدارة مراكز التكلفة الشجرية وتوزيعها الهرمي."
     }
   },
   "attendanceDevices": {

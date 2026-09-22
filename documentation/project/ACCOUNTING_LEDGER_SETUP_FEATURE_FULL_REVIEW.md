@@ -1,6 +1,6 @@
 # Accounting Ledger Setup — Cross-Platform Implementation Contract
 
-Status: **Phase 00 execution contract — runtime target not implemented yet**.  
+Status: **Phase 01 Domain/API and persistence migration implemented — client slices and final Phase 06 verification remain gated**.
 Plan: `accounting-core-gl` / `Slice 1 — Ledger setup spine`.  
 Applied implementation reference: Fiscal Years in the same Accounting module.
 
@@ -14,7 +14,11 @@ migrations and tests are Required.
 
 `VERIFIED CURRENT`: Accounting already owns the `acc` schema, module DbContext,
 Inbox/Outbox, PartyReference projection, permissions infrastructure and the complete
-Fiscal Years vertical slice. Ledger Setup entities/routes/screens do not yet exist.
+Fiscal Years vertical slice. Ledger Setup domain entities, CQRS handlers, persistence
+stores, versioned API controllers and the EF-generated
+`20260922091842_InitialAccounting` clean baseline now exist under Accounting. The
+migration has passed no-pending-model and clean SQL Server apply/idempotency checks;
+client journeys and final Phase 06 verification remain gated.
 
 `AUTHORIZED TARGET`: all Ledger Setup capabilities described here. JournalEntry
 workflow/posting, GL/TB, independent Month Close, opening balances and subledgers are
@@ -70,6 +74,29 @@ Used financial configuration is archived/versioned rather than destructively
 deleted. All important writes use RowVersion and current tenant/company from the
 trusted actor, never request scope fields.
 
+### Entity completion matrix
+
+| Entity | Create/read/update | Archive/restore | Archived discovery | Dependency/atomic rule |
+| --- | --- | --- | --- | --- |
+| AccountHierarchyLevel | Required | Required | `RecordStatus` | cannot archive while any Account references it; shares level/account resource |
+| Account | Required | Required | `RecordStatus` | child/policy/mapping/profile references block archive; account resource shared by competing writes |
+| DimensionDefinition | Required | Required | paged `RecordStatus` | active values or policies block archive; one dimension resource |
+| DimensionValue | Required | Required | paged value `RecordStatus` | restore requires active definition and unique code |
+| Currency | Required | Required | paged status | settings/account/rate references block archive; currency resource shared with all consumers |
+| Book | Required | Required | `RecordStatus` | settings/journal/mapping/profile references block archive; shared book resources |
+| JournalDefinition | Required | Required | paged `RecordStatus` | restore requires active Book and unique code; shared journal/book resources |
+| ExchangeRateType | Required | Required | `RecordStatus` | any ExchangeRate history blocks archive; shared FX resource |
+| AccountingCompanySettings | singleton save/read | N/A — configuration identity has no delete lifecycle | N/A | settings/book/currency resources |
+| AccountDimensionPolicy | upsert/read | N/A — relationship policy | N/A | shares account/dimension resources |
+| ExchangeRate | create/read/update | N/A — effective/versioned history | paged active effective series | shares currency/FX resources |
+| AccountMapping / PostingProfile | create/read/update | N/A — effective dating/versioning | paged effective list/resolve preview | shares account/book/determination resources |
+
+This matrix is a mandatory review gate. Future module scaffolds receive the same
+matrix through `FEATURE-QUALITY-GATE.md`, and each blank cell blocks completion.
+
+Archived master-data business keys stay reserved so a historical accounting
+identity cannot be reused by a different record.
+
 The company has one Functional Currency and one Primary Book in V1.
 `AccountingCompanySettings` owns those selections; neither is inferred from code,
 account prefixes, HR's former `Currency.IsDefault`, or UI state.
@@ -102,7 +129,7 @@ integration if required.
 
 Target route families are:
 
-- `/api/v1/accounting-currencies`
+- `/api/v1/currencies`
 - `/api/v1/accounting-settings`
 - `/api/v1/accounts`
 - `/api/v1/accounting-dimensions`
@@ -115,10 +142,10 @@ Target route families are:
 
 Controllers are thin `ISender` endpoints; handlers depend on narrow ports.
 
-Currency migration copies existing company Currency records into `acc.Currencies`
-while preserving company + ISO code and metadata, switches Web/Mobile/HR consumers
-to the Accounting currency surface, then removes the HR-owned writable Currency
-table/resource. The old single `ExchangeRateToDefault` is not retained as the
+The clean development baseline creates `acc.Currencies` directly and `InitialHr`
+never creates `hr.Currencies`. There is no Currency copy, compatibility migration,
+or backfill because the project has no customer data. Web/Mobile/HR consumers use
+the Accounting currency surface. The old single `ExchangeRateToDefault` is not retained as the
 financial FX authority; historical Accounting rates replace it.
 
 ## 7. Web and Mobile product contract
@@ -142,6 +169,12 @@ Phase 00 freezes this contract and current evidence before coding. Phases 01–0
 implement Domain/API, Web, Mobile, domain actions and integration/runtime. Each
 phase updates these applied books and `required-files.json` with actual source
 evidence.
+
+Phase 01 implements the Domain/API surface and the lifecycle matrix above.
+Client implementation and final Phase 06 reconciliation remain separate evidence
+gates. `20260922091842_InitialAccounting` was generated from the complete current
+EF model and verified on an ephemeral clean SQL Server database. A hosted development
+database carrying the superseded Accounting history must be reset before applying it.
 
 Phase 06 must reconcile every Required target here against runtime and return
 `Verified` or `Not Verified`. A feature regression or missing Required behavior
@@ -180,4 +213,3 @@ planning/documentation/architecture gates pass.
 
 The first runtime change after that gate is the Accounting-owned setup model and
 Currency ownership migration—not JournalEntry/posting runtime.
-

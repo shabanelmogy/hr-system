@@ -76,7 +76,7 @@ export const arBasicData = {
     resources: {
       branches: 'الفروع', departments: 'الإدارات', divisions: 'الأقسام',
       'job-titles': 'المسميات الوظيفية', 'job-levels': 'الدرجات الوظيفية', positions: 'المناصب',
-      'job-descriptions': 'الأوصاف الوظيفية', 'cost-centers': 'مراكز التكلفة', currencies: 'العملات',
+      'job-descriptions': 'الأوصاف الوظيفية', 'cost-centers': 'مراكز التكلفة',
     },
     status: { active: 'نشط', archived: 'مؤرشف', all: 'الكل' },
     yes: 'نعم',
@@ -85,7 +85,7 @@ export const arBasicData = {
       code: 'الرمز', nameEn: 'الاسم بالإنجليزية', nameAr: 'الاسم بالعربية', parent: 'الأب التنظيمي', status: 'الحالة',
       version: 'الإصدار', timeZone: 'المنطقة الزمنية', openedOn: 'تاريخ الافتتاح', email: 'البريد الإلكتروني', phone: 'الهاتف', headquarters: 'مقر رئيسي',
       parentDepartment: 'الإدارة الأعلى', parentCostCenter: 'مركز التكلفة الأب', centralized: 'إدارة عامة (مركزية لكل الفروع)', isCentralized: 'إدارة مركزية', costCenter: 'مركز التكلفة',
-      symbol: 'رمز العملة', exchangeRate: 'سعر الصرف', defaultCurrency: 'العملة الافتراضية', descriptionAr: 'الوصف بالعربية', descriptionEn: 'الوصف بالإنجليزية',
+      descriptionAr: 'الوصف بالعربية', descriptionEn: 'الوصف بالإنجليزية',
       levelOrder: 'ترتيب الدرجة', minSalary: 'الحد الأدنى للراتب', maxSalary: 'الحد الأقصى للراتب', currency: 'العملة', canManageOthers: 'يمكنه إدارة آخرين', managementLevel: 'درجة إدارية',
       targetHeadcount: 'العدد المستهدف', purposeAr: 'الغرض (عربي)', purposeEn: 'الغرض (إنجليزي)',
       responsibilitiesAr: 'المسؤوليات (عربي)', responsibilitiesEn: 'المسؤوليات (إنجليزي)', requirementsAr: 'المتطلبات (عربي)', requirementsEn: 'المتطلبات (إنجليزي)',

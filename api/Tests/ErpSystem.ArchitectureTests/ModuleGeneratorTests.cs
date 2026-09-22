@@ -99,7 +99,21 @@ public sealed class ModuleGeneratorTests
             Assert.Equal(
                 "api/Modules/OrderManagement/ErpSystem.Modules.OrderManagement.Tests",
                 root.GetProperty("testPath").GetString());
+            Assert.Equal(
+                "documentation/modules/order-management/FEATURE-QUALITY-GATE.md",
+                root.GetProperty("documentationPaths").GetProperty("featureQualityGate").GetString());
         }
+
+        var featureGate = File.ReadAllText(Path.Combine(
+            workspace.Root,
+            "documentation",
+            "modules",
+            "order-management",
+            "FEATURE-QUALITY-GATE.md"));
+        Assert.Contains("Archive or domain alternative", featureGate, StringComparison.Ordinal);
+        Assert.Contains("Archived discovery / RecordStatus", featureGate, StringComparison.Ordinal);
+        Assert.Contains("Shared atomic resource", featureGate, StringComparison.Ordinal);
+        Assert.Contains("Stable localized errors", featureGate, StringComparison.Ordinal);
 
         var dotnetCalls = File.ReadAllLines(workspace.DotnetCallsPath)
             .Where(line => !string.IsNullOrWhiteSpace(line))

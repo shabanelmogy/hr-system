@@ -86,7 +86,6 @@ const jobLevelSamples: readonly OrganizationalStructureMutation[] = [
     levelOrder: 3,
     minSalary: 15000,
     maxSalary: 25000,
-    currencyCode: "EGP",
     canManageOthers: false,
     isManagementLevel: false,
   },
@@ -99,7 +98,6 @@ const jobLevelSamples: readonly OrganizationalStructureMutation[] = [
     levelOrder: 4,
     minSalary: 25000,
     maxSalary: 40000,
-    currencyCode: "EGP",
     canManageOthers: true,
     isManagementLevel: true,
   },
@@ -194,8 +192,6 @@ export function getNextOrganizationalStructureMockData(
       return { ...getNextMockSample(jobDescriptionSamples, usedIndexes, random), positionId: firstId(lookups, "positions") };
     case "cost-centers":
       return getNextMockSample(costCenterSamples, usedIndexes, random);
-    case "currencies":
-      return getNextMockSample(currencySamples, usedIndexes, random);
   }
 }
 
@@ -220,41 +216,6 @@ const costCenterSamples: readonly OrganizationalStructureMutation[] = [
     nameAr: "مركز تكلفة العمليات التجارية والمبيعات",
     descriptionEn: "Commercial activities and retail operations.",
     descriptionAr: "العمليات التجارية وأنشطة المبيعات.",
-  },
-];
-
-const currencySamples: readonly OrganizationalStructureMutation[] = [
-  {
-    code: "USD",
-    nameEn: "US Dollar",
-    nameAr: "دولار أمريكي",
-    symbol: "$",
-    exchangeRateToDefault: 1,
-    isDefault: true,
-  },
-  {
-    code: "EGP",
-    nameEn: "Egyptian Pound",
-    nameAr: "جنيه مصري",
-    symbol: "EGP",
-    exchangeRateToDefault: 0.02,
-    isDefault: false,
-  },
-  {
-    code: "SAR",
-    nameEn: "Saudi Riyal",
-    nameAr: "ريال سعودي",
-    symbol: "SAR",
-    exchangeRateToDefault: 0.27,
-    isDefault: false,
-  },
-  {
-    code: "EUR",
-    nameEn: "Euro",
-    nameAr: "يورو",
-    symbol: "€",
-    exchangeRateToDefault: 1.08,
-    isDefault: false,
   },
 ];
 

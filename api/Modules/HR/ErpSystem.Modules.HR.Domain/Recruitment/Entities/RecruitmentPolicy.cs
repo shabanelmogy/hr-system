@@ -1,4 +1,5 @@
 using ErpSystem.BuildingBlocks.Domain.Entities;
+using static ErpSystem.BuildingBlocks.Domain.Guards.DomainGuard;
 
 namespace ErpSystem.Modules.HR.Domain.Recruitment.Entities;
 
@@ -17,7 +18,7 @@ public sealed class RecruitmentPolicy : TenantAuditableEntity
         bool enablePublicPortal,
         string inboundEmailAlias)
     {
-        DefaultCurrency = defaultCurrency;
+        DefaultCurrency = NormalizeCurrencyCode(defaultCurrency, nameof(defaultCurrency));
         OfferExpiryDays = offerExpiryDays;
         AutoPublishOpening = autoPublishOpening;
         EnforceHeadcountCapacity = enforceHeadcountCapacity;
@@ -44,7 +45,7 @@ public sealed class RecruitmentPolicy : TenantAuditableEntity
         bool enablePublicPortal,
         string inboundEmailAlias)
     {
-        DefaultCurrency = defaultCurrency;
+        DefaultCurrency = NormalizeCurrencyCode(defaultCurrency, nameof(defaultCurrency));
         OfferExpiryDays = offerExpiryDays;
         AutoPublishOpening = autoPublishOpening;
         EnforceHeadcountCapacity = enforceHeadcountCapacity;

@@ -54,6 +54,8 @@ export const permissions = {
   EditFiscalYears: 'FiscalYears:Edit',
   DeleteFiscalYears: 'FiscalYears:Delete',
   ManageFiscalYearLifecycle: 'FiscalYears:ManageLifecycle',
+  ViewAccountingSetup: 'AccountingSetup:View',
+  ManageAccountingSetup: 'AccountingSetup:Manage',
   GenerateInvoiceQrCode: 'Invoices:GenerateQrCode',
   ViewWorkforcePlans: 'WorkforcePlans:View',
   CreateWorkforcePlans: 'WorkforcePlans:Create',
@@ -139,6 +141,7 @@ export type PermissionModule =
   | 'OrganizationalStructure'
   | 'Recruitment'
   | 'FiscalYears'
+  | 'AccountingSetup'
   | 'Invoices'
   | 'WorkforcePlans'
   | 'WorkforceBudgets'

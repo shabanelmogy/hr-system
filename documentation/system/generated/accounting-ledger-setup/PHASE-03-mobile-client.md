@@ -66,8 +66,8 @@ profile and do not leave an unreachable route, component, or translation surface
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
 | accounting-ledger-setup-master | 3 | `dca7efc3933fbfad21faec4412e0f5fbce8747b3881d5af2b14bb3210b1cbe45` |
-| accounting-ledger-setup-master | 4 | `52db952c75365317c7bc8a2f43e41985c03640eb53c415bea2c6fcb31478eb30` |
-| accounting-ledger-setup-master | 6 | `d74ddf1245aabb0329a3dfbd0a886a1fdcf078c5c3a72d290d789e6793a4d434` |
+| accounting-ledger-setup-master | 4 | `53f38a770f4b9c229d5f924b56a2be70be0db253054c0b998b0c21ec8c2ca0ca` |
+| accounting-ledger-setup-master | 6 | `4c420eef9bb4f80999de2e4e4bebf23f4d9b3934746b134431e3cd97be170dbe` |
 | accounting-ledger-setup-master | 7 | `530c84fc6ad3ba2299961c837d2bd3af3f2693292a7893dc1e27a7636b0c9290` |
 | accounting-ledger-setup-mobile | 1 | `48c21f85cae0b04ee0edb50b7b58ea61964016dd2538667745daff7276556f58` |
 | accounting-ledger-setup-mobile | 2 | `92c812138335162645a688002fce8b47d64842727e20706a330b1eef5c610dfb` |

@@ -1,5 +1,6 @@
 export const arFiscalYears = {
   fiscalYears: {
+    title: 'السنوات المالية',
     empty: 'لا توجد سنوات مالية مطابقة للبحث والفلاتر الحالية.',
     fields: { code: 'الكود', nameAr: 'الاسم العربي', nameEn: 'الاسم الإنجليزي', startDate: 'تاريخ البداية', endDate: 'تاريخ النهاية', frequency: 'دورية الفترات', status: 'الحالة' },
     frequency: { monthly: 'شهرية', quarterly: 'ربع سنوية' },

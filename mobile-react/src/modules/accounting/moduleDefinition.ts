@@ -8,6 +8,10 @@ export const accountingModuleDefinition: MobileModuleDefinition = {
   submodules: [{
     code: 'fiscal-years',
     entryCandidates: [ROUTES.finance.fiscalYears],
-    routePrefixes: [ROUTES.finance.root],
+    routePrefixes: [ROUTES.finance.fiscalYears],
+  }, {
+    code: 'ledger-setup',
+    entryCandidates: [ROUTES.finance.currencies],
+    routePrefixes: [ROUTES.finance.ledgerSetup],
   }],
 };

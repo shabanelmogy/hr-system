@@ -7,6 +7,5 @@ export { JobLevelsScreen } from './presentation/screens/JobLevelsScreen';
 export { PositionsScreen } from './presentation/screens/PositionsScreen';
 export { JobDescriptionsScreen } from './presentation/screens/JobDescriptionsScreen';
 export { CostCentersScreen } from './presentation/screens/CostCentersScreen';
-export { CurrenciesScreen } from './presentation/screens/CurrenciesScreen';
 export { useOrganizationalLookup } from './presentation/queries/use-organizational-structure';
 export type { OrganizationalStructureLookup } from './domain/models/organizational-structure';

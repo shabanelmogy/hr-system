@@ -56,6 +56,11 @@
   <ItemGroup>
     <!-- Large installer artifacts are copied after publish so they are not fingerprinted during every IDE build. -->
     <Content Remove="wwwroot\downloads\attendance-agent\**\*" />
+    <Content Update="Localization\Resources\*.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <TargetPath>Localization\Resources\%(Filename)%(Extension)</TargetPath>
+    </Content>
   </ItemGroup>
 
 </Project>

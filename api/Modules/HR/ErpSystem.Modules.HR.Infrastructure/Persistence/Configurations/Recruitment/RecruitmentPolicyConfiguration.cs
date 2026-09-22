@@ -12,7 +12,7 @@ public sealed class RecruitmentPolicyConfiguration : IEntityTypeConfiguration<Re
         builder.HasKey(x => x.Id);
         builder.HasAlternateKey(x => new { x.TenantId, x.Id });
 
-        builder.Property(x => x.DefaultCurrency).HasMaxLength(10).IsRequired();
+        builder.Property(x => x.DefaultCurrency).HasMaxLength(3).IsRequired();
         builder.Property(x => x.InboundEmailAlias).HasMaxLength(200);
 
         builder.HasIndex(x => x.TenantId).IsUnique();

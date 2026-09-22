@@ -179,14 +179,14 @@
     {
       "id": "api-localization-en",
       "layer": "api-config",
-      "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Localization/Resources/en-US.json",
-      "purpose": "English validation/error/notification text"
+      "path": "api/ErpSystem.Api/Localization/Resources/en-US.json",
+      "purpose": "Host-owned shared English validation/error/notification text"
     },
     {
       "id": "api-localization-ar",
       "layer": "api-config",
-      "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Localization/Resources/ar-EG.json",
-      "purpose": "Arabic validation/error/notification text"
+      "path": "api/ErpSystem.Api/Localization/Resources/ar-EG.json",
+      "purpose": "Host-owned shared Arabic validation/error/notification text"
     },
     {
       "id": "domain-tests",

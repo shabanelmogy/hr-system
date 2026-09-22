@@ -134,6 +134,31 @@ public sealed class RecruitmentCqrsFoundationTests
     }
 
     [Fact]
+    public async Task RecruitmentSettings_UpdateRejectsCurrencyOutsideAccountingCatalog()
+    {
+        var actor = new TestActor("user-a", "tenant-a", 1);
+        await using var context = CreateContext(Guid.NewGuid().ToString("N"), actor);
+        var repository = new RecruitmentSettingsRepository(context);
+        var readStore = new RecruitmentSettingsReadStore(context);
+        var catalog = new TestAccountingCurrencyCatalog("EGP");
+        var handler = new UpdateRecruitmentSettingsCommandHandler(repository, readStore, actor, catalog);
+        var settings = new RecruitmentSettingsDto
+        {
+            General = new RecruitmentGeneralSettingsDto { DefaultCurrency = "USD" }
+        };
+
+        var result = await handler.Handle(
+            new UpdateRecruitmentSettingsCommand(settings),
+            CancellationToken.None);
+
+        Assert.False(result.IsSuccess);
+        Assert.Equal("HR.Currency.InvalidOrInactive", result.Error.Code);
+        Assert.Empty(await context.RecruitmentPolicies.ToListAsync());
+        Assert.Equal("tenant-a", catalog.LastTenantId);
+        Assert.Equal(1, catalog.LastCompanyId);
+    }
+
+    [Fact]
     public async Task RecruitmentDashboardReadStore_RespectsTenantAndCompanyFilters()
     {
         var databaseName = Guid.NewGuid().ToString("N");

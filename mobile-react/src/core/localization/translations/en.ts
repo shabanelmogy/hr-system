@@ -9,6 +9,7 @@ import { enFiscalYears } from './en-fiscal-years';
 import { enWorkforcePlanning } from './en-workforce-planning';
 import { enModules } from './en-modules';
 import { enOfflineOperations } from './en-offline-operations';
+import { enCurrencies } from './en-currencies';
 
 export const en = {
   ...enCommon,
@@ -22,4 +23,5 @@ export const en = {
   ...enWorkforcePlanning,
   ...enModules,
   ...enOfflineOperations,
+  ...enCurrencies,
 };

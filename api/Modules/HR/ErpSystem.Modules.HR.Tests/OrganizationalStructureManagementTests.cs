@@ -141,6 +141,7 @@ public sealed class OrganizationalStructureManagementTests
         var management = new OrganizationalStructureManagement(
             context,
             actor,
+            new TestAccountingCurrencyCatalog("EGP", "USD"),
             TimeProvider.System,
             new NoOpScheduler(),
             NoOpEntityChangeLogService.Instance);
@@ -253,6 +254,7 @@ public sealed class OrganizationalStructureManagementTests
         var management = new OrganizationalStructureManagement(
             context,
             actor,
+            new TestAccountingCurrencyCatalog("EGP", "USD"),
             TimeProvider.System,
             new NoOpScheduler(),
             NoOpEntityChangeLogService.Instance);
@@ -277,6 +279,7 @@ public sealed class OrganizationalStructureManagementTests
         var management = new OrganizationalStructureManagement(
             context,
             actor,
+            new TestAccountingCurrencyCatalog("EGP", "USD"),
             TimeProvider.System,
             new NoOpScheduler(),
             NoOpEntityChangeLogService.Instance);
@@ -288,6 +291,42 @@ public sealed class OrganizationalStructureManagementTests
         var updateResult = await management.UpdateAsync("branches", createResult.Value.Id, new OrganizationalStructureMutation(
             "BR1", "Main Branch Updated", "الفرع الرئيسي محدث"), CancellationToken.None);
         Assert.True(updateResult.IsSuccess);
+    }
+
+    [Fact]
+    public async Task JobLevel_CreateRejectsCurrencyOutsideAccountingCatalog()
+    {
+        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+            .UseInMemoryDatabase(Guid.NewGuid().ToString("N"))
+            .Options;
+        await using var context = CreateContext(options, "tenant-1", 11);
+        var actor = new TestCurrentActor("tenant-1", 11);
+        var catalog = new TestAccountingCurrencyCatalog("USD");
+        var management = new OrganizationalStructureManagement(
+            context,
+            actor,
+            catalog,
+            TimeProvider.System,
+            new NoOpScheduler(),
+            NoOpEntityChangeLogService.Instance);
+
+        var result = await management.CreateAsync(
+            OrganizationalResources.JobLevels,
+            new OrganizationalStructureMutation(
+                "L1", "Level 1", "المستوى 1", LevelOrder: 1, MinSalary: 1000m, CurrencyCode: "EGP"),
+            CancellationToken.None);
+
+        Assert.False(result.IsSuccess);
+        Assert.Equal("HR.Currency.InvalidOrInactive", result.Error.Code);
+        Assert.Equal("tenant-1", catalog.LastTenantId);
+        Assert.Equal(11, catalog.LastCompanyId);
+    }
+
+    [Fact]
+    public void Currency_IsNotAnOrganizationalStructureResource()
+    {
+        Assert.False(OrganizationalResources.IsSupported("currencies"));
+        Assert.DoesNotContain("currencies", OrganizationalResources.All);
     }
 
     private static void AssertCompositeForeignKey<TDependent, TPrincipal>(

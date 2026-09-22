@@ -292,7 +292,7 @@ const forbiddenCompatibilityPatterns = [
     message: "explicit backward-compatibility shims are not allowed in production source",
   },
   {
-    pattern: /modules\/hr\/finance\/fiscal-years|modules\/hr\/appointments|shared\/reporting\/crystal-report-manager|modules\/hr\/basic-data\/geographical-information|modules\/hr\/basic-data\/organizational-structure\/company-geographic-scope/,
+    pattern: /modules\/hr\/finance\/fiscal-years|modules\/hr\/appointments|shared\/reporting\/crystal-report-manager|modules\/hr\/basic-data\/geographical-information|modules\/hr\/basic-data\/organizational-structure\/company-geographic-scope|modules\/hr\/basic-data\/organizational-structure\/.*currenc/i,
     message: "imports must use the canonical bounded-context owner; removed legacy ownership paths are forbidden",
   },
 ];

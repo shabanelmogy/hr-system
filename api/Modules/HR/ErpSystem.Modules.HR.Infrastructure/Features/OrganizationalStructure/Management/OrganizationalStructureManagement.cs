@@ -1,4 +1,6 @@
 using ErpSystem.BuildingBlocks.Application.Common.Paginations;
+using ErpSystem.Modules.Accounting.Contracts;
+using ErpSystem.Modules.HR.Application.Features.CurrencySnapshots;
 using ErpSystem.Modules.HR.Application.Features.OrganizationalStructure.Management;
 using ErpSystem.Modules.HR.Application.Features.OrganizationalStructure.Management.Abstractions;
 using ErpSystem.Modules.HR.Application.Features.OrganizationalStructure.Management.Contracts;
@@ -16,6 +18,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Features.OrganizationalStructure.M
 public sealed class OrganizationalStructureManagement(
     ApplicationDbContext context,
     ICurrentActor currentActor,
+    IAccountingCurrencyCatalog currencyCatalog,
     TimeProvider timeProvider,
     IOrganizationalStructureChangeScheduler changeScheduler,
     IEntityChangeLogService entityChangeLogService)
@@ -111,6 +114,9 @@ public sealed class OrganizationalStructureManagement(
         CancellationToken cancellationToken)
     {
         var normalized = OrganizationalResources.Normalize(resource);
+        var currencyValidation = await ValidateCurrencySnapshotAsync(normalized, request, cancellationToken);
+        if (currencyValidation is not null)
+            return Result.Failure<OrganizationalStructureItem>(currencyValidation);
         var duplicateError = await CheckDuplicateAsync(normalized, request, null, cancellationToken);
         if (duplicateError != null)
             return Result.Failure<OrganizationalStructureItem>(duplicateError);
@@ -124,15 +130,6 @@ public sealed class OrganizationalStructureManagement(
                 "Only one active headquarters branch is allowed per company.",
                 ErrorType.Conflict));
         }
-        if (normalized == OrganizationalResources.Currencies && request.IsDefault)
-        {
-            var existingDefaults = await context.Currencies
-                .Where(x => x.IsDefault)
-                .ToListAsync(cancellationToken);
-            foreach (var cur in existingDefaults)
-                cur.SetDefault(false);
-        }
-
         try
         {
             var entity = AddEntity(normalized, request);
@@ -168,6 +165,9 @@ public sealed class OrganizationalStructureManagement(
                     var headquartersRequested = false;
                     foreach (var request in requests)
                     {
+                        var currencyValidation = await ValidateCurrencySnapshotAsync(normalized, request, token);
+                        if (currencyValidation is not null)
+                            throw new BulkCreateFailureException(currencyValidation);
                         var scopeKey = normalized + "|" + (
                             normalized is OrganizationalResources.Departments ? request.BranchId :
                             normalized is OrganizationalResources.Divisions ? request.DepartmentId :
@@ -235,6 +235,10 @@ public sealed class OrganizationalStructureManagement(
         if (entity is null || ((AuditableEntity)entity).IsDeleted)
             return Result.Failure<OrganizationalStructureItem>(NotFound);
 
+        var currencyValidation = await ValidateCurrencySnapshotAsync(normalized, request, cancellationToken);
+        if (currencyValidation is not null)
+            return Result.Failure<OrganizationalStructureItem>(currencyValidation);
+
         var duplicateError = await CheckDuplicateAsync(normalized, request, id, cancellationToken);
         if (duplicateError != null)
             return Result.Failure<OrganizationalStructureItem>(duplicateError);
@@ -246,14 +250,6 @@ public sealed class OrganizationalStructureManagement(
         if (normalized == OrganizationalResources.CostCenters &&
             !await CostCenterHierarchyIsValidAsync(id, request.ParentCostCenterId, cancellationToken))
             return Result.Failure<OrganizationalStructureItem>(InvalidHierarchy);
-        if (normalized == OrganizationalResources.Currencies && request.IsDefault)
-        {
-            var otherDefaults = await context.Currencies
-                .Where(x => x.Id != id && x.IsDefault)
-                .ToListAsync(cancellationToken);
-            foreach (var cur in otherDefaults)
-                cur.SetDefault(false);
-        }
         if (normalized == OrganizationalResources.Branches && request.IsHeadquarters &&
             await context.Branches.AnyAsync(x => x.Id != id && !x.IsDeleted && x.IsHeadquarters, cancellationToken))
         {
@@ -436,7 +432,6 @@ public sealed class OrganizationalStructureManagement(
         OrganizationalResources.Positions => nameof(Position),
         OrganizationalResources.JobDescriptions => nameof(JobDescription),
         OrganizationalResources.CostCenters => nameof(CostCenter),
-        OrganizationalResources.Currencies => nameof(Currency),
         _ => throw new ArgumentOutOfRangeException(nameof(resource))
     };
 
@@ -533,13 +528,6 @@ public sealed class OrganizationalStructureManagement(
             ParentNameAr = x.ParentCostCenter == null ? null : x.ParentCostCenter.NameAr,
             ManagerId = x.ManagerId
         }),
-        OrganizationalResources.Currencies => context.Currencies.AsNoTracking().Select(x => new OrganizationalStructureItem
-        {
-            Id = x.Id, Resource = resource, Code = x.CurrencyCode, NameEn = x.NameEn,
-            NameAr = x.NameAr, IsDeleted = x.IsDeleted, CreatedOn = x.CreatedOn, UpdatedOn = x.UpdatedOn,
-            Symbol = x.Symbol, ExchangeRateToDefault = x.ExchangeRateToDefault,
-            IsDefault = x.IsDefault
-        }),
         _ => throw new ArgumentOutOfRangeException(nameof(resource))
     };
 
@@ -558,7 +546,6 @@ public sealed class OrganizationalStructureManagement(
                 RequiredId(request.JobLevelId, nameof(request.JobLevelId)), request.TargetHeadcount ?? 0),
             OrganizationalResources.JobDescriptions => CreateJobDescription(request),
             OrganizationalResources.CostCenters => CreateCostCenter(request),
-            OrganizationalResources.Currencies => CreateCurrency(request),
             _ => throw new ArgumentOutOfRangeException(nameof(resource))
         };
 
@@ -571,17 +558,6 @@ public sealed class OrganizationalStructureManagement(
         var costCenter = new CostCenter(request.Code, request.NameEn, request.NameAr, request.ParentCostCenterId);
         costCenter.UpdateDetails(request.DescriptionEn, request.DescriptionAr, request.ManagerId);
         return costCenter;
-    }
-
-    private static Currency CreateCurrency(OrganizationalStructureMutation request)
-    {
-        return new Currency(
-            request.Code,
-            request.NameEn,
-            request.NameAr,
-            request.Symbol ?? request.Code,
-            request.ExchangeRateToDefault ?? 1.0m,
-            request.IsDefault);
     }
 
     private static Branch CreateBranch(OrganizationalStructureMutation request)
@@ -688,12 +664,6 @@ public sealed class OrganizationalStructureManagement(
                 costCenter.ChangeParent(request.ParentCostCenterId);
                 costCenter.UpdateDetails(request.DescriptionEn, request.DescriptionAr, request.ManagerId);
                 break;
-            case OrganizationalResources.Currencies:
-                var currency = (Currency)entity;
-                currency.UpdateIdentity(request.Code, request.NameEn, request.NameAr, request.Symbol ?? request.Code);
-                currency.UpdateExchangeRate(request.ExchangeRateToDefault ?? 1.0m);
-                currency.SetDefault(request.IsDefault);
-                break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(resource));
         }
@@ -722,7 +692,6 @@ public sealed class OrganizationalStructureManagement(
         OrganizationalResources.Positions => FirstAsObjectAsync(context.Positions.Where(x => x.Id == id), cancellationToken),
         OrganizationalResources.JobDescriptions => FirstAsObjectAsync(context.JobDescriptions.Where(x => x.Id == id), cancellationToken),
         OrganizationalResources.CostCenters => FirstAsObjectAsync(context.CostCenters.Where(x => x.Id == id), cancellationToken),
-        OrganizationalResources.Currencies => FirstAsObjectAsync(context.Currencies.Where(x => x.Id == id), cancellationToken),
         _ => throw new ArgumentOutOfRangeException(nameof(resource))
     };
 
@@ -735,7 +704,7 @@ public sealed class OrganizationalStructureManagement(
         int? currentId,
         CancellationToken cancellationToken) => resource switch
     {
-        OrganizationalResources.Branches or OrganizationalResources.JobTitles or OrganizationalResources.JobLevels or OrganizationalResources.Currencies => true,
+        OrganizationalResources.Branches or OrganizationalResources.JobTitles or OrganizationalResources.JobLevels => true,
         OrganizationalResources.Departments =>
             (!request.BranchId.HasValue || await context.Branches.AnyAsync(x => x.Id == request.BranchId && !x.IsDeleted && x.IsActive, cancellationToken)) &&
             (!request.ParentDepartmentId.HasValue || await context.Departments.AnyAsync(x =>
@@ -800,7 +769,6 @@ public sealed class OrganizationalStructureManagement(
         OrganizationalResources.JobDescriptions => false,
         OrganizationalResources.CostCenters =>
             await context.CostCenters.AnyAsync(x => x.ParentCostCenterId == id && !x.IsDeleted, cancellationToken),
-        OrganizationalResources.Currencies => false,
         _ => true
     };
 
@@ -1053,7 +1021,6 @@ public sealed class OrganizationalStructureManagement(
         Position x => x.Id,
         JobDescription x => x.Id,
         CostCenter x => x.Id,
-        Currency x => x.Id,
         _ => throw new ArgumentOutOfRangeException(nameof(entity))
     };
 
@@ -1067,9 +1034,28 @@ public sealed class OrganizationalStructureManagement(
         Position x => new(x.PositionCode, x.PositionCode, x.PositionCode, DivisionId: x.DivisionId, JobTitleId: x.JobTitleId, JobLevelId: x.JobLevelId),
         JobDescription x => new(x.Version, x.TitleEn, x.TitleAr, PositionId: x.PositionId, Version: x.Version),
         CostCenter x => new(x.CostCenterCode, x.NameEn, x.NameAr, ParentCostCenterId: x.ParentCostCenterId),
-        Currency x => new(x.CurrencyCode, x.NameEn, x.NameAr, Symbol: x.Symbol, ExchangeRateToDefault: x.ExchangeRateToDefault, IsDefault: x.IsDefault),
         _ => throw new ArgumentOutOfRangeException(nameof(resource))
     };
+
+    private async Task<Error?> ValidateCurrencySnapshotAsync(
+        string resource,
+        OrganizationalStructureMutation request,
+        CancellationToken cancellationToken)
+    {
+        if (resource != OrganizationalResources.JobLevels || string.IsNullOrWhiteSpace(request.CurrencyCode))
+            return null;
+
+        if (!AccountingCurrencySnapshotValidation.TryGetScope(currentActor, out var tenantId, out var companyId))
+            return HrCurrencySnapshotErrors.CompanyContextRequired;
+
+        return await currencyCatalog.FindActiveByCodeAsync(
+            tenantId,
+            companyId,
+            request.CurrencyCode,
+            cancellationToken) is null
+            ? HrCurrencySnapshotErrors.InvalidOrInactive
+            : null;
+    }
 
     private void Schedule(OrganizationalStructureItem? item, string action)
     {

@@ -32,6 +32,6 @@ internal static class HrModuleDefinition
         IsDefault: true)
         {
             Version = "1.0.0",
-            RequiredModuleDependencies = ["platform"]
+            RequiredModuleDependencies = ["platform", "acc"]
         };
 }

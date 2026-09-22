@@ -7,7 +7,6 @@ export const organizationalResources = [
   "positions",
   "job-descriptions",
   "cost-centers",
-  "currencies",
 ] as const;
 
 export type OrganizationalResource = (typeof organizationalResources)[number];
@@ -90,9 +89,6 @@ export interface OrganizationalStructureMutation {
   skills?: JobSkillItem[];
   educationRequirements?: JobEducationRequirement[];
   parentCostCenterId?: number;
-  symbol?: string;
-  exchangeRateToDefault?: number;
-  isDefault?: boolean;
 }
 
 export interface OrganizationalStructureItem extends OrganizationalStructureMutation {

@@ -17,7 +17,7 @@ describe("Accounting frontend module definition", () => {
 
   it("owns the backend fiscal-years submodule", () => {
     expect(accountingModuleDefinition.code).toBe("acc");
-    expect(accountingModuleDefinition.submodules).toHaveLength(1);
+    expect(accountingModuleDefinition.submodules).toHaveLength(2);
     expect(accountingModuleDefinition.submodules[0]).toMatchObject({
       code: "fiscal-years",
       requiredPermissions: [permissions.ViewFiscalYears],
@@ -27,6 +27,16 @@ describe("Accounting frontend module definition", () => {
     expect(requiredModuleForPath(appRoutes.modules.accounting.fiscalYears)).toEqual({
       moduleCode: "acc",
       submoduleCode: "fiscal-years",
+    });
+    expect(accountingModuleDefinition.submodules[1]).toMatchObject({
+      code: "ledger-setup",
+      requiredPermissions: [permissions.ViewAccountingSetup],
+      entryCandidates: [appRoutes.modules.accounting.ledgerSetup.currencies],
+      routePrefixes: [appRoutes.modules.accounting.ledgerSetup.currencies],
+    });
+    expect(requiredModuleForPath(appRoutes.modules.accounting.ledgerSetup.currencies)).toEqual({
+      moduleCode: "acc",
+      submoduleCode: "ledger-setup",
     });
   });
 

@@ -29,8 +29,8 @@ const jobTitleSamples: readonly OrganizationalStructureRequest[] = [
 ];
 
 const jobLevelSamples: readonly OrganizationalStructureRequest[] = [
-  { code: 'L3', nameEn: 'Professional III', nameAr: 'أخصائي ثالث', descriptionEn: 'Experienced individual contributor level.', descriptionAr: 'مستوى موظف متخصص ذي خبرة.', levelOrder: 3, minSalary: 15000, maxSalary: 25000, currencyCode: 'EGP', canManageOthers: false, isManagementLevel: false },
-  { code: 'M1', nameEn: 'First Line Manager', nameAr: 'مدير صف أول', descriptionEn: 'Leads a small operational team.', descriptionAr: 'يقود فريقًا تشغيليًا صغيرًا.', levelOrder: 4, minSalary: 25000, maxSalary: 40000, currencyCode: 'EGP', canManageOthers: true, isManagementLevel: true },
+  { code: 'L3', nameEn: 'Professional III', nameAr: 'أخصائي ثالث', descriptionEn: 'Experienced individual contributor level.', descriptionAr: 'مستوى موظف متخصص ذي خبرة.', levelOrder: 3, minSalary: 15000, maxSalary: 25000, canManageOthers: false, isManagementLevel: false },
+  { code: 'M1', nameEn: 'First Line Manager', nameAr: 'مدير صف أول', descriptionEn: 'Leads a small operational team.', descriptionAr: 'يقود فريقًا تشغيليًا صغيرًا.', levelOrder: 4, minSalary: 25000, maxSalary: 40000, canManageOthers: true, isManagementLevel: true },
 ];
 
 const positionSamples: readonly OrganizationalStructureRequest[] = [
@@ -49,12 +49,6 @@ const costCenterSamples: readonly OrganizationalStructureRequest[] = [
   { code: 'CC-OPS', nameEn: 'Operations & Logistics', nameAr: 'مركز تكلفة العمليات واللوجستيات', descriptionEn: 'Field and supply operations.', descriptionAr: 'عمليات التشغيل والإمداد.' },
 ];
 
-const currencySamples: readonly OrganizationalStructureRequest[] = [
-  { code: 'USD', nameEn: 'US Dollar', nameAr: 'دولار أمريكي', symbol: '$', exchangeRateToDefault: 1, isDefault: true },
-  { code: 'EGP', nameEn: 'Egyptian Pound', nameAr: 'جنيه مصري', symbol: 'EGP', exchangeRateToDefault: 0.02, isDefault: false },
-  { code: 'SAR', nameEn: 'Saudi Riyal', nameAr: 'ريال سعودي', symbol: 'SAR', exchangeRateToDefault: 0.27, isDefault: false },
-];
-
 const firstId = (lookups: OrganizationalStructureMockLookups, resource: OrganizationalResource): number | undefined => lookups[resource]?.[0]?.id;
 
 /** Returns a development-only sample and resolves required relationships from active lookup data. */
@@ -68,7 +62,6 @@ export function getNextOrganizationalStructureMockData(resource: OrganizationalR
     case 'positions': return { ...getNextMockSample(positionSamples, usedIndexes), divisionId: firstId(lookups, 'divisions'), jobTitleId: firstId(lookups, 'job-titles'), jobLevelId: firstId(lookups, 'job-levels') };
     case 'job-descriptions': return { ...getNextMockSample(jobDescriptionSamples, usedIndexes), positionId: firstId(lookups, 'positions') };
     case 'cost-centers': return getNextMockSample(costCenterSamples, usedIndexes);
-    case 'currencies': return getNextMockSample(currencySamples, usedIndexes);
   }
 }
 

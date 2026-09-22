@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -170,39 +170,6 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Currencies",
-                schema: "hr",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CurrencyCode = table.Column<string>(type: "nvarchar(3)", maxLength: 3, nullable: false),
-                    NameEn = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    NameAr = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Symbol = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    ExchangeRateToDefault = table.Column<decimal>(type: "decimal(18,6)", precision: 18, scale: 6, nullable: false),
-                    IsDefault = table.Column<bool>(type: "bit", nullable: false),
-                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false),
-                    CreatedById = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedByPc = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UpdatedById = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UpdatedByPc = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DeletedById = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DeletedByPc = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    TenantId = table.Column<string>(type: "nvarchar(32)", maxLength: 32, nullable: false),
-                    CompanyId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Currencies", x => x.Id);
-                    table.UniqueConstraint("AK_Currencies_TenantId_CompanyId_Id", x => new { x.TenantId, x.CompanyId, x.Id });
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Employees",
                 schema: "hr",
                 columns: table => new
@@ -351,7 +318,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    DefaultCurrency = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    DefaultCurrency = table.Column<string>(type: "nvarchar(3)", maxLength: 3, nullable: false),
                     OfferExpiryDays = table.Column<int>(type: "int", nullable: false),
                     AutoPublishOpening = table.Column<bool>(type: "bit", nullable: false),
                     EnforceHeadcountCapacity = table.Column<bool>(type: "bit", nullable: false),
@@ -2313,25 +2280,6 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
                 columns: new[] { "TenantId", "CompanyId", "ParentCostCenterId" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Currencies_TenantId",
-                schema: "hr",
-                table: "Currencies",
-                column: "TenantId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Currencies_TenantId_CompanyId",
-                schema: "hr",
-                table: "Currencies",
-                columns: new[] { "TenantId", "CompanyId" });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Currencies_TenantId_CompanyId_CurrencyCode",
-                schema: "hr",
-                table: "Currencies",
-                columns: new[] { "TenantId", "CompanyId", "CurrencyCode" },
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Departments_TenantId",
                 schema: "hr",
                 table: "Departments",
@@ -3496,10 +3444,6 @@ namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "CostCenters",
-                schema: "hr");
-
-            migrationBuilder.DropTable(
-                name: "Currencies",
                 schema: "hr");
 
             migrationBuilder.DropTable(

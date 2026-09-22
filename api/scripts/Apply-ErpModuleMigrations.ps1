@@ -73,8 +73,14 @@ function Get-ModuleEntries {
             Get-ChildItem -LiteralPath $bootstrapRoot -Filter "*.cs" -File -Recurse |
                 ForEach-Object { Get-Content -LiteralPath $_.FullName -Raw }
         ) -join "`n")
-        $codeMatch = [regex]::Match($metadataSource, 'new\s+ModuleDefinition\(\s*"(?<code>[a-z][a-z0-9-]*)"')
-        $moduleCode = if ($codeMatch.Success) { $codeMatch.Groups['code'].Value } else { $moduleName.ToLowerInvariant() }
+        $codeMatch = [regex]::Match(
+            $metadataSource,
+            'ModuleDefinition\s+(?:Definition|Create\s*\(\s*\))\s*=>\s*new\s*\(\s*"(?<code>[a-z][a-z0-9-]*)"',
+            [System.Text.RegularExpressions.RegexOptions]::IgnoreCase)
+        if (-not $codeMatch.Success) {
+            throw "Module '$moduleName' does not expose a parseable ModuleDefinition code."
+        }
+        $moduleCode = $codeMatch.Groups['code'].Value
 
         $dependencies = [System.Collections.Generic.List[string]]::new()
         $requiredDependencies = [System.Collections.Generic.List[string]]::new()

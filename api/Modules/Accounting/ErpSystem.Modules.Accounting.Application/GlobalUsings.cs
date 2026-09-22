@@ -14,3 +14,4 @@ global using ErpSystem.Modules.Platform.Contracts.Authentication.Tokens;
 global using ErpSystem.Modules.Accounting.Application.Validation;
 global using ErpSystem.Modules.Platform.Contracts.Files.Models;
 global using Microsoft.Extensions.Localization;
+global using ErpSystem.Modules.Accounting.Application.Abstractions.Persistence;

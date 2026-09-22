@@ -72,6 +72,35 @@ public sealed class MigrationOperationsTests
     }
 
     [Fact]
+    public void MigrationScript_WhatIfResolvesEveryRegisteredModuleCodeAndDependency()
+    {
+        var scriptPath = Path.Combine(FindApiRoot(), "scripts", "Apply-ErpModuleMigrations.ps1");
+        var startInfo = new System.Diagnostics.ProcessStartInfo("pwsh")
+        {
+            RedirectStandardOutput = true,
+            RedirectStandardError = true,
+            UseShellExecute = false,
+            CreateNoWindow = true,
+        };
+        startInfo.ArgumentList.Add("-NoProfile");
+        startInfo.ArgumentList.Add("-File");
+        startInfo.ArgumentList.Add(scriptPath);
+        startInfo.ArgumentList.Add("-WhatIf");
+
+        using var process = System.Diagnostics.Process.Start(startInfo);
+        Assert.NotNull(process);
+        var standardOutput = process.StandardOutput.ReadToEnd();
+        var standardError = process.StandardError.ReadToEnd();
+        process.WaitForExit();
+
+        Assert.True(
+            process.ExitCode == 0,
+            $"Migration script WhatIf failed.{Environment.NewLine}{standardOutput}{Environment.NewLine}{standardError}");
+        Assert.Contains("Accounting", standardOutput, StringComparison.Ordinal);
+        Assert.Contains("HR", standardOutput, StringComparison.Ordinal);
+    }
+
+    [Fact]
     public void CheckedInApiSettingsTemplate_ContainsNoKnownDeploymentCredentials()
     {
         var apiRoot = Path.Combine(FindApiRoot(), "ErpSystem.Api");

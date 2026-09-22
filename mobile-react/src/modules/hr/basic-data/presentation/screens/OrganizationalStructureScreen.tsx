@@ -60,12 +60,6 @@ export function OrganizationalStructureScreen() {
           route: ROUTES.basicData.organizationalStructureCostCenters,
         },
         {
-          label: t('organizationalStructure.resources.currencies'),
-          icon: 'cash-outline',
-          permissions: [permissions.ViewOrganizationalStructure],
-          route: ROUTES.basicData.organizationalStructureCurrencies,
-        },
-        {
           label: t('companyGeographicScope.title'),
           icon: 'earth-outline',
           permissions: [permissions.ViewCompanyGeographicScope],

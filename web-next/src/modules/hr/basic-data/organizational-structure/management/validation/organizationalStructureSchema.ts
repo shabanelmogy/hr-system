@@ -79,9 +79,6 @@ export const getOrganizationalStructureSchema = (resource: OrganizationalResourc
     isRequired: z.boolean().default(true),
   })).nullish().transform((v) => v ?? []),
   parentCostCenterId: optionalId,
-  symbol: optionalString(10),
-  exchangeRateToDefault: optionalNumber,
-  isDefault: optionalBoolean,
 }).superRefine((value, context) => {
   const requireId = (field: "branchId" | "departmentId" | "divisionId" | "jobTitleId" | "jobLevelId" | "positionId") => {
     if (!value[field]) context.addIssue({ code: "custom", path: [field], message: t("validation.required") });

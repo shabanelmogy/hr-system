@@ -86,7 +86,6 @@ export const routePolicies: readonly RoutePolicy[] = [
     ROUTES.basicData.organizationalStructurePositions,
     ROUTES.basicData.organizationalStructureJobDescriptions,
     ROUTES.basicData.organizationalStructureCostCenters,
-    ROUTES.basicData.organizationalStructureCurrencies,
   ].map((path) => ({ path, permissions: [permissions.ViewOrganizationalStructure] as const })),
   {
     path: ROUTES.basicData.geographicalInformation,
@@ -137,8 +136,16 @@ export const routePolicies: readonly RoutePolicy[] = [
     ],
   },
   { path: ROUTES.recruitment.root, permissions: [permissions.ViewRecruitment] },
+  { path: ROUTES.finance.currencies, permissions: [permissions.ViewAccountingSetup] },
+  { path: ROUTES.finance.ledgerSetup, permissions: [permissions.ViewAccountingSetup] },
   { path: ROUTES.finance.fiscalYears, permissions: [permissions.ViewFiscalYears] },
-  { path: ROUTES.finance.root, permissions: [permissions.ViewFiscalYears] },
+  {
+    path: ROUTES.finance.root,
+    anyOf: [
+      { permissions: [permissions.ViewFiscalYears] },
+      { permissions: [permissions.ViewAccountingSetup] },
+    ],
+  },
   { path: ROUTES.workforcePlanning.plans, permissions: [permissions.ViewWorkforcePlans] },
   { path: ROUTES.workforcePlanning.budgets, permissions: [permissions.ViewWorkforceBudgets] },
   { path: ROUTES.workforcePlanning.positionEnvelopes, permissions: [permissions.ViewPositionEnvelopes] },
@@ -248,7 +255,7 @@ export const MAIN_DRAWER_ROUTES: readonly MainDrawerRouteDefinition[] = [
   },
   {
     name: 'finance',
-    path: ROUTES.finance.fiscalYears,
+    path: ROUTES.finance.root,
     titleKey: 'navigation.finance',
     icon: 'calendar-outline',
     headerShown: false,

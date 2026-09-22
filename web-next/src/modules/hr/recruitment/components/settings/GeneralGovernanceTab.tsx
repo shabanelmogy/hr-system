@@ -24,8 +24,8 @@ import {
   type GeneralSettingsFormInput,
 } from "../../validation/recruitmentValidation";
 import { useUnsavedChangesRegistration } from "@/shared/contexts/UnsavedChangesContext";
+import { useCurrencyLookup } from "@/modules/accounting/public";
 
-const CURRENCY_CODES = ["EGP", "SAR", "AED", "USD", "EUR"] as const;
 const PROBATION_MONTHS = [1, 3, 6] as const;
 
 interface GeneralGovernanceTabProps {
@@ -42,15 +42,16 @@ export default function GeneralGovernanceTab({
   onUpdateSettings,
 }: GeneralGovernanceTabProps) {
   const { t } = useTranslation();
+  const currencies = useCurrencyLookup();
   const schema = useMemo(() => createGeneralSettingsSchema(t), [t]);
   const defaultValues = useMemo<GeneralSettingsFormInput>(() => ({
     ...settings,
     inboundEmailAlias: settings.inboundEmailAlias ?? "",
   }), [settings]);
-  const currencyOptions = useMemo(() => CURRENCY_CODES.map((code) => ({
-    id: code,
-    name: t(`recruitment.settings.currencies.${code.toLowerCase()}`),
-  })), [t]);
+  const currencyOptions = useMemo(() => (currencies.data ?? []).map(currency => ({
+    id: currency.currencyCode,
+    name: `${currency.currencyCode} — ${currency.nameEn} (${currency.nameAr})`,
+  })), [currencies.data]);
   const probationOptions = useMemo(() => PROBATION_MONTHS.map((months) => ({
     id: months,
     name: t(`recruitment.settings.probationOptions.${months === 1 ? "one" : months === 3 ? "three" : "six"}`),
@@ -106,6 +107,7 @@ export default function GeneralGovernanceTab({
               dataSource={currencyOptions}
               valueMember="id"
               displayMember="name"
+              loading={currencies.isLoading}
               disabled={!canEdit}
               required
             />

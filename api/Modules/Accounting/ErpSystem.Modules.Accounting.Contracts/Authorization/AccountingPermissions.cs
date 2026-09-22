@@ -8,6 +8,12 @@ public static class AccountingPermissions
     public const string DeleteFiscalYears = "FiscalYears:Delete";
     public const string ManageFiscalYearLifecycle = "FiscalYears:ManageLifecycle";
     public const string GenerateInvoiceQrCode = "Invoices:GenerateQrCode";
+    public const string ViewAccountingSetup = "AccountingSetup:View";
+    public const string ManageAccountingSetup = "AccountingSetup:Manage";
+    public const string ViewAccounts = "Accounts:View";
+    public const string ManageAccounts = "Accounts:Manage";
+    public const string ViewDimensions = "Dimensions:View";
+    public const string ManageDimensions = "Dimensions:Manage";
 
     public static IReadOnlyList<string> FiscalYears { get; } =
     [
@@ -23,5 +29,15 @@ public static class AccountingPermissions
         GenerateInvoiceQrCode
     ];
 
-    public static IReadOnlyList<string> All => [.. FiscalYears, .. Invoicing];
+    public static IReadOnlyList<string> LedgerSetup { get; } =
+    [
+        ViewAccountingSetup,
+        ManageAccountingSetup,
+        ViewAccounts,
+        ManageAccounts,
+        ViewDimensions,
+        ManageDimensions
+    ];
+
+    public static IReadOnlyList<string> All => [.. FiscalYears, .. Invoicing, .. LedgerSetup];
 }

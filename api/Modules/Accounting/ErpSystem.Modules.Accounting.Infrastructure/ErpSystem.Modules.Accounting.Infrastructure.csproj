@@ -29,4 +29,8 @@
     <ProjectReference Include="..\..\Platform\ErpSystem.Modules.Platform.Contracts\ErpSystem.Modules.Platform.Contracts.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EmbeddedResource Include="Features\Finance\LedgerSetup\Localization\Resources\*.json" />
+  </ItemGroup>
+
 </Project>

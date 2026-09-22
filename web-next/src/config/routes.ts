@@ -72,7 +72,6 @@ export interface OrganizationalStructureRoutes {
   positions: AppPath;
   jobDescriptions: AppPath;
   costCenters: AppPath;
-  currencies: AppPath;
 }
 
 export interface WorkforcePlanningRoutes {
@@ -99,6 +98,9 @@ export interface ModuleRoutes {
   };
   accounting: {
     fiscalYears: AppPath;
+    ledgerSetup: {
+      currencies: AppPath;
+    };
   };
   crm: {
     appointments: AppPath;
@@ -192,7 +194,6 @@ export const appRoutes: AppRoutes = {
           "/basic-data/organizational-structure/job-descriptions",
         ),
         costCenters: toAppPath("/basic-data/organizational-structure/cost-centers"),
-        currencies: toAppPath("/basic-data/organizational-structure/currencies"),
       },
       attendanceDevices: {
         index: toAppPath("/attendance-devices"),
@@ -213,6 +214,9 @@ export const appRoutes: AppRoutes = {
     },
     accounting: {
       fiscalYears: toAppPath("/finance/fiscal-years"),
+      ledgerSetup: {
+        currencies: toAppPath("/finance/ledger-setup/currencies"),
+      },
     },
     crm: {
       appointments: "/appointments",

@@ -37,8 +37,7 @@
       "job-levels": "Job levels",
       "positions": "Positions",
       "job-descriptions": "Job descriptions",
-      "cost-centers": "Cost Centers",
-      "currencies": "Currencies"
+      "cost-centers": "Cost Centers"
     },
     "routeDescriptions": {
       "branches": "Manage company branches and headquarters.",
@@ -48,8 +47,7 @@
       "job-levels": "Manage job levels, salary bands and management flags.",
       "positions": "Manage approved positions and target headcount.",
       "job-descriptions": "Manage versioned position job descriptions and approvals.",
-      "cost-centers": "Manage hierarchical cost centers and budget allocations.",
-      "currencies": "Manage recognized currencies, symbols and exchange rates."
+      "cost-centers": "Manage hierarchical cost centers and budget allocations."
     },
     "status": {
       "active": "Active",
@@ -73,9 +71,6 @@
       "centralized": "Centralized (All branches)",
       "isCentralized": "Centralized department",
       "costCenter": "Cost center",
-      "symbol": "Currency symbol",
-      "exchangeRate": "Exchange rate",
-      "defaultCurrency": "Default currency",
       "descriptionAr": "Arabic description",
       "descriptionEn": "English description",
       "timeZone": "Time zone",

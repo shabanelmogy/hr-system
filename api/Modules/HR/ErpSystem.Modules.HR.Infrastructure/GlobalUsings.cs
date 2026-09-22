@@ -15,7 +15,6 @@ global using ErpSystem.BuildingBlocks.Application.Common.Services;
 global using ErpSystem.BuildingBlocks.Domain.Entities;
 global using ErpSystem.Modules.HR.Infrastructure.Common.Services;
 global using ErpSystem.Modules.HR.Infrastructure.Common.Settings;
-global using ErpSystem.Modules.HR.Infrastructure.Localization.Configurations;
 global using ErpSystem.Modules.HR.Infrastructure.Persistence;
 global using ErpSystem.Modules.HR.Infrastructure.Validation;
 global using ErpSystem.Modules.Platform.Contracts.Authentication.Tokens;

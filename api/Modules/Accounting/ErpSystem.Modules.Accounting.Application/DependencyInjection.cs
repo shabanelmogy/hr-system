@@ -3,6 +3,8 @@ using ErpSystem.BuildingBlocks.Application;
 using ErpSystem.BuildingBlocks.Messaging;
 using ErpSystem.Modules.Accounting.Application.Parties;
 using ErpSystem.Modules.Accounting.Application.Features.Finance.FiscalYears.Errors;
+using ErpSystem.Modules.Accounting.Application.Features.Finance.LedgerSetup.Currencies.Errors;
+using ErpSystem.Modules.Accounting.Application.Features.Finance.LedgerSetup.Commands;
 using ErpSystem.Modules.Contacts.Contracts;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -17,6 +19,8 @@ public static class DependencyInjection
         services.AddValidatorsFromAssembly(AssemblyReference.Assembly, includeInternalTypes: true);
         services.AddApplicationPipeline();
         services.AddScoped<FiscalYearErrors>();
+        services.AddScoped<CurrencyErrors>();
+        services.AddScoped<LedgerSetupErrors>();
         services.AddScoped<AccountingPartyIntegrationConsumer>();
         services.AddScoped<IIntegrationEventHandler<PartyCreatedIntegrationEvent>>(provider =>
             provider.GetRequiredService<AccountingPartyIntegrationConsumer>());

@@ -10,11 +10,10 @@ public static class OrganizationalResources
     public const string Positions = "positions";
     public const string JobDescriptions = "job-descriptions";
     public const string CostCenters = "cost-centers";
-    public const string Currencies = "currencies";
 
     public static readonly string[] All =
     [
-        Branches, Departments, Divisions, JobTitles, JobLevels, Positions, JobDescriptions, CostCenters, Currencies
+        Branches, Departments, Divisions, JobTitles, JobLevels, Positions, JobDescriptions, CostCenters
     ];
 
     public static bool IsSupported(string? resource) =>

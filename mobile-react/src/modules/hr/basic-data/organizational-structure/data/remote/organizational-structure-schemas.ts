@@ -30,9 +30,6 @@ export const organizationalStructureItemSchema: z.ZodType<OrganizationalStructur
   jobDescriptionStatus: z.union([z.number(), z.string()]).nullish().transform((value) => value ?? undefined),
   effectiveDate: nullableString, expiryDate: nullableString, decisionReason: nullableString,
   isCentralized: z.boolean().optional().default(false),
-  symbol: nullableString,
-  exchangeRateToDefault: nullableNumber,
-  isDefault: z.boolean().optional().default(false),
 }).passthrough() as z.ZodType<OrganizationalStructureItem>;
 export const organizationalStructurePageSchema: z.ZodType<OrganizationalStructurePage> = z.object({ items: z.array(organizationalStructureItemSchema), metaData: pageMetadataSchema });
 export const organizationalStructureLookupSchema: z.ZodType<OrganizationalStructureLookup[]> = z.array(z.object({
