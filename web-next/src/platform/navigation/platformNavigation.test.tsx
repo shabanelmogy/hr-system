@@ -20,6 +20,6 @@ describe("Platform internal navigation", () => {
     const paths = entries().map((item) => item.path);
     expect(paths).not.toContain(appRoutes.modules.reporting.crystalReports);
     expect(paths).not.toContain(appRoutes.modules.crm.appointments);
-    expect(paths).not.toContain(appRoutes.modules.accounting.fiscalYears);
+    expect(paths).not.toContain(appRoutes.modules.accounting.ledgerSetup.fiscalYears);
   });
 });

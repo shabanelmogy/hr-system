@@ -1,4 +1,4 @@
-export const districtManagementViews = ["grid", "cards", "chart", "import"] as const;
+export const districtManagementViews = ["grid", "cards", "chart", "report", "import"] as const;
 
 export type DistrictManagementView = (typeof districtManagementViews)[number];
 

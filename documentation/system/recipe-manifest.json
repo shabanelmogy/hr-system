@@ -242,6 +242,46 @@
       "id": "accounting-ledger-setup-mobile",
       "path": "../mobile-react/accounting-ledger-setup-mobile-reference.md",
       "title": "Accounting Ledger Setup Expo implementation contract"
+    },
+    {
+      "id": "ledger-setup-currency-master",
+      "path": "../project/LEDGER_SETUP_CURRENCY_FEATURE_FULL_REVIEW.md",
+      "title": "Ledger Setup Currency cross-platform master review"
+    },
+    {
+      "id": "ledger-setup-currency-api",
+      "path": "../api/LedgerSetupCurrency_API_Implementation_Profile.md",
+      "title": "Ledger Setup Currency API implementation profile"
+    },
+    {
+      "id": "ledger-setup-currency-web",
+      "path": "../web-next/features/ledger-setup-currency-frontend-reference.md",
+      "title": "Ledger Setup Currency Next.js implementation profile"
+    },
+    {
+      "id": "ledger-setup-currency-mobile",
+      "path": "../mobile-react/ledger-setup-currency-mobile-reference.md",
+      "title": "Ledger Setup Currency Expo implementation profile"
+    },
+    {
+      "id": "ledger-setup-coa-hierarchy-master",
+      "path": "../project/LEDGER_SETUP_COA_HIERARCHY_FEATURE_FULL_REVIEW.md",
+      "title": "Accounting Chart of Accounts and Hierarchy cross-platform implementation contract"
+    },
+    {
+      "id": "ledger-setup-coa-hierarchy-api",
+      "path": "../api/LedgerSetupCoaHierarchy_API_Implementation_Profile.md",
+      "title": "Accounting Chart of Accounts and Hierarchy API implementation contract"
+    },
+    {
+      "id": "ledger-setup-coa-hierarchy-web",
+      "path": "../web-next/features/ledger-setup-coa-hierarchy-frontend-reference.md",
+      "title": "Accounting Chart of Accounts and Hierarchy Next.js implementation contract"
+    },
+    {
+      "id": "ledger-setup-coa-hierarchy-mobile",
+      "path": "../mobile-react/ledger-setup-coa-hierarchy-mobile-reference.md",
+      "title": "Accounting Chart of Accounts and Hierarchy Expo implementation contract"
     }
   ],
   "requiredFileManifests": [
@@ -256,7 +296,9 @@
     "features/fiscal-years/required-files.json",
     "features/workforce-planning/required-files.json",
     "features/tenant-module-entitlements/required-files.json",
-    "features/accounting-ledger-setup/required-files.json"
+    "features/accounting-ledger-setup/required-files.json",
+    "features/ledger-setup-currency/required-files.json",
+    "features/ledger-setup-coa-hierarchy/required-files.json"
   ],
   "recipes": [
     {
@@ -3090,6 +3132,184 @@
         { "book": "accounting-ledger-setup-master", "sections": [8, 9, 10] },
         { "book": "accounting-ledger-setup-web", "sections": [12, 13, 14] },
         { "book": "accounting-ledger-setup-mobile", "sections": [14, 15] }
+      ]
+    },
+    {
+      "id": "ledger-setup-currency-phase-00-implementation-preflight",
+      "title": "Ledger Setup Currency Phase 00 - Implementation Preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "generated/ledger-setup-currency/PHASE-00-implementation-preflight.md",
+      "sources": [
+        { "book": "ledger-setup-currency-master", "sections": [1, 2, 5, 8, 9] },
+        { "book": "ledger-setup-currency-api", "sections": [1, 10, 11] },
+        { "book": "ledger-setup-currency-web", "sections": [1, 2, 12, 13] },
+        { "book": "ledger-setup-currency-mobile", "sections": [1, 14, 15] }
+      ]
+    },
+    {
+      "id": "ledger-setup-currency-phase-01-domain-api",
+      "title": "Ledger Setup Currency Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "generated/ledger-setup-currency/PHASE-01-domain-api.md",
+      "sources": [
+        { "book": "ledger-setup-currency-master", "sections": [3, 4, 6] },
+        { "book": "ledger-setup-currency-api", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }
+      ]
+    },
+    {
+      "id": "ledger-setup-currency-phase-02-web-client",
+      "title": "Ledger Setup Currency Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "generated/ledger-setup-currency/PHASE-02-web-client.md",
+      "sources": [
+        { "book": "ledger-setup-currency-master", "sections": [3, 4, 6, 7] },
+        { "book": "ledger-setup-currency-web", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14] }
+      ]
+    },
+    {
+      "id": "ledger-setup-currency-phase-03-mobile-client",
+      "title": "Ledger Setup Currency Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "generated/ledger-setup-currency/PHASE-03-mobile-client.md",
+      "sources": [
+        { "book": "ledger-setup-currency-master", "sections": [3, 4, 6, 7] },
+        { "book": "ledger-setup-currency-mobile", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15] }
+      ]
+    },
+    {
+      "id": "ledger-setup-currency-phase-04-domain-actions",
+      "title": "Ledger Setup Currency Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "generated/ledger-setup-currency/PHASE-04-domain-actions.md",
+      "sources": [
+        { "book": "ledger-setup-currency-master", "sections": [3, 4, 6, 7, 8] },
+        { "book": "ledger-setup-currency-api", "sections": [6, 7, 8] },
+        { "book": "ledger-setup-currency-web", "sections": [6, 7, 8, 9] },
+        { "book": "ledger-setup-currency-mobile", "sections": [9, 10, 11] }
+      ]
+    },
+    {
+      "id": "ledger-setup-currency-phase-05-integration-runtime",
+      "title": "Ledger Setup Currency Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "generated/ledger-setup-currency/PHASE-05-integration-runtime.md",
+      "sources": [
+        { "book": "ledger-setup-currency-master", "sections": [4, 5, 6, 7, 9] },
+        { "book": "ledger-setup-currency-api", "sections": [8, 9, 10] },
+        { "book": "ledger-setup-currency-web", "sections": [8, 10, 13] },
+        { "book": "ledger-setup-currency-mobile", "sections": [2, 11, 12, 15] }
+      ]
+    },
+    {
+      "id": "ledger-setup-currency-phase-06-verification-acceptance",
+      "title": "Ledger Setup Currency Phase 06 - Verification and Acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "generated/ledger-setup-currency/PHASE-06-verification-acceptance.md",
+      "sources": [
+        { "book": "ledger-setup-currency-master", "sections": [8, 9, 10] },
+        { "book": "ledger-setup-currency-api", "sections": [10, 11] },
+        { "book": "ledger-setup-currency-web", "sections": [12, 13, 14] },
+        { "book": "ledger-setup-currency-mobile", "sections": [14, 15] }
+      ]
+    },
+    {
+      "id": "ledger-setup-currency-phase-07-customer-education-closure",
+      "title": "Ledger Setup Currency Phase 07 - Customer Education and Closure",
+      "template": "templates/PHASE-07-customer-education-closure.template.md",
+      "output": "generated/ledger-setup-currency/PHASE-07-customer-education-closure.md",
+      "sources": [
+        { "book": "ledger-setup-currency-master", "sections": [8, 9, 10] },
+        { "book": "ledger-setup-currency-web", "sections": [12, 13, 14] },
+        { "book": "ledger-setup-currency-mobile", "sections": [14, 15] }
+      ]
+    },
+    {
+      "id": "ledger-setup-coa-hierarchy-phase-00-implementation-preflight",
+      "title": "Accounting Chart of Accounts and Hierarchy Phase 00 - Implementation Preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "generated/ledger-setup-coa-hierarchy/PHASE-00-implementation-preflight.md",
+      "sources": [
+        { "book": "ledger-setup-coa-hierarchy-master", "sections": [1, 2, 5, 8, 9] },
+        { "book": "ledger-setup-coa-hierarchy-api", "sections": [1, 10, 11] },
+        { "book": "ledger-setup-coa-hierarchy-web", "sections": [1, 2, 12, 13] },
+        { "book": "ledger-setup-coa-hierarchy-mobile", "sections": [1, 14, 15] }
+      ]
+    },
+    {
+      "id": "ledger-setup-coa-hierarchy-phase-01-domain-api",
+      "title": "Accounting Chart of Accounts and Hierarchy Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "generated/ledger-setup-coa-hierarchy/PHASE-01-domain-api.md",
+      "sources": [
+        { "book": "ledger-setup-coa-hierarchy-master", "sections": [3, 4, 6] },
+        { "book": "ledger-setup-coa-hierarchy-api", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }
+      ]
+    },
+    {
+      "id": "ledger-setup-coa-hierarchy-phase-02-web-client",
+      "title": "Accounting Chart of Accounts and Hierarchy Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "generated/ledger-setup-coa-hierarchy/PHASE-02-web-client.md",
+      "sources": [
+        { "book": "ledger-setup-coa-hierarchy-master", "sections": [3, 4, 6, 7] },
+        { "book": "ledger-setup-coa-hierarchy-web", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14] }
+      ]
+    },
+    {
+      "id": "ledger-setup-coa-hierarchy-phase-03-mobile-client",
+      "title": "Accounting Chart of Accounts and Hierarchy Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "generated/ledger-setup-coa-hierarchy/PHASE-03-mobile-client.md",
+      "sources": [
+        { "book": "ledger-setup-coa-hierarchy-master", "sections": [3, 4, 6, 7] },
+        { "book": "ledger-setup-coa-hierarchy-mobile", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15] }
+      ]
+    },
+    {
+      "id": "ledger-setup-coa-hierarchy-phase-04-domain-actions",
+      "title": "Accounting Chart of Accounts and Hierarchy Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "generated/ledger-setup-coa-hierarchy/PHASE-04-domain-actions.md",
+      "sources": [
+        { "book": "ledger-setup-coa-hierarchy-master", "sections": [3, 4, 6, 7, 8] },
+        { "book": "ledger-setup-coa-hierarchy-api", "sections": [6, 7, 8] },
+        { "book": "ledger-setup-coa-hierarchy-web", "sections": [6, 7, 8, 9] },
+        { "book": "ledger-setup-coa-hierarchy-mobile", "sections": [9, 10, 11] }
+      ]
+    },
+    {
+      "id": "ledger-setup-coa-hierarchy-phase-05-integration-runtime",
+      "title": "Accounting Chart of Accounts and Hierarchy Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "generated/ledger-setup-coa-hierarchy/PHASE-05-integration-runtime.md",
+      "sources": [
+        { "book": "ledger-setup-coa-hierarchy-master", "sections": [4, 5, 6, 7, 9] },
+        { "book": "ledger-setup-coa-hierarchy-api", "sections": [8, 9, 10] },
+        { "book": "ledger-setup-coa-hierarchy-web", "sections": [8, 10, 13] },
+        { "book": "ledger-setup-coa-hierarchy-mobile", "sections": [2, 11, 12, 15] }
+      ]
+    },
+    {
+      "id": "ledger-setup-coa-hierarchy-phase-06-verification-acceptance",
+      "title": "Accounting Chart of Accounts and Hierarchy Phase 06 - Verification and Acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "generated/ledger-setup-coa-hierarchy/PHASE-06-verification-acceptance.md",
+      "sources": [
+        { "book": "ledger-setup-coa-hierarchy-master", "sections": [8, 9, 10] },
+        { "book": "ledger-setup-coa-hierarchy-api", "sections": [10, 11] },
+        { "book": "ledger-setup-coa-hierarchy-web", "sections": [12, 13, 14] },
+        { "book": "ledger-setup-coa-hierarchy-mobile", "sections": [14, 15] }
+      ]
+    },
+    {
+      "id": "ledger-setup-coa-hierarchy-phase-07-customer-education-closure",
+      "title": "Accounting Chart of Accounts and Hierarchy Phase 07 - Customer Education and Closure",
+      "template": "templates/PHASE-07-customer-education-closure.template.md",
+      "output": "generated/ledger-setup-coa-hierarchy/PHASE-07-customer-education-closure.md",
+      "sources": [
+        { "book": "ledger-setup-coa-hierarchy-master", "sections": [8, 9, 10] },
+        { "book": "ledger-setup-coa-hierarchy-web", "sections": [12, 13, 14] },
+        { "book": "ledger-setup-coa-hierarchy-mobile", "sections": [14, 15] }
       ]
     }
   ]

@@ -17,7 +17,7 @@ describe("performance budget policy", () => {
   it("classifies protected shell entry routes separately from normal business routes", () => {
     expect(classifyRoute("/")).toBe("protected-shell");
     expect(classifyRoute("/apps/[moduleCode]")).toBe("protected-shell");
-    expect(classifyRoute("/finance/fiscal-years")).toBe("business-app");
+    expect(classifyRoute("/finance/ledger-setup/fiscal-years")).toBe("business-app");
   });
 
   it("isolates known heavyweight feature entry points", () => {
@@ -42,7 +42,7 @@ describe("performance budget policy", () => {
     const violations = findRouteClassBudgetViolations(
       [
         { route: "/login", bytes: 1.4 * MIB },
-        { route: "/finance/fiscal-years", bytes: 2.6 * MIB },
+        { route: "/finance/ledger-setup/fiscal-years", bytes: 2.6 * MIB },
         { route: "/appointments", bytes: 2.5 * MIB },
       ],
       {
@@ -60,7 +60,7 @@ describe("performance budget policy", () => {
         budgetBytes: 1.3 * MIB,
       },
       {
-        route: "/finance/fiscal-years",
+        route: "/finance/ledger-setup/fiscal-years",
         routeClass: "business-app",
         bytes: 2.6 * MIB,
         budgetBytes: 2.55 * MIB,

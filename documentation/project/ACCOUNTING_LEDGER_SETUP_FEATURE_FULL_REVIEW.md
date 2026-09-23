@@ -3,6 +3,8 @@
 Status: **Phase 01 Domain/API and persistence migration implemented — client slices and final Phase 06 verification remain gated**.
 Plan: `accounting-core-gl` / `Slice 1 — Ledger setup spine`.  
 Applied implementation reference: Fiscal Years in the same Accounting module.
+Canonical child execution authority:
+`documentation/plans/business/accounting-core-gl/SLICE-01-LEDGER-SETUP-EXECUTION.md`.
 
 ## 1. Scope, authority, and current/target boundary
 
@@ -150,10 +152,21 @@ financial FX authority; historical Accounting rates replace it.
 
 ## 7. Web and Mobile product contract
 
+This document remains the umbrella cross-platform contract and historical evidence.
+Future client implementation/refactoring follows the child Screen Contracts in
+`SLICE-01-LEDGER-SETUP-EXECUTION.md`. The generic Ledger Setup record/renderer is
+not the target architecture; child capabilities own typed contracts and focused
+screen composition.
+
 Web adds first-class Finance setup routes for Accounts and Accounting Setup.
 COA uses `SplitTreeView` / `HierarchicalTreeList`; lists use `MyDataGrid`;
 forms use `MyForm` and shared fields/dialogs/feedback. Search/filter/sort for
 potentially large lists is server-owned.
+
+For Web COA, the closest composition reference is the existing Cost Center tree:
+reuse its `SplitTreeView` master/detail interaction shape (selection, search,
+detail/empty-detail panels and contextual child/edit actions) without copying HR
+fields, permissions, move rules or domain code.
 
 Mobile uses `AppHierarchicalTree`, `AppListScreen`, `AppDataTable`,
 `AppForm`, `AppPageHeader`, `AppStateView` and `ConfirmationDialog`.
@@ -170,6 +183,10 @@ implement Domain/API, Web, Mobile, domain actions and integration/runtime. Each
 phase updates these applied books and `required-files.json` with actual source
 evidence.
 
+Within Slice 1, local implementation/repair now proceeds through child packages
+`1A`–`1H`; `1V` performs the required cross-package reconciliation. A child can be
+locally complete while the umbrella remains Not Verified.
+
 Phase 01 implements the Domain/API surface and the lifecycle matrix above.
 Client implementation and final Phase 06 reconciliation remain separate evidence
 gates. `20260922091842_InitialAccounting` was generated from the complete current
@@ -179,6 +196,15 @@ database carrying the superseded Accounting history must be reset before applyin
 Phase 06 must reconcile every Required target here against runtime and return
 `Verified` or `Not Verified`. A feature regression or missing Required behavior
 cannot be accepted as a release note.
+
+Web and Mobile clients now have source implementations, but their live journey
+and translation audit remains open. The Web parent layout registers Accounting
+EN/AR resources for all Ledger Setup routes. Both clients page large setup
+collections and fetch the full account detail before editing from the tree,
+because tree nodes omit RowVersion. The API currently returns list arrays
+without total counts and exposes server search only for Accounts and Dimension
+Definitions; other paged views may search only their current page. This contract
+gap must be resolved before describing collection-wide search as complete.
 
 Only after `Verified` may Phase 07 create/finalize
 `documentation/plans/business/accounting-core-gl/education/accounting-ledger-setup.md`.

@@ -46,8 +46,8 @@
 - Fields: Arabic name, English name, code, State ID. Names are trimmed and code is uppercased; uniqueness is State-scoped.
 - List: one-based API paging; browser/mobile convert their zero-based display page; default status is active; supported field/operator/status/State/address-presence filters and sort allow-list are enforced server-side.
 - Import: exact first-sheet XLSX headers `nameAr,nameEn,code,stateName`; 5 MiB and 100-row bounds; `States:View` active lookup; `Districts:Create`; named `{ districts }` request; atomic response `{ createdCount }`; ambiguous submission requires reconciliation.
-- Report: published managed catalog key `districts`; `Districts:View` plus managed Run access; District/State/active-Address-count dataset; approved District/State exact filters; shared viewer.
-- Permissions: `Districts:View`, `Districts:Create`, `Districts:Edit`, and `Districts:Delete`; both imports additionally require `States:View`; mobile also observes global read-only state; mobile Report additionally requires `CrystalReports:View` before catalog access.
+ - Report: global deployment catalog key `districts`; Super Admin global-report permission; District/State/active-Address-count dataset; approved District/State exact filters; shared viewer.
+ - Permissions: `Districts:View`, `Districts:Create`, `Districts:Edit`, and `Districts:Delete`; both imports additionally require `States:View`; mobile observes global read-only state; the geographic Report uses the Super Admin global reporting policy.
 - Notifications/realtime: post-commit resource is `districts`; browser and Expo invalidate that root and mobile maps `/basic-data/districts` directly.
 
 ## Evidence register

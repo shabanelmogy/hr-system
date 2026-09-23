@@ -58,7 +58,8 @@ Poster/Controller، Finance Manager، Auditor.
 ## Domain and source of truth
 
 - Accounting owns financial ledger truth.
-- Platform owns identity/tenant/company/branch.
+- Platform owns identity/session/tenant/company actor context; HR Organizational
+  Structure owns Branch and CostCenter masters.
 - Contacts owns Party master.
 - Fiscal Years/Periods already belong to Accounting and are reused; current runtime does not prove an independent per-period close API.
 - `JournalEntry` + `JournalLine` is the single accounting source of truth; posted lines are immutable.
@@ -85,6 +86,29 @@ Poster/Controller، Finance Manager، Auditor.
 - COA maps first to existing Web/Mobile hierarchical tree primitives.
 - Empty/loading/error/forbidden/read-only/conflict/unsaved/RTL/accessibility/
   responsive states are Required.
+
+## Slice 1 execution decomposition
+
+`Slice 1 — Ledger setup spine` is executed as focused child packages under the
+existing `accounting-ledger-setup` umbrella. The package order and exact Screen
+Contracts live in `SLICE-01-LEDGER-SETUP-EXECUTION.md`:
+
+1. `1A` Currency.
+2. `1B` COA + Hierarchy Levels.
+3. `1C` Dimensions + Account Dimension Policies.
+4. `1D` Books + Journal Definitions.
+5. `1E` Accounting Company Settings.
+6. `1F` Exchange Rates.
+7. `1G` Link Accounts.
+8. `1H` Posting Profiles + Resolution Preview.
+9. `1V` Slice integration and verification.
+
+Each child requires typed API/transport contracts before client completion and a
+specific Web/Mobile Screen Contract. For COA, Web must reuse `SplitTreeView` and use
+the existing Cost Center tree master/detail composition as the closest interaction
+reference without copying HR domain logic. The umbrella generic Ledger Setup
+record/renderer is current implementation evidence, not the long-term client
+architecture.
 
 ## Privacy / security / commercial applicability
 

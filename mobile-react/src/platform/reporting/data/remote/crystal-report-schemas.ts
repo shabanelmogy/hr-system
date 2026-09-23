@@ -5,8 +5,7 @@ import type {
   CrystalReportRenderRequest,
 } from '../../domain/models/crystal-report';
 
-export const crystalReportListItemSchema: z.ZodType<CrystalReportListItem> = z.object({
-  id: z.string().uuid(),
+const crystalReportListItemShape = {
   entityKey: z.string().min(1),
   reportKey: z.string().min(1),
   displayName: z.string().min(1),
@@ -18,9 +17,20 @@ export const crystalReportListItemSchema: z.ZodType<CrystalReportListItem> = z.o
   isArchived: z.boolean(),
   rowVersion: z.string().min(1),
   updatedOn: z.string().nullable(),
+};
+
+export const crystalReportListItemSchema: z.ZodType<CrystalReportListItem> = z.object({
+  id: z.string().uuid(),
+  ...crystalReportListItemShape,
+});
+
+export const globalCrystalReportListItemSchema: z.ZodType<CrystalReportListItem> = z.object({
+  id: z.string().min(1),
+  ...crystalReportListItemShape,
 });
 
 export const publishedCrystalReportsSchema = z.array(crystalReportListItemSchema);
+export const globalCrystalReportsSchema = z.array(globalCrystalReportListItemSchema);
 
 export const crystalReportRenderRequestSchema: z.ZodType<CrystalReportRenderRequest> = z.object({
   language: z.enum(['ar', 'en']),

@@ -148,12 +148,43 @@ export const routePolicies: readonly RoutePolicy[] = [
     ],
   },
   {
-    path: appRoutes.modules.accounting.fiscalYears,
+    path: appRoutes.modules.accounting.ledgerSetup.fiscalYears,
     permissions: [permissions.ViewFiscalYears],
   },
   {
     path: appRoutes.modules.accounting.ledgerSetup.currencies,
     permissions: [permissions.ViewAccountingSetup],
+  },
+  {
+    path: appRoutes.modules.accounting.ledgerSetup.accountingSettings,
+    permissions: [permissions.ViewAccountingSetup],
+  },
+  {
+    path: appRoutes.modules.accounting.ledgerSetup.accounts,
+    permissions: [permissions.ViewAccounts],
+  },
+  {
+    path: appRoutes.modules.accounting.ledgerSetup.hierarchyLevels,
+    permissions: [permissions.ViewAccounts],
+  },
+  {
+    path: appRoutes.modules.accounting.ledgerSetup.dimensions,
+    permissions: [permissions.ViewDimensions],
+  },
+  ...[
+    appRoutes.modules.accounting.ledgerSetup.books,
+    appRoutes.modules.accounting.ledgerSetup.journals,
+    appRoutes.modules.accounting.ledgerSetup.exchangeRates,
+    appRoutes.modules.accounting.ledgerSetup.accountDetermination,
+  ].map((path) => ({ path, permissions: [permissions.ViewAccountingSetup] as const })),
+  {
+    path: appRoutes.modules.accounting.ledgerSetup.index,
+    anyOf: [
+      { permissions: [permissions.ViewFiscalYears] },
+      { permissions: [permissions.ViewAccountingSetup] },
+      { permissions: [permissions.ViewAccounts] },
+      { permissions: [permissions.ViewDimensions] },
+    ],
   },
   {
     path: appRoutes.modules.hr.workforcePlanning.plans,

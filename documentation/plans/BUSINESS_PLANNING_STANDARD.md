@@ -176,6 +176,15 @@ Run the 5-point parity audit:
 4. Listing & Filtering
 5. Mock/Test Data Generator
 
+When an implementation slice contains materially different user journeys or domain
+workflows, define a separate **Screen/Workflow Contract** for each proposed child
+feature. The contract names the business workflow, participating screens/views,
+domain actions/states, Required/Deferred/Excluded client surfaces, and acceptance
+outcome. Pair it with a reuse audit that maps each screen/workflow need to an
+existing shared component, a generic extension, or justified feature-specific
+composition. One generic renderer or umbrella page does not satisfy this requirement
+for heterogeneous workflows.
+
 Exit: every domain capability has an intentional journey or explicit Deferred/Excluded decision.
 
 ## Stage 9 — Reporting, import/export, and operations
@@ -244,6 +253,16 @@ ID; it does not maintain a competing duplicate backlog.
 
 Then break implementation into dependency-ordered vertical slices with entry/exit gates.
 
+Before a slice is handed to the implementation documentation system, complete its
+**Feature Decomposition Gate**. Record `Single feature` only when the slice is one
+coherent domain/UI workflow with one acceptance boundary. Record `Decompose` when it
+contains materially different workflows; assign two or more stable child Feature IDs
+and give each child its own Screen/Workflow Contract from
+`FEATURE_DECOMPOSITION_TEMPLATE.md`, scope boundary, dependencies, and independently
+testable acceptance outcome. Shared infrastructure can remain one technical
+dependency and does not require merging child workflows back into an umbrella
+feature.
+
 ## Stage 14 — Post-implementation customer education and video pack
 
 Every implementation phase/slice must classify its customer-education output before
@@ -304,3 +323,5 @@ education/video document, or a reviewed `N/A — reason`.
 - Authorization hidden only in navigation.
 - “We'll handle edge cases later.”
 - Unresolved source-of-truth ownership at implementation start.
+- Treating materially different workflows as one feature because they can share a
+  generic renderer, controller, or documentation package.

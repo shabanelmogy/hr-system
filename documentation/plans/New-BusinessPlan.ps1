@@ -37,6 +37,7 @@ if (Test-Path -LiteralPath $planRoot) {
 
 New-Item -ItemType Directory -Path $planRoot | Out-Null
 New-Item -ItemType Directory -Path (Join-Path $planRoot "diagrams") | Out-Null
+New-Item -ItemType Directory -Path (Join-Path $planRoot "decomposition") | Out-Null
 
 $content = Get-Content -LiteralPath $template -Raw
 $content = $content.Replace("<Business Capability>", $Name)
@@ -62,4 +63,5 @@ Set-Content -LiteralPath (Join-Path $planRoot "RESEARCH.md") -Value "# $Name - R
 
 Write-Host "Created $planFile"
 Write-Host "Next: complete DISCOVERY.md, EVIDENCE.md and SPEC_SUMMARY.md; add '$PlanId' to PLAN_REGISTRY.md; obtain plan-drafting approval; then complete PLAN.md and G0-G4."
+Write-Host "Before implementation handoff, complete the Feature Decomposition Gate; use FEATURE_DECOMPOSITION_TEMPLATE.md for every child of a Decompose slice."
 Write-Host "Then run ./documentation/plans/Check-Planning.ps1 before handoff."

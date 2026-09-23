@@ -4,6 +4,8 @@ using ErpSystem.Modules.Accounting.Infrastructure.Messaging;
 using ErpSystem.Modules.Accounting.Application.Parties;
 using ErpSystem.Modules.Accounting.Infrastructure.Parties;
 using ErpSystem.Modules.Accounting.Contracts;
+using ErpSystem.Modules.Accounting.Contracts.Reporting;
+using ErpSystem.Modules.Accounting.Infrastructure.Features.Reporting;
 using ErpSystem.Modules.Accounting.Infrastructure.Features.Finance.FiscalYears.Persistence;
 using ErpSystem.Modules.Accounting.Infrastructure.Features.Finance.FiscalYears.Jobs;
 using ErpSystem.Modules.Accounting.Infrastructure.Features.Finance.LedgerSetup.Persistence;
@@ -51,6 +53,7 @@ public static class DependencyInjection
         services.AddScoped<IFiscalYearChangeScheduler, FiscalYearChangeScheduler>();
         services.AddScoped<FiscalYearChangedJob>();
         services.AddScoped<IFiscalYearPlanningSource, FiscalYearPlanningSource>();
+        services.AddScoped<IAccountingReportingSource, AccountingReportingSource>();
         services.AddScoped<IAccountingCurrencyCatalog, AccountingCurrencyCatalog>();
         services.AddScoped<ErpSystem.Modules.Accounting.Application.Features.Finance.LedgerSetup.Currencies.Abstractions.ICurrencyReadStore, CurrencyReadStore>();
         services.AddScoped<ErpSystem.Modules.Accounting.Application.Features.Finance.LedgerSetup.Currencies.Abstractions.ICurrencyWriteStore, CurrencyWriteStore>();

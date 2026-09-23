@@ -62,22 +62,20 @@ src/modules/hr/basic-data/countries/
     queries/
       country-keys.ts
       use-countries.ts
-      use-country-reports.ts
-    reporting/
-      country-report-api.ts
+    reporting/ (shared global Crystal report adapter)
     screens/CountriesScreen.tsx
     utils/country-mock-data.ts
 
 src/platform/reporting/
   index.ts
-  crystal-reports/
-    crystal-report-api.ts
-    crystal-report-schemas.ts
+  presentation/ManagedCrystalReportView.tsx
+  data/remote/crystal-report-remote-data-source.ts
+  data/remote/crystal-report-schemas.ts
 ```
 
 Required integration sources:
 
-- `src/modules/hr/basic-data/index.ts` — public screen export;
+- `src/modules/reference-data/geography/countries/index.ts` — public screen export;
 - `src/core/constants/routes.ts` — typed path;
 - `src/platform/auth/presentation/rbac/route-manifest.ts` — canonical access policy;
 - `src/platform/auth/presentation/rbac/permissions.ts` — Countries and managed-report permission constants;
@@ -358,7 +356,9 @@ for the canonical contract. Feature-specific behavior:
 
 - The catalog comes from `crystalReportsApi.listPublished('countries')` and is
   stale for five minutes under one language-independent query key.
-- The Report mode is visible only with `CrystalReports:View`. The report
+- The geographic Report mode is available to the Platform Super Admin through
+  the global Crystal catalog/render boundary. Tenant `CrystalReports:View` is not
+  used for Countries. The report
   component repeats that authorization check before mounting its catalog query
   and renders a localized forbidden state if it is composed elsewhere.
 - Catalog failure shows a localized warning with Retry; a loaded-but-empty

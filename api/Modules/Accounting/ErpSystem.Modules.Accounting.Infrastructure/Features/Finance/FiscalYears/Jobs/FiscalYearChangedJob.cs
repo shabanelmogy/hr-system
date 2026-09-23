@@ -25,7 +25,7 @@ public sealed class FiscalYearChangedJob(INotificationPublisher notificationPubl
             request.Action,
             parameters,
             request.FiscalYear.Id.ToString(CultureInfo.InvariantCulture),
-            "/finance/fiscal-years",
+            "/finance/ledger-setup/fiscal-years",
             request.ActorUserId,
             request.OperationId,
             request.TenantId,

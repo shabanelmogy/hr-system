@@ -2,13 +2,13 @@
 
 ## 1. Feature boundary
 
-Source lives under `web-next/src/modules/hr/finance/fiscal-years`; the App Router
+Source lives under `web-next/src/modules/accounting/fiscal-years`; the App Router
 file only renders `FiscalYearsPage`. Types, services, hooks, validation, visual
 composition, and orchestration stay inside the feature boundary.
 
 ## 2. Route and navigation
 
-Canonical route is `/finance/fiscal-years`. Typed routes, access policy,
+Canonical route is `/finance/ledger-setup/fiscal-years`. Typed routes, access policy,
 navigation type/title, and the shared Finance sidebar config all reference it.
 Visibility requires `FiscalYears:View`.
 
@@ -88,4 +88,5 @@ year therefore returns to Workforce Planning without an inactive-cache gap.
 Feature ESLint, standard type-check, architecture, service/validation, route,
 permission parity, and realtime tests are required. Grid, Cards, detail, create,
 edit, lifecycle, and mock data are Required. Chart and bulk lifecycle are Excluded.
-Report/import/export are Deferred and have no reachable placeholder.
+Report is Required through the shared managed Crystal component with entity key
+`fiscalyears`; Import and Export remain Deferred with no reachable placeholder.

@@ -16,6 +16,7 @@ import { currencies } from './currencies';
 import { workforcePlanning } from './workforcePlanning';
 import { modules } from './modules';
 import { offlineOperations } from './offlineOperations';
+import { ledgerSetup } from './ledgerSetup';
 
 export { version } from './constants';
 
@@ -47,6 +48,7 @@ export const apiRoutes = {
   workforcePlanning,
   modules,
   offlineOperations,
+  ledgerSetup,
 };
 
 export default apiRoutes;

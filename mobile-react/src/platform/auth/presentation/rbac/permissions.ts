@@ -56,6 +56,10 @@ export const permissions = {
   ManageFiscalYearLifecycle: 'FiscalYears:ManageLifecycle',
   ViewAccountingSetup: 'AccountingSetup:View',
   ManageAccountingSetup: 'AccountingSetup:Manage',
+  ViewAccounts: 'Accounts:View',
+  ManageAccounts: 'Accounts:Manage',
+  ViewDimensions: 'Dimensions:View',
+  ManageDimensions: 'Dimensions:Manage',
   GenerateInvoiceQrCode: 'Invoices:GenerateQrCode',
   ViewWorkforcePlans: 'WorkforcePlans:View',
   CreateWorkforcePlans: 'WorkforcePlans:Create',
@@ -74,6 +78,7 @@ export const permissions = {
   ViewWorkforceTrace: 'WorkforcePlanning:ViewTrace',
   ViewWorkforceFinancials: 'WorkforcePlanning:ViewFinancials',
   ViewCrystalReports: 'CrystalReports:View',
+  ViewGlobalCrystalReports: 'GlobalCrystalReports:View',
   CreateCrystalReports: 'CrystalReports:Create',
   DownloadCrystalReports: 'CrystalReports:Download',
   UploadCrystalReports: 'CrystalReports:Upload',
@@ -142,6 +147,8 @@ export type PermissionModule =
   | 'Recruitment'
   | 'FiscalYears'
   | 'AccountingSetup'
+  | 'Accounts'
+  | 'Dimensions'
   | 'Invoices'
   | 'WorkforcePlans'
   | 'WorkforceBudgets'

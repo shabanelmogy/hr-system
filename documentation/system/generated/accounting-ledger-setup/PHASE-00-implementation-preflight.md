@@ -19,16 +19,20 @@ slice onto concrete runtime surfaces.
 1. Record the canonical Plan ID, plan path, authorized slice/phase, and current gate
    status.
 2. Confirm the requested implementation is inside the authorized slice.
-3. Inspect the current owning runtime capability and verify there has been no
+3. Confirm the plan's Feature Decomposition Gate binds this Feature ID to one
+   coherent execution unit. When the slice is `Decompose`, read and verify the
+   child Screen/Workflow Contract and reuse audit created from
+   `documentation/plans/FEATURE_DECOMPOSITION_TEMPLATE.md`.
+4. Inspect the current owning runtime capability and verify there has been no
    material drift since planning.
-4. Complete the Existing-System Relationship Review and shared-reuse inventory.
-5. Map each slice requirement to Domain/Application/Infrastructure/Presentation,
+5. Complete the Existing-System Relationship Review and shared-reuse inventory.
+6. Map each feature-unit requirement to Domain/Application/Infrastructure/Presentation,
    Web, Mobile, tests, migrations, integrations, and documentation as applicable.
-6. Import approved business decisions from the plan into the implementation request;
+7. Import approved business decisions from the plan into the implementation request;
    do not create a competing rule set.
-7. Record any implementation-only detail that the plan intentionally left to the
+8. Record any implementation-only detail that the plan intentionally left to the
    execution workflow.
-8. Define the exact verification commands/evidence required before Phase 06 can
+9. Define the exact verification commands/evidence required before Phase 06 can
    return `Verified`.
 
 ## Drift rule
@@ -50,6 +54,12 @@ or feature-local document.
 - [ ] Canonical Plan ID/path and authorized slice are recorded, or this is explicitly
       classified as a small change inside an already approved capability.
 - [ ] Current plan gate authorizes this implementation scope.
+- [ ] Feature Decomposition Gate contains this exact Feature ID for the authorized
+      slice; `Decompose` slices have at least two distinct child Feature IDs.
+- [ ] For a decomposed slice, this child has a complete Screen/Workflow Contract:
+      closest reference, exact reusable components, workspace/screens/journeys,
+      typed transport/server criteria, states, permissions/read-only, concurrency,
+      i18n/RTL/accessibility/responsive behavior, tests, and child exit gate.
 - [ ] Current runtime was inspected for drift since planning.
 - [ ] Owning module/capability and relationship classification are confirmed.
 - [ ] No parallel/legacy/workaround owner is being introduced.
@@ -78,15 +88,15 @@ or feature-local document.
 | accounting-ledger-setup-master | 1 | `5b73e353ec94c99bbf2f74f18662bb1ec9791d359ac7b0fdce6618013e2f82e3` |
 | accounting-ledger-setup-master | 2 | `ba74f8d48e16a3250ea09da5dca94fd96d8060a1801484679bf473110211c694` |
 | accounting-ledger-setup-master | 5 | `87f60e757fef7a4b41105347f7ce21ce3a142761a1508c3cbea45625d4ea7557` |
-| accounting-ledger-setup-master | 8 | `b107d766147b00e60075b4139735ade0dcfd81d944180947a13ae4b998832a8a` |
+| accounting-ledger-setup-master | 8 | `5010a84fb7c0439c4063c5c9962bb97fb5bea17c52fe310a943dd589c35304bd` |
 | accounting-ledger-setup-master | 9 | `4614badb58c2768d465aac681ad22c3f2fa4c16ee17cc05a8fe62177d99374a7` |
-| accounting-ledger-setup-api | 1 | `c17a4b5e92cd12468b6759103ae1148006b2d9089453e32211d497d9f21ef987` |
+| accounting-ledger-setup-api | 1 | `417381f17e083b917b4a8f0873653bde08595ae4044523b1311618eae9b43f9d` |
 | accounting-ledger-setup-api | 10 | `6c7e7b50ee5365b6105ecdfe2f7cb77290a4222a0ea767cae96acb5ce46021ae` |
 | accounting-ledger-setup-api | 11 | `bacf9dc76718244f38220ef882f14c48d62caeba700a4ce2b78f979a641037fd` |
-| accounting-ledger-setup-web | 1 | `a2917b800982d2ab738dd4c6d2207f5f323a3eac604fa4169f879a4dde91d544` |
-| accounting-ledger-setup-web | 2 | `3ae47163facb78589b0d905e77eabfef8c91549bdf086af1a39397aa4900a3d2` |
-| accounting-ledger-setup-web | 12 | `75b439b17df73a16cffffd8e97025484311c390d0e5e112953df1e212bdb5290` |
+| accounting-ledger-setup-web | 1 | `ff0807989e460de1494195417eb17b7d4bc481688c8d18a1addf17c945cdd2db` |
+| accounting-ledger-setup-web | 2 | `9a77fa3eeeb87e9be4e27b877282a7d198c5bfd9dda3d4e05689273b51887341` |
+| accounting-ledger-setup-web | 12 | `e413f46c08ba02958ed38359eef8c959607ed7cf151ea359ea3678a143ddc1e2` |
 | accounting-ledger-setup-web | 13 | `2dbb41708fc772c97f51356c9903a258148eff82d8f0eca2499e8fc4c3d081c1` |
-| accounting-ledger-setup-mobile | 1 | `48c21f85cae0b04ee0edb50b7b58ea61964016dd2538667745daff7276556f58` |
-| accounting-ledger-setup-mobile | 14 | `fa1a6a215ab292e596db868893998a319a541ebfdb8cf5bb79212d1990c639cc` |
+| accounting-ledger-setup-mobile | 1 | `c1376fa68a5d894e4d9be286fa3fa86fe38af4b3ed5f49a38d9b65a4bd09296c` |
+| accounting-ledger-setup-mobile | 14 | `74fb4cb2b31e32a72d3a6edfb7d95bc52239683551f44fe7ba47e18652d784a7` |
 | accounting-ledger-setup-mobile | 15 | `bf90a02cc0efd84b676907c5a05d0d311c1e7d41561635afe08363e1cefa84ef` |

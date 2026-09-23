@@ -11,6 +11,24 @@ which remains authoritative for dependency direction, routing, and naming.
 Do not force this pattern onto static pages, dashboards, local-only forms, or
 analytics screens that do not have a server-managed collection.
 
+## Screen Pattern Gate
+
+Before implementing or rebuilding a Web screen, select a stable Pattern ID from
+[SCREEN_PATTERN_CATALOG.md](../../project/SCREEN_PATTERN_CATALOG.md) and inspect
+the registered Web and Mobile sources for the same workflow. The current paired
+references are `P-001` Countries Grid/CRUD, `P-002` Cost Centers Tree +
+Master/Detail, and `P-003` Add Tenant multi-section form.
+
+Record Web and Mobile as `Implemented`, `Adapted`, `Deferred`, or `Excluded` in
+the owning feature profile. A responsive or native composition may differ, but
+the clients must not silently diverge on fields, validation, permissions,
+lifecycle actions, dirty-state protection, or authoritative server errors.
+
+When a repeated screen shape does not fit an existing Pattern ID, update the
+central catalog, both platform references, the shared reuse catalog, and the
+affected feature profiles in the same change. Do not establish a Web-only
+look-alike pattern without checking its Mobile counterpart.
+
 ## 1. Define the Feature Before Coding
 
 Record these decisions first. Unknown values are contract gaps, not frontend

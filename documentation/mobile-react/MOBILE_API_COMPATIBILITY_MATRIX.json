@@ -1195,7 +1195,7 @@
       "offlineMode": "online-only",
       "apiSurface": "route adapter",
       "status": "aligned",
-      "note": "Ledger Setup currencies are owned by the Accounting module (acc/ledger-setup).",
+      "note": "Fiscal Years and Ledger Setup capabilities are owned by the Accounting module (acc/ledger-setup).",
       "currentRoutePolicy": {
         "kind": "permissions",
         "permissions": [
@@ -1206,6 +1206,70 @@
         "kind": "permissions",
         "permissions": [
           "ViewAccountingSetup"
+        ]
+      },
+      "currentModuleRequirement": {
+        "moduleCode": "acc",
+        "submoduleCode": "ledger-setup"
+      },
+      "targetModuleRequirement": {
+        "moduleCode": "acc",
+        "submoduleCode": "ledger-setup"
+      }
+    },
+    {
+      "source": "app/(main)/finance/ledger-setup/accounts.tsx",
+      "path": "/finance/ledger-setup/accounts",
+      "kind": "auth",
+      "currentOwner": "Accounting/ledger-setup",
+      "targetOwner": "Accounting/ledger-setup",
+      "scope": "tenant/company",
+      "offlineMode": "online-only",
+      "apiSurface": "route adapter",
+      "status": "aligned",
+      "note": "Fiscal Years and Ledger Setup capabilities are owned by the Accounting module (acc/ledger-setup).",
+      "currentRoutePolicy": {
+        "kind": "permissions",
+        "permissions": [
+          "ViewAccounts"
+        ]
+      },
+      "targetRoutePolicy": {
+        "kind": "permissions",
+        "permissions": [
+          "ViewAccounts"
+        ]
+      },
+      "currentModuleRequirement": {
+        "moduleCode": "acc",
+        "submoduleCode": "ledger-setup"
+      },
+      "targetModuleRequirement": {
+        "moduleCode": "acc",
+        "submoduleCode": "ledger-setup"
+      }
+    },
+    {
+      "source": "app/(main)/finance/ledger-setup/hierarchy-levels.tsx",
+      "path": "/finance/ledger-setup/hierarchy-levels",
+      "kind": "auth",
+      "currentOwner": "Accounting/ledger-setup",
+      "targetOwner": "Accounting/ledger-setup",
+      "scope": "tenant/company",
+      "offlineMode": "online-only",
+      "apiSurface": "route adapter",
+      "status": "aligned",
+      "note": "Fiscal Years and Ledger Setup capabilities are owned by the Accounting module (acc/ledger-setup).",
+      "currentRoutePolicy": {
+        "kind": "permissions",
+        "permissions": [
+          "ViewAccounts"
+        ]
+      },
+      "targetRoutePolicy": {
+        "kind": "permissions",
+        "permissions": [
+          "ViewAccounts"
         ]
       },
       "currentModuleRequirement": {
@@ -1684,16 +1748,16 @@
       }
     },
     {
-      "source": "app/(main)/finance/fiscal-years.tsx",
-      "path": "/finance/fiscal-years",
+      "source": "app/(main)/finance/ledger-setup/fiscal-years.tsx",
+      "path": "/finance/ledger-setup/fiscal-years",
       "kind": "auth",
-      "currentOwner": "Accounting/fiscal-years",
-      "targetOwner": "Accounting/fiscal-years",
+      "currentOwner": "Accounting/ledger-setup",
+      "targetOwner": "Accounting/ledger-setup",
       "scope": "tenant/company",
       "offlineMode": "online-only",
       "apiSurface": "route adapter",
       "status": "aligned",
-      "note": "Fiscal years are owned by the Accounting module (acc/fiscal-years).",
+      "note": "Fiscal Years and Ledger Setup capabilities are owned by the Accounting module (acc/ledger-setup).",
       "currentRoutePolicy": {
         "kind": "permissions",
         "permissions": [
@@ -1708,11 +1772,11 @@
       },
       "currentModuleRequirement": {
         "moduleCode": "acc",
-        "submoduleCode": "fiscal-years"
+        "submoduleCode": "ledger-setup"
       },
       "targetModuleRequirement": {
         "moduleCode": "acc",
-        "submoduleCode": "fiscal-years"
+        "submoduleCode": "ledger-setup"
       }
     },
     {
@@ -2286,6 +2350,268 @@
       },
       "currentModuleRequirement": null,
       "targetModuleRequirement": null
+    },
+    {
+      "source": "app/(main)/finance/ledger-setup/account-determination.tsx",
+      "path": "/finance/ledger-setup/account-determination",
+      "kind": "auth",
+      "currentOwner": "Accounting/ledger-setup",
+      "targetOwner": "Accounting/ledger-setup",
+      "scope": "tenant/company",
+      "offlineMode": "online-only",
+      "status": "aligned",
+      "note": "Fiscal Years and Ledger Setup capabilities are owned by the Accounting module (acc/ledger-setup).",
+      "currentRoutePolicy": {
+        "kind": "permissions",
+        "permissions": [
+          "ViewAccountingSetup"
+        ]
+      },
+      "targetRoutePolicy": {
+        "kind": "permissions",
+        "permissions": [
+          "ViewAccountingSetup"
+        ]
+      },
+      "currentModuleRequirement": {
+        "moduleCode": "acc",
+        "submoduleCode": "ledger-setup"
+      },
+      "targetModuleRequirement": {
+        "moduleCode": "acc",
+        "submoduleCode": "ledger-setup"
+      },
+      "apiSurface": "route adapter"
+    },
+    {
+      "source": "app/(main)/finance/ledger-setup/books.tsx",
+      "path": "/finance/ledger-setup/books",
+      "kind": "auth",
+      "currentOwner": "Accounting/ledger-setup",
+      "targetOwner": "Accounting/ledger-setup",
+      "scope": "tenant/company",
+      "offlineMode": "online-only",
+      "status": "aligned",
+      "note": "Fiscal Years and Ledger Setup capabilities are owned by the Accounting module (acc/ledger-setup).",
+      "currentRoutePolicy": {
+        "kind": "permissions",
+        "permissions": [
+          "ViewAccountingSetup"
+        ]
+      },
+      "targetRoutePolicy": {
+        "kind": "permissions",
+        "permissions": [
+          "ViewAccountingSetup"
+        ]
+      },
+      "currentModuleRequirement": {
+        "moduleCode": "acc",
+        "submoduleCode": "ledger-setup"
+      },
+      "targetModuleRequirement": {
+        "moduleCode": "acc",
+        "submoduleCode": "ledger-setup"
+      },
+      "apiSurface": "route adapter"
+    },
+    {
+      "source": "app/(main)/finance/ledger-setup/company-settings.tsx",
+      "path": "/finance/ledger-setup/company-settings",
+      "kind": "auth",
+      "currentOwner": "Accounting/ledger-setup",
+      "targetOwner": "Accounting/ledger-setup",
+      "scope": "tenant/company",
+      "offlineMode": "online-only",
+      "status": "aligned",
+      "note": "Fiscal Years and Ledger Setup capabilities are owned by the Accounting module (acc/ledger-setup).",
+      "currentRoutePolicy": {
+        "kind": "permissions",
+        "permissions": [
+          "ViewAccountingSetup"
+        ]
+      },
+      "targetRoutePolicy": {
+        "kind": "permissions",
+        "permissions": [
+          "ViewAccountingSetup"
+        ]
+      },
+      "currentModuleRequirement": {
+        "moduleCode": "acc",
+        "submoduleCode": "ledger-setup"
+      },
+      "targetModuleRequirement": {
+        "moduleCode": "acc",
+        "submoduleCode": "ledger-setup"
+      },
+      "apiSurface": "route adapter"
+    },
+    {
+      "source": "app/(main)/finance/ledger-setup/dimensions.tsx",
+      "path": "/finance/ledger-setup/dimensions",
+      "kind": "auth",
+      "currentOwner": "Accounting/ledger-setup",
+      "targetOwner": "Accounting/ledger-setup",
+      "scope": "tenant/company",
+      "offlineMode": "online-only",
+      "status": "aligned",
+      "note": "Fiscal Years and Ledger Setup capabilities are owned by the Accounting module (acc/ledger-setup).",
+      "currentRoutePolicy": {
+        "kind": "permissions",
+        "permissions": [
+          "ViewDimensions"
+        ]
+      },
+      "targetRoutePolicy": {
+        "kind": "permissions",
+        "permissions": [
+          "ViewDimensions"
+        ]
+      },
+      "currentModuleRequirement": {
+        "moduleCode": "acc",
+        "submoduleCode": "ledger-setup"
+      },
+      "targetModuleRequirement": {
+        "moduleCode": "acc",
+        "submoduleCode": "ledger-setup"
+      },
+      "apiSurface": "route adapter"
+    },
+    {
+      "source": "app/(main)/finance/ledger-setup/exchange-rates.tsx",
+      "path": "/finance/ledger-setup/exchange-rates",
+      "kind": "auth",
+      "currentOwner": "Accounting/ledger-setup",
+      "targetOwner": "Accounting/ledger-setup",
+      "scope": "tenant/company",
+      "offlineMode": "online-only",
+      "status": "aligned",
+      "note": "Fiscal Years and Ledger Setup capabilities are owned by the Accounting module (acc/ledger-setup).",
+      "currentRoutePolicy": {
+        "kind": "permissions",
+        "permissions": [
+          "ViewAccountingSetup"
+        ]
+      },
+      "targetRoutePolicy": {
+        "kind": "permissions",
+        "permissions": [
+          "ViewAccountingSetup"
+        ]
+      },
+      "currentModuleRequirement": {
+        "moduleCode": "acc",
+        "submoduleCode": "ledger-setup"
+      },
+      "targetModuleRequirement": {
+        "moduleCode": "acc",
+        "submoduleCode": "ledger-setup"
+      },
+      "apiSurface": "route adapter"
+    },
+    {
+      "source": "app/(main)/finance/ledger-setup/index.tsx",
+      "path": "/finance/ledger-setup",
+      "kind": "auth",
+      "currentOwner": "Accounting/ledger-setup",
+      "targetOwner": "Accounting/ledger-setup",
+      "scope": "tenant/company",
+      "offlineMode": "online-only",
+      "status": "aligned",
+      "note": "Fiscal Years and Ledger Setup capabilities are owned by the Accounting module (acc/ledger-setup).",
+      "currentRoutePolicy": {
+        "kind": "anyOf",
+        "anyOf": [
+          {
+            "permissions": [
+              "ViewFiscalYears"
+            ]
+          },
+          {
+            "permissions": [
+              "ViewAccountingSetup"
+            ]
+          },
+          {
+            "permissions": [
+              "ViewAccounts"
+            ]
+          },
+          {
+            "permissions": [
+              "ViewDimensions"
+            ]
+          }
+        ]
+      },
+      "targetRoutePolicy": {
+        "kind": "anyOf",
+        "anyOf": [
+          {
+            "permissions": [
+              "ViewFiscalYears"
+            ]
+          },
+          {
+            "permissions": [
+              "ViewAccountingSetup"
+            ]
+          },
+          {
+            "permissions": [
+              "ViewAccounts"
+            ]
+          },
+          {
+            "permissions": [
+              "ViewDimensions"
+            ]
+          }
+        ]
+      },
+      "currentModuleRequirement": {
+        "moduleCode": "acc",
+        "submoduleCode": "ledger-setup"
+      },
+      "targetModuleRequirement": {
+        "moduleCode": "acc",
+        "submoduleCode": "ledger-setup"
+      },
+      "apiSurface": "route adapter"
+    },
+    {
+      "source": "app/(main)/finance/ledger-setup/journals.tsx",
+      "path": "/finance/ledger-setup/journals",
+      "kind": "auth",
+      "currentOwner": "Accounting/ledger-setup",
+      "targetOwner": "Accounting/ledger-setup",
+      "scope": "tenant/company",
+      "offlineMode": "online-only",
+      "status": "aligned",
+      "note": "Fiscal Years and Ledger Setup capabilities are owned by the Accounting module (acc/ledger-setup).",
+      "currentRoutePolicy": {
+        "kind": "permissions",
+        "permissions": [
+          "ViewAccountingSetup"
+        ]
+      },
+      "targetRoutePolicy": {
+        "kind": "permissions",
+        "permissions": [
+          "ViewAccountingSetup"
+        ]
+      },
+      "currentModuleRequirement": {
+        "moduleCode": "acc",
+        "submoduleCode": "ledger-setup"
+      },
+      "targetModuleRequirement": {
+        "moduleCode": "acc",
+        "submoduleCode": "ledger-setup"
+      },
+      "apiSurface": "route adapter"
     }
   ],
   "endpointFiles": [
@@ -2739,6 +3065,999 @@
           "offlineMode": "online-only",
           "status": "aligned",
           "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Accounting FiscalYearsController and AccountingPermissions.FiscalYears."
+        }
+      ]
+    },
+    {
+      "source": "src/modules/accounting/ledger-setup/coa-hierarchy/data/remote/coa-hierarchy-endpoints.ts",
+      "family": "coa-hierarchy",
+      "members": [
+        {
+          "key": "accounts",
+          "pattern": "'accounts'",
+          "verb": [
+            "GET",
+            "POST"
+          ],
+          "operations": [
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/modules/accounting/ledger-setup/coa-hierarchy/data/remote/coa-hierarchy-remote-data-source.ts#getAccountPage",
+              "requestBoundary": "none",
+              "responseBoundary": "accountPageSchema",
+              "permissionAuthority": "Accounting COA hierarchy controllers and AccountingPermissions.ViewAccounts (Accounts:View)"
+            },
+            {
+              "verb": [
+                "POST"
+              ],
+              "caller": "src/modules/accounting/ledger-setup/coa-hierarchy/data/remote/coa-hierarchy-remote-data-source.ts#createAccount",
+              "requestBoundary": "request",
+              "responseBoundary": "accountSchema",
+              "permissionAuthority": "Accounting COA hierarchy controllers and AccountingPermissions.ManageAccounts (Accounts:Manage)"
+            }
+          ],
+          "currentOwner": "Accounting/ledger-setup",
+          "targetOwner": "Accounting/ledger-setup",
+          "permissionAuthority": "Accounting COA hierarchy controllers and AccountingPermissions.ViewAccounts/ManageAccounts",
+          "scope": "tenant/company",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Accounting COA hierarchy controllers and AccountingPermissions.ViewAccounts/ManageAccounts."
+        },
+        {
+          "key": "account",
+          "pattern": "(id: number) => `accounts/${id}`",
+          "verb": [
+            "GET",
+            "POST",
+            "PUT",
+            "DELETE"
+          ],
+          "operations": [
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/modules/accounting/ledger-setup/coa-hierarchy/data/remote/coa-hierarchy-remote-data-source.ts#getAccountPage",
+              "requestBoundary": "none",
+              "responseBoundary": "accountPageSchema",
+              "permissionAuthority": "Accounting COA hierarchy controllers and AccountingPermissions.ViewAccounts (Accounts:View)"
+            },
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/modules/accounting/ledger-setup/coa-hierarchy/data/remote/coa-hierarchy-remote-data-source.ts#getAccountTree",
+              "requestBoundary": "none",
+              "responseBoundary": "accountTreeSchema",
+              "permissionAuthority": "Accounting COA hierarchy controllers and AccountingPermissions.ViewAccounts (Accounts:View)"
+            },
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/modules/accounting/ledger-setup/coa-hierarchy/data/remote/coa-hierarchy-remote-data-source.ts#getAccount",
+              "requestBoundary": "none",
+              "responseBoundary": "accountSchema",
+              "permissionAuthority": "Accounting COA hierarchy controllers and AccountingPermissions.ViewAccounts (Accounts:View)"
+            },
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/modules/accounting/ledger-setup/coa-hierarchy/data/remote/coa-hierarchy-remote-data-source.ts#getAccountLookup",
+              "requestBoundary": "none",
+              "responseBoundary": "accountLookupSchema",
+              "permissionAuthority": "Accounting COA hierarchy controllers and AccountingPermissions.ViewAccounts (Accounts:View)"
+            },
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/modules/accounting/ledger-setup/coa-hierarchy/data/remote/coa-hierarchy-remote-data-source.ts#getAccountCodeProposal",
+              "requestBoundary": "none",
+              "responseBoundary": "proposedAccountCodeSchema",
+              "permissionAuthority": "Accounting COA hierarchy controllers and AccountingPermissions.ViewAccounts (Accounts:View)"
+            },
+            {
+              "verb": [
+                "POST"
+              ],
+              "caller": "src/modules/accounting/ledger-setup/coa-hierarchy/data/remote/coa-hierarchy-remote-data-source.ts#createAccount",
+              "requestBoundary": "request",
+              "responseBoundary": "accountSchema",
+              "permissionAuthority": "Accounting COA hierarchy controllers and AccountingPermissions.ManageAccounts (Accounts:Manage)"
+            },
+            {
+              "verb": [
+                "PUT"
+              ],
+              "caller": "src/modules/accounting/ledger-setup/coa-hierarchy/data/remote/coa-hierarchy-remote-data-source.ts#updateAccount",
+              "requestBoundary": "{ ...request, rowVersion }",
+              "responseBoundary": "accountSchema",
+              "permissionAuthority": "Accounting COA hierarchy controllers and AccountingPermissions.ManageAccounts (Accounts:Manage)"
+            },
+            {
+              "verb": [
+                "DELETE"
+              ],
+              "caller": "src/modules/accounting/ledger-setup/coa-hierarchy/data/remote/coa-hierarchy-remote-data-source.ts#archiveAccount",
+              "requestBoundary": "request config: { data: { rowVersion } }",
+              "responseBoundary": "unknown",
+              "permissionAuthority": "Accounting COA hierarchy controllers and AccountingPermissions.ManageAccounts (Accounts:Manage)"
+            },
+            {
+              "verb": [
+                "POST"
+              ],
+              "caller": "src/modules/accounting/ledger-setup/coa-hierarchy/data/remote/coa-hierarchy-remote-data-source.ts#restoreAccount",
+              "requestBoundary": "{ rowVersion }",
+              "responseBoundary": "accountSchema",
+              "permissionAuthority": "Accounting COA hierarchy controllers and AccountingPermissions.ManageAccounts (Accounts:Manage)"
+            }
+          ],
+          "currentOwner": "Accounting/ledger-setup",
+          "targetOwner": "Accounting/ledger-setup",
+          "permissionAuthority": "Accounting COA hierarchy controllers and AccountingPermissions.ViewAccounts/ManageAccounts",
+          "scope": "tenant/company",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Accounting COA hierarchy controllers and AccountingPermissions.ViewAccounts/ManageAccounts."
+        },
+        {
+          "key": "accountTree",
+          "pattern": "'accounts/tree'",
+          "verb": [
+            "GET"
+          ],
+          "operations": [
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/modules/accounting/ledger-setup/coa-hierarchy/data/remote/coa-hierarchy-remote-data-source.ts#getAccountTree",
+              "requestBoundary": "none",
+              "responseBoundary": "accountTreeSchema",
+              "permissionAuthority": "Accounting COA hierarchy controllers and AccountingPermissions.ViewAccounts (Accounts:View)"
+            }
+          ],
+          "currentOwner": "Accounting/ledger-setup",
+          "targetOwner": "Accounting/ledger-setup",
+          "permissionAuthority": "Accounting COA hierarchy controllers and AccountingPermissions.ViewAccounts/ManageAccounts",
+          "scope": "tenant/company",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Accounting COA hierarchy controllers and AccountingPermissions.ViewAccounts/ManageAccounts."
+        },
+        {
+          "key": "accountLookup",
+          "pattern": "'accounts/lookup'",
+          "verb": [
+            "GET"
+          ],
+          "operations": [
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/modules/accounting/ledger-setup/coa-hierarchy/data/remote/coa-hierarchy-remote-data-source.ts#getAccountLookup",
+              "requestBoundary": "none",
+              "responseBoundary": "accountLookupSchema",
+              "permissionAuthority": "Accounting COA hierarchy controllers and AccountingPermissions.ViewAccounts (Accounts:View)"
+            }
+          ],
+          "currentOwner": "Accounting/ledger-setup",
+          "targetOwner": "Accounting/ledger-setup",
+          "permissionAuthority": "Accounting COA hierarchy controllers and AccountingPermissions.ViewAccounts/ManageAccounts",
+          "scope": "tenant/company",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Accounting COA hierarchy controllers and AccountingPermissions.ViewAccounts/ManageAccounts."
+        },
+        {
+          "key": "accountCodeProposal",
+          "pattern": "'accounts/code-proposal'",
+          "verb": [
+            "GET"
+          ],
+          "operations": [
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/modules/accounting/ledger-setup/coa-hierarchy/data/remote/coa-hierarchy-remote-data-source.ts#getAccountCodeProposal",
+              "requestBoundary": "none",
+              "responseBoundary": "proposedAccountCodeSchema",
+              "permissionAuthority": "Accounting COA hierarchy controllers and AccountingPermissions.ViewAccounts (Accounts:View)"
+            }
+          ],
+          "currentOwner": "Accounting/ledger-setup",
+          "targetOwner": "Accounting/ledger-setup",
+          "permissionAuthority": "Accounting COA hierarchy controllers and AccountingPermissions.ViewAccounts/ManageAccounts",
+          "scope": "tenant/company",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Accounting COA hierarchy controllers and AccountingPermissions.ViewAccounts/ManageAccounts."
+        },
+        {
+          "key": "accountRestore",
+          "pattern": "(id: number) => `accounts/${id}/restore`",
+          "verb": [
+            "POST"
+          ],
+          "operations": [
+            {
+              "verb": [
+                "POST"
+              ],
+              "caller": "src/modules/accounting/ledger-setup/coa-hierarchy/data/remote/coa-hierarchy-remote-data-source.ts#restoreAccount",
+              "requestBoundary": "{ rowVersion }",
+              "responseBoundary": "accountSchema",
+              "permissionAuthority": "Accounting COA hierarchy controllers and AccountingPermissions.ManageAccounts (Accounts:Manage)"
+            }
+          ],
+          "currentOwner": "Accounting/ledger-setup",
+          "targetOwner": "Accounting/ledger-setup",
+          "permissionAuthority": "Accounting COA hierarchy controllers and AccountingPermissions.ViewAccounts/ManageAccounts",
+          "scope": "tenant/company",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Accounting COA hierarchy controllers and AccountingPermissions.ViewAccounts/ManageAccounts."
+        },
+        {
+          "key": "hierarchyLevels",
+          "pattern": "'accounts/hierarchy-levels'",
+          "verb": [
+            "GET",
+            "POST"
+          ],
+          "operations": [
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/modules/accounting/ledger-setup/coa-hierarchy/data/remote/coa-hierarchy-remote-data-source.ts#getHierarchyLevels",
+              "requestBoundary": "none",
+              "responseBoundary": "accountHierarchyLevelListSchema",
+              "permissionAuthority": "Accounting COA hierarchy controllers and AccountingPermissions.ViewAccounts (Accounts:View)"
+            },
+            {
+              "verb": [
+                "POST"
+              ],
+              "caller": "src/modules/accounting/ledger-setup/coa-hierarchy/data/remote/coa-hierarchy-remote-data-source.ts#createHierarchyLevel",
+              "requestBoundary": "request",
+              "responseBoundary": "accountHierarchyLevelSchema",
+              "permissionAuthority": "Accounting COA hierarchy controllers and AccountingPermissions.ManageAccounts (Accounts:Manage)"
+            }
+          ],
+          "currentOwner": "Accounting/ledger-setup",
+          "targetOwner": "Accounting/ledger-setup",
+          "permissionAuthority": "Accounting COA hierarchy controllers and AccountingPermissions.ViewAccounts/ManageAccounts",
+          "scope": "tenant/company",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Accounting COA hierarchy controllers and AccountingPermissions.ViewAccounts/ManageAccounts."
+        },
+        {
+          "key": "hierarchyLevel",
+          "pattern": "(id: number) => `accounts/hierarchy-levels/${id}`",
+          "verb": [
+            "GET",
+            "POST",
+            "PUT",
+            "DELETE"
+          ],
+          "operations": [
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/modules/accounting/ledger-setup/coa-hierarchy/data/remote/coa-hierarchy-remote-data-source.ts#getHierarchyLevels",
+              "requestBoundary": "none",
+              "responseBoundary": "accountHierarchyLevelListSchema",
+              "permissionAuthority": "Accounting COA hierarchy controllers and AccountingPermissions.ViewAccounts (Accounts:View)"
+            },
+            {
+              "verb": [
+                "POST"
+              ],
+              "caller": "src/modules/accounting/ledger-setup/coa-hierarchy/data/remote/coa-hierarchy-remote-data-source.ts#createHierarchyLevel",
+              "requestBoundary": "request",
+              "responseBoundary": "accountHierarchyLevelSchema",
+              "permissionAuthority": "Accounting COA hierarchy controllers and AccountingPermissions.ManageAccounts (Accounts:Manage)"
+            },
+            {
+              "verb": [
+                "PUT"
+              ],
+              "caller": "src/modules/accounting/ledger-setup/coa-hierarchy/data/remote/coa-hierarchy-remote-data-source.ts#updateHierarchyLevel",
+              "requestBoundary": "{ ...request, rowVersion }",
+              "responseBoundary": "accountHierarchyLevelSchema",
+              "permissionAuthority": "Accounting COA hierarchy controllers and AccountingPermissions.ManageAccounts (Accounts:Manage)"
+            },
+            {
+              "verb": [
+                "DELETE"
+              ],
+              "caller": "src/modules/accounting/ledger-setup/coa-hierarchy/data/remote/coa-hierarchy-remote-data-source.ts#archiveHierarchyLevel",
+              "requestBoundary": "request config: { data: { rowVersion } }",
+              "responseBoundary": "unknown",
+              "permissionAuthority": "Accounting COA hierarchy controllers and AccountingPermissions.ManageAccounts (Accounts:Manage)"
+            },
+            {
+              "verb": [
+                "POST"
+              ],
+              "caller": "src/modules/accounting/ledger-setup/coa-hierarchy/data/remote/coa-hierarchy-remote-data-source.ts#restoreHierarchyLevel",
+              "requestBoundary": "{ rowVersion }",
+              "responseBoundary": "accountHierarchyLevelSchema",
+              "permissionAuthority": "Accounting COA hierarchy controllers and AccountingPermissions.ManageAccounts (Accounts:Manage)"
+            }
+          ],
+          "currentOwner": "Accounting/ledger-setup",
+          "targetOwner": "Accounting/ledger-setup",
+          "permissionAuthority": "Accounting COA hierarchy controllers and AccountingPermissions.ViewAccounts/ManageAccounts",
+          "scope": "tenant/company",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Accounting COA hierarchy controllers and AccountingPermissions.ViewAccounts/ManageAccounts."
+        },
+        {
+          "key": "hierarchyLevelRestore",
+          "pattern": "(id: number) => `accounts/hierarchy-levels/${id}/restore`",
+          "verb": [
+            "POST"
+          ],
+          "operations": [
+            {
+              "verb": [
+                "POST"
+              ],
+              "caller": "src/modules/accounting/ledger-setup/coa-hierarchy/data/remote/coa-hierarchy-remote-data-source.ts#restoreHierarchyLevel",
+              "requestBoundary": "{ rowVersion }",
+              "responseBoundary": "accountHierarchyLevelSchema",
+              "permissionAuthority": "Accounting COA hierarchy controllers and AccountingPermissions.ManageAccounts (Accounts:Manage)"
+            }
+          ],
+          "currentOwner": "Accounting/ledger-setup",
+          "targetOwner": "Accounting/ledger-setup",
+          "permissionAuthority": "Accounting COA hierarchy controllers and AccountingPermissions.ViewAccounts/ManageAccounts",
+          "scope": "tenant/company",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Accounting COA hierarchy controllers and AccountingPermissions.ViewAccounts/ManageAccounts."
+        }
+      ]
+    },
+    {
+      "source": "src/modules/accounting/ledger-setup/data/remote/ledger-setup-endpoints.ts",
+      "family": "ledger-setup",
+      "members": [
+        {
+          "key": "settings",
+          "pattern": "'accounting-settings'",
+          "verb": [
+            "GET",
+            "PUT"
+          ],
+          "operations": [
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/modules/accounting/ledger-setup/data/remote/ledger-setup-remote-data-source.ts#list",
+              "requestBoundary": "none",
+              "responseBoundary": "ledgerSetupRecordSchema",
+              "permissionAuthority": "Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup (AccountingSetup:View)"
+            },
+            {
+              "verb": [
+                "PUT"
+              ],
+              "caller": "src/modules/accounting/ledger-setup/data/remote/ledger-setup-remote-data-source.ts#save",
+              "requestBoundary": "request",
+              "responseBoundary": "unknown",
+              "permissionAuthority": "Accounting Ledger Setup controllers and AccountingPermissions.ManageAccountingSetup (AccountingSetup:Manage)"
+            }
+          ],
+          "currentOwner": "Accounting/ledger-setup",
+          "targetOwner": "Accounting/ledger-setup",
+          "permissionAuthority": "Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup/ManageAccountingSetup",
+          "scope": "tenant/company",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup/ManageAccountingSetup."
+        },
+        {
+          "key": "accounts.base",
+          "pattern": "'accounts'",
+          "verb": [
+            "GET"
+          ],
+          "operations": [
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/modules/accounting/ledger-setup/data/remote/ledger-setup-remote-data-source.ts#list (dynamic resource endpoint helper)",
+              "requestBoundary": "request config: { params }",
+              "responseBoundary": "ledgerSetupRecordListSchema",
+              "permissionAuthority": "Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup (AccountingSetup:View)"
+            },
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/modules/accounting/ledger-setup/data/remote/ledger-setup-remote-data-source.ts#account",
+              "requestBoundary": "none",
+              "responseBoundary": "ledgerSetupRecordSchema",
+              "permissionAuthority": "Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup (AccountingSetup:View)"
+            }
+          ],
+          "currentOwner": "Accounting/ledger-setup",
+          "targetOwner": "Accounting/ledger-setup",
+          "permissionAuthority": "Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup/ManageAccountingSetup",
+          "scope": "tenant/company",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup/ManageAccountingSetup."
+        },
+        {
+          "key": "accounts.lookup",
+          "pattern": "'accounts/lookup'",
+          "verb": [
+            "GET"
+          ],
+          "operations": [
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/modules/accounting/ledger-setup/data/remote/ledger-setup-remote-data-source.ts#list (dynamic resource endpoint helper)",
+              "requestBoundary": "request config: { params }",
+              "responseBoundary": "ledgerSetupRecordListSchema",
+              "permissionAuthority": "Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup (AccountingSetup:View)"
+            },
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/modules/accounting/ledger-setup/data/remote/ledger-setup-remote-data-source.ts#lookups",
+              "requestBoundary": "none",
+              "responseBoundary": "unknown",
+              "permissionAuthority": "Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup (AccountingSetup:View)"
+            }
+          ],
+          "currentOwner": "Accounting/ledger-setup",
+          "targetOwner": "Accounting/ledger-setup",
+          "permissionAuthority": "Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup/ManageAccountingSetup",
+          "scope": "tenant/company",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup/ManageAccountingSetup."
+        },
+        {
+          "key": "accounts.tree",
+          "pattern": "'accounts/tree'",
+          "verb": [
+            "GET"
+          ],
+          "operations": [
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/modules/accounting/ledger-setup/data/remote/ledger-setup-remote-data-source.ts#list (dynamic resource endpoint helper)",
+              "requestBoundary": "request config: { params }",
+              "responseBoundary": "ledgerSetupRecordListSchema",
+              "permissionAuthority": "Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup (AccountingSetup:View)"
+            },
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/modules/accounting/ledger-setup/data/remote/ledger-setup-remote-data-source.ts#accountTree",
+              "requestBoundary": "none",
+              "responseBoundary": "ledgerSetupRecordListSchema",
+              "permissionAuthority": "Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup (AccountingSetup:View)"
+            }
+          ],
+          "currentOwner": "Accounting/ledger-setup",
+          "targetOwner": "Accounting/ledger-setup",
+          "permissionAuthority": "Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup/ManageAccountingSetup",
+          "scope": "tenant/company",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup/ManageAccountingSetup."
+        },
+        {
+          "key": "accounts.hierarchyLevels",
+          "pattern": "'accounts/hierarchy-levels'",
+          "verb": [
+            "GET"
+          ],
+          "operations": [
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/modules/accounting/ledger-setup/data/remote/ledger-setup-remote-data-source.ts#list (dynamic resource endpoint helper)",
+              "requestBoundary": "request config: { params }",
+              "responseBoundary": "ledgerSetupRecordListSchema",
+              "permissionAuthority": "Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup (AccountingSetup:View)"
+            },
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/modules/accounting/ledger-setup/data/remote/ledger-setup-remote-data-source.ts#lookups",
+              "requestBoundary": "request config: { params: { recordStatus: 'active' } }",
+              "responseBoundary": "unknown",
+              "permissionAuthority": "Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup (AccountingSetup:View)"
+            }
+          ],
+          "currentOwner": "Accounting/ledger-setup",
+          "targetOwner": "Accounting/ledger-setup",
+          "permissionAuthority": "Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup/ManageAccountingSetup",
+          "scope": "tenant/company",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup/ManageAccountingSetup."
+        },
+        {
+          "key": "dimensions.base",
+          "pattern": "'accounting-dimensions'",
+          "verb": [
+            "GET"
+          ],
+          "operations": [
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/modules/accounting/ledger-setup/data/remote/ledger-setup-remote-data-source.ts#dimensionOptions",
+              "requestBoundary": "request config: { params: { ...lookupParams, pageNumber } }",
+              "responseBoundary": "ledgerSetupRecordListSchema",
+              "permissionAuthority": "Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup (AccountingSetup:View)"
+            }
+          ],
+          "currentOwner": "Accounting/ledger-setup",
+          "targetOwner": "Accounting/ledger-setup",
+          "permissionAuthority": "Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup/ManageAccountingSetup",
+          "scope": "tenant/company",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup/ManageAccountingSetup."
+        },
+        {
+          "key": "dimensions.values",
+          "pattern": "(definitionId: number) => `accounting-dimensions/${definitionId}/values`",
+          "verb": [
+            "GET"
+          ],
+          "operations": [
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/modules/accounting/ledger-setup/data/remote/ledger-setup-remote-data-source.ts#list",
+              "requestBoundary": "request config: { params }",
+              "responseBoundary": "ledgerSetupRecordListSchema",
+              "permissionAuthority": "Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup (AccountingSetup:View)"
+            }
+          ],
+          "currentOwner": "Accounting/ledger-setup",
+          "targetOwner": "Accounting/ledger-setup",
+          "permissionAuthority": "Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup/ManageAccountingSetup",
+          "scope": "tenant/company",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup/ManageAccountingSetup."
+        },
+        {
+          "key": "dimensions.valuesBase",
+          "pattern": "'accounting-dimensions/values'",
+          "verb": [
+            "GET"
+          ],
+          "operations": [
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/modules/accounting/ledger-setup/data/remote/ledger-setup-remote-data-source.ts#list (dynamic resource endpoint helper)",
+              "requestBoundary": "request config: { params }",
+              "responseBoundary": "ledgerSetupRecordListSchema",
+              "permissionAuthority": "Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup (AccountingSetup:View)"
+            }
+          ],
+          "currentOwner": "Accounting/ledger-setup",
+          "targetOwner": "Accounting/ledger-setup",
+          "permissionAuthority": "Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup/ManageAccountingSetup",
+          "scope": "tenant/company",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup/ManageAccountingSetup."
+        },
+        {
+          "key": "dimensions.policies",
+          "pattern": "(accountId: number) => `accounting-dimensions/accounts/${accountId}/policies`",
+          "verb": [
+            "GET",
+            "PUT"
+          ],
+          "operations": [
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/modules/accounting/ledger-setup/data/remote/ledger-setup-remote-data-source.ts#list",
+              "requestBoundary": "none",
+              "responseBoundary": "ledgerSetupRecordListSchema",
+              "permissionAuthority": "Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup (AccountingSetup:View)"
+            },
+            {
+              "verb": [
+                "PUT"
+              ],
+              "caller": "src/modules/accounting/ledger-setup/data/remote/ledger-setup-remote-data-source.ts#save",
+              "requestBoundary": "request",
+              "responseBoundary": "unknown",
+              "permissionAuthority": "Accounting Ledger Setup controllers and AccountingPermissions.ManageAccountingSetup (AccountingSetup:Manage)"
+            }
+          ],
+          "currentOwner": "Accounting/ledger-setup",
+          "targetOwner": "Accounting/ledger-setup",
+          "permissionAuthority": "Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup/ManageAccountingSetup",
+          "scope": "tenant/company",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup/ManageAccountingSetup."
+        },
+        {
+          "key": "dimensions.policiesBase",
+          "pattern": "'accounting-dimensions/policies'",
+          "verb": [
+            "GET",
+            "PUT"
+          ],
+          "operations": [
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/modules/accounting/ledger-setup/data/remote/ledger-setup-remote-data-source.ts#list (dynamic resource endpoint helper)",
+              "requestBoundary": "request config: { params }",
+              "responseBoundary": "ledgerSetupRecordListSchema",
+              "permissionAuthority": "Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup (AccountingSetup:View)"
+            },
+            {
+              "verb": [
+                "PUT"
+              ],
+              "caller": "src/modules/accounting/ledger-setup/data/remote/ledger-setup-remote-data-source.ts#save",
+              "requestBoundary": "request",
+              "responseBoundary": "unknown",
+              "permissionAuthority": "Accounting Ledger Setup controllers and AccountingPermissions.ManageAccountingSetup (AccountingSetup:Manage)"
+            }
+          ],
+          "currentOwner": "Accounting/ledger-setup",
+          "targetOwner": "Accounting/ledger-setup",
+          "permissionAuthority": "Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup/ManageAccountingSetup",
+          "scope": "tenant/company",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup/ManageAccountingSetup."
+        },
+        {
+          "key": "books",
+          "pattern": "'accounting-books'",
+          "verb": [
+            "GET"
+          ],
+          "operations": [
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/modules/accounting/ledger-setup/data/remote/ledger-setup-remote-data-source.ts#list (dynamic resource endpoint helper)",
+              "requestBoundary": "request config: { params }",
+              "responseBoundary": "ledgerSetupRecordListSchema",
+              "permissionAuthority": "Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup (AccountingSetup:View)"
+            },
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/modules/accounting/ledger-setup/data/remote/ledger-setup-remote-data-source.ts#lookups",
+              "requestBoundary": "request config: { params: { recordStatus: 'active' } }",
+              "responseBoundary": "unknown",
+              "permissionAuthority": "Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup (AccountingSetup:View)"
+            }
+          ],
+          "currentOwner": "Accounting/ledger-setup",
+          "targetOwner": "Accounting/ledger-setup",
+          "permissionAuthority": "Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup/ManageAccountingSetup",
+          "scope": "tenant/company",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup/ManageAccountingSetup."
+        },
+        {
+          "key": "journals",
+          "pattern": "'accounting-journals'",
+          "verb": [
+            "GET"
+          ],
+          "operations": [
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/modules/accounting/ledger-setup/data/remote/ledger-setup-remote-data-source.ts#list (dynamic resource endpoint helper)",
+              "requestBoundary": "request config: { params }",
+              "responseBoundary": "ledgerSetupRecordListSchema",
+              "permissionAuthority": "Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup (AccountingSetup:View)"
+            }
+          ],
+          "currentOwner": "Accounting/ledger-setup",
+          "targetOwner": "Accounting/ledger-setup",
+          "permissionAuthority": "Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup/ManageAccountingSetup",
+          "scope": "tenant/company",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup/ManageAccountingSetup."
+        },
+        {
+          "key": "exchangeRateTypes",
+          "pattern": "'accounting-exchange-rate-types'",
+          "verb": [
+            "GET"
+          ],
+          "operations": [
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/modules/accounting/ledger-setup/data/remote/ledger-setup-remote-data-source.ts#list (dynamic resource endpoint helper)",
+              "requestBoundary": "request config: { params }",
+              "responseBoundary": "ledgerSetupRecordListSchema",
+              "permissionAuthority": "Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup (AccountingSetup:View)"
+            },
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/modules/accounting/ledger-setup/data/remote/ledger-setup-remote-data-source.ts#lookups",
+              "requestBoundary": "request config: { params: { recordStatus: 'active' } }",
+              "responseBoundary": "unknown",
+              "permissionAuthority": "Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup (AccountingSetup:View)"
+            }
+          ],
+          "currentOwner": "Accounting/ledger-setup",
+          "targetOwner": "Accounting/ledger-setup",
+          "permissionAuthority": "Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup/ManageAccountingSetup",
+          "scope": "tenant/company",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup/ManageAccountingSetup."
+        },
+        {
+          "key": "exchangeRates",
+          "pattern": "'accounting-exchange-rates'",
+          "verb": [
+            "GET"
+          ],
+          "operations": [
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/modules/accounting/ledger-setup/data/remote/ledger-setup-remote-data-source.ts#list (dynamic resource endpoint helper)",
+              "requestBoundary": "request config: { params }",
+              "responseBoundary": "ledgerSetupRecordListSchema",
+              "permissionAuthority": "Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup (AccountingSetup:View)"
+            }
+          ],
+          "currentOwner": "Accounting/ledger-setup",
+          "targetOwner": "Accounting/ledger-setup",
+          "permissionAuthority": "Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup/ManageAccountingSetup",
+          "scope": "tenant/company",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup/ManageAccountingSetup."
+        },
+        {
+          "key": "accountMappings",
+          "pattern": "'account-mappings'",
+          "verb": [
+            "GET"
+          ],
+          "operations": [
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/modules/accounting/ledger-setup/data/remote/ledger-setup-remote-data-source.ts#list (dynamic resource endpoint helper)",
+              "requestBoundary": "request config: { params }",
+              "responseBoundary": "ledgerSetupRecordListSchema",
+              "permissionAuthority": "Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup (AccountingSetup:View)"
+            }
+          ],
+          "currentOwner": "Accounting/ledger-setup",
+          "targetOwner": "Accounting/ledger-setup",
+          "permissionAuthority": "Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup/ManageAccountingSetup",
+          "scope": "tenant/company",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup/ManageAccountingSetup."
+        },
+        {
+          "key": "postingProfiles",
+          "pattern": "'posting-profiles'",
+          "verb": [
+            "GET"
+          ],
+          "operations": [
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/modules/accounting/ledger-setup/data/remote/ledger-setup-remote-data-source.ts#list (dynamic resource endpoint helper)",
+              "requestBoundary": "request config: { params }",
+              "responseBoundary": "ledgerSetupRecordListSchema",
+              "permissionAuthority": "Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup (AccountingSetup:View)"
+            }
+          ],
+          "currentOwner": "Accounting/ledger-setup",
+          "targetOwner": "Accounting/ledger-setup",
+          "permissionAuthority": "Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup/ManageAccountingSetup",
+          "scope": "tenant/company",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup/ManageAccountingSetup."
+        },
+        {
+          "key": "currenciesLookup",
+          "pattern": "'currencies/lookup'",
+          "verb": [
+            "GET"
+          ],
+          "operations": [
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/modules/accounting/ledger-setup/data/remote/ledger-setup-remote-data-source.ts#list (dynamic resource endpoint helper)",
+              "requestBoundary": "request config: { params }",
+              "responseBoundary": "ledgerSetupRecordListSchema",
+              "permissionAuthority": "Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup (AccountingSetup:View)"
+            },
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/modules/accounting/ledger-setup/data/remote/ledger-setup-remote-data-source.ts#lookups",
+              "requestBoundary": "none",
+              "responseBoundary": "unknown",
+              "permissionAuthority": "Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup (AccountingSetup:View)"
+            }
+          ],
+          "currentOwner": "Accounting/ledger-setup",
+          "targetOwner": "Accounting/ledger-setup",
+          "permissionAuthority": "Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup/ManageAccountingSetup",
+          "scope": "tenant/company",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup/ManageAccountingSetup."
+        },
+        {
+          "key": "byId",
+          "pattern": "byId",
+          "verb": [
+            "GET"
+          ],
+          "operations": [
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/modules/accounting/ledger-setup/data/remote/ledger-setup-remote-data-source.ts#list (dynamic resource endpoint helper)",
+              "requestBoundary": "request config: { params }",
+              "responseBoundary": "ledgerSetupRecordListSchema",
+              "permissionAuthority": "Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup (AccountingSetup:View)"
+            },
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/modules/accounting/ledger-setup/data/remote/ledger-setup-remote-data-source.ts#account",
+              "requestBoundary": "none",
+              "responseBoundary": "ledgerSetupRecordSchema",
+              "permissionAuthority": "Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup (AccountingSetup:View)"
+            }
+          ],
+          "currentOwner": "Accounting/ledger-setup",
+          "targetOwner": "Accounting/ledger-setup",
+          "permissionAuthority": "Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup/ManageAccountingSetup",
+          "scope": "tenant/company",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup/ManageAccountingSetup."
+        },
+        {
+          "key": "restore",
+          "pattern": "(base: string, id: number) => `${byId(base, id)}/restore`",
+          "verb": [
+            "GET",
+            "POST"
+          ],
+          "operations": [
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/modules/accounting/ledger-setup/data/remote/ledger-setup-remote-data-source.ts#list (dynamic resource endpoint helper)",
+              "requestBoundary": "request config: { params }",
+              "responseBoundary": "ledgerSetupRecordListSchema",
+              "permissionAuthority": "Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup (AccountingSetup:View)"
+            },
+            {
+              "verb": [
+                "POST"
+              ],
+              "caller": "src/modules/accounting/ledger-setup/data/remote/ledger-setup-remote-data-source.ts#restore",
+              "requestBoundary": "{ rowVersion: item.rowVersion }",
+              "responseBoundary": "ledgerSetupRecordSchema",
+              "permissionAuthority": "Accounting Ledger Setup controllers and AccountingPermissions.ManageAccountingSetup (AccountingSetup:Manage)"
+            }
+          ],
+          "currentOwner": "Accounting/ledger-setup",
+          "targetOwner": "Accounting/ledger-setup",
+          "permissionAuthority": "Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup/ManageAccountingSetup",
+          "scope": "tenant/company",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup/ManageAccountingSetup."
+        },
+        {
+          "key": "resolvePreview",
+          "pattern": "'posting-profiles/resolve-preview'",
+          "verb": [
+            "GET",
+            "POST"
+          ],
+          "operations": [
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/modules/accounting/ledger-setup/data/remote/ledger-setup-remote-data-source.ts#list (dynamic resource endpoint helper)",
+              "requestBoundary": "request config: { params }",
+              "responseBoundary": "ledgerSetupRecordListSchema",
+              "permissionAuthority": "Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup (AccountingSetup:View)"
+            },
+            {
+              "verb": [
+                "POST"
+              ],
+              "caller": "src/modules/accounting/ledger-setup/data/remote/ledger-setup-remote-data-source.ts#resolvePreview",
+              "requestBoundary": "request",
+              "responseBoundary": "resolveAccountPreviewSchema",
+              "permissionAuthority": "Accounting Ledger Setup controllers and AccountingPermissions.ManageAccountingSetup (AccountingSetup:Manage)"
+            }
+          ],
+          "currentOwner": "Accounting/ledger-setup",
+          "targetOwner": "Accounting/ledger-setup",
+          "permissionAuthority": "Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup/ManageAccountingSetup",
+          "scope": "tenant/company",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup/ManageAccountingSetup."
         }
       ]
     },
@@ -7047,6 +8366,65 @@
                 "POST"
               ],
               "caller": "src/platform/reporting/data/remote/crystal-report-remote-data-source.ts#render",
+              "requestBoundary": "request",
+              "responseBoundary": "ArrayBuffer",
+              "permissionAuthority": "Reporting API endpoint policy and ReportingPermissions.Reports"
+            },
+            {
+              "verb": [
+                "POST"
+              ],
+              "caller": "src/platform/reporting/data/remote/crystal-report-remote-data-source.ts#renderGlobal",
+              "requestBoundary": "request",
+              "responseBoundary": "ArrayBuffer",
+              "permissionAuthority": "Reporting API endpoint policy and ReportingPermissions.Reports"
+            }
+          ],
+          "currentOwner": "Platform/reporting",
+          "targetOwner": "Platform/reporting",
+          "permissionAuthority": "Reporting API endpoint policy and ReportingPermissions.Reports",
+          "scope": "tenant/company",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Reporting API endpoint policy and ReportingPermissions.Reports."
+        },
+        {
+          "key": "globalBase",
+          "pattern": "'global-crystal-reports'",
+          "verb": [
+            "GET"
+          ],
+          "operations": [
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/platform/reporting/data/remote/crystal-report-remote-data-source.ts#listGlobal",
+              "requestBoundary": "request config: { params: { entityKey } }",
+              "responseBoundary": "globalCrystalReportsSchema",
+              "permissionAuthority": "Reporting API endpoint policy and ReportingPermissions.Reports"
+            }
+          ],
+          "currentOwner": "Platform/reporting",
+          "targetOwner": "Platform/reporting",
+          "permissionAuthority": "Reporting API endpoint policy and ReportingPermissions.Reports",
+          "scope": "tenant/company",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Reporting API endpoint policy and ReportingPermissions.Reports."
+        },
+        {
+          "key": "renderGlobal",
+          "pattern": "(sourceId: string) => `global-crystal-reports/${sourceId}/render`",
+          "verb": [
+            "POST"
+          ],
+          "operations": [
+            {
+              "verb": [
+                "POST"
+              ],
+              "caller": "src/platform/reporting/data/remote/crystal-report-remote-data-source.ts#renderGlobal",
               "requestBoundary": "request",
               "responseBoundary": "ArrayBuffer",
               "permissionAuthority": "Reporting API endpoint policy and ReportingPermissions.Reports"

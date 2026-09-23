@@ -31,6 +31,7 @@ public static class AccountingPermissions
 
     public static IReadOnlyList<string> LedgerSetup { get; } =
     [
+        .. FiscalYears,
         ViewAccountingSetup,
         ManageAccountingSetup,
         ViewAccounts,
@@ -39,5 +40,5 @@ public static class AccountingPermissions
         ManageDimensions
     ];
 
-    public static IReadOnlyList<string> All => [.. FiscalYears, .. Invoicing, .. LedgerSetup];
+    public static IReadOnlyList<string> All => [.. Invoicing, .. LedgerSetup];
 }

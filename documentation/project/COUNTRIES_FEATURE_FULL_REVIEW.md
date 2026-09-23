@@ -215,8 +215,8 @@ rows. The handler checks conflicts and the database unique indexes close races.
 | `useCountryGridLogic.ts` | One list controller and guarded actions |
 | `countryPageQuery.ts` | Exact criteria serialization |
 | `useCountryQueries.ts`, `countryService.ts` | Cache and HTTP normalization |
-| `CountriesMultiView.tsx` and view folders | Grid/Cards/Chart/Import composition |
-| Web Reports | Excluded until Countries owns a reachable report route, composition, permissions, and focused tests |
+| `CountriesMultiView.tsx` and view folders | Five-view Grid/Cards/Chart/Report/Import composition |
+| `CountryReportPage.tsx` + shared `ManagedCrystalReportView` | Super Admin global Crystal catalog, approved filters, render lifecycle and localized report selection; no tenant/company Reporting entitlement |
 | `CountryForm.tsx`, validation | Detail-backed modes and request rules |
 | web Countries tests | Query/service/permission/chart/cell evidence |
 

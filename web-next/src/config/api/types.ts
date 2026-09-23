@@ -95,6 +95,8 @@ export interface ReportTemplatesRoutes {
 export interface CrystalReportsRoutes {
   list: string;
   render: (id: string) => string;
+  globalList: string;
+  globalRender: (sourceId: string) => string;
   manage: string;
   getForManagement: (id: string) => string;
   create: string;

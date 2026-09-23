@@ -9,6 +9,7 @@ The canonical flow is:
 ```text
 documentation/plans/
   Discovery → Evidence → Spec → Plan/Decisions → authorized slice
+  → Feature Decomposition Gate
         ↓
 documentation/system/
   Phase 00 Implementation Preflight
@@ -112,7 +113,17 @@ Generation validates every required file and source collection before writing. C
 The new-feature scaffold writes a copy-ready `IMPLEMENTATION-REQUEST.md`, review
 artifact, draft evidence manifest, and draft recipe registration. For planned work,
 pass the exact `PlanId` and authorized `SliceId`; the script verifies that the
-canonical plan exists and that the slice is present before creating the scaffold.
+canonical plan exists, that the slice is present, and that the plan's Feature
+Decomposition Gate binds that exact `FeatureId` to one coherent execution unit
+before creating the scaffold. `Decompose` slices must define at least two child
+Feature IDs; run the scaffold once per child feature.
+
+For backward compatibility, a plan created before this gate existed may scaffold
+with a warning so Phase 00 can perform the planning reconciliation. That compatibility
+path does not authorize runtime work: Phase 00 remains blocked until the plan records
+the gate. Once a plan explicitly marks a slice `Decompose`, the scaffold hard-fails
+when the requested child Feature ID or its Screen/Workflow Contract is missing or
+incomplete.
 
 The implementation request's matrices remain mandatory because they map approved
 rules to concrete enforcement layers/tests, but they are **execution traceability**.
@@ -147,6 +158,12 @@ when requirements change.
    authorized implementation slice before runtime work. The documentation recipe
    system starts after product/business decisions are mature enough to implement;
    it does not replace the planning gate.
+   Before scaffolding, complete the slice's Feature Decomposition Gate. A slice with
+   materially different domain/UI workflows is decomposed into child Feature IDs.
+   Each child uses `../plans/FEATURE_DECOMPOSITION_TEMPLATE.md` for its
+   Screen/Workflow Contract, scope boundary, independent acceptance outcome, and
+   reuse audit. A generic umbrella renderer is not a substitute for those child
+   workflow contracts.
 1. Run check mode against the already registered references.
 2. Choose the closest reference deliberately:
    - `countries`: flat global reference data, lifecycle, bulk actions, reports, and multi-view lists;

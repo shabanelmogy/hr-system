@@ -1,6 +1,7 @@
 using ErpSystem.Modules.Accounting.Application.Features.Finance.LedgerSetup.Commands;
 using ErpSystem.Modules.Accounting.Application.Features.Finance.LedgerSetup.Contracts;
 using ErpSystem.Modules.Accounting.Application.Features.Finance.LedgerSetup.Queries;
+using ErpSystem.BuildingBlocks.Application.Common.Paginations;
 
 namespace ErpSystem.Modules.Accounting.Presentation.Features.Finance.LedgerSetup.V1;
 
@@ -10,7 +11,8 @@ namespace ErpSystem.Modules.Accounting.Presentation.Features.Finance.LedgerSetup
 [TenantMember]
 public sealed class AccountsController(ISender sender) : ControllerBase
 {
-    [HttpGet] [HasPermission(AccountingPermissions.ViewAccounts)] public Task<IReadOnlyList<AccountResponse>> List([FromQuery] GetAccountsQuery query, CancellationToken cancellationToken) => sender.Send(query, cancellationToken);
+    [HttpGet] [HasPermission(AccountingPermissions.ViewAccounts)] public Task<PageResponse<AccountResponse>> List([FromQuery] GetAccountsQuery query, CancellationToken cancellationToken) => sender.Send(query, cancellationToken);
+    [HttpGet("code-proposal")] [HasPermission(AccountingPermissions.ViewAccounts)] public async Task<IActionResult> CodeProposal(CancellationToken cancellationToken) { var result = await sender.Send(new GetAccountCodeProposalQuery(), cancellationToken); return result.IsSuccess ? Ok(result.Value) : result.ToProblem(); }
     [HttpGet("tree")] [HasPermission(AccountingPermissions.ViewAccounts)] public Task<IReadOnlyList<AccountTreeNodeResponse>> Tree(CancellationToken cancellationToken) => sender.Send(new GetAccountTreeQuery(), cancellationToken);
     [HttpGet("lookup")] [HasPermission(AccountingPermissions.ViewAccounts)] public Task<IReadOnlyList<AccountLookupResponse>> Lookup(CancellationToken cancellationToken) => sender.Send(new GetAccountLookupQuery(), cancellationToken);
     [HttpGet("hierarchy-levels")] [HasPermission(AccountingPermissions.ViewAccounts)] public Task<IReadOnlyList<AccountHierarchyLevelResponse>> Levels([FromQuery] GetAccountHierarchyLevelsQuery query, CancellationToken cancellationToken) => sender.Send(query, cancellationToken);

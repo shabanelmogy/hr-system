@@ -36,6 +36,7 @@ export interface AppHierarchicalTreeProps<T> {
   onEdit?: (item: T) => void;
   onDelete?: (item: T) => void;
   onAddChild?: (item: T) => void;
+  canAddChild?: (item: T) => boolean;
   onReparent?: (item: T, newParentId: TreeId | null) => Promise<void>;
   renderBadges?: (item: T, childrenCount: number) => React.ReactNode;
   entityName?: string;
@@ -64,6 +65,7 @@ export function AppHierarchicalTree<T>({
   onEdit,
   onDelete,
   onAddChild,
+  canAddChild,
   onReparent,
   renderBadges,
   entityName,
@@ -405,7 +407,7 @@ export function AppHierarchicalTree<T>({
           >
 
             {/* Action 1: Add Child (+) */}
-            {canCreate && onAddChild ? (
+            {canCreate && onAddChild && (canAddChild?.(item) ?? true) ? (
               <Pressable
                 accessibilityLabel={t('treeDiagram.addChild')}
                 accessibilityRole="button"

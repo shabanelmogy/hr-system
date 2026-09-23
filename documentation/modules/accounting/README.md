@@ -14,7 +14,8 @@ Verified in the runtime repository today:
 - `AccountingDbContext` owns the short `acc` schema and its migrations history
   boundary.
 - Fiscal Years is an implemented Accounting vertical slice, including domain/API
-  behavior and the Next.js route `/finance/fiscal-years`.
+  behavior and the Next.js route `/finance/ledger-setup/fiscal-years` under the
+  Ledger Setup navigation boundary.
 - Later Accounting areas such as chart of accounts, posting, AP/AR, cash/bank,
   tax, fixed assets, close, and broader reporting remain roadmap work unless
   their own feature evidence says otherwise.

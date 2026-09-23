@@ -4,9 +4,15 @@ import { Box, LinearProgress, MenuItem, TextField } from "@mui/material";
 import type { GridPaginationModel, GridSortModel } from "@mui/x-data-grid";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import dynamic from "next/dynamic";
+import { permissions as appPermissions } from "@/lib/auth/permissions";
+import { useAccessibleModulesQuery } from "@/platform/modules";
+import { usePermissions } from "@/shared/hooks/usePermissions";
 import type { FiscalYearLifecycleAction, FiscalYearLifecycleFilter, FiscalYearListItem, FiscalYearPermissions, FiscalYearRecordStatus, FiscalYearSearchField, FiscalYearSearchOperator, FiscalYearSortColumn } from "../types/FiscalYear";
 import FiscalYearsCardView from "./FiscalYearsCardView";
 import FiscalYearsDataGrid from "./FiscalYearsDataGrid";
+
+const FiscalYearReportPage = dynamic(() => import("../reports/pages/FiscalYearReportPage"));
 
 interface Props {
   items: FiscalYearListItem[]; loading: boolean; fetching: boolean; page: number; pageSize: number; totalCount: number; permissions: FiscalYearPermissions;
@@ -17,14 +23,19 @@ interface Props {
 
 export default function FiscalYearsMultiView(props: Props) {
   const { t } = useTranslation();
-  const [view, setView] = useState<"grid" | "cards">("grid");
+  const { hasPermission } = usePermissions();
+  const modulesQuery = useAccessibleModulesQuery();
+  const canViewReports = hasPermission(appPermissions.ViewCrystalReports) &&
+    (modulesQuery.data ?? []).some((module) => module.code.toLowerCase() === "reporting");
+  const [view, setView] = useState<"grid" | "cards" | "report">("grid");
   const [filtersVisible, setFiltersVisible] = useState(true);
+  const visibleView = view === "report" && !canViewReports ? "grid" : view;
   const searchFields: FiscalYearSearchField[] = ["all", "code", "nameAr", "nameEn"];
   const operators: FiscalYearSearchOperator[] = ["contains", "doesNotContain", "equals", "doesNotEqual", "startsWith", "endsWith"];
   const sortOptions: FiscalYearSortColumn[] = ["startDate", "endDate", "code", "nameAr", "nameEn", "status", "createdOn"];
   return <Box sx={{ display: "flex", flexDirection: "column", height: "100%", width: "100%", minWidth: 0 }}>
-    <PageHeader variant="multi-view" title={t("fiscalYears.title")} storageKey="fiscal-years-view-layout" defaultView="grid" availableViews={["grid", "cards"]} onAdd={props.permissions.canCreate ? props.onAdd : undefined} dataCount={props.totalCount} totalLabel={t("fiscalYears.totalLabel")} onRefresh={props.onRefresh} onViewTypeChange={value => (value === "grid" || value === "cards") && setView(value)} onFilter={() => setFiltersVisible(value => !value)} isFilterBarVisible={filtersVisible} showActions={{ add: props.permissions.canCreate, refresh: true, export: false, filter: true }} />
-    {filtersVisible && view === "cards" ? <CardViewHeader compact showTitleSection={false} title="" mainChipLabel="" page={props.page}
+    <PageHeader variant="multi-view" title={t("fiscalYears.title")} storageKey="fiscal-years-view-layout" defaultView="grid" availableViews={["grid", "cards", ...(canViewReports ? ["report" as const] : [])]} onAdd={props.permissions.canCreate ? props.onAdd : undefined} dataCount={props.totalCount} totalLabel={t("fiscalYears.totalLabel")} onRefresh={props.onRefresh} onViewTypeChange={value => (value === "grid" || value === "cards" || (value === "report" && canViewReports)) && setView(value)} onFilter={() => setFiltersVisible(value => !value)} isFilterBarVisible={filtersVisible} showActions={{ add: props.permissions.canCreate, refresh: true, export: false, filter: true }} />
+    {filtersVisible && visibleView === "cards" ? <CardViewHeader compact showTitleSection={false} title="" mainChipLabel="" page={props.page}
       searchTerm={props.searchValue} searchPlaceholder={t("fiscalYears.search.placeholder")} onSearchChange={props.onSearchChange} onClearSearch={() => props.onSearchChange("")}
       sortBy={props.sortColumn} sortByOptions={sortOptions.map(value => ({ value, label: t(`fiscalYears.sort.${value}`) }))} onSortByChange={value => props.onSortChange(value as FiscalYearSortColumn, props.sortDirection)} sortOrder={props.sortDirection.toLowerCase() as "asc" | "desc"} onSortOrderChange={value => props.onSortChange(props.sortColumn, value.toUpperCase() as "ASC" | "DESC")}
       filterBy={props.recordStatus} filterOptions={(["active", "archived", "all"] as const).map(value => ({ value, label: t(`fiscalYears.recordStatus.${value}`) }))} onFilterByChange={value => props.onRecordStatusChange(value as FiscalYearRecordStatus)} onReset={props.onReset}
@@ -33,7 +44,9 @@ export default function FiscalYearsMultiView(props: Props) {
     /> : null}
     <Box sx={{ flex: 1, minHeight: 0, minWidth: 0, overflow: "hidden", position: "relative" }}>
       {props.fetching && !props.loading ? <LinearProgress sx={{ position: "absolute", insetInline: 0, top: 0, zIndex: 4 }} /> : null}
-      {view === "grid" ? <FiscalYearsDataGrid {...props} rows={props.items} showFilterBar={filtersVisible} onPaginationChange={(model: GridPaginationModel) => model.pageSize !== props.pageSize ? props.onPageSizeChange(model.pageSize) : props.onPageChange(model.page)} onSortChange={(model: GridSortModel) => { const item = model[0]; if (item?.sort) props.onSortChange(item.field as FiscalYearSortColumn, item.sort.toUpperCase() as "ASC" | "DESC"); }} /> : <FiscalYearsCardView {...props} hasCriteria={!!props.searchValue.trim() || props.recordStatus !== "active" || props.lifecycleStatus !== "all"} onClear={props.onReset} />}
+      {visibleView === "grid" ? <FiscalYearsDataGrid {...props} rows={props.items} showFilterBar={filtersVisible} onPaginationChange={(model: GridPaginationModel) => model.pageSize !== props.pageSize ? props.onPageSizeChange(model.pageSize) : props.onPageChange(model.page)} onSortChange={(model: GridSortModel) => { const item = model[0]; if (item?.sort) props.onSortChange(item.field as FiscalYearSortColumn, item.sort.toUpperCase() as "ASC" | "DESC"); }} /> : null}
+      {visibleView === "cards" ? <FiscalYearsCardView {...props} hasCriteria={!!props.searchValue.trim() || props.recordStatus !== "active" || props.lifecycleStatus !== "all"} onClear={props.onReset} /> : null}
+      {visibleView === "report" ? <FiscalYearReportPage showFilterBar={filtersVisible} /> : null}
     </Box>
   </Box>;
 }

@@ -53,7 +53,7 @@ describe("HR frontend module definition", () => {
     expect(requiredModuleForPath(appRoutes.platform.administration.offlineOperations)).toBeNull();
     expect(requiredModuleForPath(appRoutes.modules.reporting.crystalReports)).toBeNull();
     expect(requiredModuleForPath(appRoutes.modules.crm.appointments)).toBeNull();
-    expect(requiredModuleForPath(appRoutes.modules.accounting.fiscalYears)).toBeNull();
+    expect(requiredModuleForPath(appRoutes.modules.accounting.ledgerSetup.fiscalYears)).toBeNull();
   });
 
   it("lazy-loads only current HR submodule translations", async () => {

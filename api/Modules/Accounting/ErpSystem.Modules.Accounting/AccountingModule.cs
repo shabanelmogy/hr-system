@@ -17,7 +17,6 @@ public sealed class AccountingModule : IModule
         "acc",
         "Accounting",
         [
-            new SubmoduleDefinition("fiscal-years", "Fiscal years", AccountingPermissions.FiscalYears),
             new SubmoduleDefinition("invoicing", "Invoicing", AccountingPermissions.Invoicing),
             new SubmoduleDefinition("ledger-setup", "Ledger setup", AccountingPermissions.LedgerSetup)
         ])

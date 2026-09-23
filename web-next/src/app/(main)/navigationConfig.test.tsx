@@ -65,12 +65,17 @@ describe("application navigation configuration", () => {
 
   it("gets Fiscal Years from Accounting, not HR", () => {
     const config = getNavigationConfig([], [permissions.ViewFiscalYears]);
+    const accountingNavigation = accountingModuleDefinition.navigation?.[0];
     const financeSection = config.find(
-      (section) => section.id === NavigationSectionId.FINANCE,
+      (section) => section.id === accountingNavigation?.id,
     );
-    expect(financeSection?.items?.map((item) => item.path)).toEqual([
-      appRoutes.modules.accounting.fiscalYears,
-    ]);
+    expect(financeSection?.items?.map((item) => item.path)).toContain(
+      appRoutes.modules.accounting.ledgerSetup.fiscalYears,
+    );
+    expect(accountingModuleDefinition.submodules
+      .find((submodule) => submodule.code === "ledger-setup")
+      ?.navigation.flatMap((section) => section.entries)
+      .map((entry) => entry.path)).toContain(appRoutes.modules.accounting.ledgerSetup.fiscalYears);
   });
 
   it("gets Ledger Setup currencies from Accounting, not Basic Data", () => {
@@ -89,10 +94,15 @@ describe("application navigation configuration", () => {
     ], "acc");
 
     expect(paths(config)).toEqual([
-      appRoutes.modules.accounting.fiscalYears,
+      appRoutes.modules.accounting.ledgerSetup.fiscalYears,
+      appRoutes.modules.accounting.ledgerSetup.accountingSettings,
       appRoutes.modules.accounting.ledgerSetup.currencies,
+      appRoutes.modules.accounting.ledgerSetup.books,
+      appRoutes.modules.accounting.ledgerSetup.journals,
+      appRoutes.modules.accounting.ledgerSetup.exchangeRates,
+      appRoutes.modules.accounting.ledgerSetup.accountDetermination,
     ]);
-    expect(config).toHaveLength(2);
+    expect(config).toHaveLength(1);
   });
 
   it("keeps Crystal Reports only when Reporting analytics is accessible", () => {
@@ -132,7 +142,7 @@ describe("application navigation configuration", () => {
       permissions.ManageCrystalReportAccess,
     ]);
     const moduleFiltered = filterNavigationConfigByModules(permissionFiltered, []);
-    expect(paths(moduleFiltered)).not.toContain(appRoutes.modules.accounting.fiscalYears);
+    expect(paths(moduleFiltered)).not.toContain(appRoutes.modules.accounting.ledgerSetup.fiscalYears);
     expect(paths(moduleFiltered)).not.toContain(appRoutes.modules.crm.appointments);
     expect(paths(moduleFiltered)).not.toContain(appRoutes.modules.referenceData.addressTypes);
     expect(paths(moduleFiltered)).not.toContain(appRoutes.modules.reporting.crystalReports);

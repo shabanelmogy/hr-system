@@ -9,7 +9,7 @@ it does not create a route or entity by itself.
 - Canonical six-project module shape and deterministic host composition.
 - `acc` schema ownership, context registration, and module migration boundary.
 - Fiscal Years is an implemented Accounting vertical slice with Domain/Application
-  rules, versioned API/CQRS, Web `/finance/fiscal-years`, Mobile Fiscal Years
+  rules, versioned API/CQRS, Web `/finance/ledger-setup/fiscal-years`, Mobile Fiscal Years
   feature ownership, and focused tests. It is runtime evidence for that slice
   only; it does not imply the remaining Accounting roadmap is implemented.
 

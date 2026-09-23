@@ -68,9 +68,19 @@ export const ROUTES = {
   },
   finance: {
     root: '/finance',
-    fiscalYears: '/finance/fiscal-years',
-    ledgerSetup: '/finance/ledger-setup',
-    currencies: '/finance/ledger-setup/currencies',
+    ledgerSetup: {
+      root: '/finance/ledger-setup',
+      fiscalYears: '/finance/ledger-setup/fiscal-years',
+      accountingSettings: '/finance/ledger-setup/company-settings',
+      currencies: '/finance/ledger-setup/currencies',
+      accounts: '/finance/ledger-setup/accounts',
+      hierarchyLevels: '/finance/ledger-setup/hierarchy-levels',
+      dimensions: '/finance/ledger-setup/dimensions',
+      books: '/finance/ledger-setup/books',
+      journals: '/finance/ledger-setup/journals',
+      exchangeRates: '/finance/ledger-setup/exchange-rates',
+      accountDetermination: '/finance/ledger-setup/account-determination',
+    },
   },
   workforcePlanning: {
     index: '/workforce-planning',
@@ -114,7 +124,8 @@ export type AppRoute =
   | ReturnType<typeof ROUTES.administration.rolePermissions>
   | typeof ROUTES.recruitment.root
   | (typeof ROUTES.workforcePlanning)[keyof typeof ROUTES.workforcePlanning]
-  | (typeof ROUTES.finance)[keyof typeof ROUTES.finance];
+  | typeof ROUTES.finance.root
+  | (typeof ROUTES.finance.ledgerSetup)[keyof typeof ROUTES.finance.ledgerSetup];
 
 // Expo regenerates typed route declarations after route files change.
 export const asHref = (route: AppRoute): Href => route as Href;

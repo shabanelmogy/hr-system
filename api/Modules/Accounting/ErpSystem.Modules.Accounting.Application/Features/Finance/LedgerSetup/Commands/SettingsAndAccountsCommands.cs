@@ -86,7 +86,7 @@ public sealed record UpdateAccountHierarchyLevelCommand(int Id, int LevelNumber,
 public sealed class AccountHierarchyLevelCommandValidator<T> : AbstractValidator<T> where T : class
 { public AccountHierarchyLevelCommandValidator() { RuleFor(item => item).NotNull(); } }
 public sealed class CreateAccountHierarchyLevelCommandValidator : AbstractValidator<CreateAccountHierarchyLevelCommand> { public CreateAccountHierarchyLevelCommandValidator() { RuleFor(item => item.LevelNumber).GreaterThan(0); RuleFor(item => item.NameAr).NotEmpty().MaximumLength(150); RuleFor(item => item.NameEn).NotEmpty().MaximumLength(150); } }
-public sealed class UpdateAccountHierarchyLevelCommandValidator : AbstractValidator<UpdateAccountHierarchyLevelCommand> { public UpdateAccountHierarchyLevelCommandValidator() { RuleFor(item => item.Id).GreaterThan(0); RuleFor(item => item.LevelNumber).GreaterThan(0); RuleFor(item => item.RowVersion).Must(LedgerSetupCommandSupport.ValidVersion); } }
+public sealed class UpdateAccountHierarchyLevelCommandValidator : AbstractValidator<UpdateAccountHierarchyLevelCommand> { public UpdateAccountHierarchyLevelCommandValidator() { RuleFor(item => item.Id).GreaterThan(0); RuleFor(item => item.LevelNumber).GreaterThan(0); RuleFor(item => item.NameAr).NotEmpty().MaximumLength(150); RuleFor(item => item.NameEn).NotEmpty().MaximumLength(150); RuleFor(item => item.RowVersion).Must(LedgerSetupCommandSupport.ValidVersion); } }
 
 public sealed class CreateAccountHierarchyLevelCommandHandler(IAccountHierarchyLevelStore store, IAccountingUnitOfWork unitOfWork, ICurrentActor actor, LedgerSetupErrors errors) : ICommandHandler<CreateAccountHierarchyLevelCommand, Result<AccountHierarchyLevelResponse>>
 {

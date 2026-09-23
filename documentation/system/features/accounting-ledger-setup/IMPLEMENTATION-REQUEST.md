@@ -12,6 +12,7 @@ Slice 1 and final Phase 06 verification remain gated (2026-09-21).**
 | Plan ID | `accounting-core-gl` |
 | Authorized slice | `Slice 1 — Ledger setup spine` |
 | Canonical plan | `documentation/plans/business/accounting-core-gl/PLAN.md` |
+| Slice 1 execution decomposition | `documentation/plans/business/accounting-core-gl/SLICE-01-LEDGER-SETUP-EXECUTION.md` |
 | Applied implementation reference | `fiscal-years` — same-module architecture/verification pattern only |
 | Request date | 2026-09-20 |
 | Review artifact | `documentation/system/features/accounting-ledger-setup/ACCOUNTING_LEDGER_SETUP-REVIEW-ARTIFACTS.md` |
@@ -36,6 +37,20 @@ If implementation discovers a business change that affects ownership, persisted
 financial meaning, security, lifecycle or a Required customer journey, stop the
 affected work and reopen the relevant plan gate. Do not solve it as a feature-local
 exception.
+
+### Child execution authority
+
+This umbrella request remains the Slice 1 integration/history contract. Future
+Slice 1 implementation and corrective work is decomposed by
+`SLICE-01-LEDGER-SETUP-EXECUTION.md` into `1A` Currency, `1B` COA/Hierarchy, `1C`
+Dimensions, `1D` Books/Journals, `1E` Company Settings, `1F` Exchange Rates, `1G`
+Link Accounts, `1H` Posting Profiles and `1V` Integration/Verification.
+
+Work one child at a time by default. Each child owns typed API/transport models,
+feature-owned client data boundaries and an explicit Screen Contract. The current
+generic `LedgerSetupRecord`/resource renderer is implementation evidence to refactor,
+not an architecture to expand. The umbrella remains responsible for cross-child
+integration and the final Phase 06 result.
 
 ## Approved product decisions translated for execution
 
@@ -103,7 +118,7 @@ exception.
 | BR-006 | V1 company has one Primary Book selected by settings | Domain/application | invalid/missing primary setup rejected | company-settings tests |
 | BR-007 | Account hierarchy level numbers are company-unique and ordered | Domain + database | validation/duplicate conflict | level tests |
 | BR-008 | Posting account requires level CanPost + AllowPosting and no children | Domain + persisted-state handler | invalid hierarchy rejected | account domain/handler tests |
-| BR-009 | Account code is server-proposed but user-editable if valid/unique | Application + database | proposed or accepted unique code | code-generation + race tests |
+| BR-009 | Account code is server-proposed but user-editable if valid/unique; D-024 uses a non-hierarchical company-wide `ACC-####` suggestion and keeps archived codes reserved | Application + database | proposed or accepted unique code; duplicate race is deterministic | proposal/reservation + race tests |
 | BR-010 | Used financial setup is archived/versioned, not destructively deleted | Domain/application | archive or in-use conflict | dependency lifecycle tests |
 | BR-011 | ManualPostingPolicy is Allowed/Restricted/Blocked | Domain | undefined value rejected | enum/policy tests |
 | BR-012 | CurrencyPolicy is Any/FunctionalOnly/SpecificCurrency | Domain/application | missing/incompatible specific currency rejected | account currency tests |
@@ -173,6 +188,10 @@ duplicates, dependency resolution, limits and rejected-row handling.
 
 ## Required implementation
 
+Execution follows the child-package order in
+`SLICE-01-LEDGER-SETUP-EXECUTION.md`. The list below remains the umbrella scope
+inventory and must not be interpreted as one generic CRUD implementation unit.
+
 API:
 1. Accounting-owned Currency in the clean baseline plus stable Accounting Currency catalog Contract; no HR Currency persistence or cutover migration.
 2. AccountingCompanySettings.
@@ -218,6 +237,10 @@ atomic resources, RowVersion, permissions, localized stable errors and tests.
 AccountMapping and PostingProfile use effective/versioned history instead of a
 destructive lifecycle route. All other setup masters expose archive/restore and
 `RecordStatus` discovery.
+
+Child-package completion does not close Slice 1. Package `1V` must reconcile the
+typed child contracts, exact Screen Contracts and cross-package journeys before
+umbrella Phase 06 may record `Verified`.
 
 The same gate is now generated for every future module by
 `api/scripts/New-ErpModule.ps1`, and solution architecture tests prevent modules

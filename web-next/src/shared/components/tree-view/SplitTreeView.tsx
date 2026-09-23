@@ -42,6 +42,8 @@ export default function SplitTreeView<T>({
   getIsDeleted,
   variant = "tree-list",
   searchFilter,
+  searchValue: controlledSearchValue,
+  onSearchChange,
   renderNode,
   renderDetailPanel,
   renderEmptyDetailPanel,
@@ -49,6 +51,8 @@ export default function SplitTreeView<T>({
   canDrag = true,
   onSelect,
   selectedId: controlledSelectedId,
+  expandedIds: controlledExpandedIds,
+  onExpandedIdsChange,
   rootTitle,
   searchPlaceholder,
   loading = false,
@@ -66,9 +70,11 @@ export default function SplitTreeView<T>({
   const selectedId = controlledSelectedId !== undefined ? controlledSelectedId : internalSelectedId;
 
   const [isDetailPanelOpen, setIsDetailPanelOpen] = useState<boolean>(initialDetailPanelOpen);
-  const [expandedNodes, setExpandedNodes] = useState<Set<number | string>>(() => new Set(items.map(getId)));
+  const [internalExpandedNodes, setInternalExpandedNodes] = useState<Set<number | string>>(() => new Set(items.map(getId)));
+  const expandedNodes = controlledExpandedIds ?? internalExpandedNodes;
   const [zoom, setZoom] = useState<number>(1);
-  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [internalSearchTerm, setInternalSearchTerm] = useState<string>("");
+  const searchTerm = controlledSearchValue ?? internalSearchTerm;
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
 
   const [draggingItem, setDraggingItem] = useState<T | null>(null);
@@ -169,16 +175,25 @@ export default function SplitTreeView<T>({
   }, [expandedNodes, matchingAncestorIds]);
 
   const toggleExpand = (id: number | string) => {
-    setExpandedNodes((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
+    const next = new Set(expandedNodes);
+    if (next.has(id)) next.delete(id);
+    else next.add(id);
+    if (controlledExpandedIds === undefined) setInternalExpandedNodes(next);
+    onExpandedIdsChange?.(next);
   };
 
-  const expandAll = () => setExpandedNodes(new Set(items.map(getId)));
-  const collapseAll = () => setExpandedNodes(new Set());
+  const setExpansion = (next: Set<number | string>) => {
+    if (controlledExpandedIds === undefined) setInternalExpandedNodes(next);
+    onExpandedIdsChange?.(next);
+  };
+
+  const expandAll = () => setExpansion(new Set(items.map(getId)));
+  const collapseAll = () => setExpansion(new Set());
+
+  const handleSearchChange = (value: string) => {
+    if (controlledSearchValue === undefined) setInternalSearchTerm(value);
+    onSearchChange?.(value);
+  };
 
   const handleSelect = (item: T | null) => {
     const id = item ? getId(item) : null;
@@ -461,7 +476,7 @@ export default function SplitTreeView<T>({
             size="small"
             placeholder={resolvedSearchPlaceholder}
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={(e) => handleSearchChange(e.target.value)}
             slotProps={{
               input: {
                 startAdornment: (

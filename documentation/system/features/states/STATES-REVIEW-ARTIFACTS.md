@@ -34,8 +34,8 @@
 | Child relation | Active Districts block archive and bulk archive; participating State and District operations share one State resource. |
 | Search | State names, code, and Country name only; no Countries alpha/phone/currency fields. |
 | Bulk creation/import | Web and mobile XLSX import post `{ "states": [...] }` to `POST /api/v1/states/bulk` (`States:Create`, 1-100 rows, atomic, one `BulkAdd` change) and require `Countries:View` for parent resolution. Shared preflight validates XLSX metadata, first-sheet canonical headers, values-only safety, non-empty/100-row bounds, and feature mapping. Dependency states fail explicitly; ambiguous submissions lock and reconcile because the API has no idempotency key. Duplicate checks are case-insensitive, independent for Arabic name, English name, and code, and scoped to Country. |
-| Browser report | Crystal viewer catalog and generation contract are ready. The checked-in States report slot is empty, so browser Report mode shows a localized unavailable state until the owner adds a valid State `.rpt`. |
-| Mobile report | Current-page summary only until an Expo Crystal PDF viewer/download/share workflow is implemented. |
+| Browser report | Super Admin Report mode calls the global Crystal catalog/render contract for `states`; it shows a localized unavailable state until the deployment-owned source catalog exposes a valid State `.rpt`. |
+| Mobile report | Super Admin Report mode uses the same global catalog/render contract and shared native PDF open/print/share lifecycle; no tenant entitlement is required. |
 | Charts | Required current-page view using the shared criteria and pagination; page scope is explicit. Global analytics remains excluded without an aggregate endpoint. |
 
 ## Open findings

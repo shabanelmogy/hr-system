@@ -114,6 +114,37 @@ describe("crystalReportService", () => {
     expect(rendered).toBe(pdf);
   });
 
+  it("lists and renders global reports through the super-admin endpoint", async () => {
+    const globalReport = {
+      ...listItem,
+      id: "a".repeat(64),
+      rowVersion: "b".repeat(64),
+    };
+    const pdf = new Blob(["%PDF-1.7"], { type: "application/pdf" });
+    get.mockResolvedValue([globalReport]);
+    postBlob.mockResolvedValue(pdf);
+
+    const reports = await crystalReportService.listGlobal("countries");
+    const rendered = await crystalReportService.renderGlobal(reports[0], {
+      language: "en",
+      filters: { NameEn: "Egypt" },
+    });
+
+    expect(get).toHaveBeenCalledWith(apiRoutes.crystalReports.globalList, { entityKey: "countries" });
+    expect(postBlob).toHaveBeenCalledWith(
+      apiRoutes.crystalReports.globalRender(globalReport.id),
+      {
+        entityKey: "countries",
+        expectedSha256: globalReport.rowVersion,
+        language: "en",
+        filters: { NameEn: "Egypt" },
+      },
+      "application/pdf",
+      120_000,
+    );
+    expect(rendered).toBe(pdf);
+  });
+
   it("uses exact success bodies for publish and access while sending row versions", async () => {
     post.mockResolvedValue(detail);
     put.mockResolvedValue([grant]);

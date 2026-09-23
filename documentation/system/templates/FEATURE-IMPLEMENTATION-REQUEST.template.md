@@ -13,6 +13,8 @@ remains the evidence ledger; this request states the work to perform.
 | Plan ID | `<PlanId or N/A>` |
 | Authorized slice / phase | `<SliceId or N/A>` |
 | Canonical plan | `<CanonicalPlanPath or N/A>` |
+| Feature decomposition decision | `<FeatureDecompositionDecision>` |
+| Screen/Workflow Contract | `<ScreenWorkflowContractPath>` |
 | Applied implementation reference | `<ReferenceFeature or N/A>` |
 | Request date | `<YYYY-MM-DD>` |
 | Review artifact | `<repository-relative review artifact path>` |
@@ -45,11 +47,20 @@ Before changing runtime source:
 3. Verify every referenced runtime path and record current, requested,
    intentionally different, and unresolved behavior separately.
 4. For planned work, read the canonical plan and authorized slice first, then
-   complete the implementation preflight. Import approved decisions into the
-   matrices below instead of re-deciding them.
+   confirm this Feature ID is the exact execution unit authorized by the plan's
+   Feature Decomposition Gate, then complete the implementation preflight. Import
+   approved decisions into the matrices below instead of re-deciding them.
 5. Complete the Existing-System Relationship Review and execution-readiness
    matrices. Do not infer a missing decision from the reference.
-6. If implementation inspection discovers a material contradiction or a new
+6. When the authorized slice is `Decompose`, read the child Screen/Workflow
+   Contract created from `documentation/plans/FEATURE_DECOMPOSITION_TEMPLATE.md`
+   and verify its reuse audit before runtime work. It must cover the closest existing
+   reference, exact reusable components, layout/workspace, list/tree/detail,
+   create/edit/view/lifecycle, typed transport, server criteria, states,
+   permissions/read-only, concurrency, i18n/RTL/accessibility/responsive behavior,
+   tests, and the child exit gate. A generic umbrella renderer is not evidence for a
+   materially different workflow.
+7. If implementation inspection discovers a material contradiction or a new
    business decision affecting persisted meaning, lifecycle, ownership, security,
    or a Required customer journey, reopen the affected plan gate before coding.
 

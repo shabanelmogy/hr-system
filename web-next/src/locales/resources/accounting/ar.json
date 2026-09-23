@@ -2,6 +2,10 @@
   "fiscalYears": {
     "title": "السنوات المالية",
     "totalLabel": "سنوات مالية",
+    "report": {
+      "catalogError": "تعذر تحميل قائمة تقارير السنوات المالية. أضف تقريرًا منشورًا ثم أعد المحاولة.",
+      "unavailable": "لا يوجد تقرير منشور للسنوات المالية. انشر تقريرًا من مدير التقارير وامنح صلاحية التشغيل."
+    },
     "fields": {
       "code": "الكود",
       "startDate": "تاريخ البداية",
@@ -198,5 +202,109 @@
       "restoreTitle": "استعادة العملة؟",
       "restoreDescription": "ستصبح العملة متاحة مرة أخرى في القوائم النشطة."
     }
+  },
+  "ledgerSetup": {
+    "subtitle": "إعداد الأساس المحاسبي للشركة المستخدم في قيود الحسابات.",
+    "overview": { "open": "فتح الإعداد" },
+    "search": "ابحث في إعدادات دفتر الأستاذ...",
+    "actions": { "add": "إضافة سجل", "resolve": "معاينة التحديد" },
+    "form": { "subtitle": "يتحقق الخادم من البيانات ويحمي التعديلات بإصدار السجل." },
+    "validation": { "required": "هذا الحقل مطلوب." },
+    "boolean": { "yes": "نعم", "no": "لا" },
+    "status": { "active": "نشط", "archived": "مؤرشف" },
+    "fields": { "status": "الحالة", "code": "الكود", "nameAr": "الاسم العربي", "nameEn": "الاسم الإنجليزي", "functionalCurrencyId": "العملة الوظيفية", "primaryBookId": "الدفتر الأساسي", "accountHierarchyLevelId": "مستوى الحساب", "parentAccountId": "الحساب الأب", "allowPosting": "السماح بالترحيل", "manualPostingPolicy": "سياسة الترحيل اليدوي", "currencyPolicy": "سياسة العملة", "specificCurrencyId": "العملة المحددة", "levelNumber": "رقم المستوى", "canPost": "يسمح بالترحيل", "valueSource": "مصدر القيمة", "dimensionDefinitionId": "البُعد", "requirement": "درجة الإلزام", "bookId": "الدفتر", "categoryCode": "كود التصنيف", "numberPrefix": "بادئة الرقم", "numberPadding": "عدد الخانات", "resetPolicy": "سياسة إعادة الترقيم", "nextNumber": "الرقم التالي", "exchangeRateTypeId": "نوع سعر الصرف", "fromCurrencyId": "العملة المصدر", "toCurrencyId": "العملة الهدف", "effectiveFrom": "ساري من", "effectiveTo": "ساري حتى", "version": "الإصدار", "rate": "السعر", "purposeCode": "كود الغرض", "sourceType": "نوع المصدر", "sourceReferenceId": "مرجع المصدر", "accountId": "الحساب", "contextType": "نوع السياق", "contextReferenceId": "مرجع السياق", "priority": "الأولوية", "onDate": "تاريخ التحديد" },
+    "companySettings": { "title": "إعدادات محاسبة الشركة", "create": "إعدادات محاسبة الشركة", "edit": "إعدادات محاسبة الشركة", "view": "إعدادات محاسبة الشركة" },
+    "accounts": {
+      "title": "دليل الحسابات",
+      "subtitle": "استعرض التسلسل الهرمي للحسابات وأدر حسابات الترحيل الخاصة بالشركة.",
+      "create": "إضافة حساب",
+      "edit": "تعديل الحساب",
+      "view": "تفاصيل الحساب",
+      "actions": { "add": "إضافة حساب", "addChild": "إضافة حساب فرعي" },
+      "views": { "label": "طرق عرض دليل الحسابات", "tree": "التسلسل الهرمي", "list": "قائمة الحسابات" },
+      "tree": { "rootTitle": "دليل الحسابات", "emptyTitle": "اختر حسابًا", "emptyPrompt": "اختر حسابًا من التسلسل لتحميل تفاصيله الحالية." },
+      "detail": { "posting": "حساب ترحيل", "summary": "حساب تجميعي", "level": "مستوى التسلسل {{level}}" },
+      "fields": { "createdOn": "تاريخ الإنشاء" },
+      "search": {
+        "placeholder": "ابحث في الحسابات...",
+        "treePlaceholder": "ابحث في تسلسل الحسابات...",
+        "column": "حقل البحث",
+        "condition": "الشرط",
+        "fields": { "all": "كل الحقول", "code": "الكود", "nameAr": "الاسم العربي", "nameEn": "الاسم الإنجليزي" },
+        "operators": { "contains": "يحتوي", "doesNotContain": "لا يحتوي", "equals": "يساوي", "doesNotEqual": "لا يساوي", "startsWith": "يبدأ بـ", "endsWith": "ينتهي بـ" }
+      },
+      "recordStatus": { "active": "الحسابات النشطة", "archived": "الحسابات المؤرشفة", "all": "كل الحسابات" },
+      "form": {
+        "addTitle": "إضافة حساب",
+        "editTitle": "تعديل الحساب",
+        "viewTitle": "تفاصيل الحساب",
+        "subtitle": "تتحقق المحاسبة من قواعد الحساب وتحمي التعديلات بإصدار السجل."
+      },
+      "messages": {
+        "forbidden": "ليست لديك صلاحية عرض دليل الحسابات.",
+        "created": "تم إنشاء الحساب {{code}}.",
+        "updated": "تم تحديث الحساب {{code}}.",
+        "archived": "تمت أرشفة الحساب.",
+        "restored": "تمت استعادة الحساب.",
+        "createFailed": "تعذر إنشاء الحساب.",
+        "updateFailed": "تعذر تحديث الحساب.",
+        "archiveFailed": "تعذر أرشفة الحساب.",
+        "restoreFailed": "تعذر استعادة الحساب.",
+        "listFailed": "تعذر تحميل قائمة الحسابات.",
+        "treeFailed": "تعذر تحميل تسلسل الحسابات.",
+        "detailFailed": "تعذر تحميل تفاصيل الحساب الحالية.",
+        "proposalFailed": "تعذر جلب كود الحساب المقترح التالي.",
+        "conflictReloaded": "تم تعديل الحساب على الخادم. أُعيد تحميل البيانات الحالية."
+      },
+      "confirm": {
+        "archiveTitle": "أرشفة هذا الحساب؟",
+        "archiveDescription": "سيُزال الحساب من محددات الحسابات النشطة.",
+        "restoreTitle": "استعادة هذا الحساب؟",
+        "restoreDescription": "سيصبح الحساب نشطًا مرة أخرى."
+      }
+    },
+    "hierarchyLevels": {
+      "title": "مستويات تسلسل الحسابات",
+      "subtitle": "عرّف المستويات المرتبة المستخدمة للتحقق من هيكل دليل الحسابات.",
+      "create": "إضافة مستوى",
+      "edit": "تعديل المستوى",
+      "view": "تفاصيل المستوى",
+      "actions": { "add": "إضافة مستوى تسلسل" },
+      "recordStatus": { "active": "المستويات النشطة", "archived": "المستويات المؤرشفة", "all": "كل المستويات" },
+      "form": {
+        "addTitle": "إضافة مستوى تسلسل",
+        "editTitle": "تعديل مستوى التسلسل",
+        "viewTitle": "تفاصيل مستوى التسلسل",
+        "subtitle": "تتحقق المحاسبة من أرقام المستويات وإمكانية الترحيل."
+      },
+      "messages": {
+        "forbidden": "ليست لديك صلاحية عرض مستويات تسلسل الحسابات.",
+        "created": "تم إنشاء مستوى التسلسل.",
+        "updated": "تم تحديث مستوى التسلسل.",
+        "archived": "تمت أرشفة مستوى التسلسل.",
+        "restored": "تمت استعادة مستوى التسلسل.",
+        "createFailed": "تعذر إنشاء مستوى التسلسل.",
+        "updateFailed": "تعذر تحديث مستوى التسلسل.",
+        "archiveFailed": "تعذر أرشفة مستوى التسلسل.",
+        "restoreFailed": "تعذر استعادة مستوى التسلسل.",
+        "listFailed": "تعذر تحميل مستويات تسلسل الحسابات.",
+        "conflictReloaded": "تم تعديل مستوى التسلسل على الخادم. أُعيد تحميل البيانات الحالية."
+      },
+      "confirm": {
+        "archiveTitle": "أرشفة مستوى التسلسل؟",
+        "archiveDescription": "لن يكون المستوى متاحًا لإعداد حسابات جديدة.",
+        "restoreTitle": "استعادة مستوى التسلسل؟",
+        "restoreDescription": "سيصبح المستوى نشطًا مرة أخرى."
+      }
+    },
+    "dimensions": { "title": "الأبعاد وسياسات الحسابات", "definitions": "تعريفات الأبعاد", "values": "قيم الأبعاد", "policies": "سياسات الحسابات", "create": "إضافة بُعد", "edit": "تعديل البُعد", "view": "تفاصيل البُعد" },
+    "books": { "title": "الدفاتر", "create": "إضافة دفتر", "edit": "تعديل الدفتر", "view": "تفاصيل الدفتر" },
+    "journals": { "title": "تعريفات اليومية", "create": "إضافة يومية", "edit": "تعديل اليومية", "view": "تفاصيل اليومية" },
+    "exchangeRates": { "title": "أسعار الصرف", "types": "أنواع الأسعار", "rates": "الأسعار التاريخية", "create": "إضافة سعر صرف", "edit": "تعديل سعر الصرف", "view": "تفاصيل سعر الصرف" },
+    "accountDetermination": { "title": "تحديد الحسابات", "mappings": "ربط الحسابات", "profiles": "ملفات الترحيل", "preview": "معاينة تحديد الحساب", "previewHelp": "اختبر قاعدة الحساب الفعالة دون إنشاء قيد مالي.", "create": "إضافة ربط حساب", "edit": "تعديل ربط الحساب", "view": "تفاصيل ربط الحساب" },
+    "enums": { "manualPosting": { "allowed": "مسموح", "restricted": "مقيد", "blocked": "محظور" }, "currencyPolicy": { "any": "أي عملة", "functionalOnly": "العملة الوظيفية فقط", "specificCurrency": "عملة محددة" }, "dimensionRequirement": { "optional": "اختياري", "required": "إلزامي", "forbidden": "محظور" }, "resetPolicy": { "never": "بدون إعادة", "fiscalYear": "كل سنة مالية" }, "company": "الشركة", "accountingOwned": "مملوك للمحاسبة" },
+    "resolutionStatus": { "1": "تم التحديد", "2": "لا توجد قاعدة مطابقة", "3": "قواعد متعارضة" },
+    "messages": { "saved": "تم حفظ إعدادات دفتر الأستاذ.", "saveFailed": "تعذر حفظ إعدادات دفتر الأستاذ.", "archived": "تمت أرشفة السجل.", "restored": "تمت استعادة السجل.", "loadFailed": "تعذر تحميل إعدادات دفتر الأستاذ." },
+    "confirm": { "archiveTitle": "أرشفة السجل؟", "archiveDescription": "سيختفي السجل من قوائم الإعداد النشطة.", "restoreTitle": "استعادة السجل؟", "restoreDescription": "سيصبح السجل نشطًا مرة أخرى." }
   }
 }

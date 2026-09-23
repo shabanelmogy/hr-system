@@ -5,6 +5,8 @@ import type { CrystalReportsRoutes } from "./types";
 export const crystalReports: CrystalReportsRoutes = {
   list: `${version}/crystal-reports`,
   render: (id) => `${version}/crystal-reports/${id}/render`,
+  globalList: `${version}/global-crystal-reports`,
+  globalRender: (sourceId) => `${version}/global-crystal-reports/${sourceId}/render`,
   manage: `${version}/crystal-reports/manage`,
   getForManagement: (id) => `${version}/crystal-reports/manage/${id}`,
   create: `${version}/crystal-reports`,

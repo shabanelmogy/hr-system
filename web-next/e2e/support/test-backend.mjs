@@ -450,10 +450,10 @@ function modulesFor(session) {
       isDefault: true,
       submodules: [
         {
-          code: "fiscal-years",
-          name: "Fiscal years",
+          code: "ledger-setup",
+          name: "Ledger setup",
           requiredPermissions: ["FiscalYears:View"],
-          entryPath: "/finance/fiscal-years",
+          entryPath: "/finance/ledger-setup",
         },
       ],
     },

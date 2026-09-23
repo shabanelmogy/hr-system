@@ -97,9 +97,18 @@ export interface ModuleRoutes {
     workforcePlanning: WorkforcePlanningRoutes;
   };
   accounting: {
-    fiscalYears: AppPath;
     ledgerSetup: {
+      index: AppPath;
+      fiscalYears: AppPath;
+      accountingSettings: AppPath;
       currencies: AppPath;
+      accounts: AppPath;
+      hierarchyLevels: AppPath;
+      dimensions: AppPath;
+      books: AppPath;
+      journals: AppPath;
+      exchangeRates: AppPath;
+      accountDetermination: AppPath;
     };
   };
   crm: {
@@ -213,9 +222,18 @@ export const appRoutes: AppRoutes = {
       },
     },
     accounting: {
-      fiscalYears: toAppPath("/finance/fiscal-years"),
       ledgerSetup: {
+        index: toAppPath("/finance/ledger-setup"),
+        fiscalYears: toAppPath("/finance/ledger-setup/fiscal-years"),
+        accountingSettings: toAppPath("/finance/ledger-setup/company-settings"),
         currencies: toAppPath("/finance/ledger-setup/currencies"),
+        accounts: toAppPath("/finance/ledger-setup/accounts"),
+        hierarchyLevels: toAppPath("/finance/ledger-setup/hierarchy-levels"),
+        dimensions: toAppPath("/finance/ledger-setup/dimensions"),
+        books: toAppPath("/finance/ledger-setup/books"),
+        journals: toAppPath("/finance/ledger-setup/journals"),
+        exchangeRates: toAppPath("/finance/ledger-setup/exchange-rates"),
+        accountDetermination: toAppPath("/finance/ledger-setup/account-determination"),
       },
     },
     crm: {

@@ -22,6 +22,7 @@ The goal is not to write the longest plan. The goal is to reach an implementatio
 | `EVIDENCE_TEMPLATE.md` | Evidence ledger template for a plan. |
 | `SPEC_SUMMARY_TEMPLATE.md` | Pre-plan specification produced before implementation phases are written. |
 | `BUSINESS_PLAN_TEMPLATE.md` | Copyable master template for a new business capability. |
+| `FEATURE_DECOMPOSITION_TEMPLATE.md` | Mandatory child Screen/Workflow Contract template when an authorized slice is decomposed into materially different feature workflows. |
 | `CUSTOMER_EDUCATION_TEMPLATE.md` | Post-implementation customer guide + training/demo + video-script template used to close customer-visible phases. |
 | `PLAN_QUALITY_GATE.md` | Gates that decide whether a plan is ready to implement. |
 | `PLAN_REGISTRY.md` | Index of active, approved, deferred, and closed plans. |
@@ -54,6 +55,7 @@ Business request
 → risks / Required-Deferred-Excluded decisions
 → implementation phases
 → quality gates
+→ Feature Decomposition Gate per authorized slice
 → approved implementation request
 → implementation + verification
 → customer education / video pack per completed customer-visible phase
@@ -98,12 +100,16 @@ Silence is not a decision.
 After a plan reaches `Implementation Ready`, or after a bounded slice receives
 explicit execution authorization under `PLAN_QUALITY_GATE.md`:
 
-1. API work follows `documentation/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md`.
-2. Cross-platform feature work follows `documentation/system/README.md` and the closest reviewed reference.
-3. Reusable frontend rules belong in the Web architecture/reference guides.
-4. Module-specific rules belong in the owning `documentation/modules/<module>/` package.
-5. Generated documentation is regenerated; it is never edited manually.
-6. After each customer-visible implementation phase is verified, create/update its
+1. Complete the Feature Decomposition Gate for the exact authorized slice. A slice
+   with materially different domain/UI workflows must be split into coherent feature
+   execution units before an implementation scaffold is created; a coherent slice
+   records `Single feature` explicitly.
+2. API work follows `documentation/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md`.
+3. Cross-platform feature work follows `documentation/system/README.md` and the closest reviewed reference.
+4. Reusable frontend rules belong in the Web architecture/reference guides.
+5. Module-specific rules belong in the owning `documentation/modules/<module>/` package.
+6. Generated documentation is regenerated; it is never edited manually.
+7. After each customer-visible implementation phase is verified, create/update its
    Customer Education Pack from `CUSTOMER_EDUCATION_TEMPLATE.md` before marking
    that phase `Closed`.
 
@@ -127,6 +133,8 @@ documentation/plans/business/<plan-id>/
 ├── PLAN.md
 ├── DECISIONS.md
 ├── RESEARCH.md
+├── decomposition/
+│   └── <feature-id>.md
 ├── education/
 │   └── <phase-or-slice-id>.md
 └── diagrams/
@@ -136,6 +144,8 @@ Then register the plan in `PLAN_REGISTRY.md`.
 
 The authoritative creation sequence is `PLAN_CREATION_PROTOCOL.md`. Do not jump
 straight from an idea to `PLAN.md` for a new capability or substantial rebuild.
+Create files under `decomposition/` only for slices marked `Decompose`, using
+`FEATURE_DECOMPOSITION_TEMPLATE.md`.
 
 External prompts are inputs to this method, not parallel authorities. Their
 adoption status is tracked in `PLANNING_METHOD_PROVENANCE.md`.

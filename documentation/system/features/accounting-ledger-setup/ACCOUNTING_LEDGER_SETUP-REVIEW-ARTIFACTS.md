@@ -7,6 +7,7 @@
 | Feature | `accounting-ledger-setup` |
 | Plan / slice | `accounting-core-gl` / `Slice 1 — Ledger setup spine` |
 | Canonical plan | `documentation/plans/business/accounting-core-gl/PLAN.md` |
+| Slice 1 execution decomposition | `documentation/plans/business/accounting-core-gl/SLICE-01-LEDGER-SETUP-EXECUTION.md` |
 | Operating mode | New vertical slice extending Accounting |
 | Review date | 2026-09-20 |
 | Review owner | Accounting Product + Architecture + implementation agent |
@@ -48,6 +49,29 @@
 | Offline write | N/A browser | Excluded | server authority |
 | Realtime | Deferred | Deferred | correctness independent |
 | Notifications | Deferred | Deferred | no workflow notification in Slice 1 |
+
+## Child execution packages and Screen Contract authority
+
+The umbrella feature is retained for integration/history evidence and final Slice 1
+verification. Future implementation/refactoring is reviewed child-by-child against
+the canonical decomposition document.
+
+| Package | Capability | Screen Contract focus | Closest reuse/reference |
+| --- | --- | --- | --- |
+| `1A` | Currency | server-managed list + create/view/edit/archive/restore + active lookup | Web shared grid/form/list state; Mobile shared list/table/form |
+| `1B` | COA + Hierarchy | first-class tree master/detail, proposed editable code, account lifecycle | Web `SplitTreeView` + Cost Center master/detail composition; Mobile `AppHierarchicalTree` |
+| `1C` | Dimensions | definitions/values + account constraint relationship editor | shared tabs/list/forms/selectors; typed Account lookup |
+| `1D` | Books + Journal Definitions | focused setup lists/forms; numbering config only | shared list/form/confirmation systems |
+| `1E` | Company Settings | singleton functional-currency/primary-book editor | shared form/select/state primitives |
+| `1F` | Exchange Rates | rate types + historical/versioned rates | shared list/form/date/select primitives |
+| `1G` | Link Accounts | capability-driven direct mappings | typed Book/Account lookups + shared list/form |
+| `1H` | Posting Profiles | profile editor + separate resolution preview diagnostics | shared list/form/feedback; typed preview response |
+| `1V` | Integration/Verification | launcher, permissions, translations, cross-child journeys, Phase 06 | existing Accounting shell + umbrella generated evidence |
+
+The current generic `LedgerSetupRecord` and generic resource renderer are accepted
+only as current-tree evidence. They are not the target client architecture for child
+completion. Each child must demonstrate typed transport/runtime contracts and its
+own Screen Contract evidence.
 
 ## Evidence register
 
@@ -139,6 +163,7 @@ separate plan.
 | F-06 | Medium | Original scaffold lifecycle implied recipe registration only after runtime | system workflow corrected: Phase 00 contracts/manifest/recipe are registered before coding |
 | F-07 | High | Initial Phase 01 review proved create/update but did not enumerate lifecycle evidence per mutable entity | fixed with archive/restore/status/dependency guards, entity completion matrix, generated future-module quality gate and architecture tests |
 | F-08 | High | Process-wide JSON localization factory/resources were owned and registered by HR | moved global composition/resources to ErpSystem.Api; Ledger Setup uses Accounting-owned embedded resources; architecture test blocks future module registration |
+| F-09 | High | Slice 1 was implemented/reviewed as one broad setup client surface, making typed screen contracts and independent completion harder to assess | D-023 decomposes Slice 1 into child packages 1A–1H plus 1V; umbrella retained for integration/history and Phase 06 only |
 
 ## Verification
 
@@ -184,6 +209,22 @@ Accounting Ledger Setup persistence verification on 2026-09-22:
 This verifies the completed Currency ownership/cutover foundation and Accounting
 Ledger Setup persistence. Full Ledger Setup client/runtime reconciliation is
 intentionally **not** claimed here; Phase 06 owns that.
+
+Slice 1 execution-decomposition checkpoint on 2026-09-22:
+
+- D-023 and `SLICE-01-LEDGER-SETUP-EXECUTION.md` define child packages `1A`–`1H`
+  plus mandatory `1V` integration/verification.
+- `PLAN.md` now carries the exact `Feature Decomposition Gate`, with one stable
+  Feature ID and completed `decomposition/<feature-id>.md` Screen/Workflow Contract
+  for every child; `1A` is reconcile-only, `1B` is first active, `1C`–`1H` are
+  queued, and `1V` is final.
+- Every child has an API-readiness gate and Web/Mobile Screen Contract; COA names
+  `SplitTreeView` and the Cost Center master/detail composition as the required
+  closest reuse reference without transferring HR domain logic.
+- Planning Check: PASS.
+- Documentation system check: PASS for 85 recipes after generator-driven refresh.
+- `required-files.json` parse: PASS; `git diff --check`: PASS with line-ending
+  notices only.
 
 ## Final reconciliation
 

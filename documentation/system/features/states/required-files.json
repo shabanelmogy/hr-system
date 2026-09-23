@@ -376,6 +376,18 @@
       "purpose": "Generic managed Crystal catalog and render endpoint"
     },
     {
+      "id": "global-crystal-report-controller",
+      "layer": "reporting-api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Presentation/Features/Analytics/CrystalReports/V1/GlobalCrystalReportsController.cs",
+      "purpose": "Super Admin-only deployment-owned global geography catalog and hash-checked render boundary"
+    },
+    {
+      "id": "global-crystal-report-tests",
+      "layer": "api-test",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/GlobalCrystalReportQueryTests.cs",
+      "purpose": "Global catalog allow-list, source-hash concurrency, and unsupported-entity coverage"
+    },
+    {
       "id": "crystal-report-data-resolver",
       "layer": "reporting-api",
       "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/CrystalReports/Persistence/CrystalReportDataSource.cs",

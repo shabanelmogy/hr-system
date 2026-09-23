@@ -145,10 +145,22 @@
       "purpose": "RDLX size/structure/connection validation and approved Countries API descriptor"
     },
     {
+      "id": "api-global-crystal-controller",
+      "layer": "reporting-api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Presentation/Features/Analytics/CrystalReports/V1/GlobalCrystalReportsController.cs",
+      "purpose": "Super Admin-only deployment-owned global geography catalog and hash-checked render boundary"
+    },
+    {
+      "id": "api-global-crystal-tests",
+      "layer": "api-test",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/GlobalCrystalReportQueryTests.cs",
+      "purpose": "Global catalog allow-list, source-hash concurrency, and unsupported-entity coverage"
+    },
+    {
       "id": "api-country-report-data",
       "layer": "api",
       "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Queries/GetCountryReportData/GetCountryReportDataQuery.cs",
-      "purpose": "Approved stable Countries JSON data query for browser report rendering"
+      "purpose": "Existing tenant ReportTemplate data source; global Super Admin Crystal reports use the Reporting source contract instead"
     },
     {
       "id": "api-entity-configuration",
@@ -505,22 +517,10 @@
       "purpose": "Feature boundary"
     },
     {
-      "id": "mobile-country-report-api",
-      "layer": "mobile-react",
-      "path": "mobile-react/src/modules/reference-data/geography/countries/presentation/reporting/country-report-api.ts",
-      "purpose": "Countries filter mapping, localized report naming, PDF validation, and secure temporary-file lifecycle"
-    },
-    {
-      "id": "mobile-country-report-query",
-      "layer": "mobile-react",
-      "path": "mobile-react/src/modules/reference-data/geography/countries/presentation/queries/use-country-reports.ts",
-      "purpose": "Stable Countries published-report catalog query"
-    },
-    {
       "id": "mobile-country-report-view",
       "layer": "mobile-react",
       "path": "mobile-react/src/modules/reference-data/geography/countries/presentation/components/CountryReportView.tsx",
-      "purpose": "Permission-aware report selection, filters, render, preview, share, and failure states"
+      "purpose": "Super Admin global report selection, filters, render, preview, share, and failure states"
     },
     {
       "id": "mobile-reporting-public-api",

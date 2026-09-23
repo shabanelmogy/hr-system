@@ -665,7 +665,7 @@ Representative applied areas:
 
 Measured after the runtime-boundary pass:
 
-- `/finance/fiscal-years`: about `2.78 MiB` First Load, versus the earlier documented baseline of about `3.76 MiB`;
+- `/finance/ledger-setup/fiscal-years`: about `2.78 MiB` First Load, versus the earlier documented baseline of about `3.76 MiB`;
 - largest measured First Load route: about `3.10 MiB`;
 - Recruitment: about `2.96 MiB`.
 
@@ -1538,7 +1538,7 @@ Final shared protected intersection:  36 chunks / ~1.61 MB
 /profile                       ~3.09 -> 2.09 MiB
 /appointments                  ~3.02 -> 2.77 MiB
 /recruitment                   ~2.96 -> 1.86 MiB
-/finance/fiscal-years          ~2.78 -> 2.32 MiB
+/finance/ledger-setup/fiscal-years ~2.78 -> 2.32 MiB
 largest measured First Load    ~3.09 -> 2.77 MiB
 ```
 
@@ -1577,7 +1577,7 @@ lint, module-generator self-test, full Vitest, documentation check, production
 build, `measure:build`, focused backend tenant-summary tests and runtime smoke.
 
 Authenticated browser smoke is also complete. The built-in Admin path reached
-the dashboard and `/finance/fiscal-years` with `ERROR_COUNT 0`; session,
+the dashboard and `/finance/ledger-setup/fiscal-years` with `ERROR_COUNT 0`; session,
 realtime-token and hub requests were same-origin and successful. The smoke found
 and closed two final runtime defects: the project-local Emotion streaming cache
 was replaced by MUI's Next 16 App Router cache provider, and development SignalR

@@ -72,7 +72,7 @@ public sealed class MigrationOperationsTests
     }
 
     [Fact]
-    public void MigrationScript_WhatIfResolvesEveryRegisteredModuleCodeAndDependency()
+    public async Task MigrationScript_WhatIfResolvesEveryRegisteredModuleCodeAndDependency()
     {
         var scriptPath = Path.Combine(FindApiRoot(), "scripts", "Apply-ErpModuleMigrations.ps1");
         var startInfo = new System.Diagnostics.ProcessStartInfo("pwsh")
@@ -89,9 +89,12 @@ public sealed class MigrationOperationsTests
 
         using var process = System.Diagnostics.Process.Start(startInfo);
         Assert.NotNull(process);
-        var standardOutput = process.StandardOutput.ReadToEnd();
-        var standardError = process.StandardError.ReadToEnd();
-        process.WaitForExit();
+        using var timeout = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+        var standardOutputTask = process.StandardOutput.ReadToEndAsync(timeout.Token);
+        var standardErrorTask = process.StandardError.ReadToEndAsync(timeout.Token);
+        await process.WaitForExitAsync(timeout.Token);
+        var standardOutput = await standardOutputTask;
+        var standardError = await standardErrorTask;
 
         Assert.True(
             process.ExitCode == 0,

@@ -111,4 +111,23 @@ describe("SplitTreeView", () => {
     expect(html).toContain("data-testid=\"empty-overview\"");
     expect(html).toContain("Company Overview");
   });
+
+  it("accepts controlled search and expansion state", () => {
+    const html = renderToStaticMarkup(
+      <ThemeProvider theme={createTheme()}>
+        <SplitTreeView<TestItem>
+          items={sampleItems}
+          getId={(x) => x.id}
+          getParentId={(x) => x.parentId}
+          getCode={(x) => x.code}
+          getName={(x) => x.name}
+          searchValue="Sub Center"
+          expandedIds={new Set([1])}
+        />
+      </ThemeProvider>,
+    );
+
+    expect(html).toContain('value="Sub Center"');
+    expect(html).toContain('data-tree-list-node-id="2"');
+  });
 });

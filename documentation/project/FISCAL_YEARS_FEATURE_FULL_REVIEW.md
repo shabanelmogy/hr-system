@@ -82,8 +82,9 @@ a caller-selected tenant/company scope.
 
 ## 6. Web implementation
 
-Route `/finance/fiscal-years` is registered in typed routes, access policies, and
-a shared Finance sidebar group. The feature boundary
+Route `/finance/ledger-setup/fiscal-years` is registered in typed routes, access policies, and
+the Accounting Ledger Setup sidebar group. Fiscal Years is a child capability of
+`acc:ledger-setup`, not a standalone Finance module entry. The feature boundary
 owns contracts, service calls, React Query hooks, validation, list/card views,
 form, and page orchestration.
 
@@ -96,8 +97,8 @@ Generate Mock Data.
 
 ## 7. Mobile implementation
 
-Expo route `/finance/fiscal-years` is protected by `RouteGuard` and
-registered in the main drawer. The feature uses runtime Zod response schemas,
+Expo route `/finance/ledger-setup/fiscal-years` is protected by `RouteGuard` and
+registered under the Ledger Setup route group. The feature uses runtime Zod response schemas,
 an API boundary, React Query keys/mutations, `useServerListState`, `AppListScreen`,
 `AppDataTable`, `AppDataCard`, `AppFilterButton`, `AppForm`, shared fields,
 status badges, toasts, and confirmation dialogs.
@@ -155,10 +156,12 @@ Five-point audit:
 ## 10. Handoff and next slices
 
 Fiscal Years is releasable after an authenticated manual smoke test in both
-clients. Report and API/Web import are Deferred until the Workforce Budget dataset
-is defined; mobile import, charts, and bulk lifecycle are Excluded. Reopen is a
-Required single-record lifecycle action on API, Web, and Mobile.
-No placeholder UI exists for those decisions.
+clients. Fiscal Year Report is Required on Web and Mobile through the shared managed
+Crystal catalog/render contract and the Accounting-owned `fiscalyears` dataset;
+it remains company-scoped and uses tenant Reporting entitlement. Import is
+Deferred until the Workforce Budget dataset is defined; charts and bulk lifecycle
+are Excluded. Reopen is a Required single-record lifecycle action on API, Web, and
+Mobile. No placeholder UI exists for deferred capabilities.
 
 The next implementation slice is Workforce Plans and Workforce Budgets, followed
 by Position Envelopes and Staffing Requests. Only after approval and reservation

@@ -10,6 +10,7 @@ import { enWorkforcePlanning } from './en-workforce-planning';
 import { enModules } from './en-modules';
 import { enOfflineOperations } from './en-offline-operations';
 import { enCurrencies } from './en-currencies';
+import { enLedgerSetup } from './en-ledger-setup';
 
 export const en = {
   ...enCommon,
@@ -24,4 +25,5 @@ export const en = {
   ...enModules,
   ...enOfflineOperations,
   ...enCurrencies,
+  ...enLedgerSetup,
 };

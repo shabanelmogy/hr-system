@@ -13,7 +13,15 @@ namespace ErpSystem.Modules.Reporting;
 public sealed class ReportingModule : IModule
 {
     public string Name => "Reporting";
-    public ModuleDefinition Definition => new("reporting", "Reporting", [new SubmoduleDefinition("analytics", "Analytics", ReportingPermissions.Reports)])
+    public ModuleDefinition Definition => new("reporting", "Reporting",
+    [
+        new SubmoduleDefinition("analytics", "Analytics", ReportingPermissions.Reports),
+        new SubmoduleDefinition(
+            "global-geography-reports",
+            "Global geography reports",
+            ReportingPermissions.GlobalReports,
+            PermissionAccessMode: PermissionAccessMode.Global)
+    ])
     {
         Version = "1.0.0"
     };

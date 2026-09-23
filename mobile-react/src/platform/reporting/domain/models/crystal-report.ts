@@ -17,3 +17,8 @@ export interface CrystalReportRenderRequest {
   language: 'ar' | 'en';
   filters?: Record<string, string | null>;
 }
+
+export interface GlobalCrystalReportRenderRequest extends CrystalReportRenderRequest {
+  entityKey: string;
+  expectedSha256: string;
+}

@@ -16,6 +16,7 @@ $requiredFiles = @(
     "EVIDENCE_TEMPLATE.md",
     "SPEC_SUMMARY_TEMPLATE.md",
     "BUSINESS_PLAN_TEMPLATE.md",
+    "FEATURE_DECOMPOSITION_TEMPLATE.md",
     "PLAN_QUALITY_GATE.md",
     "PLAN_REGISTRY.md",
     "NOTES_MIGRATION_GUIDE.md",
@@ -39,6 +40,36 @@ foreach ($relativePath in $requiredFiles) {
     $fullPath = Join-Path $planningRoot $relativePath
     if (-not (Test-Path -LiteralPath $fullPath -PathType Leaf)) {
         $errors.Add("Missing required planning file: documentation/plans/$relativePath")
+    }
+}
+
+$businessPlanTemplatePath = Join-Path $planningRoot "BUSINESS_PLAN_TEMPLATE.md"
+if (Test-Path -LiteralPath $businessPlanTemplatePath -PathType Leaf) {
+    $businessPlanTemplateContent = Get-Content -LiteralPath $businessPlanTemplatePath -Raw
+    if ($businessPlanTemplateContent -notmatch '(?m)^### Feature Decomposition Gate$') {
+        $errors.Add("BUSINESS_PLAN_TEMPLATE.md must contain the mandatory Feature Decomposition Gate")
+    }
+}
+
+$decompositionTemplatePath = Join-Path $planningRoot "FEATURE_DECOMPOSITION_TEMPLATE.md"
+if (Test-Path -LiteralPath $decompositionTemplatePath -PathType Leaf) {
+    $decompositionTemplateContent = Get-Content -LiteralPath $decompositionTemplatePath -Raw
+    foreach ($requiredHeading in @(
+        "## 1. Child boundary and outcome",
+        "## 2. Closest existing reference",
+        "## 3. Reuse and composition contract",
+        "## 4. Screen and workspace contract",
+        "## 5. Create, edit, view, and lifecycle contract",
+        "## 6. Typed transport and server criteria",
+        "## 7. UX states, permissions, and read-only behavior",
+        "## 8. Concurrency and consistency",
+        "## 9. i18n, RTL, accessibility, and responsive behavior",
+        "## 10. Verification contract",
+        "## 11. Child exit gate"
+    )) {
+        if (-not $decompositionTemplateContent.Contains($requiredHeading)) {
+            $errors.Add("FEATURE_DECOMPOSITION_TEMPLATE.md is missing required section '$requiredHeading'")
+        }
     }
 }
 

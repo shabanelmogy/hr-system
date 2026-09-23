@@ -50,6 +50,66 @@
       "purpose": "Business scope, gates and authorized Slice 1"
     },
     {
+      "id": "slice-01-execution-decomposition",
+      "layer": "planning",
+      "path": "documentation/plans/business/accounting-core-gl/SLICE-01-LEDGER-SETUP-EXECUTION.md",
+      "purpose": "Canonical Slice 1 child package order, Screen Contracts, typed readiness gates and integration closure"
+    },
+    {
+      "id": "slice-01-currency-screen-contract",
+      "layer": "planning",
+      "path": "documentation/plans/business/accounting-core-gl/decomposition/ledger-setup-currency.md",
+      "purpose": "Child 1A Currency Screen/Workflow Contract"
+    },
+    {
+      "id": "slice-01-coa-hierarchy-screen-contract",
+      "layer": "planning",
+      "path": "documentation/plans/business/accounting-core-gl/decomposition/ledger-setup-coa-hierarchy.md",
+      "purpose": "Child 1B COA and Hierarchy Screen/Workflow Contract with SplitTreeView and Cost Center reuse"
+    },
+    {
+      "id": "slice-01-dimensions-screen-contract",
+      "layer": "planning",
+      "path": "documentation/plans/business/accounting-core-gl/decomposition/ledger-setup-dimensions.md",
+      "purpose": "Child 1C Dimensions and Account Dimension Policies Screen/Workflow Contract"
+    },
+    {
+      "id": "slice-01-books-journals-screen-contract",
+      "layer": "planning",
+      "path": "documentation/plans/business/accounting-core-gl/decomposition/ledger-setup-books-journals.md",
+      "purpose": "Child 1D Books and Journal Definitions Screen/Workflow Contract"
+    },
+    {
+      "id": "slice-01-company-settings-screen-contract",
+      "layer": "planning",
+      "path": "documentation/plans/business/accounting-core-gl/decomposition/ledger-setup-company-settings.md",
+      "purpose": "Child 1E Accounting Company Settings Screen/Workflow Contract"
+    },
+    {
+      "id": "slice-01-exchange-rates-screen-contract",
+      "layer": "planning",
+      "path": "documentation/plans/business/accounting-core-gl/decomposition/ledger-setup-exchange-rates.md",
+      "purpose": "Child 1F Exchange Rates Screen/Workflow Contract"
+    },
+    {
+      "id": "slice-01-link-accounts-screen-contract",
+      "layer": "planning",
+      "path": "documentation/plans/business/accounting-core-gl/decomposition/ledger-setup-link-accounts.md",
+      "purpose": "Child 1G Link Accounts Screen/Workflow Contract"
+    },
+    {
+      "id": "slice-01-posting-profiles-screen-contract",
+      "layer": "planning",
+      "path": "documentation/plans/business/accounting-core-gl/decomposition/ledger-setup-posting-profiles.md",
+      "purpose": "Child 1H Posting Profiles and Resolution Preview Screen/Workflow Contract"
+    },
+    {
+      "id": "slice-01-integration-verification-screen-contract",
+      "layer": "planning",
+      "path": "documentation/plans/business/accounting-core-gl/decomposition/ledger-setup-integration-verification.md",
+      "purpose": "Child 1V cross-package integration and final verification Screen/Workflow Contract"
+    },
+    {
       "id": "plan-evidence",
       "layer": "planning",
       "path": "documentation/plans/business/accounting-core-gl/EVIDENCE.md",
@@ -296,6 +356,48 @@
       "purpose": "Shared COA tree workspace candidate"
     },
     {
+      "id": "web-ledger-setup-route-layout",
+      "layer": "web-next",
+      "path": "web-next/src/app/(main)/(modules)/(accounting)/finance/ledger-setup/layout.tsx",
+      "purpose": "Accounting translation scope for all Ledger Setup routes"
+    },
+    {
+      "id": "web-ledger-setup-route-loading",
+      "layer": "web-next",
+      "path": "web-next/src/app/(main)/(modules)/(accounting)/finance/ledger-setup/loading.tsx",
+      "purpose": "Instant navigation fallback and Suspense boundary for Ledger Setup routes"
+    },
+    {
+      "id": "web-ledger-setup-overview",
+      "layer": "web-next",
+      "path": "web-next/src/modules/accounting/ledger-setup/pages/LedgerSetupOverviewPage.tsx",
+      "purpose": "Permission-filtered Ledger Setup launcher including Fiscal Years"
+    },
+    {
+      "id": "web-ledger-setup-resource-page",
+      "layer": "web-next",
+      "path": "web-next/src/modules/accounting/ledger-setup/pages/LedgerSetupResourcePage.tsx",
+      "purpose": "Shared setup list/tree/forms and lifecycle orchestration"
+    },
+    {
+      "id": "web-ledger-setup-service",
+      "layer": "web-next",
+      "path": "web-next/src/modules/accounting/ledger-setup/services/ledgerSetupService.ts",
+      "purpose": "Accounting Ledger Setup transport and permission-safe selective lookups"
+    },
+    {
+      "id": "web-ledger-setup-tests",
+      "layer": "tests",
+      "path": "web-next/src/modules/accounting/ledger-setup/services/ledgerSetupService.test.ts",
+      "purpose": "Web endpoint, scope, lifecycle and concurrency contract tests"
+    },
+    {
+      "id": "web-ledger-setup-validation-tests",
+      "layer": "tests",
+      "path": "web-next/src/modules/accounting/ledger-setup/validation/ledgerSetupValidation.test.ts",
+      "purpose": "Conditional account currency and numeric form validation"
+    },
+    {
       "id": "mobile-accounting-module",
       "layer": "mobile-react",
       "path": "mobile-react/src/modules/accounting/moduleDefinition.ts",
@@ -330,6 +432,48 @@
       "layer": "mobile-react",
       "path": "mobile-react/src/shared/components/tree-view/AppHierarchicalTree.tsx",
       "purpose": "Shared touch-friendly COA hierarchy candidate"
+    },
+    {
+      "id": "mobile-ledger-setup-overview",
+      "layer": "mobile-react",
+      "path": "mobile-react/src/modules/accounting/ledger-setup/presentation/screens/LedgerSetupOverviewScreen.tsx",
+      "purpose": "Permission-filtered mobile Ledger Setup launcher"
+    },
+    {
+      "id": "mobile-ledger-setup-resource-screen",
+      "layer": "mobile-react",
+      "path": "mobile-react/src/modules/accounting/ledger-setup/presentation/screens/LedgerSetupResourceScreen.tsx",
+      "purpose": "Shared mobile setup list/tree/forms and lifecycle orchestration"
+    },
+    {
+      "id": "mobile-ledger-setup-application",
+      "layer": "mobile-react",
+      "path": "mobile-react/src/modules/accounting/ledger-setup/application/ledger-setup-use-cases.ts",
+      "purpose": "Mobile Ledger Setup use-case and repository boundary"
+    },
+    {
+      "id": "mobile-ledger-setup-remote",
+      "layer": "mobile-react",
+      "path": "mobile-react/src/modules/accounting/ledger-setup/data/remote/ledger-setup-remote-data-source.ts",
+      "purpose": "Runtime-validated Accounting API boundary with selective lookups"
+    },
+    {
+      "id": "mobile-ledger-setup-tests",
+      "layer": "tests",
+      "path": "mobile-react/src/modules/accounting/ledger-setup/application/ledger-setup-use-cases.test.ts",
+      "purpose": "Mobile use-case and endpoint contract tests"
+    },
+    {
+      "id": "mobile-ledger-setup-remote-tests",
+      "layer": "tests",
+      "path": "mobile-react/src/modules/accounting/ledger-setup/data/remote/__tests__/ledger-setup-remote-boundary.test.ts",
+      "purpose": "Mobile API endpoint, nested tree and versioned detail contract tests"
+    },
+    {
+      "id": "mobile-ledger-setup-validation-tests",
+      "layer": "tests",
+      "path": "mobile-react/src/modules/accounting/ledger-setup/presentation/validation/ledger-setup-schema.test.ts",
+      "purpose": "Conditional account currency and zero-priority form validation"
     },
     {
       "id": "ledger-setup-domain",

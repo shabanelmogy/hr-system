@@ -187,6 +187,25 @@ export const crystalReportService = {
   render: (id: string, request: RenderCrystalReportRequest) =>
     apiService.postBlob(apiRoutes.crystalReports.render(id), request, "application/pdf", 120_000),
 
+  async listGlobal(entityKey: string): Promise<CrystalReportListItem[]> {
+    const response = await apiService.get<unknown>(apiRoutes.crystalReports.globalList, { entityKey });
+    return requireArray(response, "global crystal reports", parseListItem);
+  },
+
+  renderGlobal: (
+    report: Pick<CrystalReportListItem, "id" | "entityKey" | "rowVersion">,
+    request: RenderCrystalReportRequest,
+  ) => apiService.postBlob(
+    apiRoutes.crystalReports.globalRender(report.id),
+    {
+      entityKey: report.entityKey,
+      expectedSha256: report.rowVersion,
+      ...request,
+    },
+    "application/pdf",
+    120_000,
+  ),
+
   async listGrantRoleOptions(): Promise<CrystalReportRoleOption[]> {
     return requireArray(
       await apiService.get<unknown>(apiRoutes.crystalReports.grantRoleOptions),

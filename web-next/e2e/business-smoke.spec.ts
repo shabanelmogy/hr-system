@@ -100,7 +100,7 @@ test("dirty country form blocks browser history traversal until changes are disc
 });
 
 test("Fiscal Years, Appointments and HR each have a browser-level module smoke", async ({ page }) => {
-  await loginWithDemoRole(page, "User", "/finance/fiscal-years");
+  await loginWithDemoRole(page, "User", "/finance/ledger-setup/fiscal-years");
   await completeUserTenantAndCompanySelection(page);
   await expect(page.getByText("FY-ONE", { exact: true }).first()).toBeVisible({ timeout: 15_000 });
 
@@ -113,7 +113,7 @@ test("Fiscal Years, Appointments and HR each have a browser-level module smoke",
 });
 
 test("Fiscal Years covers tenant-scoped create and update through the shared form pattern", async ({ page }) => {
-  await loginWithDemoRole(page, "User", "/finance/fiscal-years");
+  await loginWithDemoRole(page, "User", "/finance/ledger-setup/fiscal-years");
   await completeUserTenantAndCompanySelection(page);
   await expect(page.getByRole("heading", { name: "Fiscal Years" })).toBeVisible();
 

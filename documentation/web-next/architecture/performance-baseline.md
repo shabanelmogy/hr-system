@@ -31,7 +31,7 @@ work and the completed cross-route runtime hardening:
 | `/` First Load JS | 2.00 MiB |
 | `/login` First Load JS | 1.14 MiB |
 | `/register` First Load JS | 1.94 MiB |
-| `/finance/fiscal-years` First Load JS | 2.23 MiB |
+| `/finance/ledger-setup/fiscal-years` First Load JS | 2.23 MiB |
 | `/administration/users` First Load JS | 2.19 MiB |
 | `/profile` First Load JS | 2.10 MiB |
 | `/recruitment` First Load JS | 2.25 MiB |

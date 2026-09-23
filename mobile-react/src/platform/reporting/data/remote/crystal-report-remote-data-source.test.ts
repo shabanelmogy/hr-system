@@ -28,6 +28,12 @@ const publishedReport = {
   updatedOn: '2026-08-23T10:00:00Z',
 };
 
+const globalReport = {
+  ...publishedReport,
+  id: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+  rowVersion: 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
+};
+
 describe('Crystal report remote data source', () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -59,6 +65,33 @@ describe('Crystal report remote data source', () => {
     await expect(crystalReportRemoteDataSource.render(publishedReport.id, request)).resolves.toBe(pdf);
     expect(postMock).toHaveBeenCalledWith(
       crystalReportEndpoints.render(publishedReport.id),
+      request,
+      {
+        responseType: 'arraybuffer',
+        timeout: 120_000,
+        allowWhenReadOnly: true,
+        headers: { Accept: 'application/pdf' },
+      },
+    );
+  });
+
+  it('lists and renders global reports through the super-admin boundary', async () => {
+    getMock.mockResolvedValue([globalReport]);
+    const pdf = Uint8Array.from([0x25, 0x50, 0x44, 0x46, 0x2d]).buffer;
+    const request = {
+      entityKey: 'countries',
+      expectedSha256: globalReport.rowVersion,
+      language: 'en' as const,
+    };
+    postMock.mockResolvedValue({ data: pdf });
+
+    await expect(crystalReportRemoteDataSource.listGlobal('countries')).resolves.toEqual([globalReport]);
+    expect(getMock).toHaveBeenCalledWith(crystalReportEndpoints.globalBase, {
+      params: { entityKey: 'countries' },
+    });
+    await expect(crystalReportRemoteDataSource.renderGlobal(globalReport.id, request)).resolves.toBe(pdf);
+    expect(postMock).toHaveBeenCalledWith(
+      crystalReportEndpoints.renderGlobal(globalReport.id),
       request,
       {
         responseType: 'arraybuffer',

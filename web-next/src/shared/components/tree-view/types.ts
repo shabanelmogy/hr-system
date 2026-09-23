@@ -27,6 +27,12 @@ export interface SplitTreeViewProps<T> {
   /** Function to test if item matches search term. */
   searchFilter?: (item: T, term: string) => boolean;
 
+  /** Controlled search value. Omit to let SplitTreeView own search state. */
+  searchValue?: string;
+
+  /** Called when the search input changes. */
+  onSearchChange?: (value: string) => void;
+
   /** Optional custom node card renderer (used when variant is 'diagram' or custom). */
   renderNode?: (props: {
     item: T;
@@ -62,6 +68,12 @@ export interface SplitTreeViewProps<T> {
 
   /** Selected item ID (controlled). */
   selectedId?: number | string | null;
+
+  /** Controlled expanded node IDs. Omit to let SplitTreeView own expansion state. */
+  expandedIds?: ReadonlySet<number | string>;
+
+  /** Called after expand/collapse changes. */
+  onExpandedIdsChange?: (expandedIds: Set<number | string>) => void;
 
   /** Root anchor title / element. */
   rootTitle?: ReactNode;

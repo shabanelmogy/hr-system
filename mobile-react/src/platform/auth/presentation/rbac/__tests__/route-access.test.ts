@@ -42,7 +42,7 @@ describe('route access manifest', () => {
     expect(requiredModuleForPath(ROUTES.basicData.companyGeographicScope)).toEqual({ moduleCode: 'platform', submoduleCode: 'tenant-administration' });
     expect(requiredModuleForPath(ROUTES.extras.appointments)).toEqual({ moduleCode: 'crm', submoduleCode: 'appointments' });
     expect(requiredModuleForPath(ROUTES.advancedTools.healthCheck)).toEqual({ moduleCode: 'platform', submoduleCode: 'operations' });
-    expect(requiredModuleForPath(ROUTES.finance.currencies)).toEqual({ moduleCode: 'acc', submoduleCode: 'ledger-setup' });
+    expect(requiredModuleForPath(ROUTES.finance.ledgerSetup.currencies)).toEqual({ moduleCode: 'acc', submoduleCode: 'ledger-setup' });
   });
 
   it('defaults unknown routes to denied', () => {
@@ -174,14 +174,14 @@ describe('route access manifest', () => {
     });
 
     expect(canAccessRoute(ROUTES.finance.root, userWith())).toBe(false);
-    expect(canAccessRoute(ROUTES.finance.fiscalYears, userWith())).toBe(false);
-    expect(canAccessRoute(ROUTES.finance.currencies, userWith())).toBe(false);
+    expect(canAccessRoute(ROUTES.finance.ledgerSetup.fiscalYears, userWith())).toBe(false);
+    expect(canAccessRoute(ROUTES.finance.ledgerSetup.currencies, userWith())).toBe(false);
     expect(canAccessRoute(ROUTES.finance.root, fiscalYearViewer)).toBe(true);
-    expect(canAccessRoute(ROUTES.finance.fiscalYears, fiscalYearViewer)).toBe(true);
-    expect(canAccessRoute(ROUTES.finance.currencies, fiscalYearViewer)).toBe(false);
+    expect(canAccessRoute(ROUTES.finance.ledgerSetup.fiscalYears, fiscalYearViewer)).toBe(true);
+    expect(canAccessRoute(ROUTES.finance.ledgerSetup.currencies, fiscalYearViewer)).toBe(false);
     expect(canAccessRoute(ROUTES.finance.root, ledgerSetupManager)).toBe(true);
-    expect(canAccessRoute(ROUTES.finance.currencies, ledgerSetupManager)).toBe(true);
-    expect(canAccessRoute(ROUTES.finance.fiscalYears, ledgerSetupManager)).toBe(false);
+    expect(canAccessRoute(ROUTES.finance.ledgerSetup.currencies, ledgerSetupManager)).toBe(true);
+    expect(canAccessRoute(ROUTES.finance.ledgerSetup.fiscalYears, ledgerSetupManager)).toBe(false);
   });
 
   it('allows the Workforce Planning workspace for any module view permission', () => {

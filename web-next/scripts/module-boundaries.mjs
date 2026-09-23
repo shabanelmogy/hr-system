@@ -2,7 +2,7 @@
 export const allowedOwnerDependencies = Object.freeze({
   platform: Object.freeze(["shared"]),
   hr: Object.freeze(["accounting", "platform", "reporting", "shared"]),
-  accounting: Object.freeze(["platform", "shared"]),
+  accounting: Object.freeze(["platform", "reporting", "shared"]),
   crm: Object.freeze(["platform", "shared"]),
   "reference-data": Object.freeze(["platform", "reporting", "shared"]),
   reporting: Object.freeze(["platform", "shared"]),
@@ -73,7 +73,7 @@ export const sharedMainRouteRoots = Object.freeze([
  * do not use this as a second copy of the entire route tree.
  */
 export const documentedRouteOwnership = Object.freeze({
-  "/finance/fiscal-years": "accounting",
+  "/finance/ledger-setup/fiscal-years": "accounting",
   "/finance/ledger-setup/currencies": "accounting",
   "/appointments": "crm",
   "/super-admin/geography/countries": "reference-data",

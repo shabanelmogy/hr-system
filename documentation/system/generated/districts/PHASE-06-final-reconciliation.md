@@ -53,7 +53,7 @@ decision. A focused test pass alone is never a `Ready` decision.
 | --- | ---: | --- |
 | districts-master | 8 | `8b2d2dd81761ee08dc4f372a5fed20353b60d2020d2680d5d0138459389b7bbd` |
 | districts-master | 9 | `6266a855e1cd714553644fb584e857d8f02350ce0abec9a1904245cf0f63eeb5` |
-| districts-master | 10 | `3cde520c0a46d9956c336a492d3091329118836df0ae7087f320470c83e70fc1` |
+| districts-master | 10 | `c573fda5482d21087c51b39beff83bab6bf6faeaa8410f4957b5c5e21a8372d5` |
 | districts-api | 10 | `36d563363a7c0b878ef54b12ab23dc6eb7e77e583b14c5199eeed69540539ee0` |
 | districts-api | 11 | `94630d0b417ed5537a5071fe59e19f7e36b325b45b543acd0a067dffb45e4bbc` |
 | districts-web | 12 | `cf9b0888ef0144a75decf29a461edb753e1d68c5b8c12089d5d107157f157fe7` |

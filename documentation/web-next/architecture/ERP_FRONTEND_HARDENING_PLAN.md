@@ -802,7 +802,7 @@ Protected shared intersection   26 chunks / 1.60 MiB
 /                               2.00 MiB
 /login                          1.14 MiB
 /register                       1.94 MiB
-/finance/fiscal-years           2.23 MiB
+/finance/ledger-setup/fiscal-years 2.23 MiB
 /appointments                   2.33 MiB
 ```
 

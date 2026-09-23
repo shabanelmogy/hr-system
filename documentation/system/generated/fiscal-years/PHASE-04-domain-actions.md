@@ -58,8 +58,8 @@ invalidation, success test, and failure test. Use `N/A` only with a reason.
 | --- | ---: | --- |
 | fiscal-years-master | 3 | `8390cefc7a311be46bc6e92580fcbe7aff06ff47aaa4ac187f90cd7e66903da8` |
 | fiscal-years-master | 4 | `a138eeba03b2c75a88c481f8ecad0b88cd339b53f5c26f67fc52bf62d2da13bf` |
-| fiscal-years-master | 6 | `c61603f2d747c9ea9d5c5c0dbec61ba19af29c8f378afac7131e65ec8659b438` |
-| fiscal-years-master | 7 | `b3750a34f63ea59165176bbfdfde4267e123c0e9eed6ed0d09b5d821c9c45099` |
+| fiscal-years-master | 6 | `a441290822263415d40f5bdaca531bce89957f82d6491760dac44cab5853fe6e` |
+| fiscal-years-master | 7 | `2d676a37e47f0762d9822c902b57ad4f35040c56ffdc980efbb455187382dfee` |
 | fiscal-years-master | 8 | `0608539faf50906c65ce836f3ec4d3ac23ed071fee40e136df580a996f2a1c73` |
 | fiscal-years-api | 6 | `748acbb8a884f50f81cdf9e854ef7f784765a8f2781f904bf2a90f5872ed6c64` |
 | fiscal-years-api | 7 | `bb9330bdbdb4a33564e6b4560a0a2709d55cca905f26b079bd9507f9bb0276ad` |

@@ -181,13 +181,30 @@ function endpointAliases(sourceFile) {
   return aliases;
 }
 
-function hasEndpointReference(node, sourceFile, aliases, initializers, seen = new Set()) {
+function hasEndpointReference(node, sourceFile, aliases, initializers, functionBodies, seen = new Set()) {
   const text = node.getText(sourceFile);
   if ([...aliases].some((alias) => new RegExp(`\\b${alias}\\b`).test(text))) return true;
+  if (ts.isCallExpression(node) && ts.isIdentifier(node.expression)) {
+    return hasEndpointReference(node.expression, sourceFile, aliases, initializers, functionBodies, seen);
+  }
   if (!ts.isIdentifier(node) || seen.has(node.text)) return false;
   seen.add(node.text);
   const initializer = initializers.get(node.text);
-  return initializer ? hasEndpointReference(initializer, sourceFile, aliases, initializers, seen) : false;
+  if (initializer && hasEndpointReference(initializer, sourceFile, aliases, initializers, functionBodies, seen)) return true;
+  const functionBody = functionBodies.get(node.text);
+  if (!functionBody) return false;
+  if (hasEndpointReference(functionBody, sourceFile, aliases, initializers, functionBodies, seen)) return true;
+  let nestedReference = false;
+  const visit = (child) => {
+    if (nestedReference) return;
+    if (hasEndpointReference(child, sourceFile, aliases, initializers, functionBodies, seen)) {
+      nestedReference = true;
+      return;
+    }
+    ts.forEachChild(child, visit);
+  };
+  ts.forEachChild(functionBody, visit);
+  return nestedReference;
 }
 
 function isFunctionParameter(node, name) {
@@ -207,6 +224,7 @@ for (const file of sourceFiles) {
   const sourceFile = ts.createSourceFile(file, source, ts.ScriptTarget.Latest, true, file.endsWith('.tsx') ? ts.ScriptKind.TSX : ts.ScriptKind.TS);
   const aliases = endpointAliases(sourceFile);
   const initializers = new Map();
+  const functionBodies = new Map();
 
   const collect = (node) => {
     if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.initializer) {
@@ -215,6 +233,7 @@ for (const file of sourceFiles) {
         errors.push(`local endpoint catalog must be moved to a *-endpoints.ts file: ${relative(file)}#${node.name.text}`);
       }
     }
+    if (ts.isFunctionDeclaration(node) && node.name && node.body) functionBodies.set(node.name.text, node.body);
     ts.forEachChild(node, collect);
   };
   collect(sourceFile);
@@ -230,7 +249,7 @@ for (const file of sourceFiles) {
       if (isApiCall) {
         const target = node.arguments[0];
         const delegatedUrl = target && ts.isIdentifier(target) && isFunctionParameter(node, target.text);
-        if (!target || (!delegatedUrl && !hasEndpointReference(target, sourceFile, aliases, initializers))) {
+        if (!target || (!delegatedUrl && !hasEndpointReference(target, sourceFile, aliases, initializers, functionBodies))) {
           errors.push(`transport URL is not sourced from a *-endpoints.ts catalog: ${relative(file)} (${target?.getText(sourceFile) ?? 'missing URL'})`);
         }
       }

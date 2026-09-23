@@ -16,6 +16,31 @@ known risks, and open decisions are centralized under
 `documentation/plans/notes/` and indexed from `MOBILE_NOTES.md`. Do not leave a
 material Mobile deferral only in a feature README or TODO.
 
+## Screen pattern gate
+
+Before implementing or rebuilding a Mobile screen, select a stable Pattern ID
+from [SCREEN_PATTERN_CATALOG.md](../project/SCREEN_PATTERN_CATALOG.md) and inspect
+the registered Web and Mobile sources for the same workflow:
+
+- `P-001`: Countries server-managed Grid/CRUD; Mobile uses `CountriesScreen`
+  with `AppListScreen`/`AppMultiView`/`AppDataTable` and the shared form shell.
+- `P-002`: Cost Centers Tree + Master/Detail; Mobile uses `CostCentersScreen`
+  through `OrganizationalStructureManagementScreen` and `AppHierarchicalTree`.
+- `P-003`: Add Tenant multi-section form; Web is tabbed, while the current Mobile
+  reference is an explicitly `Adapted` full-screen stacked `AppForm`.
+
+Record Mobile and Web as `Implemented`, `Adapted`, `Deferred`, or `Excluded` in
+the owning feature profile. Platform ergonomics may change the composition, but
+must not silently remove fields, validation, permissions, lifecycle actions,
+dirty-state protection, or authoritative server errors. Offline remains a
+feature-operation decision and is never inherited merely from the visual pattern.
+
+When a repeated screen shape does not fit an existing Pattern ID, update the
+central catalog, the Web and Mobile references, the shared reuse catalog, and
+the affected feature profiles in the same change. Do not establish a Mobile-only
+look-alike pattern without checking its Web counterpart, and do not claim a
+Mobile implementation from types, routes, or an unused shared component.
+
 ## 1. Define the boundary first
 
 Write down the business capability and actor, API resources and permissions, tenant/company ownership, read-only behavior, list/filter/sort requirements, workflows, and realtime/offline expectations.
@@ -91,6 +116,15 @@ The top-level module migration is complete: do not recreate `src/features` or `s
 - Add every direct route to `AppBreadcrumbs` with its complete parent chain. Breadcrumb overflow stays anchored at the logical Home item (left in LTR, right in RTL), while later items remain horizontally swipeable; re-evaluate that position after route, language, orientation, and width changes.
 - Keep `RouteGuard` in routed pages even when a navigation item is hidden.
 - Use a module Drawer for a large module; reserve main tabs for a few frequent destinations.
+
+After adding or moving an Expo route, run `npm run sync:contracts` from
+`mobile-react`, then review the generated entry and run `npm run check:contracts`.
+The compatibility matrix must contain every physical route and every endpoint
+leaf. Generic resource transports may use reviewed helper functions, but the
+matrix must record the concrete owner, scope, permission authority, HTTP verbs,
+and non-test caller for each leaf. A `deferred`, `UNREVIEWED`, or `UNUSED`
+entry is a contract failure and must be resolved before the feature is handed
+to business implementation.
 
 ## 4. API boundary
 

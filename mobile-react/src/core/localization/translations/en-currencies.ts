@@ -13,7 +13,7 @@ export const enCurrencies = {
     actions: { add: 'Add currency' },
     form: { createTitle: 'Add Currency', editTitle: 'Edit Currency', viewTitle: 'Currency Details', subtitle: 'Maintain the company currency catalog used by accounting and operational currency snapshots.', identity: 'Currency identity' },
     validation: { code: 'Enter exactly three English letters.', name: 'Enter a name of up to 100 characters.', symbol: 'Enter a symbol of up to 10 characters.' },
-    messages: { created: 'Currency created.', updated: 'Currency updated.', archive: 'Currency archived.', restore: 'Currency restored.', loadFailed: 'Unable to load currencies.', saveFailed: 'Unable to save the currency.', actionFailed: 'Unable to complete the currency action.' },
+    messages: { created: 'Currency created.', updated: 'Currency updated.', archive: 'Currency archived.', restore: 'Currency restored.', loadFailed: 'Unable to load currencies.', saveFailed: 'Unable to save the currency.', actionFailed: 'Unable to complete the currency action.', conflictReloaded: 'This currency was changed by another operation. The latest server version has been reloaded.' },
     confirm: { archiveTitle: 'Archive currency?', archiveDescription: 'Archive {{code}}. Accounting references may block this action.', restoreTitle: 'Restore currency?', restoreDescription: 'Restore {{code}} to the active company currency catalog.' },
   },
 };

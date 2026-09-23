@@ -13,7 +13,10 @@
   created; never predeclare nonexistent runtime paths merely to make the manifest
   look complete.
 - For planned work, record the canonical Plan ID + authorized Slice ID and complete
-  Phase 00 Implementation Preflight before runtime implementation. The scaffolded
+  the plan's Feature Decomposition Gate before scaffolding. A `Decompose` slice is
+  handed off one child Feature ID at a time; each child has a completed
+  Screen/Workflow Contract from `documentation/plans/FEATURE_DECOMPOSITION_TEMPLATE.md`.
+  Then complete Phase 00 Implementation Preflight before runtime implementation. The scaffolded
   `IMPLEMENTATION-REQUEST.md` and review artifact translate approved plan decisions
   into execution evidence; they must not silently re-plan the feature. Their
   Existing-System Relationship Review, Business Rules Matrix, Edge Cases &

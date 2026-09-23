@@ -142,6 +142,22 @@ All routes are below `/api/v1/crystal-reports`:
 | `GET`, `PUT /{reportId}/access` | Manager | Read/replace current-company role grants |
 | `DELETE /{reportId}` | Manager | Soft archive with `RowVersion` |
 
+Global Platform Super Admin geography uses a separate read-only boundary. It
+never enters the tenant/company report store or evaluates a tenant Reporting
+entitlement:
+
+| Method and route | Consumer | Purpose |
+| --- | --- | --- |
+| `GET /api/v1/global-crystal-reports?entityKey={countries\|states\|districts}` | Platform Super Admin | List importable deployment-owned reports for one allow-listed global entity |
+| `POST /api/v1/global-crystal-reports/{sourceId}/render` | Platform Super Admin | Render after exact source ID and SHA-256 revalidation |
+
+The global boundary requires the `super_admin` role and
+`GlobalCrystalReports:View`. The server obtains global Reference Data through
+the owning module's reporting Contract, applies bounded allow-listed filters,
+and rejects an unsupported entity, stale source hash, or unavailable runtime.
+The browser and mobile clients receive only an opaque source ID and hash; they
+never receive a deployment path, tenant/company identifier, or connection data.
+
 Render body:
 
 ```json
@@ -184,6 +200,12 @@ Before implementation, record:
 - required feature permission in addition to `CrystalReports:View` where needed;
 - empty-result behavior and expected language/layout;
 - whether reports are global, tenant-owned, or company-owned data.
+
+For a global Platform feature, choose the global catalog/render boundary above,
+register the entity in the server allow-list and runtime schema profile, and
+record the Super Admin role plus `GlobalCrystalReports:View`. Do not add a
+tenant ReportTemplate or `CrystalReports:View` gate to a global Reference Data
+screen.
 
 The report may format data, but it must not define data-access security. Tenant,
 company, soft-delete, feature authorization, and filter rules belong in the owning
@@ -316,6 +338,11 @@ API at `mobile-react/src/platform/reporting`:
 - the mobile permission catalog must include `CrystalReports:View`. Feature
   composition hides Report mode without that permission, and the report component
   repeats the guard before mounting a catalog query.
+- global Platform geography uses `crystalReportsApi.listGlobal(entityKey)` and
+  `renderGlobal(sourceId, { entityKey, expectedSha256, language, filters })`.
+  Its screen is already Super Admin-scoped, so it does not require a tenant
+  Reporting entitlement or the tenant `CrystalReports:View` claim; the API still
+  enforces the role and `GlobalCrystalReports:View` permission.
 
 The business feature keeps one stable query key such as
 

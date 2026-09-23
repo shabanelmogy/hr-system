@@ -1,0 +1,259 @@
+# Screen Pattern Catalog
+
+هذا الكتالوج هو المرجع المركزي لأنماط الشاشات القابلة لإعادة الاستخدام في
+الويب والموبايل. النمط يحدد شكل التركيب، حالات التشغيل، حدود إعادة الاستخدام،
+ومعايير القبول؛ ولا يحدد حقول المجال أو صلاحياته. كل ميزة جديدة تختار نمطًا
+مسجلًا أو تضيف نمطًا جديدًا وفق البروتوكول في نهاية هذا الملف.
+
+## الحالة والملكية
+
+- **Status:** Active baseline for new screens.
+- **Owner:** Shared UX/Frontend documentation, مع احتفاظ كل موديول بملكية
+  عقوده وبياناته وصلاحياته.
+- **References are evidence:** Countries وCost Center وAdd Tenant مراجع
+  تنفيذية للتركيب والسلوك، وليست مصدرًا لحقول أو قواعد أعمال ميزة أخرى.
+- **Platform fit:** اختيار النمط مستقل لكل منصة. يمكن للويب استخدام split
+  layout وللموبايل استخدام stacked layout ما دام العقد والرحلة متكافئين.
+
+## مصفوفة المراجع عبر المنصات
+
+حالة المنصة داخل النمط تستخدم واحدة من القيم التالية:
+
+- `Implemented`: المرجع الحالي يطبق تركيب النمط وسلوكه مباشرة.
+- `Adapted`: نفس رحلة العمل والعقد، مع تركيب مختلف يناسب المنصة.
+- `Deferred`: مطلوب وله مالك وشرط إعادة فتح، ولا يوجد UI مضلل حاليًا.
+- `Excluded`: غير مطلوب على المنصة بقرار منتج صريح.
+
+| Pattern | Web reference/status | Mobile reference/status | Shared primitives | الاختلاف المقصود |
+| --- | --- | --- | --- | --- |
+| P-001 Grid/CRUD | Countries `CountriesPage` + `CountriesMultiView` — `Implemented` بخمس طرق عرض Grid/Cards/Chart/Report/Import | Countries `CountriesScreen` — `Implemented` بخمس طرق عرض Table/Cards/Chart/Report/Import | Web list/grid/form/report/import shared components؛ Mobile `AppListScreen`, `AppMultiView`, `AppDataTable`, `AppDataCard`, `AppForm` ومنصة Reporting المشتركة | كثافة الجدول وعدد الصفوف والـCards تتكيف مع مساحة الموبايل، بينما يبقى server paging/filter/permissions واحدًا؛ Report وImport يظهران فقط عند تحقق الصلاحية والـentitlement |
+| P-002 Tree + Master/Detail | Cost Centers `CostCentersPage` + `CostCenterTreeDiagram` + `SplitTreeView` — `Implemented` | `CostCentersScreen` + `OrganizationalStructureManagementScreen` + `OrganizationalStructureTreeDiagram` + `AppHierarchicalTree` — `Implemented` | Web `SplitTreeView`؛ Mobile `AppHierarchicalTree` | Web يعرض split view عند توفر المساحة؛ Mobile يستخدم stacked/detail navigation ولا يضغط عمودين داخل الهاتف |
+| P-003 Tabbed multi-section form | Add Tenant في `TenantManagementPage` + `FormTabs` + `MyForm` — `Implemented` | `TenantManagementScreen` + `TenantFormModal` + `AppForm` — `Adapted` | Web `FormTabs`/`MyForm`؛ Mobile `AppForm` و`AppFormTabs` عند اعتماد tabs | Mobile Add Tenant الحالي full-screen stacked ولا يستخدم `AppFormTabs`; التكافؤ الحالي في الحقول والتحقق والصلاحيات والحفظ وdirty-state، وليس في شكل tabs |
+
+هذه المصفوفة هي سجل حقيقة التنفيذ. لا يجوز تغيير حالة منصة إلى `Implemented`
+من دون مسار مصدر فعلي واختبار أو evidence مناسب، ولا يعني `Adapted` أن المنصة
+يمكنها حذف حقل أو validation أو permission من العقد المشترك.
+
+## P-001 — Server-managed Grid / CRUD
+
+### الاستخدام
+
+يُستخدم لقائمة مسطحة أو شبه مسطحة من سجلات مستقلة نسبيًا، مثل Countries أو
+Currency أو Address Types، عندما تكون الرحلة الأساسية: list، search/filter،
+create، edit، archive/restore، وview permissions.
+
+### المرجع الحالي
+
+- Web (`Implemented`):
+  `web-next/src/modules/reference-data/geographical-information/countries/pages/CountriesPage.tsx`
+  و`web-next/src/modules/reference-data/geographical-information/countries/components/CountriesMultiView.tsx`.
+- Mobile (`Implemented`):
+  `mobile-react/src/modules/reference-data/geography/countries/presentation/screens/CountriesScreen.tsx`
+  مع `AppListScreen`, `AppMultiView`, `AppDataTable`, `AppDataCard`, و`CountryForm`.
+- Web shared list/form primitives يجب فحصها أولًا تحت
+  `web-next/src/shared/components/`.
+- Mobile shared list/form primitives يجب فحصها أولًا تحت
+  `mobile-react/src/shared/components/`.
+
+### العقد الإلزامي
+
+1. يملك `services` استدعاء `apiService`، وتملك React Query أو طبقة الاستعلام
+   المقابلة المفاتيح والكاش والـmutations.
+2. يستخدم الجدول أو البطاقات مكونات الـshared المعتمدة، ولا يعيد feature إنشاء
+   toolbar أو pagination أو loading/empty/error state محليًا.
+3. يدعم البحث والتصفية والترقيم والفرز حسب عقد API؛ لا تُنفذ تصفية محلية
+   توحي بنتائج غير موجودة في الخادم.
+4. يدعم إنشاء وتعديل السجل بنفس عقد النموذج المشترك، مع Zod/validation على
+   العميل، وأخطاء الخادم أسفل الحقل المعني، وتركيز أول حقل غير صالح.
+5. يوضح حالات loading، empty، error، forbidden، archive/restore، وconflict أو
+   concurrency إن كان العقد يدعمها.
+6. يراعي RTL، الترجمة، أحجام الشاشة، وإمكانية الوصول للجدول والبطاقات.
+7. تكون الصلاحيات والـtenant/company scope جزءًا من العقد؛ إخفاء زر الواجهة
+   لا يغني عن authorization في API.
+8. عندما تكون الميزة **Geographic/Reference Data** وتملك عقود Chart وManaged
+   Report وAtomic Import، يكون مرجع Countries الكامل هو خمس طرق عرض:
+   `Grid|Table`, `Cards`, `Chart`, `Report`, `Import`. يجب أن تستخدم الشاشة
+   المكونات المشتركة نفسها، وأن تخفي Report أو Import فقط عند غياب صلاحيتها أو
+   module entitlement، لا بسبب اختلاف محلي في تركيب الشاشة.
+
+### ما لا يُنسخ تلقائيًا من Countries
+
+وجود هذا النمط لا يعني أن كل كيان في النظام يحتاج Chart أو Import أو Report.
+يجب أن يصنف عقد الميزة كل قدرة `Required` أو `Deferred` أو `Excluded`. لكن عند
+اختيار Countries كمرجع لميزة بيانات جغرافية تقبل العقود الخمسة، تصبح الطرق
+الخمس جزءًا من المطابقة المطلوبة على الويب والموبايل ولا يجوز إسقاط إحداها من
+منصة بلا قرار موثق. الحقول وسياسة الأرشفة تظل ملكًا للمجال ولا تُنسخ.
+
+## P-002 — Tree + Master / Detail
+
+### الاستخدام
+
+يُستخدم للبيانات الهرمية التي تحتاج تحديد عقدة ثم عرض تفاصيلها أو تحريرها، مثل
+Cost Centers وChart of Accounts. الشجرة ليست بديلًا عن عقد API ولا تمنح ضمنيًا
+إمكانية إعادة الأب أو تغيير الترتيب.
+
+### المرجع الحالي
+
+- Web (`Implemented`):
+  `web-next/src/modules/hr/basic-data/organizational-structure/management/pages/CostCentersPage.tsx`,
+  `web-next/src/modules/hr/basic-data/organizational-structure/management/components/tree-view/CostCenterTreeDiagram.tsx`,
+  و`web-next/src/shared/components/tree-view/SplitTreeView.tsx`.
+- Mobile (`Implemented`):
+  `mobile-react/src/modules/hr/basic-data/organizational-structure/presentation/screens/CostCentersScreen.tsx`,
+  `mobile-react/src/modules/hr/basic-data/organizational-structure/presentation/screens/OrganizationalStructureManagementScreen.tsx`,
+  `mobile-react/src/modules/hr/basic-data/organizational-structure/presentation/components/OrganizationalStructureTreeDiagram.tsx`,
+  و`mobile-react/src/shared/components/tree-view/AppHierarchicalTree.tsx`.
+
+### العقد الإلزامي
+
+1. يحدد الخادم علاقة `parentId`، المستوى، الترتيب، lifecycle، وrow version؛
+   لا تستنتج الواجهة صحة النقل أو الأب من الرسم وحده.
+2. على الشاشات الكبيرة يستخدم الويب split tree/detail مع حالة واضحة للعقدة
+   المحددة، وحالة فارغة عند عدم الاختيار.
+3. على الموبايل يُستخدم عرض stacked أو انتقال إلى detail screen مع الحفاظ على
+   back behavior، ولا يُفرض عرض عمودين ضيقين.
+4. يكون create/edit/archive/restore ظاهرًا فقط إذا كان مسموحًا في الصلاحيات؛
+   drag/reparent لا يُنفذ إلا بعقد مستقل يعرّف التحقق والتعارض والتراجع.
+5. يوضح البحث داخل الشجرة، expand/collapse، loading لكل جزء، empty tree،
+   forbidden، not found، وserver conflict.
+6. يستخدم النمط المشترك للـtree وdetail shell، بينما تبقى حقول الحساب أو
+   مركز التكلفة وقواعد المجال داخل الموديول المالك.
+7. يجب أن يكون التنقل إلى التفاصيل قابلًا للوصول بلوحة المفاتيح أو قارئ الشاشة
+   وأن يحافظ على RTL ومرساة العقدة المختارة عند إعادة التحميل.
+
+## P-003 — Tabbed Form
+
+### الاستخدام
+
+يُستخدم عندما يمثل النموذج aggregate أو configuration متعدد الأقسام، وتصبح
+الشاشة الطويلة أو المتطلبات المختلفة لكل قسم صعبة القراءة في Section واحد.
+التبويبات تنظّم العرض فقط؛ لا تغيّر عقد API ولا تقسّم عملية الحفظ إلى عمليات
+مستقلة إلا إذا وُجد workflow صريح لذلك.
+
+### المرجع الحالي: Add Tenant
+
+- Web (`Implemented`): `web-next/src/platform/tenants/TenantManagementPage.tsx`
+- Web layout primitive: `web-next/src/shared/components/forms/layouts/FormTabs.tsx`
+- Web form shell: `web-next/src/shared/components/forms/dialog/MyForm.tsx`
+- الأقسام الفعلية في المرجع: `identity`, `subscription`, `contact`,
+  `entitlements`, `notes`.
+- Mobile (`Adapted`):
+  `mobile-react/src/platform/tenants/presentation/screens/TenantManagementScreen.tsx`
+  و`mobile-react/src/platform/tenants/presentation/components/TenantFormModal.tsx`
+- Mobile form shell: `mobile-react/src/shared/components/forms/AppForm.tsx`
+- Mobile tabs primitive المتاح عند اعتماد التبويبات على الموبايل:
+  `mobile-react/src/shared/components/forms/layouts/AppFormTabs.tsx`.
+
+المرجع الحالي للموبايل يعرض Add Tenant كـfull-screen stacked form ولا يستدعي
+`AppFormTabs`. لذلك حالته `Adapted` وليست تطبيقًا حرفيًا لـTabbed layout. هذا
+اختلاف موثق في الكثافة، وليس دعوة لإعادة كتابة قواعد النموذج. عند اعتماد tabs
+على الموبايل يستخدم `AppFormTabs`؛ وإذا بقي stacked يجب أن يحافظ على نفس عقد
+الحقول والتحقق والصلاحيات والحفظ وdirty-state وأخطاء الخادم.
+
+### العقد الإلزامي
+
+1. يوجد **form context واحد** وschema واحد للـaggregate كله. لا تنشئ كل tab
+   form مستقلًا ولا ترسل طلب حفظ جزئيًا من دون قرار workflow موثق.
+2. في تطبيق tabs يملك كل tab قائمة field names أو section contract حتى يمكن
+   تحديد `hasError` وترجمة رسالة مثل “يوجد خطأ في هذا القسم”. في تطبيق Mobile
+   stacked تحتفظ الأقسام بنفس الملكية من دون عرض tab غير موجود.
+3. عند الإرسال الفاشل ينتقل تطبيق tabs تلقائيًا إلى أول tab يحتوي خطأ ثم يركز
+   أول حقل غير صالح. تطبيق stacked يمرر ويركز أول حقل غير صالح مباشرة. في
+   الحالتين تظهر الرسالة تحت الحقل من خلال المكوّن المشترك.
+4. يظل Save/Create متاحًا للمستخدم؛ التحقق يشرح الأخطاء ولا يعتمد على browser
+   native validation أو `alert`/`confirm`.
+5. يسجل النموذج dirty state ويحمي الإغلاق، cancel، تغيير الصفحة، وتغيير الشركة
+   من فقدان التعديلات عبر آلية unsaved-changes المشتركة.
+6. تكون أزرار Save/Cancel وloading وserver error في shell ثابت، ولا تتغير
+   مواضعها أو سلوكها من tab إلى آخر.
+7. تُعاد أخطاء الخادم إلى الحقول أو القسم المقابل. الأخطاء العابرة للأقسام
+   تظهر في ملخص قابل للوصول مع رابط يعيد المستخدم إلى القسم الصحيح.
+8. تُحسم تبعيات الأقسام في schema أو domain/application layer. يمكن لقسم
+   Entitlements أن يعتمد على اختيار Plan، لكن لا تُخفى قاعدة المجال داخل
+   `FormTabs` أو مكوّن shared.
+9. التبويب الحالي لا يضيع عند إعادة التصيير، وتُستخدم `keepMounted` عندما
+   يحتاج React Hook Form إلى بقاء الحقول المسجلة. لا تُخزّن قيمة حقل في state
+   محلي موازٍ للـform.
+10. deep-linking إلى tab، عند وجود tabs، مسموح فقط إذا كان مفيدًا ويمكن حمايته
+    من عرض بيانات غير مصرح بها؛ وإلا يبقى tab state داخليًا ويبدأ النموذج من
+    أول قسم.
+11. على الشاشات الصغيرة تتحول التبويبات إلى عرض قابل للتمرير أو stacked، مع
+    label واضح وaria state، ومنع قص العناوين في RTL.
+12. يغطي تطبيق tabs: tab selection، validation/error badge، والانتقال لأول
+    خطأ. ويغطي كل تطبيق: dirty close، submit loading، server field error، focus
+    لأول حقل، RTL، وإعادة ضبط baseline بعد حفظ ناجح.
+
+### الحدود
+
+- لا يستخدم P-003 لخطوات workflow مرتبة بضرورة إكمال كل خطوة قبل التالية؛ استخدم
+  `FormStepper` وسجل ذلك كـP-004 عندما تتكرر الحاجة.
+- لا يستخدم لتجميع صفحات مستقلة لها APIs أو صلاحيات أو lifecycle مختلفة؛ هذه
+  قد تكون master/detail أو wizard أو navigation flow.
+- لا ينسخ عدد تبويبات Add Tenant أو أسماءها إلى موديول آخر؛ الذي يُنسخ هو
+  contract والسلوك العام فقط.
+
+## مصفوفة اختيار النمط
+
+| شكل البيانات والرحلة | النمط المبدئي | قرار يجب تسجيله |
+| --- | --- | --- |
+| Collection مسطحة مع CRUD وخدمات بحث/ترقيم | P-001 Grid/CRUD | هل هي بيانات جغرافية تقبل مرجع Countries ذي الخمس طرق، أم أن Chart/Report/Import مصنفة صراحة Deferred/Excluded؟ |
+| Hierarchy مع اختيار عقدة وتفاصيل | P-002 Tree + Master/Detail | هل النقل أو إعادة الترتيب مسموحان بعقد مستقل؟ |
+| Aggregate أو إعداد متعدد الأقسام يحفظ كوحدة | P-003 Tabbed Form | tabs أم stacked على الموبايل؟ وهل توجد تبعيات بين الأقسام؟ |
+| Workflow مرتب يحتاج إكمال خطوة قبل التالية | Candidate P-004 Stepper | لا يعتمد حتى يُسجل reference وعقد التحقق |
+| Relationship editor أو شاشة تشغيلية خاصة | Candidate | لا يُجبر على نمط قريب؛ سجّل reference وسبب الاستثناء |
+
+## بروتوكول تسجيل نمط جديد أو تحديث نمط قائم
+
+1. ابدأ ببحث read-only في الكتالوج ومكونات `shared` ومراجع feature المسجلة.
+2. ابحث عن **نفس رحلة العمل** في Web وMobile، وتحقق من المصدر الحالي لكل منصة،
+   وليس من screenshot أو نسخة قديمة؛ سجل المسارات الفعلية والاختبارات التي
+   تثبت السلوك.
+3. امنح النمط معرفًا ثابتًا `P-###`، وحدد `Proposed` أو `Active` أو `Deprecated`
+   والمالك وتاريخ المراجعة.
+4. سجّل لكل منصة `Implemented` أو `Adapted` أو `Deferred` أو `Excluded`. لا
+   يعتمد النمط كـ`Active` إلا بمرجع source حقيقي على منصة واحدة على الأقل وقرار
+   صريح للمنصة الأخرى.
+5. اكتب Web/Mobile applicability، وإعادة الاستخدام، وحالات loading/empty/error/
+   forbidden/dirty/conflict، ومتطلبات RTL وaccessibility وresponsive.
+6. حدّد ما هو reusable layout وما هو feature-owned data/permission/business
+   rule. لا تحول اختلاف مجال إلى option غامض في shared component.
+7. أضف أمثلة مصدرية واختبارات وحدودًا واضحة، ثم اربط كل مستهلك في feature
+   profile بـ`Required` أو `Deferred` أو `Excluded`.
+8. حدّث في **نفس التغيير** هذا الكتالوج و
+   [SHARED_REUSE_CATALOG.md](SHARED_REUSE_CATALOG.md) ودليلي Web/Mobile وملفات
+   feature profiles المتأثرة. إذا تغيرت evidence surface فحدّث manifest والوصفة
+   وأعد التوليد من المصدر canonical؛ لا تعدّل `documentation/system/generated/`
+   يدويًا.
+9. أضف Change Log يذكر سبب الإضافة أو التعديل، المستهلكين المتأثرين، ونتائج
+   الاختبارات أو سبب تأجيلها.
+
+### Checklist ظهور نمط شاشة جديد
+
+- هل تكرر تركيب الشاشة أو رحلة العمل في ميزتين مستقلتين، أم ما زال خاصًا بمجال؟
+- ما أقرب مرجع حقيقي في Web، وما نظيره في Mobile؟
+- هل اختلاف المنصة `Adapted` ergonomics فقط، أم اختلاف capability يجب تصنيفه
+  `Deferred` أو `Excluded`؟
+- ما المكونات المشتركة الموجودة قبل إنشاء مكوّن جديد؟
+- هل العقود والحقول والصلاحيات والـvalidation والـloading/error/empty متكافئة؟
+- هل حدثت المصفوفة وfeature profiles والـrequired-files/recipes عند تغير الأدلة؟
+- هل توجد اختبارات للمكونات المشتركة ورحلة ممثلة على كل منصة مطلوبة؟
+
+## Anti-patterns
+
+- نسخ JSX من Countries أو Add Tenant مع تغيير الأسماء فقط.
+- إنشاء Grid أو Form محلي يكرر shared toolbar/dialog/validation/dirty-state.
+- بناء renderer عام ضخم يحتوي قواعد كل الموديولات تحت flags غامضة.
+- وضع business rules أو API calls أو صلاحيات الموديول داخل shared layout.
+- اعتبار تحديث DTO أو migration دليلًا على اكتمال واجهة الويب والموبايل.
+- إضافة drag-and-drop للشجرة من دون عقد نقل وتعارض وتدقيق.
+- إخفاء خطأ في tab غير نشط أو ترك المستخدم يبحث عن أول حقل غير صالح.
+- اعتبار اختلاف Mobile stacked عن Web tabs فشلًا؛ القرار يجب أن يكون موثقًا
+  ومتكافئًا وظيفيًا.
+
+## Change Log
+
+| التاريخ | التغيير | المستهلكون |
+| --- | --- | --- |
+| 2026-09-22 | تثبيت Countries كمرجع الخمس طرق لميزات Geographic/Reference Data التي تملك عقود Chart وManaged Report وAtomic Import، وتوحيد بوابة Report بالصلاحية وReporting entitlement | Countries، States، Districts، Address Types، وأي ميزة جغرافية جديدة |
+| 2026-09-22 | إنشاء P-001 Countries Grid/CRUD وP-002 Cost Center Tree/Master/Detail وP-003 Add Tenant Tabbed Form | Reference Data، Platform، HR، Accounting عند اعتماد النمط |
+| 2026-09-22 | ربط كل نمط بمرجعي Web/Mobile وإضافة حالات Implemented/Adapted/Deferred/Excluded وقاعدة تحديث النظيرين | كل الشاشات الجديدة أو المعاد بناؤها |

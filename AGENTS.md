@@ -61,6 +61,10 @@ Rules:
 - Use the selected feature's `documentation/system/features/<reference>/required-files.json` to discover its complete evidence surface. Verify current source before applying the pattern.
 - For planned new work, run
   `./documentation/system/New-FeatureDocumentation.ps1 -FeatureId <id> -FeatureName "<name>" -PlanId <plan-id> -SliceId "<exact authorized slice>" -Module <module>`.
+  Before that command, the authorized slice must pass the Feature Decomposition Gate
+  in its canonical plan. A `Decompose` slice is scaffolded one child Feature ID at a
+  time and each child must have a completed Screen/Workflow Contract from
+  `documentation/plans/FEATURE_DECOMPOSITION_TEMPLATE.md`.
   Add `-ReferenceFeature <reviewed-feature>` only when useful. Complete Phase 00
   Implementation Preflight, the generated `IMPLEMENTATION-REQUEST.md`, and review
   artifact before runtime work. During Phase 00, create the initial applied books

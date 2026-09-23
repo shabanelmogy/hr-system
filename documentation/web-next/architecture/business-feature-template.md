@@ -5,7 +5,7 @@ Status: applied first to HR Fiscal Years.
 Business features live inside their owning module, for example:
 
 ```text
-src/modules/hr/finance/fiscal-years/
+src/modules/accounting/fiscal-years/
   pages/
   components/
   hooks/

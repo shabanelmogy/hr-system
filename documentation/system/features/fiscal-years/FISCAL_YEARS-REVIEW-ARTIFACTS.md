@@ -6,8 +6,8 @@
 | --- | --- |
 | Feature | `fiscal-years` |
 | API route | `/api/v1/fiscal-years` |
-| Web route | `/finance/fiscal-years` |
-| Mobile route | `/finance/fiscal-years` |
+| Web route | `/finance/ledger-setup/fiscal-years` |
+| Mobile route | `/finance/ledger-setup/fiscal-years` |
 | Review owner | `ERP System implementation team` |
 | Review date | `2026-09-05` |
 | Implementation request | `documentation/system/features/fiscal-years/IMPLEMENTATION-REQUEST.md` |
@@ -18,8 +18,8 @@
 | Import decision | `API/Web Deferred; Mobile Excluded` |
 | Import platforms | `N/A in current release` |
 | Import format | `N/A; Finance will decide XLSX contract at Workforce Budget milestone` |
-| Reporting decision | `Deferred` |
-| Reporting engine | `N/A until Finance reporting dataset is approved` |
+| Reporting decision | `Required` |
+| Reporting engine | `Managed Crystal catalog/render using the Accounting-owned fiscalyears dataset` |
 
 ## Requirement manifest
 
@@ -32,7 +32,7 @@
 | R-05 | Exact server paging/search/filter/sort shared by clients | Countries reference plus implementation request | Required | Required | Required | Frozen |
 | R-06 | EN/AR, RTL, responsive, accessible, permission/read-only workflows | Repository guides | Required errors | Required | Required | Frozen |
 | R-07 | Post-commit notification/realtime invalidation | Repository guides | Required | Required | Required | Frozen |
-| R-08 | Reports and Import have no placeholder runtime | Product decision | Deferred/Excluded | Deferred | Excluded | Frozen |
+| R-08 | Fiscal Year Report is available through managed Crystal; Import has no placeholder runtime | Accounting reporting contract | Required | Required | Required | Frozen |
 
 ## Platform capability decisions
 
@@ -42,7 +42,7 @@
 | Cards | N/A | Required | Required | Same page/query as Grid/Table | Responsive lifecycle overview |
 | Detail/periods | Required | Required | Required | One Fiscal Year plus generated periods | Creation/edit/view parity |
 | Chart | Excluded | Excluded | Excluded | No runtime | Meaningful aggregates belong to Workforce Budget |
-| Report | Deferred | Deferred | Deferred | No runtime | Finance owner; reopen after budget dataset/profile |
+| Report | Required | Required | Required | Company-scoped fiscalyears dataset | Accounting owns dataset and tenant Reporting permission |
 | Import | Deferred | Deferred | Excluded | No runtime | Finance owner; reopen for initial budget setup on API/Web only |
 | Export | Deferred | Deferred | Excluded | No runtime | Reopen with reporting contract |
 | Bulk lifecycle | Excluded | Excluded | Excluded | No runtime | Critical, low-volume records require explicit review |
@@ -137,16 +137,16 @@ manifest.
 
 | Field | Decision/evidence |
 | --- | --- |
-| Decision and reason | Deferred until Workforce Budget supplies an approved Finance dataset |
-| Engine | N/A in this release |
-| Entity/feature key | N/A |
-| Source | N/A |
-| Dataset/schema | N/A |
-| Filters | N/A |
-| Permissions | N/A |
-| Localization | No reachable placeholder |
-| Runtime/deployment | N/A |
-| Verification | Architecture/source tests assert no Report route or view |
+| Decision and reason | Required for the Fiscal Years screen; it is a tenant/company report and does not belong to the global geography boundary |
+| Engine | Managed Crystal catalog/render |
+| Entity/feature key | `fiscalyears` |
+| Source | Accounting public reporting contract |
+| Dataset/schema | Fiscal year and generated period status/date schema |
+| Filters | Approved code and bilingual name filters |
+| Permissions | `FiscalYears:View` plus tenant Reporting `CrystalReports:View`/Run access |
+| Localization | EN/AR report language and localized catalog names |
+| Runtime/deployment | Deployment-owned compatible Fiscal Years `.rpt`; empty catalog is a localized unavailable state |
+| Verification | Accounting source/provider tests plus Web/Mobile managed-report transport and screen tests |
 
 ## Findings and handoffs
 
@@ -166,7 +166,7 @@ manifest.
 | Documentation baseline | Fiscal Years manifest check; `./documentation/system/Generate-Documentation.ps1 -Check` | All Fiscal Years required files exist; the consolidated baseline `20260906112413_create-database.cs` contains the global geography transition | 2026-09-07 |
 | API | API build; focused Fiscal Year tests; full suite | Focused 23/23 passed, including Closed and Locked reopen; full suite 429/430 with the inherited `OrganizationalStructureManagementTests.UpdateAsync_Branch_WorksCorrectly` company-isolation failure | 2026-09-06 |
 | Database | Consolidated baseline migration plus pending-model check | Fiscal Years schema is represented by `20260906112413_create-database`; the Reopen change is code-only and needs no new migration | 2026-09-06 |
-| Web | Feature lint, architecture, types, tests, production build | Passed; full Vitest 349/349; route `/finance/fiscal-years` emitted | 2026-09-06 |
+| Web | Feature lint, architecture, types, tests, production build | Passed; route `/finance/ledger-setup/fiscal-years` emitted | 2026-09-06 |
 | Web full strict | `npm run type-check:strict` | Inherited failures in Organizational Structure and Basic Data; none in Fiscal Years | 2026-09-05 |
 | Mobile | Feature lint, types, architecture, focused tests, full Jest suite | Fiscal Years and translation parity passed; full suite 146/148 with unrelated Recruitment translation debt and a concurrent tree timeout; the tree suite passed 7/7 standalone | 2026-09-06 |
 | Mobile full tests | `npm test` | 143 passed; inherited Recruitment translation failure and shared-tree timeout | 2026-09-05 |

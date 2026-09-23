@@ -97,6 +97,123 @@ if ($planText -notmatch '(?im)^\|\s*Status\s*\|\s*[^|]*(execution-ready|implemen
     throw "Canonical plan '$PlanId' is not marked execution-ready/Implementation Ready/In Progress/Verified. Resolve the planning gate before scaffolding runtime work."
 }
 
+$decompositionSection = [regex]::Match(
+    $planText,
+    '(?ims)^###\s+Feature Decomposition Gate\s*\r?\n(?<body>.*?)(?=^###\s+|^##\s+|\z)')
+$decompositionDecision = 'Not declared - Phase 00 planning reconciliation required'
+$screenWorkflowContractRelativePath = 'N/A'
+if (-not $decompositionSection.Success) {
+    Write-Warning "Canonical plan '$PlanId' predates the Feature Decomposition Gate. Scaffold creation may continue for compatibility, but Phase 00 blocks runtime implementation until the authorized slice is updated with the gate."
+} else {
+
+$decompositionRows = @(
+    foreach ($line in ($decompositionSection.Groups['body'].Value -split "\r?\n")) {
+        if ($line -notmatch '^\s*\|') {
+            continue
+        }
+
+        $cells = @($line.Trim().Trim('|') -split '\|' | ForEach-Object { $_.Trim().Trim([char]96) })
+        if ($cells.Count -lt 5 -or $cells[1] -notin @('Single feature', 'Decompose')) {
+            continue
+        }
+
+        if ($cells[2] -notmatch '^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$') {
+            throw "Feature Decomposition Gate contains invalid Feature ID '$($cells[2])' in canonical plan '$PlanId'."
+        }
+
+        [pscustomobject]@{
+            Slice = $cells[0]
+            Decision = $cells[1]
+            FeatureId = $cells[2]
+            Contract = $cells[3]
+            Boundary = $cells[4]
+        }
+    }
+)
+
+$sliceDecompositionRows = @($decompositionRows | Where-Object {
+    $_.Slice.Equals($SliceId, [System.StringComparison]::OrdinalIgnoreCase)
+})
+if ($sliceDecompositionRows.Count -eq 0) {
+    throw "Feature Decomposition Gate has no row for authorized SliceId '$SliceId'. Use the exact slice identifier/name and bind it to one or more Feature IDs."
+}
+
+$sliceDecisions = @($sliceDecompositionRows.Decision | Select-Object -Unique)
+if ($sliceDecisions.Count -ne 1) {
+    throw "Feature Decomposition Gate for SliceId '$SliceId' mixes Single feature and Decompose decisions."
+}
+$decompositionDecision = [string]$sliceDecisions[0]
+$matchingDecompositionRows = @($sliceDecompositionRows | Where-Object {
+    $_.FeatureId.Equals($FeatureId, [System.StringComparison]::OrdinalIgnoreCase)
+})
+if ($matchingDecompositionRows.Count -ne 1) {
+    throw "Feature Decomposition Gate for SliceId '$SliceId' must contain FeatureId '$FeatureId' exactly once."
+}
+$featureDecomposition = $matchingDecompositionRows[0]
+
+if ([string]::IsNullOrWhiteSpace($featureDecomposition.Boundary) -or
+    $featureDecomposition.Boundary -match '<[^>]+>|\bTBD\b') {
+    throw "Feature Decomposition Gate boundary for FeatureId '$FeatureId' is unresolved."
+}
+
+if ($decompositionDecision -eq 'Single feature') {
+    if ($sliceDecompositionRows.Count -ne 1) {
+        throw "SliceId '$SliceId' is marked Single feature but declares $($sliceDecompositionRows.Count) feature rows."
+    }
+} else {
+    $distinctChildIds = @($sliceDecompositionRows.FeatureId | Select-Object -Unique)
+    if ($distinctChildIds.Count -lt 2) {
+        throw "SliceId '$SliceId' is marked Decompose but must declare at least two distinct child Feature IDs."
+    }
+    if ([string]::IsNullOrWhiteSpace($featureDecomposition.Contract) -or
+        $featureDecomposition.Contract -match '^(?i:N/A)' -or
+        $featureDecomposition.Contract -match '<[^>]+>|\bTBD\b') {
+        throw "Decomposed FeatureId '$FeatureId' must reference a completed Screen/Workflow Contract."
+    }
+
+    $screenWorkflowContractRelativePath = $featureDecomposition.Contract -replace '\\', '/'
+    $screenWorkflowContractPath = [System.IO.Path]::GetFullPath((Join-Path $repositoryRoot ($screenWorkflowContractRelativePath -replace '/', [System.IO.Path]::DirectorySeparatorChar)))
+    $planDirectory = Split-Path -Parent $canonicalPlanPath
+    $decompositionRoot = [System.IO.Path]::GetFullPath((Join-Path $planDirectory 'decomposition'))
+    $decompositionPrefix = $decompositionRoot.TrimEnd([System.IO.Path]::DirectorySeparatorChar) + [System.IO.Path]::DirectorySeparatorChar
+    if (-not $screenWorkflowContractPath.StartsWith($decompositionPrefix, [System.StringComparison]::OrdinalIgnoreCase)) {
+        throw "Screen/Workflow Contract for FeatureId '$FeatureId' must live under the owning plan's decomposition/ folder."
+    }
+    if (-not (Test-Path -LiteralPath $screenWorkflowContractPath -PathType Leaf)) {
+        throw "Screen/Workflow Contract is missing for decomposed FeatureId '$FeatureId': $screenWorkflowContractRelativePath"
+    }
+
+    $screenWorkflowContractText = Get-Content -LiteralPath $screenWorkflowContractPath -Raw -Encoding UTF8
+    $requiredContractHeadings = @(
+        '## 1. Child boundary and outcome',
+        '## 2. Closest existing reference',
+        '## 3. Reuse and composition contract',
+        '## 4. Screen and workspace contract',
+        '## 5. Create, edit, view, and lifecycle contract',
+        '## 6. Typed transport and server criteria',
+        '## 7. UX states, permissions, and read-only behavior',
+        '## 8. Concurrency and consistency',
+        '## 9. i18n, RTL, accessibility, and responsive behavior',
+        '## 10. Verification contract',
+        '## 11. Child exit gate'
+    )
+    foreach ($heading in $requiredContractHeadings) {
+        if (-not $screenWorkflowContractText.Contains($heading)) {
+            throw "Screen/Workflow Contract for FeatureId '$FeatureId' is missing required section '$heading'."
+        }
+    }
+    if ($screenWorkflowContractText -match '<[A-Za-z][^>\r\n]*>') {
+        throw "Screen/Workflow Contract for FeatureId '$FeatureId' contains unresolved template placeholders: $screenWorkflowContractRelativePath"
+    }
+    if ($screenWorkflowContractText -notmatch ("(?im)^\|\s*Child Feature ID\s*\|\s*\x60?" + [regex]::Escape($FeatureId) + "\x60?\s*\|")) {
+        throw "Screen/Workflow Contract metadata does not declare Child Feature ID '$FeatureId'."
+    }
+    if ($screenWorkflowContractText -notmatch ("(?im)^\|\s*Authorized slice\s*\|\s*\x60?" + [regex]::Escape($SliceId) + "\x60?\s*\|")) {
+        throw "Screen/Workflow Contract metadata does not declare authorized SliceId '$SliceId'."
+    }
+}
+}
+
 $planIdDisplay = $PlanId
 $sliceIdDisplay = $SliceId
 $moduleDisplay = $Module
@@ -144,6 +261,8 @@ $artifact = $artifact.Replace('<YYYY-MM-DD>', (Get-Date).ToString('yyyy-MM-dd'))
 $artifact = $artifact.Replace('<PlanId or N/A>', $planIdDisplay)
 $artifact = $artifact.Replace('<SliceId or N/A>', $sliceIdDisplay)
 $artifact = $artifact.Replace('<CanonicalPlanPath or N/A>', $canonicalPlanRelativePath)
+$artifact = $artifact.Replace('<FeatureDecompositionDecision>', $decompositionDecision)
+$artifact = $artifact.Replace('<ScreenWorkflowContractPath>', $screenWorkflowContractRelativePath)
 $artifact = $artifact.Replace('<ReferenceFeature or N/A>', $referenceDisplay)
 $artifact = $artifact.Replace('<repository-relative path or N/A>', $educationRelativePath)
 $artifact = $artifact.Replace('<repository-relative implementation request path>', $implementationRequestRelativePath)
@@ -157,6 +276,8 @@ $implementationRequest = $implementationRequest.Replace('<YYYY-MM-DD>', (Get-Dat
 $implementationRequest = $implementationRequest.Replace('<PlanId or N/A>', $planIdDisplay)
 $implementationRequest = $implementationRequest.Replace('<SliceId or N/A>', $sliceIdDisplay)
 $implementationRequest = $implementationRequest.Replace('<CanonicalPlanPath or N/A>', $canonicalPlanRelativePath)
+$implementationRequest = $implementationRequest.Replace('<FeatureDecompositionDecision>', $decompositionDecision)
+$implementationRequest = $implementationRequest.Replace('<ScreenWorkflowContractPath>', $screenWorkflowContractRelativePath)
 $implementationRequest = $implementationRequest.Replace('<ReferenceFeature or N/A>', $referenceDisplay)
 $implementationRequest = $implementationRequest.Replace('<CustomerEducationPath>', $educationRelativePath)
 $implementationRequest = $implementationRequest.Replace('<platform | hr | accounting | ...>', $moduleDisplay)
@@ -172,6 +293,8 @@ $draftManifest = [ordered]@{
     planId = $planIdDisplay
     sliceId = $sliceIdDisplay
     canonicalPlan = $canonicalPlanRelativePath
+    featureDecompositionDecision = $decompositionDecision
+    screenWorkflowContract = $screenWorkflowContractRelativePath
     plannedCustomerEducation = $educationRelativePath
     purpose = "Draft evidence plan for $FeatureName. This file is not registered until every final source exists."
     reviewArtifact = $artifactRelativePath
@@ -234,6 +357,8 @@ $registrationDraft = [ordered]@{
     planId = $planIdDisplay
     sliceId = $sliceIdDisplay
     canonicalPlan = $canonicalPlanRelativePath
+    featureDecompositionDecision = $decompositionDecision
+    screenWorkflowContract = $screenWorkflowContractRelativePath
     plannedCustomerEducation = $educationRelativePath
     instructions = 'Merge these entries into recipe-manifest.json after Phase 00 has a final preflight required-files.json and all four initial applied implementation books. Extend the manifest/books with runtime evidence during implementation.'
     books = @(
@@ -337,6 +462,7 @@ Write-Host "Created $implementationRequestRelativePath"
 Write-Host "Created $draftManifestRelativePath"
 Write-Host "Created $registrationDraftRelativePath"
 Write-Host "Plan: $planIdDisplay / Slice: $sliceIdDisplay"
+Write-Host "Feature decomposition: $decompositionDecision / Contract: $screenWorkflowContractRelativePath"
 Write-Host "Reference selected: $referenceDisplay"
 Write-Host 'The draft manifest is intentionally not registered in recipe-manifest.json.'
 Write-Host 'Runtime implementation starts only after Phase 00 implementation preflight and execution-readiness evidence are complete.'

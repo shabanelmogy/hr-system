@@ -22,6 +22,7 @@ import StatesDataGrid from "./grid-view/StatesDataGrid";
 
 const StatesChartView = dynamic(() => import("./StatesChartView"));
 const ImportStates = dynamic(() => import("./import-data/ImportStates"));
+const StateReportPage = dynamic(() => import("../reports/pages/StateReportPage"));
 
 const sortableColumns = new Set<StateSortColumn>([
   "nameEn",
@@ -141,9 +142,13 @@ const StatesMultiView = ({
   }, [onRefresh]);
 
   const hasActiveCriteria = searchValue.trim().length > 0 || filter !== "active";
-  const availableViews: StateManagementView[] = permissions.canCreate
-    ? ["grid", "cards", "chart", "import"]
-    : ["grid", "cards", "chart"];
+  const availableViews: StateManagementView[] = [
+    "grid",
+    "cards",
+    "chart",
+    "report",
+    ...(permissions.canCreate ? ["import" as const] : []),
+  ];
   const supportsFilterBar = visibleView !== "import";
 
   return (
@@ -271,6 +276,9 @@ const StatesMultiView = ({
             loading={loading}
             onAdd={permissions.canCreate ? onAdd : undefined}
           />
+        )}
+        {visibleView === "report" && (
+          <StateReportPage showFilterBar={isFilterBarVisible} />
         )}
         {visibleView === "import" && permissions.canCreate && (
           <ImportStates onReconcile={handleImportReconcile} />

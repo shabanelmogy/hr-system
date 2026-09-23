@@ -28,7 +28,7 @@ test("company switch revalidates the server session before exposing the new cont
 });
 
 test("company switch drops old-context business data and loads the new scope", async ({ page }) => {
-  await loginWithDemoRole(page, "User", "/finance/fiscal-years");
+  await loginWithDemoRole(page, "User", "/finance/ledger-setup/fiscal-years");
   await completeUserTenantAndCompanySelection(page);
 
   await expect(page.getByText("FY-ONE", { exact: true }).first()).toBeVisible();

@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { ApiError } from '@/src/core/api';
 import { useAppTheme } from '@/src/core/theme';
 import { permissions, useAuthorization } from '@/src/platform/auth';
+import { useManagedReportAvailability } from '@/src/platform/reporting';
 import { useAppReadOnly } from '@/src/shared/contexts/AppReadOnlyContext';
 import { toApiPageNumber, useServerListState } from '@/src/shared/listing';
 import { AppButton, AppDataTable, type AppDataTableFlash, type AppDataTableColumn, AppIconButton, AppListScreen, AppScreen, AppStateView, AppStatusBadge, AppText, ConfirmationDialog, showToast } from '@/src/shared/components';
@@ -25,6 +26,7 @@ export function StatesScreen() {
   const { allowed: isCreateAuthorized } = useAuthorization({ allowSuperAdmin: true, requiredPermissions: [permissions.CreateStates] });
   const { allowed: isEditAuthorized } = useAuthorization({ allowSuperAdmin: true, requiredPermissions: [permissions.EditStates] });
   const { allowed: isDeleteAuthorized } = useAuthorization({ allowSuperAdmin: true, requiredPermissions: [permissions.DeleteStates] });
+  const { allowed: canViewReports } = useManagedReportAvailability('global');
   const canCreate = isCreateAuthorized && !isReadOnly; const canEdit = isEditAuthorized && !isReadOnly; const canDelete = isDeleteAuthorized && !isReadOnly;
   const list = useServerListState<StateSortColumn, StateFilters>({ initialFilters, initialPageSize: 5, initialSort: { columnId: 'createdOn', direction: 'descending' } });
   const [searchField, setSearchField] = useState<StateSearchField>('all'); const [searchOperator, setSearchOperator] = useState<StateSearchOperator>('contains');
@@ -67,7 +69,7 @@ export function StatesScreen() {
       { value: 'table', icon: 'grid-outline', label: t('multiView.table'), defaultPageSize: 5, render: (items) => <AppDataTable columns={columns} flash={flash} getRowKey={(state) => state.id} rowSelection={canDelete ? { getAccessibilityLabel: (state) => t('states.selectState', { name: state.nameEn }), header: t('dataTable.select'), isRowSelectable: (state) => !state.isDeleted, onSelectionChange: (keys) => setSelectedIds(keys.filter((key): key is number => typeof key === 'number')), selectedRowKeys: selectedIds } : undefined} rows={items} showPagination={false} serverState={{ onPageChange: changePage, onPageSizeChange: changePageSize, onSortChange: changeSort, page: list.state.page, pageSize: list.state.pageSize, sort: list.state.sort, totalRows: statesQuery.data?.metaData.totalCount ?? 0 }} /> },
       { value: 'cards', icon: 'albums-outline', label: t('multiView.cards'), defaultPageSize: 3, scrollable: true, render: (items) => <View style={styles.cards}>{items.map((state, index) => <StateCard active={index === 0} canDelete={canDelete} canEdit={canEdit} flash={flash?.rowKey === state.id} flashToken={flash?.token} key={state.id} onArchive={(item) => setPendingAction({ kind: 'archive', state: item })} onEdit={(item) => openForm('edit', item)} onRestore={(item) => void restore(item)} onToggleSelection={toggleSelection} onView={(item) => openForm('view', item)} selected={selectedIds.includes(state.id)} state={state} />)}</View> },
       { value: 'chart', icon: 'stats-chart-outline', label: t('states.chartView'), paginate: false, renderWhenEmpty: true, scrollable: true, render: (items) => <StatesChartView states={items} totalCount={statesQuery.data?.metaData.totalCount ?? 0} /> },
-      { value: 'report', icon: 'document-text-outline', label: t('states.reportView'), paginate: false, renderWhenEmpty: true, render: (items) => <StateReportView states={items} totalCount={statesQuery.data?.metaData.totalCount ?? 0} /> },
+      ...(canViewReports ? [{ value: 'report' as const, icon: 'document-text-outline' as const, label: t('states.reportView'), paginate: false, renderWhenEmpty: true, render: () => <StateReportView /> }] : []),
       ...(canCreate ? [{ value: 'import' as const, icon: 'cloud-upload-outline' as const, label: t('states.importView'), paginate: false, renderWhenEmpty: true, scrollable: true, render: () => <StateImportView /> }] : []),
     ]} />
     {selectedState || formMode === 'create' ? <StateForm loading={saveMutation.isPending} mode={formMode} onClose={closeForm} onSave={save} state={selectedState} /> : null}

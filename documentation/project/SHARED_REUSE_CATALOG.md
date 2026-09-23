@@ -4,6 +4,21 @@
 يعلن API جديدًا؛ قبل كل ميزة نقرأ المصادر المرتبطة ونسجل قرار إعادة الاستخدام
 في كتاب الميزة المالك.
 
+## كتالوج أنماط الشاشات
+
+[SCREEN_PATTERN_CATALOG.md](SCREEN_PATTERN_CATALOG.md) هو المرجع الإلزامي
+لاختيار تركيب الشاشة قبل إنشاء Grid أو Tree/Master-Detail أو Tabbed Form.
+المعرفات الحالية هي:
+
+| Pattern | Web reference | Mobile reference | الاستخدام |
+| --- | --- | --- | --- |
+| P-001 Grid/CRUD | Countries Page/MultiView | Countries Screen و`AppListScreen` | قوائم البيانات المسطحة ذات إدارة الخادم |
+| P-002 Tree + Master/Detail | Cost Centers و`SplitTreeView` | Cost Centers و`AppHierarchicalTree` | البيانات الهرمية |
+| P-003 Tabbed multi-section form | Add Tenant و`FormTabs` | Add Tenant full-screen stacked عبر `AppForm` (`Adapted`) | aggregate أو إعداد متعدد الأقسام |
+
+اختيار النمط لا ينقل حقول المرجع أو قواعده. يجب أن يسجل feature profile ما تم
+إعادة استخدامه، وما هو `Required` أو `Deferred` أو `Excluded` لكل منصة.
+
 | المجال | المصدر المرجعي | يستخدمه |
 | --- | --- | --- |
 | API modular monolith وملكية الموديول | [MODULAR_MONOLITH_ARCHITECTURE.md](../api/MODULAR_MONOLITH_ARCHITECTURE.md) | كل موديولات الـAPI |
@@ -29,6 +44,12 @@
 4. اربط المستهلكين المتأثرين بملفاتهم feature profiles، وسجّل لكل منصة
    `Required` أو `Deferred` أو `Excluded` مع السبب والمالك أو شرط إعادة الفتح.
 5. شغّل التوليد وفحص التوثيق إذا تغيّرت أقسام مرقمة أو مصادر وصفة.
+
+عند ظهور نمط جديد، لا تضف مكوّنًا محليًا قبل تحديث كتالوج الأنماط وتسجيل
+المعرف الثابت، المرجع التنفيذي، حدود shared، حالات الاستخدام، وقائمة الاختبارات.
+يجب فحص نفس رحلة العمل في Web وMobile وتسجيل حالة كل منصة صراحة؛ لا يُسجل
+مرجع منصة واحدة ويُترك النظير الآخر ضمنيًا. اختلاف layout الموثق مسموح إذا
+حافظ على العقد والسلوك والصلاحيات والتحقق.
 
 الترقية إلى shared قرار ملكية، وليست اختصارًا لتجنب تسمية الموديول أو توثيقه.
 السجل الحالي يفهرس الوثائق فقط؛ تفاصيل كل Contract أو مكوّن تبقى في مصدره

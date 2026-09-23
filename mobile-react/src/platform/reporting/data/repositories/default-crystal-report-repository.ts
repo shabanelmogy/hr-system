@@ -20,4 +20,14 @@ export class DefaultCrystalReportRepository implements CrystalReportRepository {
     this.requireOnline();
     return this.remote.render(id, request);
   }
+
+  listGlobal(entityKey: string) {
+    this.requireOnline();
+    return this.remote.listGlobal(entityKey);
+  }
+
+  renderGlobal(sourceId: string, request: Parameters<CrystalReportRepository['renderGlobal']>[1]) {
+    this.requireOnline();
+    return this.remote.renderGlobal(sourceId, request);
+  }
 }

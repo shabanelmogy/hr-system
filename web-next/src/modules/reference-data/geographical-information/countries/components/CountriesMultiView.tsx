@@ -18,8 +18,9 @@ import CountriesDataGrid from "./grid-view/CountriesDataGrid";
 
 const CountriesChartView = dynamic(() => import("./CountriesChartView"));
 const ImportCountries = dynamic(() => import("./import-data/ImportCountries"));
+const CountryReportPage = dynamic(() => import("../reports/pages/CountryReportPage"));
 
-type CountryView = "grid" | "cards" | "chart" | "import";
+type CountryView = "grid" | "cards" | "chart" | "report" | "import";
 
 interface CountriesMultiViewProps {
   countries: CountryListItem[];
@@ -121,6 +122,7 @@ const CountriesMultiView = ({
       view === "grid" ||
       view === "cards" ||
       view === "chart" ||
+      view === "report" ||
       view === "import"
     ) {
       if (view !== "import" || permissions.canCreate) {
@@ -148,9 +150,13 @@ const CountriesMultiView = ({
 
   const activeFilterCount = Number(filter !== "active");
   const hasActiveCriteria = searchValue.trim().length > 0 || activeFilterCount > 0;
-  const availableViews: CountryView[] = permissions.canCreate
-    ? ["grid", "cards", "chart", "import"]
-    : ["grid", "cards", "chart"];
+  const availableViews: CountryView[] = [
+    "grid",
+    "cards",
+    "chart",
+    "report",
+    ...(permissions.canCreate ? ["import" as const] : []),
+  ];
   const supportsFilterBar = visibleView !== "import";
 
   return (
@@ -279,6 +285,9 @@ const CountriesMultiView = ({
             loading={loading}
             onAdd={permissions.canCreate ? onAdd : undefined}
           />
+        )}
+        {visibleView === "report" && (
+          <CountryReportPage showFilterBar={isFilterBarVisible} />
         )}
         {visibleView === "import" && permissions.canCreate && (
           <ImportCountries onReconcile={handleImportReconcile} />

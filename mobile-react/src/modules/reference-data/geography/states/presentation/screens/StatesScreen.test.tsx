@@ -24,9 +24,16 @@ jest.mock('@/src/platform/auth', () => ({
     CreateStates: 'States:Create',
     EditStates: 'States:Edit',
     DeleteStates: 'States:Delete',
+    ViewCrystalReports: 'CrystalReports:View',
   },
   useAuthorization: ({ requiredPermissions }: { requiredPermissions: string[] }) => ({
     allowed: requiredPermissions.every((permission) => mockAllowedPermissions.has(permission)),
+  }),
+}));
+jest.mock('@/src/platform/reporting', () => ({
+  useManagedReportAvailability: () => ({
+    allowed: mockAllowedPermissions.has('CrystalReports:View'),
+    isLoading: false,
   }),
 }));
 jest.mock('@/src/shared/contexts/AppReadOnlyContext', () => ({
@@ -144,6 +151,7 @@ describe('StatesScreen', () => {
     mockAllowedPermissions.add(permissions.CreateStates);
     mockAllowedPermissions.add(permissions.EditStates);
     mockAllowedPermissions.add(permissions.DeleteStates);
+    mockAllowedPermissions.add(permissions.ViewCrystalReports);
     mockUseStates.mockReturnValue({ data: { items: [state], metaData: { totalCount: 1 } }, error: null, isFetching: false, isLoading: false, isRefetching: false, refetch: jest.fn() });
     mockArchive.mockResolvedValue(undefined);
     mockBulkArchive.mockResolvedValue({ archivedCount: 1 });

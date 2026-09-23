@@ -19,6 +19,7 @@ Request
 -> Master plan
 -> Adversarial review
 -> G0-G4
+-> Feature Decomposition Gate for the authorized slice
 -> Implementation Ready
    OR explicit bounded Slice execution authorization under PLAN_QUALITY_GATE.md
 ```
@@ -220,7 +221,9 @@ Challenge at least:
 - unsupported legal/privacy/product assertions;
 - optional client capabilities left undecided;
 - implementation phases that are horizontal layers instead of coherent business
-  slices.
+  slices;
+- a single implementation slice that bundles materially different domain workflows,
+  screens, user journeys, or acceptance boundaries into one umbrella feature.
 
 Findings are fixed in the plan or centralized as explicit notes before approval.
 
@@ -234,6 +237,24 @@ A bounded dependency-ordered slice may nevertheless be execution-authorized befo
 overall G4 only when `PLAN_QUALITY_GATE.md`'s slice-authorization conditions are
 met and all remaining G4 findings are explicitly release/hardening-only. This does
 not change the overall plan status to `Implementation Ready`.
+
+Before runtime implementation, complete the authorized slice's **Feature
+Decomposition Gate** in `PLAN.md`. New plans complete it before handoff to
+`documentation/system/`. A pre-gate legacy plan may enter Phase 00 only to perform
+this reconciliation; it remains blocked from runtime implementation until the gate
+is complete. Every slice must state either:
+
+- `Single feature` — one coherent domain/UI workflow can be implemented and accepted
+  as one feature execution unit; or
+- `Decompose` — the slice contains materially different workflows and therefore has
+  two or more child feature execution units, each with its own stable Feature ID,
+  Screen/Workflow Contract created from `FEATURE_DECOMPOSITION_TEMPLATE.md`, scope
+  boundary, dependencies, and acceptance outcome.
+
+Do not use one generic screen/renderer, shared controller, or umbrella documentation
+package as evidence that materially different workflows form one feature. Shared
+technical infrastructure may be reused, but each decomposed child must still prove
+its own workflow contract and reuse audit before runtime implementation.
 
 The implementation team receives the approved specification, master plan,
 decision/evidence trail, and linked central note IDs. Chat history is not an

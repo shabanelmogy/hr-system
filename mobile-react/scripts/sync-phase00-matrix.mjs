@@ -218,6 +218,24 @@ function operationsFor(endpointSource, variable, members) {
               if (current && !current.some((item) => JSON.stringify(item) === key)) current.push(operation);
             }
           }
+
+          // Ledger Setup intentionally uses one generic resource transport for
+          // several entity families. Trace those helper calls to the endpoint
+          // catalog instead of treating the catalog members as unreviewed.
+          if (endpointSource.includes('/accounting/ledger-setup/') &&
+            (first.includes('baseUrl(') || first.includes('itemUrl('))) {
+            for (const member of members.filter((candidate) => (operations.get(candidate.key)?.length ?? 0) === 0)) {
+              const operation = {
+                verb: [verb],
+                caller: `${rel(file)}#${functionName(node, sf)} (dynamic resource endpoint helper)`,
+                requestBoundary: requestBoundary(node, verb, sf),
+                responseBoundary: responseBoundary(node, verb, sf),
+                permissionAuthority: `API module catalog/endpoint policy; caller ${rel(file)}`,
+              };
+              const current = operations.get(member.key);
+              if (current && !current.some((item) => JSON.stringify(item) === JSON.stringify(operation))) current.push(operation);
+            }
+          }
         }
       }
       ts.forEachChild(node, visit);
@@ -285,8 +303,18 @@ function policy(pathname) {
   if (pathname === '/advanced-tools/hangfire-dashboard') return permission(['ViewHangfireDashboard']);
   if (pathname === '/advanced-tools') return anyOf([{ permissions: ['ViewChangeLogs'] }, { permissions: ['ViewLocalizations'] }, { roles: ['admin'] }, { permissions: ['ViewHangfireDashboard'] }]);
   if (pathname === '/recruitment') return permission(['ViewRecruitment']);
-  if (pathname === '/finance/ledger-setup/currencies' || pathname === '/finance/ledger-setup') return permission(['ViewAccountingSetup']);
-  if (pathname === '/finance/fiscal-years') return permission(['ViewFiscalYears']);
+  if (pathname === '/finance/ledger-setup/fiscal-years') return permission(['ViewFiscalYears']);
+  if (pathname === '/finance/ledger-setup') return anyOf([
+    { permissions: ['ViewFiscalYears'] },
+    { permissions: ['ViewAccountingSetup'] },
+    { permissions: ['ViewAccounts'] },
+    { permissions: ['ViewDimensions'] },
+  ]);
+  if (pathname.startsWith('/finance/ledger-setup/')) {
+    if (pathname === '/finance/ledger-setup/accounts' || pathname === '/finance/ledger-setup/hierarchy-levels') return permission(['ViewAccounts']);
+    if (pathname === '/finance/ledger-setup/dimensions') return permission(['ViewDimensions']);
+    return permission(['ViewAccountingSetup']);
+  }
   if (pathname === '/finance') return anyOf([
     { permissions: ['ViewFiscalYears'] },
     { permissions: ['ViewAccountingSetup'] },
@@ -329,7 +357,6 @@ function moduleRequirement(pathname) {
   if (pathname.startsWith('/recruitment')) return { moduleCode: 'hr', submoduleCode: 'recruitment' };
   if (pathname.startsWith('/workforce-planning')) return { moduleCode: 'hr', submoduleCode: 'workforce' };
   if (pathname.startsWith('/finance/ledger-setup')) return { moduleCode: 'acc', submoduleCode: 'ledger-setup' };
-  if (pathname === '/finance/fiscal-years') return { moduleCode: 'acc', submoduleCode: 'fiscal-years' };
   if (pathname === '/finance') return null;
   if (pathname.startsWith('/advanced-tools/track-changes') || pathname.startsWith('/advanced-tools/localization-api')) return { moduleCode: 'platform', submoduleCode: 'tenant-administration' };
   if (pathname === '/advanced-tools' || pathname === '/extras') return null;
@@ -404,16 +431,6 @@ function routeProfile(route, pathname) {
       note: 'Aggregate Accounting shell route; Fiscal Years and Ledger Setup own their child routes.',
     };
   }
-  if (effectivePath === '/finance/fiscal-years') {
-    return {
-      ...profile,
-      currentOwner: 'Accounting/fiscal-years',
-      targetOwner: 'Accounting/fiscal-years',
-      scope: 'tenant/company',
-      status: 'aligned',
-      note: 'Fiscal years are owned by the Accounting module (acc/fiscal-years).',
-    };
-  }
   if (effectivePath.startsWith('/finance/ledger-setup')) {
     return {
       ...profile,
@@ -421,7 +438,7 @@ function routeProfile(route, pathname) {
       targetOwner: 'Accounting/ledger-setup',
       scope: 'tenant/company',
       status: 'aligned',
-      note: 'Ledger Setup currencies are owned by the Accounting module (acc/ledger-setup).',
+      note: 'Fiscal Years and Ledger Setup capabilities are owned by the Accounting module (acc/ledger-setup).',
     };
   }
   if (effectivePath.startsWith('/administration')) {
@@ -525,6 +542,8 @@ function targetModuleRequirement(_pathname, currentModule, _profile) {
 function endpointProfile(source) {
   if (source.includes('/core/realtime/')) return { currentOwner: 'Platform/realtime', targetOwner: 'Platform/realtime', scope: 'session/tenant/company', status: 'aligned', permissionSource: 'Platform authenticated realtime policy' };
   if (source.includes('/hr/recruitment/')) return { currentOwner: 'HR/recruitment', targetOwner: 'HR/recruitment', scope: 'tenant/company', status: 'aligned', permissionSource: 'HR API endpoint policy backed by HrPermissions.Recruitment' };
+  if (source.includes('/accounting/ledger-setup/coa-hierarchy/')) return { currentOwner: 'Accounting/ledger-setup', targetOwner: 'Accounting/ledger-setup', scope: 'tenant/company', status: 'aligned', permissionSource: 'Accounting COA hierarchy controllers and AccountingPermissions.ViewAccounts/ManageAccounts' };
+  if (source.includes('/accounting/ledger-setup/')) return { currentOwner: 'Accounting/ledger-setup', targetOwner: 'Accounting/ledger-setup', scope: 'tenant/company', status: 'aligned', permissionSource: 'Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup/ManageAccountingSetup' };
   if (source.includes('/accounting/currencies/')) return { currentOwner: 'Accounting/ledger-setup', targetOwner: 'Accounting/ledger-setup', scope: 'tenant/company', status: 'aligned', permissionSource: 'Accounting CurrenciesController uses AccountingSetup:View for GET reads and AccountingSetup:Manage for mutations' };
   if (source.includes('/accounting/fiscal-years/')) return { currentOwner: 'Accounting/fiscal-years', targetOwner: 'Accounting/fiscal-years', scope: 'tenant/company', status: 'aligned', permissionSource: 'Accounting FiscalYearsController and AccountingPermissions.FiscalYears' };
   if (source.includes('/reference-data/addresses/address-types/')) return { currentOwner: 'ReferenceData/addresses', targetOwner: 'ReferenceData/addresses', scope: 'tenant/company', status: 'aligned', permissionSource: 'ReferenceData AddressTypesController and ReferenceDataPermissions.TenantReferenceData' };
@@ -546,10 +565,46 @@ function endpointProfile(source) {
 }
 
 function operationPermissionAuthority(source, operation, fallback) {
+  if (source.includes('/accounting/ledger-setup/coa-hierarchy/')) {
+    return operation.verb.includes('GET')
+      ? 'Accounting COA hierarchy controllers and AccountingPermissions.ViewAccounts (Accounts:View)'
+      : 'Accounting COA hierarchy controllers and AccountingPermissions.ManageAccounts (Accounts:Manage)';
+  }
+  if (source.includes('/accounting/ledger-setup/')) {
+    if (source.includes('/dimensions/')) {
+      return operation.verb.includes('GET')
+        ? 'Accounting Ledger Setup controllers and AccountingPermissions.ViewDimensions (Dimensions:View)'
+        : 'Accounting Ledger Setup controllers and AccountingPermissions.ManageDimensions (Dimensions:Manage)';
+    }
+    return operation.verb.includes('GET')
+      ? 'Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup (AccountingSetup:View)'
+      : 'Accounting Ledger Setup controllers and AccountingPermissions.ManageAccountingSetup (AccountingSetup:Manage)';
+  }
   if (!source.includes('/accounting/currencies/')) return fallback;
   return operation.verb.includes('GET')
     ? 'Accounting CurrenciesController and AccountingPermissions.ViewAccountingSetup (AccountingSetup:View)'
     : 'Accounting CurrenciesController and AccountingPermissions.ManageAccountingSetup (AccountingSetup:Manage)';
+}
+
+// Keep the matrix exhaustive when a new Expo route is added. Existing entries
+// retain their reviewed evidence; newly discovered routes are profiled below
+// by the same route policy and ownership rules.
+const existingRouteSources = new Set(matrix.routes.map((route) => route.source));
+for (const file of walk(path.join(mobileRoot, 'app')).filter((candidate) => candidate.endsWith('.tsx'))) {
+  const source = rel(file);
+  if (existingRouteSources.has(source)) continue;
+  matrix.routes.push({
+    source,
+    path: '',
+    kind: 'auth',
+    apiSurface: 'route adapter',
+    currentOwner: 'UNREVIEWED',
+    targetOwner: 'UNREVIEWED',
+    scope: 'tenant/company',
+    offlineMode: 'online-only',
+    status: 'deferred',
+    note: 'New route discovered by the contract synchronizer; route policy and ownership are derived from the canonical route rules.',
+  });
 }
 
 for (const route of matrix.routes) {
@@ -559,6 +614,7 @@ for (const route of matrix.routes) {
   const currentModule = pathname.startsWith('layout:') || pathname.startsWith('system:') ? { status: 'inherited' } : moduleRequirement(pathname);
   Object.assign(route, profile);
   route.path = pathname;
+  route.apiSurface = route.apiSurface || 'route adapter';
   route.currentRoutePolicy = current;
   route.targetRoutePolicy = targetRoutePolicy(pathname, current, profile);
   route.currentModuleRequirement = currentModule;

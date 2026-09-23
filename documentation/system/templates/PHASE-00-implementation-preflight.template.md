@@ -17,16 +17,20 @@ slice onto concrete runtime surfaces.
 1. Record the canonical Plan ID, plan path, authorized slice/phase, and current gate
    status.
 2. Confirm the requested implementation is inside the authorized slice.
-3. Inspect the current owning runtime capability and verify there has been no
+3. Confirm the plan's Feature Decomposition Gate binds this Feature ID to one
+   coherent execution unit. When the slice is `Decompose`, read and verify the
+   child Screen/Workflow Contract and reuse audit created from
+   `documentation/plans/FEATURE_DECOMPOSITION_TEMPLATE.md`.
+4. Inspect the current owning runtime capability and verify there has been no
    material drift since planning.
-4. Complete the Existing-System Relationship Review and shared-reuse inventory.
-5. Map each slice requirement to Domain/Application/Infrastructure/Presentation,
+5. Complete the Existing-System Relationship Review and shared-reuse inventory.
+6. Map each feature-unit requirement to Domain/Application/Infrastructure/Presentation,
    Web, Mobile, tests, migrations, integrations, and documentation as applicable.
-6. Import approved business decisions from the plan into the implementation request;
+7. Import approved business decisions from the plan into the implementation request;
    do not create a competing rule set.
-7. Record any implementation-only detail that the plan intentionally left to the
+8. Record any implementation-only detail that the plan intentionally left to the
    execution workflow.
-8. Define the exact verification commands/evidence required before Phase 06 can
+9. Define the exact verification commands/evidence required before Phase 06 can
    return `Verified`.
 
 ## Drift rule
@@ -48,6 +52,12 @@ or feature-local document.
 - [ ] Canonical Plan ID/path and authorized slice are recorded, or this is explicitly
       classified as a small change inside an already approved capability.
 - [ ] Current plan gate authorizes this implementation scope.
+- [ ] Feature Decomposition Gate contains this exact Feature ID for the authorized
+      slice; `Decompose` slices have at least two distinct child Feature IDs.
+- [ ] For a decomposed slice, this child has a complete Screen/Workflow Contract:
+      closest reference, exact reusable components, workspace/screens/journeys,
+      typed transport/server criteria, states, permissions/read-only, concurrency,
+      i18n/RTL/accessibility/responsive behavior, tests, and child exit gate.
 - [ ] Current runtime was inspected for drift since planning.
 - [ ] Owning module/capability and relationship classification are confirmed.
 - [ ] No parallel/legacy/workaround owner is being introduced.

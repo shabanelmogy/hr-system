@@ -234,4 +234,24 @@ describe('AppHierarchicalTree shared component', () => {
     await fireEvent.press(getAllByLabelText('Delete')[0]);
     expect(onDeleteMock).toHaveBeenCalledWith(expect.objectContaining({ id: 1 }));
   });
+
+  it('shows contextual Add Child only for nodes allowed by the caller', async () => {
+    const onAddChildMock = jest.fn();
+    const { getAllByLabelText } = await render(
+      <AppHierarchicalTree<TestDepartment>
+        canAddChild={(item) => item.id === 1}
+        canCreate
+        getCode={(it) => it.code}
+        getId={(it) => it.id}
+        getLabel={(it) => it.name}
+        getParentId={(it) => it.parentId}
+        items={mockItems}
+        onAddChild={onAddChildMock}
+      />
+    );
+
+    expect(getAllByLabelText('Add Child')).toHaveLength(1);
+    await fireEvent.press(getAllByLabelText('Add Child')[0]);
+    expect(onAddChildMock).toHaveBeenCalledWith(expect.objectContaining({ id: 1 }));
+  });
 });

@@ -4,6 +4,15 @@ The web and mobile applications expose the same compositional form concepts. The
 only control layout and navigation. Validation, API calls, and business rules remain inside the
 owning feature.
 
+The reusable screen-level contract for a multi-section form is registered as
+[P-003 Tabbed Form](SCREEN_PATTERN_CATALOG.md#p-003--tabbed-form). The current web reference is
+Add Tenant; its tabs are an example of section ownership, not a field list to copy into another
+module. The current Mobile Add Tenant reference is explicitly `Adapted`: it uses a full-screen
+stacked `AppForm` and does not currently render `AppFormTabs`. Mobile may adopt `AppFormTabs` when
+sections require direct navigation, or keep the stacked composition, but it must preserve the same
+fields, validation, permissions, dirty-state, error-focus, and save/cancel behavior documented by
+P-003.
+
 ## Choose the layout
 
 - Use `FormSection` / `AppFormSection` to group related fields in a normal form.

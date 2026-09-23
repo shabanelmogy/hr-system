@@ -1,4 +1,11 @@
-import { AccountTree, BarChart, TableChart, ViewModule } from "@mui/icons-material";
+import {
+  AccountTree,
+  BarChart,
+  DescriptionOutlined,
+  TableChart,
+  UploadFileOutlined,
+  ViewModule,
+} from "@mui/icons-material";
 import type { TFunction } from "i18next";
 import type { ViewOption, ViewType } from "./types";
 
@@ -20,6 +27,8 @@ function getViewIcon(view: ViewType) {
     cards: <ViewModule />,
     chart: <BarChart />,
     tree: <AccountTree />,
+    report: <DescriptionOutlined />,
+    import: <UploadFileOutlined />,
     list: <ViewModule />,
     smallList: <ViewModule />,
   };

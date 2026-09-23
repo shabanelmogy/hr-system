@@ -3,6 +3,7 @@ using ErpSystem.Modules.Accounting.Application.Features.Finance.LedgerSetup.Cont
 using ErpSystem.Modules.Accounting.Domain.Finance.LedgerSetup.Services;
 using ErpSystem.Modules.Accounting.Application.Features.Finance.LedgerSetup.Commands;
 using ErpSystem.Modules.Accounting.Domain.Finance.LedgerSetup.Enums;
+using ErpSystem.BuildingBlocks.Application.Common.Paginations;
 
 namespace ErpSystem.Modules.Accounting.Application.Features.Finance.LedgerSetup.Queries;
 
@@ -12,10 +13,70 @@ public sealed class GetAccountHierarchyLevelsQueryValidator : AbstractValidator<
 public sealed class GetAccountHierarchyLevelsQueryHandler(IAccountHierarchyLevelStore store, ICurrentActor actor) : IQueryHandler<GetAccountHierarchyLevelsQuery, IReadOnlyList<AccountHierarchyLevelResponse>>
 { public Task<IReadOnlyList<AccountHierarchyLevelResponse>> Handle(GetAccountHierarchyLevelsQuery request, CancellationToken cancellationToken) => actor.TenantId is null || actor.CompanyId is not > 0 ? Task.FromResult<IReadOnlyList<AccountHierarchyLevelResponse>>([]) : store.ListAsync(request.RecordStatus, cancellationToken); }
 
-public sealed record GetAccountsQuery(int PageNumber = 1, int PageSize = 50, string? Search = null, string RecordStatus = "active") : IQuery<IReadOnlyList<AccountResponse>>;
-public sealed class GetAccountsQueryValidator : AbstractValidator<GetAccountsQuery> { public GetAccountsQueryValidator() { RuleFor(item => item.PageNumber).GreaterThan(0); RuleFor(item => item.PageSize).InclusiveBetween(1, 500); RuleFor(item => item.RecordStatus).Must(LedgerSetupQuerySupport.ValidRecordStatus); } }
-public sealed class GetAccountsQueryHandler(IAccountReadStore store, ICurrentActor actor) : IQueryHandler<GetAccountsQuery, IReadOnlyList<AccountResponse>>
-{ public Task<IReadOnlyList<AccountResponse>> Handle(GetAccountsQuery request, CancellationToken cancellationToken) => actor.TenantId is null || actor.CompanyId is not > 0 ? Task.FromResult<IReadOnlyList<AccountResponse>>([]) : store.ListAsync(new AccountListQuery(request.PageNumber, request.PageSize, request.Search, request.RecordStatus), cancellationToken); }
+public sealed record GetAccountsQuery : IQuery<PageResponse<AccountResponse>>
+{
+    public int PageNumber { get; init; } = 1;
+    public int PageSize { get; init; } = 50;
+    public string? Search { get; init; }
+    public string SearchField { get; init; } = "all";
+    public string SearchOperator { get; init; } = "contains";
+    public string RecordStatus { get; init; } = "active";
+    public string SortBy { get; init; } = "code";
+    public string SortDirection { get; init; } = "asc";
+}
+public sealed class GetAccountsQueryValidator : AbstractValidator<GetAccountsQuery>
+{
+    private static readonly string[] SearchFields = ["all", "code", "nameAr", "nameEn"];
+    private static readonly string[] SearchOperators = ["contains", "doesNotContain", "equals", "doesNotEqual", "startsWith", "endsWith"];
+    private static readonly string[] RecordStatuses = ["active", "archived", "all"];
+    private static readonly string[] SortColumns = ["code", "nameAr", "nameEn", "createdOn"];
+
+    public GetAccountsQueryValidator()
+    {
+        RuleFor(item => item.PageNumber).GreaterThan(0);
+        RuleFor(item => item.PageSize).InclusiveBetween(1, PaginationRequest.MaxClientPageSize);
+        RuleFor(item => item.Search).MaximumLength(200);
+        RuleFor(item => item.SearchField).Must(value => SearchFields.Contains(value, StringComparer.OrdinalIgnoreCase));
+        RuleFor(item => item.SearchOperator).Must(value => SearchOperators.Contains(value, StringComparer.OrdinalIgnoreCase));
+        RuleFor(item => item.RecordStatus).Must(value => RecordStatuses.Contains(value, StringComparer.OrdinalIgnoreCase));
+        RuleFor(item => item.SortBy).Must(value => SortColumns.Contains(value, StringComparer.OrdinalIgnoreCase));
+        RuleFor(item => item.SortDirection).Must(value => string.Equals(value, "asc", StringComparison.OrdinalIgnoreCase) || string.Equals(value, "desc", StringComparison.OrdinalIgnoreCase));
+    }
+}
+public sealed class GetAccountsQueryHandler(IAccountReadStore store, ICurrentActor actor) : IQueryHandler<GetAccountsQuery, PageResponse<AccountResponse>>
+{
+    public Task<PageResponse<AccountResponse>> Handle(GetAccountsQuery request, CancellationToken cancellationToken)
+    {
+        if (actor.TenantId is null || actor.CompanyId is not > 0)
+        {
+            var empty = new PagedList<AccountResponse>([], 0, request.PageNumber, request.PageSize, PaginationRequest.MaxClientPageSize);
+            return Task.FromResult(new PageResponse<AccountResponse>(empty, empty.MetaData));
+        }
+
+        return store.ListAsync(
+            new AccountListQuery(
+                request.PageNumber,
+                request.PageSize,
+                request.Search,
+                request.SearchField,
+                request.SearchOperator,
+                request.RecordStatus,
+                request.SortBy,
+                request.SortDirection),
+            cancellationToken);
+    }
+}
+public sealed record GetAccountCodeProposalQuery : IQuery<Result<AccountCodeProposalResponse>>;
+public sealed class GetAccountCodeProposalQueryHandler(IAccountReadStore store, ICurrentActor actor, LedgerSetupErrors errors)
+    : IQueryHandler<GetAccountCodeProposalQuery, Result<AccountCodeProposalResponse>>
+{
+    public async Task<Result<AccountCodeProposalResponse>> Handle(GetAccountCodeProposalQuery request, CancellationToken cancellationToken)
+    {
+        if (!LedgerSetupCommandSupport.Scope(actor, out _, out _))
+            return Result.Failure<AccountCodeProposalResponse>(errors.ScopeRequired);
+        return Result.Success(await store.GetCodeProposalAsync(cancellationToken));
+    }
+}
 public sealed record GetAccountByIdQuery(int Id) : IQuery<Result<AccountResponse>>;
 public sealed class GetAccountByIdQueryHandler(IAccountReadStore store, LedgerSetupErrors errors, ICurrentActor actor) : IQueryHandler<GetAccountByIdQuery, Result<AccountResponse>>
 { public async Task<Result<AccountResponse>> Handle(GetAccountByIdQuery request, CancellationToken cancellationToken) { if (actor.TenantId is null || actor.CompanyId is not > 0) return Result.Failure<AccountResponse>(errors.ScopeRequired); var value = await store.GetByIdAsync(request.Id, cancellationToken); return value is null ? Result.Failure<AccountResponse>(errors.NotFound("Account")) : Result.Success(value); } }

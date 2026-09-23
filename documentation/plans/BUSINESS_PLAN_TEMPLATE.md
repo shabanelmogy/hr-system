@@ -260,6 +260,26 @@ generic boilerplate requirements that the product does not support.>
 
 ## 23. Implementation phases
 
+### Feature Decomposition Gate
+
+Complete this table **before any slice is handed to `documentation/system/`**. Use
+exactly `Single feature` or `Decompose` in the Decision column. A `Decompose` slice
+must have at least two child rows with distinct stable Feature IDs. Each row must
+describe one coherent Screen/Workflow Contract and an independently testable scope
+boundary; shared infrastructure is a dependency, not a reason to merge materially
+different workflows.
+
+| Slice | Decision | Feature ID | Screen/Workflow Contract | Boundary / independent acceptance |
+| --- | --- | --- | --- | --- |
+| `<exact slice id/name>` | `<Single feature or Decompose>` | `<kebab-case-feature-id>` | `<N/A — single coherent workflow, or documentation/plans/business/<plan-id>/decomposition/<feature-id>.md>` | `<what this feature alone owns and how it is accepted>` |
+
+For `Decompose`, create every referenced Screen/Workflow Contract from
+`documentation/plans/FEATURE_DECOMPOSITION_TEMPLATE.md`. The contract must name the
+closest existing reference and exact reusable components, layout/workspace,
+list/tree/detail and create/edit/view/lifecycle journeys, typed transport and server
+criteria, UX states, permissions/read-only behavior, concurrency, i18n/RTL,
+accessibility/responsive behavior, tests, and the child exit gate.
+
 | Phase | Goal | Dependencies | Deliverables | Entry gate | Exit gate |
 | --- | --- | --- | --- | --- | --- |
 
@@ -283,6 +303,9 @@ Each phase/slice must classify its post-implementation Customer Education Pack a
 - [ ] Rollout/recovery plan is executable.
 - [ ] Applicable privacy/commercial/legal impacts were reviewed without inventing unsupported product behavior.
 - [ ] Every implementation phase defines its post-implementation Customer Education Pack requirement or a reasoned N/A.
+- [ ] Every implementation slice passed the Feature Decomposition Gate; decomposed
+      child features have distinct Feature IDs, Screen/Workflow Contracts, reuse
+      audits, and independent acceptance boundaries.
 - [ ] G0–G4 quality gates pass.
 
 ## 25. Customer education / video documentation

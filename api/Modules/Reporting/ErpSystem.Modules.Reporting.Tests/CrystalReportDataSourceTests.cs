@@ -1,3 +1,4 @@
+using ErpSystem.Modules.Accounting.Contracts.Reporting;
 using ErpSystem.Modules.ReferenceData.Contracts.Reporting;
 using ErpSystem.Modules.Reporting.Application.Features.Analytics.CrystalReports.Abstractions;
 using ErpSystem.Modules.Reporting.Application.Features.Analytics.CrystalReports.Contracts;
@@ -9,6 +10,32 @@ namespace ErpSystem.Modules.Reporting.Tests;
 
 public sealed class CrystalReportDataSourceTests
 {
+    [Fact]
+    public async Task BuildAsync_FiscalYears_UsesAccountingOwnedDataAndStablePeriodSchema()
+    {
+        var referenceData = new RecordingReferenceDataSource();
+        var accounting = new RecordingAccountingDataSource();
+        var source = CreateSource(referenceData, accounting);
+
+        var result = await source.BuildAsync(
+            "fiscalyears",
+            new Dictionary<string, string?>
+            {
+                ["Code"] = "FY-2027",
+                ["NameEn"] = "Fiscal Year 2027"
+            },
+            CancellationToken.None);
+
+        Assert.True(result.IsSuccess);
+        Assert.NotNull(result.Data);
+        Assert.Equal(("FY-2027", null, "Fiscal Year 2027"), accounting.Filter);
+        Assert.Contains("FiscalYearCode", result.Data.Xml, StringComparison.Ordinal);
+        Assert.Contains("FiscalYearStatus", result.Data.Xml, StringComparison.Ordinal);
+        Assert.Contains("FiscalPeriodSequence", result.Data.Xml, StringComparison.Ordinal);
+        Assert.Contains("FiscalPeriodStatus", result.Data.Xml, StringComparison.Ordinal);
+        Assert.Contains("FY-2027-P01", result.Data.Xml, StringComparison.Ordinal);
+    }
+
     [Fact]
     public async Task BuildAsync_Countries_UsesStableSchemaAndForwardsApprovedFilters()
     {
@@ -179,15 +206,18 @@ public sealed class CrystalReportDataSourceTests
                 Options.Create(new CrystalReportStorageOptions())));
     }
 
-    private static CrystalReportDataSource CreateSource(IReferenceDataReportingSource referenceData) =>
+    private static CrystalReportDataSource CreateSource(
+        IReferenceDataReportingSource referenceData,
+        IAccountingReportingSource? accounting = null) =>
         new(
-        [
-            new CountriesCrystalReportDataProvider(referenceData),
-            new StatesCrystalReportDataProvider(referenceData),
-            new DistrictsCrystalReportDataProvider(referenceData),
-            new AddressTypesCrystalReportDataProvider(referenceData)
-        ],
-        Options.Create(new CrystalReportStorageOptions()));
+            [
+                new CountriesCrystalReportDataProvider(referenceData),
+                new StatesCrystalReportDataProvider(referenceData),
+                new DistrictsCrystalReportDataProvider(referenceData),
+                new AddressTypesCrystalReportDataProvider(referenceData),
+                new FiscalYearsCrystalReportDataProvider(accounting ?? new RecordingAccountingDataSource())
+            ],
+            Options.Create(new CrystalReportStorageOptions()));
 
     private sealed class StubProvider : ICrystalReportDataProvider
     {
@@ -298,6 +328,47 @@ public sealed class CrystalReportDataSourceTests
             return Task.FromResult<IReadOnlyList<ReferenceAddressTypeReportRow>>(rows
                 .Where(row => (nameAr is null || row.AddressTypeAr == nameAr) &&
                               (nameEn is null || row.AddressTypeEn == nameEn))
+                .Take(maximumRows)
+                .ToArray());
+        }
+    }
+
+    private sealed class RecordingAccountingDataSource : IAccountingReportingSource
+    {
+        public (string? Code, string? NameAr, string? NameEn)? Filter { get; private set; }
+
+        public Task<IReadOnlyList<AccountingFiscalYearReportRow>> GetFiscalYearsAsync(
+            string? code,
+            string? nameAr,
+            string? nameEn,
+            int maximumRows,
+            CancellationToken cancellationToken)
+        {
+            Filter = (code, nameAr, nameEn);
+            IReadOnlyList<AccountingFiscalYearReportRow> rows =
+            [
+                new(
+                    1,
+                    "FY-2027",
+                    "السنة المالية 2027",
+                    "Fiscal Year 2027",
+                    new DateOnly(2027, 1, 1),
+                    new DateOnly(2027, 12, 31),
+                    "Monthly",
+                    "Open",
+                    10,
+                    1,
+                    "FY-2027-P01",
+                    "الفترة 1",
+                    "Period 1",
+                    new DateOnly(2027, 1, 1),
+                    new DateOnly(2027, 1, 31),
+                    "Open")
+            ];
+            return Task.FromResult<IReadOnlyList<AccountingFiscalYearReportRow>>(rows
+                .Where(row => (code is null || row.FiscalYearCode == code)
+                              && (nameAr is null || row.FiscalYearAr == nameAr)
+                              && (nameEn is null || row.FiscalYearEn == nameEn))
                 .Take(maximumRows)
                 .ToArray());
         }

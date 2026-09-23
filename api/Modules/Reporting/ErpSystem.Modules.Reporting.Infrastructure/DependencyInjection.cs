@@ -39,6 +39,7 @@ public static class DependencyInjection
         services.AddScoped<ICrystalReportDataProvider, StatesCrystalReportDataProvider>();
         services.AddScoped<ICrystalReportDataProvider, DistrictsCrystalReportDataProvider>();
         services.AddScoped<ICrystalReportDataProvider, AddressTypesCrystalReportDataProvider>();
+        services.AddScoped<ICrystalReportDataProvider, FiscalYearsCrystalReportDataProvider>();
         services.AddScoped<ICrystalReportDataSource, CrystalReportDataSource>();
         services.AddScoped<ICrystalReportFileStorage, PrivateCrystalReportFileStorage>();
         services.AddScoped<ICurrentPermissionChecker, CurrentPermissionChecker>();

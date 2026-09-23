@@ -19,6 +19,7 @@ import DistrictsDataGrid from "./grid-view/DistrictsDataGrid";
 
 const DistrictsChartView = dynamic(() => import("./DistrictsChartView"));
 const ImportDistricts = dynamic(() => import("./import-data/ImportDistricts"));
+const DistrictReportPage = dynamic(() => import("../reports/pages/DistrictReportPage"));
 
 const sortableColumns = new Set<DistrictSortColumn>(["nameEn", "nameAr", "code", "state", "createdOn"]);
 
@@ -101,9 +102,13 @@ export default function DistrictsMultiView({
     setCurrentView("grid");
   }, [onRefresh]);
 
-  const availableViews: DistrictManagementView[] = permissions.canCreate
-    ? ["grid", "cards", "chart", "import"]
-    : ["grid", "cards", "chart"];
+  const availableViews: DistrictManagementView[] = [
+    "grid",
+    "cards",
+    "chart",
+    "report",
+    ...(permissions.canCreate ? ["import" as const] : []),
+  ];
   const supportsFilterBar = visibleView !== "import";
 
   return (
@@ -212,6 +217,7 @@ export default function DistrictsMultiView({
           />
         ) : null}
         {visibleView === "chart" ? <DistrictsChartView districts={districts} totalCount={totalCount} loading={loading} onAdd={permissions.canCreate ? onAdd : undefined} /> : null}
+        {visibleView === "report" ? <DistrictReportPage showFilterBar={isFilterBarVisible} /> : null}
         {visibleView === "import" && permissions.canCreate ? (
           <ImportDistricts onReconcile={handleImportReconcile} />
         ) : null}

@@ -76,6 +76,9 @@ Passing => `Architecture Ready`.
 - [ ] Offline/mobile conflict behavior decided where applicable.
 - [ ] Import/export/report/files/realtime/notifications decided.
 - [ ] Clients do not invent missing server business semantics.
+- [ ] For every slice marked `Decompose`, each child feature has its own
+      Screen/Workflow Contract and shared-component/reuse audit; a generic umbrella
+      renderer is not treated as journey coverage for materially different workflows.
 
 ## G4 — Delivery readiness
 
@@ -89,6 +92,11 @@ Passing => `Architecture Ready`.
 - [ ] Applicable privacy/commercial/legal unknowns are resolved, assumed explicitly, or centralized as blocking/non-blocking decisions.
 - [ ] No plan claim promises a fee, right, restriction, deletion/export control, retention rule, service limit, or third-party behavior that is unsupported by evidence or an explicit target decision.
 - [ ] No blocking Required-capability question remains.
+- [ ] The exact implementation slice has passed the Feature Decomposition Gate:
+      `Single feature` is justified, or every `Decompose` child has a stable Feature
+      ID, coherent scope boundary, completed Screen/Workflow Contract from
+      `FEATURE_DECOMPOSITION_TEMPLATE.md`, dependency, and independently testable
+      acceptance outcome.
 
 Passing G0–G4 => `Implementation Ready`.
 
@@ -106,6 +114,11 @@ of the following are true:
 - The plan states that the slice is execution-ready while later slices/release
   remain gated.
 - Phase 00 Implementation Preflight rechecks current runtime for drift before coding.
+- The slice's Feature Decomposition Gate is complete before runtime implementation;
+  new plans complete it before `New-FeatureDocumentation.ps1` scaffolding. A
+  pre-gate legacy plan may scaffold only for Phase 00 reconciliation and remains
+  runtime-blocked until the gate is complete. A decomposed slice is handed off one
+  child feature execution unit at a time.
 
 This does **not** make the overall plan `Implementation Ready`. G4 still must pass
 before the full capability/release receives that status. If an open G4 item could
@@ -149,5 +162,8 @@ All should be `yes`:
 9. Is external dependency failure behavior defined?
 10. Does every new state have a user journey or explicit exclusion?
 11. Does every completed customer-visible phase have accurate customer education/video material derived from verified runtime behavior?
+12. Does each implementation scaffold correspond to one coherent feature execution
+    unit, with decomposed child workflows carrying their own Screen/Workflow Contract
+    and reuse audit?
 
 Any `no` is a planning finding, not an implementation TODO.

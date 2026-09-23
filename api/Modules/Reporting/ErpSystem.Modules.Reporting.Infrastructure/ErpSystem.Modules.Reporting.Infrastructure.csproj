@@ -29,5 +29,6 @@
     <ProjectReference Include="..\..\..\BuildingBlocks\ErpSystem.BuildingBlocks.Context\ErpSystem.BuildingBlocks.Context.csproj" />
     <ProjectReference Include="..\..\Platform\ErpSystem.Modules.Platform.Contracts\ErpSystem.Modules.Platform.Contracts.csproj" />
     <ProjectReference Include="..\..\ReferenceData\ErpSystem.Modules.ReferenceData.Contracts\ErpSystem.Modules.ReferenceData.Contracts.csproj" />
+    <ProjectReference Include="..\..\Accounting\ErpSystem.Modules.Accounting.Contracts\ErpSystem.Modules.Accounting.Contracts.csproj" />
   </ItemGroup>
 </Project>

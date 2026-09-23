@@ -2,6 +2,10 @@
   "fiscalYears": {
     "title": "Fiscal Years",
     "totalLabel": "fiscal years",
+    "report": {
+      "catalogError": "The Fiscal Years report list could not be loaded. Add a published Fiscal Years report and retry.",
+      "unavailable": "No published Fiscal Years report is available. Publish one in Report Manager and grant Run access."
+    },
     "fields": {
       "code": "Code",
       "startDate": "Start date",
@@ -198,5 +202,109 @@
       "restoreTitle": "Restore currency?",
       "restoreDescription": "The currency will become available in active selectors again."
     }
+  },
+  "ledgerSetup": {
+    "subtitle": "Configure the company ledger foundation used by Accounting postings.",
+    "overview": { "open": "Open configuration" },
+    "search": "Search ledger setup records...",
+    "actions": { "add": "Add record", "resolve": "Preview resolution" },
+    "form": { "subtitle": "Changes are validated by the server and protected by row-version concurrency." },
+    "validation": { "required": "This field is required." },
+    "boolean": { "yes": "Yes", "no": "No" },
+    "status": { "active": "Active", "archived": "Archived" },
+    "fields": { "status": "Status", "code": "Code", "nameAr": "Arabic name", "nameEn": "English name", "functionalCurrencyId": "Functional currency", "primaryBookId": "Primary book", "accountHierarchyLevelId": "Hierarchy level", "parentAccountId": "Parent account", "allowPosting": "Allow posting", "manualPostingPolicy": "Manual posting policy", "currencyPolicy": "Currency policy", "specificCurrencyId": "Specific currency", "levelNumber": "Level number", "canPost": "Can post", "valueSource": "Value source", "dimensionDefinitionId": "Dimension", "requirement": "Requirement", "bookId": "Book", "categoryCode": "Category code", "numberPrefix": "Number prefix", "numberPadding": "Number padding", "resetPolicy": "Reset policy", "nextNumber": "Next number", "exchangeRateTypeId": "Exchange rate type", "fromCurrencyId": "From currency", "toCurrencyId": "To currency", "effectiveFrom": "Effective from", "effectiveTo": "Effective to", "version": "Version", "rate": "Rate", "purposeCode": "Purpose code", "sourceType": "Source type", "sourceReferenceId": "Source reference", "accountId": "Account", "contextType": "Context type", "contextReferenceId": "Context reference", "priority": "Priority", "onDate": "Resolution date" },
+    "companySettings": { "title": "Company accounting settings", "create": "Company accounting settings", "edit": "Company accounting settings", "view": "Company accounting settings" },
+    "accounts": {
+      "title": "Chart of accounts",
+      "subtitle": "Browse the account hierarchy and manage company posting accounts.",
+      "create": "Add account",
+      "edit": "Edit account",
+      "view": "Account details",
+      "actions": { "add": "Add account", "addChild": "Add sub-account" },
+      "views": { "label": "Chart of accounts views", "tree": "Hierarchy", "list": "Account list" },
+      "tree": { "rootTitle": "Chart of accounts", "emptyTitle": "Select an account", "emptyPrompt": "Choose an account in the hierarchy to load its current details." },
+      "detail": { "posting": "Posting account", "summary": "Summary account", "level": "Hierarchy level {{level}}" },
+      "fields": { "createdOn": "Created on" },
+      "search": {
+        "placeholder": "Search accounts...",
+        "treePlaceholder": "Search the account hierarchy...",
+        "column": "Search field",
+        "condition": "Condition",
+        "fields": { "all": "All fields", "code": "Code", "nameAr": "Arabic name", "nameEn": "English name" },
+        "operators": { "contains": "Contains", "doesNotContain": "Does not contain", "equals": "Equals", "doesNotEqual": "Does not equal", "startsWith": "Starts with", "endsWith": "Ends with" }
+      },
+      "recordStatus": { "active": "Active accounts", "archived": "Archived accounts", "all": "All accounts" },
+      "form": {
+        "addTitle": "Add account",
+        "editTitle": "Edit account",
+        "viewTitle": "Account details",
+        "subtitle": "Account rules are validated by Accounting and protected by row-version concurrency."
+      },
+      "messages": {
+        "forbidden": "You do not have permission to view the chart of accounts.",
+        "created": "Account {{code}} was created.",
+        "updated": "Account {{code}} was updated.",
+        "archived": "Account archived.",
+        "restored": "Account restored.",
+        "createFailed": "Unable to create the account.",
+        "updateFailed": "Unable to update the account.",
+        "archiveFailed": "Unable to archive the account.",
+        "restoreFailed": "Unable to restore the account.",
+        "listFailed": "Unable to load the account list.",
+        "treeFailed": "Unable to load the account hierarchy.",
+        "detailFailed": "Unable to load the current account details.",
+        "proposalFailed": "Unable to reserve the next suggested account code.",
+        "conflictReloaded": "The account changed on the server. Current data has been reloaded."
+      },
+      "confirm": {
+        "archiveTitle": "Archive this account?",
+        "archiveDescription": "The account will be removed from active account selectors.",
+        "restoreTitle": "Restore this account?",
+        "restoreDescription": "The account will become active again."
+      }
+    },
+    "hierarchyLevels": {
+      "title": "Account hierarchy levels",
+      "subtitle": "Define the ordered levels used to validate the chart of accounts hierarchy.",
+      "create": "Add hierarchy level",
+      "edit": "Edit hierarchy level",
+      "view": "Hierarchy level details",
+      "actions": { "add": "Add hierarchy level" },
+      "recordStatus": { "active": "Active levels", "archived": "Archived levels", "all": "All levels" },
+      "form": {
+        "addTitle": "Add hierarchy level",
+        "editTitle": "Edit hierarchy level",
+        "viewTitle": "Hierarchy level details",
+        "subtitle": "Level numbers and posting capability are validated by Accounting."
+      },
+      "messages": {
+        "forbidden": "You do not have permission to view account hierarchy levels.",
+        "created": "Hierarchy level created.",
+        "updated": "Hierarchy level updated.",
+        "archived": "Hierarchy level archived.",
+        "restored": "Hierarchy level restored.",
+        "createFailed": "Unable to create the hierarchy level.",
+        "updateFailed": "Unable to update the hierarchy level.",
+        "archiveFailed": "Unable to archive the hierarchy level.",
+        "restoreFailed": "Unable to restore the hierarchy level.",
+        "listFailed": "Unable to load hierarchy levels.",
+        "conflictReloaded": "The hierarchy level changed on the server. Current data has been reloaded."
+      },
+      "confirm": {
+        "archiveTitle": "Archive this hierarchy level?",
+        "archiveDescription": "The level will no longer be available for new account setup.",
+        "restoreTitle": "Restore this hierarchy level?",
+        "restoreDescription": "The level will become active again."
+      }
+    },
+    "dimensions": { "title": "Dimensions and account policies", "definitions": "Dimension definitions", "values": "Dimension values", "policies": "Account policies", "create": "Add dimension", "edit": "Edit dimension", "view": "Dimension details" },
+    "books": { "title": "Books", "create": "Add book", "edit": "Edit book", "view": "Book details" },
+    "journals": { "title": "Journal definitions", "create": "Add journal", "edit": "Edit journal", "view": "Journal details" },
+    "exchangeRates": { "title": "Exchange rates", "types": "Rate types", "rates": "Historical rates", "create": "Add exchange rate", "edit": "Edit exchange rate", "view": "Exchange rate details" },
+    "accountDetermination": { "title": "Account determination", "mappings": "Link accounts", "profiles": "Posting profiles", "preview": "Resolution preview", "previewHelp": "Test the effective account rule without creating a financial entry.", "create": "Add account mapping", "edit": "Edit account mapping", "view": "Account mapping details" },
+    "enums": { "manualPosting": { "allowed": "Allowed", "restricted": "Restricted", "blocked": "Blocked" }, "currencyPolicy": { "any": "Any currency", "functionalOnly": "Functional currency only", "specificCurrency": "Specific currency" }, "dimensionRequirement": { "optional": "Optional", "required": "Required", "forbidden": "Forbidden" }, "resetPolicy": { "never": "Never", "fiscalYear": "Every fiscal year" }, "company": "Company", "accountingOwned": "Accounting owned" },
+    "resolutionStatus": { "1": "Resolved", "2": "No matching rule", "3": "Ambiguous rules" },
+    "messages": { "saved": "Ledger setup record saved.", "saveFailed": "Unable to save the ledger setup record.", "archived": "Ledger setup record archived.", "restored": "Ledger setup record restored.", "loadFailed": "Unable to load ledger setup records." },
+    "confirm": { "archiveTitle": "Archive this record?", "archiveDescription": "The record will be removed from active setup lists.", "restoreTitle": "Restore this record?", "restoreDescription": "The record will become active again." }
   }
 }

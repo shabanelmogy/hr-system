@@ -44,7 +44,7 @@ realtime, notification, localization, report, or Import integration is reachable
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
 | master | 4 | `640408799d07c9939468c39e65e9d2601daa6e89d7896f24b13a924f4ecbb04d` |
-| master | 5 | `d1ce57b8f419de334ddea6c04f0bb927922654de3f2fc5f6093e5d8c40f83495` |
+| master | 5 | `fe352d130d6968ce2c0d841de263168a59f5afb2b03c3374a8eaddfaf76c3c18` |
 | master | 6 | `b7fb453c6be690cf10f98e85664f30fb55fb590e628b0f8a0435f54cf67058ac` |
 | master | 7 | `8c0ba157ab3e6ca7bfa97bd23bdd022523f69dc7ac4386e25462b7ad667ba74b` |
 | master | 9 | `a29964faa102da876f190755e099d8b50d1ee016ceee39ae475ca4e76dbb5a5e` |
@@ -55,6 +55,6 @@ realtime, notification, localization, report, or Import integration is reachable
 | web | 10 | `dfca66fe993ca501dfd506da6673879ea9c49d5f9fa8fcd1050486f4346ffaeb` |
 | web | 13 | `5334052d6a67938009059c5948c62f0e867f48f750bb93c0ccf4e38f525c6078` |
 | mobile | 2 | `21269af699d3bfad64b852c262d640017d620ac4165fa112561ef66626153552` |
-| mobile | 11 | `009e87b66a93a0eb9b07c721d86c20edcf0522a8bbd8bc7e79a613c9a8ce4956` |
+| mobile | 11 | `903c9deb57b7630a853b6020cf60454eee46f7984414d28246a92a7e2d67e85f` |
 | mobile | 12 | `0f0448cb6bfbd6c14def633a07bb9148564323efd7e372d4f678a2a9f8d41153` |
 | mobile | 15 | `7fd51151939907e42eeda66b24dcbcefc87b13a2563a2e8ee45715b98f02b0fb` |

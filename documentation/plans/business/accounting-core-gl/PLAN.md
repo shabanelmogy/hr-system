@@ -21,6 +21,7 @@
 - Approved pre-plan specification: `SPEC_SUMMARY.md`
 - Decision log: `DECISIONS.md`
 - Research notes: `RESEARCH.md`
+- Slice 1 execution decomposition: `SLICE-01-LEDGER-SETUP-EXECUTION.md`
 
 Current behavior is proved only by `EVIDENCE.md`. This plan defines target behavior.
 
@@ -259,6 +260,7 @@ late-post/reopen actions. It does not rebuild the existing Fiscal Years slice.
 | GL-021 | Contact mapping | Resolve party purpose | Specific party override → ContactGroup+Role+Purpose → role/company default | Missing/ambiguous diagnostic | None |
 | GL-022 | Source posting contract | Future source request | Typed purpose/components + debit/credit/context; no GL AccountId accepted | Contract validation | None |
 | GL-023 | Posted void | Posted journal | Exact reversal of original accounts/dimensions/currencies; original unchanged | Validation/period error | New linked journal + audit |
+| GL-024 | Propose Account code | Current company | Suggest the next company-wide non-hierarchical `ACC-####` suffix across active + archived reserved codes; suggestion remains user-editable and is never hierarchy authority | Duplicate create may conflict under concurrency | No reservation; refetch proposal after conflict |
 
 ## 8. Edge cases and validation
 
@@ -581,6 +583,32 @@ jurisdiction-dependent production launch and does not block Slice 1 execution.
 
 ## 23. Implementation phases
 
+### Feature Decomposition Gate
+
+Slice 1 contains materially different setup workflows, so it is explicitly
+`Decompose`. Each child has its own Screen/Workflow Contract and independent
+acceptance boundary. `accounting-ledger-setup` remains the integration/history
+umbrella and does not replace these child contracts.
+
+| Slice | Decision | Feature ID | Screen/Workflow Contract | Boundary / independent acceptance |
+| --- | --- | --- | --- | --- |
+| Slice 1 — Ledger setup spine | Decompose | `ledger-setup-currency` | `documentation/plans/business/accounting-core-gl/decomposition/ledger-setup-currency.md` | Accounting-owned Currency master, lifecycle and active catalog/consumer lookup are independently verified |
+| Slice 1 — Ledger setup spine | Decompose | `ledger-setup-coa-hierarchy` | `documentation/plans/business/accounting-core-gl/decomposition/ledger-setup-coa-hierarchy.md` | Hierarchy Levels + Account tree/detail/lifecycle + proposed editable code are independently verified |
+| Slice 1 — Ledger setup spine | Decompose | `ledger-setup-dimensions` | `documentation/plans/business/accounting-core-gl/decomposition/ledger-setup-dimensions.md` | Dimension definitions/values and account-dimension policy workflow are independently verified |
+| Slice 1 — Ledger setup spine | Decompose | `ledger-setup-books-journals` | `documentation/plans/business/accounting-core-gl/decomposition/ledger-setup-books-journals.md` | Book and Journal definition/numbering setup are independently verified without JournalEntry runtime |
+| Slice 1 — Ledger setup spine | Decompose | `ledger-setup-company-settings` | `documentation/plans/business/accounting-core-gl/decomposition/ledger-setup-company-settings.md` | Functional Currency + Primary Book singleton configuration is independently verified |
+| Slice 1 — Ledger setup spine | Decompose | `ledger-setup-exchange-rates` | `documentation/plans/business/accounting-core-gl/decomposition/ledger-setup-exchange-rates.md` | Exchange Rate Types + historical/versioned rate series are independently verified |
+| Slice 1 — Ledger setup spine | Decompose | `ledger-setup-link-accounts` | `documentation/plans/business/accounting-core-gl/decomposition/ledger-setup-link-accounts.md` | Direct typed/effective purpose mappings with truthful source capabilities are independently verified |
+| Slice 1 — Ledger setup spine | Decompose | `ledger-setup-posting-profiles` | `documentation/plans/business/accounting-core-gl/decomposition/ledger-setup-posting-profiles.md` | Posting Profile lifecycle + deterministic resolve-preview diagnostics are independently verified |
+| Slice 1 — Ledger setup spine | Decompose | `ledger-setup-integration-verification` | `documentation/plans/business/accounting-core-gl/decomposition/ledger-setup-integration-verification.md` | Cross-child navigation/permissions/i18n/client integration and umbrella Phase 06 verification are independently reconciled |
+
+**Slice 1 decomposition contract gate: Closed — reviewed 2026-09-22.** All nine
+child Screen/Workflow Contracts exist under this plan's `decomposition/` folder and
+execution is authorized only in dependency order: Currency → COA/Hierarchy →
+Dimensions → Books/Journals → Company Settings → Exchange Rates → Link Accounts →
+Posting Profiles → Integration/Verification. Existing umbrella runtime is evidence
+to reconcile; it does not count as completion of a child package by itself.
+
 Implementation is vertical across API/Web/Mobile/tests.
 
 | Phase | Goal | Dependencies | Deliverables | Entry gate | Exit gate |
@@ -592,6 +620,25 @@ Implementation is vertical across API/Web/Mobile/tests.
 | Slice 4 — Hardening & release | Performance/observability/migration/recovery/smoke | 1–3 | Scale evidence + release gates | Workload agreed | G0–G4 green for release scope |
 
 Later subledger plans start only after Slice 3 proves the backbone.
+
+### Slice 1 child execution packages
+
+Slice 1 remains one business slice and one `accounting-ledger-setup` umbrella for
+integration/history evidence, but implementation is decomposed into focused child
+packages. The canonical package contracts, Screen Contracts, dependency gates and
+exit criteria are defined in `SLICE-01-LEDGER-SETUP-EXECUTION.md`.
+
+The default execution order is:
+
+`1A Currency → 1B COA/Hierarchy → 1C Dimensions → 1D Books/Journals →
+1E Company Settings → 1F Exchange Rates → 1G Link Accounts → 1H Posting Profiles
+→ 1V Integration/Verification`.
+
+Work one child at a time by default. Each child owns typed transport/API contracts
+and a specific Web/Mobile Screen Contract. The current generic Ledger Setup client
+record/renderer is implementation evidence to refactor, not the target architecture.
+Slice 1 closes only when `1V` reconciles all child contracts and Phase 06 records
+`Verified`.
 
 ### Post-implementation verification and customer education
 
@@ -614,6 +661,7 @@ Later subledger plans start only after Slice 3 proves the backbone.
 - [x] Security/company scope server-authoritative.
 - [x] Target persistence/API/integration design explicit.
 - [x] Web/Mobile R/D/E + reusable-component mappings explicit.
+- [x] Slice 1 child execution packages, dependency order and Screen Contract gates explicit.
 - [x] Test matrix and rollout/recovery defined.
 - [x] Privacy/commercial/legal applicability reviewed.
 - [x] DEC-008 resolved for Book/Currency V1 schema.
@@ -657,11 +705,13 @@ evidence.
 
 ## 25. Handoff
 
-Begin implementation with Slice 1 only. Extend
-the existing Accounting module/Fiscal Years slice; do not create parallel services,
-schemas, ownership or UI primitives. Deliver each slice end to end through API,
-Web, Mobile and tests. Preserve one central posting engine, immutable history,
-idempotency, company isolation, SoD and period authority.
+Continue Slice 1 through the child packages in
+`SLICE-01-LEDGER-SETUP-EXECUTION.md`, one child at a time by default. Extend the
+existing Accounting module/Fiscal Years slice; do not create parallel services,
+schemas, ownership or UI primitives. Preserve the umbrella
+`accounting-ledger-setup` package for integration/history evidence and final Phase 06
+reconciliation. Preserve one central posting engine, immutable history, idempotency,
+company isolation, SoD and period authority.
 
 Execution must use the plan-aware feature workflow: Phase 00 Implementation
 Preflight → Phases 01–05 implementation → Phase 06 Verification & Acceptance.

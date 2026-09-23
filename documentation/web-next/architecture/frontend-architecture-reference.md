@@ -238,7 +238,7 @@ Organizational Structure, Users, Roles, Invitations, Crystal Reports, and File
 Manager. Fiscal Years is the reference example: its form, React Hook Form/Zod
 path, and MUI date-picker runtime are not part of route entry and are first
 loaded when Add/Edit/View is opened. The measured production First Load for
-`/finance/fiscal-years` after this isolation is about `2.78 MiB`, down from the
+`/finance/ledger-setup/fiscal-years` after this isolation is about `2.78 MiB`, down from the
 previous documented baseline of about `3.76 MiB`. Treat that number as a point-in-time
 measurement, not a permanent budget.
 
@@ -545,7 +545,7 @@ Measured before -> after:
 | `/profile` | ~3.09 MiB | **2.09 MiB** |
 | `/appointments` | ~3.02 MiB | **2.77 MiB** |
 | `/recruitment` | ~2.96 MiB | **1.86 MiB** |
-| `/finance/fiscal-years` | ~2.78 MiB | **2.32 MiB** |
+| `/finance/ledger-setup/fiscal-years` | ~2.78 MiB | **2.32 MiB** |
 | Largest measured First Load route | ~3.09 MiB | **2.77 MiB** |
 
 The emitted JavaScript set changed from `230` chunks / `23.36 MiB` to `263`
@@ -579,7 +579,7 @@ work should be evidence-driven feature tuning rather than reopening these shared
 bootstrap decisions.
 
 The authenticated browser smoke used the built-in development Admin flow and
-verified `login -> dashboard -> /finance/fiscal-years` with real client
+verified `login -> dashboard -> /finance/ledger-setup/fiscal-years` with real client
 hydration. The final run had no console/runtime errors, session and realtime-token
 requests returned `200`, and SignalR negotiated through the same-origin BFF and
 started directly on Long Polling. The super-admin smoke separately verified

@@ -160,6 +160,18 @@
       "purpose": "District report schema/filter evidence"
     },
     {
+      "id": "global-crystal-report-controller",
+      "layer": "reporting-api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Presentation/Features/Analytics/CrystalReports/V1/GlobalCrystalReportsController.cs",
+      "purpose": "Super Admin-only deployment-owned global geography catalog and hash-checked render boundary"
+    },
+    {
+      "id": "global-crystal-report-tests",
+      "layer": "api-test",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/GlobalCrystalReportQueryTests.cs",
+      "purpose": "Global catalog allow-list, source-hash concurrency, and unsupported-entity coverage"
+    },
+    {
       "id": "crystal-runtime-profile",
       "layer": "api",
       "path": "api/CrystalReportGeneratorApi/Runtime/Rendering/CrystalReportProfileRegistry.cs",
@@ -340,22 +352,10 @@
       "purpose": "Zod boundary contract"
     },
     {
-      "id": "mobile-report-api",
-      "layer": "mobile-react",
-      "path": "mobile-react/src/modules/reference-data/geography/districts/presentation/reporting/district-report-api.ts",
-      "purpose": "District managed-report filters, localized names, PDF validation, cache, and cleanup"
-    },
-    {
-      "id": "mobile-report-query",
-      "layer": "mobile-react",
-      "path": "mobile-react/src/modules/reference-data/geography/districts/presentation/queries/use-district-reports.ts",
-      "purpose": "Stable districts published-catalog query"
-    },
-    {
       "id": "mobile-report-view",
       "layer": "mobile-react",
       "path": "mobile-react/src/modules/reference-data/geography/districts/presentation/components/DistrictReportView.tsx",
-      "purpose": "Permission-aware managed catalog, bounded filters, PDF open/print/share states"
+      "purpose": "Super Admin global managed catalog, bounded filters, PDF open/print/share states"
     },
     {
       "id": "mobile-shared-report-api",

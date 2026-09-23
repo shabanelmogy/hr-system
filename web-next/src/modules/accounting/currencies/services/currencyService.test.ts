@@ -44,4 +44,45 @@ describe("currencyService", () => {
     expect(remove).toHaveBeenCalledWith(apiRoutes.currencies.archive(7), { rowVersion: "AQ==" });
     expect(post).toHaveBeenCalledWith(apiRoutes.currencies.restore(7), { rowVersion: "Ag==" });
   });
+
+  it("passes the complete server-managed page criteria without client-side reinterpretation", async () => {
+    const query = {
+      pageNumber: 3,
+      pageSize: 25,
+      search: " usd ",
+      searchField: "currencyCode" as const,
+      searchOperator: "startsWith" as const,
+      recordStatus: "archived" as const,
+      sortBy: "createdOn" as const,
+      sortDirection: "desc" as const,
+    };
+    get.mockResolvedValue({ items: [], metaData: { totalCount: 0 } });
+
+    await currencyService.getPage(query);
+
+    expect(get).toHaveBeenCalledWith(apiRoutes.currencies.page, query);
+  });
+
+  it("normalizes update fields while preserving the authoritative RowVersion", async () => {
+    put.mockResolvedValue({ id: 7 });
+
+    await currencyService.update({
+      id: 7,
+      request: {
+        currencyCode: " usd ",
+        nameEn: " US Dollar ",
+        nameAr: " دولار أمريكي ",
+        symbol: " $ ",
+      },
+      rowVersion: "AQIDBA==",
+    });
+
+    expect(put).toHaveBeenCalledWith(apiRoutes.currencies.update(7), {
+      currencyCode: "USD",
+      nameEn: "US Dollar",
+      nameAr: "دولار أمريكي",
+      symbol: "$",
+      rowVersion: "AQIDBA==",
+    });
+  });
 });

@@ -47,7 +47,16 @@ public sealed record AccountRequest(
 
 public sealed record AccountLookupResponse(int Id, string Code, string NameAr, string NameEn, bool AllowPosting);
 public sealed record AccountTreeNodeResponse(int Id, string Code, string NameAr, string NameEn, bool AllowPosting, IReadOnlyList<AccountTreeNodeResponse> Children);
-public sealed record AccountListQuery(int PageNumber = 1, int PageSize = 50, string? Search = null, string RecordStatus = "active");
+public sealed record AccountCodeProposalResponse(string Code);
+public sealed record AccountListQuery(
+    int PageNumber = 1,
+    int PageSize = 50,
+    string? Search = null,
+    string SearchField = "all",
+    string SearchOperator = "contains",
+    string RecordStatus = "active",
+    string SortBy = "code",
+    string SortDirection = "asc");
 
 public sealed record DimensionDefinitionResponse(int Id, string Code, string NameAr, string NameEn, DimensionValueSourceKind ValueSource, bool IsDeleted, string RowVersion);
 public sealed record DimensionDefinitionRequest(string Code, string NameAr, string NameEn, DimensionValueSourceKind ValueSource, string? RowVersion);

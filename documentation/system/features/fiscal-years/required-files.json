@@ -215,7 +215,7 @@
     {
       "id": "web-route",
       "layer": "web-next",
-      "path": "web-next/src/app/(main)/(modules)/(accounting)/finance/fiscal-years/page.tsx",
+      "path": "web-next/src/app/(main)/(modules)/(accounting)/finance/ledger-setup/fiscal-years/page.tsx",
       "purpose": "Thin App Router entry"
     },
     {
@@ -335,7 +335,7 @@
     {
       "id": "mobile-route",
       "layer": "mobile-react",
-      "path": "mobile-react/app/(main)/finance/fiscal-years.tsx",
+      "path": "mobile-react/app/(main)/finance/ledger-setup/fiscal-years.tsx",
       "purpose": "Thin guarded Expo route"
     },
     {

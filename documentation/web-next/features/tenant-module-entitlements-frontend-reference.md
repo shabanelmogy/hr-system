@@ -69,7 +69,7 @@ catalog; the Platform API is authoritative.
 
 When the current route belongs to a registered business module, the sidebar is
 scoped to that module's permission-filtered navigation. For example,
-/finance/fiscal-years shows Accounting navigation rather than every entitled
+/finance/ledger-setup/fiscal-years shows Accounting navigation rather than every entitled
 module. The top-bar search remains cross-module.
 
 ## 10. Selection integrity

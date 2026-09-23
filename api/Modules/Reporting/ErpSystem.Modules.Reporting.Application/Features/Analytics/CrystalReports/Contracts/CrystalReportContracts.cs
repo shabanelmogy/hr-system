@@ -75,6 +75,31 @@ public sealed record CrystalReportRenderRequest(
     string Language,
     IReadOnlyDictionary<string, string?>? Filters);
 
+/// <summary>
+/// Read-only deployment report exposed to platform super administrators for
+/// global Reference Data. The source hash is returned as the concurrency token
+/// and must be supplied when rendering so a changed RPT is never run silently.
+/// </summary>
+public sealed record GlobalCrystalReportListItemResponse(
+    string Id,
+    string EntityKey,
+    string ReportKey,
+    string DisplayName,
+    string? SummaryTitle,
+    string? SummarySubject,
+    string? Description,
+    int? CurrentVersionNumber,
+    bool IsPublished,
+    bool IsArchived,
+    string RowVersion,
+    DateTime? UpdatedOn);
+
+public sealed record GlobalCrystalReportRenderRequest(
+    string EntityKey,
+    string ExpectedSha256,
+    string Language,
+    IReadOnlyDictionary<string, string?>? Filters);
+
 public sealed record CrystalReportRuntimeRequest(
     string EntityKey,
     string ReportKey,

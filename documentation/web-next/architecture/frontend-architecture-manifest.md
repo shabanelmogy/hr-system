@@ -11,7 +11,7 @@ Run `npm run generate:architecture-manifest` after an intentional ownership/rout
 | --- | --- | --- | --- |
 | platform | `web-next/src/platform` | `(platform)` | shared |
 | hr | `web-next/src/modules/hr` | `(hr)` | accounting, platform, reporting, shared |
-| accounting | `web-next/src/modules/accounting` | `(accounting)` | platform, shared |
+| accounting | `web-next/src/modules/accounting` | `(accounting)` | platform, reporting, shared |
 | crm | `web-next/src/modules/crm` | `(crm)` | platform, shared |
 | reference-data | `web-next/src/modules/reference-data` | `(reference-data)` | platform, reporting, shared |
 | reporting | `web-next/src/modules/reporting` | `(reporting)` | platform, shared |
@@ -38,7 +38,8 @@ These routes are explicit Phase 13 regression contracts, not just examples in pr
 | --- | --- | --- |
 | `/administration/crystal-reports` | reporting | `web-next/src/app/(main)/administration/(reporting)/crystal-reports/page.tsx` |
 | `/appointments` | crm | `web-next/src/app/(main)/(modules)/(crm)/appointments/page.tsx` |
-| `/finance/fiscal-years` | accounting | `web-next/src/app/(main)/(modules)/(accounting)/finance/fiscal-years/page.tsx` |
+| `/finance/ledger-setup/currencies` | accounting | `web-next/src/app/(main)/(modules)/(accounting)/finance/ledger-setup/currencies/page.tsx` |
+| `/finance/ledger-setup/fiscal-years` | accounting | `web-next/src/app/(main)/(modules)/(accounting)/finance/ledger-setup/fiscal-years/page.tsx` |
 | `/super-admin/geography/countries` | reference-data | `web-next/src/app/(main)/super-admin/(reference-data)/geography/countries/page.tsx` |
 | `/super-admin/geography/districts` | reference-data | `web-next/src/app/(main)/super-admin/(reference-data)/geography/districts/page.tsx` |
 | `/super-admin/geography/states` | reference-data | `web-next/src/app/(main)/super-admin/(reference-data)/geography/states/page.tsx` |
@@ -70,7 +71,6 @@ These routes are explicit Phase 13 regression contracts, not just examples in pr
 | `/basic-data/address-types` | reference-data | `web-next/src/app/(main)/basic-data/(reference-data)/address-types/page.tsx` |
 | `/basic-data/organizational-structure/branches` | hr | `web-next/src/app/(main)/basic-data/organizational-structure/(hr)/branches/page.tsx` |
 | `/basic-data/organizational-structure/cost-centers` | hr | `web-next/src/app/(main)/basic-data/organizational-structure/(hr)/cost-centers/page.tsx` |
-| `/basic-data/organizational-structure/currencies` | hr | `web-next/src/app/(main)/basic-data/organizational-structure/(hr)/currencies/page.tsx` |
 | `/basic-data/organizational-structure/departments` | hr | `web-next/src/app/(main)/basic-data/organizational-structure/(hr)/departments/page.tsx` |
 | `/basic-data/organizational-structure/divisions` | hr | `web-next/src/app/(main)/basic-data/organizational-structure/(hr)/divisions/page.tsx` |
 | `/basic-data/organizational-structure/geographic-scope` | platform | `web-next/src/app/(main)/basic-data/organizational-structure/(platform)/geographic-scope/page.tsx` |
@@ -80,7 +80,17 @@ These routes are explicit Phase 13 regression contracts, not just examples in pr
 | `/basic-data/organizational-structure/positions` | hr | `web-next/src/app/(main)/basic-data/organizational-structure/(hr)/positions/page.tsx` |
 | `/files` | platform | `web-next/src/app/(main)/(platform)/files/page.tsx` |
 | `/files/view/[...fileParams]` | platform | `web-next/src/app/(main)/(platform)/files/view/[...fileParams]/page.tsx` |
-| `/finance/fiscal-years` | accounting | `web-next/src/app/(main)/(modules)/(accounting)/finance/fiscal-years/page.tsx` |
+| `/finance/ledger-setup` | accounting | `web-next/src/app/(main)/(modules)/(accounting)/finance/ledger-setup/page.tsx` |
+| `/finance/ledger-setup/account-determination` | accounting | `web-next/src/app/(main)/(modules)/(accounting)/finance/ledger-setup/account-determination/page.tsx` |
+| `/finance/ledger-setup/accounts` | accounting | `web-next/src/app/(main)/(modules)/(accounting)/finance/ledger-setup/accounts/page.tsx` |
+| `/finance/ledger-setup/books` | accounting | `web-next/src/app/(main)/(modules)/(accounting)/finance/ledger-setup/books/page.tsx` |
+| `/finance/ledger-setup/company-settings` | accounting | `web-next/src/app/(main)/(modules)/(accounting)/finance/ledger-setup/company-settings/page.tsx` |
+| `/finance/ledger-setup/currencies` | accounting | `web-next/src/app/(main)/(modules)/(accounting)/finance/ledger-setup/currencies/page.tsx` |
+| `/finance/ledger-setup/dimensions` | accounting | `web-next/src/app/(main)/(modules)/(accounting)/finance/ledger-setup/dimensions/page.tsx` |
+| `/finance/ledger-setup/exchange-rates` | accounting | `web-next/src/app/(main)/(modules)/(accounting)/finance/ledger-setup/exchange-rates/page.tsx` |
+| `/finance/ledger-setup/fiscal-years` | accounting | `web-next/src/app/(main)/(modules)/(accounting)/finance/ledger-setup/fiscal-years/page.tsx` |
+| `/finance/ledger-setup/hierarchy-levels` | accounting | `web-next/src/app/(main)/(modules)/(accounting)/finance/ledger-setup/hierarchy-levels/page.tsx` |
+| `/finance/ledger-setup/journals` | accounting | `web-next/src/app/(main)/(modules)/(accounting)/finance/ledger-setup/journals/page.tsx` |
 | `/profile` | platform | `web-next/src/app/(main)/(platform)/profile/page.tsx` |
 | `/recruitment` | hr | `web-next/src/app/(main)/(modules)/(hr)/recruitment/page.tsx` |
 | `/route-unavailable` | shell | `web-next/src/app/(main)/(shell)/route-unavailable/page.tsx` |

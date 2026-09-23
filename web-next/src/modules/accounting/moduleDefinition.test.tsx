@@ -15,24 +15,33 @@ describe("Accounting frontend module definition", () => {
     registerFrontendModule(accountingModuleDefinition);
   });
 
-  it("owns the backend fiscal-years submodule", () => {
+  it("owns Fiscal Years as the first Ledger Setup capability", () => {
     expect(accountingModuleDefinition.code).toBe("acc");
-    expect(accountingModuleDefinition.submodules).toHaveLength(2);
+    expect(accountingModuleDefinition.submodules).toHaveLength(1);
     expect(accountingModuleDefinition.submodules[0]).toMatchObject({
-      code: "fiscal-years",
-      requiredPermissions: [permissions.ViewFiscalYears],
-      entryCandidates: [appRoutes.modules.accounting.fiscalYears],
-      routePrefixes: [appRoutes.modules.accounting.fiscalYears],
-    });
-    expect(requiredModuleForPath(appRoutes.modules.accounting.fiscalYears)).toEqual({
-      moduleCode: "acc",
-      submoduleCode: "fiscal-years",
-    });
-    expect(accountingModuleDefinition.submodules[1]).toMatchObject({
       code: "ledger-setup",
-      requiredPermissions: [permissions.ViewAccountingSetup],
-      entryCandidates: [appRoutes.modules.accounting.ledgerSetup.currencies],
-      routePrefixes: [appRoutes.modules.accounting.ledgerSetup.currencies],
+      requiredPermissions: [],
+      entryCandidates: [
+        appRoutes.modules.accounting.ledgerSetup.index,
+        appRoutes.modules.accounting.ledgerSetup.fiscalYears,
+        appRoutes.modules.accounting.ledgerSetup.accountingSettings,
+        appRoutes.modules.accounting.ledgerSetup.currencies,
+        appRoutes.modules.accounting.ledgerSetup.accounts,
+        appRoutes.modules.accounting.ledgerSetup.hierarchyLevels,
+        appRoutes.modules.accounting.ledgerSetup.dimensions,
+        appRoutes.modules.accounting.ledgerSetup.books,
+        appRoutes.modules.accounting.ledgerSetup.journals,
+        appRoutes.modules.accounting.ledgerSetup.exchangeRates,
+        appRoutes.modules.accounting.ledgerSetup.accountDetermination,
+      ],
+      routePrefixes: [appRoutes.modules.accounting.ledgerSetup.index],
+    });
+    expect(accountingModuleDefinition.submodules[0]?.navigation
+      ?.flatMap((section) => section.entries)
+      .map((entry) => entry.path)).toContain(appRoutes.modules.accounting.ledgerSetup.fiscalYears);
+    expect(requiredModuleForPath(appRoutes.modules.accounting.ledgerSetup.fiscalYears)).toEqual({
+      moduleCode: "acc",
+      submoduleCode: "ledger-setup",
     });
     expect(requiredModuleForPath(appRoutes.modules.accounting.ledgerSetup.currencies)).toEqual({
       moduleCode: "acc",

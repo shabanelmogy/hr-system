@@ -7,6 +7,17 @@ namespace ErpSystem.Modules.Reporting.Application.Features.Analytics.CrystalRepo
 public sealed record GetPublishedCrystalReportsQuery(string? EntityKey, string? Search)
     : IQuery<IReadOnlyList<CrystalReportListItemResponse>>;
 
+public sealed record GetGlobalCrystalReportsQuery(string EntityKey)
+    : IQuery<Result<IReadOnlyList<GlobalCrystalReportListItemResponse>>>;
+
+public sealed record RenderGlobalCrystalReportQuery(
+    string SourceId,
+    string EntityKey,
+    string ExpectedSha256,
+    string Language,
+    IReadOnlyDictionary<string, string?>? Filters)
+    : IQuery<Result<CrystalReportDownload>>;
+
 public sealed record GetCrystalReportsManagementQuery(
     string? EntityKey, string? Search, string? Status, int Page, int PageSize)
     : IQuery<CrystalReportPageResponse>;
@@ -83,7 +94,7 @@ public sealed class RenderCrystalReportQueryValidator : AbstractValidator<Render
             .WithMessage("Report filters must contain at most 16 safe keys with values up to 200 characters.");
     }
 
-    private static bool AreValidFilters(IReadOnlyDictionary<string, string?>? filters)
+    internal static bool AreValidFilters(IReadOnlyDictionary<string, string?>? filters)
     {
         if (filters is null)
             return true;
@@ -93,5 +104,37 @@ public sealed class RenderCrystalReportQueryValidator : AbstractValidator<Render
         return filters.All(item =>
             CrystalReportRules.IsValidKey(item.Key) &&
             (item.Value is null || item.Value.Length <= 200));
+    }
+}
+
+public sealed class GetGlobalCrystalReportsQueryValidator
+    : AbstractValidator<GetGlobalCrystalReportsQuery>
+{
+    public GetGlobalCrystalReportsQueryValidator()
+    {
+        RuleFor(x => x.EntityKey)
+            .NotEmpty()
+            .MaximumLength(64)
+            .Must(CrystalReportRules.IsValidKey);
+    }
+}
+
+public sealed class RenderGlobalCrystalReportQueryValidator
+    : AbstractValidator<RenderGlobalCrystalReportQuery>
+{
+    public RenderGlobalCrystalReportQueryValidator()
+    {
+        RuleFor(x => x.SourceId).Matches("^[0-9a-f]{64}$");
+        RuleFor(x => x.EntityKey)
+            .NotEmpty()
+            .MaximumLength(64)
+            .Must(CrystalReportRules.IsValidKey);
+        RuleFor(x => x.ExpectedSha256).Matches("^[0-9a-f]{64}$");
+        RuleFor(x => x.Language)
+            .Must(value => value is "ar" or "en")
+            .WithMessage("Language must be ar or en.");
+        RuleFor(x => x.Filters)
+            .Must(RenderCrystalReportQueryValidator.AreValidFilters)
+            .WithMessage("Report filters must contain at most 16 safe keys with values up to 200 characters.");
     }
 }

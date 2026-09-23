@@ -1,6 +1,6 @@
 # Accounting Ledger Setup — Expo Implementation Contract
 
-Status: **Phase 00 target contract; screens below are not current runtime claims.**
+Status: **Client implementation evidence exists; Phase 06 live journey verification remains required.**
 
 ## 1. Feature boundary
 
@@ -9,11 +9,19 @@ routes under the existing Finance route group. Fiscal Years is the same-module
 reference for layered transport/domain/presentation boundaries, not a business
 template.
 
+Future Slice 1 work follows the child Screen Contracts in
+`documentation/plans/business/accounting-core-gl/SLICE-01-LEDGER-SETUP-EXECUTION.md`.
+The current generic Ledger Setup record/renderer is implementation evidence to
+refactor. Each child owns typed domain/remote schemas, repository/use-case/query
+boundaries and focused screen composition.
+
 ## 2. Route and module registration
 
 Extend `ROUTES.finance`, the Accounting module definition and RBAC route manifest
-for Accounts plus Accounting Setup screens. Do not introduce another module code or
-parallel Finance root.
+for Accounts plus Accounting Setup screens. The user-facing Finance entry is one
+Ledger Setup launcher; Fiscal Years and Ledger Setup remain separate technical
+submodules to preserve server entitlement compatibility. Do not introduce another
+module code or parallel Finance root.
 
 ## 3. Domain and runtime schemas
 
@@ -85,10 +93,15 @@ keyboard handling and phone/tablet layouts use shared design-system behavior.
 
 ## 14. Verification
 
-Required evidence: typecheck, lint/architecture checks, runtime schema/API tests,
-route/RBAC tests, tree/form/list tests, currency-consumer cutover tests, permission
-and read-only tests, EN/AR/RTL review, phone/tablet interaction and supported Expo
-platform build/export gates as applicable.
+Source evidence includes server-page state for paged setup lists, full active
+account hierarchy from `/accounts/tree`, and detail fetch before tree edits so
+RowVersion is current. Dimension selector options traverse each server page
+to avoid silently hiding definitions beyond 500. Cards, table and tree expose direct archive/restore
+actions; lookup search must actually filter the shown options. Specific currency
+is required only when the account currency policy selects it, and switching
+away sends null. Phase 06 must still collect live phone/tablet creation,
+editing, view, permissions, read-only, EN/AR/RTL and API-backed evidence.
+Passing static typecheck and focused tests is not a substitute for this audit.
 
 ## 15. Deferred and handoff
 
@@ -96,4 +109,3 @@ Deferred/Excluded: offline writes, setup import, bulk actions, notifications,
 realtime correctness, JournalEntry runtime, posting, GL/TB and Month Close. Phase 06
 must verify actual Mobile behavior against this contract before Phase 07 customer
 education can describe it.
-

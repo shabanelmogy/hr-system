@@ -1,3 +1,6 @@
+using System.Linq.Expressions;
+using System.Numerics;
+using ErpSystem.BuildingBlocks.Application.Common.Paginations;
 using ErpSystem.BuildingBlocks.Domain.Entities;
 using ErpSystem.Modules.Accounting.Application.Features.Finance.LedgerSetup.Abstractions;
 using ErpSystem.Modules.Accounting.Application.Features.Finance.LedgerSetup.Contracts;
@@ -52,19 +55,42 @@ public sealed class AccountHierarchyLevelStore(AccountingDbContext context) : IA
 
 public sealed class AccountReadStore(AccountingDbContext context) : IAccountReadStore
 {
-    public async Task<IReadOnlyList<AccountResponse>> ListAsync(AccountListQuery query, CancellationToken cancellationToken)
+    public async Task<PageResponse<AccountResponse>> ListAsync(AccountListQuery query, CancellationToken cancellationToken)
     {
-        var source = context.Accounts.AsNoTracking();
-        source = query.RecordStatus.ToUpperInvariant() switch { "ALL" => source, "ARCHIVED" => source.Where(item => item.IsDeleted), _ => source.Where(item => !item.IsDeleted) };
+        var source = context.Accounts.AsNoTracking().ByRecordStatus(query.RecordStatus);
         if (!string.IsNullOrWhiteSpace(query.Search))
+            source = ApplySearch(source, query.SearchField, query.SearchOperator, query.Search.Trim().ToUpperInvariant());
+
+        source = ApplyOrdering(source, query.SortBy, query.SortDirection);
+        var totalCount = await source.CountAsync(cancellationToken);
+        var items = await source
+            .Skip((query.PageNumber - 1) * query.PageSize)
+            .Take(query.PageSize)
+            .Select(item => new AccountResponse(item.Id, item.Code, item.NameAr, item.NameEn, item.AccountHierarchyLevelId, item.ParentAccountId, item.AllowPosting, item.ManualPostingPolicy, item.CurrencyPolicy, item.SpecificCurrencyId, item.IsDeleted, item.CreatedOn, item.UpdatedOn, LedgerSetupProjection.Version(item.RowVersion)))
+            .ToListAsync(cancellationToken);
+        var page = new PagedList<AccountResponse>(items, totalCount, query.PageNumber, query.PageSize, PaginationRequest.MaxClientPageSize);
+        return new PageResponse<AccountResponse>(page, page.MetaData);
+    }
+
+    public async Task<AccountCodeProposalResponse> GetCodeProposalAsync(CancellationToken cancellationToken)
+    {
+        var candidateCodes = await context.Accounts.AsNoTracking()
+            .Where(item => item.Code.StartsWith("ACC-"))
+            .Select(item => item.Code)
+            .ToListAsync(cancellationToken);
+
+        var maxReservedSuffix = BigInteger.Zero;
+        foreach (var code in candidateCodes)
         {
-            var pattern = $"%{query.Search.Trim()}%";
-            source = source.Where(item =>
-                EF.Functions.Like(item.Code, pattern)
-                || EF.Functions.Like(item.NameEn, pattern)
-                || EF.Functions.Like(item.NameAr, pattern));
+            var suffix = code.AsSpan(4);
+            if (suffix.Length < 4 || !IsAsciiDigits(suffix))
+                continue;
+            if (BigInteger.TryParse(suffix, out var value) && value > maxReservedSuffix)
+                maxReservedSuffix = value;
         }
-        return await source.OrderBy(item => item.Code).ThenBy(item => item.Id).Skip((Math.Max(1, query.PageNumber) - 1) * Math.Clamp(query.PageSize, 1, 500)).Take(Math.Clamp(query.PageSize, 1, 500)).Select(item => new AccountResponse(item.Id, item.Code, item.NameAr, item.NameEn, item.AccountHierarchyLevelId, item.ParentAccountId, item.AllowPosting, item.ManualPostingPolicy, item.CurrencyPolicy, item.SpecificCurrencyId, item.IsDeleted, item.CreatedOn, item.UpdatedOn, LedgerSetupProjection.Version(item.RowVersion))).ToListAsync(cancellationToken);
+
+        var nextSuffix = maxReservedSuffix + BigInteger.One;
+        return new AccountCodeProposalResponse($"ACC-{nextSuffix.ToString("D4", System.Globalization.CultureInfo.InvariantCulture)}");
     }
     public Task<AccountResponse?> GetByIdAsync(int id, CancellationToken cancellationToken) => context.Accounts.AsNoTracking().Where(item => item.Id == id).Select(item => new AccountResponse(item.Id, item.Code, item.NameAr, item.NameEn, item.AccountHierarchyLevelId, item.ParentAccountId, item.AllowPosting, item.ManualPostingPolicy, item.CurrencyPolicy, item.SpecificCurrencyId, item.IsDeleted, item.CreatedOn, item.UpdatedOn, LedgerSetupProjection.Version(item.RowVersion))).FirstOrDefaultAsync(cancellationToken);
     public async Task<IReadOnlyList<AccountLookupResponse>> LookupAsync(CancellationToken cancellationToken) => await context.Accounts.AsNoTracking().Where(item => !item.IsDeleted).OrderBy(item => item.Code).Select(item => new AccountLookupResponse(item.Id, item.Code, item.NameAr, item.NameEn, item.AllowPosting)).ToListAsync(cancellationToken);
@@ -79,6 +105,65 @@ public sealed class AccountReadStore(AccountingDbContext context) : IAccountRead
         }
         var roots = rows.Where(item => !item.ParentAccountId.HasValue).ToArray();
         return roots.Select(Build).ToArray();
+    }
+
+    private static IQueryable<Account> ApplyOrdering(IQueryable<Account> query, string sortBy, string sortDirection)
+    {
+        var descending = sortDirection.Equals("desc", StringComparison.OrdinalIgnoreCase);
+        return (sortBy.ToUpperInvariant(), descending) switch
+        {
+            ("CODE", true) => query.OrderByDescending(item => item.Code).ThenByDescending(item => item.Id),
+            ("NAMEAR", false) => query.OrderBy(item => item.NameAr).ThenBy(item => item.Id),
+            ("NAMEAR", true) => query.OrderByDescending(item => item.NameAr).ThenByDescending(item => item.Id),
+            ("NAMEEN", false) => query.OrderBy(item => item.NameEn).ThenBy(item => item.Id),
+            ("NAMEEN", true) => query.OrderByDescending(item => item.NameEn).ThenByDescending(item => item.Id),
+            ("CREATEDON", false) => query.OrderBy(item => item.CreatedOn).ThenBy(item => item.Id),
+            ("CREATEDON", true) => query.OrderByDescending(item => item.CreatedOn).ThenByDescending(item => item.Id),
+            _ => query.OrderBy(item => item.Code).ThenBy(item => item.Id)
+        };
+    }
+
+    private static IQueryable<Account> ApplySearch(IQueryable<Account> query, string field, string searchOperator, string search)
+    {
+        var parameter = Expression.Parameter(typeof(Account), "account");
+        string[] propertyNames = field.ToUpperInvariant() switch
+        {
+            "CODE" => [nameof(Account.Code)],
+            "NAMEAR" => [nameof(Account.NameAr)],
+            "NAMEEN" => [nameof(Account.NameEn)],
+            _ => [nameof(Account.Code), nameof(Account.NameAr), nameof(Account.NameEn)]
+        };
+        var operation = searchOperator.ToUpperInvariant();
+        var negative = operation is "DOESNOTCONTAIN" or "DOESNOTEQUAL";
+        Expression? predicate = null;
+        foreach (var propertyName in propertyNames)
+        {
+            var property = Expression.Property(parameter, propertyName);
+            var normalized = Expression.Call(property, nameof(string.ToUpper), Type.EmptyTypes);
+            var target = Expression.Constant(search);
+            Expression comparison = operation switch
+            {
+                "EQUALS" or "DOESNOTEQUAL" => Expression.Equal(normalized, target),
+                "STARTSWITH" => Expression.Call(normalized, nameof(string.StartsWith), Type.EmptyTypes, target),
+                "ENDSWITH" => Expression.Call(normalized, nameof(string.EndsWith), Type.EmptyTypes, target),
+                _ => Expression.Call(normalized, nameof(string.Contains), Type.EmptyTypes, target)
+            };
+            if (negative)
+                comparison = Expression.Not(comparison);
+            predicate = predicate is null
+                ? comparison
+                : negative ? Expression.AndAlso(predicate, comparison) : Expression.OrElse(predicate, comparison);
+        }
+
+        return query.Where(Expression.Lambda<Func<Account, bool>>(predicate!, parameter));
+    }
+
+    private static bool IsAsciiDigits(ReadOnlySpan<char> value)
+    {
+        foreach (var character in value)
+            if (character is < '0' or > '9')
+                return false;
+        return true;
     }
 
     private sealed record TreeRow(int Id, int? ParentAccountId, string Code, string NameAr, string NameEn, bool AllowPosting);

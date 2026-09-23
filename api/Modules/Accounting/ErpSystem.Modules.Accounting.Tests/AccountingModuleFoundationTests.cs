@@ -1,4 +1,5 @@
 using ErpSystem.Modules.Accounting.Infrastructure;
+using ErpSystem.Modules.Accounting.Contracts.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,6 +13,19 @@ public sealed class AccountingModuleFoundationTests
     {
         Assert.Equal("Accounting", new AccountingModule().Name);
         Assert.Equal("acc", AccountingDbContext.Schema);
+    }
+
+    [Fact]
+    public void FiscalYears_AreOwnedByLedgerSetup_WithoutStandaloneSubmodule()
+    {
+        var submodules = new AccountingModule().Definition.Submodules;
+
+        Assert.DoesNotContain(submodules, item => item.Code == "fiscal-years");
+
+        var ledgerSetup = Assert.Single(submodules, item => item.Code == "ledger-setup");
+        Assert.Equal(AccountingPermissions.LedgerSetup.Count, ledgerSetup.RequiredPermissions.Count);
+        Assert.All(AccountingPermissions.FiscalYears, permission =>
+            Assert.Contains(permission, ledgerSetup.RequiredPermissions));
     }
 
     [Fact]

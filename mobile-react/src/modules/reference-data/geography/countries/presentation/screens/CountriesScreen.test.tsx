@@ -71,6 +71,13 @@ jest.mock('@/src/platform/auth', () => ({
   }),
 }));
 
+jest.mock('@/src/platform/reporting', () => ({
+  useManagedReportAvailability: () => ({
+    allowed: mockAllowedPermissions.has('CrystalReports:View'),
+    isLoading: false,
+  }),
+}));
+
 jest.mock('@/src/shared/contexts/AppReadOnlyContext', () => ({
   useAppReadOnly: () => ({ isReadOnly: mockReadOnly, notifyBlockedAction: jest.fn() }),
 }));
@@ -286,14 +293,14 @@ describe('CountriesScreen', () => {
     await waitFor(() => expect(mockBulkArchive).toHaveBeenCalledWith([7]));
   });
 
-  it('hides mutation entry points when permissions are absent but keeps the report tab available', async () => {
+  it('hides mutation entry points and the report tab when permissions are absent', async () => {
     mockAllowedPermissions.clear();
     await render(<CountriesScreen />);
 
     expect(screen.queryByTestId('icon-countries.addCountry')).toBeNull();
     expect(screen.queryByTestId('edit-7')).toBeNull();
     expect(screen.queryByTestId('archive-7')).toBeNull();
-    expect(screen.getByTestId('country-report')).toBeTruthy();
+    expect(screen.queryByTestId('country-report')).toBeNull();
     expect(screen.getByTestId('country-import-present').props.children).toBe('false');
   });
 

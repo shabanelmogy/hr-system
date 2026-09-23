@@ -1,7 +1,7 @@
 # Accounting web documentation
 
 Accounting has an active Next.js surface. The currently implemented Accounting
-slice is Fiscal Years at `/finance/fiscal-years`, owned by
+slice is Fiscal Years at `/finance/ledger-setup/fiscal-years`, owned by
 `web-next/src/modules/accounting` and registered through
 `moduleDefinition.tsx`. This does **not** imply that the remaining Accounting
 roadmap is implemented.

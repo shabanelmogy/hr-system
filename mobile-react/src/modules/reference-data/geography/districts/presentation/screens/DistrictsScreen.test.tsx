@@ -21,9 +21,16 @@ jest.mock('@/src/platform/auth', () => ({
     CreateDistricts: 'Districts:Create',
     EditDistricts: 'Districts:Edit',
     DeleteDistricts: 'Districts:Delete',
+    ViewCrystalReports: 'CrystalReports:View',
   },
   useAuthorization: ({ requiredPermissions }: { requiredPermissions: string[] }) => ({
     allowed: requiredPermissions.every((permission) => mockAllowedPermissions.has(permission)),
+  }),
+}));
+jest.mock('@/src/platform/reporting', () => ({
+  useManagedReportAvailability: () => ({
+    allowed: mockAllowedPermissions.has('CrystalReports:View'),
+    isLoading: false,
   }),
 }));
 jest.mock('@/src/shared/contexts/AppReadOnlyContext', () => ({
@@ -125,6 +132,7 @@ describe('DistrictsScreen views', () => {
     mockAllowedPermissions.add(permissions.CreateDistricts);
     mockAllowedPermissions.add(permissions.EditDistricts);
     mockAllowedPermissions.add(permissions.DeleteDistricts);
+    mockAllowedPermissions.add(permissions.ViewCrystalReports);
     mockUseDistricts.mockReturnValue({
       data: { items: [district], metaData: { totalCount: 1 } },
       error: null,
@@ -145,12 +153,12 @@ describe('DistrictsScreen views', () => {
     expect(screen.getByTestId('district-import')).toBeTruthy();
   });
 
-  it('keeps Report visible but removes Import without District create permission', async () => {
+  it('removes Report and Import without their permissions', async () => {
     mockAllowedPermissions.clear();
     await render(<DistrictsScreen />);
 
-    expect(screen.getByTestId('district-view-values').props.children).toBe('table,cards,chart,report');
-    expect(screen.getByTestId('district-report')).toBeTruthy();
+    expect(screen.getByTestId('district-view-values').props.children).toBe('table,cards,chart');
+    expect(screen.queryByTestId('district-report')).toBeNull();
     expect(screen.queryByTestId('district-import')).toBeNull();
   });
 });

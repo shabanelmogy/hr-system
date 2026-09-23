@@ -59,6 +59,7 @@ const financeItem: BreadcrumbItem = {
 const ledgerSetupItem: BreadcrumbItem = {
   key: 'ledger-setup',
   labelKey: 'navigation.ledgerSetup',
+  route: ROUTES.finance.ledgerSetup.root,
 };
 
 const breadcrumbsByPath: Record<string, readonly BreadcrumbItem[]> = {
@@ -93,13 +94,14 @@ const breadcrumbsByPath: Record<string, readonly BreadcrumbItem[]> = {
   ],
   [ROUTES.basicData.root]: [homeItem, basicDataItem],
   [ROUTES.finance.root]: [homeItem, financeItem],
-  [ROUTES.finance.fiscalYears]: [
+  [ROUTES.finance.ledgerSetup.fiscalYears]: [
     homeItem,
     financeItem,
+    ledgerSetupItem,
     { key: 'fiscal-years', labelKey: 'fiscalYears.title' },
   ],
-  [ROUTES.finance.ledgerSetup]: [homeItem, financeItem, ledgerSetupItem],
-  [ROUTES.finance.currencies]: [
+  [ROUTES.finance.ledgerSetup.root]: [homeItem, financeItem, ledgerSetupItem],
+  [ROUTES.finance.ledgerSetup.currencies]: [
     homeItem,
     financeItem,
     ledgerSetupItem,

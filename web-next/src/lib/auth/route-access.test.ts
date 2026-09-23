@@ -185,9 +185,9 @@ describe("route access policies", () => {
     expect(canAccessRoute(appRoutes.platform.administration.offlineOperations, session)).toBe(true);
   });
 
-  it("requires FiscalYears:View for the shared Finance fiscal-years route", () => {
-    expect(canAccessRoute(appRoutes.modules.accounting.fiscalYears, session)).toBe(false);
-    expect(canAccessRoute(appRoutes.modules.accounting.fiscalYears, {
+  it("requires FiscalYears:View for the Ledger Setup fiscal-years route", () => {
+    expect(canAccessRoute(appRoutes.modules.accounting.ledgerSetup.fiscalYears, session)).toBe(false);
+    expect(canAccessRoute(appRoutes.modules.accounting.ledgerSetup.fiscalYears, {
       ...session,
       permissions: [permissions.ViewFiscalYears],
     })).toBe(true);

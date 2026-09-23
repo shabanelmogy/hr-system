@@ -2,13 +2,13 @@
 
 ## 1. Feature boundary
 
-Source lives under `src/modules/hr/finance/fiscal-years`; Expo Router files
+Source lives under `src/modules/accounting/fiscal-years`; Expo Router files
 are thin route guards. API, runtime schemas, types, queries, validation, filter,
 form, and screen remain feature owned.
 
 ## 2. Routes and navigation
 
-Canonical route is `/finance/fiscal-years`. Constants, route manifest,
+Canonical route is `/finance/ledger-setup/fiscal-years`. Constants, route manifest,
 drawer definition, nested layout, redirect, and guarded route are registered.
 Access requires `FiscalYears:View`.
 
@@ -90,6 +90,6 @@ than JSON. Small screens scroll within shared shells.
 
 Feature ESLint, type-check, architecture, API/schema/validation, route, and realtime
 tests are required. Table, Cards, detail, create, edit, lifecycle, and mock data are
-Required. Chart, bulk lifecycle, import, and export are Excluded. Report is
-Deferred until the Workforce Budget reporting dataset is approved; no placeholder
-route or control exists.
+Required. Fiscal Year Report is Required through the shared managed Crystal
+component with entity key `fiscalyears`. Chart and bulk lifecycle are Excluded;
+Import and Export remain Deferred with no placeholder route or control.

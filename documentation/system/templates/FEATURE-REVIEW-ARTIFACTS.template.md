@@ -10,6 +10,8 @@ Use this file as the evidence ledger for one feature. Replace every bracketed va
 | Plan ID | `<PlanId or N/A>` |
 | Authorized slice / phase | `<SliceId or N/A>` |
 | Canonical plan | `<CanonicalPlanPath or N/A>` |
+| Feature decomposition decision | `<FeatureDecompositionDecision>` |
+| Screen/Workflow Contract | `<ScreenWorkflowContractPath>` |
 | API route | `<route>` |
 | Web route | `<route>` |
 | Mobile route | `<route>` |

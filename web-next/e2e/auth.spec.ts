@@ -15,8 +15,8 @@ test.beforeEach(async ({ request }) => {
 });
 
 test("protected navigation returns an anonymous user to login", async ({ page }) => {
-  await page.goto("/finance/fiscal-years");
-  await expect(page).toHaveURL(/\/login\?returnTo=%2Ffinance%2Ffiscal-years$/);
+  await page.goto("/finance/ledger-setup/fiscal-years");
+  await expect(page).toHaveURL(/\/login\?returnTo=%2Ffinance%2Fledger-setup%2Ffiscal-years$/);
   await expect(page.getByRole("heading", { name: "Sign In" })).toBeVisible();
 });
 
@@ -41,8 +41,8 @@ test("explicit logout clears the protected session and rejects the next protecte
 
   await expect(page).toHaveURL(/\/login$/);
 
-  await page.goto("/finance/fiscal-years");
-  await expect(page).toHaveURL(/\/login\?returnTo=%2Ffinance%2Ffiscal-years$/);
+  await page.goto("/finance/ledger-setup/fiscal-years");
+  await expect(page).toHaveURL(/\/login\?returnTo=%2Ffinance%2Fledger-setup%2Ffiscal-years$/);
 });
 
 test("terminal session expiry returns the browser to login", async ({ page, request }) => {

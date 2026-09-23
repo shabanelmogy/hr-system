@@ -10,6 +10,7 @@ import { arWorkforcePlanning } from './ar-workforce-planning';
 import { arModules } from './ar-modules';
 import { arOfflineOperations } from './ar-offline-operations';
 import { arCurrencies } from './ar-currencies';
+import { arLedgerSetup } from './ar-ledger-setup';
 
 export const ar = {
   ...arCommon,
@@ -24,4 +25,5 @@ export const ar = {
   ...arModules,
   ...arOfflineOperations,
   ...arCurrencies,
+  ...arLedgerSetup,
 };

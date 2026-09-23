@@ -2,6 +2,7 @@ using ErpSystem.Modules.Accounting.Application.Features.Finance.LedgerSetup.Cont
 using ErpSystem.Modules.Accounting.Domain.Finance.LedgerSetup.Entities;
 using ErpSystem.BuildingBlocks.Domain.Entities;
 using ErpSystem.Modules.Accounting.Domain.Finance.LedgerSetup.Services;
+using ErpSystem.BuildingBlocks.Application.Common.Paginations;
 
 namespace ErpSystem.Modules.Accounting.Application.Features.Finance.LedgerSetup.Abstractions;
 
@@ -32,7 +33,8 @@ public interface IAccountHierarchyLevelStore
 
 public interface IAccountReadStore
 {
-    Task<IReadOnlyList<AccountResponse>> ListAsync(AccountListQuery query, CancellationToken cancellationToken);
+    Task<PageResponse<AccountResponse>> ListAsync(AccountListQuery query, CancellationToken cancellationToken);
+    Task<AccountCodeProposalResponse> GetCodeProposalAsync(CancellationToken cancellationToken);
     Task<AccountResponse?> GetByIdAsync(int id, CancellationToken cancellationToken);
     Task<IReadOnlyList<AccountLookupResponse>> LookupAsync(CancellationToken cancellationToken);
     Task<IReadOnlyList<AccountTreeNodeResponse>> TreeAsync(CancellationToken cancellationToken);

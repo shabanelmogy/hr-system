@@ -13,7 +13,7 @@ export const arCurrencies = {
     actions: { add: 'إضافة عملة' },
     form: { createTitle: 'إضافة عملة', editTitle: 'تعديل عملة', viewTitle: 'تفاصيل العملة', subtitle: 'إدارة دليل عملات الشركة المستخدم في المحاسبة ولقطات العملة التشغيلية.', identity: 'بيانات العملة' },
     validation: { code: 'أدخل ثلاثة أحرف إنجليزية بالضبط.', name: 'أدخل اسمًا بحد أقصى 100 حرف.', symbol: 'أدخل رمزًا بحد أقصى 10 أحرف.' },
-    messages: { created: 'تم إنشاء العملة.', updated: 'تم تحديث العملة.', archive: 'تمت أرشفة العملة.', restore: 'تمت استعادة العملة.', loadFailed: 'تعذر تحميل العملات.', saveFailed: 'تعذر حفظ العملة.', actionFailed: 'تعذر تنفيذ إجراء العملة.' },
+    messages: { created: 'تم إنشاء العملة.', updated: 'تم تحديث العملة.', archive: 'تمت أرشفة العملة.', restore: 'تمت استعادة العملة.', loadFailed: 'تعذر تحميل العملات.', saveFailed: 'تعذر حفظ العملة.', actionFailed: 'تعذر تنفيذ إجراء العملة.', conflictReloaded: 'تم تعديل العملة بواسطة عملية أخرى. تم تحميل أحدث نسخة من الخادم.' },
     confirm: { archiveTitle: 'أرشفة العملة؟', archiveDescription: 'أرشفة {{code}}. قد تمنع المراجع المحاسبية هذا الإجراء.', restoreTitle: 'استعادة العملة؟', restoreDescription: 'استعادة {{code}} إلى دليل عملات الشركة النشط.' },
   },
 };

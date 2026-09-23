@@ -9,6 +9,13 @@ Extend the existing Accounting modular-monolith slice. Reuse
 filters, RowVersion, module authorization and Fiscal Years. Do not create a second
 Accounting service stack or generic CRUD service.
 
+Future Slice 1 execution is decomposed by
+`documentation/plans/business/accounting-core-gl/SLICE-01-LEDGER-SETUP-EXECUTION.md`.
+Each child package owns typed request/response/lookup/error contracts and must pass
+its API-readiness gate before its Screen Contract is considered complete. The
+umbrella route inventory below does not authorize a generic resource DTO or generic
+resource-switching service.
+
 ## 2. Domain model
 
 Accounting-owned `Currency`, `AccountingCompanySettings`,

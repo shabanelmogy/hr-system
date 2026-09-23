@@ -44,15 +44,12 @@ The State change job schedules only after persistence succeeds, sends the `state
 
 ## 9. State-specific report decision
 
-The States-specific browser Report view is Excluded from the current web client.
-Reporting still owns its managed Crystal contracts and explicit State dataset,
-but the States feature does not expose a report route or composition.
-
-Expo retains its current-page report summary because it has no Crystal PDF
-viewer/file-handling integration. This is an intentional platform difference,
-not an indication that the browser should fall back to a local table. A future
-mobile Crystal experience must reuse the managed States catalog and render contract
-and add explicit device PDF handling.
+Report is Required on both clients. Reporting owns the managed Crystal lifecycle,
+while Reference Data owns the stable State dataset and approved `NameAr`/`NameEn`
+filters. Web uses `StateReportPage` through the shared
+`ManagedCrystalReportView`; Expo uses `StateReportView` through the mobile shared
+managed-report component with validated PDF preview/print/share and temporary-file
+cleanup. Neither surface derives report data from the currently loaded list page.
 
 ## 10. Verification and remaining review work
 

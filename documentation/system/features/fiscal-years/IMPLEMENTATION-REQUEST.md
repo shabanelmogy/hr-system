@@ -123,7 +123,7 @@ notification/realtime scheduling occurs after commit.
 | Create/edit | Required | Required shared form dialog | Required full-screen AppForm | Same validation and requests |
 | Lifecycle actions | Required | Required | Required | Permission/read-only/direct-handler guarded |
 | Chart | Excluded | Excluded | Excluded | Budget/headcount analytics will own meaningful aggregates |
-| Report | Deferred | Deferred | Deferred | Finance reporting milestone after Workforce Budget dataset exists |
+| Report | Required | Required | Required | Accounting-owned `fiscalyears` managed Crystal dataset; tenant/company scope |
 | Import | Deferred | Deferred | Excluded | Web/API revisit with Workforce Plan/Budget setup; no native bulk authoring need |
 | Export | Deferred | Deferred | Excluded | Reopen with Finance report/export requirements |
 | Bulk actions | Excluded | Excluded | Excluded | Low-volume critical lifecycle; explicit single-row review is required |
@@ -135,8 +135,8 @@ unused component is permitted in this release.
 
 ## Client routes and integration
 
-- Web route: `/finance/fiscal-years`.
-- Mobile route: `/finance/fiscal-years`.
+- Web route: `/finance/ledger-setup/fiscal-years` under `acc:ledger-setup`.
+- Mobile route: `/finance/ledger-setup/fiscal-years` under `acc:ledger-setup`.
 - Both applications add a shared Finance navigation group, permission
   constants, route access, localized EN/AR labels, query-key registration, and
   `fiscal-years` realtime invalidation.
