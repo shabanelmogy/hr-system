@@ -1,6 +1,6 @@
 # Accounting Chart of Accounts and Hierarchy — Cross-Platform Implementation Contract
 
-Status: **Phase 01 API implemented and focused-tested; client refactor and Phase 06 closure remain pending.**
+Status: **Phase 01 API plus typed Web Phase 02 and Mobile Phase 03 implemented/static-verified; live Phase 06 closure remains pending.**
 
 Plan: `accounting-core-gl` / `Slice 1 — Ledger setup spine` / child `ledger-setup-coa-hierarchy` (`1B`).
 
@@ -10,11 +10,12 @@ This child owns `AccountHierarchyLevel` and `Account` setup only. It covers comp
 hierarchy, account tree/detail, create/edit/archive/restore, posting/manual-posting/
 currency policies, and the D-024 server-proposed editable account code.
 
-`VERIFIED CURRENT`: Accounting already contains Account/Hierarchy domain entities,
-CQRS commands/queries, persistence, versioned routes, Web/Mobile Ledger Setup routes,
-tree primitives, and lifecycle tests. `AUTHORIZED TARGET`: the focused child contract
-under `documentation/plans/business/accounting-core-gl/decomposition/ledger-setup-coa-hierarchy.md`.
-Current generic clients are evidence to refactor, not proof that the target child is complete.
+`VERIFIED CURRENT`: Accounting contains Account/Hierarchy domain entities,
+CQRS commands/queries, persistence, versioned routes, typed Web/Mobile Ledger Setup
+clients, tree primitives, mock-draft utilities and lifecycle tests. `AUTHORIZED TARGET`:
+the focused child contract under
+`documentation/plans/business/accounting-core-gl/decomposition/ledger-setup-coa-hierarchy.md`.
+The umbrella generic client remains only for untouched sibling resources.
 
 ## 2. Existing-system relationship and closest reuse
 
@@ -45,9 +46,8 @@ not a reservation, and never determines hierarchy. `ParentAccountId` plus
 same suggestion; the company unique DB key is race authority, one create wins, the
 loser receives the stable duplicate conflict and refetches a fresh proposal.
 
-Current API runtime now exposes `GET /api/v1/accounts/code-proposal`; Web and Mobile
-consumption is verified only when their focused child implementations pass their own
-gates.
+Current API runtime exposes `GET /api/v1/accounts/code-proposal`; typed Web and Mobile
+clients consume and preserve the proposal. Live API-backed acceptance remains a Phase 06 gate.
 
 ## 4. Business rules and lifecycle
 
@@ -98,6 +98,11 @@ Mobile keeps separate Accounts and Hierarchy Levels routes, uses typed runtime s
 `AppHierarchicalTree`, explicit detail/form journeys and online-authoritative writes.
 It does not imitate a desktop split pane on narrow phones.
 
+Writable Account and Hierarchy Level forms on both clients expose the shared local
+mock-data action when prerequisites are loaded. It fills a valid draft only, never
+submits/persists or fabricates IDs, RowVersion, tenant/company, posting or auth state;
+read-only/report/query-only surfaces are N/A.
+
 ## 8. Delivery phases and verification
 
 Phase 00 freezes this contract and evidence. Phases 01–05 may refactor/extend API,
@@ -113,24 +118,20 @@ Accounts View/Manage/read-only; EN/AR RTL; compact Web and phone/tablet Mobile.
 
 Current gaps are target-vs-current findings, not implemented claims:
 
-- Web/Mobile D-024 proposal consumption remains pending until their focused child
-  implementations are verified;
-- current Web/Mobile Ledger Setup use catch-all `LedgerSetupRecord`/generic renderers;
-- current Web tree uses SplitTreeView but not the approved Cost Center-style dedicated
-  master/detail composition;
-- current Mobile server pagination synthesizes a future-page total;
-- focused child-owned typed services/hooks/runtime schemas/tests do not yet replace the umbrella generic clients.
+- live API-backed Web/Mobile Phase 06 journey evidence remains pending;
+- the umbrella generic Ledger Setup runtime remains for untouched sibling resources;
+- release/customer education stays blocked until Phase 06 records `Verified`.
 
-Phase 01 API evidence is **56/56 Accounting module tests PASS** on 2026-09-22, including
-focused COA page/proposal/query-validator/controller tests. No schema change or feature
-migration was required.
+The full Accounting module was revalidated on 2026-09-23 with **66/66 tests PASS**;
+this includes the focused COA page/proposal/query-validator/controller evidence first
+closed in Phase 01. No schema change or feature migration was required.
 
 Safeguards: no hierarchy from code, no client code generator, no sequence table unless
 the master plan is reopened, no copied HR domain logic, no runtime claim before Phase 06.
 
 ## 10. Phase 00 handoff
 
-Phase 00 authorizes runtime work only after this book, the API/Web/Mobile books, final
-feature `required-files.json`, implementation request/review artifact and feature
-recipes pass planning/documentation checks. `1B` is the first active Slice 1 child;
-completion of this child does not imply Dimensions or umbrella Slice 1 completion.
+Phase 00 authorized runtime work on 2026-09-22. API Phase 01 and typed Web/Mobile
+Phase 02/03 implementation are recorded; Phase 06 remains the acceptance gate. `1B`
+is the first active Slice 1 child; completion of this child does not imply Dimensions
+or umbrella Slice 1 completion.

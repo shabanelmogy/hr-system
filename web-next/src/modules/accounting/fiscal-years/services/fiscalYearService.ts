@@ -2,6 +2,7 @@ import { apiRoutes } from "@/config";
 import apiService from "@/shared/services/apiService";
 import type {
   FiscalYearDetail,
+  FiscalYearConcurrencyMutation,
   FiscalYearLifecycleAction,
   FiscalYearLookup,
   FiscalYearMutationRequest,
@@ -38,8 +39,8 @@ export class FiscalYearService {
     return apiService.put(apiRoutes.fiscalYears.update(id), { ...clean(request), rowVersion: request.rowVersion });
   }
 
-  static async archive(id: number): Promise<number> {
-    await apiService.delete(apiRoutes.fiscalYears.archive(id));
+  static async archive({ id, rowVersion }: FiscalYearConcurrencyMutation): Promise<number> {
+    await apiService.delete(apiRoutes.fiscalYears.archive(id), { rowVersion });
     return id;
   }
 

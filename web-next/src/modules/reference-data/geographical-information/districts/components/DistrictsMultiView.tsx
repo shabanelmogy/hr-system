@@ -1,4 +1,5 @@
 import { PageHeader } from "@/shared/components/navigation/header";
+import { useManagedReportAvailability } from "@/modules/reporting/public";
 import { Box, LinearProgress } from "@mui/material";
 import type { GridApi, GridPaginationModel, GridSortModel } from "@mui/x-data-grid";
 import dynamic from "next/dynamic";
@@ -71,20 +72,25 @@ export default function DistrictsMultiView({
   onSelectedDistrictIdsChange, onBulkArchive, isBulkArchiving, lastAddedId, lastEditedId,
 }: DistrictsMultiViewProps) {
   const { t } = useTranslation();
+  const reportAvailability = useManagedReportAvailability("global");
   const [currentView, setCurrentView] = useState<DistrictManagementView>("grid");
   const [isFilterBarVisible, setIsFilterBarVisible] = useState(true);
-  const visibleView = currentView === "import" && !permissions.canCreate
+  const visibleView = (currentView === "import" && !permissions.canCreate) ||
+    (currentView === "report" && !reportAvailability.allowed)
     ? "grid"
     : currentView;
   const hasActiveCriteria = searchValue.trim().length > 0 || filter !== "active";
 
   const handleViewChange = useCallback((view: string) => {
     if (!isDistrictManagementView(view)) return;
-    if (view !== "import" || permissions.canCreate) {
+    if (
+      (view !== "import" || permissions.canCreate) &&
+      (view !== "report" || reportAvailability.allowed)
+    ) {
       if (view === "chart" && page !== 0) onPageChange(0);
       setCurrentView(view);
     }
-  }, [onPageChange, page, permissions.canCreate]);
+  }, [onPageChange, page, permissions.canCreate, reportAvailability.allowed]);
 
   const handlePaginationChange = useCallback((model: GridPaginationModel) => {
     if (model.pageSize !== pageSize) onPageSizeChange(model.pageSize);
@@ -106,7 +112,7 @@ export default function DistrictsMultiView({
     "grid",
     "cards",
     "chart",
-    "report",
+    ...(reportAvailability.allowed ? ["report" as const] : []),
     ...(permissions.canCreate ? ["import" as const] : []),
   ];
   const supportsFilterBar = visibleView !== "import";

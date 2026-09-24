@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { type Resolver, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { ApiClientError } from "@/lib/api/client";
@@ -21,11 +21,15 @@ import {
   getHierarchyLevelSchema,
   type HierarchyLevelFormValues,
 } from "../validation/coaHierarchyValidation";
+import { createHierarchyLevelMockDraft } from "../utils/mockData";
 
 interface Props {
   open: boolean;
   mode: "add" | "edit" | "view";
   item?: AccountHierarchyLevel | null;
+  levels: readonly AccountHierarchyLevel[];
+  levelsLoading?: boolean;
+  levelsError?: boolean;
   loading?: boolean;
   onClose: () => void;
   onSubmit: (request: AccountHierarchyLevelMutationRequest) => Promise<void>;
@@ -42,6 +46,9 @@ export default function HierarchyLevelForm({
   open,
   mode,
   item,
+  levels,
+  levelsLoading = false,
+  levelsError = false,
   loading = false,
   onClose,
   onSubmit,
@@ -55,6 +62,7 @@ export default function HierarchyLevelForm({
     defaultValues: emptyValues,
     mode: "onSubmit",
   });
+  const usedMockSamples = useRef(new Set<number>());
   const booleanOptions = useMemo<SelectOption[]>(
     () => [
       { id: true, label: t("ledgerSetup.boolean.yes") },
@@ -116,6 +124,22 @@ export default function HierarchyLevelForm({
       focusFieldName="levelNumber"
       autoFocusFirst
       errors={toFormErrorMessages(form.formState.errors)}
+      mockDataAction={
+        !readOnly
+          ? {
+              onGenerate: () => {
+                const draft = createHierarchyLevelMockDraft({ levels, usedSampleIndexes: usedMockSamples.current });
+                if (!draft) return;
+                const options = { shouldDirty: true, shouldValidate: true };
+                form.setValue("levelNumber", draft.levelNumber, options);
+                form.setValue("nameAr", draft.nameAr, options);
+                form.setValue("nameEn", draft.nameEn, options);
+                form.setValue("canPost", draft.canPost, options);
+              },
+              disabled: loading || levelsLoading || levelsError,
+            }
+          : undefined
+      }
     >
       <MyTextField
         fieldName="levelNumber"

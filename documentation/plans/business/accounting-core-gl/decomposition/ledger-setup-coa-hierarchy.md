@@ -10,7 +10,7 @@
 | Child feature name | Chart of Accounts and Hierarchy Levels |
 | Owner | Accounting |
 | Depends on | `ledger-setup-currency` |
-| Execution status | `1B` — queued after `1A` Currency |
+| Execution status | `1B` — API Phase 01 + Web Phase 02 + Mobile Phase 03 implemented; Phase 06 pending |
 | Contract status | `Closed — reviewed 2026-09-22` |
 
 ## 1. Child boundary and outcome
@@ -47,6 +47,7 @@ The generic `LedgerSetupRecord`/resource renderer is not an approved reuse targe
 | Tree/Hierarchy | Required for Accounts | Web split master/detail; Mobile hierarchical tree | search/select/expand, add child, open detail |
 | Detail/View | Required | selected account details from full detail endpoint | inspect policies/status/parent/level |
 | Create/Edit | Required | account form with contextual parent | proposed code, names, posting/manual/currency policy |
+| Mock draft action | Required | shared `MyForm` / `AppForm` action on writable Account and Hierarchy Level forms | Account keeps the server-proposed code, uses a loaded active hierarchy level, keeps only a valid contextual non-posting parent, and selects a real currency lookup only; Hierarchy Level chooses the next positive number unused by active **or archived** loaded levels and bilingual sample names |
 | Drag/reparent | Excluded until explicit API contract | no inferred DnD | parent changes use approved account mutation only |
 
 ## 5. Create, edit, view, and lifecycle contract
@@ -112,7 +113,8 @@ force the desktop split-pane model on narrow phones.
 | Domain/Application | hierarchy/posting/code/lifecycle tests | posting account cannot gain child |
 | API/transport | typed tree/detail/proposed-code/mutation tests | detail RowVersion + code race |
 | Web | SplitTreeView composition + account form tests | Cost Center interaction reuse without HR domain coupling |
-| Mobile | AppHierarchicalTree/form tests | add child, view/edit, read-only |
+| Mobile | AppHierarchicalTree/form tests + mock-draft utility tests | add child, view/edit, read-only, valid local Account/Hierarchy Level drafts |
+| Mock data | pure utility tests on both platforms | no code synthesis, no fabricated lookup/identity/concurrency/scope values, next unused level number |
 | E2E/manual | API-backed tree/detail journey | proposed code, archive/restore, EN/AR RTL, compact/phone/tablet |
 
 ## 11. Child exit gate

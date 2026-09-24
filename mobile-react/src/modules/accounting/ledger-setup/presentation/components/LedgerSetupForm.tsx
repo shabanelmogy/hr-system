@@ -19,6 +19,7 @@ import type {
   LedgerSetupFormValues,
   LedgerSetupRecord,
 } from '../../domain/models/ledger-setup';
+import { canCreateLedgerSetupMockDraft, createLedgerSetupMockDraft } from '../utils/ledger-setup-mock-data';
 import { createLedgerSetupSchema } from '../validation/ledger-setup-schema';
 
 interface LedgerSetupFormProps {
@@ -67,18 +68,6 @@ function defaultValues(definition: LedgerSetupEntityDefinition, item: LedgerSetu
   }));
 }
 
-function mockValue(field: LedgerSetupField, sequence: number, lookups: Record<string, LedgerSetupRecord[]>): LedgerSetupFormValues[string] {
-  if (field.optionSource) return (lookups[field.optionSource]?.[0]?.id as number | undefined) ?? '';
-  if (field.options?.length) return field.options[0].value;
-  if (field.type === 'boolean') return true;
-  if (field.type === 'number') return field.name === 'rate' ? 1 : sequence;
-  if (field.type === 'date') return new Date().toISOString().slice(0, 10);
-  if (field.name === 'code' || field.name.endsWith('Code')) return `DEMO-${sequence}`;
-  if (field.name === 'nameAr') return `بيانات تجريبية ${sequence}`;
-  if (field.name === 'nameEn') return `Demo ${sequence}`;
-  return `DEMO-${sequence}`;
-}
-
 export function LedgerSetupForm({ definition, item, lookups, mode, loading, onClose, onSave, onArchive }: LedgerSetupFormProps) {
   const { t } = useTranslation();
   const schema = useMemo(() => createLedgerSetupSchema(definition.fields, t('ledgerSetup.validation.required')), [definition.fields, t]);
@@ -88,6 +77,7 @@ export function LedgerSetupForm({ definition, item, lookups, mode, loading, onCl
   const [serverError, setServerError] = useState<string | null>(null);
   const mockSequence = useRef(1);
   const readOnly = mode === 'view';
+  const mockUnavailable = !canCreateLedgerSetupMockDraft(definition.fields, lookups);
 
   const submit = form.handleSubmit(async (values) => {
     setServerError(null);
@@ -99,11 +89,9 @@ export function LedgerSetupForm({ definition, item, lookups, mode, loading, onCl
   });
 
   const generateMock = () => {
-    const sequence = mockSequence.current++;
-    for (const field of definition.fields) {
-      if (field.name === 'specificCurrencyId') continue;
-      form.setValue(field.name, mockValue(field, sequence, lookups), { shouldDirty: true, shouldValidate: true });
-    }
+    const draft = createLedgerSetupMockDraft({ fields: definition.fields, lookups, sequence: mockSequence.current++, currentValues: form.getValues() });
+    if (!draft) return;
+    for (const [name, value] of Object.entries(draft)) form.setValue(name, value, { shouldDirty: true, shouldValidate: true });
   };
 
   return (
@@ -121,7 +109,7 @@ export function LedgerSetupForm({ definition, item, lookups, mode, loading, onCl
       onSubmit={readOnly ? undefined : submit}
       submitLabel={t(mode === 'edit' ? 'common.update' : 'common.create')}
       serverError={serverError}
-      mockDataAction={__DEV__ && !readOnly ? { onGenerate: generateMock, disabled: loading } : undefined}
+      mockDataAction={!readOnly ? { onGenerate: generateMock, disabled: loading || mockUnavailable } : undefined}
       contentContainerStyle={styles.content}>
       <AppFormSection title={t(definition.titleKey)} icon={definition.icon as AppIconName}>
         {readOnly && onArchive ? <AppButton variant="outline" onPress={onArchive}>{t(item?.isDeleted ? 'common.restore' : 'common.archive')}</AppButton> : null}

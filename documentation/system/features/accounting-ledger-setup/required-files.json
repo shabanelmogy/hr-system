@@ -377,7 +377,19 @@
       "id": "web-ledger-setup-resource-page",
       "layer": "web-next",
       "path": "web-next/src/modules/accounting/ledger-setup/pages/LedgerSetupResourcePage.tsx",
-      "purpose": "Shared setup list/tree/forms and lifecycle orchestration"
+      "purpose": "Compatibility setup list/tree/forms, lifecycle and D-025 mock orchestration pending typed child replacement"
+    },
+    {
+      "id": "web-ledger-setup-mock-data",
+      "layer": "web-next",
+      "path": "web-next/src/modules/accounting/ledger-setup/utils/ledgerSetupMockData.ts",
+      "purpose": "Pure compatibility mock generator with authoritative prerequisite gating"
+    },
+    {
+      "id": "web-ledger-setup-mock-data-tests",
+      "layer": "tests",
+      "path": "web-next/src/modules/accounting/ledger-setup/utils/ledgerSetupMockData.test.ts",
+      "purpose": "Web D-025 lookup, scope and exchange-rate pair safety tests"
     },
     {
       "id": "web-ledger-setup-service",
@@ -443,7 +455,25 @@
       "id": "mobile-ledger-setup-resource-screen",
       "layer": "mobile-react",
       "path": "mobile-react/src/modules/accounting/ledger-setup/presentation/screens/LedgerSetupResourceScreen.tsx",
-      "purpose": "Shared mobile setup list/tree/forms and lifecycle orchestration"
+      "purpose": "Compatibility mobile setup list/tree/forms and lifecycle orchestration pending typed child replacement"
+    },
+    {
+      "id": "mobile-ledger-setup-form",
+      "layer": "mobile-react",
+      "path": "mobile-react/src/modules/accounting/ledger-setup/presentation/components/LedgerSetupForm.tsx",
+      "purpose": "Compatibility form wired to the shared D-025 mock action"
+    },
+    {
+      "id": "mobile-ledger-setup-mock-data",
+      "layer": "mobile-react",
+      "path": "mobile-react/src/modules/accounting/ledger-setup/presentation/utils/ledger-setup-mock-data.ts",
+      "purpose": "Pure compatibility mock generator with authoritative prerequisite gating"
+    },
+    {
+      "id": "mobile-ledger-setup-mock-data-tests",
+      "layer": "tests",
+      "path": "mobile-react/src/modules/accounting/ledger-setup/presentation/utils/ledger-setup-mock-data.test.ts",
+      "purpose": "Mobile D-025 lookup, currency-pair and boolean type safety tests"
     },
     {
       "id": "mobile-ledger-setup-application",

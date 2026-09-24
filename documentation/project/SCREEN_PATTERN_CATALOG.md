@@ -26,13 +26,28 @@
 
 | Pattern | Web reference/status | Mobile reference/status | Shared primitives | الاختلاف المقصود |
 | --- | --- | --- | --- | --- |
-| P-001 Grid/CRUD | Countries `CountriesPage` + `CountriesMultiView` — `Implemented` بخمس طرق عرض Grid/Cards/Chart/Report/Import | Countries `CountriesScreen` — `Implemented` بخمس طرق عرض Table/Cards/Chart/Report/Import | Web list/grid/form/report/import shared components؛ Mobile `AppListScreen`, `AppMultiView`, `AppDataTable`, `AppDataCard`, `AppForm` ومنصة Reporting المشتركة | كثافة الجدول وعدد الصفوف والـCards تتكيف مع مساحة الموبايل، بينما يبقى server paging/filter/permissions واحدًا؛ Report وImport يظهران فقط عند تحقق الصلاحية والـentitlement |
+| P-001 Grid/CRUD | Countries `CountriesPage` + `CountriesMultiView` — `Implemented` بخمس طرق عرض Grid/Cards/Chart/Report/Import | Countries `CountriesScreen` — `Implemented` بخمس طرق عرض Table/Cards/Chart/Report/Import | Web list/grid/form/report/import shared components؛ Mobile `AppListScreen`, `AppMultiView`, `AppDataTable`, `AppDataCard`, `AppForm` ومنصة Reporting المشتركة | Report في Reference Data هو Global managed Crystal: `super_admin` + `GlobalCrystalReports:View` فقط، بلا tenant entitlement؛ Tenant reports هي `CrystalReports:View` + accessible Reporting module. Import يتبع create permission والـread-only policy |
 | P-002 Tree + Master/Detail | Cost Centers `CostCentersPage` + `CostCenterTreeDiagram` + `SplitTreeView` — `Implemented` | `CostCentersScreen` + `OrganizationalStructureManagementScreen` + `OrganizationalStructureTreeDiagram` + `AppHierarchicalTree` — `Implemented` | Web `SplitTreeView`؛ Mobile `AppHierarchicalTree` | Web يعرض split view عند توفر المساحة؛ Mobile يستخدم stacked/detail navigation ولا يضغط عمودين داخل الهاتف |
-| P-003 Tabbed multi-section form | Add Tenant في `TenantManagementPage` + `FormTabs` + `MyForm` — `Implemented` | `TenantManagementScreen` + `TenantFormModal` + `AppForm` — `Adapted` | Web `FormTabs`/`MyForm`؛ Mobile `AppForm` و`AppFormTabs` عند اعتماد tabs | Mobile Add Tenant الحالي full-screen stacked ولا يستخدم `AppFormTabs`; التكافؤ الحالي في الحقول والتحقق والصلاحيات والحفظ وdirty-state، وليس في شكل tabs |
+| P-003 Tabbed multi-section form | Add Tenant في `TenantManagementPage` + `FormTabs` + `MyForm` — `Implemented` | `TenantManagementScreen` + `TenantFormModal` + `AppForm` — `Adapted` | Web `FormTabs`/`MyForm`؛ Mobile `AppForm` و`AppFormTabs` عند اعتماد tabs | Web maps the first invalid field to its tab and focuses it after the tab is mounted. Mobile Add Tenant remains one full-screen stacked form with one validation context; `AppFormTabs` is covered as the reusable primitive, not forced into this flow |
 
 هذه المصفوفة هي سجل حقيقة التنفيذ. لا يجوز تغيير حالة منصة إلى `Implemented`
 من دون مسار مصدر فعلي واختبار أو evidence مناسب، ولا يعني `Adapted` أن المنصة
 يمكنها حذف حقل أو validation أو permission من العقد المشترك.
+
+## عقد استهلاك الكتالوج في التخطيط
+
+يُستهلك هذا الكتالوج قبل أي تنفيذ شاشة من خلال
+`documentation/plans/FEATURE_DECOMPOSITION_TEMPLATE.md` (الإصدار `2.0`). لكل
+Screen ID وعلى كل منصة، يجب أن يذكر عقد الميزة Pattern ID، المسار الدقيق للمصدر
+الذي تمت مراجعته، قرار form/sub-pattern، حالة المنصة، وقدرات Grid/Table/Cards/
+Tree/Detail/Report/Import/Export/Chart كـ`Required` أو `Deferred` أو `Excluded`.
+كما يسجل حالات loading/empty/error/forbidden/dirty/conflict، سياسة offline وMock
+Data، scope والصلاحيات، responsive/RTL/accessibility، وأي اختلاف مقصود.
+
+النمط `Candidate` يوقف تنفيذ واجهة المستخدم. لا يتحول إلى `P-###` نشط إلا بعد
+تسجيله هنا بمرجع مصدر فعلي واختبارات/دليل مراجعة وقرار واضح للمنصتين. يكفي
+اختيار نمط قائم فقط عندما يكون المصدر الفعلي مطابقًا لرحلة العمل؛ لا يكفي ذكر
+اسم مكوّن shared أو نسخ شكل Countries.
 
 ## P-001 — Server-managed Grid / CRUD
 
@@ -257,3 +272,5 @@ Cost Centers وChart of Accounts. الشجرة ليست بديلًا عن عقد
 | 2026-09-22 | تثبيت Countries كمرجع الخمس طرق لميزات Geographic/Reference Data التي تملك عقود Chart وManaged Report وAtomic Import، وتوحيد بوابة Report بالصلاحية وReporting entitlement | Countries، States، Districts، Address Types، وأي ميزة جغرافية جديدة |
 | 2026-09-22 | إنشاء P-001 Countries Grid/CRUD وP-002 Cost Center Tree/Master/Detail وP-003 Add Tenant Tabbed Form | Reference Data، Platform، HR، Accounting عند اعتماد النمط |
 | 2026-09-22 | ربط كل نمط بمرجعي Web/Mobile وإضافة حالات Implemented/Adapted/Deferred/Excluded وقاعدة تحديث النظيرين | كل الشاشات الجديدة أو المعاد بناؤها |
+| 2026-09-23 | إغلاق P1/P2/P3: Global Report بوابة مشتركة role+permission بلا tenant query، Tenant Report بوابة permission+Reporting module، واختبارات تركيب Cost Center وFormTabs وAdd Tenant على المنصتين | Countries، States، Districts، Address Types، Organizational Structure، Cost Centers، Add Tenant |
+| 2026-09-23 | توحيد Local Mock Data كقدرة في shell النماذج: كل رحلة إدخال قابلة للكتابة تملأ draft محليًا صالحًا دون submit/persist أو اختلاق identity/scope/concurrency؛ الشاشات read-only/report/query-only لا تصطنع بيانات، ولا تستخدم feature flags مبنية على NODE_ENV/DEV | Accounting Currency، Fiscal Years، COA Accounts، Hierarchy Levels، وكل مستهلك لاحق لـMyForm/AppForm |

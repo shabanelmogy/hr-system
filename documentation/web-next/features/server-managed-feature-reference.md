@@ -460,25 +460,47 @@ permissions, lifecycle, or UI state.
 Follow the canonical
 [Crystal Report Manager Feature Integration Guide](../../project/CRYSTAL_REPORT_MANAGER_INTEGRATION_GUIDE.md).
 The source of a feature's Crystal selector is the manager-owned published catalog,
-not the legacy Crystal filesystem/API:
+not the legacy Crystal filesystem/API. Use the public Reporting boundary and its
+scope policy:
 
 ```ts
+const availability = useManagedReportAvailability(scope);
 const reports = useQuery({
-  queryKey: ["crystal-reports", "published", entityKey],
-  queryFn: () => crystalReportService.listPublished(entityKey),
+  queryKey: ["crystal-reports", scope, entityKey],
+  queryFn: () => scope === "global"
+    ? crystalReportService.listGlobal(entityKey)
+    : crystalReportService.listPublished(entityKey),
+  enabled: availability.allowed,
 });
 ```
 
-- use the shared `crystalReportService` and `ReportViewer` exports from
-  `src/shared/reporting`;
-- list through `GET /api/v1/crystal-reports?entityKey={entityKey}`;
-- render through `POST /api/v1/crystal-reports/{reportId}/render` with only the
-  report ID, `ar`/`en`, and feature-approved bounded filters;
+- use the public Reporting exports `useManagedReportAvailability`,
+  `crystalReportService`, and `ManagedCrystalReportView` from
+  `src/modules/reporting/public`; the lower-level `ReportViewer` is exported
+  separately from `src/shared/reporting`;
+- tenant scope lists through `GET /api/v1/crystal-reports?entityKey={entityKey}`
+  and requires `CrystalReports:View` plus an accessible `reporting` module;
+- global Reference Data scope lists through
+  `GET /api/v1/global-crystal-reports?entityKey={entityKey}` and requires the
+  case-insensitive `super_admin` role plus `GlobalCrystalReports:View`; it does
+  not query tenant module entitlements;
+- tenant scope renders through
+  `POST /api/v1/crystal-reports/{reportId}/render` using the selected report ID
+  and a body containing only `language` (`ar`/`en`) plus feature-approved
+  bounded filters; global scope calls
+  `crystalReportService.renderGlobal(selectedReport, { language, filters })`,
+  which uses the selected catalog item to send the source ID in
+  `POST /api/v1/global-crystal-reports/{sourceId}/render`, its `entityKey`, and
+  its `rowVersion` as `expectedSha256`, together with the language and filters;
+  clients never invent a path, source ID, hash, or filename;
 - display `summaryTitle` for Arabic/RTL and `summarySubject` for English, falling
   back to manager `displayName`/`reportKey`;
 - keep the Report view independent from Grid/Cards pagination. With
   `AppMultiView`, use `paginate: false` and `renderWhenEmpty: true`;
 - show explicit catalog loading/error/empty and PDF render/retry states;
+- hide Report when the scope gate is loading or denied, return to Grid if a
+  previously selected Report loses access, and keep the catalog query disabled
+  until authorization is settled and allowed;
 - never call legacy `report/info` or `report/generate`, send `ReportPath` or
   `ReportFileName`, or read `NEXT_PUBLIC_REPORT_API_URL` for managed reports.
 

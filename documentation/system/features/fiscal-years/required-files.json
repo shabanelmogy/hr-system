@@ -153,10 +153,10 @@
       "purpose": "Database tables, composite relationships, indexes, and RowVersion"
     },
     {
-      "id": "db-context",
+      "id": "accounting-migration",
       "layer": "api-infrastructure",
-      "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Persistence/ApplicationDbContext.cs",
-      "purpose": "FiscalYear/FiscalPeriod DbSets and company filters/stamping"
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Infrastructure/Migrations/20260922091842_InitialAccounting.cs",
+      "purpose": "Accounting-owned acc schema baseline for FiscalYears and FiscalPeriods"
     },
     {
       "id": "api-permissions",
@@ -169,12 +169,6 @@
       "layer": "api-config",
       "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Infrastructure/DependencyInjection.cs",
       "purpose": "Accounting context, unit-of-work, feature store, audit, scheduler, and job registration"
-    },
-    {
-      "id": "api-error-di",
-      "layer": "api-config",
-      "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Dependencies/ErrorsService.cs",
-      "purpose": "FiscalYearErrors registration"
     },
     {
       "id": "api-localization-en",
@@ -198,7 +192,7 @@
       "id": "company-isolation-tests",
       "layer": "api-test",
       "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Tests/FiscalYearCompanyIsolationTests.cs",
-      "purpose": "Tenant/company visibility, fail-closed scope, and composite relationship coverage"
+      "purpose": "Tenant/company visibility, archive RowVersion, non-deleted period counts, fail-closed scope, and composite relationship coverage"
     },
     {
       "id": "controller-tests",
@@ -229,6 +223,12 @@
       "layer": "web-next",
       "path": "web-next/src/modules/accounting/fiscal-years/components/FiscalYearForm.tsx",
       "purpose": "Shared add/edit/view form and period detail"
+    },
+    {
+      "id": "web-multiview",
+      "layer": "web-next",
+      "path": "web-next/src/modules/accounting/fiscal-years/components/FiscalYearsMultiView.tsx",
+      "purpose": "P-001 Grid/Cards/Report view composition and report entitlement gate"
     },
     {
       "id": "web-grid",
@@ -265,6 +265,30 @@
       "layer": "web-next-test",
       "path": "web-next/src/modules/accounting/fiscal-years/utils/fiscalYearLifecycle.test.ts",
       "purpose": "Every status maps to its exact allowed actions, including both choices from Closed"
+    },
+    {
+      "id": "web-view-policy",
+      "layer": "web-next",
+      "path": "web-next/src/modules/accounting/fiscal-years/utils/fiscalYearViews.ts",
+      "purpose": "Pure P-001 view policy for Grid/Cards and authorized Report"
+    },
+    {
+      "id": "web-view-policy-tests",
+      "layer": "web-next-test",
+      "path": "web-next/src/modules/accounting/fiscal-years/utils/fiscalYearViews.test.ts",
+      "purpose": "P-001 view availability and report entitlement policy"
+    },
+    {
+      "id": "web-mock-data",
+      "layer": "web-next",
+      "path": "web-next/src/modules/accounting/fiscal-years/utils/fiscalYearMockData.ts",
+      "purpose": "Pure valid local mock draft generator without identity/scope/concurrency"
+    },
+    {
+      "id": "web-mock-data-tests",
+      "layer": "web-next-test",
+      "path": "web-next/src/modules/accounting/fiscal-years/utils/fiscalYearMockData.test.ts",
+      "purpose": "Mock-data contract and metadata exclusion"
     },
     {
       "id": "web-service-tests",
@@ -375,6 +399,30 @@
       "purpose": "Live contiguous period preview aligned with Domain"
     },
     {
+      "id": "mobile-view-policy",
+      "layer": "mobile-react",
+      "path": "mobile-react/src/modules/accounting/fiscal-years/domain/policies/fiscal-year-views.ts",
+      "purpose": "Pure P-001 view policy for Table/Cards and authorized Report"
+    },
+    {
+      "id": "mobile-view-policy-tests",
+      "layer": "mobile-react-test",
+      "path": "mobile-react/src/modules/accounting/fiscal-years/domain/policies/fiscal-year-views.test.ts",
+      "purpose": "P-001 view availability and report entitlement policy"
+    },
+    {
+      "id": "mobile-mock-data",
+      "layer": "mobile-react",
+      "path": "mobile-react/src/modules/accounting/fiscal-years/domain/policies/fiscal-year-mock-data.ts",
+      "purpose": "Pure valid local mock draft generator without identity/scope/concurrency"
+    },
+    {
+      "id": "mobile-mock-data-tests",
+      "layer": "mobile-react-test",
+      "path": "mobile-react/src/modules/accounting/fiscal-years/domain/policies/fiscal-year-mock-data.test.ts",
+      "purpose": "Mock-data contract and metadata exclusion"
+    },
+    {
       "id": "mobile-lifecycle",
       "layer": "mobile-react",
       "path": "mobile-react/src/modules/accounting/fiscal-years/domain/policies/fiscal-year-lifecycle.ts",
@@ -384,7 +432,7 @@
       "id": "mobile-api-tests",
       "layer": "mobile-react-test",
       "path": "mobile-react/src/modules/accounting/fiscal-years/data/remote/__tests__/fiscal-year-remote-boundary.test.ts",
-      "purpose": "Endpoint, list, detail, period, validation, and preview coverage"
+      "purpose": "Endpoint, archive RowVersion, list, detail, period, validation, and preview coverage"
     },
     {
       "id": "mobile-routes",

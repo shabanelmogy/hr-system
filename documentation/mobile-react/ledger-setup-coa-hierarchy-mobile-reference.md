@@ -1,6 +1,6 @@
 # Accounting Chart of Accounts and Hierarchy — Expo Implementation Contract
 
-Status: **Phase 00 target contract; current generic Ledger Setup screen is evidence only.**
+Status: **Phase 03 typed client implemented and focused/static-verified; live Phase 06 acceptance pending.**
 
 ## 1. Feature boundary
 
@@ -30,7 +30,7 @@ from the server, never calculated by the device.
 
 Use stable child keys for Account list/tree/detail/lookup/proposal and Hierarchy
 Levels. Server page/search/status/sort are authoritative. Real totals are consumed
-from the API; the current synthesized future-page total is a gap to remove.
+from the API; typed COA screens no longer use the generic synthesized future-page total.
 
 ## 6. Chart of Accounts tree
 
@@ -59,7 +59,15 @@ Duplicate proposal race displays conflict and refetches proposal; it does not si
 ## 10. Online/offline behavior
 
 Offline financial writes are Excluded. Cached setup reads remain Deferred pending a
-separate approved policy. There is no local draft, write queue or synthesized success.
+separate approved policy. The shared mock action is a local form draft only; it never
+queues, submits, persists or fabricates server success. It remains available through
+the central `MockDataPreferencesProvider` when prerequisites are loaded.
+
+Untouched sibling routes that still use the compatibility renderer enforce the same
+D-025 prerequisite rule. Their mock action is disabled when an authoritative required
+lookup is absent, uses distinct real currencies for exchange-rate pairs and emits real
+booleans rather than numeric select sentinels. This coverage does not close packages
+1C–1H; each remains responsible for its typed screen contract.
 
 ## 11. Consistency and dependency behavior
 
@@ -84,8 +92,9 @@ Reuse `AppHierarchicalTree`, `AppListScreen`, `AppDataTable`, `AppForm`,
 
 Required tests cover runtime schemas, endpoint serialization, real server pagination,
 D-024 proposal/edit/duplicate-refetch, tree/detail fetch, Account and Level lifecycle,
-permission/read-only states, error/retry and key invalidation. Current generic source
-does not prove these focused child requirements.
+permission/read-only states, error/retry and key invalidation. Typed Phase 03 forms also
+cover pure mock drafts, proposal preservation, lookup validity and next unused level
+number. Live Phase 06 device/API evidence remains pending.
 
 ## 15. Deferred and handoff
 

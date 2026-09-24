@@ -119,6 +119,24 @@
       "purpose": "Tenant editor consuming only assignable catalog choices"
     },
     {
+      "id": "web-tenant-form-tab-policy",
+      "layer": "web",
+      "path": "web-next/src/platform/tenants/tenantFormTabs.ts",
+      "purpose": "Deterministic Add Tenant error-to-tab and first-field focus mapping"
+    },
+    {
+      "id": "web-tenant-form-tab-tests",
+      "layer": "test",
+      "path": "web-next/src/platform/tenants/tenantFormTabs.test.ts",
+      "purpose": "Add Tenant tab and field mapping coverage"
+    },
+    {
+      "id": "web-shared-form-tabs-tests",
+      "layer": "test",
+      "path": "web-next/src/shared/components/forms/layouts/FormTabs.test.tsx",
+      "purpose": "Shared FormTabs ARIA, error indicator, and keepMounted coverage"
+    },
+    {
       "id": "api-regression-test",
       "layer": "test",
       "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Tests/TenantUserFoundationTests.cs",
@@ -171,6 +189,24 @@
       "layer": "mobile",
       "path": "mobile-react/src/platform/tenants/presentation/screens/TenantManagementScreen.tsx",
       "purpose": "Tenant editor consuming only assignable catalog choices"
+    },
+    {
+      "id": "mobile-tenant-form",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tenants/presentation/components/TenantFormModal.tsx",
+      "purpose": "Adapted full-screen stacked Tenant form with one validation context"
+    },
+    {
+      "id": "mobile-tenant-form-tests",
+      "layer": "test",
+      "path": "mobile-react/src/platform/tenants/presentation/components/TenantFormModal.test.tsx",
+      "purpose": "Adapted stacked form shell and visible validation evidence"
+    },
+    {
+      "id": "mobile-shared-form-tabs-tests",
+      "layer": "test",
+      "path": "mobile-react/src/shared/components/forms/layouts/AppFormTabs.test.tsx",
+      "purpose": "Shared mobile tab accessibility, error, RTL, and mounted-panel coverage"
     },
     {
       "id": "mobile-submodule-route",

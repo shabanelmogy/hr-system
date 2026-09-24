@@ -3,6 +3,7 @@ import { useInvalidatingMutation } from "@/shared/query";
 import FiscalYearService from "../services/fiscalYearService";
 import type {
   FiscalYearDetail,
+  FiscalYearConcurrencyMutation,
   FiscalYearLifecycleAction,
   FiscalYearMutationRequest,
   FiscalYearPageQuery,
@@ -34,7 +35,7 @@ export const useCreateFiscalYear = (options?: UseMutationOptions<FiscalYearDetai
   useInvalidatingMutation(FiscalYearService.create, [fiscalYearKeys.all], options);
 export const useUpdateFiscalYear = (options?: UseMutationOptions<FiscalYearDetail, Error, UpdateFiscalYearMutation>) =>
   useInvalidatingMutation(FiscalYearService.update, [fiscalYearKeys.all], options);
-export const useArchiveFiscalYear = (options?: UseMutationOptions<number, Error, number>) =>
+export const useArchiveFiscalYear = (options?: UseMutationOptions<number, Error, FiscalYearConcurrencyMutation>) =>
   useInvalidatingMutation(FiscalYearService.archive, [fiscalYearKeys.all], options);
 export const useRestoreFiscalYear = (options?: UseMutationOptions<FiscalYearDetail, Error, { id: number; rowVersion: string }>) =>
   useInvalidatingMutation(({ id, rowVersion }) => FiscalYearService.restore(id, rowVersion), [fiscalYearKeys.all], options);

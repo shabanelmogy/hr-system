@@ -52,6 +52,13 @@ permission, Import. Report summarizes the loaded authoritative page. Import
 uses exact resource headers and active-code relationship lookups before sending
 the atomic bulk request.
 
+For the P-002 pattern, Cost Centers select `tree` as the default view and
+compose `OrganizationalStructureTreeDiagram` with the shared
+`AppHierarchicalTree`; departments use the same feature shell but keep the
+resource-specific parent mapping. The feature-level proof is
+`OrganizationalStructureManagementScreen.test.tsx`, while the shared tree
+behavior remains in `AppHierarchicalTree.test.tsx`.
+
 ## 8. Filter interaction
 
 `OrganizationalStructureFilterButton` follows the States filter pattern and

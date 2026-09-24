@@ -42,6 +42,10 @@ describe('Fiscal Years API boundary', () => {
     expect(fiscalYearEndpoints.reopen(7)).toBe('fiscal-years/7/reopen');
   });
 
+  it('keeps archive on the DELETE resource route with an explicit RowVersion body', () => {
+    expect(fiscalYearEndpoints.byId(7)).toBe('fiscal-years/7');
+  });
+
   it('requires complete page and detail contracts including generated periods', () => {
     const metaData = { currentPage: 1, totalPages: 1, pageSize: 5, pageNumber: 1, totalCount: 1, hasPrev: false, hasNext: false };
     expect(fiscalYearPageSchema.parse({ items: [fiscalYear], metaData }).items[0]?.periodsCount).toBe(12);

@@ -56,10 +56,10 @@ invalidation, success test, and failure test. Use `N/A` only with a reason.
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| ledger-setup-coa-hierarchy-master | 3 | `506261bc57d418b35b861e895202f0d0e002e76580f31b6bc221fcdf725417e3` |
+| ledger-setup-coa-hierarchy-master | 3 | `492db78014ebbec06f6ea5efcb4834728e7e716f07de1a65b7a8ef54c48f5d96` |
 | ledger-setup-coa-hierarchy-master | 4 | `d98c472a1497ad2d7f2e5d96839ed1a1c7fec16d3f6f3c1a45fd083f190be6d8` |
 | ledger-setup-coa-hierarchy-master | 6 | `aa868978610f3e8a3aa72060935719cf3f657c796f10359642b45cc0c244edc5` |
-| ledger-setup-coa-hierarchy-master | 7 | `289dae9e3e135bc59698fc02c8dfdbe8088e38c13624adb5c124290e507f252d` |
+| ledger-setup-coa-hierarchy-master | 7 | `7a06d80a788ca9f33ed3c3651f664ddddeade75ccfbc008979ae5eaf90d72150` |
 | ledger-setup-coa-hierarchy-master | 8 | `f381f5b8e20edecbb259bae89a027a9c5d53f2f4681a22476941c738d69653b9` |
 | ledger-setup-coa-hierarchy-api | 6 | `73e68ac89eec57a9104aabd20dae6650a50fe3d1eb96ee4e2005194dfcc3c979` |
 | ledger-setup-coa-hierarchy-api | 7 | `cf04147c5bc2adca4aec42ef7c9f6cf1e6e9fa7150804c42a53d18b07ab669bd` |
@@ -69,5 +69,5 @@ invalidation, success test, and failure test. Use `N/A` only with a reason.
 | ledger-setup-coa-hierarchy-web | 8 | `d1847f446370d2d37dde9fec6fb57fd8731f7c700e413476fdc3965d94a75dca` |
 | ledger-setup-coa-hierarchy-web | 9 | `c6b858f0d4064aa2df6f016a6629c458d4b55547c1f8febcd6fb972248133492` |
 | ledger-setup-coa-hierarchy-mobile | 9 | `b41990b5ac6d76b1d2f5bab04effd08b886afb7bc93e945b2bc9dec5ae4144f8` |
-| ledger-setup-coa-hierarchy-mobile | 10 | `6c0dd27cf4e3a456030fc11b4d77a976d295c3e2a999d5a91a0d21714bf8dbf0` |
+| ledger-setup-coa-hierarchy-mobile | 10 | `dc9df5b0cb83c6ce8750b5bad42cfb9cb855023f0e4911db1894f6ae1b4dbe9a` |
 | ledger-setup-coa-hierarchy-mobile | 11 | `caa58263a99e472c4a77664492d5fc21590c70ea93e0311cbe2c827cee848c2b` |

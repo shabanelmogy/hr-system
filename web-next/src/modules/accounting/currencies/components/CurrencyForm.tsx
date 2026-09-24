@@ -84,7 +84,7 @@ export default function CurrencyForm({
       focusFieldName="currencyCode"
       autoFocusFirst
       errors={toFormErrorMessages(form.formState.errors)}
-      mockDataAction={process.env.NODE_ENV !== "production" && !readOnly ? {
+      mockDataAction={!readOnly ? {
         onGenerate: () => {
           const options = { shouldDirty: true, shouldValidate: true };
           form.setValue("currencyCode", "EGP", options);
@@ -92,7 +92,7 @@ export default function CurrencyForm({
           form.setValue("nameAr", "جنيه مصري", options);
           form.setValue("symbol", "EGP", options);
         },
-        disabled: loading,
+        disabled: loading || Boolean(detailError),
       } : undefined}
     >
       {detailError ? (

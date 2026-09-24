@@ -354,8 +354,10 @@ Report Manager through the shared `src/platform/reporting` boundary; see the
 [Crystal Report Manager Integration Guide](../project/CRYSTAL_REPORT_MANAGER_INTEGRATION_GUIDE.md)
 for the canonical contract. Feature-specific behavior:
 
-- The catalog comes from `crystalReportsApi.listPublished('countries')` and is
-  stale for five minutes under one language-independent query key.
+- The Platform geography catalog comes from
+  `crystalReportsApi.listGlobal('countries')` and is stale for five minutes
+  under one language-independent query key. This is a global managed report
+  surface and does not query tenant Reporting entitlement.
 - The geographic Report mode is available to the Platform Super Admin through
   the global Crystal catalog/render boundary. Tenant `CrystalReports:View` is not
   used for Countries. The report
@@ -367,8 +369,10 @@ for the canonical contract. Feature-specific behavior:
   back to `displayName`.
 - Report filters are Arabic/English country names with draft/apply/clear state;
   only trimmed non-empty values are sent as `NameAr`/`NameEn`.
-- Rendering sends only the selected report ID, `ar`/`en`, and those filters to
-  `crystalReportsApi.render`; the call stays available in tenant read-only mode.
+- Rendering sends the selected global source ID, entity key, expected SHA-256,
+  `ar`/`en`, and those filters to `crystalReportsApi.renderGlobal`; the call
+  remains within the global report boundary and is not downgraded to a tenant
+  report when the user is in a tenant read-only context.
 - The response must be a non-trivial PDF validated by size and `%PDF-`
   signature.
 - Native platforms write to sensitive temporary cache, print/preview through

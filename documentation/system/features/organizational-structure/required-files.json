@@ -264,6 +264,12 @@
       "purpose": "Managed Crystal report view per resource"
     },
     {
+      "id": "web-cost-center-reference-tests",
+      "layer": "web-test",
+      "path": "web-next/src/modules/hr/basic-data/organizational-structure/management/components/tree-view/CostCenterTreeDiagram.test.tsx",
+      "purpose": "Feature-level tree composition and action permission evidence"
+    },
+    {
       "id": "web-organizational-import",
       "layer": "web",
       "path": "web-next/src/modules/hr/basic-data/organizational-structure/management/components/import-view/OrganizationalStructureImport.tsx",
@@ -388,6 +394,18 @@
       "layer": "mobile",
       "path": "mobile-react/src/modules/hr/basic-data/organizational-structure/presentation/screens/JobDescriptionsScreen.tsx",
       "purpose": "Job Descriptions screen composition"
+    },
+    {
+      "id": "mobile-cost-center-pattern-tests",
+      "layer": "mobile-test",
+      "path": "mobile-react/src/modules/hr/basic-data/organizational-structure/presentation/screens/OrganizationalStructureManagementScreen.test.tsx",
+      "purpose": "Cost Centers default tree mode and shared AppHierarchicalTree composition"
+    },
+    {
+      "id": "mobile-organizational-view-policy",
+      "layer": "mobile",
+      "path": "mobile-react/src/modules/hr/basic-data/organizational-structure/presentation/utils/organizationalStructureViews.ts",
+      "purpose": "Shared resource-to-default-view policy used by the organizational structure screen"
     },
     {
       "id": "mobile-organizational-report",

@@ -9,6 +9,7 @@ import type { FiscalYearDetail, FiscalYearRequest } from '../../domain/models/fi
 import { buildFiscalPeriodPreview, endOfFiscalYear } from '../../domain/policies/fiscal-period-preview';
 import { createFiscalYearSchema } from '../validation/fiscal-year-schema';
 import { useAppTheme } from '@/src/core/theme';
+import { createFiscalYearMockData } from '../../domain/policies/fiscal-year-mock-data';
 
 interface Props { item: FiscalYearDetail | null; mode: 'create' | 'edit' | 'view'; loading: boolean; detailLoading?: boolean; detailError?: string | null; onRetryDetail?: () => void; onClose: () => void; onSave: (request: FiscalYearRequest) => Promise<void> }
 
@@ -24,8 +25,8 @@ export function FiscalYearForm({ item, mode, loading, detailLoading = false, det
     () => readOnly ? item?.periods ?? [] : buildFiscalPeriodPreview(code, start, periodFrequency ?? 1),
     [code, item?.periods, periodFrequency, readOnly, start],
   );
-  const mock = () => { const year = new Date().getFullYear() + 1; const options = { shouldDirty: true, shouldValidate: true }; form.setValue('code', `FY-${year}`, options); form.setValue('nameAr', `السنة المالية ${year}`, options); form.setValue('nameEn', `Fiscal Year ${year}`, options); form.setValue('startDate', `${year}-01-01`, options); form.setValue('endDate', `${year}-12-31`, options); form.setValue('periodFrequency', 1, options); };
-  return <AppForm visible presentation="fullScreen" title={t(`fiscalYears.form.${mode}Title`)} subtitle={t('fiscalYears.form.subtitle')} icon={mode === 'create' ? 'add-circle-outline' : readOnly ? 'eye-outline' : 'create-outline'} errors={toFormErrorMap(form.formState.errors)} isDirty={form.formState.isDirty} submitting={loading || form.formState.isSubmitting} submitDisabled={detailLoading || Boolean(detailError)} onCancel={onClose} onClearFieldError={name => form.clearErrors(name as keyof Values)} onSubmit={readOnly ? undefined : form.handleSubmit(values => onSave({ ...values, periodFrequency: values.periodFrequency ?? 1 }))} submitLabel={t(mode === 'edit' ? 'common.update' : 'common.create')} mockDataAction={__DEV__ && !readOnly ? { onGenerate: mock, disabled } : undefined} contentContainerStyle={styles.content}>
+  const mock = () => { const value = createFiscalYearMockData(); const options = { shouldDirty: true, shouldValidate: true }; form.setValue('code', value.code, options); form.setValue('nameAr', value.nameAr, options); form.setValue('nameEn', value.nameEn, options); form.setValue('startDate', value.startDate, options); form.setValue('endDate', value.endDate, options); form.setValue('periodFrequency', value.periodFrequency, options); };
+  return <AppForm visible presentation="fullScreen" title={t(`fiscalYears.form.${mode}Title`)} subtitle={t('fiscalYears.form.subtitle')} icon={mode === 'create' ? 'add-circle-outline' : readOnly ? 'eye-outline' : 'create-outline'} errors={toFormErrorMap(form.formState.errors)} isDirty={form.formState.isDirty} submitting={loading || form.formState.isSubmitting} submitDisabled={detailLoading || Boolean(detailError)} onCancel={onClose} onClearFieldError={name => form.clearErrors(name as keyof Values)} onSubmit={readOnly ? undefined : form.handleSubmit(values => onSave({ ...values, periodFrequency: values.periodFrequency ?? 1 }))} submitLabel={t(mode === 'edit' ? 'common.update' : 'common.create')} mockDataAction={!readOnly ? { onGenerate: mock, disabled } : undefined} contentContainerStyle={styles.content}>
     {detailLoading ? <AppStateView state="loading" /> : null}
     {detailError ? <AppStateView state="error" message={detailError} onRetry={onRetryDetail} /> : null}
     <AppFormSection title={t('fiscalYears.form.identity')} icon="calendar-outline">

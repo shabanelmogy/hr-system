@@ -202,6 +202,49 @@ Every plan decision must be traceable to one of:
 - documented architectural policy;
 - external authoritative requirement/source.
 
+### P7A — Separate planning authorities before writing execution detail
+
+Keep four planning levels separate so a roadmap cannot silently become a second
+feature specification:
+
+| Level | Canonical owner | It decides | It must not duplicate |
+| --- | --- | --- | --- |
+| Capability plan | `PLAN.md` | business outcome, scope, ownership, domain decisions, dependencies, and release boundaries | feature-by-feature screen/API execution detail |
+| Slice roadmap | the slice execution document linked from `PLAN.md` | dependency order, one current status, entry/exit gates, and the next-step rule | business rules or platform implementation prose |
+| Feature execution contract | one file under `decomposition/` from `FEATURE_DECOMPOSITION_TEMPLATE.md` | one feature's API → Web → Mobile → integrated verification → documentation/closure, including its UI Pattern Gate | sibling feature status or unrelated scope |
+| Evidence ledger | canonical API/Web/Mobile/system profiles and tests | what actually passed and when | desired behavior that has no evidence |
+
+Do not copy a screen contract into both `PLAN.md` and the slice roadmap. Link to
+the feature contract instead. Historical package completion is evidence only when
+the current contract, pattern mapping, tests, and live journey are revalidated.
+
+### P7B — Mandatory UI Pattern Gate
+
+Before a feature contract is authorized, inventory every Web and Mobile screen or
+route and complete one row per platform using the **UI Pattern Gate** in
+`FEATURE_DECOMPOSITION_TEMPLATE.md`. Each row must name the Screen ID, route,
+user job, data/interaction shape, primary Pattern ID, form/sub-pattern decision,
+exact reviewed source path, platform status, Required/Deferred/Excluded views,
+states, offline policy, mock-data policy, permission/scope, responsive/RTL/
+accessibility behavior, and any deviation.
+
+The canonical catalog is `documentation/project/SCREEN_PATTERN_CATALOG.md`.
+Selecting a `Candidate` pattern blocks runtime UI work until the pattern is
+registered, reviewed, and assigned a stable `P-###` ID with evidence. “Shared
+component reused” alone is never a pattern decision.
+
+### P7C — One feature active at a time
+
+The slice roadmap must contain one explicit `ACTIVE_FEATURE_STEP` marker. Exactly
+one feature may be `Active`; all later features remain `Queued` or `Blocked` until
+the current feature reaches `Verified` and its documentation/closure stage is
+`Closed`. Execute the current contract in this fixed order:
+
+`API → Web → Mobile → integrated live verification → documentation/closure`.
+
+Do not start a later platform or feature because code exists in the repository.
+Record evidence in the current contract and roadmap before moving the marker.
+
 ## P8 — Adversarial plan review
 
 Review the completed plan as if another team will implement it without access to
@@ -239,17 +282,21 @@ met and all remaining G4 findings are explicitly release/hardening-only. This do
 not change the overall plan status to `Implementation Ready`.
 
 Before runtime implementation, complete the authorized slice's **Feature
-Decomposition Gate** in `PLAN.md`. New plans complete it before handoff to
+Decomposition Gate** in `PLAN.md` and create a current version 2.0 feature
+execution contract from `FEATURE_DECOMPOSITION_TEMPLATE.md`. This contract is
+mandatory even when the slice is `Single feature` or is a revalidation of an
+already implemented feature. New plans complete it before handoff to
 `documentation/system/`. A pre-gate legacy plan may enter Phase 00 only to perform
 this reconciliation; it remains blocked from runtime implementation until the gate
 is complete. Every slice must state either:
 
 - `Single feature` — one coherent domain/UI workflow can be implemented and accepted
-  as one feature execution unit; or
+  as one feature execution unit, with one version 2.0 contract; or
 - `Decompose` — the slice contains materially different workflows and therefore has
   two or more child feature execution units, each with its own stable Feature ID,
-  Screen/Workflow Contract created from `FEATURE_DECOMPOSITION_TEMPLATE.md`, scope
-  boundary, dependencies, and acceptance outcome.
+  version 2.0 Screen/Workflow Contract created from
+  `FEATURE_DECOMPOSITION_TEMPLATE.md`, scope boundary, dependencies, and acceptance
+  outcome.
 
 Do not use one generic screen/renderer, shared controller, or umbrella documentation
 package as evidence that materially different workflows form one feature. Shared

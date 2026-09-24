@@ -1,4 +1,5 @@
 import { PageHeader } from "@/shared/components/navigation/header";
+import { useManagedReportAvailability } from "@/modules/reporting/public";
 import { Box, LinearProgress } from "@mui/material";
 import type { GridApi, GridPaginationModel, GridSortModel } from "@mui/x-data-grid";
 import dynamic from "next/dynamic";
@@ -111,9 +112,11 @@ const CountriesMultiView = ({
   isBulkArchiving,
 }: CountriesMultiViewProps) => {
   const { t } = useTranslation();
+  const reportAvailability = useManagedReportAvailability("global");
   const [currentView, setCurrentView] = useState<CountryView>("grid");
   const [isFilterBarVisible, setIsFilterBarVisible] = useState(true);
-  const visibleView = currentView === "import" && !permissions.canCreate
+  const visibleView = (currentView === "import" && !permissions.canCreate) ||
+    (currentView === "report" && !reportAvailability.allowed)
     ? "grid"
     : currentView;
 
@@ -125,12 +128,15 @@ const CountriesMultiView = ({
       view === "report" ||
       view === "import"
     ) {
-      if (view !== "import" || permissions.canCreate) {
+      if (
+        (view !== "import" || permissions.canCreate) &&
+        (view !== "report" || reportAvailability.allowed)
+      ) {
         if (view === "chart" && page !== 0) onPageChange(0);
         setCurrentView(view);
       }
     }
-  }, [onPageChange, page, permissions.canCreate]);
+  }, [onPageChange, page, permissions.canCreate, reportAvailability.allowed]);
 
   const handlePaginationChange = useCallback((model: GridPaginationModel) => {
     if (model.pageSize !== pageSize) onPageSizeChange(model.pageSize);
@@ -154,7 +160,7 @@ const CountriesMultiView = ({
     "grid",
     "cards",
     "chart",
-    "report",
+    ...(reportAvailability.allowed ? ["report" as const] : []),
     ...(permissions.canCreate ? ["import" as const] : []),
   ];
   const supportsFilterBar = visibleView !== "import";

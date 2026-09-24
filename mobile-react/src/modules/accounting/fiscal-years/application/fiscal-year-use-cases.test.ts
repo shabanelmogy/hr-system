@@ -44,4 +44,14 @@ describe('fiscal year application use cases', () => {
     expect(() => useCases.save({ id: 7, request })).toThrow('rowVersion');
     expect(repository.update).not.toHaveBeenCalled();
   });
+
+  it('requires and forwards the current rowVersion when archiving', async () => {
+    const repository = repositoryMock();
+    repository.archive.mockResolvedValue(undefined);
+    const useCases = createFiscalYearUseCases(repository);
+
+    await useCases.archive(7, 'AQ==');
+
+    expect(repository.archive).toHaveBeenCalledWith(7, 'AQ==');
+  });
 });

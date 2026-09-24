@@ -9,17 +9,19 @@
 | Web route | `/finance/ledger-setup/fiscal-years` |
 | Mobile route | `/finance/ledger-setup/fiscal-years` |
 | Review owner | `ERP System implementation team` |
-| Review date | `2026-09-05` |
+| Review date | `2026-09-23` |
 | Implementation request | `documentation/system/features/fiscal-years/IMPLEMENTATION-REQUEST.md` |
 | Required-file manifest | `documentation/system/features/fiscal-years/required-files.json` |
 | Operating mode | `new feature` |
 | Documentation state | `Final; canonical profiles and generated phases registered` |
-| Applied reference | `countries`; ownership and optional views deliberately differ |
-| Import decision | `API/Web Deferred; Mobile Excluded` |
-| Import platforms | `N/A in current release` |
-| Import format | `N/A; Finance will decide XLSX contract at Workforce Budget milestone` |
+| Applied reference | `countries`; ownership, pattern meaning, and optional views deliberately differ |
+| Import decision | `Excluded on Web and Mobile` |
+| Import platforms | `No platform exposes Import in this feature` |
+| Import format | `N/A; no parser or transport is planned for Fiscal Years` |
 | Reporting decision | `Required` |
 | Reporting engine | `Managed Crystal catalog/render using the Accounting-owned fiscalyears dataset` |
+| Vertical gate | `Step 01 Active — API → Web → Mobile → live verification → documentation; not Verified yet` |
+| UI pattern | `P-001 Server-managed Grid/CRUD; Web Grid/Cards/Report; Mobile Table/Cards/Report; P-003 tabs intentionally not applied` |
 
 ## Requirement manifest
 
@@ -27,7 +29,7 @@
 | --- | --- | --- | --- | --- | --- | --- |
 | R-01 | Company-scoped Fiscal Year with generated monthly/quarterly periods | User-approved architecture and implementation request | Required | Required | Required | Frozen |
 | R-02 | Non-overlapping dates and unique code within trusted company | Implementation request | Required | Mirror for UX | Mirror for UX | Frozen |
-| R-03 | Draft/Open/Closing/Closed/Locked lifecycle, controlled Closed/Locked-to-Open reopen, and optimistic concurrency | Implementation request | Required | Required | Required | Frozen |
+| R-03 | Draft/Open/Closing/Closed/Locked lifecycle, controlled Closed/Locked-to-Open reopen, and optimistic concurrency including archive RowVersion | Implementation request | Required | Required | Required | Frozen |
 | R-04 | Finance owns the shared calendar; Workforce Planning, Payroll, Attendance reporting, and Recruitment may only consume eligible years | Cross-module ownership review | Required boundary | Finance navigation | Finance navigation | Frozen |
 | R-05 | Exact server paging/search/filter/sort shared by clients | Countries reference plus implementation request | Required | Required | Required | Frozen |
 | R-06 | EN/AR, RTL, responsive, accessible, permission/read-only workflows | Repository guides | Required errors | Required | Required | Frozen |
@@ -41,10 +43,10 @@
 | Grid/Table | Required | Required | Required | Current company, server paged | Primary management surface |
 | Cards | N/A | Required | Required | Same page/query as Grid/Table | Responsive lifecycle overview |
 | Detail/periods | Required | Required | Required | One Fiscal Year plus generated periods | Creation/edit/view parity |
-| Chart | Excluded | Excluded | Excluded | No runtime | Meaningful aggregates belong to Workforce Budget |
+| Chart | Excluded | Excluded | Excluded | No runtime | Fiscal Years is a calendar-management surface; no chart contract is defined |
 | Report | Required | Required | Required | Company-scoped fiscalyears dataset | Accounting owns dataset and tenant Reporting permission |
-| Import | Deferred | Deferred | Excluded | No runtime | Finance owner; reopen for initial budget setup on API/Web only |
-| Export | Deferred | Deferred | Excluded | No runtime | Reopen with reporting contract |
+| Import | Excluded | Excluded | Excluded | No runtime | No financial-calendar import workflow or transport is owned by this feature |
+| Export | Excluded | Excluded | Excluded | No runtime | Reporting remains the read/output surface; no Fiscal Years export contract is defined |
 | Bulk lifecycle | Excluded | Excluded | Excluded | No runtime | Critical, low-volume records require explicit review |
 
 ## Verified current behavior before implementation
@@ -52,7 +54,7 @@
 - No Fiscal Year, Fiscal Period, Workforce Plan, Workforce Budget, reservation,
   commitment, or variance aggregate exists in Domain or persistence.
 - `CompanyAuditableEntity` supplies trusted tenant/company scope markers and
-  `ApplicationDbContext` applies tenant/company filters and ownership stamping.
+  `AccountingDbContext` applies tenant/company filters and ownership stamping.
 - Recruitment currently contains only a budgeted boolean/justification on a
   requisition; it does not provide a financial calendar.
 - Countries supplies the reviewed CQRS and multi-client lifecycle pattern but is
@@ -114,12 +116,12 @@ route access, endpoints, query keys, realtime mapping, translations, and thin
 route adapters. Exact source paths are registered in the final required-file
 manifest.
 
-## Import contract
+## Import decision contract
 
 | Field | Decision/evidence |
 | --- | --- |
-| Decision and reason | API/Web Deferred to Workforce Budget setup; Mobile Excluded because mass financial-calendar authoring is not a phone workflow |
-| Platforms and format | N/A in this release |
+| Decision and reason | Excluded on Web and Mobile; Fiscal Years is an authoritative calendar-management workflow and has no import requirement |
+| Platforms and format | No platform or file format is supported in this release |
 | Parsing ownership | N/A |
 | Template and parsing | N/A |
 | API transport | No endpoint in this release |
@@ -131,21 +133,21 @@ manifest.
 | Retry and error artifact | N/A |
 | Side effects and refresh | N/A |
 | UX and localization | No reachable placeholder |
-| Verification | Architecture/source tests assert no Import route or view |
+| Verification | Architecture/source tests assert no Import route, view, control, parser, or transport |
 
 ## Reporting contract
 
 | Field | Decision/evidence |
 | --- | --- |
 | Decision and reason | Required for the Fiscal Years screen; it is a tenant/company report and does not belong to the global geography boundary |
-| Engine | Managed Crystal catalog/render |
+| Engine | Managed Crystal catalog/render; no report endpoint is owned by `FiscalYearsController` |
 | Entity/feature key | `fiscalyears` |
 | Source | Accounting public reporting contract |
 | Dataset/schema | Fiscal year and generated period status/date schema |
 | Filters | Approved code and bilingual name filters |
 | Permissions | `FiscalYears:View` plus tenant Reporting `CrystalReports:View`/Run access |
 | Localization | EN/AR report language and localized catalog names |
-| Runtime/deployment | Deployment-owned compatible Fiscal Years `.rpt`; empty catalog is a localized unavailable state |
+| Runtime/deployment | Deployment-owned compatible Fiscal Years `.rpt`; empty catalog is a localized unavailable state; Accounting supplies the dataset through its public reporting contract |
 | Verification | Accounting source/provider tests plus Web/Mobile managed-report transport and screen tests |
 
 ## Findings and handoffs
@@ -154,7 +156,7 @@ manifest.
 | --- | --- | --- | --- | --- | --- |
 | F-01 | High | Financial calendar did not exist; Recruitment used only a budget boolean | Domain/recruitment source review | Finance/HR Planning | Resolved by shared Finance aggregate and routes |
 | F-02 | Medium | Countries is global and cannot prove company isolation | Countries profile and `CompanyAuditableEntity` | API | Resolved by tenant/company/fail-closed aggregate tests |
-| F-03 | Medium | Full reports/import depend on an unimplemented Workforce Budget dataset | Architecture review | Finance | Deferred with reopening trigger |
+| F-03 | Medium | Workforce Budget is a downstream planning capability and must not be treated as an Import dependency for Fiscal Years | Architecture review | Finance | Resolved by excluding Import from this feature; any future bulk authoring requires a separate approved feature contract |
 | F-04 | High | Draft update replaced every generated period, causing SQL unique-index conflicts when the same codes were inserted before prior rows were soft-archived | Production edit response and update-handler review | API | Resolved by sequence reconciliation, identity preservation, archived-period restoration, and regression tests |
 | F-05 | Manual | Runtime visual/device matrix requires live authenticated environments | Web/Mobile guides | Release owner | Automated UI contract audited; authenticated browser/device smoke remains |
 | F-06 | High | Fiscal Year mutation handlers requested the shared `IUnitOfWork`; later module registrations could route the commit away from `AccountingDbContext`, leaving the new year unreadable and returning an unexpected error | Host module composition, Accounting handler/store/DI review, and error report `b23c4526-17cb-469e-9ca7-ba0196c0cb8b` | Accounting API | Resolved with `IAccountingUnitOfWork` and competing-registration regression coverage |
@@ -165,20 +167,20 @@ manifest.
 | --- | --- | --- | --- |
 | Documentation baseline | Fiscal Years manifest check; `./documentation/system/Generate-Documentation.ps1 -Check` | All Fiscal Years required files exist; the consolidated baseline `20260906112413_create-database.cs` contains the global geography transition | 2026-09-07 |
 | API | API build; focused Fiscal Year tests; full suite | Focused 23/23 passed, including Closed and Locked reopen; full suite 429/430 with the inherited `OrganizationalStructureManagementTests.UpdateAsync_Branch_WorksCorrectly` company-isolation failure | 2026-09-06 |
-| Database | Consolidated baseline migration plus pending-model check | Fiscal Years schema is represented by `20260906112413_create-database`; the Reopen change is code-only and needs no new migration | 2026-09-06 |
+| Database | Accounting migration plus pending-model check | Fiscal Years schema is owned by `AccountingDbContext` in `acc` and `20260922091842_InitialAccounting` | 2026-09-23 |
 | Web | Feature lint, architecture, types, tests, production build | Passed; route `/finance/ledger-setup/fiscal-years` emitted | 2026-09-06 |
 | Web full strict | `npm run type-check:strict` | Inherited failures in Organizational Structure and Basic Data; none in Fiscal Years | 2026-09-05 |
 | Mobile | Feature lint, types, architecture, focused tests, full Jest suite | Fiscal Years and translation parity passed; full suite 146/148 with unrelated Recruitment translation debt and a concurrent tree timeout; the tree suite passed 7/7 standalone | 2026-09-06 |
 | Mobile full tests | `npm test` | 143 passed; inherited Recruitment translation failure and shared-tree timeout | 2026-09-05 |
-| UI audit | Creation, editing, viewing, listing/filtering, mock data on Web/Mobile | Passed source/contract audit; live authenticated viewport/device smoke is manual | 2026-09-05 |
+| UI audit | Creation, editing, viewing, listing/filtering, mock data on Web/Mobile | Focused source/contract audit passed; Step 01 live authenticated viewport/device smoke remains pending and prevents `Verified` | 2026-09-23 |
 | Accounting unit-of-work binding | Focused `AccountingUnitOfWorkRegistrationTests`; Accounting module suite | Competing shared registrations before/after Accounting cannot intercept Fiscal Year persistence; create stores one year and 12 monthly periods | 2026-09-15 |
 
 ## Final reconciliation
 
 - [x] Requested contract and platform decisions are frozen before runtime work.
 - [x] Intentional Countries-reference differences are documented.
-- [x] Import and Reporting are explicitly classified per platform.
+- [x] Import, Export, Chart, and Reporting are explicitly classified per platform.
 - [x] Runtime evidence and canonical profiles exist.
-- [x] Feature-scoped API, web, mobile, migration, and UI audit gates pass.
+- [ ] Step 01 live authenticated API-backed Web/Mobile journey and final reconciliation are complete (`Verified` pending).
 - [x] Final required-file manifest and feature recipes are registered/generated.
 - [x] Inherited repository failures and manual release checks are separated from feature regressions.

@@ -76,6 +76,14 @@ Passing => `Architecture Ready`.
 - [ ] Offline/mobile conflict behavior decided where applicable.
 - [ ] Import/export/report/files/realtime/notifications decided.
 - [ ] Clients do not invent missing server business semantics.
+- [ ] Every Web and Mobile screen has a completed UI Pattern Gate row with Screen
+      ID, route, job, data/interaction shape, Pattern ID, exact reviewed source
+      path, platform status, R/D/E views, states, offline/mock policy, scope,
+      responsive/RTL/accessibility, and deviations.
+- [ ] No `Candidate` pattern is used for runtime UI; a new pattern is registered
+      and reviewed in `SCREEN_PATTERN_CATALOG.md` before implementation.
+- [ ] The feature contract records the vertical order API → Web → Mobile →
+      integrated live verification → documentation/closure.
 - [ ] For every slice marked `Decompose`, each child feature has its own
       Screen/Workflow Contract and shared-component/reuse audit; a generic umbrella
       renderer is not treated as journey coverage for materially different workflows.
@@ -97,6 +105,9 @@ Passing => `Architecture Ready`.
       ID, coherent scope boundary, completed Screen/Workflow Contract from
       `FEATURE_DECOMPOSITION_TEMPLATE.md`, dependency, and independently testable
       acceptance outcome.
+- [ ] The slice roadmap contains exactly one active feature step; every later step
+      is `Queued` or `Blocked` until the active feature is `Verified` and its
+      documentation/closure stage is `Closed`.
 
 Passing G0–G4 => `Implementation Ready`.
 

@@ -34,7 +34,7 @@ public sealed record UpdateFiscalYearCommand(
     : FiscalYearMutation(Code, NameAr, NameEn, StartDate, EndDate, PeriodFrequency),
       ICommand<Result<FiscalYearDetailResponse>>;
 
-public sealed record ArchiveFiscalYearCommand(int Id) : ICommand<Result>;
+public sealed record ArchiveFiscalYearCommand(int Id, string RowVersion) : ICommand<Result>;
 public sealed record RestoreFiscalYearCommand(int Id, string RowVersion) : ICommand<Result<FiscalYearDetailResponse>>;
 
 public enum FiscalYearLifecycleAction
@@ -69,7 +69,13 @@ public sealed class UpdateFiscalYearCommandValidator : FiscalYearMutationValidat
 
 public sealed class ArchiveFiscalYearCommandValidator : AbstractValidator<ArchiveFiscalYearCommand>
 {
-    public ArchiveFiscalYearCommandValidator() => RuleFor(command => command.Id).GreaterThan(0);
+    public ArchiveFiscalYearCommandValidator(IStringLocalizer<CreateFiscalYearRequest> localizer)
+    {
+        RuleFor(command => command.Id).GreaterThan(0);
+        RuleFor(command => command.RowVersion)
+            .Must(FiscalYearValidation.IsValidRowVersion)
+            .WithMessage(localizer["FiscalYearRowVersionInvalid"]);
+    }
 }
 
 public sealed class RestoreFiscalYearCommandValidator : AbstractValidator<RestoreFiscalYearCommand>
@@ -213,6 +219,7 @@ public sealed class ArchiveFiscalYearCommandHandler(
                 if (fiscalYear.Status != FiscalYearStatus.Draft)
                     return Result.Failure(errors.FiscalYearNotArchivable);
 
+                writeStore.ApplyOriginalRowVersion(fiscalYear, Convert.FromBase64String(request.RowVersion));
                 fiscalYear.IsDeleted = true;
                 fiscalYear.DeletedById = actor.UserId;
                 fiscalYear.DeletedByPc = actor.MachineName;

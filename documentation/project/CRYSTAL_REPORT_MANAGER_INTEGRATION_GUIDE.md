@@ -292,27 +292,53 @@ database login.
 
 ## 7. Web feature integration
 
-Use the shared exports from `web-next/src/shared/reporting`:
+Use `useManagedReportAvailability`, `crystalReportService`, and
+`ManagedCrystalReportView` from the public Reporting exports at
+`web-next/src/modules/reporting/public`. The lower-level `ReportViewer` comes
+from `web-next/src/shared/reporting`; scope and authorization remain owned by
+the public boundary:
 
-- `crystalReportService.listPublished(entityKey)`;
-- `crystalReportService.render(reportId, { language, filters })`;
+- tenant reports use `crystalReportService.listPublished(entityKey)` and
+  `crystalReportService.render(reportId, { language, filters })`;
+- global Reference Data reports use `crystalReportService.listGlobal(entityKey)`
+  and `crystalReportService.renderGlobal(report, { language, filters })`;
+- `useManagedReportAvailability('tenant')` requires
+  `CrystalReports:View` plus an accessible `reporting` module;
+- `useManagedReportAvailability('global')` requires `super_admin` plus
+  `GlobalCrystalReports:View` and never queries tenant entitlements;
 - shared `ReportViewer` for the PDF workflow.
 
-Use a stable query key:
+Use a stable scope-aware query key:
 
 ```ts
-["crystal-reports", "published", entityKey]
+["crystal-reports", scope, entityKey]
 ```
 
 Build the report selector from the manager response. For RTL/Arabic use
 `summaryTitle`; for English use `summarySubject`; then fall back to `displayName`
-or `reportKey`. Keep the selected report ID in the view and send only that ID,
-`ar`/`en`, and feature-approved filters to `render`.
+or `reportKey`. Keep the full selected catalog item in the view so the render
+contract remains scope-aware:
+
+- tenant scope calls `crystalReportService.render(selectedReport.id, {
+  language, filters })`; the selected report ID is used in the tenant route and
+  the body contains only the language and feature-approved filters;
+- global scope calls `crystalReportService.renderGlobal(selectedReport, {
+  language, filters })`; the service derives the global route source ID from the
+  selected catalog item and sends its `entityKey` and `rowVersion` as
+  `expectedSha256`, followed by the language and approved filters in the body.
+
+Clients never invent report paths, source IDs, hashes, or filenames.
 
 When Report is an `AppMultiView` view, configure it as a non-list surface: it owns
 no list pagination and must be able to render before list rows exist. The current
 pattern is `paginate: false` and `renderWhenEmpty: true` where those options are
 available.
+
+The Report option is hidden while the scope gate is loading or denied. If an
+already-selected Report loses authorization, the feature returns to Grid and
+rejects the view change. `ManagedCrystalReportView` repeats the guard and passes
+`enabled: false` to React Query while loading or denied, so direct routes and
+stale UI state cannot call a catalog or render endpoint.
 
 The retired public `report/info` and `report/generate` endpoints no longer exist.
 Managed reports never send `ReportPath`, `ReportFileName`, or

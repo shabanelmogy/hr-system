@@ -63,5 +63,7 @@ Set-Content -LiteralPath (Join-Path $planRoot "RESEARCH.md") -Value "# $Name - R
 
 Write-Host "Created $planFile"
 Write-Host "Next: complete DISCOVERY.md, EVIDENCE.md and SPEC_SUMMARY.md; add '$PlanId' to PLAN_REGISTRY.md; obtain plan-drafting approval; then complete PLAN.md and G0-G4."
-Write-Host "Before implementation handoff, complete the Feature Decomposition Gate; use FEATURE_DECOMPOSITION_TEMPLATE.md for every child of a Decompose slice."
-Write-Host "Then run ./documentation/plans/Check-Planning.ps1 before handoff."
+Write-Host "Before any runtime scaffold, create exactly one current feature contract from FEATURE_DECOMPOSITION_TEMPLATE.md (version 2.0) for the authorized step."
+Write-Host "Complete its mandatory UI Pattern Gate for every Web and Mobile screen; a Candidate pattern blocks UI work until it is registered and reviewed in SCREEN_PATTERN_CATALOG.md."
+Write-Host "The slice roadmap must declare one ACTIVE_FEATURE_STEP. Execute one feature in API -> Web -> Mobile -> integrated live verification -> documentation/closure order; keep all siblings Queued or Blocked until closure."
+Write-Host "Then run ./documentation/plans/Check-Planning.ps1 before handoff. Legacy contracts are allowed as migration warnings, but cannot become Active until upgraded."

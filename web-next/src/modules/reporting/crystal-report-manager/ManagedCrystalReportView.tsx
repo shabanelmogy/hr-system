@@ -10,6 +10,7 @@ import {
   type ReportSearchParams,
   type UpdateReportSearchParams,
 } from "@/shared/reporting";
+import { useManagedReportAvailability } from "../public/useManagedReportAvailability";
 import { crystalReportService } from "./services";
 
 export interface ManagedCrystalReportFilter {
@@ -45,6 +46,7 @@ export default function ManagedCrystalReportView({
   showFilterBar = true,
 }: ManagedCrystalReportViewProps) {
   const { t, i18n } = useTranslation();
+  const availability = useManagedReportAvailability(scope);
   const direction = i18n.dir();
   const [selectedReportId, setSelectedReportId] = useState<string | null>(null);
   const reportsQuery = useQuery({
@@ -53,8 +55,9 @@ export default function ManagedCrystalReportView({
       ? crystalReportService.listGlobal(entityKey)
       : crystalReportService.listPublished(entityKey),
     staleTime: 5 * 60_000,
+    enabled: availability.allowed,
   });
-  const reports = reportsQuery.data ?? [];
+  const reports = useMemo(() => reportsQuery.data ?? [], [reportsQuery.data]);
   const selectedReport = reports.find((report) => report.id === selectedReportId) ?? reports[0] ?? null;
   const reportOptions = useMemo(
     () => reports.map((report) => ({
@@ -83,12 +86,16 @@ export default function ManagedCrystalReportView({
       : crystalReportService.render(selectedReport.id, request);
   }, [approvedFilterKeys, entityKey, scope, selectedReport]);
 
-  if (reportsQuery.isLoading) {
+  if (availability.isLoading || reportsQuery.isLoading) {
     return (
       <Box sx={{ display: "grid", minHeight: 240, placeItems: "center" }}>
         <CircularProgress />
       </Box>
     );
+  }
+
+  if (!availability.allowed) {
+    return <Alert severity="info">{unavailableMessage}</Alert>;
   }
 
   if (!selectedReport) {

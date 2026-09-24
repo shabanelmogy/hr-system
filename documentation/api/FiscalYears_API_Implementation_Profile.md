@@ -30,8 +30,10 @@ periods; lookup returns eligible non-archived/non-locked years.
 ## 5. Write contract
 
 Create and update accept code, bilingual names, ISO dates, and numeric frequency.
-Update adds Base64 RowVersion. Restore/lifecycle accept only RowVersion; route owns
-ID. TenantId and CompanyId are never request fields.
+Update and archive add a required Base64 RowVersion. Restore/lifecycle accept only
+RowVersion; route owns ID. TenantId and CompanyId are never request fields. An
+already archived year remains an idempotent archive success, but an active archive
+must still compare the supplied RowVersion.
 
 Update reconciles generated periods by sequence. Matching periods retain their
 database identity; only surplus periods are soft-archived and only missing periods
@@ -83,8 +85,13 @@ JSON, and pending-model check are mandatory release evidence.
 registrations both before and after Accounting and verifies that create persists the
 year and all generated periods through Accounting before scheduling the change.
 
-## 11. Deferred and next integration
+## 11. Reporting, persistence, and deferred integration
 
-Fiscal Period has no independent mutation route. Import/report/export are not
-published in this release. Workforce Plans and Budgets must reference FiscalYearId
-through server-enforced company scope and lifecycle eligibility.
+Fiscal Period has no independent mutation route. `FiscalYearsController` has no
+report endpoint: the Reporting module/catalog owns managed Crystal rendering over
+Accounting's public `fiscalyears` dataset and applies the Reporting entitlement.
+Persistence belongs to `AccountingDbContext` in schema `acc`, with the
+`20260922091842_InitialAccounting` migration; HR's `ApplicationDbContext` and
+`ErrorsService` are not feature dependencies. Import/export remain unpublished in
+this release. Workforce Plans and Budgets must reference FiscalYearId through
+server-enforced company scope and lifecycle eligibility.

@@ -79,13 +79,13 @@ existing-system review, implementation order, and Definition of Done.
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
 | fiscal-years-master | 3 | `8390cefc7a311be46bc6e92580fcbe7aff06ff47aaa4ac187f90cd7e66903da8` |
-| fiscal-years-master | 4 | `a138eeba03b2c75a88c481f8ecad0b88cd339b53f5c26f67fc52bf62d2da13bf` |
-| fiscal-years-master | 6 | `a441290822263415d40f5bdaca531bce89957f82d6491760dac44cab5853fe6e` |
+| fiscal-years-master | 4 | `e2521b85856f5b6c1e6f32e24792ae592df4134bee4bdcc4000751481eedce7e` |
+| fiscal-years-master | 6 | `e03953b3fea34d231ad9a922ae587bd21b59920251d27e5d5b70cfc570a01fc8` |
 | fiscal-years-api | 1 | `c5cd5261f849189a2749a31cd78e70e9245714e5d8c28b7f8dacb8285b23b92c` |
 | fiscal-years-api | 2 | `02d18d2d40635c247dd35aabe02cd296212efe5cb30da3a8e834f5e0c9877e8e` |
 | fiscal-years-api | 3 | `44970c0fb772eb86a62f0ea45e141c7d993b7060480314e2b05ee7fc83cfdc3f` |
 | fiscal-years-api | 4 | `1e69de36f54c56ace43f1c0d1fc3071374d91f7e473e1439011b21d51b55efcd` |
-| fiscal-years-api | 5 | `ba8176ed5d7ccdae35e2e28dbf19753c72676ad255c6787cf74c3a0dac821529` |
+| fiscal-years-api | 5 | `145560b0413b9e540fc4199f1b4aed2dfb4d7521ab496079a11f92410527841d` |
 | fiscal-years-api | 6 | `748acbb8a884f50f81cdf9e854ef7f784765a8f2781f904bf2a90f5872ed6c64` |
 | fiscal-years-api | 7 | `bb9330bdbdb4a33564e6b4560a0a2709d55cca905f26b079bd9507f9bb0276ad` |
 | fiscal-years-api | 8 | `da26f9374d1461299ddd9043d1a72414d6f63e7df4cd8babe579a9c9382cebb2` |

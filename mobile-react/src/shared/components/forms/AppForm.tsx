@@ -68,7 +68,7 @@ export interface AppFormProps extends PropsWithChildren<Omit<ViewProps, 'childre
   serverError?: string | null;
   contentContainerStyle?: StyleProp<ViewStyle>;
   footer?: ReactNode;
-  /** Development-only action that fills the form without submitting it. */
+  /** Fills a realistic local draft without submitting or persisting it. */
   mockDataAction?: {
     onGenerate: () => void;
     disabled?: boolean;

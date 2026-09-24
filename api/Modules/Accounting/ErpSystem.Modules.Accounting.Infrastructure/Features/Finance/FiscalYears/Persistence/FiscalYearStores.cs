@@ -47,7 +47,7 @@ public sealed class FiscalYearReadStore(AccountingDbContext context) : IFiscalYe
                 item.EndDate,
                 item.PeriodFrequency,
                 item.Status,
-                item.Periods.Count,
+                item.Periods.Count(period => !period.IsDeleted),
                 item.CreatedOn,
                 item.UpdatedOn,
                 item.IsDeleted,

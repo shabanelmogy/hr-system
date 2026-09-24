@@ -5,6 +5,7 @@
 | Field | Value |
 | --- | --- |
 | Plan ID | accounting-core-gl |
+| Planning method version | 2.0 |
 | Business capability | Accounting Core General Ledger |
 | Owning module | Accounting |
 | Status | Slice 1 execution-ready — later slices/release remain gated |
@@ -12,7 +13,7 @@
 | Primary owner | Accounting Product + Accounting Engineering |
 | Reference feature(s) | Existing Accounting Fiscal Years + current Web/Mobile shared component systems |
 | Related plans | `accounting-delivery`, future AP/AR/Tax/Treasury/Assets/Reporting plans |
-| Last reviewed | 2026-09-22 |
+| Last reviewed | 2026-09-23 |
 
 ### Planning evidence
 
@@ -399,6 +400,7 @@ prototype reference is design input only.
 | Page actions | `PageHeader` | Reuse |
 | Lists/ledger | `MyDataGrid` | Reuse |
 | Forms | `MyForm` + shared form shell/fields | Reuse |
+| Local mock drafts | shared `MyForm` / `AppForm` mock action | Required on every writable Accounting form after authoritative prerequisites load; current reachable compatibility forms follow the rule until replaced, without counting as child completion |
 | Confirmation | shared confirmation dialog | Reuse |
 | Loading/empty/error | shared feedback/loaders | Reuse |
 | Journal lines | shared form/grid primitives | Feature-local composition first; promote only if genuinely generic |
@@ -439,7 +441,7 @@ before offering another financial mutation.
 | Editing | Required | Required | Preserve child lines + RowVersion |
 | Viewing | Required | Required | Read-only detail + lifecycle/audit |
 | Listing & Filtering | Required | Required | Server criteria/status/account filters |
-| Mock/Test Data Generator | Required in development where project pattern applies | Same | Balanced draft only; never auto-persist |
+| Mock/Test Data Generator | **Mandatory on every writable Accounting data-entry journey** | **Mandatory on every writable Accounting data-entry journey** | One shared form action fills a realistic, valid local draft only; it never submits, persists, fabricates IDs/RowVersion/tenant/company/posting/auth state, or bypasses server validation. Read-only, report-only, and query-only screens are explicitly N/A and must not fabricate data. Availability follows the shared platform preference/contract and is not gated by build environment flags. |
 
 ## 15. Reporting / import / export / files
 
@@ -602,12 +604,12 @@ umbrella and does not replace these child contracts.
 | Slice 1 — Ledger setup spine | Decompose | `ledger-setup-posting-profiles` | `documentation/plans/business/accounting-core-gl/decomposition/ledger-setup-posting-profiles.md` | Posting Profile lifecycle + deterministic resolve-preview diagnostics are independently verified |
 | Slice 1 — Ledger setup spine | Decompose | `ledger-setup-integration-verification` | `documentation/plans/business/accounting-core-gl/decomposition/ledger-setup-integration-verification.md` | Cross-child navigation/permissions/i18n/client integration and umbrella Phase 06 verification are independently reconciled |
 
-**Slice 1 decomposition contract gate: Closed — reviewed 2026-09-22.** All nine
-child Screen/Workflow Contracts exist under this plan's `decomposition/` folder and
-execution is authorized only in dependency order: Currency → COA/Hierarchy →
-Dimensions → Books/Journals → Company Settings → Exchange Rates → Link Accounts →
-Posting Profiles → Integration/Verification. Existing umbrella runtime is evidence
-to reconcile; it does not count as completion of a child package by itself.
+**Slice 1 decomposition contract gate: Closed — reviewed 2026-09-22.** The historical
+nine child Screen/Workflow Contracts remain the package traceability set. Their
+dependency order is preserved in `SLICE-01-LEDGER-SETUP-EXECUTION.md`, but the
+current human run is controlled by that roadmap's single active-step marker and
+starts with the Fiscal Years revalidation contract. Existing umbrella runtime is
+evidence to reconcile; it does not count as completion of a child package by itself.
 
 Implementation is vertical across API/Web/Mobile/tests.
 
@@ -621,24 +623,20 @@ Implementation is vertical across API/Web/Mobile/tests.
 
 Later subledger plans start only after Slice 3 proves the backbone.
 
-### Slice 1 child execution packages
+### Slice 1 execution authority
 
-Slice 1 remains one business slice and one `accounting-ledger-setup` umbrella for
-integration/history evidence, but implementation is decomposed into focused child
-packages. The canonical package contracts, Screen Contracts, dependency gates and
-exit criteria are defined in `SLICE-01-LEDGER-SETUP-EXECUTION.md`.
+`SLICE-01-LEDGER-SETUP-EXECUTION.md` is the single roadmap for Slice 1 dependency
+order and status. It contains the historical package IDs for traceability and the
+current human sequence, but it is the only document that moves the active-step
+marker. Work one feature at a time in the fixed order API → Web → Mobile →
+integrated live verification → documentation/closure.
 
-The default execution order is:
-
-`1A Currency → 1B COA/Hierarchy → 1C Dimensions → 1D Books/Journals →
-1E Company Settings → 1F Exchange Rates → 1G Link Accounts → 1H Posting Profiles
-→ 1V Integration/Verification`.
-
-Work one child at a time by default. Each child owns typed transport/API contracts
-and a specific Web/Mobile Screen Contract. The current generic Ledger Setup client
-record/renderer is implementation evidence to refactor, not the target architecture.
-Slice 1 closes only when `1V` reconciles all child contracts and Phase 06 records
-`Verified`.
+The active first feature and its complete UI Pattern Gate are recorded in
+`decomposition/fiscal-years.md`. That contract is the only detailed authority for
+Fiscal Years; this master plan does not duplicate its screen or API details.
+Currency and all later steps remain queued or blocked until Fiscal Years is
+verified and closed. Historical package completion is evidence only until its
+current contract and live journey are revalidated.
 
 ### Post-implementation verification and customer education
 

@@ -64,6 +64,11 @@ export interface UpdateFiscalYearMutation {
   request: FiscalYearMutationRequest & { rowVersion: string };
 }
 
+export interface FiscalYearConcurrencyMutation {
+  id: number;
+  rowVersion: string;
+}
+
 export interface FiscalYearPageQuery {
   pageNumber: number;
   pageSize: number;

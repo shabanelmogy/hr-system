@@ -183,7 +183,7 @@ rows. The handler checks conflicts and the database unique indexes close races.
 | Archive dependencies | Authoritative | Confirmation/error feedback | Confirmation/error feedback |
 | Audit | DbContext + update trail | None | None |
 | Realtime production | Post-commit Hangfire job | Invalidate Countries + States | Invalidate `['countries']` |
-| Reports | Crystal remains separate; main API owns tenant-scoped report-template CQRS, revisions, approved data-source catalog, and Countries report data | Crystal viewer plus published ActiveReportsJS viewer and permission-protected shared Designer | Independent PDF/device workflow |
+| Reports | Global managed Crystal viewer requires `super_admin` + `GlobalCrystalReports:View` and never queries tenant entitlement; tenant ActiveReportsJS templates remain a separate contract | Global Crystal viewer uses the Platform catalog/render boundary; tenant template APIs remain separate | Independent PDF/device workflow |
 | Import | Atomic 1-100 bulk-create endpoint without an idempotency key | Shared bounded XLSX parse/template/preview, feature validation, locked uncertainty reconciliation | Shared bounded native XLSX parse/template/preview, feature validation, locked uncertainty reconciliation |
 | Localization | EN/AR errors/notifications | EN/AR UI | EN/AR UI |
 
@@ -306,7 +306,7 @@ specified for the new feature.
 | Page size | 10 | 5 Table / 3 Cards | API limit remains shared |
 | Analytics | Page-scoped Chart | None | Never invent client-side global metrics |
 | Import | XLSX preview/bulk create | None | Mobile absence is explicit |
-| Report output | Crystal remains default; published tenant ActiveReports templates are viewable and authorized authors manage drafts with Save/Save As/publish | PDF preview/share/download | Crystal remains independent; ActiveReports templates use the main API, revisions, RowVersion, and only the approved relative Countries JSON source |
+| Report output | Global Crystal remains default for Geography; published tenant ActiveReports templates are a separate viewable/authorable capability | Global Crystal PDF preview/share/download; tenant template behavior remains separate | Global Crystal is independent; ActiveReports templates use the main API, revisions, RowVersion, and only the approved relative Countries JSON source |
 | Form surface | Modal/dialog | Full-screen modal | Same request and lifecycle contract |
 
 Parity means equivalent business capability and truthful criteria, not
@@ -322,7 +322,7 @@ pixel-identical UI.
 | C-F06 | Web | Resolved: Import now validates extension/MIME/size, XLSX container, first-sheet presence, exact ordered headers, duplicate headers, empty files, formulas, and unexpected columns instead of blindly discarding row 1. | Keep feature headers/mapping separate from the shared parser. |
 | C-F07 | Web | Resolved: ambiguous no-response/5xx submissions are locked as uncertain and reconcile through a refreshed Grid; stable 4xx batches are failed and never conflated with uncertainty. | Do not add blind retry without API idempotency. |
 | C-F04 | Web tests | Resolved: page wiring covers criteria/loading/action/form composition, service tests assert bulk bodies, and query-hook tests prove mutation invalidation order. | Keep representative integration wiring beside pure-unit coverage. |
-| C-F05 | Web reports | Resolved: ActiveReportsJS now has tenant-scoped template/revision persistence, published and management reads, explicit permissions, RowVersion, an approved source catalog, and a published viewer. | Preserve the shared reporting contract; register every future feature/data source in the server allow-list and prove tenant isolation. |
+| C-F05 | Web reports | Resolved: global managed Crystal authorization is centralized (`super_admin` + `GlobalCrystalReports:View`, no tenant entitlement query); ActiveReportsJS tenant template/revision persistence remains a separate contract. | Preserve both explicit scopes; register every future feature/data source in the server allow-list and prove tenant isolation. |
 | C-F08 | API lifecycle | Resolved: Country archive and State create/update/restore now share transaction-owned Country lifecycle resources, closing the stale dependency-check race. | Every dependent mutation must participate in the same database invariant boundary. |
 | C-F12 | API lifecycle | Resolved: Company registration/operating scope now blocks Country archive and scope writes share selected Country lifecycle resources. | Global master lifecycle must remain consistent with every tenant/company reference. |
 | C-F09 | Web bulk | Resolved: oversized eligible selections are rejected at 100 with localized feedback and rechecked by direct submit handlers. | Mirror API limits without truncation; keep API validation authoritative. |

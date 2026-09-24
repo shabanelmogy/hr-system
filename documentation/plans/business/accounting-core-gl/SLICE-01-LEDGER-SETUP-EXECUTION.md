@@ -15,6 +15,16 @@ This decomposition does not create a new Accounting module, new ownership bounda
 or new business scope. Runtime implementation still lives in the existing
 Accounting module and existing Web/Mobile Accounting feature areas.
 
+**ROADMAP_STATUS_AUTHORITY:** This document owns dependency order and the current
+execution status for Slice 1. `PLAN.md` links here and does not duplicate the
+step-by-step runbook.
+
+**ACTIVE_FEATURE_STEP:** fiscal-years
+
+Exactly one feature may be `Active`. Every later feature remains `Queued` or
+`Blocked` until the active feature is `Verified` and its documentation/closure
+stage is `Closed`.
+
 ## 1. Execution rules
 
 1. Work one child package at a time by default. Finish its API/client contract and
@@ -28,6 +38,9 @@ Accounting module and existing Web/Mobile Accounting feature areas.
    The generic `LedgerSetupRecord` catch-all model and resource-name renderer are
    explicitly not the target architecture. Future corrections move toward
    child-owned typed services/hooks/screens instead of expanding generic switching.
+   While queued routes remain reachable, the renderer must still honor cross-cutting
+   shared-form safety rules such as D-025. That compatibility coverage is not evidence
+   that a queued child package is implemented or accepted.
 4. Every child must pass an API-readiness gate before client completion: typed
    request/response models, stable errors, permissions, RowVersion/lifecycle rules,
    deterministic paging/filter/sort/search where applicable, and exact lookups.
@@ -40,6 +53,16 @@ Accounting module and existing Web/Mobile Accounting feature areas.
    primitive. Do not copy domain-specific code between modules.
 7. Cross-child behavior is accepted only in package 1V Integration & Verification.
    A child may be locally complete while Slice 1 remains open.
+8. The human execution sequence starts with Step 01 Fiscal Years & Periods, then
+   Step 02 Currency, and continues through the historical child packages. Each
+   step is a closed vertical slice in the order `API → Web → Mobile → live
+   API-backed verification → documentation/closure`; no later step may start
+   until integrated live verification is `Verified` and documentation/closure is
+   `Closed` for the current step.
+9. Every screen contract must state its Pattern ID and reviewed reference,
+   platform adaptation, required/Deferred/Excluded views, form/detail shape,
+   loading/empty/error/permission states, mock-data decision, and evidence. The
+   shared component list alone is not a pattern decision.
 
 ## 2. Child package catalog and dependency order
 
@@ -62,15 +85,33 @@ Package 1V is mandatory; completing packages 1A–1H separately does not close S
 
 | Package | Status | Meaning |
 | --- | --- | --- |
-| `1A` Currency | **Closed — Phase 07 complete 2026-09-22** | Phase 06 verified API/Web/Mobile child behavior; the customer education pack is published; sibling/global findings remain with `1B`–`1V` |
-| `1B` COA & Hierarchy | **Active child** | next implementation/refactor authority after verified Currency closure |
+| `1A` Currency | **Queued — current revalidation** | Historical Phase 07 completion is evidence only; start after Fiscal Years is Closed and revalidate the current contract |
+| `1B` COA & Hierarchy | Queued | starts only after the current human Step 02 Currency is Verified/Closed |
 | `1C` Dimensions | Queued | starts after the `1B` typed composition seam is ready |
 | `1D` Books & Journal Definitions | Queued | focused setup child; no JournalEntry lifecycle |
 | `1E` Company Settings | Queued | starts after Currency + Book contracts are ready |
 | `1F` Exchange Rates | Queued | starts after Currency contract readiness |
 | `1G` Link Accounts | Queued | starts after Account + Book contracts are ready |
 | `1H` Posting Profiles | Queued | starts after account-determination dependencies are ready |
-| `1V` Integration & Verification | Final | runs after `1A`–`1H`; owns umbrella Phase 06 reconciliation only |
+| `1V` Integration & Verification | Queued — final | runs after `1A`–`1H`; owns umbrella Phase 06 reconciliation only |
+
+### Human execution sequence (current run)
+
+Historical package IDs are intentionally unchanged. They remain the traceability
+keys while this table controls the actual review order:
+
+| Step | Feature | Package/reference | Status | Gate |
+| ---: | --- | --- | --- | --- |
+| 01 | Fiscal Years & Periods | Existing Accounting Fiscal Years | **Active — revalidation** | Integrated live verification must be `Verified`, then documentation/closure must be `Closed` |
+| 02 | Currency | `1A` | Queued | Cannot start before Step 01 is `Closed` |
+| 03 | COA & Hierarchy | `1B` | Queued | Cannot start before Step 02 is `Closed` |
+| 04 | Dimensions | `1C` | Queued | Cannot start before Step 03 is `Closed` |
+| 05 | Books & Journal Definitions | `1D` | Queued | Cannot start before Step 04 is `Closed` |
+| 06 | Company Settings | `1E` | Queued | Cannot start before Step 05 is `Closed` |
+| 07 | Exchange Rates | `1F` | Queued | Cannot start before Step 06 is `Closed` |
+| 08 | Link Accounts | `1G` | Queued | Cannot start before Step 07 is `Closed` |
+| 09 | Posting Profiles | `1H` | Queued | Cannot start before Step 08 is `Closed` |
+| 10 | Integration & Verification | `1V` | Final | Reconcile all steps and close Slice 1 |
 
 ## 3. Screen Contract baseline
 
@@ -85,10 +126,23 @@ Every child screen contract must record and verify all applicable items below.
 | Write state | create/edit/view/lifecycle actions, server field errors, RowVersion conflict/reload where applicable |
 | Criteria | server-owned paging/search/filter/sort for growing collections; no current-page behavior presented as global |
 | Forms | shared form primitives, explicit enum/select sources, server-scope fields absent from payloads |
+| Mock data | Every writable form exposes the shared mock-data action after authoritative prerequisites load; it fills local valid draft values only and never submits, persists, fabricates identity/concurrency/scope/posting/auth state. Read-only/report/query-only surfaces are N/A. Reachable generic compatibility forms obey the same rule until their typed child replaces them; this does not close the child gate. |
 | Accessibility | translated labels/actions, keyboard/touch target semantics, focus/error behavior, screen-reader names |
 | Localization | English/Arabic + RTL/LTR verified through the Accounting translation scope/catalog |
 | Responsive | bounded desktop content; compact/mobile layouts avoid page-level horizontal overflow |
 | Verification | focused contract tests + component/screen tests + live API-backed Phase 06 journey evidence |
+
+## 3A. Step 01 — Fiscal Years & Periods revalidation contract
+
+Fiscal Years is the sole active feature in the current run. Its complete
+Screen/Workflow Contract, including the UI Pattern Gate, API/Web/Mobile contracts,
+vertical execution ledger, and pending live-evidence boundary, is canonical at
+`decomposition/fiscal-years.md`.
+
+This roadmap owns only the order and status. It must not duplicate the Fiscal
+Years screen or API details. Historical implementation and test evidence remains
+useful, but cannot move the step to `Verified` until the contract's authenticated
+Web and actual Mobile/device journey is recorded.
 
 ## 4. Package 1A — Currency
 
@@ -100,6 +154,10 @@ history.
 ISO-code normalization/uniqueness errors; server total/search/filter/sort contract;
 RowVersion archive/restore; `IAccountingCurrencyCatalog` active validation contract.
 
+**Pattern mapping.** Currency will be revalidated as Step 02 against P-001
+Server-managed Grid/CRUD; its exact Web/Mobile views, form states, and evidence
+must be recorded in its child contract before Step 02 starts.
+
 **Screen Contract.** Web route `/finance/ledger-setup/currencies`; Mobile route
 `/finance/ledger-setup/currencies`. Primary view is a server-managed list with
 create/view/edit/archive/restore. The form contains ISO code, bilingual names and
@@ -110,6 +168,11 @@ use the Accounting lookup and keep their own `CurrencyCode` snapshots.
 `ConfirmationDialog`, shared server-list state; Mobile `AppListScreen`,
 `AppDataTable`, `AppForm`, `AppStateView`, `ConfirmationDialog`. Fiscal Years is an
 architecture/query-state reference only.
+
+**Mock data.** Currency create/edit uses the shared form action on both platforms;
+it fills a valid local bilingual currency draft and never calls the API. The action
+is visible according to the shared form contract, not a build-environment flag;
+view mode remains without it.
 
 **Exit.** One management route/owner, typed clients, HR selectors migrated, no HR
 Currency management/persistence surface, client/API contract tests green.

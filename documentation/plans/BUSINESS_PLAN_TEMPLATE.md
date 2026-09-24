@@ -13,6 +13,7 @@
 | Target milestone | `<release/phase>` |
 | Primary owner | `<team/role>` |
 | Reference feature(s) | `<countries/states/other/none>` |
+| Planning method version | `2.0 — capability plan + slice roadmap + feature contract + evidence ledger` |
 | Related plans | `<links or N/A>` |
 | Last reviewed | `<YYYY-MM-DD>` |
 
@@ -260,6 +261,21 @@ generic boilerplate requirements that the product does not support.>
 
 ## 23. Implementation phases
 
+### Planning authority and execution rule
+
+`PLAN.md` owns capability scope, ownership, business decisions, and release
+boundaries. Link one canonical slice roadmap for dependency order and status. Each
+executable feature has one contract created from
+`FEATURE_DECOMPOSITION_TEMPLATE.md`; that contract owns its UI Pattern Gate and
+the fixed order `API → Web → Mobile → integrated live verification →
+documentation/closure`. Evidence remains in the owning API/Web/Mobile/system
+profiles and tests. Do not duplicate feature screen or API detail across these
+levels.
+
+The roadmap must contain exactly one `ACTIVE_FEATURE_STEP` marker. Only that
+feature may be `Active`; all later features stay `Queued` or `Blocked` until its
+contract reaches integrated `Verified` and documentation/closure `Closed`.
+
 ### Feature Decomposition Gate
 
 Complete this table **before any slice is handed to `documentation/system/`**. Use
@@ -271,14 +287,19 @@ different workflows.
 
 | Slice | Decision | Feature ID | Screen/Workflow Contract | Boundary / independent acceptance |
 | --- | --- | --- | --- | --- |
-| `<exact slice id/name>` | `<Single feature or Decompose>` | `<kebab-case-feature-id>` | `<N/A — single coherent workflow, or documentation/plans/business/<plan-id>/decomposition/<feature-id>.md>` | `<what this feature alone owns and how it is accepted>` |
+| `<exact slice id/name>` | `<Single feature or Decompose>` | `<kebab-case-feature-id>` | `documentation/plans/business/<plan-id>/decomposition/<feature-id>.md` | `<what this feature alone owns and how it is accepted>` |
 
-For `Decompose`, create every referenced Screen/Workflow Contract from
-`documentation/plans/FEATURE_DECOMPOSITION_TEMPLATE.md`. The contract must name the
-closest existing reference and exact reusable components, layout/workspace,
+Create every referenced Screen/Workflow Contract from
+`documentation/plans/FEATURE_DECOMPOSITION_TEMPLATE.md`. A `Single feature` slice
+has one contract; a `Decompose` slice has one contract per child. Each contract must
+name the closest existing reference and exact reusable components, layout/workspace,
 list/tree/detail and create/edit/view/lifecycle journeys, typed transport and server
 criteria, UX states, permissions/read-only behavior, concurrency, i18n/RTL,
 accessibility/responsive behavior, tests, and the child exit gate.
+
+Every contract must also complete the mandatory UI Pattern Gate for each Web and
+Mobile screen. A `Candidate` pattern blocks UI implementation until it is
+registered and reviewed in `documentation/project/SCREEN_PATTERN_CATALOG.md`.
 
 | Phase | Goal | Dependencies | Deliverables | Entry gate | Exit gate |
 | --- | --- | --- | --- | --- | --- |

@@ -15,6 +15,6 @@ function useInvalidatingMutation<TVariables, TResult = unknown>(mutationFn: (val
   });
 }
 export const useSaveFiscalYear = () => useInvalidatingMutation(({ id, request, rowVersion }: { id: number | null; request: FiscalYearRequest; rowVersion?: string }, useCases) => useCases.save({ id, request, rowVersion }));
-export const useArchiveFiscalYear = () => useInvalidatingMutation((id: number, useCases) => useCases.archive(id));
+export const useArchiveFiscalYear = () => useInvalidatingMutation(({ id, rowVersion }: { id: number; rowVersion: string }, useCases) => useCases.archive(id, rowVersion));
 export const useRestoreFiscalYear = () => useInvalidatingMutation(({ id, rowVersion }: { id: number; rowVersion: string }, useCases) => useCases.restore(id, rowVersion));
 export const useFiscalYearLifecycle = () => useInvalidatingMutation(({ id, rowVersion, action }: { id: number; rowVersion: string; action: FiscalYearLifecycleAction }, useCases) => useCases.lifecycle(id, rowVersion, action));

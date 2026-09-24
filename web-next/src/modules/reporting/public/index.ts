@@ -8,3 +8,9 @@ export type {
   CrystalReportListItem,
   RenderCrystalReportRequest,
 } from "../crystal-report-manager/types";
+export {
+  useManagedReportAvailability,
+  getManagedReportAuthorization,
+  resolveManagedReportAvailability,
+  type ManagedReportScope,
+} from "./useManagedReportAvailability";

@@ -208,6 +208,30 @@
       "purpose": "Approved Grid, Card, Chart, Report, and Import registration"
     },
     {
+      "id": "web-global-report-policy",
+      "layer": "web-next-shared",
+      "path": "web-next/src/modules/reporting/public/useManagedReportAvailability.ts",
+      "purpose": "Global managed-report role and permission gate without tenant entitlement"
+    },
+    {
+      "id": "web-global-report-policy-tests",
+      "layer": "web-next-test",
+      "path": "web-next/src/modules/reporting/public/useManagedReportAvailability.test.ts",
+      "purpose": "Global and tenant scope authorization policy coverage"
+    },
+    {
+      "id": "web-global-report-policy-integration-tests",
+      "layer": "web-next-test",
+      "path": "web-next/src/modules/reporting/public/useManagedReportAvailability.integration.test.tsx",
+      "purpose": "Hook-level proof that global scope disables tenant module queries and tenant scope enables them"
+    },
+    {
+      "id": "web-managed-report-defense-tests",
+      "layer": "web-next-test",
+      "path": "web-next/src/modules/reporting/crystal-report-manager/ManagedCrystalReportView.test.tsx",
+      "purpose": "Denied report catalog query defense"
+    },
+    {
       "id": "web-report-viewer",
       "layer": "web-next",
       "path": "web-next/src/shared/reporting/components/ReportViewer.tsx",

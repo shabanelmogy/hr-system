@@ -11,6 +11,7 @@ import { usePermissions } from "@/shared/hooks/usePermissions";
 import type { FiscalYearLifecycleAction, FiscalYearLifecycleFilter, FiscalYearListItem, FiscalYearPermissions, FiscalYearRecordStatus, FiscalYearSearchField, FiscalYearSearchOperator, FiscalYearSortColumn } from "../types/FiscalYear";
 import FiscalYearsCardView from "./FiscalYearsCardView";
 import FiscalYearsDataGrid from "./FiscalYearsDataGrid";
+import { getFiscalYearViews, isFiscalYearView, type FiscalYearView } from "../utils/fiscalYearViews";
 
 const FiscalYearReportPage = dynamic(() => import("../reports/pages/FiscalYearReportPage"));
 
@@ -27,14 +28,15 @@ export default function FiscalYearsMultiView(props: Props) {
   const modulesQuery = useAccessibleModulesQuery();
   const canViewReports = hasPermission(appPermissions.ViewCrystalReports) &&
     (modulesQuery.data ?? []).some((module) => module.code.toLowerCase() === "reporting");
-  const [view, setView] = useState<"grid" | "cards" | "report">("grid");
+  const [view, setView] = useState<FiscalYearView>("grid");
   const [filtersVisible, setFiltersVisible] = useState(true);
-  const visibleView = view === "report" && !canViewReports ? "grid" : view;
+  const visibleView = isFiscalYearView(view, canViewReports) ? view : "grid";
+  const availableViews = getFiscalYearViews(canViewReports);
   const searchFields: FiscalYearSearchField[] = ["all", "code", "nameAr", "nameEn"];
   const operators: FiscalYearSearchOperator[] = ["contains", "doesNotContain", "equals", "doesNotEqual", "startsWith", "endsWith"];
   const sortOptions: FiscalYearSortColumn[] = ["startDate", "endDate", "code", "nameAr", "nameEn", "status", "createdOn"];
   return <Box sx={{ display: "flex", flexDirection: "column", height: "100%", width: "100%", minWidth: 0 }}>
-    <PageHeader variant="multi-view" title={t("fiscalYears.title")} storageKey="fiscal-years-view-layout" defaultView="grid" availableViews={["grid", "cards", ...(canViewReports ? ["report" as const] : [])]} onAdd={props.permissions.canCreate ? props.onAdd : undefined} dataCount={props.totalCount} totalLabel={t("fiscalYears.totalLabel")} onRefresh={props.onRefresh} onViewTypeChange={value => (value === "grid" || value === "cards" || (value === "report" && canViewReports)) && setView(value)} onFilter={() => setFiltersVisible(value => !value)} isFilterBarVisible={filtersVisible} showActions={{ add: props.permissions.canCreate, refresh: true, export: false, filter: true }} />
+    <PageHeader variant="multi-view" title={t("fiscalYears.title")} storageKey="fiscal-years-view-layout" defaultView="grid" availableViews={availableViews} onAdd={props.permissions.canCreate ? props.onAdd : undefined} dataCount={props.totalCount} totalLabel={t("fiscalYears.totalLabel")} onRefresh={props.onRefresh} onViewTypeChange={value => isFiscalYearView(value, canViewReports) && setView(value)} onFilter={() => setFiltersVisible(value => !value)} isFilterBarVisible={filtersVisible} showActions={{ add: props.permissions.canCreate, refresh: true, export: false, filter: true }} />
     {filtersVisible && visibleView === "cards" ? <CardViewHeader compact showTitleSection={false} title="" mainChipLabel="" page={props.page}
       searchTerm={props.searchValue} searchPlaceholder={t("fiscalYears.search.placeholder")} onSearchChange={props.onSearchChange} onClearSearch={() => props.onSearchChange("")}
       sortBy={props.sortColumn} sortByOptions={sortOptions.map(value => ({ value, label: t(`fiscalYears.sort.${value}`) }))} onSortByChange={value => props.onSortChange(value as FiscalYearSortColumn, props.sortDirection)} sortOrder={props.sortDirection.toLowerCase() as "asc" | "desc"} onSortOrderChange={value => props.onSortChange(props.sortColumn, value.toUpperCase() as "ASC" | "DESC")}

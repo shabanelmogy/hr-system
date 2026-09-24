@@ -39,6 +39,6 @@ export interface MyFormProps {
   errorLabels?: Record<string, string>;
   onErrorFound?: (errorField: string, fieldElement: HTMLElement) => void;
   footerLeft?: ReactNode;
-  /** Development-only action that fills the form without submitting it. */
+  /** Fills a realistic local draft without submitting or persisting it. */
   mockDataAction?: MockDataAction;
 }

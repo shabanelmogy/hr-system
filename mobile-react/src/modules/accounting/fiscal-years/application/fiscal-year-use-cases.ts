@@ -22,7 +22,7 @@ export interface FiscalYearUseCases {
   create(request: FiscalYearRequest): Promise<FiscalYearDetail>;
   update(id: number, request: FiscalYearRequest, rowVersion: string): Promise<FiscalYearDetail>;
   save(input: SaveFiscalYearInput): Promise<FiscalYearDetail>;
-  archive(id: number): Promise<void>;
+  archive(id: number, rowVersion: string): Promise<void>;
   restore(id: number, rowVersion: string): Promise<FiscalYearDetail>;
   lifecycle(id: number, rowVersion: string, action: FiscalYearLifecycleAction): Promise<FiscalYearDetail>;
 }
@@ -43,7 +43,7 @@ export function createFiscalYearUseCases(repository: FiscalYearRepository): Fisc
       if (!rowVersion) throw new Error('Fiscal year rowVersion is required for update.');
       return update(id, request, rowVersion);
     },
-    archive: (id) => repository.archive(id),
+    archive: (id, rowVersion) => repository.archive(id, rowVersion),
     restore: (id, rowVersion) => repository.restore(id, rowVersion),
     lifecycle: (id, rowVersion, action) => repository.lifecycle(id, rowVersion, action),
   };

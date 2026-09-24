@@ -8,7 +8,7 @@ export class DefaultFiscalYearRepository implements FiscalYearRepository {
   getLookup() { return this.remote.getLookup(); }
   create(request: Parameters<FiscalYearRepository['create']>[0]) { return this.remote.create(request); }
   update(id: number, request: Parameters<FiscalYearRepository['update']>[1], rowVersion: string) { return this.remote.update(id, request, rowVersion); }
-  archive(id: number) { return this.remote.archive(id); }
+  archive(id: number, rowVersion: string) { return this.remote.archive(id, rowVersion); }
   restore(id: number, rowVersion: string) { return this.remote.restore(id, rowVersion); }
   lifecycle(id: number, rowVersion: string, action: Parameters<FiscalYearRepository['lifecycle']>[2]) { return this.remote.lifecycle(id, rowVersion, action); }
 }

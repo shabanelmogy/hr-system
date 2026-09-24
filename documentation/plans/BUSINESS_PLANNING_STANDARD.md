@@ -187,6 +187,23 @@ for heterogeneous workflows.
 
 Exit: every domain capability has an intentional journey or explicit Deferred/Excluded decision.
 
+### UI Pattern Gate (part of Stage 8)
+
+Every executable feature unit has a Screen/Workflow Contract with one row for
+each Web and Mobile screen. The row records Screen ID, route, user job,
+data/interaction shape, primary Pattern ID, form or sub-pattern decision, exact
+reviewed reference source path, platform status, Required/Deferred/Excluded views,
+all loading/empty/error/forbidden/dirty/conflict states, offline policy, mock-data
+policy, permission and tenant/company scope, responsive/RTL/accessibility rules,
+and intentional deviations.
+
+Use the current catalog in `documentation/project/SCREEN_PATTERN_CATALOG.md` and
+inspect its source references before implementation. A `Candidate` pattern is a
+hard stop: register and review it as a stable `P-###` pattern before writing
+feature UI. A shared-component reuse list cannot replace this decision. The
+feature contract also records the fixed vertical order `API → Web → Mobile →
+integrated live verification → documentation/closure`.
+
 ## Stage 9 — Reporting, import/export, and operations
 
 When applicable define:
@@ -252,6 +269,13 @@ stable canonical ID under `documentation/plans/notes/`. The plan references the
 ID; it does not maintain a competing duplicate backlog.
 
 Then break implementation into dependency-ordered vertical slices with entry/exit gates.
+
+Keep the authorities separate: `PLAN.md` owns capability scope and business
+decisions; the slice execution document owns dependency order and exactly one
+`Active` feature marker; one decomposition contract owns one feature's platform
+execution and evidence. Do not duplicate screen/API detail in the master plan or
+roadmap. Every later feature remains `Queued` or `Blocked` until the active feature
+is `Verified` and its documentation/closure stage is `Closed`.
 
 Before a slice is handed to the implementation documentation system, complete its
 **Feature Decomposition Gate**. Record `Single feature` only when the slice is one

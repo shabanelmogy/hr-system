@@ -4,9 +4,7 @@ import dynamic from "next/dynamic";
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { PageHeader } from "@/shared/components/navigation/header";
-import { permissions as appPermissions } from "@/lib/auth/permissions";
-import { usePermissions } from "@/shared/hooks/usePermissions";
-import { useAccessibleModulesQuery } from "@/platform/modules";
+import { useManagedReportAvailability } from "@/modules/reporting/public";
 import type { AddressType, AddressTypeSearchField, AddressTypeSearchOperator, AddressTypeSortColumn, AddressTypeStatus } from "../types/AddressType";
 import type { AddressTypePermissionSet } from "../utils/addressTypePermissions";
 import AddressTypesCardView from "./AddressTypesCardView";
@@ -58,10 +56,7 @@ export interface AddressTypesMultiViewProps {
 /** Directly follows StatesMultiView: the only differences are Address Type fields and contracts. */
 export default function AddressTypesMultiView(props: AddressTypesMultiViewProps) {
   const { t } = useTranslation();
-  const { hasPermission } = usePermissions();
-  const modulesQuery = useAccessibleModulesQuery();
-  const canViewReports = hasPermission(appPermissions.ViewCrystalReports) &&
-    (modulesQuery.data ?? []).some((module) => module.code.toLowerCase() === "reporting");
+  const { allowed: canViewReports } = useManagedReportAvailability("tenant");
   const {
     onPageChange,
     onPageSizeChange,

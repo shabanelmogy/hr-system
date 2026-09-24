@@ -70,8 +70,8 @@ Before changing runtime source:
 | Concern | Required decision |
 | --- | --- |
 | Platform and engine | `Web and mobile use the managed Crystal Report catalog/render contract; web uses shared ReportViewer and mobile uses authenticated native PDF cache, print/open, share, and cleanup. No feature-owned legacy report endpoint.` |
-| Catalog and authorization | `Both clients listPublished("districts"); Districts:View guards the feature, CrystalReports:View guards the mobile Report view, and the managed catalog enforces published version plus Run access.` |
-| Render contract | `Both clients render(reportId, { language, filters }); clients send only the managed report ID, ar|en, and approved filters.` |
+| Catalog and authorization | `Web and mobile Districts use only the global catalog/render boundary: super_admin + GlobalCrystalReports:View, with no tenant Reporting entitlement query. Tenant-owned features use their own entityKey and tenant policy; Districts never falls back to tenant listPublished("districts"). The managed catalog enforces published version plus Run access.` |
+| Render contract | `Global clients renderGlobal(sourceId, { entityKey, expectedSha256, language, filters }); tenant clients render(reportId, { language, filters }); each client sends only the scope-approved identifier and bounded filters.` |
 | Dataset | `One ReportData table with DistrictId, DistrictAr, DistrictEn, DistrictCode, StateId, StateAr, StateEn, AddressesCount; active Districts whose State and Country are active; deterministic DistrictId order.` |
 | Filters | `Optional exact-match NameAr/NameEn aliases and StateAr/StateEn aliases only; unknown nonblank filters reject the dataset request.` |
 | Runtime profile | `The Reporting data-provider schema and Crystal runtime profile must match exactly; business truth comes through the owning module's public source Contract.` |

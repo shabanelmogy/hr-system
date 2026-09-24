@@ -78,7 +78,7 @@ existing-system review, implementation order, and Definition of Done.
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| ledger-setup-coa-hierarchy-master | 3 | `506261bc57d418b35b861e895202f0d0e002e76580f31b6bc221fcdf725417e3` |
+| ledger-setup-coa-hierarchy-master | 3 | `492db78014ebbec06f6ea5efcb4834728e7e716f07de1a65b7a8ef54c48f5d96` |
 | ledger-setup-coa-hierarchy-master | 4 | `d98c472a1497ad2d7f2e5d96839ed1a1c7fec16d3f6f3c1a45fd083f190be6d8` |
 | ledger-setup-coa-hierarchy-master | 6 | `aa868978610f3e8a3aa72060935719cf3f657c796f10359642b45cc0c244edc5` |
 | ledger-setup-coa-hierarchy-api | 1 | `e2c839e0c968b6e7aa5cba8ed03dde1391d48c46c58e89f1c2110a9798469a82` |
@@ -90,4 +90,4 @@ existing-system review, implementation order, and Definition of Done.
 | ledger-setup-coa-hierarchy-api | 7 | `cf04147c5bc2adca4aec42ef7c9f6cf1e6e9fa7150804c42a53d18b07ab669bd` |
 | ledger-setup-coa-hierarchy-api | 8 | `8dcb5ea99081e32bbd4095112efce6a07842e0058acdc680cf894f4f04a91f47` |
 | ledger-setup-coa-hierarchy-api | 9 | `c8041457f1c06b0cd3ee0961ffa2e68f5affd8510f8853c775e43df1925fad8e` |
-| ledger-setup-coa-hierarchy-api | 10 | `7977bfeaae288d0578f9b01da67facc08a62e49cdbee75cd43791e00b50aa0df` |
+| ledger-setup-coa-hierarchy-api | 10 | `92b6ee99a4b7937cb020709d6fbcd182c273535be0067760f35ba068aaf5ace4` |

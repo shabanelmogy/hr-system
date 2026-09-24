@@ -63,9 +63,12 @@ public sealed class FiscalYearsController(ISender sender) : ControllerBase
     [HttpDelete("{id:int}")]
     [HasPermission(AccountingPermissions.DeleteFiscalYears)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    public async Task<IActionResult> Archive([FromRoute] int id, CancellationToken cancellationToken)
+    public async Task<IActionResult> Archive(
+        [FromRoute] int id,
+        [FromBody] FiscalYearConcurrencyRequest request,
+        CancellationToken cancellationToken)
     {
-        var result = await sender.Send(new ArchiveFiscalYearCommand(id), cancellationToken);
+        var result = await sender.Send(new ArchiveFiscalYearCommand(id, request.RowVersion), cancellationToken);
         return result.IsSuccess ? NoContent() : result.ToProblem();
     }
 

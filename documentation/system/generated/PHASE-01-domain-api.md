@@ -79,7 +79,7 @@ existing-system review, implementation order, and Definition of Done.
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
 | master | 3 | `8514635d9b88b4e74c315a3f0b0860314393524012944996853cce1ab76195cd` |
-| master | 4 | `640408799d07c9939468c39e65e9d2601daa6e89d7896f24b13a924f4ecbb04d` |
+| master | 4 | `5313466cc23f4cd78d346588b46a10c8f3459953defddd6c00a05dc22f4ad6c5` |
 | master | 6 | `b7fb453c6be690cf10f98e85664f30fb55fb590e628b0f8a0435f54cf67058ac` |
 | api | 1 | `a0977b60e2a09823da430522f9939915d8529c5c078859a35c5c4f6125dff514` |
 | api | 2 | `56d1a2a7f31bd99f31d6d47bc54ec7d9bc9857ea2e8acd28bac4ed2d601864a3` |

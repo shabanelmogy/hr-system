@@ -9,6 +9,7 @@ import type { CurrencyLookup } from '@/src/modules/accounting/currencies';
 import { applyInitialAccountCodeProposal } from '../../application/account-code-proposal-policy';
 import type { Account, AccountHierarchyLevel, AccountLookup, AccountRequest } from '../../domain/models/coa-hierarchy';
 import { createAccountFormSchema } from '../validation/coa-hierarchy-schema';
+import { createAccountMockDraft } from '../utils/mockData';
 
 interface Props {
   item: Account | null;
@@ -52,8 +53,10 @@ export function AccountForm({ item, mode, proposal, proposalLoading = false, pro
   const [serverError, setServerError] = useState<string | null>(null);
   const currencyPolicy = useWatch({ control: form.control, name: 'currencyPolicy' });
   const proposalApplied = useRef(false);
+  const usedMockSamples = useRef(new Set<number>());
   const readOnly = mode === 'view';
   const disabled = readOnly || loading || detailLoading || lookupsLoading || Boolean(detailError);
+  const mockDisabled = disabled || !canManage || mode === 'create' && (proposalLoading || Boolean(proposalError)) || Boolean(lookupsError) || hierarchyLevels.length === 0 || (!proposal && !item?.code);
 
   useEffect(() => {
     if (mode !== 'create') return;
@@ -89,7 +92,20 @@ export function AccountForm({ item, mode, proposal, proposalLoading = false, pro
     }
   });
 
-  return <AppForm visible presentation="fullScreen" title={t(`coaHierarchy.accounts.form.${mode}Title`)} subtitle={t('coaHierarchy.accounts.form.subtitle')} icon={mode === 'create' ? 'add-circle-outline' : readOnly ? 'eye-outline' : 'create-outline'} errors={toFormErrorMap(form.formState.errors)} isDirty={form.formState.isDirty} submitting={loading || form.formState.isSubmitting} submitDisabled={detailLoading || lookupsLoading || Boolean(detailError) || Boolean(lookupsError) || (mode === 'create' && (proposalLoading || Boolean(proposalError)))} onCancel={onClose} onClearFieldError={name => form.clearErrors(name as keyof Values)} onSubmit={readOnly ? undefined : submit} submitLabel={t(mode === 'edit' ? 'common.update' : 'common.create')} serverError={serverError} contentContainerStyle={styles.content}>
+  return <AppForm visible presentation="fullScreen" title={t(`coaHierarchy.accounts.form.${mode}Title`)} subtitle={t('coaHierarchy.accounts.form.subtitle')} icon={mode === 'create' ? 'add-circle-outline' : readOnly ? 'eye-outline' : 'create-outline'} errors={toFormErrorMap(form.formState.errors)} isDirty={form.formState.isDirty} submitting={loading || form.formState.isSubmitting} submitDisabled={detailLoading || lookupsLoading || Boolean(detailError) || Boolean(lookupsError) || (mode === 'create' && (proposalLoading || Boolean(proposalError)))} onCancel={onClose} onClearFieldError={name => form.clearErrors(name as keyof Values)} onSubmit={readOnly ? undefined : submit} submitLabel={t(mode === 'edit' ? 'common.update' : 'common.create')} serverError={serverError} mockDataAction={!readOnly ? { onGenerate: () => {
+    const draft = createAccountMockDraft({ proposal: proposal ?? item?.code, hierarchyLevels, accounts, currencies, preferredParentAccountId: item?.parentAccountId ?? initialParentId, excludedAccountId: item?.id, currentAllowPosting: item?.allowPosting, usedSampleIndexes: usedMockSamples.current });
+    if (!draft) return;
+    const options = { shouldDirty: true, shouldValidate: true };
+    form.setValue('code', draft.code, options);
+    form.setValue('nameAr', draft.nameAr, options);
+    form.setValue('nameEn', draft.nameEn, options);
+    form.setValue('accountHierarchyLevelId', draft.accountHierarchyLevelId, options);
+    form.setValue('parentAccountId', draft.parentAccountId ?? 0, options);
+    form.setValue('allowPosting', draft.allowPosting, options);
+    form.setValue('manualPostingPolicy', draft.manualPostingPolicy, options);
+    form.setValue('currencyPolicy', draft.currencyPolicy, options);
+    form.setValue('specificCurrencyId', draft.specificCurrencyId ?? 0, options);
+  }, disabled: mockDisabled } : undefined} contentContainerStyle={styles.content}>
     {detailLoading ? <AppStateView state="loading" /> : null}
     {detailError ? <AppStateView state="error" message={detailError} onRetry={onRetryDetail} /> : null}
     {mode === 'create' && proposalLoading ? <AppStateView state="loading" /> : null}

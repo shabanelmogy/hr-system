@@ -13,9 +13,7 @@ import EntityCard from "@/shared/components/cards/EntityCard";
 import { EmptyState } from "@/shared/components/feedback/states/EmptyState";
 import CardViewPagination from "@/shared/components/lists/card-view/CardViewPagination";
 import PageHeader from "@/shared/components/navigation/header/PageHeader";
-import { permissions as appPermissions } from "@/lib/auth/permissions";
-import { usePermissions } from "@/shared/hooks/usePermissions";
-import { useAccessibleModulesQuery } from "@/platform/modules/queries";
+import { useManagedReportAvailability } from "@/modules/reporting/public";
 import {
   type OrganizationalResource,
   type OrganizationalSearchField,
@@ -78,10 +76,7 @@ interface Props {
 
 export default function OrganizationalStructureMultiView(props: Props) {
   const { t, i18n } = useTranslation();
-  const { hasPermission } = usePermissions();
-  const modulesQuery = useAccessibleModulesQuery();
-  const canViewReports = hasPermission(appPermissions.ViewCrystalReports) &&
-    (modulesQuery.data ?? []).some((module) => module.code.toLowerCase() === "reporting");
+  const { allowed: canViewReports } = useManagedReportAvailability("tenant");
   const [view, setView] = useState<OrganizationalView>("grid");
   const [isFilterBarVisible, setIsFilterBarVisible] = useState(true);
   const visibleView =

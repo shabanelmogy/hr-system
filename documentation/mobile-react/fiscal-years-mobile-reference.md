@@ -36,7 +36,13 @@ because it supplies downstream workflows such as Workforce Planning.
 provides the shared view selector, search row, filter slot, loading/background
 fetching, empty state, and server pagination.
 
-## 7. Table view
+## 7. UI pattern and Table view
+
+The screen follows **P-001 Server-managed Grid/CRUD** from
+`documentation/project/SCREEN_PATTERN_CATALOG.md`. Table, Cards, and managed
+Report are required; Chart is Excluded, Import/Export are Excluded for Mobile,
+and generated periods are a read-only child preview. The full-screen form remains
+one compact sectioned workflow; P-003 tabs are intentionally not applied.
 
 `AppDataTable` shows code, bilingual names, dates, lifecycle, and authorized row
 actions. Sorting and paging remain server-side and columns use shared responsive
@@ -51,7 +57,9 @@ lifecycle badge, and actions. Palette colors come from the active theme.
 
 The full-screen `AppForm` uses shared text/date/select fields and Zod validation.
 Start date calculates end date, frequency is explicit, save stays actionable for
-field-error feedback, and development mode exposes Generate Mock Data.
+field-error feedback, and the shared Generate Mock Data action is available on
+writable forms in hosted trials and development alike without submitting or
+fabricating identity, scope, or RowVersion.
 
 ## 10. Edit workflow
 
@@ -91,5 +99,6 @@ than JSON. Small screens scroll within shared shells.
 Feature ESLint, type-check, architecture, API/schema/validation, route, and realtime
 tests are required. Table, Cards, detail, create, edit, lifecycle, and mock data are
 Required. Fiscal Year Report is Required through the shared managed Crystal
-component with entity key `fiscalyears`. Chart and bulk lifecycle are Excluded;
-Import and Export remain Deferred with no placeholder route or control.
+component with entity key `fiscalyears`; the Reporting module/catalog owns report
+rendering. Chart and bulk lifecycle are Excluded; Import and Export remain
+Excluded with no placeholder route or control.

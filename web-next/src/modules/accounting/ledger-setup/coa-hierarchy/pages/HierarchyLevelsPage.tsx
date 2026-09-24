@@ -67,6 +67,10 @@ function AuthorizedHierarchyLevelsPage({
   const [dialog, setDialog] = useState<DialogMode>(null);
   const [selected, setSelected] = useState<AccountHierarchyLevel | null>(null);
   const data = useHierarchyLevels(recordStatus);
+  const mockLevels = useHierarchyLevels(
+    "all",
+    dialog === "add" || dialog === "edit",
+  );
 
   const closeDialog = () => {
     setDialog(null);
@@ -226,6 +230,9 @@ function AuthorizedHierarchyLevelsPage({
           open
           mode={dialog}
           item={selected}
+          levels={mockLevels.data ?? []}
+          levelsLoading={mockLevels.isLoading}
+          levelsError={mockLevels.isError}
           loading={create.isPending || update.isPending}
           onClose={closeDialog}
           onSubmit={submit}

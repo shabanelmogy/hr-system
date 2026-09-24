@@ -6,7 +6,7 @@ import RestoreRoundedIcon from "@mui/icons-material/RestoreRounded";
 import { Alert, Box, Button, Chip, LinearProgress, Tab, Tabs, Typography } from "@mui/material";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { permissions } from "@/lib/auth/permissions";
@@ -21,6 +21,7 @@ import { extractErrorMessage } from "@/shared/utils/errorUtils";
 import { applyApiFieldErrors } from "@/shared/utils/formErrors";
 import { ledgerSetupService } from "../services/ledgerSetupService";
 import type { LedgerSetupEntity, LedgerSetupEntityDefinition, LedgerSetupField, LedgerSetupLookupSource, LedgerSetupOption, LedgerSetupRecord, LedgerSetupResource, ResolveAccountPreviewResponse } from "../types";
+import { canCreateLedgerSetupMockDraft, createLedgerSetupMockDraft } from "../utils/ledgerSetupMockData";
 import { createLedgerSetupSchema, type LedgerSetupFormValues } from "../validation/ledgerSetupValidation";
 
 const booleanOptions: readonly LedgerSetupOption[] = [{ id: true, label: "general.yes" }, { id: false, label: "general.no" }];
@@ -112,6 +113,7 @@ function EntityPanel({ definition, canManage }: { definition: LedgerSetupEntityD
   const [selected, setSelected] = useState<LedgerSetupRecord | null>(null);
   const schema = useMemo(() => createLedgerSetupSchema(definition.fields, t("ledgerSetup.validation.required")), [definition.fields, t]);
   const form = useForm<LedgerSetupFormValues>({ resolver: zodResolver(schema), defaultValues: {} });
+  const mockSequence = useRef(1);
   const currencyPolicy = useWatch({ control: form.control, name: "currencyPolicy" });
   const mutation = useMutation({ mutationFn: (values: LedgerSetupFormValues) => ledgerSetupService.save(definition.entity, dialog === "edit" ? selected?.id ?? null : null, { ...Object.fromEntries(definition.fields.map((item) => [item.name, normalizeFieldValue(item, values[item.name])])), ...(definition.entity === "accounts" && Number(values.currencyPolicy) !== 3 ? { specificCurrencyId: null } : {}), rowVersion: selected?.rowVersion }), onSuccess: async () => { await queryClient.invalidateQueries({ queryKey: ["accounting", "ledger-setup"] }); showToast.success(t("ledgerSetup.messages.saved")); setDialog(null); } });
   const lifecycle = useMutation<void>({ mutationFn: async () => { if (dialog === "restore") await ledgerSetupService.restore(definition.entity, selected ?? {}); else await ledgerSetupService.archive(definition.entity, selected ?? {}); }, onSuccess: async () => { await queryClient.invalidateQueries({ queryKey: ["accounting", "ledger-setup"] }); showToast.success(t(dialog === "restore" ? "ledgerSetup.messages.restored" : "ledgerSetup.messages.archived")); setDialog(null); } });
@@ -129,6 +131,20 @@ function EntityPanel({ definition, canManage }: { definition: LedgerSetupEntityD
     const records = fieldDefinition.optionSource ? lookupsQuery.data?.[fieldDefinition.optionSource] ?? [] : [];
     return records.filter((item) => fieldDefinition.name !== "parentAccountId" || item.id !== selected?.id).map((item) => ({ id: Number(item.id), label: displayName(item) }));
   };
+  const mockLookups = lookupsQuery.data ?? {};
+  const mockUnavailable = !canCreateLedgerSetupMockDraft(definition.fields, mockLookups);
+  const generateMock = () => {
+    const draft = createLedgerSetupMockDraft({
+      fields: definition.fields,
+      lookups: mockLookups,
+      sequence: mockSequence.current++,
+      currentValues: form.getValues(),
+    });
+    if (!draft) return;
+    for (const [name, value] of Object.entries(draft)) {
+      form.setValue(name, value, { shouldDirty: true, shouldValidate: true });
+    }
+  };
   const rows = query.data ?? [];
   const treeRows = treeQuery.data ? flattenTree(treeQuery.data) : rows;
   return <Box sx={{ display: "flex", flexDirection: "column", gap: 2, minHeight: 0 }}>
@@ -137,7 +153,7 @@ function EntityPanel({ definition, canManage }: { definition: LedgerSetupEntityD
     {query.error ? <Alert severity="error">{extractErrorMessage(query.error) || t("ledgerSetup.messages.loadFailed")}</Alert> : null}
     {canManage ? <Box><Button variant="contained" startIcon={<AddRoundedIcon />} onClick={() => openForm(definition.entity === "settings" && rows[0] ? "edit" : "create", rows[0])}>{t(definition.entity === "settings" && rows[0] ? "actions.edit" : "ledgerSetup.actions.add")}</Button></Box> : null}
     {definition.tree ? <SplitTreeView items={treeRows} getId={(item) => Number(item.id)} getParentId={(item) => typeof item.parentAccountId === "number" ? item.parentAccountId : null} getCode={(item) => String(item.code ?? "")} getName={(item) => String(item.nameEn ?? "")} getSecondaryName={(item) => String(item.nameAr ?? "")} getIsDeleted={(item) => Boolean(item.isDeleted)} searchFilter={(item, term) => displayName(item).toLowerCase().includes(term.toLowerCase())} searchPlaceholder={t("ledgerSetup.search")} canDrag={false} onEdit={(item) => { if (canManage) void openTreeAccount("edit", item); }} onSelect={(item) => { if (item) void openTreeAccount("view", item); }} /> : <MyDataGrid rows={rows.map((row, index) => ({ ...row, id: row.id ?? index }))} columns={[...definition.fields.slice(0, 6).map((item) => ({ field: item.name, headerName: t(item.label), flex: 1, minWidth: 130 })), { field: "recordState", headerName: t("ledgerSetup.fields.status"), width: 120, renderCell: ({ row }) => <Chip size="small" label={t(row.isDeleted ? "ledgerSetup.status.archived" : "ledgerSetup.status.active")} color={row.isDeleted ? "warning" : "success"} /> }, { field: "actions", headerName: t("actions.buttons"), minWidth: 230, sortable: false, renderCell: ({ row }) => <Box sx={{ display: "flex", gap: .5 }}><Button size="small" onClick={() => openForm("view", row)}>{t("actions.view")}</Button>{canManage && !row.isDeleted ? <Button size="small" onClick={() => openForm("edit", row)}>{t("actions.edit")}</Button> : null}{canManage && definition.supportsArchive ? <Button size="small" color="warning" startIcon={row.isDeleted ? <RestoreRoundedIcon /> : <ArchiveRoundedIcon />} onClick={() => { setSelected(row); setDialog(row.isDeleted ? "restore" : "archive"); }}>{t(row.isDeleted ? "actions.restore" : "actions.archive")}</Button> : null}</Box> }]} loading={query.isLoading} autoHeight disableRowSelectionOnClick paginationMode={paged ? "server" : "client"} paginationModel={paged ? pageModel : undefined} onPaginationModelChange={paged ? setPageModel : undefined} pageSizeOptions={paged ? [25, 50, 100] : undefined} rowCount={paged ? pageModel.page * pageModel.pageSize + rows.length + (rows.length === pageModel.pageSize ? 1 : 0) : undefined} toolbarSearch={serverSearch !== undefined ? { value: search, onChange: (value) => { setSearch(value); setPageModel((current) => ({ ...current, page: 0 })); }, onClear: () => { setSearch(""); setPageModel((current) => ({ ...current, page: 0 })); }, placeholder: t("ledgerSetup.search") } : undefined} />}
-    <MyForm open={dialog === "create" || dialog === "edit" || dialog === "view"} onClose={() => setDialog(null)} title={t(definition.titleKey)} subtitle={t("ledgerSetup.form.subtitle")} submitButtonText={t(dialog === "edit" ? "actions.update" : "actions.create")} isViewMode={dialog === "view"} hideFooter={dialog === "view"} isSubmitting={mutation.isPending} isDirty={form.formState.isDirty} errors={toFormErrorMessages(form.formState.errors)} errorLabels={Object.fromEntries(definition.fields.map((item) => [item.name, t(item.label)]))} onSubmit={dialog === "view" ? undefined : submit}>
+    <MyForm open={dialog === "create" || dialog === "edit" || dialog === "view"} onClose={() => setDialog(null)} title={t(definition.titleKey)} subtitle={t("ledgerSetup.form.subtitle")} submitButtonText={t(dialog === "edit" ? "actions.update" : "actions.create")} isViewMode={dialog === "view"} hideFooter={dialog === "view"} isSubmitting={mutation.isPending} isDirty={form.formState.isDirty} errors={toFormErrorMessages(form.formState.errors)} errorLabels={Object.fromEntries(definition.fields.map((item) => [item.name, t(item.label)]))} onSubmit={dialog === "view" ? undefined : submit} mockDataAction={dialog !== "view" ? { onGenerate: generateMock, disabled: mutation.isPending || lookupsQuery.isLoading || Boolean(lookupsQuery.error) || mockUnavailable } : undefined}>
       {dialog === "view" && canManage && definition.supportsArchive && selected?.rowVersion ? <Button color="warning" startIcon={selected.isDeleted ? <RestoreRoundedIcon /> : <ArchiveRoundedIcon />} onClick={() => setDialog(selected.isDeleted ? "restore" : "archive")}>{t(selected.isDeleted ? "actions.restore" : "actions.archive")}</Button> : null}
       {definition.fields.filter((item) => item.name !== "specificCurrencyId" || definition.entity !== "accounts" || Number(currencyPolicy) === 3).map((item) => item.type === "select" ? <MySelect key={item.name} name={item.name} label={t(item.label)} control={form.control} dataSource={lookupOptions(item)} valueMember="id" displayMember="label" errors={form.formState.errors} required={item.required || (item.name === "specificCurrencyId" && Number(currencyPolicy) === 3)} isViewMode={dialog === "view"} showClearButton={!item.required && dialog !== "view"} /> : <MyTextField key={item.name} fieldName={item.name} labelKey={t(item.label)} control={form.control} errors={form.formState.errors} type={item.type === "number" ? "number" : item.type === "date" ? "date" : "text"} required={item.required} readOnly={dialog === "view"} />)}
     </MyForm>

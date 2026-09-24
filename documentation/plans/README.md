@@ -53,6 +53,10 @@ Business request
 → test matrix
 → rollout and migration
 → risks / Required-Deferred-Excluded decisions
+→ capability plan (`PLAN.md`)
+→ one canonical slice roadmap (order/status)
+→ one feature execution contract at a time
+→ UI Pattern Gate for every Web/Mobile screen
 → implementation phases
 → quality gates
 → Feature Decomposition Gate per authorized slice
@@ -61,6 +65,17 @@ Business request
 → customer education / video pack per completed customer-visible phase
 → phase closure
 ```
+
+The authorities are deliberately separate. `PLAN.md` records capability scope,
+ownership, and business decisions. A slice execution document records dependency
+order and the single `ACTIVE_FEATURE_STEP`. A feature contract records one
+feature's API → Web → Mobile → integrated live verification → documentation/
+closure. API/Web/Mobile/system profiles and tests are the evidence ledger. Link
+between these documents; do not copy their screen/API detail into multiple places.
+
+Only one feature may be `Active`. Every later feature is `Queued` or `Blocked`
+until the active feature is `Verified` and its documentation/closure stage is
+`Closed`.
 
 ## Plan status vocabulary
 
@@ -144,8 +159,17 @@ Then register the plan in `PLAN_REGISTRY.md`.
 
 The authoritative creation sequence is `PLAN_CREATION_PROTOCOL.md`. Do not jump
 straight from an idea to `PLAN.md` for a new capability or substantial rebuild.
-Create files under `decomposition/` only for slices marked `Decompose`, using
-`FEATURE_DECOMPOSITION_TEMPLATE.md`.
+Every executable feature step, including a `Single feature` slice and a legacy
+feature revalidation, gets one current version 2.0 contract from
+`FEATURE_DECOMPOSITION_TEMPLATE.md`. A `Decompose` slice creates one such contract
+per child feature; it does not use one umbrella contract for materially different
+workflows.
+
+Before any runtime scaffold, create exactly one feature contract for the current
+step. Complete its UI Pattern Gate with one row per Web and Mobile screen. Every
+row must name an active catalog Pattern ID (or stop as `Candidate`), exact source
+reference, platform R/D/E capabilities, states, offline/mock policy, scope, and
+responsive/accessibility behavior. A shared-component list alone does not pass.
 
 External prompts are inputs to this method, not parallel authorities. Their
 adoption status is tracked in `PLANNING_METHOD_PROVENANCE.md`.

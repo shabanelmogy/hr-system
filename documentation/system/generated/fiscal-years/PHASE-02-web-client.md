@@ -107,12 +107,12 @@ failure into partial success.
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
 | fiscal-years-master | 3 | `8390cefc7a311be46bc6e92580fcbe7aff06ff47aaa4ac187f90cd7e66903da8` |
-| fiscal-years-master | 4 | `a138eeba03b2c75a88c481f8ecad0b88cd339b53f5c26f67fc52bf62d2da13bf` |
-| fiscal-years-master | 6 | `a441290822263415d40f5bdaca531bce89957f82d6491760dac44cab5853fe6e` |
-| fiscal-years-master | 7 | `2d676a37e47f0762d9822c902b57ad4f35040c56ffdc980efbb455187382dfee` |
+| fiscal-years-master | 4 | `e2521b85856f5b6c1e6f32e24792ae592df4134bee4bdcc4000751481eedce7e` |
+| fiscal-years-master | 6 | `e03953b3fea34d231ad9a922ae587bd21b59920251d27e5d5b70cfc570a01fc8` |
+| fiscal-years-master | 7 | `e48e4b393af65084e67296aba09a61bfefd8c5ca257478e14ddb0845a243296e` |
 | fiscal-years-web | 1 | `76b34317540c2a0a7266170f2cbea4f9f331f07982d2a90aca8145259950068c` |
 | fiscal-years-web | 2 | `2ffbb67cc6d6354b0f9faa55aa64c8285b8b3523612ff7ab8ec2d3dba28074da` |
-| fiscal-years-web | 3 | `e6bcc3d2ac2751711a2aa02ca5298edfa689a207eaebbc40789ec582d8b9d3e1` |
+| fiscal-years-web | 3 | `ee882a13d81816151991947c763329154e451e4c36294c89526c9b5dc44f8b09` |
 | fiscal-years-web | 4 | `e806257d4fd24b9b03c77e39321b37b5f2128d19ee5ab77f6d16970953e1d027` |
 | fiscal-years-web | 5 | `4fcf948018d829fa3202e5389b1e5594c85ecd5b1db9b66453f03ac69feb6436` |
 | fiscal-years-web | 6 | `4a987d415b162e64422f9bb51141de6927512e52c13326d8d0f5b7718c2212ff` |
@@ -123,4 +123,4 @@ failure into partial success.
 | fiscal-years-web | 11 | `0f5e7a964da15bf4e340074c3b9b7d59436735455f00b3a65ff233c2d66aea38` |
 | fiscal-years-web | 12 | `94a00e7675f510f6cb95000d5a53f387ee35649b7ad34069557235b216941346` |
 | fiscal-years-web | 13 | `f5dc0e405de381f45c3c08fef09d4f52c7d3a996be0d0c005f535d718be57033` |
-| fiscal-years-web | 14 | `9e993a8e4ecce27d68f3caadb98d803375a40597b734108e71c117316dfe0ce7` |
+| fiscal-years-web | 14 | `62781ae5dc0a7d527fc9c6f48bbc551971eebbe95d6cdad6fd97f58b74924ebd` |

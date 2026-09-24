@@ -175,10 +175,13 @@ create.
 
 ## 10. Crystal report integration
 
-A States-specific web report view is Excluded from the current client surface.
-The managed Reporting and Crystal contracts remain available to their owning
-module, but States does not claim runtime integration until a route, composition,
-permissions, and focused client tests exist.
+States has an `Implemented` global managed Crystal report view through
+`StateReportPage`, `StatesMultiView`, and the public Reporting API. It requires
+the case-insensitive `super_admin` role plus `GlobalCrystalReports:View`; it has
+no tenant/company Reporting entitlement query. The view and its consumer both
+fail closed and return to Grid when authorization is unavailable. Any legacy
+tenant ActiveReports/report-data references are a separate contract and do not
+change the global managed report scope.
 
 ## 11. Localization and RTL
 

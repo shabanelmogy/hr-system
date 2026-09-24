@@ -16,6 +16,24 @@
 | P-002 Tree + Master/Detail | Cost Centers و`SplitTreeView` | Cost Centers و`AppHierarchicalTree` | البيانات الهرمية |
 | P-003 Tabbed multi-section form | Add Tenant و`FormTabs` | Add Tenant full-screen stacked عبر `AppForm` (`Adapted`) | aggregate أو إعداد متعدد الأقسام |
 
+### Managed reporting authorization boundary
+
+`web-next/src/modules/reporting/public/useManagedReportAvailability.ts` is the
+shared consumer policy for report views. It has two explicit scopes:
+
+- `global`: `super_admin` **and** `GlobalCrystalReports:View`; it passes
+  `enabled=false` to the accessible-module query and never depends on a tenant
+  Reporting entitlement.
+- `tenant`: `CrystalReports:View` **and** an accessible `reporting` module.
+
+Countries, States, and Districts use the global scope. Address Types and
+Organizational Structure use the tenant scope. The feature view hides Report,
+falls back to Grid if authorization is lost, and `ManagedCrystalReportView`
+also disables catalog requests until authorization is settled and allowed.
+Policy and query-defense evidence lives in
+`web-next/src/modules/reporting/public/useManagedReportAvailability.test.ts` and
+`web-next/src/modules/reporting/crystal-report-manager/ManagedCrystalReportView.test.tsx`.
+
 اختيار النمط لا ينقل حقول المرجع أو قواعده. يجب أن يسجل feature profile ما تم
 إعادة استخدامه، وما هو `Required` أو `Deferred` أو `Excluded` لكل منصة.
 

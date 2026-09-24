@@ -30,6 +30,7 @@ export function HierarchyLevelsScreen() {
   const saveMutation = useSaveHierarchyLevel();
   const archiveMutation = useArchiveHierarchyLevel();
   const restoreMutation = useRestoreHierarchyLevel();
+  const mockLevels = useHierarchyLevels('all', formOpen && formMode !== 'view');
 
   const openForm = useCallback(async (mode: FormMode, item: AccountHierarchyLevel | null = null) => {
     if (mode !== 'view' && isReadOnly) return notifyBlockedAction();
@@ -83,7 +84,7 @@ export function HierarchyLevelsScreen() {
       filterControl={<HierarchyLevelFilterButton value={recordStatus} onApply={value => setRecordStatus(value)} />}
       searchActions={canManage ? <AppIconButton icon="add-outline" label={t('coaHierarchy.levels.actions.add')} color={theme.colors.onPrimary} onPress={() => void openForm('create')} size={22} style={({ pressed }) => ({ backgroundColor: theme.colors.primary, opacity: pressed ? 0.75 : 1 })} /> : null}
       views={[{ value: 'table', icon: 'grid-outline', label: t('multiView.table'), defaultPageSize: 10, render: items => <AppDataTable rows={items} columns={columns} getRowKey={item => item.id} /> }]} />
-    {formOpen ? <HierarchyLevelForm key={`${formMode}-${selected?.id ?? 'new'}-${selected?.rowVersion ?? ''}`} item={selected} mode={formMode} loading={saveMutation.isPending} canManage={canManage} onClose={closeForm} onSave={save} onEdit={selected && !selected.isDeleted ? () => setFormMode('edit') : undefined} onLifecycle={selected ? () => setPending({ kind: selected.isDeleted ? 'restore' : 'archive', item: selected }) : undefined} /> : null}
+    {formOpen ? <HierarchyLevelForm key={`${formMode}-${selected?.id ?? 'new'}-${selected?.rowVersion ?? ''}`} item={selected} mode={formMode} levels={mockLevels.data ?? []} levelsLoading={mockLevels.isLoading} levelsError={Boolean(mockLevels.error)} loading={saveMutation.isPending} canManage={canManage} onClose={closeForm} onSave={save} onEdit={selected && !selected.isDeleted ? () => setFormMode('edit') : undefined} onLifecycle={selected ? () => setPending({ kind: selected.isDeleted ? 'restore' : 'archive', item: selected }) : undefined} /> : null}
     <ConfirmationDialog visible={pending !== null} title={t(`coaHierarchy.confirm.${pending?.kind ?? 'archive'}LevelTitle`)} description={t(`coaHierarchy.confirm.${pending?.kind ?? 'archive'}LevelDescription`, { level: pending?.item.levelNumber ?? '' })} confirmLabel={t(pending?.kind === 'restore' ? 'common.restore' : 'common.archive')} tone={pending?.kind === 'archive' ? 'warning' : 'default'} loading={archiveMutation.isPending || restoreMutation.isPending} onCancel={() => setPending(null)} onConfirm={() => void confirmLifecycle()} />
   </AppScreen>;
 }

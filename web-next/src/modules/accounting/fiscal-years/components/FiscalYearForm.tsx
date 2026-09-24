@@ -10,6 +10,7 @@ import { useTranslation } from "react-i18next";
 import type { FiscalYearDetail, FiscalYearMutationRequest } from "../types/FiscalYear";
 import { getFiscalYearSchema, type FiscalYearFormValues } from "../validation/fiscalYearValidation";
 import { buildFiscalPeriodPreview, endOfFiscalYear } from "../utils/fiscalPeriodPreview";
+import { createFiscalYearMockData } from "../utils/fiscalYearMockData";
 
 interface Props {
   open: boolean;
@@ -68,14 +69,14 @@ export default function FiscalYearForm({ open, mode, item, loading = false, deta
   );
 
   const fillMock = () => {
-    const year = new Date().getFullYear() + 1;
+    const mock = createFiscalYearMockData();
     const values = { shouldDirty: true, shouldValidate: true };
-    form.setValue("code", `FY-${year}`, values);
-    form.setValue("nameAr", `السنة المالية ${year}`, values);
-    form.setValue("nameEn", `Fiscal Year ${year}`, values);
-    form.setValue("startDate", `${year}-01-01`, values);
-    form.setValue("endDate", `${year}-12-31`, values);
-    form.setValue("periodFrequency", 1, values);
+    form.setValue("code", mock.code, values);
+    form.setValue("nameAr", mock.nameAr, values);
+    form.setValue("nameEn", mock.nameEn, values);
+    form.setValue("startDate", mock.startDate, values);
+    form.setValue("endDate", mock.endDate, values);
+    form.setValue("periodFrequency", mock.periodFrequency, values);
   };
 
   return (
@@ -105,7 +106,7 @@ export default function FiscalYearForm({ open, mode, item, loading = false, deta
       focusFieldName="code"
       autoFocusFirst
       errors={messages}
-      mockDataAction={process.env.NODE_ENV !== "production" && !readOnly ? { onGenerate: fillMock, disabled: loading } : undefined}
+      mockDataAction={!readOnly ? { onGenerate: fillMock, disabled: loading || Boolean(detailError) } : undefined}
     >
       {detailError ? <Alert severity="error" action={onRetryDetail ? <Button color="inherit" onClick={onRetryDetail}>{t("common.retry")}</Button> : undefined}>{detailError}</Alert> : null}
       <MyTextField fieldName="code" labelKey={t("fiscalYears.fields.code")} control={form.control} errors={form.formState.errors} maxLength={20} required readOnly={fieldsReadOnly} loading={loading} />

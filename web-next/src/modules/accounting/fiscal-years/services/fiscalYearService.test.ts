@@ -49,6 +49,7 @@ describe("FiscalYearService", () => {
     await FiscalYearService.update({ id: 7, request: { ...request, rowVersion: "AQ==" } });
     await FiscalYearService.changeLifecycle(7, "Ag==", "beginClosing");
     await FiscalYearService.changeLifecycle(7, "Aw==", "reopen");
+    await FiscalYearService.archive({ id: 7, rowVersion: "BA==" });
 
     expect(put).toHaveBeenCalledWith(apiRoutes.fiscalYears.update(7), expect.objectContaining({
       code: "FY-2027",
@@ -56,6 +57,7 @@ describe("FiscalYearService", () => {
     }));
     expect(post).toHaveBeenCalledWith(apiRoutes.fiscalYears.beginClosing(7), { rowVersion: "Ag==" });
     expect(post).toHaveBeenCalledWith(apiRoutes.fiscalYears.reopen(7), { rowVersion: "Aw==" });
+    expect(remove).toHaveBeenCalledWith(apiRoutes.fiscalYears.archive(7), { rowVersion: "BA==" });
   });
 
   it("mirrors the exact twelve-month rule in client validation", () => {

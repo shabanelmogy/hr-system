@@ -57,10 +57,10 @@ invalidation, success test, and failure test. Use `N/A` only with a reason.
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
 | master | 3 | `8514635d9b88b4e74c315a3f0b0860314393524012944996853cce1ab76195cd` |
-| master | 4 | `640408799d07c9939468c39e65e9d2601daa6e89d7896f24b13a924f4ecbb04d` |
+| master | 4 | `5313466cc23f4cd78d346588b46a10c8f3459953defddd6c00a05dc22f4ad6c5` |
 | master | 6 | `b7fb453c6be690cf10f98e85664f30fb55fb590e628b0f8a0435f54cf67058ac` |
-| master | 7 | `8c0ba157ab3e6ca7bfa97bd23bdd022523f69dc7ac4386e25462b7ad667ba74b` |
-| master | 8 | `f29c1f43d4c99ad67f8520f2bd4f2bc1af0abc7b40c7a9ab14e84c7d188f9952` |
+| master | 7 | `e603de6e96ed32d995c8cf0eeb698f377a3da508a9febf3d500377754e915c84` |
+| master | 8 | `5d1cfc7a10ca9d6b36b33cb3c2e8d6bbc82afd4c1c14434d7a1c44b39db382b0` |
 | api | 6 | `7a0068ac357a0f11efb5c80b77a0c24ccac4f86c4c981f24d6916fe168dd16a8` |
 | api | 7 | `d3c803b44c4e65794a60c9b31eeeab120922dc55a8da5e8c0de7e8a116913f93` |
 | api | 8 | `6ba0561bbba0e93a7ce34482ec27b468c6d56b5255c755acb11d8b29f74bb994` |
@@ -70,4 +70,4 @@ invalidation, success test, and failure test. Use `N/A` only with a reason.
 | web | 9 | `4da29b144dca03553c2568393fde9b32e14b1782bcd53ce7244453d4c9510f97` |
 | mobile | 9 | `623e8dfe26f3d5b874a1785d7c2a545a519ddbbd1ad41e34765322988d7d4df6` |
 | mobile | 10 | `7d90a6bd3148af61cc84222408c9349630432fd3c40780d755e1212ac0e76171` |
-| mobile | 11 | `903c9deb57b7630a853b6020cf60454eee46f7984414d28246a92a7e2d67e85f` |
+| mobile | 11 | `2edd4c87b5d2ab95f77aa1021af3e15cdcf5d4cd275fdb6f141bf321c096a631` |

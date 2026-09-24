@@ -35,6 +35,7 @@ $requiredFiles = @(
 )
 
 $errors = New-Object System.Collections.Generic.List[string]
+$warnings = New-Object System.Collections.Generic.List[string]
 
 foreach ($relativePath in $requiredFiles) {
     $fullPath = Join-Path $planningRoot $relativePath
@@ -55,20 +56,38 @@ $decompositionTemplatePath = Join-Path $planningRoot "FEATURE_DECOMPOSITION_TEMP
 if (Test-Path -LiteralPath $decompositionTemplatePath -PathType Leaf) {
     $decompositionTemplateContent = Get-Content -LiteralPath $decompositionTemplatePath -Raw
     foreach ($requiredHeading in @(
+        "## 0. Contract metadata",
         "## 1. Child boundary and outcome",
-        "## 2. Closest existing reference",
-        "## 3. Reuse and composition contract",
-        "## 4. Screen and workspace contract",
-        "## 5. Create, edit, view, and lifecycle contract",
+        "## 2. UI Pattern Gate (mandatory before implementation)",
+        "## 3. Closest existing reference",
+        "## 4. Reuse and composition contract",
+        "## 5. Screen and workspace contract",
         "## 6. Typed transport and server criteria",
-        "## 7. UX states, permissions, and read-only behavior",
-        "## 8. Concurrency and consistency",
-        "## 9. i18n, RTL, accessibility, and responsive behavior",
-        "## 10. Verification contract",
-        "## 11. Child exit gate"
+        "## 7. Create, edit, view, and lifecycle contract",
+        "## 8. UX states, permissions, offline, and mock data",
+        "## 9. Concurrency, transactions, and consistency",
+        "## 10. i18n, RTL, accessibility, and responsive behavior",
+        "## 11. Vertical execution ledger (strict one-active-step gate)",
+        "## 12. Verification contract",
+        "## 13. Child exit gate"
     )) {
         if (-not $decompositionTemplateContent.Contains($requiredHeading)) {
             $errors.Add("FEATURE_DECOMPOSITION_TEMPLATE.md is missing required section '$requiredHeading'")
+        }
+    }
+
+    foreach ($requiredTemplateMarker in @(
+        "| Contract version |",
+        "## 2. UI Pattern Gate (mandatory before implementation)",
+        "Screen ID",
+        "Primary Pattern ID",
+        "Exact reviewed reference source path",
+        "## 11. Vertical execution ledger (strict one-active-step gate)",
+        "API → Web → Mobile → integrated live verification → documentation/closure",
+        "## 13. Child exit gate"
+    )) {
+        if (-not $decompositionTemplateContent.Contains($requiredTemplateMarker)) {
+            $errors.Add("FEATURE_DECOMPOSITION_TEMPLATE.md is missing mandatory UI-pattern/execution marker '$requiredTemplateMarker'")
         }
     }
 }
@@ -88,8 +107,10 @@ if (Test-Path -LiteralPath $businessRoot -PathType Container) {
         }
 
         $planFile = Join-Path $directory.FullName "PLAN.md"
+        $planContent = ""
         if (Test-Path -LiteralPath $planFile -PathType Leaf) {
             $content = Get-Content -LiteralPath $planFile -Raw
+            $planContent = $content
             $escapedId = [regex]::Escape($directory.Name)
             if ($content -notmatch "\|\s*Plan ID\s*\|\s*`?$escapedId`?\s*\|") {
                 $errors.Add("Business plan '$($directory.Name)' PLAN.md must declare the same Plan ID as its folder name")
@@ -104,6 +125,220 @@ if (Test-Path -LiteralPath $businessRoot -PathType Container) {
                     $errors.Add("Business plan '$($directory.Name)' EVIDENCE.md must preserve classification '$classification'")
                 }
             }
+        }
+
+        # The roadmap is the only status authority. New roadmaps must publish one
+        # explicit active-feature marker; contracts and PLAN.md link to it instead
+        # of duplicating execution order.
+        $roadmapMarkers = @(Get-ChildItem -LiteralPath $directory.FullName -Recurse -File -Filter "*.md" |
+            Select-String -Pattern '(?m)^\*\*ACTIVE_FEATURE_STEP:\*\*\s*\u0060?([^\u0060\r\n| ]+)\u0060?' |
+            ForEach-Object { $_.Matches } |
+            ForEach-Object { $_.Groups[1].Value })
+        if ($roadmapMarkers.Count -gt 1) {
+            $errors.Add("Business plan '$($directory.Name)' declares more than one ACTIVE_FEATURE_STEP marker")
+        } elseif ($roadmapMarkers.Count -eq 1 -and $roadmapMarkers[0] -match '<|TBD') {
+            $errors.Add("Business plan '$($directory.Name)' ACTIVE_FEATURE_STEP must name one concrete feature")
+        }
+
+        $decompositionRoot = Join-Path $directory.FullName "decomposition"
+        $currentContracts = New-Object System.Collections.Generic.List[object]
+        if (Test-Path -LiteralPath $decompositionRoot -PathType Container) {
+            foreach ($contractFile in Get-ChildItem -LiteralPath $decompositionRoot -File -Filter "*.md") {
+                $contractContent = Get-Content -LiteralPath $contractFile.FullName -Raw
+                $isCurrentContract = $contractContent -match '(?m)^\|\s*Contract version\s*\|\s*(?:\u0060)?2\.0(?:\u0060)?\s*\|'
+                if (-not $isCurrentContract) {
+                    $warnings.Add("Legacy feature contract '$($contractFile.FullName)' has no Contract version 2.0; migrate it before making it Active")
+                    continue
+                }
+
+                $featureId = ""
+                $featureIdMatch = [regex]::Match($contractContent, '(?m)^\|\s*Child Feature ID\s*\|\s*([^|\r\n]+)')
+                if ($featureIdMatch.Success) {
+                    $featureId = $featureIdMatch.Groups[1].Value.Trim().Trim([char]0x60)
+                }
+                $isActiveContract = $contractContent -match '(?m)^\|\s*Execution status\s*\|\s*(?:\u0060)?Active\b'
+                $currentContracts.Add([pscustomobject]@{
+                    Path = $contractFile.FullName
+                    FeatureId = $featureId
+                    IsActive = $isActiveContract
+                })
+
+                foreach ($requiredContractHeading in @(
+                    "## 0. Contract metadata",
+                    "## 1. Child boundary and outcome",
+                    "## 2. UI Pattern Gate (mandatory before implementation)",
+                    "## 3. Closest existing reference",
+                    "## 4. Reuse and composition contract",
+                    "## 5. Screen and workspace contract",
+                    "## 6. Typed transport and server criteria",
+                    "## 7. Create, edit, view, and lifecycle contract",
+                    "## 8. UX states, permissions, offline, and mock data",
+                    "## 9. Concurrency, transactions, and consistency",
+                    "## 10. i18n, RTL, accessibility, and responsive behavior",
+                    "## 11. Vertical execution ledger (strict one-active-step gate)",
+                    "## 12. Verification contract",
+                    "## 13. Child exit gate"
+                )) {
+                    if (-not $contractContent.Contains($requiredContractHeading)) {
+                        $errors.Add("Current feature contract '$($contractFile.FullName)' is missing '$requiredContractHeading'")
+                    }
+                }
+
+                foreach ($requiredContractMarker in @(
+                    "Screen ID",
+                    "Primary Pattern ID",
+                    "Exact reviewed reference source path",
+                    "Platform status",
+                    "Offline policy",
+                    "Mock-data policy",
+                    "Permission / scope",
+                    "Next-step rule"
+                )) {
+                    if (-not $contractContent.Contains($requiredContractMarker)) {
+                        $errors.Add("Current feature contract '$($contractFile.FullName)' is missing UI Pattern Gate marker '$requiredContractMarker'")
+                    }
+                }
+
+                if ($contractContent -match '<[^>\r\n]+>') {
+                    $errors.Add("Current feature contract '$($contractFile.FullName)' still contains template placeholders")
+                }
+
+                $uiPatternSection = [regex]::Match(
+                    $contractContent,
+                    '(?ms)^## 2\. UI Pattern Gate \(mandatory before implementation\)\s*(.*?)(?=^## 3\.)'
+                )
+                if (-not $uiPatternSection.Success) {
+                    $errors.Add("Current feature contract '$($contractFile.FullName)' has no parseable UI Pattern Gate section")
+                } else {
+                    $uiTableLines = @($uiPatternSection.Groups[1].Value -split "`r?`n" |
+                        Where-Object {
+                            $_ -match '^\|.*\|\s*$' -and
+                            $_ -notmatch '^\|\s*---' -and
+                            $_ -notmatch '^\|\s*Screen ID\s*\|'
+                        })
+                    $screenPlatforms = @{}
+
+                    foreach ($uiTableLine in $uiTableLines) {
+                        $columns = @($uiTableLine.Trim().Trim([char]0x7C).Split([char]0x7C) |
+                            ForEach-Object { $_.Trim() })
+                        if ($columns.Count -ne 16) {
+                            $errors.Add("Current feature contract '$($contractFile.FullName)' has a UI Pattern Gate row with $($columns.Count) columns; expected 16")
+                            continue
+                        }
+
+                        $screenId = $columns[0]
+                        $platform = $columns[1]
+                        $patternId = $columns[5]
+                        $referencePath = $columns[7]
+                        $platformStatus = $columns[8]
+                        $capabilityDecisions = $columns[9]
+
+                        if ([string]::IsNullOrWhiteSpace($screenId) -or $screenId -match '<|TBD') {
+                            $errors.Add("Current feature contract '$($contractFile.FullName)' has an invalid UI Pattern Gate Screen ID")
+                        }
+                        if ($platform -notin @('Web', 'Mobile')) {
+                            $errors.Add("Current feature contract '$($contractFile.FullName)' UI Pattern Gate platform '$platform' must be Web or Mobile")
+                            continue
+                        }
+                        if ($patternId -notmatch '^(?:P-[0-9]{3}|Candidate)\b') {
+                            $errors.Add("Current feature contract '$($contractFile.FullName)' UI Pattern Gate pattern '$patternId' must be P-### or Candidate")
+                        }
+                        if ([string]::IsNullOrWhiteSpace($referencePath) -or $referencePath -match '<|TBD' -or $referencePath -notmatch '/') {
+                            $errors.Add("Current feature contract '$($contractFile.FullName)' UI Pattern Gate must contain an exact reviewed source path")
+                        }
+                        if ($platformStatus -notmatch '^(?:Implemented|Adapted|Deferred|Excluded)\b') {
+                            $errors.Add("Current feature contract '$($contractFile.FullName)' UI Pattern Gate platform status '$platformStatus' is invalid")
+                        }
+                        if ([regex]::Matches($capabilityDecisions, '\b(?:Required|Deferred|Excluded)\b').Count -lt 1) {
+                            $errors.Add("Current feature contract '$($contractFile.FullName)' UI Pattern Gate must classify its views as Required, Deferred, or Excluded")
+                        }
+
+                        if (-not $screenPlatforms.ContainsKey($screenId)) {
+                            $screenPlatforms[$screenId] = New-Object System.Collections.Generic.HashSet[string]
+                        }
+                        [void]$screenPlatforms[$screenId].Add($platform)
+                    }
+
+                    foreach ($screenId in $screenPlatforms.Keys) {
+                        if (-not $screenPlatforms[$screenId].Contains('Web') -or -not $screenPlatforms[$screenId].Contains('Mobile')) {
+                            $errors.Add("Current feature contract '$($contractFile.FullName)' Screen ID '$screenId' must have explicit Web and Mobile UI Pattern Gate rows")
+                        }
+                    }
+                }
+
+                $webRows = [regex]::Matches($contractContent, '(?m)^\|[^|\r\n]+\|\s*Web\s*\|').Count
+                $mobileRows = [regex]::Matches($contractContent, '(?m)^\|[^|\r\n]+\|\s*Mobile\s*\|').Count
+                if ($webRows -lt 1 -or $mobileRows -lt 1) {
+                    $errors.Add("Current feature contract '$($contractFile.FullName)' must declare at least one Web and one Mobile UI Pattern Gate row")
+                }
+
+                $hasCandidate = $contractContent -match '(?im)^\|.*\bCandidate\b.*\|'
+                if ($isActiveContract -and $hasCandidate) {
+                    $errors.Add("Active feature contract '$($contractFile.FullName)' still selects a Candidate UI pattern; register/review the pattern before implementation")
+                }
+
+                if ($isActiveContract) {
+                    $executionSection = [regex]::Match(
+                        $contractContent,
+                        '(?ms)^## 11\. Vertical execution ledger \(strict one-active-step gate\)\s*(.*?)(?=^## 12\.)'
+                    )
+                    $stageRows = @()
+                    if ($executionSection.Success) {
+                        foreach ($stageLine in @($executionSection.Groups[1].Value -split "`r?`n" | Where-Object { $_ -match '^\|\s*[0-9]+\s*\|' })) {
+                            $stageColumns = @($stageLine.Trim().Trim([char]0x7C).Split([char]0x7C) |
+                                ForEach-Object { $_.Trim() })
+                            if ($stageColumns.Count -ne 6) {
+                                $errors.Add("Active feature contract '$($contractFile.FullName)' has a malformed vertical execution row")
+                                continue
+                            }
+                            $stageRows += [pscustomobject]@{
+                                Order = [int]$stageColumns[0]
+                                Status = $stageColumns[2]
+                            }
+                        }
+                    }
+
+                    if ($stageRows.Count -ne 5) {
+                        $errors.Add("Active feature contract '$($contractFile.FullName)' must contain all five vertical execution stages")
+                    } else {
+                        $activeStages = @($stageRows | Where-Object { $_.Status -eq 'Active' })
+                        if ($activeStages.Count -ne 1) {
+                            $errors.Add("Active feature contract '$($contractFile.FullName)' must have exactly one Active vertical execution stage")
+                        } else {
+                            $activeOrder = $activeStages[0].Order
+                            foreach ($stageRow in $stageRows) {
+                                if ($stageRow.Order -lt $activeOrder -and $stageRow.Status -ne 'Verified') {
+                                    $errors.Add("Active feature contract '$($contractFile.FullName)' stage $($stageRow.Order) must be Verified before stage $activeOrder is Active")
+                                }
+                                if ($stageRow.Order -gt $activeOrder -and $stageRow.Status -notin @('Queued', 'Blocked')) {
+                                    $errors.Add("Active feature contract '$($contractFile.FullName)' stage $($stageRow.Order) must remain Queued or Blocked")
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        $planIsV2OrExecutionReady = $planContent -match '(?im)Planning method version\s*\|\s*(?:\u0060)?2\.0' -or
+            $planContent -match '(?im)^\|\s*Status\s*\|.*(?:execution-ready|Implementation Ready)'
+        if ($currentContracts.Count -gt 0) {
+            if ($roadmapMarkers.Count -ne 1) {
+                $errors.Add("Business plan '$($directory.Name)' with version 2.0 feature contracts must declare exactly one ACTIVE_FEATURE_STEP marker")
+            }
+
+            $activeContracts = @($currentContracts | Where-Object { $_.IsActive })
+            if ($activeContracts.Count -ne 1) {
+                $errors.Add("Business plan '$($directory.Name)' must have exactly one version 2.0 feature contract with Execution status Active")
+            } elseif ($roadmapMarkers.Count -eq 1) {
+                $activeFeatureId = $activeContracts[0].FeatureId
+                $roadmapFeatureId = $roadmapMarkers[0].Trim([char]0x60)
+                if ([string]::IsNullOrWhiteSpace($activeFeatureId) -or $activeFeatureId -ne $roadmapFeatureId) {
+                    $errors.Add("Business plan '$($directory.Name)' ACTIVE_FEATURE_STEP '$roadmapFeatureId' must match the Active version 2.0 contract Child Feature ID '$activeFeatureId'")
+                }
+            }
+        } elseif ($planIsV2OrExecutionReady) {
+            $warnings.Add("Business plan '$($directory.Name)' is version 2.0 or execution-ready but has no version 2.0 feature contract; create one before runtime implementation")
         }
     }
 }
@@ -204,4 +439,11 @@ if ($errors.Count -gt 0) {
     exit 1
 }
 
-Write-Host "Planning checks passed: creation protocol, plan structure, evidence/spec files, plan registry IDs, canonical note IDs, note indexes, and canonical paths are clean."
+if ($warnings.Count -gt 0) {
+    Write-Host "Planning checks passed with migration warnings:" -ForegroundColor Yellow
+    foreach ($warningMessage in $warnings) {
+        Write-Host "  - $warningMessage" -ForegroundColor Yellow
+    }
+}
+
+Write-Host "Planning checks passed: creation protocol, authority separation, UI Pattern Gate markers, one-active-step roadmap rule, plan structure, evidence/spec files, plan registry IDs, canonical note IDs, note indexes, and canonical paths are clean."

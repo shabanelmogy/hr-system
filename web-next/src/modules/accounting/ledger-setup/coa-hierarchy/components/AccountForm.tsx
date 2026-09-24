@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Alert, Button } from "@mui/material";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { type Resolver, useForm, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { useCurrencyLookup } from "@/modules/accounting/currencies";
@@ -15,10 +15,10 @@ import {
 import { applyApiFieldErrors } from "@/shared/utils/formErrors";
 import {
   useAccountLookup,
-  useHierarchyLevels,
 } from "../hooks/useCoaHierarchyQueries";
 import type {
   AccountDetail,
+  AccountHierarchyLevel,
   AccountMutationRequest,
   SelectOption,
 } from "../types/coaHierarchy";
@@ -27,6 +27,7 @@ import {
   type AccountFormValues,
 } from "../validation/coaHierarchyValidation";
 import { isAccountCodeConflict } from "../utils/accountErrors";
+import { createAccountMockDraft } from "../utils/mockData";
 
 type FormMode = "add" | "edit" | "view";
 
@@ -35,6 +36,8 @@ interface Props {
   mode: FormMode;
   item?: AccountDetail | null;
   proposalCode?: string;
+  hierarchyLevels: readonly AccountHierarchyLevel[];
+  hierarchyLevelsLoading?: boolean;
   initialParentAccountId?: number | null;
   loading?: boolean;
   detailError?: string | null;
@@ -60,6 +63,8 @@ export default function AccountForm({
   mode,
   item,
   proposalCode,
+  hierarchyLevels,
+  hierarchyLevelsLoading = false,
   initialParentAccountId = null,
   loading = false,
   detailError = null,
@@ -76,13 +81,13 @@ export default function AccountForm({
     defaultValues: emptyValues,
     mode: "onSubmit",
   });
+  const usedMockSamples = useRef(new Set<number>());
   const currencyPolicy = useWatch({
     control: form.control,
     name: "currencyPolicy",
   });
 
   const accounts = useAccountLookup(open);
-  const levels = useHierarchyLevels("active", open);
   const currencies = useCurrencyLookup(open);
 
   const parentOptions = useMemo<SelectOption[]>(
@@ -97,11 +102,11 @@ export default function AccountForm({
   );
   const levelOptions = useMemo<SelectOption[]>(
     () =>
-      (levels.data ?? []).map((level) => ({
+      hierarchyLevels.map((level) => ({
         id: level.id,
         label: `${level.levelNumber} — ${isArabic ? level.nameAr : level.nameEn}`,
       })),
-    [isArabic, levels.data],
+    [hierarchyLevels, isArabic],
   );
   const currencyOptions = useMemo<SelectOption[]>(
     () =>
@@ -209,6 +214,46 @@ export default function AccountForm({
       focusFieldName="code"
       autoFocusFirst
       errors={toFormErrorMessages(form.formState.errors)}
+      mockDataAction={
+        !readOnly
+          ? {
+              onGenerate: () => {
+                const draft = createAccountMockDraft({
+                  proposalCode: proposalCode ?? item?.code,
+                  hierarchyLevels,
+                  parentAccounts: accounts.data ?? [],
+                  currencies: currencies.data ?? [],
+                  preferredParentAccountId:
+                    item?.parentAccountId ?? initialParentAccountId,
+                  excludedAccountId: item?.id,
+                  currentAllowPosting: item?.allowPosting,
+                  usedSampleIndexes: usedMockSamples.current,
+                });
+                if (!draft) return;
+                const options = { shouldDirty: true, shouldValidate: true };
+                form.setValue("code", draft.code, options);
+                form.setValue("nameAr", draft.nameAr, options);
+                form.setValue("nameEn", draft.nameEn, options);
+                form.setValue("accountHierarchyLevelId", draft.accountHierarchyLevelId, options);
+                form.setValue("parentAccountId", draft.parentAccountId, options);
+                form.setValue("allowPosting", draft.allowPosting, options);
+                form.setValue("manualPostingPolicy", draft.manualPostingPolicy, options);
+                form.setValue("currencyPolicy", draft.currencyPolicy, options);
+                form.setValue("specificCurrencyId", draft.specificCurrencyId, options);
+              },
+              disabled:
+                loading ||
+                hierarchyLevelsLoading ||
+                hierarchyLevels.length === 0 ||
+                accounts.isLoading ||
+                accounts.isError ||
+                currencies.isLoading ||
+                currencies.isError ||
+                (!proposalCode && !item?.code) ||
+                Boolean(detailError),
+            }
+          : undefined
+      }
     >
       {detailError ? (
         <Alert
@@ -262,8 +307,8 @@ export default function AccountForm({
         valueMember="id"
         displayMember="label"
         required
-        loading={levels.isLoading}
-        disabled={fieldsReadOnly}
+        loading={hierarchyLevelsLoading}
+        disabled={fieldsReadOnly || hierarchyLevelsLoading}
         errors={form.formState.errors}
       />
       <MySelect

@@ -53,7 +53,7 @@ realtime, notification, localization, report, or Import integration is reachable
 | states-api | 10 | `67f990428b9dbca4718c2f98282eab7cbd9bb777971adb9c3614260407765e8c` |
 | states-web | 8 | `dec0c122194d60ca08d8135c4d8fa24774fbecc3f5dc9d9fb4df340f9b3259c8` |
 | states-web | 9 | `746099e532ae94bd3061c2ef0f9418838809d5c581bdd7444e64e3ef7948de7a` |
-| states-web | 10 | `e00223d95189162d606ece03c771998864d3cc00b1d132341c23c447e6f5a098` |
+| states-web | 10 | `52d53dc52aa8dc1617ce1acc48ab2c75ba58fbb120a5257c1773b06a6563dd35` |
 | states-web | 13 | `6f4711600d21044390b0bccc326dadf61fbb4bb687b5c0b4aebe5f33772c42ca` |
 | states-mobile | 2 | `5351f9449214fcab85cd168d1b76405c676fc140bbad5d6031466f55ccd2b04f` |
 | states-mobile | 11 | `a658c758cf1ad2b2ee4e64cfe6ecc5c5c16418220248aa4cd02df51a1ced4063` |

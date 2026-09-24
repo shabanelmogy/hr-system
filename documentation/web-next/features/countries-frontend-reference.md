@@ -342,10 +342,14 @@ product and API contracts justify them.
 
 ### Web Reports
 
-A Countries-specific web report page and designer are Excluded from the current
-client surface. The shared reporting infrastructure remains Platform-owned, but
-it is not Countries runtime evidence until Countries registers a real route,
-composition component, permissions, and focused tests.
+Countries has an `Implemented` global managed Crystal report view through
+`CountryReportPage`, `CountriesMultiView`, and the public Reporting API. The
+view is available only to `super_admin` users with `GlobalCrystalReports:View`;
+it does not require or query the tenant Reporting module entitlement. The
+shared view disables its catalog query while the gate is loading or denied, and
+`CountriesMultiView` returns to Grid if access is lost. The older ActiveReports
+`report-data`/template contract above remains a separate tenant-scoped browser
+template capability; it is not the managed global view.
 
 Mobile view switching is owned by `AppListScreen`/`AppMultiView`. Switching to
 Table or Cards applies that view's server page size and returns to page zero;

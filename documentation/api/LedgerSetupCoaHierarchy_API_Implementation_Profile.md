@@ -1,6 +1,6 @@
 # Accounting Chart of Accounts and Hierarchy — API Implementation Contract
 
-Status: **Phase 01 API contract implemented and focused-tested; Web/Mobile integration remains pending.**
+Status: **Phase 01 API contract implemented and focused-tested; typed Web/Mobile clients consume it, with live Phase 06 acceptance pending.**
 
 ## 1. Boundary and current baseline
 
@@ -83,9 +83,10 @@ notification/realtime delivery is correctness-critical in this child.
 
 ## 10. Verification
 
-Focused runtime evidence on 2026-09-22 is
+Phase 01 focused runtime evidence on 2026-09-22 was
 `dotnet test Modules/Accounting/ErpSystem.Modules.Accounting.Tests/ErpSystem.Modules.Accounting.Tests.csproj -c Release --no-restore`
-with **56/56 PASS**. The new COA tests cover truthful page metadata and focused search,
+with **56/56 PASS**. The same complete Accounting suite was revalidated on 2026-09-23
+with **66/66 PASS** after the typed client/mock-data reconciliation. The COA tests cover truthful page metadata and focused search,
 negative search behavior, D-024 empty/active/archived/large-suffix behavior, frozen
 query vocabulary, hierarchy-level update-validator parity, and controller/permission
 surface. Existing lifecycle/domain tests continue to cover create/update/archive/
@@ -94,9 +95,8 @@ feature migration was introduced.
 
 Additional verification keeps the persistence/race boundary explicit: the focused
 global exception-handler theory passes **2/2** for SQL unique error numbers 2601/2627,
-and the repository-wide EF pending-model check passes **1/1**. Architecture tests remain
-**57 PASS / 1 environment-only failure** because the test host cannot launch `pwsh` for
-the migration WhatIf check; no architecture assertion failed.
+and the repository-wide EF pending-model check passes **1/1**. The current Architecture
+suite passes **58/58** on 2026-09-23, including the migration WhatIf assertion.
 
 ## 11. Deferred and excluded API work
 

@@ -39,6 +39,7 @@ import {
   useAccountTree,
   useArchiveAccount,
   useCreateAccount,
+  useHierarchyLevels,
   useRestoreAccount,
   useUpdateAccount,
 } from "../hooks/useCoaHierarchyQueries";
@@ -140,6 +141,10 @@ function AuthorizedAccountsPage({ canManage }: { canManage: boolean }) {
   );
   const detail = useAccountDetail(selectedId, viewMode === "tree");
   const proposal = useAccountCodeProposal(dialog === "add");
+  const hierarchyLevels = useHierarchyLevels(
+    "active",
+    dialog === "add" || dialog === "edit" || dialog === "view",
+  );
 
   useEffect(() => {
     if (initializedExpansion.current || treeItems.length === 0) return;
@@ -472,6 +477,8 @@ function AuthorizedAccountsPage({ canManage }: { canManage: boolean }) {
           mode={dialog}
           item={dialogAccount}
           proposalCode={proposal.data?.code}
+          hierarchyLevels={hierarchyLevels.data ?? []}
+          hierarchyLevelsLoading={hierarchyLevels.isLoading}
           initialParentAccountId={createParentId}
           loading={
             create.isPending ||

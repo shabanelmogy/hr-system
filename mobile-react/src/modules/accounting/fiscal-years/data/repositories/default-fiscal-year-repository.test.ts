@@ -7,8 +7,8 @@ describe('DefaultFiscalYearRepository', () => {
     const repository = new DefaultFiscalYearRepository(remote);
     const request = { code: 'FY-2027', nameAr: 'السنة المالية 2027', nameEn: 'Fiscal Year 2027', startDate: '2027-01-01', endDate: '2027-12-31', periodFrequency: 1 as const };
     remote.archive.mockResolvedValue(undefined);
-    await repository.archive(7);
-    expect(remote.archive).toHaveBeenCalledWith(7);
+    await repository.archive(7, 'AQ==');
+    expect(remote.archive).toHaveBeenCalledWith(7, 'AQ==');
     expect(remote.create).not.toHaveBeenCalled();
     void request;
   });

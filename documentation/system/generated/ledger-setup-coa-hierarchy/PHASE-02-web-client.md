@@ -106,21 +106,21 @@ failure into partial success.
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| ledger-setup-coa-hierarchy-master | 3 | `506261bc57d418b35b861e895202f0d0e002e76580f31b6bc221fcdf725417e3` |
+| ledger-setup-coa-hierarchy-master | 3 | `492db78014ebbec06f6ea5efcb4834728e7e716f07de1a65b7a8ef54c48f5d96` |
 | ledger-setup-coa-hierarchy-master | 4 | `d98c472a1497ad2d7f2e5d96839ed1a1c7fec16d3f6f3c1a45fd083f190be6d8` |
 | ledger-setup-coa-hierarchy-master | 6 | `aa868978610f3e8a3aa72060935719cf3f657c796f10359642b45cc0c244edc5` |
-| ledger-setup-coa-hierarchy-master | 7 | `289dae9e3e135bc59698fc02c8dfdbe8088e38c13624adb5c124290e507f252d` |
+| ledger-setup-coa-hierarchy-master | 7 | `7a06d80a788ca9f33ed3c3651f664ddddeade75ccfbc008979ae5eaf90d72150` |
 | ledger-setup-coa-hierarchy-web | 1 | `caa3204185b97905e4369dadabd0d4538f2aa6c09b114177e974e095303d99f3` |
 | ledger-setup-coa-hierarchy-web | 2 | `4f2fd9712cf706d3a1f7d2e28b463bf227367abe2037446603bf14b012328ced` |
 | ledger-setup-coa-hierarchy-web | 3 | `d74d6f6b3c1839431455d6cadbb243af05b8792865ed7eef57beea4c826e280d` |
-| ledger-setup-coa-hierarchy-web | 4 | `d3d16f47184c4b2622efdd54e361565ad1e2454484a40eccc88b7fdcbd0b42b0` |
+| ledger-setup-coa-hierarchy-web | 4 | `743be6efb5eef8bd364ea6047b3e1642577a34e879908f1a1ce4f656a36a673d` |
 | ledger-setup-coa-hierarchy-web | 5 | `f225df144da40125c4daada3e5c049292fdb0afa51a0a8a66c0c8f2d80d8ef0f` |
 | ledger-setup-coa-hierarchy-web | 6 | `4d15b00723aed36bddf556739c3720f4287becc783c84b5ee5884f074e1b716c` |
 | ledger-setup-coa-hierarchy-web | 7 | `bd8a065331955528857396f8c24e7524e52af0000be228e749266b7f6baeda66` |
 | ledger-setup-coa-hierarchy-web | 8 | `d1847f446370d2d37dde9fec6fb57fd8731f7c700e413476fdc3965d94a75dca` |
 | ledger-setup-coa-hierarchy-web | 9 | `c6b858f0d4064aa2df6f016a6629c458d4b55547c1f8febcd6fb972248133492` |
-| ledger-setup-coa-hierarchy-web | 10 | `9a8ef39c2078b3a4d39533e09f85106738eec64c680e4ad10dff07615683ccbd` |
+| ledger-setup-coa-hierarchy-web | 10 | `33bb55239f23ddff10f381100cd21f83fa52864583d7496824b4cc9233aa02e2` |
 | ledger-setup-coa-hierarchy-web | 11 | `b37e9ad791cc4313895df53a91c0fa3a7d4d1a86c5c3ef7628ba65c1f1bc271e` |
 | ledger-setup-coa-hierarchy-web | 12 | `c1d6dd5013924c2f67afeb404ed8060c65cee180dee0ef8059c7afcc34d1807c` |
 | ledger-setup-coa-hierarchy-web | 13 | `8b93bc6b97cf54398c3e16940c46c65f873bc7b80c05b2fd9164ea69bf516e74` |
-| ledger-setup-coa-hierarchy-web | 14 | `3adffee683d394f9ff942d843d9839ed3908e3750096abcd42eb426deac7ea29` |
+| ledger-setup-coa-hierarchy-web | 14 | `0367583b13c0a492c9ed87ad92ad21d6fcd5d7716cdc23cbd0f5585ffb33a24a` |

@@ -10,6 +10,7 @@ using ErpSystem.Modules.Platform.Contracts.EntityChangeLogs;
 using ErpSystem.Modules.Accounting.Infrastructure.Features.Finance.FiscalYears.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
+using ErpSystem.Modules.Accounting.Application.Features.Finance.FiscalYears.Queries.GetFiscalYears;
 
 namespace ErpSystem.Modules.Accounting.Tests;
 
@@ -218,6 +219,51 @@ public sealed class FiscalYearCompanyIsolationTests
         Assert.True(result.IsSuccess);
         Assert.Equal(originalPeriodIds, fiscalYear.Periods.Select(period => period.Id));
         Assert.Equal("Update", scheduler.Change?.Action);
+    }
+
+    [Fact]
+    public async Task ArchiveHandler_RequiresAndAppliesTheCurrentRowVersion()
+    {
+        var options = new DbContextOptionsBuilder<AccountingDbContext>()
+            .UseInMemoryDatabase(Guid.NewGuid().ToString("N"))
+            .Options;
+        var actor = new TestActor("tenant-1", 11);
+        await using var context = new AccountingDbContext(options, actor, TimeProvider.System);
+        var fiscalYear = Create("FY-2027", "tenant-1", 11);
+        context.FiscalYears.Add(fiscalYear);
+        await context.SaveChangesAsync();
+        var rowVersion = Convert.ToBase64String(fiscalYear.RowVersion);
+        var scheduler = new RecordingScheduler();
+        var handler = new ArchiveFiscalYearCommandHandler(
+            new FiscalYearWriteStore(context), context, scheduler, actor, TimeProvider.System,
+            new FiscalYearErrors(new EchoLocalizer<CreateFiscalYearRequest>()));
+
+        var result = await handler.Handle(
+            new ArchiveFiscalYearCommand(fiscalYear.Id, rowVersion), CancellationToken.None);
+
+        Assert.True(result.IsSuccess);
+        Assert.True(fiscalYear.IsDeleted);
+        Assert.Equal("Archive", scheduler.Change?.Action);
+    }
+
+    [Fact]
+    public async Task PageProjection_ExcludesArchivedPeriodsFromPeriodsCount()
+    {
+        var options = new DbContextOptionsBuilder<AccountingDbContext>()
+            .UseInMemoryDatabase(Guid.NewGuid().ToString("N"))
+            .Options;
+        var actor = new TestActor("tenant-1", 11);
+        await using var context = new AccountingDbContext(options, actor, TimeProvider.System);
+        var fiscalYear = Create("FY-2027", "tenant-1", 11);
+        fiscalYear.Periods.Last().IsDeleted = true;
+        context.FiscalYears.Add(fiscalYear);
+        await context.SaveChangesAsync();
+
+        var page = await new FiscalYearReadStore(context).GetPageAsync(
+            new GetFiscalYearsQuery { RecordStatus = "active", PageNumber = 1, PageSize = 10 },
+            CancellationToken.None);
+
+        Assert.Equal(11, Assert.Single(page.Items).PeriodsCount);
     }
 
     [Fact]

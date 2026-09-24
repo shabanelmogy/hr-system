@@ -11,7 +11,8 @@ and does not create financial years, budgets, or planning demand.
 This slice is implemented across API, Next.js, and Expo. The Countries feature is
 the implementation reference for CQRS, controlled lists, shared form/list shells,
 authorization, localization, realtime invalidation, and verification. Its global
-ownership, import, bulk, report, and super-admin rules are not copied.
+ownership, optional-view count, import, bulk, report, and super-admin rules are
+not copied.
 
 ## 2. Product boundary and operating model
 
@@ -60,14 +61,15 @@ handler, stores, and `AccountingDbContext` share the same scoped context even wh
 other ERP modules register the shared `IUnitOfWork`. Duplicate code includes
 archived records. Overlap checks include all
 active records and are repeated during restore so an old archived year cannot be
-restored over a newer calendar. Update, restore, and lifecycle operations use
+restored over a newer calendar. Update, archive, restore, and lifecycle operations use
 RowVersion. Audit persistence is part of the transaction; Hangfire/realtime is
 scheduled after commit only.
 
-The consolidated EF baseline migration `20260906112413_create-database` creates
-`FiscalYears` and `FiscalPeriods`, composite tenant/company relationships,
-unique code/sequence indexes, and RowVersion columns. Fiscal Year permissions
-are assigned through the runtime system-role seeding path.
+The Accounting migration `20260922091842_InitialAccounting` creates the `acc`
+schema tables `FiscalYears` and `FiscalPeriods`, composite tenant/company
+relationships, unique code/sequence indexes, and RowVersion columns. Fiscal Year
+permissions are assigned through the runtime system-role seeding path. HR's
+`ApplicationDbContext` and `ErrorsService` do not own this feature.
 
 ## 5. Authorization and ownership
 
@@ -92,8 +94,10 @@ The page uses shared `PageHeader`, `MyDataGrid`, grid toolbar/options, cards,
 server pagination, feedback states, `MyForm`, shared fields, and confirmation
 dialogs. Search field/operator, record status, lifecycle, sorting, and pagination
 are server driven. Create/edit includes calculated end date and frequency; view
-loads detail and renders generated periods. Development builds expose shared
-Generate Mock Data.
+loads detail and renders generated periods. The shared Generate Mock Data action
+is available on writable forms in hosted trials and development alike; it fills
+only a local valid draft and never submits or fabricates scope/identity/concurrency
+metadata.
 
 ## 7. Mobile implementation
 
@@ -105,8 +109,23 @@ status badges, toasts, and confirmation dialogs.
 
 Table and Cards consume the same server page. The full-screen create/edit/view
 workflow calculates the end date, selects frequency, hydrates detail for editing,
-shows periods in view mode, and exposes development mock data. All colors and
+shows periods in view mode, and exposes the shared mock-data action. All colors and
 selected states come from the active theme palette.
+
+## 7A. UI Pattern contract
+
+Fiscal Years uses **P-001 Server-managed Grid/CRUD** from the canonical
+`documentation/project/SCREEN_PATTERN_CATALOG.md` as its layout and interaction
+pattern. P-001 does not require Countries' five views; each optional surface is
+decided by this feature contract. Web requires Grid, Cards, and managed Report
+views; Mobile requires Table, Cards, and managed Report views. Import, Export, and
+Chart are Excluded on both platforms and have no route or control. The
+create/edit/view experience is one compact sectioned shared form; P-003 tabs are
+intentionally not applied. Generated periods are a read-only child preview/detail
+and have no independent CRUD route. Loading,
+background fetch, empty/no-results, error/retry, permission/read-only, validation,
+dirty-exit, busy, and RowVersion conflict/reload states are part of the pattern
+evidence on both platforms.
 
 ## 8. Lifecycle, integration, and UI audit
 
@@ -135,9 +154,13 @@ Five-point audit:
 
 ## 9. Verification evidence and known repository state
 
+Step 01 revalidation is **Active — pending live authenticated verification**. The
+automated checks below prove source contracts and focused behavior; they do not
+mark this vertical slice `Verified` or authorize Step 02 Currency.
+
 - API feature tests include domain/lifecycle generation, company isolation,
-  restore/idempotency, and controller CQRS/route contracts; the full API suite
-  passed 407 tests at reconciliation.
+  archive RowVersion dispatch, non-deleted period-count projection,
+  restore/idempotency, and controller CQRS/route contracts.
 - The migration was applied to the configured development database and EF reported
   no pending model changes.
 - Web feature lint, regular type-check, architecture, route/permission parity, and
@@ -155,13 +178,13 @@ Five-point audit:
 
 ## 10. Handoff and next slices
 
-Fiscal Years is releasable after an authenticated manual smoke test in both
-clients. Fiscal Year Report is Required on Web and Mobile through the shared managed
+Fiscal Years remains pending the Step 01 live API-backed Web/Mobile journey. Fiscal
+Year Report is Required on Web and Mobile through the shared managed
 Crystal catalog/render contract and the Accounting-owned `fiscalyears` dataset;
-it remains company-scoped and uses tenant Reporting entitlement. Import is
-Deferred until the Workforce Budget dataset is defined; charts and bulk lifecycle
-are Excluded. Reopen is a Required single-record lifecycle action on API, Web, and
-Mobile. No placeholder UI exists for deferred capabilities.
+it remains company-scoped and uses tenant Reporting entitlement. Import, Export,
+and charts are Excluded from this feature on both platforms; no placeholder UI,
+transport, or future Workforce Budget dependency is recorded here. Reopen is a
+Required single-record lifecycle action on API, Web, and Mobile.
 
 The next implementation slice is Workforce Plans and Workforce Budgets, followed
 by Position Envelopes and Staffing Requests. Only after approval and reservation

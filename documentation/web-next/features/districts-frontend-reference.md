@@ -2,7 +2,10 @@
 
 ## 1. Scope
 
-The Districts browser feature is a State-dependent reference-data implementation using the approved Grid, Cards, Chart, and Import views. A District-specific web Report view is Excluded from the current client.
+The Districts browser feature is a State-dependent reference-data implementation
+using the approved Grid, Cards, Chart, Report, and Import views. Its Report is a
+global managed Crystal view and requires `super_admin` plus
+`GlobalCrystalReports:View`; it has no tenant Reporting entitlement query.
 
 ## 2. Route and composition
 
@@ -54,9 +57,10 @@ Import is visible only with `Districts:Create` and submits only while the user a
 
 ## 13. Report view
 
-Excluded on web until Districts owns a reachable report composition, permissions,
-and focused tests. The Reporting module's managed Crystal capabilities do not by
-themselves make a District report view part of this client feature.
+Districts owns a reachable `DistrictReportPage` composition and focused policy
+tests. The Report option is hidden when denied and an active Report view falls
+back to Grid if the session changes. Older tenant ActiveReports/report-data
+references are a separate capability.
 
 ## 14. Verification
 

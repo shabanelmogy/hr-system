@@ -12,10 +12,18 @@ Canonical route is `/finance/ledger-setup/fiscal-years`. Typed routes, access po
 navigation type/title, and the shared Finance sidebar config all reference it.
 Visibility requires `FiscalYears:View`.
 
-## 3. Transport and contracts
+## 3. UI pattern and transport contract
+
+The screen follows **P-001 Server-managed Grid/CRUD** from
+`documentation/project/SCREEN_PATTERN_CATALOG.md` as its layout and interaction
+pattern. P-001 does not imply Countries' five views. Grid, Cards, and managed
+Report are the required views; Import, Export, and Chart are Excluded and have no
+route, control, parser, or transport. Generated periods are a read-only child
+preview. Create/edit/view uses one sectioned shared form; P-003 tabs are
+intentionally not applied because this is a single bounded calendar workflow.
 
 Only `FiscalYearService` calls `apiService`. It normalizes code/names, sends the
-server page criteria, sends RowVersion for update/restore/lifecycle, and never sends
+server page criteria, sends RowVersion for update/archive/restore/lifecycle, and never sends
 tenant/company identifiers. React Query owns one stable `fiscal-years` key family.
 
 ## 4. Validation
@@ -87,6 +95,10 @@ year therefore returns to Workforce Planning without an inactive-cache gap.
 
 Feature ESLint, standard type-check, architecture, service/validation, route,
 permission parity, and realtime tests are required. Grid, Cards, detail, create,
-edit, lifecycle, and mock data are Required. Chart and bulk lifecycle are Excluded.
-Report is Required through the shared managed Crystal component with entity key
-`fiscalyears`; Import and Export remain Deferred with no reachable placeholder.
+edit, lifecycle, and mock data are Required. Chart, Import, Export, and bulk
+lifecycle are Excluded with no reachable placeholder. Report is Required through
+the shared managed Crystal component with entity key `fiscalyears`; the Reporting
+module/catalog owns report endpoint and dataset rendering. Mock
+data is available on writable forms through the shared form contract in hosted
+trials and development alike; it never submits or fabricates identity, scope, or
+RowVersion.

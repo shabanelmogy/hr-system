@@ -37,7 +37,7 @@ public sealed class FiscalYearsControllerContractTests
         Assert.IsType<OkObjectResult>(await controller.GetById(7, CancellationToken.None));
         Assert.IsType<CreatedAtActionResult>(await controller.Create(mutation, CancellationToken.None));
         Assert.IsType<OkObjectResult>(await controller.Update(7, update, CancellationToken.None));
-        Assert.IsType<NoContentResult>(await controller.Archive(7, CancellationToken.None));
+        Assert.IsType<NoContentResult>(await controller.Archive(7, concurrency, CancellationToken.None));
         Assert.IsType<OkObjectResult>(await controller.Restore(7, concurrency, CancellationToken.None));
         Assert.IsType<OkObjectResult>(await controller.Open(7, concurrency, CancellationToken.None));
         Assert.IsType<OkObjectResult>(await controller.BeginClosing(7, concurrency, CancellationToken.None));
@@ -52,7 +52,12 @@ public sealed class FiscalYearsControllerContractTests
             request => Assert.Equal(7, Assert.IsType<GetFiscalYearByIdQuery>(request).Id),
             request => Assert.Equal("FY2027", Assert.IsType<CreateFiscalYearCommand>(request).Code),
             request => Assert.Equal("AQ==", Assert.IsType<UpdateFiscalYearCommand>(request).RowVersion),
-            request => Assert.Equal(7, Assert.IsType<ArchiveFiscalYearCommand>(request).Id),
+            request =>
+            {
+                var command = Assert.IsType<ArchiveFiscalYearCommand>(request);
+                Assert.Equal(7, command.Id);
+                Assert.Equal("AQ==", command.RowVersion);
+            },
             request => Assert.Equal("AQ==", Assert.IsType<RestoreFiscalYearCommand>(request).RowVersion),
             request => AssertLifecycle(request, FiscalYearLifecycleAction.Open),
             request => AssertLifecycle(request, FiscalYearLifecycleAction.BeginClosing),

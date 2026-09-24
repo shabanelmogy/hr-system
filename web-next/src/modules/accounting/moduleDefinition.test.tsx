@@ -1,7 +1,6 @@
 import { beforeEach, describe, expect, it } from "vitest";
 
 import { appRoutes } from "@/config/routes";
-import { permissions } from "@/lib/auth/permissions";
 import {
   registerFrontendModule,
   requiredModuleForPath,

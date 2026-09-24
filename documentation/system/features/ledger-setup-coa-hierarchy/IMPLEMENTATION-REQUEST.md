@@ -26,8 +26,8 @@
 Refactor the existing Account/Hierarchy Ledger Setup surface into one canonical
 typed child feature without compatibility façades or duplicate ownership. Preserve
 the existing correct Account/AccountHierarchyLevel domain rules and database model,
-complete the missing read/transport contracts, then replace the Accounts and
-Hierarchy-Level generic Web/Mobile renderers with focused typed implementations.
+complete the missing read/transport contracts, and keep the focused typed Web/Mobile
+implementations aligned with the shared form contract.
 
 Do not delete the umbrella Ledger Setup generic client while sibling child features
 still consume it. The COA routes themselves must stop consuming that generic runtime
@@ -61,7 +61,7 @@ when this child is complete.
 | Owning capability | Existing Accounting Ledger Setup Account/Hierarchy capability under `api/Modules/Accounting`. |
 | Relationship classification | Change/extend the current owner; do not create parallel aggregates, tables, services or routes. |
 | Existing behavior retained | Domain hierarchy/posting/currency invariants, archive/restore, RowVersion, company filters, current table/index/FK model, route family and permissions. |
-| Existing behavior replaced | Array-only Account page contract; missing code proposal; generic Web/Mobile Account/Hierarchy renderer. |
+| Existing behavior replaced | Array-only Account page contract; missing code proposal; generic Web/Mobile Account/Hierarchy renderer on the COA routes. |
 | Existing path disposition | Existing API routes remain canonical and evolve additively except the Account list response shape consumed by in-repo clients in the same delivery. |
 | Evidence | Account/Level entities, SettingsAndAccountsCommands, LedgerSetupQueries/Stores, AccountsController, LedgerSetupConfigurations, module tests; Web SplitTreeView/CostCenterTreeDiagram/Currencies; Mobile AppHierarchicalTree/Currencies. |
 
@@ -167,10 +167,21 @@ runtime schemas/repository/use-cases/hooks/screens using AppHierarchicalTree.
 | Connection for mutation | Required | Required | Required | permissions/concurrency server-owned |
 | Recovery | authoritative refetch | refetch on 409/uncertain response | refetch on 409/uncertain response | no queued mutation |
 
+## Local mock-data contract
+
+Every writable Account and Hierarchy Level form exposes the shared Web `MyForm` or
+Mobile `AppForm` mock-data action when authoritative prerequisites are loaded. It fills
+a realistic, schema-valid local draft only and never submits, persists, fabricates IDs,
+RowVersion, tenant/company scope, posting or authorization state. Account mock data
+keeps the server-proposed code, uses an active loaded hierarchy level, keeps only a
+valid contextual non-posting parent, and selects a real Currency lookup only. Hierarchy
+Level mock data selects the next positive number unused by active or archived loaded
+levels and bilingual sample names. View-only and
+query/report-only surfaces are N/A. This is a local-draft aid, not offline mutation.
+
 ## Verification and handoff
 
-Phase 00 closes only when this request/review, four applied books, final manifest and
-recipes are registered and planning/documentation checks pass. Runtime implementation
-then proceeds API → Web → Mobile for this child, with no permanent compatibility
-adapter. Phase 06 alone may mark the customer journey Verified; Phase 07 education
-starts only after that decision.
+Phase 00 closed for the child contract on 2026-09-22. API Phase 01 and typed Web/Mobile
+client phases are implemented and focused/static checks are recorded in the review
+artifact; live API-backed Phase 06 remains the only path to `Verified`. Phase 07
+education starts only after that decision.

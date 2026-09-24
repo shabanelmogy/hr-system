@@ -56,6 +56,11 @@ import {
 } from "./tenantValidation";
 import { useTenantPage } from "./useTenantsQuery";
 import {
+  getFirstTenantErrorField,
+  getFirstTenantErrorTab,
+  type TenantFormTab,
+} from "./tenantFormTabs";
+import {
   toLauncherModule,
   useTenantEntitlementModulesQuery,
   type ErpModule,
@@ -75,7 +80,6 @@ import {
 } from "./types";
 
 const defaultTenantFilters: TenantListFilters = { includeArchived: false };
-type TenantFormTab = "identity" | "subscription" | "contact" | "entitlements" | "notes";
 
 export default function TenantManagementPage() {
   const queryClient = useQueryClient();
@@ -246,14 +250,26 @@ function TenantEditor({
   });
   const subscriptionStartedOn = useWatch({ control, name: "subscriptionStartedOn" });
   const [activeTab, setActiveTab] = useState<TenantFormTab>("identity");
+  const [focusField, setFocusField] = useState<keyof TenantFormState | null>(null);
   const [selectedEntitlementModuleCode, setSelectedEntitlementModuleCode] = useState(
     () => tenantEntitlementModules[0]?.code ?? "",
   );
   const { requestDiscard } = useUnsavedChanges();
   useUnsavedChangesRegistration(fullPage && isDirty, fullPage && loading);
 
+  useEffect(() => {
+    if (!focusField || typeof document === "undefined") return;
+    const field = focusField;
+    const frame = window.requestAnimationFrame(() => {
+      document.querySelector<HTMLElement>(`[name="${String(field)}"]`)?.focus();
+      setFocusField(null);
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [activeTab, focusField]);
+
   const handleInvalid = (validationErrors: FieldErrors<TenantFormState>) => {
     setActiveTab(getFirstTenantErrorTab(validationErrors));
+    setFocusField(getFirstTenantErrorField(validationErrors));
   };
 
   const handleClose = async () => {
@@ -1113,24 +1129,6 @@ function TenantFormSection({
       </Box>
     </Paper>
   );
-}
-
-function getFirstTenantErrorTab(errors: FieldErrors<TenantFormState>): TenantFormTab {
-  if (errors.identifier || errors.name || errors.isActive) return "identity";
-  if (
-    errors.planName ||
-    errors.subscriptionStatus ||
-    errors.subscriptionStartedOn ||
-    errors.subscriptionEndsOn ||
-    errors.maxAdmins ||
-    errors.maxUsers
-  ) {
-    return "subscription";
-  }
-  if (errors.billingEmail || errors.contactName || errors.contactPhone) return "contact";
-  if (errors.entitlements) return "entitlements";
-  if (errors.notes) return "notes";
-  return "identity";
 }
 
 function createEmptyForm(tenantEntitlementModules: ErpModule[]): TenantFormState {

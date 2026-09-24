@@ -27,7 +27,9 @@ the registered Web and Mobile sources for the same workflow:
 - `P-002`: Cost Centers Tree + Master/Detail; Mobile uses `CostCentersScreen`
   through `OrganizationalStructureManagementScreen` and `AppHierarchicalTree`.
 - `P-003`: Add Tenant multi-section form; Web is tabbed, while the current Mobile
-  reference is an explicitly `Adapted` full-screen stacked `AppForm`.
+  reference is an explicitly `Adapted` full-screen stacked `AppForm`. The shared
+  `AppFormTabs` primitive remains available for future tabbed mobile forms, and
+  both paths keep one validation context.
 
 Record Mobile and Web as `Implemented`, `Adapted`, `Deferred`, or `Excluded` in
 the owning feature profile. Platform ergonomics may change the composition, but
@@ -474,22 +476,31 @@ Record every Report view as Required, Deferred, or Excluded. When Managed Crysta
 is Required, follow the cross-project
 [Crystal Report Manager Feature Integration Guide](../project/CRYSTAL_REPORT_MANAGER_INTEGRATION_GUIDE.md).
 
-Mobile uses the same Reporting API catalog and render endpoints as web. The feature owns
+Mobile uses the same Reporting API catalog and render endpoints as web. Global
+Reference Data reports and tenant-owned reports are separate scopes. Global
+geography requires `super_admin` plus `GlobalCrystalReports:View` and does not
+query tenant Reporting entitlement; tenant reports require `CrystalReports:View`
+and an accessible Reporting module. The feature owns
 its stable `entityKey`, localized selector, allowed filters, and PDF
 open/share/error experience; shared reporting infrastructure owns the typed
 service, Zod parsing, query keys, and viewer primitives after the first mobile
 consumer is implemented.
 
-- list published, permitted reports with
-  `GET /api/v1/crystal-reports?entityKey={entityKey}`;
+- list tenant reports with `GET /api/v1/crystal-reports?entityKey={entityKey}`;
+  global geography reports use `GET /api/v1/global-crystal-reports?entityKey={entityKey}`;
 - display SummaryInfo Title in Arabic and Subject in English, with the documented
   manager fallback;
-- render with `POST /api/v1/crystal-reports/{reportId}/render`, sending only report
-  ID, `ar`/`en`, and approved bounded filters;
+- render tenant reports with `POST /api/v1/crystal-reports/{reportId}/render`;
+  global geography reports use `POST /api/v1/global-crystal-reports/{sourceId}/render`
+  with the entity key, expected hash, `ar`/`en`, and approved bounded filters;
 - keep Report independent from table/card pagination. In `AppMultiView`, use
   `paginate: false` and `renderWhenEmpty: true`;
 - never call the Crystal host directly or send paths, filenames, SQL, connection
   strings, tenant IDs, or company IDs.
+
+The Report option is hidden while the scope gate is loading or denied. A report
+component repeats the gate before mounting a catalog query and returns to the
+list view when a previously selected report loses access.
 
 ## 10. Tests and definition of done
 
