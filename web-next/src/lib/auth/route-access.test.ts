@@ -193,6 +193,21 @@ describe("route access policies", () => {
     })).toBe(true);
   });
 
+  it("requires the exact RolePermissions:View claim for role-permission screens", () => {
+    const rolePermissionsPath = appRoutes.platform.administration.rolePermissions("role-1");
+
+    expect(canAccessRoute(rolePermissionsPath, {
+      ...session,
+      roles: ["admin"],
+      permissions: [permissions.ViewRoles],
+    })).toBe(false);
+    expect(canAccessRoute(rolePermissionsPath, {
+      ...session,
+      roles: ["admin"],
+      permissions: [permissions.ViewRolePermissions],
+    })).toBe(true);
+  });
+
   it("requires AccountingSetup:View for the Ledger Setup currencies route", () => {
     expect(canAccessRoute(appRoutes.modules.accounting.ledgerSetup.currencies, session)).toBe(false);
     expect(canAccessRoute(appRoutes.modules.accounting.ledgerSetup.currencies, {

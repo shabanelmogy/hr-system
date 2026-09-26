@@ -21,17 +21,20 @@ public sealed class PlatformSystemRoleStartupTask(
         var userRole = await FindSystemRoleAsync(PlatformRoleNames.User, cancellationToken)
             ?? throw new InvalidOperationException("The default user role was not created.");
 
-        var tenantPermissions = moduleCatalog.Definitions
+        var catalogSubmodules = moduleCatalog.Definitions
             .SelectMany(definition => definition.Submodules)
-            .Where(submodule => submodule.PermissionAccessMode != PermissionAccessMode.Global)
-            .SelectMany(submodule => submodule.RequiredPermissions)
+            .ToArray();
+        var tenantPermissions = PlatformPermissions.TenantAdministration
+            .Concat(catalogSubmodules
+                .Where(submodule => submodule.PermissionAccessMode != PermissionAccessMode.Global)
+                .SelectMany(submodule => submodule.RequiredPermissions))
             .Where(permission => !string.IsNullOrWhiteSpace(permission))
             .Distinct(StringComparer.Ordinal)
             .ToArray();
-        var globalPermissions = moduleCatalog.Definitions
-            .SelectMany(definition => definition.Submodules)
-            .Where(submodule => submodule.PermissionAccessMode == PermissionAccessMode.Global)
-            .SelectMany(submodule => submodule.RequiredPermissions)
+        var globalPermissions = PlatformPermissions.GlobalOperations
+            .Concat(catalogSubmodules
+                .Where(submodule => submodule.PermissionAccessMode == PermissionAccessMode.Global)
+                .SelectMany(submodule => submodule.RequiredPermissions))
             .Where(permission => !string.IsNullOrWhiteSpace(permission))
             .Distinct(StringComparer.Ordinal)
             .ToArray();

@@ -47,7 +47,7 @@ export const routePolicies: readonly RoutePolicy[] = [
   { path: appRoutes.modules.referenceData.geography.districts, roles: [superAdminRole], permissions: [permissions.ViewDistricts] },
   {
     path: rolePermissionsBase,
-    permissions: [permissions.ViewRoles],
+    permissions: [permissions.ViewRolePermissions],
   },
   { path: appRoutes.platform.administration.roles, permissions: [permissions.ViewRoles] },
   { path: appRoutes.platform.administration.users, permissions: [permissions.ViewUsers] },

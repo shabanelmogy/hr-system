@@ -80,7 +80,15 @@ Rules:
 - API permission catalogs are the source of truth.
 - Web and Mobile catalogs mirror the API and must pass parity checks.
 - System-role startup reconciliation removes stale permission claims instead of
-  only adding new claims.
+  only adding new claims. Platform-owned system-role permissions are included
+  explicitly by the Platform bootstrap and must not depend on Platform appearing
+  in an externally assembled module catalog; in particular, the tenant `admin`
+  role always receives the exact `Roles:View`, `RolePermissions:View`, and
+  `RolePermissions:Edit` claims from the canonical Platform catalog.
+- A protected client route, its navigation/action entry, and its API endpoint use
+  the same minimum exact permission. For example, the role-permission route and
+  its row action both require `RolePermissions:View`; `Roles:View` only grants
+  access to the role list and never implicitly grants permission inspection.
 - Architecture tests reject catalog constants whose action begins with `Manage`.
 - Tests cover authorized and forbidden outcomes for sensitive actions and prove
   that Archive does not grant Restore (and vice versa).

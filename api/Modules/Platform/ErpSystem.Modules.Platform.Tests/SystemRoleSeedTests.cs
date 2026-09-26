@@ -54,15 +54,19 @@ public sealed class SystemRoleSeedTests
 
         var adminRole = Assert.Single(roles, role => role.NormalizedName == "ADMIN");
         var adminClaims = await roleManager.GetClaimsAsync(adminRole);
-        var expectedPermissions = moduleCatalog.TenantEntitlementDefinitions
-            .SelectMany(definition => definition.Submodules)
-            .Where(submodule => submodule.PermissionAccessMode != PermissionAccessMode.Global)
-            .SelectMany(submodule => submodule.RequiredPermissions)
+        var expectedPermissions = PlatformPermissions.TenantAdministration
+            .Concat(moduleCatalog.TenantEntitlementDefinitions
+                .SelectMany(definition => definition.Submodules)
+                .Where(submodule => submodule.PermissionAccessMode != PermissionAccessMode.Global)
+                .SelectMany(submodule => submodule.RequiredPermissions))
             .Distinct(StringComparer.Ordinal)
             .ToArray();
 
         Assert.NotEmpty(expectedPermissions);
         Assert.Contains("FutureInventory:View", expectedPermissions);
+        Assert.Contains(PlatformPermissions.ViewRoles, expectedPermissions);
+        Assert.Contains(PlatformPermissions.ViewRolePermissions, expectedPermissions);
+        Assert.Contains(PlatformPermissions.EditRolePermissions, expectedPermissions);
         Assert.Equal(expectedPermissions.Length, adminClaims.Count(claim => claim.Type == PermissionClaimNames.Permission));
         Assert.All(expectedPermissions, permission =>
             Assert.Single(adminClaims, claim =>
@@ -71,6 +75,9 @@ public sealed class SystemRoleSeedTests
 
         var superAdminRole = Assert.Single(roles, role => role.NormalizedName == "SUPER_ADMIN");
         var superAdminClaims = await roleManager.GetClaimsAsync(superAdminRole);
+        Assert.All(PlatformPermissions.GlobalOperations, permission =>
+            Assert.Single(superAdminClaims, claim =>
+                claim.Type == PermissionClaimNames.Permission && claim.Value == permission));
         Assert.Single(superAdminClaims, claim =>
             claim.Type == PermissionClaimNames.Permission && claim.Value == "FutureOperations:View");
         Assert.DoesNotContain(superAdminClaims, claim =>
