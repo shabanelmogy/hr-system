@@ -666,7 +666,7 @@ public sealed class UserManagementWriteStore(
             roles.Distinct(StringComparer.OrdinalIgnoreCase).ToArray(),
             companyAccesses.Select(access => access.CompanyId).Distinct().ToArray(),
             companyAccesses.FirstOrDefault(access => access.IsDefault)?.CompanyId,
-            user.LifecycleStatus.ToString().ToLowerInvariant(),
+            UserLifecycleStatusContract.FromStoredValue(user.LifecycleStatus),
             user.ArchivedOn,
             user.ArchiveReason);
     }

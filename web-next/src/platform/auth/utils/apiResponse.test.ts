@@ -81,4 +81,10 @@ describe("authentication API response parsing", () => {
       "Invalid user.roles response",
     );
   });
+
+  it("rejects numeric lifecycle strings from the API", () => {
+    expect(() => parseUsersResponse([{ ...user, lifecycleStatus: "0" }])).toThrow(
+      "Invalid user.lifecycleStatus: expected active or archived.",
+    );
+  });
 });

@@ -8,6 +8,7 @@ using ErpSystem.Modules.Platform.Application.Features.Security.Users.Commands;
 using ErpSystem.Modules.Platform.Application.Features.Security.Users.Contracts;
 using ErpSystem.Modules.Platform.Application.Features.Security.Users.Queries;
 using ErpSystem.Modules.Platform.Contracts.Authorization;
+using ErpSystem.Modules.Platform.Domain.Security.Users.Enums;
 using ErpSystem.Modules.Platform.Infrastructure;
 using ErpSystem.Modules.Platform.Infrastructure.Features.Security.Authorization.Services;
 using ErpSystem.Modules.Platform.Infrastructure.Features.Security.Users.Persistence;
@@ -23,6 +24,23 @@ namespace ErpSystem.Modules.Platform.Tests;
 
 public sealed class PlatformUserManagementCqrsTests
 {
+    [Theory]
+    [InlineData((int)UserLifecycleStatus.Active, "active")]
+    [InlineData((int)UserLifecycleStatus.Archived, "archived")]
+    public void UserLifecycleStatusContract_UsesStableClientValues(
+        int storedValue,
+        string expected)
+    {
+        Assert.Equal(expected, UserLifecycleStatusContract.FromStoredValue(storedValue));
+    }
+
+    [Fact]
+    public void UserLifecycleStatusContract_RejectsUnknownStoredValue()
+    {
+        Assert.Throws<InvalidOperationException>(
+            () => UserLifecycleStatusContract.FromStoredValue(99));
+    }
+
     [Fact]
     public void UsersController_IsSenderOnlyAndLegacyUserServiceIsRemoved()
     {
@@ -172,6 +190,11 @@ public sealed class PlatformUserManagementCqrsTests
         Assert.Equal([companyA.Id], target.CompanyIds);
         Assert.Equal(companyA.Id, target.DefaultCompanyId);
         Assert.DoesNotContain(companyB.Id, target.CompanyIds);
+        Assert.Equal("active", target.LifecycleStatus);
+
+        var allUsers = await store.GetAllAsync(CancellationToken.None);
+        var targetFromAll = Assert.Single(allUsers, user => user.Id == targetUser.Id);
+        Assert.Equal("active", targetFromAll.LifecycleStatus);
     }
 
     private static PlatformApplicationUser User(string id, string firstName, string email) =>
