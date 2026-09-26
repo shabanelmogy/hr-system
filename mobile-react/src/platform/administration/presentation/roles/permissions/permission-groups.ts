@@ -143,6 +143,18 @@ const actionTranslationKeys: Record<string, string> = {
   ViewAnalytics: 'viewAnalytics',
 };
 
+const preferredActionOrder = [
+  'View',
+  'Create',
+  'Edit',
+  'Approve',
+  'Submit',
+  'Review',
+  'Archive',
+  'Restore',
+  'Delete',
+] as const;
+
 export function groupRoleClaims(claims: readonly RoleClaim[]): PermissionGroup[] {
   const groups = new Map<string, IndexedRoleClaim[]>();
 
@@ -160,8 +172,29 @@ export function groupRoleClaims(claims: readonly RoleClaim[]): PermissionGroup[]
   });
 
   return [...groups.entries()]
-    .map(([module, groupedClaims]) => ({ module, claims: groupedClaims }))
+    .map(([module, groupedClaims]) => ({
+      module,
+      claims: [...groupedClaims].sort((left, right) => comparePermissionActions(
+        left.action,
+        right.action,
+      )),
+    }))
     .sort((left, right) => left.module.localeCompare(right.module));
+}
+
+export function countChangedRoleClaims(
+  current: readonly RoleClaim[],
+  baseline: readonly RoleClaim[],
+): number {
+  const baselineSelection = new Map(
+    baseline.map((claim) => [claim.displayValue.toLocaleLowerCase(), claim.isSelected]),
+  );
+
+  return current.reduce((count, claim) => (
+    baselineSelection.get(claim.displayValue.toLocaleLowerCase()) === claim.isSelected
+      ? count
+      : count + 1
+  ), 0);
 }
 
 export function getPermissionModuleLabel(module: string, t: TFunction): string {
@@ -179,4 +212,18 @@ function humanize(value: string): string {
     .replace(/([a-z0-9])([A-Z])/g, '$1 $2')
     .replace(/[_-]+/g, ' ')
     .trim();
+}
+
+function comparePermissionActions(left: string, right: string): number {
+  const leftIndex = preferredActionOrder.findIndex(
+    (action) => action.toLocaleLowerCase() === left.toLocaleLowerCase(),
+  );
+  const rightIndex = preferredActionOrder.findIndex(
+    (action) => action.toLocaleLowerCase() === right.toLocaleLowerCase(),
+  );
+
+  if (leftIndex >= 0 && rightIndex >= 0) return leftIndex - rightIndex;
+  if (leftIndex >= 0) return -1;
+  if (rightIndex >= 0) return 1;
+  return left.localeCompare(right);
 }

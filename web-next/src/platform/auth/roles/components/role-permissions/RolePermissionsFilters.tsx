@@ -1,16 +1,21 @@
-import { FilterList, Search, ViewModule } from "@mui/icons-material";
+import FilterAltOffRoundedIcon from "@mui/icons-material/FilterAltOffRounded";
+import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
+import ViewModuleRoundedIcon from "@mui/icons-material/ViewModuleRounded";
 import {
-  Checkbox,
-  Chip,
+  Box,
+  Button,
   FormControl,
-  FormControlLabel,
-  Grid,
   InputLabel,
   MenuItem,
   Select,
+  Stack,
+  ToggleButton,
+  ToggleButtonGroup,
+  Typography,
 } from "@mui/material";
-import { MyTextField } from "@/shared/components/forms";
 import { useTranslation } from "react-i18next";
+import { MyTextField } from "@/shared/components/forms";
+import { getPermissionResourceLabel } from "../../utils/permissionLabels";
 
 type RolePermissionsFiltersProps = {
   modules: string[];
@@ -18,65 +23,106 @@ type RolePermissionsFiltersProps = {
   selectedModule: string;
   showOnlySelected: boolean;
   resultCount: number;
+  totalCount: number;
   onSearchChange: (value: string) => void;
   onModuleChange: (value: string) => void;
   onShowOnlySelectedChange: (value: boolean) => void;
+  onReset: () => void;
 };
 
 export default function RolePermissionsFilters(props: RolePermissionsFiltersProps) {
   const { t } = useTranslation();
+  const hasActiveFilters = Boolean(
+    props.searchTerm || props.selectedModule || props.showOnlySelected,
+  );
+
   return (
-    <Grid container spacing={3} sx={{ alignItems: "center" }}>
-      <Grid size={{ xs: 12, md: 4 }}>
+    <Stack spacing={2}>
+      <Stack
+        direction={{ xs: "column", sm: "row" }}
+        spacing={1}
+        sx={{ alignItems: { sm: "center" }, justifyContent: "space-between" }}
+      >
+        <Box>
+          <Typography component="h2" variant="subtitle1" sx={{ fontWeight: 800 }}>
+            {t("roles.permissionGroups")}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            {t("roles.groupsVisible", { visible: props.resultCount, total: props.totalCount })}
+          </Typography>
+        </Box>
+        <Button
+          size="small"
+          startIcon={<FilterAltOffRoundedIcon />}
+          onClick={props.onReset}
+          disabled={!hasActiveFilters}
+        >
+          {t("roles.clearFilters")}
+        </Button>
+      </Stack>
+
+      <Box
+        sx={{
+          display: "grid",
+          gridTemplateColumns: {
+            xs: "1fr",
+            md: "minmax(260px, 1.5fr) minmax(210px, 1fr) minmax(250px, 1fr)",
+          },
+          gap: 1.5,
+          alignItems: "center",
+        }}
+      >
         <MyTextField
           counter={false}
           fieldName="rolePermissionsSearch"
           labelKey={null}
           margin="none"
           maxValue={100}
-          placeholder={t("roles.searchModules")}
+          placeholder={t("roles.searchPermissions")}
           value={props.searchTerm}
           onChange={(event) => props.onSearchChange(event.target.value)}
           showClearButton
           size="small"
-          startIcon={<Search color="action" />}
+          startIcon={<SearchRoundedIcon color="action" />}
         />
-      </Grid>
-      <Grid size={{ xs: 12, md: 3 }}>
+
         <FormControl fullWidth size="small">
-          <InputLabel>{t("roles.filterByModule")}</InputLabel>
+          <InputLabel>{t("roles.filterByGroup")}</InputLabel>
           <Select
             value={props.selectedModule}
-            label={t("roles.filterByModule")}
+            label={t("roles.filterByGroup")}
             onChange={(event) => props.onModuleChange(event.target.value)}
-            startAdornment={<ViewModule sx={{ mr: 1, color: "action.active" }} />}
+            startAdornment={
+              <ViewModuleRoundedIcon
+                sx={{ marginInlineEnd: 1, color: "action.active" }}
+              />
+            }
           >
-            <MenuItem value=""><em>{t("roles.allModules")}</em></MenuItem>
+            <MenuItem value="">
+              <em>{t("roles.allGroups")}</em>
+            </MenuItem>
             {props.modules.map((module) => (
-              <MenuItem key={module} value={module}>{module}</MenuItem>
+              <MenuItem key={module} value={module}>
+                {getPermissionResourceLabel(module, t)}
+              </MenuItem>
             ))}
           </Select>
         </FormControl>
-      </Grid>
-      <Grid size={{ xs: 12, md: 3 }}>
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={props.showOnlySelected}
-              onChange={(event) => props.onShowOnlySelectedChange(event.target.checked)}
-            />
-          }
-          label={t("roles.showOnlySelected")}
-        />
-      </Grid>
-      <Grid size={{ xs: 12, md: 2 }}>
-        <Chip
-          icon={<FilterList />}
-          label={t("roles.moduleCount", { count: props.resultCount })}
-          color="primary"
-          variant="outlined"
-        />
-      </Grid>
-    </Grid>
+
+        <ToggleButtonGroup
+          exclusive
+          fullWidth
+          size="small"
+          value={props.showOnlySelected ? "selected" : "all"}
+          onChange={(_, value: "all" | "selected" | null) => {
+            if (value) props.onShowOnlySelectedChange(value === "selected");
+          }}
+          aria-label={t("roles.selectionFilter")}
+        >
+          <ToggleButton value="all">{t("roles.allPermissions")}</ToggleButton>
+          <ToggleButton value="selected">{t("roles.selectedOnly")}</ToggleButton>
+        </ToggleButtonGroup>
+      </Box>
+    </Stack>
   );
 }

@@ -30,7 +30,7 @@
 | P-002 Tree + Master/Detail | Cost Centers `CostCentersPage` + `CostCenterTreeDiagram` + `SplitTreeView` — `Implemented` | `CostCentersScreen` + `OrganizationalStructureManagementScreen` + `OrganizationalStructureTreeDiagram` + `AppHierarchicalTree` — `Implemented` | Web `SplitTreeView`؛ Mobile `AppHierarchicalTree` | Web يعرض split view عند توفر المساحة؛ Mobile يستخدم stacked/detail navigation ولا يضغط عمودين داخل الهاتف |
 | P-003 Tabbed multi-section form | Add Tenant في `TenantManagementPage` + `FormTabs` + `MyForm` — `Implemented` | `TenantManagementScreen` + `TenantFormModal` + `AppForm` — `Adapted` | Web `FormTabs`/`MyForm`؛ Mobile `AppForm` و`AppFormTabs` عند اعتماد tabs | Web maps the first invalid field to its tab and focuses it after the tab is mounted. Mobile Add Tenant remains one full-screen stacked form with one validation context; `AppFormTabs` is covered as the reusable primitive, not forced into this flow |
 | P-005 Singleton Settings Editor | Ledger Setup `LedgerSetupResourcePage` لمسار Accounting Company Settings — `Adapted` evidence | `LedgerSetupResourceScreen` + `LedgerSetupForm` لمسار Accounting Company Settings — `Adapted` evidence | Web `PageHeader` + `MyForm`؛ Mobile `AppPageHeader` + `AppForm` | المرجع يثبت رحلة التحميل/التحرير/الحفظ لسجل واحد فقط؛ الـgeneric resource switch والـcatch-all DTO ليسا جزءًا من النمط أو المعمارية المستهدفة |
-| P-006 Scoped Relationship / Mapping Editor | Role Permissions `RolePermissionsPage` + `useRolePermissions` — `Implemented` | `RolePermissionsScreen` + `PermissionModuleCard` — `Adapted` | shared filters, feedback, dirty-state, save/read-only shells | Web يستخدم table/group composition؛ Mobile يستخدم module cards. كلاهما يحافظ على scope، الاختيار، dirty state، الصلاحيات والحفظ الصريح |
+| P-006 Scoped Relationship / Mapping Editor | Role Permissions `RolePermissionsPage` + `useRolePermissions` — `Implemented` | `RolePermissionsScreen` + `PermissionModuleCard` — `Adapted` | shared filters, feedback, dirty-state, save/read-only shells | Web يستخدم قائمة شاشات رأسية ويفتح صلاحيات كل شاشة داخل Accordion؛ Mobile يستخدم بطاقات شاشات رأسية قابلة للفتح. كلاهما يحافظ على scope، الاختيار، dirty state، الصلاحيات والحفظ الصريح |
 | P-007 Settings Navigation Hub | `LedgerSetupOverviewPage` + Accounting module definition — `Implemented` | `LedgerSetupOverviewScreen` + Accounting module definition — `Implemented` | module navigation, page headers, permission-filtered route manifests | الـHub يكتشف ويفتح الرحلات فقط؛ لا يملك DTO عامًا أو CRUD أو business state للأطفال |
 
 هذه المصفوفة هي سجل حقيقة التنفيذ. لا يجوز تغيير حالة منصة إلى `Implemented`
@@ -255,7 +255,7 @@ Cost Centers وChart of Accounts. الشجرة ليست بديلًا عن عقد
 
 ## P-006 — Scoped Relationship / Mapping Editor
 
-**الحالة:** `Active` — راجع في 2026-09-25.
+**الحالة:** `Active` — راجع في 2026-09-26.
 
 ### الاستخدام
 
@@ -288,10 +288,45 @@ Role Permissions مرجع لتركيب الاختيار/التصفية/dirty-sta
    error، forbidden، read-only، conflict، وsaved baseline.
 4. تحفظ filters/search اختيار المستخدم ولا تفقد تغييرات مخفية بالفلتر. يعرض
    ملخصًا واضحًا للتغييرات قبل الحفظ عندما تكون المجموعة كبيرة أو حساسة.
-5. يدعم Web table/group layout وMobile stacked cards أو sections، مع تكافؤ
-   كامل في العلاقات والصلاحيات والتحقق، وبدون ضغط table مكتبي داخل الهاتف.
+5. يعرض Web العناصر المصدرية كشاشات رأسية قابلة للفتح، ويعرض الصلاحيات داخل
+   Accordion الشاشة المختارة بدل مصفوفة إجراءات أفقية. يستخدم Mobile stacked
+   cards أو sections، مع تكافؤ كامل في العلاقات والصلاحيات والتحقق.
 6. توجد dirty-navigation protection، Save صريح، server-authoritative validation،
    وإعادة تحميل بعد conflict. لا تعتبر checkbox state المحلية حقيقة مالية.
+
+### خط أساس Web لتفاعل شاشة الصلاحيات — 2026-09-26
+
+- المشكلة المرصودة: تمدد إجراءات الصلاحيات كأعمدة أفقية يجعل الشاشة أصعب في
+  القراءة ويخفي سياق الشاشة عند زيادة عدد الإجراءات.
+- القرار: الدور المختار هو scope الصفحة، وتظهر الموارد/الشاشات كقائمة رأسية.
+  الضغط على شاشة يفتح Accordion واحدًا يعرض إجراءاتها فقط، مع عداد المحدد،
+  وأمر تحديد أو إلغاء كل صلاحيات الشاشة.
+- تحفظ التصفية والبحث والترقيم والتغييرات غير المحفوظة كما هي، ولا يؤدي إغلاق
+  Accordion أو انتقال المستخدم بين الصفحات إلى إسقاط الاختيارات.
+- يستخدم Web النمط نفسه في العرض المكتبي والصغير؛ لا تعاد مصفوفة action-per-column
+  ولا يظهر scrollbar أفقي لإدارة الصلاحيات.
+- يجب أن يربط كل عنوان Accordion بمحتواه عبر `id` و`aria-controls`، وأن تحمل كل
+  خانة اختيار اسمًا قابلًا للوصول يجمع اسم الإجراء واسم الشاشة.
+- لا يغير هذا النمط عقد API: يظل الحفظ replace-set الكامل للدور، وتظل سلطة
+  التحقق والتنفيذ على الخادم.
+
+### خط أساس Mobile لتفاعل شاشة الصلاحيات — 2026-09-26
+
+- يظل الدور المختار هو scope الرحلة، وتظهر الموارد للمستخدم باسم «الشاشات» في
+  قائمة بطاقات رأسية Native بلا جدول أو تمرير أفقي.
+- عنوان البطاقة هدف لمس قابل للوصول لا يقل عن 44 نقطة، ويحمل اسم الشاشة وحالة
+  `expanded`. يفتح الضغط صلاحيات شاشة واحدة فقط، ويغلق فتح شاشة أخرى البطاقة
+  السابقة من دون فقد الاختيارات غير المحفوظة.
+- تظهر الصلاحيات داخل البطاقة عبر `AppSwitchField`، مع إجراء مستقل لتحديد أو
+  إلغاء كل صلاحيات الشاشة، وترتيب ثابت للإجراءات الشائعة يبدأ بالعرض ثم الإضافة
+  والتعديل ثم الحذف، وتأتي الإجراءات المتخصصة بعد ذلك بترتيب أبجدي ثابت.
+- يعرض ملخص الرحلة عدد الصلاحيات المحددة ونسبة التغطية وعدد التغييرات المعلقة
+  مقارنة بخط أساس الخادم. البحث يطابق اسم الشاشة واسم الإجراء المترجم.
+- تستخدم الرحلة مكونات Mobile المشتركة والثيم الدلالي، وتدعم EN/AR وRTL والوضع
+  الداكن، وتحمي dirty navigation. يتحقق handler الحفظ نفسه من edit permission
+  وread-only وSystem Role ولا يعتمد على تعطيل الزر وحده.
+- لا يغير هذا التكييف عقد API أو offline policy: يظل الحفظ online-authoritative
+  replace-set كاملًا للدور، ولا تمثل حالة switches المحلية حقيقة خادم قبل النجاح.
 
 ## P-007 — Settings Navigation Hub / Launcher
 
@@ -398,3 +433,5 @@ Role Permissions مرجع لتركيب الاختيار/التصفية/dirty-sta
 | 2026-09-23 | إغلاق P1/P2/P3: Global Report بوابة مشتركة role+permission بلا tenant query، Tenant Report بوابة permission+Reporting module، واختبارات تركيب Cost Center وFormTabs وAdd Tenant على المنصتين | Countries، States، Districts، Address Types، Organizational Structure، Cost Centers، Add Tenant |
 | 2026-09-23 | توحيد Local Mock Data كقدرة في shell النماذج: كل رحلة إدخال قابلة للكتابة تملأ draft محليًا صالحًا دون submit/persist أو اختلاق identity/scope/concurrency؛ الشاشات read-only/report/query-only لا تصطنع بيانات، ولا تستخدم feature flags مبنية على NODE_ENV/DEV | Accounting Currency، Fiscal Years، COA Accounts، Hierarchy Levels، وكل مستهلك لاحق لـMyForm/AppForm |
 | 2026-09-25 | اعتماد P-005 Singleton Settings Editor وP-006 Scoped Relationship/Mapping Editor وP-007 Settings Navigation Hub بمراجع Web/Mobile فعلية وحدود تمنع اعتماد Ledger Setup generic renderer كمعمارية مستهدفة | Ledger Setup Company Settings، Dimensions Constraints، Link Accounts، Ledger Setup Overview، وأي مستهلك لاحق مطابق |
+| 2026-09-26 | تحديث مرجع P-006 على Web إلى قائمة شاشات رأسية؛ يفتح Accordion الشاشة صلاحياتها بدل مصفوفة الإجراءات الأفقية، مع تثبيت الوصول وdirty-state والحفظ الصريح | Role Permissions وأي محرر علاقات كثيف يختار P-006 لاحقًا |
+| 2026-09-26 | توحيد مرجع P-006 على Mobile إلى بطاقات شاشات رأسية قابلة للفتح مع مصطلحات EN/AR متطابقة، ترتيب إجراءات، عداد تغييرات، accessibility state وحماية handler الحفظ | Role Permissions وأي محرر علاقات Mobile يختار P-006 لاحقًا |

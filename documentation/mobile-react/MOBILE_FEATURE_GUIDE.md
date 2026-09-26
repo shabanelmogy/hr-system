@@ -33,8 +33,9 @@ the registered Web and Mobile sources for the same workflow:
 - `P-005`: Singleton Settings Editor; Mobile uses a full-screen `AppForm` with
   explicit unconfigured/configured/read-only/conflict states and no fake list.
 - `P-006`: Scoped Relationship/Mapping Editor; Mobile adapts the Role Permissions
-  journey to stacked module cards while retaining scope, filters, dirty state,
-  save semantics, and read-only behavior.
+  journey to stacked screen-first disclosure cards. Tapping a screen opens its
+  permissions while retaining role scope, filters, dirty/change summary, explicit
+  save semantics, accessibility state, and read-only behavior.
 - `P-007`: Settings Navigation Hub; Mobile uses the Ledger Setup overview and
   module definition as a permission-filtered launcher only, never as a generic
   child data owner.

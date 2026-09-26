@@ -18,6 +18,7 @@ import {
   AppScreen,
   AppSegmentedControl,
   AppSelectField,
+  AppStatusBadge,
   AppStateView,
   AppText,
   AppTextField,
@@ -34,6 +35,7 @@ import type { RolePermissionsFormValues } from '../../../models/administration-f
 import { rolePermissionsSchema } from '../../../validation/role-validation';
 import { PermissionModuleCard } from '../components/PermissionModuleCard';
 import {
+  countChangedRoleClaims,
   getPermissionActionLabel,
   getPermissionModuleLabel,
   groupRoleClaims,
@@ -58,10 +60,10 @@ export function RolePermissionsScreen({ roleId }: RolePermissionsScreenProps) {
   const updateMutation = useUpdateRoleClaims();
   const initializedRoleId = useRef<string | null>(null);
   const [search, setSearch] = useState('');
-  const [selectedModule, setSelectedModule] = useState('');
+  const [selectedScreen, setSelectedScreen] = useState('');
   const [selectedAction, setSelectedAction] = useState('');
   const [selectionFilter, setSelectionFilter] = useState<'all' | 'selected'>('all');
-  const [expandedModule, setExpandedModule] = useState<string | null>(null);
+  const [expandedScreen, setExpandedScreen] = useState<string | null>(null);
   const [showFilters, setShowFilters] = useState(false);
   const [showBulkTools, setShowBulkTools] = useState(false);
   const form = useZodForm<RolePermissionsFormValues>(rolePermissionsSchema, {
@@ -93,8 +95,8 @@ export function RolePermissionsScreen({ roleId }: RolePermissionsScreenProps) {
   }, [reset, roleQuery.data]);
 
   const groups = useMemo(() => groupRoleClaims(claims), [claims]);
-  const moduleOptions = useMemo(() => [
-    { value: '', label: t('roleManagement.allModules'), icon: 'apps-outline' as const },
+  const screenOptions = useMemo(() => [
+    { value: '', label: t('roleManagement.allScreens'), icon: 'apps-outline' as const },
     ...groups.map((group) => ({
       value: group.module,
       label: getPermissionModuleLabel(group.module, t),
@@ -115,7 +117,7 @@ export function RolePermissionsScreen({ roleId }: RolePermissionsScreenProps) {
     const query = search.trim().toLocaleLowerCase(i18n.language);
 
     return groups.filter((group) => {
-      if (selectedModule && group.module !== selectedModule) return false;
+      if (selectedScreen && group.module !== selectedScreen) return false;
       if (selectionFilter === 'selected' && !group.claims.some(({ claim }) => claim.isSelected)) {
         return false;
       }
@@ -124,13 +126,21 @@ export function RolePermissionsScreen({ roleId }: RolePermissionsScreenProps) {
       return [
         group.module,
         getPermissionModuleLabel(group.module, t),
-        ...group.claims.flatMap(({ action, claim }) => [action, claim.displayValue]),
+        ...group.claims.flatMap(({ action, claim }) => [
+          action,
+          getPermissionActionLabel(action, t),
+          claim.displayValue,
+        ]),
       ].some((value) => value.toLocaleLowerCase(i18n.language).includes(query));
     });
-  }, [groups, i18n.language, search, selectedModule, selectionFilter, t]);
+  }, [groups, i18n.language, search, selectedScreen, selectionFilter, t]);
   const selectedCount = claims.filter((claim) => claim.isSelected).length;
+  const changedCount = useMemo(() => countChangedRoleClaims(
+    claims,
+    roleQuery.data?.roleClaims ?? [],
+  ), [claims, roleQuery.data?.roleClaims]);
   const percentage = claims.length ? Math.round((selectedCount / claims.length) * 100) : 0;
-  const hasActiveFilters = Boolean(selectedModule) || selectionFilter !== 'all';
+  const hasActiveFilters = Boolean(selectedScreen) || selectionFilter !== 'all';
   const fieldErrors = useMemo(() => toFormErrorMap(errors), [errors]);
 
   const replaceClaims = (indexes: ReadonlySet<number>, selected?: boolean) => {
@@ -177,7 +187,7 @@ export function RolePermissionsScreen({ roleId }: RolePermissionsScreenProps) {
     onDiscard: leaveScreen,
   });
   const submit = handleSubmit(async (values) => {
-    if (isSystemRole) return;
+    if (isSystemRole || !canEdit || isReadOnly || updateMutation.isPending) return;
     try {
       await updateMutation.mutateAsync(values);
       reset(values);
@@ -264,7 +274,18 @@ export function RolePermissionsScreen({ roleId }: RolePermissionsScreenProps) {
               </AppText>
               <AppText color="muted" variant="caption">{t('roleManagement.coverage')}</AppText>
             </View>
-            <AppText color="success" variant="titleSmall" weight="800">{percentage}%</AppText>
+            <AppStatusBadge
+              color={changedCount > 0 ? theme.colors.warning : theme.colors.success}
+              icon={changedCount > 0 ? 'create-outline' : 'checkmark-circle-outline'}
+              label={changedCount > 0
+                ? t('roleManagement.pendingChangesCount', { count: changedCount })
+                : t('roleManagement.noPendingChanges')}
+              variant="outlined"
+            />
+          </View>
+          <View style={[styles.coverageRow, { direction }]}>
+            <AppText color="muted" variant="caption">{t('roleManagement.coverage')}</AppText>
+            <AppText color="success" variant="label" weight="800">{percentage}%</AppText>
           </View>
           <View style={[styles.progressTrack, { backgroundColor: theme.colors.border }]}>
             <View
@@ -312,11 +333,11 @@ export function RolePermissionsScreen({ roleId }: RolePermissionsScreenProps) {
         {showFilters ? (
           <AppCard padding="sm" style={styles.filters} variant="outlined">
             <AppSelectField
-              label={t('roleManagement.filterByModule')}
+              label={t('roleManagement.filterByScreen')}
               leadingIcon="filter-outline"
-              onChange={setSelectedModule}
-              options={moduleOptions}
-              value={selectedModule}
+              onChange={setSelectedScreen}
+              options={screenOptions}
+              value={selectedScreen}
             />
             <AppSegmentedControl
               label={t('roleManagement.selectionFilter')}
@@ -346,7 +367,7 @@ export function RolePermissionsScreen({ roleId }: RolePermissionsScreenProps) {
           ]}>
           <View style={styles.listToolbarText}>
             <AppText variant="label" weight="800">
-              {t('roleManagement.modulesVisible', {
+              {t('roleManagement.screensVisible', {
                 visible: filteredGroups.length,
                 total: groups.length,
               })}
@@ -429,12 +450,12 @@ export function RolePermissionsScreen({ roleId }: RolePermissionsScreenProps) {
             {filteredGroups.map((group) => (
               <PermissionModuleCard
                 disabled={editingDisabled}
-                expanded={expandedModule === group.module}
+                expanded={expandedScreen === group.module}
                 group={group}
                 key={group.module}
                 onSetModule={setModuleSelection}
                 onToggle={toggleClaim}
-                onToggleExpanded={() => setExpandedModule((current) =>
+                onToggleExpanded={() => setExpandedScreen((current) =>
                   current === group.module ? null : group.module)}
               />
             ))}
@@ -472,11 +493,18 @@ const styles = StyleSheet.create({
   summary: { gap: 8, marginBottom: 12 },
   summaryRow: {
     flexDirection: 'row',
+    flexWrap: 'wrap',
     alignItems: 'center',
     justifyContent: 'space-between',
     gap: 8,
   },
   summaryText: { flex: 1, minWidth: 0, gap: 1 },
+  coverageRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: 8,
+  },
   progressTrack: { width: '100%', height: 6, borderRadius: 3, overflow: 'hidden' },
   progressValue: { height: '100%', borderRadius: 3 },
   searchRow: {

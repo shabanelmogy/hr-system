@@ -16,7 +16,15 @@ const permissions = {
     "FiscalYears:Edit",
     "Appointments:View",
   ],
-  admin: ["FiscalYears:View", "Appointments:View", "OrganizationalStructure:View"],
+  admin: [
+    "FiscalYears:View",
+    "Appointments:View",
+    "OrganizationalStructure:View",
+    "Roles:View",
+    "RolePermissions:View",
+    "RolePermissions:Edit",
+    "Users:View",
+  ],
   superadmin: ["Countries:View", "Countries:Create", "Countries:Edit", "Countries:Delete"],
 };
 
@@ -27,6 +35,7 @@ const state = {
   fiscalYears: {},
   sessionMode: "ok",
   countriesMode: "ok",
+  role: null,
 };
 
 resetState();
@@ -145,6 +154,25 @@ const server = http.createServer(async (request, response) => {
     const session = sessionFromAuthorization(request);
     if (!session) return problem(response, 401, "Unauthorized");
     return json(response, 200, modulesFor(session));
+  }
+
+  if (request.method === "GET" && url.pathname === "/api/v1/roles/getRoleClaims") {
+    const session = sessionFromAuthorization(request);
+    if (!session) return problem(response, 401, "Unauthorized");
+    return url.searchParams.get("roleId") === state.role.id
+      ? json(response, 200, state.role)
+      : problem(response, 404, "Role not found");
+  }
+
+  if (request.method === "PUT" && url.pathname === "/api/v1/roles/updateRoleClaims") {
+    const session = sessionFromAuthorization(request);
+    if (!session) return problem(response, 401, "Unauthorized");
+    const body = await readJson(request);
+    if (body?.id !== state.role.id || !Array.isArray(body?.roleClaims)) {
+      return problem(response, 400, "Invalid role permissions payload");
+    }
+    state.role = { ...state.role, roleClaims: body.roleClaims };
+    return json(response, 204);
   }
 
   if (request.method === "GET" && url.pathname === "/api/v1/fiscal-years") {
@@ -320,6 +348,7 @@ function resetState() {
   state.refreshTokens.clear();
   state.sessionMode = "ok";
   state.countriesMode = "ok";
+  state.role = makeRoleFixture();
   state.fiscalYears = {
     1: [makeFiscalYear({
       id: 1,
@@ -357,6 +386,47 @@ function resetState() {
       statesCount: 4,
     },
   ];
+}
+
+function makeRoleFixture() {
+  const selectedPermissions = new Set([
+    "Accounts:View",
+    "Books:View",
+    "Countries:View",
+    "Currencies:View",
+    "FiscalYears:View",
+    "JournalDefinitions:View",
+    "Roles:View",
+    "RolePermissions:View",
+    "Users:View",
+    "Users:Create",
+    "Users:Edit",
+  ]);
+  const groups = [
+    "Accounts",
+    "Books",
+    "Countries",
+    "Currencies",
+    "FiscalYears",
+    "JournalDefinitions",
+    "Roles",
+    "RolePermissions",
+    "Users",
+    "UserInvitations",
+    "WorkforcePlans",
+    "WorkforceBudgets",
+  ];
+  const actions = ["View", "Create", "Edit", "Archive", "Restore", "Delete"];
+  return {
+    id: "finance-manager",
+    name: "Finance managers",
+    isSystem: false,
+    isDeleted: false,
+    roleClaims: groups.flatMap((group) => actions.map((action) => {
+      const displayValue = `${group}:${action}`;
+      return { displayValue, isSelected: selectedPermissions.has(displayValue) };
+    })),
+  };
 }
 
 function fiscalYearsFor(companyId) {

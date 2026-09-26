@@ -39,17 +39,33 @@ export function PermissionModuleCard({
   const selectedCount = group.claims.filter(({ claim }) => claim.isSelected).length;
   const allSelected = selectedCount === group.claims.length && group.claims.length > 0;
   const moduleLabel = getPermissionModuleLabel(group.module, t);
+  const selectionLabel = t('roleManagement.selectedOfTotal', {
+    selected: selectedCount,
+    total: group.claims.length,
+  });
 
   return (
-    <AppCard padding="sm" style={styles.card}>
+    <AppCard
+      padding="sm"
+      style={[
+        styles.card,
+        expanded ? {
+          backgroundColor: theme.colors.surfaceMuted,
+          borderColor: theme.colors.primary,
+        } : null,
+      ]}>
       <View style={[styles.header, { direction }]}>
         <Pressable
           accessibilityLabel={t(
-            expanded ? 'roleManagement.collapseModule' : 'roleManagement.expandModule',
+            expanded
+              ? 'roleManagement.collapseScreenPermissions'
+              : 'roleManagement.expandScreenPermissions',
             { module: moduleLabel },
           )}
+          accessibilityHint={t('roleManagement.screenPermissionsHint')}
           accessibilityRole="button"
           accessibilityState={{ expanded }}
+          accessibilityValue={{ text: selectionLabel }}
           onPress={onToggleExpanded}
           style={({ pressed }) => [
             styles.expandButton,
@@ -67,10 +83,7 @@ export function PermissionModuleCard({
               {moduleLabel}
             </AppText>
             <AppText color={selectedCount ? 'success' : 'muted'} variant="caption" weight="700">
-              {t('roleManagement.selectedOfTotal', {
-                selected: selectedCount,
-                total: group.claims.length,
-              })}
+              {selectionLabel}
             </AppText>
           </View>
           <AppIcon
@@ -83,7 +96,11 @@ export function PermissionModuleCard({
           <AppIconButton
             color={allSelected ? theme.colors.danger : theme.colors.success}
             icon={allSelected ? 'remove-circle-outline' : 'checkmark-circle-outline'}
-            label={t(allSelected ? 'roleManagement.clearModule' : 'roleManagement.selectModule')}
+            label={t(
+              allSelected
+                ? 'roleManagement.clearScreenPermissions'
+                : 'roleManagement.selectScreenPermissions',
+            )}
             onPress={() => onSetModule(group, !allSelected)}
           />
         ) : null}
@@ -155,7 +172,7 @@ const styles = StyleSheet.create({
   permissions: {
     gap: 8,
     borderTopWidth: StyleSheet.hairlineWidth,
-    marginTop: 6,
-    paddingTop: 8,
+    marginTop: 8,
+    paddingTop: 12,
   },
 });

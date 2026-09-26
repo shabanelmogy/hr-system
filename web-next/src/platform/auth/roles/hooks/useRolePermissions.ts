@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { useUnsavedChanges } from "@/shared/contexts/UnsavedChangesContext";
 import useRoleStore from "../store/useRoleStore";
 import type { RoleWithClaims } from "../../types";
@@ -14,6 +15,8 @@ import {
 import { permissions } from "@/lib/auth/permissions";
 import { usePermissions } from "@/shared/hooks/usePermissions";
 import { appRoutes } from "@/config/routes";
+import { getPermissionActionLabel, getPermissionResourceLabel } from "../utils/permissionLabels";
+import { countChangedClaims, sortPermissionActions } from "../utils/permissionPresentation";
 
 function splitPermission(value: string): { module: string; action: string } | null {
   const separator = value.indexOf(":");
@@ -22,6 +25,7 @@ function splitPermission(value: string): { module: string; action: string } | nu
 }
 
 export function useRolePermissions(roleId: string) {
+  const { i18n, t } = useTranslation();
   const router = useRouter();
   const { requestDiscard } = useUnsavedChanges();
   const { hasPermission, isReadOnly } = usePermissions();
@@ -35,6 +39,7 @@ export function useRolePermissions(roleId: string) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [showOnlySelected, setShowOnlySelected] = useState(false);
+  const [baselineClaims, setBaselineClaims] = useState<RoleClaimsFormData["roleClaims"]>([]);
   const canEdit = !isReadOnly && hasPermission(permissions.EditRolePermissions);
 
   const form = useForm<RoleClaimsFormData>({
@@ -62,11 +67,12 @@ export function useRolePermissions(roleId: string) {
           roleClaims: result.roleClaims || [],
         };
         setRole(nextRole);
+        setBaselineClaims(nextRole.roleClaims.map((claim) => ({ ...claim })));
         form.reset({ id: nextRole.id, name: nextRole.name, roleClaims: nextRole.roleClaims });
       })
       .catch((error) => {
         if (!active) return;
-        showError((error as Error)?.message || "Failed to load role claims");
+        showError((error as Error)?.message || t("roles.permissionsLoadFailed"));
         setRole(null);
       })
       .finally(() => {
@@ -76,7 +82,7 @@ export function useRolePermissions(roleId: string) {
     return () => {
       active = false;
     };
-  }, [form, getRoleWithClaims, roleId, showError]);
+  }, [form, getRoleWithClaims, roleId, showError, t]);
 
   const replaceClaims = (roleClaims: RoleClaimsFormData["roleClaims"]) => {
     if (!role || role.isSystem || !canEdit) return;
@@ -84,23 +90,16 @@ export function useRolePermissions(roleId: string) {
     form.setValue("roleClaims", roleClaims, { shouldDirty: true, shouldValidate: true });
   };
 
-  const selectAll = (type: string, isSelected: boolean) => {
+  const selectModule = (module: string, isSelected: boolean) => {
     if (!role || role.isSystem || !canEdit) return;
     replaceClaims(
-      role.roleClaims.map((claim) =>
-        claim.displayValue.toLowerCase().endsWith(`:${type.toLowerCase()}`)
+      role.roleClaims.map((claim) => {
+        const parsed = splitPermission(claim.displayValue);
+        return parsed?.module.toLowerCase() === module.toLowerCase()
           ? { ...claim, isSelected }
-          : claim,
-      ),
+          : claim;
+      }),
     );
-  };
-
-  const areAllSelected = (type: string) => {
-    if (!role) return false;
-    const claims = role.roleClaims.filter((claim) =>
-      claim.displayValue.toLowerCase().endsWith(`:${type.toLowerCase()}`),
-    );
-    return claims.length > 0 && claims.every((claim) => claim.isSelected);
   };
 
   const toggleClaim = (claimIndex: number) => {
@@ -118,21 +117,34 @@ export function useRolePermissions(roleId: string) {
       .filter((module): module is string => Boolean(module)),
   )).sort((left, right) => left.localeCompare(right)), [role]);
 
-  const permissionActions = useMemo(() => Array.from(new Set(
+  const permissionActions = useMemo(() => sortPermissionActions(Array.from(new Set(
     (role?.roleClaims ?? [])
       .map((claim) => splitPermission(claim.displayValue)?.action)
       .filter((action): action is string => Boolean(action)),
-  )).sort((left, right) => left.localeCompare(right)), [role]);
+  ))), [role]);
 
   const filteredModules = useMemo(() => {
     let modules = availableModules.filter(
       (module) => !selectedModule || module.toLowerCase() === selectedModule.toLowerCase(),
     );
 
-    if (searchTerm) {
-      modules = modules.filter((module) =>
-        module.toLowerCase().includes(searchTerm.toLowerCase()),
-      );
+    if (searchTerm.trim()) {
+      const query = searchTerm.trim().toLocaleLowerCase(i18n.language);
+      modules = modules.filter((module) => {
+        const searchableValues = [
+          module,
+          getPermissionResourceLabel(module, t),
+          ...(role?.roleClaims ?? [])
+            .map((claim) => splitPermission(claim.displayValue))
+            .filter((claim) => claim?.module.toLowerCase() === module.toLowerCase())
+            .flatMap((claim) => claim
+              ? [claim.action, getPermissionActionLabel(claim.action, t)]
+              : []),
+        ];
+        return searchableValues.some((value) =>
+          value.toLocaleLowerCase(i18n.language).includes(query),
+        );
+      });
     }
 
     if (showOnlySelected && role) {
@@ -145,31 +157,46 @@ export function useRolePermissions(roleId: string) {
     }
 
     return modules;
-  }, [availableModules, role, searchTerm, selectedModule, showOnlySelected]);
+  }, [availableModules, i18n.language, role, searchTerm, selectedModule, showOnlySelected, t]);
 
   const paginatedModules = useMemo(() => {
     const start = page * rowsPerPage;
     return filteredModules.slice(start, start + rowsPerPage);
   }, [filteredModules, page, rowsPerPage]);
 
+  const selectFiltered = (isSelected: boolean) => {
+    if (!role || role.isSystem || !canEdit) return;
+    const filteredModuleNames = new Set(filteredModules.map((module) => module.toLowerCase()));
+    replaceClaims(
+      role.roleClaims.map((claim) => {
+        const parsed = splitPermission(claim.displayValue);
+        return parsed && filteredModuleNames.has(parsed.module.toLowerCase())
+          ? { ...claim, isSelected }
+          : claim;
+      }),
+    );
+  };
+
   const statistics = useMemo(() => {
     const total = role?.roleClaims.length ?? 0;
     const selected = role?.roleClaims.filter((claim) => claim.isSelected).length ?? 0;
-    return { total, selected, percentage: total > 0 ? (selected / total) * 100 : 0 };
-  }, [role]);
+    const changed = countChangedClaims(role?.roleClaims ?? [], baselineClaims);
+    return { total, selected, changed, percentage: total > 0 ? (selected / total) * 100 : 0 };
+  }, [baselineClaims, role]);
 
   const updateRole = async (data: RoleClaimsFormData) => {
     if (!role || role.isSystem || !canEdit) return;
     setIsSaving(true);
     try {
       await updateRoleClaims(data);
-      showSuccess("Role permissions updated successfully");
+      setBaselineClaims(data.roleClaims.map((claim) => ({ ...claim })));
+      showSuccess(t("roles.permissionsUpdatedSuccessfully"));
       form.reset(data);
       router.push(appRoutes.platform.administration.roles);
     } catch (error) {
       applyApiFieldErrors(error, form.setError, { Name: "name" });
       showError(
-        (error as Error)?.message || "Failed to update role permissions",
+        (error as Error)?.message || t("roles.permissionsSaveFailed"),
       );
     } finally {
       setIsSaving(false);
@@ -183,7 +210,6 @@ export function useRolePermissions(roleId: string) {
 
   return {
     ...form,
-    areAllSelected,
     availableModules,
     canEdit,
     filteredModules,
@@ -201,7 +227,8 @@ export function useRolePermissions(roleId: string) {
     role,
     rowsPerPage,
     searchTerm,
-    selectAll,
+    selectFiltered,
+    selectModule,
     selectedModule,
     setPage,
     setRowsPerPage,
@@ -215,6 +242,12 @@ export function useRolePermissions(roleId: string) {
     },
     setShowOnlySelected: (value: boolean) => {
       setShowOnlySelected(value);
+      setPage(0);
+    },
+    resetFilters: () => {
+      setSearchTerm("");
+      setSelectedModule("");
+      setShowOnlySelected(false);
       setPage(0);
     },
     showOnlySelected,
