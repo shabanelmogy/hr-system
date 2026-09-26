@@ -706,6 +706,10 @@
     "accountDetermination": "تحديد الحسابات",
     "genericEmpty": "تم تثبيت التطبيق، ولا توجد وحدات متاحة بعد.",
     "noAvailableFeatures": "هذه الوحدة مفعلة، لكن لا توجد شاشة متاحة حاليًا تتوافق مع صلاحياتك.",
+    "tenantAdministration": "إدارة الـ Tenant",
+    "administrationEyebrow": "إدارة النظام",
+    "tenantRolesPermissions": "الأدوار والصلاحيات",
+    "tenantUsers": "المستخدمون",
     "submodules": {
       "hr": {
         "basic-data": "البيانات الأساسية",

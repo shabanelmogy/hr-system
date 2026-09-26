@@ -89,6 +89,10 @@ Rules:
   the same minimum exact permission. For example, the role-permission route and
   its row action both require `RolePermissions:View`; `Roles:View` only grants
   access to the role list and never implicitly grants permission inspection.
+- The tenant Apps launcher presents a separate Tenant administration section for
+  `Users` and `Roles and permissions`. Each card is filtered by its exact view
+  claim (`Users:View` or `Roles:View`); the launcher never infers visibility from
+  a role name or from access to another module.
 - Architecture tests reject catalog constants whose action begins with `Manage`.
 - Tests cover authorized and forbidden outcomes for sensitive actions and prove
   that Archive does not grant Restore (and vice versa).

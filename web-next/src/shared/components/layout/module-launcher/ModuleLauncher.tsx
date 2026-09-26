@@ -31,7 +31,22 @@ export interface ModuleLauncherModule {
   accentColor?: string;
 }
 
-export function ModuleLauncher({ modules }: { modules: readonly ModuleLauncherModule[] }) {
+export interface ModuleLauncherAction {
+  code: string;
+  href: string;
+  label: string;
+  icon?: ReactNode;
+  tone?: LauncherTone;
+  accentColor?: string;
+}
+
+export function ModuleLauncher({
+  modules,
+  actions = [],
+}: {
+  modules: readonly ModuleLauncherModule[];
+  actions?: readonly ModuleLauncherAction[];
+}) {
   const { t } = useTranslation();
   return (
     <LauncherShell
@@ -39,9 +54,9 @@ export function ModuleLauncher({ modules }: { modules: readonly ModuleLauncherMo
       description={t("modules.description")}
       icon={<GridViewRoundedIcon />}
     >
-      {modules.length === 0 ? (
+      {modules.length === 0 && actions.length === 0 ? (
         <EmptyLauncher icon={<AppsRoundedIcon />} message={t("modules.empty")} />
-      ) : (
+      ) : modules.length > 0 ? (
         <LauncherGrid variant="module">
           {modules.map((module) => (
             <LauncherTile
@@ -57,7 +72,33 @@ export function ModuleLauncher({ modules }: { modules: readonly ModuleLauncherMo
             />
           ))}
         </LauncherGrid>
-      )}
+      ) : null}
+      {actions.length > 0 ? (
+        <Stack spacing={2} sx={{ width: "100%", alignItems: "center" }}>
+          <Typography
+            component="h2"
+            variant="h5"
+            sx={{ fontWeight: 800, textAlign: "center" }}
+          >
+            {t("modules.tenantAdministration")}
+          </Typography>
+          <LauncherGrid variant="module">
+            {actions.map((action) => (
+              <LauncherTile
+                key={action.code}
+                href={action.href}
+                icon={action.icon}
+                label={action.label}
+                tone={action.tone}
+                accentColor={action.accentColor}
+                variant="module"
+                iconSize={58}
+                eyebrow={t("modules.administrationEyebrow")}
+              />
+            ))}
+          </LauncherGrid>
+        </Stack>
+      ) : null}
     </LauncherShell>
   );
 }

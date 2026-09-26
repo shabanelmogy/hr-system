@@ -698,6 +698,10 @@
     "accountDetermination": "Account determination",
     "genericEmpty": "This application is installed but no areas are available yet.",
     "noAvailableFeatures": "This area is enabled, but no screen matching your current permissions is available yet.",
+    "tenantAdministration": "Tenant administration",
+    "administrationEyebrow": "ADMINISTRATION",
+    "tenantRolesPermissions": "Roles and permissions",
+    "tenantUsers": "Users",
     "submodules": {
       "hr": {
         "basic-data": "Basic data",
