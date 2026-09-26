@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-17T13:24:27.926439+00:00",
+  "generated_at": "2026-09-26T07:50:59.248388+00:00",
   "nodes": {
     "api_erpsystem": {
       "code_fingerprint": "92477bcbb995489ccf6a5eeac80028eea2dd28c87c9a02f16e65fa45e5dd8cf5",
@@ -12,13 +12,13 @@
           "q": "المفروض HR يكون داخل Modules مثل Accounting واسم المشروع العام ERP System"
         }
       ],
-      "score": 0.807656472,
+      "score": 0.65954047,
       "source_file": "api/ErpSystem.sln",
       "status": "tentative",
       "uses": 1
     },
     "api_modules_accounting_erpsystem_modules_accounting_accountingmodule_erpsystem_modules_accounting_accountingmodule": {
-      "code_fingerprint": "0566f6d602e13fb71161b66d9cc8308a53b8ed38938af9be317a93873a51c0f1",
+      "code_fingerprint": "bada546c3c50622702fd71f2bcc9d21341fc4d8225fd886fc6ce80338ea2f36f",
       "label": "AccountingModule",
       "last": "2026-09-08T03:42:00.110281+00:00",
       "provenance": [
@@ -28,13 +28,13 @@
           "q": "مراجعة شاملة لهيكل المشروع وتجهيزه كـ Modular Monolith لإضافة موديول حسابات وأنشطة مستقبلية"
         }
       ],
-      "score": 0.804696714,
+      "score": 0.657123501,
       "source_file": "api/Modules/Accounting/ErpSystem.Modules.Accounting/AccountingModule.cs",
       "status": "tentative",
       "uses": 1
     },
     "api_modules_accounting_erpsystem_modules_accounting_infrastructure_accountingdbcontext_erpsystem_modules_accounting_infrastructure_accountingdbcontext": {
-      "code_fingerprint": "7e8a3f2c500cece32eacedd0eb8809fb6da26d8df605150ca7054cdf400f6ee2",
+      "code_fingerprint": "70eb19e01624ce45c5ec604d2d4c9c087d40bb47cf58a2bd3c67abed9dab6ba7",
       "label": "AccountingDbContext",
       "last": "2026-09-08T03:42:00.110281+00:00",
       "provenance": [
@@ -44,13 +44,13 @@
           "q": "مراجعة شاملة لهيكل المشروع وتجهيزه كـ Modular Monolith لإضافة موديول حسابات وأنشطة مستقبلية"
         }
       ],
-      "score": 0.804696714,
+      "score": 0.657123501,
       "source_file": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Infrastructure/AccountingDbContext.cs",
       "status": "tentative",
       "uses": 1
     },
     "api_modules_hr_erpsystem_modules_hr_application_features_organizationalstructure_management_contracts_organizationalstructurecontracts_erpsystem_modules_hr_application_features_organizationalstructure_management_contracts_organizationalstructureitem": {
-      "code_fingerprint": "884fddee2fbf41247f63548222079e7c8aeec898bb404995f292522180ce211e",
+      "code_fingerprint": "6570dc54a62d9cc6452f45c9ee373c1edd51ee4b09e6f83f52e6cb8ee62e221c",
       "label": "OrganizationalStructureItem",
       "last": "2026-08-31T09:31:13.495544+00:00",
       "provenance": [
@@ -60,7 +60,7 @@
           "q": "Why did the Organizational Structure management route return HTTP 500?"
         }
       ],
-      "score": 0.672652947,
+      "score": 0.549295221,
       "source_file": "api/Modules/HR/ErpSystem.Modules.HR.Application/Features/OrganizationalStructure/Management/Contracts/OrganizationalStructureContracts.cs",
       "status": "tentative",
       "uses": 1
@@ -76,7 +76,7 @@
           "q": "Why did the Organizational Structure management route return HTTP 500?"
         }
       ],
-      "score": 0.672652947,
+      "score": 0.549295221,
       "source_file": "api/Modules/HR/ErpSystem.Modules.HR.Application/Features/OrganizationalStructure/Management/Queries/OrganizationalStructureQueries.cs",
       "status": "tentative",
       "uses": 1
@@ -92,13 +92,13 @@
           "q": "اعمل migartion"
         }
       ],
-      "score": 0.671528237,
+      "score": 0.548376772,
       "source_file": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Dependencies/DatabaseService.cs",
       "status": "tentative",
       "uses": 1
     },
     "api_modules_hr_erpsystem_modules_hr_infrastructure_features_organizationalstructure_management_organizationalstructuremanagement_erpsystem_modules_hr_infrastructure_features_organizationalstructure_management_organizationalstructuremanagement": {
-      "code_fingerprint": "ab1f7eceeeaa7584dc62fe8efd6fda448ef3d5a4524eff8dea7323e1f763bdee",
+      "code_fingerprint": "2e2af446a753933deef4c7fa490d834c4fb2e1198e5d2b5dce525d379e2c5463",
       "label": "OrganizationalStructureManagement",
       "last": "2026-08-31T09:31:13.495544+00:00",
       "provenance": [
@@ -108,13 +108,13 @@
           "q": "Why did the Organizational Structure management route return HTTP 500?"
         }
       ],
-      "score": 0.672652947,
+      "score": 0.549295221,
       "source_file": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Features/OrganizationalStructure/Management/OrganizationalStructureManagement.cs",
       "status": "tentative",
       "uses": 1
     },
     "documentation_api_modular_monolith_architecture_document": {
-      "code_fingerprint": "40bee5395dd8f6b5d3702e53c666a61f6a8dfca91653906b3827bf9945f23c35",
+      "code_fingerprint": "f004d982635fd29f11716a3c9cb0e08fa22e94ec24fd4cd3ab5d84f780b3cf37",
       "label": "Modular Monolith Architecture",
       "last": "2026-09-08T03:42:00.110281+00:00",
       "provenance": [
@@ -124,7 +124,7 @@
           "q": "مراجعة شاملة لهيكل المشروع وتجهيزه كـ Modular Monolith لإضافة موديول حسابات وأنشطة مستقبلية"
         }
       ],
-      "score": 0.804696714,
+      "score": 0.657123501,
       "source_file": "documentation/api/MODULAR_MONOLITH_ARCHITECTURE.md",
       "status": "tentative",
       "uses": 1
@@ -140,7 +140,7 @@
           "q": "اعمل migartion"
         }
       ],
-      "score": 0.671528237,
+      "score": 0.548376772,
       "source_file": "",
       "status": "tentative",
       "uses": 1
@@ -156,13 +156,13 @@
           "q": "when focus input keyboard cover input"
         }
       ],
-      "score": 0.426653089,
+      "score": 0.348409242,
       "source_file": "mobile-react/app.json",
       "status": "tentative",
       "uses": 1
     },
     "next": {
-      "code_fingerprint": "50f86826ed8c26e3af9b71dc29ec1b8a37aa431660d78a7b0340b906c8a34719",
+      "code_fingerprint": "69b2874b452decebd46f05b625f7590838dbdae9d55ca21974b8f5e1ca661cb0",
       "label": "next",
       "last": "2026-08-11T18:57:00.761650+00:00",
       "provenance": [
@@ -172,13 +172,13 @@
           "q": "Diagnose and fix recurring Turbopack panic: Next.js package not found while /login returns 200."
         }
       ],
-      "score": 0.427609118,
+      "score": 0.349189944,
       "source_file": "web-next/package.json",
       "status": "tentative",
       "uses": 1
     },
     "web_next_readme_development": {
-      "code_fingerprint": "6c44f250833afb9ac096f1ffa9766223a5e9b74fe50012831ef638015dffbf42",
+      "code_fingerprint": "0492c5e2eda07229a90c89c1634d66efaff88c52ffd9d2e79191858d5c536031",
       "label": "Development",
       "last": "2026-08-11T18:39:48.685616+00:00",
       "provenance": [
@@ -188,7 +188,7 @@
           "q": "mkcert is not recognized while creating localhost certificates"
         }
       ],
-      "score": 0.427491116,
+      "score": 0.349093582,
       "source_file": "web-next/README.md",
       "status": "tentative",
       "uses": 1
@@ -204,7 +204,7 @@
           "q": "mkcert is not recognized while creating localhost certificates"
         }
       ],
-      "score": 0.427491116,
+      "score": 0.349093582,
       "source_file": "web-next/scripts/setup-local-https.ps1",
       "status": "tentative",
       "uses": 1
@@ -220,13 +220,13 @@
           "q": "Diagnose and fix recurring Turbopack panic: Next.js package not found while /login returns 200."
         }
       ],
-      "score": 0.427609118,
+      "score": 0.349189944,
       "source_file": "web-next/src/app/(auth)/login/page.tsx",
       "status": "tentative",
       "uses": 1
     },
     "web_next_src_lib_auth_route_access_canaccessroute": {
-      "code_fingerprint": "ae1ca3ef8213a16cb65aa91199924d1874624703add7a58161e4fcd868701eb5",
+      "code_fingerprint": "12c43428d457f2b29a3494f2dd3d22035d528d850a4239c0bd9e7e6e8bd546dc",
       "label": "canAccessRoute()",
       "last": "2026-08-11T18:26:28.622140+00:00",
       "provenance": [
@@ -236,13 +236,13 @@
           "q": "super admin will not see other tenant details it will be to admin tenant only"
         }
       ],
-      "score": 0.427399663,
+      "score": 0.349018901,
       "source_file": "web-next/src/lib/auth/route-access.ts",
       "status": "tentative",
       "uses": 1
     },
     "web_next_src_platform_auth_login_components_loginform": {
-      "code_fingerprint": "e26e96f32b342e0f83302b1bf81ce854df20039d9cf509b223b9c74e940377da",
+      "code_fingerprint": "94741011d9546416a4c88def9894fa44751ee125894573125941948273e1cb81",
       "label": "LoginForm.tsx",
       "last": "2026-08-11T20:08:00.701332+00:00",
       "provenance": [
@@ -252,7 +252,7 @@
           "q": "i want like attach screen"
         }
       ],
-      "score": 0.428096521,
+      "score": 0.349587962,
       "source_file": "web-next/src/platform/auth/login/components/LoginForm.tsx",
       "status": "tentative",
       "uses": 1
@@ -268,7 +268,7 @@
           "q": "fix style for buton : login as admin"
         }
       ],
-      "score": 0.426711185,
+      "score": 0.348456683,
       "source_file": "web-next/src/platform/auth/login/Login.tsx",
       "status": "tentative",
       "uses": 1
@@ -289,7 +289,7 @@
           "q": "create dashborad and tenetamanagement in web-next and mobile"
         }
       ],
-      "score": 0.855120396,
+      "score": 0.698299991,
       "source_file": "web-next/src/platform/tenants/TenantDashboardPage.tsx",
       "status": "preferred",
       "uses": 2
@@ -310,13 +310,13 @@
           "q": "Diagnose and fix recurring Turbopack panic: Next.js package not found while /login returns 200."
         }
       ],
-      "score": 0.855395328,
+      "score": 0.698524504,
       "source_file": "web-next/src/proxy.ts",
       "status": "preferred",
       "uses": 2
     },
     "web_next_src_shared_components_forms_text_fields_internals_charactercount": {
-      "code_fingerprint": "c4822e34ecf0b32737d1406a2d2eddcd0ae3a238302ecc2a5865dcd2c27dcf90",
+      "code_fingerprint": "5d463efeeb1d780a45a35e3dbe774f7a9fdc1b2ae41e1492c79923fd0ab0b722",
       "label": "characterCount.ts",
       "last": "2026-08-11T20:03:38.693723+00:00",
       "neg": 1,
@@ -332,7 +332,7 @@
           "q": "add min value and max value and counter in web-next\\\\src\\\\shared\\\\components\\\\forms\\\\text-fields"
         }
       ],
-      "score": -4.5326e-05,
+      "score": -3.7014e-05,
       "source_file": "web-next/src/shared/components/forms/text-fields/internals/characterCount.ts",
       "status": "contested",
       "uses": 1,
@@ -355,14 +355,14 @@
           "q": "add min value and max value and counter in web-next\\\\src\\\\shared\\\\components\\\\forms\\\\text-fields"
         }
       ],
-      "score": -4.5326e-05,
+      "score": -3.7014e-05,
       "source_file": "web-next/src/shared/components/forms/text-fields/internals/inputConstraints.ts",
       "status": "contested",
       "uses": 1,
       "verdict": "dead end"
     },
     "web_next_src_shared_components_forms_text_fields_internals_textfieldendadornment": {
-      "code_fingerprint": "7289f04d2fd46038a9c6140162aca305f911e7851dbe1deeac16d74c649ea7ee",
+      "code_fingerprint": "afedb25fe13d0bcd8adbb4094076a4db9729a0519a3ade141eb3e8c6424cd340",
       "label": "TextFieldEndAdornment.tsx",
       "last": "2026-08-11T20:08:00.701332+00:00",
       "neg": 1,
@@ -383,7 +383,7 @@
           "q": "add min value and max value and counter in web-next\\\\src\\\\shared\\\\components\\\\forms\\\\text-fields"
         }
       ],
-      "score": 0.428051194,
+      "score": 0.349550948,
       "source_file": "web-next/src/shared/components/forms/text-fields/internals/TextFieldEndAdornment.tsx",
       "status": "contested",
       "uses": 2,
@@ -411,14 +411,14 @@
           "q": "add min value and max value and counter in web-next\\\\src\\\\shared\\\\components\\\\forms\\\\text-fields"
         }
       ],
-      "score": 0.428051194,
+      "score": 0.349550948,
       "source_file": "web-next/src/shared/components/forms/text-fields/MyTextField.tsx",
       "status": "contested",
       "uses": 2,
       "verdict": "useful"
     },
     "web_next_src_shell_basic_data_navigation_basicdatanavigation": {
-      "code_fingerprint": "44f66f7c48f13f15aa3b3e75adc7601a11b21250d7342873d9c1b01ead108fa4",
+      "code_fingerprint": "26ddc91aa0ade431099d4109cad08ca5dbc4875c7866674b7e613ac066a90ba3",
       "label": "basicDataNavigation.tsx",
       "last": "2026-08-31T07:31:46.656648+00:00",
       "provenance": [
@@ -428,7 +428,7 @@
           "q": "انا سجلت دخول بالادمن والصفحات مش ظاهرة ؟"
         }
       ],
-      "score": 0.671365014,
+      "score": 0.548243482,
       "source_file": "web-next/src/shell/basic-data/navigation/basicDataNavigation.tsx",
       "status": "tentative",
       "uses": 1
