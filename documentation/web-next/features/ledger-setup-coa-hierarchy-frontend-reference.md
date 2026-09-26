@@ -8,11 +8,17 @@ Own focused Web workflows for `/finance/ledger-setup/accounts` and
 `/finance/ledger-setup/hierarchy-levels`. The target uses typed COA models/services/
 hooks/components; the umbrella `LedgerSetupRecord`/resource renderer is not the final architecture.
 
+The current v2 Screen Contract selects `P-002` for Accounts, with a secondary P-001
+record Grid, and `P-001` for Hierarchy Levels. Both entities expose separate
+required `NameAr` and `NameEn` in create/edit/detail/list/search and valid mock
+drafts; locale selection never overwrites the other value.
+
 ## 2. Route and module navigation
 
 Keep existing Accounting Finance/Ledger Setup navigation and translation scope. Do
-not create a second sidebar/root. Direct routes require `Accounts:View`; mutations
-require `Accounts:Manage` and respect global read-only mode.
+not create a second sidebar/root. Direct account and hierarchy-level routes require
+their exact View permission; mutations require the matching resource
+Create/Edit/Archive/Restore permission and respect global read-only mode.
 
 ## 3. Transport and types
 
@@ -58,7 +64,8 @@ input where safe, refetches a fresh proposal for the next attempt and never sile
 
 ## 9. Permissions and read-only mode
 
-`Accounts:View` gates reads; `Accounts:Manage` gates mutations. Read-only keeps tree,
+Exact `Accounts:*` and `AccountHierarchyLevels:*` action permissions gate their
+reads and mutations. Read-only keeps tree,
 detail and lists usable while suppressing mutation controls. API denial remains authoritative.
 
 ## 10. Query state and truthful criteria

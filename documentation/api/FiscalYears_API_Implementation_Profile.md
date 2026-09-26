@@ -85,6 +85,15 @@ JSON, and pending-model check are mandatory release evidence.
 registrations both before and after Accounting and verifies that create persists the
 year and all generated periods through Accounting before scheduling the change.
 
+These checks are readiness evidence for the manual acceptance gate, not customer
+acceptance. Before Phase 06 can record `Verified`, the API must support the live
+authenticated and company-scoped cases in
+`documentation/plans/business/accounting-core-gl/manual-acceptance/FISCAL-YEARS-STEP-01.md`:
+valid lifecycle, bilingual data, duplicate/overlap/duration failures, permissions,
+read-only mode, second-company isolation, stale RowVersion conflict, report scope,
+and post-commit refresh. The user's explicit acceptance is required after the Web
+and actual-device journey; no API-only pass advances Currency.
+
 ## 11. Reporting, persistence, and deferred integration
 
 Fiscal Period has no independent mutation route. `FiscalYearsController` has no

@@ -64,7 +64,7 @@ public class UsersController(ISender sender) : ControllerBase
     }
 
     [HttpPut("{id}")]
-    [HasPermission(PlatformPermissions.EditUsers)]
+    [HasPermission(PlatformPermissions.ResetUserPasswords)]
     public async Task<IActionResult> ChangePassword(
         [FromRoute] string id,
         [FromBody] ChangeUserPasswordRequest request,
@@ -77,7 +77,7 @@ public class UsersController(ISender sender) : ControllerBase
     }
 
     [HttpPut("{id}")]
-    [HasPermission(PlatformPermissions.EditUsers)]
+    [HasPermission(PlatformPermissions.SetUserStatus)]
     public async Task<IActionResult> Toggle(
         [FromRoute] string id,
         CancellationToken cancellationToken)
@@ -87,7 +87,7 @@ public class UsersController(ISender sender) : ControllerBase
     }
 
     [HttpPut("{id}")]
-    [HasPermission(PlatformPermissions.EditUsers)]
+    [HasPermission(PlatformPermissions.UnlockUsers)]
     public async Task<IActionResult> Unlock(
         [FromRoute] string id,
         CancellationToken cancellationToken)
@@ -97,7 +97,7 @@ public class UsersController(ISender sender) : ControllerBase
     }
 
     [HttpPost("~/api/v{version:apiVersion}/users/archive/{id}")]
-    [HasPermission(PlatformPermissions.DeleteUsers)]
+    [HasPermission(PlatformPermissions.ArchiveUsers)]
     public async Task<IActionResult> Archive(
         [FromRoute] string version,
         [FromRoute] string id,
@@ -109,7 +109,7 @@ public class UsersController(ISender sender) : ControllerBase
     }
 
     [HttpPost("~/api/v{version:apiVersion}/users/restore/{id}")]
-    [HasPermission(PlatformPermissions.DeleteUsers)]
+    [HasPermission(PlatformPermissions.RestoreUsers)]
     public async Task<IActionResult> Restore(
         [FromRoute] string version,
         [FromRoute] string id,
@@ -120,6 +120,7 @@ public class UsersController(ISender sender) : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [HasPermission(PlatformPermissions.ViewUsers)]
     public async Task<IActionResult> GetUserPhoto([FromRoute] string id, CancellationToken cancellationToken)
     {
         var result = await _sender.Send(new GetUserPhotoQuery(id), cancellationToken);

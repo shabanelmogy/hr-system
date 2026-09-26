@@ -31,7 +31,9 @@ interface Props {
   searchField: AccountSearchField;
   searchOperator: AccountSearchOperator;
   recordStatus: AccountRecordStatus;
-  canManage: boolean;
+  canEdit: boolean;
+  canArchive: boolean;
+  canRestore: boolean;
   onSearchChange: (value: string) => void;
   onSearchFieldChange: (value: AccountSearchField) => void;
   onSearchOperatorChange: (value: AccountSearchOperator) => void;
@@ -111,7 +113,7 @@ export default function AccountsDataGrid(props: Props) {
             key="edit"
             icon={<Edit />}
             label={t("actions.edit")}
-            disabled={!props.canManage || row.isDeleted}
+            disabled={!props.canEdit || row.isDeleted}
             onClick={() => props.onEdit(row)}
             showInMenu={false}
           />,
@@ -120,7 +122,7 @@ export default function AccountsDataGrid(props: Props) {
               key="restore"
               icon={<Restore />}
               label={t("actions.restore")}
-              disabled={!props.canManage}
+              disabled={!props.canRestore}
               onClick={() => props.onRestore(row)}
               showInMenu
             />
@@ -129,7 +131,7 @@ export default function AccountsDataGrid(props: Props) {
               key="archive"
               icon={<Archive />}
               label={t("actions.archive")}
-              disabled={!props.canManage}
+              disabled={!props.canArchive}
               onClick={() => props.onArchive(row)}
               showInMenu
             />

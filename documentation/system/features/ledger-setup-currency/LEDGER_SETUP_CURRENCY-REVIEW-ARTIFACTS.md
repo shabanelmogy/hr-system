@@ -14,12 +14,13 @@
 | Web route | `/finance/ledger-setup/currencies` |
 | Mobile route | `/finance/ledger-setup/currencies` |
 | Review owner | `Accounting implementation team` |
-| Review date | `2026-09-22` |
+| Review date | `2026-09-25` v2 reconciliation; historical verification `2026-09-22` |
 | Implementation request | `documentation/system/features/ledger-setup-currency/IMPLEMENTATION-REQUEST.md` |
 | Required-file manifest | `documentation/system/features/ledger-setup-currency/required-files.json` |
 | Operating mode | `existing-feature change / reconciliation` |
-| Documentation state | `Phase 07 Closed — Phase 06 Verified 2026-09-22` |
+| Documentation state | Historical Phase 07 Closed / Phase 06 Verified evidence retained; current v2 roadmap state is Queued after Fiscal Years |
 | Applied implementation reference | `fiscal-years` |
+| Approved UI pattern | `P-001` Server-managed Grid/CRUD |
 | Import decision | `Excluded` |
 | Import platforms | `N/A` |
 | Import format | `N/A` |
@@ -39,6 +40,7 @@
 | R-05 | Archive is blocked while Currency is referenced by Accounting settings, accounts or FX; active lookup excludes archived Currency. | Child contract/current store | Existing evidence | Displays API outcome | Displays API outcome | Frozen |
 | R-06 | EN/AR, RTL, accessible shared controls and responsive Web/Mobile composition are required. | Child contract/repository guides | stable errors | Required | Required | Frozen |
 | R-07 | Import/Report/Export are absent for this child; education occurs only after verified runtime. | Plan + child package | Excluded | Excluded | Excluded | Frozen |
+| R-08 | `NameAr` and `NameEn` remain distinct required business data through API, forms, detail, Web Grid, Mobile Table/Cards, search and mock drafts. | v2 child contract | Required | Required | Required | Frozen |
 
 ## Platform capability decisions
 
@@ -144,7 +146,7 @@ reporting can only reopen under a later approved reporting capability.
 
 | ID | Severity | Finding | Evidence | Owner | Resolution |
 | --- | --- | --- | --- | --- | --- |
-| F-01 | High | Previous umbrella documentation treated much of Slice 1 as one execution unit, which could hide child workflow quality. | Feature Decomposition Gate and prior `accounting-ledger-setup` package | Planning | Resolved by nine closed child contracts; umbrella is integration/history evidence only. |
+| F-01 | High | Previous umbrella documentation treated much of Slice 1 as one execution unit, which could hide child workflow quality. | Feature Decomposition Gate and prior `accounting-ledger-setup` package | Planning | Resolved by nine current v2 child contracts; umbrella is integration/history evidence only. |
 | F-02 | High | Currency runtime already exists from ownership cutover, so accepting it as automatically complete would bypass child acceptance. | current Accounting API/Web/Mobile Currency paths | Accounting | Runtime is evidence only; child package performs explicit reconciliation and exit verification. |
 | F-03 | Medium | Currency-specific server notification/realtime contract is not required by the child contract. | current child scope | Accounting clients | Keep client query invalidation/refetch; do not add a new server side-effect merely for symmetry. |
 | F-04 | Manual | Authenticated Web EN/AR, desktop/compact, lifecycle and denial behavior required runtime proof. | API-backed browser journey on `https://localhost:3000` | Accounting Web | Resolved 2026-09-22: Admin completed create/edit/archive/restore in Arabic and English, compact width had no page overflow, and Normal User received the expected 403. |
@@ -187,5 +189,8 @@ notes; neither represents a missing Currency behavior.
 - [x] Phase 06 records `Verified` before customer education is authored/finalized.
 - [x] Phase 07 publishes the verified customer setup/training/video guide before child closure.
 
-Child `1A` is closed. Slice 1 remains open until packages `1B`–`1H` and final package
-`1V` complete their own gates.
+The 2026-09-22 child run closed `1A` and remains valid historical evidence. Under the
+current v2 human roadmap, Currency is Queued as Step 02 until Fiscal Years closes;
+it must then revalidate `P-001`, bilingual data parity and the live Web/Mobile journey
+before its current step may be Closed. Slice 1 remains open until all ordered steps
+and final package `1V` complete their current gates.

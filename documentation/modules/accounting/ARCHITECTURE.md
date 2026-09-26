@@ -46,8 +46,8 @@ Currency cutover/data-copy path and no duplicate writable master.
 Client ownership follows the same boundary. Web and Mobile expose Currency
 management only at `/finance/ledger-setup/currencies`; the former HR
 `/basic-data/organizational-structure/currencies` route is not retained. Currency
-page/read/lookup access uses `AccountingSetup:View`, while create, update, archive,
-and restore use `AccountingSetup:Manage`. HR forms that accept a user-selected
+page/read/lookup access uses `Currencies:View`, while create, update, archive,
+and restore use `Currencies:Create/Edit/Archive/Restore` respectively. HR forms that accept a user-selected
 `CurrencyCode` consume the Accounting active-currency lookup instead of maintaining
 an HR list, free-text master, or client-side default-currency authority.
 

@@ -38,7 +38,7 @@ public sealed class PartiesController(ISender sender) : ControllerBase
     }
 
     [HttpPut("{id:guid}")]
-    [HasPermission(PartyPermissions.Update)]
+    [HasPermission(PartyPermissions.Edit)]
     public async Task<ActionResult<PartyResponse>> Update(
         Guid id,
         UpdatePartyRequest request,

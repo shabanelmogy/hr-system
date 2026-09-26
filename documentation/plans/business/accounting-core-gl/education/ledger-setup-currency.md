@@ -16,8 +16,8 @@ Settings, and historical rates are maintained in Exchange Rates.
 
 | Permission/state | Available behavior |
 | --- | --- |
-| `AccountingSetup:View` | Open the Currency route, search/filter/sort/page and view details. |
-| `AccountingSetup:Manage` | Create, edit, archive and restore in addition to View behavior. |
+| `Currencies:View` | Open the Currency route, search/filter/sort/page and view details. |
+| `Currencies:Create/Edit/Archive/Restore` | Each mutation is independently available only with its matching action claim. |
 | Application read-only | View remains available; mutation controls are suppressed. |
 | No View permission | The route fails closed with Access Denied / 403. |
 
@@ -85,9 +85,9 @@ unsaved and must be retried after connectivity returns.
 ## 7. Arabic quick guide / دليل عربي مختصر
 
 1. افتح **الحسابات ← إعداد دفتر الأستاذ ← العملات**.
-2. صلاحية العرض `AccountingSetup:View` تسمح بالبحث والتصفية وعرض التفاصيل فقط.
-3. صلاحية الإدارة `AccountingSetup:Manage` مطلوبة للإضافة والتعديل والأرشفة
-   والاستعادة.
+2. صلاحية العرض `Currencies:View` تسمح بالبحث والتصفية وعرض التفاصيل فقط.
+3. الإضافة والتعديل والأرشفة والاستعادة مستقلة، وتحتاج على الترتيب إلى
+   `Currencies:Create` و`Currencies:Edit` و`Currencies:Archive` و`Currencies:Restore`.
 4. أدخل كود عملة من ثلاثة أحرف إنجليزية، والاسم العربي، والاسم الإنجليزي، والرمز.
 5. استخدم حالة **المؤرشفة** للوصول إلى العملة المؤرشفة ثم اختر **استعادة**.
 6. إذا كانت العملة مستخدمة في إعدادات الحسابات أو الحسابات أو أسعار الصرف فلن يتم

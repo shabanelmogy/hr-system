@@ -5,14 +5,14 @@ import { UserManagementScreen } from '@/src/platform/administration';
 import { permissions, RouteGuard, useAuthorization } from '@/src/platform/auth';
 
 const viewUsersPermission = [permissions.ViewUsers] as const;
-const manageOfflineOperationsPermission = [permissions.ManageOfflineOperations] as const;
+const viewOfflineOperationsPermission = [permissions.ViewOfflineOperations] as const;
 
 export default function UserManagementRoute() {
   const { allowed: canViewUsers } = useAuthorization({
     requiredPermissions: viewUsersPermission,
   });
-  const { allowed: canManageOfflineOperations } = useAuthorization({
-    requiredPermissions: manageOfflineOperationsPermission,
+  const { allowed: canViewOfflineOperations } = useAuthorization({
+    requiredPermissions: viewOfflineOperationsPermission,
   });
 
   return (
@@ -20,7 +20,7 @@ export default function UserManagementRoute() {
       {canViewUsers
         ? <UserManagementScreen />
         : <Redirect href={asHref(
-            canManageOfflineOperations
+            canViewOfflineOperations
               ? ROUTES.administration.offlineOperations
               : ROUTES.administration.roles,
           )} />}

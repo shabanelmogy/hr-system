@@ -27,6 +27,11 @@ and the API Architecture Constitution. This documentation system records decisio
 evidence, and client coordination; it does not override bounded-context ownership or
 the mandatory Existing-System Relationship Review.
 
+All features also follow the product-wide
+[`Permission and Authorization Model`](PERMISSION_MODEL.md). Its exact-action
+Permission Action Matrix and bilingual-label rules are mandatory planning and
+implementation gates.
+
 For the product-wide ownership and reuse workflow, start with the [ERP
 documentation guide](../project/ERP_DOCUMENTATION_GUIDE_AR.md) and its [shared
 reuse catalog](../project/SHARED_REUSE_CATALOG.md). This system owns the shared
@@ -82,6 +87,7 @@ foundation facts only until feature evidence is added.
 | `recipe-manifest.json` | Books, section dependencies, recipe outputs, and required-file manifests |
 | `Generate-Documentation.ps1` | Generation, fingerprinting, required-path validation, and stale-output checks |
 | `New-FeatureDocumentation.ps1` | Safe implementation request, draft artifact, required-file plan, and feature-scoped recipe-registration scaffold |
+| `PERMISSION_MODEL.md` | Exact `Resource:Action` authorization, bilingual labels, lifecycle separation, and the mandatory Permission Action Matrix |
 | `templates/` | Human-maintained phase and review templates |
 | `generated/` | Machine-generated phase packets; never edit directly |
 | `features/countries/required-files.json` | Source/configuration evidence needed to review Countries end to end |

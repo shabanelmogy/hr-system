@@ -29,7 +29,11 @@ const UsersPage = () => {
     permissions.EditUsers,
     permissions.ViewRoles,
   ]);
-  const canDelete = !isReadOnly && hasPermission(permissions.DeleteUsers);
+  const canArchive = !isReadOnly && hasPermission(permissions.ArchiveUsers);
+  const canRestore = !isReadOnly && hasPermission(permissions.RestoreUsers);
+  const canSetStatus = !isReadOnly && hasPermission(permissions.SetUserStatus);
+  const canUnlock = !isReadOnly && hasPermission(permissions.UnlockUsers);
+  const canRevoke = !isReadOnly && hasPermission(permissions.EditUsers);
   const [lifecycleTarget, setLifecycleTarget] = useState<User | null>(null);
   const [lifecycleAction, setLifecycleAction] = useState<"archive" | "restore" | null>(null);
   const [archiveReason, setArchiveReason] = useState("");
@@ -138,7 +142,11 @@ const UsersPage = () => {
           lastEditedId={lastEditedId}
           canCreate={canCreate}
           canEdit={canEdit}
-          canDelete={canDelete}
+          canArchive={canArchive}
+          canRestore={canRestore}
+          canSetStatus={canSetStatus}
+          canUnlock={canUnlock}
+          canRevoke={canRevoke}
           page={page}
           pageSize={pageSize}
           totalCount={totalCount}

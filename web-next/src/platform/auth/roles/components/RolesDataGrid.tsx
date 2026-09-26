@@ -20,12 +20,13 @@ interface RolesDataGridProps {
   onEdit: (row: Role) => void;
   onDelete: (row: Role) => void;
   onView: (row: Role) => void;
-  onManagePermissions: (row: Role) => void;
+  onManagePermissions?: (row: Role) => void;
   onRestore: (row: Role) => void | Promise<unknown>;
   onAdd: () => void;
   canCreate: boolean;
   canEdit: boolean;
   canDelete: boolean;
+  canEditPermissions: boolean;
   t: Translator;
   lastAddedId?: string | number | null;
   lastEditedId?: string | number | null;
@@ -45,6 +46,7 @@ const RolesDataGrid = ({
   canCreate,
   canEdit,
   canDelete,
+  canEditPermissions,
   t,
   lastAddedId,
   lastEditedId,
@@ -63,8 +65,8 @@ const RolesDataGrid = ({
         </Tooltip>,
       ];
 
-      if (!params.row.isDeleted) {
-        const permissionLabel = params.row.isSystem || !canEdit
+      if (!params.row.isDeleted && onManagePermissions) {
+        const permissionLabel = params.row.isSystem || !canEditPermissions
           ? t("roles.viewPermissions")
           : t("roles.managePermissions");
         actions.push(
@@ -114,7 +116,7 @@ const RolesDataGrid = ({
       }
       return actions;
     },
-    [canDelete, canEdit, onDelete, onEdit, onManagePermissions, onRestore, onView, t]
+    [canDelete, canEdit, canEditPermissions, onDelete, onEdit, onManagePermissions, onRestore, onView, t]
   );
 
   // Memoized columns

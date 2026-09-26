@@ -39,10 +39,10 @@ public sealed class AttendanceDevicesArchitectureTests
         AssertRoute<HttpGetAttribute>(nameof(AttendanceDevicesController.Providers), "providers");
         AssertRoute<HttpGetAttribute>(nameof(AttendanceDevicesController.Branches), "branches");
         AssertRoute<HttpPostAttribute>(nameof(AttendanceDevicesController.PullAttendance), "{id:int}/pull-attendance");
-        Assert.Equal(HrPermissions.ManageAttendanceDeviceCredentials,
+        Assert.Equal(HrPermissions.EditAttendanceDeviceCredentials,
             typeof(AttendanceDevicesController).GetMethod(nameof(AttendanceDevicesController.UpdateCredentials))!
                 .GetCustomAttribute<HasPermissionAttribute>()?.Policy);
-        Assert.Equal(HrPermissions.PullAttendanceDevices,
+        Assert.Equal(HrPermissions.PullAttendance,
             typeof(AttendanceDevicesController).GetMethod(nameof(AttendanceDevicesController.PullAttendance))!
                 .GetCustomAttribute<HasPermissionAttribute>()?.Policy);
     }

@@ -48,7 +48,7 @@ public sealed class WorkforcePlansController(ISender sender) : ControllerBase
     }
 
     [HttpDelete("{id:int}")]
-    [HasPermission(HrPermissions.DeleteWorkforcePlans)]
+    [HasPermission(HrPermissions.ArchiveWorkforcePlans)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> Archive([FromRoute] int id, [FromBody] WorkforcePlanActionRequest request, CancellationToken cancellationToken)
     {
@@ -57,7 +57,7 @@ public sealed class WorkforcePlansController(ISender sender) : ControllerBase
     }
 
     [HttpPost("{id:int}/restore")]
-    [HasPermission(HrPermissions.DeleteWorkforcePlans)]
+    [HasPermission(HrPermissions.RestoreWorkforcePlans)]
     [ProducesResponseType(typeof(WorkforcePlanDetailResponse), StatusCodes.Status200OK)]
     public async Task<IActionResult> Restore([FromRoute] int id, [FromBody] WorkforcePlanActionRequest request, CancellationToken cancellationToken)
     {

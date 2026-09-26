@@ -93,7 +93,7 @@ describe("route access policies", () => {
     expect(canAccessRoute(appRoutes.modules.reporting.crystalReports, session)).toBe(false);
     expect(canAccessRoute(appRoutes.modules.reporting.crystalReports, {
       ...session,
-      permissions: [permissions.ManageCrystalReportAccess],
+      permissions: [permissions.ViewCrystalReports],
     })).toBe(true);
   });
 
@@ -197,7 +197,7 @@ describe("route access policies", () => {
     expect(canAccessRoute(appRoutes.modules.accounting.ledgerSetup.currencies, session)).toBe(false);
     expect(canAccessRoute(appRoutes.modules.accounting.ledgerSetup.currencies, {
       ...session,
-      permissions: [permissions.ViewAccountingSetup],
+      permissions: [permissions.ViewCurrencies],
     })).toBe(true);
   });
 

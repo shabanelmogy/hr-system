@@ -35,7 +35,7 @@ export function useRolePermissions(roleId: string) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [showOnlySelected, setShowOnlySelected] = useState(false);
-  const canEdit = !isReadOnly && hasPermission(permissions.EditRoles);
+  const canEdit = !isReadOnly && hasPermission(permissions.EditRolePermissions);
 
   const form = useForm<RoleClaimsFormData>({
     resolver: zodResolver(getRoleClaimsValidationSchema()),

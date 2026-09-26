@@ -83,6 +83,6 @@ scenarios or an explicit `N/A` with a reason.
 | states-web | 2 | `5715616f7749731d49b88637b1bdf8ddeb9d6d691bfa13552d58058a37aaed75` |
 | states-web | 12 | `ecb38dd9b6149a025aa10b1edca9ed23050620cedf2f397b10ff34764e10874d` |
 | states-web | 13 | `6f4711600d21044390b0bccc326dadf61fbb4bb687b5c0b4aebe5f33772c42ca` |
-| states-mobile | 1 | `c8d48f8300b2ef243fdb0b1298471a67afb9c615ec26840b57ea36291c15fd85` |
+| states-mobile | 1 | `36f536a172405f5822b722894810743121e730f10532981ae313647308ee7ad3` |
 | states-mobile | 14 | `878d6ee91cf9a0c0fbbad61869a28448bd5abe694f3c8ad4fa6943c2ce49221e` |
 | states-mobile | 15 | `b3b8a55cb4cbf29648648d312dc0d12f8fa6c2673bb0c40e6123a12247f18acd` |

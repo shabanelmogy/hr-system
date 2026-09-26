@@ -81,13 +81,13 @@ public sealed class FiscalYearsControllerContractTests
         AssertRoute<HttpGetAttribute>(nameof(FiscalYearsController.GetById), "{id:int}", AccountingPermissions.ViewFiscalYears);
         AssertRoute<HttpPostAttribute>(nameof(FiscalYearsController.Create), null, AccountingPermissions.CreateFiscalYears);
         AssertRoute<HttpPutAttribute>(nameof(FiscalYearsController.Update), "{id:int}", AccountingPermissions.EditFiscalYears);
-        AssertRoute<HttpDeleteAttribute>(nameof(FiscalYearsController.Archive), "{id:int}", AccountingPermissions.DeleteFiscalYears);
-        AssertRoute<HttpPostAttribute>(nameof(FiscalYearsController.Restore), "{id:int}/restore", AccountingPermissions.DeleteFiscalYears);
-        AssertRoute<HttpPostAttribute>(nameof(FiscalYearsController.Open), "{id:int}/open", AccountingPermissions.ManageFiscalYearLifecycle);
-        AssertRoute<HttpPostAttribute>(nameof(FiscalYearsController.BeginClosing), "{id:int}/begin-closing", AccountingPermissions.ManageFiscalYearLifecycle);
-        AssertRoute<HttpPostAttribute>(nameof(FiscalYearsController.Close), "{id:int}/close", AccountingPermissions.ManageFiscalYearLifecycle);
-        AssertRoute<HttpPostAttribute>(nameof(FiscalYearsController.Lock), "{id:int}/lock", AccountingPermissions.ManageFiscalYearLifecycle);
-        AssertRoute<HttpPostAttribute>(nameof(FiscalYearsController.Reopen), "{id:int}/reopen", AccountingPermissions.ManageFiscalYearLifecycle);
+        AssertRoute<HttpDeleteAttribute>(nameof(FiscalYearsController.Archive), "{id:int}", AccountingPermissions.ArchiveFiscalYears);
+        AssertRoute<HttpPostAttribute>(nameof(FiscalYearsController.Restore), "{id:int}/restore", AccountingPermissions.RestoreFiscalYears);
+        AssertRoute<HttpPostAttribute>(nameof(FiscalYearsController.Open), "{id:int}/open", AccountingPermissions.OpenFiscalYears);
+        AssertRoute<HttpPostAttribute>(nameof(FiscalYearsController.BeginClosing), "{id:int}/begin-closing", AccountingPermissions.BeginClosingFiscalYears);
+        AssertRoute<HttpPostAttribute>(nameof(FiscalYearsController.Close), "{id:int}/close", AccountingPermissions.CloseFiscalYears);
+        AssertRoute<HttpPostAttribute>(nameof(FiscalYearsController.Lock), "{id:int}/lock", AccountingPermissions.LockFiscalYears);
+        AssertRoute<HttpPostAttribute>(nameof(FiscalYearsController.Reopen), "{id:int}/reopen", AccountingPermissions.ReopenFiscalYears);
     }
 
     private static void AssertLifecycle(object request, FiscalYearLifecycleAction action)

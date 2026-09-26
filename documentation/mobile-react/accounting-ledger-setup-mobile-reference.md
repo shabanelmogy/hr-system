@@ -1,6 +1,6 @@
 # Accounting Ledger Setup — Expo Implementation Contract
 
-Status: **Client implementation evidence exists; Phase 06 live journey verification remains required.**
+Status: **Fiscal Years/Currency/COA typed client evidence exists; remaining Ledger Setup routes are generic compatibility evidence pending typed child refactors; Phase 06 live journey verification remains required.**
 
 ## 1. Feature boundary
 
@@ -56,9 +56,25 @@ state.
 
 ## 8. Setup collection screens
 
-Currencies, Dimensions, Books, Journal definitions, Exchange Rates, Link Accounts
-and Posting Profiles use `AppListScreen`, `AppDataTable`, shared cards only when
-useful, `AppStateView`, shared filters and confirmations.
+Currency already has typed ownership. Dimensions, Books, Journal definitions,
+Exchange Rates, Link Accounts and Posting Profiles are currently generic
+compatibility routes and must become typed domain/application/data/presentation
+children. They use `AppListScreen`, `AppDataTable`, shared cards only when Required,
+`AppStateView`, shared filters and confirmations.
+
+### Screen Pattern decisions
+
+| Surface | Pattern | Mobile composition |
+| --- | --- | --- |
+| Flat setup masters | `P-001` | native Table/Cards as contracted plus typed full-screen `AppForm` |
+| Accounts | `P-002` primary + P-001 list | stacked/segmented `AppHierarchicalTree`, detail and record Table |
+| Account Dimension Constraints and Link Accounts | `P-006` | scoped stacked cards with explicit dirty/save/effective semantics |
+| Company Settings | `P-005` | dedicated singleton `AppForm`; no fake list/archive |
+| Ledger Setup overview | `P-007` | permission-filtered launcher only |
+| Resolve Preview | feature-specific read-only diagnostic sub-surface | typed modal/sheet inside Posting Profiles |
+
+P-003 is not used for independent resources. P-004 remains Candidate and cannot
+authorize Mobile implementation.
 
 ## 9. Currency cutover consumers
 
@@ -91,9 +107,15 @@ Every visible string is localized English/Arabic. Use logical spacing/direction 
 theme tokens. Touch targets, form error focus, screen-reader labels, safe areas,
 keyboard handling and phone/tablet layouts use shared design-system behavior.
 
+Translation is separate from stored business names. Every named master exposes,
+requires and preserves `NameAr` and `NameEn` in create/edit/detail/Table/Card and
+valid local mock drafts. Current locale chooses primary display with documented
+fallback; neither value overwrites the other. Settings, historical Rates and
+Mappings do not invent names and instead render localized referenced-owner labels.
+
 ## 14. Verification
 
-Source evidence includes server-page state for paged setup lists, full active
+Typed Currency/COA source evidence plus generic compatibility evidence includes server-page state for paged setup lists, full active
 account hierarchy from `/accounts/tree`, and detail fetch before tree edits so
 RowVersion is current. Dimension selector options traverse each server page
 to avoid silently hiding definitions beyond 500. Cards, table and tree expose direct archive/restore
@@ -102,6 +124,14 @@ is required only when the account currency policy selects it, and switching
 away sends null. Phase 06 must still collect live phone/tablet creation,
 editing, view, permissions, read-only, EN/AR/RTL and API-backed evidence.
 Passing static typecheck and focused tests is not a substitute for this audit.
+
+The device audit is sent as part of the feature-specific scenario derived from
+`documentation/plans/business/accounting-core-gl/MANUAL_ACCEPTANCE_SCENARIO_TEMPLATE.md`.
+It must name the actual device/OS/build and cover Table/Cards/detail/form, Arabic and
+English with RTL/LTR, light/dark where supported, safe area, keyboard, dirty-back,
+portrait/landscape, permissions/read-only/company scope, online-only financial
+mutations, stale conflict and cleanup. Emulator/source evidence alone is not a
+manual pass; the user explicitly accepts the combined Web/device result.
 
 ## 15. Deferred and handoff
 

@@ -63,7 +63,7 @@ public sealed class AddressTypesController(ISender sender) : ControllerBase
     }
 
     [HttpDelete("{id:int}")]
-    [HasPermission(ReferenceDataPermissions.DeleteAddressTypes)]
+    [HasPermission(ReferenceDataPermissions.ArchiveAddressTypes)]
     public async Task<IActionResult> Archive(int id, CancellationToken cancellationToken)
     {
         var result = await sender.Send(new ArchiveAddressTypeCommand(id), cancellationToken);
@@ -71,7 +71,7 @@ public sealed class AddressTypesController(ISender sender) : ControllerBase
     }
 
     [HttpPost("bulk-archive")]
-    [HasPermission(ReferenceDataPermissions.DeleteAddressTypes)]
+    [HasPermission(ReferenceDataPermissions.ArchiveAddressTypes)]
     public async Task<IActionResult> BulkArchive([FromBody] BulkArchiveAddressTypesRequest request, CancellationToken cancellationToken)
     {
         var result = await sender.Send(new BulkArchiveAddressTypesCommand(request.Ids), cancellationToken);
@@ -79,7 +79,7 @@ public sealed class AddressTypesController(ISender sender) : ControllerBase
     }
 
     [HttpPost("{id:int}/restore")]
-    [HasPermission(ReferenceDataPermissions.DeleteAddressTypes)]
+    [HasPermission(ReferenceDataPermissions.RestoreAddressTypes)]
     public async Task<IActionResult> Restore(int id, CancellationToken cancellationToken)
     {
         var result = await sender.Send(new RestoreAddressTypeCommand(id), cancellationToken);

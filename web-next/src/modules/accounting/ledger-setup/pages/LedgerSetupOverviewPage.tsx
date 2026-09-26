@@ -11,15 +11,15 @@ import { useUnsavedChanges } from "@/shared/contexts/UnsavedChangesContext";
 
 const entries = [
   { key: "fiscalYears", title: "menu.fiscalYears", path: appRoutes.modules.accounting.ledgerSetup.fiscalYears, permission: permissions.ViewFiscalYears },
-  { key: "currencies", title: "menu.currencies", path: appRoutes.modules.accounting.ledgerSetup.currencies, permission: permissions.ViewAccountingSetup },
-  { key: "settings", title: "menu.accountingSettings", path: appRoutes.modules.accounting.ledgerSetup.accountingSettings, permission: permissions.ViewAccountingSetup },
+  { key: "currencies", title: "menu.currencies", path: appRoutes.modules.accounting.ledgerSetup.currencies, permission: permissions.ViewCurrencies },
+  { key: "settings", title: "menu.accountingSettings", path: appRoutes.modules.accounting.ledgerSetup.accountingSettings, permission: permissions.ViewAccountingSettings },
   { key: "accounts", title: "menu.chartOfAccounts", path: appRoutes.modules.accounting.ledgerSetup.accounts, permission: permissions.ViewAccounts },
-  { key: "hierarchy", title: "menu.hierarchyLevels", path: appRoutes.modules.accounting.ledgerSetup.hierarchyLevels, permission: permissions.ViewAccounts },
-  { key: "dimensions", title: "menu.dimensions", path: appRoutes.modules.accounting.ledgerSetup.dimensions, permission: permissions.ViewDimensions },
-  { key: "books", title: "menu.books", path: appRoutes.modules.accounting.ledgerSetup.books, permission: permissions.ViewAccountingSetup },
-  { key: "journals", title: "menu.journals", path: appRoutes.modules.accounting.ledgerSetup.journals, permission: permissions.ViewAccountingSetup },
-  { key: "rates", title: "menu.exchangeRates", path: appRoutes.modules.accounting.ledgerSetup.exchangeRates, permission: permissions.ViewAccountingSetup },
-  { key: "determination", title: "menu.accountDetermination", path: appRoutes.modules.accounting.ledgerSetup.accountDetermination, permission: permissions.ViewAccountingSetup },
+  { key: "hierarchy", title: "menu.hierarchyLevels", path: appRoutes.modules.accounting.ledgerSetup.hierarchyLevels, permission: permissions.ViewAccountHierarchyLevels },
+  { key: "dimensions", title: "menu.dimensions", path: appRoutes.modules.accounting.ledgerSetup.dimensions, permission: permissions.ViewDimensionDefinitions },
+  { key: "books", title: "menu.books", path: appRoutes.modules.accounting.ledgerSetup.books, permission: permissions.ViewBooks },
+  { key: "journals", title: "menu.journals", path: appRoutes.modules.accounting.ledgerSetup.journals, permission: permissions.ViewJournalDefinitions },
+  { key: "rates", title: "menu.exchangeRates", path: appRoutes.modules.accounting.ledgerSetup.exchangeRates, permission: permissions.ViewExchangeRateTypes },
+  { key: "determination", title: "menu.accountDetermination", path: appRoutes.modules.accounting.ledgerSetup.accountDetermination, permission: permissions.ViewAccountMappings },
 ] as const;
 
 export default function LedgerSetupOverviewPage() {

@@ -20,7 +20,8 @@ jest.mock('@/src/platform/auth', () => ({
   permissions: {
     CreateDistricts: 'Districts:Create',
     EditDistricts: 'Districts:Edit',
-    DeleteDistricts: 'Districts:Delete',
+    ArchiveDistricts: 'Districts:Archive',
+    RestoreDistricts: 'Districts:Restore',
     ViewCrystalReports: 'CrystalReports:View',
   },
   useAuthorization: ({ requiredPermissions }: { requiredPermissions: string[] }) => ({
@@ -131,7 +132,7 @@ describe('DistrictsScreen views', () => {
     mockAllowedPermissions.clear();
     mockAllowedPermissions.add(permissions.CreateDistricts);
     mockAllowedPermissions.add(permissions.EditDistricts);
-    mockAllowedPermissions.add(permissions.DeleteDistricts);
+    mockAllowedPermissions.add(permissions.ArchiveDistricts);
     mockAllowedPermissions.add(permissions.ViewCrystalReports);
     mockUseDistricts.mockReturnValue({
       data: { items: [district], metaData: { totalCount: 1 } },

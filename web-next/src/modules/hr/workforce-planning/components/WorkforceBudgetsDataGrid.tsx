@@ -36,9 +36,9 @@ export default function WorkforceBudgetsDataGrid(props: Props) {
     },
     { field: "actions", type: "actions", headerName: t("actions.buttons"), width: 150, getActions: ({ row }) => [
       <GridActionsCellItem key="view" icon={<Visibility />} label={t("actions.view")} onClick={() => props.onView(row)} />,
-      <GridActionsCellItem key="edit" icon={<Edit />} label={t("actions.edit")} disabled={!props.permissions.canManage || ![1, 4].includes(row.status)} onClick={() => props.onEdit(row)} />,
-      <GridActionsCellItem key="lifecycle" icon={row.status === 2 ? <CheckCircle /> : <Send />} label={t(`workforceBudget.actions.${row.status === 2 ? "approve" : "submit"}`)} disabled={row.status === 2 ? !props.permissions.canApprove : !props.permissions.canManage || ![1, 4].includes(row.status)} onClick={() => props.onLifecycle(row)} showInMenu />,
-      <GridActionsCellItem key="reject" icon={<Undo />} label={t("workforceBudget.actions.reject")} disabled={!props.permissions.canManage || row.status !== 2} onClick={() => props.onReject(row)} showInMenu />,
+      <GridActionsCellItem key="edit" icon={<Edit />} label={t("actions.edit")} disabled={!props.permissions.canEdit || ![1, 4].includes(row.status)} onClick={() => props.onEdit(row)} />,
+      <GridActionsCellItem key="lifecycle" icon={row.status === 2 ? <CheckCircle /> : <Send />} label={t(`workforceBudget.actions.${row.status === 2 ? "approve" : "submit"}`)} disabled={row.status === 2 ? !props.permissions.canReview : !props.permissions.canSubmit || ![1, 4].includes(row.status)} onClick={() => props.onLifecycle(row)} showInMenu />,
+      <GridActionsCellItem key="reject" icon={<Undo />} label={t("workforceBudget.actions.reject")} disabled={!props.permissions.canReview || row.status !== 2} onClick={() => props.onReject(row)} showInMenu />,
     ] },
   ], [props, t]);
 

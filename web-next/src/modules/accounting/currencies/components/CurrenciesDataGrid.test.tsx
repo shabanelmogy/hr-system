@@ -65,7 +65,9 @@ function renderGrid(canManage: boolean) {
       searchField="all"
       searchOperator="contains"
       recordStatus="all"
-      canManage={canManage}
+      canEdit={canManage}
+      canArchive={canManage}
+      canRestore={canManage}
       onSearchChange={vi.fn()}
       onSearchFieldChange={vi.fn()}
       onSearchOperatorChange={vi.fn()}

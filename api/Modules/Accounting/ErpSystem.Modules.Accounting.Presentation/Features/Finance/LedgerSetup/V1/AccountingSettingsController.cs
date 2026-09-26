@@ -11,10 +11,10 @@ namespace ErpSystem.Modules.Accounting.Presentation.Features.Finance.LedgerSetup
 public sealed class AccountingSettingsController(ISender sender) : ControllerBase
 {
     [HttpGet]
-    [HasPermission(AccountingPermissions.ViewAccountingSetup)]
+    [HasPermission(AccountingPermissions.ViewAccountingSettings)]
     public async Task<IActionResult> Get(CancellationToken cancellationToken) { var result = await sender.Send(new GetAccountingSettingsQuery(), cancellationToken); return result.IsSuccess ? Ok(result.Value) : result.ToProblem(); }
 
     [HttpPut]
-    [HasPermission(AccountingPermissions.ManageAccountingSetup)]
+    [HasPermission(AccountingPermissions.EditAccountingSettings)]
     public async Task<IActionResult> Save(SaveAccountingSettingsRequest request, CancellationToken cancellationToken) { var result = await sender.Send(new SaveAccountingSettingsCommand(request.FunctionalCurrencyId, request.PrimaryBookId, request.RowVersion), cancellationToken); return result.IsSuccess ? Ok(result.Value) : result.ToProblem(); }
 }

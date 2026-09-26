@@ -1,129 +1,158 @@
 # Ledger Setup COA & Hierarchy — Screen / Workflow Contract
 
+Execution order marker: API → Web → Mobile → integrated live verification → documentation/closure
+
 ## 0. Contract metadata
 
 | Field | Value |
 | --- | --- |
+| Contract version | `2.0` |
 | Plan ID | `accounting-core-gl` |
 | Authorized slice | `Slice 1 — Ledger setup spine` |
 | Child Feature ID | `ledger-setup-coa-hierarchy` |
 | Child feature name | Chart of Accounts and Hierarchy Levels |
 | Owner | Accounting |
 | Depends on | `ledger-setup-currency` |
-| Execution status | `1B` — API Phase 01 + Web Phase 02 + Mobile Phase 03 implemented; Phase 06 pending |
-| Contract status | `Closed — reviewed 2026-09-22` |
+| Execution status | `Queued` — source phases 01–03 exist; activation waits for Fiscal Years and Currency closure |
+| Status evidence | `SLICE-01-LEDGER-SETUP-EXECUTION.md` and COA API/Web/Mobile feature reviews |
 
 ## 1. Child boundary and outcome
 
-Own AccountHierarchyLevel and Account setup: company hierarchy, server-proposed
-editable account code, posting/manual-posting/currency policies, tree/detail and
-archive/restore. Independent acceptance proves the account hierarchy without
-claiming Dimensions, JournalEntry posting or final cross-package verification.
+This child owns `AccountHierarchyLevel` and `Account`: company hierarchy,
+server-proposed editable code, bilingual stored names, posting/manual-posting/
+currency policies, tree/detail, and archive/restore. Independent acceptance proves
+the Chart of Accounts and its level master without claiming Dimensions, journal
+posting, or final Slice 1 integration.
 
-## 2. Closest existing reference
+## 2. UI Pattern Gate (mandatory before implementation)
+
+| Screen ID | Platform | Route / entry | User job | Data / interaction shape | Primary Pattern ID | Sub-pattern / form decision | Exact reviewed reference source path | Platform status | Grid / Table / Cards / Tree / Detail / Report / Import / Export / Chart (R/D/E) | Loading / empty / error / forbidden / dirty / conflict states | Offline policy | Mock-data policy | Permission / scope | Responsive / RTL / accessibility | Deviation and reason |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| ledger-setup-accounts | Web | `/finance/ledger-setup/accounts` | Build and inspect the account hierarchy | hierarchy plus record list and full detail | P-002 | split tree/detail primary; P-001 server grid secondary; `MyForm` for create/edit | `web-next/src/modules/accounting/ledger-setup/coa-hierarchy/pages/AccountsPage.tsx` | Implemented | Tree Required; Grid Required; Detail Required; Table Cards Report Import Export Chart Excluded | tree/list/detail loading, empty/no-selection/no-results, error/retry, forbidden, dirty form, dependency/concurrency conflict | online authoritative | local valid draft uses server-proposed code and real level/currency/parent lookups only | `Accounts:View/Manage`; current company | desktop split, compact stacked detail, RTL, keyboard tree/actions, focused errors | List is a secondary view of the same server authority, not a second feature |
+| ledger-setup-accounts | Mobile | `/finance/ledger-setup/accounts` | Build and inspect the account hierarchy | segmented hierarchy and records with native detail/form | P-002 | `AppHierarchicalTree` plus P-001 Table; full-screen `AppForm` | `mobile-react/src/modules/accounting/ledger-setup/coa-hierarchy/presentation/screens/AccountsScreen.tsx` | Adapted | Tree Required; Table Required; Detail Required; Grid Cards Report Import Export Chart Excluded | tree/list/detail loading, empty/no-selection/no-results, error/retry, forbidden, dirty form, dependency/concurrency conflict | online authoritative; no queued setup writes | local valid draft uses server-proposed code and authoritative lookups only | `Accounts:View/Manage`; current company | phone stacked/segmented, tablet-safe, RTL, touch and screen-reader actions | Mobile does not compress Web split panes into a phone layout |
+| ledger-setup-hierarchy-levels | Web | `/finance/ledger-setup/hierarchy-levels` | Manage the ordered account-level master | server-managed flat collection | P-001 | Grid with `MyForm` detail/create/edit | `web-next/src/modules/accounting/ledger-setup/coa-hierarchy/pages/HierarchyLevelsPage.tsx` | Implemented | Grid Required; Detail Required; Table Cards Tree Report Import Export Chart Excluded | loading, empty/no-results, error/retry, forbidden, dirty form, dependency/concurrency conflict | online authoritative | valid local bilingual draft; next positive number excludes active and archived loaded levels | `Accounts:View/Manage`; current company | bounded grid, compact form, RTL and keyboard/error focus | Level ordering and `CanPost` remain server-owned |
+| ledger-setup-hierarchy-levels | Mobile | `/finance/ledger-setup/hierarchy-levels` | Manage the ordered account-level master | native server-managed collection | P-001 | Table/Cards list with full-screen `AppForm` | `mobile-react/src/modules/accounting/ledger-setup/coa-hierarchy/presentation/screens/HierarchyLevelsScreen.tsx` | Implemented | Table Required; Cards Required; Detail Required; Grid Tree Report Import Export Chart Excluded | loading, empty/no-results, error/retry, forbidden, dirty form, dependency/concurrency conflict | online authoritative | valid local bilingual draft; no identity/scope/RowVersion fabrication | `Accounts:View/Manage`; current company | phone/tablet, RTL, touch targets and validation focus | Native Cards adapt the same paged contract |
+
+## 3. Closest existing reference
 
 | Reference | Exact path/screen | What is reused | What intentionally differs |
 | --- | --- | --- | --- |
-| Shared tree primitive | `web-next/src/shared/components/tree-view/SplitTreeView.tsx` | tree/search/selection/detail-panel composition | Accounting owns fields/rules and server authority |
-| Cost Center master/detail | `web-next/src/modules/hr/basic-data/organizational-structure/management/components/tree-view/CostCenterTreeDiagram.tsx` | controlled selection, `renderDetailPanel`, `renderEmptyDetailPanel`, add-child/edit affordances, bounded detail pane | no HR fields/permissions/move rules/domain code copied |
-| Mobile hierarchy | `mobile-react/src/shared/components/tree-view/AppHierarchicalTree.tsx` | touch-friendly hierarchy/search/actions | mobile account detail/form is Accounting-specific |
+| P-002 Cost Centers | `web-next/src/modules/hr/basic-data/organizational-structure/management/pages/CostCentersPage.tsx` and `mobile-react/src/modules/hr/basic-data/organizational-structure/presentation/screens/CostCentersScreen.tsx` | tree selection, responsive master/detail and accessible hierarchy actions | no HR fields, permissions, move rules or code generation copied |
+| Current COA source | `web-next/src/modules/accounting/ledger-setup/coa-hierarchy/` and `mobile-react/src/modules/accounting/ledger-setup/coa-hierarchy/` | typed Account/Level source and tests | integrated live verification remains pending |
 
-## 3. Reuse and composition contract
+## 4. Reuse and composition contract
 
 | Need | Existing reusable component/source | Decision | Exact use or extension |
 | --- | --- | --- | --- |
-| Web workspace | `web-next/src/shared/components/tree-view/SplitTreeView.tsx` and its `HierarchicalTreeList` composition | reuse | master tree + selected-account detail pane |
-| Web detail/form | `web-next/src/shared/components/navigation/header/PageHeader.tsx`, `web-next/src/shared/components/forms/dialog/MyForm.tsx`, shared form/feedback exports | feature-specific composition | account policy fields + detail fetch |
-| Hierarchy-level list | `web-next/src/shared/components/data-grid/core/MyDataGrid.tsx` + `web-next/src/shared/components/forms/dialog/MyForm.tsx` | reuse | focused `/hierarchy-levels` screen |
-| Mobile hierarchy/form | `mobile-react/src/shared/components/tree-view/AppHierarchicalTree.tsx`, `mobile-react/src/shared/components/forms/AppForm.tsx`, `mobile-react/src/shared/components/feedback/AppStateView.tsx` | reuse | tree then explicit view/create/edit journey |
+| Web hierarchy | `web-next/src/shared/components/tree-view/SplitTreeView.tsx` and `web-next/src/shared/components/data-grid/core/MyDataGrid.tsx` | reuse | one selected Account detail plus server list alternative |
+| Web forms | `web-next/src/shared/components/forms/dialog/MyForm.tsx` and shared fields/feedback | reuse | typed Account and Hierarchy Level forms with bilingual fields |
+| Mobile hierarchy/forms | `mobile-react/src/shared/components/tree-view/AppHierarchicalTree.tsx`, `mobile-react/src/shared/components/forms/AppForm.tsx`, `mobile-react/src/shared/components/data-table/AppDataTable.tsx` | reuse | stacked hierarchy/detail and native level management |
+| Currency dependency | Currency active lookup | reuse public child contract | Specific Currency only when CurrencyPolicy requires it |
 
-The generic `LedgerSetupRecord`/resource renderer is not an approved reuse target.
+The generic `LedgerSetupRecord`/resource renderer is not an approved target.
 
-## 4. Screen and workspace contract
+## 5. Screen and workspace contract
 
 | Surface | Required / Deferred / Excluded | Layout/workspace | Primary user actions |
 | --- | --- | --- | --- |
-| List/Grid | Required for Hierarchy Levels | focused server list | create/view/edit/archive/restore levels |
-| Tree/Hierarchy | Required for Accounts | Web split master/detail; Mobile hierarchical tree | search/select/expand, add child, open detail |
-| Detail/View | Required | selected account details from full detail endpoint | inspect policies/status/parent/level |
-| Create/Edit | Required | account form with contextual parent | proposed code, names, posting/manual/currency policy |
-| Mock draft action | Required | shared `MyForm` / `AppForm` action on writable Account and Hierarchy Level forms | Account keeps the server-proposed code, uses a loaded active hierarchy level, keeps only a valid contextual non-posting parent, and selects a real currency lookup only; Hierarchy Level chooses the next positive number unused by active **or archived** loaded levels and bilingual sample names |
-| Drag/reparent | Excluded until explicit API contract | no inferred DnD | parent changes use approved account mutation only |
-
-## 5. Create, edit, view, and lifecycle contract
-
-| Journey/action | Entry state | User interaction | Server action/state change | Result/read-only behavior |
-| --- | --- | --- | --- | --- |
-| Add root/child | Manage permission | choose parent/level; accept/edit proposed code | create Account | tree/detail refresh |
-| Edit | selected active account + full detail | update permitted fields | update with RowVersion | conflict reloads selected detail |
-| View | selected node | inspect full detail | GET detail | no mutations in read-only mode |
-| Archive/restore | valid lifecycle | confirm | archive/restore | history preserved; dependency errors shown |
-| Manage level | Accounts:Manage | edit level order/name/CanPost | level mutation | account dependency rules remain server-owned |
-
-Account create/edit/detail exposes parent, configured level, server-proposed editable
-code, bilingual names, AllowPosting, ManualPostingPolicy, CurrencyPolicy and
-conditional SpecificCurrencyId. Package `ledger-setup-dimensions` composes account
-dimension constraints before umbrella verification.
+| Accounts tree and list | Required | Web split/tree plus grid; Mobile segmented tree/table | search, select, expand, page and open |
+| Account detail/form | Required | full typed detail and shared form | add root/child, view, edit, archive/restore |
+| Hierarchy Levels | Required | focused server-managed collection and form | manage order, `NameAr`, `NameEn`, `CanPost` and lifecycle |
+| Drag/reparent | Excluded | no inferred gesture | parent change only through an approved typed mutation |
+| Report/Import/Export/Chart | Excluded | outside this child | none |
 
 ## 6. Typed transport and server criteria
 
 | Concern | Exact contract |
 | --- | --- |
-| Typed request/response | distinct tree node, account detail, hierarchy-level, lookup and mutation DTOs |
-| Server search/filter/sort | Account search/list criteria and hierarchy-level allow-lists are explicit; tree follows parent IDs |
-| Paging/limits | any paged fallback returns real totals; tree endpoint returns complete permitted hierarchy |
-| Domain errors | duplicate/proposed-code conflict, invalid parent/level, posting-with-children, dependency, concurrency |
-| Cross-module contract | Currency lookup from Accounting Currency child; no cross-module EF access |
+| Typed request/response | distinct tree node, Account detail/list/lookup/mutation, Hierarchy Level, code-proposal and lifecycle contracts; named entities include separate `NameAr` and `NameEn` |
+| Canonical routes | Accounting Accounts/Hierarchy Levels API plus the two client routes above |
+| Server search/filter/sort | Account code, Arabic/English name, level, parent, posting/status filters; Level allow-list; tree by parent IDs |
+| Paging/limits | server totals for lists; tree returns the complete permitted company hierarchy |
+| Domain errors / ProblemDetails | missing bilingual name, duplicate/proposed code, invalid parent/level, posting-with-children, dependency and concurrency |
+| Permission and tenant/company scope | `Accounts:View/Manage`; server-enforced current company |
+| Cross-module contract | Currency active lookup only; no cross-module EF access |
+| Persistence/schema/migration | Accounting DbContext/migrations own Accounts and Hierarchy Levels; live schema evidence is mandatory |
 
-Server-proposed code is an explicit query/endpoint result. Per D-024, the baseline
-proposal is a company-wide, non-hierarchical `ACC-####` convenience value using the
-next reserved numeric suffix across active and archived accounts. The proposal is
-not a reservation: the client must not synthesize it, the user may edit it, hierarchy
-never derives from it, and a concurrent duplicate is resolved by the database unique
-constraint followed by refetching a fresh proposal.
+The `ACC-####` proposal is editable convenience, not a reservation or hierarchy
+source. The client never synthesizes it; uniqueness is resolved by the database
+and a conflicting create refetches a fresh proposal.
 
-## 7. UX states, permissions, and read-only behavior
+## 7. Create, edit, view, and lifecycle contract
+
+| Journey/action | Entry state | User interaction | Server action/state change | Result/read-only behavior |
+| --- | --- | --- | --- | --- |
+| Add root/child Account | Manage plus authoritative lookups | choose parent/level; enter `NameAr` and `NameEn`; accept/edit proposed code and policies | create Account | tree/list/detail refresh; both names remain visible |
+| Edit Account | selected full detail and RowVersion | edit both names and allowed policy fields | update | 409 reloads detail/tree without silently merging languages |
+| View Account | selected node | inspect identity, both names, policies and status | GET detail | no mutations in read-only mode |
+| Archive/restore Account | valid dependency state | confirm | lifecycle mutation | dependency failures remain explicit |
+| Manage Hierarchy Level | Manage | level number, `NameAr`, `NameEn`, `CanPost` | create/update/lifecycle | dependent Accounts remain server-authoritative |
+
+## 8. UX states, permissions, offline, and mock data
 
 | Concern | Contract |
 | --- | --- |
-| Loading / empty / error | tree loading, empty-company overview, selected-detail loading/error and retry are distinct |
-| Permission / forbidden | reads `Accounts:View`; writes `Accounts:Manage` |
-| Read-only / archived / locked | read-only keeps tree/detail; archived identity remains viewable according to server contract |
-| Unsaved changes / destructive confirmation | shared dirty guard; archive/restore confirmation |
-| Offline/stale behavior when applicable | online mutations; refetch selected detail before protected write |
+| Loading / empty / error / retry | tree/list/detail states are independent; no-selection differs from empty company |
+| Permission / forbidden / read-only | View keeps tree/detail; Manage controls mutations; API remains authority |
+| Archived / locked | archived identity remains inspectable per server criteria |
+| Unsaved changes / destructive confirmation | shared dirty guard and lifecycle confirmation |
+| Offline / stale / conflict | online mutations; selected detail refetches before protected write; 409 reloads key family |
+| Mock data | Account keeps server proposal and real dependencies; both Arabic/English names are valid; no fabricated ID, scope, lookup or RowVersion |
 
-## 8. Concurrency and consistency
+## 9. Concurrency, transactions, and consistency
 
-Tree nodes are lightweight and do not authorize writes. Selecting/opening an account
-fetches current typed detail/RowVersion before edit or lifecycle actions. A stale
-write reloads account detail and tree. Parent/level/account resources invalidate as a
-coherent key family after committed changes.
+Tree nodes never authorize writes. Edit/lifecycle first use current detail and
+RowVersion. Account, parent, level, tree and lookup keys invalidate coherently.
+Database constraints own code and parent races; committed writes preserve both
+language values transactionally.
 
-## 9. i18n, RTL, accessibility, and responsive behavior
+## 10. i18n, RTL, accessibility, and responsive behavior
 
-All names/actions/help text are Accounting EN/AR. Web tree/detail uses logical
-spacing, keyboard-accessible tree/actions and bounded internal scrolling. Compact Web
-stacks detail safely. Mobile uses touch targets/screen-reader labels and does not
-force the desktop split-pane model on narrow phones.
+Translated UI text and persisted business names are separate concerns. Account and
+Hierarchy Level create/edit/view/list journeys expose `NameAr` and `NameEn`; current
+locale selects display while details retain both. Web supports keyboard tree/actions
+and compact stacking; Mobile uses touch/screen-reader semantics. Both focus the first
+invalid bilingual field and preserve RTL without directional hacks.
 
-## 10. Verification contract
+## 11. Vertical execution ledger (strict one-active-step gate)
 
-| Layer | Required evidence/test | Critical scenario |
-| --- | --- | --- |
-| Domain/Application | hierarchy/posting/code/lifecycle tests | posting account cannot gain child |
-| API/transport | typed tree/detail/proposed-code/mutation tests | detail RowVersion + code race |
-| Web | SplitTreeView composition + account form tests | Cost Center interaction reuse without HR domain coupling |
-| Mobile | AppHierarchicalTree/form tests + mock-draft utility tests | add child, view/edit, read-only, valid local Account/Hierarchy Level drafts |
-| Mock data | pure utility tests on both platforms | no code synthesis, no fabricated lookup/identity/concurrency/scope values, next unused level number |
-| E2E/manual | API-backed tree/detail journey | proposed code, archive/restore, EN/AR RTL, compact/phone/tablet |
+| Order | Stage | Status | Entry gate | Required evidence / exit gate | Evidence path |
+| ---: | --- | --- | --- | --- | --- |
+| 1 | API | Verified | Currency contract available | typed Account/Level/code-proposal contracts, migrations, bilingual validation and tests | `documentation/project/LEDGER_SETUP_COA_HIERARCHY_FEATURE_FULL_REVIEW.md` |
+| 2 | Web | Verified | API Verified | P-002/P-001 typed journeys, forms and focused tests | `documentation/web-next/features/ledger-setup-coa-hierarchy-frontend-reference.md` |
+| 3 | Mobile | Verified | Web Verified | runtime schemas, hierarchy/list/forms and focused tests | `documentation/mobile-react/ledger-setup-coa-hierarchy-mobile-reference.md` |
+| 4 | Integrated live verification + user acceptance | Queued | prior roadmap children closed | agent sends detailed authenticated API/Web/actual-Mobile journey with live-schema checks; user runs or supervises it and explicitly accepts | `SLICE-01-LEDGER-SETUP-EXECUTION.md` |
+| 5 | Documentation and closure | Queued | integrated verification Verified and explicit user acceptance recorded | reconcile canonical books, manifest/recipes and education | `documentation/system/features/ledger-setup-coa-hierarchy/required-files.json` |
 
-## 11. Child exit gate
+**Manual acceptance protocol.** The central
+`../MANUAL_ACCEPTANCE_SCENARIO_TEMPLATE.md` format is mandatory:
+prerequisites, roles/permissions, exact hierarchy data, Web and actual-device steps,
+EN/AR and RTL/LTR checks, expected outcomes, negative/read-only/conflict cases,
+cleanup and evidence. The feature remains Active until the user explicitly accepts.
 
-- [ ] Its boundary is implemented without absorbing sibling workflows.
-- [ ] Screen/workspace behavior matches this contract and the approved plan.
-- [ ] Reused components and any generic extensions match the reuse audit.
-- [ ] Typed transport and server criteria are implemented and verified.
-- [ ] Permissions/read-only states and concurrency behavior are verified.
-- [ ] i18n/RTL/accessibility/responsive requirements are verified.
-- [ ] Required automated/manual evidence above is green.
-- [ ] The master slice records this child as complete without implying unfinished sibling features are complete.
+**Next-step rule:** no sibling feature may become `Active` until this feature's
+Integrated live verification is `Verified` and Documentation and closure is
+`Closed` in the roadmap, with explicit user acceptance recorded.
+
+## 12. Verification contract
+
+| Layer | Required evidence/test | Critical scenario | Result |
+| --- | --- | --- | --- |
+| Domain/Application | hierarchy, bilingual requiredness, posting, proposal, lifecycle | posting Account cannot gain child | source tests recorded |
+| API/transport | tree/detail/proposal/mutation serialization | both names, RowVersion and proposal race | source tests recorded |
+| Persistence/migration | apply current Accounting migration to live database | parent/code/name columns and constraints | pending live stage |
+| Web | SplitTreeView, grid, typed forms and mock utility | add child, edit both names, conflict | source implementation recorded |
+| Mobile | hierarchy/table/form/runtime schemas and mock utility | phone/tablet view/edit both names | source implementation recorded |
+| E2E/manual/live | authenticated EN/AR cross-platform journey | create root/child, lifecycle, read-only, RTL | Queued |
+
+## 13. Child exit gate
+
+- [x] Contract version is current and every screen/platform row passes the UI Pattern Gate.
+- [x] No `Candidate` pattern remains; P-001/P-002 are registered and reviewed.
+- [x] API, Web and Mobile source phases are reconciled without generic renderer ownership.
+- [ ] Live database migration/schema is applied and recorded.
+- [ ] Detailed manual scenario/results are sent to the user and explicit acceptance is recorded.
+- [ ] Creation, editing, viewing and listing prove both Arabic and English names without data loss.
+- [ ] Integrated API/Web/actual-Mobile verification is green in roadmap order.
+- [ ] Documentation/manifest/recipes and education are reconciled.
+- [ ] Roadmap closure is recorded before Dimensions becomes Active.

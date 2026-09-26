@@ -1,6 +1,6 @@
 # Accounting Ledger Setup — Cross-Platform Implementation Contract
 
-Status: **Phase 01 Domain/API and persistence migration implemented — client slices and final Phase 06 verification remain gated**.
+Status: **Broad Phase 01 Domain/API exists; Currency is typed with historical closure evidence, COA has typed clients through Phase 03, remaining clients require typed child refactors, and live Phase 06 remains gated by detailed per-step user acceptance**.
 Plan: `accounting-core-gl` / `Slice 1 — Ledger setup spine`.  
 Applied implementation reference: Fiscal Years in the same Accounting module.
 Canonical child execution authority:
@@ -51,16 +51,16 @@ Accounting adds these company-scoped concepts:
 - `AccountingCompanySettings`: one row per company with
   `FunctionalCurrencyId`, `PrimaryBookId` and RowVersion.
 - `AccountHierarchyLevel`: ordered company level, bilingual name and `CanPost`.
-- `Account`: code, names, parent, hierarchy level, `AllowPosting`,
+- `Account`: code, distinct `NameAr`/`NameEn`, parent, hierarchy level, `AllowPosting`,
   `ManualPostingPolicy`, `CurrencyPolicy` and optional specific currency.
-- `DimensionDefinition`: code/name, Required/Optional/Forbidden policy metadata
+- `DimensionDefinition`: code, distinct `NameAr`/`NameEn`, Required/Optional/Forbidden policy metadata
   and typed value source.
-- `DimensionValue`: Accounting-owned value or validated typed external reference.
-- `Book`: company ledger book; exactly one Primary Book in V1.
-- `Journal`: definition/category/numbering configuration attached to a Book.
-- `ExchangeRateType` and `ExchangeRate`: historical effective/versioned series.
+- `DimensionValue`: code plus distinct `NameAr`/`NameEn`, or a validated typed external reference that preserves owner naming.
+- `Book`: code plus distinct `NameAr`/`NameEn`; exactly one Primary Book in V1.
+- `Journal`: definition with distinct `NameAr`/`NameEn`, category and numbering configuration attached to a Book.
+- `ExchangeRateType`: code plus distinct `NameAr`/`NameEn`; `ExchangeRate` is historical effective/versioned data with no invented name field.
 - `AccountMapping`: typed, effective direct purpose mapping used by Link Accounts.
-- `PostingProfile`: effective/versioned conditional account-resolution rules.
+- `PostingProfile`: code plus distinct `NameAr`/`NameEn` and effective/versioned conditional account-resolution rules.
 
 Account code is proposed by the server but remains editable when it satisfies the
 configured hierarchy/code rules and company uniqueness.
@@ -158,6 +158,20 @@ Future client implementation/refactoring follows the child Screen Contracts in
 not the target architecture; child capabilities own typed contracts and focused
 screen composition.
 
+### Approved screen-pattern map
+
+| Surface | Pattern | Web/Mobile contract |
+| --- | --- | --- |
+| Flat setup masters | `P-001` | Web Grid and Mobile Table/Cards only as each child marks Required |
+| Accounts | `P-002` plus secondary P-001 list | Web split tree/detail; Mobile stacked/segmented hierarchy/detail |
+| Account Dimension Constraints and Link Accounts | `P-006` | scoped relationship/mapping editor with explicit save/effective semantics |
+| Company Settings | `P-005` | singleton editor, not a fake collection |
+| Ledger Setup overview | `P-007` | permission-filtered launcher only |
+| Posting resolve preview | feature-specific read-only diagnostic sub-surface | structured result inside Posting Profiles; no posting or CRUD ownership |
+
+No child uses a Candidate pattern. Independent resources are not forced into
+P-003 tabs merely because they share a route.
+
 Web adds first-class Finance setup routes for Accounts and Accounting Setup.
 COA uses `SplitTreeView` / `HierarchicalTreeList`; lists use `MyDataGrid`;
 forms use `MyForm` and shared fields/dialogs/feedback. Search/filter/sort for
@@ -173,8 +187,12 @@ Mobile uses `AppHierarchicalTree`, `AppListScreen`, `AppDataTable`,
 Financial setup mutation is online-authoritative. Cached/offline financial writes
 are not part of Slice 1.
 
-Both clients implement English/Arabic, RTL/LTR, permission/read-only behavior,
+Both clients require English/Arabic UI, RTL/LTR, permission/read-only behavior,
 accessible validation and responsive/touch layouts from existing shared systems.
+Separately, every named master carries `NameAr` and `NameEn` through persistence,
+typed transport, create/edit, detail, list/card/search and valid local mock drafts.
+Singleton/history/mapping records without authored names display localized owner
+names and do not duplicate them.
 
 ## 8. Delivery phases and verification
 
@@ -197,8 +215,17 @@ Phase 06 must reconcile every Required target here against runtime and return
 `Verified` or `Not Verified`. A feature regression or missing Required behavior
 cannot be accepted as a release note.
 
-Web and Mobile clients now have source implementations, but their live journey
-and translation audit remains open. The Web parent layout registers Accounting
+Every human feature step must first complete a feature-specific instance of
+`documentation/plans/business/accounting-core-gl/MANUAL_ACCEPTANCE_SCENARIO_TEMPLATE.md`.
+The user runs or supervises its Web and actual-device Mobile cases and explicitly
+accepts or rejects the result. No later step becomes Active, and no Phase 06 or
+documentation closure is recorded, before that acceptance. The final `1V` package
+repeats the protocol for the complete cross-child setup chain.
+
+Typed Web and Mobile clients exist for Fiscal Years, Currency and COA; COA live
+verification remains open. Other Ledger Setup routes currently use generic
+compatibility screens and must not be described as completed typed children. The
+Web parent layout registers Accounting
 EN/AR resources for all Ledger Setup routes. Both clients page large setup
 collections and fetch the full account detail before editing from the tree,
 because tree nodes omit RowVersion. The API currently returns list arrays
@@ -213,8 +240,8 @@ Only after `Verified` may Phase 07 create/finalize
 
 Current confirmed drift:
 
-- Currency is temporarily owned by HR although canonical design reserved the
-  financial master for Finance/Payroll.
+- Historical documents described Currency as HR-owned; current runtime and client
+  ownership have already moved it to Accounting and must not regress.
 - Accounting architecture previously attributed Branch ownership to Platform;
   runtime proves HR Organizational Structure owns Branch/CostCenter.
 - several Link Account source masters named by the long-term business design do not
@@ -223,7 +250,8 @@ Current confirmed drift:
 Safeguards:
 
 - one writable Currency master at every completed deployment state;
-- migration preserves ISO code/company business identity and is rehearsed/tested;
+- the clean development baseline keeps one Accounting Currency identity; any future
+  customer-data migration requires a separately rehearsed preservation plan;
 - no current Fiscal Years reconstruction;
 - no implicit statutory COA seed;
 - no source-specific account-mapping option without a validating owner Contract;

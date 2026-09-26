@@ -29,9 +29,9 @@ semantics, but they do not need identical controls or screen composition.
 
 | Item | Countries decision or evidence |
 |---|---|
-| Web feature owner | `web-next/src/modules/hr/basic-data/geographical-information/countries` |
+| Web feature owner | `web-next/src/modules/reference-data/geographical-information/countries` |
 | Mobile feature owner | `mobile-react/src/modules/reference-data/geography/countries` |
-| Web route adapter | `web-next/src/app/(main)/basic-data/(geographical-information)/countries/page.tsx` |
+| Web route adapter | `web-next/src/app/(main)/super-admin/(reference-data)/geography/countries/page.tsx` |
 | Mobile route adapter | `mobile-react/app/(main)/basic-data/geographical-information/countries.tsx` |
 | Web primary UI shape | Server-managed Grid with modal create/edit/view workflows |
 | Mobile primary UI shape | Responsive server-managed Table/Cards with a full-screen create/edit/view form |
@@ -89,7 +89,7 @@ Expo Router page + RouteGuard
 
 | Responsibility | Web source |
 |---|---|
-| Thin route adapter | `src/app/(main)/basic-data/(geographical-information)/countries/page.tsx` |
+| Thin route adapter | `src/app/(main)/super-admin/(reference-data)/geography/countries/page.tsx` |
 | Page composition and dialogs | `pages/CountriesPage.tsx` |
 | Shared list/controller state | `hooks/useCountryGridLogic.ts` |
 | Query keys, queries and mutations | `hooks/useCountryQueries.ts` |
@@ -814,7 +814,7 @@ From `mobile-react`:
 npm.cmd run typecheck
 npm.cmd run lint
 npm.cmd run check:architecture
-npm.cmd test -- --runTestsByPath src/modules/hr/basic-data/countries/data/remote/__tests__/country-remote-boundary.test.ts
+npm.cmd test -- --runTestsByPath src/modules/reference-data/geography/countries/data/remote/__tests__/country-remote-boundary.test.ts
 npm.cmd run check
 ```
 

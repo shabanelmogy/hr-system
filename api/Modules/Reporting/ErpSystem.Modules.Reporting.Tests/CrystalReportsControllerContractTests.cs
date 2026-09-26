@@ -18,10 +18,10 @@ public sealed class CrystalReportsControllerContractTests
     [InlineData(nameof(CrystalReportsController.Create), "CrystalReports:Create")]
     [InlineData(nameof(CrystalReportsController.AddVersion), "CrystalReports:Upload")]
     [InlineData(nameof(CrystalReportsController.Publish), "CrystalReports:Publish")]
-    [InlineData(nameof(CrystalReportsController.ReplaceGrants), "CrystalReports:ManageAccess")]
-    [InlineData(nameof(CrystalReportsController.Archive), "CrystalReports:Delete")]
+    [InlineData(nameof(CrystalReportsController.ReplaceGrants), "CrystalReportAccess:Edit")]
+    [InlineData(nameof(CrystalReportsController.Archive), "CrystalReports:Archive")]
     [InlineData(nameof(CrystalReportsController.ImportDeploymentReport), "CrystalReports:Create")]
-    public void MutationEndpoints_DeclareCoarsePermission(string action, string permission)
+    public void MutationEndpoints_DeclareExactPermission(string action, string permission)
     {
         var attribute = typeof(CrystalReportsController).GetMethod(action)!.GetCustomAttribute<HasPermissionAttribute>();
         Assert.NotNull(attribute);
@@ -29,35 +29,35 @@ public sealed class CrystalReportsControllerContractTests
     }
 
     [Fact]
-    public void DeploymentCatalog_RequiresManageAccessPermission()
+    public void DeploymentCatalog_RequiresCreatePermission()
     {
         var attribute = typeof(CrystalReportsController)
             .GetMethod(nameof(CrystalReportsController.GetDeploymentCandidates))!
             .GetCustomAttribute<HasPermissionAttribute>();
 
         Assert.NotNull(attribute);
-        Assert.Equal("CrystalReports:ManageAccess", attribute.Policy);
+        Assert.Equal("CrystalReports:Create", attribute.Policy);
     }
 
     [Fact]
-    public void GrantRoleOptions_RequiresManageAccessPermission()
+    public void GrantRoleOptions_RequiresViewAccessPermission()
     {
         var attribute = typeof(CrystalReportsController)
             .GetMethod(nameof(CrystalReportsController.GetGrantRoleOptions))!
             .GetCustomAttribute<HasPermissionAttribute>();
 
         Assert.NotNull(attribute);
-        Assert.Equal("CrystalReports:ManageAccess", attribute.Policy);
+        Assert.Equal("CrystalReportAccess:View", attribute.Policy);
     }
 
     [Fact]
-    public void HistoricalVersionDownload_RequiresManageAccessPermission()
+    public void HistoricalVersionDownload_RequiresDownloadPermission()
     {
         var attribute = typeof(CrystalReportsController)
             .GetMethod(nameof(CrystalReportsController.DownloadVersion))!
             .GetCustomAttribute<HasPermissionAttribute>();
 
         Assert.NotNull(attribute);
-        Assert.Equal("CrystalReports:ManageAccess", attribute.Policy);
+        Assert.Equal("CrystalReports:Download", attribute.Policy);
     }
 }

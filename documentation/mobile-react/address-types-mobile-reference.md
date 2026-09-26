@@ -2,7 +2,7 @@
 
 ## 1. Feature boundary
 
-`src/modules/hr/basic-data/address-types` owns company-scoped Address Type schemas,
+`src/modules/reference-data/addresses/address-types` owns company-scoped Address Type schemas,
 API, keys, views and full-screen form. The Expo route imports only its public root.
 
 ## 2. Route and authorization

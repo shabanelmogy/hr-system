@@ -30,6 +30,20 @@ the registered Web and Mobile sources for the same workflow:
   reference is an explicitly `Adapted` full-screen stacked `AppForm`. The shared
   `AppFormTabs` primitive remains available for future tabbed mobile forms, and
   both paths keep one validation context.
+- `P-005`: Singleton Settings Editor; Mobile uses a full-screen `AppForm` with
+  explicit unconfigured/configured/read-only/conflict states and no fake list.
+- `P-006`: Scoped Relationship/Mapping Editor; Mobile adapts the Role Permissions
+  journey to stacked module cards while retaining scope, filters, dirty state,
+  save semantics, and read-only behavior.
+- `P-007`: Settings Navigation Hub; Mobile uses the Ledger Setup overview and
+  module definition as a permission-filtered launcher only, never as a generic
+  child data owner.
+
+`P-004` remains a Candidate Stepper and is not implementation authority. For
+Ledger Setup, `LedgerSetupResourceScreen` and `LedgerSetupForm` are compatibility
+evidence for the current singleton journey only. Their generic resource model is
+not copied into a new child; the target child owns typed domain/application/data/
+presentation boundaries and its own runtime schemas.
 
 Record Mobile and Web as `Implemented`, `Adapted`, `Deferred`, or `Excluded` in
 the owning feature profile. Platform ergonomics may change the composition, but
@@ -202,7 +216,7 @@ authoritative plan before retry, and stops on a concurrent server change.
 
 ## 6. Server-managed list reference
 
-`src/modules/hr/basic-data/countries` is the first implemented mobile reference for
+`src/modules/reference-data/geography/countries` is the first implemented mobile reference for
 this pattern. It demonstrates a feature-owned endpoint/schema boundary, stable query
 keys, one server list state shared by table and card views, table page size 5,
 card page size 3,

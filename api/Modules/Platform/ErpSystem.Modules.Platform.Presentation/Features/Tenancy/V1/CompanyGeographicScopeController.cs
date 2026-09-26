@@ -21,7 +21,7 @@ public sealed class CompanyGeographicScopeController(ISender sender) : Controlle
     }
 
     [HttpPut]
-    [HasPermission(PlatformPermissions.ManageCompanyGeographicScope)]
+    [HasPermission(PlatformPermissions.EditCompanyGeographicScope)]
     [ProducesResponseType(typeof(CompanyGeographicScopeResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]

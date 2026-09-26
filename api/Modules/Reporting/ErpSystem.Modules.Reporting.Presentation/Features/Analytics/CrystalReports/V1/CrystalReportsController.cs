@@ -38,7 +38,7 @@ public sealed class CrystalReportsController(ISender sender) : ControllerBase
 
     /// <summary>Lists reports for tenant management; archived rows are opt-in.</summary>
     [HttpGet("manage")]
-    [HasPermission(ReportingPermissions.ManageCrystalReportAccess)]
+    [HasPermission(ReportingPermissions.ViewCrystalReports)]
     public async Task<IActionResult> GetManagement(
         [FromQuery] string? entityKey,
         [FromQuery] string? search,
@@ -51,7 +51,7 @@ public sealed class CrystalReportsController(ISender sender) : ControllerBase
             cancellationToken));
 
     [HttpGet("manage/{id:guid}")]
-    [HasPermission(ReportingPermissions.ManageCrystalReportAccess)]
+    [HasPermission(ReportingPermissions.ViewCrystalReports)]
     public async Task<IActionResult> GetDetail(Guid id, CancellationToken cancellationToken)
     {
         var result = await sender.Send(new GetCrystalReportDetailQuery(id), cancellationToken);
@@ -60,7 +60,7 @@ public sealed class CrystalReportsController(ISender sender) : ControllerBase
 
     /// <summary>Lists deployment-owned RPT files that can be imported into managed storage.</summary>
     [HttpGet("deployment-candidates")]
-    [HasPermission(ReportingPermissions.ManageCrystalReportAccess)]
+    [HasPermission(ReportingPermissions.CreateCrystalReports)]
     public async Task<IActionResult> GetDeploymentCandidates(
         [FromQuery] string? entityKey,
         CancellationToken cancellationToken)
@@ -118,7 +118,7 @@ public sealed class CrystalReportsController(ISender sender) : ControllerBase
     }
 
     [HttpGet("{id:guid}/versions")]
-    [HasPermission(ReportingPermissions.ManageCrystalReportAccess)]
+    [HasPermission(ReportingPermissions.ViewCrystalReports)]
     public async Task<IActionResult> GetVersions(Guid id, CancellationToken cancellationToken)
     {
         var result = await sender.Send(new GetCrystalReportVersionsQuery(id), cancellationToken);
@@ -131,7 +131,7 @@ public sealed class CrystalReportsController(ISender sender) : ControllerBase
         Download(new DownloadCrystalReportQuery(id, null), cancellationToken);
 
     [HttpGet("{id:guid}/versions/{versionId:guid}/download")]
-    [HasPermission(ReportingPermissions.ManageCrystalReportAccess)]
+    [HasPermission(ReportingPermissions.DownloadCrystalReports)]
     public Task<IActionResult> DownloadVersion(
         Guid id, Guid versionId, CancellationToken cancellationToken) =>
         Download(new DownloadCrystalReportQuery(id, versionId), cancellationToken);
@@ -151,7 +151,7 @@ public sealed class CrystalReportsController(ISender sender) : ControllerBase
     }
 
     [HttpGet("{id:guid}/access")]
-    [HasPermission(ReportingPermissions.ManageCrystalReportAccess)]
+    [HasPermission(ReportingPermissions.ViewCrystalReportAccess)]
     public async Task<IActionResult> GetGrants(Guid id, CancellationToken cancellationToken)
     {
         var result = await sender.Send(new GetCrystalReportGrantsQuery(id), cancellationToken);
@@ -159,13 +159,13 @@ public sealed class CrystalReportsController(ISender sender) : ControllerBase
     }
 
     [HttpGet("grant-role-options")]
-    [HasPermission(ReportingPermissions.ManageCrystalReportAccess)]
+    [HasPermission(ReportingPermissions.ViewCrystalReportAccess)]
     public async Task<IActionResult> GetGrantRoleOptions(CancellationToken cancellationToken) =>
         Ok(await sender.Send(new GetCrystalReportGrantRoleOptionsQuery(), cancellationToken));
 
     /// <summary>Atomically replaces current-company role grants; no tenant/company comes from the client.</summary>
     [HttpPut("{id:guid}/access")]
-    [HasPermission(ReportingPermissions.ManageCrystalReportAccess)]
+    [HasPermission(ReportingPermissions.EditCrystalReportAccess)]
     public async Task<IActionResult> ReplaceGrants(
         Guid id,
         [FromBody] ReplaceCrystalReportGrantsRequest request,
@@ -179,7 +179,7 @@ public sealed class CrystalReportsController(ISender sender) : ControllerBase
 
     /// <summary>Soft-archives the logical report; immutable source versions remain private.</summary>
     [HttpDelete("{id:guid}")]
-    [HasPermission(ReportingPermissions.DeleteCrystalReports)]
+    [HasPermission(ReportingPermissions.ArchiveCrystalReports)]
     public async Task<IActionResult> Archive(
         Guid id,
         [FromBody] CrystalReportConcurrencyRequest request,

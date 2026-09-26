@@ -20,7 +20,7 @@
 | Import format | `N/A; no parser or transport is planned for Fiscal Years` |
 | Reporting decision | `Required` |
 | Reporting engine | `Managed Crystal catalog/render using the Accounting-owned fiscalyears dataset` |
-| Vertical gate | `Step 01 Active — API → Web → Mobile → live verification → documentation; not Verified yet` |
+| Vertical gate | `Step 01 Active — API → Web → Mobile → detailed manual scenario → explicit user acceptance → documentation; not Verified yet` |
 | UI pattern | `P-001 Server-managed Grid/CRUD; Web Grid/Cards/Report; Mobile Table/Cards/Report; P-003 tabs intentionally not applied` |
 
 ## Requirement manifest
@@ -158,7 +158,7 @@ manifest.
 | F-02 | Medium | Countries is global and cannot prove company isolation | Countries profile and `CompanyAuditableEntity` | API | Resolved by tenant/company/fail-closed aggregate tests |
 | F-03 | Medium | Workforce Budget is a downstream planning capability and must not be treated as an Import dependency for Fiscal Years | Architecture review | Finance | Resolved by excluding Import from this feature; any future bulk authoring requires a separate approved feature contract |
 | F-04 | High | Draft update replaced every generated period, causing SQL unique-index conflicts when the same codes were inserted before prior rows were soft-archived | Production edit response and update-handler review | API | Resolved by sequence reconciliation, identity preservation, archived-period restoration, and regression tests |
-| F-05 | Manual | Runtime visual/device matrix requires live authenticated environments | Web/Mobile guides | Release owner | Automated UI contract audited; authenticated browser/device smoke remains |
+| F-05 | Manual | Runtime visual/device matrix requires live authenticated environments and explicit user acceptance before roadmap transition | Web/Mobile guides + `manual-acceptance/FISCAL-YEARS-STEP-01.md` | User + implementation agent | Automated UI contract audited and detailed scenario authored; execute it and record the user's acceptance or rejection |
 | F-06 | High | Fiscal Year mutation handlers requested the shared `IUnitOfWork`; later module registrations could route the commit away from `AccountingDbContext`, leaving the new year unreadable and returning an unexpected error | Host module composition, Accounting handler/store/DI review, and error report `b23c4526-17cb-469e-9ca7-ba0196c0cb8b` | Accounting API | Resolved with `IAccountingUnitOfWork` and competing-registration regression coverage |
 
 ## Verification ledger
@@ -173,6 +173,7 @@ manifest.
 | Mobile | Feature lint, types, architecture, focused tests, full Jest suite | Fiscal Years and translation parity passed; full suite 146/148 with unrelated Recruitment translation debt and a concurrent tree timeout; the tree suite passed 7/7 standalone | 2026-09-06 |
 | Mobile full tests | `npm test` | 143 passed; inherited Recruitment translation failure and shared-tree timeout | 2026-09-05 |
 | UI audit | Creation, editing, viewing, listing/filtering, mock data on Web/Mobile | Focused source/contract audit passed; Step 01 live authenticated viewport/device smoke remains pending and prevents `Verified` | 2026-09-23 |
+| Manual scenario readiness | Central template plus Fiscal Years Step 01 Web/device/security/i18n/UI cases | Scenario authored and registered; execution, case results, and explicit user decision remain pending | 2026-09-25 |
 | Accounting unit-of-work binding | Focused `AccountingUnitOfWorkRegistrationTests`; Accounting module suite | Competing shared registrations before/after Accounting cannot intercept Fiscal Year persistence; create stores one year and 12 monthly periods | 2026-09-15 |
 
 ## Final reconciliation
@@ -182,5 +183,7 @@ manifest.
 - [x] Import, Export, Chart, and Reporting are explicitly classified per platform.
 - [x] Runtime evidence and canonical profiles exist.
 - [ ] Step 01 live authenticated API-backed Web/Mobile journey and final reconciliation are complete (`Verified` pending).
+- [x] A detailed versioned manual scenario is authored and registered in the feature evidence surface.
+- [ ] The scenario has been executed, its results sent/recorded, and explicit user acceptance captured verbatim.
 - [x] Final required-file manifest and feature recipes are registered/generated.
 - [x] Inherited repository failures and manual release checks are separated from feature regressions.

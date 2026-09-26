@@ -1,112 +1,146 @@
 # Ledger Setup Company Settings — Screen / Workflow Contract
 
+Execution order marker: API → Web → Mobile → integrated live verification → documentation/closure
+
 ## 0. Contract metadata
 
 | Field | Value |
 | --- | --- |
+| Contract version | `2.0` |
 | Plan ID | `accounting-core-gl` |
 | Authorized slice | `Slice 1 — Ledger setup spine` |
 | Child Feature ID | `ledger-setup-company-settings` |
 | Child feature name | Accounting Company Settings |
 | Owner | Accounting |
 | Depends on | `ledger-setup-currency`, `ledger-setup-books-journals` |
-| Execution status | `1E` queued after `1D` |
-| Contract status | `Closed — reviewed 2026-09-22` |
+| Execution status | `Queued` after Books/Journals closure |
+| Status evidence | `SLICE-01-LEDGER-SETUP-EXECUTION.md`; current generic singleton is compatibility evidence only |
 
 ## 1. Child boundary and outcome
 
-Own the one-row-per-company `AccountingCompanySettings` workflow that selects
-`FunctionalCurrencyId` and `PrimaryBookId` with RowVersion. Independent acceptance
-proves explicit company financial policy configuration without deriving either
-selection from Currency metadata, Book identity, HR data or UI state.
+This child owns the one-row-per-company `AccountingCompanySettings` workflow that
+selects `FunctionalCurrencyId` and `PrimaryBookId` with RowVersion. Independent
+acceptance proves explicit company financial policy without deriving either choice
+from UI state or another domain. The setting itself has no business-name field;
+selectors must display the persisted Arabic/English Currency and Book names from
+their owning children.
 
-Explicitly outside this child: Currency and Book master lifecycle, additional
-adjustment books, reporting-currency policy and posting runtime.
+## 2. UI Pattern Gate (mandatory before implementation)
 
-## 2. Closest existing reference
+| Screen ID | Platform | Route / entry | User job | Data / interaction shape | Primary Pattern ID | Sub-pattern / form decision | Exact reviewed reference source path | Platform status | Grid / Table / Cards / Tree / Detail / Report / Import / Export / Chart (R/D/E) | Loading / empty / error / forbidden / dirty / conflict states | Offline policy | Mock-data policy | Permission / scope | Responsive / RTL / accessibility | Deviation and reason |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| ledger-setup-company-settings | Web | `/finance/ledger-setup/company-settings` | Configure functional currency and primary book | one singleton per company | P-005 | dedicated `MyForm` editor; no fake grid or lifecycle | `web-next/src/modules/accounting/ledger-setup/pages/LedgerSetupResourcePage.tsx` | Adapted | Detail Required; Grid Table Cards Tree Report Import Export Chart Excluded | loading, unconfigured, configured, lookup/load error/retry, forbidden/read-only, dirty, save conflict | online authoritative | local draft may choose only real loaded Currency/Book IDs; no identity/scope/RowVersion fabrication | `AccountingSetup:View/Manage`; current company | compact/wide form, RTL, keyboard/error focus and accessible selector states | Reference proves singleton journey only; generic resource dispatch is excluded from target |
+| ledger-setup-company-settings | Mobile | `/finance/ledger-setup/company-settings` | Configure functional currency and primary book | one singleton per company | P-005 | dedicated full-screen `AppForm`; no fake list | `mobile-react/src/modules/accounting/ledger-setup/presentation/screens/LedgerSetupResourceScreen.tsx` | Adapted | Detail Required; Grid Table Cards Tree Report Import Export Chart Excluded | loading, unconfigured, configured, lookup/load error/retry, forbidden/read-only, dirty, save conflict | online authoritative | local draft may choose only authoritative Currency/Book IDs | `AccountingSetup:View/Manage`; current company | phone/tablet form, RTL, touch/screen-reader selectors and validation focus | Target uses typed clean layers instead of generic resource definitions |
+
+## 3. Closest existing reference
 
 | Reference | Exact path/screen | What is reused | What intentionally differs |
 | --- | --- | --- | --- |
-| Accounting Fiscal Years forms | `web-next/src/modules/accounting/fiscal-years/` | Accounting form/query/concurrency discipline | singleton two-reference policy instead of collection lifecycle |
-| Current settings evidence | `web-next/src/modules/accounting/ledger-setup/pages/LedgerSetupResourcePage.tsx` | current route and save evidence | dedicated typed singleton editor replaces generic collection assumptions |
+| P-005 current singleton journey | Web/Mobile paths named in the UI Pattern Gate | first-config/update/read-only/loading composition | catch-all resource definition and transport are not reused |
+| Fiscal Years forms | `web-next/src/modules/accounting/fiscal-years/` and `mobile-react/src/modules/accounting/fiscal-years/` | typed Accounting form/query/concurrency discipline | this is a two-reference singleton, not a collection |
 
-## 3. Reuse and composition contract
+## 4. Reuse and composition contract
 
 | Need | Existing reusable component/source | Decision | Exact use or extension |
 | --- | --- | --- | --- |
-| Web editor | `web-next/src/shared/components/navigation/header/PageHeader.tsx`, `web-next/src/shared/components/forms/dialog/MyForm.tsx`, `web-next/src/shared/components/forms/selects/MySelect.tsx`, `web-next/src/shared/components/feedback/` | reuse | one singleton editor, no grid shell |
-| Mobile editor | `mobile-react/src/shared/components/layout/AppPageHeader.tsx`, `mobile-react/src/shared/components/forms/AppForm.tsx`, `mobile-react/src/shared/components/controls/AppSelectField.tsx`, `mobile-react/src/shared/components/feedback/AppStateView.tsx` | reuse | full-screen/native singleton editor |
-| Currency lookup | `ledger-setup-currency` active lookup | reuse | Functional Currency selector |
-| Book lookup | `ledger-setup-books-journals` active Book lookup | reuse | Primary Book selector |
+| Web singleton | `PageHeader`, `MyForm`, `MySelect`, shared feedback/dirty guard | reuse | typed GET/PUT editor with unconfigured state |
+| Mobile singleton | `AppPageHeader`, `AppForm`, `AppSelectField`, `AppStateView` | reuse | native full-screen typed editor |
+| Dependency lookups | active Currency and Book lookup contracts | reuse | display current-locale name while retaining both names in referenced details |
 
-## 4. Screen and workspace contract
+## 5. Screen and workspace contract
 
 | Surface | Required / Deferred / Excluded | Layout/workspace | Primary user actions |
 | --- | --- | --- | --- |
-| List/Grid | Excluded | singleton is not a fake collection | N/A |
-| Tree/Hierarchy | Excluded | N/A | N/A |
-| Detail/View | Required | settings summary/form | inspect configured policy |
-| Create/Edit | Required as singleton save/update | two authoritative selectors | configure/update functional currency + primary book |
-| Archive/restore | Excluded | singleton identity has no delete lifecycle | N/A |
-
-## 5. Create, edit, view, and lifecycle contract
-
-| Journey/action | Entry state | User interaction | Server action/state change | Result/read-only behavior |
-| --- | --- | --- | --- | --- |
-| First configuration | unconfigured company + Manage | select active Currency and Book | singleton PUT/save | persisted settings become authoritative |
-| View | configured + View | inspect selections | GET singleton | read-only mode has no save action |
-| Update | configured + Manage + RowVersion | change eligible selector | update singleton | 409 reloads current settings |
-| Unconfigured read | no row exists | open route | typed not-configured response/state | editable empty form for Manage; informative empty state for View |
+| Singleton detail/editor | Required | two authoritative selectors | first configure, view and update |
+| List/Grid/archive/delete | Excluded | singleton is not a collection | none |
+| Tree/Report/Import/Export/Chart | Excluded | outside this child | none |
 
 ## 6. Typed transport and server criteria
 
 | Concern | Exact contract |
 | --- | --- |
-| Typed request/response | singleton GET/PUT DTO with FunctionalCurrencyId, PrimaryBookId and opaque RowVersion |
-| Server search/filter/sort | N/A — singleton; dependency lookups own their criteria |
-| Paging/limits | N/A — singleton |
-| Domain errors | missing/inactive/foreign Currency or Book, singleton uniqueness and concurrency conflict |
+| Typed request/response | singleton GET/PUT with `FunctionalCurrencyId`, `PrimaryBookId`, configuration state and opaque RowVersion |
+| Canonical routes | Accounting Company Settings API and `/finance/ledger-setup/company-settings` |
+| Server search/filter/sort | N/A — singleton; dependency lookups own criteria |
+| Paging/limits | N/A — singleton; lookups must return complete eligible choices |
+| Domain errors / ProblemDetails | missing/inactive/foreign Currency or Book, uniqueness, permission and concurrency |
+| Permission and tenant/company scope | `AccountingSetup:View/Manage`; one row per server-enforced company |
 | Cross-module contract | N/A — dependencies are Accounting-owned child contracts |
+| Persistence/schema/migration | Accounting singleton mapping, unique company constraint and RowVersion; live database update required |
 
-## 7. UX states, permissions, and read-only behavior
+## 7. Create, edit, view, and lifecycle contract
+
+| Journey/action | Entry state | User interaction | Server action/state change | Result/read-only behavior |
+| --- | --- | --- | --- | --- |
+| First configuration | unconfigured plus Manage | select active Currency and Book | singleton PUT/upsert | persisted settings reload; localized selector labels come from bilingual masters |
+| View | configured plus View/read-only | inspect selections | GET singleton | no save action; referenced names remain understandable in current locale |
+| Update | configured plus Manage and RowVersion | change eligible selector | update singleton | 409 reloads settings and lookups |
+| Delete/archive | N/A | no action | no endpoint | singleton identity has no invented lifecycle |
+
+## 8. UX states, permissions, offline, and mock data
 
 | Concern | Contract |
 | --- | --- |
-| Loading / empty / error | initial loading, unconfigured, load error/retry and saving states are distinct |
-| Permission / forbidden | read `AccountingSetup:View`; save `AccountingSetup:Manage` |
-| Read-only / archived / locked | global read-only shows current policy and blocks save; archived dependencies are not selectable |
-| Unsaved changes / destructive confirmation | shared dirty-navigation protection; no destructive lifecycle |
-| Offline/stale behavior when applicable | online-authoritative save; no cached write success |
+| Loading / empty / error / retry | loading, unconfigured, configured, dependency failure, load failure and saving are distinct |
+| Permission / forbidden / read-only | View inspects; Manage saves; global read-only preserves values and removes Save |
+| Archived / locked | archived dependencies are not selectable; an existing invalid dependency is displayed as an explicit issue |
+| Unsaved changes / destructive confirmation | shared dirty-navigation guard; no destructive lifecycle |
+| Offline / stale / conflict | online-authoritative; no cached success; 409 reloads singleton and lookups |
+| Mock data | draft may select real loaded dependencies only; no fabricated company, IDs, names or RowVersion |
 
-## 8. Concurrency and consistency
+## 9. Concurrency, transactions, and consistency
 
-Every update sends current RowVersion. Conflict reloads singleton plus dependency
-lookups. Currency/Book lifecycle changes invalidate the settings dependencies so the
-form cannot silently retain newly ineligible choices.
+Every update sends RowVersion. The unique company constraint prevents duplicate
+singletons. Currency/Book lifecycle changes invalidate settings dependencies; a
+conflict reloads singleton and lookups before retry.
 
-## 9. i18n, RTL, accessibility, and responsive behavior
+## 10. i18n, RTL, accessibility, and responsive behavior
 
-Accounting EN/AR owns labels/help/error text. Shared select/form behavior covers RTL,
-keyboard/focus/screen-reader semantics. The two-field policy editor remains readable
-on compact Web and phone layouts and may use wider inline composition on desktop/tablet.
+UI labels/help/errors are translated EN/AR. This aggregate has no `NameAr` or
+`NameEn`; it references Currency and Book masters that do. Selectors display the
+current-locale stored name with a documented fallback and never copy or overwrite
+either value. Shared forms provide RTL, keyboard/touch access, loading/error state,
+linked validation messages and first-invalid focus.
 
-## 10. Verification contract
+## 11. Vertical execution ledger (strict one-active-step gate)
 
-| Layer | Required evidence/test | Critical scenario |
-| --- | --- | --- |
-| Domain/Application | singleton/reference/concurrency tests | inactive Currency/Book and duplicate singleton |
-| API/transport | exact GET/PUT/unconfigured contract | RowVersion round trip |
-| Web | singleton editor tests | first config, update, read-only, conflict |
-| Mobile | runtime schema/form/query tests | first config + retry/error state |
-| E2E/manual | API-backed company setup | Currency + Book selected then reload persisted values |
+| Order | Stage | Status | Entry gate | Required evidence / exit gate | Evidence path |
+| ---: | --- | --- | --- | --- | --- |
+| 1 | API | Queued | Books/Journals closed and contract approved | typed singleton, unique company constraint, lookups, migration, permissions and tests | `SLICE-01-LEDGER-SETUP-EXECUTION.md` |
+| 2 | Web | Queued | API Verified | typed P-005 editor and first-config/update/read-only/conflict tests | `documentation/web-next/features/accounting-ledger-setup-frontend-reference.md` |
+| 3 | Mobile | Queued | Web Verified | typed clean layers, schemas and native P-005 journey/tests | `documentation/mobile-react/accounting-ledger-setup-mobile-reference.md` |
+| 4 | Integrated live verification + user acceptance | Queued | prior stages Verified | agent sends detailed authenticated first-config/update/reload API/Web/actual-Mobile scenario with live-schema checks; user runs or supervises it and explicitly accepts | `SLICE-01-LEDGER-SETUP-EXECUTION.md` |
+| 5 | Documentation and closure | Queued | integrated verification Verified and explicit user acceptance recorded | canonical docs, manifest/recipes and education reconciled | `documentation/system/features/accounting-ledger-setup/required-files.json` |
 
-## 11. Child exit gate
+**Manual acceptance protocol.** The central
+`../MANUAL_ACCEPTANCE_SCENARIO_TEMPLATE.md` format is mandatory:
+prerequisites, roles/permissions, exact Currency/Book settings, Web and actual-device
+steps, EN/AR and RTL/LTR checks, expected outcomes, negative/read-only/conflict
+cases, cleanup and evidence. The feature remains Active until explicit user acceptance.
 
-- [ ] Its boundary is implemented without absorbing sibling workflows.
-- [ ] Screen/workspace behavior matches this contract and the approved plan.
-- [ ] Reused components and any generic extensions match the reuse audit.
-- [ ] Typed transport and server criteria are implemented and verified.
-- [ ] Permissions/read-only states and concurrency behavior are verified.
-- [ ] i18n/RTL/accessibility/responsive requirements are verified.
-- [ ] Required automated/manual evidence above is green.
-- [ ] The master slice records this child as complete without implying unfinished sibling features are complete.
+**Next-step rule:** no sibling feature may become `Active` until this feature's
+Integrated live verification is `Verified` and Documentation and closure is
+`Closed` in the roadmap, with explicit user acceptance recorded.
+
+## 12. Verification contract
+
+| Layer | Required evidence/test | Critical scenario | Result |
+| --- | --- | --- | --- |
+| Domain/Application | singleton/reference/concurrency tests | inactive dependency and duplicate company row | Queued |
+| API/transport | exact GET/PUT/unconfigured contract | IDs plus RowVersion round trip | Queued |
+| Persistence/migration | apply current Accounting migration | unique company and foreign keys | Queued |
+| Web | P-005 editor tests | first config, update, localized names, read-only and conflict | Queued |
+| Mobile | runtime schema/form/query tests | same journey on phone/tablet | Queued |
+| E2E/manual/live | authenticated company setup | select bilingual Currency/Book, save and reload | Queued |
+
+## 13. Child exit gate
+
+- [x] Contract version is current and every screen/platform row passes the UI Pattern Gate.
+- [x] No `Candidate` pattern remains; P-005 is registered and reviewed.
+- [ ] Generic singleton evidence is replaced by typed child ownership.
+- [ ] API, Web, Mobile and database verify singleton uniqueness and conflict behavior.
+- [ ] Selectors correctly present Arabic/English names from their owning masters.
+- [ ] Integrated live verification is green in roadmap order.
+- [ ] Detailed manual scenario/results are sent to the user and explicit acceptance is recorded.
+- [ ] Documentation/manifest/recipes and education are reconciled.
+- [ ] Roadmap closure is recorded before Exchange Rates becomes Active.

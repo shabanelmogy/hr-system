@@ -8,7 +8,8 @@ import { AppDataCard, AppIcon, AppIconButton, AppStatusBadge, AppText } from '@/
 interface CountryCardProps {
   country: Country;
   canEdit: boolean;
-  canDelete: boolean;
+  canArchive: boolean;
+  canRestore: boolean;
   selected: boolean;
   active?: boolean;
   flash?: boolean;
@@ -20,7 +21,7 @@ interface CountryCardProps {
   onToggleSelection: (country: Country) => void;
 }
 
-export function CountryCard({ country, canEdit, canDelete, selected, active = false, flash = false, flashToken, onEdit, onArchive, onRestore, onView, onToggleSelection }: CountryCardProps) {
+export function CountryCard({ country, canArchive, canEdit, canRestore, selected, active = false, flash = false, flashToken, onEdit, onArchive, onRestore, onView, onToggleSelection }: CountryCardProps) {
   const { t } = useTranslation();
   const { theme } = useAppTheme();
   const archived = country.isDeleted;
@@ -41,10 +42,11 @@ export function CountryCard({ country, canEdit, canDelete, selected, active = fa
         <AppText color="muted" variant="caption">{t('countries.statesCount', { count: country.statesCount })}</AppText>
       </View>
       <View style={styles.actions}>
-        {canDelete && !archived ? <AppIconButton accessibilityState={{ selected }} color={selected ? theme.colors.accent : undefined} icon={selected ? 'checkbox' : 'square-outline'} label={t('countries.selectCountry', { name: country.nameEn })} onPress={() => onToggleSelection(country)} /> : null}
+        {canArchive && !archived ? <AppIconButton accessibilityState={{ selected }} color={selected ? theme.colors.accent : undefined} icon={selected ? 'checkbox' : 'square-outline'} label={t('countries.selectCountry', { name: country.nameEn })} onPress={() => onToggleSelection(country)} /> : null}
         <AppIconButton icon="eye-outline" label={t('countries.viewCountry')} onPress={() => onView(country)} />
         {canEdit && !archived ? <AppIconButton icon="create-outline" label={t('countries.editCountry')} onPress={() => onEdit(country)} /> : null}
-        {canDelete ? <AppIconButton icon={archived ? 'refresh-outline' : 'archive-outline'} label={t(archived ? 'countries.restore' : 'countries.archive')} onPress={() => archived ? onRestore(country) : onArchive(country)} /> : null}
+        {!archived && canArchive ? <AppIconButton icon="archive-outline" label={t('countries.archive')} onPress={() => onArchive(country)} /> : null}
+        {archived && canRestore ? <AppIconButton icon="refresh-outline" label={t('countries.restore')} onPress={() => onRestore(country)} /> : null}
       </View>
     </AppDataCard>
   );

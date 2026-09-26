@@ -31,12 +31,26 @@ public sealed class SystemRoleSeedTests
         var moduleCatalog = new ModuleCatalog([new FutureBusinessModule()]);
         var startupTask = new PlatformSystemRoleStartupTask(roleManager, moduleCatalog);
 
+        var customRole = new PlatformApplicationRole("finance-clerk");
+        Assert.True((await roleManager.CreateAsync(customRole)).Succeeded);
+        Assert.True((await roleManager.AddClaimAsync(
+            customRole,
+            new System.Security.Claims.Claim(PermissionClaimNames.Permission, "FutureInventory:View"))).Succeeded);
+        Assert.True((await roleManager.AddClaimAsync(
+            customRole,
+            new System.Security.Claims.Claim(PermissionClaimNames.Permission, "LegacyResource:Manage"))).Succeeded);
+
         await startupTask.ExecuteAsync();
+        var adminBeforeReconciliation = await roleManager.FindByNameAsync(PlatformRoleNames.Admin);
+        Assert.NotNull(adminBeforeReconciliation);
+        Assert.True((await roleManager.AddClaimAsync(
+            adminBeforeReconciliation,
+            new System.Security.Claims.Claim(PermissionClaimNames.Permission, "LegacyResource:Manage"))).Succeeded);
         await startupTask.ExecuteAsync();
 
         var roles = await roleManager.Roles.OrderBy(role => role.NormalizedName).ToListAsync();
-        Assert.Equal(3, roles.Count);
-        Assert.All(roles, role => Assert.True(role.IsSystem));
+        Assert.Equal(4, roles.Count);
+        Assert.Equal(3, roles.Count(role => role.IsSystem));
 
         var adminRole = Assert.Single(roles, role => role.NormalizedName == "ADMIN");
         var adminClaims = await roleManager.GetClaimsAsync(adminRole);
@@ -53,6 +67,7 @@ public sealed class SystemRoleSeedTests
         Assert.All(expectedPermissions, permission =>
             Assert.Single(adminClaims, claim =>
                 claim.Type == PermissionClaimNames.Permission && claim.Value == permission));
+        Assert.DoesNotContain(adminClaims, claim => claim.Value == "LegacyResource:Manage");
 
         var superAdminRole = Assert.Single(roles, role => role.NormalizedName == "SUPER_ADMIN");
         var superAdminClaims = await roleManager.GetClaimsAsync(superAdminRole);
@@ -63,6 +78,13 @@ public sealed class SystemRoleSeedTests
 
         var userRole = Assert.Single(roles, role => role.NormalizedName == "USER");
         Assert.True(userRole.IsDefault);
+
+        var persistedCustomRole = Assert.Single(roles, role => role.NormalizedName == "FINANCE-CLERK");
+        Assert.False(persistedCustomRole.IsSystem);
+        var customClaims = await roleManager.GetClaimsAsync(persistedCustomRole);
+        Assert.Single(customClaims, claim =>
+            claim.Type == PermissionClaimNames.Permission && claim.Value == "FutureInventory:View");
+        Assert.DoesNotContain(customClaims, claim => claim.Value == "LegacyResource:Manage");
     }
 
     private sealed class EmptyCurrentActor : ICurrentActor

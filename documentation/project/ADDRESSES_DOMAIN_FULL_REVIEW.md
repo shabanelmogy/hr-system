@@ -15,10 +15,11 @@ owner of Company, Branch, Employee, Candidate, or Emergency Contact semantics.
 Those domains own the relationship to an Address and decide purpose, primary
 status, visibility, and effective dating.
 
-The current implementation keeps the existing `/api/v1/addresses` service
-surface so current consumers can migrate incrementally. The new domain model
-adds explicit owner link entities for Company and Branch and removes the
-ambiguous direct `AddressId` fields and Address-level `IsDefault` flag.
+The current implementation keeps the existing action-token Address controller
+surface under `/api/v1/addresses/{action}` so current consumers can migrate
+incrementally. The new domain model adds explicit owner link entities for
+Company and Branch and removes the ambiguous direct `AddressId` fields and
+Address-level `IsDefault` flag.
 
 ## 2. Data model
 
@@ -39,8 +40,10 @@ transactional revalidation.
 `CompanyAddress` and `BranchAddress` contain the owning Company/Branch IDs,
 `AddressPurpose`, and `IsPrimary`. Their constructors require the company
 scope and owner IDs so a future owner-link command cannot create an incomplete
-relationship. Filtered unique indexes allow one active primary address per
-owner and purpose. No polymorphic `OwnerType/OwnerId` is used.
+relationship. The current baseline creates the owner-link tables and ordinary
+Address foreign-key indexes; it does not yet enforce one active primary address
+per owner and purpose. That command, lock, and persistence enforcement remains
+deferred under `DEF-006`. No polymorphic `OwnerType/OwnerId` is used.
 
 ## 3. API contract
 
@@ -48,13 +51,13 @@ The existing routes remain:
 
 | Method | Route | Decision |
 |---|---|---|
-| GET | `/api/v1/addresses` | Current company list; retained during migration |
-| GET | `/api/v1/addresses/{id}` | Detail |
-| GET | `/api/v1/addresses/{id}/details` | Detail with geographic/type relations |
-| POST | `/api/v1/addresses` | Creates a flexible address |
-| PUT | `/api/v1/addresses` | Updates a flexible address |
-| DELETE | `/api/v1/addresses/{id}` | Soft archive/restore toggle during legacy service period |
-| GET | `/api/v1/addresses/count` | Active count |
+| GET | `/api/v1/addresses/GetAll` | Current company list; retained during migration |
+| GET | `/api/v1/addresses/GetByID/{id}` | Detail |
+| GET | `/api/v1/addresses/GetAddressWithDetails/{id}/details` | Detail with geographic/type relations |
+| POST | `/api/v1/addresses/Add` | Creates a flexible address |
+| PUT | `/api/v1/addresses/Update` | Updates a flexible address |
+| DELETE | `/api/v1/addresses/Delete/{id}` | Soft archive/restore toggle during compatibility period |
+| GET | `/api/v1/addresses/GetCount/count` | Active count |
 
 Create/update request fields use the same names as the domain model. `CountryId`
 is required; State, District, City, street lines, structured building details,
@@ -111,8 +114,8 @@ candidate's home address.
 | Owner links | `CompanyAddress.cs`, `BranchAddress.cs`, `AddressPurpose.cs` |
 | Request/response | `api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Addresses/Contracts` |
 | Validation | `AddressRequestValidator.cs` and Country/State/District validation queries |
-| Persistence | `AddressConfiguration.cs`, `CompanyAddressConfiguration.cs`, `BranchAddressConfiguration.cs` |
-| Migration | `RefactorAddressesForGlobalGeography` |
+| Persistence | `AddressConfiguration.cs`, `AddressStores.cs`, and owner-link scope filters in `ReferenceDataDbContext.cs` |
+| Migration baseline | `20260914181144_InitialReferenceData` |
 | Current HTTP boundary | `api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Presentation/Features/GeographicalInformation/Addresses/V1/AddressesController.cs` |
 
 ## 7. Client decisions

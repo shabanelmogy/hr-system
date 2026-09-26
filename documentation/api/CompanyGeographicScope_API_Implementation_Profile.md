@@ -30,7 +30,7 @@ Missing actor company context fails closed with the stable forbidden error. Miss
 
 ## 8. HTTP and Authorization
 
-The versioned controller exposes GET and PUT at `/api/v1/company-geographic-scope`, requires an active tenant member, and applies `CompanyGeographicScope:View` or `CompanyGeographicScope:Manage`. It accepts no tenant/company route, query, or body field. Read-only middleware blocks PUT.
+The versioned controller exposes GET and PUT at `/api/v1/company-geographic-scope`, requires an active tenant member, and applies `CompanyGeographicScope:View` or `CompanyGeographicScope:Edit`. It accepts no tenant/company route, query, or body field. Read-only middleware blocks PUT.
 
 ## 9. Composition and Migration
 

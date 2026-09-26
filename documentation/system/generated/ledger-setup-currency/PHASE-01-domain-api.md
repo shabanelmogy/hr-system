@@ -88,6 +88,6 @@ existing-system review, implementation order, and Definition of Done.
 | ledger-setup-currency-api | 5 | `b2e89f223b43ba3805cfb59c1abc73d1c1df0e8529c1050fe4ae860e7d330151` |
 | ledger-setup-currency-api | 6 | `51b2eaae1b7f4d980663df2cc3bf3fa4a4bf76c87bea22770639d84c8cfeb236` |
 | ledger-setup-currency-api | 7 | `59076dbce64b783f44dd30df6da4b67e5d0c311fef94f5146637db0e3aef2e28` |
-| ledger-setup-currency-api | 8 | `5ec6bb7f5e6325a82fc9de425281748b0496fb12c7fd0ec132bd1c5047abebaf` |
+| ledger-setup-currency-api | 8 | `1369f1ffe58bd47ec8f398ca6f17e0ea5c6e99f731de75b2d9f857b5f77f772b` |
 | ledger-setup-currency-api | 9 | `12bf887a00d1c51b4c717b7615d0cc85b2f99796835dc8e357b93d26d60717cf` |
 | ledger-setup-currency-api | 10 | `01bbb185825055c46bcab3251bc15df822bd15ca88bbef31094caa68e25bbbb5` |

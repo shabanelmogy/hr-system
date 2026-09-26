@@ -54,7 +54,7 @@ public sealed class StateCqrsArchitectureTests
             bulkCreate.GetParameters()[0].ParameterType);
 
         var bulkArchive = typeof(StatesController).GetMethod(nameof(StatesController.BulkArchive))!;
-        Assert.Equal(ReferenceDataPermissions.DeleteStates, bulkArchive.GetCustomAttribute<HasPermissionAttribute>()?.Policy);
+        Assert.Equal(ReferenceDataPermissions.ArchiveStates, bulkArchive.GetCustomAttribute<HasPermissionAttribute>()?.Policy);
         Assert.Contains(
             bulkArchive.GetCustomAttributes<ProducesResponseTypeAttribute>(),
             attribute => attribute.StatusCode == StatusCodes.Status200OK && attribute.Type == typeof(BulkArchiveStatesResponse));

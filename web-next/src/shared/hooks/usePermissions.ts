@@ -60,11 +60,11 @@ export const useCountriesPermissions = () => {
   const { hasGlobalGeographyPermission } = useGlobalGeographyPermissions();
   
   return useMemo(() => ({
-    canView: hasGlobalGeographyPermission("Countries:View"),
-    canCreate: hasGlobalGeographyPermission("Countries:Create"),
-    canEdit: hasGlobalGeographyPermission("Countries:Edit"),
-    canDelete: hasGlobalGeographyPermission("Countries:Delete"),
-    canRestore: hasGlobalGeographyPermission("Countries:Delete"),
+    canView: hasGlobalGeographyPermission(permissions.ViewCountries),
+    canCreate: hasGlobalGeographyPermission(permissions.CreateCountries),
+    canEdit: hasGlobalGeographyPermission(permissions.EditCountries),
+    canDelete: hasGlobalGeographyPermission(permissions.ArchiveCountries),
+    canRestore: hasGlobalGeographyPermission(permissions.RestoreCountries),
   }), [hasGlobalGeographyPermission]);
 };
 
@@ -74,10 +74,11 @@ export const useStatesPermissions = () => {
   const { hasGlobalGeographyPermission } = useGlobalGeographyPermissions();
   
   return useMemo(() => ({
-    canView: hasGlobalGeographyPermission("States:View"),
-    canCreate: !isReadOnly && hasGlobalGeographyPermission("States:Create"),
-    canEdit: !isReadOnly && hasGlobalGeographyPermission("States:Edit"),
-    canDelete: !isReadOnly && hasGlobalGeographyPermission("States:Delete"),
+    canView: hasGlobalGeographyPermission(permissions.ViewStates),
+    canCreate: !isReadOnly && hasGlobalGeographyPermission(permissions.CreateStates),
+    canEdit: !isReadOnly && hasGlobalGeographyPermission(permissions.EditStates),
+    canDelete: !isReadOnly && hasGlobalGeographyPermission(permissions.ArchiveStates),
+    canRestore: !isReadOnly && hasGlobalGeographyPermission(permissions.RestoreStates),
   }), [hasGlobalGeographyPermission, isReadOnly]);
 };
 
@@ -86,10 +87,11 @@ export const useDistrictsPermissions = () => {
   const { hasGlobalGeographyPermission } = useGlobalGeographyPermissions();
 
   return useMemo(() => ({
-    canView: hasGlobalGeographyPermission("Districts:View"),
-    canCreate: !isReadOnly && hasGlobalGeographyPermission("Districts:Create"),
-    canEdit: !isReadOnly && hasGlobalGeographyPermission("Districts:Edit"),
-    canDelete: !isReadOnly && hasGlobalGeographyPermission("Districts:Delete"),
+    canView: hasGlobalGeographyPermission(permissions.ViewDistricts),
+    canCreate: !isReadOnly && hasGlobalGeographyPermission(permissions.CreateDistricts),
+    canEdit: !isReadOnly && hasGlobalGeographyPermission(permissions.EditDistricts),
+    canDelete: !isReadOnly && hasGlobalGeographyPermission(permissions.ArchiveDistricts),
+    canRestore: !isReadOnly && hasGlobalGeographyPermission(permissions.RestoreDistricts),
   }), [hasGlobalGeographyPermission, isReadOnly]);
 };
 
@@ -122,23 +124,23 @@ export const useModulePermissions = (module: PermissionModule) => {
 
 // Recruitment permissions hook
 export const useRecruitmentPermissions = () => {
-  const { hasPermission, isReadOnly } = usePermissions();
+  const { hasPermission, hasAllPermissions, isReadOnly } = usePermissions();
 
   return useMemo(
     () => ({
       canView: hasPermission(permissions.ViewRecruitment),
-      canManageRequisitions: !isReadOnly && hasPermission(permissions.ManageJobRequisitions),
-      canApproveRequisitions: !isReadOnly && hasPermission(permissions.ApproveJobRequisitions),
-      canManageOpenings: !isReadOnly && hasPermission(permissions.ManageJobOpenings),
-      canManagePostings: !isReadOnly && hasPermission(permissions.ManageJobPostings),
-      canManageCandidates: !isReadOnly && hasPermission(permissions.ManageCandidates),
-      canManageApplications: !isReadOnly && hasPermission(permissions.ManageApplications),
+      canManageRequisitions: !isReadOnly && hasAllPermissions([permissions.CreateJobRequisitions, permissions.SubmitJobRequisitions, permissions.CancelJobRequisitions]),
+      canApproveRequisitions: !isReadOnly && hasPermission(permissions.ReviewJobRequisitions),
+      canManageOpenings: !isReadOnly && hasAllPermissions([permissions.CreateJobOpenings, permissions.OpenJobOpenings, permissions.PauseJobOpenings, permissions.CloseJobOpenings]),
+      canManagePostings: !isReadOnly && hasAllPermissions([permissions.CreateJobPostings, permissions.EditJobPostings, permissions.PublishJobPostings, permissions.CloseJobPostings]),
+      canManageCandidates: !isReadOnly && hasAllPermissions([permissions.CreateCandidates, permissions.EditCandidates]),
+      canManageApplications: !isReadOnly && hasAllPermissions([permissions.CreateEmploymentApplications, permissions.MoveEmploymentApplications, permissions.RejectEmploymentApplications, permissions.WithdrawEmploymentApplications]),
       canEvaluateInterviews: !isReadOnly && hasPermission(permissions.EvaluateInterviews),
-      canManageOffers: !isReadOnly && hasPermission(permissions.ManageJobOffers),
-      canApproveOffers: !isReadOnly && hasPermission(permissions.ApproveJobOffers),
+      canManageOffers: !isReadOnly && hasAllPermissions([permissions.CreateJobOffers, permissions.SubmitJobOffers, permissions.IssueJobOffers, permissions.RespondJobOffers]),
+      canApproveOffers: !isReadOnly && hasPermission(permissions.ReviewJobOffers),
       canHire: !isReadOnly && hasPermission(permissions.HireCandidate),
     }),
-    [hasPermission, isReadOnly]
+    [hasAllPermissions, hasPermission, isReadOnly]
   );
 };
 

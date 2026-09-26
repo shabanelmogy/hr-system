@@ -23,7 +23,8 @@ jest.mock('@/src/platform/auth', () => ({
   permissions: {
     CreateStates: 'States:Create',
     EditStates: 'States:Edit',
-    DeleteStates: 'States:Delete',
+    ArchiveStates: 'States:Archive',
+    RestoreStates: 'States:Restore',
     ViewCrystalReports: 'CrystalReports:View',
   },
   useAuthorization: ({ requiredPermissions }: { requiredPermissions: string[] }) => ({
@@ -86,8 +87,8 @@ jest.mock('../components/StateCard', () => {
   const React = require('react');
   const { Pressable, Text, View } = require('react-native');
   return {
-    StateCard: ({ canDelete, canEdit, onArchive, onEdit, onToggleSelection, onView, state }: {
-      canDelete: boolean;
+    StateCard: ({ canArchive, canEdit, onArchive, onEdit, onToggleSelection, onView, state }: {
+      canArchive: boolean;
       canEdit: boolean;
       onArchive: (state: State) => void;
       onEdit: (state: State) => void;
@@ -97,7 +98,7 @@ jest.mock('../components/StateCard', () => {
     }) => <View>
       <Pressable onPress={() => onView(state)} testID={`view-${state.id}`}><Text>view</Text></Pressable>
       {canEdit ? <Pressable onPress={() => onEdit(state)} testID={`edit-${state.id}`}><Text>edit</Text></Pressable> : null}
-      {canDelete ? <Pressable onPress={() => onArchive(state)} testID={`archive-${state.id}`}><Text>archive</Text></Pressable> : null}
+      {canArchive ? <Pressable onPress={() => onArchive(state)} testID={`archive-${state.id}`}><Text>archive</Text></Pressable> : null}
       <Pressable onPress={() => onToggleSelection(state)} testID={`select-${state.id}`}><Text>select</Text></Pressable>
     </View>,
   };
@@ -150,7 +151,7 @@ describe('StatesScreen', () => {
     mockAllowedPermissions.clear();
     mockAllowedPermissions.add(permissions.CreateStates);
     mockAllowedPermissions.add(permissions.EditStates);
-    mockAllowedPermissions.add(permissions.DeleteStates);
+    mockAllowedPermissions.add(permissions.ArchiveStates);
     mockAllowedPermissions.add(permissions.ViewCrystalReports);
     mockUseStates.mockReturnValue({ data: { items: [state], metaData: { totalCount: 1 } }, error: null, isFetching: false, isLoading: false, isRefetching: false, refetch: jest.fn() });
     mockArchive.mockResolvedValue(undefined);

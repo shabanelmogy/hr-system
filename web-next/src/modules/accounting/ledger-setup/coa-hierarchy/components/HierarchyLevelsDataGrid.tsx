@@ -14,7 +14,9 @@ interface Props {
   rows: AccountHierarchyLevel[];
   loading: boolean;
   recordStatus: AccountRecordStatus;
-  canManage: boolean;
+  canEdit: boolean;
+  canArchive: boolean;
+  canRestore: boolean;
   onRecordStatusChange: (value: AccountRecordStatus) => void;
   onView: (item: AccountHierarchyLevel) => void;
   onEdit: (item: AccountHierarchyLevel) => void;
@@ -72,7 +74,7 @@ export default function HierarchyLevelsDataGrid(props: Props) {
             key="edit"
             icon={<Edit />}
             label={t("actions.edit")}
-            disabled={!props.canManage || row.isDeleted}
+            disabled={!props.canEdit || row.isDeleted}
             onClick={() => props.onEdit(row)}
             showInMenu={false}
           />,
@@ -81,7 +83,7 @@ export default function HierarchyLevelsDataGrid(props: Props) {
               key="restore"
               icon={<Restore />}
               label={t("actions.restore")}
-              disabled={!props.canManage}
+              disabled={!props.canRestore}
               onClick={() => props.onRestore(row)}
               showInMenu
             />
@@ -90,7 +92,7 @@ export default function HierarchyLevelsDataGrid(props: Props) {
               key="archive"
               icon={<Archive />}
               label={t("actions.archive")}
-              disabled={!props.canManage}
+              disabled={!props.canArchive}
               onClick={() => props.onArchive(row)}
               showInMenu
             />

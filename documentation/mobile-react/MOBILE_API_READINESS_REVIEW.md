@@ -65,8 +65,8 @@ Recruitment interviews are queried from `GET recruitment/interviews` with the
 application ID as a page filter. Each returned `InterviewDto` keeps its own ID;
 scorecard, completion, and evaluation requests use the selected interview ID.
 The client offers evaluation for scheduled interviews only when the actor can
-both manage applications and evaluate interviews; completion uses
-`ManageApplications`, while evaluation uses `EvaluateInterviews`. Completed
+both complete applications and evaluate interviews; completion uses
+`Interviews:Complete`, while evaluation uses `Interviews:Evaluate`. Completed
 interviews skip completion, and cancelled/no-show interviews are excluded from
 evaluation choices.
 

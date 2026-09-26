@@ -20,7 +20,7 @@ public static class PlatformPermissions
     public const string ViewApiKeys = "ApiKeys:View";
     public const string CreateApiKeys = "ApiKeys:Create";
     public const string EditApiKeys = "ApiKeys:Edit";
-    public const string DeleteApiKeys = "ApiKeys:Delete";
+    public const string RevokeApiKeys = "ApiKeys:Revoke";
 
     public const string ViewBackups = "Backups:View";
     public const string CreateBackups = "Backups:Create";
@@ -28,7 +28,7 @@ public static class PlatformPermissions
     public const string DeleteBackups = "Backups:Delete";
 
     public const string ViewCompanyGeographicScope = "CompanyGeographicScope:View";
-    public const string ManageCompanyGeographicScope = "CompanyGeographicScope:Manage";
+    public const string EditCompanyGeographicScope = "CompanyGeographicScope:Edit";
 
     public const string ViewChangeLogs = "ChangeLogs:View";
     public const string ViewHangfireDashboard = "Hangfire:View";
@@ -41,24 +41,39 @@ public static class PlatformPermissions
     public const string ViewRoles = "Roles:View";
     public const string CreateRoles = "Roles:Create";
     public const string EditRoles = "Roles:Edit";
-    public const string DeleteRoles = "Roles:Delete";
+    public const string SetRoleStatus = "Roles:SetStatus";
+    public const string ViewRolePermissions = "RolePermissions:View";
+    public const string EditRolePermissions = "RolePermissions:Edit";
 
-    public const string ManageOfflineOperations = "OfflineOperations:Manage";
+    public const string ViewOfflineOperations = "OfflineOperations:View";
+    public const string EditOfflineOperations = "OfflineOperations:Edit";
 
     public const string ViewUsers = "Users:View";
     public const string CreateUsers = "Users:Create";
     public const string EditUsers = "Users:Edit";
-    public const string DeleteUsers = "Users:Delete";
+    public const string ResetUserPasswords = "Users:ResetPassword";
+    public const string SetUserStatus = "Users:SetStatus";
+    public const string UnlockUsers = "Users:Unlock";
+    public const string ArchiveUsers = "Users:Archive";
+    public const string RestoreUsers = "Users:Restore";
+
+    public const string ViewUserInvitations = "UserInvitations:View";
+    public const string CreateUserInvitations = "UserInvitations:Create";
+    public const string ResendUserInvitations = "UserInvitations:Resend";
+    public const string RevokeUserInvitations = "UserInvitations:Revoke";
 
     public static IReadOnlyList<string> TenantAdministration { get; } =
     [
-        ViewApiKeys, CreateApiKeys, EditApiKeys, DeleteApiKeys,
-        ViewCompanyGeographicScope, ManageCompanyGeographicScope,
+        ViewApiKeys, CreateApiKeys, EditApiKeys, RevokeApiKeys,
+        ViewCompanyGeographicScope, EditCompanyGeographicScope,
         ViewChangeLogs,
         ViewLocalizations, CreateLocalizations, EditLocalizations, DeleteLocalizations,
-        ViewRoles, CreateRoles, EditRoles, DeleteRoles,
-        ManageOfflineOperations,
-        ViewUsers, CreateUsers, EditUsers, DeleteUsers
+        ViewRoles, CreateRoles, EditRoles, SetRoleStatus,
+        ViewRolePermissions, EditRolePermissions,
+        ViewOfflineOperations, EditOfflineOperations,
+        ViewUsers, CreateUsers, EditUsers, ResetUserPasswords, SetUserStatus, UnlockUsers,
+        ArchiveUsers, RestoreUsers,
+        ViewUserInvitations, CreateUserInvitations, ResendUserInvitations, RevokeUserInvitations
     ];
 
     public static IReadOnlyList<string> GlobalOperations { get; } =

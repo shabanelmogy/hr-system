@@ -60,11 +60,13 @@ export function CountriesScreen() {
   const { isReadOnly, notifyBlockedAction } = useAppReadOnly();
   const { allowed: isCreateAuthorized } = useAuthorization({ allowSuperAdmin: true, requiredPermissions: [permissions.CreateCountries] });
   const { allowed: isEditAuthorized } = useAuthorization({ allowSuperAdmin: true, requiredPermissions: [permissions.EditCountries] });
-  const { allowed: isDeleteAuthorized } = useAuthorization({ allowSuperAdmin: true, requiredPermissions: [permissions.DeleteCountries] });
+  const { allowed: isArchiveAuthorized } = useAuthorization({ allowSuperAdmin: true, requiredPermissions: [permissions.ArchiveCountries] });
+  const { allowed: isRestoreAuthorized } = useAuthorization({ allowSuperAdmin: true, requiredPermissions: [permissions.RestoreCountries] });
   const { allowed: canViewReports } = useManagedReportAvailability('global');
   const canCreate = isCreateAuthorized && !isReadOnly;
   const canEdit = isEditAuthorized && !isReadOnly;
-  const canDelete = isDeleteAuthorized && !isReadOnly;
+  const canArchive = isArchiveAuthorized && !isReadOnly;
+  const canRestore = isRestoreAuthorized && !isReadOnly;
   const list = useServerListState<CountrySortColumn, CountryFilters>({ initialFilters, initialPageSize: 5, initialSort: { columnId: 'createdOn', direction: 'descending' } });
   const [searchField, setSearchField] = useState<CountrySearchField>('all');
   const [searchOperator, setSearchOperator] = useState<CountrySearchOperator>('contains');
@@ -163,17 +165,17 @@ export function CountriesScreen() {
       notifyBlockedAction();
       return;
     }
-    if (!isDeleteAuthorized) return;
+    if (!isRestoreAuthorized) return;
     try { await restoreMutation.mutateAsync(country.id); showToast.success(t('countries.restored')); }
     catch (error) { showToast.error(error, t('countries.restoreFailed')); }
-  }, [isDeleteAuthorized, isReadOnly, notifyBlockedAction, restoreMutation, t]);
+  }, [isReadOnly, isRestoreAuthorized, notifyBlockedAction, restoreMutation, t]);
   const confirmAction = useCallback(async () => {
     if (!pendingAction) return;
     if (isReadOnly) {
       notifyBlockedAction();
       return;
     }
-    if (!isDeleteAuthorized) return;
+    if (!isArchiveAuthorized) return;
     try {
       if (pendingAction.kind === 'bulk') {
         const result = await bulkArchiveMutation.mutateAsync(selectedIds);
@@ -186,7 +188,7 @@ export function CountriesScreen() {
       }
       setPendingAction(null);
     } catch (error) { showToast.error(error, t('countries.archiveFailed')); }
-  }, [archiveMutation, bulkArchiveMutation, isDeleteAuthorized, isReadOnly, notifyBlockedAction, pendingAction, selectedIds, t]);
+  }, [archiveMutation, bulkArchiveMutation, isArchiveAuthorized, isReadOnly, notifyBlockedAction, pendingAction, selectedIds, t]);
 
   const columns = useMemo<AppDataTableColumn<Country>[]>(() => [
     { id: 'nameEn', header: t('countries.nameEn'), width: 170, sortable: true, render: (country) => <AppText variant="bodySmall" weight="700">{country.nameEn}</AppText> },
@@ -199,9 +201,10 @@ export function CountriesScreen() {
     { id: 'actions', header: t('countries.actions'), width: 190, align: 'center', render: (country) => <View style={styles.tableActions}>
       <AppIconButton icon="eye-outline" label={t('countries.viewCountry')} onPress={() => openForm('view', country)} />
       {canEdit && !country.isDeleted ? <AppIconButton icon="create-outline" label={t('countries.editCountry')} onPress={() => openForm('edit', country)} /> : null}
-      {canDelete ? <AppIconButton icon={country.isDeleted ? 'refresh-outline' : 'archive-outline'} label={t(country.isDeleted ? 'countries.restore' : 'countries.archive')} onPress={() => country.isDeleted ? void restore(country) : setPendingAction({ kind: 'archive', country })} /> : null}
+      {!country.isDeleted && canArchive ? <AppIconButton icon="archive-outline" label={t('countries.archive')} onPress={() => setPendingAction({ kind: 'archive', country })} /> : null}
+      {country.isDeleted && canRestore ? <AppIconButton icon="refresh-outline" label={t('countries.restore')} onPress={() => void restore(country)} /> : null}
     </View> },
-  ], [canDelete, canEdit, i18n.language, openForm, restore, t, theme.colors.success, theme.colors.warning]);
+  ], [canArchive, canEdit, canRestore, i18n.language, openForm, restore, t, theme.colors.success, theme.colors.warning]);
   const offlineControls = (
     <View style={styles.offlineControls}>
       <AppSwitchField
@@ -239,7 +242,7 @@ export function CountriesScreen() {
   return <AppScreen contentContainerStyle={styles.screen} edges={['left', 'right', 'bottom']} refreshControl={<RefreshControl colors={[theme.colors.primary]} onRefresh={() => void countriesQuery.refetch()} refreshing={countriesQuery.isRefetching} tintColor={theme.colors.primary} />}>
     {offlineControls}
     <AppListScreen<Country, 'table' | 'cards' | 'chart' | 'report' | 'import'>
-      aboveViews={selectedIds.length > 0 && canDelete ? <AppButton icon="archive-outline" onPress={() => setPendingAction({ kind: 'bulk' })} variant="outline">{t('countries.archiveSelected', { count: selectedIds.length })}</AppButton> : null}
+      aboveViews={selectedIds.length > 0 && canArchive ? <AppButton icon="archive-outline" onPress={() => setPendingAction({ kind: 'bulk' })} variant="outline">{t('countries.archiveSelected', { count: selectedIds.length })}</AppButton> : null}
       defaultView="table" emptyContent={<AppStateView message={t('countries.empty')} state="empty" />}
       fillViewSelector
       filterControl={<CountryFilterButton field={searchField} onApply={applyFilters} operator={searchOperator} status={list.state.filters.status} />}
@@ -253,8 +256,8 @@ export function CountriesScreen() {
       showResultCount={false}
       showViewLabels
       views={[
-        { value: 'table', icon: 'grid-outline', label: t('multiView.table'), defaultPageSize: 5, render: (items) => <AppDataTable columns={columns} flash={flash} getRowKey={(country) => country.id} rowSelection={canDelete ? { getAccessibilityLabel: (country) => t('countries.selectCountry', { name: country.nameEn }), header: t('dataTable.select'), isRowSelectable: (country) => !country.isDeleted, onSelectionChange: (keys) => setSelectedIds(keys.filter((key): key is number => typeof key === 'number')), selectedRowKeys: selectedIds } : undefined} rows={items} showPagination={false} serverState={{ onPageChange: changePage, onPageSizeChange: changePageSize, onSortChange: changeSort, page: list.state.page, pageSize: list.state.pageSize, sort: list.state.sort, totalRows: countryPage?.metaData.totalCount ?? 0 }} /> },
-        { value: 'cards', icon: 'albums-outline', label: t('multiView.cards'), defaultPageSize: 3, scrollable: true, render: (items) => <View style={styles.cards}>{items.map((country, index) => <CountryCard active={index === 0} canDelete={canDelete} canEdit={canEdit} country={country} flash={flash?.rowKey === country.id} flashToken={flash?.token} key={country.id} onArchive={(item) => setPendingAction({ kind: 'archive', country: item })} onEdit={(item) => openForm('edit', item)} onRestore={(item) => void restore(item)} onToggleSelection={toggleSelection} onView={(item) => openForm('view', item)} selected={selectedIds.includes(country.id)} />)}</View> },
+        { value: 'table', icon: 'grid-outline', label: t('multiView.table'), defaultPageSize: 5, render: (items) => <AppDataTable columns={columns} flash={flash} getRowKey={(country) => country.id} rowSelection={canArchive ? { getAccessibilityLabel: (country) => t('countries.selectCountry', { name: country.nameEn }), header: t('dataTable.select'), isRowSelectable: (country) => !country.isDeleted, onSelectionChange: (keys) => setSelectedIds(keys.filter((key): key is number => typeof key === 'number')), selectedRowKeys: selectedIds } : undefined} rows={items} showPagination={false} serverState={{ onPageChange: changePage, onPageSizeChange: changePageSize, onSortChange: changeSort, page: list.state.page, pageSize: list.state.pageSize, sort: list.state.sort, totalRows: countryPage?.metaData.totalCount ?? 0 }} /> },
+        { value: 'cards', icon: 'albums-outline', label: t('multiView.cards'), defaultPageSize: 3, scrollable: true, render: (items) => <View style={styles.cards}>{items.map((country, index) => <CountryCard active={index === 0} canArchive={canArchive} canEdit={canEdit} canRestore={canRestore} country={country} flash={flash?.rowKey === country.id} flashToken={flash?.token} key={country.id} onArchive={(item) => setPendingAction({ kind: 'archive', country: item })} onEdit={(item) => openForm('edit', item)} onRestore={(item) => void restore(item)} onToggleSelection={toggleSelection} onView={(item) => openForm('view', item)} selected={selectedIds.includes(country.id)} />)}</View> },
         { value: 'chart', icon: 'stats-chart-outline', label: t('countries.chartView'), paginate: false, renderWhenEmpty: true, scrollable: true, render: (items) => <CountriesChartView countries={items} totalCount={countryPage?.metaData.totalCount ?? 0} /> },
         ...(canViewReports ? [{ value: 'report' as const, icon: 'document-text-outline' as const, label: t('countries.reportView'), paginate: false, renderWhenEmpty: true, render: () => <CountryReportView /> }] : []),
         ...(canCreate ? [{ value: 'import' as const, icon: 'cloud-upload-outline' as const, label: t('countries.importView'), paginate: false, renderWhenEmpty: true, scrollable: true, render: () => <CountryImportView /> }] : []),

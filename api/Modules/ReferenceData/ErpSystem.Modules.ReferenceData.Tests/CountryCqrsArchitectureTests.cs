@@ -55,7 +55,7 @@ public sealed class CountryCqrsArchitectureTests
 
         var bulkArchive = typeof(CountriesController).GetMethod(nameof(CountriesController.BulkArchive))!;
         Assert.Equal(
-            ReferenceDataPermissions.DeleteCountries,
+            ReferenceDataPermissions.ArchiveCountries,
             bulkArchive.GetCustomAttribute<HasPermissionAttribute>()?.Policy);
         Assert.Contains(
             bulkArchive.GetCustomAttributes<ProducesResponseTypeAttribute>(),

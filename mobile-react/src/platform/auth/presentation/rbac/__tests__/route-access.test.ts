@@ -50,17 +50,17 @@ describe('route access manifest', () => {
   });
 
   it('uses the specific role-permissions policy before administration root', () => {
-    const session = userWith({ permissionClaims: [permissions.ViewRoles] });
+    const session = userWith({ permissionClaims: [permissions.ViewRolePermissions] });
 
     expect(getRoutePolicy('/administration/role-permissions/role-1')?.path)
       .toBe(ROUTES.administration.rolePermissionsRoot);
     expect(canAccessRoute('/administration/role-permissions/role-1', session)).toBe(true);
   });
 
-  it('keeps Offline Operations behind its canonical manage permission', () => {
+  it('keeps Offline Operations behind its canonical view permission', () => {
     const usersViewer = userWith({ permissionClaims: [permissions.ViewUsers] });
     const rolesViewer = userWith({ permissionClaims: [permissions.ViewRoles] });
-    const manager = userWith({ permissionClaims: [permissions.ManageOfflineOperations] });
+    const manager = userWith({ permissionClaims: [permissions.ViewOfflineOperations] });
     const roleOnlyAdmin = userWith({ roles: [appRoles.admin] });
 
     expect(getRoutePolicy(ROUTES.administration.offlineOperations)?.path)
@@ -110,7 +110,7 @@ describe('route access manifest', () => {
       roles: [appRoles.admin],
       permissionClaims: [
         permissions.ViewCompanyGeographicScope,
-        permissions.ManageCompanyGeographicScope,
+        permissions.EditCompanyGeographicScope,
         permissions.ViewCountries,
         permissions.ViewStates,
         permissions.ViewDistricts,
@@ -169,8 +169,8 @@ describe('route access manifest', () => {
     const fiscalYearViewer = userWith({
       permissionClaims: [permissions.ViewFiscalYears],
     });
-    const ledgerSetupManager = userWith({
-      permissionClaims: [permissions.ViewAccountingSetup],
+    const currencyViewer = userWith({
+      permissionClaims: [permissions.ViewCurrencies],
     });
 
     expect(canAccessRoute(ROUTES.finance.root, userWith())).toBe(false);
@@ -179,9 +179,9 @@ describe('route access manifest', () => {
     expect(canAccessRoute(ROUTES.finance.root, fiscalYearViewer)).toBe(true);
     expect(canAccessRoute(ROUTES.finance.ledgerSetup.fiscalYears, fiscalYearViewer)).toBe(true);
     expect(canAccessRoute(ROUTES.finance.ledgerSetup.currencies, fiscalYearViewer)).toBe(false);
-    expect(canAccessRoute(ROUTES.finance.root, ledgerSetupManager)).toBe(true);
-    expect(canAccessRoute(ROUTES.finance.ledgerSetup.currencies, ledgerSetupManager)).toBe(true);
-    expect(canAccessRoute(ROUTES.finance.ledgerSetup.fiscalYears, ledgerSetupManager)).toBe(false);
+    expect(canAccessRoute(ROUTES.finance.root, currencyViewer)).toBe(true);
+    expect(canAccessRoute(ROUTES.finance.ledgerSetup.currencies, currencyViewer)).toBe(true);
+    expect(canAccessRoute(ROUTES.finance.ledgerSetup.fiscalYears, currencyViewer)).toBe(false);
   });
 
   it('allows the Workforce Planning workspace for any module view permission', () => {

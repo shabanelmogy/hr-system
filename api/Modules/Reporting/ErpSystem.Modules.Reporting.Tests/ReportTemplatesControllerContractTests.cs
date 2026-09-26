@@ -24,7 +24,7 @@ public sealed class ReportTemplatesControllerContractTests
         AssertPermission(nameof(ReportTemplatesController.Create), ReportingPermissions.CreateReportTemplates);
         AssertPermission(nameof(ReportTemplatesController.Update), ReportingPermissions.EditReportTemplates);
         AssertPermission(nameof(ReportTemplatesController.Publish), ReportingPermissions.PublishReportTemplates);
-        AssertPermission(nameof(ReportTemplatesController.Archive), ReportingPermissions.DeleteReportTemplates);
+        AssertPermission(nameof(ReportTemplatesController.Archive), ReportingPermissions.ArchiveReportTemplates);
 
         Assert.Equal(
             typeof(CreateReportTemplateRequest),

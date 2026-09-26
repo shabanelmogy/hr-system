@@ -56,7 +56,7 @@ namespace ErpSystem.Modules.Platform.Presentation.Features.Security.ApiKeys.V1
         }
 
         [HttpPost("{id:int}/revoke")]
-        [HasPermission(PlatformPermissions.DeleteApiKeys)]
+        [HasPermission(PlatformPermissions.RevokeApiKeys)]
         public async Task<IActionResult> Revoke(int id, CancellationToken cancellationToken)
         {
             var result = await sender.Send(new RevokeApiKeyCommand(id), cancellationToken);

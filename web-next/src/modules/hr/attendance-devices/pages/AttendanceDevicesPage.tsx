@@ -148,25 +148,25 @@ export default function AttendanceDevicesPage() {
         <PageHeader
           title={t("attendanceDevices.viewTitle")}
           subTitle={t("attendanceDevices.viewSubtitle")}
-          actions={permissions.canManage ? (
+          actions={permissions.canCreateDevice || permissions.canCreateAgent ? (
             <Stack direction="row" spacing={1}>
-              <Button startIcon={<GroupsRoundedIcon />} onClick={() => {
+              {permissions.canCreateAgent ? <Button startIcon={<GroupsRoundedIcon />} onClick={() => {
                 setCreatedAgent(null);
                 setAgentOpen(true);
               }}>
                 {t("attendanceDevices.siteAgent")}
-              </Button>
-              <Button variant="contained" startIcon={<AddRoundedIcon />} onClick={() => {
+              </Button> : null}
+              {permissions.canCreateDevice ? <Button variant="contained" startIcon={<AddRoundedIcon />} onClick={() => {
                 setEditing(null);
                 setFormOpen(true);
               }}>
                 {t("attendanceDevices.addDevice")}
-              </Button>
+              </Button> : null}
             </Stack>
           ) : undefined}
         />
 
-        {permissions.canManage && !agents.isLoading && agents.data?.length === 0 ? (
+        {permissions.canCreateAgent && !agents.isLoading && agents.data?.length === 0 ? (
           <Alert
             severity="info"
             action={(
@@ -240,7 +240,7 @@ export default function AttendanceDevicesPage() {
                   icon={DevicesRoundedIcon}
                   title={t("attendanceDevices.noDevicesTitle")}
                   subtitle={t("attendanceDevices.noDevicesSubtitle")}
-                  action={permissions.canManage ? (
+                  action={permissions.canCreateDevice ? (
                     <Button variant="contained" startIcon={<AddRoundedIcon />} onClick={() => {
                       setEditing(null);
                       setFormOpen(true);
@@ -261,7 +261,7 @@ export default function AttendanceDevicesPage() {
                   title={selected.name}
                   subtitle={`${selected.providerId} · ${selected.host}:${selected.port}`}
                   actions={<Stack direction="row" spacing={1}>
-                    <Button disabled={!permissions.canManage} onClick={() => {
+                    <Button disabled={!permissions.canEditDevice} onClick={() => {
                       setEditing(selected);
                       setFormOpen(true);
                     }}>
@@ -269,7 +269,7 @@ export default function AttendanceDevicesPage() {
                     </Button>
                     <Button
                       color={selected.enabled ? "warning" : "success"}
-                      disabled={!permissions.canManage || setEnabled.isPending}
+                      disabled={!permissions.canSetStatus || setEnabled.isPending}
                       onClick={() => void run(
                         () => setEnabled.mutateAsync({ id: selected.id, enabled: !selected.enabled, rowVersion: selected.rowVersion }),
                         selected.enabled ? t("attendanceDevices.deviceDisabled") : t("attendanceDevices.deviceEnabled"),
@@ -301,10 +301,10 @@ export default function AttendanceDevicesPage() {
                   actions={<ManageSearchRoundedIcon color="action" />}
                 >
                   <Stack direction={{ xs: "column", sm: "row" }} spacing={1}>
-                    <Button disabled={!permissions.canCredentials} onClick={() => setCredentialsOpen(true)}>{t("attendanceDevices.credentials")}</Button>
+                    <Button disabled={!permissions.canEditCredentials} onClick={() => setCredentialsOpen(true)}>{t("attendanceDevices.credentials")}</Button>
                     <Button
                       variant="contained"
-                      disabled={!permissions.canPull || !canOperateSelected || test.isPending}
+                      disabled={!permissions.canTest || !canOperateSelected || test.isPending}
                       onClick={() => void run(async () => {
                         const result = await test.mutateAsync(selected.id);
                         setTestResult(result);
@@ -345,7 +345,7 @@ export default function AttendanceDevicesPage() {
             <Stack spacing={1.25}>
               <Button
                 fullWidth
-                disabled={!permissions.canPull || !canOperateSelected || pullUsers.isPending}
+                disabled={!permissions.canPullUsers || !canOperateSelected || pullUsers.isPending}
                 onClick={() => {
                   if (selected) void run(() => pullUsers.mutateAsync({ id: selected.id, request: { operationId: crypto.randomUUID() } }), t("attendanceDevices.userPullQueued"));
                 }}
@@ -368,7 +368,7 @@ export default function AttendanceDevicesPage() {
                 fullWidth
                 variant="contained"
                 startIcon={<DownloadRoundedIcon />}
-                disabled={!permissions.canPull || !canOperateSelected || pullAttendance.isPending}
+                disabled={!permissions.canPullAttendance || !canOperateSelected || pullAttendance.isPending}
                 onClick={() => {
                   if (selected) void run(
                     () => pullAttendance.mutateAsync({
@@ -398,7 +398,7 @@ export default function AttendanceDevicesPage() {
           providers={providers.data ?? []}
           branches={branches.data ?? []}
           agents={agents.data ?? []}
-          disabled={!permissions.canManage || create.isPending || update.isPending}
+          disabled={editing ? !permissions.canEditDevice || update.isPending : !permissions.canCreateDevice || create.isPending}
           onClose={() => setFormOpen(false)}
           onSubmit={(request) => void run(async () => {
             if (editing) await update.mutateAsync({ id: editing.id, request: { ...request, rowVersion: editing.rowVersion } });
@@ -408,7 +408,7 @@ export default function AttendanceDevicesPage() {
         /> : null}
         {agentOpen ? <AttendanceAgentEnrollmentDialog
           open={agentOpen}
-          disabled={!permissions.canManage || createAgent.isPending}
+          disabled={!permissions.canCreateAgent || createAgent.isPending}
           created={createdAgent}
           onClose={() => {
             setAgentOpen(false);
@@ -422,7 +422,7 @@ export default function AttendanceDevicesPage() {
         {credentialsOpen ? <CredentialsDialog
           open={credentialsOpen}
           deviceId={selected?.id ?? null}
-          disabled={!permissions.canCredentials || credentials.isPending}
+          disabled={!permissions.canEditCredentials || credentials.isPending}
           onClose={() => setCredentialsOpen(false)}
           onSubmit={(id, values) => void run(async () => {
             await credentials.mutateAsync({ id, request: values });

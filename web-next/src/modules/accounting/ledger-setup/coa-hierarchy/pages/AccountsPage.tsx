@@ -79,9 +79,12 @@ export default function AccountsPage() {
   const { t } = useTranslation();
   const authorization = usePermissions();
   const canView = authorization.hasPermission(permissions.ViewAccounts);
-  const canManage =
-    !authorization.isReadOnly &&
-    authorization.hasPermission(permissions.ManageAccounts);
+  const access = {
+    canCreate: !authorization.isReadOnly && authorization.hasPermission(permissions.CreateAccounts),
+    canEdit: !authorization.isReadOnly && authorization.hasPermission(permissions.EditAccounts),
+    canArchive: !authorization.isReadOnly && authorization.hasPermission(permissions.ArchiveAccounts),
+    canRestore: !authorization.isReadOnly && authorization.hasPermission(permissions.RestoreAccounts),
+  };
 
   if (!canView) {
     return (
@@ -93,10 +96,10 @@ export default function AccountsPage() {
     );
   }
 
-  return <AuthorizedAccountsPage canManage={canManage} />;
+  return <AuthorizedAccountsPage access={access} />;
 }
 
-function AuthorizedAccountsPage({ canManage }: { canManage: boolean }) {
+function AuthorizedAccountsPage({ access }: { access: { canCreate: boolean; canEdit: boolean; canArchive: boolean; canRestore: boolean } }) {
   const { t } = useTranslation();
   const queryClient = useQueryClient();
   const [viewMode, setViewMode] = useState<ViewMode>("tree");
@@ -233,7 +236,7 @@ function AuthorizedAccountsPage({ canManage }: { canManage: boolean }) {
   });
 
   const openCreate = (parentId: number | null = null) => {
-    if (!canManage) return;
+    if (!access.canCreate) return;
     setDialogAccount(null);
     setCreateParentId(parentId);
     setDialog("add");
@@ -243,7 +246,9 @@ function AuthorizedAccountsPage({ canManage }: { canManage: boolean }) {
     id: number,
     next: Exclude<DialogMode, "add" | null>,
   ) => {
-    if (next !== "view" && !canManage) return;
+    if (next === "edit" && !access.canEdit) return;
+    if (next === "archive" && !access.canArchive) return;
+    if (next === "restore" && !access.canRestore) return;
     try {
       const current = await fetchFreshAccountDetail(queryClient, id);
       setDialogAccount(current);
@@ -257,9 +262,8 @@ function AuthorizedAccountsPage({ canManage }: { canManage: boolean }) {
   };
 
   const submit = async (request: AccountMutationRequest) => {
-    if (!canManage) return;
-    if (dialog === "add") await create.mutateAsync(request);
-    else if (dialog === "edit" && dialogAccount) {
+    if (dialog === "add" && access.canCreate) await create.mutateAsync(request);
+    else if (dialog === "edit" && access.canEdit && dialogAccount) {
       await update.mutateAsync({
         id: dialogAccount.id,
         request,
@@ -290,7 +294,7 @@ function AuthorizedAccountsPage({ canManage }: { canManage: boolean }) {
         title={t("ledgerSetup.accounts.title")}
         subTitle={t("ledgerSetup.accounts.subtitle")}
         actions={
-          canManage ? (
+          access.canCreate ? (
             <Button
               variant="contained"
               startIcon={<AddRoundedIcon />}
@@ -356,14 +360,14 @@ function AuthorizedAccountsPage({ canManage }: { canManage: boolean }) {
               onSelect={(item) => setSelectedId(item?.id ?? null)}
               canDrag={false}
               onAddChild={
-                canManage
+                access.canCreate
                   ? (item) => {
                       if (!item.allowPosting) openCreate(item.id);
                     }
                   : undefined
               }
               onEdit={
-                canManage
+                access.canEdit
                   ? (item) => void openProtectedAction(item.id, "edit")
                   : undefined
               }
@@ -378,7 +382,9 @@ function AuthorizedAccountsPage({ canManage }: { canManage: boolean }) {
                         t("ledgerSetup.accounts.messages.detailFailed")
                       : null
                   }
-                  canManage={canManage}
+                  canCreate={access.canCreate}
+                  canEdit={access.canEdit}
+                  canArchive={access.canArchive}
                   onRetry={() => void detail.refetch()}
                   onAddChild={(node) => openCreate(node.id)}
                   onEdit={(id) => void openProtectedAction(id, "edit")}
@@ -437,7 +443,9 @@ function AuthorizedAccountsPage({ canManage }: { canManage: boolean }) {
             searchField={list.state.filters.searchField}
             searchOperator={list.state.filters.searchOperator}
             recordStatus={list.state.filters.recordStatus}
-            canManage={canManage}
+            canEdit={access.canEdit}
+            canArchive={access.canArchive}
+            canRestore={access.canRestore}
             onSearchChange={list.setSearchValue}
             onSearchFieldChange={(value) =>
               list.setFilters({ ...list.state.filters, searchField: value })
@@ -506,7 +514,7 @@ function AuthorizedAccountsPage({ canManage }: { canManage: boolean }) {
         busy={archive.isPending}
         onClose={closeDialog}
         onConfirm={() => {
-          if (!canManage || !dialogAccount) return;
+          if (!access.canArchive || !dialogAccount) return;
           void archive.mutateAsync({
             id: dialogAccount.id,
             rowVersion: dialogAccount.rowVersion,
@@ -530,7 +538,7 @@ function AuthorizedAccountsPage({ canManage }: { canManage: boolean }) {
         busy={restore.isPending}
         onClose={closeDialog}
         onConfirm={() => {
-          if (!canManage || !dialogAccount) return;
+          if (!access.canRestore || !dialogAccount) return;
           void restore.mutateAsync({
             id: dialogAccount.id,
             rowVersion: dialogAccount.rowVersion,

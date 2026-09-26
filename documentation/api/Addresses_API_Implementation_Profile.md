@@ -12,6 +12,13 @@ Future owner-link APIs must be thin controllers over CQRS commands and queries,
 with Company, Branch, Employee, and Work Location ownership kept in their own
 feature slices.
 
+The controller still uses the action-token `ApiRoutes.BaseRoute` compatibility
+shape. Its concrete routes are `GET addresses/GetAll`,
+`GET addresses/GetByID/{id}`, `GET addresses/GetAddressWithDetails/{id}/details`,
+`POST addresses/Add`, `PUT addresses/Update`, `DELETE addresses/Delete/{id}`,
+and `GET addresses/GetCount/count`, all below `/api/v1`. A future move to the
+resource-style route must be treated as an explicit contract migration.
+
 ## 2. Request shape
 
 ```json
@@ -45,12 +52,15 @@ rejected.
 
 `AddressConfiguration` stores nullable structured fields, direct Country/State/
 District foreign keys, range and paired-coordinate constraints, and a composite
-tenant/company/ID alternate key. `CompanyAddressConfiguration` and
-`BranchAddressConfiguration` enforce owner-scoped primary-purpose uniqueness.
+tenant/company/ID alternate key. `ReferenceDataDbContext` registers the
+CompanyAddress and BranchAddress sets and their fail-closed scope filters. The
+current migration does not yet enforce owner-scoped primary-purpose uniqueness;
+that remains part of `DEF-006` with the owner-link command boundary.
 
 `CompanyAddress` and `BranchAddress` use `AddressPurpose` and `IsPrimary`; the
 old Company/Branch scalar `AddressId` columns and Address-level `IsDefault` are
-removed by `RefactorAddressesForGlobalGeography`.
+absent from the current `20260914181144_InitialReferenceData` migration
+baseline.
 
 ## 4. Side effects and security
 

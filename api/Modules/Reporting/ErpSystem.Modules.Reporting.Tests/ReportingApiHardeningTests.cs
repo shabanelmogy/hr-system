@@ -7,11 +7,19 @@ namespace ErpSystem.Modules.Reporting.Tests;
 public sealed class ReportingApiHardeningTests
 {
     [Fact]
-    public void ViewsController_RequiresDatabaseViewPermission()
+    public void ViewsController_RequiresActionSpecificDatabaseViewPermissions()
     {
-        var attribute = typeof(ViewsController).GetCustomAttribute<HasPermissionAttribute>();
-
-        Assert.NotNull(attribute);
-        Assert.Equal(ReportingPermissions.ManageDatabaseViews, attribute.Policy);
+        Assert.Equal(
+            ReportingPermissions.EditDatabaseViews,
+            typeof(ViewsController).GetMethod(nameof(ViewsController.CreateOrAlterView))!
+                .GetCustomAttribute<HasPermissionAttribute>()?.Policy);
+        Assert.Equal(
+            ReportingPermissions.ViewDatabaseViews,
+            typeof(ViewsController).GetMethod(nameof(ViewsController.GetAllViews))!
+                .GetCustomAttribute<HasPermissionAttribute>()?.Policy);
+        Assert.Equal(
+            ReportingPermissions.DeleteDatabaseViews,
+            typeof(ViewsController).GetMethod(nameof(ViewsController.DropView))!
+                .GetCustomAttribute<HasPermissionAttribute>()?.Policy);
     }
 }

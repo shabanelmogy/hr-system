@@ -30,11 +30,11 @@ import {
 } from '@/src/shared/components';
 
 const createInvitationPermissions = [
-  permissions.CreateUsers,
+  permissions.CreateUserInvitations,
   permissions.ViewRoles,
 ] as const;
-const resendInvitationPermissions = [permissions.EditUsers] as const;
-const revokeInvitationPermissions = [permissions.DeleteUsers] as const;
+const resendInvitationPermissions = [permissions.ResendUserInvitations] as const;
+const revokeInvitationPermissions = [permissions.RevokeUserInvitations] as const;
 
 export function InvitationManagementScreen() {
   const { t } = useTranslation();

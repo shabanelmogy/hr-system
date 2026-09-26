@@ -6,6 +6,11 @@
 child `ledger-setup-currency`. It manages the Accounting company Currency catalog and
 does not absorb Company Settings or Exchange Rates.
 
+The current v2 Screen Contract selects `P-001`. Web requires the server-managed
+Grid and typed detail/create/edit/lifecycle; Cards are Deferred and Tree/Report/
+Import/Export/Chart are Excluded. `NameAr` and `NameEn` are separate required
+business fields in form, detail, list/search and valid mock draft.
+
 ## 2. Route and navigation
 
 The thin App Router entry is
@@ -59,7 +64,9 @@ list/detail reload and clears stale selection before another write.
 ## 10. Permissions and read-only mode
 
 View route/access remains usable with `AccountingSetup:View`. Mutation controls
-require `AccountingSetup:Manage` and are suppressed when global read-only is active.
+require the matching `Currencies:Create`, `Currencies:Edit`,
+`Currencies:Archive`, or `Currencies:Restore` permission and are suppressed when
+global read-only is active. Reads require `Currencies:View`.
 Archived rows can be viewed/restored but not edited.
 
 ## 11. Localization and RTL

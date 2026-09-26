@@ -102,7 +102,7 @@ public sealed class AddCrystalReportVersionCommandHandler(
         AddCrystalReportVersionCommand request,
         CancellationToken cancellationToken)
     {
-        var bypass = permissions.HasPermission(ReportingPermissions.ManageCrystalReportAccess);
+        var bypass = permissions.HasPermission(ReportingPermissions.EditCrystalReportAccess);
         var snapshot = await store.GetDetailAsync(
             request.ReportId,
             includeArchived: false,
@@ -182,7 +182,7 @@ public sealed class PublishCrystalReportVersionCommandHandler(
     {
         if (!TryDecodeRowVersion(request.RowVersion, out var rowVersion))
             return Result.Failure<CrystalReportDetailResponse>(errors.CrystalReportInvalidRowVersion);
-        var bypass = permissions.HasPermission(ReportingPermissions.ManageCrystalReportAccess);
+        var bypass = permissions.HasPermission(ReportingPermissions.EditCrystalReportAccess);
 
         var result = await unitOfWork.ExecuteAtomicallyAsync(
             [CrystalReportLocks.Report(request.ReportId)],

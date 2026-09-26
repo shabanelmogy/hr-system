@@ -32,7 +32,8 @@ import { RoleForm } from '../components/RoleForm';
 
 const createRolePermissions = [permissions.CreateRoles] as const;
 const editRolePermissions = [permissions.EditRoles] as const;
-const deleteRolePermissions = [permissions.DeleteRoles] as const;
+const viewRolePermissions = [permissions.ViewRolePermissions] as const;
+const deleteRolePermissions = [permissions.SetRoleStatus] as const;
 
 type RoleFormMode = 'add' | 'edit' | 'view';
 type RoleView = 'table' | 'cards';
@@ -45,6 +46,9 @@ export function RoleManagementScreen() {
   });
   const { allowed: canEdit } = useAuthorization({
     requiredPermissions: editRolePermissions,
+  });
+  const { allowed: canViewPermissions } = useAuthorization({
+    requiredPermissions: viewRolePermissions,
   });
   const { allowed: canDelete } = useAuthorization({
     requiredPermissions: deleteRolePermissions,
@@ -97,6 +101,7 @@ export function RoleManagementScreen() {
     <RoleActions
       canDelete={canDelete}
       canEdit={canEdit}
+      canViewPermissions={canViewPermissions}
       onEdit={(selected) => openForm('edit', selected)}
       onManagePermissions={(selected) => router.push(
         asHref(ROUTES.administration.rolePermissions(selected.id)),
@@ -105,7 +110,7 @@ export function RoleManagementScreen() {
       onView={(selected) => openForm('view', selected)}
       role={role}
     />
-  ), [canDelete, canEdit, openForm]);
+  ), [canDelete, canEdit, canViewPermissions, openForm]);
 
   const columns = useMemo<AppDataTableColumn<RoleOption>[]>(() => [
     {

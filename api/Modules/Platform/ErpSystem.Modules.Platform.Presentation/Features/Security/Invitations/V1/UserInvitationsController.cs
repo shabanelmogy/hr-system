@@ -10,12 +10,12 @@ namespace ErpSystem.Modules.Platform.Presentation.Features.Security.Invitations.
 public sealed class UserInvitationsController(ISender sender) : ControllerBase
 {
     [HttpGet]
-    [HasPermission(PlatformPermissions.ViewUsers)]
+    [HasPermission(PlatformPermissions.ViewUserInvitations)]
     public async Task<IActionResult> GetAll(CancellationToken cancellationToken) =>
         Ok(await sender.Send(new GetUserInvitationsQuery(), cancellationToken));
 
     [HttpPost]
-    [HasPermission(PlatformPermissions.CreateUsers)]
+    [HasPermission(PlatformPermissions.CreateUserInvitations)]
     public async Task<IActionResult> Create(
         [FromBody] CreateUserInvitationRequest request,
         CancellationToken cancellationToken)
@@ -25,7 +25,7 @@ public sealed class UserInvitationsController(ISender sender) : ControllerBase
     }
 
     [HttpPost("{id:guid}")]
-    [HasPermission(PlatformPermissions.EditUsers)]
+    [HasPermission(PlatformPermissions.ResendUserInvitations)]
     public async Task<IActionResult> Resend(Guid id, CancellationToken cancellationToken)
     {
         var result = await sender.Send(new ResendUserInvitationCommand(id), cancellationToken);
@@ -33,7 +33,7 @@ public sealed class UserInvitationsController(ISender sender) : ControllerBase
     }
 
     [HttpDelete("{id:guid}")]
-    [HasPermission(PlatformPermissions.DeleteUsers)]
+    [HasPermission(PlatformPermissions.RevokeUserInvitations)]
     public async Task<IActionResult> Revoke(Guid id, CancellationToken cancellationToken)
     {
         var result = await sender.Send(new RevokeUserInvitationCommand(id), cancellationToken);

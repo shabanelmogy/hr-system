@@ -24,7 +24,8 @@ public sealed class PlatformOfflineOperationsPolicyTests
         Assert.Equal(
             "ErpSystem.Modules.Platform.Contracts",
             typeof(PlatformPermissions).Assembly.GetName().Name);
-        Assert.Equal("OfflineOperations:Manage", PlatformPermissions.ManageOfflineOperations);
+        Assert.Equal("OfflineOperations:View", PlatformPermissions.ViewOfflineOperations);
+        Assert.Equal("OfflineOperations:Edit", PlatformPermissions.EditOfflineOperations);
         Assert.Equal(
             "ErpSystem.Modules.Platform.Application",
             typeof(OfflineOperationCapabilityIds).Assembly.GetName().Name);
@@ -180,13 +181,15 @@ public sealed class PlatformOfflineOperationsPolicyTests
         var get = controller.GetMethod(nameof(OfflineOperationsController.GetPolicy))!;
         Assert.Equal("policy", Assert.Single(get.GetCustomAttributes<HttpGetAttribute>()).Template);
         Assert.NotNull(get.GetCustomAttribute<TenantMemberAttribute>());
-        Assert.Null(get.GetCustomAttribute<HasPermissionAttribute>());
+        Assert.Equal(
+            PlatformPermissions.ViewOfflineOperations,
+            get.GetCustomAttribute<HasPermissionAttribute>()?.Policy);
 
         var update = controller.GetMethod(nameof(OfflineOperationsController.UpdatePolicy))!;
         Assert.Equal("policy", Assert.Single(update.GetCustomAttributes<HttpPutAttribute>()).Template);
         Assert.NotNull(update.GetCustomAttribute<TenantMemberAttribute>());
         Assert.Equal(
-            PlatformPermissions.ManageOfflineOperations,
+            PlatformPermissions.EditOfflineOperations,
             update.GetCustomAttribute<HasPermissionAttribute>()?.Policy);
     }
 

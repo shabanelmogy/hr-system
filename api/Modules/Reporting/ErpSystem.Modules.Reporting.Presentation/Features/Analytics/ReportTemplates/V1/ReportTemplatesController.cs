@@ -150,7 +150,7 @@ public sealed class ReportTemplatesController(ISender sender) : ControllerBase
 
     /// <summary>Unpublishes an active template after checking its row version.</summary>
     [HttpPost("{id:guid}/unpublish")]
-    [HasPermission(ReportingPermissions.PublishReportTemplates)]
+    [HasPermission(ReportingPermissions.UnpublishReportTemplates)]
     public Task<IActionResult> Unpublish(
         [FromRoute] Guid id,
         [FromBody] ReportTemplateConcurrencyRequest request,
@@ -159,7 +159,7 @@ public sealed class ReportTemplatesController(ISender sender) : ControllerBase
 
     /// <summary>Soft-archives a template after checking its row version.</summary>
     [HttpDelete("{id:guid}")]
-    [HasPermission(ReportingPermissions.DeleteReportTemplates)]
+    [HasPermission(ReportingPermissions.ArchiveReportTemplates)]
     public Task<IActionResult> Archive(
         [FromRoute] Guid id,
         [FromBody] ReportTemplateConcurrencyRequest request,
@@ -168,7 +168,7 @@ public sealed class ReportTemplatesController(ISender sender) : ControllerBase
 
     /// <summary>Restores a soft-archived template after checking its row version.</summary>
     [HttpPost("{id:guid}/restore")]
-    [HasPermission(ReportingPermissions.DeleteReportTemplates)]
+    [HasPermission(ReportingPermissions.RestoreReportTemplates)]
     public Task<IActionResult> Restore(
         [FromRoute] Guid id,
         [FromBody] ReportTemplateConcurrencyRequest request,

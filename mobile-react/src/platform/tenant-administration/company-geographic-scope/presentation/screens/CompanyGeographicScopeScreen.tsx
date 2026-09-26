@@ -53,7 +53,7 @@ export function CompanyGeographicScopeScreen() {
     requiredPermissions: [permissions.ViewCompanyGeographicScope],
   });
   const { allowed: canManage } = useAuthorization({
-    requiredPermissions: [permissions.ManageCompanyGeographicScope],
+    requiredPermissions: [permissions.EditCompanyGeographicScope],
   });
   const schema = useMemo(() => createCompanyGeographicScopeFormSchema(t), [t]);
   const {

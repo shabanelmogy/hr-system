@@ -15,6 +15,13 @@
 | P-001 Grid/CRUD | Countries Page/MultiView | Countries Screen و`AppListScreen` | قوائم البيانات المسطحة ذات إدارة الخادم |
 | P-002 Tree + Master/Detail | Cost Centers و`SplitTreeView` | Cost Centers و`AppHierarchicalTree` | البيانات الهرمية |
 | P-003 Tabbed multi-section form | Add Tenant و`FormTabs` | Add Tenant full-screen stacked عبر `AppForm` (`Adapted`) | aggregate أو إعداد متعدد الأقسام |
+| P-005 Singleton Settings Editor | Ledger Setup Company Settings journey + `MyForm` (`Adapted`) | Ledger Setup Company Settings journey + `AppForm` (`Adapted`) | سجل إعداد واحد لكل company/scope؛ المرجع العام الحالي evidence مؤقت وليس target architecture |
+| P-006 Scoped Relationship / Mapping Editor | Role Permissions table/group editor | Role Permissions module-card editor (`Adapted`) | علاقات أو mappings كثيرة داخل scope مع dirty/read-only/save contract |
+| P-007 Settings Navigation Hub | Ledger Setup overview + Accounting module definition | Ledger Setup overview + Accounting module definition | مدخل permission-filtered لأطفال مستقلين بلا generic CRUD ownership |
+
+المعرف `P-004` محجوز لـStepper لكنه ما يزال `Candidate` ولا يجوز اختياره في
+عقد تنفيذ حتى يُسجل بمرجع فعلي وعقد قبول كامل. التفاصيل والحدود واختبارات كل
+نمط موجودة في [SCREEN_PATTERN_CATALOG.md](SCREEN_PATTERN_CATALOG.md).
 
 ### Managed reporting authorization boundary
 

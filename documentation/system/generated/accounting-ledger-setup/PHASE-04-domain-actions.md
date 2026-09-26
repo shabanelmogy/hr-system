@@ -56,16 +56,16 @@ invalidation, success test, and failure test. Use `N/A` only with a reason.
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| accounting-ledger-setup-master | 3 | `dca7efc3933fbfad21faec4412e0f5fbce8747b3881d5af2b14bb3210b1cbe45` |
+| accounting-ledger-setup-master | 3 | `0fe7b836f7c51edaace81656d19dd76754de5fefdb1761a92e1bb4de7b632c0c` |
 | accounting-ledger-setup-master | 4 | `53f38a770f4b9c229d5f924b56a2be70be0db253054c0b998b0c21ec8c2ca0ca` |
 | accounting-ledger-setup-master | 6 | `4c420eef9bb4f80999de2e4e4bebf23f4d9b3934746b134431e3cd97be170dbe` |
-| accounting-ledger-setup-master | 7 | `d164de4b8addd9575c48cd3c43367a86fd03b0a3632109db487388e47d560bec` |
-| accounting-ledger-setup-master | 8 | `5010a84fb7c0439c4063c5c9962bb97fb5bea17c52fe310a943dd589c35304bd` |
+| accounting-ledger-setup-master | 7 | `b92882805c347017f5b031c78910e2aee911d3c40803f8e830e62fefbcfde520` |
+| accounting-ledger-setup-master | 8 | `4b12f431b5a5534b82d13f0645a56b7f91b345e4a9338b9513e0958389746876` |
 | accounting-ledger-setup-api | 6 | `d92b8334e847d6072d4b74e175d17a3445a288147d12d978a0439be0a73cb03b` |
 | accounting-ledger-setup-api | 7 | `bdfa4a51832c8c7dafbb42106330d18ab2c5a6089ee4c4999f857e1e720154bd` |
 | accounting-ledger-setup-api | 8 | `41d4b1feca011b953fd8e9854d130b9845ec2a231d006bca531ba8ee5120bcb3` |
 | accounting-ledger-setup-web | 6 | `caa25114c13584f5c63a0d62adfe0f841af2efa070a8a061acae55ae860b3dae` |
-| accounting-ledger-setup-web | 7 | `ee4dbb8fbf48ca96c8344cbd4bbf822e11232f1468c8e3f41b1a87d9a23448af` |
+| accounting-ledger-setup-web | 7 | `0443077bf0a9094b2d3e788b3734293e820531d3f2ec242032ca3cb2a7fb9e90` |
 | accounting-ledger-setup-web | 8 | `685a2b7b584057016a5604aaabd9119f073dfe5af18c9edb020de5630782624a` |
 | accounting-ledger-setup-web | 9 | `e6e40f5106ad2ec463abf8fc312ef97f5f206e1e95f8fafbe40194c72c508623` |
 | accounting-ledger-setup-mobile | 9 | `b38a5d0b193d3bd41831972e1709ff0a24f68ebc99b65f78546db8f34f28775e` |

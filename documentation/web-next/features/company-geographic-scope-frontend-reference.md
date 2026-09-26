@@ -6,7 +6,7 @@ The owner is `web-next/src/modules/hr/basic-data/organizational-structure/compan
 
 ## 2. Route and Access
 
-The public path is `/basic-data/organizational-structure/geographic-scope`. Route access requires `CompanyGeographicScope:View`; save additionally requires `CompanyGeographicScope:Manage` and a writable application state.
+The public path is `/basic-data/organizational-structure/geographic-scope`. Route access requires `CompanyGeographicScope:View`; save additionally requires `CompanyGeographicScope:Edit` and a writable application state.
 
 ## 3. Runtime Contract
 

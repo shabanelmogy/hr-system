@@ -46,7 +46,7 @@ public sealed class JobOffersController(ISender sender) : ControllerBase
     }
 
     [HttpPost]
-    [HasPermission(HrPermissions.ManageJobOffers)]
+    [HasPermission(HrPermissions.CreateJobOffers)]
     [ProducesResponseType(typeof(JobOfferDto), StatusCodes.Status201Created)]
     public async Task<IActionResult> Create([FromBody] JobOfferMutation mutation, CancellationToken cancellationToken)
     {
@@ -57,7 +57,7 @@ public sealed class JobOffersController(ISender sender) : ControllerBase
     }
 
     [HttpPost("{id:int}/submit")]
-    [HasPermission(HrPermissions.ManageJobOffers)]
+    [HasPermission(HrPermissions.SubmitJobOffers)]
     [ProducesResponseType(typeof(JobOfferDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> Submit(int id, CancellationToken cancellationToken)
     {
@@ -66,7 +66,7 @@ public sealed class JobOffersController(ISender sender) : ControllerBase
     }
 
     [HttpPost("{id:int}/approve")]
-    [HasPermission(HrPermissions.ApproveJobOffers)]
+    [HasPermission(HrPermissions.ReviewJobOffers)]
     [ProducesResponseType(typeof(JobOfferDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> Approve(int id, CancellationToken cancellationToken)
     {
@@ -75,7 +75,7 @@ public sealed class JobOffersController(ISender sender) : ControllerBase
     }
 
     [HttpPost("{id:int}/reject")]
-    [HasPermission(HrPermissions.ApproveJobOffers)]
+    [HasPermission(HrPermissions.ReviewJobOffers)]
     [ProducesResponseType(typeof(JobOfferDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> Reject(int id, [FromBody] DeclineOfferRequest request, CancellationToken cancellationToken)
     {
@@ -84,7 +84,7 @@ public sealed class JobOffersController(ISender sender) : ControllerBase
     }
 
     [HttpPost("{id:int}/issue")]
-    [HasPermission(HrPermissions.ManageJobOffers)]
+    [HasPermission(HrPermissions.IssueJobOffers)]
     [ProducesResponseType(typeof(JobOfferDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> Issue(int id, CancellationToken cancellationToken)
     {
@@ -93,7 +93,7 @@ public sealed class JobOffersController(ISender sender) : ControllerBase
     }
 
     [HttpPost("{id:int}/accept")]
-    [HasPermission(HrPermissions.ApproveJobOffers)]
+    [HasPermission(HrPermissions.RespondJobOffers)]
     [ProducesResponseType(typeof(JobOfferDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> Accept(int id, CancellationToken cancellationToken)
     {
@@ -102,7 +102,7 @@ public sealed class JobOffersController(ISender sender) : ControllerBase
     }
 
     [HttpPost("{id:int}/decline")]
-    [HasPermission(HrPermissions.ApproveJobOffers)]
+    [HasPermission(HrPermissions.RespondJobOffers)]
     [ProducesResponseType(typeof(JobOfferDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> Decline(int id, [FromBody] DeclineOfferRequest request, CancellationToken cancellationToken)
     {

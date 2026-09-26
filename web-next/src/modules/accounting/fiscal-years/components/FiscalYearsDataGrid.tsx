@@ -6,7 +6,7 @@ import { Chip, Divider, ListItemIcon, ListItemText, MenuItem, Radio } from "@mui
 import { GridActionsCellItem, type GridColDef, type GridPaginationModel, type GridSortModel } from "@mui/x-data-grid";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import type { FiscalYearLifecycleAction, FiscalYearLifecycleFilter, FiscalYearListItem, FiscalYearPermissions, FiscalYearRecordStatus, FiscalYearSearchField, FiscalYearSearchOperator, FiscalYearSortColumn } from "../types/FiscalYear";
+import { canRunFiscalYearLifecycle, type FiscalYearLifecycleAction, type FiscalYearLifecycleFilter, type FiscalYearListItem, type FiscalYearPermissions, type FiscalYearRecordStatus, type FiscalYearSearchField, type FiscalYearSearchOperator, type FiscalYearSortColumn } from "../types/FiscalYear";
 import { getAvailableFiscalYearLifecycleActions } from "../utils/fiscalYearLifecycle";
 
 interface Props {
@@ -33,10 +33,10 @@ export default function FiscalYearsDataGrid(props: Props) {
       <GridActionsCellItem key="view" icon={<Visibility />} label={t("actions.view")} onClick={() => props.onView(row)} showInMenu={false} />,
       <GridActionsCellItem key="edit" icon={<Edit />} label={t("actions.edit")} disabled={!props.permissions.canEdit || row.isDeleted || row.status !== 1} onClick={() => props.onEdit(row)} showInMenu={false} />,
       ...getAvailableFiscalYearLifecycleActions(row.status).map(action =>
-        <GridActionsCellItem key={`lifecycle-${action}`} icon={action === "reopen" ? <LockOpen /> : <LockClock />} label={t(`fiscalYears.lifecycle.${action}`)} disabled={!props.permissions.canManageLifecycle || row.isDeleted} onClick={() => props.onLifecycle(row, action)} showInMenu />),
+        <GridActionsCellItem key={`lifecycle-${action}`} icon={action === "reopen" ? <LockOpen /> : <LockClock />} label={t(`fiscalYears.lifecycle.${action}`)} disabled={!canRunFiscalYearLifecycle(props.permissions, action) || row.isDeleted} onClick={() => props.onLifecycle(row, action)} showInMenu />),
       row.isDeleted
-        ? <GridActionsCellItem key="restore" icon={<Restore />} label={t("actions.restore")} disabled={!props.permissions.canDelete} onClick={() => props.onRestore(row)} showInMenu />
-        : <GridActionsCellItem key="archive" icon={<Archive />} label={t("actions.archive")} disabled={!props.permissions.canDelete || row.status !== 1} onClick={() => props.onArchive(row)} showInMenu />,
+        ? <GridActionsCellItem key="restore" icon={<Restore />} label={t("actions.restore")} disabled={!props.permissions.canRestore} onClick={() => props.onRestore(row)} showInMenu />
+        : <GridActionsCellItem key="archive" icon={<Archive />} label={t("actions.archive")} disabled={!props.permissions.canArchive || row.status !== 1} onClick={() => props.onArchive(row)} showInMenu />,
     ] },
   ], [props, t]);
   const operators: FiscalYearSearchOperator[] = ["contains", "doesNotContain", "equals", "doesNotEqual", "startsWith", "endsWith"];

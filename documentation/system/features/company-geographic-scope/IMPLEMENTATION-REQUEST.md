@@ -42,7 +42,7 @@ behavior; it is never inferred from the operating default.
 | Nationality boundary | Employee nationality is never filtered by `CompanyCountry`; it reads the complete active global Country catalog. |
 | Branch boundary | Every Branch selects its own allowed address hierarchy. The company default Country is not a branch-location restriction. |
 | Fields and relationships | `CompanyCountry` keeps required `CountryId` and `IsDefault`; `Company.RegistrationCountryId` is a separate restrictive global Country FK. Registration and default are both selected operating Countries. |
-| Permissions and read-only | `CompanyGeographicScope:View` and `CompanyGeographicScope:Manage`; tenant read-only blocks PUT before permission feedback. |
+| Permissions and read-only | `CompanyGeographicScope:View` and `CompanyGeographicScope:Edit`; tenant read-only blocks PUT before permission feedback. |
 | Read contract | One aggregate, not a paged list: every active Country with `IsSelected`/`IsDefault`, sorted by English name then ID. |
 | Write contract | Replace selected Country IDs and update Company registration atomically; 1-100 distinct active IDs; registration and default are required and must be selected. No client-owned company or tenant ID. |
 | Lifecycle | Link rows are activated/deactivated by replacement. There is no public archive/restore or bulk endpoint. Registration migration backfills from an active default only and otherwise leaves null until the first valid save; it never guesses. |

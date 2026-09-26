@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "status": "phase-07-closed",
+  "status": "historical-phase-07-closed-current-v2-revalidation-queued",
   "feature": "ledger-setup-currency",
   "featureName": "Ledger Setup Currency",
   "referenceFeature": "fiscal-years",
@@ -10,7 +10,7 @@
   "featureDecompositionDecision": "Decompose",
   "screenWorkflowContract": "documentation/plans/business/accounting-core-gl/decomposition/ledger-setup-currency.md",
   "plannedCustomerEducation": "documentation/plans/business/accounting-core-gl/education/ledger-setup-currency.md",
-  "purpose": "Final Phase 07 evidence for the verified and closed Accounting Currency vertical slice.",
+  "purpose": "Historical Phase 07 evidence for the verified Currency vertical slice; the current v2 roadmap separately queues live revalidation after Fiscal Years.",
   "reviewArtifact": "documentation/system/features/ledger-setup-currency/LEDGER_SETUP_CURRENCY-REVIEW-ARTIFACTS.md",
   "implementationRequest": "documentation/system/features/ledger-setup-currency/IMPLEMENTATION-REQUEST.md",
   "sourceCollections": [
@@ -43,9 +43,11 @@
     { "id": "mobile-agent-guidance", "layer": "configuration", "path": "mobile-react/AGENTS.md", "purpose": "Expo implementation rules" },
     { "id": "api-workflow", "layer": "documentation", "path": "documentation/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md", "purpose": "Mandatory existing-system relationship and business-readiness workflow" },
     { "id": "shared-reuse-catalog", "layer": "documentation", "path": "documentation/project/SHARED_REUSE_CATALOG.md", "purpose": "Approved shared reuse inventory" },
+    { "id": "screen-pattern-catalog", "layer": "documentation", "path": "documentation/project/SCREEN_PATTERN_CATALOG.md", "purpose": "Canonical P-001 Currency screen pattern and platform decisions" },
     { "id": "accounting-module-docs", "layer": "documentation", "path": "documentation/modules/accounting/README.md", "purpose": "Accounting bounded-context ownership" },
     { "id": "canonical-plan", "layer": "planning", "path": "documentation/plans/business/accounting-core-gl/PLAN.md", "purpose": "Business authority and Slice 1 authorization" },
     { "id": "slice-execution", "layer": "planning", "path": "documentation/plans/business/accounting-core-gl/SLICE-01-LEDGER-SETUP-EXECUTION.md", "purpose": "Child dependency order and package boundaries" },
+    { "id": "manual-acceptance-template", "layer": "planning", "path": "documentation/plans/business/accounting-core-gl/MANUAL_ACCEPTANCE_SCENARIO_TEMPLATE.md", "purpose": "Required future detailed Currency revalidation scenario and explicit user decision format" },
     { "id": "screen-workflow-contract", "layer": "planning", "path": "documentation/plans/business/accounting-core-gl/decomposition/ledger-setup-currency.md", "purpose": "Closed Currency child Screen/Workflow Contract" },
     { "id": "customer-education", "layer": "planning", "path": "documentation/plans/business/accounting-core-gl/education/ledger-setup-currency.md", "purpose": "Verified Currency setup, training and video guide" },
     { "id": "implementation-request", "layer": "documentation", "path": "documentation/system/features/ledger-setup-currency/IMPLEMENTATION-REQUEST.md", "purpose": "Currency execution readiness, rules, edge cases and impact matrices" },

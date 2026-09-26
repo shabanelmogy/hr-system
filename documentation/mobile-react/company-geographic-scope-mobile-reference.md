@@ -10,7 +10,7 @@ The feature owner is `src/modules/hr/basic-data/company-geographic-scope`; the t
 
 ## 3. Access Contract
 
-View requires `CompanyGeographicScope:View`. Mutation requires `CompanyGeographicScope:Manage` and writable application state. Screen guards remain in place even when navigation hides the item.
+View requires `CompanyGeographicScope:View`. Mutation requires `CompanyGeographicScope:Edit` and writable application state. Screen guards remain in place even when navigation hides the item.
 
 ## 4. Runtime Validation
 

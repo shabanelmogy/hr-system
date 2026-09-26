@@ -74,7 +74,44 @@
     "roleNotFound": "الدور غير موجود",
     "reviewPermissions": "مراجعة الصلاحيات",
     "archiveTitle": "أرشفة الدور؟",
-    "archiveDescription": "لن يكون الدور متاحًا للإسناد بعد الأرشفة، ويمكن استعادته لاحقًا."
+    "archiveDescription": "لن يكون الدور متاحًا للإسناد بعد الأرشفة، ويمكن استعادته لاحقًا.",
+    "permissionActions": {
+      "Approve": "اعتماد", "ApproveJobDescriptions": "اعتماد الأوصاف الوظيفية", "Archive": "أرشفة",
+      "BeginClosing": "بدء الإقفال", "Cancel": "إلغاء", "Close": "إقفال", "Complete": "إكمال",
+      "Create": "إنشاء", "Delete": "حذف", "Detect": "اكتشاف", "Download": "تنزيل", "Edit": "تعديل",
+      "EditCredentials": "تعديل بيانات الاتصال", "Evaluate": "تقييم", "Export": "تصدير",
+      "GenerateQrCode": "إنشاء رمز QR", "Hire": "تعيين", "Issue": "إصدار", "Lock": "قفل", "Move": "نقل",
+      "Open": "فتح", "Pause": "إيقاف مؤقت", "Publish": "نشر", "PullAttendance": "سحب الحضور",
+      "PullUsers": "سحب المستخدمين", "Reject": "رفض", "Reopen": "إعادة فتح", "Resend": "إعادة إرسال",
+      "ResetPassword": "إعادة تعيين كلمة المرور", "Resolve": "تسوية", "Respond": "رد", "Restore": "استعادة",
+      "Review": "مراجعة", "Revoke": "إلغاء", "Schedule": "جدولة", "SetStatus": "تغيير الحالة",
+      "Submit": "إرسال", "Test": "اختبار", "Unlock": "فك القفل", "Unpublish": "إلغاء النشر", "Upload": "رفع",
+      "View": "عرض", "ViewDashboard": "عرض لوحة المؤشرات", "ViewFinancials": "عرض البيانات المالية",
+      "ViewRaw": "عرض البيانات الخام", "ViewTrace": "عرض مسار التتبع", "Withdraw": "سحب"
+    },
+    "permissionResources": {
+      "AccountDimensionPolicies": "سياسات أبعاد الحسابات", "AccountHierarchyLevels": "مستويات دليل الحسابات",
+      "AccountingSettings": "إعدادات الحسابات", "AccountMappings": "ربط الحسابات", "Accounts": "دليل الحسابات",
+      "Addresses": "العناوين", "AddressTypes": "أنواع العناوين", "Analytics": "التحليلات", "ApiKeys": "مفاتيح API",
+      "Appointments": "المواعيد", "AttendanceAgents": "وكلاء الحضور", "AttendanceDevices": "أجهزة الحضور",
+      "Backups": "النسخ الاحتياطية", "Books": "الدفاتر المحاسبية", "Candidates": "المرشحون", "Categories": "التصنيفات",
+      "ChangeLogs": "سجل التغييرات", "CompanyGeographicScope": "النطاق الجغرافي للشركة",
+      "ContactsParties": "أطراف الاتصال", "Countries": "الدول", "CrystalReportAccess": "الوصول إلى تقارير Crystal",
+      "CrystalReports": "تقارير Crystal", "Currencies": "العملات", "DatabaseViews": "عروض قاعدة البيانات",
+      "DimensionDefinitions": "تعريفات الأبعاد", "DimensionValues": "قيم الأبعاد", "Districts": "المناطق",
+      "EmploymentApplications": "طلبات التوظيف", "EnvelopeAmendments": "تعديلات مخصصات الوظائف",
+      "ExchangeRates": "أسعار الصرف", "ExchangeRateTypes": "أنواع أسعار الصرف", "FiscalYears": "السنوات المالية",
+      "GlobalCrystalReports": "تقارير Crystal العامة", "Hangfire": "المهام الخلفية", "Interviews": "المقابلات",
+      "Invoices": "الفواتير", "JobOffers": "عروض العمل", "JobOpenings": "الوظائف الشاغرة", "JobPostings": "إعلانات الوظائف",
+      "JobRequisitions": "طلبات الوظائف", "JournalDefinitions": "تعريفات اليوميات", "Localizations": "الترجمة",
+      "OfflineOperations": "العمليات دون اتصال", "OrganizationalStructure": "الهيكل التنظيمي",
+      "PositionEnvelopes": "مخصصات الوظائف", "PostingProfiles": "ملفات الترحيل", "Recruitment": "التوظيف",
+      "RecruitmentSettings": "إعدادات التوظيف", "ReportsCategories": "تصنيفات التقارير",
+      "ReportTemplates": "قوالب التقارير", "RolePermissions": "صلاحيات الأدوار", "Roles": "الأدوار",
+      "StaffingRequests": "طلبات التوظيف الداخلي", "States": "المحافظات", "SubCategories": "التصنيفات الفرعية",
+      "UserInvitations": "دعوات المستخدمين", "Users": "المستخدمون", "WorkforceBudgets": "موازنات القوى العاملة",
+      "WorkforcePlanning": "تخطيط القوى العاملة", "WorkforcePlans": "خطط القوى العاملة"
+    }
   },
   "users": {
     "dashboard": {

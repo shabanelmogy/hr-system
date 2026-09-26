@@ -63,7 +63,7 @@ invalidation, success test, and failure test. Use `N/A` only with a reason.
 | ledger-setup-currency-master | 8 | `f35d7dda56d7fc291b43bfae11ec6854a54f4c5fed49738b726458153311452d` |
 | ledger-setup-currency-api | 6 | `51b2eaae1b7f4d980663df2cc3bf3fa4a4bf76c87bea22770639d84c8cfeb236` |
 | ledger-setup-currency-api | 7 | `59076dbce64b783f44dd30df6da4b67e5d0c311fef94f5146637db0e3aef2e28` |
-| ledger-setup-currency-api | 8 | `5ec6bb7f5e6325a82fc9de425281748b0496fb12c7fd0ec132bd1c5047abebaf` |
+| ledger-setup-currency-api | 8 | `1369f1ffe58bd47ec8f398ca6f17e0ea5c6e99f731de75b2d9f857b5f77f772b` |
 | ledger-setup-currency-web | 6 | `01187cfb787c420e216e186dea232734ac15d837de68d05d40e61499ecdf4023` |
 | ledger-setup-currency-web | 7 | `a3275c603ecc7d3fd9914f7ee9dff1adba9ec4542f982287ff2b7a7cfaf2b2f3` |
 | ledger-setup-currency-web | 8 | `b8685a30c64e3d84eeb814aea52a1c9b5998e0a6951c31134b17555cf552b76d` |

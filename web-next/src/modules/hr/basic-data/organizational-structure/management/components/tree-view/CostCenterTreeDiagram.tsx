@@ -53,7 +53,8 @@ interface CostCenterTreeDiagramProps {
   permissions: {
     canCreate: boolean;
     canEdit: boolean;
-    canDelete?: boolean;
+    canArchive: boolean;
+    canRestore: boolean;
   };
   onReparent: (sourceItem: OrganizationalStructureItem, newParentId: number | null) => Promise<void>;
   onAddChild?: (parentItem: OrganizationalStructureItem) => void;
@@ -504,7 +505,7 @@ export default function CostCenterTreeDiagram({
             </Button>
           )}
 
-          {permissions.canDelete && onLifecycle && (
+          {(selectedItem.isDeleted ? permissions.canRestore : permissions.canArchive) && onLifecycle && (
             <Button
               size="small"
               variant="outlined"

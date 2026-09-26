@@ -22,7 +22,7 @@ interface Props {
   sortDirection: "asc" | "desc";
   searchField: OrganizationalSearchField;
   searchOperator: OrganizationalSearchOperator;
-  permissions: { canCreate: boolean; canEdit: boolean; canDelete: boolean; canApprove: boolean };
+  permissions: { canCreate: boolean; canEdit: boolean; canArchive: boolean; canRestore: boolean; canApprove: boolean };
   language: "ar" | "en";
   showFilterBar: boolean;
   onPageChange: (page: number) => void;
@@ -45,7 +45,7 @@ const operators: OrganizationalSearchOperator[] = ["contains", "doesNotContain",
 
 export default function OrganizationalStructureDataGrid(props: Props) {
   const { t } = useTranslation();
-  const getActions = useMemo(() => makeOrganizationalStructureActions({ t, resource: props.resource, canEdit: props.permissions.canEdit, canDelete: props.permissions.canDelete, canApprove: props.permissions.canApprove, onView: props.onView, onEdit: props.onEdit, onLifecycle: props.onLifecycle, onApprove: props.onApprove, onReject: props.onReject, onViewLogs: props.onViewLogs }), [props.onApprove, props.onEdit, props.onLifecycle, props.onReject, props.onView, props.onViewLogs, props.permissions.canApprove, props.permissions.canDelete, props.permissions.canEdit, props.resource, t]);
+  const getActions = useMemo(() => makeOrganizationalStructureActions({ t, resource: props.resource, canEdit: props.permissions.canEdit, canArchive: props.permissions.canArchive, canRestore: props.permissions.canRestore, canApprove: props.permissions.canApprove, onView: props.onView, onEdit: props.onEdit, onLifecycle: props.onLifecycle, onApprove: props.onApprove, onReject: props.onReject, onViewLogs: props.onViewLogs }), [props.onApprove, props.onEdit, props.onLifecycle, props.onReject, props.onView, props.onViewLogs, props.permissions.canApprove, props.permissions.canArchive, props.permissions.canEdit, props.permissions.canRestore, props.resource, t]);
   const columns = useMemo(
     () => getOrganizationalStructureColumns({ t, resource: props.resource, language: props.language, getActions, onView: props.onView }),
     [getActions, props.language, props.onView, props.resource, t],

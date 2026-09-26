@@ -41,7 +41,7 @@ public sealed class CandidatesController(ISender sender) : ControllerBase
     }
 
     [HttpPost]
-    [HasPermission(HrPermissions.ManageCandidates)]
+    [HasPermission(HrPermissions.CreateCandidates)]
     [ProducesResponseType(typeof(CandidateDto), StatusCodes.Status201Created)]
     public async Task<IActionResult> Create([FromBody] CandidateMutation mutation, CancellationToken cancellationToken)
     {
@@ -52,7 +52,7 @@ public sealed class CandidatesController(ISender sender) : ControllerBase
     }
 
     [HttpPut("{id:int}")]
-    [HasPermission(HrPermissions.ManageCandidates)]
+    [HasPermission(HrPermissions.EditCandidates)]
     [ProducesResponseType(typeof(CandidateDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> Update(int id, [FromBody] CandidateMutation mutation, CancellationToken cancellationToken)
     {

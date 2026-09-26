@@ -48,7 +48,7 @@ public class RolesController(ISender sender) : ControllerBase
     }
 
     [HttpPut("{id}")]
-    [HasPermission(PlatformPermissions.DeleteRoles)]
+    [HasPermission(PlatformPermissions.SetRoleStatus)]
     public async Task<IActionResult> Toggle([FromRoute] string id, CancellationToken cancellationToken)
     {
         var result = await sender.Send(new ToggleRoleStatusCommand(id), cancellationToken);
@@ -56,7 +56,7 @@ public class RolesController(ISender sender) : ControllerBase
     }
 
     [HttpGet]
-    [HasPermission(PlatformPermissions.ViewRoles)]
+    [HasPermission(PlatformPermissions.ViewRolePermissions)]
     public async Task<IActionResult> GetRoleClaims([FromQuery] RoleIdQuery query, CancellationToken cancellationToken)
     {
         var result = await sender.Send(new GetRoleClaimsQuery(query.RoleId), cancellationToken);
@@ -65,7 +65,7 @@ public class RolesController(ISender sender) : ControllerBase
     }
 
     [HttpPut]
-    [HasPermission(PlatformPermissions.EditRoles)]
+    [HasPermission(PlatformPermissions.EditRolePermissions)]
     public async Task<IActionResult> UpdateRoleClaims([FromBody] RoleRequest roleRequest, CancellationToken cancellationToken)
     {
         var result = await sender.Send(new UpdateRoleClaimsCommand(roleRequest), cancellationToken);

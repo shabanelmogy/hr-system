@@ -69,17 +69,17 @@ public sealed class PlatformUserManagementCqrsTests
         AssertRoute<HttpGetAttribute>(nameof(UsersController.Get), "{id}", PlatformPermissions.ViewUsers);
         AssertRoute<HttpPostAttribute>(nameof(UsersController.Add), null, PlatformPermissions.CreateUsers);
         AssertRoute<HttpPutAttribute>(nameof(UsersController.Update), "{id}", PlatformPermissions.EditUsers);
-        AssertRoute<HttpPutAttribute>(nameof(UsersController.ChangePassword), "{id}", PlatformPermissions.EditUsers);
-        AssertRoute<HttpPutAttribute>(nameof(UsersController.Toggle), "{id}", PlatformPermissions.EditUsers);
-        AssertRoute<HttpPutAttribute>(nameof(UsersController.Unlock), "{id}", PlatformPermissions.EditUsers);
+        AssertRoute<HttpPutAttribute>(nameof(UsersController.ChangePassword), "{id}", PlatformPermissions.ResetUserPasswords);
+        AssertRoute<HttpPutAttribute>(nameof(UsersController.Toggle), "{id}", PlatformPermissions.SetUserStatus);
+        AssertRoute<HttpPutAttribute>(nameof(UsersController.Unlock), "{id}", PlatformPermissions.UnlockUsers);
         AssertRoute<HttpPostAttribute>(
             nameof(UsersController.Archive),
             "~/api/v{version:apiVersion}/users/archive/{id}",
-            PlatformPermissions.DeleteUsers);
+            PlatformPermissions.ArchiveUsers);
         AssertRoute<HttpPostAttribute>(
             nameof(UsersController.Restore),
             "~/api/v{version:apiVersion}/users/restore/{id}",
-            PlatformPermissions.DeleteUsers);
+            PlatformPermissions.RestoreUsers);
     }
 
     [Fact]

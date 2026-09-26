@@ -106,7 +106,7 @@ failure into partial success.
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| addresses-master | 2 | `f6905cf3ebdfb61f3dedafe60d90b6278bc63362788cb616cacad7e5510e93a4` |
+| addresses-master | 2 | `53e8699338077278bbcec154b5c31193c1035428a90a19561abac3dfd70a26cf` |
 | addresses-master | 5 | `be429c9bb75de8fc649c7097750eb74710ba53166dd392c1cfc1260915c8fd41` |
 | addresses-master | 7 | `95ff65dd25be7fbaf9c075b1a0056c4f291541eea3c995a6b029d83b46a5b49c` |
 | addresses-web | 1 | `eb5da2402bb94c969e2b61f85de4e7a52a394b1fc808a321e929a3257d8d1b3b` |

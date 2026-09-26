@@ -17,6 +17,11 @@ the focused child contract under
 `documentation/plans/business/accounting-core-gl/decomposition/ledger-setup-coa-hierarchy.md`.
 The umbrella generic client remains only for untouched sibling resources.
 
+The v2 Screen Contract selects `P-002` for Accounts on both platforms, with a
+secondary P-001 record list, and `P-001` for Hierarchy Levels. Both Account and
+Hierarchy Level require distinct `NameAr` and `NameEn` through create/edit/detail/
+list and mock-draft evidence; UI translations do not substitute for these values.
+
 ## 2. Existing-system relationship and closest reuse
 
 The feature extends the existing Accounting Ledger Setup capability; it does not create
@@ -83,7 +88,8 @@ Canonical route family remains `/api/v1/accounts`: list, tree, lookup, detail,
 hierarchy-level list/create/update/archive/restore, Account create/update/archive/
 restore. Target adds a typed read-only proposed-code endpoint/query under this family;
 the exact client route constant must be one canonical route. Reads require
-`Accounts:View`; mutations require `Accounts:Manage`.
+the matching `Accounts:View` or `AccountHierarchyLevels:View`; mutations require
+the exact resource `Create`, `Edit`, `Archive`, or `Restore` permission.
 
 ## 7. Web and Mobile product contract
 
@@ -133,5 +139,6 @@ the master plan is reopened, no copied HR domain logic, no runtime claim before 
 
 Phase 00 authorized runtime work on 2026-09-22. API Phase 01 and typed Web/Mobile
 Phase 02/03 implementation are recorded; Phase 06 remains the acceptance gate. `1B`
-is the first active Slice 1 child; completion of this child does not imply Dimensions
-or umbrella Slice 1 completion.
+is **Queued** in the current human run until Fiscal Years and Currency close in
+order. Existing source does not make it active. Completion of this child does not
+imply Dimensions or umbrella Slice 1 completion.

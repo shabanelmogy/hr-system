@@ -35,8 +35,8 @@ export default function WorkforcePlansCardView(props: Props) {
           { ...lifecycleAction, disabled: item.isDeleted || lifecycleAction.disabled },
           { key: "reject", title: t("workforcePlanning.actions.reject"), color: "error", icon: <Undo />, onClick: () => props.onReject(item), disabled: item.isDeleted || !props.permissions.canApprove || item.status !== 3 },
           item.isDeleted
-            ? { key: "restore", title: t("workforcePlanning.actions.restore"), color: "success", icon: <Restore />, onClick: () => props.onRestore(item), disabled: !props.permissions.canDelete }
-            : { key: "archive", title: t("workforcePlanning.actions.archive"), color: "error", icon: <Archive />, onClick: () => props.onArchive(item), disabled: !props.permissions.canDelete || ![1, 5].includes(item.status) },
+            ? { key: "restore", title: t("workforcePlanning.actions.restore"), color: "success", icon: <Restore />, onClick: () => props.onRestore(item), disabled: !props.permissions.canRestore }
+            : { key: "archive", title: t("workforcePlanning.actions.archive"), color: "error", icon: <Archive />, onClick: () => props.onArchive(item), disabled: !props.permissions.canArchive || ![1, 5].includes(item.status) },
         ];
         return <Grid key={item.id} size={{ xs: 12, sm: 6, lg: 4, xl: 3 }}><EntityCard index={index} height={300} title={item.titleEn} subtitle={`${item.titleAr} • ${item.planCode}`}
           endBadge={<Stack spacing={.5} sx={{ alignItems: "flex-end" }}><Chip size="small" color={item.status === 4 ? "success" : item.status === 5 ? "error" : "info"} label={t(`workforcePlanning.status.${statusKeys[item.status]}`)} />{item.isDeleted ? <Chip size="small" variant="outlined" label={t("workforcePlanning.recordStatus.archived")} /> : null}</Stack>}

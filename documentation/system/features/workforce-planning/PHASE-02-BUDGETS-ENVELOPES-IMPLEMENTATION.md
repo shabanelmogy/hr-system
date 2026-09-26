@@ -354,7 +354,7 @@ GET    /api/v1/workforce-planning/position-envelopes/{id}
 Permissions:
 
 - Budget page/detail/source reads: `WorkforceBudgets:View`
-- Budget create/update/submit/reject authoring path: `WorkforceBudgets:Manage`
+- Budget create/update/submit/review paths: `WorkforceBudgets:Create`, `WorkforceBudgets:Edit`, `WorkforceBudgets:Submit`, and `WorkforceBudgets:Review` respectively
 - Budget approve: built-in `admin` role only for Phase 2
 - Envelope page/detail: `PositionEnvelopes:View`
 

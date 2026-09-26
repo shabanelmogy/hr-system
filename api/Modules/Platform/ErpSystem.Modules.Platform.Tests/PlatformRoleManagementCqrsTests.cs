@@ -59,9 +59,9 @@ public sealed class PlatformRoleManagementCqrsTests
         AssertRoute<HttpGetAttribute>(nameof(RolesController.Get), "{id}", PlatformPermissions.ViewRoles);
         AssertRoute<HttpPostAttribute>(nameof(RolesController.Add), string.Empty, PlatformPermissions.CreateRoles);
         AssertRoute<HttpPutAttribute>(nameof(RolesController.Update), null, PlatformPermissions.EditRoles);
-        AssertRoute<HttpPutAttribute>(nameof(RolesController.Toggle), "{id}", PlatformPermissions.DeleteRoles);
-        AssertRoute<HttpGetAttribute>(nameof(RolesController.GetRoleClaims), null, PlatformPermissions.ViewRoles);
-        AssertRoute<HttpPutAttribute>(nameof(RolesController.UpdateRoleClaims), null, PlatformPermissions.EditRoles);
+        AssertRoute<HttpPutAttribute>(nameof(RolesController.Toggle), "{id}", PlatformPermissions.SetRoleStatus);
+        AssertRoute<HttpGetAttribute>(nameof(RolesController.GetRoleClaims), null, PlatformPermissions.ViewRolePermissions);
+        AssertRoute<HttpPutAttribute>(nameof(RolesController.UpdateRoleClaims), null, PlatformPermissions.EditRolePermissions);
     }
 
     [Fact]

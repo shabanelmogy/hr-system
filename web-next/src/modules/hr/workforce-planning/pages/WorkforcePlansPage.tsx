@@ -64,7 +64,8 @@ export default function WorkforcePlansPage() {
     canView: authorization.hasPermission(permissions.ViewWorkforcePlans),
     canCreate: !authorization.isReadOnly && authorization.hasPermission(permissions.CreateWorkforcePlans),
     canEdit: !authorization.isReadOnly && authorization.hasPermission(permissions.EditWorkforcePlans),
-    canDelete: !authorization.isReadOnly && authorization.hasPermission(permissions.DeleteWorkforcePlans),
+    canArchive: !authorization.isReadOnly && authorization.hasPermission(permissions.ArchiveWorkforcePlans),
+    canRestore: !authorization.isReadOnly && authorization.hasPermission(permissions.RestoreWorkforcePlans),
     canApprove: !authorization.isReadOnly && authorization.hasPermission(permissions.ApproveWorkforcePlans),
   }), [authorization]);
   const fiscalOptions = useMemo(() => (fiscalYears.data ?? []).map(year => ({ id: year.id, label: `${year.code} Ã¢â‚¬â€ ${i18n.language.startsWith("ar") ? year.nameAr : year.nameEn}` })), [fiscalYears.data, i18n.language]);

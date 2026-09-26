@@ -18,7 +18,9 @@ interface Props {
   detail?: AccountDetail;
   loading: boolean;
   error?: string | null;
-  canManage: boolean;
+  canCreate: boolean;
+  canEdit: boolean;
+  canArchive: boolean;
   onRetry: () => void;
   onAddChild: (node: AccountTreeItem) => void;
   onEdit: (id: number) => void;
@@ -30,7 +32,9 @@ export default function AccountTreeDetailPanel({
   detail,
   loading,
   error,
-  canManage,
+  canCreate,
+  canEdit,
+  canArchive,
   onRetry,
   onAddChild,
   onEdit,
@@ -141,11 +145,11 @@ export default function AccountTreeDetailPanel({
         </Typography>
       </Box>
 
-      {canManage ? (
+      {canCreate || canEdit || canArchive ? (
         <>
           <Divider />
           <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
-            {!node.allowPosting ? (
+            {canCreate && !node.allowPosting ? (
               <Button
                 size="small"
                 startIcon={<AddRoundedIcon />}
@@ -154,21 +158,21 @@ export default function AccountTreeDetailPanel({
                 {t("ledgerSetup.accounts.actions.addChild")}
               </Button>
             ) : null}
-            <Button
+            {canEdit ? <Button
               size="small"
               startIcon={<EditRoundedIcon />}
               onClick={() => onEdit(node.id)}
             >
               {t("actions.edit")}
-            </Button>
-            <Button
+            </Button> : null}
+            {canArchive ? <Button
               size="small"
               color="warning"
               startIcon={<ArchiveRoundedIcon />}
               onClick={() => onArchive(node.id)}
             >
               {t("actions.archive")}
-            </Button>
+            </Button> : null}
           </Box>
         </>
       ) : null}

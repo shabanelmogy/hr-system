@@ -34,7 +34,7 @@ const OrganizationalStructureImport = dynamic(() => import("./import-view/Organi
 const DepartmentTreeDiagram = dynamic(() => import("./tree-view/DepartmentTreeDiagram"));
 const CostCenterTreeDiagram = dynamic(() => import("./tree-view/CostCenterTreeDiagram"));
 
-interface PermissionSet { canCreate: boolean; canEdit: boolean; canDelete: boolean; canApprove: boolean }
+interface PermissionSet { canCreate: boolean; canEdit: boolean; canArchive: boolean; canRestore: boolean; canApprove: boolean }
 interface Props {
   resource: OrganizationalResource;
   items: OrganizationalStructureItem[];
@@ -203,7 +203,7 @@ export default function OrganizationalStructureMultiView(props: Props) {
                 footer={<Stack direction="row" spacing={0.5} useFlexGap sx={{ flexWrap: "wrap", justifyContent: "flex-end", rowGap: 0.5 }}><Button size="small" variant={props.resource === "job-descriptions" ? "contained" : "text"} color="primary" onClick={() => props.onView(item)}>{props.resource === "job-descriptions" ? t("organizationalStructure.jobDescriptionDetails.profileTitle") : t("actions.view")}</Button>
                   {props.onViewLogs ? <Button size="small" color="inherit" onClick={() => props.onViewLogs?.(item)}>{t("actions.changeLog")}</Button> : null}
                   {props.permissions.canEdit && !item.isDeleted ? <Button size="small" onClick={() => props.onEdit(item)}>{t("actions.edit")}</Button> : null}
-                  {props.permissions.canDelete ? <Button size="small" color={item.isDeleted ? "success" : "warning"} onClick={() => props.onLifecycle(item)}>{t(item.isDeleted ? "actions.restore" : "actions.archive")}</Button> : null}
+                  {(item.isDeleted ? props.permissions.canRestore : props.permissions.canArchive) ? <Button size="small" color={item.isDeleted ? "success" : "warning"} onClick={() => props.onLifecycle(item)}>{t(item.isDeleted ? "actions.restore" : "actions.archive")}</Button> : null}
                   {canDecide(item) ? <><Button size="small" color="success" onClick={() => props.onApprove(item)}>{t("organizationalStructure.decision.approve")}</Button><Button size="small" color="error" onClick={() => props.onReject(item)}>{t("organizationalStructure.decision.reject")}</Button></> : null}
                 </Stack>} />
             </Box>)}</Box>

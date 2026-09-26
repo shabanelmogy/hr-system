@@ -46,7 +46,7 @@ This is a configuration form, not a collection feature. Web and mobile present t
 
 ## 6. API Contract
 
-`GET /api/v1/company-geographic-scope` reads the aggregate. `PUT /api/v1/company-geographic-scope` atomically replaces it using `{ "countryIds": [65], "registrationCountryId": 65, "defaultCountryId": 65 }`. Permissions are `CompanyGeographicScope:View` and `CompanyGeographicScope:Manage`.
+`GET /api/v1/company-geographic-scope` reads the aggregate. `PUT /api/v1/company-geographic-scope` atomically replaces it using `{ "countryIds": [65], "registrationCountryId": 65, "defaultCountryId": 65 }`. Permissions are `CompanyGeographicScope:View` and `CompanyGeographicScope:Edit`.
 
 ## 7. Client Contract
 

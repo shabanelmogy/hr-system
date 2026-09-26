@@ -48,7 +48,7 @@ public sealed class EmploymentApplicationsController(ISender sender) : Controlle
     }
 
     [HttpPost]
-    [HasPermission(HrPermissions.ManageApplications)]
+    [HasPermission(HrPermissions.CreateEmploymentApplications)]
     [ProducesResponseType(typeof(EmploymentApplicationDto), StatusCodes.Status201Created)]
     public async Task<IActionResult> Submit([FromBody] SubmitApplicationMutation mutation, CancellationToken cancellationToken)
     {
@@ -59,7 +59,7 @@ public sealed class EmploymentApplicationsController(ISender sender) : Controlle
     }
 
     [HttpPost("{id:int}/move-stage")]
-    [HasPermission(HrPermissions.ManageApplications)]
+    [HasPermission(HrPermissions.MoveEmploymentApplications)]
     [ProducesResponseType(typeof(EmploymentApplicationDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> MoveStage(int id, [FromBody] MoveStageRequest request, CancellationToken cancellationToken)
     {
@@ -70,7 +70,7 @@ public sealed class EmploymentApplicationsController(ISender sender) : Controlle
     }
 
     [HttpPost("{id:int}/reject")]
-    [HasPermission(HrPermissions.ManageApplications)]
+    [HasPermission(HrPermissions.RejectEmploymentApplications)]
     [ProducesResponseType(typeof(EmploymentApplicationDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> Reject(int id, [FromBody] ApplicationReasonRequest request, CancellationToken cancellationToken)
     {
@@ -79,7 +79,7 @@ public sealed class EmploymentApplicationsController(ISender sender) : Controlle
     }
 
     [HttpPost("{id:int}/withdraw")]
-    [HasPermission(HrPermissions.ManageApplications)]
+    [HasPermission(HrPermissions.WithdrawEmploymentApplications)]
     [ProducesResponseType(typeof(EmploymentApplicationDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> Withdraw(int id, [FromBody] ApplicationReasonRequest request, CancellationToken cancellationToken)
     {

@@ -172,7 +172,7 @@ from silently reintroducing the English-only/Arabic-only rule.
 | Address Type validators use the shared rule | Done | `AddressTypeMutationValidator`, `AddressTypeRequestValidator` |
 | Names accept spaces, digits, punctuation, Arabic and English text | Done | `GeographicalNameRulesTests` plus web/mobile schemas |
 | Control characters, tabs and line breaks are rejected | Done | `GeographicalNameRulesTests` plus web/mobile schemas |
-| Legacy geographical SQL check constraints are removed by migration | Done | `RefactorAddressesForGlobalGeography` migration `Up` |
+| Current geographic schema omits the retired legacy SQL check constraints | Done | `20260914181144_InitialReferenceData` migration baseline |
 | API deployment includes the changed assembly and pending migration | Pending deployment | Required for `https://shabanhrms.runasp.net` |
 | Hosted API smoke test creates a name such as `New Cairo 2` | Pending deployment | Run after publishing API and applying migrations |
 

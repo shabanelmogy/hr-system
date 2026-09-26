@@ -55,7 +55,9 @@ mutations; concurrency conflict must never overwrite newer state.
 `CurrenciesController` is `[TenantMember]`, versioned at
 `api/v{version:apiVersion}/currencies` and delegates only through `ISender`.
 Page/lookup/detail require `AccountingSetup:View`; create/update/archive/restore
-require `AccountingSetup:Manage`.
+require the exact `Currencies:Create`, `Currencies:Edit`, `Currencies:Archive`, or
+`Currencies:Restore` permission for the invoked endpoint; reads require
+`Currencies:View`.
 
 ## 9. Errors and localization
 

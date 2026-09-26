@@ -41,8 +41,10 @@ when this child is complete.
 | Hierarchy identity | `ParentAccountId` + `AccountHierarchyLevelId`; Account Code never implies hierarchy. |
 | Account fields | Code, NameAr, NameEn, hierarchy level, optional parent, AllowPosting, ManualPostingPolicy, CurrencyPolicy, optional SpecificCurrencyId, archive/audit state and RowVersion. |
 | Level fields | positive company-unique LevelNumber, NameAr, NameEn, CanPost, archive/audit state and RowVersion. |
+| UI patterns | Accounts use approved `P-002` Hierarchical Master/Detail with a secondary `P-001` server-managed list; Hierarchy Levels use `P-001`. Web reuses `SplitTreeView`; Mobile reuses `AppHierarchicalTree`. |
+| Bilingual data parity | Account and Hierarchy Level create/update/detail/tree/list/lookup/search and local mock drafts preserve distinct required `NameAr` and `NameEn`. Translation keys localize field labels and actions but never replace either stored business name. |
 | D-024 code proposal | Server proposes editable company-wide non-hierarchical `ACC-####` using the next reserved numeric suffix across active + archived codes. Proposal is not a reservation. |
-| Permissions | `Accounts:View` for reads; `Accounts:Manage` for writes. Global read-only suppresses client mutations. |
+| Permissions | `Accounts:View` and `AccountHierarchyLevels:View` gate their reads; exact `Create`, `Edit`, `Archive`, and `Restore` permissions gate each resource mutation. Global read-only suppresses client mutations. |
 | Account list | Real server page envelope; search fields `all|code|nameAr|nameEn`; operators `contains|doesNotContain|equals|doesNotEqual|startsWith|endsWith`; status `active|archived|all`; sort allow-list `code|nameAr|nameEn|createdOn`; deterministic ID tie-break; bounded page size. |
 | Tree/detail/lookup | Active complete tree; full versioned detail before protected action; active lookup for selectors. |
 | Level list | Deterministic LevelNumber/Id ordering with active/archived/all discovery; expected set is small, so a bounded typed list is acceptable. |
@@ -153,9 +155,11 @@ flag is created by this child.
 
 API must add the D-024 proposal query and real Account page contract while preserving
 the canonical domain/persistence owner. Web must replace Accounts and Hierarchy Levels
-generic routes with typed child pages and a Cost Center-style SplitTreeView
-master/detail composition. Mobile must replace the same two generic routes with typed
-runtime schemas/repository/use-cases/hooks/screens using AppHierarchicalTree.
+generic routes with typed child pages and the approved `P-002` Cost Center-style
+`SplitTreeView` master/detail composition plus `P-001` Hierarchy Levels. Mobile must
+replace the same two generic routes with typed runtime schemas/repository/use-cases/
+hooks/screens using `AppHierarchicalTree` and the approved `P-001` Level surface.
+Both clients must expose, edit, render and search `NameAr` and `NameEn` independently.
 
 ## Offline and synchronization
 
@@ -181,7 +185,10 @@ query/report-only surfaces are N/A. This is a local-draft aid, not offline mutat
 
 ## Verification and handoff
 
-Phase 00 closed for the child contract on 2026-09-22. API Phase 01 and typed Web/Mobile
-client phases are implemented and focused/static checks are recorded in the review
-artifact; live API-backed Phase 06 remains the only path to `Verified`. Phase 07
-education starts only after that decision.
+Phase 00 closed for the historical child contract on 2026-09-22. API Phase 01 and
+typed Web/Mobile client phases are implemented and focused/static checks are recorded
+in the review artifact. In the current v2 roadmap, COA is Queued behind Fiscal Years
+and Currency; historical evidence does not activate it. When its turn starts, live
+API-backed Phase 06 must revalidate `P-002`/`P-001`, bilingual data parity and the
+complete Web/Mobile journeys before `Verified`. Phase 07 education starts only after
+that current decision.

@@ -8,12 +8,14 @@ Status: applied domain foundation review.
 - `api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Domain/GeographicalInformation/Addresses/Entities/CompanyAddress.cs`
 - `api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Domain/GeographicalInformation/Addresses/Entities/BranchAddress.cs`
 - `api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Infrastructure/Features/GeographicalInformation/Addresses/Persistence/AddressConfiguration.cs`
-- `api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Persistence/Configurations/OrganizationalStructure/CompanyAddressConfiguration.cs`
-- `api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Persistence/Configurations/OrganizationalStructure/BranchAddressConfiguration.cs`
+- `api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Infrastructure/Features/GeographicalInformation/Addresses/Persistence/AddressStores.cs`
+- `api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Infrastructure/ReferenceDataDbContext.cs`
+- `api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Infrastructure/Migrations/20260914181144_InitialReferenceData.cs`
 - `api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Addresses/Contracts/AddressRequestValidator.cs`
 - `api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Validation/PrintableTextRules.cs`
 - `api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Validation/GeographicalNameRules.cs`
-- `api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Infrastructure/Features/GeographicalInformation/Addresses/Services/AddressService.cs`
+- `api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Addresses/Commands/AddressCommands.cs`
+- `api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Addresses/Queries/AddressQueries.cs`
 
 ## Decisions
 
@@ -23,7 +25,8 @@ Status: applied domain foundation review.
 | State/District optional | Required | Nullable entity fields and optional FKs |
 | Flexible street/city fields | Required | Address entity/configuration |
 | Nullable paired coordinates | Required | Validator and three SQL checks |
-| Owner-specific primary status | Required foundation | CompanyAddress/BranchAddress + filtered indexes |
+| Owner-link purpose and primary fields | Required foundation | CompanyAddress/BranchAddress entities and migration tables |
+| One-primary-per-owner-purpose enforcement | Deferred | `DEF-006` owns commands, transaction locks, and persistence enforcement |
 | Employee/Emergency Contact links | Deferred | Employee domain and privacy policy not yet implemented |
 | Standalone web/mobile Address screens | Deferred | Platform references |
 | Country-specific address format | Deferred | Requires Country policy contract |
@@ -49,8 +52,8 @@ Status: applied domain foundation review.
 
 ## Remaining findings
 
-- The existing Address HTTP surface is still a compatibility service rather
-  than the full CQRS owner-link API.
+- The existing Address HTTP surface is action-token compatibility CQRS rather
+  than the full owner-link API.
 - Company/Branch owner-link commands and UI are deferred until those domains are
   implemented.
 - Country ISO code validation is intentionally strict and currency remains an

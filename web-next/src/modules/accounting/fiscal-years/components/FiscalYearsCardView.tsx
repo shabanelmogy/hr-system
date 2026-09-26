@@ -4,7 +4,7 @@ import { CardViewPagination, CardViewSkeleton } from "@/shared/components/lists/
 import { Archive, CalendarMonth, Edit, LockClock, LockOpen, Restore, Visibility } from "@mui/icons-material";
 import { Box, Chip, Grid, Stack, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import type { FiscalYearLifecycleAction, FiscalYearListItem, FiscalYearPermissions } from "../types/FiscalYear";
+import { canRunFiscalYearLifecycle, type FiscalYearLifecycleAction, type FiscalYearListItem, type FiscalYearPermissions } from "../types/FiscalYear";
 import { getAvailableFiscalYearLifecycleActions } from "../utils/fiscalYearLifecycle";
 
 interface Props {
@@ -25,10 +25,10 @@ export default function FiscalYearsCardView(props: Props) {
         const actions: CardActionItem[] = [
           { key: "view", title: t("actions.view"), color: "info", icon: <Visibility fontSize="small" />, onClick: () => props.onView(item) },
           { key: "edit", title: t("actions.edit"), color: "primary", icon: <Edit fontSize="small" />, onClick: () => props.onEdit(item), disabled: !props.permissions.canEdit || item.isDeleted || item.status !== 1 },
-          ...getAvailableFiscalYearLifecycleActions(item.status).map(action => ({ key: `lifecycle-${action}`, title: t(`fiscalYears.lifecycle.${action}`), color: action === "reopen" ? "warning" as const : "success" as const, icon: action === "reopen" ? <LockOpen fontSize="small" /> : <LockClock fontSize="small" />, onClick: () => props.onLifecycle(item, action), disabled: !props.permissions.canManageLifecycle || item.isDeleted })),
+          ...getAvailableFiscalYearLifecycleActions(item.status).map(action => ({ key: `lifecycle-${action}`, title: t(`fiscalYears.lifecycle.${action}`), color: action === "reopen" ? "warning" as const : "success" as const, icon: action === "reopen" ? <LockOpen fontSize="small" /> : <LockClock fontSize="small" />, onClick: () => props.onLifecycle(item, action), disabled: !canRunFiscalYearLifecycle(props.permissions, action) || item.isDeleted })),
           item.isDeleted
-            ? { key: "restore", title: t("actions.restore"), color: "success", icon: <Restore fontSize="small" />, onClick: () => props.onRestore(item), disabled: !props.permissions.canDelete }
-            : { key: "archive", title: t("actions.archive"), color: "warning", icon: <Archive fontSize="small" />, onClick: () => props.onArchive(item), disabled: !props.permissions.canDelete || item.status !== 1 },
+            ? { key: "restore", title: t("actions.restore"), color: "success", icon: <Restore fontSize="small" />, onClick: () => props.onRestore(item), disabled: !props.permissions.canRestore }
+            : { key: "archive", title: t("actions.archive"), color: "warning", icon: <Archive fontSize="small" />, onClick: () => props.onArchive(item), disabled: !props.permissions.canArchive || item.status !== 1 },
         ];
         return <Grid key={item.id} size={{ xs: 12, sm: 6, lg: 4, xl: 3 }}><EntityCard index={index} height={300} title={item.nameEn} subtitle={`${item.nameAr} • ${item.code}`}
           endBadge={<Chip size="small" color={item.status === 2 ? "success" : item.status === 3 ? "warning" : "default"} label={t(`fiscalYears.status.${statusKey(item.status)}`)} />}

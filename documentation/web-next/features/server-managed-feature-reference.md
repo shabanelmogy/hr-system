@@ -17,7 +17,10 @@ Before implementing or rebuilding a Web screen, select a stable Pattern ID from
 [SCREEN_PATTERN_CATALOG.md](../../project/SCREEN_PATTERN_CATALOG.md) and inspect
 the registered Web and Mobile sources for the same workflow. The current paired
 references are `P-001` Countries Grid/CRUD, `P-002` Cost Centers Tree +
-Master/Detail, and `P-003` Add Tenant multi-section form.
+Master/Detail, `P-003` Add Tenant multi-section form, `P-005` Singleton Settings
+Editor, `P-006` Scoped Relationship/Mapping Editor, and `P-007` Settings
+Navigation Hub. `P-004` remains a Candidate Stepper and is not implementation
+authority.
 
 Record Web and Mobile as `Implemented`, `Adapted`, `Deferred`, or `Excluded` in
 the owning feature profile. A responsive or native composition may differ, but
@@ -28,6 +31,15 @@ When a repeated screen shape does not fit an existing Pattern ID, update the
 central catalog, both platform references, the shared reuse catalog, and the
 affected feature profiles in the same change. Do not establish a Web-only
 look-alike pattern without checking its Mobile counterpart.
+
+For Ledger Setup specifically, the existing `LedgerSetupResourcePage` may be
+used only as reviewed compatibility evidence for P-005's singleton journey. Its
+generic `resourceName` dispatch and catch-all transport are not reusable target
+architecture. New or rebuilt children keep typed services, query keys, schemas,
+forms, permissions, and routes. P-006 consumers additionally document whether a
+save replaces a set, applies a delta, or creates effective/versioned records;
+P-007 launchers only discover permission-filtered child routes and never call
+their CRUD services.
 
 ## 1. Define the Feature Before Coding
 

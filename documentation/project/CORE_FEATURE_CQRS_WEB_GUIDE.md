@@ -520,11 +520,11 @@ Use these files as the implemented reference:
 - Commands/queries: `api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries`
 - Mapster rules: `api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Mapping/CountryMappingConfig.cs`
 - Persistence ports: `api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Infrastructure/Features/GeographicalInformation/Countries/Persistence`
-- Countries page: `web-next/src/modules/hr/basic-data/geographical-information/countries/pages/CountriesPage.tsx`
-- Countries multi-view: `web-next/src/modules/hr/basic-data/geographical-information/countries/components/CountriesMultiView.tsx`
-- Countries orchestration: `web-next/src/modules/hr/basic-data/geographical-information/countries/hooks/useCountryGridLogic.ts`
-- Countries queries: `web-next/src/modules/hr/basic-data/geographical-information/countries/hooks/useCountryQueries.ts`
-- Country form: `web-next/src/modules/hr/basic-data/geographical-information/countries/components/CountryForm.tsx`
+- Countries page: `web-next/src/modules/reference-data/geographical-information/countries/pages/CountriesPage.tsx`
+- Countries multi-view: `web-next/src/modules/reference-data/geographical-information/countries/components/CountriesMultiView.tsx`
+- Countries orchestration: `web-next/src/modules/reference-data/geographical-information/countries/hooks/useCountryGridLogic.ts`
+- Countries queries: `web-next/src/modules/reference-data/geographical-information/countries/hooks/useCountryQueries.ts`
+- Country form: `web-next/src/modules/reference-data/geographical-information/countries/components/CountryForm.tsx`
 - Shared server list state: `web-next/src/shared/hooks/useServerListState.ts`
 
 Migrate the other geographic features toward this reference rather than copying

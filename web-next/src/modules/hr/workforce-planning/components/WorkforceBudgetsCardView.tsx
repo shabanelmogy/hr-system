@@ -17,19 +17,19 @@ const statusKeys = ["", "draft", "submitted", "approved", "rejected", "supersede
 export default function WorkforceBudgetsCardView(props: Props) {
   const { t } = useTranslation();
   if (props.loading) return <CardViewSkeleton />;
-  if (!props.items.length && !props.hasCriteria) return <EmptyState title={t("workforceBudget.empty.title")} subtitle={t("workforceBudget.empty.subtitle")} actionText={props.permissions.canManage ? t("workforceBudget.actions.add") : undefined} onAction={props.permissions.canManage ? props.onAdd : undefined} />;
+  if (!props.items.length && !props.hasCriteria) return <EmptyState title={t("workforceBudget.empty.title")} subtitle={t("workforceBudget.empty.subtitle")} actionText={props.permissions.canCreate ? t("workforceBudget.actions.add") : undefined} onAction={props.permissions.canCreate ? props.onAdd : undefined} />;
   if (!props.items.length) return <NoResultsState message={t("workforceBudget.noResults.title")} subtitle={t("workforceBudget.noResults.subtitle")} onClearFilters={props.onClear} />;
   return <Box sx={{ display: "flex", flexDirection: "column", height: "100%", minHeight: 0 }}>
     <Box sx={{ flex: 1, minHeight: 0, overflowY: "auto", overflowX: "hidden", p: { xs: 1, md: 1.5 }, scrollbarGutter: "stable" }}>
       <Grid container spacing={3}>{props.items.map((item, index) => {
         const lifecycleAction: CardActionItem = item.status === 2
-          ? { key: "approve", title: t("workforceBudget.actions.approve"), color: "success", icon: <CheckCircle />, onClick: () => props.onLifecycle(item), disabled: !props.permissions.canApprove }
-          : { key: "submit", title: t("workforceBudget.actions.submit"), color: "primary", icon: <Send />, onClick: () => props.onLifecycle(item), disabled: !props.permissions.canManage };
+          ? { key: "approve", title: t("workforceBudget.actions.approve"), color: "success", icon: <CheckCircle />, onClick: () => props.onLifecycle(item), disabled: !props.permissions.canReview }
+          : { key: "submit", title: t("workforceBudget.actions.submit"), color: "primary", icon: <Send />, onClick: () => props.onLifecycle(item), disabled: !props.permissions.canSubmit };
         const actions: CardActionItem[] = [
           { key: "view", title: t("actions.view"), color: "info", icon: <Visibility />, onClick: () => props.onView(item) },
-          { key: "edit", title: t("actions.edit"), color: "primary", icon: <Edit />, onClick: () => props.onEdit(item), disabled: !props.permissions.canManage || ![1, 4].includes(item.status) },
+          { key: "edit", title: t("actions.edit"), color: "primary", icon: <Edit />, onClick: () => props.onEdit(item), disabled: !props.permissions.canEdit || ![1, 4].includes(item.status) },
           { ...lifecycleAction, disabled: item.status === 2 ? lifecycleAction.disabled : lifecycleAction.disabled || ![1, 4].includes(item.status) },
-          { key: "reject", title: t("workforceBudget.actions.reject"), color: "error", icon: <Undo />, onClick: () => props.onReject(item), disabled: !props.permissions.canManage || item.status !== 2 },
+          { key: "reject", title: t("workforceBudget.actions.reject"), color: "error", icon: <Undo />, onClick: () => props.onReject(item), disabled: !props.permissions.canReview || item.status !== 2 },
         ];
         return <Grid key={item.id} size={{ xs: 12, sm: 6, lg: 4, xl: 3 }}><EntityCard index={index} height={300} title={item.budgetCode} subtitle={`${item.currencyCode} • ${t("workforceBudget.revision.short", { revision: item.revisionNumber })}`}
           endBadge={<Stack spacing={.5} sx={{ alignItems: "flex-end" }}><Chip size="small" color={item.status === 3 ? "success" : item.status === 4 ? "error" : "info"} label={t(`workforceBudget.status.${statusKeys[item.status]}`)} />{item.isEffective ? <Chip size="small" color="success" variant="outlined" label={t("workforceBudget.effective")} /> : null}</Stack>}

@@ -18,6 +18,8 @@ public sealed class PlatformSystemRoleStartupTask(
             ?? throw new InvalidOperationException("The administrator role was not created.");
         var superAdminRole = await FindSystemRoleAsync(PlatformRoleNames.SuperAdmin, cancellationToken)
             ?? throw new InvalidOperationException("The platform administrator role was not created.");
+        var userRole = await FindSystemRoleAsync(PlatformRoleNames.User, cancellationToken)
+            ?? throw new InvalidOperationException("The default user role was not created.");
 
         var tenantPermissions = moduleCatalog.Definitions
             .SelectMany(definition => definition.Submodules)
@@ -34,8 +36,12 @@ public sealed class PlatformSystemRoleStartupTask(
             .Distinct(StringComparer.Ordinal)
             .ToArray();
 
-        await EnsureClaimsAsync(adminRole, tenantPermissions, cancellationToken);
-        await EnsureClaimsAsync(superAdminRole, globalPermissions, cancellationToken);
+        await SynchronizeClaimsAsync(adminRole, tenantPermissions, cancellationToken);
+        await SynchronizeClaimsAsync(superAdminRole, globalPermissions, cancellationToken);
+        await SynchronizeClaimsAsync(userRole, [], cancellationToken);
+        await RemoveUnknownCustomRoleClaimsAsync(
+            tenantPermissions.Concat(globalPermissions).ToHashSet(StringComparer.Ordinal),
+            cancellationToken);
     }
 
     private async Task EnsureSystemRoleAsync(
@@ -62,19 +68,29 @@ public sealed class PlatformSystemRoleStartupTask(
                     role.NormalizedName == roleManager.NormalizeKey(roleName),
             cancellationToken);
 
-    private async Task EnsureClaimsAsync(
+    private async Task SynchronizeClaimsAsync(
         PlatformApplicationRole role,
         IEnumerable<string> permissions,
         CancellationToken cancellationToken)
     {
-        var existing = await roleManager.GetClaimsAsync(role);
-        var existingValues = existing
-            .Where(claim => claim.Type == PermissionClaimNames.Permission)
-            .Select(claim => claim.Value)
+        var targetValues = permissions
+            .Where(value => !string.IsNullOrWhiteSpace(value))
+            .Distinct(StringComparer.Ordinal)
             .ToHashSet(StringComparer.Ordinal);
+        var existing = await roleManager.GetClaimsAsync(role);
+        var permissionClaims = existing
+            .Where(claim => claim.Type == PermissionClaimNames.Permission)
+            .ToArray();
+        var existingValues = permissionClaims.Select(claim => claim.Value).ToHashSet(StringComparer.Ordinal);
 
-        foreach (var permission in permissions.Where(value => !string.IsNullOrWhiteSpace(value))
-                     .Distinct(StringComparer.Ordinal))
+        foreach (var staleClaim in permissionClaims.Where(claim => !targetValues.Contains(claim.Value)))
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            var result = await roleManager.RemoveClaimAsync(role, staleClaim);
+            EnsureSuccess(result, $"Unable to remove stale permission {staleClaim.Value} from {role.Name}.");
+        }
+
+        foreach (var permission in targetValues)
         {
             cancellationToken.ThrowIfCancellationRequested();
             if (existingValues.Contains(permission))
@@ -82,6 +98,30 @@ public sealed class PlatformSystemRoleStartupTask(
 
             var result = await roleManager.AddClaimAsync(role, new Claim(PermissionClaimNames.Permission, permission));
             EnsureSuccess(result, $"Unable to seed permission {permission}.");
+        }
+    }
+
+    private async Task RemoveUnknownCustomRoleClaimsAsync(
+        IReadOnlySet<string> allowedPermissions,
+        CancellationToken cancellationToken)
+    {
+        var customRoles = await roleManager.Roles
+            .Where(role => !role.IsSystem)
+            .ToListAsync(cancellationToken);
+
+        foreach (var role in customRoles)
+        {
+            var claims = await roleManager.GetClaimsAsync(role);
+            foreach (var claim in claims.Where(claim =>
+                         claim.Type == PermissionClaimNames.Permission &&
+                         !allowedPermissions.Contains(claim.Value)))
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                var result = await roleManager.RemoveClaimAsync(role, claim);
+                EnsureSuccess(
+                    result,
+                    $"Unable to remove unknown permission {claim.Value} from custom role {role.Name}.");
+            }
         }
     }
 

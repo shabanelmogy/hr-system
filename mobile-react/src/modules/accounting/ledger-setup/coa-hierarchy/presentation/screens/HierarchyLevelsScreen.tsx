@@ -18,9 +18,12 @@ export function HierarchyLevelsScreen() {
   const { t } = useTranslation();
   const { theme } = useAppTheme();
   const { isReadOnly, notifyBlockedAction } = useAppReadOnly();
-  const { allowed: canView } = useAuthorization({ requiredPermissions: [permissions.ViewAccounts] });
-  const { allowed: canWrite } = useAuthorization({ requiredPermissions: [permissions.ManageAccounts] });
-  const canManage = canWrite && !isReadOnly;
+  const { allowed: canView } = useAuthorization({ requiredPermissions: [permissions.ViewAccountHierarchyLevels] });
+  const { allowed: createAllowed } = useAuthorization({ requiredPermissions: [permissions.CreateAccountHierarchyLevels] });
+  const { allowed: editAllowed } = useAuthorization({ requiredPermissions: [permissions.EditAccountHierarchyLevels] });
+  const { allowed: archiveAllowed } = useAuthorization({ requiredPermissions: [permissions.ArchiveAccountHierarchyLevels] });
+  const { allowed: restoreAllowed } = useAuthorization({ requiredPermissions: [permissions.RestoreAccountHierarchyLevels] });
+  const canCreate = createAllowed && !isReadOnly; const canEdit = editAllowed && !isReadOnly; const canArchive = archiveAllowed && !isReadOnly; const canRestore = restoreAllowed && !isReadOnly;
   const [recordStatus, setRecordStatus] = useState<AccountRecordStatus>('active');
   const query = useHierarchyLevels(recordStatus, canView);
   const [formOpen, setFormOpen] = useState(false);
@@ -72,8 +75,8 @@ export function HierarchyLevelsScreen() {
     { id: 'nameAr', header: t('coaHierarchy.fields.nameAr'), width: 190, render: item => <AppText variant="bodySmall">{item.nameAr}</AppText> },
     { id: 'canPost', header: t('coaHierarchy.fields.canPost'), width: 110, render: item => <AppText variant="bodySmall">{t(item.canPost ? 'coaHierarchy.common.yes' : 'coaHierarchy.common.no')}</AppText> },
     { id: 'status', header: t('coaHierarchy.fields.status'), width: 110, render: item => <AppStatusBadge color={item.isDeleted ? theme.colors.warning : theme.colors.success} label={t(item.isDeleted ? 'coaHierarchy.status.archived' : 'coaHierarchy.status.active')} /> },
-    { id: 'actions', header: t('common.actions'), width: 110, align: 'center', render: item => <View style={styles.actions}><AppIconButton icon="eye-outline" label={t('common.view')} onPress={() => void openForm('view', item)} />{canManage && !item.isDeleted ? <AppIconButton icon="create-outline" label={t('common.edit')} onPress={() => void openForm('edit', item)} /> : null}</View> },
-  ], [canManage, openForm, t, theme.colors.success, theme.colors.warning]);
+    { id: 'actions', header: t('common.actions'), width: 110, align: 'center', render: item => <View style={styles.actions}><AppIconButton icon="eye-outline" label={t('common.view')} onPress={() => void openForm('view', item)} />{canEdit && !item.isDeleted ? <AppIconButton icon="create-outline" label={t('common.edit')} onPress={() => void openForm('edit', item)} /> : null}</View> },
+  ], [canEdit, openForm, t, theme.colors.success, theme.colors.warning]);
 
   if (!canView) return <AppScreen edges={['left', 'right', 'bottom']}><AppStateView state="error" message={t('common.accessDenied')} /></AppScreen>;
   if (query.isLoading) return <AppScreen edges={['left', 'right', 'bottom']}><AppStateView state="loading" /></AppScreen>;
@@ -82,9 +85,9 @@ export function HierarchyLevelsScreen() {
   return <AppScreen edges={['left', 'right', 'bottom']} contentContainerStyle={styles.screen} refreshControl={<RefreshControl refreshing={query.isRefetching} onRefresh={() => void query.refetch()} tintColor={theme.colors.primary} colors={[theme.colors.primary]} />}>
     <AppListScreen<AccountHierarchyLevel, 'table'> defaultView="table" items={query.data ?? []} emptyContent={<AppStateView state="empty" message={t('coaHierarchy.levels.empty')} />} searchPlaceholder={t('coaHierarchy.levels.search')} onSearch={(items, term) => { const needle = term.trim().toLocaleLowerCase(); return items.filter(item => String(item.levelNumber).includes(needle) || item.nameEn.toLocaleLowerCase().includes(needle) || item.nameAr.toLocaleLowerCase().includes(needle)); }}
       filterControl={<HierarchyLevelFilterButton value={recordStatus} onApply={value => setRecordStatus(value)} />}
-      searchActions={canManage ? <AppIconButton icon="add-outline" label={t('coaHierarchy.levels.actions.add')} color={theme.colors.onPrimary} onPress={() => void openForm('create')} size={22} style={({ pressed }) => ({ backgroundColor: theme.colors.primary, opacity: pressed ? 0.75 : 1 })} /> : null}
+      searchActions={canCreate ? <AppIconButton icon="add-outline" label={t('coaHierarchy.levels.actions.add')} color={theme.colors.onPrimary} onPress={() => void openForm('create')} size={22} style={({ pressed }) => ({ backgroundColor: theme.colors.primary, opacity: pressed ? 0.75 : 1 })} /> : null}
       views={[{ value: 'table', icon: 'grid-outline', label: t('multiView.table'), defaultPageSize: 10, render: items => <AppDataTable rows={items} columns={columns} getRowKey={item => item.id} /> }]} />
-    {formOpen ? <HierarchyLevelForm key={`${formMode}-${selected?.id ?? 'new'}-${selected?.rowVersion ?? ''}`} item={selected} mode={formMode} levels={mockLevels.data ?? []} levelsLoading={mockLevels.isLoading} levelsError={Boolean(mockLevels.error)} loading={saveMutation.isPending} canManage={canManage} onClose={closeForm} onSave={save} onEdit={selected && !selected.isDeleted ? () => setFormMode('edit') : undefined} onLifecycle={selected ? () => setPending({ kind: selected.isDeleted ? 'restore' : 'archive', item: selected }) : undefined} /> : null}
+    {formOpen ? <HierarchyLevelForm key={`${formMode}-${selected?.id ?? 'new'}-${selected?.rowVersion ?? ''}`} item={selected} mode={formMode} levels={mockLevels.data ?? []} levelsLoading={mockLevels.isLoading} levelsError={Boolean(mockLevels.error)} loading={saveMutation.isPending} canManage={formMode === 'create' ? canCreate : formMode === 'edit' ? canEdit : canEdit || canArchive || canRestore} onClose={closeForm} onSave={save} onEdit={selected && !selected.isDeleted && canEdit ? () => setFormMode('edit') : undefined} onLifecycle={selected && (selected.isDeleted ? canRestore : canArchive) ? () => setPending({ kind: selected.isDeleted ? 'restore' : 'archive', item: selected }) : undefined} /> : null}
     <ConfirmationDialog visible={pending !== null} title={t(`coaHierarchy.confirm.${pending?.kind ?? 'archive'}LevelTitle`)} description={t(`coaHierarchy.confirm.${pending?.kind ?? 'archive'}LevelDescription`, { level: pending?.item.levelNumber ?? '' })} confirmLabel={t(pending?.kind === 'restore' ? 'common.restore' : 'common.archive')} tone={pending?.kind === 'archive' ? 'warning' : 'default'} loading={archiveMutation.isPending || restoreMutation.isPending} onCancel={() => setPending(null)} onConfirm={() => void confirmLifecycle()} />
   </AppScreen>;
 }

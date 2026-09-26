@@ -1,6 +1,6 @@
 # Accounting Ledger Setup — Next.js Implementation Contract
 
-Status: **Client implementation evidence exists; Phase 06 live journey verification remains required.**
+Status: **Fiscal Years/Currency/COA typed client evidence exists; remaining Ledger Setup routes are generic compatibility evidence pending typed child refactors; Phase 06 live verification remains required.**
 
 ## 1. Feature boundary
 
@@ -67,10 +67,26 @@ dimension constraints. Posting/parent rules are explained but enforced by server
 
 ## 7. Setup lists
 
-Currencies, Dimensions, Books, Journal definitions, Exchange Rates, Link Accounts
-and Posting Profiles use shared `PageHeader`, `MyDataGrid`, feedback,
-confirmation and server-owned criteria where lists can grow. Cards are Deferred
-unless a concrete workflow later proves value.
+Currency already has typed ownership. Dimensions, Books, Journal definitions,
+Exchange Rates, Link Accounts and Posting Profiles currently remain reachable
+through a generic compatibility renderer; the target children must own typed
+services, query keys, schemas, forms and screens. They use shared `PageHeader`,
+`MyDataGrid`, feedback, confirmation and server-owned criteria where lists can
+grow. Cards are Deferred unless a concrete workflow later proves value.
+
+### Screen Pattern decisions
+
+| Surface | Pattern | Web composition |
+| --- | --- | --- |
+| Flat setup masters | `P-001` | server-managed Grid plus typed `MyForm` |
+| Accounts | `P-002` primary + P-001 list | `SplitTreeView` detail plus server Grid |
+| Account Dimension Constraints and Link Accounts | `P-006` | scoped relationship/mapping table with explicit dirty/save/effective semantics |
+| Company Settings | `P-005` | dedicated singleton `MyForm`; no fake Grid/archive |
+| Ledger Setup overview | `P-007` | permission-filtered launcher cards only |
+| Resolve Preview | feature-specific read-only diagnostic sub-surface | typed dialog/panel inside Posting Profiles |
+
+P-003 is not used to group independent resources with distinct APIs/lifecycles.
+P-004 remains Candidate and cannot authorize a screen.
 
 ## 8. Currency ownership migration UX
 
@@ -89,9 +105,10 @@ appears as a dead option.
 
 ## 10. Permissions and read-only mode
 
-`Accounts:View` gates COA reads; `Accounts:Manage` gates account writes;
-`Dimensions:View/Manage` gates dimensions; `AccountingSetup:Manage` gates
-currency/book/journal/FX/mapping/profile setup. Global app read-only mode suppresses
+`Accounts:View/Create/Edit/Archive/Restore` gates each COA operation;
+dimension definitions, dimension values, hierarchy levels, policies, currencies,
+books, journals, FX, mappings, profiles, and settings each use their own exact
+resource/action permission. Global app read-only mode suppresses
 mutations while preserving permitted reads.
 
 ## 11. Localization, RTL, and accessibility
@@ -99,6 +116,14 @@ mutations while preserving permitted reads.
 All visible strings use Accounting English/Arabic namespaces. Shared RTL/theme
 behavior controls direction. Tree/list/form actions have keyboard-accessible
 alternatives, labels and focus behavior; no native alert/confirm/browser validation.
+
+Visible-string translation is separate from business data. Fiscal Year, Currency,
+Hierarchy Level, Account, Dimension Definition/Value, Book, Journal Definition,
+Exchange Rate Type and Posting Profile forms expose separately labelled `NameAr`
+and `NameEn`, require and submit both, map server field errors to each control, and
+show both in detail. Lists/search use the current-locale value with documented
+fallback and preserve the other value. Settings, Rates and Mappings have no fake
+name fields; their selectors/cells render localized names from referenced owners.
 
 ## 12. Responsive and shared-component contract
 
@@ -119,8 +144,8 @@ correctness. Company switch/session behavior comes from existing shell context.
 
 ## 14. Verification and optional capabilities
 
-Source exists for the COA tree/detail/create/edit/archive flow and the setup
-lists/forms. The tree endpoint returns a lightweight node without RowVersion;
+Source exists for the typed Currency and COA flows plus generic compatibility setup
+lists/forms. Generic reachability is not typed child completion. The tree endpoint returns a lightweight node without RowVersion;
 opening a tree node must fetch `/accounts/{id}` before edit, view, or archive.
 Paged API lists must bind their current page to the grid; a first-page-only
 `pageSize=500` request silently hides later records. Dimension selector options
@@ -140,3 +165,11 @@ still required to verify the reported failure. Phase 06 remains Not Verified
 until create/edit/view, permission subsets, RTL and device-width journeys are
 observed against the live API. Import, bulk actions, Cards, notifications and
 realtime are Deferred; Journal runtime/GL/TB belong to later slices.
+
+For every human roadmap step, those browser checks must be delivered as a completed,
+feature-specific instance of
+`documentation/plans/business/accounting-core-gl/MANUAL_ACCEPTANCE_SCENARIO_TEMPLATE.md`.
+It names exact bilingual data, identities, desktop/compact viewports, shared UI
+pattern comparisons, expected server results, evidence and cleanup. Web success is
+recorded but does not activate the next step until actual-device Mobile also passes
+and the user explicitly accepts the complete step.

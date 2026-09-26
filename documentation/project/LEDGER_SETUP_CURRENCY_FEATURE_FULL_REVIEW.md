@@ -7,6 +7,9 @@ the single writable owner of the company Currency master. The current runtime wa
 created during the Currency ownership cutover and is evidence to reconcile, not an
 automatic child-completion claim. The package follows the closed Screen/Workflow
 Contract at `documentation/plans/business/accounting-core-gl/decomposition/ledger-setup-currency.md`.
+That contract is now version 2.0 and selects `P-001` on both platforms. Historical
+closure evidence is retained, while the current roadmap keeps Currency queued until
+Fiscal Years completes its active revalidation.
 
 ## 2. Product boundary and operating model
 
@@ -43,8 +46,9 @@ Accounting Company Settings, Accounts and Exchange Rates. The public
 
 ## 5. Authorization and ownership
 
-`AccountingSetup:View` gates page/detail/lookup. `AccountingSetup:Manage` gates
-create/update/archive/restore. `[TenantMember]` and Accounting scope filters remain
+`Currencies:View` gates page/detail/lookup. Exact `Currencies:Create`,
+`Currencies:Edit`, `Currencies:Archive`, and `Currencies:Restore` permissions gate
+their matching operations. `[TenantMember]` and Accounting scope filters remain
 authoritative. Clients never submit trusted tenant/company identifiers. Cross-module
 consumers use the Accounting Contract; they do not query `AccountingDbContext`.
 
@@ -76,7 +80,7 @@ Currency mutation success invalidates relevant client page/detail/lookup caches.
 
 ## 9. Verification evidence and known repository state
 
-Phase 06 recorded `Verified` on 2026-09-22. Evidence includes 14 Currency behavior
+Historical Phase 06 recorded `Verified` on 2026-09-22. Evidence includes 14 Currency behavior
 tests, two ownership architecture tests, one clean-baseline migration test, 31 focused
 HR consumer tests, 34 Web Currency/navigation/permission tests, 27 Mobile
 Currency/route/permission tests, Web production build and API-backed Admin/Normal
@@ -92,9 +96,10 @@ notes `PROD-010` and `PROD-014`.
 
 ## 10. Handoff and next slices
 
-Currency child `1A` is closed after Phase 06 `Verified` and Phase 07 publication of
+Currency child `1A` has historical Phase 06/07 closure evidence at
 `documentation/plans/business/accounting-core-gl/education/ledger-setup-currency.md`.
-Execution advances to `ledger-setup-coa-hierarchy`, followed by Dimensions,
-Books/Journals, Company Settings, Exchange Rates, Link Accounts, Posting Profiles and
-final Integration/Verification. Slice 1 remains open until package `1V` verifies the
-integrated posting context.
+For the current v2 run it remains **Queued** until Fiscal Years is Closed, then its
+authenticated API/Web/actual-Mobile journey, live schema and bilingual `NameAr`/
+`NameEn` create/edit/view/list behavior are revalidated. Only current closure in the
+canonical roadmap may advance execution to COA. Slice 1 remains open until package
+`1V` verifies the integrated posting context.

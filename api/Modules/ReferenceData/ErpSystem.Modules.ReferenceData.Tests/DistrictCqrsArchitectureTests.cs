@@ -45,7 +45,7 @@ public sealed class DistrictCqrsArchitectureTests
         AssertHttpRoute<HttpPostAttribute>(nameof(DistrictsController.Restore), "{id:int}/restore");
 
         var bulkArchive = typeof(DistrictsController).GetMethod(nameof(DistrictsController.BulkArchive))!;
-        Assert.Equal(ReferenceDataPermissions.DeleteDistricts, bulkArchive.GetCustomAttribute<HasPermissionAttribute>()?.Policy);
+        Assert.Equal(ReferenceDataPermissions.ArchiveDistricts, bulkArchive.GetCustomAttribute<HasPermissionAttribute>()?.Policy);
         Assert.Contains(
             bulkArchive.GetCustomAttributes<ProducesResponseTypeAttribute>(),
             attribute => attribute.StatusCode == StatusCodes.Status200OK && attribute.Type == typeof(BulkArchiveDistrictsResponse));

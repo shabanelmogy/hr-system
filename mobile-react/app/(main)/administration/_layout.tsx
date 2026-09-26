@@ -10,7 +10,7 @@ import { useAppTheme } from '@/src/core/theme';
 
 const viewUsersPermission = [permissions.ViewUsers] as const;
 const viewRolesPermission = [permissions.ViewRoles] as const;
-const manageOfflineOperationsPermission = [permissions.ManageOfflineOperations] as const;
+const viewOfflineOperationsPermission = [permissions.ViewOfflineOperations] as const;
 
 export default function AdministrationLayout() {
   const { t } = useTranslation();
@@ -22,8 +22,8 @@ export default function AdministrationLayout() {
   const { allowed: canViewRoles } = useAuthorization({
     requiredPermissions: viewRolesPermission,
   });
-  const { allowed: canManageOfflineOperations } = useAuthorization({
-    requiredPermissions: manageOfflineOperationsPermission,
+  const { allowed: canViewOfflineOperations } = useAuthorization({
+    requiredPermissions: viewOfflineOperationsPermission,
   });
   const bottomSpacing = Math.max(insets.bottom, 10);
 
@@ -86,7 +86,7 @@ export default function AdministrationLayout() {
       <Tabs.Screen
         name="offline-operations"
         options={{
-          href: canManageOfflineOperations ? undefined : null,
+          href: canViewOfflineOperations ? undefined : null,
           title: t('navigation.offlineOperations'),
           tabBarIcon: ({ color, size }) => (
             <AppIcon color={color} name="cloud-offline-outline" size={size} />

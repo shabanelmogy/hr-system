@@ -241,7 +241,7 @@ post-commit `BulkArchive` change event.
 - Controller: `api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Presentation/Features/GeographicalInformation/Countries/V1/CountriesController.cs`
 - Commands/queries: `api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries`
 - Mapster configuration: `api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Mapping/CountryMappingConfig.cs`
-- Web implementation: `web-next/src/modules/hr/basic-data/geographical-information/countries`
+- Web implementation: `web-next/src/modules/reference-data/geographical-information/countries`
 - Cross-feature guide: `documentation/project/CORE_FEATURE_CQRS_WEB_GUIDE.md`
 - [Applied API implementation profile](../../Countries_API_Implementation_Profile.md)
 - [Full API/web/mobile review](../../../project/COUNTRIES_FEATURE_FULL_REVIEW.md)

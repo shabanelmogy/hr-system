@@ -27,7 +27,7 @@ export function WorkforcePlansScreen() {
   const { allowed: viewAllowed } = useAuthorization({ requiredPermissions: [permissions.ViewWorkforcePlans] });
   const { allowed: createAllowed } = useAuthorization({ requiredPermissions: [permissions.CreateWorkforcePlans] });
   const { allowed: editAllowed } = useAuthorization({ requiredPermissions: [permissions.EditWorkforcePlans] });
-  const { allowed: deleteAllowed } = useAuthorization({ requiredPermissions: [permissions.DeleteWorkforcePlans] });
+  const { allowed: deleteAllowed } = useAuthorization({ requiredPermissions: [permissions.ArchiveWorkforcePlans] });
   const { allowed: approveAllowed } = useAuthorization({ requiredPermissions: [permissions.ApproveWorkforcePlans] });
   const canCreate = createAllowed && !isReadOnly; const canEdit = editAllowed && !isReadOnly; const canDelete = deleteAllowed && !isReadOnly; const canApprove = approveAllowed && !isReadOnly;
   const list = useServerListState<WorkforcePlanPageQuery['sortBy'], WorkforcePlanFilters>({ initialFilters, initialPageSize: 5, initialSort: { columnId: 'createdOn', direction: 'descending' } });

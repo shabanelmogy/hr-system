@@ -88,6 +88,22 @@ export interface FiscalYearPermissions {
   canView: boolean;
   canCreate: boolean;
   canEdit: boolean;
-  canDelete: boolean;
-  canManageLifecycle: boolean;
+  canArchive: boolean;
+  canRestore: boolean;
+  canOpen: boolean;
+  canBeginClosing: boolean;
+  canClose: boolean;
+  canLock: boolean;
+  canReopen: boolean;
 }
+
+export const canRunFiscalYearLifecycle = (
+  value: FiscalYearPermissions,
+  action: FiscalYearLifecycleAction,
+): boolean => ({
+  open: value.canOpen,
+  beginClosing: value.canBeginClosing,
+  close: value.canClose,
+  lock: value.canLock,
+  reopen: value.canReopen,
+})[action];

@@ -233,6 +233,17 @@ Selecting a `Candidate` pattern blocks runtime UI work until the pattern is
 registered, reviewed, and assigned a stable `P-###` ID with evidence. “Shared
 component reused” alone is never a pattern decision.
 
+### P7B.1 — Mandatory Permission Action Matrix
+
+Complete the Permission Action Matrix in each feature execution contract according
+to `documentation/system/PERMISSION_MODEL.md`. Map every API endpoint/message and
+every Web/Mobile visible action plus direct callback to the minimum exact
+`Resource:Action` permission, scope, read-only behavior, denial test, and English/
+Arabic display ownership. Create, Edit, Archive, Restore, irreversible Delete, and
+each named lifecycle transition are separate decisions. A runtime `Manage` claim,
+permission alias, or one mutation claim reused for independent actions blocks
+authorization of the feature contract.
+
 ### P7C — One feature active at a time
 
 The slice roadmap must contain one explicit `ACTIVE_FEATURE_STEP` marker. Exactly
@@ -260,6 +271,9 @@ Challenge at least:
 - offline/stale-client conflicts;
 - migration/backfill risk;
 - permissions that exist only in UI;
+- broad `Manage` permissions or missing separation between create, edit, archive,
+  restore, irreversible delete, and lifecycle actions;
+- permission labels or descriptions missing either Arabic or English ownership;
 - missing production evidence;
 - unsupported legal/privacy/product assertions;
 - optional client capabilities left undecided;

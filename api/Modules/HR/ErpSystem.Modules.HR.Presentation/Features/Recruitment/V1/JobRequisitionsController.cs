@@ -56,13 +56,13 @@ public sealed class JobRequisitionsController(ISender sender) : ControllerBase
     }
 
     [HttpGet("staffing-request-options")]
-    [HasPermission(HrPermissions.ManageJobRequisitions)]
+    [HasPermission(HrPermissions.CreateJobRequisitions)]
     [ProducesResponseType(typeof(IReadOnlyList<ApprovedStaffingRequestOptionDto>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetStaffingRequestOptions(CancellationToken cancellationToken) =>
         Ok(await _sender.Send(new GetApprovedStaffingRequestOptionsQuery(), cancellationToken));
 
     [HttpPost]
-    [HasPermission(HrPermissions.ManageJobRequisitions)]
+    [HasPermission(HrPermissions.CreateJobRequisitions)]
     [ProducesResponseType(typeof(JobRequisitionDto), StatusCodes.Status201Created)]
     public async Task<IActionResult> Create([FromBody] JobRequisitionMutation mutation, CancellationToken cancellationToken)
     {
@@ -73,7 +73,7 @@ public sealed class JobRequisitionsController(ISender sender) : ControllerBase
     }
 
     [HttpPost("{id:int}/submit")]
-    [HasPermission(HrPermissions.ManageJobRequisitions)]
+    [HasPermission(HrPermissions.SubmitJobRequisitions)]
     [ProducesResponseType(typeof(JobRequisitionDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> Submit(int id, CancellationToken cancellationToken)
     {
@@ -82,7 +82,7 @@ public sealed class JobRequisitionsController(ISender sender) : ControllerBase
     }
 
     [HttpPost("{id:int}/approve")]
-    [HasPermission(HrPermissions.ApproveJobRequisitions)]
+    [HasPermission(HrPermissions.ReviewJobRequisitions)]
     [ProducesResponseType(typeof(JobRequisitionDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> Approve(int id, CancellationToken cancellationToken)
     {
@@ -91,7 +91,7 @@ public sealed class JobRequisitionsController(ISender sender) : ControllerBase
     }
 
     [HttpPost("{id:int}/reject")]
-    [HasPermission(HrPermissions.ApproveJobRequisitions)]
+    [HasPermission(HrPermissions.ReviewJobRequisitions)]
     [ProducesResponseType(typeof(JobRequisitionDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> Reject(int id, [FromBody] RejectRequisitionRequest request, CancellationToken cancellationToken)
     {
@@ -100,7 +100,7 @@ public sealed class JobRequisitionsController(ISender sender) : ControllerBase
     }
 
     [HttpPost("{id:int}/cancel")]
-    [HasPermission(HrPermissions.ManageJobRequisitions)]
+    [HasPermission(HrPermissions.CancelJobRequisitions)]
     [ProducesResponseType(typeof(JobRequisitionDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> Cancel(int id, [FromBody] RejectRequisitionRequest request, CancellationToken cancellationToken)
     {

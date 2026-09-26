@@ -19,11 +19,11 @@ const navigation = createNavSection(
       createColoredIcon(<AssessmentRoundedIcon />, "#0ea5e9"),
       appRoutes.modules.reporting.crystalReports,
       undefined,
-      [permissions.ManageCrystalReportAccess],
+      [permissions.ViewCrystalReports],
     ),
   ],
   undefined,
-  [permissions.ManageCrystalReportAccess],
+  [permissions.ViewCrystalReports],
 );
 
 export const reportingModuleDefinition: FrontendModuleDefinition = {
@@ -41,7 +41,6 @@ export const reportingModuleDefinition: FrontendModuleDefinition = {
     tone: "info",
     requiredPermissions: [
       permissions.ViewCrystalReports,
-      permissions.ManageCrystalReportAccess,
     ],
     entryCandidates: [appRoutes.modules.reporting.crystalReports],
     navigation: [{
@@ -50,7 +49,7 @@ export const reportingModuleDefinition: FrontendModuleDefinition = {
       entries: [{
         titleKey: "menu.crystalReportsManagement",
         path: appRoutes.modules.reporting.crystalReports,
-        requiredPermissions: [permissions.ManageCrystalReportAccess],
+        requiredPermissions: [permissions.ViewCrystalReports],
       }],
     }],
     routePrefixes: [appRoutes.modules.reporting.crystalReports],

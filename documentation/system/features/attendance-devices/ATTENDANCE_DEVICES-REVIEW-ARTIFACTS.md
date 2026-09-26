@@ -99,8 +99,8 @@ authorization are separate Organizational Structure work.
 | Action | Permission | Enabled device | Disabled device | Read-only |
 | --- | --- | --- | --- | --- |
 | View devices/status | `AttendanceDevices:View` | Allowed | Allowed | Allowed |
-| Create/edit/enable/disable | `AttendanceDevices:Manage` | Allowed | Allowed | Blocked |
-| Update credentials | `AttendanceDevices:Credentials` | Allowed | Allowed | Blocked |
+| Create/edit/enable/disable | `AttendanceDevices:Create`, `AttendanceDevices:Edit`, or `AttendanceDevices:SetStatus` for the requested action | Allowed | Allowed | Blocked |
+| Update credentials | `AttendanceDevices:EditCredentials` | Allowed | Allowed | Blocked |
 | Test/detect/pull | `AttendanceDevices:Pull` | Allowed | Test/pull blocked | Blocked |
 | View raw users/punches/runs | `AttendanceDevices:ViewRaw` | Allowed | Allowed | Allowed |
 

@@ -44,7 +44,7 @@ public sealed class InterviewsController(ISender sender) : ControllerBase
     }
 
     [HttpPost]
-    [HasPermission(HrPermissions.ManageApplications)]
+    [HasPermission(HrPermissions.ScheduleInterviews)]
     [ProducesResponseType(typeof(InterviewDto), StatusCodes.Status201Created)]
     public async Task<IActionResult> Schedule([FromBody] ScheduleInterviewMutation mutation, CancellationToken cancellationToken)
     {
@@ -55,7 +55,7 @@ public sealed class InterviewsController(ISender sender) : ControllerBase
     }
 
     [HttpPost("{id:int}/cancel")]
-    [HasPermission(HrPermissions.ManageApplications)]
+    [HasPermission(HrPermissions.CancelInterviews)]
     [ProducesResponseType(typeof(InterviewDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> Cancel(int id, [FromBody] CancelInterviewRequest request, CancellationToken cancellationToken)
     {
@@ -64,7 +64,7 @@ public sealed class InterviewsController(ISender sender) : ControllerBase
     }
 
     [HttpPost("{id:int}/complete")]
-    [HasPermission(HrPermissions.ManageApplications)]
+    [HasPermission(HrPermissions.CompleteInterviews)]
     [ProducesResponseType(typeof(InterviewDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> Complete(int id, CancellationToken cancellationToken)
     {

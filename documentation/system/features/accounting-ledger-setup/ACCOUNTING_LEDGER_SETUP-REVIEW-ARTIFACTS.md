@@ -9,11 +9,11 @@
 | Canonical plan | `documentation/plans/business/accounting-core-gl/PLAN.md` |
 | Slice 1 execution decomposition | `documentation/plans/business/accounting-core-gl/SLICE-01-LEDGER-SETUP-EXECUTION.md` |
 | Operating mode | New vertical slice extending Accounting |
-| Review date | 2026-09-20 |
+| Review date | 2026-09-25 v2 planning/UI reconciliation; original preflight 2026-09-20 |
 | Review owner | Accounting Product + Architecture + implementation agent |
 | Implementation request | `documentation/system/features/accounting-ledger-setup/IMPLEMENTATION-REQUEST.md` |
 | Evidence manifest | `documentation/system/features/accounting-ledger-setup/required-files.json` |
-| Documentation state | Phase 01 Domain/API and persistence migration implemented — client/final verification in progress |
+| Documentation state | Historical API/client evidence retained; current v2 run has Fiscal Years Active and every later child Queued |
 | Applied implementation reference | `fiscal-years` — same-module pattern only |
 | Import | Web Deferred; Mobile Excluded |
 | Reporting | N/A Slice 1 — GL/TB are later |
@@ -35,6 +35,8 @@
 | R-09 | Existing Fiscal Years reused unchanged | Reuse | Reuse | Reuse | Verified current |
 | R-10 | Clean baseline has Accounting-only writable Currency ownership | Required baseline | HR consumes catalog | HR consumes catalog | Contract frozen |
 | R-11 | JournalEntry/posting/GL/TB/Month Close absent in Slice 1 | Excluded now | Excluded now | Excluded now | Scope guard frozen |
+| R-12 | Every named master carries distinct required `NameAr` and `NameEn` through API, Web, Mobile, search and mock-draft journeys | Required | Required | Required | v2 contract frozen |
+| R-13 | Every human feature step has a detailed Web/actual-device manual scenario and explicit user acceptance before Phase 06/closure/next-step activation | Evidence prerequisite | Required | Required | v2 gate frozen |
 
 ## Platform capability decisions
 
@@ -43,7 +45,7 @@
 | COA hierarchy | Required | Required | shared tree systems |
 | Setup lists/forms | Required | Required | online-authoritative |
 | Detail/create/edit/archive | Required | Required | permission/RowVersion aware |
-| Cards | Deferred | Deferred | no proven setup value yet |
+| Cards | Per child v2 contract | Per child v2 contract | Required only where the chosen pattern and viewport justify it; never inferred from the umbrella |
 | Bulk | Deferred | Deferred | no bulk financial setup contract |
 | Import | Deferred | Excluded | no placeholder |
 | Offline write | N/A browser | Excluded | server authority |
@@ -56,17 +58,18 @@ The umbrella feature is retained for integration/history evidence and final Slic
 verification. Future implementation/refactoring is reviewed child-by-child against
 the canonical decomposition document.
 
-| Package | Capability | Screen Contract focus | Closest reuse/reference |
-| --- | --- | --- | --- |
-| `1A` | Currency | server-managed list + create/view/edit/archive/restore + active lookup | Web shared grid/form/list state; Mobile shared list/table/form |
-| `1B` | COA + Hierarchy | first-class tree master/detail, proposed editable code, account lifecycle | Web `SplitTreeView` + Cost Center master/detail composition; Mobile `AppHierarchicalTree` |
-| `1C` | Dimensions | definitions/values + account constraint relationship editor | shared tabs/list/forms/selectors; typed Account lookup |
-| `1D` | Books + Journal Definitions | focused setup lists/forms; numbering config only | shared list/form/confirmation systems |
-| `1E` | Company Settings | singleton functional-currency/primary-book editor | shared form/select/state primitives |
-| `1F` | Exchange Rates | rate types + historical/versioned rates | shared list/form/date/select primitives |
-| `1G` | Link Accounts | capability-driven direct mappings | typed Book/Account lookups + shared list/form |
-| `1H` | Posting Profiles | profile editor + separate resolution preview diagnostics | shared list/form/feedback; typed preview response |
-| `1V` | Integration/Verification | launcher, permissions, translations, cross-child journeys, Phase 06 | existing Accounting shell + umbrella generated evidence |
+| Package | Capability | Approved pattern | Screen Contract focus | Closest reuse/reference |
+| --- | --- | --- | --- | --- |
+| Step 01 | Fiscal Years + Periods | `P-001` | current year/period lifecycle revalidation | existing typed Fiscal Years clients |
+| `1A` | Currency | `P-001` | server-managed list + create/view/edit/archive/restore + active lookup | Web shared grid/form/list state; Mobile shared list/table/form |
+| `1B` | COA + Hierarchy | Accounts `P-002`; Levels `P-001` | first-class tree master/detail, proposed editable code, account lifecycle | Web `SplitTreeView` + Cost Center master/detail composition; Mobile `AppHierarchicalTree` |
+| `1C` | Dimensions | Definitions/Values `P-001`; Constraints `P-006` | definitions/values + account constraint relationship editor | shared lists/forms/selectors; typed Account lookup |
+| `1D` | Books + Journal Definitions | `P-001` | focused setup lists/forms; numbering config only | shared list/form/confirmation systems |
+| `1E` | Company Settings | `P-005` | singleton functional-currency/primary-book editor | shared form/select/state primitives |
+| `1F` | Exchange Rates | `P-001` | rate types + historical/versioned rates | shared list/form/date/select primitives |
+| `1G` | Link Accounts | `P-006` | capability-driven direct mappings | typed Book/Account lookups + shared relationship editor primitives |
+| `1H` | Posting Profiles | `P-001` + diagnostic preview | profile editor + separate resolution preview diagnostics | shared list/form/feedback; typed preview response |
+| `1V` | Integration/Verification | `P-007` | launcher, permissions, translations, cross-child journeys, Phase 06 | existing Accounting shell + umbrella generated evidence |
 
 The current generic `LedgerSetupRecord` and generic resource renderer are accepted
 only as current-tree evidence. They are not the target client architecture for child
@@ -109,9 +112,15 @@ No local business filtering that can disagree with the API.
 
 ## Detail and write contract
 
-All create/update forms use typed controls, bilingual text, RowVersion on protected
-updates, explicit policies/enums and server field-error mapping. Company/tenant
-scope is not editable or sent by clients.
+All named-master create/update forms use typed controls and distinct required
+`NameAr`/`NameEn` fields, RowVersion on protected updates, explicit policies/enums
+and server field-error mapping. Both names remain visible in detail and list/card
+surfaces, searchable where the list contract supports search, and independently
+editable without overwriting one another. Local mock-data actions populate both.
+Company/tenant scope is not editable or sent by clients. Company Settings,
+ExchangeRate history, AccountMapping and resolve-preview results are non-named
+records: they show the localized label of their linked named owner instead of
+inventing duplicate name properties.
 
 Currency starts with one writable owner: Accounting. `InitialAccounting` creates the
 Currency store and `InitialHr` never creates one. HR CurrencyCode snapshots use the
@@ -123,9 +132,9 @@ through normal Accounting settings together with Primary Book.
 
 | Surface | View | Mutate | Lifecycle |
 | --- | --- | --- | --- |
-| Accounts | `Accounts:View` | `Accounts:Manage` | archive/restore subject to dependency/history rules |
-| Dimensions | `Dimensions:View` | `Dimensions:Manage` | archive/restore |
-| Currency/Settings/Books/Journals/FX/Mapping/Profile | `AccountingSetup:View` | `AccountingSetup:Manage` | archive/version/effective-date rules by aggregate |
+| Accounts | `Accounts:View` | `Accounts:Create/Edit/Archive/Restore` | each action independent; dependency/history rules still apply |
+| Dimensions | `DimensionDefinitions:*`, `DimensionValues:*`, `AccountDimensionPolicies:View/Edit` | exact action claim | archive/restore only where the resource supports it |
+| Currency/Settings/Books/Journals/FX/Mapping/Profile | resource-specific `View` | resource-specific exact action claim | archive/version/effective-date rules by aggregate |
 
 Clients hide/block mutations in read-only mode; API remains authoritative.
 
@@ -164,6 +173,8 @@ separate plan.
 | F-07 | High | Initial Phase 01 review proved create/update but did not enumerate lifecycle evidence per mutable entity | fixed with archive/restore/status/dependency guards, entity completion matrix, generated future-module quality gate and architecture tests |
 | F-08 | High | Process-wide JSON localization factory/resources were owned and registered by HR | moved global composition/resources to ErpSystem.Api; Ledger Setup uses Accounting-owned embedded resources; architecture test blocks future module registration |
 | F-09 | High | Slice 1 was implemented/reviewed as one broad setup client surface, making typed screen contracts and independent completion harder to assess | D-023 decomposes Slice 1 into child packages 1A–1H plus 1V; umbrella retained for integration/history and Phase 06 only |
+| F-10 | High | Legacy child contracts did not make the UI-pattern gate or full Arabic/English data parity independently auditable | Resolved by v2 child contracts with approved `P-001`/`P-002`/`P-005`/`P-006`/`P-007` mappings, per-platform view decisions and explicit `NameAr`/`NameEn` acceptance |
+| F-11 | High | Automated/source verification alone did not give the user an executable, per-step acceptance journey or a hard transition decision | Resolved by the central manual-acceptance template, feature-specific scenario files, result-by-case evidence, explicit user acceptance, and retest rules |
 
 ## Verification
 
@@ -190,8 +201,8 @@ Bounded Currency ownership cutover verification on 2026-09-21:
   150 suites.
 - Mobile contract matrix covers 74 routes, 28 endpoint files and 197 endpoint
   members, including `/finance/ledger-setup/currencies` and the Currency endpoint
-  family with `AccountingSetup:View` for reads and `AccountingSetup:Manage` for
-  mutations.
+  family with `Currencies:View` for reads and exact `Currencies:Create/Edit/Archive/Restore`
+  claims for mutations.
 
 Accounting Ledger Setup persistence verification on 2026-09-22:
 
@@ -214,15 +225,18 @@ Slice 1 execution-decomposition checkpoint on 2026-09-22:
 
 - D-023 and `SLICE-01-LEDGER-SETUP-EXECUTION.md` define child packages `1A`–`1H`
   plus mandatory `1V` integration/verification.
-- `PLAN.md` now carries the exact `Feature Decomposition Gate`, with one stable
-  Feature ID and completed `decomposition/<feature-id>.md` Screen/Workflow Contract
-  for every child; `1A` is reconcile-only, `1B` is first active, `1C`–`1H` are
-  queued, and `1V` is final.
-- Every child has an API-readiness gate and Web/Mobile Screen Contract; COA names
-  `SplitTreeView` and the Cost Center master/detail composition as the required
-  closest reuse reference without transferring HR domain logic.
+- `PLAN.md` carries the exact `Feature Decomposition Gate`, with one stable Feature
+  ID and a current v2 `decomposition/<feature-id>.md` Screen/Workflow Contract for
+  every child. Fiscal Years is the sole Active step; `1A`–`1H` and `1V` are ordered
+  Queued work despite historical implementation evidence.
+- Every child has an API-readiness gate, Web/Mobile Screen Contract and approved UI
+  pattern. COA names `SplitTreeView` and the Cost Center master/detail composition as
+  the required closest reuse reference without transferring HR domain logic.
+- Every named master has explicit `NameAr`/`NameEn` API, form, view, list/search and
+  mock-draft parity; non-named rows reuse localized linked-owner labels.
 - Planning Check: PASS.
-- Documentation system check: PASS for 85 recipes after generator-driven refresh.
+- Documentation system check: PASS for 101 recipes after generator-driven refresh
+  and v2 contract registration.
 - `required-files.json` parse: PASS; `git diff --check`: PASS with line-ending
   notices only.
 
@@ -246,3 +260,10 @@ This decision authorizes **only Slice 1**. It does not mark the feature
 `Verified`, does not close G4, and does not permit customer education. Phases
 01–05 must update this artifact, the four applied books and `required-files.json`
 with actual implementation evidence before Phase 06.
+
+Phase 06 also remains unavailable until each active human step has sent and run its
+completed manual scenario, the user has explicitly accepted it, and the verbatim
+decision is recorded. For the current run, Fiscal Years remains Active and Currency
+remains Queued until
+`documentation/plans/business/accounting-core-gl/manual-acceptance/FISCAL-YEARS-STEP-01.md`
+is completed and accepted.

@@ -102,3 +102,12 @@ module/catalog owns report endpoint and dataset rendering. Mock
 data is available on writable forms through the shared form contract in hosted
 trials and development alike; it never submits or fabricates identity, scope, or
 RowVersion.
+
+The source checks above are followed by the user-operated Web cases `W-01` through
+`W-09`, security cases `S-01` through `S-04`, bilingual/RTL coverage, and the
+five-point UI-pattern audit in
+`documentation/plans/business/accounting-core-gl/manual-acceptance/FISCAL-YEARS-STEP-01.md`.
+Run them at desktop and compact widths with full-access, view-only, denied,
+read-only and second-company contexts. A passing browser journey is recorded but
+does not close the feature until the same scenario's actual-device cases pass and
+the user explicitly accepts the complete step.

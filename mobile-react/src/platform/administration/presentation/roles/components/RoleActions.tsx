@@ -9,6 +9,7 @@ import type { RoleOption } from '../../../domain/models/administration';
 interface RoleActionsProps {
   canDelete: boolean;
   canEdit: boolean;
+  canViewPermissions: boolean;
   onEdit: (role: RoleOption) => void;
   onManagePermissions: (role: RoleOption) => void;
   onToggle: (role: RoleOption) => void;
@@ -19,6 +20,7 @@ interface RoleActionsProps {
 export function RoleActions({
   canDelete,
   canEdit,
+  canViewPermissions,
   onEdit,
   onManagePermissions,
   onToggle,
@@ -45,12 +47,14 @@ export function RoleActions({
           onPress={() => onEdit(role)}
         />
       ) : null}
-      <AppIconButton
-        color={theme.colors.accent}
-        icon="key-outline"
-        label={t(role.isSystem ? 'roleManagement.viewPermissions' : 'roleManagement.managePermissions')}
-        onPress={() => onManagePermissions(role)}
-      />
+      {canViewPermissions ? (
+        <AppIconButton
+          color={theme.colors.accent}
+          icon="key-outline"
+          label={t(role.isSystem ? 'roleManagement.viewPermissions' : 'roleManagement.managePermissions')}
+          onPress={() => onManagePermissions(role)}
+        />
+      ) : null}
       {canDelete && !role.isSystem ? (
         <AppIconButton
           color={role.isDeleted ? theme.colors.success : theme.colors.danger}

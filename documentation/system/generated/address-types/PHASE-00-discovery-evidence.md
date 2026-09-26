@@ -83,6 +83,6 @@ scenarios or an explicit `N/A` with a reason.
 | address-types-web | 2 | `566c1bb2e2d57ebcaf5853637d29939bf6c53061d7ddff9fdb92740ec3ae4f66` |
 | address-types-web | 12 | `79c8b65d2b3da2c9f670533292936c9cc7c268333fc03488b6e3f321ea75e4da` |
 | address-types-web | 13 | `2bd84244023861a16a3969ed4ce8128912ee46de5ae8b9cf76fe928dd7480d5f` |
-| address-types-mobile | 1 | `638b28e532a39d37667bbc8fe949baebd73954e99acd2d6cfc6c1f6d52d2837e` |
+| address-types-mobile | 1 | `8b500cc83eb1ea43939126ac861dcd593d241908f95700a1ac9dc7872d0ab2fc` |
 | address-types-mobile | 14 | `b38f608a88bd0703b059047dbd8102d44f80b028d6959f2fc9d0b2dc69d2b4aa` |
 | address-types-mobile | 15 | `22bf074cab1a83481fef4c63b81aaa5747d0fc1f013506c2e02e2c2cc1ba7f7f` |

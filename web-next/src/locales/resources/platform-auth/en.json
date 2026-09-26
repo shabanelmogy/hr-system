@@ -74,7 +74,44 @@
     "roleNotFound": "Role not found",
     "reviewPermissions": "Review permissions",
     "archiveTitle": "Archive role?",
-    "archiveDescription": "The role will no longer be assignable and can be restored later."
+    "archiveDescription": "The role will no longer be assignable and can be restored later.",
+    "permissionActions": {
+      "Approve": "Approve", "ApproveJobDescriptions": "Approve job descriptions", "Archive": "Archive",
+      "BeginClosing": "Begin closing", "Cancel": "Cancel", "Close": "Close", "Complete": "Complete",
+      "Create": "Create", "Delete": "Delete", "Detect": "Detect", "Download": "Download", "Edit": "Edit",
+      "EditCredentials": "Edit credentials", "Evaluate": "Evaluate", "Export": "Export",
+      "GenerateQrCode": "Generate QR code", "Hire": "Hire", "Issue": "Issue", "Lock": "Lock", "Move": "Move",
+      "Open": "Open", "Pause": "Pause", "Publish": "Publish", "PullAttendance": "Pull attendance",
+      "PullUsers": "Pull users", "Reject": "Reject", "Reopen": "Reopen", "Resend": "Resend",
+      "ResetPassword": "Reset password", "Resolve": "Resolve", "Respond": "Respond", "Restore": "Restore",
+      "Review": "Review", "Revoke": "Revoke", "Schedule": "Schedule", "SetStatus": "Set status",
+      "Submit": "Submit", "Test": "Test", "Unlock": "Unlock", "Unpublish": "Unpublish", "Upload": "Upload",
+      "View": "View", "ViewDashboard": "View dashboard", "ViewFinancials": "View financials",
+      "ViewRaw": "View raw data", "ViewTrace": "View trace", "Withdraw": "Withdraw"
+    },
+    "permissionResources": {
+      "AccountDimensionPolicies": "Account dimension policies", "AccountHierarchyLevels": "Account hierarchy levels",
+      "AccountingSettings": "Accounting settings", "AccountMappings": "Account mappings", "Accounts": "Chart of accounts",
+      "Addresses": "Addresses", "AddressTypes": "Address types", "Analytics": "Analytics", "ApiKeys": "API keys",
+      "Appointments": "Appointments", "AttendanceAgents": "Attendance agents", "AttendanceDevices": "Attendance devices",
+      "Backups": "Backups", "Books": "Accounting books", "Candidates": "Candidates", "Categories": "Categories",
+      "ChangeLogs": "Change logs", "CompanyGeographicScope": "Company geographic scope",
+      "ContactsParties": "Contact parties", "Countries": "Countries", "CrystalReportAccess": "Crystal report access",
+      "CrystalReports": "Crystal reports", "Currencies": "Currencies", "DatabaseViews": "Database views",
+      "DimensionDefinitions": "Dimension definitions", "DimensionValues": "Dimension values", "Districts": "Districts",
+      "EmploymentApplications": "Employment applications", "EnvelopeAmendments": "Position envelope amendments",
+      "ExchangeRates": "Exchange rates", "ExchangeRateTypes": "Exchange-rate types", "FiscalYears": "Fiscal years",
+      "GlobalCrystalReports": "Global Crystal reports", "Hangfire": "Background jobs", "Interviews": "Interviews",
+      "Invoices": "Invoices", "JobOffers": "Job offers", "JobOpenings": "Job openings", "JobPostings": "Job postings",
+      "JobRequisitions": "Job requisitions", "JournalDefinitions": "Journal definitions", "Localizations": "Localization",
+      "OfflineOperations": "Offline operations", "OrganizationalStructure": "Organizational structure",
+      "PositionEnvelopes": "Position envelopes", "PostingProfiles": "Posting profiles", "Recruitment": "Recruitment",
+      "RecruitmentSettings": "Recruitment settings", "ReportsCategories": "Report categories",
+      "ReportTemplates": "Report templates", "RolePermissions": "Role permissions", "Roles": "Roles",
+      "StaffingRequests": "Staffing requests", "States": "States", "SubCategories": "Subcategories",
+      "UserInvitations": "User invitations", "Users": "Users", "WorkforceBudgets": "Workforce budgets",
+      "WorkforcePlanning": "Workforce planning", "WorkforcePlans": "Workforce plans"
+    }
   },
   "users": {
     "dashboard": {

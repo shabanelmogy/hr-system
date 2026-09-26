@@ -59,7 +59,8 @@ interface Props {
   permissions: {
     canCreate: boolean;
     canEdit: boolean;
-    canDelete: boolean;
+    canArchive: boolean;
+    canRestore: boolean;
     canApprove: boolean;
   };
   onView: (item: OrganizationalStructureItem) => void;

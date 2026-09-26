@@ -41,6 +41,11 @@ Explicitly outside this child:
 
 ## 2. UI Pattern Gate (mandatory before implementation)
 
+Complete the product-wide Permission Action Matrix from
+`../system/PERMISSION_MODEL.md` alongside this gate. Every Screen ID below must map
+its buttons, menus, gestures, row actions, bulk actions, reports/imports, and direct
+handlers to matrix rows; a broad `Manage` permission is not an acceptable value.
+
 Every screen or route in this feature has one row for **each platform**. Do not
 write “reuse shared components” as a substitute for a pattern decision. The exact
 source paths below must be inspected before runtime work starts.
@@ -108,6 +113,16 @@ Define the actual information architecture and interaction surfaces for this chi
 | Permission and tenant/company scope | `<server-authoritative rule>` |
 | Cross-module contract | `<contract/event or N/A>` |
 | Persistence/schema/migration | `<DbContext, schema, migration or N/A>` |
+
+### Permission Action Matrix
+
+| Actor | Resource | User action | API endpoint / message | Exact permission | Scope | Read-only behavior | Web control + direct guard | Mobile control + direct guard | EN label | AR label | Denial test |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `<actor>` | `<resource>` | `<one independently grantable action>` | `<route/message>` | `<Resource:Action>` | `<scope>` | `<behavior>` | `<evidence/target>` | `<evidence/target>` | `<label>` | `<label>` | `<test>` |
+
+Archive, Restore, and irreversible Delete require separate rows and permissions.
+Named lifecycle transitions such as Submit, Review, Publish, Lock, Reopen, Revoke,
+or ResetPassword also require their own rows.
 
 Client-only filtering or state must not replace required server criteria.
 

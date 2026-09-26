@@ -12,7 +12,7 @@ interface Props {
   rows: Currency[]; loading: boolean; page: number; pageSize: number; totalCount: number;
   sortColumn: CurrencySortColumn; sortDirection: "ASC" | "DESC";
   searchValue: string; searchField: CurrencySearchField; searchOperator: CurrencySearchOperator;
-  recordStatus: CurrencyRecordStatus; canManage: boolean;
+  recordStatus: CurrencyRecordStatus; canEdit: boolean; canArchive: boolean; canRestore: boolean;
   onSearchChange: (value: string) => void; onSearchFieldChange: (value: CurrencySearchField) => void;
   onSearchOperatorChange: (value: CurrencySearchOperator) => void; onRecordStatusChange: (value: CurrencyRecordStatus) => void;
   onReset: () => void; onPaginationChange: (model: GridPaginationModel) => void; onSortChange: (model: GridSortModel) => void;
@@ -28,10 +28,10 @@ export default function CurrenciesDataGrid(props: Props) {
     { field: "symbol", headerName: t("currencies.fields.symbol"), minWidth: 110, flex: 0.5, align: "center", headerAlign: "center" },
     { field: "actions", type: "actions", headerName: t("actions.buttons"), width: 165, getActions: ({ row }) => [
       <GridActionsCellItem key="view" icon={<Visibility />} label={t("actions.view")} onClick={() => props.onView(row)} showInMenu={false} />,
-      <GridActionsCellItem key="edit" icon={<Edit />} label={t("actions.edit")} disabled={!props.canManage || row.isDeleted} onClick={() => props.onEdit(row)} showInMenu={false} />,
+      <GridActionsCellItem key="edit" icon={<Edit />} label={t("actions.edit")} disabled={!props.canEdit || row.isDeleted} onClick={() => props.onEdit(row)} showInMenu={false} />,
       row.isDeleted
-        ? <GridActionsCellItem key="restore" icon={<Restore />} label={t("actions.restore")} disabled={!props.canManage} onClick={() => props.onRestore(row)} showInMenu />
-        : <GridActionsCellItem key="archive" icon={<Archive />} label={t("actions.archive")} disabled={!props.canManage} onClick={() => props.onArchive(row)} showInMenu />,
+        ? <GridActionsCellItem key="restore" icon={<Restore />} label={t("actions.restore")} disabled={!props.canRestore} onClick={() => props.onRestore(row)} showInMenu />
+        : <GridActionsCellItem key="archive" icon={<Archive />} label={t("actions.archive")} disabled={!props.canArchive} onClick={() => props.onArchive(row)} showInMenu />,
     ] },
   ], [props, t]);
   const operators: CurrencySearchOperator[] = ["contains", "doesNotContain", "equals", "doesNotEqual", "startsWith", "endsWith"];

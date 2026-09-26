@@ -1,8 +1,8 @@
 # Ledger Setup Currency Implementation Request
 
 This is the execution contract for child package `ledger-setup-currency`. Product
-intent remains owned by `accounting-core-gl`; this file translates the closed child
-Screen/Workflow Contract and verified current runtime into implementation work.
+intent remains owned by `accounting-core-gl`; this file translates the current v2
+Screen/Workflow Contract and verified historical runtime into revalidation work.
 
 ## Request metadata
 
@@ -26,14 +26,15 @@ Screen/Workflow Contract and verified current runtime into implementation work.
 
 ## Execution request
 
-Reconcile the existing Accounting Currency vertical slice against the closed child
+Reconcile the existing Accounting Currency vertical slice against the current v2
 contract. Keep one canonical owner and one runtime surface; do not create a parallel
 Currency aggregate, generic CRUD service, compatibility facade, or alternate client
 screen. Existing runtime is evidence only until the package exit gate is verified.
 
-Execution order is fixed by the master Slice 1 decomposition. This package is first.
-No COA/Hierarchy child implementation is accepted as started until Currency reaches
-its child exit gate.
+Execution order is fixed by the master Slice 1 decomposition. Currency is human
+Step 02 and remains **Queued** until the active Fiscal Years step is Closed. No
+COA/Hierarchy child revalidation is accepted as started until Currency reaches its
+current v2 child exit gate.
 
 Before runtime changes, Phase 00 must have final applied books, required-file
 manifest, registered generated packet and green documentation check. A material
@@ -46,7 +47,9 @@ customer journey reopens the owning plan decision before coding.
 | --- | --- |
 | Ownership and scope | Accounting owns the writable Currency master; records are tenant + company scoped from trusted `ICurrentActor`; HR only stores validated `CurrencyCode` snapshots in its own business records. |
 | Fields and relationships | `CurrencyCode` is exactly three ASCII letters, trimmed and normalized uppercase; `NameEn` and `NameAr` are required max 100; `Symbol` required max 10; opaque RowVersion protects mutations. No `IsDefault` or `ExchangeRateToDefault` authority exists. |
-| Permissions and read-only | Reads and active lookup require `AccountingSetup:View`; create/update/archive/restore require `AccountingSetup:Manage`; application read-only mode suppresses all writes. |
+| UI pattern | Approved `P-001` Server-managed Grid/CRUD: Web Grid is Required; Mobile Table and Cards are Required; create/edit/view/lifecycle use shared form, state and confirmation systems. |
+| Bilingual data parity | API create/update/detail/page/lookup, Web Grid/form/detail/search, Mobile Table/Cards/form/detail/search and local mock drafts preserve distinct required `NameAr` and `NameEn`; translation keys localize labels but never replace stored business names. |
+| Permissions and read-only | Reads and active lookup require `Currencies:View`; create/update/archive/restore require `Currencies:Create`, `Currencies:Edit`, `Currencies:Archive`, and `Currencies:Restore` respectively; application read-only mode suppresses all writes. |
 | List contract | Server-owned paging; search max 200; fields `all/currencyCode/nameAr/nameEn/symbol`; operators `contains/doesNotContain/equals/doesNotEqual/startsWith/endsWith`; status `active/archived/all`; sort `currencyCode/nameAr/nameEn/symbol/createdOn`; deterministic Id tie-break. |
 | Lifecycle | Create active; update active record; soft archive; restore. Archive is idempotent when already archived and is blocked while referenced by Accounting settings, accounts or exchange rates. Restore of active record is idempotent. Update/archive/restore use current RowVersion. |
 | Web views | Grid/list + detail/create/edit + archive/restore are Required. Separate Cards/Tree/Chart/Report/Import/Export views are Excluded for this child. |
@@ -156,9 +159,11 @@ transaction semantics and permissions before runtime is introduced.
 - API: reconcile the existing Currency Domain/Application/Infrastructure/Presentation
   path against this request; do not replace a correct existing path for symmetry.
 - Next.js: retain the dedicated typed Currency route, service, server-list state,
-  Grid/form/lifecycle and shared primitives; fix only contract gaps.
+  `P-001` Grid/form/lifecycle and shared primitives; fix only contract gaps and
+  verify independent `NameAr`/`NameEn` editing, rendering and search.
 - Expo: retain the dedicated layered Currency route, runtime schemas, repository,
-  use cases, Table/Cards/form/lifecycle and permissions; fix only contract gaps.
+  use cases, `P-001` Table/Cards/form/lifecycle and permissions; fix only contract
+  gaps and verify both stored names in Table, Cards, detail, form and search.
 - Documentation: keep this execution package, the four applied books, final evidence
   manifest, registered recipes and generated phases current. Education is Phase 07.
 
@@ -177,12 +182,14 @@ transaction semantics and permissions before runtime is introduced.
 
 Phase 00 may close when all of the following are true:
 
-- the nine Slice 1 child Screen/Workflow Contracts remain closed and planning checks pass;
+- the nine Slice 1 child Screen/Workflow Contracts remain current v2 contracts and
+  planning checks pass;
 - this file and the review artifact contain no unresolved placeholders;
 - the four Currency applied books exist and describe current vs target-only behavior;
 - `required-files.json` includes current API/Web/Mobile/configuration/localization/test evidence;
 - Currency recipes are registered and the generated Phase 00 packet is current;
 - `Generate-Documentation.ps1 -Check` passes.
 
-Passing Phase 00 authorizes **review/reconciliation implementation** for Currency; it
-does not mark Currency complete and it does not authorize the next child package.
+Passing Phase 00 establishes Currency readiness only. It does not activate Currency
+before Fiscal Years is Closed, does not mark the current v2 revalidation complete,
+and does not authorize the next child package.

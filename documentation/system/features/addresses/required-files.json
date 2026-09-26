@@ -26,13 +26,6 @@
       "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Infrastructure/Features/GeographicalInformation/Addresses",
       "minimumFiles": 3,
       "purpose": "Address configuration, service, and post-commit job"
-    },
-    {
-      "id": "api-owner-persistence",
-      "layer": "api",
-      "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Persistence/Configurations/OrganizationalStructure",
-      "minimumFiles": 2,
-      "purpose": "CompanyAddress and BranchAddress persistence contracts"
     }
   ],
   "requiredFiles": [
@@ -127,16 +120,22 @@
       "purpose": "Address constraints and relations"
     },
     {
-      "id": "company-address-config",
+      "id": "company-address-scope",
       "layer": "api",
       "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Infrastructure/ReferenceDataDbContext.cs",
-      "purpose": "Company link constraints"
+      "purpose": "CompanyAddress DbSet and fail-closed scope filter"
     },
     {
-      "id": "branch-address-config",
+      "id": "branch-address-scope",
       "layer": "api",
       "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Infrastructure/ReferenceDataDbContext.cs",
-      "purpose": "Branch link constraints"
+      "purpose": "BranchAddress DbSet and fail-closed scope filter"
+    },
+    {
+      "id": "migration-baseline",
+      "layer": "api",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Infrastructure/Migrations/20260914181144_InitialReferenceData.cs",
+      "purpose": "Current Address and owner-link table baseline"
     },
     {
       "id": "integrity-tests",

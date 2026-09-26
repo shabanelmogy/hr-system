@@ -44,7 +44,8 @@ export interface WorkforcePlanPermissions {
   canView: boolean;
   canCreate: boolean;
   canEdit: boolean;
-  canDelete: boolean;
+  canArchive: boolean;
+  canRestore: boolean;
   canApprove: boolean;
 }
 

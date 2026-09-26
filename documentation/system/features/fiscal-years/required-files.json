@@ -1,9 +1,16 @@
 {
   "schemaVersion": 1,
+  "status": "phase-06-manual-user-acceptance-pending",
   "feature": "fiscal-years",
   "featureName": "Fiscal Years",
   "referenceFeature": "countries",
-  "purpose": "Minimum evidence set for the company-scoped Fiscal Years feature across API, Next.js, and Expo.",
+  "planId": "accounting-core-gl",
+  "sliceId": "Step 01 — Fiscal Years & Periods revalidation",
+  "canonicalPlan": "documentation/plans/business/accounting-core-gl/PLAN.md",
+  "featureDecompositionDecision": "Decompose",
+  "screenWorkflowContract": "documentation/plans/business/accounting-core-gl/decomposition/fiscal-years.md",
+  "manualAcceptanceScenario": "documentation/plans/business/accounting-core-gl/manual-acceptance/FISCAL-YEARS-STEP-01.md",
+  "purpose": "Minimum current v2 evidence set for the company-scoped Fiscal Years feature across API, Next.js, and Expo; detailed live Web/actual-device user acceptance remains pending.",
   "reviewArtifact": "documentation/system/features/fiscal-years/FISCAL_YEARS-REVIEW-ARTIFACTS.md",
   "implementationRequest": "documentation/system/features/fiscal-years/IMPLEMENTATION-REQUEST.md",
   "sourceCollections": [
@@ -49,6 +56,48 @@
       "layer": "configuration",
       "path": "AGENTS.md",
       "purpose": "Repository-wide implementation and documentation rules"
+    },
+    {
+      "id": "canonical-plan",
+      "layer": "planning",
+      "path": "documentation/plans/business/accounting-core-gl/PLAN.md",
+      "purpose": "Accounting scope, one-active-step gate and Step 01 authority"
+    },
+    {
+      "id": "slice-execution",
+      "layer": "planning",
+      "path": "documentation/plans/business/accounting-core-gl/SLICE-01-LEDGER-SETUP-EXECUTION.md",
+      "purpose": "Human execution order and explicit user-acceptance transition rule"
+    },
+    {
+      "id": "screen-workflow-contract",
+      "layer": "planning",
+      "path": "documentation/plans/business/accounting-core-gl/decomposition/fiscal-years.md",
+      "purpose": "Current Fiscal Years v2 Screen/Workflow Contract and P-001 UI gate"
+    },
+    {
+      "id": "manual-acceptance-template",
+      "layer": "planning",
+      "path": "documentation/plans/business/accounting-core-gl/MANUAL_ACCEPTANCE_SCENARIO_TEMPLATE.md",
+      "purpose": "Mandatory detailed per-step manual scenario and explicit decision format"
+    },
+    {
+      "id": "manual-acceptance-step-01",
+      "layer": "planning",
+      "path": "documentation/plans/business/accounting-core-gl/manual-acceptance/FISCAL-YEARS-STEP-01.md",
+      "purpose": "Executable pending Web/actual-device user journey for Fiscal Years"
+    },
+    {
+      "id": "shared-reuse-catalog",
+      "layer": "documentation",
+      "path": "documentation/project/SHARED_REUSE_CATALOG.md",
+      "purpose": "Approved shared Web/Mobile primitives and extension rules"
+    },
+    {
+      "id": "screen-pattern-catalog",
+      "layer": "documentation",
+      "path": "documentation/project/SCREEN_PATTERN_CATALOG.md",
+      "purpose": "Canonical P-001 pattern and UI-pattern acceptance criteria"
     },
     {
       "id": "implementation-request",

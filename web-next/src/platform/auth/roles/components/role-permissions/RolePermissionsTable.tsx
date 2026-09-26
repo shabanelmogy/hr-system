@@ -16,6 +16,7 @@ import {
 import type { RoleClaimsFormData } from "../../utils/validation";
 import RolePermissionRow from "./RolePermissionRow";
 import { useTranslation } from "react-i18next";
+import { getPermissionActionLabel } from "../../utils/permissionLabels";
 
 type RolePermissionsTableProps = {
   modules: string[];
@@ -51,7 +52,7 @@ export default function RolePermissionsTable(props: RolePermissionsTableProps) {
                   <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 1 }}>
                     <Chip
                       size="small"
-                      label={type}
+                      label={getPermissionActionLabel(type, t)}
                       sx={{
                         bgcolor: theme.palette.primary.main,
                         color: theme.palette.primary.contrastText,

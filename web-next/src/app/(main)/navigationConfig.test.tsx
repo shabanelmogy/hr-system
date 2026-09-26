@@ -79,7 +79,7 @@ describe("application navigation configuration", () => {
   });
 
   it("gets Ledger Setup currencies from Accounting, not Basic Data", () => {
-    const config = getNavigationConfig([], [permissions.ViewAccountingSetup]);
+    const config = getNavigationConfig([], [permissions.ViewCurrencies]);
     const pathsForAccounting = paths(config);
     expect(pathsForAccounting).toContain(appRoutes.modules.accounting.ledgerSetup.currencies);
     expect(pathsForAccounting).not.toContain("/basic-data/organizational-structure/currencies");
@@ -88,25 +88,20 @@ describe("application navigation configuration", () => {
   it("scopes the sidebar to the module that owns the active business route", () => {
     const config = getNavigationConfig([], [
       permissions.ViewFiscalYears,
-      permissions.ViewAccountingSetup,
+      permissions.ViewCurrencies,
       permissions.ViewOrganizationalStructure,
       permissions.ViewRecruitment,
     ], "acc");
 
     expect(paths(config)).toEqual([
       appRoutes.modules.accounting.ledgerSetup.fiscalYears,
-      appRoutes.modules.accounting.ledgerSetup.accountingSettings,
       appRoutes.modules.accounting.ledgerSetup.currencies,
-      appRoutes.modules.accounting.ledgerSetup.books,
-      appRoutes.modules.accounting.ledgerSetup.journals,
-      appRoutes.modules.accounting.ledgerSetup.exchangeRates,
-      appRoutes.modules.accounting.ledgerSetup.accountDetermination,
     ]);
     expect(config).toHaveLength(1);
   });
 
   it("keeps Crystal Reports only when Reporting analytics is accessible", () => {
-    const permissionFiltered = getNavigationConfig([], [permissions.ManageCrystalReportAccess]);
+    const permissionFiltered = getNavigationConfig([], [permissions.ViewCrystalReports]);
     expect(paths(permissionFiltered)).toContain(appRoutes.modules.reporting.crystalReports);
 
     expect(paths(filterNavigationConfigByModules(permissionFiltered, [{
@@ -139,7 +134,7 @@ describe("application navigation configuration", () => {
       permissions.ViewFiscalYears,
       permissions.ViewAppointments,
       permissions.ViewAddressTypes,
-      permissions.ManageCrystalReportAccess,
+      permissions.ViewCrystalReports,
     ]);
     const moduleFiltered = filterNavigationConfigByModules(permissionFiltered, []);
     expect(paths(moduleFiltered)).not.toContain(appRoutes.modules.accounting.ledgerSetup.fiscalYears);

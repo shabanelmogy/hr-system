@@ -123,7 +123,7 @@ public sealed class StatesController(ISender sender) : ControllerBase
 
     /// <summary>Archives one State when it has no active Districts.</summary>
     [HttpDelete("{id:int}")]
-    [HasPermission(ReferenceDataPermissions.DeleteStates)]
+    [HasPermission(ReferenceDataPermissions.ArchiveStates)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -137,7 +137,7 @@ public sealed class StatesController(ISender sender) : ControllerBase
 
     /// <summary>Atomically archives up to 100 States.</summary>
     [HttpPost("bulk-archive")]
-    [HasPermission(ReferenceDataPermissions.DeleteStates)]
+    [HasPermission(ReferenceDataPermissions.ArchiveStates)]
     [ProducesResponseType(typeof(BulkArchiveStatesResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -151,7 +151,7 @@ public sealed class StatesController(ISender sender) : ControllerBase
 
     /// <summary>Restores one archived State when its parent country is active.</summary>
     [HttpPost("{id:int}/restore")]
-    [HasPermission(ReferenceDataPermissions.DeleteStates)]
+    [HasPermission(ReferenceDataPermissions.RestoreStates)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

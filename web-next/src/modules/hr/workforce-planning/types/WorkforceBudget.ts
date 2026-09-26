@@ -40,8 +40,10 @@ export interface RejectWorkforceBudgetMutation extends WorkforceBudgetActionMuta
 
 export interface WorkforceBudgetPermissions {
   canView: boolean;
-  canManage: boolean;
-  canApprove: boolean;
+  canCreate: boolean;
+  canEdit: boolean;
+  canSubmit: boolean;
+  canReview: boolean;
 }
 
 export interface WorkforceBudgetListItem {

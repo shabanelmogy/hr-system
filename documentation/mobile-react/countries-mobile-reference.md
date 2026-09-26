@@ -5,7 +5,7 @@
 | Status | Canonical Clean Architecture reference with optional scoped offline reads |
 | Physical route | `app/(main)/basic-data/geographical-information/countries.tsx` |
 | Typed route | `/basic-data/geographical-information/countries` |
-| Feature owner | `src/modules/hr/basic-data/countries` |
+| Feature owner | `src/modules/reference-data/geography/countries` |
 | Access | `RouteGuard` plus `super_admin` route policy; action permissions remain explicit |
 | Primary views | Server-managed Table and Cards |
 | Optional view | Independent PDF Report |
@@ -32,7 +32,7 @@ app/(main)/basic-data/geographical-information/
   _layout.tsx
   countries.tsx
 
-src/modules/hr/basic-data/countries/
+src/modules/reference-data/geography/countries/
   index.ts
   application/
     country-use-cases.ts
@@ -435,15 +435,15 @@ reports.
 
 Existing focused evidence:
 
-- `src/modules/hr/basic-data/countries/data/remote/__tests__/country-remote-boundary.test.ts`;
-- `src/modules/hr/basic-data/countries/data/remote/__tests__/country-bulk-remote.test.ts`;
-- `src/modules/hr/basic-data/countries/data/repositories/default-country-repository.test.ts`;
-- `src/modules/hr/basic-data/countries/application/country-use-cases.test.ts`;
-- `src/modules/hr/basic-data/countries/presentation/screens/CountriesScreen.test.tsx`;
-- `src/modules/hr/basic-data/countries/presentation/components/chart-view/country-chart-data.test.ts`;
-- `src/modules/hr/basic-data/countries/presentation/components/import-data/country-import.test.ts`;
+- `src/modules/reference-data/geography/countries/data/remote/__tests__/country-remote-boundary.test.ts`;
+- `src/modules/reference-data/geography/countries/data/remote/__tests__/country-bulk-remote.test.ts`;
+- `src/modules/reference-data/geography/countries/data/repositories/default-country-repository.test.ts`;
+- `src/modules/reference-data/geography/countries/application/country-use-cases.test.ts`;
+- `src/modules/reference-data/geography/countries/presentation/screens/CountriesScreen.test.tsx`;
+- `src/modules/reference-data/geography/countries/presentation/components/chart-view/country-chart-data.test.ts`;
+- `src/modules/reference-data/geography/countries/presentation/components/import-data/country-import.test.ts`;
 - `src/shared/importing/native-spreadsheet.test.ts`;
-- `src/modules/hr/basic-data/countries/presentation/queries/use-countries.test.ts`;
+- `src/modules/reference-data/geography/countries/presentation/queries/use-countries.test.ts`;
 - `src/core/preferences/OfflineReadPreferencesProvider.test.tsx`;
 - `src/core/offline/offline-read-policy.test.ts`;
 - `src/platform/reporting/data/remote/crystal-report-remote-data-source.test.ts`;
@@ -456,7 +456,7 @@ Existing focused evidence:
 npm.cmd run typecheck
 npm.cmd run lint
 npm.cmd run check:architecture
-npm.cmd test -- --runTestsByPath src/modules/hr/basic-data/countries/data/remote/__tests__/country-remote-boundary.test.ts
+npm.cmd test -- --runTestsByPath src/modules/reference-data/geography/countries/data/remote/__tests__/country-remote-boundary.test.ts
 npm.cmd run check
 ```
 

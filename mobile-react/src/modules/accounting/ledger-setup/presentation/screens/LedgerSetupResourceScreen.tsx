@@ -43,11 +43,20 @@ function recordTitle(item: LedgerSetupRecord): string {
   return [item.code ?? item.currencyCode ?? item.levelNumber, item.nameEn ?? item.nameAr].filter(Boolean).join(' · ') || String(item.id ?? '');
 }
 
-function getManagePermission(entity: LedgerSetupEntity) {
-  if (entity === 'accounts' || entity === 'hierarchyLevels') return permissions.ManageAccounts;
-  if (entity === 'dimensionDefinitions' || entity === 'dimensionValues' || entity === 'dimensionPolicies') return permissions.ManageDimensions;
-  return permissions.ManageAccountingSetup;
-}
+const entityPermissions = {
+  settings: { view: permissions.ViewAccountingSettings, create: permissions.EditAccountingSettings, edit: permissions.EditAccountingSettings, archive: permissions.EditAccountingSettings, restore: permissions.EditAccountingSettings },
+  accounts: { view: permissions.ViewAccounts, create: permissions.CreateAccounts, edit: permissions.EditAccounts, archive: permissions.ArchiveAccounts, restore: permissions.RestoreAccounts },
+  hierarchyLevels: { view: permissions.ViewAccountHierarchyLevels, create: permissions.CreateAccountHierarchyLevels, edit: permissions.EditAccountHierarchyLevels, archive: permissions.ArchiveAccountHierarchyLevels, restore: permissions.RestoreAccountHierarchyLevels },
+  dimensionDefinitions: { view: permissions.ViewDimensionDefinitions, create: permissions.CreateDimensionDefinitions, edit: permissions.EditDimensionDefinitions, archive: permissions.ArchiveDimensionDefinitions, restore: permissions.RestoreDimensionDefinitions },
+  dimensionValues: { view: permissions.ViewDimensionValues, create: permissions.CreateDimensionValues, edit: permissions.EditDimensionValues, archive: permissions.ArchiveDimensionValues, restore: permissions.RestoreDimensionValues },
+  dimensionPolicies: { view: permissions.ViewAccountDimensionPolicies, create: permissions.EditAccountDimensionPolicies, edit: permissions.EditAccountDimensionPolicies, archive: permissions.EditAccountDimensionPolicies, restore: permissions.EditAccountDimensionPolicies },
+  books: { view: permissions.ViewBooks, create: permissions.CreateBooks, edit: permissions.EditBooks, archive: permissions.ArchiveBooks, restore: permissions.RestoreBooks },
+  journals: { view: permissions.ViewJournalDefinitions, create: permissions.CreateJournalDefinitions, edit: permissions.EditJournalDefinitions, archive: permissions.ArchiveJournalDefinitions, restore: permissions.RestoreJournalDefinitions },
+  exchangeRateTypes: { view: permissions.ViewExchangeRateTypes, create: permissions.CreateExchangeRateTypes, edit: permissions.EditExchangeRateTypes, archive: permissions.ArchiveExchangeRateTypes, restore: permissions.RestoreExchangeRateTypes },
+  exchangeRates: { view: permissions.ViewExchangeRates, create: permissions.CreateExchangeRates, edit: permissions.EditExchangeRates, archive: permissions.EditExchangeRates, restore: permissions.EditExchangeRates },
+  accountMappings: { view: permissions.ViewAccountMappings, create: permissions.CreateAccountMappings, edit: permissions.EditAccountMappings, archive: permissions.EditAccountMappings, restore: permissions.EditAccountMappings },
+  postingProfiles: { view: permissions.ViewPostingProfiles, create: permissions.CreatePostingProfiles, edit: permissions.EditPostingProfiles, archive: permissions.EditPostingProfiles, restore: permissions.EditPostingProfiles },
+} as const satisfies Record<LedgerSetupEntity, { view: string; create: string; edit: string; archive: string; restore: string }>;
 
 export function LedgerSetupResourceScreen({ resource }: { resource: LedgerSetupResource }) {
   const { t } = useTranslation();
@@ -60,33 +69,35 @@ export function LedgerSetupResourceScreen({ resource }: { resource: LedgerSetupR
   const [search, setSearch] = useState('');
   const [scopeSearch, setScopeSearch] = useState('');
   const definition = ledgerSetupDefinitions[activeEntity];
-  const viewAccounting = useAuthorization({ requiredPermissions: [permissions.ViewAccountingSetup] });
+  const permissionSet = entityPermissions[activeEntity];
+  const { allowed: canView } = useAuthorization({ requiredPermissions: [permissionSet.view] });
+  const { allowed: createAllowed } = useAuthorization({ requiredPermissions: [permissionSet.create] });
+  const { allowed: editAllowed } = useAuthorization({ requiredPermissions: [permissionSet.edit] });
+  const { allowed: archiveAllowed } = useAuthorization({ requiredPermissions: [permissionSet.archive] });
+  const { allowed: restoreAllowed } = useAuthorization({ requiredPermissions: [permissionSet.restore] });
+  const canCreateAction = createAllowed && !isReadOnly;
+  const canEdit = editAllowed && !isReadOnly;
+  const canArchive = archiveAllowed && !isReadOnly;
+  const canRestore = restoreAllowed && !isReadOnly;
   const viewAccounts = useAuthorization({ requiredPermissions: [permissions.ViewAccounts] });
-  const viewDimensions = useAuthorization({ requiredPermissions: [permissions.ViewDimensions] });
-  const manageAccounting = useAuthorization({ requiredPermissions: [permissions.ManageAccountingSetup] });
-  const manageAccounts = useAuthorization({ requiredPermissions: [permissions.ManageAccounts] });
-  const manageDimensions = useAuthorization({ requiredPermissions: [permissions.ManageDimensions] });
-  const canView = activeEntity === 'accounts' || activeEntity === 'hierarchyLevels'
-    ? viewAccounts.allowed
-    : activeEntity.startsWith('dimension')
-      ? viewDimensions.allowed
-      : viewAccounting.allowed;
-  const managePermission = getManagePermission(activeEntity);
-  const canWrite = managePermission === permissions.ManageAccounts
-    ? manageAccounts.allowed
-    : managePermission === permissions.ManageDimensions
-      ? manageDimensions.allowed
-      : manageAccounting.allowed;
-  const canManage = canWrite && !isReadOnly;
+  const viewHierarchyLevels = useAuthorization({ requiredPermissions: [permissions.ViewAccountHierarchyLevels] });
+  const viewDimensions = useAuthorization({ requiredPermissions: [permissions.ViewDimensionDefinitions] });
+  const viewCurrencies = useAuthorization({ requiredPermissions: [permissions.ViewCurrencies] });
+  const viewBooks = useAuthorization({ requiredPermissions: [permissions.ViewBooks] });
+  const viewExchangeRateTypes = useAuthorization({ requiredPermissions: [permissions.ViewExchangeRateTypes] });
   const requestedLookupSources = useMemo<LedgerSetupLookupSource[]>(() => Array.from(new Set([
     ...definition.fields.flatMap((field) => field.optionSource ? [field.optionSource] : []),
     ...(definition.scope === 'account' ? ['accounts' as const] : definition.scope === 'dimension' ? ['dimensions' as const] : []),
   ])), [definition]);
-  const allowedLookupSources = requestedLookupSources.filter((source) => source === 'accounts' || source === 'hierarchyLevels'
-    ? viewAccounts.allowed
-    : source === 'dimensions'
-      ? viewDimensions.allowed
-      : viewAccounting.allowed);
+  const allowedLookupSources = requestedLookupSources.filter((source) => {
+    if (source === 'accounts') return viewAccounts.allowed;
+    if (source === 'hierarchyLevels') return viewHierarchyLevels.allowed;
+    if (source === 'dimensions') return viewDimensions.allowed;
+    if (source === 'currencies') return viewCurrencies.allowed;
+    if (source === 'books') return viewBooks.allowed;
+    if (source === 'exchangeRateTypes') return viewExchangeRateTypes.allowed;
+    return false;
+  });
   const lookups = useLedgerSetupLookups(allowedLookupSources, allowedLookupSources.length > 0);
   const scopeItems = definition.scope === 'account' ? lookups.data?.accounts : definition.scope === 'dimension' ? lookups.data?.dimensions : undefined;
   const [selectedScopeId, setSelectedScopeId] = useState<number | undefined>();
@@ -145,8 +156,8 @@ export function LedgerSetupResourceScreen({ resource }: { resource: LedgerSetupR
   const columns = useMemo<AppDataTableColumn<LedgerSetupRecord>[]>(() => [
     ...visibleFields.map((field) => ({ id: field.name, header: t(field.labelKey), width: 150, render: (item: LedgerSetupRecord) => <AppText variant="bodySmall">{displayValue(item[field.name])}</AppText> })),
     ...(definition.supportsArchive ? [{ id: 'status', header: t('ledgerSetup.fields.status'), width: 110, render: (item: LedgerSetupRecord) => <AppStatusBadge color={item.isDeleted ? theme.colors.warning : theme.colors.success} label={t(item.isDeleted ? 'ledgerSetup.status.archived' : 'ledgerSetup.status.active')} /> } satisfies AppDataTableColumn<LedgerSetupRecord>] : []),
-    { id: 'actions', header: t('common.actions'), width: 150, align: 'center', render: (item) => <View style={styles.actions}><AppIconButton icon="eye-outline" label={t('common.view')} onPress={() => openForm('view', item)} />{canManage && !item.isDeleted ? <AppIconButton icon="create-outline" label={t('common.edit')} onPress={() => openForm('edit', item)} /> : null}{canManage && definition.supportsArchive ? <AppIconButton icon={item.isDeleted ? 'refresh-outline' : 'archive-outline'} label={t(item.isDeleted ? 'common.restore' : 'common.archive')} onPress={() => setPending({ kind: item.isDeleted ? 'restore' : 'archive', item })} /> : null}</View> },
-  ], [canManage, definition.supportsArchive, openForm, t, theme.colors.success, theme.colors.warning, visibleFields]);
+    { id: 'actions', header: t('common.actions'), width: 150, align: 'center', render: (item) => <View style={styles.actions}><AppIconButton icon="eye-outline" label={t('common.view')} onPress={() => openForm('view', item)} />{canEdit && !item.isDeleted ? <AppIconButton icon="create-outline" label={t('common.edit')} onPress={() => openForm('edit', item)} /> : null}{definition.supportsArchive && (item.isDeleted ? canRestore : canArchive) ? <AppIconButton icon={item.isDeleted ? 'refresh-outline' : 'archive-outline'} label={t(item.isDeleted ? 'common.restore' : 'common.archive')} onPress={() => setPending({ kind: item.isDeleted ? 'restore' : 'archive', item })} /> : null}</View> },
+  ], [canArchive, canEdit, canRestore, definition.supportsArchive, openForm, t, theme.colors.success, theme.colors.warning, visibleFields]);
 
   if (!canView) return <AppScreen edges={['left', 'right', 'bottom']}><AppStateView state="error" message={t('common.accessDenied')} /></AppScreen>;
   if ((query.isLoading && (!definition.scope || scopeId)) || lookups.isLoading) return <AppScreen edges={['left', 'right', 'bottom']}><AppStateView state="loading" /></AppScreen>;
@@ -154,7 +165,7 @@ export function LedgerSetupResourceScreen({ resource }: { resource: LedgerSetupR
 
   const scopeOptions: AppSelectOption<number>[] = (scopeItems ?? []).flatMap((item) => typeof item.id === 'number' ? [{ value: item.id, label: recordTitle(item), icon: definition.scope === 'account' ? 'git-branch-outline' : 'options-outline' }] : []);
   const entityOptions = entities.map((entity) => ({ value: entity, label: t(ledgerSetupDefinitions[entity].titleKey), icon: ledgerSetupDefinitions[entity].icon as AppIconName }));
-  const canCreate = canManage && (!definition.scope || Boolean(scopeId)) && (activeEntity !== 'settings' || rows.length === 0);
+  const canCreate = canCreateAction && (!definition.scope || Boolean(scopeId)) && (activeEntity !== 'settings' || rows.length === 0);
 
   return (
     <AppScreen edges={['left', 'right', 'bottom']} contentContainerStyle={styles.screen} refreshControl={<RefreshControl refreshing={query.isRefetching} onRefresh={() => void query.refetch()} tintColor={theme.colors.primary} colors={[theme.colors.primary]} />}>
@@ -175,12 +186,12 @@ export function LedgerSetupResourceScreen({ resource }: { resource: LedgerSetupR
         showViewLabels
         views={[
           { value: 'table', icon: 'grid-outline', label: t('multiView.table'), render: (items) => <AppDataTable rows={items} columns={columns} getRowKey={(item) => item.id ?? recordTitle(item)} /> },
-          { value: 'cards', icon: 'albums-outline', label: t('multiView.cards'), scrollable: true, render: (items) => <View style={styles.cards}>{items.map((item, index) => <AppDataCard key={item.id ?? index} padding="md"><AppText variant="titleSmall" weight="800">{recordTitle(item)}</AppText>{visibleFields.map((field) => <AppText key={field.name} color="muted" variant="bodySmall">{t(field.labelKey)}: {displayValue(item[field.name])}</AppText>)}<View style={styles.actions}><AppIconButton icon="eye-outline" label={t('common.view')} onPress={() => openForm('view', item)} />{canManage && !item.isDeleted ? <AppIconButton icon="create-outline" label={t('common.edit')} onPress={() => openForm('edit', item)} /> : null}{canManage && definition.supportsArchive ? <AppIconButton icon={item.isDeleted ? 'refresh-outline' : 'archive-outline'} label={t(item.isDeleted ? 'common.restore' : 'common.archive')} onPress={() => setPending({ kind: item.isDeleted ? 'restore' : 'archive', item })} /> : null}</View></AppDataCard>)}</View> },
-          ...(activeEntity === 'accounts' ? [{ value: 'tree' as const, icon: 'git-branch-outline' as const, label: t('ledgerSetup.accounts.tree'), scrollable: true, renderWhenEmpty: true, render: () => treeQuery.isLoading ? <AppStateView state="loading" /> : <AppHierarchicalTree items={treeQuery.data ?? []} getId={(item) => item.id ?? recordTitle(item)} getParentId={(item) => typeof item.parentAccountId === 'number' ? item.parentAccountId : null} getLabel={recordTitle} getCode={(item) => typeof item.code === 'string' ? item.code : undefined} onView={(item) => { void openTreeAccount('view', item); }} onEdit={canManage ? (item) => { void openTreeAccount('edit', item); } : undefined} canEdit={canManage} canCreate={false} canDelete={false} emptyMessage={t('ledgerSetup.empty')} /> }] : []),
+          { value: 'cards', icon: 'albums-outline', label: t('multiView.cards'), scrollable: true, render: (items) => <View style={styles.cards}>{items.map((item, index) => <AppDataCard key={item.id ?? index} padding="md"><AppText variant="titleSmall" weight="800">{recordTitle(item)}</AppText>{visibleFields.map((field) => <AppText key={field.name} color="muted" variant="bodySmall">{t(field.labelKey)}: {displayValue(item[field.name])}</AppText>)}<View style={styles.actions}><AppIconButton icon="eye-outline" label={t('common.view')} onPress={() => openForm('view', item)} />{canEdit && !item.isDeleted ? <AppIconButton icon="create-outline" label={t('common.edit')} onPress={() => openForm('edit', item)} /> : null}{definition.supportsArchive && (item.isDeleted ? canRestore : canArchive) ? <AppIconButton icon={item.isDeleted ? 'refresh-outline' : 'archive-outline'} label={t(item.isDeleted ? 'common.restore' : 'common.archive')} onPress={() => setPending({ kind: item.isDeleted ? 'restore' : 'archive', item })} /> : null}</View></AppDataCard>)}</View> },
+          ...(activeEntity === 'accounts' ? [{ value: 'tree' as const, icon: 'git-branch-outline' as const, label: t('ledgerSetup.accounts.tree'), scrollable: true, renderWhenEmpty: true, render: () => treeQuery.isLoading ? <AppStateView state="loading" /> : <AppHierarchicalTree items={treeQuery.data ?? []} getId={(item) => item.id ?? recordTitle(item)} getParentId={(item) => typeof item.parentAccountId === 'number' ? item.parentAccountId : null} getLabel={recordTitle} getCode={(item) => typeof item.code === 'string' ? item.code : undefined} onView={(item) => { void openTreeAccount('view', item); }} onEdit={canEdit ? (item) => { void openTreeAccount('edit', item); } : undefined} canEdit={canEdit} canCreate={false} canDelete={false} emptyMessage={t('ledgerSetup.empty')} /> }] : []),
         ]}
       />
       {resource === 'account-determination' ? <AccountResolutionPreview books={lookups.data?.books ?? []} /> : null}
-      {formOpen ? <LedgerSetupForm key={`${activeEntity}-${formMode}-${selected?.id ?? 'new'}-${selected?.rowVersion ?? ''}`} definition={definition} item={selected} lookups={lookups.data ?? {}} mode={formMode} loading={saveMutation.isPending} onClose={closeForm} onSave={save} onArchive={formMode === 'view' && canManage && definition.supportsArchive && selected?.rowVersion ? () => { setPending({ kind: selected.isDeleted ? 'restore' : 'archive', item: selected }); closeForm(); } : undefined} /> : null}
+      {formOpen ? <LedgerSetupForm key={`${activeEntity}-${formMode}-${selected?.id ?? 'new'}-${selected?.rowVersion ?? ''}`} definition={definition} item={selected} lookups={lookups.data ?? {}} mode={formMode} loading={saveMutation.isPending} onClose={closeForm} onSave={save} onArchive={formMode === 'view' && definition.supportsArchive && selected?.rowVersion && (selected.isDeleted ? canRestore : canArchive) ? () => { setPending({ kind: selected.isDeleted ? 'restore' : 'archive', item: selected }); closeForm(); } : undefined} /> : null}
       <ConfirmationDialog visible={pending !== null} title={t(`ledgerSetup.confirm.${pending?.kind ?? 'archive'}Title`)} description={t(`ledgerSetup.confirm.${pending?.kind ?? 'archive'}Description`, { record: recordTitle(pending?.item ?? {}) })} confirmLabel={t(pending?.kind === 'restore' ? 'common.restore' : 'common.archive')} tone={pending?.kind === 'archive' ? 'warning' : 'default'} loading={archiveMutation.isPending || restoreMutation.isPending} onCancel={() => setPending(null)} onConfirm={() => void confirmLifecycle()} />
     </AppScreen>
   );

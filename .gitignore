@@ -3,7 +3,9 @@ graphify-out/cost.json
 graphify-out/cache/
 .codex-tmp
 .kiro
-.codex
+.codex/*
+!.codex/skills/
+!.codex/skills/**
 
 # Local execution/build diagnostics
 *.log

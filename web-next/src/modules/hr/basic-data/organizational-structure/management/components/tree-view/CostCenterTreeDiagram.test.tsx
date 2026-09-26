@@ -43,7 +43,7 @@ describe("CostCenterTreeDiagram feature composition", () => {
           onAddChild={onAddChild}
           onEdit={onEdit}
           onReparent={onReparent}
-          permissions={{ canCreate: true, canEdit: true, canDelete: true }}
+          permissions={{ canCreate: true, canEdit: true, canArchive: true, canRestore: true }}
         />
       </ThemeProvider>,
     );
@@ -66,7 +66,7 @@ describe("CostCenterTreeDiagram feature composition", () => {
           items={items}
           onEdit={vi.fn()}
           onReparent={vi.fn(async () => undefined)}
-          permissions={{ canCreate: false, canEdit: false, canDelete: false }}
+          permissions={{ canCreate: false, canEdit: false, canArchive: false, canRestore: false }}
         />
       </ThemeProvider>,
     );

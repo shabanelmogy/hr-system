@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "status": "phase-03-client-implemented",
+  "status": "historical-phase-03-client-implemented-current-v2-revalidation-queued",
   "feature": "ledger-setup-coa-hierarchy",
   "featureName": "Accounting Chart of Accounts and Hierarchy",
   "referenceFeature": "organizational-structure",
@@ -79,6 +79,12 @@
       "purpose": "Slice 1 child order, API readiness and execution status"
     },
     {
+      "id": "manual-acceptance-template",
+      "layer": "planning",
+      "path": "documentation/plans/business/accounting-core-gl/MANUAL_ACCEPTANCE_SCENARIO_TEMPLATE.md",
+      "purpose": "Required future detailed COA revalidation scenario and explicit user decision format"
+    },
+    {
       "id": "screen-workflow-contract",
       "layer": "planning",
       "path": "documentation/plans/business/accounting-core-gl/decomposition/ledger-setup-coa-hierarchy.md",
@@ -143,6 +149,12 @@
       "layer": "documentation",
       "path": "documentation/project/SHARED_REUSE_CATALOG.md",
       "purpose": "Canonical shared component reuse inventory"
+    },
+    {
+      "id": "screen-pattern-catalog",
+      "layer": "documentation",
+      "path": "documentation/project/SCREEN_PATTERN_CATALOG.md",
+      "purpose": "Canonical P-002 Accounts and P-001 Hierarchy Levels screen-pattern decisions"
     },
     {
       "id": "umbrella-review",

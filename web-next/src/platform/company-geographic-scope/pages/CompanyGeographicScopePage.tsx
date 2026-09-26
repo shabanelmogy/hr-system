@@ -48,7 +48,7 @@ export default function CompanyGeographicScopePage() {
   const { isReadOnly, notifyBlockedAction } = useAppReadOnly();
   const { showError, showSuccess, SnackbarComponent } = useNotifications();
   const canView = hasPermission(permissions.ViewCompanyGeographicScope);
-  const canManage = hasPermission(permissions.ManageCompanyGeographicScope);
+  const canManage = !isReadOnly && hasPermission(permissions.EditCompanyGeographicScope);
 
   const schema = useMemo(
     () => z.object({

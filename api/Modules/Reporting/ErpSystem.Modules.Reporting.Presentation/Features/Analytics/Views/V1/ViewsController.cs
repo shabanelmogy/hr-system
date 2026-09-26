@@ -7,13 +7,13 @@ namespace ErpSystem.Modules.Reporting.Presentation.Features.Analytics.Views.V1;
 [Route(ApiRoutes.BaseRoute2)]
 [ApiController]
 [TenantMember]
-[HasPermission(ReportingPermissions.ManageDatabaseViews)]
 public class ViewsController(ISender sender, IWebHostEnvironment environment) : ControllerBase
 {
     private readonly ISender _sender = sender;
     private readonly IWebHostEnvironment _environment = environment;
 
     [HttpPost("create-or-alter")]
+    [HasPermission(ReportingPermissions.EditDatabaseViews)]
     public async Task<IActionResult> CreateOrAlterView([FromBody] ViewRequest view, CancellationToken cancellationToken)
     {
         if (!_environment.IsDevelopment())
@@ -24,6 +24,7 @@ public class ViewsController(ISender sender, IWebHostEnvironment environment) : 
     }
 
     [HttpGet("all")]
+    [HasPermission(ReportingPermissions.ViewDatabaseViews)]
     public async Task<IActionResult> GetAllViews(CancellationToken cancellationToken)
     {
         if (!_environment.IsDevelopment())
@@ -34,6 +35,7 @@ public class ViewsController(ISender sender, IWebHostEnvironment environment) : 
     }
 
     [HttpDelete("{viewName}")]
+    [HasPermission(ReportingPermissions.DeleteDatabaseViews)]
     public async Task<IActionResult> DropView(string viewName, CancellationToken cancellationToken)
     {
         if (!_environment.IsDevelopment())
@@ -44,6 +46,7 @@ public class ViewsController(ISender sender, IWebHostEnvironment environment) : 
     }
 
     [HttpGet("tables")]
+    [HasPermission(ReportingPermissions.ViewDatabaseViews)]
     public async Task<IActionResult> GetAllTables(CancellationToken cancellationToken)
     {
         if (!_environment.IsDevelopment())
@@ -54,6 +57,7 @@ public class ViewsController(ISender sender, IWebHostEnvironment environment) : 
     }
 
     [HttpGet("tables/{tableName}/columns")]
+    [HasPermission(ReportingPermissions.ViewDatabaseViews)]
     public async Task<IActionResult> GetTableColumns(string tableName, CancellationToken cancellationToken)
     {
         if (!_environment.IsDevelopment())

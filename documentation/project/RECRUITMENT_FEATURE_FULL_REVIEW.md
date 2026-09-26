@@ -87,9 +87,9 @@ Actions across API, Web, and Mobile are guarded with granular permissions:
 - `Recruitment:ManageJobRequisitions`: Create and submit staffing requisitions.
 - `Recruitment:ApproveJobRequisitions`: Approve or reject pending requisitions with reason tracking.
 - `Recruitment:ManageJobOpenings`: Create, activate, pause, and close job openings.
-- `Recruitment:ManageCandidates`: Create and edit talent pool candidate records.
-- `Recruitment:ManageApplications`: Submit applications, move pipeline stages, and reject applications.
-- `Recruitment:EvaluateInterviews`: Schedule interviews and submit structured scorecards.
+- `Candidates:Create` and `Candidates:Edit`: independently create or edit talent-pool candidate records.
+- `EmploymentApplications:Create/Move/Reject/Withdraw/Hire`: each application lifecycle transition is independently authorized.
+- `Interviews:Schedule/Cancel/Complete/Evaluate`: each interview operation is independently authorized.
 - `Recruitment:ManageJobOffers`: Create and issue formal job offers.
 - `Recruitment:ApproveJobOffers`: Accept or decline job offers.
 - `Recruitment:HireCandidate`: Execute the final one-click hiring transition to employee.

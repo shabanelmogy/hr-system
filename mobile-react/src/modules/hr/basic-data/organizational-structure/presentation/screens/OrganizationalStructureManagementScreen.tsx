@@ -36,7 +36,7 @@ export function OrganizationalStructureManagementScreen({ resource }: { resource
   const { allowed: viewAllowed } = useAuthorization({ requiredPermissions: [permissions.ViewOrganizationalStructure] });
   const { allowed: createAllowed } = useAuthorization({ requiredPermissions: [permissions.CreateOrganizationalStructure] });
   const { allowed: editAllowed } = useAuthorization({ requiredPermissions: [permissions.EditOrganizationalStructure] });
-  const { allowed: deleteAllowed } = useAuthorization({ requiredPermissions: [permissions.DeleteOrganizationalStructure] });
+  const { allowed: deleteAllowed } = useAuthorization({ requiredPermissions: [permissions.ArchiveOrganizationalStructure] });
   const { allowed: approveAllowed } = useAuthorization({ requiredPermissions: [permissions.ApproveJobDescriptions] });
   const canCreate = createAllowed && !isReadOnly; const canEdit = editAllowed && !isReadOnly; const canDelete = deleteAllowed && !isReadOnly;
   const [status, setStatus] = useState<OrganizationalStatus>('active'); const [searchField, setSearchField] = useState<OrganizationalSearchField>('all'); const [searchOperator, setSearchOperator] = useState<OrganizationalSearchOperator>('contains');

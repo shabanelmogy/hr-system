@@ -38,10 +38,13 @@ type DialogMode = "add" | "edit" | "view" | "archive" | "restore" | null;
 export default function HierarchyLevelsPage() {
   const { t } = useTranslation();
   const authorization = usePermissions();
-  const canView = authorization.hasPermission(permissions.ViewAccounts);
-  const canManage =
-    !authorization.isReadOnly &&
-    authorization.hasPermission(permissions.ManageAccounts);
+  const canView = authorization.hasPermission(permissions.ViewAccountHierarchyLevels);
+  const access = {
+    canCreate: !authorization.isReadOnly && authorization.hasPermission(permissions.CreateAccountHierarchyLevels),
+    canEdit: !authorization.isReadOnly && authorization.hasPermission(permissions.EditAccountHierarchyLevels),
+    canArchive: !authorization.isReadOnly && authorization.hasPermission(permissions.ArchiveAccountHierarchyLevels),
+    canRestore: !authorization.isReadOnly && authorization.hasPermission(permissions.RestoreAccountHierarchyLevels),
+  };
 
   if (!canView) {
     return (
@@ -53,13 +56,13 @@ export default function HierarchyLevelsPage() {
     );
   }
 
-  return <AuthorizedHierarchyLevelsPage canManage={canManage} />;
+  return <AuthorizedHierarchyLevelsPage access={access} />;
 }
 
 function AuthorizedHierarchyLevelsPage({
-  canManage,
+  access,
 }: {
-  canManage: boolean;
+  access: { canCreate: boolean; canEdit: boolean; canArchive: boolean; canRestore: boolean };
 }) {
   const { t } = useTranslation();
   const [recordStatus, setRecordStatus] =
@@ -146,15 +149,17 @@ function AuthorizedHierarchyLevelsPage({
     item: AccountHierarchyLevel | null,
     next: DialogMode,
   ) => {
-    if (next !== "view" && next !== null && !canManage) return;
+    if (next === "add" && !access.canCreate) return;
+    if (next === "edit" && !access.canEdit) return;
+    if (next === "archive" && !access.canArchive) return;
+    if (next === "restore" && !access.canRestore) return;
     setSelected(item);
     setDialog(next);
   };
 
   const submit = async (request: AccountHierarchyLevelMutationRequest) => {
-    if (!canManage) return;
-    if (dialog === "add") await create.mutateAsync(request);
-    else if (dialog === "edit" && selected) {
+    if (dialog === "add" && access.canCreate) await create.mutateAsync(request);
+    else if (dialog === "edit" && access.canEdit && selected) {
       await update.mutateAsync({
         id: selected.id,
         request,
@@ -195,7 +200,7 @@ function AuthorizedHierarchyLevelsPage({
         title={t("ledgerSetup.hierarchyLevels.title")}
         subTitle={t("ledgerSetup.hierarchyLevels.subtitle")}
         actions={
-          canManage ? (
+          access.canCreate ? (
             <Button
               variant="contained"
               startIcon={<AddRoundedIcon />}
@@ -216,7 +221,9 @@ function AuthorizedHierarchyLevelsPage({
           rows={data.data ?? []}
           loading={data.isLoading}
           recordStatus={recordStatus}
-          canManage={canManage}
+          canEdit={access.canEdit}
+          canArchive={access.canArchive}
+          canRestore={access.canRestore}
           onRecordStatusChange={setRecordStatus}
           onView={(item) => select(item, "view")}
           onEdit={(item) => select(item, "edit")}
@@ -253,7 +260,7 @@ function AuthorizedHierarchyLevelsPage({
         busy={archive.isPending}
         onClose={closeDialog}
         onConfirm={() => {
-          if (!canManage || !selected) return;
+          if (!access.canArchive || !selected) return;
           void archive.mutateAsync({
             id: selected.id,
             rowVersion: selected.rowVersion,
@@ -279,7 +286,7 @@ function AuthorizedHierarchyLevelsPage({
         busy={restore.isPending}
         onClose={closeDialog}
         onConfirm={() => {
-          if (!canManage || !selected) return;
+          if (!access.canRestore || !selected) return;
           void restore.mutateAsync({
             id: selected.id,
             rowVersion: selected.rowVersion,

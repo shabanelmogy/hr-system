@@ -32,7 +32,6 @@ const WorkforceBudgetForm = dynamic(() => import("../components/WorkforceBudgetF
 type Dialog = "add" | "edit" | "view" | "submit" | "approve" | "reject" | null;
 interface Filters { status: string; fiscalYearId?: number; workforcePlanId?: number }
 const defaultFilters: Filters = { status: "all", fiscalYearId: undefined, workforcePlanId: undefined };
-const ADMIN_ROLE = "admin";
 
 export default function WorkforceBudgetsPage() {
   const { t, i18n } = useTranslation();
@@ -60,10 +59,10 @@ export default function WorkforceBudgetsPage() {
   const currentItem: WorkforceBudgetDetail | null = detail.data ?? null;
   const access = useMemo<WorkforceBudgetPermissions>(() => ({
     canView: canViewBudgets,
-    canManage: !authorization.isReadOnly && authorization.hasPermission(permissions.ManageWorkforceBudgets),
-    canApprove: !authorization.isReadOnly && authorization.userRoles.some(
-      role => role.trim().toLowerCase() === ADMIN_ROLE,
-    ),
+    canCreate: !authorization.isReadOnly && authorization.hasPermission(permissions.CreateWorkforceBudgets),
+    canEdit: !authorization.isReadOnly && authorization.hasPermission(permissions.EditWorkforceBudgets),
+    canSubmit: !authorization.isReadOnly && authorization.hasPermission(permissions.SubmitWorkforceBudgets),
+    canReview: !authorization.isReadOnly && authorization.hasPermission(permissions.ReviewWorkforceBudgets),
   }), [authorization, canViewBudgets]);
   const fiscalOptions = useMemo(() => (fiscalYears.data ?? []).map(year => ({ id: year.id, label: `${year.code} Ã¢â‚¬â€ ${i18n.language.startsWith("ar") ? year.nameAr : year.nameEn}` })), [fiscalYears.data, i18n.language]);
   const planOptions = useMemo(() => (sourcePlans.data?.items ?? []).map(plan => ({ id: plan.id, label: `${plan.planCode} Ã¢â‚¬â€ ${i18n.language.startsWith("ar") ? plan.titleAr : plan.titleEn}` })), [sourcePlans.data, i18n.language]);

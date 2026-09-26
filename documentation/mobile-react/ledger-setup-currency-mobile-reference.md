@@ -6,10 +6,15 @@
 feature is a server-authoritative company master and does not own Functional Currency
 or exchange-rate history.
 
+The current v2 Screen Contract selects `P-001`. Mobile requires Table, Cards and
+typed detail/create/edit/lifecycle through the shared native shells. `NameAr` and
+`NameEn` remain separate required business values in forms, Table/Card/detail/
+search and valid local mock drafts.
+
 ## 2. Routes and navigation
 
 The thin route is `app/(main)/finance/ledger-setup/currencies.tsx`, backed by
-`ROUTES.finance.currencies`. Route manifest/access require Accounting setup View and
+`ROUTES.finance.ledgerSetup.currencies`. Route manifest/access require Accounting setup View and
 the Ledger Setup module/submodule relationship.
 
 ## 3. Runtime response validation

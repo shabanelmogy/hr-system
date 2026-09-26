@@ -45,7 +45,7 @@ public sealed class JobOpeningsController(ISender sender) : ControllerBase
     }
 
     [HttpPost]
-    [HasPermission(HrPermissions.ManageJobOpenings)]
+    [HasPermission(HrPermissions.CreateJobOpenings)]
     [ProducesResponseType(typeof(JobOpeningDto), StatusCodes.Status201Created)]
     public async Task<IActionResult> Create([FromBody] JobOpeningMutation mutation, CancellationToken cancellationToken)
     {
@@ -56,7 +56,7 @@ public sealed class JobOpeningsController(ISender sender) : ControllerBase
     }
 
     [HttpPost("{id:int}/open")]
-    [HasPermission(HrPermissions.ManageJobOpenings)]
+    [HasPermission(HrPermissions.OpenJobOpenings)]
     [ProducesResponseType(typeof(JobOpeningDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> Open(int id, CancellationToken cancellationToken)
     {
@@ -65,7 +65,7 @@ public sealed class JobOpeningsController(ISender sender) : ControllerBase
     }
 
     [HttpPost("{id:int}/pause")]
-    [HasPermission(HrPermissions.ManageJobOpenings)]
+    [HasPermission(HrPermissions.PauseJobOpenings)]
     [ProducesResponseType(typeof(JobOpeningDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> Pause(int id, [FromBody] OpeningReasonRequest request, CancellationToken cancellationToken)
     {
@@ -74,7 +74,7 @@ public sealed class JobOpeningsController(ISender sender) : ControllerBase
     }
 
     [HttpPost("{id:int}/close")]
-    [HasPermission(HrPermissions.ManageJobOpenings)]
+    [HasPermission(HrPermissions.CloseJobOpenings)]
     [ProducesResponseType(typeof(JobOpeningDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> Close(int id, [FromBody] OpeningReasonRequest request, CancellationToken cancellationToken)
     {

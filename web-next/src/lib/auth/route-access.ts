@@ -55,7 +55,7 @@ export const routePolicies: readonly RoutePolicy[] = [
   { path: appRoutes.platform.administration.offlineOperations },
   {
     path: appRoutes.modules.reporting.crystalReports,
-    permissions: [permissions.ManageCrystalReportAccess],
+    permissions: [permissions.ViewCrystalReports],
   },
   {
     path: appRoutes.modules.referenceData.addressTypes,
@@ -153,15 +153,15 @@ export const routePolicies: readonly RoutePolicy[] = [
   },
   {
     path: appRoutes.modules.accounting.ledgerSetup.currencies,
-    permissions: [permissions.ViewAccountingSetup],
+    permissions: [permissions.ViewCurrencies],
   },
   {
     path: appRoutes.modules.accounting.ledgerSetup.accountingSettings,
-    permissions: [permissions.ViewAccountingSetup],
+    permissions: [permissions.ViewAccountingSettings],
   },
   {
     path: appRoutes.modules.accounting.ledgerSetup.accounts,
-    permissions: [permissions.ViewAccounts],
+    permissions: [permissions.ViewAccountHierarchyLevels],
   },
   {
     path: appRoutes.modules.accounting.ledgerSetup.hierarchyLevels,
@@ -169,21 +169,25 @@ export const routePolicies: readonly RoutePolicy[] = [
   },
   {
     path: appRoutes.modules.accounting.ledgerSetup.dimensions,
-    permissions: [permissions.ViewDimensions],
+    permissions: [permissions.ViewDimensionDefinitions],
   },
-  ...[
-    appRoutes.modules.accounting.ledgerSetup.books,
-    appRoutes.modules.accounting.ledgerSetup.journals,
-    appRoutes.modules.accounting.ledgerSetup.exchangeRates,
-    appRoutes.modules.accounting.ledgerSetup.accountDetermination,
-  ].map((path) => ({ path, permissions: [permissions.ViewAccountingSetup] as const })),
+  { path: appRoutes.modules.accounting.ledgerSetup.books, permissions: [permissions.ViewBooks] },
+  { path: appRoutes.modules.accounting.ledgerSetup.journals, permissions: [permissions.ViewJournalDefinitions] },
+  { path: appRoutes.modules.accounting.ledgerSetup.exchangeRates, permissions: [permissions.ViewExchangeRateTypes] },
+  { path: appRoutes.modules.accounting.ledgerSetup.accountDetermination, permissions: [permissions.ViewAccountMappings] },
   {
     path: appRoutes.modules.accounting.ledgerSetup.index,
     anyOf: [
       { permissions: [permissions.ViewFiscalYears] },
-      { permissions: [permissions.ViewAccountingSetup] },
+      { permissions: [permissions.ViewCurrencies] },
+      { permissions: [permissions.ViewAccountingSettings] },
       { permissions: [permissions.ViewAccounts] },
-      { permissions: [permissions.ViewDimensions] },
+      { permissions: [permissions.ViewAccountHierarchyLevels] },
+      { permissions: [permissions.ViewDimensionDefinitions] },
+      { permissions: [permissions.ViewBooks] },
+      { permissions: [permissions.ViewJournalDefinitions] },
+      { permissions: [permissions.ViewExchangeRateTypes] },
+      { permissions: [permissions.ViewAccountMappings] },
     ],
   },
   {

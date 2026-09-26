@@ -78,13 +78,13 @@ the current company context.
 | GET | `/api/v1/fiscal-years/{id}` | `FiscalYears:View` | detail including periods |
 | POST | `/api/v1/fiscal-years` | `FiscalYears:Create` | `201` detail |
 | PUT | `/api/v1/fiscal-years/{id}` | `FiscalYears:Edit` | `200` detail |
-| DELETE | `/api/v1/fiscal-years/{id}` | `FiscalYears:Delete` | `204` archive |
-| POST | `/api/v1/fiscal-years/{id}/restore` | `FiscalYears:Delete` | `204` restore |
-| POST | `/api/v1/fiscal-years/{id}/open` | `FiscalYears:ManageLifecycle` | `200` detail |
-| POST | `/api/v1/fiscal-years/{id}/begin-closing` | `FiscalYears:ManageLifecycle` | `200` detail |
-| POST | `/api/v1/fiscal-years/{id}/close` | `FiscalYears:ManageLifecycle` | `200` detail |
-| POST | `/api/v1/fiscal-years/{id}/lock` | `FiscalYears:ManageLifecycle` | `200` detail |
-| POST | `/api/v1/fiscal-years/{id}/reopen` | `FiscalYears:ManageLifecycle` | `200` detail |
+| DELETE | `/api/v1/fiscal-years/{id}` | `FiscalYears:Archive` | `204` archive |
+| POST | `/api/v1/fiscal-years/{id}/restore` | `FiscalYears:Restore` | `200` detail |
+| POST | `/api/v1/fiscal-years/{id}/open` | `FiscalYears:Open` | `200` detail |
+| POST | `/api/v1/fiscal-years/{id}/begin-closing` | `FiscalYears:BeginClosing` | `200` detail |
+| POST | `/api/v1/fiscal-years/{id}/close` | `FiscalYears:Close` | `200` detail |
+| POST | `/api/v1/fiscal-years/{id}/lock` | `FiscalYears:Lock` | `200` detail |
+| POST | `/api/v1/fiscal-years/{id}/reopen` | `FiscalYears:Reopen` | `200` detail |
 
 Create body:
 
@@ -153,5 +153,10 @@ tests; inspected and applied migration; exact web/mobile transport tests; list,
 form, lifecycle, permission, read-only, localization, and realtime tests; API
 build/tests; web architecture/type/lint/test/build; mobile `npm run check`;
 documentation generation/check; `git diff --check`; and the mandatory five-point
-Web/Mobile UI audit. Manual viewport/device checks remain explicitly recorded
-when no interactive runtime is available.
+Web/Mobile UI audit. After automated evidence is ready, the implementation agent
+must send the user the detailed manual Web/actual-device scenario defined by the
+Slice 1 execution authority. The current executable instance is
+`documentation/plans/business/accounting-core-gl/manual-acceptance/FISCAL-YEARS-STEP-01.md`,
+derived from `MANUAL_ACCEPTANCE_SCENARIO_TEMPLATE.md`. The step remains Active until the user explicitly
+accepts the results; an unavailable environment or user rejection is recorded and
+never converted into an inferred Phase 06 pass.

@@ -63,6 +63,35 @@ stage is `Closed`.
    platform adaptation, required/Deferred/Excluded views, form/detail shape,
    loading/empty/error/permission states, mock-data decision, and evidence. The
    shared component list alone is not a pattern decision.
+10. UI translation and business naming are separate gates. Every named master must
+    carry distinct `NameAr` and `NameEn` through API persistence/transport and Web/
+    Mobile create, edit, view, list and local mock-draft journeys. Records without
+    an authored name keep stable IDs and display the localized names of referenced
+    owners; they must not invent duplicate name columns.
+11. Every human feature step ends with a user-operated manual acceptance journey.
+    After API, Web and Mobile automated evidence is ready, the implementation agent
+    sends the user a completed, feature-specific instance of
+    `MANUAL_ACCEPTANCE_SCENARIO_TEMPLATE.md` with environment/prerequisite checks, roles,
+    permissions, exact test data, Web steps, actual Mobile/device steps, EN/AR and
+    RTL/LTR checks, expected results, negative/read-only/validation/concurrency
+    cases, cleanup and evidence to capture. The user performs or supervises that
+    journey and returns an explicit acceptance or rejection.
+12. Automated tests, a historical Phase 06, or the agent's own smoke result never
+    substitutes for the current user's acceptance. Until the user explicitly says
+    the step is accepted, its integrated-live stage remains `Active`, Phase 06 is
+    not `Verified`, documentation/closure is not `Closed`, and the next roadmap row
+    remains `Queued`. A rejection keeps the same step Active; after correction the
+    agent sends a detailed retest scenario before requesting acceptance again.
+13. Every child completes the product-wide Permission Action Matrix from
+    `documentation/system/PERMISSION_MODEL.md`. API endpoints, Web actions, Mobile
+    actions, direct handlers, denial tests, and EN/AR permission labels use exact
+    action permissions. `Manage` is allowed only as a role-editor preset label and
+    never as an authorization claim.
+
+The active Step 01 scenario is
+`manual-acceptance/FISCAL-YEARS-STEP-01.md`. Its result table and verbatim user
+decision become Phase 06 evidence only after execution; the pre-authored scenario
+does not itself constitute a pass.
 
 ## 2. Child package catalog and dependency order
 
@@ -95,6 +124,22 @@ Package 1V is mandatory; completing packages 1A–1H separately does not close S
 | `1H` Posting Profiles | Queued | starts after account-determination dependencies are ready |
 | `1V` Integration & Verification | Queued — final | runs after `1A`–`1H`; owns umbrella Phase 06 reconciliation only |
 
+### UI Pattern ownership for the current v2 contracts
+
+| Package / surface | Approved pattern | Platform decision |
+| --- | --- | --- |
+| Fiscal Years, Currency and flat setup masters | `P-001` | Web Grid and Mobile Table/Cards only where each child row marks them Required |
+| Accounts | `P-002` primary + P-001 secondary record list | Web split tree/detail; Mobile stacked/segmented hierarchy/detail |
+| Account Dimension Constraints | `P-006` | Web grouped relationship table; Mobile stacked relationship cards |
+| Company Settings | `P-005` | dedicated singleton editor; no fake list/archive lifecycle |
+| Link Accounts | `P-006` | capability-driven effective mapping editor; no fake source options |
+| Posting Profiles | `P-001` plus feature-specific read-only diagnostic sub-surface | typed profile CRUD and structured resolve preview; preview never posts |
+| Ledger Setup overview | `P-007` | permission-filtered launcher only; no catch-all data ownership |
+
+No Slice 1 row selects a `Candidate` pattern. `P-003` is not used for independent
+resources with different APIs/lifecycles, and `P-004` Stepper remains unavailable
+until separately registered.
+
 ### Human execution sequence (current run)
 
 Historical package IDs are intentionally unchanged. They remain the traceability
@@ -102,7 +147,7 @@ keys while this table controls the actual review order:
 
 | Step | Feature | Package/reference | Status | Gate |
 | ---: | --- | --- | --- | --- |
-| 01 | Fiscal Years & Periods | Existing Accounting Fiscal Years | **Active — revalidation** | Integrated live verification must be `Verified`, then documentation/closure must be `Closed` |
+| 01 | Fiscal Years & Periods | Existing Accounting Fiscal Years | **Active — revalidation** | Detailed manual scenario + explicit user acceptance, then Phase 06 `Verified` and documentation/closure `Closed` |
 | 02 | Currency | `1A` | Queued | Cannot start before Step 01 is `Closed` |
 | 03 | COA & Hierarchy | `1B` | Queued | Cannot start before Step 02 is `Closed` |
 | 04 | Dimensions | `1C` | Queued | Cannot start before Step 03 is `Closed` |
@@ -120,7 +165,7 @@ Every child screen contract must record and verify all applicable items below.
 | Area | Required contract |
 | --- | --- |
 | Route/entry | one canonical Accounting route; existing Finance/Ledger Setup navigation only |
-| Authorization | exact View/Manage permission + global read-only behavior; API remains authoritative |
+| Authorization | exact per-action permission (`View/Create/Edit/Archive/Restore` or named lifecycle action) + global read-only behavior; API remains authoritative; linked Permission Action Matrix owns EN/AR labels and denial evidence |
 | Data owner | feature-owned typed service/repository + stable query keys/hooks; no direct component-to-HTTP calls |
 | Read state | initial loading, background refresh, empty/no-results, error/retry and current authoritative data |
 | Write state | create/edit/view/lifecycle actions, server field errors, RowVersion conflict/reload where applicable |
@@ -129,8 +174,9 @@ Every child screen contract must record and verify all applicable items below.
 | Mock data | Every writable form exposes the shared mock-data action after authoritative prerequisites load; it fills local valid draft values only and never submits, persists, fabricates identity/concurrency/scope/posting/auth state. Read-only/report/query-only surfaces are N/A. Reachable generic compatibility forms obey the same rule until their typed child replaces them; this does not close the child gate. |
 | Accessibility | translated labels/actions, keyboard/touch target semantics, focus/error behavior, screen-reader names |
 | Localization | English/Arabic + RTL/LTR verified through the Accounting translation scope/catalog |
+| Bilingual business names | Named masters require stored `NameAr` + `NameEn` in API/Web/Mobile create, edit, view, list/search and valid local mock draft; reference-only rows display localized owner names without duplicating them |
 | Responsive | bounded desktop content; compact/mobile layouts avoid page-level horizontal overflow |
-| Verification | focused contract tests + component/screen tests + live API-backed Phase 06 journey evidence |
+| Verification | focused contract tests + component/screen tests + detailed user-run live API-backed scenario + explicit user acceptance recorded in Phase 06 |
 
 ## 3A. Step 01 — Fiscal Years & Periods revalidation contract
 

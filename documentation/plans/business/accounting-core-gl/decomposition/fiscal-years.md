@@ -48,7 +48,7 @@ second form workflow.
 
 | Screen ID | Platform | Route / entry | User job | Data / interaction shape | Primary Pattern ID | Sub-pattern / form decision | Exact reviewed reference source path | Platform status | Grid / Table / Cards / Tree / Detail / Report / Import / Export / Chart (R/D/E) | Loading / empty / error / forbidden / dirty / conflict states | Offline policy | Mock-data policy | Permission / scope | Responsive / RTL / accessibility | Deviation and reason |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| fiscal-years-management | Web | /finance/ledger-setup/fiscal-years | Manage the company's financial calendar and inspect generated periods | Server-managed collection + read-only aggregate detail | P-001 | Grid/Cards/Report composition; one compact sectioned MyForm; period preview is read-only | web-next/src/modules/accounting/fiscal-years/pages/FiscalYearsPage.tsx; web-next/src/modules/accounting/fiscal-years/components/FiscalYearsMultiView.tsx; web-next/src/modules/accounting/fiscal-years/components/FiscalYearForm.tsx; Countries reference web-next/src/modules/reference-data/geographical-information/countries/pages/CountriesPage.tsx | Implemented — revalidation active | Grid Required; Cards Required; Detail Required; Report Required through managed Reporting catalog; Import Excluded; Export Excluded; Chart Excluded; Tree Excluded | Initial/background loading, default/filtered empty, retryable error, forbidden/read-only, dirty form, field errors, busy actions, and RowVersion conflict/reload | Online authoritative reads and writes; no offline success synthesis or queued mutation | Writable form shows shared local mock draft after authoritative prerequisites; no submit, identity, tenant/company, or RowVersion fabrication; report/detail/query surfaces are N/A | FiscalYears View/Create/Edit/Delete/ManageLifecycle; tenant + current company come from authenticated actor; no scope fields in route/body | Shared PageHeader, MyDataGrid, cards, feedback, MyForm and RTL theme; dialog/list scroll remains bounded; keyboard focus goes to first invalid field | Report is a managed Reporting surface, not a FiscalYearsController endpoint; compact form deliberately does not use P-003; import/export/chart have no runtime control |
+| fiscal-years-management | Web | /finance/ledger-setup/fiscal-years | Manage the company's financial calendar and inspect generated periods | Server-managed collection + read-only aggregate detail | P-001 | Grid/Cards/Report composition; one compact sectioned MyForm; period preview is read-only | web-next/src/modules/accounting/fiscal-years/pages/FiscalYearsPage.tsx; web-next/src/modules/accounting/fiscal-years/components/FiscalYearsMultiView.tsx; web-next/src/modules/accounting/fiscal-years/components/FiscalYearForm.tsx; Countries reference web-next/src/modules/reference-data/geographical-information/countries/pages/CountriesPage.tsx | Implemented — revalidation active | Grid Required; Cards Required; Detail Required; Report Required through managed Reporting catalog; Import Excluded; Export Excluded; Chart Excluded; Tree Excluded | Initial/background loading, default/filtered empty, retryable error, forbidden/read-only, dirty form, field errors, busy actions, and RowVersion conflict/reload | Online authoritative reads and writes; no offline success synthesis or queued mutation | Writable form shows shared local mock draft after authoritative prerequisites; no submit, identity, tenant/company, or RowVersion fabrication; report/detail/query surfaces are N/A | Exact FiscalYears View/Create/Edit/Archive/Restore/Open/BeginClosing/Close/Lock/Reopen action; tenant + current company come from authenticated actor; no scope fields in route/body | Shared PageHeader, MyDataGrid, cards, feedback, MyForm and RTL theme; dialog/list scroll remains bounded; keyboard focus goes to first invalid field | Report is a managed Reporting surface, not a FiscalYearsController endpoint; compact form deliberately does not use P-003; import/export/chart have no runtime control |
 | fiscal-years-management | Mobile | /finance/ledger-setup/fiscal-years | Manage and review the same authoritative company calendar on a touch device | Server-managed page + cards + read-only detail/period preview | P-001 | Table/Cards composition; full-screen stacked AppForm; no tabs; period preview is read-only | mobile-react/src/modules/accounting/fiscal-years/presentation/screens/FiscalYearsScreen.tsx; mobile-react/src/modules/accounting/fiscal-years/presentation/components/FiscalYearForm.tsx; Countries reference mobile-react/src/modules/reference-data/geography/countries/presentation/screens/CountriesScreen.tsx | Adapted — revalidation active | Table Required; Cards Required; Detail Required; Report Required through managed Reporting catalog; Import Excluded; Export Excluded; Chart Excluded; Tree Excluded | Loading/background refresh, empty/no-results, retryable error, forbidden/read-only, dirty exit, field validation, busy action, stale RowVersion conflict with reload | Online authoritative reads and writes; offline read/cache may be shown only as stale state; mutations require connectivity and never claim local success | AppForm mock action fills a deterministic valid local draft only after prerequisites; it never queues/submits or invents scope/identity/concurrency; read/report surfaces are N/A | Same server permissions and tenant/current-company scope; RouteGuard and API remain authoritative | Full-screen stacked form preserves one validation context; responsive table/cards, RTL labels, accessible touch targets, and back/dirty protection | Mobile adapts the P-001 ergonomics to table/cards and stacked form; it does not mirror a desktop split layout; import/export/chart have no runtime control |
 
 No screen uses a new or unregistered pattern. A future pattern candidate would
@@ -88,15 +88,34 @@ block UI implementation until it is registered and reviewed in the catalog.
 
 | Concern | Exact contract |
 | --- | --- |
-| Typed request/response | CQRS requests/responses under api/Modules/Accounting/ErpSystem.Modules.Accounting.Application/Features/Finance/FiscalYears; detail includes ordered non-deleted periods and RowVersion |
+| Typed request/response | CQRS requests/responses under api/Modules/Accounting/ErpSystem.Modules.Accounting.Application/Features/Finance/FiscalYears include distinct required `NameAr` and `NameEn`; detail includes ordered non-deleted periods and RowVersion |
 | Canonical API route | /api/v1/fiscal-years in api/Modules/Accounting/ErpSystem.Modules.Accounting.Presentation/Features/Finance/FiscalYears/V1/FiscalYearsController.cs |
 | Web/Mobile routes | /finance/ledger-setup/fiscal-years |
 | Server search/filter/sort | One-based page/pageSize, allow-listed search field/operator, record/lifecycle status, sort column/direction; default StartDate descending then Id descending |
 | Paging/limits | Server-owned page metadata and max client page size; clients do not present current-page filtering as global |
 | Domain errors / ProblemDetails | Stable not-found, duplicate-code, overlap, transition, not-editable/not-archivable/not-restorable, validation, missing-company, and concurrency errors localized EN/AR |
-| Permission and tenant/company scope | TenantMember plus FiscalYears View/Create/Edit/Delete/ManageLifecycle; ICurrentActor supplies TenantId and current CompanyId; request DTOs never accept scope |
+| Permission and tenant/company scope | TenantMember plus the exact FiscalYears View/Create/Edit/Archive/Restore/Open/BeginClosing/Close/Lock/Reopen permission; ICurrentActor supplies TenantId and current CompanyId; request DTOs never accept scope |
 | Cross-module contract | Reporting consumes Accounting's public fiscalyears dataset; future Workforce Planning references FiscalYearId under server company/lifecycle eligibility |
 | Persistence/schema/migration | AccountingDbContext, acc schema, api/Modules/Accounting/ErpSystem.Modules.Accounting.Infrastructure/Migrations/20260922091842_InitialAccounting.cs; HR ApplicationDbContext and ErrorsService are outside this feature |
+
+### Permission Action Matrix
+
+All rows are company-scoped, blocked by global read-only for mutations, enforced by
+the API, and guarded by both the visible Web/Mobile action and its direct callback.
+Technical keys are stable English; role-catalog labels are bilingual.
+
+| Actor | Action / route | Exact permission | English label | العربية | Required denial evidence |
+| --- | --- | --- | --- | --- | --- |
+| Company user | List/detail/report dataset `GET` | `FiscalYears:View` | View fiscal years | عرض السنوات المالية | Direct route/API denied without View |
+| Company user | Create `POST` | `FiscalYears:Create` | Create fiscal year | إضافة سنة مالية | View/Edit do not grant Create |
+| Company user | Edit `PUT` | `FiscalYears:Edit` | Edit fiscal year | تعديل سنة مالية | Create does not grant Edit |
+| Company user | Archive `DELETE .../archive` | `FiscalYears:Archive` | Archive fiscal year | أرشفة سنة مالية | Restore does not grant Archive |
+| Company user | Restore `POST .../restore` | `FiscalYears:Restore` | Restore fiscal year | استعادة سنة مالية | Archive does not grant Restore |
+| Company user | Open | `FiscalYears:Open` | Open fiscal year | فتح السنة المالية | Other lifecycle claims do not grant Open |
+| Company user | Begin closing | `FiscalYears:BeginClosing` | Begin closing | بدء الإقفال | Open/Close do not grant Begin closing |
+| Company user | Close | `FiscalYears:Close` | Close fiscal year | إقفال السنة المالية | Begin closing does not grant Close |
+| Company user | Lock | `FiscalYears:Lock` | Lock fiscal year | قفل السنة المالية | Close does not grant Lock |
+| Authorized exception actor | Reopen | `FiscalYears:Reopen` | Reopen fiscal year | إعادة فتح السنة المالية | Lock/Open do not grant Reopen |
 
 ## 7. Create, edit, view, and lifecycle contract
 
@@ -132,7 +151,10 @@ resource.
 ## 10. i18n, RTL, accessibility, and responsive behavior
 
 Visible Web/Mobile text is owned by the Fiscal Years translation scopes in English
-and Arabic. Both platforms use the shared RTL/theme system. Web maps the first
+and Arabic. Separately, Fiscal Year and generated named Period data preserve
+distinct persisted `NameAr` and `NameEn`: create/edit require both, detail exposes
+both, and Grid/Table/Cards/search use current locale with documented fallback
+without overwriting the other value. Both platforms use the shared RTL/theme system. Web maps the first
 invalid field to its section and focus; Mobile preserves one validation context and
 first-error focus. Grid/Cards/Table remain usable at narrow widths, list scroll is
 bounded to its panel, lifecycle actions have accessible names and confirmation,
@@ -145,19 +167,27 @@ and read-only/forbidden states are announced through shared state components.
 | 1 | API | Verified | Accounting owner/scope/contracts frozen | API build and focused Fiscal Year domain/application/controller/isolation tests; migration applied and no pending model changes | documentation/api/FiscalYears_API_Implementation_Profile.md; api/Modules/Accounting/ErpSystem.Modules.Accounting.Tests/ |
 | 2 | Web | Verified | API contract verified | Source evidence: typed service/hooks, P-001 Grid/Cards/Report, form/mock/conflict tests, type-check and focused lint; authenticated live journey is still pending | documentation/web-next/features/fiscal-years-frontend-reference.md; web-next/src/modules/accounting/fiscal-years/ |
 | 3 | Mobile | Verified | Web contract verified | Source evidence: typed remote/use-case boundary, P-001 Table/Cards/Report, form/mock/conflict tests, type-check/lint/export evidence; actual device journey is still pending | documentation/mobile-react/fiscal-years-mobile-reference.md; mobile-react/src/modules/accounting/fiscal-years/ |
-| 4 | Integrated live verification | Active | API/Web/Mobile evidence complete | Pending: authenticated hosted API + Web journey plus actual Mobile/device journey, including create/edit/view/archive/restore/lifecycle/report and conflict checks; no live pass claimed yet | To be recorded in Phase 06 evidence |
-| 5 | Documentation and closure | Queued | Integrated stage Verified | Reconcile canonical profiles, required-file manifest/recipe, plan status, and customer education when required; then mark Closed | To be recorded after Step 01 live verification |
+| 4 | Integrated live verification + user acceptance | Active | API/Web/Mobile evidence complete | Agent sends the detailed authenticated API/Web/actual-Mobile scenario; user runs or supervises it and explicitly accepts. Create/edit/view/archive/restore/lifecycle/report/conflict and bilingual checks are mandatory; no pass is inferred from automated evidence. | Scenario, results and user decision recorded in Phase 06 evidence |
+| 5 | Documentation and closure | Queued | Integrated stage Verified **and explicit user acceptance recorded** | Reconcile canonical profiles, required-file manifest/recipe, plan status, and customer education when required; then mark Closed | To be recorded after Step 01 manual acceptance |
+
+**Manual acceptance protocol.** Follow
+`../MANUAL_ACCEPTANCE_SCENARIO_TEMPLATE.md`, the transition rule in
+`../SLICE-01-LEDGER-SETUP-EXECUTION.md`, and the current executable instance in
+`../manual-acceptance/FISCAL-YEARS-STEP-01.md`. The implementation agent must send the user
+all prerequisites, exact data, Web and actual-device actions, EN/AR/RTL cases,
+expected outcomes, negative/read-only/conflict checks, cleanup and evidence fields.
+This step remains Active until the user replies with explicit acceptance.
 
 Next-step rule: Currency and every later Accounting step remain Queued or Blocked.
 No sibling may become Active until this contract's integrated live verification is
-Verified and documentation/closure is Closed.
+Verified, explicit user acceptance is recorded, and documentation/closure is Closed.
 
 ## 12. Verification contract
 
 | Layer | Required evidence/test | Critical scenario | Result |
 | --- | --- | --- | --- |
-| Domain/Application | Fiscal Year generation, exact duration, lifecycle, reopen, period identity preservation, archived-period restoration, validation | Monthly/quarterly coverage, invalid transitions, idempotent target state | Source tests recorded in canonical profile |
-| API/transport | Controller CQRS/route/permission/TenantMember contract tests; company isolation; RowVersion archive/restore/lifecycle | Scope cannot be selected by caller; stale write conflicts | Focused tests reported green; live auth still pending |
+| Domain/Application | Fiscal Year generation, bilingual names, exact duration, lifecycle, reopen, period identity preservation, archived-period restoration, validation | Both names survive monthly/quarterly generation and lifecycle; invalid transitions; idempotent target state | Source tests recorded in canonical profile |
+| API/transport | Controller CQRS/route/permission/TenantMember contract tests; `NameAr`/`NameEn`; company isolation; RowVersion archive/restore/lifecycle | Scope cannot be selected by caller; either name missing fails; stale write conflicts | Focused tests reported green; live auth still pending |
 | Persistence/migration | AccountingDbContext schema/index/relationship and migration application | acc schema and composite tenant/company isolation | Development migration applied; deployment evidence remains in Phase 06 |
 | Web | P-001 Grid/Cards/Report composition, server criteria, form validation/mock, lifecycle/conflict tests; explicit absence of Import/Export/Chart controls | No direct transport in components; report permission/entitlement gate | Focused checks green; authenticated live journey pending |
 | Mobile | P-001 Table/Cards/Report composition, remote boundary, form validation/mock, conflict/reload tests; explicit absence of Import/Export/Chart controls | Online authoritative mutation and device navigation/back/dirty behavior | Focused checks green; actual device journey pending |
@@ -168,7 +198,10 @@ Verified and documentation/closure is Closed.
 - [x] API, Web, and Mobile contracts are documented and focused source checks are recorded.
 - [x] P-001 is selected for both platforms with exact references and explicit R/D/E decisions.
 - [x] No new/candidate pattern is used and P-003 is intentionally not applied.
+- [x] Source contracts/forms/lists carry distinct Arabic and English Fiscal Year names.
 - [ ] Authenticated live Web and actual Mobile/device journey is verified.
+- [ ] Live create/edit/view/list verifies both `NameAr` and `NameEn` without data loss.
+- [ ] The detailed manual scenario and results were sent to the user, and the user's explicit acceptance is recorded.
 - [ ] Integrated evidence is recorded in Phase 06 and this contract moves to Verified.
 - [ ] Canonical documentation, manifest/recipe, and required customer education are reconciled.
 - [ ] The roadmap moves Currency to Active only after this feature is Closed.

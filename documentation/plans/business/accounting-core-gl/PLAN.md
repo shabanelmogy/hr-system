@@ -8,12 +8,12 @@
 | Planning method version | 2.0 |
 | Business capability | Accounting Core General Ledger |
 | Owning module | Accounting |
-| Status | Slice 1 execution-ready — later slices/release remain gated |
+| Status | Slice 1 planning/UI gates ready — Fiscal Years is the sole active feature; later children/slices/release remain gated |
 | Target milestone | Accounting Core V1 |
 | Primary owner | Accounting Product + Accounting Engineering |
 | Reference feature(s) | Existing Accounting Fiscal Years + current Web/Mobile shared component systems |
 | Related plans | `accounting-delivery`, future AP/AR/Tax/Treasury/Assets/Reporting plans |
-| Last reviewed | 2026-09-23 |
+| Last reviewed | 2026-09-25 |
 
 ### Planning evidence
 
@@ -286,15 +286,26 @@ late-post/reopen actions. It does not rebuild the existing Fiscal Years slice.
 
 ## 9. Permissions and security
 
-Target action separation:
+Target action separation follows
+[`../../../system/PERMISSION_MODEL.md`](../../../system/PERMISSION_MODEL.md). Technical
+claims remain stable English; the role editor owns matching Arabic and English
+labels/descriptions.
 
-| Permission | Access mode | Action/data controlled | Server enforcement |
+| Permission family | Access mode | Exact actions controlled | Server enforcement |
 | --- | --- | --- | --- |
-| Accounts:View | Company | COA read | Query/controller |
-| Accounts:Manage | Company | Account mutations | Command/controller |
-| Dimensions:View | Company | Dimension read | Query/controller |
-| Dimensions:Manage | Company | Dimension mutations | Command/controller |
-| AccountingSetup:Manage | Company | Books/journals/currencies/profiles | Command/controller |
+| Accounts:* | Company | `View`, `Create`, `Edit`, `Archive`, `Restore` | Exact query/command controller policy |
+| AccountHierarchyLevels:* | Company | `View`, `Create`, `Edit`, `Archive`, `Restore` | Exact query/command controller policy |
+| DimensionDefinitions:* | Company | `View`, `Create`, `Edit`, `Archive`, `Restore` | Exact query/command controller policy |
+| DimensionValues:* | Company | `View`, `Create`, `Edit`, `Archive`, `Restore` | Exact query/command controller policy |
+| AccountDimensionPolicies:* | Company | `View`, `Edit` | Exact query/command controller policy |
+| Currencies:* | Company | `View`, `Create`, `Edit`, `Archive`, `Restore` | Exact query/command controller policy |
+| AccountingSettings:* | Company | `View`, `Edit` | Exact query/command controller policy |
+| Books:* | Company | `View`, `Create`, `Edit`, `Archive`, `Restore` | Exact query/command controller policy |
+| JournalDefinitions:* | Company | `View`, `Create`, `Edit`, `Archive`, `Restore` | Exact query/command controller policy |
+| ExchangeRateTypes:* | Company | `View`, `Create`, `Edit`, `Archive`, `Restore` | Exact query/command controller policy |
+| ExchangeRates:* | Company | `View`, `Create`, `Edit` | Exact query/command controller policy |
+| AccountMappings:* | Company | `View`, `Create`, `Edit` | Exact query/command controller policy |
+| PostingProfiles:* | Company | `View`, `Create`, `Edit`, `Resolve` | Exact query/command controller policy |
 | Journals:View | Company | Journal read | Query/controller |
 | Journals:Create | Company | Draft create/edit/submit | Command/controller |
 | Journals:Approve | Company | Approve/reject | Command + DEC-010 |
@@ -351,12 +362,12 @@ through `ISender`; handlers use narrow Application ports.
 | Operation | Type | Target route/message | Permission | Error/concurrency contract |
 | --- | --- | --- | --- | --- |
 | Account list/tree/detail | Query | `GET /api/v1/accounts...` | Accounts:View | scoped criteria/errors |
-| Account mutations | Command | accounts family | Accounts:Manage | duplicate/stale/in-use 409 |
-| Dimensions | CQRS | accounting-dimensions family | Dimensions:* | duplicate/stale 409 |
-| Books/Journals setup | CQRS | accounting-books/journals | AccountingSetup:Manage | duplicate/stale 409 |
-| Exchange-rate types/rates | CQRS | accounting-exchange-rates | AccountingSetup:Manage | duplicate/effective-version 409 |
-| Link Accounts | CQRS | account-mappings | AccountingSetup:Manage | typed reference/currency/missing-reference errors |
-| Profile resolution preview | Query | posting-profiles/resolve-preview | AccountingSetup:Manage | zero/ambiguous diagnostic |
+| Account mutations | Command | accounts family | Accounts:Create/Edit/Archive/Restore by endpoint | duplicate/stale/in-use 409 |
+| Dimensions | CQRS | accounting-dimensions family | exact DimensionDefinitions/DimensionValues/AccountDimensionPolicies action | duplicate/stale 409 |
+| Books/Journals setup | CQRS | accounting-books/journals | exact Books/JournalDefinitions action | duplicate/stale 409 |
+| Exchange-rate types/rates | CQRS | accounting-exchange-rates | exact ExchangeRateTypes/ExchangeRates action | duplicate/effective-version 409 |
+| Link Accounts | CQRS | account-mappings | AccountMappings:View/Create/Edit by endpoint | typed reference/currency/missing-reference errors |
+| Profile resolution preview | Query | posting-profiles/resolve-preview | PostingProfiles:Resolve | zero/ambiguous diagnostic |
 | Journal page/detail | Query | journal-entries | Journals:View | scoped 404/403 |
 | Journal create/update | Command | journal-entries | Journals:Create | RowVersion 409 |
 | Submit/approve/reject | Command | journal lifecycle | Create/Approve | lifecycle/SoD/stale |
@@ -432,6 +443,45 @@ before offering another financial mutation.
 | States | `AppStateView` | Reuse |
 | Confirmations | `ConfirmationDialog` | Reuse |
 | Journal lines | shared primitives | Domain composition unless generic reuse is proven |
+
+### Slice 1 UI Pattern map
+
+The child contracts are the detailed authority; this table prevents a generic
+Ledger Setup renderer or an arbitrary tabs layout from becoming the implicit
+screen design.
+
+| Child surface | Web / Mobile pattern decision |
+| --- | --- |
+| Fiscal Years, Currency, Hierarchy Levels, Dimension Definitions/Values, Books, Journal Definitions, Exchange Rate Types/Rates, Posting Profile management | `P-001` Server-managed Grid/CRUD, with each contract classifying Grid/Table/Cards/Detail and optional views separately |
+| Accounts | `P-002` Tree + Master/Detail, with a secondary P-001 record list where contracted |
+| Account Dimension Constraints and Link Accounts | `P-006` Scoped Relationship/Mapping Editor |
+| Company Settings | `P-005` Singleton Settings Editor |
+| Ledger Setup overview | `P-007` Settings Navigation Hub |
+| Resolve Preview | read-only diagnostic sub-surface inside the Posting Profiles route; it does not become a second CRUD feature |
+
+`P-003` is not used to group independent Ledger Setup resources with different
+APIs or lifecycles. `P-004` remains a Candidate Stepper and cannot authorize UI
+implementation. Exact sources, platform adaptations and R/D/E decisions live in
+the current v2 decomposition contracts.
+
+### Bilingual business-name invariant
+
+English/Arabic UI translation does not replace bilingual business data. Every
+named Slice 1 master stores, validates, transports, edits and displays distinct
+`NameAr` and `NameEn` values across API, Web and Mobile: Fiscal Year and Period
+where named by contract, Currency, Account Hierarchy Level, Account, Dimension
+Definition, Dimension Value, Book, Journal Definition, Exchange Rate Type and
+Posting Profile. Create and edit require both values; detail keeps both visible;
+lists/cards use the current-locale value with a documented fallback and may expose
+the other value where useful. Search/sort contracts include each name where the
+collection supports name criteria.
+
+Records that have no authored business name—Accounting Company Settings,
+historical Exchange Rate, Account Mapping and resolve-preview results—must not gain
+fake name columns. They display localized Arabic/English names from referenced
+owners while persisting stable IDs. Mock generators must produce valid values for
+both names on named writable masters and must never fabricate referenced identity,
+scope or concurrency.
 
 ## 14. 5-point structured-data parity audit
 
@@ -604,8 +654,9 @@ umbrella and does not replace these child contracts.
 | Slice 1 — Ledger setup spine | Decompose | `ledger-setup-posting-profiles` | `documentation/plans/business/accounting-core-gl/decomposition/ledger-setup-posting-profiles.md` | Posting Profile lifecycle + deterministic resolve-preview diagnostics are independently verified |
 | Slice 1 — Ledger setup spine | Decompose | `ledger-setup-integration-verification` | `documentation/plans/business/accounting-core-gl/decomposition/ledger-setup-integration-verification.md` | Cross-child navigation/permissions/i18n/client integration and umbrella Phase 06 verification are independently reconciled |
 
-**Slice 1 decomposition contract gate: Closed — reviewed 2026-09-22.** The historical
-nine child Screen/Workflow Contracts remain the package traceability set. Their
+**Slice 1 decomposition contract gate: Closed — v2 contracts and UI Pattern Gates
+reviewed 2026-09-25.** The nine current child Screen/Workflow Contracts remain the
+package traceability set. Their
 dependency order is preserved in `SLICE-01-LEDGER-SETUP-EXECUTION.md`, but the
 current human run is controlled by that roadmap's single active-step marker and
 starts with the Fiscal Years revalidation contract. Existing umbrella runtime is
@@ -631,12 +682,29 @@ current human sequence, but it is the only document that moves the active-step
 marker. Work one feature at a time in the fixed order API → Web → Mobile →
 integrated live verification → documentation/closure.
 
+Every human feature step has a mandatory **user manual-acceptance gate** after its
+API/Web/Mobile automated evidence is complete. The implementation agent must send
+the user a detailed, executable manual scenario covering prerequisites, roles and
+permissions, test data, Web and actual Mobile/device actions, Arabic/English and
+RTL/LTR behavior, expected results, negative/security/read-only/concurrency cases,
+cleanup and evidence to capture. The feature remains `Active`; Phase 06 must not be
+marked `Verified`, documentation/closure must not be marked `Closed`, and the next
+step must not become `Active` until the user explicitly confirms acceptance. A
+failed or partially completed scenario keeps the same step Active and produces a
+documented retest scenario after correction.
+
+Every scenario and retest must be a completed, feature-specific instance of
+`MANUAL_ACCEPTANCE_SCENARIO_TEMPLATE.md`. The current Step 01 instance is
+`manual-acceptance/FISCAL-YEARS-STEP-01.md`; later steps receive their own versioned
+file when their API/Web/Mobile evidence is ready. A generic checklist or a link to
+automated results is not sufficient evidence of the user's manual journey.
+
 The active first feature and its complete UI Pattern Gate are recorded in
 `decomposition/fiscal-years.md`. That contract is the only detailed authority for
 Fiscal Years; this master plan does not duplicate its screen or API details.
 Currency and all later steps remain queued or blocked until Fiscal Years is
-verified and closed. Historical package completion is evidence only until its
-current contract and live journey are revalidated.
+verified, explicitly accepted by the user, and closed. Historical package completion
+is evidence only until its current contract and live journey are revalidated.
 
 ### Post-implementation verification and customer education
 
@@ -659,6 +727,8 @@ current contract and live journey are revalidated.
 - [x] Security/company scope server-authoritative.
 - [x] Target persistence/API/integration design explicit.
 - [x] Web/Mobile R/D/E + reusable-component mappings explicit.
+- [x] Every Slice 1 child uses a current v2 UI Pattern Gate with no Candidate pattern.
+- [x] Named Accounting masters require separate Arabic/English stored names across API/Web/Mobile create, edit, view, list and mock-draft journeys.
 - [x] Slice 1 child execution packages, dependency order and Screen Contract gates explicit.
 - [x] Test matrix and rollout/recovery defined.
 - [x] Privacy/commercial/legal applicability reviewed.
@@ -676,11 +746,12 @@ current contract and live journey are revalidated.
 | G0 Scope & ownership | PASS | R/D/E explicit; branch/intercompany Deferred; Fiscal Years vs additive Month Close boundary frozen |
 | G1 Business readiness | PASS for Slice 1 | COA/dimensions/book/currency/link-account rules are approved; Slice 2 workflow policy baseline is also resolved |
 | G2 Architecture readiness | PASS for Slice 1 | One Accounting-owned Currency master, company settings for functional currency/primary book, historical FX, single JournalLine truth and account-determination contracts are frozen; period-close schema is not part of Slice 1 |
-| G3 Product/client readiness | PASS for Slice 1 | Web/Mobile/states/reuse mapping explicit; notifications/import/realtime classified Deferred |
+| G3 Product/client readiness | PASS for Slice 1 | Web/Mobile states, P-001/P-002/P-005/P-006/P-007 choices, bilingual business-name parity and R/D/E decisions are explicit; notifications/import/realtime remain Deferred |
 | G4 Delivery readiness | BLOCKED | Production scale and jurisdiction-dependent release decision remain |
 
-The overall release plan is not production-ready while G4 remains blocked, but Slice 1
-is explicitly authorized for implementation. Later slices must satisfy their own entry
+The overall release plan is not production-ready while G4 remains blocked. Slice 1
+is authorized only through the roadmap's single active-feature rule; current v2
+contracts make later children planning-ready but do not activate them. Later slices must satisfy their own entry
 conditions; Slice 3 must gate the new Month Closing/per-period lifecycle before work.
 
 ### Phase 00 implementation-preflight revalidation — 2026-09-20

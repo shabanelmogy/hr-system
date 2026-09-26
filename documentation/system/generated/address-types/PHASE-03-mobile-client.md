@@ -69,7 +69,7 @@ profile and do not leave an unreachable route, component, or translation surface
 | address-types-master | 4 | `7308f8020bdbc0c722447f200a173af87d8fa4f5f3fb6bf250463bd9f057ef5a` |
 | address-types-master | 6 | `38ba2cceb96c08e8c3815c45b40fc5ef311b74eb1e6e3095936183f7ac67aeb4` |
 | address-types-master | 7 | `78e6057906c656526f8fb427486cc0fcf24d5fd8fb865fdb58d0a786b9cce3ba` |
-| address-types-mobile | 1 | `638b28e532a39d37667bbc8fe949baebd73954e99acd2d6cfc6c1f6d52d2837e` |
+| address-types-mobile | 1 | `8b500cc83eb1ea43939126ac861dcd593d241908f95700a1ac9dc7872d0ab2fc` |
 | address-types-mobile | 2 | `90348c7f9a0edf3bdd9ed0fc93ba14f932b2d50b4344841749965a2f5d7d5e87` |
 | address-types-mobile | 3 | `58350328d61cf60c46769f6fd5d40296c1df27905a1e3115eff064319ea1c1bd` |
 | address-types-mobile | 4 | `e97fa285fb049f33ba4a1ac982a082354bf4f67062fffa9b077bfa85c4350134` |

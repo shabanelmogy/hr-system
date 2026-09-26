@@ -34,7 +34,10 @@ const defaultFilters: Filters = { recordStatus: "active", searchField: "all", se
 export default function CurrenciesPage() {
   const { t } = useTranslation();
   const authorization = usePermissions();
-  const canManage = !authorization.isReadOnly && authorization.hasPermission(permissions.ManageAccountingSetup);
+  const canCreate = !authorization.isReadOnly && authorization.hasPermission(permissions.CreateCurrencies);
+  const canEdit = !authorization.isReadOnly && authorization.hasPermission(permissions.EditCurrencies);
+  const canArchive = !authorization.isReadOnly && authorization.hasPermission(permissions.ArchiveCurrencies);
+  const canRestore = !authorization.isReadOnly && authorization.hasPermission(permissions.RestoreCurrencies);
   const list = useServerListState<CurrencySortColumn, Filters>({ defaultColumn: "currencyCode", defaultFilters, defaultPageSize: 10 });
   const [dialog, setDialog] = useState<Dialog>(null);
   const [selected, setSelected] = useState<Currency | null>(null);
@@ -78,13 +81,14 @@ export default function CurrenciesPage() {
   if (data.error) return <Box sx={{ p: 3 }}><Alert severity="error" action={<Button color="inherit" onClick={() => void data.refetch()}>{t("common.retry")}</Button>}>{extractErrorMessage(data.error) || t("currencies.messages.fetchError")}</Alert></Box>;
 
   return <Box sx={{ display: "flex", height: "100%", minHeight: 0, flexDirection: "column", gap: 2 }}>
-    <PageHeader title={t("currencies.title")} subTitle={t("currencies.subtitle")} actions={canManage ? <Button variant="contained" startIcon={<AddRoundedIcon />} onClick={() => { setSelected(null); setDialog("add"); }}>{t("currencies.actions.add")}</Button> : undefined} />
+    <PageHeader title={t("currencies.title")} subTitle={t("currencies.subtitle")} actions={canCreate ? <Button variant="contained" startIcon={<AddRoundedIcon />} onClick={() => { setSelected(null); setDialog("add"); }}>{t("currencies.actions.add")}</Button> : undefined} />
     <Box sx={{ position: "relative", flex: 1, minHeight: 0 }}>
       {data.isFetching && !data.isLoading ? <LinearProgress sx={{ position: "absolute", insetInline: 0, top: 0, zIndex: 4 }} /> : null}
       <CurrenciesDataGrid
         rows={data.pageItems} loading={data.isLoading} page={list.state.page} pageSize={list.state.pageSize} totalCount={data.totalCount}
         sortColumn={list.state.columnName} sortDirection={list.state.sortDirection} searchValue={list.state.searchValue}
-        searchField={list.state.filters.searchField} searchOperator={list.state.filters.searchOperator} recordStatus={list.state.filters.recordStatus} canManage={canManage}
+        searchField={list.state.filters.searchField} searchOperator={list.state.filters.searchOperator} recordStatus={list.state.filters.recordStatus}
+        canEdit={canEdit} canArchive={canArchive} canRestore={canRestore}
         onSearchChange={list.setSearchValue} onSearchFieldChange={value => list.setFilters({ ...list.state.filters, searchField: value })}
         onSearchOperatorChange={value => list.setFilters({ ...list.state.filters, searchOperator: value })}
         onRecordStatusChange={value => list.setFilters({ ...list.state.filters, recordStatus: value })} onReset={list.reset}

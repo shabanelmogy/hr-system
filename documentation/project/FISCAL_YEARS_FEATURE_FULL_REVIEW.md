@@ -74,7 +74,9 @@ permissions are assigned through the runtime system-role seeding path. HR's
 ## 5. Authorization and ownership
 
 Permissions are `FiscalYears:View`, `FiscalYears:Create`, `FiscalYears:Edit`,
-`FiscalYears:Delete`, and `FiscalYears:ManageLifecycle`. The server is authoritative;
+`FiscalYears:Archive`, `FiscalYears:Restore`, `FiscalYears:Open`,
+`FiscalYears:BeginClosing`, `FiscalYears:Close`, `FiscalYears:Lock`, and
+`FiscalYears:Reopen`. The server is authoritative;
 clients repeat the rules for discoverability and fail closed when claims are absent.
 Read-only subscription mode suppresses every mutation while preserving view access.
 
@@ -158,6 +160,14 @@ Step 01 revalidation is **Active — pending live authenticated verification**. 
 automated checks below prove source contracts and focused behavior; they do not
 mark this vertical slice `Verified` or authorize Step 02 Currency.
 
+The executable user journey is
+`documentation/plans/business/accounting-core-gl/manual-acceptance/FISCAL-YEARS-STEP-01.md`.
+It covers full-access, view-only, denied, read-only and second-company identities;
+Web and actual-device Mobile; bilingual data and EN/AR RTL/LTR; lifecycle,
+reporting, validation, concurrency, offline behavior, UI-pattern parity and cleanup.
+Only the user's explicit acceptance after completing that scenario authorizes
+Phase 06 `Verified`, Step 01 closure, and activation of Step 02.
+
 - API feature tests include domain/lifecycle generation, company isolation,
   archive RowVersion dispatch, non-deleted period-count projection,
   restore/idempotency, and controller CQRS/route contracts.
@@ -185,6 +195,11 @@ it remains company-scoped and uses tenant Reporting entitlement. Import, Export,
 and charts are Excluded from this feature on both platforms; no placeholder UI,
 transport, or future Workforce Budget dependency is recorded here. Reopen is a
 Required single-record lifecycle action on API, Web, and Mobile.
+
+The implementation agent sends the detailed scenario and any versioned retest;
+the user runs or supervises it and supplies the transition decision. A partial run,
+an unavailable environment, or a rejected case keeps Fiscal Years Active and does
+not advance the roadmap.
 
 The next implementation slice is Workforce Plans and Workforce Budgets, followed
 by Position Envelopes and Staffing Requests. Only after approval and reservation

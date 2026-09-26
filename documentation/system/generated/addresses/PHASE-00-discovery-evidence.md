@@ -71,8 +71,8 @@ scenarios or an explicit `N/A` with a reason.
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| addresses-master | 1 | `75e97dda56319742c7d1cc6ff3146ab382fa198888f10d13a884f7dc6d767c50` |
-| addresses-master | 6 | `19c4ab44c9e75e9340c1e9ebeec762e08717bb055c6e9a66970818279156231c` |
-| addresses-api | 1 | `139bbbb1b2af77d76955730e1256564b162db1cdf96c8c8f93cc78f2e9fefe63` |
+| addresses-master | 1 | `3292cc498e6f0905f16ff9a4dbfcf6e78473a30c4317d46a17fd61f78b072fc6` |
+| addresses-master | 6 | `a4ce640dfdf62014247e0c8164fbed604464f1e93fefa890ac894ad6ecc6d201` |
+| addresses-api | 1 | `107087198cae22612773795ed2dfdede5e374a8dc3d4211441d1878d6b5c9e9a` |
 | addresses-web | 1 | `eb5da2402bb94c969e2b61f85de4e7a52a394b1fc808a321e929a3257d8d1b3b` |
 | addresses-mobile | 1 | `76ed40a2410aebdffd449bbc75169f0a943b541e69dd029a0029fa2fee3abf35` |

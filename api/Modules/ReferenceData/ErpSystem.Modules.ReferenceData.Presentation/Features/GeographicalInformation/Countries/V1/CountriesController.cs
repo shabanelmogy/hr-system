@@ -155,7 +155,7 @@ public sealed class CountriesController(ISender sender) : ControllerBase
 
     /// <summary>Archives one active country.</summary>
     [HttpDelete("{id:int}")]
-    [HasPermission(ReferenceDataPermissions.DeleteCountries)]
+    [HasPermission(ReferenceDataPermissions.ArchiveCountries)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -171,7 +171,7 @@ public sealed class CountriesController(ISender sender) : ControllerBase
 
     /// <summary>Atomically archives up to 100 countries.</summary>
     [HttpPost("bulk-archive")]
-    [HasPermission(ReferenceDataPermissions.DeleteCountries)]
+    [HasPermission(ReferenceDataPermissions.ArchiveCountries)]
     [ProducesResponseType(typeof(BulkArchiveCountriesResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -189,7 +189,7 @@ public sealed class CountriesController(ISender sender) : ControllerBase
 
     /// <summary>Restores one archived country.</summary>
     [HttpPost("{id:int}/restore")]
-    [HasPermission(ReferenceDataPermissions.DeleteCountries)]
+    [HasPermission(ReferenceDataPermissions.RestoreCountries)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

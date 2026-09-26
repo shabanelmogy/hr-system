@@ -63,7 +63,8 @@ jest.mock('@/src/platform/auth', () => ({
   permissions: {
     CreateCountries: 'Countries:Create',
     EditCountries: 'Countries:Edit',
-    DeleteCountries: 'Countries:Delete',
+    ArchiveCountries: 'Countries:Archive',
+    RestoreCountries: 'Countries:Restore',
     ViewCrystalReports: 'CrystalReports:View',
   },
   useAuthorization: ({ requiredPermissions }: { requiredPermissions: string[] }) => ({
@@ -159,8 +160,8 @@ jest.mock('../components/CountryCard', () => {
   const React = require('react');
   const { Pressable, Text, View } = require('react-native');
   return ({
-  CountryCard: ({ canDelete, canEdit, country, onArchive, onEdit, onToggleSelection, onView }: {
-    canDelete: boolean;
+  CountryCard: ({ canArchive, canEdit, country, onArchive, onEdit, onToggleSelection, onView }: {
+    canArchive: boolean;
     canEdit: boolean;
     country: Country;
     onArchive: (country: Country) => void;
@@ -171,7 +172,7 @@ jest.mock('../components/CountryCard', () => {
     <View>
       <Pressable onPress={() => onView(country)} testID={`view-${country.id}`}><Text>view</Text></Pressable>
       {canEdit ? <Pressable onPress={() => onEdit(country)} testID={`edit-${country.id}`}><Text>edit</Text></Pressable> : null}
-      {canDelete ? <Pressable onPress={() => onArchive(country)} testID={`archive-${country.id}`}><Text>archive</Text></Pressable> : null}
+      {canArchive ? <Pressable onPress={() => onArchive(country)} testID={`archive-${country.id}`}><Text>archive</Text></Pressable> : null}
       <Pressable onPress={() => onToggleSelection(country)} testID={`select-${country.id}`}><Text>select</Text></Pressable>
     </View>
     ),
@@ -232,7 +233,7 @@ describe('CountriesScreen', () => {
     mockAllowedPermissions.clear();
     mockAllowedPermissions.add(permissions.CreateCountries);
     mockAllowedPermissions.add(permissions.EditCountries);
-    mockAllowedPermissions.add(permissions.DeleteCountries);
+    mockAllowedPermissions.add(permissions.ArchiveCountries);
     mockAllowedPermissions.add(permissions.ViewCrystalReports);
     mockUseCountries.mockReturnValue({
       data: {

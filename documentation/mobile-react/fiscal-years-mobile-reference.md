@@ -102,3 +102,12 @@ Required. Fiscal Year Report is Required through the shared managed Crystal
 component with entity key `fiscalyears`; the Reporting module/catalog owns report
 rendering. Chart and bulk lifecycle are Excluded; Import and Export remain
 Excluded with no placeholder route or control.
+
+The required manual device evidence is cases `M-01` through `M-05`, the applicable
+security cases, bilingual/RTL coverage, and the Mobile five-point UI audit in
+`documentation/plans/business/accounting-core-gl/manual-acceptance/FISCAL-YEARS-STEP-01.md`.
+It must run on an actual device and record device/OS/build, light/dark where
+supported, portrait/landscape, keyboard/safe-area/dirty-back behavior, online-only
+financial mutation, conflict reload, permissions, current-company scope, and the
+Table/Cards/Report views. Emulator/source evidence alone is insufficient. The step
+remains Active until the user explicitly accepts the combined Web/device result.

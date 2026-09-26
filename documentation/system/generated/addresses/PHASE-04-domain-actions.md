@@ -56,10 +56,10 @@ invalidation, success test, and failure test. Use `N/A` only with a reason.
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| addresses-master | 2 | `f6905cf3ebdfb61f3dedafe60d90b6278bc63362788cb616cacad7e5510e93a4` |
+| addresses-master | 2 | `53e8699338077278bbcec154b5c31193c1035428a90a19561abac3dfd70a26cf` |
 | addresses-master | 4 | `561bbb66409a25f2f56fae62857a227d206afceac4c0a2ddf9fc35d01e4e06ba` |
 | addresses-master | 5 | `be429c9bb75de8fc649c7097750eb74710ba53166dd392c1cfc1260915c8fd41` |
-| addresses-api | 3 | `bfd1fff73dcec9a06d17661c141f21582853d046dab16d7f7ad5902273f90a98` |
+| addresses-api | 3 | `de75512bfb5ad408ab3f9e8e2b3eb50a120baef7912c7f9cabd6945c0f3a2e71` |
 | addresses-api | 5 | `9c08be5e148e21abd8ad8cd698da361d97baa34067cda08b362765f9892464e3` |
 | addresses-api | 6 | `e9346d11daa0f11fd4c864526ca6669d44b6f0e23a88a9afccf8bb18d3d295e4` |
 | addresses-web | 2 | `42ff61aee802dc6e2f1dda59633bde69d0c8d3e85cfbaecabe927b68200abbdb` |

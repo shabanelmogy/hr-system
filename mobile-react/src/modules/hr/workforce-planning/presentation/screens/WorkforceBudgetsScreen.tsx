@@ -23,7 +23,7 @@ const lifecycleKind = (item: WorkforceBudget): PendingKind => item.status === 2 
 export function WorkforceBudgetsScreen() {
   const { t, i18n } = useTranslation(); const { theme } = useAppTheme(); const { isReadOnly, notifyBlockedAction } = useAppReadOnly();
   const { allowed: viewAllowed } = useAuthorization({ requiredPermissions: [permissions.ViewWorkforceBudgets] });
-  const { allowed: manageAllowed } = useAuthorization({ requiredPermissions: [permissions.ManageWorkforceBudgets] });
+  const { allowed: manageAllowed } = useAuthorization({ requiredPermissions: [permissions.EditWorkforceBudgets] });
   const { allowed: approveAllowed } = useAuthorization({ allowedRoles: [appRoles.admin] });
   const canManage = manageAllowed && !isReadOnly; const canApprove = approveAllowed && !isReadOnly;
   const list = useServerListState<WorkforceBudgetPageQuery['sortBy'], WorkforceBudgetFilters>({ initialFilters, initialPageSize: 5, initialSort: { columnId: 'createdOn', direction: 'descending' } });

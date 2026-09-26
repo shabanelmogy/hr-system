@@ -58,7 +58,7 @@
 | D-E02 | List and lifecycle rules are feature-owned | `Application/.../Districts/Queries/DistrictQueries.cs`, `Commands/DistrictCommands.cs` |
 | D-E03 | Persistence/audit/realtime are post-commit | `Infrastructure/.../Districts/Persistence/DistrictManagementStores.cs`, `Jobs/DistrictManagementChangedJob.cs` |
 | D-E04 | Browser uses server list and approved views | `web-next/.../districts/hooks/useDistrictGridLogic.ts`, `components/DistrictsMultiView.tsx` |
-| D-E05 | Mobile has a direct guarded route and Zod boundary | `mobile-react/app/(main)/basic-data/geographical-information/districts.tsx`, `src/modules/hr/basic-data/districts` |
+| D-E05 | Mobile has a direct guarded route and Zod boundary | `mobile-react/app/(main)/basic-data/geographical-information/districts.tsx`, `src/modules/reference-data/geography/districts` |
 | D-E06 | API contract/route/validator/mapping tests exist | `api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Tests/DistrictCqrsArchitectureTests.cs` |
 | D-E07 | Atomic District bulk-create behavior and persistence conflict closure | `api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Tests/DistrictBulkCreateHandlerTests.cs` |
 | D-E08 | Web import parser/lookup/duplicate/body behavior | `web-next/.../districts/components/import-data`, `services/districtService.test.ts` |
@@ -91,7 +91,7 @@ Districts is below State and is guarded by Address dependencies. Its import reso
 | Web focused test | `vitest run districtService.test.ts districtImport.test.ts districtImportDuplicates.test.ts --pool=forks --maxWorkers=1` | Passed: 3 files, 12 tests |
 | Web architecture | `npm run check:architecture` | 4 inherited cross-feature forbidden imports and 1 shared forms/dialogs cycle; no Districts finding |
 | Mobile full gate | `npm.cmd run check` | Passed: typecheck, full lint, architecture, 31 suites and 93 tests |
-| Mobile focused tests | `jest src/modules/hr/basic-data/districts --runInBand --forceExit` | Passed: 4 suites, 12 tests; force-exit notice remains the inherited focused-run behavior |
+| Mobile focused tests | `jest src/modules/reference-data/geography/districts --runInBand --forceExit` | Passed: 4 suites, 12 tests; force-exit notice remains the inherited focused-run behavior |
 | Documentation | Generation and `-Check` | Passed: 21 recipes |
 | Markdown local links | Repository documentation link scan | Passed: 123 Markdown files |
 | Diff hygiene | `git diff --check` | Passed |

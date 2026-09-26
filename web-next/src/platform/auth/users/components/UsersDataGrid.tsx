@@ -57,7 +57,11 @@ interface UsersDataGridProps {
   lastEditedId?: string | number | null;
   canCreate: boolean;
   canEdit: boolean;
-  canDelete: boolean;
+  canArchive: boolean;
+  canRestore: boolean;
+  canSetStatus: boolean;
+  canUnlock: boolean;
+  canRevoke: boolean;
   page: number;
   pageSize: number;
   totalCount: number;
@@ -90,7 +94,11 @@ const UsersDataGrid = ({
   lastEditedId,
   canCreate,
   canEdit,
-  canDelete,
+  canArchive,
+  canRestore,
+  canSetStatus,
+  canUnlock,
+  canRevoke,
   page,
   pageSize,
   totalCount,
@@ -205,7 +213,7 @@ const UsersDataGrid = ({
       ];
 
       if (isArchived) {
-        if (canDelete && !isOwnUser) {
+        if (canRestore && !isOwnUser) {
           actions.push(
             <Tooltip title={t("actions.restore")} key={`restore-${params.row.id}`} arrow>
               <GridActionsCellItem
@@ -219,7 +227,7 @@ const UsersDataGrid = ({
         return actions;
       }
 
-      if (canDelete && !isOwnUser) {
+      if (canArchive && !isOwnUser) {
         actions.push(
           <Tooltip title={t("actions.archive")} key={`archive-${params.row.id}`} arrow>
             <GridActionsCellItem
@@ -245,7 +253,7 @@ const UsersDataGrid = ({
       );
 
       // Enable/Disable toggle button - changes based on current status
-      if (isDisabled) {
+      if (canSetStatus && isDisabled) {
         actions.push(
           <Tooltip
             title={t("actions.enable")}
@@ -261,7 +269,7 @@ const UsersDataGrid = ({
             />
           </Tooltip>
         );
-      } else {
+      } else if (canSetStatus) {
         actions.push(
           <Tooltip
             title={t("actions.disable")}
@@ -280,7 +288,7 @@ const UsersDataGrid = ({
       }
 
       // Unlock button - only show if user is locked AND not disabled
-      if (isLocked && !isDisabled) {
+      if (canUnlock && isLocked && !isDisabled) {
         actions.push(
           <Tooltip
             title={t("actions.unlock")}
@@ -299,7 +307,7 @@ const UsersDataGrid = ({
       }
 
       // Revoke button - always available (you can add conditions if needed)
-      actions.push(
+      if (canRevoke) actions.push(
         <Tooltip
           title={t("users.revoked")}
           key={`revoke-${params.row.id}`}
@@ -318,7 +326,11 @@ const UsersDataGrid = ({
       return actions;
     },
     [
-      canDelete,
+      canArchive,
+      canRestore,
+      canSetStatus,
+      canUnlock,
+      canRevoke,
       canEdit,
       currentUser?.userId,
       onArchive,

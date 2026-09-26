@@ -444,13 +444,13 @@ public sealed class CurrencyOwnershipTests
         var actions = typeof(CurrenciesController).GetMethods(BindingFlags.Instance | BindingFlags.Public)
             .Where(method => method.GetCustomAttributes<HttpMethodAttribute>().Any())
             .ToDictionary(method => method.Name);
-        Assert.Equal(AccountingPermissions.ViewAccountingSetup, actions[nameof(CurrenciesController.GetPage)].GetCustomAttribute<HasPermissionAttribute>()?.Policy);
-        Assert.Equal(AccountingPermissions.ViewAccountingSetup, actions[nameof(CurrenciesController.GetLookup)].GetCustomAttribute<HasPermissionAttribute>()?.Policy);
-        Assert.Equal(AccountingPermissions.ViewAccountingSetup, actions[nameof(CurrenciesController.GetById)].GetCustomAttribute<HasPermissionAttribute>()?.Policy);
-        Assert.Equal(AccountingPermissions.ManageAccountingSetup, actions[nameof(CurrenciesController.Create)].GetCustomAttribute<HasPermissionAttribute>()?.Policy);
-        Assert.Equal(AccountingPermissions.ManageAccountingSetup, actions[nameof(CurrenciesController.Update)].GetCustomAttribute<HasPermissionAttribute>()?.Policy);
-        Assert.Equal(AccountingPermissions.ManageAccountingSetup, actions[nameof(CurrenciesController.Archive)].GetCustomAttribute<HasPermissionAttribute>()?.Policy);
-        Assert.Equal(AccountingPermissions.ManageAccountingSetup, actions[nameof(CurrenciesController.Restore)].GetCustomAttribute<HasPermissionAttribute>()?.Policy);
+        Assert.Equal(AccountingPermissions.ViewCurrencies, actions[nameof(CurrenciesController.GetPage)].GetCustomAttribute<HasPermissionAttribute>()?.Policy);
+        Assert.Equal(AccountingPermissions.ViewCurrencies, actions[nameof(CurrenciesController.GetLookup)].GetCustomAttribute<HasPermissionAttribute>()?.Policy);
+        Assert.Equal(AccountingPermissions.ViewCurrencies, actions[nameof(CurrenciesController.GetById)].GetCustomAttribute<HasPermissionAttribute>()?.Policy);
+        Assert.Equal(AccountingPermissions.CreateCurrencies, actions[nameof(CurrenciesController.Create)].GetCustomAttribute<HasPermissionAttribute>()?.Policy);
+        Assert.Equal(AccountingPermissions.EditCurrencies, actions[nameof(CurrenciesController.Update)].GetCustomAttribute<HasPermissionAttribute>()?.Policy);
+        Assert.Equal(AccountingPermissions.ArchiveCurrencies, actions[nameof(CurrenciesController.Archive)].GetCustomAttribute<HasPermissionAttribute>()?.Policy);
+        Assert.Equal(AccountingPermissions.RestoreCurrencies, actions[nameof(CurrenciesController.Restore)].GetCustomAttribute<HasPermissionAttribute>()?.Policy);
 
         Assert.Collection(
             sender.Requests,

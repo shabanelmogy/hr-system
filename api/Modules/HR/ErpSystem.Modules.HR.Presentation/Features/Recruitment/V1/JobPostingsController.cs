@@ -42,7 +42,7 @@ public sealed class JobPostingsController(ISender sender) : ControllerBase
     }
 
     [HttpPost]
-    [HasPermission(HrPermissions.ManageJobPostings)]
+    [HasPermission(HrPermissions.CreateJobPostings)]
     [ProducesResponseType(typeof(JobPostingDto), StatusCodes.Status201Created)]
     public async Task<IActionResult> Create([FromBody] JobPostingMutation mutation, CancellationToken cancellationToken)
     {
@@ -53,7 +53,7 @@ public sealed class JobPostingsController(ISender sender) : ControllerBase
     }
 
     [HttpPut("{id:int}")]
-    [HasPermission(HrPermissions.ManageJobPostings)]
+    [HasPermission(HrPermissions.EditJobPostings)]
     [ProducesResponseType(typeof(JobPostingDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> Update(int id, [FromBody] JobPostingMutation mutation, CancellationToken cancellationToken)
     {
@@ -62,7 +62,7 @@ public sealed class JobPostingsController(ISender sender) : ControllerBase
     }
 
     [HttpPost("{id:int}/publish")]
-    [HasPermission(HrPermissions.ManageJobPostings)]
+    [HasPermission(HrPermissions.PublishJobPostings)]
     [ProducesResponseType(typeof(JobPostingDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> Publish(int id, CancellationToken cancellationToken)
     {
@@ -71,7 +71,7 @@ public sealed class JobPostingsController(ISender sender) : ControllerBase
     }
 
     [HttpPost("{id:int}/close")]
-    [HasPermission(HrPermissions.ManageJobPostings)]
+    [HasPermission(HrPermissions.CloseJobPostings)]
     [ProducesResponseType(typeof(JobPostingDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> Close(int id, CancellationToken cancellationToken)
     {

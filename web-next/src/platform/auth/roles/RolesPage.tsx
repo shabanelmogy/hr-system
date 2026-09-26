@@ -23,6 +23,7 @@ const RolesPage = () => {
     canCreate,
     canEdit,
     canDelete,
+    canEditPermissions,
     apiRef,
     onEdit,
     onView,
@@ -62,6 +63,7 @@ const RolesPage = () => {
           canCreate={canCreate}
           canEdit={canEdit}
           canDelete={canDelete}
+          canEditPermissions={canEditPermissions}
           lastAddedId={lastAddedId}
           lastEditedId={lastEditedId}
           lastDeletedIndex={lastDeletedIndex}

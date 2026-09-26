@@ -41,7 +41,10 @@ Failure => `Draft`.
 - [ ] Invariants independent from UI/API.
 - [ ] Rules matrix covers every Required action.
 - [ ] Edge-case matrix fully decided or reasoned N/A.
-- [ ] Permissions/actors defined.
+- [ ] Actors and permissions are defined through the mandatory Permission Action
+  Matrix in `../system/PERMISSION_MODEL.md`: every endpoint and Web/Mobile action
+  uses an exact permission; Create/Edit/Archive/Restore/Delete and lifecycle
+  operations are independently decided; no runtime `Manage` claim remains.
 - [ ] Audit/history requirements defined.
 - [ ] No blocking business question.
 
@@ -80,6 +83,11 @@ Passing => `Architecture Ready`.
       ID, route, job, data/interaction shape, Pattern ID, exact reviewed source
       path, platform status, R/D/E views, states, offline/mock policy, scope,
       responsive/RTL/accessibility, and deviations.
+- [ ] Each UI Pattern Gate row is linked to the Permission Action Matrix and states
+      forbidden/read-only behavior for both the visible control and direct callback.
+- [ ] Every human-facing permission name and description has matching Arabic and
+      English ownership while the technical `Resource:Action` identifier remains
+      stable English.
 - [ ] No `Candidate` pattern is used for runtime UI; a new pattern is registered
       and reviewed in `SCREEN_PATTERN_CATALOG.md` before implementation.
 - [ ] The feature contract records the vertical order API → Web → Mobile →

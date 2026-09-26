@@ -2,6 +2,10 @@ import { Avatar, Box, Checkbox, TableCell, TableRow, Tooltip, Typography } from 
 import { alpha, type Theme } from "@mui/material/styles";
 import type { RoleClaimsFormData } from "../../utils/validation";
 import { useTranslation } from "react-i18next";
+import {
+  getPermissionActionLabel,
+  getPermissionResourceLabel,
+} from "../../utils/permissionLabels";
 
 type RolePermissionRowProps = {
   module: string;
@@ -21,6 +25,7 @@ export default function RolePermissionRow({
   readOnly,
 }: RolePermissionRowProps) {
   const { t } = useTranslation();
+  const resourceLabel = getPermissionResourceLabel(module, t);
   return (
     <TableRow
       hover
@@ -42,7 +47,7 @@ export default function RolePermissionRow({
           >
             {module.substring(0, 2).toUpperCase()}
           </Avatar>
-          <Typography variant="body1" sx={{ fontWeight: "medium" }}>{module}</Typography>
+          <Typography variant="body1" sx={{ fontWeight: "medium" }}>{resourceLabel}</Typography>
         </Box>
       </TableCell>
       {actions.map((type) => {
@@ -54,7 +59,10 @@ export default function RolePermissionRow({
         return (
           <TableCell key={`${module}-${type}`} align="center">
             {claim && (
-              <Tooltip title={t("roles.permissionFor", { type, module })}>
+              <Tooltip title={t("roles.permissionFor", {
+                type: getPermissionActionLabel(type, t),
+                module: resourceLabel,
+              })}>
                 <Box sx={{ display: "flex", justifyContent: "center" }}>
                   <input type="hidden" value={claim.displayValue} />
                   <Checkbox

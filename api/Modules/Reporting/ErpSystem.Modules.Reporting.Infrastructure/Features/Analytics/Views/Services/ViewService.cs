@@ -64,7 +64,7 @@ namespace ErpSystem.Modules.Reporting.Infrastructure.Features.Analytics.Views.Se
     {
         public void DispatchChange(string action, string viewName) =>
             realtimeChanges.Dispatch(new RealtimeChangeRequest(
-                RealtimeAudience.ForPermission(ReportingPermissions.ManageDatabaseViews),
+                RealtimeAudience.ForPermission(ReportingPermissions.ViewDatabaseViews),
                 "database-views",
                 action,
                 viewName,

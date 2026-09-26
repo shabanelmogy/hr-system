@@ -69,8 +69,8 @@ profile and do not leave an unreachable route, component, or translation surface
 | ledger-setup-currency-master | 4 | `4ed34b720eff68b1e8efaa1b9a8901f2adf75224a463590905ce817d806a9b94` |
 | ledger-setup-currency-master | 6 | `dbc146242b859fa8b147c7cb15b5c30e6a51b45d89c43fa7c08ee1df7b0d5e4a` |
 | ledger-setup-currency-master | 7 | `e5857e4099341e28701b97b3b30a9b9301a3b61d5c5610c0d1032a500affffcd` |
-| ledger-setup-currency-mobile | 1 | `e3e2be711c26e4e2bb5bddbfc4c3009724a9ccd15c5323e41c0ecfde5af1fe79` |
-| ledger-setup-currency-mobile | 2 | `2bc4e8c119b94d002e9aa6ae03b5f31d6d76e3bb60f11ada7371a9efa39b9ce2` |
+| ledger-setup-currency-mobile | 1 | `badd004336f4c30b5c34155cd007cdb5bb38a5170038daae5b957522dcb51256` |
+| ledger-setup-currency-mobile | 2 | `f67cb487460edd4a9affd9e00e819af4876785febf8dd4b4b5ce64742425653d` |
 | ledger-setup-currency-mobile | 3 | `1df1220d4c547a3a231f5059eda66344602e613f2f1107d190d06bc29f21dbeb` |
 | ledger-setup-currency-mobile | 4 | `adc55449cf2e4dc759fa1791a72b58365212feca0da68d11efc34338adef097d` |
 | ledger-setup-currency-mobile | 5 | `4efbc1d2af4001708708aac0d972dca8364e041d2b69231835f8527df58d283e` |

@@ -279,10 +279,10 @@ function policy(pathname) {
   const anyOf = (requirements) => ({ kind: 'anyOf', anyOf: requirements });
   if (pathname === '/super-admin-dashboard' || pathname === '/tenant-management' || pathname === '/tenant-admin-management') return role(['superAdmin']);
   if (pathname.startsWith('/administration/role-permissions')) return permission(['ViewRoles']);
-  if (pathname === '/administration/offline-operations') return permission(['ManageOfflineOperations']);
+  if (pathname === '/administration/offline-operations') return permission(['ViewOfflineOperations']);
   if (pathname === '/administration/roles') return permission(['ViewRoles']);
   if (pathname === '/administration/invitations') return permission(['ViewUsers']);
-  if (pathname === '/administration') return anyOf([{ permissions: ['ViewUsers'] }, { permissions: ['ViewRoles'] }, { permissions: ['ManageOfflineOperations'] }]);
+  if (pathname === '/administration') return anyOf([{ permissions: ['ViewUsers'] }, { permissions: ['ViewRoles'] }, { permissions: ['ViewOfflineOperations'] }]);
   if (/^\/basic-data\/geographical-information\/(countries|states|districts)$/.test(pathname)) return role(['superAdmin']);
   if (pathname === '/basic-data/geographical-information/address-types') return permission(['ViewAddressTypes']);
   if (pathname === '/basic-data/organizational-structure/geographic-scope') return permission(['ViewCompanyGeographicScope']);
@@ -306,18 +306,26 @@ function policy(pathname) {
   if (pathname === '/finance/ledger-setup/fiscal-years') return permission(['ViewFiscalYears']);
   if (pathname === '/finance/ledger-setup') return anyOf([
     { permissions: ['ViewFiscalYears'] },
-    { permissions: ['ViewAccountingSetup'] },
+    { permissions: ['ViewAccountingSettings'] },
+    { permissions: ['ViewCurrencies'] },
     { permissions: ['ViewAccounts'] },
-    { permissions: ['ViewDimensions'] },
+    { permissions: ['ViewDimensionDefinitions'] },
   ]);
   if (pathname.startsWith('/finance/ledger-setup/')) {
-    if (pathname === '/finance/ledger-setup/accounts' || pathname === '/finance/ledger-setup/hierarchy-levels') return permission(['ViewAccounts']);
-    if (pathname === '/finance/ledger-setup/dimensions') return permission(['ViewDimensions']);
-    return permission(['ViewAccountingSetup']);
+    if (pathname === '/finance/ledger-setup/accounts') return permission(['ViewAccounts']);
+    if (pathname === '/finance/ledger-setup/hierarchy-levels') return permission(['ViewAccountHierarchyLevels']);
+    if (pathname === '/finance/ledger-setup/dimensions') return permission(['ViewDimensionDefinitions']);
+    if (pathname === '/finance/ledger-setup/currencies') return permission(['ViewCurrencies']);
+    if (pathname === '/finance/ledger-setup/books') return permission(['ViewBooks']);
+    if (pathname === '/finance/ledger-setup/journals') return permission(['ViewJournalDefinitions']);
+    if (pathname === '/finance/ledger-setup/exchange-rates') return permission(['ViewExchangeRateTypes']);
+    if (pathname === '/finance/ledger-setup/account-determination') return permission(['ViewAccountMappings']);
+    return permission(['ViewAccountingSettings']);
   }
   if (pathname === '/finance') return anyOf([
     { permissions: ['ViewFiscalYears'] },
-    { permissions: ['ViewAccountingSetup'] },
+    { permissions: ['ViewAccountingSettings'] },
+    { permissions: ['ViewCurrencies'] },
   ]);
   const workforce = new Map([['/workforce-planning/plans', 'ViewWorkforcePlans'], ['/workforce-planning/budgets', 'ViewWorkforceBudgets'], ['/workforce-planning/position-envelopes', 'ViewPositionEnvelopes'], ['/workforce-planning/staffing-requests', 'ViewStaffingRequests'], ['/workforce-planning/envelope-amendments', 'ViewEnvelopeAmendments'], ['/workforce-planning/trace', 'ViewWorkforceTrace']]);
   if (workforce.has(pathname)) return permission([workforce.get(pathname)]);
@@ -542,9 +550,9 @@ function targetModuleRequirement(_pathname, currentModule, _profile) {
 function endpointProfile(source) {
   if (source.includes('/core/realtime/')) return { currentOwner: 'Platform/realtime', targetOwner: 'Platform/realtime', scope: 'session/tenant/company', status: 'aligned', permissionSource: 'Platform authenticated realtime policy' };
   if (source.includes('/hr/recruitment/')) return { currentOwner: 'HR/recruitment', targetOwner: 'HR/recruitment', scope: 'tenant/company', status: 'aligned', permissionSource: 'HR API endpoint policy backed by HrPermissions.Recruitment' };
-  if (source.includes('/accounting/ledger-setup/coa-hierarchy/')) return { currentOwner: 'Accounting/ledger-setup', targetOwner: 'Accounting/ledger-setup', scope: 'tenant/company', status: 'aligned', permissionSource: 'Accounting COA hierarchy controllers and AccountingPermissions.ViewAccounts/ManageAccounts' };
-  if (source.includes('/accounting/ledger-setup/')) return { currentOwner: 'Accounting/ledger-setup', targetOwner: 'Accounting/ledger-setup', scope: 'tenant/company', status: 'aligned', permissionSource: 'Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup/ManageAccountingSetup' };
-  if (source.includes('/accounting/currencies/')) return { currentOwner: 'Accounting/ledger-setup', targetOwner: 'Accounting/ledger-setup', scope: 'tenant/company', status: 'aligned', permissionSource: 'Accounting CurrenciesController uses AccountingSetup:View for GET reads and AccountingSetup:Manage for mutations' };
+  if (source.includes('/accounting/ledger-setup/coa-hierarchy/')) return { currentOwner: 'Accounting/ledger-setup', targetOwner: 'Accounting/ledger-setup', scope: 'tenant/company', status: 'aligned', permissionSource: 'Accounting COA hierarchy controllers use exact View/Create/Edit/Archive/Restore permissions per resource' };
+  if (source.includes('/accounting/ledger-setup/')) return { currentOwner: 'Accounting/ledger-setup', targetOwner: 'Accounting/ledger-setup', scope: 'tenant/company', status: 'aligned', permissionSource: 'Accounting Ledger Setup controllers use exact resource-and-action AccountingPermissions' };
+  if (source.includes('/accounting/currencies/')) return { currentOwner: 'Accounting/ledger-setup', targetOwner: 'Accounting/ledger-setup', scope: 'tenant/company', status: 'aligned', permissionSource: 'Accounting CurrenciesController uses Currencies:View/Create/Edit/Archive/Restore' };
   if (source.includes('/accounting/fiscal-years/')) return { currentOwner: 'Accounting/fiscal-years', targetOwner: 'Accounting/fiscal-years', scope: 'tenant/company', status: 'aligned', permissionSource: 'Accounting FiscalYearsController and AccountingPermissions.FiscalYears' };
   if (source.includes('/reference-data/addresses/address-types/')) return { currentOwner: 'ReferenceData/addresses', targetOwner: 'ReferenceData/addresses', scope: 'tenant/company', status: 'aligned', permissionSource: 'ReferenceData AddressTypesController and ReferenceDataPermissions.TenantReferenceData' };
   if (source.includes('/reference-data/geography/countries/') || source.includes('/reference-data/geography/states/') || source.includes('/reference-data/geography/districts/')) return { currentOwner: 'ReferenceData/geography', targetOwner: 'ReferenceData/geography', scope: 'platform-global', status: 'aligned', permissionSource: 'ReferenceData geography controllers and ReferenceDataPermissions.GlobalGeography' };
@@ -568,22 +576,22 @@ function operationPermissionAuthority(source, operation, fallback) {
   if (source.includes('/accounting/ledger-setup/coa-hierarchy/')) {
     return operation.verb.includes('GET')
       ? 'Accounting COA hierarchy controllers and AccountingPermissions.ViewAccounts (Accounts:View)'
-      : 'Accounting COA hierarchy controllers and AccountingPermissions.ManageAccounts (Accounts:Manage)';
+      : 'Accounting COA hierarchy controllers use the exact resource action (Create/Edit/Archive/Restore)';
   }
   if (source.includes('/accounting/ledger-setup/')) {
     if (source.includes('/dimensions/')) {
       return operation.verb.includes('GET')
-        ? 'Accounting Ledger Setup controllers and AccountingPermissions.ViewDimensions (Dimensions:View)'
-        : 'Accounting Ledger Setup controllers and AccountingPermissions.ManageDimensions (Dimensions:Manage)';
+        ? 'Accounting Ledger Setup controllers use the exact dimension resource View permission'
+        : 'Accounting Ledger Setup controllers use the exact dimension resource mutation permission';
     }
     return operation.verb.includes('GET')
-      ? 'Accounting Ledger Setup controllers and AccountingPermissions.ViewAccountingSetup (AccountingSetup:View)'
-      : 'Accounting Ledger Setup controllers and AccountingPermissions.ManageAccountingSetup (AccountingSetup:Manage)';
+      ? 'Accounting Ledger Setup controllers use the exact resource View permission'
+      : 'Accounting Ledger Setup controllers use the exact resource mutation permission';
   }
   if (!source.includes('/accounting/currencies/')) return fallback;
   return operation.verb.includes('GET')
-    ? 'Accounting CurrenciesController and AccountingPermissions.ViewAccountingSetup (AccountingSetup:View)'
-    : 'Accounting CurrenciesController and AccountingPermissions.ManageAccountingSetup (AccountingSetup:Manage)';
+    ? 'Accounting CurrenciesController and AccountingPermissions.ViewCurrencies (Currencies:View)'
+    : 'Accounting CurrenciesController uses the exact Currencies mutation permission';
 }
 
 // Keep the matrix exhaustive when a new Expo route is added. Existing entries

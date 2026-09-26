@@ -25,6 +25,16 @@ Accounting-owned `Currency`, `AccountingCompanySettings`,
 
 JournalEntry/JournalLine/PostingReceipt and Month Close runtime are later slices.
 
+Every named master has separate required `NameAr` and `NameEn` in domain state,
+request/response/detail/list contracts, validation, persistence columns and
+search/sort vocabulary where names are searchable: Fiscal Year/Period when named,
+Currency, AccountHierarchyLevel, Account, DimensionDefinition, DimensionValue,
+Book, JournalDefinition, ExchangeRateType and PostingProfile. The API never derives
+one language from the other. `AccountingCompanySettings`, `ExchangeRate`,
+`AccountMapping` and resolve-preview results have no authored business name and
+must not receive fake name columns; projections may return localized referenced
+owner labels without transferring write ownership.
+
 ## 3. Scope, authorization, and permissions
 
 All operations fail closed without current tenant/company context. Request DTOs do
@@ -32,14 +42,15 @@ not contain TenantId/CompanyId.
 
 Slice 1 permissions:
 
-- `Accounts:View`
-- `Accounts:Manage`
-- `Dimensions:View`
-- `Dimensions:Manage`
-- `AccountingSetup:View`
-- `AccountingSetup:Manage`
+- Accounts: `Accounts:View/Create/Edit/Archive/Restore`
+- Hierarchy levels: `AccountHierarchyLevels:View/Create/Edit/Archive/Restore`
+- Dimension definitions: `DimensionDefinitions:View/Create/Edit/Archive/Restore`
+- Dimension values: `DimensionValues:View/Create/Edit/Archive/Restore`
+- Account dimension policies: `AccountDimensionPolicies:View/Edit`
+- Settings: `AccountingSettings:View/Edit`
+- Currency, Book, Journal, Exchange-rate type, Exchange-rate, Account-mapping, and Posting-profile endpoints use their own exact resource/action claim from the canonical permission catalog.
 
-Journal definition setup uses `AccountingSetup:Manage`; Slice 2 lifecycle
+Journal definition mutations use the corresponding `JournalDefinitions:Create/Edit/Archive/Restore` claim; Slice 2 lifecycle
 permissions are not activated merely because their names exist in the master plan.
 
 ## 4. CQRS and HTTP surface
@@ -146,13 +157,22 @@ does not depend on realtime/notifications; those are Deferred for this slice.
 Required API evidence includes domain invariant tests, lifecycle/dependency tests,
 company-isolation tests,
 permission/controller contract tests, CQRS handler tests, migration/model tests,
-Currency migration preservation tests, concurrency/uniqueness tests, account
+clean-baseline Currency ownership tests, bilingual contract/persistence tests,
+concurrency/uniqueness tests, account
 resolution tests, module-definition tests and no-pending-model verification.
 
 Build/test commands and exact counts are recorded in Phase 06, not invented here.
 
 Every new feature/module must complete the generated entity lifecycle matrix in
 `FEATURE-QUALITY-GATE.md`; a successful build alone is not completion evidence.
+
+API evidence also prepares, but never replaces, each step's manual user gate. The
+feature-specific scenario derived from
+`documentation/plans/business/accounting-core-gl/MANUAL_ACCEPTANCE_SCENARIO_TEMPLATE.md`
+must exercise authenticated permission subsets, read-only mode, tenant/company
+isolation, validation/dependency rules, RowVersion conflicts, atomic failure, and
+the exact live data consumed by Web and actual-device Mobile. Phase 06 remains open
+until the user explicitly accepts the combined scenario result.
 
 ## 11. Deferred and excluded API work
 

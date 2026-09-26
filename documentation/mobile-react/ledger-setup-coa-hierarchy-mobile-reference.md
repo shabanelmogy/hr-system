@@ -8,6 +8,11 @@ Own focused Mobile Accounts and Hierarchy Levels workflows under existing Financ
 Ledger Setup routes. Target code uses typed child domain/runtime schemas/repository/
 use-cases/queries; the generic `LedgerSetupRecord` renderer is not the final architecture.
 
+The current v2 Screen Contract selects `P-002` for the stacked/segmented Accounts
+hierarchy and detail, with a secondary P-001 Table, and `P-001` for Hierarchy
+Levels. Both entities require separate `NameAr` and `NameEn` in forms, detail,
+Table/search and valid mock drafts; Cards are required only where contracted.
+
 ## 2. Route and module registration
 
 Keep `/finance/ledger-setup/accounts` and `/finance/ledger-setup/hierarchy-levels`
@@ -52,7 +57,9 @@ CanPost, status and lifecycle. Active/archived discovery and server errors remai
 
 ## 9. Lifecycle and permissions
 
-Reads require `Accounts:View`; mutations require `Accounts:Manage`; app read-only
+Account reads require `Accounts:View`; create, edit, archive, and restore require
+`Accounts:Create`, `Accounts:Edit`, `Accounts:Archive`, and `Accounts:Restore`;
+hierarchy-level operations use the parallel `AccountHierarchyLevels:*` actions; app read-only
 blocks mutation controls. Create/edit/archive/restore wait for server confirmation.
 Duplicate proposal race displays conflict and refetches proposal; it does not silently alter submitted code.
 

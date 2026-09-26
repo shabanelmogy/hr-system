@@ -31,7 +31,9 @@ const useRoleGridLogic = () => {
   const toggleRole = useRoleStore((state) => state.toggleRole);
   const canCreate = !isReadOnly && hasPermission(permissions.CreateRoles);
   const canEdit = !isReadOnly && hasPermission(permissions.EditRoles);
-  const canDelete = !isReadOnly && hasPermission(permissions.DeleteRoles);
+  const canDelete = !isReadOnly && hasPermission(permissions.SetRoleStatus);
+  const canViewPermissions = hasPermission(permissions.ViewRolePermissions);
+  const canEditPermissions = !isReadOnly && hasPermission(permissions.EditRolePermissions);
 
   const create = useCallback(async (formData: RoleFormData): Promise<Role> => {
     const request: CreateRoleRequest = { name: formData.name };
@@ -130,7 +132,8 @@ const useRoleGridLogic = () => {
     onView: crud.onView,
     onDelete: crud.onDelete,
     onAdd: crud.onAdd,
-    onManagePermissions: handleManagePermissions,
+    onManagePermissions: canViewPermissions ? handleManagePermissions : undefined,
+    canEditPermissions,
     onRestore: handleRestore,
     lastAddedId: crud.lastAddedId,
     lastEditedId: crud.lastEditedId,

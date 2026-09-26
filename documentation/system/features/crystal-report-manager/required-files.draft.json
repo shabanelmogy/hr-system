@@ -244,13 +244,13 @@
     {
       "id": "web-countries-report-consumer",
       "layer": "web-next",
-      "path": "web-next/src/modules/hr/basic-data/geographical-information/countries/reports/pages/CountryReportPage.tsx",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/reports/pages/CountryReportPage.tsx",
       "purpose": "Consumes only the manager-owned Countries published catalog and render endpoint"
     },
     {
       "id": "web-states-report-consumer",
       "layer": "web-next",
-      "path": "web-next/src/modules/hr/basic-data/geographical-information/states/reports/pages/StateReportPage.tsx",
+      "path": "web-next/src/modules/reference-data/geographical-information/states/reports/pages/StateReportPage.tsx",
       "purpose": "Consumes only the manager-owned States published catalog and render endpoint"
     },
     {

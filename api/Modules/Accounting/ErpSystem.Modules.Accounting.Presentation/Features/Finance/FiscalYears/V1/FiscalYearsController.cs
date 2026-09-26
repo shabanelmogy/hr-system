@@ -61,7 +61,7 @@ public sealed class FiscalYearsController(ISender sender) : ControllerBase
     }
 
     [HttpDelete("{id:int}")]
-    [HasPermission(AccountingPermissions.DeleteFiscalYears)]
+    [HasPermission(AccountingPermissions.ArchiveFiscalYears)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> Archive(
         [FromRoute] int id,
@@ -73,33 +73,33 @@ public sealed class FiscalYearsController(ISender sender) : ControllerBase
     }
 
     [HttpPost("{id:int}/restore")]
-    [HasPermission(AccountingPermissions.DeleteFiscalYears)]
+    [HasPermission(AccountingPermissions.RestoreFiscalYears)]
     [ProducesResponseType(typeof(FiscalYearDetailResponse), StatusCodes.Status200OK)]
     public Task<IActionResult> Restore([FromRoute] int id, [FromBody] FiscalYearConcurrencyRequest request, CancellationToken cancellationToken) =>
         SendLifecycleResult(new RestoreFiscalYearCommand(id, request.RowVersion), cancellationToken);
 
     [HttpPost("{id:int}/open")]
-    [HasPermission(AccountingPermissions.ManageFiscalYearLifecycle)]
+    [HasPermission(AccountingPermissions.OpenFiscalYears)]
     public Task<IActionResult> Open([FromRoute] int id, [FromBody] FiscalYearConcurrencyRequest request, CancellationToken cancellationToken) =>
         ChangeLifecycle(id, request, FiscalYearLifecycleAction.Open, cancellationToken);
 
     [HttpPost("{id:int}/begin-closing")]
-    [HasPermission(AccountingPermissions.ManageFiscalYearLifecycle)]
+    [HasPermission(AccountingPermissions.BeginClosingFiscalYears)]
     public Task<IActionResult> BeginClosing([FromRoute] int id, [FromBody] FiscalYearConcurrencyRequest request, CancellationToken cancellationToken) =>
         ChangeLifecycle(id, request, FiscalYearLifecycleAction.BeginClosing, cancellationToken);
 
     [HttpPost("{id:int}/close")]
-    [HasPermission(AccountingPermissions.ManageFiscalYearLifecycle)]
+    [HasPermission(AccountingPermissions.CloseFiscalYears)]
     public Task<IActionResult> Close([FromRoute] int id, [FromBody] FiscalYearConcurrencyRequest request, CancellationToken cancellationToken) =>
         ChangeLifecycle(id, request, FiscalYearLifecycleAction.Close, cancellationToken);
 
     [HttpPost("{id:int}/lock")]
-    [HasPermission(AccountingPermissions.ManageFiscalYearLifecycle)]
+    [HasPermission(AccountingPermissions.LockFiscalYears)]
     public Task<IActionResult> Lock([FromRoute] int id, [FromBody] FiscalYearConcurrencyRequest request, CancellationToken cancellationToken) =>
         ChangeLifecycle(id, request, FiscalYearLifecycleAction.Lock, cancellationToken);
 
     [HttpPost("{id:int}/reopen")]
-    [HasPermission(AccountingPermissions.ManageFiscalYearLifecycle)]
+    [HasPermission(AccountingPermissions.ReopenFiscalYears)]
     public Task<IActionResult> Reopen([FromRoute] int id, [FromBody] FiscalYearConcurrencyRequest request, CancellationToken cancellationToken) =>
         ChangeLifecycle(id, request, FiscalYearLifecycleAction.Reopen, cancellationToken);
 

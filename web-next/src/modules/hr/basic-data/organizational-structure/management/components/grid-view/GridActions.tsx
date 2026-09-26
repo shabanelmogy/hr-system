@@ -7,7 +7,8 @@ interface ActionFactoryProps {
   t: (key: string) => string;
   resource: OrganizationalResource;
   canEdit: boolean;
-  canDelete: boolean;
+  canArchive: boolean;
+  canRestore: boolean;
   canApprove: boolean;
   onView: (item: OrganizationalStructureItem) => void;
   onEdit: (item: OrganizationalStructureItem) => void;
@@ -21,7 +22,8 @@ export const makeOrganizationalStructureActions = ({
   t,
   resource,
   canEdit,
-  canDelete,
+  canArchive,
+  canRestore,
   canApprove,
   onView,
   onEdit,
@@ -54,7 +56,7 @@ export const makeOrganizationalStructureActions = ({
         />,
       );
     }
-    if (canDelete) {
+    if (item.isDeleted ? canRestore : canArchive) {
       actions.push(
         <GridActionsCellItem
           key={`lifecycle-${item.id}`}

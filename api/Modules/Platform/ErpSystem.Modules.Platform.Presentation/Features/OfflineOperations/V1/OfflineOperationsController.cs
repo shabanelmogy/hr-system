@@ -17,6 +17,7 @@ public sealed class OfflineOperationsController(ISender sender)
 {
     [HttpGet("policy")]
     [TenantMember]
+    [HasPermission(PlatformPermissions.ViewOfflineOperations)]
     public async Task<ActionResult<OfflineOperationsPolicyResponse>> GetPolicy(
         CancellationToken cancellationToken)
     {
@@ -33,7 +34,7 @@ public sealed class OfflineOperationsController(ISender sender)
 
     [HttpPut("policy")]
     [TenantMember]
-    [HasPermission(PlatformPermissions.ManageOfflineOperations)]
+    [HasPermission(PlatformPermissions.EditOfflineOperations)]
     public async Task<ActionResult<OfflineOperationsPolicyResponse>> UpdatePolicy(
         [FromBody] UpdateOfflineOperationsPolicyRequest request,
         CancellationToken cancellationToken)

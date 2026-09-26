@@ -36,7 +36,7 @@ describe("authorization policy", () => {
   });
 
   it("supports any and all permission modes", () => {
-    const required = [permissions.ViewUsers, permissions.DeleteUsers];
+    const required = [permissions.ViewUsers, permissions.ArchiveUsers];
 
     expect(isAuthorized(session, { permissions: required })).toBe(true);
     expect(

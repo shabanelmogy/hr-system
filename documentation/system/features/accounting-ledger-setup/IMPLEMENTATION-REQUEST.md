@@ -1,7 +1,9 @@
 # Accounting Ledger Setup Implementation Request
 
-Status: **Phase 01 Domain/API and persistence migration implemented; Web/Mobile
-Slice 1 and final Phase 06 verification remain gated (2026-09-21).**
+Status: **Domain/API and clean-baseline evidence exists; typed Currency and COA
+clients also exist. The current v2 execution run starts with Fiscal Years as the
+sole Active step; Currency and every later child remain Queued until the preceding
+step is Closed (reconciled 2026-09-25).**
 
 ## Request metadata
 
@@ -40,17 +42,29 @@ exception.
 
 ### Child execution authority
 
-This umbrella request remains the Slice 1 integration/history contract. Future
-Slice 1 implementation and corrective work is decomposed by
+This umbrella request remains the Slice 1 integration/history contract. Current v2
+Slice 1 revalidation, implementation and corrective work is decomposed by
 `SLICE-01-LEDGER-SETUP-EXECUTION.md` into `1A` Currency, `1B` COA/Hierarchy, `1C`
 Dimensions, `1D` Books/Journals, `1E` Company Settings, `1F` Exchange Rates, `1G`
 Link Accounts, `1H` Posting Profiles and `1V` Integration/Verification.
 
-Work one child at a time by default. Each child owns typed API/transport models,
-feature-owned client data boundaries and an explicit Screen Contract. The current
-generic `LedgerSetupRecord`/resource renderer is implementation evidence to refactor,
-not an architecture to expand. The umbrella remains responsible for cross-child
-integration and the final Phase 06 result.
+Work one step at a time. Fiscal Years is the sole Active v2 step; `1A` is queued
+behind it, `1B` is queued behind `1A`, and the remaining children follow the master
+roadmap. Historical implementation or closure is evidence, not permission to skip
+the current ordered live-revalidation gate. Each child owns typed API/transport
+models, feature-owned client data boundaries and an explicit Screen Contract. The
+current generic `LedgerSetupRecord`/resource renderer is compatibility evidence to
+refactor, not an architecture to expand. The umbrella remains responsible for
+cross-child integration and the final Phase 06 result.
+
+Each human roadmap step also owns a mandatory manual gate. When its automated
+API/Web/Mobile evidence is ready, the implementation agent must send a completed,
+feature-specific copy of
+`documentation/plans/business/accounting-core-gl/MANUAL_ACCEPTANCE_SCENARIO_TEMPLATE.md`.
+The user executes or supervises the Web and actual-device journey and returns an
+explicit decision. Until the decision is `Accepted`, the current step remains
+Active, Phase 06 and documentation closure remain open, and no later child becomes
+Active. A failure produces a versioned, impact-scoped retest scenario after the fix.
 
 ## Approved product decisions translated for execution
 
@@ -71,9 +85,10 @@ integration and the final Phase 06 result.
 | Posting Profiles | Effective/versioned deterministic rules + resolve-preview; zero/ambiguous result blocks |
 | External source types | Expose only when owning Contract/master exists; do not invent BankAccount/PaymentMethod/Cashbox/ContactGroup/PartyRole |
 | Fiscal Years | Reuse existing Accounting authority unchanged |
-| Permissions | Accounts:View, Accounts:Manage, Dimensions:View, Dimensions:Manage; Accounting setup reads/lookups use `AccountingSetup:View`, setup mutations use `AccountingSetup:Manage` |
-| Web | COA tree + setup lists/forms Required; Cards/Import/Bulk Deferred |
-| Mobile | COA tree + setup lists/forms Required; offline writes/import Excluded |
+| Bilingual names | Every named master stores and transports distinct required `NameAr` and `NameEn`; create/edit/view/list/search and local mock drafts preserve both. Non-named settings, relationship and historical rows display localized names from their linked named owners and must not invent duplicate name fields. |
+| Permissions | Every resource uses exact action claims. Accounts, hierarchy levels, dimension definitions/values, currencies, books, journals, and exchange-rate types use `View/Create/Edit/Archive/Restore`; settings and account-dimension policies use `View/Edit`; exchange rates and account mappings use `View/Create/Edit`; posting profiles use `View/Create/Edit/Resolve`. No runtime `Manage` claim. |
+| Web | Apply each child contract's approved UI pattern and per-view capability decisions; no umbrella-wide assumption that every setup screen needs or forbids Cards. Import/Bulk remain outside Slice 1 unless a child explicitly reopens them. |
+| Mobile | Apply each child contract's approved UI pattern and per-view Table/Cards decision; offline writes/import remain Excluded. |
 | Reporting | N/A for Slice 1; GL/TB later |
 | Notifications/realtime | Deferred; correctness never depends on them |
 
@@ -103,6 +118,22 @@ integration and the final Phase 06 result.
 | Mobile hierarchy | `AppHierarchicalTree` | Reuse/extend generically |
 | Mobile lists/forms | `AppListScreen`, `AppDataTable`, `AppForm`, `AppStateView`, confirmations | Reuse |
 | Applied implementation reference | Fiscal Years | Reuse architecture/verification discipline only; no copied business rules |
+
+### Approved UI pattern map
+
+| Capability | Pattern | Required composition |
+| --- | --- | --- |
+| Fiscal Years, Currency and flat setup masters | `P-001` Server-managed Grid/CRUD | Web Grid; Mobile Table and Cards only where the child contract marks Cards Required |
+| Accounts | `P-002` Hierarchical Master/Detail + secondary `P-001` list | Web `SplitTreeView`; Mobile `AppHierarchicalTree`; typed detail and lifecycle forms |
+| Dimension constraints and Link Accounts | `P-006` Scoped Relationship / Mapping Editor | typed owner/context selectors, relationship matrix/list, explicit save and conflict feedback |
+| Company Settings | `P-005` Singleton Settings Editor | one authoritative settings form; no fabricated list or lifecycle |
+| Ledger Setup overview | `P-007` Settings Navigation Hub | permission-filtered child navigation and truthful readiness/feedback states |
+| Posting resolve preview | Feature-specific diagnostic sub-surface under `P-001` | read-only typed request/result panel; never presented as a writable master |
+
+The patterns are approved, not Candidate. Feature pages must compose the shared Web
+and Mobile design-system components named in the child contract. The generic Ledger
+Setup renderer is compatibility evidence only and is not a substitute for any pattern
+above.
 
 ## Mandatory Business Readiness Gate
 
@@ -209,7 +240,12 @@ Web/Mobile:
    Posting Profiles and company accounting settings;
 4. keep HR free of Currency management/persistence and make its currency consumers
    use the Accounting catalog;
-5. permission/read-only/localization/RTL/accessibility/responsive tests.
+5. preserve distinct `NameAr` and `NameEn` through every named-master create, edit,
+   view, list, search and local mock-data journey; linked non-named rows render the
+   localized owner label rather than a fabricated name;
+6. permission/read-only/localization/RTL/accessibility/responsive tests;
+7. implement the approved `P-001`/`P-002`/`P-005`/`P-006`/`P-007` compositions from
+   the child contracts, reusing shared components before any feature-local UI.
 
 Explicitly not implemented in Slice 1: JournalEntry posting workflow, GL/TB,
 PostingReceipt runtime, independent period close, opening balances, AP/AR, bank/
@@ -242,6 +278,12 @@ Child-package completion does not close Slice 1. Package `1V` must reconcile the
 typed child contracts, exact Screen Contracts and cross-package journeys before
 umbrella Phase 06 may record `Verified`.
 
+The same manual gate applies twice where relevant: once to each individual human
+feature step and again to `1V`'s final cross-child setup chain. The Phase 06 record
+must include the completed scenario, sanitized evidence, results by case ID, and the
+user's verbatim acceptance. Historical verification or an agent-authored pass must
+not be substituted for that decision.
+
 The same gate is now generated for every future module by
 `api/scripts/New-ErpModule.ps1`, and solution architecture tests prevent modules
 from replacing host-wide localization registration.
@@ -261,11 +303,16 @@ placeholder and archive-isolation checks PASS; `git diff --check` has no
 non-warning findings.
 
 Phases 01–05 then update the books/manifest with actual runtime paths. Phase 06
-records only `Verified` or `Not Verified`. Customer education starts only after
-`Verified`.
+records only `Verified` or `Not Verified`, and may record `Verified` only after the
+current detailed manual scenario is completed and explicitly accepted by the user.
+Customer education starts only after `Verified`.
 
 Persistence checkpoint recorded on 2026-09-22: the EF-generated
 `20260922091842_InitialAccounting` clean baseline is registered in the required-file
 manifest, has no pending model changes, and passes the clean SQL Server
 apply/idempotency integration test. A development database carrying the superseded
 Accounting migration history must be reset before this baseline is applied.
+
+Current v2 handoff recorded on 2026-09-25: only Fiscal Years is Active. Historical
+Currency and COA evidence remains valid input to their later revalidation, but it
+does not mark those steps Active or permit execution to skip the documented order.

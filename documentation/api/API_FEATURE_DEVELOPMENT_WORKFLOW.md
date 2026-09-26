@@ -153,6 +153,14 @@ If ownership is unclear, resolve it before creating persistence or endpoints.
 
 ## 6. Step 3 — Business Readiness Gate
 
+Before API implementation, complete the Permission Action Matrix defined by
+[`../system/PERMISSION_MODEL.md`](../system/PERMISSION_MODEL.md). Every controller
+action must use the minimum exact `Resource:Action` policy. Runtime `Manage` claims
+and aliases are forbidden; Archive, Restore, irreversible Delete, and named
+lifecycle operations are separate authorization decisions. Update API, Web,
+Mobile, role seeds, tests, contract matrices, and canonical documentation as one
+clean development cut.
+
 This gate is mandatory before implementation. For planned work, convert the
 **approved plan decisions** and existing-system review into three explicit execution
 matrices. A category may be `N/A`,

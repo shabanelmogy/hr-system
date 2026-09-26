@@ -57,7 +57,7 @@ public sealed class PlatformApiKeyCqrsTests
         AssertRoute<HttpGetAttribute>(nameof(ApiKeysController.Get), "{id:int}", PlatformPermissions.ViewApiKeys);
         AssertRoute<HttpPostAttribute>(nameof(ApiKeysController.Add), null, PlatformPermissions.CreateApiKeys);
         AssertRoute<HttpPutAttribute>(nameof(ApiKeysController.Update), null, PlatformPermissions.EditApiKeys);
-        AssertRoute<HttpPostAttribute>(nameof(ApiKeysController.Revoke), "{id:int}/revoke", PlatformPermissions.DeleteApiKeys);
+        AssertRoute<HttpPostAttribute>(nameof(ApiKeysController.Revoke), "{id:int}/revoke", PlatformPermissions.RevokeApiKeys);
     }
 
     [Fact]

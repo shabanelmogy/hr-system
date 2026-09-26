@@ -80,10 +80,10 @@ existing-system review, implementation order, and Definition of Done.
 | --- | ---: | --- |
 | ledger-setup-coa-hierarchy-master | 3 | `492db78014ebbec06f6ea5efcb4834728e7e716f07de1a65b7a8ef54c48f5d96` |
 | ledger-setup-coa-hierarchy-master | 4 | `d98c472a1497ad2d7f2e5d96839ed1a1c7fec16d3f6f3c1a45fd083f190be6d8` |
-| ledger-setup-coa-hierarchy-master | 6 | `aa868978610f3e8a3aa72060935719cf3f657c796f10359642b45cc0c244edc5` |
+| ledger-setup-coa-hierarchy-master | 6 | `0d7dd56699efbb0a91fb1cd3b332bb99aef11aa207c01f444594a47914561f5b` |
 | ledger-setup-coa-hierarchy-api | 1 | `e2c839e0c968b6e7aa5cba8ed03dde1391d48c46c58e89f1c2110a9798469a82` |
 | ledger-setup-coa-hierarchy-api | 2 | `9b18f61a2c3d53a30802a90b5245df4274e22cdd297ace37917a55854bf59a2e` |
-| ledger-setup-coa-hierarchy-api | 3 | `94cf74987d2611cab49018ce2976c7821f6b85c737a97cc584454a39eae82179` |
+| ledger-setup-coa-hierarchy-api | 3 | `9fa56b3a94a83b98391862fe753e80e49a58ba4ae9813a75eacfabe13c7177f8` |
 | ledger-setup-coa-hierarchy-api | 4 | `820065d969a437a2e119ea010024d8c8644c1b5df8e05a7ccc42250bf5da133c` |
 | ledger-setup-coa-hierarchy-api | 5 | `676be8796f9425327bae13950e4576b697bddafc25d70bab9d4e03f86aaca39e` |
 | ledger-setup-coa-hierarchy-api | 6 | `73e68ac89eec57a9104aabd20dae6650a50fe3d1eb96ee4e2005194dfcc3c979` |

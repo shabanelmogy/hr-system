@@ -43,8 +43,13 @@ export default function FiscalYearsPage() {
     canView: authorization.hasPermission(permissions.ViewFiscalYears),
     canCreate: !authorization.isReadOnly && authorization.hasPermission(permissions.CreateFiscalYears),
     canEdit: !authorization.isReadOnly && authorization.hasPermission(permissions.EditFiscalYears),
-    canDelete: !authorization.isReadOnly && authorization.hasPermission(permissions.DeleteFiscalYears),
-    canManageLifecycle: !authorization.isReadOnly && authorization.hasPermission(permissions.ManageFiscalYearLifecycle),
+    canArchive: !authorization.isReadOnly && authorization.hasPermission(permissions.ArchiveFiscalYears),
+    canRestore: !authorization.isReadOnly && authorization.hasPermission(permissions.RestoreFiscalYears),
+    canOpen: !authorization.isReadOnly && authorization.hasPermission(permissions.OpenFiscalYears),
+    canBeginClosing: !authorization.isReadOnly && authorization.hasPermission(permissions.BeginClosingFiscalYears),
+    canClose: !authorization.isReadOnly && authorization.hasPermission(permissions.CloseFiscalYears),
+    canLock: !authorization.isReadOnly && authorization.hasPermission(permissions.LockFiscalYears),
+    canReopen: !authorization.isReadOnly && authorization.hasPermission(permissions.ReopenFiscalYears),
   }), [authorization]);
 
   const fail = async (error: Error, key: string) => {

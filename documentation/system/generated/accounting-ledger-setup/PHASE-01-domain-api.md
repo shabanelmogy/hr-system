@@ -78,16 +78,16 @@ existing-system review, implementation order, and Definition of Done.
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| accounting-ledger-setup-master | 3 | `dca7efc3933fbfad21faec4412e0f5fbce8747b3881d5af2b14bb3210b1cbe45` |
+| accounting-ledger-setup-master | 3 | `0fe7b836f7c51edaace81656d19dd76754de5fefdb1761a92e1bb4de7b632c0c` |
 | accounting-ledger-setup-master | 4 | `53f38a770f4b9c229d5f924b56a2be70be0db253054c0b998b0c21ec8c2ca0ca` |
 | accounting-ledger-setup-master | 6 | `4c420eef9bb4f80999de2e4e4bebf23f4d9b3934746b134431e3cd97be170dbe` |
 | accounting-ledger-setup-api | 1 | `417381f17e083b917b4a8f0873653bde08595ae4044523b1311618eae9b43f9d` |
-| accounting-ledger-setup-api | 2 | `1f325fb026aa8f7ef93c7130b47db404d9326dc15781005e638eda3fd735eef7` |
-| accounting-ledger-setup-api | 3 | `88287551f6ed876900eabe52cd812d8ef367e50b40d219cbafdb71eca854373e` |
+| accounting-ledger-setup-api | 2 | `eaf94e1c570efec496e1ad631cdd1ad9bac1aa0fa29bbdc0c9ec1eab3e87bf3e` |
+| accounting-ledger-setup-api | 3 | `bfa7993abdd991b7d31cab6d49f55fcde6e31e3303d527615bed50fcddfe889a` |
 | accounting-ledger-setup-api | 4 | `abb770b6a3ca192bbfb70ee0ff8e378e818fa8889ce4fde4b1ae090fbce8e99e` |
 | accounting-ledger-setup-api | 5 | `66265aa17871d618f30f45705b8144dff124b15f01a9eb4c31301a39e5f874b4` |
 | accounting-ledger-setup-api | 6 | `d92b8334e847d6072d4b74e175d17a3445a288147d12d978a0439be0a73cb03b` |
 | accounting-ledger-setup-api | 7 | `bdfa4a51832c8c7dafbb42106330d18ab2c5a6089ee4c4999f857e1e720154bd` |
 | accounting-ledger-setup-api | 8 | `41d4b1feca011b953fd8e9854d130b9845ec2a231d006bca531ba8ee5120bcb3` |
 | accounting-ledger-setup-api | 9 | `d29c661ae9da4a7c9386abb9bed6c06c8f0b2c2e7f6f0c5748960ee4a48d710c` |
-| accounting-ledger-setup-api | 10 | `6c7e7b50ee5365b6105ecdfe2f7cb77290a4222a0ea767cae96acb5ce46021ae` |
+| accounting-ledger-setup-api | 10 | `c511792f4de9f865da515ffa7dfd97555512ead0b5f30bdffe33e991971a9f8d` |

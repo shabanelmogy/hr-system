@@ -1,117 +1,150 @@
 # Ledger Setup Currency — Screen / Workflow Contract
 
+Execution order marker: API → Web → Mobile → integrated live verification → documentation/closure
+
 ## 0. Contract metadata
 
 | Field | Value |
 | --- | --- |
+| Contract version | `2.0` |
 | Plan ID | `accounting-core-gl` |
 | Authorized slice | `Slice 1 — Ledger setup spine` |
 | Child Feature ID | `ledger-setup-currency` |
 | Child feature name | Ledger Setup Currency |
 | Owner | Accounting |
 | Depends on | existing Accounting module foundation |
-| Execution status | `1A` — Phase 07 Closed 2026-09-22 |
-| Contract status | `Closed — reviewed 2026-09-22` |
-| Verification decision | `Verified` — Currency-owned gates passed; sibling/global and release-only findings classified in the review artifact |
+| Execution status | `Queued` — historical package `1A` is closed; current v2 revalidation follows Fiscal Years closure |
+| Status evidence | `SLICE-01-LEDGER-SETUP-EXECUTION.md`; historical Phase 06/07 evidence remains in the Currency review and education artifact |
 
 ## 1. Child boundary and outcome
 
-Own the Accounting company Currency master, its active lookup/catalog contract and
-the Web/Mobile management workflow. Independent acceptance proves one writable
-Accounting owner, complete lifecycle and authoritative consumer lookup. Functional
-Currency selection, FX history and HR business-record ownership are outside this child.
+This child owns the company Currency master, its active lookup/catalog contract,
+and the Web/Mobile management journey. Independent acceptance proves one writable
+Accounting owner, complete lifecycle, server-managed list truth, bilingual stored
+names, and an authoritative consumer lookup. Functional Currency selection, FX
+history, and HR business-record ownership are outside this child.
 
-Existing umbrella/API/Web/Mobile implementation is review evidence only until this
-child package reconciles it against this contract; prior runtime does not bypass the
-child exit gate.
+The existing closed package is historical evidence, not authority to skip the v2
+UI gate or the current ordered live revalidation.
 
-## 2. Closest existing reference
+## 2. UI Pattern Gate (mandatory before implementation)
+
+| Screen ID | Platform | Route / entry | User job | Data / interaction shape | Primary Pattern ID | Sub-pattern / form decision | Exact reviewed reference source path | Platform status | Grid / Table / Cards / Tree / Detail / Report / Import / Export / Chart (R/D/E) | Loading / empty / error / forbidden / dirty / conflict states | Offline policy | Mock-data policy | Permission / scope | Responsive / RTL / accessibility | Deviation and reason |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| ledger-setup-currency-management | Web | `/finance/ledger-setup/currencies` | Manage company currencies and lifecycle | server-managed collection plus shared form | P-001 | Grid with `MyForm` detail/create/edit | `web-next/src/modules/accounting/currencies/pages/CurrenciesPage.tsx` | Implemented | Grid Required; Detail Required; Table Excluded; Cards Deferred; Tree Report Import Export Chart Excluded | initial/background loading, empty/no-results, error/retry, forbidden, dirty form, lifecycle/concurrency conflict | online authoritative | local valid draft only; no identity, scope, or RowVersion fabrication | `AccountingSetup:View/Manage`; current company | bounded grid scroll, compact dialog, RTL, keyboard focus and error links | Cards remain Deferred until a concrete Accounting workflow reopens them |
+| ledger-setup-currency-management | Mobile | `/finance/ledger-setup/currencies` | Manage company currencies and lifecycle | server-managed native collection plus form | P-001 | Table/Cards through `AppListScreen`; full-screen `AppForm` | `mobile-react/src/modules/accounting/currencies/presentation/screens/CurrenciesScreen.tsx` | Implemented | Table Required; Cards Required; Detail Required; Grid Tree Report Import Export Chart Excluded | initial/background loading, empty/no-results, error/retry, forbidden, dirty form, lifecycle/concurrency conflict | online authoritative; no queued financial writes | local valid draft only; no identity, scope, or RowVersion fabrication | `AccountingSetup:View/Manage`; current company | phone/tablet layouts, RTL, touch targets, screen-reader labels and validation focus | Native cards adapt the same server page |
+
+## 3. Closest existing reference
 
 | Reference | Exact path/screen | What is reused | What intentionally differs |
 | --- | --- | --- | --- |
-| Fiscal Years client architecture | `web-next/src/modules/accounting/fiscal-years/` and `mobile-react/src/modules/accounting/fiscal-years/` | Accounting route/service/query/form discipline | Currency fields/lifecycle/catalog semantics |
-| Existing Currency evidence | `web-next/src/modules/accounting/currencies/` and `mobile-react/src/modules/accounting/currencies/` | current route/list/form evidence | child completion requires typed server-list truth and Screen Contract evidence |
+| P-001 Countries | `web-next/src/modules/reference-data/geographical-information/countries/pages/CountriesPage.tsx` and `mobile-react/src/modules/reference-data/geography/countries/presentation/screens/CountriesScreen.tsx` | server list, shared states, forms, permissions and lifecycle composition | Currency does not inherit Geographic Chart/Report/Import contracts |
+| Current Currency implementation | `web-next/src/modules/accounting/currencies/` and `mobile-react/src/modules/accounting/currencies/` | typed Currency ownership and evidence | current v2 revalidation must record live evidence in roadmap order |
 
-## 3. Reuse and composition contract
+## 4. Reuse and composition contract
 
 | Need | Existing reusable component/source | Decision | Exact use or extension |
 | --- | --- | --- | --- |
-| Web list | `web-next/src/shared/components/navigation/header/PageHeader.tsx`, `web-next/src/shared/components/data-grid/core/MyDataGrid.tsx`, `web-next/src/shared/hooks/useServerListState.ts` | reuse | one authoritative paged list with search/status/sort |
-| Web form | `web-next/src/shared/components/forms/dialog/MyForm.tsx`, `web-next/src/shared/components/forms/text-fields/MyTextField.tsx`, `web-next/src/shared/components/dialogs/confirmation/ConfirmationDialog.tsx` | reuse | create/view/edit/archive/restore |
-| Mobile list/form | `mobile-react/src/shared/components/multi-view/AppListScreen.tsx`, `mobile-react/src/shared/components/data-table/AppDataTable.tsx`, `mobile-react/src/shared/components/forms/AppForm.tsx`, `mobile-react/src/shared/components/feedback/AppStateView.tsx` | reuse | native table/card/form states without local financial writes |
-| Consumer lookup | `api/Modules/Accounting/ErpSystem.Modules.Accounting.Contracts/CurrencyCatalogContracts.cs` | feature-specific composition | HR selectors consume active CurrencyCode lookup only |
+| Web list/form | `web-next/src/shared/components/data-grid/core/MyDataGrid.tsx`, `web-next/src/shared/hooks/useServerListState.ts`, `web-next/src/shared/components/forms/dialog/MyForm.tsx` | reuse | authoritative paged list and typed form/lifecycle dialogs |
+| Mobile list/form | `mobile-react/src/shared/components/multi-view/AppListScreen.tsx`, `mobile-react/src/shared/components/data-table/AppDataTable.tsx`, `mobile-react/src/shared/components/forms/AppForm.tsx` | reuse | native Table/Cards and typed full-screen form |
+| Consumer lookup | `api/Modules/Accounting/ErpSystem.Modules.Accounting.Contracts/CurrencyCatalogContracts.cs` | feature-owned public contract | consumers validate active CurrencyCode without owning Currency writes |
 
-## 4. Screen and workspace contract
+## 5. Screen and workspace contract
 
 | Surface | Required / Deferred / Excluded | Layout/workspace | Primary user actions |
 | --- | --- | --- | --- |
-| List/Grid | Required | server-managed currency collection | search/filter/sort/page, open record |
-| Tree/Hierarchy | Excluded | N/A | N/A |
-| Detail/View | Required | read-only shared form/detail | inspect identity/status |
-| Create/Edit | Required | shared form | create/update ISO code, bilingual names, symbol |
-| Lifecycle | Required | confirmation flow | archive/restore |
-
-## 5. Create, edit, view, and lifecycle contract
-
-| Journey/action | Entry state | User interaction | Server action/state change | Result/read-only behavior |
-| --- | --- | --- | --- | --- |
-| Create | Manage permission | enter valid ISO identity/metadata | create Currency | success refreshes list/lookups |
-| Edit | active + current RowVersion | edit allowed metadata | update Currency | conflict reloads authoritative detail |
-| View | View permission | open row | read only | no mutation controls in read-only mode |
-| Archive/restore | Manage permission | confirm lifecycle action | archive/restore with RowVersion | status refresh; dependent-use conflict shown |
+| Grid/Table/Cards | Web Grid Required; Mobile Table/Cards Required | server-managed collection | search, filter, sort, page, open |
+| Detail/Create/Edit | Required | shared form with `NameAr` and `NameEn` as separately labelled required fields | view, create, edit both stored names |
+| Archive/restore | Required | shared confirmation | lifecycle with RowVersion |
+| Tree/Report/Import/Export/Chart | Excluded | not part of the Currency child | none |
 
 ## 6. Typed transport and server criteria
 
 | Concern | Exact contract |
 | --- | --- |
-| Typed request/response | explicit Currency detail/page/lookup/mutation DTOs with opaque RowVersion |
-| Server search/filter/sort | ISO code/name/status and approved sort allow-list are server-owned |
-| Paging/limits | page response includes real total metadata; client never invents total rows |
-| Domain errors | invalid ISO, duplicate company code, dependency conflict, concurrency conflict |
-| Cross-module contract | `IAccountingCurrencyCatalog` validates active codes for HR/future consumers |
+| Typed request/response | Currency detail/page/lookup/create/update/lifecycle contracts include distinct `NameAr`, `NameEn`, ISO code and opaque RowVersion |
+| Canonical routes | Accounting Currency API routes and `/finance/ledger-setup/currencies` on both clients |
+| Server search/filter/sort | ISO code, Arabic name, English name, record status and approved sort allow-list |
+| Paging/limits | authoritative total metadata; lookup traversal cannot silently truncate |
+| Domain errors / ProblemDetails | missing bilingual name, invalid ISO, duplicate company code, dependency, permission and concurrency conflict |
+| Permission and tenant/company scope | server-enforced current company; View for reads and Manage for writes |
+| Cross-module contract | `IAccountingCurrencyCatalog` and Accounting active lookup |
+| Persistence/schema/migration | Accounting Currency mapping/migration is the sole writable owner |
 
-## 7. UX states, permissions, and read-only behavior
+## 7. Create, edit, view, and lifecycle contract
+
+| Journey/action | Entry state | User interaction | Server action/state change | Result/read-only behavior |
+| --- | --- | --- | --- | --- |
+| Create | Manage | enter ISO identity, `NameAr`, `NameEn` and symbol | create Currency | refresh list and lookup; both names render by locale with explicit fallback policy |
+| Edit | current detail/RowVersion | edit both stored names and allowed metadata | update Currency | conflict reloads authoritative detail without losing the other language silently |
+| View | View or read-only | open record | GET detail | both Arabic and English names remain inspectable; mutation controls absent |
+| Archive/restore | Manage and valid dependency state | confirm | lifecycle mutation with RowVersion | status refresh; dependency conflict explicit |
+
+## 8. UX states, permissions, offline, and mock data
 
 | Concern | Contract |
 | --- | --- |
-| Loading / empty / error | distinct initial loading, background refresh, empty/no-results and retry states |
-| Permission / forbidden | `AccountingSetup:View`; writes require `AccountingSetup:Manage` |
-| Read-only / archived / locked | app read-only suppresses writes; archived rows remain discoverable |
-| Unsaved changes / destructive confirmation | shared dirty protection and archive/restore confirmation |
-| Offline/stale behavior when applicable | online-authoritative mutations; no local success synthesis |
+| Loading / empty / error / retry | initial/background loading, empty/no-results, persistent error and retry are distinct |
+| Permission / forbidden / read-only | View reads; Manage writes; global read-only preserves inspection and removes writes |
+| Archived / locked | archived records remain discoverable under server criteria |
+| Unsaved changes / destructive confirmation | shared dirty protection plus archive/restore confirmation |
+| Offline / stale / conflict | online-authoritative mutations; uncertain writes refetch; 409 reloads detail/list |
+| Mock data | local draft supplies valid Arabic and English names only; never submit or fabricate identity, scope, RowVersion, lookup, or success |
 
-## 8. Concurrency and consistency
+## 9. Concurrency, transactions, and consistency
 
-Update/archive/restore send current RowVersion. A 409 invalidates/refetches detail and
-list before another write. Currency lookup invalidates after committed lifecycle changes.
+Update/archive/restore send current RowVersion. Committed lifecycle changes
+invalidate page, detail, and lookup keys. A 409 refetches authoritative state
+before another write; database uniqueness remains the final race authority.
 
-## 9. i18n, RTL, accessibility, and responsive behavior
+## 10. i18n, RTL, accessibility, and responsive behavior
 
-Accounting EN/AR catalogs own visible strings. Shared logical layout provides RTL.
-Web keyboard/focus and Mobile touch/screen-reader behavior come from shared controls;
-compact views avoid page-level horizontal overflow.
+UI labels/messages live in Accounting EN/AR catalogs, while `NameAr` and `NameEn`
+are separate persisted business values. Forms label and validate both; lists,
+cards and details use current-locale display with a documented fallback and never
+overwrite one language from the other. Shared layout provides RTL, error links and
+first-invalid focus. Web bounds grid scrolling; Mobile uses phone/tablet-safe views.
 
-## 10. Verification contract
+## 11. Vertical execution ledger (strict one-active-step gate)
 
-| Layer | Required evidence/test | Critical scenario |
-| --- | --- | --- |
-| Domain/Application | normalization/uniqueness/lifecycle/catalog tests | duplicate ISO and in-use archive |
-| API/transport | exact page/lookup/mutation serialization | RowVersion + real totals |
-| Web | list/form/permission/component tests | create/edit/archive/restore and conflict |
-| Mobile | runtime schema/query/screen tests | active lookup + lifecycle |
-| E2E/manual | API-backed EN/AR responsive journey | one owner and HR selector integration |
+| Order | Stage | Status | Entry gate | Required evidence / exit gate | Evidence path |
+| ---: | --- | --- | --- | --- | --- |
+| 1 | API | Verified | Currency boundary approved | typed owner, bilingual fields, catalog, migration, permissions and tests | `documentation/project/LEDGER_SETUP_CURRENCY_FEATURE_FULL_REVIEW.md` |
+| 2 | Web | Verified | API Verified | bilingual typed list/form/lifecycle and tests | `documentation/web-next/features/ledger-setup-currency-frontend-reference.md` |
+| 3 | Mobile | Verified | Web Verified | runtime schemas, bilingual native journey and tests | `documentation/mobile-react/ledger-setup-currency-mobile-reference.md` |
+| 4 | Integrated live verification + user acceptance | Queued | Fiscal Years closure and prior stages Verified | agent sends detailed authenticated API/Web/actual-Mobile v2 scenario; user runs or supervises it and explicitly accepts | `SLICE-01-LEDGER-SETUP-EXECUTION.md` |
+| 5 | Documentation and closure | Queued | current integrated verification Verified and explicit user acceptance recorded | reconcile historical Phase 07 material and close roadmap row | `documentation/plans/business/accounting-core-gl/education/ledger-setup-currency.md` |
 
-## 11. Child exit gate
+**Manual acceptance protocol.** The central
+`../MANUAL_ACCEPTANCE_SCENARIO_TEMPLATE.md` format is mandatory:
+prerequisites, roles/permissions, exact data, Web and actual-device steps, EN/AR and
+RTL/LTR checks, expected outcomes, negative/read-only/conflict cases, cleanup and
+evidence. The feature remains Active until the user explicitly accepts the result.
 
-- [x] Its boundary is implemented without absorbing sibling workflows.
-- [x] Screen/workspace behavior matches this contract and the approved plan.
-- [x] Reused components and any generic extensions match the reuse audit.
-- [x] Typed transport and server criteria are implemented and verified.
-- [x] Permissions/read-only states and concurrency behavior are verified.
-- [x] i18n/RTL/accessibility/responsive requirements are verified for source and development runtime; physical release evidence remains centrally owned by `PROD-010`/`PROD-014`.
-- [x] Required child-owned automated and API-backed manual evidence above is green.
-- [x] The master slice records this child as complete without implying unfinished sibling features are complete.
+**Next-step rule:** no sibling feature may become `Active` until this feature's
+Integrated live verification is `Verified` and Documentation and closure is
+`Closed`, with explicit user acceptance recorded. Historical closure does not bypass
+current ordered revalidation.
 
-Phase 06 recorded `Verified` and Phase 07 published
-`documentation/plans/business/accounting-core-gl/education/ledger-setup-currency.md`.
-Package `1A` is closed; Slice 1 remains open through packages `1B`–`1V`.
+## 12. Verification contract
+
+| Layer | Required evidence/test | Critical scenario | Result |
+| --- | --- | --- | --- |
+| Domain/Application | normalization, bilingual requiredness, uniqueness, lifecycle, catalog | duplicate ISO and missing one language | historical evidence verified; current live revalidation queued |
+| API/transport | exact bilingual page/lookup/mutation serialization | `NameAr`/`NameEn`, RowVersion and totals | historical evidence verified |
+| Persistence/migration | live Accounting schema evidence | sole writable owner and both name columns | recheck during live stage |
+| Web | list/form/permission/component tests | create/edit/view both names plus conflict | source tests verified |
+| Mobile | runtime schema/query/screen tests | Table/Cards and both names | source tests verified |
+| E2E/manual/live | authenticated EN/AR responsive journey | enter, edit and view Arabic and English names | queued after Fiscal Years closure |
+
+## 13. Child exit gate
+
+- [x] Contract version is current and every screen/platform row passes the UI Pattern Gate.
+- [x] No `Candidate` pattern remains; P-001 is registered and reviewed.
+- [x] Boundary, typed source ownership, bilingual fields, Web, Mobile and historical evidence are reconciled.
+- [ ] Current authenticated integrated API/Web/Mobile revalidation is recorded in roadmap order.
+- [ ] Live database schema/migration evidence is refreshed for the current run.
+- [ ] Detailed manual scenario/results are sent to the user and explicit acceptance is recorded.
+- [ ] Creation, editing, viewing and listing verify both Arabic and English stored names.
+- [ ] Documentation/manifest/recipe and education evidence are reconciled after verification.
+- [ ] The roadmap records current closure before COA becomes Active.

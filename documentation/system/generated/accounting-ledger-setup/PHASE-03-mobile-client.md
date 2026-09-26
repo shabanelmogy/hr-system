@@ -65,10 +65,10 @@ profile and do not leave an unreachable route, component, or translation surface
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| accounting-ledger-setup-master | 3 | `dca7efc3933fbfad21faec4412e0f5fbce8747b3881d5af2b14bb3210b1cbe45` |
+| accounting-ledger-setup-master | 3 | `0fe7b836f7c51edaace81656d19dd76754de5fefdb1761a92e1bb4de7b632c0c` |
 | accounting-ledger-setup-master | 4 | `53f38a770f4b9c229d5f924b56a2be70be0db253054c0b998b0c21ec8c2ca0ca` |
 | accounting-ledger-setup-master | 6 | `4c420eef9bb4f80999de2e4e4bebf23f4d9b3934746b134431e3cd97be170dbe` |
-| accounting-ledger-setup-master | 7 | `d164de4b8addd9575c48cd3c43367a86fd03b0a3632109db487388e47d560bec` |
+| accounting-ledger-setup-master | 7 | `b92882805c347017f5b031c78910e2aee911d3c40803f8e830e62fefbcfde520` |
 | accounting-ledger-setup-mobile | 1 | `c1376fa68a5d894e4d9be286fa3fa86fe38af4b3ed5f49a38d9b65a4bd09296c` |
 | accounting-ledger-setup-mobile | 2 | `d9fa0988586e5ce71e9872c903882e9c7d3b7284a7389dadf16ef91b7f7ba065` |
 | accounting-ledger-setup-mobile | 3 | `aa339ca38582f7c9ce37e0a942e649c4758d8c508696ff4477a5d32cddd266fc` |
@@ -76,11 +76,11 @@ profile and do not leave an unreachable route, component, or translation surface
 | accounting-ledger-setup-mobile | 5 | `716608f67856b81426aabce16eae8bd37d0cda93f21a1458e9ad00ba980e0e89` |
 | accounting-ledger-setup-mobile | 6 | `8f3acc91847c8c79a5fcb6635e442f1128e189ecb6a9df34e82dc98fdd5fbdab` |
 | accounting-ledger-setup-mobile | 7 | `00d827969d9ff0fb842be3730060a4c1857b1a62fd305804a65a21a56fec1e76` |
-| accounting-ledger-setup-mobile | 8 | `924d56281d7fe1b4a41d16f9199c325ab69d51aab90a55594af7cd2dfe8c4cf1` |
+| accounting-ledger-setup-mobile | 8 | `c0565416e9b522c8d1fa5dbff576ee8007e71f36c2d557cf9840a2f9a68702c3` |
 | accounting-ledger-setup-mobile | 9 | `b38a5d0b193d3bd41831972e1709ff0a24f68ebc99b65f78546db8f34f28775e` |
 | accounting-ledger-setup-mobile | 10 | `e90120b0c01c5eb55b901a74d4dcfcb6714449cbc5290a553cbf6a83054810b2` |
 | accounting-ledger-setup-mobile | 11 | `63d74a38b34eeb8328687b1a744a9507b0a7524bfbb6fb42f63c07a3a96ddd36` |
 | accounting-ledger-setup-mobile | 12 | `aac8b8ddd629c4b3f3dedbd1cc26947919d81e4d6574c009a04916ea805c23db` |
-| accounting-ledger-setup-mobile | 13 | `458f9ae6e33c7b3d72542e57224f51c3936110b845ef5de05f1fea3f926b1235` |
-| accounting-ledger-setup-mobile | 14 | `74fb4cb2b31e32a72d3a6edfb7d95bc52239683551f44fe7ba47e18652d784a7` |
+| accounting-ledger-setup-mobile | 13 | `60f4becd49e0f8e172abf6e3d948251b1ba47e9725dcf3f8415b7c8dd53d9774` |
+| accounting-ledger-setup-mobile | 14 | `8163ce60439f08b3672e819111412fd25cd41fc01f3ed4b07d68eb5e8559233a` |
 | accounting-ledger-setup-mobile | 15 | `bf90a02cc0efd84b676907c5a05d0d311c1e7d41561635afe08363e1cefa84ef` |

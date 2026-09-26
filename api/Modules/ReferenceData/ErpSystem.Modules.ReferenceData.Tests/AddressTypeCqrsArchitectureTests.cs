@@ -43,7 +43,7 @@ public sealed class AddressTypeCqrsArchitectureTests
         var bulkCreate = typeof(AddressTypesController).GetMethod(nameof(AddressTypesController.CreateBulk))!;
         var bulkArchive = typeof(AddressTypesController).GetMethod(nameof(AddressTypesController.BulkArchive))!;
         Assert.Equal(ReferenceDataPermissions.CreateAddressTypes, bulkCreate.GetCustomAttribute<HasPermissionAttribute>()?.Policy);
-        Assert.Equal(ReferenceDataPermissions.DeleteAddressTypes, bulkArchive.GetCustomAttribute<HasPermissionAttribute>()?.Policy);
+        Assert.Equal(ReferenceDataPermissions.ArchiveAddressTypes, bulkArchive.GetCustomAttribute<HasPermissionAttribute>()?.Policy);
         Assert.Equal(typeof(UpdateAddressTypeRequest), typeof(AddressTypesController).GetMethod(nameof(AddressTypesController.Update))!.GetParameters()[1].ParameterType);
     }
 

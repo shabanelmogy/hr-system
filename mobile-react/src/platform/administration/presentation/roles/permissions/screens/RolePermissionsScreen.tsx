@@ -40,7 +40,7 @@ import {
   type PermissionGroup,
 } from '../permission-groups';
 
-const editRolePermissions = [permissions.EditRoles] as const;
+const editRolePermissions = [permissions.EditRolePermissions] as const;
 
 interface RolePermissionsScreenProps {
   roleId: string;

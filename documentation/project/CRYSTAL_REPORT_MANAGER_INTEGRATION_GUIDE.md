@@ -112,9 +112,9 @@ The lifecycle is:
 6. The feature catalog exposes only active, published reports the current user may
    run.
 
-Coarse permissions are `CrystalReports:View`, `Create`, `Download`, `Upload`,
-`Publish`, `ManageAccess`, and `Delete`. Per-report role rights are `Run`,
-`Download`, `Upload`, `Publish`, and `ManageAccess`. The Reporting API derives tenant and
+Exact permissions are `CrystalReports:View/Create/Download/Upload/Publish/Archive`
+and `CrystalReportAccess:View/Edit`. Per-report role rights remain `Run`,
+`Download`, `Upload`, `Publish`, and access-edit rights. The Reporting API derives tenant and
 company from the authenticated session and evaluates access server-side. A client
 must never send either scope identifier.
 
@@ -532,8 +532,8 @@ granted, and both allowlisted runtime profiles support its `entityKey`.
   `web-next/src/config/api/crystalReports.ts` and
   `web-next/src/modules/reporting/crystal-report-manager/services.ts`
 - Applied web consumers:
-  `web-next/src/modules/hr/basic-data/geographical-information/countries/reports` and
-  `web-next/src/modules/hr/basic-data/geographical-information/states/reports`
+  `web-next/src/modules/reference-data/geographical-information/countries/reports` and
+  `web-next/src/modules/reference-data/geographical-information/states/reports`
 - Mobile shared service and schemas:
   `mobile-react/src/platform/reporting/data/remote/crystal-report-remote-data-source.ts` and
   `mobile-react/src/platform/reporting/data/remote/crystal-report-schemas.ts`

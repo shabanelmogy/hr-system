@@ -18,8 +18,10 @@ parent + level identity, never code prefix.
 ## 3. Scope, authorization, and permissions
 
 Tenant/company come only from `ICurrentActor`; request DTOs never author scope.
-Read endpoints require `Accounts:View`; create/update/archive/restore require
-`Accounts:Manage`. Missing scope fails closed. Cross-company references are unavailable.
+Read endpoints require `Accounts:View` or `AccountHierarchyLevels:View` as
+appropriate; create/update/archive/restore require the matching resource
+`Create`/`Edit`/`Archive`/`Restore` permission. Missing scope fails closed.
+Cross-company references are unavailable.
 
 ## 4. CQRS and HTTP surface
 

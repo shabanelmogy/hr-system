@@ -115,7 +115,7 @@ public sealed class DistrictsController(ISender sender) : ControllerBase
     }
 
     [HttpDelete("{id:int}")]
-    [HasPermission(ReferenceDataPermissions.DeleteDistricts)]
+    [HasPermission(ReferenceDataPermissions.ArchiveDistricts)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -128,7 +128,7 @@ public sealed class DistrictsController(ISender sender) : ControllerBase
     }
 
     [HttpPost("bulk-archive")]
-    [HasPermission(ReferenceDataPermissions.DeleteDistricts)]
+    [HasPermission(ReferenceDataPermissions.ArchiveDistricts)]
     [ProducesResponseType(typeof(BulkArchiveDistrictsResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -141,7 +141,7 @@ public sealed class DistrictsController(ISender sender) : ControllerBase
     }
 
     [HttpPost("{id:int}/restore")]
-    [HasPermission(ReferenceDataPermissions.DeleteDistricts)]
+    [HasPermission(ReferenceDataPermissions.RestoreDistricts)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

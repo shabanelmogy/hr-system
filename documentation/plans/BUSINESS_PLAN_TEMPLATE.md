@@ -118,8 +118,13 @@ Every category requires a decision or `N/A — reason`.
 
 ## 9. Permissions and security
 
-| Permission | Access mode | Action/data controlled | Server enforcement |
-| --- | --- | --- | --- |
+Follow `../system/PERMISSION_MODEL.md`. The table below is a Permission Action
+Matrix, not a role bundle: use exact `Resource:Action` values and separate
+Create/Edit/Archive/Restore/Delete and every named lifecycle action. Record both
+Arabic and English display ownership for user-facing permission catalogs.
+
+| Actor | Permission | Access mode / scope | Exact action/data controlled | Endpoint/message | Web guard | Mobile guard | EN/AR label owner | Server enforcement / denial test |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
 
 ## 10. Persistence and migration
 

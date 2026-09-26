@@ -15,11 +15,11 @@ const InvitationsPage = () => {
   const { t } = useTranslation();
   const { hasAllPermissions, isReadOnly } = usePermissions();
   const canCreate = !isReadOnly && hasAllPermissions([
-    permissions.CreateUsers,
+    permissions.CreateUserInvitations,
     permissions.ViewRoles,
   ]);
-  const canResend = !isReadOnly && hasAllPermissions([permissions.EditUsers]);
-  const canRevoke = !isReadOnly && hasAllPermissions([permissions.DeleteUsers]);
+  const canResend = !isReadOnly && hasAllPermissions([permissions.ResendUserInvitations]);
+  const canRevoke = !isReadOnly && hasAllPermissions([permissions.RevokeUserInvitations]);
   const {
     invitations,
     loading,

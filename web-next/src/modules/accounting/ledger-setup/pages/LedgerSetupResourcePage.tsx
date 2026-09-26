@@ -81,7 +81,15 @@ function flattenTree(nodes: readonly LedgerSetupRecord[], parentAccountId: numbe
   });
 }
 
-function EntityPanel({ definition, canManage }: { definition: LedgerSetupEntityDefinition; canManage: boolean }) {
+interface LedgerSetupAccess {
+  canView: boolean;
+  canCreate: boolean;
+  canEdit: boolean;
+  canArchive: boolean;
+  canRestore: boolean;
+}
+
+function EntityPanel({ definition, access }: { definition: LedgerSetupEntityDefinition; access: LedgerSetupAccess }) {
   const { t } = useTranslation();
   const queryClient = useQueryClient();
   const auth = usePermissions();
@@ -90,11 +98,19 @@ function EntityPanel({ definition, canManage }: { definition: LedgerSetupEntityD
     ...(definition.scope === "account" ? ["accounts" as const] : definition.scope === "dimension" ? ["dimensions" as const] : []),
   ]));
   const allowedSources = requestedSources.filter((source): source is LedgerSetupLookupSource =>
-    source === "accounts" || source === "hierarchyLevels"
+    source === "accounts"
       ? auth.hasPermission(permissions.ViewAccounts)
+      : source === "hierarchyLevels"
+        ? auth.hasPermission(permissions.ViewAccountHierarchyLevels)
       : source === "dimensions"
-        ? auth.hasPermission(permissions.ViewDimensions)
-        : auth.hasPermission(permissions.ViewAccountingSetup),
+        ? auth.hasPermission(permissions.ViewDimensionDefinitions)
+        : source === "currencies"
+          ? auth.hasPermission(permissions.ViewCurrencies)
+          : source === "books"
+            ? auth.hasPermission(permissions.ViewBooks)
+            : source === "exchangeRateTypes"
+              ? auth.hasPermission(permissions.ViewExchangeRateTypes)
+              : false,
   );
   const lookupsQuery = useQuery({ queryKey: ["accounting", "ledger-setup", "lookups", allowedSources], queryFn: () => ledgerSetupService.lookups(allowedSources), enabled: allowedSources.length > 0 });
   const scopeOptions = definition.scope === "dimension" ? lookupsQuery.data?.dimensions : definition.scope === "account" ? lookupsQuery.data?.accounts : undefined;
@@ -151,17 +167,17 @@ function EntityPanel({ definition, canManage }: { definition: LedgerSetupEntityD
     {definition.scope ? <MySelect dataSource={(scopeOptions ?? []).map((item) => ({ id: Number(item.id), label: displayName(item) }))} selectedItem={scopeId} handleSelectionChange={(event) => { setSelectedScopeId(selectionValue(event)); setPageModel((current) => ({ ...current, page: 0 })); }} label={t(definition.scope === "account" ? "ledgerSetup.fields.accountId" : "ledgerSetup.fields.dimensionDefinitionId")} valueMember="id" displayMember="label" all={false} showClearButton={false} loading={lookupsQuery.isLoading} /> : null}
     {query.isFetching ? <LinearProgress /> : null}
     {query.error ? <Alert severity="error">{extractErrorMessage(query.error) || t("ledgerSetup.messages.loadFailed")}</Alert> : null}
-    {canManage ? <Box><Button variant="contained" startIcon={<AddRoundedIcon />} onClick={() => openForm(definition.entity === "settings" && rows[0] ? "edit" : "create", rows[0])}>{t(definition.entity === "settings" && rows[0] ? "actions.edit" : "ledgerSetup.actions.add")}</Button></Box> : null}
-    {definition.tree ? <SplitTreeView items={treeRows} getId={(item) => Number(item.id)} getParentId={(item) => typeof item.parentAccountId === "number" ? item.parentAccountId : null} getCode={(item) => String(item.code ?? "")} getName={(item) => String(item.nameEn ?? "")} getSecondaryName={(item) => String(item.nameAr ?? "")} getIsDeleted={(item) => Boolean(item.isDeleted)} searchFilter={(item, term) => displayName(item).toLowerCase().includes(term.toLowerCase())} searchPlaceholder={t("ledgerSetup.search")} canDrag={false} onEdit={(item) => { if (canManage) void openTreeAccount("edit", item); }} onSelect={(item) => { if (item) void openTreeAccount("view", item); }} /> : <MyDataGrid rows={rows.map((row, index) => ({ ...row, id: row.id ?? index }))} columns={[...definition.fields.slice(0, 6).map((item) => ({ field: item.name, headerName: t(item.label), flex: 1, minWidth: 130 })), { field: "recordState", headerName: t("ledgerSetup.fields.status"), width: 120, renderCell: ({ row }) => <Chip size="small" label={t(row.isDeleted ? "ledgerSetup.status.archived" : "ledgerSetup.status.active")} color={row.isDeleted ? "warning" : "success"} /> }, { field: "actions", headerName: t("actions.buttons"), minWidth: 230, sortable: false, renderCell: ({ row }) => <Box sx={{ display: "flex", gap: .5 }}><Button size="small" onClick={() => openForm("view", row)}>{t("actions.view")}</Button>{canManage && !row.isDeleted ? <Button size="small" onClick={() => openForm("edit", row)}>{t("actions.edit")}</Button> : null}{canManage && definition.supportsArchive ? <Button size="small" color="warning" startIcon={row.isDeleted ? <RestoreRoundedIcon /> : <ArchiveRoundedIcon />} onClick={() => { setSelected(row); setDialog(row.isDeleted ? "restore" : "archive"); }}>{t(row.isDeleted ? "actions.restore" : "actions.archive")}</Button> : null}</Box> }]} loading={query.isLoading} autoHeight disableRowSelectionOnClick paginationMode={paged ? "server" : "client"} paginationModel={paged ? pageModel : undefined} onPaginationModelChange={paged ? setPageModel : undefined} pageSizeOptions={paged ? [25, 50, 100] : undefined} rowCount={paged ? pageModel.page * pageModel.pageSize + rows.length + (rows.length === pageModel.pageSize ? 1 : 0) : undefined} toolbarSearch={serverSearch !== undefined ? { value: search, onChange: (value) => { setSearch(value); setPageModel((current) => ({ ...current, page: 0 })); }, onClear: () => { setSearch(""); setPageModel((current) => ({ ...current, page: 0 })); }, placeholder: t("ledgerSetup.search") } : undefined} />}
+    {(definition.entity === "settings" && rows[0] ? access.canEdit : access.canCreate) ? <Box><Button variant="contained" startIcon={<AddRoundedIcon />} onClick={() => openForm(definition.entity === "settings" && rows[0] ? "edit" : "create", rows[0])}>{t(definition.entity === "settings" && rows[0] ? "actions.edit" : "ledgerSetup.actions.add")}</Button></Box> : null}
+    {definition.tree ? <SplitTreeView items={treeRows} getId={(item) => Number(item.id)} getParentId={(item) => typeof item.parentAccountId === "number" ? item.parentAccountId : null} getCode={(item) => String(item.code ?? "")} getName={(item) => String(item.nameEn ?? "")} getSecondaryName={(item) => String(item.nameAr ?? "")} getIsDeleted={(item) => Boolean(item.isDeleted)} searchFilter={(item, term) => displayName(item).toLowerCase().includes(term.toLowerCase())} searchPlaceholder={t("ledgerSetup.search")} canDrag={false} onEdit={(item) => { if (access.canEdit) void openTreeAccount("edit", item); }} onSelect={(item) => { if (item) void openTreeAccount("view", item); }} /> : <MyDataGrid rows={rows.map((row, index) => ({ ...row, id: row.id ?? index }))} columns={[...definition.fields.slice(0, 6).map((item) => ({ field: item.name, headerName: t(item.label), flex: 1, minWidth: 130 })), { field: "recordState", headerName: t("ledgerSetup.fields.status"), width: 120, renderCell: ({ row }) => <Chip size="small" label={t(row.isDeleted ? "ledgerSetup.status.archived" : "ledgerSetup.status.active")} color={row.isDeleted ? "warning" : "success"} /> }, { field: "actions", headerName: t("actions.buttons"), minWidth: 230, sortable: false, renderCell: ({ row }) => <Box sx={{ display: "flex", gap: .5 }}><Button size="small" onClick={() => openForm("view", row)}>{t("actions.view")}</Button>{access.canEdit && !row.isDeleted ? <Button size="small" onClick={() => openForm("edit", row)}>{t("actions.edit")}</Button> : null}{definition.supportsArchive && (row.isDeleted ? access.canRestore : access.canArchive) ? <Button size="small" color="warning" startIcon={row.isDeleted ? <RestoreRoundedIcon /> : <ArchiveRoundedIcon />} onClick={() => { setSelected(row); setDialog(row.isDeleted ? "restore" : "archive"); }}>{t(row.isDeleted ? "actions.restore" : "actions.archive")}</Button> : null}</Box> }]} loading={query.isLoading} autoHeight disableRowSelectionOnClick paginationMode={paged ? "server" : "client"} paginationModel={paged ? pageModel : undefined} onPaginationModelChange={paged ? setPageModel : undefined} pageSizeOptions={paged ? [25, 50, 100] : undefined} rowCount={paged ? pageModel.page * pageModel.pageSize + rows.length + (rows.length === pageModel.pageSize ? 1 : 0) : undefined} toolbarSearch={serverSearch !== undefined ? { value: search, onChange: (value) => { setSearch(value); setPageModel((current) => ({ ...current, page: 0 })); }, onClear: () => { setSearch(""); setPageModel((current) => ({ ...current, page: 0 })); }, placeholder: t("ledgerSetup.search") } : undefined} />}
     <MyForm open={dialog === "create" || dialog === "edit" || dialog === "view"} onClose={() => setDialog(null)} title={t(definition.titleKey)} subtitle={t("ledgerSetup.form.subtitle")} submitButtonText={t(dialog === "edit" ? "actions.update" : "actions.create")} isViewMode={dialog === "view"} hideFooter={dialog === "view"} isSubmitting={mutation.isPending} isDirty={form.formState.isDirty} errors={toFormErrorMessages(form.formState.errors)} errorLabels={Object.fromEntries(definition.fields.map((item) => [item.name, t(item.label)]))} onSubmit={dialog === "view" ? undefined : submit} mockDataAction={dialog !== "view" ? { onGenerate: generateMock, disabled: mutation.isPending || lookupsQuery.isLoading || Boolean(lookupsQuery.error) || mockUnavailable } : undefined}>
-      {dialog === "view" && canManage && definition.supportsArchive && selected?.rowVersion ? <Button color="warning" startIcon={selected.isDeleted ? <RestoreRoundedIcon /> : <ArchiveRoundedIcon />} onClick={() => setDialog(selected.isDeleted ? "restore" : "archive")}>{t(selected.isDeleted ? "actions.restore" : "actions.archive")}</Button> : null}
+      {dialog === "view" && definition.supportsArchive && selected?.rowVersion && (selected.isDeleted ? access.canRestore : access.canArchive) ? <Button color="warning" startIcon={selected.isDeleted ? <RestoreRoundedIcon /> : <ArchiveRoundedIcon />} onClick={() => setDialog(selected.isDeleted ? "restore" : "archive")}>{t(selected.isDeleted ? "actions.restore" : "actions.archive")}</Button> : null}
       {definition.fields.filter((item) => item.name !== "specificCurrencyId" || definition.entity !== "accounts" || Number(currencyPolicy) === 3).map((item) => item.type === "select" ? <MySelect key={item.name} name={item.name} label={t(item.label)} control={form.control} dataSource={lookupOptions(item)} valueMember="id" displayMember="label" errors={form.formState.errors} required={item.required || (item.name === "specificCurrencyId" && Number(currencyPolicy) === 3)} isViewMode={dialog === "view"} showClearButton={!item.required && dialog !== "view"} /> : <MyTextField key={item.name} fieldName={item.name} labelKey={t(item.label)} control={form.control} errors={form.formState.errors} type={item.type === "number" ? "number" : item.type === "date" ? "date" : "text"} required={item.required} readOnly={dialog === "view"} />)}
     </MyForm>
     <ConfirmationDialog open={dialog === "archive" || dialog === "restore"} title={t(dialog === "restore" ? "ledgerSetup.confirm.restoreTitle" : "ledgerSetup.confirm.archiveTitle")} description={t(dialog === "restore" ? "ledgerSetup.confirm.restoreDescription" : "ledgerSetup.confirm.archiveDescription")} confirmLabel={t(dialog === "restore" ? "common.restore" : "common.archive")} cancelLabel={t("actions.cancel")} confirmColor={dialog === "restore" ? "success" : "warning"} busy={lifecycle.isPending} onClose={() => setDialog(null)} onConfirm={() => void lifecycle.mutateAsync()}><Typography sx={{ fontWeight: 700 }}>{selected ? displayName(selected) : ""}</Typography></ConfirmationDialog>
   </Box>;
 }
 
-function ResolutionPreview({ canView }: { canView: boolean }) {
+function ResolutionPreview({ canResolve }: { canResolve: boolean }) {
   const { t } = useTranslation();
   const lookups = useQuery({ queryKey: ["accounting", "ledger-setup", "lookups", ["books"]], queryFn: () => ledgerSetupService.lookups(["books"]) });
   const [open, setOpen] = useState(false);
@@ -169,8 +185,45 @@ function ResolutionPreview({ canView }: { canView: boolean }) {
   const schema = useMemo(() => createLedgerSetupSchema([field("bookId", { type: "select", required: true }), field("purposeCode", { required: true }), field("onDate", { required: true })], t("ledgerSetup.validation.required")), [t]);
   const form = useForm<LedgerSetupFormValues>({ resolver: zodResolver(schema), defaultValues: { onDate: new Date().toISOString().slice(0, 10) } });
   const preview = useMutation({ mutationFn: ledgerSetupService.resolvePreview, onSuccess: setResult });
-  if (!canView) return null;
+  if (!canResolve) return null;
   return <Box sx={{ mt: 1 }}><Button variant="outlined" onClick={() => setOpen(true)}>{t("ledgerSetup.accountDetermination.preview")}</Button><MyForm open={open} title={t("ledgerSetup.accountDetermination.preview")} subtitle={t("ledgerSetup.accountDetermination.previewHelp")} submitButtonText={t("ledgerSetup.actions.resolve")} isSubmitting={preview.isPending} isDirty={form.formState.isDirty} errors={toFormErrorMessages(form.formState.errors)} errorLabels={{ bookId: t("ledgerSetup.fields.bookId"), purposeCode: t("ledgerSetup.fields.purposeCode"), onDate: t("ledgerSetup.fields.onDate"), contextReferenceId: t("ledgerSetup.fields.contextReferenceId") }} onClose={() => { setOpen(false); setResult(null); }} onSubmit={form.handleSubmit((values) => preview.mutate({ bookId: Number(values.bookId), purposeCode: String(values.purposeCode), onDate: String(values.onDate), contextReferenceId: values.contextReferenceId ? String(values.contextReferenceId) : null }))}><MySelect name="bookId" label={t("ledgerSetup.fields.bookId")} control={form.control} dataSource={(lookups.data?.books ?? []).map((item) => ({ id: Number(item.id), label: displayName(item) }))} valueMember="id" displayMember="label" errors={form.formState.errors} loading={lookups.isLoading} required /><MyTextField fieldName="purposeCode" labelKey={t("ledgerSetup.fields.purposeCode")} control={form.control} errors={form.formState.errors} required /><MyTextField fieldName="onDate" labelKey={t("ledgerSetup.fields.onDate")} control={form.control} errors={form.formState.errors} type="date" required /><MyTextField fieldName="contextReferenceId" labelKey={t("ledgerSetup.fields.contextReferenceId")} control={form.control} errors={form.formState.errors} />{result ? <Alert severity={result.status === 1 ? "success" : "warning"}>{t(`ledgerSetup.resolutionStatus.${result.status}`)}{result.accountId ? ` — ${t("ledgerSetup.fields.accountId")}: ${result.accountId}` : ""}</Alert> : null}</MyForm></Box>;
+}
+
+function getLedgerSetupAccess(
+  entity: LedgerSetupEntity,
+  auth: ReturnType<typeof usePermissions>,
+): LedgerSetupAccess {
+  const allowed = (permission: Parameters<typeof auth.hasPermission>[0]) =>
+    auth.hasPermission(permission);
+  const writable = (permission: Parameters<typeof auth.hasPermission>[0]) =>
+    !auth.isReadOnly && allowed(permission);
+
+  switch (entity) {
+    case "settings":
+      return { canView: allowed(permissions.ViewAccountingSettings), canCreate: false, canEdit: writable(permissions.EditAccountingSettings), canArchive: false, canRestore: false };
+    case "accounts":
+      return { canView: allowed(permissions.ViewAccounts), canCreate: writable(permissions.CreateAccounts), canEdit: writable(permissions.EditAccounts), canArchive: writable(permissions.ArchiveAccounts), canRestore: writable(permissions.RestoreAccounts) };
+    case "hierarchyLevels":
+      return { canView: allowed(permissions.ViewAccountHierarchyLevels), canCreate: writable(permissions.CreateAccountHierarchyLevels), canEdit: writable(permissions.EditAccountHierarchyLevels), canArchive: writable(permissions.ArchiveAccountHierarchyLevels), canRestore: writable(permissions.RestoreAccountHierarchyLevels) };
+    case "dimensionDefinitions":
+      return { canView: allowed(permissions.ViewDimensionDefinitions), canCreate: writable(permissions.CreateDimensionDefinitions), canEdit: writable(permissions.EditDimensionDefinitions), canArchive: writable(permissions.ArchiveDimensionDefinitions), canRestore: writable(permissions.RestoreDimensionDefinitions) };
+    case "dimensionValues":
+      return { canView: allowed(permissions.ViewDimensionValues), canCreate: writable(permissions.CreateDimensionValues), canEdit: writable(permissions.EditDimensionValues), canArchive: writable(permissions.ArchiveDimensionValues), canRestore: writable(permissions.RestoreDimensionValues) };
+    case "dimensionPolicies":
+      return { canView: allowed(permissions.ViewAccountDimensionPolicies), canCreate: false, canEdit: writable(permissions.EditAccountDimensionPolicies), canArchive: false, canRestore: false };
+    case "books":
+      return { canView: allowed(permissions.ViewBooks), canCreate: writable(permissions.CreateBooks), canEdit: writable(permissions.EditBooks), canArchive: writable(permissions.ArchiveBooks), canRestore: writable(permissions.RestoreBooks) };
+    case "journals":
+      return { canView: allowed(permissions.ViewJournalDefinitions), canCreate: writable(permissions.CreateJournalDefinitions), canEdit: writable(permissions.EditJournalDefinitions), canArchive: writable(permissions.ArchiveJournalDefinitions), canRestore: writable(permissions.RestoreJournalDefinitions) };
+    case "exchangeRateTypes":
+      return { canView: allowed(permissions.ViewExchangeRateTypes), canCreate: writable(permissions.CreateExchangeRateTypes), canEdit: writable(permissions.EditExchangeRateTypes), canArchive: writable(permissions.ArchiveExchangeRateTypes), canRestore: writable(permissions.RestoreExchangeRateTypes) };
+    case "exchangeRates":
+      return { canView: allowed(permissions.ViewExchangeRates), canCreate: writable(permissions.CreateExchangeRates), canEdit: writable(permissions.EditExchangeRates), canArchive: false, canRestore: false };
+    case "accountMappings":
+      return { canView: allowed(permissions.ViewAccountMappings), canCreate: writable(permissions.CreateAccountMappings), canEdit: writable(permissions.EditAccountMappings), canArchive: false, canRestore: false };
+    case "postingProfiles":
+      return { canView: allowed(permissions.ViewPostingProfiles), canCreate: writable(permissions.CreatePostingProfiles), canEdit: writable(permissions.EditPostingProfiles), canArchive: false, canRestore: false };
+  }
 }
 
 export default function LedgerSetupResourcePage({ resource }: { resource: LedgerSetupResource }) {
@@ -178,10 +231,7 @@ export default function LedgerSetupResourcePage({ resource }: { resource: Ledger
   const auth = usePermissions();
   const entities = resourceEntities[resource];
   const [activeEntity, setActiveEntity] = useState<LedgerSetupEntity>(entities[0]);
-  const accountArea = activeEntity === "accounts" || activeEntity === "hierarchyLevels";
-  const dimensionArea = activeEntity === "dimensionDefinitions" || activeEntity === "dimensionValues" || activeEntity === "dimensionPolicies";
-  const canView = accountArea ? auth.hasPermission(permissions.ViewAccounts) : dimensionArea ? auth.hasPermission(permissions.ViewDimensions) : auth.hasPermission(permissions.ViewAccountingSetup);
-  const canManage = !auth.isReadOnly && (accountArea ? auth.hasPermission(permissions.ManageAccounts) : dimensionArea ? auth.hasPermission(permissions.ManageDimensions) : auth.hasPermission(permissions.ManageAccountingSetup));
-  if (!canView) return <Alert severity="error">{t("common.accessDenied")}</Alert>;
-  return <Box sx={{ display: "flex", flexDirection: "column", gap: 2, height: "100%", minHeight: 0 }}><PageHeader title={t("menu.ledgerSetup")} subTitle={t("ledgerSetup.subtitle")} />{entities.length > 1 ? <Tabs value={activeEntity} onChange={(_, value: LedgerSetupEntity) => setActiveEntity(value)} variant="scrollable" scrollButtons="auto">{entities.map((entity) => <Tab key={entity} value={entity} label={t(entityDefinitions[entity].titleKey)} />)}</Tabs> : null}<EntityPanel key={activeEntity} definition={entityDefinitions[activeEntity]} canManage={canManage} />{resource === "account-determination" ? <ResolutionPreview canView={canView} /> : null}</Box>;
+  const access = getLedgerSetupAccess(activeEntity, auth);
+  if (!access.canView) return <Alert severity="error">{t("common.accessDenied")}</Alert>;
+  return <Box sx={{ display: "flex", flexDirection: "column", gap: 2, height: "100%", minHeight: 0 }}><PageHeader title={t("menu.ledgerSetup")} subTitle={t("ledgerSetup.subtitle")} />{entities.length > 1 ? <Tabs value={activeEntity} onChange={(_, value: LedgerSetupEntity) => setActiveEntity(value)} variant="scrollable" scrollButtons="auto">{entities.map((entity) => <Tab key={entity} value={entity} label={t(entityDefinitions[entity].titleKey)} disabled={!getLedgerSetupAccess(entity, auth).canView} />)}</Tabs> : null}<EntityPanel key={activeEntity} definition={entityDefinitions[activeEntity]} access={access} />{resource === "account-determination" ? <ResolutionPreview canResolve={!auth.isReadOnly && auth.hasPermission(permissions.ResolvePostingProfiles)} /> : null}</Box>;
 }

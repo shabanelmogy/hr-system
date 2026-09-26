@@ -15,7 +15,7 @@ public sealed class GetPublishedCrystalReportsQueryHandler(
         GetPublishedCrystalReportsQuery request, CancellationToken cancellationToken) =>
         store.ListPublishedAsync(
             request.EntityKey, request.Search, CrystalReportRight.Run,
-            permissions.HasPermission(ReportingPermissions.ManageCrystalReportAccess), cancellationToken);
+            permissions.HasPermission(ReportingPermissions.ViewCrystalReportAccess), cancellationToken);
 }
 
 public sealed class GetGlobalCrystalReportsQueryHandler(
@@ -223,7 +223,7 @@ public sealed class DownloadCrystalReportQueryHandler(
     public async Task<Result<CrystalReportDownload>> Handle(
         DownloadCrystalReportQuery request, CancellationToken cancellationToken)
     {
-        var bypass = permissions.HasPermission(ReportingPermissions.ManageCrystalReportAccess);
+        var bypass = permissions.HasPermission(ReportingPermissions.ViewCrystalReportAccess);
         if (!bypass && !await store.HasRightAsync(
                 request.ReportId, CrystalReportRight.Download, cancellationToken))
             return Result.Failure<CrystalReportDownload>(errors.CrystalReportNotFound);
@@ -258,7 +258,7 @@ public sealed class RenderCrystalReportQueryHandler(
     public async Task<Result<CrystalReportDownload>> Handle(
         RenderCrystalReportQuery request, CancellationToken cancellationToken)
     {
-        var bypass = permissions.HasPermission(ReportingPermissions.ManageCrystalReportAccess);
+        var bypass = permissions.HasPermission(ReportingPermissions.ViewCrystalReportAccess);
         var report = await store.GetDetailAsync(
             request.ReportId, false, CrystalReportRight.Run, bypass, cancellationToken);
         if (report is null || !report.IsPublished)

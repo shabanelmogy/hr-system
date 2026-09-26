@@ -24,8 +24,11 @@ jest.mock('@/src/core/theme', () => ({
 
 jest.mock('@/src/platform/auth', () => ({
   permissions: {
-    ViewAccountingSetup: 'AccountingSetup:View',
-    ManageAccountingSetup: 'AccountingSetup:Manage',
+    ViewCurrencies: 'Currencies:View',
+    CreateCurrencies: 'Currencies:Create',
+    EditCurrencies: 'Currencies:Edit',
+    ArchiveCurrencies: 'Currencies:Archive',
+    RestoreCurrencies: 'Currencies:Restore',
   },
   useAuthorization: ({ requiredPermissions }: { requiredPermissions: string[] }) => ({
     allowed: requiredPermissions.every(permission => mockAllowedPermissions.has(permission)),
@@ -155,8 +158,11 @@ describe('CurrenciesScreen concurrency recovery', () => {
     jest.clearAllMocks();
     mockReadOnly = false;
     mockAllowedPermissions.clear();
-    mockAllowedPermissions.add('AccountingSetup:View');
-    mockAllowedPermissions.add('AccountingSetup:Manage');
+    mockAllowedPermissions.add('Currencies:View');
+    mockAllowedPermissions.add('Currencies:Create');
+    mockAllowedPermissions.add('Currencies:Edit');
+    mockAllowedPermissions.add('Currencies:Archive');
+    mockAllowedPermissions.add('Currencies:Restore');
     mockListRefetch.mockResolvedValue(undefined);
     mockDetailRefetch.mockResolvedValue(undefined);
   });
@@ -195,7 +201,7 @@ describe('CurrenciesScreen authorization', () => {
     jest.clearAllMocks();
     mockReadOnly = false;
     mockAllowedPermissions.clear();
-    mockAllowedPermissions.add('AccountingSetup:View');
+    mockAllowedPermissions.add('Currencies:View');
   });
 
   it('allows view-only users to see currency rows without write actions', async () => {
@@ -210,7 +216,10 @@ describe('CurrenciesScreen authorization', () => {
   });
 
   it('suppresses write actions for managers when the application is read-only', async () => {
-    mockAllowedPermissions.add('AccountingSetup:Manage');
+    mockAllowedPermissions.add('Currencies:Create');
+    mockAllowedPermissions.add('Currencies:Edit');
+    mockAllowedPermissions.add('Currencies:Archive');
+    mockAllowedPermissions.add('Currencies:Restore');
     mockReadOnly = true;
 
     await render(<CurrenciesScreen />);

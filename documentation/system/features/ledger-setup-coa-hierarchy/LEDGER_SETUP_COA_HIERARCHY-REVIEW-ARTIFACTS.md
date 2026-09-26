@@ -12,7 +12,8 @@
 | Mobile routes | `/finance/ledger-setup/accounts`, `/finance/ledger-setup/hierarchy-levels` |
 | Review owner | Accounting Product + Architecture + implementation agent |
 | Applied reference | `organizational-structure` interaction pattern only |
-| Documentation state | Phase 03 client implementation recorded; Phase 06 live acceptance pending |
+| Documentation state | Historical Phase 03 client implementation recorded; current v2 roadmap state is Queued behind Fiscal Years and Currency; Phase 06 live revalidation pending |
+| Approved UI patterns | Accounts `P-002` + secondary `P-001`; Hierarchy Levels `P-001` |
 | Import | Excluded on Web and Mobile |
 | Reporting/export | Excluded in 1B |
 | Customer Education | Required only after Phase 06 Verified |
@@ -30,6 +31,7 @@
 | R-07 | No generic COA client runtime | Generic runtime retained only for untouched siblings | N/A | Typed COA routes no longer use catch-all | Typed COA routes no longer use catch-all | Resolved in Phase 02/03; sibling migration remains separate |
 | R-08 | EN/AR, RTL, responsive/accessibility | shared systems exist | localized stable errors | static/focused checks | static/focused checks | Phase 02/03 checks recorded; Phase 06 live pending |
 | R-09 | Local mock-data draft action | D-025 shared form contract | local only | Account/Level/Currency/Fiscal Year + reachable sibling compatibility forms | Account/Level/Currency/Fiscal Year + reachable sibling compatibility forms | Focused utility/static checks; no persistence; compatibility coverage does not close 1C–1H |
+| R-10 | Distinct required `NameAr` and `NameEn` across Account and Hierarchy Level API, forms, tree/list/detail/lookup/search and mock drafts | v2 child contract | Required | Required | Required | Contract frozen; live revalidation pending |
 
 ## Platform capability decisions
 
@@ -76,8 +78,8 @@
 
 | State | View | Create child | Edit | Archive | Restore |
 | --- | --- | --- | --- | --- | --- |
-| Active | Accounts:View | Accounts:Manage when non-posting parent | Accounts:Manage | Accounts:Manage subject to dependencies | N/A |
-| Archived | Accounts:View via status/detail | No | No | N/A | Accounts:Manage after revalidation |
+| Active | Accounts:View | Accounts:Create when non-posting parent | Accounts:Edit | Accounts:Archive subject to dependencies | N/A |
+| Archived | Accounts:View via status/detail | No | No | N/A | Accounts:Restore after revalidation |
 | Global read-only | Allowed | Blocked client-side | Blocked | Blocked | Blocked |
 
 API permissions remain authoritative in all cases.
@@ -123,4 +125,7 @@ Phase 00 decision: **READY FOR CODING — 2026-09-22** for
 implementation are now recorded, including the D-025 local mock-draft contract and
 safe compatibility coverage for still-reachable sibling forms. The final manifest,
 four books, recipes and generated child packets are registered; this state does not
-mark Phase 06 Verified or authorize customer education.
+mark Phase 06 Verified or authorize customer education. For the current v2 roadmap,
+the child remains Queued until Fiscal Years and Currency are Closed; its eventual live
+gate must revalidate Accounts `P-002`, Hierarchy Levels `P-001`, and independent
+Arabic/English business-name parity on both Web and Mobile.

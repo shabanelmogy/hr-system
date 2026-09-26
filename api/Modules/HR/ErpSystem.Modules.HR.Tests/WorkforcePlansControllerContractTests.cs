@@ -23,8 +23,8 @@ public sealed class WorkforcePlansControllerContractTests
         AssertRoute<HttpGetAttribute>(nameof(WorkforcePlansController.GetById), "{id:int}", HrPermissions.ViewWorkforcePlans);
         AssertRoute<HttpPostAttribute>(nameof(WorkforcePlansController.Create), null, HrPermissions.CreateWorkforcePlans);
         AssertRoute<HttpPutAttribute>(nameof(WorkforcePlansController.Update), "{id:int}", HrPermissions.EditWorkforcePlans);
-        AssertRoute<HttpDeleteAttribute>(nameof(WorkforcePlansController.Archive), "{id:int}", HrPermissions.DeleteWorkforcePlans);
-        AssertRoute<HttpPostAttribute>(nameof(WorkforcePlansController.Restore), "{id:int}/restore", HrPermissions.DeleteWorkforcePlans);
+        AssertRoute<HttpDeleteAttribute>(nameof(WorkforcePlansController.Archive), "{id:int}", HrPermissions.ArchiveWorkforcePlans);
+        AssertRoute<HttpPostAttribute>(nameof(WorkforcePlansController.Restore), "{id:int}/restore", HrPermissions.RestoreWorkforcePlans);
         AssertRoute<HttpPostAttribute>(nameof(WorkforcePlansController.Submit), "{id:int}/submit", HrPermissions.EditWorkforcePlans);
         AssertRoute<HttpPostAttribute>(nameof(WorkforcePlansController.BeginReview), "{id:int}/begin-review", HrPermissions.ApproveWorkforcePlans);
         AssertRoute<HttpPostAttribute>(nameof(WorkforcePlansController.Approve), "{id:int}/approve", HrPermissions.ApproveWorkforcePlans);

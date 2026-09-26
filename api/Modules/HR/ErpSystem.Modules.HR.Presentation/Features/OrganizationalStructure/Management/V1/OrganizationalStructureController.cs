@@ -95,7 +95,7 @@ public sealed class OrganizationalStructureController(ISender sender) : Controll
     }
 
     [HttpDelete("{id:int}")]
-    [HasPermission(HrPermissions.DeleteOrganizationalStructure)]
+    [HasPermission(HrPermissions.ArchiveOrganizationalStructure)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> Archive(string resource, int id, CancellationToken cancellationToken)
     {
@@ -104,7 +104,7 @@ public sealed class OrganizationalStructureController(ISender sender) : Controll
     }
 
     [HttpPost("{id:int}/restore")]
-    [HasPermission(HrPermissions.DeleteOrganizationalStructure)]
+    [HasPermission(HrPermissions.RestoreOrganizationalStructure)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> Restore(string resource, int id, CancellationToken cancellationToken)
     {

@@ -43,7 +43,7 @@ type DialogMode = "add" | "edit" | "view" | "lifecycle" | "approve" | "reject" |
 
 export default function OrganizationalStructurePage({ resource }: { resource: OrganizationalResource }) {
   const { t, i18n } = useTranslation();
-  const { hasPermission } = usePermissions();
+  const { hasPermission, isReadOnly } = usePermissions();
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(10);
   const [search, setSearch] = useState("");
@@ -57,11 +57,12 @@ export default function OrganizationalStructurePage({ resource }: { resource: Or
   const [addSeed, setAddSeed] = useState<Partial<OrganizationalStructureMutation> | null>(null);
   const canView = hasPermission(permissions.ViewOrganizationalStructure);
   const permissionSet = useMemo(() => ({
-    canCreate: hasPermission(permissions.CreateOrganizationalStructure),
-    canEdit: hasPermission(permissions.EditOrganizationalStructure),
-    canDelete: hasPermission(permissions.DeleteOrganizationalStructure),
-    canApprove: hasPermission(permissions.ApproveJobDescriptions),
-  }), [hasPermission]);
+    canCreate: !isReadOnly && hasPermission(permissions.CreateOrganizationalStructure),
+    canEdit: !isReadOnly && hasPermission(permissions.EditOrganizationalStructure),
+    canArchive: !isReadOnly && hasPermission(permissions.ArchiveOrganizationalStructure),
+    canRestore: !isReadOnly && hasPermission(permissions.RestoreOrganizationalStructure),
+    canApprove: !isReadOnly && hasPermission(permissions.ApproveJobDescriptions),
+  }), [hasPermission, isReadOnly]);
   const queryArgs = useMemo(() => ({
     resource,
     pageNumber: page + 1,
@@ -98,6 +99,7 @@ export default function OrganizationalStructurePage({ resource }: { resource: Or
   };
   const lifecycle = async () => {
     if (!selected) return;
+    if (selected.isDeleted ? !permissionSet.canRestore : !permissionSet.canArchive) return;
     const variables = { resource, id: selected.id };
     if (selected.isDeleted) {
       await restoreMutation.mutateAsync(variables);

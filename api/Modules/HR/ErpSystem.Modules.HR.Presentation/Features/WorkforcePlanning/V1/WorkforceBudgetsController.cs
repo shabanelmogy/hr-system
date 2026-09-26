@@ -43,7 +43,7 @@ public sealed class WorkforceBudgetsController(ISender sender) : ControllerBase
     }
 
     [HttpPost]
-    [HasPermission(HrPermissions.ManageWorkforceBudgets)]
+    [HasPermission(HrPermissions.CreateWorkforceBudgets)]
     [ProducesResponseType(typeof(WorkforceBudgetDetailResponse), StatusCodes.Status201Created)]
     public async Task<IActionResult> Create([FromBody] CreateWorkforceBudgetRequest request, CancellationToken cancellationToken)
     {
@@ -54,7 +54,7 @@ public sealed class WorkforceBudgetsController(ISender sender) : ControllerBase
     }
 
     [HttpPut("{id:int}")]
-    [HasPermission(HrPermissions.ManageWorkforceBudgets)]
+    [HasPermission(HrPermissions.EditWorkforceBudgets)]
     [ProducesResponseType(typeof(WorkforceBudgetDetailResponse), StatusCodes.Status200OK)]
     public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateWorkforceBudgetRequest request, CancellationToken cancellationToken)
     {
@@ -63,7 +63,7 @@ public sealed class WorkforceBudgetsController(ISender sender) : ControllerBase
     }
 
     [HttpPost("{id:int}/submit")]
-    [HasPermission(HrPermissions.ManageWorkforceBudgets)]
+    [HasPermission(HrPermissions.SubmitWorkforceBudgets)]
     public async Task<IActionResult> Submit([FromRoute] int id, [FromBody] WorkforceBudgetActionRequest request, CancellationToken cancellationToken)
     {
         var result = await sender.Send(new SubmitWorkforceBudgetCommand(id, request.RowVersion), cancellationToken);
@@ -71,7 +71,7 @@ public sealed class WorkforceBudgetsController(ISender sender) : ControllerBase
     }
 
     [HttpPost("{id:int}/approve")]
-    [Authorize(Roles = PlatformRoleNames.Admin)]
+    [HasPermission(HrPermissions.ReviewWorkforceBudgets)]
     public async Task<IActionResult> Approve([FromRoute] int id, [FromBody] WorkforceBudgetActionRequest request, CancellationToken cancellationToken)
     {
         var result = await sender.Send(new ApproveWorkforceBudgetCommand(id, request.RowVersion), cancellationToken);
@@ -79,7 +79,7 @@ public sealed class WorkforceBudgetsController(ISender sender) : ControllerBase
     }
 
     [HttpPost("{id:int}/reject")]
-    [HasPermission(HrPermissions.ManageWorkforceBudgets)]
+    [HasPermission(HrPermissions.ReviewWorkforceBudgets)]
     public async Task<IActionResult> Reject([FromRoute] int id, [FromBody] RejectWorkforceBudgetRequest request, CancellationToken cancellationToken)
     {
         var result = await sender.Send(new RejectWorkforceBudgetCommand(id, request.Reason, request.RowVersion), cancellationToken);

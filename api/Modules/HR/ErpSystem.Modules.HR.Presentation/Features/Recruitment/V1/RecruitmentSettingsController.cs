@@ -22,7 +22,7 @@ public sealed class RecruitmentSettingsController(ISender sender) : ControllerBa
     }
 
     [HttpPut]
-    [HasPermission(HrPermissions.ManageJobOpenings)]
+    [HasPermission(HrPermissions.EditRecruitmentSettings)]
     [ProducesResponseType(typeof(RecruitmentSettingsDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> UpdateSettings([FromBody] RecruitmentSettingsDto updatedSettings, CancellationToken cancellationToken)
     {

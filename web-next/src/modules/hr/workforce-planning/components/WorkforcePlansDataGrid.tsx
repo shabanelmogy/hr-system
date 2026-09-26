@@ -39,8 +39,8 @@ export default function WorkforcePlansDataGrid(props: Props) {
       <GridActionsCellItem key="lifecycle" icon={lifecycleIcon(row.status)} label={t(`workforcePlanning.actions.${lifecycleKey(row.status)}`)} disabled={row.isDeleted || (row.status === 2 || row.status === 3 ? !props.permissions.canApprove : [4, 6].includes(row.status) ? !props.permissions.canCreate : !props.permissions.canEdit)} onClick={() => props.onLifecycle(row)} showInMenu />,
       <GridActionsCellItem key="reject" icon={<Undo />} label={t("workforcePlanning.actions.reject")} disabled={row.isDeleted || !props.permissions.canApprove || row.status !== 3} onClick={() => props.onReject(row)} showInMenu />,
       row.isDeleted
-        ? <GridActionsCellItem key="restore" icon={<Restore />} label={t("workforcePlanning.actions.restore")} disabled={!props.permissions.canDelete} onClick={() => props.onRestore(row)} showInMenu />
-        : <GridActionsCellItem key="archive" icon={<Archive />} label={t("workforcePlanning.actions.archive")} disabled={!props.permissions.canDelete || ![1, 5].includes(row.status)} onClick={() => props.onArchive(row)} showInMenu />,
+        ? <GridActionsCellItem key="restore" icon={<Restore />} label={t("workforcePlanning.actions.restore")} disabled={!props.permissions.canRestore} onClick={() => props.onRestore(row)} showInMenu />
+        : <GridActionsCellItem key="archive" icon={<Archive />} label={t("workforcePlanning.actions.archive")} disabled={!props.permissions.canArchive || ![1, 5].includes(row.status)} onClick={() => props.onArchive(row)} showInMenu />,
     ] },
   ], [props, t]);
 

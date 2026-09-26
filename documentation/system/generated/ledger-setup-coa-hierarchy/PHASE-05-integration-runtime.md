@@ -45,7 +45,7 @@ realtime, notification, localization, report, or Import integration is reachable
 | --- | ---: | --- |
 | ledger-setup-coa-hierarchy-master | 4 | `d98c472a1497ad2d7f2e5d96839ed1a1c7fec16d3f6f3c1a45fd083f190be6d8` |
 | ledger-setup-coa-hierarchy-master | 5 | `0976c6ca329e0384e1cafbb08925931731db09b8d9000d03864ee5c72913020d` |
-| ledger-setup-coa-hierarchy-master | 6 | `aa868978610f3e8a3aa72060935719cf3f657c796f10359642b45cc0c244edc5` |
+| ledger-setup-coa-hierarchy-master | 6 | `0d7dd56699efbb0a91fb1cd3b332bb99aef11aa207c01f444594a47914561f5b` |
 | ledger-setup-coa-hierarchy-master | 7 | `7a06d80a788ca9f33ed3c3651f664ddddeade75ccfbc008979ae5eaf90d72150` |
 | ledger-setup-coa-hierarchy-master | 9 | `18d3ec5849cc352024286af9cdf57d35681fe9873a7d9e6495d5afc11cf10506` |
 | ledger-setup-coa-hierarchy-api | 8 | `8dcb5ea99081e32bbd4095112efce6a07842e0058acdc680cf894f4f04a91f47` |

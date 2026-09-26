@@ -1,25 +1,39 @@
 # ReferenceData module
 
-This package is the documentation ownership boundary for the **ReferenceData** module.
-It describes the module's verified runtime foundation and records decisions for
-future capabilities. Shared ERP rules remain in `documentation/system/` and are
-linked rather than copied here.
+This package is the documentation ownership boundary for the **ReferenceData**
+module. It summarizes the current module and points to the feature-specific
+books that remain authoritative for contracts, platform parity, and evidence.
+Shared ERP rules stay in `documentation/system/` and are linked rather than
+copied here.
 
 ## Current status
 
-- Lifecycle: active modular-monolith module.
-- Runtime foundation: six projects, a module bootstrap, and an EF Core context
-  using the `ref` schema.
-- ReferenceData is no longer scaffold-only: Countries, States, Districts and
-  Address Types have implemented domain/API behavior and active Next.js surfaces.
-  Additional capabilities require their own verified contracts and tests.
+- Lifecycle: active, default modular-monolith module, version `1.0.0`.
+- Runtime: six production projects plus a module-owned test project, composed by
+  `ErpSystem.Modules.ReferenceData.ReferenceDataModule`.
+- Persistence: `ReferenceDataDbContext`, the module-owned `ref` schema, a
+  module-specific migrations history table, and an idempotent Egypt geography
+  seed after migration.
+- Capability boundaries: `geography` is global Platform reference data;
+  `addresses` is the tenant-entitlement submodule granted to new tenants.
+- Applied cross-platform features: Countries, States, Districts, and Address
+  Types have API, Next.js, Expo, tests, and canonical evidence.
+- Applied API foundation: Address has company-scoped CQRS and persistence, while
+  owner-link commands and standalone Web/Mobile Address experiences remain
+  deferred under the canonical Address books and central notes.
 
-Start with [ARCHITECTURE.md](ARCHITECTURE.md), then record delivery decisions
-in [DELIVERY-ROADMAP.md](DELIVERY-ROADMAP.md). Platform entry points are kept
-under [api/](api/README.md), [web-next/](web-next/README.md), and
-[mobile-react/](mobile-react/README.md).
+The module is therefore **not scaffold-only**. Start with
+[ARCHITECTURE.md](ARCHITECTURE.md), use the
+[feature catalog](features/README.md) to select a capability, and follow the
+linked project/API/Web/Mobile profiles rather than treating this overview as a
+replacement for them.
 
-Before adding a component, service, or Contract, inventory shared BuildingBlocks
-and module-local reusable pieces. Reuse or extend compatible abstractions and
-record the decision in the feature book. Start new behavior module-local and
-promote it only when it is domain-neutral and used by multiple modules.
+Platform entry points are summarized under [api/](api/README.md),
+[web-next/](web-next/README.md), and [mobile-react/](mobile-react/README.md).
+Delivery status and deferrals are in
+[DELIVERY-ROADMAP.md](DELIVERY-ROADMAP.md).
+
+Before changing a component, service, or Contract, inventory shared
+BuildingBlocks and module-local reusable pieces. Reuse or extend compatible
+abstractions, keep business rules in the owning module, and update the affected
+canonical feature books and required-file manifest in the same change.

@@ -48,7 +48,7 @@ export function OfflineOperationsPage() {
   const { t, i18n } = useTranslation();
   const { user } = useSession();
   const { hasPermission, isReadOnly } = usePermissions();
-  const canManage = hasPermission(permissions.ManageOfflineOperations) && !isReadOnly;
+  const canManage = hasPermission(permissions.EditOfflineOperations) && !isReadOnly;
   const client = useQueryClient();
   const [resetOpen, setResetOpen] = useState(false);
   const [notice, setNotice] = useState<{ severity: "success" | "error" | "warning"; text: string } | null>(null);

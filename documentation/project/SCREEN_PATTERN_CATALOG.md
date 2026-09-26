@@ -29,6 +29,9 @@
 | P-001 Grid/CRUD | Countries `CountriesPage` + `CountriesMultiView` — `Implemented` بخمس طرق عرض Grid/Cards/Chart/Report/Import | Countries `CountriesScreen` — `Implemented` بخمس طرق عرض Table/Cards/Chart/Report/Import | Web list/grid/form/report/import shared components؛ Mobile `AppListScreen`, `AppMultiView`, `AppDataTable`, `AppDataCard`, `AppForm` ومنصة Reporting المشتركة | Report في Reference Data هو Global managed Crystal: `super_admin` + `GlobalCrystalReports:View` فقط، بلا tenant entitlement؛ Tenant reports هي `CrystalReports:View` + accessible Reporting module. Import يتبع create permission والـread-only policy |
 | P-002 Tree + Master/Detail | Cost Centers `CostCentersPage` + `CostCenterTreeDiagram` + `SplitTreeView` — `Implemented` | `CostCentersScreen` + `OrganizationalStructureManagementScreen` + `OrganizationalStructureTreeDiagram` + `AppHierarchicalTree` — `Implemented` | Web `SplitTreeView`؛ Mobile `AppHierarchicalTree` | Web يعرض split view عند توفر المساحة؛ Mobile يستخدم stacked/detail navigation ولا يضغط عمودين داخل الهاتف |
 | P-003 Tabbed multi-section form | Add Tenant في `TenantManagementPage` + `FormTabs` + `MyForm` — `Implemented` | `TenantManagementScreen` + `TenantFormModal` + `AppForm` — `Adapted` | Web `FormTabs`/`MyForm`؛ Mobile `AppForm` و`AppFormTabs` عند اعتماد tabs | Web maps the first invalid field to its tab and focuses it after the tab is mounted. Mobile Add Tenant remains one full-screen stacked form with one validation context; `AppFormTabs` is covered as the reusable primitive, not forced into this flow |
+| P-005 Singleton Settings Editor | Ledger Setup `LedgerSetupResourcePage` لمسار Accounting Company Settings — `Adapted` evidence | `LedgerSetupResourceScreen` + `LedgerSetupForm` لمسار Accounting Company Settings — `Adapted` evidence | Web `PageHeader` + `MyForm`؛ Mobile `AppPageHeader` + `AppForm` | المرجع يثبت رحلة التحميل/التحرير/الحفظ لسجل واحد فقط؛ الـgeneric resource switch والـcatch-all DTO ليسا جزءًا من النمط أو المعمارية المستهدفة |
+| P-006 Scoped Relationship / Mapping Editor | Role Permissions `RolePermissionsPage` + `useRolePermissions` — `Implemented` | `RolePermissionsScreen` + `PermissionModuleCard` — `Adapted` | shared filters, feedback, dirty-state, save/read-only shells | Web يستخدم table/group composition؛ Mobile يستخدم module cards. كلاهما يحافظ على scope، الاختيار، dirty state، الصلاحيات والحفظ الصريح |
+| P-007 Settings Navigation Hub | `LedgerSetupOverviewPage` + Accounting module definition — `Implemented` | `LedgerSetupOverviewScreen` + Accounting module definition — `Implemented` | module navigation, page headers, permission-filtered route manifests | الـHub يكتشف ويفتح الرحلات فقط؛ لا يملك DTO عامًا أو CRUD أو business state للأطفال |
 
 هذه المصفوفة هي سجل حقيقة التنفيذ. لا يجوز تغيير حالة منصة إلى `Implemented`
 من دون مسار مصدر فعلي واختبار أو evidence مناسب، ولا يعني `Adapted` أن المنصة
@@ -207,6 +210,123 @@ Cost Centers وChart of Accounts. الشجرة ليست بديلًا عن عقد
 - لا ينسخ عدد تبويبات Add Tenant أو أسماءها إلى موديول آخر؛ الذي يُنسخ هو
   contract والسلوك العام فقط.
 
+## P-005 — Singleton Settings Editor
+
+**الحالة:** `Active` — راجع في 2026-09-25.
+
+### الاستخدام
+
+يُستخدم عندما تملك الشركة أو الـscope سجل إعداد واحدًا ذا هوية ثابتة، مثل
+`AccountingCompanySettings`. لا تُعرض الـsingleton كقائمة ذات صف وهمي ولا
+تُمنح archive/delete lifecycle لا يملكه عقد المجال.
+
+### المرجع الحالي وحدوده
+
+- Web (`Adapted` evidence):
+  `web-next/src/modules/accounting/ledger-setup/pages/LedgerSetupResourcePage.tsx`.
+- Mobile (`Adapted` evidence):
+  `mobile-react/src/modules/accounting/ledger-setup/presentation/screens/LedgerSetupResourceScreen.tsx`
+  و`mobile-react/src/modules/accounting/ledger-setup/presentation/components/LedgerSetupForm.tsx`.
+- اختبارات boundary/schema الحالية:
+  `web-next/src/modules/accounting/ledger-setup/services/ledgerSetupService.test.ts`،
+  `web-next/src/modules/accounting/ledger-setup/validation/ledgerSetupValidation.test.ts`،
+  `mobile-react/src/modules/accounting/ledger-setup/data/remote/__tests__/ledger-setup-remote-boundary.test.ts`،
+  و`mobile-react/src/modules/accounting/ledger-setup/presentation/validation/ledger-setup-schema.test.ts`.
+
+هذه المراجع تثبت تركيب رحلة singleton الحالية فقط. لا يعتمد النمط
+`resourceName` switch، أو catch-all fields، أو DTO عام. المستهلك المستهدف يجب
+أن يملك service/query/schema/form typed باسمه، وتظل إعادة بناء Ledger Setup
+إلى أطفال typed عملاً مطلوبًا لا يغلقه تسجيل النمط.
+
+### العقد الإلزامي
+
+1. يحمل المسار سجلًا واحدًا للـscope الحالي بعقد GET/PUT أو upsert typed، مع
+   `RowVersion` أو token التزامن عند وجوده.
+2. يفرّق بين loading، unconfigured، configured، load error، save error،
+   forbidden، read-only، وconflict؛ غياب الصف ليس قائمة فارغة.
+3. يستخدم Web `MyForm` والحقول المشتركة، ويستخدم Mobile `AppForm` وحقوله؛
+   تظل Save متاحة وتظهر validation تحت كل حقل مع focus لأول خطأ.
+4. تعتمد selectors على lookups مالكة ومحددة النطاق، ولا تُخزّن labels أو
+   كائنات غير موثوقة بدل المعرفات التي يطلبها العقد.
+5. يحمي dirty navigation، ويعيد baseline بعد الحفظ، ويعيد تحميل الحقيقة
+   الحالية عند conflict. لا يوجد delete/archive إلا إذا أثبته عقد المجال.
+6. يملك feature النصوص والصلاحيات وقواعد dependencies؛ shell المشترك يملك
+   layout وvalidation focus وloading/feedback فقط.
+
+## P-006 — Scoped Relationship / Mapping Editor
+
+**الحالة:** `Active` — راجع في 2026-09-25.
+
+### الاستخدام
+
+يُستخدم لتحرير علاقات أو تعيينات كثيرة داخل scope محدد، مثل Role Permissions،
+Account Mappings، أو قيود أبعاد الحساب، عندما يختار المستخدم عناصر/علاقات ثم
+يحفظ مجموعة مقصودة كوحدة واضحة. لا يستخدم كبديل عام لـCRUD إذا كانت كل علاقة
+aggregate مستقلاً ذا lifecycle منفصل.
+
+### المرجع الحالي
+
+- Web (`Implemented`):
+  `web-next/src/platform/auth/roles/components/RolePermissionsPage.tsx`،
+  `web-next/src/platform/auth/roles/components/role-permissions/`،
+  و`web-next/src/platform/auth/roles/hooks/useRolePermissions.ts`.
+- Mobile (`Adapted`):
+  `mobile-react/src/platform/administration/presentation/roles/permissions/screens/RolePermissionsScreen.tsx`
+  و`mobile-react/src/platform/administration/presentation/roles/permissions/components/PermissionModuleCard.tsx`.
+
+Role Permissions مرجع لتركيب الاختيار/التصفية/dirty-state/read-only والحفظ،
+وليس مصدرًا لحقول Accounting أو قرار replace مقابل versioned mappings. على
+كل مستهلك إضافة اختبارات عقده، لأن وجود المرجع لا يثبت قواعد المجال الجديد.
+
+### العقد الإلزامي
+
+1. يحدد العقد scope، عناصر المصدر، العلاقات الحالية، الفرق dirty، ودلالة
+   الحفظ بدقة: replace-set أو delta أو versioned records؛ لا تستنتج الواجهة ذلك.
+2. تُحمّل source/target capabilities والlookups من المالك الفعلي، وتختفي
+   الخيارات غير المدعومة بدل إظهار placeholders أو معرفات مختلقة.
+3. يفرق UI بين loading، empty source، no matches، partial lookup error، save
+   error، forbidden، read-only، conflict، وsaved baseline.
+4. تحفظ filters/search اختيار المستخدم ولا تفقد تغييرات مخفية بالفلتر. يعرض
+   ملخصًا واضحًا للتغييرات قبل الحفظ عندما تكون المجموعة كبيرة أو حساسة.
+5. يدعم Web table/group layout وMobile stacked cards أو sections، مع تكافؤ
+   كامل في العلاقات والصلاحيات والتحقق، وبدون ضغط table مكتبي داخل الهاتف.
+6. توجد dirty-navigation protection، Save صريح، server-authoritative validation،
+   وإعادة تحميل بعد conflict. لا تعتبر checkbox state المحلية حقيقة مالية.
+
+## P-007 — Settings Navigation Hub / Launcher
+
+**الحالة:** `Active` — راجع في 2026-09-25.
+
+### الاستخدام
+
+يُستخدم لمدخل إعدادات يجمع روابط أطفال مستقلين، مثل Ledger Setup. هو طبقة
+اكتشاف وتنقل وصلاحيات فقط، وليس aggregate أو generic CRUD owner.
+
+### المرجع الحالي
+
+- Web (`Implemented`):
+  `web-next/src/modules/accounting/ledger-setup/pages/LedgerSetupOverviewPage.tsx`
+  و`web-next/src/modules/accounting/moduleDefinition.tsx`؛ ويغطي
+  `web-next/src/modules/accounting/moduleDefinition.test.tsx` تسجيل المسارات.
+- Mobile (`Implemented`):
+  `mobile-react/src/modules/accounting/ledger-setup/presentation/screens/LedgerSetupOverviewScreen.tsx`
+  و`mobile-react/src/modules/accounting/moduleDefinition.ts`.
+
+### العقد الإلزامي
+
+1. كل card/row يربط Screen ID وroute وtranslation وView permission/submodule
+   معروفًا. لا تظهر وجهة ميتة أو طفل Deferred كميزة جاهزة.
+2. يخفي أو يعطل الوجهات وفق سياسة المنتج الموثقة، بينما يبقى API authorization
+   هو السلطة. global read-only يمنع الكتابة داخل الطفل ولا يحول الـHub إلى form.
+3. يعرض loading/error/forbidden للـroute manifest أو entitlements إن كانت
+   ديناميكية، ويحافظ على back/breadcrumb behavior وdeep links.
+4. يستخدم responsive cards/list مع ترتيب منطقي في RTL، أسماء قابلة للوصول،
+   وحالة focus واضحة. Mobile لا ينسخ grid مكتبيًا ضيقًا.
+5. لا يستدعي child CRUD services ولا يملك catch-all DTO أو `resourceName`
+   dispatch. كل طفل يحتفظ بخدمته واستعلاماته ونموذجه وعقده typed.
+6. يختبر تسجيل المسارات، permission filtering، عدم وجود links ميتة، والتنقل
+   إلى طفل ممثل على كل منصة مطلوبة.
+
 ## مصفوفة اختيار النمط
 
 | شكل البيانات والرحلة | النمط المبدئي | قرار يجب تسجيله |
@@ -214,8 +334,11 @@ Cost Centers وChart of Accounts. الشجرة ليست بديلًا عن عقد
 | Collection مسطحة مع CRUD وخدمات بحث/ترقيم | P-001 Grid/CRUD | هل هي بيانات جغرافية تقبل مرجع Countries ذي الخمس طرق، أم أن Chart/Report/Import مصنفة صراحة Deferred/Excluded؟ |
 | Hierarchy مع اختيار عقدة وتفاصيل | P-002 Tree + Master/Detail | هل النقل أو إعادة الترتيب مسموحان بعقد مستقل؟ |
 | Aggregate أو إعداد متعدد الأقسام يحفظ كوحدة | P-003 Tabbed Form | tabs أم stacked على الموبايل؟ وهل توجد تبعيات بين الأقسام؟ |
+| سجل إعداد واحد لكل company/scope | P-005 Singleton Settings Editor | ما حالة unconfigured؟ وما عقد GET/PUT والتزامن؟ |
+| تحرير علاقات أو mappings داخل scope | P-006 Scoped Relationship / Mapping Editor | هل الحفظ replace-set أم delta أم records فعالة/versioned؟ |
+| Hub لاكتشاف إعدادات أطفال مستقلة | P-007 Settings Navigation Hub | كيف تُصفى الوجهات بالصلاحيات؟ وهل كل route فعلي ومسجل؟ |
 | Workflow مرتب يحتاج إكمال خطوة قبل التالية | Candidate P-004 Stepper | لا يعتمد حتى يُسجل reference وعقد التحقق |
-| Relationship editor أو شاشة تشغيلية خاصة | Candidate | لا يُجبر على نمط قريب؛ سجّل reference وسبب الاستثناء |
+| شاشة تشغيلية خاصة لا تطابق الأنماط السابقة | Candidate | لا تُجبر على نمط قريب؛ سجّل reference وسبب الاستثناء |
 
 ## بروتوكول تسجيل نمط جديد أو تحديث نمط قائم
 
@@ -274,3 +397,4 @@ Cost Centers وChart of Accounts. الشجرة ليست بديلًا عن عقد
 | 2026-09-22 | ربط كل نمط بمرجعي Web/Mobile وإضافة حالات Implemented/Adapted/Deferred/Excluded وقاعدة تحديث النظيرين | كل الشاشات الجديدة أو المعاد بناؤها |
 | 2026-09-23 | إغلاق P1/P2/P3: Global Report بوابة مشتركة role+permission بلا tenant query، Tenant Report بوابة permission+Reporting module، واختبارات تركيب Cost Center وFormTabs وAdd Tenant على المنصتين | Countries، States، Districts، Address Types، Organizational Structure، Cost Centers، Add Tenant |
 | 2026-09-23 | توحيد Local Mock Data كقدرة في shell النماذج: كل رحلة إدخال قابلة للكتابة تملأ draft محليًا صالحًا دون submit/persist أو اختلاق identity/scope/concurrency؛ الشاشات read-only/report/query-only لا تصطنع بيانات، ولا تستخدم feature flags مبنية على NODE_ENV/DEV | Accounting Currency، Fiscal Years، COA Accounts، Hierarchy Levels، وكل مستهلك لاحق لـMyForm/AppForm |
+| 2026-09-25 | اعتماد P-005 Singleton Settings Editor وP-006 Scoped Relationship/Mapping Editor وP-007 Settings Navigation Hub بمراجع Web/Mobile فعلية وحدود تمنع اعتماد Ledger Setup generic renderer كمعمارية مستهدفة | Ledger Setup Company Settings، Dimensions Constraints، Link Accounts، Ledger Setup Overview، وأي مستهلك لاحق مطابق |

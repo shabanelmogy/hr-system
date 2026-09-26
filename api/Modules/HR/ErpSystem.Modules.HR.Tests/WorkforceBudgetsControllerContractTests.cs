@@ -24,11 +24,11 @@ public sealed class WorkforceBudgetsControllerContractTests
         AssertBudgetRoute<HttpGetAttribute>(nameof(WorkforceBudgetsController.GetById), "{id:int}", HrPermissions.ViewWorkforceBudgets);
         AssertBudgetRoute<HttpGetAttribute>(nameof(WorkforceBudgetsController.GetSourcePlans), "source-plans", HrPermissions.ViewWorkforceBudgets);
         AssertBudgetRoute<HttpGetAttribute>(nameof(WorkforceBudgetsController.GetSourcePlanById), "source-plans/{planId:int}", HrPermissions.ViewWorkforceBudgets);
-        AssertBudgetRoute<HttpPostAttribute>(nameof(WorkforceBudgetsController.Create), null, HrPermissions.ManageWorkforceBudgets);
-        AssertBudgetRoute<HttpPutAttribute>(nameof(WorkforceBudgetsController.Update), "{id:int}", HrPermissions.ManageWorkforceBudgets);
-        AssertBudgetRoute<HttpPostAttribute>(nameof(WorkforceBudgetsController.Submit), "{id:int}/submit", HrPermissions.ManageWorkforceBudgets);
-        AssertBudgetAdminRoute<HttpPostAttribute>(nameof(WorkforceBudgetsController.Approve), "{id:int}/approve");
-        AssertBudgetRoute<HttpPostAttribute>(nameof(WorkforceBudgetsController.Reject), "{id:int}/reject", HrPermissions.ManageWorkforceBudgets);
+        AssertBudgetRoute<HttpPostAttribute>(nameof(WorkforceBudgetsController.Create), null, HrPermissions.CreateWorkforceBudgets);
+        AssertBudgetRoute<HttpPutAttribute>(nameof(WorkforceBudgetsController.Update), "{id:int}", HrPermissions.EditWorkforceBudgets);
+        AssertBudgetRoute<HttpPostAttribute>(nameof(WorkforceBudgetsController.Submit), "{id:int}/submit", HrPermissions.SubmitWorkforceBudgets);
+        AssertBudgetRoute<HttpPostAttribute>(nameof(WorkforceBudgetsController.Approve), "{id:int}/approve", HrPermissions.ReviewWorkforceBudgets);
+        AssertBudgetRoute<HttpPostAttribute>(nameof(WorkforceBudgetsController.Reject), "{id:int}/reject", HrPermissions.ReviewWorkforceBudgets);
 
         var envelopeConstructor = Assert.Single(typeof(PositionEnvelopesController).GetConstructors());
         Assert.Equal([typeof(ISender)], envelopeConstructor.GetParameters().Select(parameter => parameter.ParameterType));

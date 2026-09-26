@@ -80,11 +80,11 @@ Record one outcome:
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| accounting-ledger-setup-master | 8 | `5010a84fb7c0439c4063c5c9962bb97fb5bea17c52fe310a943dd589c35304bd` |
-| accounting-ledger-setup-master | 9 | `4614badb58c2768d465aac681ad22c3f2fa4c16ee17cc05a8fe62177d99374a7` |
+| accounting-ledger-setup-master | 8 | `4b12f431b5a5534b82d13f0645a56b7f91b345e4a9338b9513e0958389746876` |
+| accounting-ledger-setup-master | 9 | `7054a939e6cc2faa4f8f97e8271de948ae6139f7049594b236d8d1c430f81d6e` |
 | accounting-ledger-setup-master | 10 | `b4085e540c58462cf0c23318c9f23ab60d94448d3b0dc572006266170445f30d` |
 | accounting-ledger-setup-web | 12 | `e413f46c08ba02958ed38359eef8c959607ed7cf151ea359ea3678a143ddc1e2` |
 | accounting-ledger-setup-web | 13 | `2dbb41708fc772c97f51356c9903a258148eff82d8f0eca2499e8fc4c3d081c1` |
-| accounting-ledger-setup-web | 14 | `e95b2ca525612aa95a65dbb6e70782517a83f8dd97102442ceee56d7b8ff3efc` |
-| accounting-ledger-setup-mobile | 14 | `74fb4cb2b31e32a72d3a6edfb7d95bc52239683551f44fe7ba47e18652d784a7` |
+| accounting-ledger-setup-web | 14 | `53884f83102bbf7a4c16006dfae115b37fe2838fe3863c6ce826337ece4cb3cc` |
+| accounting-ledger-setup-mobile | 14 | `8163ce60439f08b3672e819111412fd25cd41fc01f3ed4b07d68eb5e8559233a` |
 | accounting-ledger-setup-mobile | 15 | `bf90a02cc0efd84b676907c5a05d0d311c1e7d41561635afe08363e1cefa84ef` |

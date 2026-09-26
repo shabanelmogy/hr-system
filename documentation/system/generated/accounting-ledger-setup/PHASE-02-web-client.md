@@ -106,21 +106,21 @@ failure into partial success.
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| accounting-ledger-setup-master | 3 | `dca7efc3933fbfad21faec4412e0f5fbce8747b3881d5af2b14bb3210b1cbe45` |
+| accounting-ledger-setup-master | 3 | `0fe7b836f7c51edaace81656d19dd76754de5fefdb1761a92e1bb4de7b632c0c` |
 | accounting-ledger-setup-master | 4 | `53f38a770f4b9c229d5f924b56a2be70be0db253054c0b998b0c21ec8c2ca0ca` |
 | accounting-ledger-setup-master | 6 | `4c420eef9bb4f80999de2e4e4bebf23f4d9b3934746b134431e3cd97be170dbe` |
-| accounting-ledger-setup-master | 7 | `d164de4b8addd9575c48cd3c43367a86fd03b0a3632109db487388e47d560bec` |
+| accounting-ledger-setup-master | 7 | `b92882805c347017f5b031c78910e2aee911d3c40803f8e830e62fefbcfde520` |
 | accounting-ledger-setup-web | 1 | `ff0807989e460de1494195417eb17b7d4bc481688c8d18a1addf17c945cdd2db` |
 | accounting-ledger-setup-web | 2 | `9a77fa3eeeb87e9be4e27b877282a7d198c5bfd9dda3d4e05689273b51887341` |
 | accounting-ledger-setup-web | 3 | `d1074886f61180b09629d42fc21b274845adf9536008daa2276340faf1155f16` |
 | accounting-ledger-setup-web | 4 | `a79e3dec3d0d3e2a9a901e683e1f7827d48716a1ade104bda3a4231a7e2c630e` |
 | accounting-ledger-setup-web | 5 | `7ae2e4bde1fac5519cf3de9fc679e46fba85526863af0fd9ad74aaea31f142b5` |
 | accounting-ledger-setup-web | 6 | `caa25114c13584f5c63a0d62adfe0f841af2efa070a8a061acae55ae860b3dae` |
-| accounting-ledger-setup-web | 7 | `ee4dbb8fbf48ca96c8344cbd4bbf822e11232f1468c8e3f41b1a87d9a23448af` |
+| accounting-ledger-setup-web | 7 | `0443077bf0a9094b2d3e788b3734293e820531d3f2ec242032ca3cb2a7fb9e90` |
 | accounting-ledger-setup-web | 8 | `685a2b7b584057016a5604aaabd9119f073dfe5af18c9edb020de5630782624a` |
 | accounting-ledger-setup-web | 9 | `e6e40f5106ad2ec463abf8fc312ef97f5f206e1e95f8fafbe40194c72c508623` |
-| accounting-ledger-setup-web | 10 | `9e280560fb080cd3f4191b6398bd457150fb3e776fd24e21312c31fd2b4759d5` |
-| accounting-ledger-setup-web | 11 | `6bcce6ce92cd0f90bcbb489422a5f906e380e7758d920a507bee4d238c798818` |
+| accounting-ledger-setup-web | 10 | `0d95f05b0868ba0ea4d5606cfa5d95543bcfb0c4c9ae6a899dc7c2e3fb4a64d0` |
+| accounting-ledger-setup-web | 11 | `933fd9a1559c8676e1cd83d2a02e3a9121cfd335f5095f669420d849331d40da` |
 | accounting-ledger-setup-web | 12 | `e413f46c08ba02958ed38359eef8c959607ed7cf151ea359ea3678a143ddc1e2` |
 | accounting-ledger-setup-web | 13 | `2dbb41708fc772c97f51356c9903a258148eff82d8f0eca2499e8fc4c3d081c1` |
-| accounting-ledger-setup-web | 14 | `e95b2ca525612aa95a65dbb6e70782517a83f8dd97102442ceee56d7b8ff3efc` |
+| accounting-ledger-setup-web | 14 | `53884f83102bbf7a4c16006dfae115b37fe2838fe3863c6ce826337ece4cb3cc` |
