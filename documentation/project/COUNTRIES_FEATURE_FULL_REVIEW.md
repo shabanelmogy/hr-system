@@ -124,7 +124,7 @@ Both clients gate visible controls and direct handlers. The API controller and
 | Input | API rule | Web | Mobile |
 |---|---|---|---|
 | Page | One-based, minimum 1 | Zero-based UI converted in query mapper | Zero-based UI converted with `toApiPageNumber` |
-| Size | 1-5000 for the adaptive web read; ordinary pages remain small | Default 10; client through 5000, server above | Table 5, Cards 3; options 3/5/10 |
+| Size | API accepts 1-5000; interactive pages remain small | Default 10; options 5/10/25/50; always server-paged | Table 5, Cards 3; options 3/5/10 |
 | Search | Trimmed, maximum 200 | Controlled debounced text | Controlled shared 350 ms debounce |
 | Search field | Seven-field allow-list | User-selectable | API default `all` |
 | Operator | Six-operator allow-list | User-selectable | API default `contains` |
@@ -328,6 +328,7 @@ pixel-identical UI.
 | C-F09 | Web bulk | Resolved: oversized eligible selections are rejected at 100 with localized feedback and rechecked by direct submit handlers. | Mirror API limits without truncation; keep API validation authoritative. |
 | C-F10 | Web loading | Resolved: background refetch preserves current Grid/Card/Chart content and shows a non-destructive progress indicator. | Never conflate initial loading with background fetching. |
 | C-F11 | Web import | Resolved: Country and State Import submit handlers enforce read-only and feature create permission directly; State keeps Countries lookup permission separate. | UI visibility is never the only mutation guard. |
+| C-F13 | Web pagination | Resolved: an equivalent `sortModel` array received a new identity during the page-2 loading render, so MUI emitted a sort change and reset its controlled pager to page zero after the request had succeeded. Shared Grid code now stabilizes sort-model identity and row count, owns no competing server clamp, and has a real descending-order browser regression. | Preserve one server page writer, stable controlled-model identity, stable loading totals, and the existing centered record navigator for every Grid consumer. |
 | C-M01 | Mobile | Resolved: unexposed currency/state-presence filter state and serialization were removed from the presented mobile contract. | Never retain active criteria without visible controls. |
 | C-M02 | Mobile | Resolved: the unused detail hook/key were removed because the list row contains every mutable form field. | Hydrate detail only when the list is not authoritative. |
 | C-M03 | Mobile tests | Resolved: Countries and States now cover screen composition/actions/permissions and mutation transport/invalidation. | Keep representative integration tests beside boundary tests. |

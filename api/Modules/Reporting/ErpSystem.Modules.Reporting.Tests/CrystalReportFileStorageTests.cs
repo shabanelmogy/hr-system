@@ -37,10 +37,12 @@ public sealed class CrystalReportFileStorageTests
                 source.Length,
                 () => new MemoryStream(source, writable: false));
 
-            var result = await storage.StoreAsync(upload, CancellationToken.None);
+            var result = await storage.StoreAsync("countries", upload, CancellationToken.None);
 
             Assert.True(result.IsSuccess);
             Assert.NotNull(result.File);
+            Assert.Equal(1, result.File.ValidationContractSchemaVersion);
+            Assert.Equal(new string('a', 64), result.File.ValidationContractFingerprint);
             var storedPath = Path.Combine(
                 contentRoot, "App_Data", "CrystalReports", result.File.StorageKey);
             Assert.True(File.Exists(storedPath));
@@ -62,10 +64,17 @@ public sealed class CrystalReportFileStorageTests
     private sealed class AcceptingInspector : ICrystalReportInspector
     {
         public Task<CrystalReportInspection?> InspectAsync(
+            string entityKey,
             FileUpload upload,
             CancellationToken cancellationToken) =>
             Task.FromResult<CrystalReportInspection?>(new(
-                true, "Countries", null, null));
+                true,
+                "Countries",
+                null,
+                null,
+                1,
+                new string('a', 64),
+                CrystalReportInspectionFailure.None));
     }
 
     [Fact]
@@ -88,6 +97,7 @@ public sealed class CrystalReportFileStorageTests
                 new TestWebHostEnvironment(contentRoot));
             byte[] source = [0xD0, 0xCF, 0x11, 0xE0, 0xA1, 0xB1, 0x1A, 0xE1];
             var result = await storage.StoreAsync(
+                "countries",
                 new FileUpload(
                     "Countries.rpt",
                     "application/octet-stream",

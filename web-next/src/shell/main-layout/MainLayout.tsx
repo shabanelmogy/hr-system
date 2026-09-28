@@ -13,7 +13,7 @@ import * as React from "react";
 import { useTranslation } from "react-i18next";
 import { usePathname } from "next/navigation";
 
-import { appRoutes } from "@/config/routes";
+import { appRoutes, rolePermissionsRoutePrefix } from "@/config/routes";
 import { useSession } from "@/lib/auth/SessionContext";
 import { requiredModuleForPath } from "@/platform/modules/route-access";
 import { useModuleTranslations } from "@/platform/modules/translations";
@@ -28,7 +28,13 @@ const fallbackSidebarContextValue = {
   setOpen: (() => undefined) as React.Dispatch<React.SetStateAction<boolean>>,
 };
 
-const MainLayout = ({ children }: { children: React.ReactNode }) => (
+interface MainLayoutProps {
+  children: React.ReactNode;
+  contextActions?: React.ReactNode;
+  compactContextActions?: React.ReactNode;
+}
+
+const MainLayout = ({ children, contextActions, compactContextActions }: MainLayoutProps) => (
   <React.Suspense
     fallback={(
       <SidebarContext.Provider value={fallbackSidebarContextValue}>
@@ -36,11 +42,16 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => (
       </SidebarContext.Provider>
     )}
   >
-    <PathAwareMainLayout>{children}</PathAwareMainLayout>
+    <PathAwareMainLayout
+      contextActions={contextActions}
+      compactContextActions={compactContextActions}
+    >
+      {children}
+    </PathAwareMainLayout>
   </React.Suspense>
 );
 
-const PathAwareMainLayout = ({ children }: { children: React.ReactNode }) => {
+const PathAwareMainLayout = ({ children, contextActions, compactContextActions }: MainLayoutProps) => {
   const theme = useTheme();
   const desktopNavigation = useMediaQuery(theme.breakpoints.up("md"));
   const { t } = useTranslation();
@@ -59,6 +70,7 @@ const PathAwareMainLayout = ({ children }: { children: React.ReactNode }) => {
     pathname.startsWith(`${appRoutes.modules.hr.workforcePlanning.index}/`) ||
     pathname === appRoutes.modules.hr.attendanceDevices.index ||
     pathname.startsWith(`${appRoutes.modules.hr.attendanceDevices.index}/`) ||
+    (desktopNavigation && pathname.startsWith(`${rolePermissionsRoutePrefix}/`)) ||
     isSuperAdminDashboard ||
     pathname === appRoutes.platform.superAdmin.tenants;
   const sidebarScope = dedicatedLayoutRoute ? appRoutes.shell.basicData : "main";
@@ -128,6 +140,8 @@ const PathAwareMainLayout = ({ children }: { children: React.ReactNode }) => {
           handleDrawerToggle={handleDrawerToggle}
           onHeightChange={setToolbarHeight}
           showSidebarToggle={!isModuleLauncher}
+          contextActions={contextActions}
+          compactContextActions={compactContextActions}
         />
 
         {!isModuleLauncher && (

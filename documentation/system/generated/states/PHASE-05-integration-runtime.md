@@ -44,9 +44,9 @@ realtime, notification, localization, report, or Import integration is reachable
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
 | states-master | 4 | `5a6d15c81abe80fbc5e13715f385f8a978b6482153ba7cec90474f46b6886ebf` |
-| states-master | 5 | `885ba01b409f605e650990d649c44935897caed196b1c3edaf44f56297bc25f6` |
+| states-master | 5 | `002d36cfa33f128930ba6d0987b3a52e2fb1dae047686ff1921e5c841bde7f1d` |
 | states-master | 6 | `b8c91c53fff7908b583e3690463b7effdbab5394ed9d327133e8c755d3234223` |
-| states-master | 7 | `6371fb99e0ed19e3c7ff227b4464958214689d132873b2be717901c0742af044` |
+| states-master | 7 | `b5da7829b71468e37781ede303a63f4d1427b75982c54dc61b24c700c3a5ba8e` |
 | states-master | 8 | `103cda8ceabc6cdb194149434e646d558fac575baaa20e3f693ba7c38737ca22` |
 | states-api | 8 | `4778b66ab2e8bc98acc1502c1988db12fa425ebdba2caebe7e6a0fa0ff427221` |
 | states-api | 9 | `fa29e6b6d508b4adf2fbee147d4cdd2e0520800e9974aba97afacde7dd386ed5` |

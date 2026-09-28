@@ -2,6 +2,7 @@ using System.Net;
 using System.Text;
 using ErpSystem.BuildingBlocks.Context;
 using ErpSystem.Modules.Platform.Contracts.Files.Models;
+using ErpSystem.Modules.Reporting.Application.Features.Analytics.CrystalReports.Contracts;
 using ErpSystem.Modules.Reporting.Infrastructure.Features.Analytics.CrystalReports.Storage;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
@@ -10,6 +11,57 @@ namespace ErpSystem.Modules.Reporting.Tests;
 
 public sealed class CrystalReportInspectorClientTests
 {
+    [Fact]
+    public async Task InspectAsync_SendsEntityKey_AndReturnsCurrentContractEvidence()
+    {
+        using var httpClient = CreateHttpClient(new CallbackHandler(request =>
+        {
+            var multipart = Assert.IsType<MultipartFormDataContent>(request.Content);
+            Assert.Contains(multipart, part =>
+                string.Equals(part.Headers.ContentDisposition?.Name?.Trim('"'), "entityKey", StringComparison.Ordinal));
+            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(
+                    "{\"isValid\":true,\"title\":\"Countries\",\"subject\":null," +
+                    "\"hasSavedData\":false,\"hasEmbeddedCredentials\":false," +
+                    "\"subreportCount\":0,\"contractSchemaVersion\":1," +
+                    "\"contractFingerprint\":\"" + new string('a', 64) + "\",\"failure\":0}",
+                    Encoding.UTF8,
+                    "application/json")
+            });
+        }));
+        var client = CreateClient(httpClient);
+
+        var result = await client.InspectAsync("countries", CreateUpload(), CancellationToken.None);
+
+        Assert.NotNull(result);
+        Assert.True(result.IsValid);
+        Assert.Equal(1, result.ContractSchemaVersion);
+        Assert.Equal(new string('a', 64), result.ContractFingerprint);
+        Assert.Equal(CrystalReportInspectionFailure.None, result.Failure);
+    }
+
+    [Fact]
+    public async Task InspectAsync_MapsRuntimeSchemaMismatchWithoutLeakingDetails()
+    {
+        using var httpClient = CreateHttpClient(new CallbackHandler(_ => Task.FromResult(
+            new HttpResponseMessage(HttpStatusCode.BadRequest)
+            {
+                Content = new StringContent(
+                    "{\"code\":\"crystal_runtime_schema_mismatch\",\"message\":\"internal detail\"}",
+                    Encoding.UTF8,
+                    "application/json")
+            })));
+        var client = CreateClient(httpClient);
+
+        var result = await client.InspectAsync("countries", CreateUpload(), CancellationToken.None);
+
+        Assert.NotNull(result);
+        Assert.False(result.IsValid);
+        Assert.Equal(CrystalReportInspectionFailure.SchemaMismatch, result.Failure);
+        Assert.Equal("Crystal runtime rejected the report.", result.ValidationReason);
+    }
+
     [Fact]
     public async Task InspectAsync_ReturnsUnavailableForMalformedRuntimeJson()
     {
@@ -20,7 +72,7 @@ public sealed class CrystalReportInspectorClientTests
             })));
         var client = CreateClient(httpClient);
 
-        var result = await client.InspectAsync(CreateUpload(), CancellationToken.None);
+        var result = await client.InspectAsync("countries", CreateUpload(), CancellationToken.None);
 
         Assert.Null(result);
     }
@@ -38,7 +90,7 @@ public sealed class CrystalReportInspectorClientTests
             })));
         var client = CreateClient(httpClient, maxInspectionResponseSizeBytes: 16);
 
-        var result = await client.InspectAsync(CreateUpload(), CancellationToken.None);
+        var result = await client.InspectAsync("countries", CreateUpload(), CancellationToken.None);
 
         Assert.Null(result);
     }
@@ -55,7 +107,7 @@ public sealed class CrystalReportInspectorClientTests
             new TestExecutionContext("crystal-test-correlation"),
             NullLogger<CrystalReportInspectorClient>.Instance);
 
-        var result = await client.InspectAsync(CreateUpload(), CancellationToken.None);
+        var result = await client.InspectAsync("countries", CreateUpload(), CancellationToken.None);
 
         Assert.Null(result);
     }

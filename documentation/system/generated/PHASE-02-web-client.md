@@ -39,7 +39,7 @@ Execution references:
 - [ ] Existing reusable components and their tests were inspected before adding or replacing UI.
 - [ ] Grid uses the shared `MyDataGrid`/`GridFooter` pagination unless an explicit product exception is recorded.
 - [ ] Client and server Grids render the same shared record-navigation footer; server mode fetches an adjacent page only when navigation crosses a record boundary.
-- [ ] Adaptive pagination uses client mode only with the complete result at 5000 rows or fewer; larger or partially loaded results stay in server mode.
+- [ ] Server-managed lists request one authoritative page, preserve the previous page while fetching, and never clamp against a loading/missing/unknown total.
 - [ ] Shared-component changes preserve behavior and are verified against every known consumer.
 - [ ] Search column, condition, input, and reset controls align and share control height.
 - [ ] Grid options are the final toolbar item and own column visibility, density, status, archive, and restore actions where specified.
@@ -106,7 +106,7 @@ failure into partial success.
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| master | 3 | `8514635d9b88b4e74c315a3f0b0860314393524012944996853cce1ab76195cd` |
+| master | 3 | `20ba989c0a7bd8701d9ea7c60bf6c8096f744f019efe212a4163e7b1193a84f3` |
 | master | 4 | `5313466cc23f4cd78d346588b46a10c8f3459953defddd6c00a05dc22f4ad6c5` |
 | master | 6 | `b7fb453c6be690cf10f98e85664f30fb55fb590e628b0f8a0435f54cf67058ac` |
 | master | 7 | `e603de6e96ed32d995c8cf0eeb698f377a3da508a9febf3d500377754e915c84` |
@@ -114,13 +114,13 @@ failure into partial success.
 | web | 2 | `7918c07be1512c532f960cfdf0c1ff8af97542f1f3ceaf8e87a26eecb1accd08` |
 | web | 3 | `8ed626078fb4bfcf82f49bef3053e0a706c11d9801738c6e797befd29b29df53` |
 | web | 4 | `d65a1f9e04c4f9445a29a6fd80d6416d04bedf0d32cafe2d997870c485938730` |
-| web | 5 | `a6c9e3d832ae664e015d81d738ac49b1fcb7fd85d76d57eb438f5f10e619be81` |
+| web | 5 | `9d468d1b1f98ccc38d9b1ce68e87c8555385a807433f9b39fef824ed5694c6af` |
 | web | 6 | `90759ad423b1224c2285653dcb646b68398ac0418ac66869a8c0d1dc04534ef4` |
 | web | 7 | `f9f1e9693346be686ff0effa80374e6f012a385ee00d622e1a3df1168dd8126a` |
 | web | 8 | `43a7e4cb95554e828d56afdc3c933a1b1f224531dc5829a1c6d0b31e25f632fe` |
 | web | 9 | `4da29b144dca03553c2568393fde9b32e14b1782bcd53ce7244453d4c9510f97` |
 | web | 10 | `dfca66fe993ca501dfd506da6673879ea9c49d5f9fa8fcd1050486f4346ffaeb` |
 | web | 11 | `e8a121214de50a2aa4eb5c7d4d55f6ceb0024cca72c23afec1f636c1b29dc7bf` |
-| web | 12 | `7e1719746bfe470e8b8e620c2aa6ae5618be17d388c4a6fdb1a58f9aa7d72ae8` |
-| web | 13 | `db7af0d288356f138e14f5fa1ab2b77dd060bc65ef6e401965f0a2e831d5b546` |
+| web | 12 | `86dfb0a78a771e2bd7e2c6f6ed760e7e143c70d2eed6cc0f4aebd272dcae7814` |
+| web | 13 | `5082c41cade66646c563cab5418dc9750f474641f021b7f1950a530b7582c961` |
 | web | 14 | `80765976d54ff8e1c218832a3dbd4d3643fda41d5caa77f3878160e71213626c` |

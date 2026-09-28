@@ -5,6 +5,8 @@ using ErpSystem.Modules.Reporting.Application.Features.Analytics.CrystalReports.
 using ErpSystem.Modules.Reporting.Infrastructure.Features.Analytics.CrystalReports.Persistence;
 using ErpSystem.Modules.Reporting.Infrastructure.Features.Analytics.CrystalReports.Storage;
 using Microsoft.Extensions.Options;
+using System.Data;
+using System.Xml;
 
 namespace ErpSystem.Modules.Reporting.Tests;
 
@@ -34,6 +36,63 @@ public sealed class CrystalReportDataSourceTests
         Assert.Contains("FiscalPeriodSequence", result.Data.Xml, StringComparison.Ordinal);
         Assert.Contains("FiscalPeriodStatus", result.Data.Xml, StringComparison.Ordinal);
         Assert.Contains("FY-2027-P01", result.Data.Xml, StringComparison.Ordinal);
+
+        var dataSet = new DataSet();
+        var settings = new XmlReaderSettings
+        {
+            DtdProcessing = DtdProcessing.Prohibit,
+            XmlResolver = null
+        };
+        using var text = new StringReader(result.Data.Xml);
+        using var reader = XmlReader.Create(text, settings);
+        dataSet.ReadXml(reader, XmlReadMode.ReadSchema);
+        var table = Assert.Single(dataSet.Tables.Cast<DataTable>());
+        Assert.Equal(16, table.Columns.Count);
+        Assert.All(table.Columns.Cast<DataColumn>().Take(8), column => Assert.False(column.AllowDBNull));
+        Assert.All(table.Columns.Cast<DataColumn>().Skip(8), column => Assert.True(column.AllowDBNull));
+    }
+
+    [Theory]
+    [InlineData("countries")]
+    [InlineData("states")]
+    [InlineData("districts")]
+    [InlineData("addresstypes")]
+    [InlineData("fiscalyears")]
+    public async Task BuildAsync_AllRegisteredProvidersMatchCanonicalDataSetSchema(string entityKey)
+    {
+        var source = CreateSource(new RecordingReferenceDataSource());
+
+        var result = await source.BuildAsync(
+            entityKey,
+            new Dictionary<string, string?>(),
+            CancellationToken.None);
+
+        Assert.True(result.IsSuccess);
+        Assert.NotNull(result.Data);
+    }
+
+    [Fact]
+    public void Providers_RowLimitsAndFiltersMatchCanonicalContract()
+    {
+        var referenceData = new RecordingReferenceDataSource();
+        var providers = new CrystalReportDataProviderBase[]
+        {
+            new CountriesCrystalReportDataProvider(referenceData),
+            new StatesCrystalReportDataProvider(referenceData),
+            new DistrictsCrystalReportDataProvider(referenceData),
+            new AddressTypesCrystalReportDataProvider(referenceData),
+            new FiscalYearsCrystalReportDataProvider(new RecordingAccountingDataSource())
+        };
+        var registry = ManagedCrystalReportContractRegistry.LoadEmbedded();
+
+        foreach (var provider in providers)
+        {
+            var contract = registry.GetRequired(provider.EntityKey);
+            Assert.Equal(contract.MaxRows, provider.MaximumRowCount);
+            Assert.True(
+                contract.Filters.ToHashSet(StringComparer.OrdinalIgnoreCase)
+                    .SetEquals(provider.SupportedFilters));
+        }
     }
 
     [Fact]

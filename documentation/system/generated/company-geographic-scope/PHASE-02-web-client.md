@@ -39,7 +39,7 @@ Execution references:
 - [ ] Existing reusable components and their tests were inspected before adding or replacing UI.
 - [ ] Grid uses the shared `MyDataGrid`/`GridFooter` pagination unless an explicit product exception is recorded.
 - [ ] Client and server Grids render the same shared record-navigation footer; server mode fetches an adjacent page only when navigation crosses a record boundary.
-- [ ] Adaptive pagination uses client mode only with the complete result at 5000 rows or fewer; larger or partially loaded results stay in server mode.
+- [ ] Server-managed lists request one authoritative page, preserve the previous page while fetching, and never clamp against a loading/missing/unknown total.
 - [ ] Shared-component changes preserve behavior and are verified against every known consumer.
 - [ ] Search column, condition, input, and reset controls align and share control height.
 - [ ] Grid options are the final toolbar item and own column visibility, density, status, archive, and restore actions where specified.

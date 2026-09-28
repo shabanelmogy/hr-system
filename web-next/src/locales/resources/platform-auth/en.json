@@ -77,6 +77,11 @@
     "permissionsSubtitle": "Grant only the access this role needs, then save the complete permission set.",
     "permissionsReadOnly": "Review the effective permission set for this role.",
     "permissionWorkspace": "Permission workspace",
+    "businessModuleNavigation": "Modules",
+    "chooseBusinessModule": "Choose a module",
+    "searchBusinessModules": "Search modules",
+    "noBusinessModulesMatch": "No modules match this search.",
+    "moduleScreensCount": "{{count}} screens",
     "readOnlyMode": "Read only",
     "editingEnabled": "Editing enabled",
     "permissionCoverage": "Permission coverage",
@@ -111,6 +116,17 @@
     "savePermissions": "Save permissions",
     "archiveTitle": "Archive role?",
     "archiveDescription": "The role will no longer be assignable and can be restored later.",
+    "businessModules": {
+      "accounting": "Accounting",
+      "contacts": "Contacts",
+      "crm": "CRM",
+      "hr": "Human Resources",
+      "inventory": "Inventory",
+      "platform": "Administration",
+      "pointOfSale": "Point of Sale",
+      "referenceData": "Reference Data",
+      "reporting": "Reporting"
+    },
     "permissionActions": {
       "Approve": "Approve", "ApproveJobDescriptions": "Approve job descriptions", "Archive": "Archive",
       "BeginClosing": "Begin closing", "Cancel": "Cancel", "Close": "Close", "Complete": "Complete",
@@ -120,7 +136,7 @@
       "Open": "Open", "Pause": "Pause", "Publish": "Publish", "PullAttendance": "Pull attendance",
       "PullUsers": "Pull users", "Reject": "Reject", "Reopen": "Reopen", "Resend": "Resend",
       "ResetPassword": "Reset password", "Resolve": "Resolve", "Respond": "Respond", "Restore": "Restore",
-      "Review": "Review", "Revoke": "Revoke", "Schedule": "Schedule", "SetStatus": "Set status",
+      "Review": "Review", "Revoke": "Revoke", "Schedule": "Schedule", "SetCurrent": "Set company current", "SetStatus": "Set status",
       "Submit": "Submit", "Test": "Test", "Unlock": "Unlock", "Unpublish": "Unpublish", "Upload": "Upload",
       "View": "View", "ViewDashboard": "View dashboard", "ViewFinancials": "View financials",
       "ViewRaw": "View raw data", "ViewTrace": "View trace", "Withdraw": "Withdraw"

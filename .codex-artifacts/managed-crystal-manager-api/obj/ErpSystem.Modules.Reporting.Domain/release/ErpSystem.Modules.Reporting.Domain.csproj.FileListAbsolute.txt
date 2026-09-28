@@ -1,0 +1,16 @@
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\bin\ErpSystem.Modules.Reporting.Domain\release\ErpSystem.Modules.Reporting.Domain.deps.json
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\bin\ErpSystem.Modules.Reporting.Domain\release\ErpSystem.Modules.Reporting.Domain.dll
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\bin\ErpSystem.Modules.Reporting.Domain\release\ErpSystem.Modules.Reporting.Domain.pdb
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\bin\ErpSystem.Modules.Reporting.Domain\release\ErpSystem.BuildingBlocks.Domain.dll
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\bin\ErpSystem.Modules.Reporting.Domain\release\ErpSystem.BuildingBlocks.Domain.pdb
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.Modules.Reporting.Domain\release\ErpSystem.Modules.Reporting.Domain.csproj.AssemblyReference.cache
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.Modules.Reporting.Domain\release\ErpSystem.Modules.Reporting.Domain.GeneratedMSBuildEditorConfig.editorconfig
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.Modules.Reporting.Domain\release\ErpSystem.Modules.Reporting.Domain.AssemblyInfoInputs.cache
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.Modules.Reporting.Domain\release\ErpSystem.Modules.Reporting.Domain.AssemblyInfo.cs
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.Modules.Reporting.Domain\release\ErpSystem.Modules.Reporting.Domain.csproj.CoreCompileInputs.cache
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.Modules.Reporting.Domain\release\ErpSystem.Modules.Reporting.Domain.sourcelink.json
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.Modules.Reporting.Domain\release\ErpSyste.3220E7EC.Up2Date
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.Modules.Reporting.Domain\release\ErpSystem.Modules.Reporting.Domain.dll
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.Modules.Reporting.Domain\release\refint\ErpSystem.Modules.Reporting.Domain.dll
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.Modules.Reporting.Domain\release\ErpSystem.Modules.Reporting.Domain.pdb
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.Modules.Reporting.Domain\release\ref\ErpSystem.Modules.Reporting.Domain.dll

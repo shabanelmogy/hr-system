@@ -310,8 +310,8 @@ contract and serialize those choices; do not filter the visible page locally.
 
 | Platform/view | Data source and scope | Required behavior |
 |---|---|---|
-| Web Grid | Complete filtered/sorted result through 5000 rows; current authoritative server page above 5000 | One adaptive data strategy and the reusable `MyDataGrid` footer |
-| Web Cards | Current display page from the same adaptive criteria/result | Same actions and pager; no second list state |
+| Web Grid | Current authoritative server page | One server-first data strategy and the reusable `MyDataGrid` footer |
+| Web Cards | Current server page from the same criteria/result | Same actions and pager; no second list state |
 | Web Chart | First display page for the shared criteria plus authoritative total | Reset to page zero on entry, omit pagination controls, label metrics as page-scoped, and never imply global aggregation |
 | Web Report | Crystal reporting API/catalog plus tenant-scoped ActiveReportsJS template API and approved Countries JSON data | Crystal remains default; published ActiveReports templates have a read-only viewer, while permission-protected authors use the reusable Designer with Save, Save As, drafts, publish, dirty guards, revisions, and RowVersion conflicts |
 | Web Import | Local XLSX preview then bulk-create API | Create permission, local validation, submitted-batch atomicity and invalidation |
@@ -331,11 +331,12 @@ and page size. Its summary labels, rather than a duplicate informational alert,
 disclose that only the first display page supplies the chart derivations.
 
 Countries does not own a Grid pager. It configures the shared
-`MyDataGrid`/`GridFooter` in client mode only after the adaptive hook has loaded
-the complete result at 5000 rows or fewer. Larger results use controlled server
-pagination. Both modes keep the established reusable navigation behavior.
-If the hosted API still enforces its earlier page-size cap, the adaptive hook
-falls back to server pagination until the updated Countries API is deployed.
+`MyDataGrid`/`GridFooter` with controlled server pagination for every result size.
+The React Query boundary preserves the authoritative total but does not expose
+the prior page's row IDs while the next page loads, and the shared Grid does not
+clamp against a transient or unknown total. The footer retains the established
+centered first/previous/next/last record navigation, current-record/total counter,
+page indicator, and page-size selector.
 
 Optional views are not mandatory for the next feature. Add them only when the
 product and API contracts justify them.
@@ -377,7 +378,7 @@ or a vertical document scroll.
 
 ### Web Cards applied profile
 
-Countries Cards use the same adaptive list criteria as Grid and Chart. The
+Countries Cards use the same server-first list criteria as Grid and Chart. The
 shared card toolbar exposes the Countries search-column choices (`all`, Arabic
 and English names, alpha codes, phone, and currency) and all six search
 conditions before the search input; Reset follows the shared sort controls. Its
@@ -387,8 +388,7 @@ toolbar. Shared sort-column and direction controls follow the search controls
 and accept only the Countries server sort allow-list.
 
 `CountriesCardView` renders a responsive `12 / 6 / 4 / 3` card grid
-(`xs / sm / md / lg`) from the current page. Results at or below 5000 rows are
-loaded once and paged on the client; larger results remain server-paged. It uses `EntityCard` for
+(`xs / sm / md / lg`) from the current authoritative server page. It uses `EntityCard` for
 the fixed visual scaffold, guarded active-row selection, lifecycle actions,
 hover/reduced-motion treatment and a five-second create/edit highlight. Country
 content remains feature-specific; Currency and States are not extra Card toolbar
@@ -758,6 +758,7 @@ Replace every Countries-owned contract:
 | C-F09 | Resolved | Adaptive selection could exceed the API's 100-ID archive contract. Shared normalization now rejects oversized eligible selections with localized feedback and direct-submit defense. | Client batch limits must mirror—but never replace—the authoritative API validator. |
 | C-F10 | Resolved | Background refetch previously replaced current Grid/Card/Chart content with initial-loading UI. The view now preserves content and shows a non-destructive progress bar. | Model initial load and background fetching as distinct states. |
 | C-F11 | Resolved | Import submit previously relied on the parent view being hidden. The button and direct handler now enforce read-only and `Countries:Create`. | Enforce mutation authorization inside every direct handler as well as in UI visibility. |
+| C-F13 | Resolved | With descending sort, the page-2 request succeeded but the feature supplied a newly allocated, semantically identical `sortModel` on the loading render. MUI published `sortModelChange`, its pagination feature reset to page zero, and cached page 1 reappeared without a second HTTP request. Duplicate server-page clamping and transient totals made the race easier to trigger. | `MyDataGrid` stabilizes controlled sort-model identity, retains authoritative `rowCount` while loading, and never adds a second server clamp. The owner clamps only after a real response; the footer uses MUI's one pagination-model path and keeps the established centered record navigator unchanged. |
 | C-M01 | Resolved | Mobile no longer models or serializes dedicated `currencyCode`/`hasStates` filters without visible controls; Currency remains an explicit search column. | Every active criterion needs a visible control and reset path. |
 | C-M02 | Resolved | Mobile removed the unused detail hook/key because its list row contains every editable field. | Fetch and handle detail whenever list and form contracts differ. |
 | C-M03 | Resolved | Mobile Countries/States now have screen criteria/view/form/action/permission tests plus mutation transport/invalidation tests. | Keep representative feature integration coverage beside boundary tests. |
@@ -779,6 +780,10 @@ instead of recreating the original gap.
 | Cell formatting | `components/grid-view/CountryCellRenderers.test.tsx` |
 | Grid sort affordances | `components/grid-view/Columns.test.tsx` |
 | Page/controller/action wiring | `pages/CountriesPage.test.tsx` |
+| Shared server-page continuity | `shared/hooks/useAdaptivePagination.test.ts` |
+| Shared loading-safe page bounds | `shared/components/data-grid/core/pagination.test.ts` |
+| Shared controlled-sort identity | `shared/components/data-grid/core/controlledModels.test.ts` |
+| Browser page-forward/page-back contract | `e2e/business-smoke.spec.ts` with `e2e/support/test-backend.mjs` |
 | Mutation invalidation order | `hooks/useCountryQueries.test.ts` |
 | Shared bulk limit normalization | `shared/utils/bulkSelection.test.ts` |
 | Shared XLSX safety contract | `shared/services/excelService.test.ts` |

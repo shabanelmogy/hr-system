@@ -49,6 +49,7 @@ describe("FiscalYearService", () => {
     await FiscalYearService.update({ id: 7, request: { ...request, rowVersion: "AQ==" } });
     await FiscalYearService.changeLifecycle(7, "Ag==", "beginClosing");
     await FiscalYearService.changeLifecycle(7, "Aw==", "reopen");
+    await FiscalYearService.setCurrent(7, "BQ==");
     await FiscalYearService.archive({ id: 7, rowVersion: "BA==" });
 
     expect(put).toHaveBeenCalledWith(apiRoutes.fiscalYears.update(7), expect.objectContaining({
@@ -57,7 +58,21 @@ describe("FiscalYearService", () => {
     }));
     expect(post).toHaveBeenCalledWith(apiRoutes.fiscalYears.beginClosing(7), { rowVersion: "Ag==" });
     expect(post).toHaveBeenCalledWith(apiRoutes.fiscalYears.reopen(7), { rowVersion: "Aw==" });
+    expect(post).toHaveBeenCalledWith(apiRoutes.fiscalYears.setCurrent(7), { rowVersion: "BQ==" });
     expect(remove).toHaveBeenCalledWith(apiRoutes.fiscalYears.archive(7), { rowVersion: "BA==" });
+  });
+
+  it("reads and updates only the signed-in user's fiscal-year context", async () => {
+    get.mockResolvedValue({ selectedFiscalYear: { id: 7 } });
+    put.mockResolvedValue({ selectedFiscalYear: { id: 8 } });
+
+    await FiscalYearService.getContext();
+    await FiscalYearService.updateContext(8);
+
+    expect(get).toHaveBeenCalledWith(apiRoutes.fiscalYears.context);
+    expect(put).toHaveBeenCalledWith(apiRoutes.fiscalYears.context, { fiscalYearId: 8 });
+    expect(put.mock.calls[0][1]).not.toHaveProperty("userId");
+    expect(put.mock.calls[0][1]).not.toHaveProperty("companyId");
   });
 
   it("mirrors the exact twelve-month rule in client validation", () => {

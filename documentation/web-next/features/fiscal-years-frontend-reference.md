@@ -23,8 +23,10 @@ preview. Create/edit/view uses one sectioned shared form; P-003 tabs are
 intentionally not applied because this is a single bounded calendar workflow.
 
 Only `FiscalYearService` calls `apiService`. It normalizes code/names, sends the
-server page criteria, sends RowVersion for update/archive/restore/lifecycle, and never sends
-tenant/company identifiers. React Query owns one stable `fiscal-years` key family.
+server page criteria, sends RowVersion for update/archive/restore/lifecycle/company
+Current, updates the signed-in user's context without sending a user/company ID,
+and never sends tenant/company identifiers. React Query owns one stable
+`fiscal-years` key family including the context query.
 
 ## 4. Validation
 
@@ -35,20 +37,27 @@ API field errors map back to code and date fields.
 ## 5. List state
 
 `useServerListState` owns zero-based UI page, size, debounced search, filters, and
-sort; the API conversion to one-based pages happens once. Adaptive pagination
-consumes the same criteria for Grid and Cards.
+sort; the API conversion to one-based pages happens once. Server-first pagination
+consumes the same criteria for Grid and Cards and preserves the prior page while
+the next authoritative page loads.
 
 ## 6. Grid view
 
 `FiscalYearsDataGrid` composes `MyDataGrid`, its shared toolbar/search controls,
 grid options, reset control, server sort/paging, theme-aware chips, and authorized
-row actions. It does not call transport or perform local business filtering.
+row actions. It identifies the company Current year with a gold/warning badge,
+offers Set Current only for an Open target and only with `FiscalYears:SetCurrent`,
+and disables archive for Current. It does not call
+transport or perform local business filtering.
 
 ## 7. Card view
 
 `FiscalYearsCardView` composes the shared card header/filter scaffold, EntityCard,
 CardActionButtons, feedback states, and pagination. Cards show localized names,
-code, dates, frequency, period count, lifecycle, and archive state.
+code, dates, frequency, period count, lifecycle, archive state, and company Current
+badge/action. Grid, Cards, detail, and the confirmation surface use the same
+gold/warning semantic treatment; Draft/Closing/Closed/Locked rows do not expose
+Set Current.
 
 ## 8. Create and edit
 
@@ -65,11 +74,32 @@ Reopen. The selected action sends RowVersion,
 returns the year/periods to Open, and leaves calendar fields read-only. No native
 alert, confirm, or browser validation is used.
 
+## 9A. Global working-year context
+
+This surface follows **P-008 Global Scoped Context Selector**. The
+`FiscalYearContextSwitcher` is Accounting-owned and is injected by `MainShell`
+into generic full/compact `MainLayout`/`TopBar` slots; the shell never imports
+Accounting internals. It appears for users with `FiscalYears:View`, displays the
+effective bilingual year, and writes only that user's selection for the current
+company. Company switching naturally loads a different scoped preference. The
+shared unsaved-changes registry must approve a context switch before the request
+runs. Missing/archived preferences fall back to company Current on the server.
+The Topbar presents the complete scope hierarchy as Tenant, Company, then Working
+Fiscal Year through the shared `ContextBadge`/`ContextSwitcher` presentation. Wide
+layouts group the three contexts into one restrained surface and show icon plus
+current value on one line; translated context labels remain in each complete
+accessible name and tooltip instead of consuming a second visual line. Compressed
+layouts retain all three as icon-only controls/identity. Only context values may
+truncate; the fixed user-avatar frame and its focus/ring decoration must remain
+fully visible in LTR and RTL. Tenant is informational and does not imply a
+post-login tenant-switch API.
+
 ## 10. Permissions and read-only mode
 
-The page derives separate view/create/edit/delete/lifecycle decisions. Subscription
-read-only mode removes every mutating action. Server permission checks remain
-authoritative.
+The page derives separate view/create/edit/archive/restore/lifecycle/SetCurrent
+decisions. Subscription read-only mode removes financial mutations and company
+Current changes, while the personal working-year selector remains available with
+View. Server permission checks remain authoritative.
 
 ## 11. Localization and RTL
 

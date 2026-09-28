@@ -9,18 +9,19 @@ import { ConfirmationDialog } from "@/shared/components/dialogs";
 import { showToast } from "@/shared/components/feedback/transient";
 import { extractErrorMessage } from "@/shared/utils/errorUtils";
 import { Alert, Box, Button, Typography } from "@mui/material";
-import { Archive, LockClock, LockOpen, Restore } from "@mui/icons-material";
+import { Archive, LockClock, LockOpen, Restore, StarRounded } from "@mui/icons-material";
 import dynamic from "next/dynamic";
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import FiscalYearsMultiView from "../components/FiscalYearsMultiView";
-import { fiscalYearKeys, useArchiveFiscalYear, useChangeFiscalYearLifecycle, useCreateFiscalYear, useFiscalYear, useRestoreFiscalYear, useUpdateFiscalYear } from "../hooks/useFiscalYearQueries";
+import { fiscalYearKeys, useArchiveFiscalYear, useChangeFiscalYearLifecycle, useCreateFiscalYear, useFiscalYear, useRestoreFiscalYear, useSetCurrentFiscalYear, useUpdateFiscalYear } from "../hooks/useFiscalYearQueries";
 import FiscalYearService from "../services/fiscalYearService";
 import type { FiscalYearDetail, FiscalYearLifecycleAction, FiscalYearLifecycleFilter, FiscalYearListItem, FiscalYearMutationRequest, FiscalYearPermissions, FiscalYearRecordStatus, FiscalYearSearchField, FiscalYearSearchOperator, FiscalYearSortColumn } from "../types/FiscalYear";
+import { canSetFiscalYearAsCurrent } from "../utils/fiscalYearLifecycle";
 
 const FiscalYearForm = dynamic(() => import("../components/FiscalYearForm"), { ssr: false });
 
-type Dialog = "add" | "edit" | "view" | "archive" | "restore" | "lifecycle" | null;
+type Dialog = "add" | "edit" | "view" | "archive" | "restore" | "lifecycle" | "setCurrent" | null;
 interface Filters { recordStatus: FiscalYearRecordStatus; lifecycleStatus: FiscalYearLifecycleFilter; searchField: FiscalYearSearchField; searchOperator: FiscalYearSearchOperator }
 const defaultFilters: Filters = { recordStatus: "active", lifecycleStatus: "all", searchField: "all", searchOperator: "contains" };
 
@@ -50,6 +51,7 @@ export default function FiscalYearsPage() {
     canClose: !authorization.isReadOnly && authorization.hasPermission(permissions.CloseFiscalYears),
     canLock: !authorization.isReadOnly && authorization.hasPermission(permissions.LockFiscalYears),
     canReopen: !authorization.isReadOnly && authorization.hasPermission(permissions.ReopenFiscalYears),
+    canSetCurrent: !authorization.isReadOnly && authorization.hasPermission(permissions.SetCurrentFiscalYears),
   }), [authorization]);
 
   const fail = async (error: Error, key: string) => {
@@ -69,8 +71,13 @@ export default function FiscalYearsPage() {
   const archive = useArchiveFiscalYear({ onSuccess: () => { showToast.success(t("fiscalYears.messages.archived")); setDialog(null); }, onError: error => { void fail(error, "fiscalYears.messages.archiveError"); } });
   const restore = useRestoreFiscalYear({ onSuccess: () => { showToast.success(t("fiscalYears.messages.restored")); setDialog(null); }, onError: error => { void fail(error, "fiscalYears.messages.restoreError"); } });
   const lifecycle = useChangeFiscalYearLifecycle({ onSuccess: item => { showToast.success(t("fiscalYears.messages.lifecycleChanged", { status: t(`fiscalYears.status.${["", "draft", "open", "closing", "closed", "locked"][item.status]}`) })); setDialog(null); setLifecycleAction(null); }, onError: error => { void fail(error, "fiscalYears.messages.lifecycleError"); } });
+  const setCurrent = useSetCurrentFiscalYear({ onSuccess: item => { showToast.success(t("fiscalYears.messages.currentChanged", { code: item.code })); setDialog(null); }, onError: error => { void fail(error, "fiscalYears.messages.currentError"); } });
   const select = (item: FiscalYearListItem, next: Dialog) => { setSelected(item); setDialog(next); };
   const selectLifecycle = (item: FiscalYearListItem, action: FiscalYearLifecycleAction) => { setSelected(item); setLifecycleAction(action); setDialog("lifecycle"); };
+  const selectCurrent = (item: FiscalYearListItem) => {
+    if (!access.canSetCurrent || !canSetFiscalYearAsCurrent(item)) return;
+    select(item, "setCurrent");
+  };
   const submit = async (request: FiscalYearMutationRequest) => {
     if (dialog === "add") await create.mutateAsync(request);
     else if (dialog === "edit" && currentItem) await update.mutateAsync({ id: currentItem.id, request: { ...request, rowVersion: currentItem.rowVersion } });
@@ -81,10 +88,11 @@ export default function FiscalYearsPage() {
     <FiscalYearsMultiView items={data.pageItems} loading={data.isLoading} fetching={data.isFetching} page={list.state.page} pageSize={list.state.pageSize} totalCount={data.totalCount} permissions={access}
       searchValue={list.state.searchValue} searchField={list.state.filters.searchField} searchOperator={list.state.filters.searchOperator} sortColumn={list.state.columnName} sortDirection={list.state.sortDirection} recordStatus={list.state.filters.recordStatus} lifecycleStatus={list.state.filters.lifecycleStatus}
       onPageChange={list.setPage} onPageSizeChange={list.setPageSize} onSearchChange={list.setSearchValue} onSearchFieldChange={value => list.setFilters({ ...list.state.filters, searchField: value })} onSearchOperatorChange={value => list.setFilters({ ...list.state.filters, searchOperator: value })} onSortChange={list.setSort} onRecordStatusChange={value => list.setFilters({ ...list.state.filters, recordStatus: value })} onLifecycleStatusChange={value => list.setFilters({ ...list.state.filters, lifecycleStatus: value })} onReset={list.reset} onRefresh={() => void data.refetch()} onAdd={() => { setSelected(null); setDialog("add"); }}
-      onView={item => select(item, "view")} onEdit={item => select(item, "edit")} onArchive={item => select(item, "archive")} onRestore={item => select(item, "restore")} onLifecycle={selectLifecycle} />
+      onView={item => select(item, "view")} onEdit={item => select(item, "edit")} onArchive={item => select(item, "archive")} onRestore={item => select(item, "restore")} onLifecycle={selectLifecycle} onSetCurrent={selectCurrent} />
     {(dialog === "add" || dialog === "edit" || dialog === "view") ? <FiscalYearForm open mode={dialog} item={currentItem} loading={create.isPending || update.isPending || details.isFetching} detailError={details.error ? extractErrorMessage(details.error) || t("fiscalYears.messages.fetchError") : null} onRetryDetail={() => void details.refetch()} onClose={() => setDialog(null)} onSubmit={submit} /> : null}
     <ConfirmationDialog open={dialog === "archive"} title={t("fiscalYears.confirm.archiveTitle")} description={t("fiscalYears.confirm.archiveDescription")} confirmLabel={t("actions.archive")} cancelLabel={t("actions.cancel")} confirmColor="warning" confirmIcon={<Archive />} icon={<Archive color="warning" />} busy={archive.isPending} onClose={() => setDialog(null)} onConfirm={() => selected && void archive.mutateAsync({ id: selected.id, rowVersion: selected.rowVersion })}><Typography sx={{ fontWeight: 700 }}>{selected?.code}</Typography></ConfirmationDialog>
     <ConfirmationDialog open={dialog === "restore"} title={t("fiscalYears.confirm.restoreTitle")} description={t("fiscalYears.confirm.restoreDescription")} confirmLabel={t("actions.restore")} cancelLabel={t("actions.cancel")} confirmColor="success" confirmIcon={<Restore />} icon={<Restore color="success" />} busy={restore.isPending} onClose={() => setDialog(null)} onConfirm={() => selected && void restore.mutateAsync({ id: selected.id, rowVersion: selected.rowVersion })}><Typography sx={{ fontWeight: 700 }}>{selected?.code}</Typography></ConfirmationDialog>
     <ConfirmationDialog open={dialog === "lifecycle"} title={t(`fiscalYears.confirm.${lifecycleAction ?? "open"}Title`)} description={t(`fiscalYears.confirm.${lifecycleAction ?? "open"}Description`)} confirmLabel={t(`fiscalYears.lifecycle.${lifecycleAction ?? "open"}`)} cancelLabel={t("actions.cancel")} confirmColor={lifecycleAction === "reopen" ? "warning" : "primary"} confirmIcon={lifecycleAction === "reopen" ? <LockOpen /> : <LockClock />} icon={lifecycleAction === "reopen" ? <LockOpen color="warning" /> : <LockClock color="primary" />} busy={lifecycle.isPending} onClose={() => { setDialog(null); setLifecycleAction(null); }} onConfirm={() => selected && lifecycleAction && void lifecycle.mutateAsync({ id: selected.id, rowVersion: selected.rowVersion, action: lifecycleAction })}><Typography sx={{ fontWeight: 700 }}>{selected?.code}</Typography></ConfirmationDialog>
+    <ConfirmationDialog open={dialog === "setCurrent"} title={t("fiscalYears.confirm.setCurrentTitle")} description={t("fiscalYears.confirm.setCurrentDescription")} confirmLabel={t("fiscalYears.actions.setCurrent")} cancelLabel={t("actions.cancel")} confirmColor="warning" confirmIcon={<StarRounded />} icon={<StarRounded color="warning" />} busy={setCurrent.isPending} onClose={() => setDialog(null)} onConfirm={() => selected && access.canSetCurrent && canSetFiscalYearAsCurrent(selected) && void setCurrent.mutateAsync({ id: selected.id, rowVersion: selected.rowVersion })}><Typography sx={{ fontWeight: 700 }}>{selected?.code}</Typography></ConfirmationDialog>
   </>;
 }

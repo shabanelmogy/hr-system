@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "twLjH4MyGN4=",
+  "success": true,
+  "projectFilePath": "F:\\Portofolio Projects\\ERPSYSTEM\\api\\BuildingBlocks\\ErpSystem.BuildingBlocks.Application\\ErpSystem.BuildingBlocks.Application.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\user\\.nuget\\packages\\fluentvalidation\\12.1.1\\fluentvalidation.12.1.1.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\mediatr\\12.5.0\\mediatr.12.5.0.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\mediatr.contracts\\2.0.1\\mediatr.contracts.2.0.1.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\10.0.9\\microsoft.extensions.dependencyinjection.abstractions.10.0.9.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\microsoft.extensions.localization.abstractions\\10.0.9\\microsoft.extensions.localization.abstractions.10.0.9.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\10.0.9\\microsoft.extensions.logging.abstractions.10.0.9.nupkg.sha512"
+  ],
+  "logs": []
+}

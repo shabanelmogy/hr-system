@@ -1,5 +1,24 @@
 import type { TFunction } from "i18next";
 
+const businessModuleTranslationKeys: Record<string, string> = {
+  acc: "accounting",
+  contacts: "contacts",
+  crm: "crm",
+  hr: "hr",
+  inventory: "inventory",
+  platform: "platform",
+  "point-of-sale": "pointOfSale",
+  "reference-data": "referenceData",
+  reporting: "reporting",
+};
+
+export function getPermissionBusinessModuleLabel(moduleCode: string, t: TFunction): string {
+  const key = businessModuleTranslationKeys[moduleCode.toLowerCase()];
+  return key
+    ? t(`roles.businessModules.${key}`, { defaultValue: humanize(moduleCode) })
+    : humanize(moduleCode);
+}
+
 export function getPermissionResourceLabel(resource: string, t: TFunction): string {
   return t(`roles.permissionResources.${resource}`, { defaultValue: humanize(resource) });
 }

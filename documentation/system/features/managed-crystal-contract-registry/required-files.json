@@ -1,0 +1,250 @@
+{
+  "schemaVersion": 1,
+  "status": "phase-06-verified-closed",
+  "feature": "managed-crystal-contract-registry",
+  "featureName": "Managed Crystal Contract Registry",
+  "referenceFeature": "N/A",
+  "planId": "managed-crystal-reporting-reliability",
+  "sliceId": "Slice 1 — Managed Crystal Reporting Reliability",
+  "canonicalPlan": "documentation/plans/business/managed-crystal-reporting-reliability/PLAN.md",
+  "featureDecompositionDecision": "Decompose",
+  "screenWorkflowContract": "documentation/plans/business/managed-crystal-reporting-reliability/decomposition/managed-crystal-contract-registry.md",
+  "plannedCustomerEducation": "N/A — internal foundation with no customer-visible action",
+  "purpose": "Final Phase 00 through Phase 06 evidence surface for the Verified and Closed contract-registry foundation.",
+  "reviewArtifact": "documentation/system/features/managed-crystal-contract-registry/MANAGED_CRYSTAL_CONTRACT_REGISTRY-REVIEW-ARTIFACTS.md",
+  "implementationRequest": "documentation/system/features/managed-crystal-contract-registry/IMPLEMENTATION-REQUEST.md",
+  "canonicalBooks": {
+    "master": "documentation/project/MANAGED_CRYSTAL_CONTRACT_REGISTRY_FEATURE_FULL_REVIEW.md",
+    "api": "documentation/api/ManagedCrystalContractRegistry_API_Implementation_Profile.md",
+    "web": "documentation/web-next/features/managed-crystal-contract-registry-frontend-reference.md",
+    "mobile": "documentation/mobile-react/managed-crystal-contract-registry-mobile-reference.md"
+  },
+  "sourceCollections": [
+    {
+      "id": "legacy-runtime-rendering",
+      "layer": "runtime",
+      "path": "api/CrystalReportGeneratorApi/Runtime/Rendering",
+      "minimumFiles": 3,
+      "purpose": "Current independent .NET Framework profile, managed-parameter and render behavior"
+    },
+    {
+      "id": "reporting-provider-persistence",
+      "layer": "api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/CrystalReports/Persistence",
+      "minimumFiles": 6,
+      "purpose": "Current provider, data-source, store and configuration evidence"
+    }
+  ],
+  "requiredFiles": [
+    {
+      "id": "root-agent-guidance",
+      "layer": "configuration",
+      "path": "AGENTS.md",
+      "purpose": "Repository-wide planning, documentation and verification rules"
+    },
+    {
+      "id": "api-agent-guidance",
+      "layer": "configuration",
+      "path": "api/AGENTS.md",
+      "purpose": "API modular-monolith and independent runtime rules"
+    },
+    {
+      "id": "api-workflow",
+      "layer": "configuration",
+      "path": "documentation/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md",
+      "purpose": "Required API feature workflow"
+    },
+    {
+      "id": "api-constitution",
+      "layer": "configuration",
+      "path": "documentation/api/ERP_ARCHITECTURE_CONSTITUTION.md",
+      "purpose": "API architecture and ownership constraints"
+    },
+    {
+      "id": "canonical-plan",
+      "layer": "planning",
+      "path": "documentation/plans/business/managed-crystal-reporting-reliability/PLAN.md",
+      "purpose": "Master scope, decisions and phased quality gates"
+    },
+    {
+      "id": "implementation-roadmap",
+      "layer": "planning",
+      "path": "documentation/plans/business/managed-crystal-reporting-reliability/IMPLEMENTATION-ROADMAP.md",
+      "purpose": "Active child sequencing and later deferred work"
+    },
+    {
+      "id": "screen-workflow-contract",
+      "layer": "planning",
+      "path": "documentation/plans/business/managed-crystal-reporting-reliability/decomposition/managed-crystal-contract-registry.md",
+      "purpose": "Authorized child boundary and platform decisions"
+    },
+    {
+      "id": "implementation-request",
+      "layer": "documentation",
+      "path": "documentation/system/features/managed-crystal-contract-registry/IMPLEMENTATION-REQUEST.md",
+      "purpose": "Frozen business rules, edge cases, impact and execution contract"
+    },
+    {
+      "id": "review-artifact",
+      "layer": "documentation",
+      "path": "documentation/system/features/managed-crystal-contract-registry/MANAGED_CRYSTAL_CONTRACT_REGISTRY-REVIEW-ARTIFACTS.md",
+      "purpose": "Requirement, evidence, finding and verification ledger"
+    },
+    {
+      "id": "master-book",
+      "layer": "documentation",
+      "path": "documentation/project/MANAGED_CRYSTAL_CONTRACT_REGISTRY_FEATURE_FULL_REVIEW.md",
+      "purpose": "Cross-process and cross-platform applied contract"
+    },
+    {
+      "id": "api-book",
+      "layer": "documentation",
+      "path": "documentation/api/ManagedCrystalContractRegistry_API_Implementation_Profile.md",
+      "purpose": "Reporting and legacy runtime implementation profile"
+    },
+    {
+      "id": "web-book",
+      "layer": "documentation",
+      "path": "documentation/web-next/features/managed-crystal-contract-registry-frontend-reference.md",
+      "purpose": "Explicit unchanged Next.js consumer disposition"
+    },
+    {
+      "id": "mobile-book",
+      "layer": "documentation",
+      "path": "documentation/mobile-react/managed-crystal-contract-registry-mobile-reference.md",
+      "purpose": "Explicit unchanged Expo consumer disposition"
+    },
+    {
+      "id": "crystal-engine-guide",
+      "layer": "documentation",
+      "path": "documentation/project/CRYSTAL_REPORT_MANAGER_INTEGRATION_GUIDE.md",
+      "purpose": "Existing managed Crystal ownership, deployment and runtime contract"
+    },
+    {
+      "id": "runtime-project",
+      "layer": "runtime",
+      "path": "api/CrystalReportGeneratorApi/CrystalReportGeneratorApi.csproj",
+      "purpose": "Legacy .NET Framework build and packaging surface"
+    },
+    {
+      "id": "runtime-profile-registry",
+      "layer": "runtime",
+      "path": "api/CrystalReportGeneratorApi/Runtime/Rendering/CrystalReportProfileRegistry.cs",
+      "purpose": "Strict legacy loader and exact five-entity runtime registry"
+    },
+    {
+      "id": "runtime-artifact-accessor",
+      "layer": "runtime",
+      "path": "api/CrystalReportGeneratorApi/Runtime/Rendering/ManagedCrystalReportContractArtifact.cs",
+      "purpose": "Fixed embedded-resource access to the canonical artifact"
+    },
+    {
+      "id": "runtime-health",
+      "layer": "runtime",
+      "path": "api/CrystalReportGeneratorApi/Controllers/InternalReportHealthController.cs",
+      "purpose": "Runtime readiness response with contract version, count and fingerprint"
+    },
+    {
+      "id": "runtime-solution",
+      "layer": "runtime",
+      "path": "api/CrystalReportGeneratorApi/CrystalReportGeneratorApi.slnx",
+      "purpose": "Release x64 runtime and contract-harness build composition"
+    },
+    {
+      "id": "runtime-harness-project",
+      "layer": "tests",
+      "path": "api/CrystalReportGeneratorApi.ContractTests/CrystalReportGeneratorApi.ContractTests.csproj",
+      "purpose": "Independent .NET Framework contract verification harness"
+    },
+    {
+      "id": "runtime-harness",
+      "layer": "tests",
+      "path": "api/CrystalReportGeneratorApi.ContractTests/Program.cs",
+      "purpose": "Semantic negative, Fiscal Years, fingerprint and built-resource byte-parity checks"
+    },
+    {
+      "id": "runtime-render-service",
+      "layer": "runtime",
+      "path": "api/CrystalReportGeneratorApi/Runtime/Rendering/CrystalReportRenderService.cs",
+      "purpose": "Current name-only schema validation consumer"
+    },
+    {
+      "id": "reporting-contracts-project",
+      "layer": "api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Contracts/ErpSystem.Modules.Reporting.Contracts.csproj",
+      "purpose": "Owner and embedding boundary for the canonical artifact"
+    },
+    {
+      "id": "canonical-contract-artifact",
+      "layer": "api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Contracts/Features/Analytics/CrystalReports/managed-crystal-report-contracts.v1.json",
+      "purpose": "Single exact five-entity managed Crystal contract source"
+    },
+    {
+      "id": "modern-artifact-accessor",
+      "layer": "api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Contracts/Features/Analytics/CrystalReports/ManagedCrystalReportContractArtifact.cs",
+      "purpose": "Modern process access to exact embedded artifact bytes"
+    },
+    {
+      "id": "modern-contract-registry",
+      "layer": "api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/CrystalReports/Persistence/ManagedCrystalReportContractRegistry.cs",
+      "purpose": "Strict modern parser, immutable registry, fingerprint and dataset validator"
+    },
+    {
+      "id": "reporting-data-source",
+      "layer": "api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/CrystalReports/Persistence/CrystalReportDataSource.cs",
+      "purpose": "Registered-provider completeness and exact output-schema enforcement"
+    },
+    {
+      "id": "provider-base",
+      "layer": "api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/CrystalReports/Persistence/CrystalReportDataProviderBase.cs",
+      "purpose": "Current row limit, filter and XML shaping behavior"
+    },
+    {
+      "id": "reference-data-providers",
+      "layer": "api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/CrystalReports/Persistence/ReferenceDataCrystalReportProviders.cs",
+      "purpose": "Countries, States, Districts and Address Types current schemas"
+    },
+    {
+      "id": "accounting-provider",
+      "layer": "api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/CrystalReports/Persistence/AccountingCrystalReportProviders.cs",
+      "purpose": "Fiscal Years current 16-column schema"
+    },
+    {
+      "id": "reporting-di",
+      "layer": "api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/DependencyInjection.cs",
+      "purpose": "Current five-provider composition"
+    },
+    {
+      "id": "reporting-data-source-tests",
+      "layer": "tests",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/CrystalReportDataSourceTests.cs",
+      "purpose": "Provider resolution, filters, all-entity schema and Fiscal Years nullability evidence"
+    },
+    {
+      "id": "contract-registry-tests",
+      "layer": "tests",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/ManagedCrystalReportContractRegistryTests.cs",
+      "purpose": "Modern artifact/model/parser/fingerprint and semantic negative tests"
+    },
+    {
+      "id": "web-fiscal-years-consumer",
+      "layer": "web-next",
+      "path": "web-next/src/modules/accounting/fiscal-years/reports/pages/FiscalYearReportPage.tsx",
+      "purpose": "Current stable fiscalyears Web entity key"
+    },
+    {
+      "id": "mobile-fiscal-years-consumer",
+      "layer": "mobile-react",
+      "path": "mobile-react/src/modules/accounting/fiscal-years/presentation/components/FiscalYearReportView.tsx",
+      "purpose": "Current stable fiscalyears Mobile entity key"
+    }
+  ]
+}

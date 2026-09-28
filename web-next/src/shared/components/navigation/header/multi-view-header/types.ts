@@ -25,6 +25,8 @@ export interface SimplePageHeaderProps {
   subTitle?: ReactNode;
   actions?: ReactNode;
   isDashboard?: boolean;
+  /** Reduces title size and surrounding gaps for dense workspaces. */
+  compact?: boolean;
 }
 
 export interface MultiViewPageHeaderProps {

@@ -7,6 +7,9 @@ namespace ErpSystem.Modules.Reporting.Application.Features.Analytics.CrystalRepo
 public sealed record GetPublishedCrystalReportsQuery(string? EntityKey, string? Search)
     : IQuery<IReadOnlyList<CrystalReportListItemResponse>>;
 
+public sealed record GetSupportedCrystalReportEntitiesQuery
+    : IQuery<IReadOnlyList<SupportedCrystalReportEntityResponse>>;
+
 public sealed record GetGlobalCrystalReportsQuery(string EntityKey)
     : IQuery<Result<IReadOnlyList<GlobalCrystalReportListItemResponse>>>;
 

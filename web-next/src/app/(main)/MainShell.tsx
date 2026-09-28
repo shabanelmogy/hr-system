@@ -15,6 +15,7 @@ import { createQueryClient } from "@/shared/config/queryClient";
 import { TenantAccessBoundary } from "@/platform/tenant-access/runtime";
 import { UnsavedChangesProvider } from "@/shared/contexts/UnsavedChangesContext";
 import { MainClientBootstrap } from "@/shell/bootstrap";
+import { FiscalYearContextSwitcher } from "@/modules/accounting/fiscal-years";
 
 const ReactQueryDevtools = dynamic(
   () => import("@tanstack/react-query-devtools").then((module) => module.ReactQueryDevtools),
@@ -84,7 +85,10 @@ function ContextShell({
                 <RealtimeEntityBridge />
               </Suspense>
             ) : null}
-            <MainLayout>
+            <MainLayout
+              contextActions={<FiscalYearContextSwitcher />}
+              compactContextActions={<FiscalYearContextSwitcher iconOnly />}
+            >
               <RouteAuthorizationGuard fallback={<RouteLoading />}>
                 <Suspense fallback={<RouteLoading />}>{children}</Suspense>
               </RouteAuthorizationGuard>

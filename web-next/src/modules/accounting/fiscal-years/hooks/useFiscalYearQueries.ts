@@ -4,14 +4,15 @@ import FiscalYearService from "../services/fiscalYearService";
 import type {
   FiscalYearDetail,
   FiscalYearConcurrencyMutation,
+  FiscalYearContext,
   FiscalYearLifecycleAction,
   FiscalYearMutationRequest,
   FiscalYearPageQuery,
   UpdateFiscalYearMutation,
 } from "../types/FiscalYear";
-import { fiscalYearKeys } from "./fiscalYearQueryKeys";
+import { fiscalYearContextKey, fiscalYearKeys } from "./fiscalYearQueryKeys";
 
-export { fiscalYearKeys } from "./fiscalYearQueryKeys";
+export { fiscalYearContextKey, fiscalYearKeys } from "./fiscalYearQueryKeys";
 
 export const useFiscalYearPage = (query: FiscalYearPageQuery) =>
   useQuery({ queryKey: fiscalYearKeys.page(query), queryFn: () => FiscalYearService.getPage(query), placeholderData: previous => previous });
@@ -31,6 +32,22 @@ export const fiscalYearLookupQueryOptions = () => ({
 export const useFiscalYearLookup = () =>
   useQuery(fiscalYearLookupQueryOptions());
 
+export const useFiscalYearContext = (enabled = true) =>
+  useQuery({
+    queryKey: fiscalYearContextKey,
+    queryFn: FiscalYearService.getContext,
+    enabled,
+    refetchOnMount: "always",
+  });
+
+export const useUpdateFiscalYearContext = (
+  options?: UseMutationOptions<FiscalYearContext, Error, number | null>,
+) => useInvalidatingMutation(
+  FiscalYearService.updateContext,
+  [fiscalYearKeys.all],
+  options,
+);
+
 export const useCreateFiscalYear = (options?: UseMutationOptions<FiscalYearDetail, Error, FiscalYearMutationRequest>) =>
   useInvalidatingMutation(FiscalYearService.create, [fiscalYearKeys.all], options);
 export const useUpdateFiscalYear = (options?: UseMutationOptions<FiscalYearDetail, Error, UpdateFiscalYearMutation>) =>
@@ -41,3 +58,5 @@ export const useRestoreFiscalYear = (options?: UseMutationOptions<FiscalYearDeta
   useInvalidatingMutation(({ id, rowVersion }) => FiscalYearService.restore(id, rowVersion), [fiscalYearKeys.all], options);
 export const useChangeFiscalYearLifecycle = (options?: UseMutationOptions<FiscalYearDetail, Error, { id: number; rowVersion: string; action: FiscalYearLifecycleAction }>) =>
   useInvalidatingMutation(({ id, rowVersion, action }) => FiscalYearService.changeLifecycle(id, rowVersion, action), [fiscalYearKeys.all], options);
+export const useSetCurrentFiscalYear = (options?: UseMutationOptions<FiscalYearDetail, Error, FiscalYearConcurrencyMutation>) =>
+  useInvalidatingMutation(({ id, rowVersion }) => FiscalYearService.setCurrent(id, rowVersion), [fiscalYearKeys.all], options);

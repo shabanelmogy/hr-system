@@ -9,14 +9,22 @@ import type {
   CrystalReportRight,
   CrystalReportRoleOption,
   CrystalReportStatus,
+  CrystalReportValidationStatus,
   CrystalReportVersion,
   DiscoveredCrystalReport,
   ImportDiscoveredCrystalReportRequest,
   RenderCrystalReportRequest,
+  SupportedCrystalReportEntity,
 } from "./types";
 
 type UnknownRecord = Record<string, unknown>;
 const RIGHTS: readonly CrystalReportRight[] = ["Run", "Download", "Upload", "Publish"];
+const VALIDATION_STATUSES: readonly CrystalReportValidationStatus[] = [
+  "Pending",
+  "Valid",
+  "Invalid",
+  "NeedsRevalidation",
+];
 
 function requireRecord(value: unknown, label: string): UnknownRecord {
   if (value === null || typeof value !== "object" || Array.isArray(value)) {
@@ -59,6 +67,10 @@ function nullablePositiveInteger(value: unknown, label: string): number | null {
   return requireInteger(value, label, 1);
 }
 
+function nullableStringArray(value: unknown, label: string): string[] {
+  return requireArray(value, label, (item) => requireString(item, `${label} item`));
+}
+
 function parseRight(value: unknown): CrystalReportRight {
   if (typeof value !== "string" || !RIGHTS.includes(value as CrystalReportRight)) {
     throw new Error("Invalid crystalReportGrant.rights response.");
@@ -87,7 +99,7 @@ function parseListItem(value: unknown): CrystalReportListItem {
 function parseVersion(value: unknown): CrystalReportVersion {
   const source = requireRecord(value, "crystal report version");
   const validationStatus = requireString(source.validationStatus, "crystalReportVersion.validationStatus");
-  if (validationStatus !== "Valid" && validationStatus !== "Invalid") {
+  if (!VALIDATION_STATUSES.includes(validationStatus as CrystalReportValidationStatus)) {
     throw new Error("Invalid crystalReportVersion.validationStatus response.");
   }
   return {
@@ -98,10 +110,39 @@ function parseVersion(value: unknown): CrystalReportVersion {
     sha256: requireString(source.sha256, "crystalReportVersion.sha256"),
     summaryTitle: nullableString(source.summaryTitle, "crystalReportVersion.summaryTitle"),
     summarySubject: nullableString(source.summarySubject, "crystalReportVersion.summarySubject"),
-    validationStatus,
+    validationStatus: validationStatus as CrystalReportValidationStatus,
     validationReason: nullableString(source.validationReason, "crystalReportVersion.validationReason"),
+    validationContractSchemaVersion: source.validationContractSchemaVersion === null
+      ? null
+      : requireInteger(source.validationContractSchemaVersion, "crystalReportVersion.validationContractSchemaVersion", 1),
+    validationContractFingerprint: nullableString(
+      source.validationContractFingerprint,
+      "crystalReportVersion.validationContractFingerprint",
+    ),
     isPublished: requireBoolean(source.isPublished, "crystalReportVersion.isPublished"),
     createdOn: requireString(source.createdOn, "crystalReportVersion.createdOn"),
+  };
+}
+
+function parseSupportedEntity(value: unknown): SupportedCrystalReportEntity {
+  const source = requireRecord(value, "supported crystal report entity");
+  const scope = requireString(source.scope, "supportedCrystalReportEntity.scope");
+  if (scope !== "global" && scope !== "tenant-company") {
+    throw new Error("Invalid supportedCrystalReportEntity.scope response.");
+  }
+  return {
+    entityKey: requireString(source.entityKey, "supportedCrystalReportEntity.entityKey"),
+    scope,
+    filters: nullableStringArray(source.filters, "supportedCrystalReportEntity.filters"),
+    contractSchemaVersion: requireInteger(
+      source.contractSchemaVersion,
+      "supportedCrystalReportEntity.contractSchemaVersion",
+      1,
+    ),
+    contractFingerprint: requireString(
+      source.contractFingerprint,
+      "supportedCrystalReportEntity.contractFingerprint",
+    ),
   };
 }
 
@@ -176,6 +217,14 @@ function toFormData(request: CreateCrystalReportRequest): FormData {
 }
 
 export const crystalReportService = {
+  async listSupportedEntities(): Promise<SupportedCrystalReportEntity[]> {
+    return requireArray(
+      await apiService.get<unknown>(apiRoutes.crystalReports.supportedEntities),
+      "supported crystal report entities",
+      parseSupportedEntity,
+    );
+  },
+
   async listPublished(entityKey?: string, search?: string): Promise<CrystalReportListItem[]> {
     const response = await apiService.get<unknown>(apiRoutes.crystalReports.list, {
       ...(entityKey ? { entityKey } : {}),
@@ -257,6 +306,12 @@ export const crystalReportService = {
     return parseDetail(await apiService.post<unknown>(
       apiRoutes.crystalReports.publishVersion(id, versionId),
       { rowVersion },
+    ));
+  },
+
+  async revalidateVersion(id: string, versionId: string): Promise<CrystalReportVersion> {
+    return parseVersion(await apiService.post<unknown>(
+      apiRoutes.crystalReports.revalidateVersion(id, versionId),
     ));
   },
 

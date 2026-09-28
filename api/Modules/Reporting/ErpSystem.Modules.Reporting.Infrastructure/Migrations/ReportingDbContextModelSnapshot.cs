@@ -269,6 +269,14 @@ namespace ErpSystem.Modules.Reporting.Infrastructure.Migrations
                     b.Property<DateTime?>("UpdatedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("ValidationContractFingerprint")
+                        .HasMaxLength(64)
+                        .HasColumnType("nchar(64)")
+                        .IsFixedLength();
+
+                    b.Property<int?>("ValidationContractSchemaVersion")
+                        .HasColumnType("int");
+
                     b.Property<string>("ValidationReason")
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
@@ -293,7 +301,12 @@ namespace ErpSystem.Modules.Reporting.Infrastructure.Migrations
                     b.HasIndex("TenantId", "CrystalReportId", "VersionNumber")
                         .IsUnique();
 
-                    b.ToTable("CrystalReportVersions", "rpt");
+                    b.ToTable("CrystalReportVersions", "rpt", t =>
+                        {
+                            t.HasCheckConstraint("CK_CrystalReportVersions_ValidationEvidence", "([ValidationStatus] = 'Valid' AND [ValidationContractSchemaVersion] > 0 AND LEN([ValidationContractFingerprint]) = 64) OR ([ValidationStatus] <> 'Valid' AND [ValidationContractSchemaVersion] IS NULL AND [ValidationContractFingerprint] IS NULL)");
+
+                            t.HasCheckConstraint("CK_CrystalReportVersions_ValidationStatus", "[ValidationStatus] IN ('Pending', 'Valid', 'Invalid', 'NeedsRevalidation')");
+                        });
                 });
 
             modelBuilder.Entity("ErpSystem.Modules.Reporting.Domain.Analytics.ReportTemplates.Entities.ReportTemplate", b =>

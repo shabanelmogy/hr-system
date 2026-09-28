@@ -57,11 +57,12 @@ export function useUserInvitations(enabled = true) {
   });
 }
 
-export function useAssignableCompanies() {
+export function useAssignableCompanies(enabled = true) {
   const useCases = useAdministrationUseCases();
   return useQuery({
     queryKey: administrationKeys.companyOptions,
     queryFn: () => useCases.getCompanyOptions(),
+    enabled,
     staleTime: 60_000,
   });
 }

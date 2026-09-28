@@ -15,6 +15,7 @@ export const rolePermissionsSchema = z.object({
   name: z.string().trim().min(3).max(50),
   roleClaims: z.array(z.object({
     displayValue: z.string().trim().min(1),
+    moduleCode: z.string().trim().min(1),
     isSelected: z.boolean(),
   })),
 });

@@ -125,7 +125,13 @@ public sealed class PlatformRoleManagementCqrsTests
                 false,
                 ["permission.allowed", "permission.unavailable"])
         };
-        var catalog = new StubModuleCatalogPolicy(["permission.allowed", "permission.other"]);
+        var catalog = new StubModuleCatalogPolicy(
+            ["permission.allowed", "permission.other"],
+            new Dictionary<string, string>(StringComparer.Ordinal)
+            {
+                ["permission.allowed"] = "platform",
+                ["permission.other"] = "hr"
+            });
         var handler = new GetRoleClaimsQueryHandler(
             store,
             new Actor("actor", "tenant-a", 1),
@@ -140,11 +146,13 @@ public sealed class PlatformRoleManagementCqrsTests
             claim =>
             {
                 Assert.Equal("permission.allowed", claim.DisplayValue);
+                Assert.Equal("platform", claim.ModuleCode);
                 Assert.True(claim.IsSelected);
             },
             claim =>
             {
                 Assert.Equal("permission.other", claim.DisplayValue);
+                Assert.Equal("hr", claim.ModuleCode);
                 Assert.False(claim.IsSelected);
             });
     }
@@ -413,7 +421,9 @@ public sealed class PlatformRoleManagementCqrsTests
         }
     }
 
-    private sealed class StubModuleCatalogPolicy(IReadOnlyCollection<string> assignablePermissions)
+    private sealed class StubModuleCatalogPolicy(
+        IReadOnlyCollection<string> assignablePermissions,
+        IReadOnlyDictionary<string, string>? moduleCodes = null)
         : IModuleCatalogPolicy
     {
         private readonly IReadOnlySet<string> _assignablePermissions =
@@ -434,6 +444,17 @@ public sealed class PlatformRoleManagementCqrsTests
 
         public bool TryResolvePermission(string permission, out ModulePermissionCatalogItem resolvedPermission)
         {
+            if (moduleCodes?.TryGetValue(permission, out var moduleCode) == true)
+            {
+                resolvedPermission = new ModulePermissionCatalogItem(
+                    permission,
+                    moduleCode,
+                    "test",
+                    RequiresTenantScope: true,
+                    RequiresTenantEntitlement: true);
+                return true;
+            }
+
             resolvedPermission = default!;
             return false;
         }

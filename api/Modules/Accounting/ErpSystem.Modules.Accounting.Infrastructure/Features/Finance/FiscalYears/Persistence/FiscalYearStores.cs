@@ -47,6 +47,7 @@ public sealed class FiscalYearReadStore(AccountingDbContext context) : IFiscalYe
                 item.EndDate,
                 item.PeriodFrequency,
                 item.Status,
+                item.IsCurrent,
                 item.Periods.Count(period => !period.IsDeleted),
                 item.CreatedOn,
                 item.UpdatedOn,
@@ -70,7 +71,7 @@ public sealed class FiscalYearReadStore(AccountingDbContext context) : IFiscalYe
             .Where(item => !item.IsDeleted && item.Status != FiscalYearStatus.Locked)
             .OrderByDescending(item => item.StartDate)
             .ThenByDescending(item => item.Id)
-            .Select(item => new FiscalYearLookupResponse(item.Id, item.Code, item.NameAr, item.NameEn, item.StartDate, item.EndDate, item.Status))
+            .Select(item => new FiscalYearLookupResponse(item.Id, item.Code, item.NameAr, item.NameEn, item.StartDate, item.EndDate, item.Status, item.IsCurrent))
             .ToListAsync(cancellationToken);
 
     private static IQueryable<FiscalYear> ApplySearch(IQueryable<FiscalYear> query, string field, string searchOperator, string search)
@@ -134,6 +135,9 @@ public sealed class FiscalYearWriteStore(AccountingDbContext context) : IFiscalY
     public Task<FiscalYear?> GetForUpdateAsync(int id, CancellationToken cancellationToken) =>
         context.FiscalYears.Include(item => item.Periods).FirstOrDefaultAsync(item => item.Id == id, cancellationToken);
 
+    public Task<FiscalYear?> GetCurrentForUpdateAsync(CancellationToken cancellationToken) =>
+        context.FiscalYears.FirstOrDefaultAsync(item => !item.IsDeleted && item.IsCurrent, cancellationToken);
+
     public Task<bool> CodeExistsAsync(string code, int? excludedId, CancellationToken cancellationToken) =>
         context.FiscalYears.AnyAsync(item =>
             (!excludedId.HasValue || item.Id != excludedId.Value) && item.Code == code,
@@ -166,6 +170,13 @@ public sealed class FiscalYearAuditTrail(IEntityChangeLogStore changeLogStore, I
     public Task RecordLifecycleAsync(FiscalYear fiscalYear, string oldStatus, string newStatus, CancellationToken cancellationToken) =>
         AddAsync(fiscalYear.Id, new Dictionary<string, string?> { [nameof(FiscalYear.Status)] = oldStatus }, new Dictionary<string, string?> { [nameof(FiscalYear.Status)] = newStatus }, cancellationToken);
 
+    public Task RecordCurrentChangedAsync(FiscalYear fiscalYear, int? previousFiscalYearId, CancellationToken cancellationToken) =>
+        AddAsync(
+            fiscalYear.Id,
+            new Dictionary<string, string?> { [nameof(FiscalYear.IsCurrent)] = "false", ["PreviousFiscalYearId"] = previousFiscalYearId?.ToString(CultureInfo.InvariantCulture) },
+            new Dictionary<string, string?> { [nameof(FiscalYear.IsCurrent)] = "true", ["PreviousFiscalYearId"] = previousFiscalYearId?.ToString(CultureInfo.InvariantCulture) },
+            cancellationToken);
+
     private Task AddAsync(int id, IReadOnlyDictionary<string, string?> oldValues, IReadOnlyDictionary<string, string?> newValues, CancellationToken cancellationToken) =>
         changeLogStore.AddAsync(new EntityChangeLogRecord(
             id,
@@ -186,4 +197,51 @@ public sealed class FiscalYearAuditTrail(IEntityChangeLogStore changeLogStore, I
         [nameof(FiscalYear.EndDate)] = item.EndDate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture),
         [nameof(FiscalYear.PeriodFrequency)] = item.PeriodFrequency.ToString()
     };
+}
+
+public sealed class FiscalYearContextStore(AccountingDbContext context) : IFiscalYearContextStore
+{
+    public async Task<FiscalYearContextResponse> GetContextAsync(string userId, CancellationToken cancellationToken)
+    {
+        var available = await context.FiscalYears.AsNoTracking()
+            .Where(item => !item.IsDeleted)
+            .OrderByDescending(item => item.StartDate)
+            .ThenByDescending(item => item.Id)
+            .Select(item => new FiscalYearLookupResponse(
+                item.Id,
+                item.Code,
+                item.NameAr,
+                item.NameEn,
+                item.StartDate,
+                item.EndDate,
+                item.Status,
+                item.IsCurrent))
+            .ToListAsync(cancellationToken);
+        var selectedId = await context.FiscalYearUserSelections.AsNoTracking()
+            .Where(item => !item.IsDeleted && item.UserId == userId)
+            .Select(item => item.SelectedFiscalYearId)
+            .SingleOrDefaultAsync(cancellationToken);
+        var companyCurrent = available.SingleOrDefault(item => item.IsCurrent);
+        var personalSelection = selectedId.HasValue
+            ? available.FirstOrDefault(item => item.Id == selectedId.Value)
+            : null;
+        var hasUserOverride = personalSelection is not null && personalSelection.Id != companyCurrent?.Id;
+
+        return new FiscalYearContextResponse(
+            companyCurrent,
+            hasUserOverride ? personalSelection : companyCurrent,
+            hasUserOverride,
+            available);
+    }
+
+    public Task<FiscalYear?> GetSelectableForUpdateAsync(int id, CancellationToken cancellationToken) =>
+        context.FiscalYears.FirstOrDefaultAsync(item => item.Id == id && !item.IsDeleted, cancellationToken);
+
+    public Task<FiscalYearUserSelection?> GetSelectionForUpdateAsync(string userId, CancellationToken cancellationToken) =>
+        context.FiscalYearUserSelections.FirstOrDefaultAsync(
+            item => !item.IsDeleted && item.UserId == userId,
+            cancellationToken);
+
+    public void AddSelection(FiscalYearUserSelection selection) =>
+        context.FiscalYearUserSelections.Add(selection);
 }

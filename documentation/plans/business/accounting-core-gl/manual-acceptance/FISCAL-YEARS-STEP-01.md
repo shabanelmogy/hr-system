@@ -8,7 +8,7 @@
 | الشريحة | `Slice 1 — Ledger setup spine` |
 | الخطوة | `Step 01 — Fiscal Years & Periods revalidation` |
 | الميزة | `fiscal-years` — السنوات والفترات المالية / Fiscal Years & Periods |
-| إصدار السيناريو | `2026-09-25 / Revision 1` |
+| إصدار السيناريو | `2026-09-27 / Revision 7` |
 | الحالة الحالية | `Pending — environment execution and explicit user acceptance required` |
 | الخطوة التالية المحجوزة | `Step 02 — العملات / Currency`، ولا تصبح Active قبل قبول المستخدم وإغلاق الخطوة 01 |
 
@@ -41,19 +41,47 @@ Web: https://localhost:3000/finance/ledger-setup/fiscal-years
 Mobile route: /finance/ledger-setup/fiscal-years
 ```
 
+### 2.1 سجل الجاهزية الآلية — 2026-09-27
+
+هذا السجل يثبت جاهزية المصدر وقاعدة التطوير لبدء الرحلة اليدوية، ولا يحوّل أي
+حالة Web أو Mobile أو صلاحيات أدناه إلى `Pass` تلقائيًا.
+
+| الفحص | النتيجة | الدليل المختصر |
+| --- | --- | --- |
+| Git baseline | Ready with declared working changes | branch `main`، commit `e1c61be2`، والـworking tree يحتوي تغييرات المهمة الحالية غير الملتزمة |
+| تخطيط وتوثيق | Pass | `Check-Planning.ps1` و`Generate-Documentation.ps1 -Check`؛ عدد الوصفات 125 وقت آخر فحص |
+| API Fiscal Years | Pass | 33/33 focused Accounting tests، تشمل رفض Draft كـCurrent مع الحفاظ على Current السابقة، واستمرار Current خلال Closing، وحارس الـaggregate، وعزل اختيار المستخدم حسب الشركة |
+| Platform role/permission projection | Pass | 10/10 focused role-management tests؛ صلاحيات Fiscal Years مستقلة لكل إجراء ولا يوجد authorization claim باسم `Manage` |
+| Accounting EF model | Pass | migration `20260927190043_EnforceOpenFiscalYearCurrentEligibility` مولّدة فوق working-context migration، ولا توجد pending model changes |
+| Development database | Pass | تم تطبيق migration الجديدة فعليًا على قاعدة التطوير؛ تنظف Draft Current القديمة فقط وتحافظ على Current التي تقدمت بعد Open |
+| Web Fiscal Years + permissions | Feature delta Pass; inherited full-gate blocker | 11/11 لاختبار سياسة lifecycle/Current وfocused ESLint ناجحان؛ type-check الكامل متوقف بخطأ missing props موروث خارج الميزة في `CrystalReportManagerPage` |
+| Mobile Fiscal Years + permissions | Pass | 8/8 لاختبار سياسة calendar/Current + type-check + focused ESLint؛ نتائج بوابات السياق/العقود السابقة باقية كما هي |
+| Web/Mobile context badges | Pass — source gate | 2/2 Web + 3/3 Mobile focused shared-component tests؛ Fiscal Years totals 16/16 Web و19/19 Mobile؛ TypeScript وfocused ESLint وarchitecture وEN/AR i18n وMobile 230-member contract matrix خضراء، والتوثيق 125/125 والوحدة التخطيطية خضراء |
+| API health/auth + shared Company context | Pending manual environment check | يُثبت عند بدء W-01/M-01 |
+| Actual Mobile device metadata | Pending | يسجل في M-01 قبل اختبار الجهاز |
+
+أصلح فحص الجاهزية أيضًا ملفي اختبار Domain في Mobile بحيث لا يعتمدا مباشرة على
+Jest، وثبّت callback صلاحيات دورة الحياة لمنع إعادة إنشائه في كل render. لم تتغير
+قواعد العمل أو العقود المرئية للمستخدم نتيجة هذين الإصلاحين.
+
+أُعيد فحص الجاهزية بعد تعديل نموذج الصلاحيات وتقسيم `Manage` إلى صلاحيات إجراءات
+مستقلة. فشل التشغيل المتوازي الأول بسبب نفاد ذاكرة بيئة التطوير قبل تنفيذ
+الاختبارات؛ نجحت إعادة التشغيل التسلسلية كاملة، ولذلك لا يسجل ذلك كفشل وظيفي.
+
 ## 3. حسابات الاختبار المطلوبة
 
 لا تكتب كلمات المرور أو tokens في الملف أو الصور.
 
 | الرمز | الصلاحيات/الحالة | النتيجة التي نثبتها |
 | --- | --- | --- |
-| `FY-FULL` | `FiscalYears:View/Create/Edit/Archive/Restore/Open/BeginClosing/Close/Lock/Reopen` + صلاحية التقرير | الرحلة الإيجابية كاملة |
+| `FY-FULL` | `FiscalYears:View/Create/Edit/Archive/Restore/Open/BeginClosing/Close/Lock/Reopen/SetCurrent` + صلاحية التقرير | الرحلة الإيجابية كاملة، ومنها تغيير Current للشركة |
 | `FY-VIEW` | `FiscalYears:View` فقط | العرض يعمل، وكل mutation مخفي أو مرفوض |
 | `FY-ARCHIVE` | `FiscalYears:View` + `FiscalYears:Archive` فقط | الأرشفة متاحة والاستعادة وباقي الأفعال مرفوضة |
 | `FY-RESTORE` | `FiscalYears:View` + `FiscalYears:Restore` فقط | الاستعادة متاحة والأرشفة وباقي الأفعال مرفوضة |
 | `FY-LIFECYCLE-ONE` | `FiscalYears:View` + صلاحية lifecycle واحدة في كل جولة | كل انتقال مستقل ولا تمنح صلاحية انتقال سلطة انتقال آخر |
+| `FY-SETCURRENT` | `FiscalYears:View` + `FiscalYears:SetCurrent` فقط | يستطيع تغيير Current للشركة ولا يحصل على Create/Edit/Archive/lifecycle |
 | `FY-DENIED` | بلا `FiscalYears:View` | القائمة والرابط المباشر وAPI تفشل بصورة آمنة |
-| `FY-READONLY` | الصلاحيات موجودة لكن الاشتراك/البيئة Read-only | لا يوجد إنشاء/تعديل/أرشفة/استعادة/تغيير حالة |
+| `FY-READONLY` | الصلاحيات موجودة لكن الاشتراك/البيئة Read-only | العمليات المالية وSetCurrent محظورة، لكن المستخدم يستطيع تغيير سنة عمله الشخصية |
 | `FY-FULL` في Company B | نفس المستخدم أو مستخدم مماثل في شركة اختبار ثانية | لا تظهر بيانات Company A في Company B |
 
 ## 4. بيانات الاختبار الدقيقة
@@ -140,6 +168,83 @@ Chart، ولا `alert/confirm` أصلي من المتصفح.
 النتيجة المتوقعة: Create يعيد سجل Draft authoritative وRowVersion، ولا يرسل العميل
 TenantId أو CompanyId في body.
 
+### W-03A — تعيين السنة الحالية للشركة / Company Current
+
+1. بحساب `FY-FULL` افتح Grid ثم Cards وتحقق أن عمود/شارة `Current / الحالية`
+   يظهران بنفس المعنى في الإنجليزية والعربية وباللون الذهبي/التحذيري نفسه في
+   Grid وCards وDetail في Web وTable وCards وDetail في Mobile.
+2. على سنة `Draft` تحقق أن إجراء `Set as company current / تعيين كسنة الشركة
+   الحالية` غير ظاهر/غير متاح في Web وMobile. أرسل طلبًا مباشرًا صحيح الصلاحية
+   والـRowVersion وتحقق من `409` بالخطأ المستقر
+   `FiscalYear.MustBeOpenForCurrent`، ومن بقاء السنة الحالية السابقة بلا تغيير.
+3. افتح السنة المراد تعيينها لتصبح `Open`، ثم اختر `Set as company current / تعيين
+   كسنة الشركة الحالية`، اقرأ نص التأكيد ثم Cancel؛ لا يجب أن تتغير أي شارة.
+4. كرر الإجراء وConfirm. تحقق أن سنة واحدة فقط أصبحت Current، وأن السنة السابقة
+   فقدت العلامة، وأن الـTopbar يعرض السنة الجديدة لمستخدم لم يحدد اختيارًا شخصيًا.
+5. أعد تحميل الصفحة وافتح Detail؛ يجب بقاء العلامة. حاول Archive للسنة Current؛
+   يجب ألا يظهر الإجراء في Web، والطلب المباشر يجب أن يُرفض بالخطأ المستقر
+   `FiscalYear.CurrentCannotBeArchived`.
+6. جرّب نفس الإجراء بحساب يملك View ولا يملك `FiscalYears:SetCurrent`؛ يجب أن تختفي
+   الإدارة وأن يعيد الطلب المباشر `403`.
+7. افحص Network: طلب Set Current يحمل `RowVersion` فقط، ولا يحمل TenantId أو
+   CompanyId أو UserId. أعد المحاولة من نسخة stale وتحقق من conflict/reload.
+8. بعد تعيين Open كسنة Current، انقلها إلى Closing ثم Closed؛ يجب أن تحتفظ بعلامة
+   Current أثناء تقدم دورة الحياة، لكن لا يمكن تعيين سنة غير Current في أي من
+   هاتين الحالتين. لتغيير Current افتح سنة أخرى أولًا ثم عيّنها.
+
+النتيجة المتوقعة: قيد قاعدة البيانات والعقد يضمنان Current واحدًا فقط لكل شركة،
+ولا يسمحان بتعيين Current جديدة إلا من حالة Open. تغيير Current لا يغير lifecycle
+أو اختيارات المستخدمين الشخصية الموجودة.
+
+### W-03B — سنة العمل الشخصية في Topbar
+
+1. بحساب `FY-VIEW` الذي لا يملك `SetCurrent` افتح محدد سنة العمل في Topbar. يجب
+   أن يظهر لأن `FiscalYears:View` كافية لاختيار سياق المستخدم نفسه.
+2. اختر سنة غير Current. تحقق أن الاسم المعروض يتبع اللغة الحالية، ثم أعد تحميل
+   الصفحة وسجّل الخروج والدخول؛ يجب أن يبقى اختيار هذا المستخدم داخل Company A.
+3. افتح نفس Company A بمستخدم ثانٍ لم يغيّر اختياره؛ يجب أن يرى Company Current
+   وليس اختيار المستخدم الأول.
+4. بدّل المستخدم الأول إلى Company B؛ يجب تحميل اختيار Company B المستقل أو
+   Current الخاص بها، لا اختيار Company A. عد إلى Company A وتحقق من رجوع اختياره.
+5. افتح نموذجًا وعدّل قيمة من دون حفظ، ثم حاول تبديل سنة العمل. اختر Stay أولًا؛
+   يجب ألا يتغير السياق. أعد المحاولة واختر Discard؛ يجب التخلص من التعديل ثم
+   تحميل السنة المختارة.
+6. غيّر Company Current بحساب `FY-FULL`: المستخدم صاحب override الصحيح يظل على
+   اختياره، والمستخدم بلا override يتبع Current الجديدة. اختيار Current نفسها من
+   القائمة يجب أن يلغي override ويتبع تغييرات Current اللاحقة.
+7. افحص Network: `PUT /api/v1/fiscal-years/context` يرسل `fiscalYearId` فقط؛ لا
+   يرسل UserId/CompanyId. جرّب ID مؤرشفًا/من شركة أخرى وتحقق من الرفض أو fallback
+   بلا تسريب.
+
+النتيجة المتوقعة: اختيار سنة العمل شخصي ومفصول حسب الشركة، بينما Current هي default
+مشترك فقط. لا تُخزن السنة في token ولا يتأثر مستخدم باختيار مستخدم آخر.
+
+### W-03C — تدقيق Context Badges في Topbar
+
+1. على عرض Desktop `1440px` أو أكبر تحقق أن مجموعة السياق تظهر بترتيب منطقي:
+   `المنشأة الحالية / Current tenant` ثم `الشركة الحالية / Current company` ثم
+   `سنة العمل المالية / Working fiscal year`. يجب أن تظهر داخل حاوية واحدة خفيفة؛
+   كل عنصر يعرض الأيقونة والقيمة الحالية في سطر واحد من دون بطاقات منفصلة أو
+   ظلال أو تكرار بصري لعنوان السياق. تحقق من ثبات التمييز اللوني للأيقونات:
+   Tenant بنفسجي/ثانوي، Company سماوي/معلوماتي، Fiscal Year ذهبي/تحذيري، مع contrast
+   واضح في Light وDark.
+2. مرر المؤشر على كل Badge وتحقق أن Tooltip/accessible name يحتوي **نوع السياق
+   وقيمته**. Tenant للعرض فقط؛ لا يجب أن يظهر له سهم أو قائمة تبديل بعد تسجيل
+   الدخول. Company وFiscal Year يظهر لهما سهم فقط إذا كان هناك اختيار فعلي متاح.
+3. افتح قائمتي Company وFiscal Year بلوحة المفاتيح (`Tab` ثم `Enter/Space`)؛ تحقق
+   من focus واضح، ومن تمييز القيمة الحالية، ومن الإغلاق بـ`Escape` دون تغيير.
+4. صغّر العرض إلى أقل من `1200px`. يجب أن تتحول مجموعة السياق إلى أيقونات متساوية
+   وواضحة من دون overlap أو قص أزرار البحث/الإشعارات/المزيد، مع بقاء القيمة الكاملة
+   في Tooltip وقارئ الشاشة. تحقق أيضًا أن صورة المستخدم وحلقتها تظهران دائرة كاملة
+   ولا تنضغطان أو تُقصان من أي جانب في LTR أو RTL.
+5. كرر النقاط السابقة بالعربية RTL والإنجليزية LTR، ثم في Light/Dark. الأسماء
+   الطويلة تُختصر بصريًا فقط ولا تغيّر القيمة المنطوقة، ولا ينكسر ترتيب hierarchy.
+6. بدّل الشركة ثم سنة العمل وتحقق أن Badge لا يعرض القيمة الجديدة قبل نجاح API،
+   وأن loading لا يسبب قفزة في ارتفاع Topbar أو اختلافًا بين أشكال الثلاثة.
+
+النتيجة المتوقعة: الثلاثة يستخدمون لغة بصرية واحدة، مع فصل واضح بين هوية Tenant
+الثابتة ومبدلي Company/Fiscal Year، ومن دون تغيير أي عقد scope أو صلاحية.
+
 ### W-04 — البحث والفرز والتصفية
 
 1. ابحث بحقل `NameAr` عن `سنة اختبار مسودة <S>` وتحقق أن السجل يظهر وحده.
@@ -224,6 +329,29 @@ state audit/realtime noise جديد. احتفظ بالسجل Open مع prefix ا
 4. جرّب server pagination بأحجام 3 و5 و10، والفرز والفلاتر وpull-to-refresh.
 5. افتح Report إذا كان متاحًا وتحقق من نفس قواعد الصلاحية والشركة في W-09.
 
+### M-01A — محدد سنة العمل في الهيدر
+
+1. على هاتف/Tablet أضيق من `900pt` تحقق من ظهور ثلاث أيقونات متساوية بحجم لمس لا يقل عن
+   `44×44`: Tenant ثم Company ثم Fiscal Year. يجب ألا تزاحم زر القائمة أو
+   الإشعارات أو الخروج، وأن يعلن قارئ الشاشة نوع كل سياق وقيمته الحالية كاملة.
+2. على Tablet/Landscape بعرض `900pt` أو أكثر تحقق أن مجموعة السياق الموحدة تعرض
+   الأيقونة والقيمة الحالية في سطر واحد من دون عنوان مرئي ثانٍ أو بطاقات/ظلال
+   منفصلة. الأسماء الطويلة تُختصر بصريًا بلا قص النص المكبر أو فقد اسم السياق
+   والقيمة في accessible name، وتعمل في Light/Dark وRTL/LTR. تحقق من ألوان
+   التعريف: Tenant بنفسجي، Company سماوي، Fiscal Year ذهبي.
+3. Tenant هوية session للقراءة فقط ولا يفتح modal. اضغط Company وتحقق أن modal
+   الشركة الحالي لم يتغير وظيفيًا، ثم اضغط أيقونة التقويم: يجب فتح modal يعرض أسماء السنوات حسب اللغة، ويميز Company
+   Current بنجمة/وصف، ويميز الاختيار الحالي.
+4. اختر سنة أخرى ثم `استخدام هذه السنة / Use this year`، وأعد فتح modal وتطبيق
+   الصفحة. يجب بقاء اختيار المستخدم من الخادم.
+5. افتح نموذجًا متسخًا ثم حاول التبديل؛ اختبر Cancel/Stay ثم Discard كما في W-03B.
+6. بدّل Company ثم عد إليها، وكرر بمستخدم آخر للتأكد من العزل حسب user+company.
+7. فعّل Read-only subscription: يجب أن يظل هذا التفضيل الشخصي قابلاً للتغيير،
+   بينما Set Current داخل شاشة الإدارة وكل العمليات المالية تظل محظورة.
+
+النتيجة المتوقعة: الهيدر يستهلك slot عام ولا يعتمد Platform على Accounting، وسلوك
+الموبايل يطابق Web/API من دون تخزين سنة العمل محليًا كمصدر حقيقة.
+
 ### M-02 — النموذج والـkeyboard والاتجاه
 
 1. افتح Create واضغط Create فارغًا. يجب ظهور رسالة تحت كل حقل وتركيز/scroll لأول
@@ -277,14 +405,19 @@ periods → Archive → Archived filter → Restore، ثم اتركه Archived. 
 ### S-03 — Read-only subscription
 
 1. بحساب `FY-READONLY` تحقق أن القراءة متاحة إذا كانت الصلاحية موجودة.
-2. كل mutation يجب أن تكون مخفية/blocked من client، وأي direct API attempt مرفوض.
-3. لا success toast ولا optimistic change ولا queued mutation.
+2. Create/Edit/Archive/Restore وكل lifecycle وSetCurrent يجب أن تكون مخفية/blocked
+   من client، وأي direct API attempt لها مرفوض.
+3. محدد سنة العمل الشخصية يجب أن يبقى متاحًا مع View؛ غيّره وتحقق من نجاح
+   `PUT /context` فقط، لأنه تفضيل مستخدم وليس تعديل master مالي.
+4. لا success toast ولا optimistic change ولا queued mutation لأي عملية محظورة.
 
 ### S-04 — Company isolation
 
 1. في Company A ابحث عن Codes `FYD-<S>` و`FYL-<S>` وتأكد من وجود الحالة المتوقعة.
 2. بدّل إلى Company B بنفس Tenant وابحث بالكود والاسمين في list/lookup/report.
 3. حاول فتح detail بالـID المعروف من Company A.
+4. اختر Working Year في Company A ثم بدّل إلى B؛ يجب ألا ينتقل الاختيار إلى B.
+   عد إلى A وتحقق من استرجاعه.
 
 النتيجة المتوقعة: لا نتائج أو detail أو report أو realtime event من Company A،
 ولا يستطيع client إرسال CompanyId لتجاوز current-company context.
@@ -304,6 +437,11 @@ periods → Archive → Archived filter → Restore، ثم اتركه Archived. 
 | الجولة 3 | `FiscalYears:Close` | Closing → Closed | Open/BeginClosing/Lock/Reopen |
 | الجولة 4 | `FiscalYears:Lock` | Closed → Locked | Open/BeginClosing/Close/Reopen |
 | الجولة 5 | `FiscalYears:Reopen` | Closed/Locked → Open وفق السياسة | Open/BeginClosing/Close/Lock |
+| `FY-SETCURRENT` | `FiscalYears:SetCurrent` | تغيير Current لسنة Open غير مؤرشفة مع RowVersion | تعيين Draft/Closing/Closed/Locked، وCreate/Edit/Archive/Restore وكل lifecycle |
+
+`FiscalYears:View` وحدها تسمح للمستخدم بتغيير Working Year الخاص به فقط؛ لا تمنحه
+`SetCurrent` ولا أي تعديل مالي. تحقق أن شاشة إعداد الدور تعرض `Set company current /
+تعيين الحالية للشركة` كإجراء مستقل.
 
 افحص أيضًا شاشة إعداد الدور باللغتين: يجب أن تظهر تسميات مستقلة مثل
 `Archive fiscal year / أرشفة سنة مالية` و`Restore fiscal year / استعادة سنة مالية`؛
@@ -334,6 +472,7 @@ periods → Archive → Archived filter → Restore، ثم اتركه Archived. 
 | Viewing Journey | Pending | Pending | detail read-only يعرض السنة والفترات والحالات بصورة منظمة |
 | Listing & Filtering | Pending | Pending | P-001 Grid/Cards وTable/Cards مع server criteria والحالة والعدد |
 | Mock Data Generator | Pending | Pending | local bilingual valid draft فقط، بلا submit أو scope/identity مزيف |
+| Global Working Context | Pending | Pending | Header selector شخصي حسب الشركة، dirty guard، Current fallback، وضوح بالعربي والإنجليزي |
 
 قارن Web بمصدر Fiscal Years/Countries المراجع عند Desktop وعرض ضيق، وMobile بمصدر
 Countries على نفس الجهاز. أي اختلاف غير موثق في PageHeader، toolbar، grid/table،
@@ -352,9 +491,9 @@ cards، pagination، loading/empty/error، form shell أو confirmation يعتب
 
 | مجموعة الحالات | Passed | Failed | Blocked | Not run | دليل/ملاحظات |
 | --- | ---: | ---: | ---: | ---: | --- |
-| W-01..W-09 | 0 | 0 | 0 | 9 | Pending |
-| M-01..M-05 | 0 | 0 | 0 | 5 | Pending |
-| S-01..S-04 | 0 | 0 | 0 | 4 | Pending |
+| W-01..W-09 + W-03A/B/C | 0 | 0 | 0 | 12 | Pending |
+| M-01..M-05 + M-01A | 0 | 0 | 0 | 6 | Pending |
+| S-01..S-05 | 0 | 0 | 0 | 5 | Pending |
 | i18n/UI audit | 0 | 0 | 0 | 1 | Pending |
 
 كل Fail يسجل: رقم الحالة، المنصة/اللغة، القيم المستخدمة، المتوقع، الفعلي، صورة أو

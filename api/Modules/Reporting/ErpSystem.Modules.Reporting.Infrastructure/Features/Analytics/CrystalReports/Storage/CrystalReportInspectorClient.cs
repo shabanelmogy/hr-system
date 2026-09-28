@@ -14,7 +14,9 @@ public sealed class CrystalReportInspectorClient(
     ILogger<CrystalReportInspectorClient> logger) : ICrystalReportInspector
 {
     public async Task<CrystalReportInspection?> InspectAsync(
-        FileUpload upload, CancellationToken cancellationToken)
+        string entityKey,
+        FileUpload upload,
+        CancellationToken cancellationToken)
     {
         var settings = options.Value;
         if (!settings.RuntimeEnabled)
@@ -36,6 +38,7 @@ public sealed class CrystalReportInspectorClient(
             request.Headers.TryAddWithoutValidation("X-Internal-Api-Key", apiKey);
         AddCorrelationHeader(request, executionContext.CorrelationId);
         using var multipart = new MultipartFormDataContent();
+        multipart.Add(new StringContent(entityKey), "entityKey");
         await using var source = upload.OpenReadStream();
         using var content = new StreamContent(source);
         if (MediaTypeHeaderValue.TryParse(upload.ContentType, out var mediaType))
@@ -47,16 +50,6 @@ public sealed class CrystalReportInspectorClient(
         {
             using var response = await httpClient.SendAsync(
                 request, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
-            if (!response.IsSuccessStatusCode)
-            {
-                logger.LogWarning(
-                    "Crystal report inspection service returned HTTP {StatusCode}.",
-                    (int)response.StatusCode);
-                return response.StatusCode == System.Net.HttpStatusCode.BadRequest
-                    ? new CrystalReportInspection(false, null, null, "Crystal runtime rejected the report.")
-                    : null;
-            }
-
             var payload = await BoundedHttpContentReader.ReadAsync(
                 response.Content,
                 settings.MaxInspectionResponseSizeBytes,
@@ -65,6 +58,35 @@ public sealed class CrystalReportInspectorClient(
             {
                 logger.LogWarning("Crystal report inspection service returned an invalid response size.");
                 return null;
+            }
+
+            if (!response.IsSuccessStatusCode)
+            {
+                logger.LogWarning(
+                    "Crystal report inspection service returned HTTP {StatusCode}.",
+                    (int)response.StatusCode);
+                if (response.StatusCode != System.Net.HttpStatusCode.BadRequest)
+                    return null;
+
+                try
+                {
+                    var error = JsonSerializer.Deserialize<InspectionErrorResponse>(
+                        payload,
+                        InspectionJsonOptions);
+                    return new CrystalReportInspection(
+                        false,
+                        null,
+                        null,
+                        "Crystal runtime rejected the report.",
+                        null,
+                        null,
+                        ToInspectionFailure(error?.Code));
+                }
+                catch (JsonException exception)
+                {
+                    logger.LogWarning(exception, "Crystal report inspection service returned invalid error JSON.");
+                    return null;
+                }
             }
 
             InspectionResponse? result;
@@ -86,10 +108,28 @@ public sealed class CrystalReportInspectorClient(
                     : result.HasSavedData
                         ? "Saved report data is not allowed."
                         : "Crystal runtime rejected the report.";
-                return new CrystalReportInspection(false, result.Title, result.Subject, reason);
+                return new CrystalReportInspection(
+                    false,
+                    result.Title,
+                    result.Subject,
+                    reason,
+                    null,
+                    null,
+                    result.Failure);
             }
 
-            return new CrystalReportInspection(true, result.Title, result.Subject, null);
+            if (result.ContractSchemaVersion is not > 0 ||
+                result.ContractFingerprint is not { Length: 64 })
+                return null;
+
+            return new CrystalReportInspection(
+                true,
+                result.Title,
+                result.Subject,
+                null,
+                result.ContractSchemaVersion,
+                result.ContractFingerprint,
+                CrystalReportInspectionFailure.None);
         }
         catch (HttpRequestException exception)
         {
@@ -109,7 +149,20 @@ public sealed class CrystalReportInspectorClient(
         string? Subject,
         bool HasSavedData,
         bool HasEmbeddedCredentials,
-        int SubreportCount);
+        int SubreportCount,
+        int? ContractSchemaVersion,
+        string? ContractFingerprint,
+        CrystalReportInspectionFailure Failure = CrystalReportInspectionFailure.None);
+
+    private sealed record InspectionErrorResponse(string? Code, string? Message);
+
+    private static CrystalReportInspectionFailure ToInspectionFailure(string? code) => code switch
+    {
+        "crystal_runtime_unsupported_profile" => CrystalReportInspectionFailure.UnsupportedEntity,
+        "crystal_runtime_schema_mismatch" => CrystalReportInspectionFailure.SchemaMismatch,
+        "crystal_runtime_parameter_mismatch" => CrystalReportInspectionFailure.ParameterMismatch,
+        _ => CrystalReportInspectionFailure.InvalidReport
+    };
 
     private static readonly JsonSerializerOptions InspectionJsonOptions =
         new(JsonSerializerDefaults.Web);

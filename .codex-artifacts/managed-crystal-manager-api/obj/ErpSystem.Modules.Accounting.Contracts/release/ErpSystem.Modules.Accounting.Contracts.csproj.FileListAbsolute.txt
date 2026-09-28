@@ -1,0 +1,12 @@
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\bin\ErpSystem.Modules.Accounting.Contracts\release\ErpSystem.Modules.Accounting.Contracts.deps.json
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\bin\ErpSystem.Modules.Accounting.Contracts\release\ErpSystem.Modules.Accounting.Contracts.dll
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\bin\ErpSystem.Modules.Accounting.Contracts\release\ErpSystem.Modules.Accounting.Contracts.pdb
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.Modules.Accounting.Contracts\release\ErpSystem.Modules.Accounting.Contracts.GeneratedMSBuildEditorConfig.editorconfig
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.Modules.Accounting.Contracts\release\ErpSystem.Modules.Accounting.Contracts.AssemblyInfoInputs.cache
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.Modules.Accounting.Contracts\release\ErpSystem.Modules.Accounting.Contracts.AssemblyInfo.cs
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.Modules.Accounting.Contracts\release\ErpSystem.Modules.Accounting.Contracts.csproj.CoreCompileInputs.cache
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.Modules.Accounting.Contracts\release\ErpSystem.Modules.Accounting.Contracts.sourcelink.json
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.Modules.Accounting.Contracts\release\ErpSystem.Modules.Accounting.Contracts.dll
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.Modules.Accounting.Contracts\release\refint\ErpSystem.Modules.Accounting.Contracts.dll
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.Modules.Accounting.Contracts\release\ErpSystem.Modules.Accounting.Contracts.pdb
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.Modules.Accounting.Contracts\release\ref\ErpSystem.Modules.Accounting.Contracts.dll

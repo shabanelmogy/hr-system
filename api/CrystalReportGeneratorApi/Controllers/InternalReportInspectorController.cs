@@ -1,6 +1,7 @@
 using CrystalReportGeneratorApi.Filters;
 using CrystalReportGeneratorApi.Runtime;
 using CrystalReportGeneratorApi.Runtime.Inspection;
+using CrystalReportGeneratorApi.Runtime.Rendering;
 using System;
 using System.IO;
 using System.Linq;
@@ -8,12 +9,16 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Text.RegularExpressions;
 
 namespace CrystalReportGeneratorApi.Controllers
 {
     [InternalApiKey]
     public sealed class InternalReportInspectorController : ApiController
     {
+        private static readonly Regex SafeEntityKey = new Regex(
+            "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            RegexOptions.Compiled | RegexOptions.CultureInvariant);
         private readonly CrystalReportInspectionService _inspectionService =
             new CrystalReportInspectionService();
 
@@ -59,6 +64,16 @@ namespace CrystalReportGeneratorApi.Controllers
                             InternalReportErrorCodes.InvalidReport,
                             "The Crystal Report file exceeds the configured size limit."));
 
+                    var entityKey = (provider.FormData["entityKey"] ?? string.Empty)
+                        .Trim()
+                        .ToLowerInvariant();
+                    if (entityKey.Length > 64 || !SafeEntityKey.IsMatch(entityKey))
+                        return ResponseMessage(InternalReportResponseFactory.Create(
+                            Request,
+                            HttpStatusCode.BadRequest,
+                            InternalReportErrorCodes.InvalidRequest,
+                            "A canonical managed report entity key is required."));
+
                     using (var executionLease = await CrystalReportExecutionGate.TryEnterAsync())
                     {
                         if (executionLease == null)
@@ -71,7 +86,7 @@ namespace CrystalReportGeneratorApi.Controllers
                                 "The Crystal report runtime is busy. Retry the request shortly."));
                         }
 
-                        var inspection = _inspectionService.Inspect(file.FullName);
+                        var inspection = _inspectionService.Inspect(file.FullName, entityKey);
                         CrystalRuntimeDiagnostics.Information(Request, "inspect", "success");
                         return Ok(inspection);
                     }
@@ -82,7 +97,20 @@ namespace CrystalReportGeneratorApi.Controllers
                     return ResponseMessage(InternalReportResponseFactory.Create(
                         Request,
                         HttpStatusCode.BadRequest,
-                        InternalReportErrorCodes.InvalidReport,
+                        exception.Code,
+                        exception.Message));
+                }
+                catch (UnsupportedCrystalReportProfileException exception)
+                {
+                    CrystalRuntimeDiagnostics.Warning(
+                        Request,
+                        "inspect",
+                        InternalReportErrorCodes.UnsupportedProfile,
+                        exception);
+                    return ResponseMessage(InternalReportResponseFactory.Create(
+                        Request,
+                        HttpStatusCode.BadRequest,
+                        InternalReportErrorCodes.UnsupportedProfile,
                         exception.Message));
                 }
                 catch (Exception exception)

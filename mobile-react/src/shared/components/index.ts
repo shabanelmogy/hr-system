@@ -24,6 +24,7 @@ export * from './forms/layouts';
 export * from './icons/AppIcon';
 export * from './importing/AppSpreadsheetImportView';
 export * from './layout/AppDivider';
+export * from './layout/AppContextBadge';
 export * from './layout/AppPageHeader';
 export * from './layout/AppScreen';
 export * from './multi-view';

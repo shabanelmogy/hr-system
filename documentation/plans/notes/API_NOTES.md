@@ -30,6 +30,8 @@ Then reference its stable ID here.
 | PROD-022 | Production | Delivery security | Deployment approval gates and artifact signing/provenance remain Production Scale work. | `PRODUCTION_NOTES.md` |
 | PROD-023 | Production | Disaster recovery | Backup/restore/RPO/RTO evidence remains Production Scale work. | `PRODUCTION_NOTES.md` |
 | PROD-024 | Production | Observability | Central error tracking, dashboards, alerts, SLOs, and redaction remain Production Scale work. | `PRODUCTION_NOTES.md` |
+| PROD-025 | Production | Managed Crystal runtime | Matching contract fingerprints, runtime/catalog packaging, worker-capacity limits and a live authenticated render require deployment evidence. | `PRODUCTION_NOTES.md` |
+| RISK-008 | Risk | Managed Crystal fixture | Real positive `.rpt` acceptance is Deferred during development and becomes mandatory before Fiscal Years live acceptance or release. | `KNOWN_RISKS.md` |
 
 ## API note checklist
 

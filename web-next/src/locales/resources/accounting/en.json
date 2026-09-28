@@ -12,7 +12,17 @@
       "endDate": "End date",
       "frequency": "Period frequency",
       "periods": "Periods",
-      "status": "Status"
+      "status": "Status",
+      "current": "Current"
+    },
+    "context": {
+      "label": "Working fiscal year",
+      "menuLabel": "Choose your working fiscal year",
+      "companyCurrent": "Company current year",
+      "noSelection": "Choose fiscal year",
+      "loadError": "Fiscal-year context unavailable",
+      "switchSuccess": "Working fiscal year changed to {{fiscalYear}}.",
+      "switchError": "Unable to change your working fiscal year."
     },
     "frequency": {
       "monthly": "Monthly",
@@ -66,6 +76,7 @@
     "actions": {
       "add": "Add fiscal year",
       "lifecycle": "Advance lifecycle",
+      "setCurrent": "Set as company current",
       "reset": "Reset filters"
     },
     "lifecycle": {
@@ -109,12 +120,14 @@
       "archived": "Fiscal year archived.",
       "restored": "Fiscal year restored.",
       "lifecycleChanged": "Fiscal year moved to {{status}}.",
+      "currentChanged": "{{code}} is now the company current fiscal year.",
       "fetchError": "Unable to load fiscal years.",
       "createError": "Unable to create the fiscal year.",
       "updateError": "Unable to update the fiscal year.",
       "archiveError": "Unable to archive the fiscal year.",
       "restoreError": "Unable to restore the fiscal year.",
       "lifecycleError": "Unable to advance the fiscal year lifecycle.",
+      "currentError": "Unable to change the company current fiscal year.",
       "conflictReloaded": "This fiscal year was changed by another operation. The latest server version has been reloaded; review it before trying again."
     },
     "confirm": {
@@ -131,7 +144,9 @@
       "lockTitle": "Lock fiscal year?",
       "lockDescription": "The year and all its periods will be locked against operational changes. An authorized lifecycle manager can still reopen it.",
       "reopenTitle": "Reopen fiscal year?",
-      "reopenDescription": "This returns either a Closed or Locked year and all its periods to Open while preserving the audit history."
+      "reopenDescription": "This returns either a Closed or Locked year and all its periods to Open while preserving the audit history.",
+      "setCurrentTitle": "Change the company current fiscal year?",
+      "setCurrentDescription": "This becomes the default working year for users who have not chosen a personal fiscal-year context. Existing personal selections are not changed."
     }
   },
   "currencies": {

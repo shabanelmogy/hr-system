@@ -18,6 +18,26 @@ public sealed class GetPublishedCrystalReportsQueryHandler(
             permissions.HasPermission(ReportingPermissions.ViewCrystalReportAccess), cancellationToken);
 }
 
+public sealed class GetSupportedCrystalReportEntitiesQueryHandler(
+    IManagedCrystalReportContractSource contracts)
+    : IQueryHandler<GetSupportedCrystalReportEntitiesQuery,
+        IReadOnlyList<SupportedCrystalReportEntityResponse>>
+{
+    public Task<IReadOnlyList<SupportedCrystalReportEntityResponse>> Handle(
+        GetSupportedCrystalReportEntitiesQuery request,
+        CancellationToken cancellationToken) =>
+        Task.FromResult<IReadOnlyList<SupportedCrystalReportEntityResponse>>(
+            contracts.EntityDescriptors
+                .OrderBy(entity => entity.EntityKey, StringComparer.Ordinal)
+                .Select(entity => new SupportedCrystalReportEntityResponse(
+                    entity.EntityKey,
+                    entity.Scope,
+                    entity.Filters,
+                    contracts.SchemaVersion,
+                    contracts.Fingerprint))
+                .ToArray());
+}
+
 public sealed class GetGlobalCrystalReportsQueryHandler(
     ICrystalReportDeploymentSource deploymentSource,
     CrystalReportErrors errors)
@@ -252,6 +272,7 @@ public sealed class RenderCrystalReportQueryHandler(
     ICrystalReportDataSource dataSource,
     ICrystalReportRenderer renderer,
     ICurrentPermissionChecker permissions,
+    IManagedCrystalReportContractSource contracts,
     CrystalReportErrors errors)
     : IQueryHandler<RenderCrystalReportQuery, Result<CrystalReportDownload>>
 {
@@ -268,6 +289,10 @@ public sealed class RenderCrystalReportQueryHandler(
             request.ReportId, null, cancellationToken);
         if (version is null)
             return Result.Failure<CrystalReportDownload>(errors.CrystalReportNotFound);
+        if (version.ValidationStatus != CrystalReportValidationStatus.Valid)
+            return Result.Failure<CrystalReportDownload>(errors.CrystalReportVersionNotValidated);
+        if (!version.IsValidFor(contracts.Fingerprint))
+            return Result.Failure<CrystalReportDownload>(errors.CrystalReportContractStale);
 
         await using var source = await fileStorage.OpenVerifiedReadAsync(
             version.StorageKey,

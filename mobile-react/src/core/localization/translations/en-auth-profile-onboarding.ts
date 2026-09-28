@@ -33,6 +33,8 @@ export const enAuthProfileOnboarding = {
     selectCompanyDescription: 'Choose the company you want to work with in this session.',
     continueToCompany: 'Continue',
     currentCompany: 'Current company',
+    currentTenant: 'Current tenant',
+    currentContext: 'Current working context',
     switchCompany: 'Switch company',
     switchCompanyDescription: 'Choose the company you want to work with in this session.',
     switchCompanyUnsavedTitle: 'Discard changes and switch company?',

@@ -10,6 +10,7 @@ import {
 } from '@/src/core/offline-policy';
 import { useLocalization } from '@/src/core/localization';
 import { useAppTheme } from '@/src/core/theme';
+import { permissions, useAuthorization } from '@/src/platform/auth';
 import {
   AppAlert,
   AppButton,
@@ -74,13 +75,17 @@ function OfflineOperationsPolicyContent() {
     resetScope,
   } = useOfflineOperationsPolicy();
   const { isReadOnly, notifyBlockedAction } = useAppReadOnly();
+  const { allowed: editAllowed } = useAuthorization({
+    requiredPermissions: [permissions.EditOfflineOperations],
+  });
+  const canEdit = editAllowed && !isReadOnly;
   const [resetPending, setResetPending] = useState(false);
   const hasReadySnapshot = policy?.status === 'ready';
   const hasLiveServerPolicy = hasReadySnapshot && policy?.authority === 'server';
 
   const updateMode = async (capabilityId: string, mode: OfflineOperationMode) => {
-    if (isReadOnly) {
-      notifyBlockedAction();
+    if (!canEdit) {
+      if (isReadOnly) notifyBlockedAction();
       return;
     }
     try {
@@ -97,8 +102,8 @@ function OfflineOperationsPolicyContent() {
   };
 
   const resetPolicy = async () => {
-    if (isReadOnly) {
-      notifyBlockedAction();
+    if (!canEdit) {
+      if (isReadOnly) notifyBlockedAction();
       return;
     }
     try {
@@ -202,7 +207,7 @@ function OfflineOperationsPolicyContent() {
                   </View>
 
                   <AppSegmentedControl<OfflineOperationMode>
-                    disabled={savingCapabilityId !== null || isReadOnly || !hasLiveServerPolicy}
+                    disabled={savingCapabilityId !== null || !canEdit || !hasLiveServerPolicy}
                     label={t(card.titleKey)}
                     layout="wrap"
                     onChange={(nextMode) => void updateMode(card.id, nextMode)}
@@ -229,7 +234,7 @@ function OfflineOperationsPolicyContent() {
       </View>
 
       <AppButton
-        disabled={savingCapabilityId !== null || isReadOnly || !hasLiveServerPolicy}
+        disabled={savingCapabilityId !== null || !canEdit || !hasLiveServerPolicy}
         fullWidth
         icon="refresh-circle-outline"
         onPress={() => setResetPending(true)}

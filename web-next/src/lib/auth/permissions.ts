@@ -81,6 +81,7 @@ export const permissions = {
   CloseFiscalYears: "FiscalYears:Close",
   LockFiscalYears: "FiscalYears:Lock",
   ReopenFiscalYears: "FiscalYears:Reopen",
+  SetCurrentFiscalYears: "FiscalYears:SetCurrent",
   ViewCurrencies: "Currencies:View",
   CreateCurrencies: "Currencies:Create",
   EditCurrencies: "Currencies:Edit",

@@ -15,6 +15,7 @@ public static class FiscalYearResponseMapper
             fiscalYear.EndDate,
             fiscalYear.PeriodFrequency,
             fiscalYear.Status,
+            fiscalYear.IsCurrent,
             fiscalYear.Periods
                 .OrderBy(period => period.Sequence)
                 .Select(period => new FiscalPeriodResponse(

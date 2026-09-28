@@ -1,0 +1,12 @@
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\bin\ErpSystem.Modules.ReferenceData.Contracts\release\ErpSystem.Modules.ReferenceData.Contracts.deps.json
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\bin\ErpSystem.Modules.ReferenceData.Contracts\release\ErpSystem.Modules.ReferenceData.Contracts.dll
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\bin\ErpSystem.Modules.ReferenceData.Contracts\release\ErpSystem.Modules.ReferenceData.Contracts.pdb
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.Modules.ReferenceData.Contracts\release\ErpSystem.Modules.ReferenceData.Contracts.GeneratedMSBuildEditorConfig.editorconfig
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.Modules.ReferenceData.Contracts\release\ErpSystem.Modules.ReferenceData.Contracts.AssemblyInfoInputs.cache
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.Modules.ReferenceData.Contracts\release\ErpSystem.Modules.ReferenceData.Contracts.AssemblyInfo.cs
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.Modules.ReferenceData.Contracts\release\ErpSystem.Modules.ReferenceData.Contracts.csproj.CoreCompileInputs.cache
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.Modules.ReferenceData.Contracts\release\ErpSystem.Modules.ReferenceData.Contracts.sourcelink.json
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.Modules.ReferenceData.Contracts\release\ErpSystem.Modules.ReferenceData.Contracts.dll
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.Modules.ReferenceData.Contracts\release\refint\ErpSystem.Modules.ReferenceData.Contracts.dll
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.Modules.ReferenceData.Contracts\release\ErpSystem.Modules.ReferenceData.Contracts.pdb
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.Modules.ReferenceData.Contracts\release\ref\ErpSystem.Modules.ReferenceData.Contracts.dll

@@ -1,10 +1,25 @@
 import { buildFiscalPeriodPreview } from './fiscal-period-preview';
-import { getAvailableFiscalYearLifecycleActions } from './fiscal-year-lifecycle';
+import { canSetFiscalYearAsCurrent, getAvailableFiscalYearLifecycleActions } from './fiscal-year-lifecycle';
 
 describe('fiscal year domain calendar policies', () => {
   it('keeps lifecycle transitions explicit', () => {
     expect([1, 2, 3, 4, 5].map(status => getAvailableFiscalYearLifecycleActions(status as 1 | 2 | 3 | 4 | 5)))
       .toEqual([['open'], ['beginClosing'], ['close'], ['reopen', 'lock'], ['reopen']]);
+  });
+
+  it.each([
+    [1, false],
+    [2, true],
+    [3, false],
+    [4, false],
+    [5, false],
+  ] as const)('allows company Current only for an active Open year (status %s)', (status, expected) => {
+    expect(canSetFiscalYearAsCurrent({ status, isDeleted: false, isCurrent: false })).toBe(expected);
+  });
+
+  it('rejects archived and already-current Open years', () => {
+    expect(canSetFiscalYearAsCurrent({ status: 2, isDeleted: true, isCurrent: false })).toBe(false);
+    expect(canSetFiscalYearAsCurrent({ status: 2, isDeleted: false, isCurrent: true })).toBe(false);
   });
 
   it('previews contiguous periods for an end-of-month fiscal start', () => {

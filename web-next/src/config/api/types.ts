@@ -94,6 +94,7 @@ export interface ReportTemplatesRoutes {
 
 export interface CrystalReportsRoutes {
   list: string;
+  supportedEntities: string;
   render: (id: string) => string;
   globalList: string;
   globalRender: (sourceId: string) => string;
@@ -104,6 +105,7 @@ export interface CrystalReportsRoutes {
   download: (id: string) => string;
   downloadVersion: (id: string, versionId: string) => string;
   publishVersion: (id: string, versionId: string) => string;
+  revalidateVersion: (id: string, versionId: string) => string;
   access: (id: string) => string;
   grantRoleOptions: string;
   archive: (id: string) => string;

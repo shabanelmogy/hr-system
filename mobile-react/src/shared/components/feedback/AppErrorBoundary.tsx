@@ -1,8 +1,8 @@
 import type { PropsWithChildren } from 'react';
 import { useCallback } from 'react';
-import { ObserveErrorBoundary } from 'expo-observe';
 import { useTranslation } from 'react-i18next';
 
+import { ObserveErrorBoundary } from '@/src/core/observability/expoObserve';
 import { useAppTheme } from '@/src/core/theme';
 import { AppScreen } from '@/src/shared/components/layout/AppScreen';
 import { AppStateView } from '@/src/shared/components/feedback/AppStateView';

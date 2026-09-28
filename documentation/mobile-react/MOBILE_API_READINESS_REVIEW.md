@@ -17,6 +17,9 @@ patched versions, and a disposable Expo Android prebuild asserts SQLCipher and
 backup settings without writing native artifacts to the repository. Expo
 Observe is configured before mount with route-parameter filtering, and its
 global/native and render-error capture wraps the existing localized retry UI.
+Expo Go does not ship `ExpoAppMetrics`; the runtime adapter therefore bypasses
+native Observe and keeps a JavaScript-only recovery boundary in that client.
+Native metrics remain enabled for custom development and release builds.
 
 ## Architecture and API boundary
 

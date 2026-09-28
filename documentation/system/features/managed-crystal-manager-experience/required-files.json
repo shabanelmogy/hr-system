@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "status": "phase-00-implementation-ready",
+  "feature": "managed-crystal-manager-experience",
+  "featureName": "Managed Crystal Report Manager Experience",
+  "referenceFeature": "N/A",
+  "planId": "managed-crystal-reporting-reliability",
+  "sliceId": "Slice 1 — Managed Crystal Reporting Reliability",
+  "canonicalPlan": "documentation/plans/business/managed-crystal-reporting-reliability/PLAN.md",
+  "featureDecompositionDecision": "Decompose",
+  "screenWorkflowContract": "documentation/plans/business/managed-crystal-reporting-reliability/decomposition/managed-crystal-manager-experience.md",
+  "plannedCustomerEducation": "documentation/plans/business/managed-crystal-reporting-reliability/education/managed-crystal-manager-experience.md",
+  "purpose": "Phase 00 current evidence and approved target contract for the API-first then Web managed Crystal Report Manager workflow.",
+  "reviewArtifact": "documentation/system/features/managed-crystal-manager-experience/MANAGED_CRYSTAL_MANAGER_EXPERIENCE-REVIEW-ARTIFACTS.md",
+  "implementationRequest": "documentation/system/features/managed-crystal-manager-experience/IMPLEMENTATION-REQUEST.md",
+  "canonicalBooks": {
+    "master": "documentation/project/MANAGED_CRYSTAL_MANAGER_EXPERIENCE_FEATURE_FULL_REVIEW.md",
+    "api": "documentation/api/ManagedCrystalManagerExperience_API_Implementation_Profile.md",
+    "web": "documentation/web-next/features/managed-crystal-manager-experience-frontend-reference.md",
+    "mobile": "documentation/mobile-react/managed-crystal-manager-experience-mobile-reference.md"
+  },
+  "sourceCollections": [
+    {
+      "id": "reporting-crystal-api",
+      "layer": "api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/CrystalReports",
+      "minimumFiles": 8,
+      "purpose": "Current contracts, CQRS, validation and orchestration"
+    },
+    {
+      "id": "reporting-crystal-infrastructure",
+      "layer": "api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/CrystalReports",
+      "minimumFiles": 10,
+      "purpose": "Current registry, store, providers and runtime adapters"
+    },
+    {
+      "id": "web-crystal-manager",
+      "layer": "web-next",
+      "path": "web-next/src/modules/reporting/crystal-report-manager",
+      "minimumFiles": 10,
+      "purpose": "Existing manager page, dialogs, types, services and tests"
+    }
+  ],
+  "requiredFiles": [
+    { "id": "root-guidance", "layer": "configuration", "path": "AGENTS.md", "purpose": "Repository rules" },
+    { "id": "web-guidance", "layer": "configuration", "path": "web-next/AGENTS.md", "purpose": "Web owner rules" },
+    { "id": "api-workflow", "layer": "configuration", "path": "documentation/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md", "purpose": "API implementation workflow" },
+    { "id": "canonical-plan", "layer": "planning", "path": "documentation/plans/business/managed-crystal-reporting-reliability/PLAN.md", "purpose": "Approved intent" },
+    { "id": "roadmap", "layer": "planning", "path": "documentation/plans/business/managed-crystal-reporting-reliability/IMPLEMENTATION-ROADMAP.md", "purpose": "Single active step" },
+    { "id": "child-contract", "layer": "planning", "path": "documentation/plans/business/managed-crystal-reporting-reliability/decomposition/managed-crystal-manager-experience.md", "purpose": "Authorized boundary" },
+    { "id": "risk-registry", "layer": "planning", "path": "documentation/plans/notes/KNOWN_RISKS.md", "purpose": "RISK-008 deferred real-file acceptance" },
+    { "id": "implementation-request", "layer": "documentation", "path": "documentation/system/features/managed-crystal-manager-experience/IMPLEMENTATION-REQUEST.md", "purpose": "Readiness matrices" },
+    { "id": "review-artifact", "layer": "documentation", "path": "documentation/system/features/managed-crystal-manager-experience/MANAGED_CRYSTAL_MANAGER_EXPERIENCE-REVIEW-ARTIFACTS.md", "purpose": "Evidence ledger" },
+    { "id": "master-book", "layer": "documentation", "path": "documentation/project/MANAGED_CRYSTAL_MANAGER_EXPERIENCE_FEATURE_FULL_REVIEW.md", "purpose": "Cross-platform applied book" },
+    { "id": "api-book", "layer": "documentation", "path": "documentation/api/ManagedCrystalManagerExperience_API_Implementation_Profile.md", "purpose": "API applied profile" },
+    { "id": "web-book", "layer": "documentation", "path": "documentation/web-next/features/managed-crystal-manager-experience-frontend-reference.md", "purpose": "Web applied profile" },
+    { "id": "mobile-book", "layer": "documentation", "path": "documentation/mobile-react/managed-crystal-manager-experience-mobile-reference.md", "purpose": "Mobile exclusion profile" },
+    { "id": "contract-registry", "layer": "api", "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/CrystalReports/Persistence/ManagedCrystalReportContractRegistry.cs", "purpose": "Canonical entity metadata source" },
+    { "id": "store-abstractions", "layer": "api", "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/CrystalReports/Abstractions/ICrystalReportStore.cs", "purpose": "Store, storage, inspector and registry ports" },
+    { "id": "contracts", "layer": "api", "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/CrystalReports/Contracts/CrystalReportContracts.cs", "purpose": "Public and internal typed contracts" },
+    { "id": "commands", "layer": "api", "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/CrystalReports/Commands/CrystalReportCommandHandlers.cs", "purpose": "Current lifecycle orchestration" },
+    { "id": "queries", "layer": "api", "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/CrystalReports/Queries/CrystalReportQueryHandlers.cs", "purpose": "Current management/detail/render queries" },
+    { "id": "version-domain", "layer": "api", "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Domain/Analytics/CrystalReports/Entities/CrystalReportVersion.cs", "purpose": "Validation lifecycle and immutable source" },
+    { "id": "file-storage", "layer": "api", "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/CrystalReports/Storage/PrivateCrystalReportFileStorage.cs", "purpose": "Verified immutable source access" },
+    { "id": "controller", "layer": "api", "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Presentation/Features/Analytics/CrystalReports/V1/CrystalReportsController.cs", "purpose": "Canonical public routes" },
+    { "id": "db-context", "layer": "api", "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/ReportingDbContext.cs", "purpose": "Validation-only update guard" },
+    { "id": "manager-page", "layer": "web-next", "path": "web-next/src/modules/reporting/crystal-report-manager/CrystalReportManagerPage.tsx", "purpose": "Current manager workspace" },
+    { "id": "create-dialog", "layer": "web-next", "path": "web-next/src/modules/reporting/crystal-report-manager/CrystalReportCreateDialog.tsx", "purpose": "Current create flow" },
+    { "id": "detail-dialog", "layer": "web-next", "path": "web-next/src/modules/reporting/crystal-report-manager/CrystalReportDetailDialog.tsx", "purpose": "Current version/grants workflow" },
+    { "id": "import-dialog", "layer": "web-next", "path": "web-next/src/modules/reporting/crystal-report-manager/CrystalReportImportDialog.tsx", "purpose": "Current deployment import" },
+    { "id": "web-types", "layer": "web-next", "path": "web-next/src/modules/reporting/crystal-report-manager/types.ts", "purpose": "Current client contracts" },
+    { "id": "web-services", "layer": "web-next", "path": "web-next/src/modules/reporting/crystal-report-manager/services.ts", "purpose": "Current API adapter" },
+    { "id": "web-routes", "layer": "web-next", "path": "web-next/src/config/api/crystalReports.ts", "purpose": "Current API route registry" },
+    { "id": "web-en", "layer": "localization", "path": "web-next/src/locales/resources/reporting/en.json", "purpose": "English reporting strings" },
+    { "id": "web-ar", "layer": "localization", "path": "web-next/src/locales/resources/reporting/ar.json", "purpose": "Arabic reporting strings" },
+    { "id": "api-tests", "layer": "tests", "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/ManagedCrystalTemplateValidationHandlerTests.cs", "purpose": "Current validation handler baseline" },
+    { "id": "controller-tests", "layer": "tests", "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/CrystalReportsControllerContractTests.cs", "purpose": "Current route/permission baseline" },
+    { "id": "web-service-tests", "layer": "tests", "path": "web-next/src/modules/reporting/crystal-report-manager/services.test.ts", "purpose": "Current transport baseline" },
+    { "id": "web-view-tests", "layer": "tests", "path": "web-next/src/modules/reporting/crystal-report-manager/ManagedCrystalReportView.test.tsx", "purpose": "Existing report consumer regression baseline" }
+  ]
+}

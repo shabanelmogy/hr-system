@@ -12,6 +12,7 @@ export { ModuleOverviewPage } from "./ModuleOverviewPage";
 export { SubmoduleEntryPage } from "./SubmoduleEntryPage";
 export {
   registerFrontendModule,
+  replaceFrontendModuleRegistry,
   getFrontendModuleDefinition,
   getFrontendModuleDefinitions,
   getFrontendSubmoduleDefinition,

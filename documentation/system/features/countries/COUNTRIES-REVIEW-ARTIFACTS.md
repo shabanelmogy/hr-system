@@ -31,7 +31,7 @@ This is the applied evidence ledger for the current Countries feature. The detai
 
 | Concern | Frozen rule |
 | --- | --- |
-| Paging | API is one-based; web and mobile state are zero-based and convert once; Countries accepts up to 5000 for bounded adaptive web reads while ordinary page choices stay small |
+| Paging | API is one-based; web and mobile state are zero-based and convert once; both clients use small authoritative server pages and never fetch the complete result to choose pagination mode |
 | Default list | Active records, deterministic sort with `Id` tie-break |
 | Search fields | `all`, `nameAr`, `nameEn`, `alpha2`, `alpha3`, `phone`, `currency` |
 | Search operators | contains, does-not-contain, equals, does-not-equal, starts-with, ends-with |
@@ -85,6 +85,7 @@ These differences are presentation decisions. They do not change the shared API 
 | C-F09 | Resolved | Web bulk archive rejects more than 100 eligible records with localized feedback and a direct-submit guard | Mirror API limits without silent truncation |
 | C-F10 | Resolved | Background fetching preserves current Grid/Card/Chart content and uses non-destructive progress | Keep initial and background loading states separate |
 | C-F11 | Resolved | Country/State import buttons and direct submit handlers enforce read-only and feature create permissions | Never rely only on hidden views/buttons for mutation authorization |
+| C-F13 | Resolved | The shared Grid now stabilizes controlled sort-model identity and row count, removes the competing server-page clamp, and proves the descending page boundary in a browser | Preserve one page writer and do not let equivalent controlled models emit false change events |
 | C-M01 | Resolved | Unexposed currency/has-states mobile filter state and serialization were removed | Never retain active criteria without visible controls |
 | C-M02 | Resolved | The unused detail hook/key were removed because the list row is authoritative for all mutable fields | Fetch detail only when the list contract is incomplete |
 | C-M03 | Resolved | Countries and States now have screen/action/permission and mutation-invalidation integration tests | Keep representative screen coverage beside API/schema tests |
@@ -101,6 +102,7 @@ These differences are presentation decisions. They do not change the shared API 
 | Mobile | Typecheck, architecture check, lint | Passed with no lint errors |
 | Documentation | Required-source validation and generated packet freshness | Passed for 49 recipes on 2026-08-27 |
 | Web | ActiveReportsJS service tests, type-check/strict/lint, architecture, and bound starter JSON | Passed; no visual browser run in this change |
+| Web pagination | Focused shared tests plus Countries `createdOn DESC` browser boundary | Passed on 2026-09-26: record 10 -> 11, page 1 -> 2, and page 2 remained stable after the response |
 | API report templates | Isolated build, full tests, EF pending-model check | Passed on 2026-08-23: 0 build errors/warnings, 272/272 tests, no pending model changes; migration generated but not applied |
 
 Focused results prove the reviewed paths, not every repository quality gate. Production release still requires the complete commands listed in the canonical master review.

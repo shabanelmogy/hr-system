@@ -41,6 +41,17 @@ public sealed class CrystalReportVersionConfiguration : IEntityTypeConfiguration
         builder.Property(x => x.SummarySubject).HasMaxLength(500);
         builder.Property(x => x.ValidationStatus).HasConversion<string>().HasMaxLength(32);
         builder.Property(x => x.ValidationReason).HasMaxLength(500);
+        builder.Property(x => x.ValidationContractFingerprint).HasMaxLength(64).IsFixedLength();
+        builder.ToTable("CrystalReportVersions", table =>
+        {
+            table.HasCheckConstraint(
+                "CK_CrystalReportVersions_ValidationEvidence",
+                "([ValidationStatus] = 'Valid' AND [ValidationContractSchemaVersion] > 0 AND LEN([ValidationContractFingerprint]) = 64) OR " +
+                "([ValidationStatus] <> 'Valid' AND [ValidationContractSchemaVersion] IS NULL AND [ValidationContractFingerprint] IS NULL)");
+            table.HasCheckConstraint(
+                "CK_CrystalReportVersions_ValidationStatus",
+                "[ValidationStatus] IN ('Pending', 'Valid', 'Invalid', 'NeedsRevalidation')");
+        });
         builder.HasIndex(x => new { x.TenantId, x.CrystalReportId, x.VersionNumber }).IsUnique();
         builder.HasIndex(x => new { x.TenantId, x.StorageKey }).IsUnique();
     }

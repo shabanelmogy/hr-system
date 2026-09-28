@@ -8,6 +8,7 @@ single source for the documentation workflow.
 | Feature | Status | Evidence |
 | --- | --- | --- |
 | User Administration | Implemented | Platform `UsersController`, CQRS user queries/commands, scoped persistence stores, Web users route, Mobile Administration screen, and cross-client response-contract tests |
+| Role Administration and Permissions | Implemented | Platform role CQRS/controllers and module-catalog ownership metadata, Web module-first P-006 editor, Mobile responsive module selector plus screen cards, and API/Web/Mobile contract/presentation tests |
 
 Add further entries only when the corresponding runtime and verification evidence
 exists, and mark future ideas as Planned or Deferred.

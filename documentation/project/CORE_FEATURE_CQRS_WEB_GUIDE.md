@@ -431,15 +431,16 @@ Required by default:
 - **Cards** for responsive scanning and mobile-sized web layouts.
 
 The Grid footer is an established reusable product component. Features configure
-its server/client paging inputs; they do not hide its navigation, copy it, or
-replace it with the UI library default. Changes to the shared footer must be
+its controlled paging inputs; they do not hide its navigation, copy it, or
+replace it locally. Changes to the shared footer must be
 verified against all consumers, including Countries, States, and Districts.
-Client and server modes render the same Districts-style record navigation,
-counter, page indicator, and page-size selector from `GridFooter`. Client mode
-moves through loaded records. Server mode fetches the adjacent authoritative
-page only when record navigation crosses a page boundary, then selects the
-target record. Do not expose the UI-library default pager or change a server
-list to client mode merely to imitate the Districts footer.
+`GridFooter` preserves the established centered Districts-style
+first/previous/next/last record navigation and current-record/total counter, with
+the page indicator and page-size selector in their existing positions. In server
+mode, crossing a record boundary notifies the owner of the controlled page model
+directly and activates the requested boundary record after that page arrives;
+`apiRef.setPage()` remains the uncontrolled-Grid fallback. Do not replace this
+product-owned footer with library-default page actions or a feature-local pager.
 
 The reusable `MyDataGrid` also marks the first visible row as the active record
 on load and after the current active row leaves the loaded page. The active row
@@ -453,16 +454,11 @@ shared success color and then leaves the normal edited marker until the shared
 CRUD cleanup clears it. The animation is disabled for users who request reduced
 motion; features must not recreate this feedback locally.
 
-The default adaptive boundary is 5000 rows. At or below the boundary, the data
-controller may load the complete filtered/sorted result and configure the same
-`MyDataGrid` with `paginationMode="client"`. Above it, the controller keeps
-authoritative server paging and configures `paginationMode="server"`. Do not
-split the visual Grid into client/server components, and do not select client
-mode unless all matching rows are actually loaded.
-
-Keep rolling deployments compatible: rejection of the bounded full-result read
-by an older API falls back to server mode. Do not fail the management page or
-pretend that the current server page is the complete client collection.
+Server-managed collections use authoritative server paging for every result size.
+Keep the previous page while fetching the next query key, and do not clamp a
+controlled page until a completed response supplies a known total. Client mode is
+reserved for explicitly complete local collections; never infer it from a count
+probe or fetch all matching rows inside a generic list hook.
 
 Optional:
 

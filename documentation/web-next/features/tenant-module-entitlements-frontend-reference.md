@@ -33,14 +33,16 @@ tones. Unknown future modules and submodules receive a safe generic icon.
 
 ## 5.1 Top-bar context switching
 
-The domain-neutral shared `ContextSwitcher` owns trigger/menu lifecycle,
-selection, loading/disabled states, keyboard semantics, and compact/icon-only
-responsive styling. `CompanyContextSwitcher` composes it without changing
+The domain-neutral shared `ContextBadge` owns the context label/value/icon surface,
+focus/tooltip semantics, and compact/icon-only responsive styling;
+`ContextSwitcher` adds trigger/menu lifecycle, selection, and loading/disabled
+states. `TenantNameBadge` uses the same surface as a read-only session identity.
+`CompanyContextSwitcher` composes it without changing
 company switching, cache invalidation, notifications, localized names, or the
 single-company display. `ModuleContextSwitcher` uses the tenant-scoped
 accessible catalog and `requiredModuleForPath` so direct HR URLs keep the
-correct active application. Desktop shows module and company controls; mobile
-uses an icon-only module control. The menu offers the applications overview and
+correct active application. Desktop shows Tenant, Company, and injected business
+context as one hierarchy; compressed layouts use icon-only controls. The menu offers the applications overview and
 only accessible modules, routed through the typed `appRoutes` helpers.
 
 ## 6. Submodule entry

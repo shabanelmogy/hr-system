@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -8,6 +8,8 @@ import { useAuth } from '@/src/platform/auth';
 import {
   AppButton,
   AppCard,
+  AppContextBadge,
+  type AppContextBadgeProps,
   AppIcon,
   AppModal,
   AppText,
@@ -19,7 +21,15 @@ import {
   hasUnsavedChanges,
 } from '@/src/shared/contexts/unsaved-changes-registry';
 
-export function CompanyContextSwitcher({ compact = false }: { compact?: boolean }) {
+export function CompanyContextSwitcher({
+  compact = false,
+  iconOnly = false,
+  tone = 'surface',
+}: {
+  compact?: boolean;
+  iconOnly?: boolean;
+  tone?: AppContextBadgeProps['tone'];
+}) {
   const { t } = useTranslation();
   const { language, direction, isRTL } = useLocalization();
   const { theme } = useAppTheme();
@@ -76,34 +86,19 @@ export function CompanyContextSwitcher({ compact = false }: { compact?: boolean 
 
   return (
     <>
-      <Pressable
-        accessibilityHint={canSwitch ? t('auth.switchCompany') : undefined}
-        accessibilityLabel={`${t('auth.currentCompany')}: ${currentName}`}
-        accessibilityRole={canSwitch ? 'button' : 'text'}
-        disabled={!canSwitch || isSwitchingCompany}
-        onPress={open}
-        style={({ pressed }) => [
-          styles.badge,
-          compact ? styles.compactBadge : null,
-          {
-            direction,
-            backgroundColor: theme.colors.surface,
-            borderColor: theme.colors.primary,
-            opacity: pressed ? 0.78 : 1,
-          },
-        ]}>
-        <AppIcon color={theme.colors.primary} name="business-outline" size={16} />
-        <AppText
-          numberOfLines={1}
-          style={[styles.badgeLabel, { color: theme.colors.text }]}
-          variant="caption"
-          weight="800">
-          {currentName}
-        </AppText>
-        {canSwitch ? (
-          <AppIcon color={theme.colors.textMuted} name="chevron-down" size={15} />
-        ) : null}
-      </Pressable>
+      <AppContextBadge
+        accent="secondary"
+        compact={compact}
+        disabled={isSwitchingCompany}
+        expandable={canSwitch}
+        icon="business-outline"
+        iconOnly={iconOnly}
+        label={t('auth.currentCompany')}
+        loading={isSwitchingCompany}
+        onPress={canSwitch ? open : undefined}
+        tone={tone}
+        value={currentName}
+      />
 
       <AppModal
         closeDisabled={isSwitchingCompany}
@@ -194,22 +189,6 @@ function companyName(nameAr: string, nameEn: string, code: string, isArabic: boo
 }
 
 const styles = StyleSheet.create({
-  badge: {
-    maxWidth: 210,
-    minHeight: 30,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 5,
-    borderWidth: 1,
-    borderRadius: 999,
-    paddingHorizontal: 9,
-  },
-  compactBadge: {
-    maxWidth: 116,
-  },
-  badgeLabel: {
-    flexShrink: 1,
-  },
   companyList: {
     gap: 10,
   },

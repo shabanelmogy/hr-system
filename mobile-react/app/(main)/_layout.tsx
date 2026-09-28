@@ -11,7 +11,8 @@ import { useUnreadNotificationCount } from '@/src/platform/notifications';
 import { OfflineOperationsPolicyProvider } from '@/src/platform/offline-operations';
 import { TenantAccessProvider } from '@/src/platform/tenant-access';
 import { AppDrawerContent, MainLayout } from '@/src/shell/layouts';
-import { AppNavigationHeader } from '@/src/platform/navigation';
+import { AppNavigationHeader, NavigationContextActionsProvider } from '@/src/platform/navigation';
+import { FiscalYearContextSwitcher } from '@/src/modules/accounting/fiscal-years';
 import { AppIcon } from '@/src/shared/components';
 import { OfflineSyncCoordinator } from '@/src/shell';
 
@@ -27,8 +28,9 @@ export default function ProtectedRouteLayout() {
     : t('navigation.notifications');
 
   return (
-    <OfflineOperationsPolicyProvider>
-      <TenantAccessProvider>
+    <NavigationContextActionsProvider primary={<FiscalYearContextSwitcher compact tone="onPrimary" />}>
+      <OfflineOperationsPolicyProvider>
+        <TenantAccessProvider>
         <OfflineSyncCoordinator />
         <MainLayout>
         <Drawer
@@ -92,7 +94,8 @@ export default function ProtectedRouteLayout() {
           />
         </Drawer>
         </MainLayout>
-      </TenantAccessProvider>
-    </OfflineOperationsPolicyProvider>
+        </TenantAccessProvider>
+      </OfflineOperationsPolicyProvider>
+    </NavigationContextActionsProvider>
   );
 }

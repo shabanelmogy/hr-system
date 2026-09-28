@@ -1,4 +1,13 @@
 export type CrystalReportStatus = "published" | "draft" | "archived";
+export type CrystalReportValidationStatus = "Pending" | "Valid" | "Invalid" | "NeedsRevalidation";
+
+export interface SupportedCrystalReportEntity {
+  entityKey: string;
+  scope: "global" | "tenant-company";
+  filters: string[];
+  contractSchemaVersion: number;
+  contractFingerprint: string;
+}
 
 export interface CrystalReportListItem {
   id: string;
@@ -28,8 +37,10 @@ export interface CrystalReportVersion {
   sha256: string;
   summaryTitle: string | null;
   summarySubject: string | null;
-  validationStatus: "Valid" | "Invalid";
+  validationStatus: CrystalReportValidationStatus;
   validationReason: string | null;
+  validationContractSchemaVersion: number | null;
+  validationContractFingerprint: string | null;
   isPublished: boolean;
   createdOn: string;
 }

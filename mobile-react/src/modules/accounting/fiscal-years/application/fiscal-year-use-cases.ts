@@ -1,5 +1,6 @@
 import type {
   FiscalYearDetail,
+  FiscalYearContext,
   FiscalYearLifecycleAction,
   FiscalYearLookup,
   FiscalYearPage,
@@ -19,12 +20,15 @@ export interface FiscalYearUseCases {
   getPage(query: FiscalYearPageQuery): Promise<FiscalYearPage>;
   getById(id: number): Promise<FiscalYearDetail>;
   getLookup(): Promise<FiscalYearLookup[]>;
+  getContext(): Promise<FiscalYearContext>;
+  updateContext(fiscalYearId: number | null): Promise<FiscalYearContext>;
   create(request: FiscalYearRequest): Promise<FiscalYearDetail>;
   update(id: number, request: FiscalYearRequest, rowVersion: string): Promise<FiscalYearDetail>;
   save(input: SaveFiscalYearInput): Promise<FiscalYearDetail>;
   archive(id: number, rowVersion: string): Promise<void>;
   restore(id: number, rowVersion: string): Promise<FiscalYearDetail>;
   lifecycle(id: number, rowVersion: string, action: FiscalYearLifecycleAction): Promise<FiscalYearDetail>;
+  setCurrent(id: number, rowVersion: string): Promise<FiscalYearDetail>;
 }
 
 export function createFiscalYearUseCases(repository: FiscalYearRepository): FiscalYearUseCases {
@@ -36,6 +40,8 @@ export function createFiscalYearUseCases(repository: FiscalYearRepository): Fisc
     getPage: (query) => repository.getPage(query),
     getById: (id) => repository.getById(id),
     getLookup: () => repository.getLookup(),
+    getContext: () => repository.getContext(),
+    updateContext: (fiscalYearId) => repository.updateContext(fiscalYearId),
     create,
     update,
     save: ({ id, request, rowVersion }) => {
@@ -46,5 +52,6 @@ export function createFiscalYearUseCases(repository: FiscalYearRepository): Fisc
     archive: (id, rowVersion) => repository.archive(id, rowVersion),
     restore: (id, rowVersion) => repository.restore(id, rowVersion),
     lifecycle: (id, rowVersion, action) => repository.lifecycle(id, rowVersion, action),
+    setCurrent: (id, rowVersion) => repository.setCurrent(id, rowVersion),
   };
 }

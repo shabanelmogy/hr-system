@@ -3,15 +3,15 @@ import { createFiscalYearUseCases } from './fiscal-year-use-cases';
 
 function repositoryMock(): jest.Mocked<FiscalYearRepository> {
   return {
-    getPage: jest.fn(), getById: jest.fn(), getLookup: jest.fn(), create: jest.fn(), update: jest.fn(),
-    archive: jest.fn(), restore: jest.fn(), lifecycle: jest.fn(),
+    getPage: jest.fn(), getById: jest.fn(), getLookup: jest.fn(), getContext: jest.fn(), updateContext: jest.fn(), create: jest.fn(), update: jest.fn(),
+    archive: jest.fn(), restore: jest.fn(), lifecycle: jest.fn(), setCurrent: jest.fn(),
   };
 }
 
 const detail = {
   id: 7, code: 'FY-2027', nameAr: 'السنة المالية 2027', nameEn: 'Fiscal Year 2027',
   startDate: '2027-01-01', endDate: '2027-12-31', periodFrequency: 1 as const, status: 1 as const,
-  createdOn: '2026-09-05T18:00:00Z', updatedOn: null, isDeleted: false, rowVersion: 'AQ==', periods: [],
+  isCurrent: false, createdOn: '2026-09-05T18:00:00Z', updatedOn: null, isDeleted: false, rowVersion: 'AQ==', periods: [],
 };
 
 describe('fiscal year application use cases', () => {
@@ -53,5 +53,23 @@ describe('fiscal year application use cases', () => {
     await useCases.archive(7, 'AQ==');
 
     expect(repository.archive).toHaveBeenCalledWith(7, 'AQ==');
+  });
+
+  it('delegates personal context and company-current operations without client scope fields', async () => {
+    const repository = repositoryMock();
+    repository.updateContext.mockResolvedValue({
+      companyCurrentFiscalYear: null,
+      selectedFiscalYear: null,
+      hasUserOverride: false,
+      availableFiscalYears: [],
+    });
+    repository.setCurrent.mockResolvedValue({ ...detail, isCurrent: true });
+    const useCases = createFiscalYearUseCases(repository);
+
+    await useCases.updateContext(7);
+    await useCases.setCurrent(7, 'AQ==');
+
+    expect(repository.updateContext).toHaveBeenCalledWith(7);
+    expect(repository.setCurrent).toHaveBeenCalledWith(7, 'AQ==');
   });
 });

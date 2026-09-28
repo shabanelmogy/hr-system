@@ -17,6 +17,7 @@ public sealed class CrystalReportsControllerContractTests
     [Theory]
     [InlineData(nameof(CrystalReportsController.Create), "CrystalReports:Create")]
     [InlineData(nameof(CrystalReportsController.AddVersion), "CrystalReports:Upload")]
+    [InlineData(nameof(CrystalReportsController.RevalidateVersion), "CrystalReports:Upload")]
     [InlineData(nameof(CrystalReportsController.Publish), "CrystalReports:Publish")]
     [InlineData(nameof(CrystalReportsController.ReplaceGrants), "CrystalReportAccess:Edit")]
     [InlineData(nameof(CrystalReportsController.Archive), "CrystalReports:Archive")]
@@ -37,6 +38,29 @@ public sealed class CrystalReportsControllerContractTests
 
         Assert.NotNull(attribute);
         Assert.Equal("CrystalReports:Create", attribute.Policy);
+    }
+
+    [Fact]
+    public void SupportedEntities_RequiresViewPermission()
+    {
+        var method = typeof(CrystalReportsController)
+            .GetMethod(nameof(CrystalReportsController.GetSupportedEntities))!;
+        var permission = method.GetCustomAttribute<HasPermissionAttribute>();
+        var route = method.GetCustomAttribute<HttpGetAttribute>();
+
+        Assert.NotNull(permission);
+        Assert.Equal("CrystalReports:View", permission.Policy);
+        Assert.Equal("supported-entities", route?.Template);
+    }
+
+    [Fact]
+    public void RevalidateVersion_UsesCanonicalVersionActionRoute()
+    {
+        var route = typeof(CrystalReportsController)
+            .GetMethod(nameof(CrystalReportsController.RevalidateVersion))!
+            .GetCustomAttribute<HttpPostAttribute>();
+
+        Assert.Equal("{id:guid}/versions/{versionId:guid}/revalidate", route?.Template);
     }
 
     [Fact]

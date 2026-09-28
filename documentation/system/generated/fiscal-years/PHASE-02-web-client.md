@@ -39,7 +39,7 @@ Execution references:
 - [ ] Existing reusable components and their tests were inspected before adding or replacing UI.
 - [ ] Grid uses the shared `MyDataGrid`/`GridFooter` pagination unless an explicit product exception is recorded.
 - [ ] Client and server Grids render the same shared record-navigation footer; server mode fetches an adjacent page only when navigation crosses a record boundary.
-- [ ] Adaptive pagination uses client mode only with the complete result at 5000 rows or fewer; larger or partially loaded results stay in server mode.
+- [ ] Server-managed lists request one authoritative page, preserve the previous page while fetching, and never clamp against a loading/missing/unknown total.
 - [ ] Shared-component changes preserve behavior and are verified against every known consumer.
 - [ ] Search column, condition, input, and reset controls align and share control height.
 - [ ] Grid options are the final toolbar item and own column visibility, density, status, archive, and restore actions where specified.
@@ -106,20 +106,20 @@ failure into partial success.
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| fiscal-years-master | 3 | `8390cefc7a311be46bc6e92580fcbe7aff06ff47aaa4ac187f90cd7e66903da8` |
-| fiscal-years-master | 4 | `e2521b85856f5b6c1e6f32e24792ae592df4134bee4bdcc4000751481eedce7e` |
-| fiscal-years-master | 6 | `e03953b3fea34d231ad9a922ae587bd21b59920251d27e5d5b70cfc570a01fc8` |
-| fiscal-years-master | 7 | `e48e4b393af65084e67296aba09a61bfefd8c5ca257478e14ddb0845a243296e` |
+| fiscal-years-master | 3 | `258121a15c42bd254f087460a281f57839ee2f56a36f373905ca0c952ed6cbe9` |
+| fiscal-years-master | 4 | `ae8155eb0f3e367113ca06829c8dc5a977d40f300ab07eac4bc4c0d34b923075` |
+| fiscal-years-master | 6 | `225416faf8af3c0eb0b46137e7224277e9ffe1f40b17bd0395016d24ec503d41` |
+| fiscal-years-master | 7 | `e2fdfb210fe8576c90f77e555f0da8b731dfc15d2bd9a2002fcd913f4901e887` |
 | fiscal-years-web | 1 | `76b34317540c2a0a7266170f2cbea4f9f331f07982d2a90aca8145259950068c` |
 | fiscal-years-web | 2 | `2ffbb67cc6d6354b0f9faa55aa64c8285b8b3523612ff7ab8ec2d3dba28074da` |
-| fiscal-years-web | 3 | `ee882a13d81816151991947c763329154e451e4c36294c89526c9b5dc44f8b09` |
+| fiscal-years-web | 3 | `c4056df9881a17676e81150e2485b7b2d0ba4e3308cf1169a2786aa17d0ce4d7` |
 | fiscal-years-web | 4 | `e806257d4fd24b9b03c77e39321b37b5f2128d19ee5ab77f6d16970953e1d027` |
-| fiscal-years-web | 5 | `4fcf948018d829fa3202e5389b1e5594c85ecd5b1db9b66453f03ac69feb6436` |
-| fiscal-years-web | 6 | `4a987d415b162e64422f9bb51141de6927512e52c13326d8d0f5b7718c2212ff` |
-| fiscal-years-web | 7 | `40edc2f5844933853f70e51361b2d32da035cc6ee8d53c774c87de4730a707d7` |
+| fiscal-years-web | 5 | `45fdd40e435c36a0439c44150a871de2999f5c11d881a44f3da6522bddfe01bb` |
+| fiscal-years-web | 6 | `3405da07c9367a0629bce54590c20d810681262f497a67cd0d3020ab8dc3ad55` |
+| fiscal-years-web | 7 | `4f6148d706881a5ebb4559e86b95ce3e51cd951f40de43f41cc7b7dd4edbcf30` |
 | fiscal-years-web | 8 | `e46e54a03b71c5d25ea8647727571d4b305e67fae28e541211b08f63c0d0fa79` |
-| fiscal-years-web | 9 | `79fbad010860a07f76192e693aa5e688ad95ffb364f8c207add350a15e041676` |
-| fiscal-years-web | 10 | `36a625f31bb605fb799c7baadb51aaf8a3c4711816ffe9d70687835cf38b6349` |
+| fiscal-years-web | 9 | `6eec41f0b50bb49712d5f8fabb3b0707fdef339b21051e0a284f8c08fc99d661` |
+| fiscal-years-web | 10 | `83e18b5494b84704135792f4a180feb9a4dc19544af04a69d8ce15baa785ad87` |
 | fiscal-years-web | 11 | `0f5e7a964da15bf4e340074c3b9b7d59436735455f00b3a65ff233c2d66aea38` |
 | fiscal-years-web | 12 | `94a00e7675f510f6cb95000d5a53f387ee35649b7ad34069557235b216941346` |
 | fiscal-years-web | 13 | `f5dc0e405de381f45c3c08fef09d4f52c7d3a996be0d0c005f535d718be57033` |

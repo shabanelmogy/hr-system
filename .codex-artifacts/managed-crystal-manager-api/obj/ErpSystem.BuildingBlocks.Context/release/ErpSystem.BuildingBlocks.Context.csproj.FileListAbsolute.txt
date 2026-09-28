@@ -1,0 +1,12 @@
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\bin\ErpSystem.BuildingBlocks.Context\release\ErpSystem.BuildingBlocks.Context.deps.json
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\bin\ErpSystem.BuildingBlocks.Context\release\ErpSystem.BuildingBlocks.Context.dll
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\bin\ErpSystem.BuildingBlocks.Context\release\ErpSystem.BuildingBlocks.Context.pdb
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.BuildingBlocks.Context\release\ErpSystem.BuildingBlocks.Context.GeneratedMSBuildEditorConfig.editorconfig
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.BuildingBlocks.Context\release\ErpSystem.BuildingBlocks.Context.AssemblyInfoInputs.cache
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.BuildingBlocks.Context\release\ErpSystem.BuildingBlocks.Context.AssemblyInfo.cs
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.BuildingBlocks.Context\release\ErpSystem.BuildingBlocks.Context.csproj.CoreCompileInputs.cache
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.BuildingBlocks.Context\release\ErpSystem.BuildingBlocks.Context.sourcelink.json
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.BuildingBlocks.Context\release\ErpSystem.BuildingBlocks.Context.dll
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.BuildingBlocks.Context\release\refint\ErpSystem.BuildingBlocks.Context.dll
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.BuildingBlocks.Context\release\ErpSystem.BuildingBlocks.Context.pdb
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.BuildingBlocks.Context\release\ref\ErpSystem.BuildingBlocks.Context.dll

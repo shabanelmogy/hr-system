@@ -892,6 +892,8 @@
     "companySwitchFailed": "تعذر تغيير الشركة الحالية.",
     "companySwitched": "تم تغيير الشركة بنجاح.",
     "currentCompany": "الشركة الحالية",
+    "currentContext": "سياق العمل الحالي",
+    "currentTenant": "المنشأة الحالية",
     "logout": "تسجيل الخروج",
     "signingOut": "جارٍ تسجيل الخروج",
     "signingOutDescription": "نؤمّن جلستك قبل المغادرة...",

@@ -15,13 +15,15 @@ Access requires `FiscalYears:View`.
 ## 3. Runtime response validation
 
 Zod schemas validate page metadata, list records, detail periods, enum values,
-archive markers, and RowVersion before data enters UI state.
+Current markers, per-user context responses, archive markers, and RowVersion
+before data enters UI state.
 
 ## 4. API contract
 
 The API module serializes the complete page criteria, trims search, normalizes
-codes/names, sends RowVersion for update/restore/lifecycle, and never accepts
-tenant/company scope.
+codes/names, sends RowVersion for update/restore/lifecycle/company Current, reads
+and updates the signed-in user's context, and never accepts caller-selected
+tenant/company/user scope.
 
 ## 5. Query ownership
 
@@ -44,14 +46,18 @@ Report are required; Chart is Excluded, Import/Export are Excluded for Mobile,
 and generated periods are a read-only child preview. The full-screen form remains
 one compact sectioned workflow; P-003 tabs are intentionally not applied.
 
-`AppDataTable` shows code, bilingual names, dates, lifecycle, and authorized row
-actions. Sorting and paging remain server-side and columns use shared responsive
-horizontal scrolling.
+`AppDataTable` shows code, bilingual names, dates, lifecycle, Current, and
+authorized row actions. It renders Current with the shared warning/gold semantic,
+hides archive for the Current row, and offers Set Current only for an Open target
+with `FiscalYears:SetCurrent`. Sorting and paging remain server-side and
+columns use shared responsive horizontal scrolling.
 
 ## 8. Card view
 
 `AppDataCard` displays localized identity, code, dates, frequency, period count,
-lifecycle badge, and actions. Palette colors come from the active theme.
+lifecycle badge, gold/warning company Current badge, and actions. Draft, Closing,
+Closed, and Locked cards do not expose Set Current. Palette colors come from the
+active theme.
 
 ## 9. Create workflow
 
@@ -75,11 +81,32 @@ separate Reopen and Lock actions; Locked rows expose a warning-backed Reopen act
 leaves calendar identity fields read-only. Shared toast feedback reports success
 and mapped API failure.
 
+## 11A. Global working-year context
+
+This surface is the Mobile `Adapted` implementation of **P-008 Global Scoped
+Context Selector**. `FiscalYearContextSwitcher` is Accounting-owned. The Expo composition root passes
+it into `NavigationContextActionsProvider`; every generic `AppAppBar`, including
+nested module layouts, consumes the slot without importing Accounting. It shows an
+icon-only trigger on narrow phones and the bilingual current value where space
+allows. The
+selection is personal and company-scoped, uses only `FiscalYears:View`, warns via
+the shared unsaved-change confirmation before discarding a form, and falls back to
+company Current through the API contract.
+The App header uses the shared `AppContextBadge` for Tenant, Company, and Working
+Fiscal Year in that scope order inside one translucent on-primary group. Tablet/
+wide layouts show icon plus current value on one line; narrow phones render
+44-point icon-only actions while retaining the complete translated label/value for
+assistive technology. The group has no individual card shadows. Tenant is read-only
+session identity; Company and Fiscal Year keep their existing modal and dirty-guard
+behavior.
+
 ## 12. Permissions and read-only mode
 
-Create/Edit/Delete/ManageLifecycle are evaluated independently. Read-only mode
-blocks mutations through visible action rules and shared blocked-action feedback.
-`RouteGuard` protects entry; the API remains authoritative.
+Create/Edit/Archive/Restore/Open/BeginClosing/Close/Lock/Reopen/SetCurrent are
+evaluated independently. Read-only mode blocks financial master/lifecycle changes
+through visible action rules and shared blocked-action feedback, but permits the
+personal working-year preference. `RouteGuard` protects entry; the API remains
+authoritative.
 
 ## 13. Localization, theme, and safe area
 
@@ -96,8 +123,10 @@ than JSON. Small screens scroll within shared shells.
 
 ## 15. Verification and optional capabilities
 
-Feature ESLint, type-check, architecture, API/schema/validation, route, and realtime
-tests are required. Table, Cards, detail, create, edit, lifecycle, and mock data are
+Feature ESLint, type-check, architecture, API/schema/validation, route, endpoint
+contract-matrix, and realtime tests are required. The matrix records `context`
+GET/PUT separately from `setCurrent` POST, including their different permission
+and user/company scope. Table, Cards, detail, create, edit, lifecycle, and mock data are
 Required. Fiscal Year Report is Required through the shared managed Crystal
 component with entity key `fiscalyears`; the Reporting module/catalog owns report
 rendering. Chart and bulk lifecycle are Excluded; Import and Export remain

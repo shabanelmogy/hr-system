@@ -119,7 +119,13 @@ export function GridFooter() {
         selectVisibleRow(localIndex);
       } else {
         pendingServerRecordRef.current = targetIndex;
-        apiRef.current.setPage(targetPage);
+        // Use Data Grid's pagination API so controlled and uncontrolled grids
+        // follow the same official onPaginationModelChange path. The shared
+        // footer must never invoke a feature callback as a second state writer.
+        apiRef.current.setPaginationModel({
+          page: targetPage,
+          pageSize: paginationModel.pageSize,
+        });
       }
       return;
     }

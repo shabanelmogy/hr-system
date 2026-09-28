@@ -18,14 +18,14 @@ import { MyTextField } from "@/shared/components/forms";
 import { getPermissionResourceLabel } from "../../utils/permissionLabels";
 
 type RolePermissionsFiltersProps = {
-  modules: string[];
+  screens: string[];
   searchTerm: string;
-  selectedModule: string;
+  selectedScreen: string;
   showOnlySelected: boolean;
   resultCount: number;
   totalCount: number;
   onSearchChange: (value: string) => void;
-  onModuleChange: (value: string) => void;
+  onScreenChange: (value: string) => void;
   onShowOnlySelectedChange: (value: boolean) => void;
   onReset: () => void;
 };
@@ -33,7 +33,7 @@ type RolePermissionsFiltersProps = {
 export default function RolePermissionsFilters(props: RolePermissionsFiltersProps) {
   const { t } = useTranslation();
   const hasActiveFilters = Boolean(
-    props.searchTerm || props.selectedModule || props.showOnlySelected,
+    props.searchTerm || props.selectedScreen || props.showOnlySelected,
   );
 
   return (
@@ -89,9 +89,9 @@ export default function RolePermissionsFilters(props: RolePermissionsFiltersProp
         <FormControl fullWidth size="small">
           <InputLabel>{t("roles.filterByGroup")}</InputLabel>
           <Select
-            value={props.selectedModule}
+            value={props.selectedScreen}
             label={t("roles.filterByGroup")}
-            onChange={(event) => props.onModuleChange(event.target.value)}
+            onChange={(event) => props.onScreenChange(event.target.value)}
             startAdornment={
               <ViewModuleRoundedIcon
                 sx={{ marginInlineEnd: 1, color: "action.active" }}
@@ -101,9 +101,9 @@ export default function RolePermissionsFilters(props: RolePermissionsFiltersProp
             <MenuItem value="">
               <em>{t("roles.allGroups")}</em>
             </MenuItem>
-            {props.modules.map((module) => (
-              <MenuItem key={module} value={module}>
-                {getPermissionResourceLabel(module, t)}
+            {props.screens.map((screen) => (
+              <MenuItem key={screen} value={screen}>
+                {getPermissionResourceLabel(screen, t)}
               </MenuItem>
             ))}
           </Select>

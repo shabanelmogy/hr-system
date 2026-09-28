@@ -66,6 +66,11 @@ built-in `EAS_BUILD_PROJECT_ID`; do not commit a made-up release ID.
 `expo-observe` is configured at module scope with route
 parameters filtered from metrics, and `ObserveRoot` plus `ObserveErrorBoundary`
 capture global/native and render errors while keeping the localized retry UI.
+Expo Go does not include the native `ExpoAppMetrics` module, so the app uses a
+JS-only error-boundary fallback there and skips metrics initialization. The
+full Observe integration is enabled automatically in a custom development
+build (`npx expo run:android`/`npx expo run:ios` or an EAS development build)
+and in release builds.
 EAS account/team configuration, signing credentials, deployed API/link domains,
 and device delivery evidence remain release-environment inputs and are not
 stored in this repository.

@@ -3,7 +3,7 @@ import { RefreshControl, StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { ApiError } from '@/src/core/api';
 import { useAppTheme } from '@/src/core/theme';
-import { permissions, useAuthorization } from '@/src/platform/auth';
+import { isAuthorized, permissions, useAuth, useAuthorization } from '@/src/platform/auth';
 import {
   AppDataCard,
   AppDataTable,
@@ -61,9 +61,16 @@ const entityPermissions = {
 export function LedgerSetupResourceScreen({ resource }: { resource: LedgerSetupResource }) {
   const { t } = useTranslation();
   const { theme } = useAppTheme();
+  const { session } = useAuth();
   const { isReadOnly, notifyBlockedAction } = useAppReadOnly();
   const entities = ledgerSetupResourceEntities[resource];
-  const [activeEntity, setActiveEntity] = useState<LedgerSetupEntity>(entities[0]);
+  const [requestedEntity, setRequestedEntity] = useState<LedgerSetupEntity>(entities[0]);
+  const accessibleEntities = entities.filter((entity) => isAuthorized(session, {
+    permissions: [entityPermissions[entity].view],
+  }));
+  const activeEntity = accessibleEntities.includes(requestedEntity)
+    ? requestedEntity
+    : accessibleEntities[0] ?? entities[0];
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(50);
   const [search, setSearch] = useState('');
@@ -159,18 +166,18 @@ export function LedgerSetupResourceScreen({ resource }: { resource: LedgerSetupR
     { id: 'actions', header: t('common.actions'), width: 150, align: 'center', render: (item) => <View style={styles.actions}><AppIconButton icon="eye-outline" label={t('common.view')} onPress={() => openForm('view', item)} />{canEdit && !item.isDeleted ? <AppIconButton icon="create-outline" label={t('common.edit')} onPress={() => openForm('edit', item)} /> : null}{definition.supportsArchive && (item.isDeleted ? canRestore : canArchive) ? <AppIconButton icon={item.isDeleted ? 'refresh-outline' : 'archive-outline'} label={t(item.isDeleted ? 'common.restore' : 'common.archive')} onPress={() => setPending({ kind: item.isDeleted ? 'restore' : 'archive', item })} /> : null}</View> },
   ], [canArchive, canEdit, canRestore, definition.supportsArchive, openForm, t, theme.colors.success, theme.colors.warning, visibleFields]);
 
-  if (!canView) return <AppScreen edges={['left', 'right', 'bottom']}><AppStateView state="error" message={t('common.accessDenied')} /></AppScreen>;
+  if (!canView || accessibleEntities.length === 0) return <AppScreen edges={['left', 'right', 'bottom']}><AppStateView state="error" message={t('common.accessDenied')} /></AppScreen>;
   if ((query.isLoading && (!definition.scope || scopeId)) || lookups.isLoading) return <AppScreen edges={['left', 'right', 'bottom']}><AppStateView state="loading" /></AppScreen>;
   if (query.error || treeQuery.error) return <AppScreen edges={['left', 'right', 'bottom']}><AppStateView state="error" message={errorMessage(query.error ?? treeQuery.error, t('ledgerSetup.messages.loadFailed'))} onRetry={() => { void query.refetch(); if (activeEntity === 'accounts') void treeQuery.refetch(); }} /></AppScreen>;
 
   const scopeOptions: AppSelectOption<number>[] = (scopeItems ?? []).flatMap((item) => typeof item.id === 'number' ? [{ value: item.id, label: recordTitle(item), icon: definition.scope === 'account' ? 'git-branch-outline' : 'options-outline' }] : []);
-  const entityOptions = entities.map((entity) => ({ value: entity, label: t(ledgerSetupDefinitions[entity].titleKey), icon: ledgerSetupDefinitions[entity].icon as AppIconName }));
+  const entityOptions = accessibleEntities.map((entity) => ({ value: entity, label: t(ledgerSetupDefinitions[entity].titleKey), icon: ledgerSetupDefinitions[entity].icon as AppIconName }));
   const canCreate = canCreateAction && (!definition.scope || Boolean(scopeId)) && (activeEntity !== 'settings' || rows.length === 0);
 
   return (
     <AppScreen edges={['left', 'right', 'bottom']} contentContainerStyle={styles.screen} refreshControl={<RefreshControl refreshing={query.isRefetching} onRefresh={() => void query.refetch()} tintColor={theme.colors.primary} colors={[theme.colors.primary]} />}>
       <AppPageHeader title={t(definition.titleKey)} subtitle={t('ledgerSetup.description')} action={canCreate ? <AppIconButton icon="add-outline" label={t('ledgerSetup.actions.add')} color={theme.colors.onPrimary} onPress={() => openForm('create', null)} size={22} style={({ pressed }) => ({ backgroundColor: theme.colors.primary, opacity: pressed ? 0.75 : 1 })} /> : undefined} />
-      {entities.length > 1 ? <AppSegmentedControl label={t('ledgerSetup.entitySelector')} value={activeEntity} options={entityOptions} onChange={(value) => { setActiveEntity(value); setPage(0); setSearch(''); setScopeSearch(''); }} layout="wrap" showLabel /> : null}
+      {accessibleEntities.length > 1 ? <AppSegmentedControl label={t('ledgerSetup.entitySelector')} value={activeEntity} options={entityOptions} onChange={(value) => { setRequestedEntity(value); setPage(0); setSearch(''); setScopeSearch(''); }} layout="wrap" showLabel /> : null}
       {definition.scope ? <AppSelectField label={t(definition.scope === 'account' ? 'ledgerSetup.scope.account' : 'ledgerSetup.scope.dimension')} value={scopeId ?? 0} options={scopeOptions.filter((option) => option.label.toLocaleLowerCase().includes(scopeSearch.toLocaleLowerCase()))} onChange={(value) => { setSelectedScopeId(Number(value)); setPage(0); setScopeSearch(''); }} searchable searchValue={scopeSearch} onSearchChange={setScopeSearch} allowWhenReadOnly /> : null}
       <AppListScreen<LedgerSetupRecord, 'table' | 'cards' | 'tree'>
         items={rows}

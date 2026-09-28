@@ -3,6 +3,7 @@ import {
   getFrontendModuleDefinitions,
   intersectAccessibleModulesWithFrontendRegistry,
   registerFrontendModule,
+  replaceFrontendModuleRegistry,
   resetFrontendModuleRegistryForTests,
   validateFrontendModuleRegistry,
   type FrontendModuleDefinition,
@@ -20,17 +21,45 @@ const moduleDefinition = (
 });
 
 describe("frontend module registry", () => {
+  beforeEach(resetFrontendModuleRegistryForTests);
+
   it("rejects equal route ownership while allowing more specific child prefixes", () => {
     const child = { code: "one", name: "One", requiredPermissions: [], entryCandidates: [], navigation: [], routePrefixes: ["/shared/"] };
     registerFrontendModule({ ...moduleDefinition("hr"), submodules: [child, { ...child, code: "two", routePrefixes: ["/shared"] }] });
     expect(() => validateFrontendModuleRegistry()).toThrow(/Ambiguous module route/);
   });
-  beforeEach(resetFrontendModuleRegistryForTests);
 
   it("registers definitions deterministically", () => {
     registerFrontendModule(moduleDefinition("zeta"));
     registerFrontendModule(moduleDefinition("alpha"));
     expect(getFrontendModuleDefinitions().map((item) => item.code)).toEqual(["alpha", "zeta"]);
+  });
+
+  it("replaces the application composition when a refresh creates new definition objects", () => {
+    const initial = moduleDefinition("hr");
+    const refreshed = moduleDefinition("hr");
+
+    replaceFrontendModuleRegistry([initial]);
+    expect(() => replaceFrontendModuleRegistry([refreshed])).not.toThrow();
+    expect(getFrontendModuleDefinitions()).toEqual([refreshed]);
+  });
+
+  it("rejects duplicate module codes within one replacement composition", () => {
+    const definition = moduleDefinition("hr");
+
+    expect(() => replaceFrontendModuleRegistry([
+      definition,
+      definition,
+    ])).toThrow(/already registered/);
+  });
+
+  it("preserves the active registry when replacement validation fails", () => {
+    replaceFrontendModuleRegistry([moduleDefinition("stable")]);
+
+    expect(() => replaceFrontendModuleRegistry([
+      moduleDefinition("hr", ["core"]),
+    ])).toThrow(/hr -> core/);
+    expect(getFrontendModuleDefinitions().map((item) => item.code)).toEqual(["stable"]);
   });
 
   it("rejects missing required dependencies", () => {

@@ -39,7 +39,7 @@ Execution references:
 - [ ] Existing reusable components and their tests were inspected before adding or replacing UI.
 - [ ] Grid uses the shared `MyDataGrid`/`GridFooter` pagination unless an explicit product exception is recorded.
 - [ ] Client and server Grids render the same shared record-navigation footer; server mode fetches an adjacent page only when navigation crosses a record boundary.
-- [ ] Adaptive pagination uses client mode only with the complete result at 5000 rows or fewer; larger or partially loaded results stay in server mode.
+- [ ] Server-managed lists request one authoritative page, preserve the previous page while fetching, and never clamp against a loading/missing/unknown total.
 - [ ] Shared-component changes preserve behavior and are verified against every known consumer.
 - [ ] Search column, condition, input, and reset controls align and share control height.
 - [ ] Grid options are the final toolbar item and own column visibility, density, status, archive, and restore actions where specified.
@@ -109,13 +109,13 @@ failure into partial success.
 | states-master | 3 | `11eb828b5ab01b440915284f32842ff110624d6f4f7a57b77d5dde5f7ce9ca4b` |
 | states-master | 4 | `5a6d15c81abe80fbc5e13715f385f8a978b6482153ba7cec90474f46b6886ebf` |
 | states-master | 6 | `b8c91c53fff7908b583e3690463b7effdbab5394ed9d327133e8c755d3234223` |
-| states-master | 7 | `6371fb99e0ed19e3c7ff227b4464958214689d132873b2be717901c0742af044` |
+| states-master | 7 | `b5da7829b71468e37781ede303a63f4d1427b75982c54dc61b24c700c3a5ba8e` |
 | states-web | 1 | `284abc272111e6e82feb45e7a332e8c1fb825eacd7c3472e7d088b0ed6b9cfa5` |
 | states-web | 2 | `5715616f7749731d49b88637b1bdf8ddeb9d6d691bfa13552d58058a37aaed75` |
 | states-web | 3 | `95ff792642bfed9c3e2e6720b788ec6098addfe6017c36fe1bee99c216624b4b` |
-| states-web | 4 | `9acd30b3a04ad1773bd8ad2b59315180664111f18183ec6d977d3daed0fc3aac` |
-| states-web | 5 | `2a1701533811454198c97e646dccb24f4ff7b260b616032e5ec4b76710f97329` |
-| states-web | 6 | `8517a829203f5f19f7657a854a5ce287388321726c0d5e773160c840f89cdb51` |
+| states-web | 4 | `2c4bb04e9db1333c2823cb41ca5fad8840bccc0d3a5b260894cf94e8d80eee05` |
+| states-web | 5 | `f83c1cc47398ad080cc0c2de4a19263880f70d674d70ae268fbcfa65f2aa4072` |
+| states-web | 6 | `68502b0a7ab1edb91de8e74500f6e781e7bd5dd60f29326ad2ada04bd07e9e69` |
 | states-web | 7 | `85652ee3b5c1d7468a6c300167194b0d003b49da5f4751350ad169befcb018a5` |
 | states-web | 8 | `dec0c122194d60ca08d8135c4d8fa24774fbecc3f5dc9d9fb4df340f9b3259c8` |
 | states-web | 9 | `746099e532ae94bd3061c2ef0f9418838809d5c581bdd7444e64e3ef7948de7a` |

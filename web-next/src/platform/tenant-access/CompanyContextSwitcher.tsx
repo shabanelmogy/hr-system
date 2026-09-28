@@ -7,7 +7,13 @@ import { ContextSwitcher, type ContextSwitcherItem } from "@/shared/components/l
 import useNotifications from "@/shared/hooks/useNotifications";
 import { useCompanyContextTransition } from "./useCompanyContextTransition";
 
-export function CompanyContextSwitcher({ compact = false }: { compact?: boolean }) {
+export function CompanyContextSwitcher({
+  compact = false,
+  iconOnly = false,
+}: {
+  compact?: boolean;
+  iconOnly?: boolean;
+}) {
   const {
     user,
     transitionToCompany,
@@ -60,7 +66,9 @@ export function CompanyContextSwitcher({ compact = false }: { compact?: boolean 
         menuLabel={t("auth.switchCompany")}
         icon={<BusinessRoundedIcon />}
         compact={compact}
+        iconOnly={iconOnly}
         loading={isSwitchingCompany}
+        tone="info"
       />
       {SnackbarComponent}
     </>

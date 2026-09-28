@@ -21,6 +21,12 @@ public sealed class CrystalReportsController(ISender sender) : ControllerBase
         CancellationToken cancellationToken) =>
         Ok(await sender.Send(new GetPublishedCrystalReportsQuery(entityKey, search), cancellationToken));
 
+    /// <summary>Lists the bounded canonical entity contracts available to the manager.</summary>
+    [HttpGet("supported-entities")]
+    [HasPermission(ReportingPermissions.ViewCrystalReports)]
+    public async Task<IActionResult> GetSupportedEntities(CancellationToken cancellationToken) =>
+        Ok(await sender.Send(new GetSupportedCrystalReportEntitiesQuery(), cancellationToken));
+
     /// <summary>Renders the current published version after enforcing the report Run ACL.</summary>
     [HttpPost("{id:guid}/render")]
     [HasPermission(ReportingPermissions.ViewCrystalReports)]
@@ -155,6 +161,20 @@ public sealed class CrystalReportsController(ISender sender) : ControllerBase
     public async Task<IActionResult> GetGrants(Guid id, CancellationToken cancellationToken)
     {
         var result = await sender.Send(new GetCrystalReportGrantsQuery(id), cancellationToken);
+        return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
+    }
+
+    /// <summary>Revalidates immutable stored source bytes against the current entity contract.</summary>
+    [HttpPost("{id:guid}/versions/{versionId:guid}/revalidate")]
+    [HasPermission(ReportingPermissions.UploadCrystalReports)]
+    public async Task<IActionResult> RevalidateVersion(
+        Guid id,
+        Guid versionId,
+        CancellationToken cancellationToken)
+    {
+        var result = await sender.Send(
+            new RevalidateCrystalReportVersionCommand(id, versionId),
+            cancellationToken);
         return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
     }
 

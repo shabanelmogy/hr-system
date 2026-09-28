@@ -16,6 +16,7 @@ const InvitationsPage = () => {
   const { hasAllPermissions, isReadOnly } = usePermissions();
   const canCreate = !isReadOnly && hasAllPermissions([
     permissions.CreateUserInvitations,
+    permissions.ViewUsers,
     permissions.ViewRoles,
   ]);
   const canResend = !isReadOnly && hasAllPermissions([permissions.ResendUserInvitations]);

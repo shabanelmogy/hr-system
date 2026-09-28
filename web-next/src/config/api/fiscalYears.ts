@@ -6,6 +6,7 @@ const base = `${version}/fiscal-years`;
 export const fiscalYears = {
   page: base,
   lookup: `${base}/lookup`,
+  context: `${base}/context`,
   getById: (id: Id) => `${base}/${id}`,
   create: base,
   update: (id: Id) => `${base}/${id}`,
@@ -16,4 +17,5 @@ export const fiscalYears = {
   close: (id: Id) => `${base}/${id}/close`,
   lock: (id: Id) => `${base}/${id}/lock`,
   reopen: (id: Id) => `${base}/${id}/reopen`,
+  setCurrent: (id: Id) => `${base}/${id}/set-current`,
 } as const;

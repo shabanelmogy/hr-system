@@ -49,6 +49,7 @@ public static class DependencyInjection
         services.AddScoped<IAccountingUnitOfWork>(provider => provider.GetRequiredService<AccountingDbContext>());
         services.AddScoped<IFiscalYearReadStore, FiscalYearReadStore>();
         services.AddScoped<IFiscalYearWriteStore, FiscalYearWriteStore>();
+        services.AddScoped<IFiscalYearContextStore, FiscalYearContextStore>();
         services.AddScoped<IFiscalYearAuditTrail, FiscalYearAuditTrail>();
         services.AddScoped<IFiscalYearChangeScheduler, FiscalYearChangeScheduler>();
         services.AddScoped<FiscalYearChangedJob>();

@@ -20,6 +20,11 @@ other period-aware modules. The API derives
 `TenantId` and `CompanyId` from the authenticated actor; neither client may send
 either scope identifier.
 
+The company has at most one default `Current` Fiscal Year. Each authenticated
+user may select a different working Fiscal Year for each company without changing
+the company default or another user's context. Accounting owns both states; the
+identity/session token is not expanded with business-calendar state.
+
 The Countries feature is the applied reference for clean CQRS, exact typed
 transport, controlled lists, shared UI, localization, realtime invalidation, and
 verification. Its global ownership, country fields, bulk/import/report surfaces,
@@ -42,6 +47,14 @@ and `super_admin` restriction are not copied.
 - inherited audit and soft-archive fields;
 - generated child `FiscalPeriod` rows that completely cover the year without
   gaps or overlaps: 12 monthly periods or 4 quarterly periods.
+- `IsCurrent`, the company-default marker, with a filtered tenant/company unique
+  index so no more than one active Fiscal Year is Current.
+
+`FiscalYearUserSelection` is a separate Accounting-owned company-scoped
+preference keyed by authenticated `UserId`. Its optional selected Fiscal Year ID
+is never supplied with tenant/company/user scope by the client. Null, a missing
+preference, an archived target, or a deleted target resolves to the company
+Current year; if no Current exists the effective selection is null.
 
 Fiscal Periods are company-scoped, read-only children in this release. They are
 generated and regenerated only while the Fiscal Year is Draft; they are shown in
@@ -60,10 +73,17 @@ the Fiscal Year detail workflow and have no independent route or mutation UI.
 - `Lock`: `Closed -> Locked`.
 - `Reopen`: `Closed -> Open` or `Locked -> Open`; all active generated periods return to `Open`.
 - Archive is allowed only for `Draft`; archived Draft rows can be restored.
+- A Current Fiscal Year cannot be archived until another Fiscal Year is made
+  Current. Setting Current is RowVersion-protected, company-locked, audited, and
+  idempotent for the existing target.
+- Personal working-year changes are last-write-wins preferences. Selecting the
+  company Current (or sending null) clears the personal override. A user can
+  select any non-archived Fiscal Year for historical/read workflows; downstream
+  writes continue to enforce their own lifecycle eligibility.
 - Lifecycle actions are idempotent only when the row is already in the requested
   target state; skipped transitions fail with a stable business error.
 - Closed and Locked Fiscal Years remain immutable. Reopen is the controlled exception: it
-  requires `ManageLifecycle`, the latest RowVersion, explicit confirmation, an
+  requires `FiscalYears:Reopen`, the latest RowVersion, explicit confirmation, an
   atomic company-calendar transaction, lifecycle audit, and post-commit realtime.
 
 ## API contract
@@ -75,6 +95,8 @@ the current company context.
 | --- | --- | --- | --- |
 | GET | `/api/v1/fiscal-years` | `FiscalYears:View` | paged list |
 | GET | `/api/v1/fiscal-years/lookup` | `FiscalYears:View` | active lookup rows |
+| GET | `/api/v1/fiscal-years/context` | `FiscalYears:View` | company Current, effective user selection, override flag, selectable years |
+| PUT | `/api/v1/fiscal-years/context` | `FiscalYears:View` | change/clear only the authenticated user's selection and return context |
 | GET | `/api/v1/fiscal-years/{id}` | `FiscalYears:View` | detail including periods |
 | POST | `/api/v1/fiscal-years` | `FiscalYears:Create` | `201` detail |
 | PUT | `/api/v1/fiscal-years/{id}` | `FiscalYears:Edit` | `200` detail |
@@ -85,6 +107,7 @@ the current company context.
 | POST | `/api/v1/fiscal-years/{id}/close` | `FiscalYears:Close` | `200` detail |
 | POST | `/api/v1/fiscal-years/{id}/lock` | `FiscalYears:Lock` | `200` detail |
 | POST | `/api/v1/fiscal-years/{id}/reopen` | `FiscalYears:Reopen` | `200` detail |
+| POST | `/api/v1/fiscal-years/{id}/set-current` | `FiscalYears:SetCurrent` | `200` detail with the new Current marker |
 
 Create body:
 
@@ -109,9 +132,22 @@ List parameters are one-based `pageNumber`, `pageSize` (1-5000), trimmed
 default is `startDate DESC`, followed by `Id DESC`.
 
 Stable errors include not found, duplicate code, overlapping dates, invalid
-transition, non-Draft update/archive, and concurrency conflict. Persistence,
+transition, non-Draft update/archive, attempting to archive Current, invalid or
+archived personal selection, missing authenticated user/company context, and
+concurrency conflict. Persistence,
 audit rows, Fiscal Period replacement, and the Fiscal Year mutation commit once;
 notification/realtime scheduling occurs after commit.
+
+Context response example:
+
+```json
+{
+  "companyCurrentFiscalYear": { "id": 27, "code": "FY2027", "nameAr": "السنة المالية 2027", "nameEn": "Fiscal Year 2027", "startDate": "2027-01-01", "endDate": "2027-12-31", "status": 2, "isCurrent": true },
+  "selectedFiscalYear": { "id": 26, "code": "FY2026", "nameAr": "السنة المالية 2026", "nameEn": "Fiscal Year 2026", "startDate": "2026-01-01", "endDate": "2026-12-31", "status": 4, "isCurrent": false },
+  "hasUserOverride": true,
+  "availableFiscalYears": []
+}
+```
 
 ## Platform decisions
 
@@ -124,14 +160,17 @@ notification/realtime scheduling occurs after commit.
 | Lifecycle actions | Required | Required | Required | Permission/read-only/direct-handler guarded |
 | Chart | Excluded | Excluded | Excluded | Budget/headcount analytics will own meaningful aggregates |
 | Report | Required | Required | Required | Accounting-owned `fiscalyears` managed Crystal dataset; tenant/company scope |
-| Import | Deferred | Deferred | Excluded | Web/API revisit with Workforce Plan/Budget setup; no native bulk authoring need |
-| Export | Deferred | Deferred | Excluded | Reopen with Finance report/export requirements |
+| Import | Excluded | Excluded | Excluded | No financial-calendar import workflow, parser, control, or transport is owned by this feature |
+| Export | Excluded | Excluded | Excluded | Managed Reporting is the approved output surface; no Fiscal Years export contract exists |
 | Bulk actions | Excluded | Excluded | Excluded | Low-volume critical lifecycle; explicit single-row review is required |
 | Realtime | Required | Required | Required | Resource `fiscal-years`, authoritative refetch |
+| Company Current | Required | Required in management Grid/Cards/detail | Required in Table/Cards/detail | Exact `SetCurrent` permission and confirmation |
+| Personal working-year context | Required | Required in global Topbar | Required in global App header | Same API; one preference per user/company; online authoritative |
 
-Deferred reporting/export/import is owned by Finance and reopens when the
-Workforce Budget implementation begins. No placeholder view, route, endpoint, or
-unused component is permitted in this release.
+Report is Required through managed Reporting. Import and Export are Excluded from
+this feature; a future bulk-authoring or export requirement needs its own approved
+feature-contract revision. No placeholder view, route, endpoint, or unused
+component is permitted in this release.
 
 ## Client routes and integration
 
@@ -145,6 +184,14 @@ unused component is permitted in this release.
 - Mobile uses the shared route guard, `AppScreen`, `AppListScreen`,
   `AppDataTable`, `AppDataCard`, `AppForm`, feedback, theme, localization, safe
   area, and server-list state.
+- Web reuses the shared `ContextSwitcher`; the App Router composition root injects
+  the Accounting selector through a generic Topbar slot so Shell never imports a
+  business-module implementation. This is the Web `Implemented` reference for
+  `P-008 Global Scoped Context Selector`.
+- Mobile composes the Accounting selector into a generic navigation-header action
+  slot and reuses `AppModal`, `AppCard`, `AppButton`, and the shared unsaved-change
+  registry. Platform navigation never imports Accounting internals. This is the
+  Mobile `Adapted` reference for P-008.
 
 ## Verification and handoff
 

@@ -151,6 +151,7 @@ function parseRoleClaims(value: unknown): RoleClaim[] {
     const record = requireRecord(claim, "role claim");
     return {
       displayValue: requireString(record.displayValue, "roleClaim.displayValue"),
+      moduleCode: requireString(record.moduleCode, "roleClaim.moduleCode"),
       isSelected: requireBoolean(record.isSelected, "roleClaim.isSelected"),
     };
   });

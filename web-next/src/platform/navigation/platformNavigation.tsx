@@ -47,12 +47,14 @@ export function getPlatformNavigation(): NavigationConfig {
         createColoredIcon(<EmailIcon />, "#5c7cbc"),
         appRoutes.platform.administration.invitations,
         undefined,
-        [permissions.ViewUsers],
+        [permissions.ViewUserInvitations],
       ),
       createNavItem(
         "menu.offlineOperations",
         createColoredIcon(<CloudOffRoundedIcon />, "#5c7cbc"),
         appRoutes.platform.administration.offlineOperations,
+        undefined,
+        [permissions.ViewOfflineOperations],
       ),
       createNavItem(
         "menu.companyGeographicScope",

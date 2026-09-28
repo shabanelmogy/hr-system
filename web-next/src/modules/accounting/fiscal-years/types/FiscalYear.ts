@@ -29,6 +29,7 @@ export interface FiscalYearListItem {
   endDate: string;
   periodFrequency: FiscalPeriodFrequency;
   status: FiscalYearStatus;
+  isCurrent: boolean;
   periodsCount: number;
   createdOn: string;
   updatedOn: string | null;
@@ -48,6 +49,14 @@ export interface FiscalYearLookup {
   startDate: string;
   endDate: string;
   status: FiscalYearStatus;
+  isCurrent: boolean;
+}
+
+export interface FiscalYearContext {
+  companyCurrentFiscalYear: FiscalYearLookup | null;
+  selectedFiscalYear: FiscalYearLookup | null;
+  hasUserOverride: boolean;
+  availableFiscalYears: FiscalYearLookup[];
 }
 
 export interface FiscalYearMutationRequest {
@@ -95,6 +104,7 @@ export interface FiscalYearPermissions {
   canClose: boolean;
   canLock: boolean;
   canReopen: boolean;
+  canSetCurrent: boolean;
 }
 
 export const canRunFiscalYearLifecycle = (

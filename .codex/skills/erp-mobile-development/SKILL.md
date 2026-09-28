@@ -145,6 +145,22 @@ filter, toolbar, pagination control, feedback state, chart, tree, or layout.
   stable selection, and server-side search/filter/sort. Do not slice a server page
   locally and present it as the complete result.
 
+### Keep App-header context compact and unified
+
+For a P-008 global context, reuse `AppContextBadge` and inject domain-owned actions
+through `NavigationContextActionsProvider`; the generic `AppAppBar` must not import
+Accounting internals. Compose Tenant, Company, and Working Fiscal Year in one
+translucent on-primary group. Wide/tablet layouts show icon plus current value on
+one line, while narrow phones use equal icon-only actions. Do not render separate
+white cards, a second visible label line, or individual shadows in the App header.
+
+Preserve the existing semantic accent mapping—Tenant accent, Company secondary,
+Fiscal Year warning—with contrast tokens from the active palette. Keep every action
+at least 44x44 and retain the complete translated scope label plus value in its
+accessible name. Verify safe-area fit, long-value truncation, phone/tablet and
+orientation breakpoints, EN/AR and RTL ordering, and every light/dark palette; a
+Jest or TypeScript pass does not prove native header fit.
+
 ## Protect data, offline, locale, and device behavior
 
 - Accept API responses as `unknown` and parse them with the owning remote Zod schema.

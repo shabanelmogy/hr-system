@@ -32,3 +32,23 @@ public sealed class GetFiscalYearLookupQueryHandler(IFiscalYearReadStore readSto
     public Task<IReadOnlyList<FiscalYearLookupResponse>> Handle(GetFiscalYearLookupQuery request, CancellationToken cancellationToken) =>
         readStore.GetLookupAsync(cancellationToken);
 }
+
+public sealed record GetFiscalYearContextQuery : IQuery<Result<FiscalYearContextResponse>>;
+
+public sealed class GetFiscalYearContextQueryHandler(
+    IFiscalYearContextStore contextStore,
+    ICurrentActor actor,
+    FiscalYearErrors errors)
+    : IQueryHandler<GetFiscalYearContextQuery, Result<FiscalYearContextResponse>>
+{
+    public async Task<Result<FiscalYearContextResponse>> Handle(
+        GetFiscalYearContextQuery request,
+        CancellationToken cancellationToken)
+    {
+        var userId = actor.UserId;
+        if (string.IsNullOrWhiteSpace(actor.TenantId) || actor.CompanyId is not > 0 || string.IsNullOrWhiteSpace(userId))
+            return Result.Failure<FiscalYearContextResponse>(errors.FiscalYearUserContextRequired);
+
+        return Result.Success(await contextStore.GetContextAsync(userId, cancellationToken));
+    }
+}

@@ -3,6 +3,7 @@ import apiService from "@/shared/services/apiService";
 import type {
   FiscalYearDetail,
   FiscalYearConcurrencyMutation,
+  FiscalYearContext,
   FiscalYearLifecycleAction,
   FiscalYearLookup,
   FiscalYearMutationRequest,
@@ -25,6 +26,14 @@ export class FiscalYearService {
 
   static getLookup(): Promise<FiscalYearLookup[]> {
     return apiService.get(apiRoutes.fiscalYears.lookup);
+  }
+
+  static getContext(): Promise<FiscalYearContext> {
+    return apiService.get(apiRoutes.fiscalYears.context);
+  }
+
+  static updateContext(fiscalYearId: number | null): Promise<FiscalYearContext> {
+    return apiService.put(apiRoutes.fiscalYears.context, { fiscalYearId });
   }
 
   static getById(id: number): Promise<FiscalYearDetail> {
@@ -50,6 +59,10 @@ export class FiscalYearService {
 
   static changeLifecycle(id: number, rowVersion: string, action: FiscalYearLifecycleAction): Promise<FiscalYearDetail> {
     return apiService.post(apiRoutes.fiscalYears[action](id), { rowVersion });
+  }
+
+  static setCurrent(id: number, rowVersion: string): Promise<FiscalYearDetail> {
+    return apiService.post(apiRoutes.fiscalYears.setCurrent(id), { rowVersion });
   }
 }
 

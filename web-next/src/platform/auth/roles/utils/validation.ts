@@ -25,6 +25,7 @@ export const getRoleClaimsValidationSchema = (t?: Translator) =>
     roleClaims: z.array(
       z.object({
         displayValue: z.string().min(1, t?.("validation.required") ?? "Required"),
+        moduleCode: z.string().min(1, t?.("validation.required") ?? "Required"),
         isSelected: z.boolean(),
       }),
     ),

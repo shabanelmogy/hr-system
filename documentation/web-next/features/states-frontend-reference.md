@@ -16,11 +16,11 @@ The canonical App Router adapter at `app/(main)/super-admin/geography/states/pag
 
 ## 4. Server-list controller
 
-`useStateGridLogic` owns the only browser list criteria state. It debounces search, converts zero-based page state in `toStatePageQuery`, resets on criteria changes, clamps an invalid last page, and clears bulk selection on criteria/page changes. The shared adaptive hook loads the complete filtered/sorted result through 5000 rows and otherwise retains server paging.
+`useStateGridLogic` owns the only browser list criteria state. It debounces search, converts zero-based page state in `toStatePageQuery`, resets on criteria changes, clamps an invalid last page only after a known total is available, and clears bulk selection on criteria/page changes. The shared list hook always requests the current authoritative server page and preserves the previous result while the next page loads.
 
 ## 5. Shared toolbar and Grid Options
 
-`StatesDataGrid` uses the same `MyDataGrid` in client or server pagination mode and the shared toolbar. The column dropdown, condition dropdown, search input, and Reset button use the shared aligned 40px control row. Grid Options is the terminal toolbar item; it owns status selection, the shared Columns/Density controls, and bulk archive. Sorting and filtering continue through the API contract in both pagination modes.
+`StatesDataGrid` uses `MyDataGrid` in controlled server pagination mode and the shared toolbar. The column dropdown, condition dropdown, search input, and Reset button use the shared aligned 40px control row. Grid Options is the terminal toolbar item; it owns status selection, the shared Columns/Density controls, and bulk archive. Sorting and filtering continue through the API contract.
 
 ID, District count, Updated, Status, and Actions are explicitly non-sortable;
 Country remains sortable because the State API allow-list supports it. Selection
@@ -36,7 +36,7 @@ features reuse the same props instead of creating another header toggle.
 
 ## 6. Views
 
-Grid is the default. Cards render the same adaptive display page and actions through the
+Grid is the default. Cards render the same authoritative server page and actions through the
 shared `EntityCard` scaffold, shared card criteria toolbar, loading/empty/no-results
 states, highlight behavior, and shared pagination. State-specific content is
 Country, State code, District count, quality, and created date. Chart mode is Required and uses the same controlled criteria, resets to
@@ -69,15 +69,13 @@ screen minimum, and stretch in desktop rows. This removes the unused area below
 the chart grid while keeping the application document from scrolling vertically.
 
 Grid keeps the reusable `MyDataGrid`/`GridFooter` pagination used by Districts.
-States configures the same component for client paging only when the complete
-result is loaded through 5000 rows, and for controlled server paging above that
-boundary; it never hides navigation or creates a feature-specific replacement.
-An older hosted API that rejects the bounded complete-result request triggers a
-safe server-pagination fallback until the updated States contract is deployed.
+States configures it for controlled server paging for every result size, preserves
+the previous page during the next fetch, and never hides record or page navigation
+or creates a feature-specific replacement.
 
 ### Web Cards applied profile
 
-States Cards use the same adaptive list criteria as Grid. The shared card
+States Cards use the same server-first list criteria as Grid. The shared card
 toolbar renders the State search-column choices (`all`, English name, Arabic
 name, State code, and Country) and all six supported conditions before the
 search input, then the shared sort controls and Reset in the same aligned row.
@@ -86,8 +84,7 @@ not add State-specific client filtering. Shared sort-column and direction
 controls follow search and accept only the State server sort allow-list.
 
 `StatesCardView` maps the current page into the shared responsive
-`12 / 6 / 4 / 3` card grid (`xs / sm / md / lg`). Results at or below 5000 rows
-are loaded once and paged on the client; larger results remain server-paged. It composes `EntityCard` for
+`12 / 6 / 4 / 3` card grid (`xs / sm / md / lg`) from the current server page. It composes `EntityCard` for
 the fixed card scaffold, guarded active-row selection, action footer,
 hover/reduced-motion behavior, logical RTL positioning, and the temporary
 five-second create/edit highlight. State fields remain State-owned; do not add

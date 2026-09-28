@@ -421,6 +421,72 @@
       "purpose": "Server-driven grid and toolbar integration"
     },
     {
+      "id": "web-shared-server-list-state",
+      "layer": "web-next-shared",
+      "path": "web-next/src/shared/hooks/useServerListState.ts",
+      "purpose": "Zero-based controlled criteria and page-reset contract"
+    },
+    {
+      "id": "web-shared-server-page-query",
+      "layer": "web-next-shared",
+      "path": "web-next/src/shared/hooks/useAdaptivePagination.ts",
+      "purpose": "Server-first React Query page with loading-safe metadata and no stale page rows"
+    },
+    {
+      "id": "web-shared-server-page-query-tests",
+      "layer": "web-next-test",
+      "path": "web-next/src/shared/hooks/useAdaptivePagination.test.ts",
+      "purpose": "One-query server paging and placeholder-data regression coverage"
+    },
+    {
+      "id": "web-shared-grid",
+      "layer": "web-next-shared",
+      "path": "web-next/src/shared/components/data-grid/core/MyDataGrid.tsx",
+      "purpose": "Controlled shared Grid with stable server totals and controlled sort-model identity"
+    },
+    {
+      "id": "web-shared-grid-pagination-bounds",
+      "layer": "web-next-shared",
+      "path": "web-next/src/shared/components/data-grid/core/pagination.ts",
+      "purpose": "Stable server row-count policy and client-owned page-bound calculation"
+    },
+    {
+      "id": "web-shared-grid-pagination-bounds-tests",
+      "layer": "web-next-test",
+      "path": "web-next/src/shared/components/data-grid/core/pagination.test.ts",
+      "purpose": "Regression coverage for server-page bounce and client bounds"
+    },
+    {
+      "id": "web-shared-grid-controlled-models",
+      "layer": "web-next-shared",
+      "path": "web-next/src/shared/components/data-grid/core/controlledModels.ts",
+      "purpose": "Semantic identity key for controlled Grid models that must not emit false change events"
+    },
+    {
+      "id": "web-shared-grid-controlled-models-tests",
+      "layer": "web-next-test",
+      "path": "web-next/src/shared/components/data-grid/core/controlledModels.test.ts",
+      "purpose": "Regression coverage for stable equivalent sort models and real sort changes"
+    },
+    {
+      "id": "web-shared-grid-footer",
+      "layer": "web-next-shared",
+      "path": "web-next/src/shared/components/data-grid/navigation/GridFooter.tsx",
+      "purpose": "Centered record navigation with server-page crossing and page-size control"
+    },
+    {
+      "id": "web-countries-pagination-e2e",
+      "layer": "web-next-test",
+      "path": "web-next/e2e/business-smoke.spec.ts",
+      "purpose": "Real-browser controlled Countries page-forward/page-back regression scenario"
+    },
+    {
+      "id": "web-countries-pagination-e2e-backend",
+      "layer": "web-next-test",
+      "path": "web-next/e2e/support/test-backend.mjs",
+      "purpose": "Deterministic multi-page Countries API fixture for browser paging evidence"
+    },
+    {
       "id": "web-grid-columns",
       "layer": "web-next",
       "path": "web-next/src/modules/reference-data/geographical-information/countries/components/grid-view/Columns.tsx",

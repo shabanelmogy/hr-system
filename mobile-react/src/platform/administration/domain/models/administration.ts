@@ -32,6 +32,7 @@ export interface RoleOption {
 
 export interface RoleClaim {
   displayValue: string;
+  moduleCode: string;
   isSelected: boolean;
 }
 

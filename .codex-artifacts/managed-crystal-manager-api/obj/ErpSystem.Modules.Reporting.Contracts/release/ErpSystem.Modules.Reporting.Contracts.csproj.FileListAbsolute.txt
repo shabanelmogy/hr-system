@@ -1,0 +1,12 @@
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\bin\ErpSystem.Modules.Reporting.Contracts\release\ErpSystem.Modules.Reporting.Contracts.deps.json
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\bin\ErpSystem.Modules.Reporting.Contracts\release\ErpSystem.Modules.Reporting.Contracts.dll
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\bin\ErpSystem.Modules.Reporting.Contracts\release\ErpSystem.Modules.Reporting.Contracts.pdb
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.Modules.Reporting.Contracts\release\ErpSystem.Modules.Reporting.Contracts.GeneratedMSBuildEditorConfig.editorconfig
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.Modules.Reporting.Contracts\release\ErpSystem.Modules.Reporting.Contracts.AssemblyInfoInputs.cache
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.Modules.Reporting.Contracts\release\ErpSystem.Modules.Reporting.Contracts.AssemblyInfo.cs
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.Modules.Reporting.Contracts\release\ErpSystem.Modules.Reporting.Contracts.csproj.CoreCompileInputs.cache
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.Modules.Reporting.Contracts\release\ErpSystem.Modules.Reporting.Contracts.sourcelink.json
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.Modules.Reporting.Contracts\release\ErpSystem.Modules.Reporting.Contracts.dll
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.Modules.Reporting.Contracts\release\refint\ErpSystem.Modules.Reporting.Contracts.dll
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.Modules.Reporting.Contracts\release\ErpSystem.Modules.Reporting.Contracts.pdb
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.Modules.Reporting.Contracts\release\ref\ErpSystem.Modules.Reporting.Contracts.dll

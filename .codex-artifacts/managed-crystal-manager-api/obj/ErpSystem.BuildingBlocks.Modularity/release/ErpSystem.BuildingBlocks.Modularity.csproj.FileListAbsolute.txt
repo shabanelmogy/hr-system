@@ -1,0 +1,12 @@
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\bin\ErpSystem.BuildingBlocks.Modularity\release\ErpSystem.BuildingBlocks.Modularity.deps.json
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\bin\ErpSystem.BuildingBlocks.Modularity\release\ErpSystem.BuildingBlocks.Modularity.dll
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\bin\ErpSystem.BuildingBlocks.Modularity\release\ErpSystem.BuildingBlocks.Modularity.pdb
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.BuildingBlocks.Modularity\release\ErpSystem.BuildingBlocks.Modularity.GeneratedMSBuildEditorConfig.editorconfig
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.BuildingBlocks.Modularity\release\ErpSystem.BuildingBlocks.Modularity.AssemblyInfoInputs.cache
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.BuildingBlocks.Modularity\release\ErpSystem.BuildingBlocks.Modularity.AssemblyInfo.cs
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.BuildingBlocks.Modularity\release\ErpSystem.BuildingBlocks.Modularity.csproj.CoreCompileInputs.cache
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.BuildingBlocks.Modularity\release\ErpSystem.BuildingBlocks.Modularity.sourcelink.json
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.BuildingBlocks.Modularity\release\ErpSystem.BuildingBlocks.Modularity.dll
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.BuildingBlocks.Modularity\release\refint\ErpSystem.BuildingBlocks.Modularity.dll
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.BuildingBlocks.Modularity\release\ErpSystem.BuildingBlocks.Modularity.pdb
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.BuildingBlocks.Modularity\release\ref\ErpSystem.BuildingBlocks.Modularity.dll

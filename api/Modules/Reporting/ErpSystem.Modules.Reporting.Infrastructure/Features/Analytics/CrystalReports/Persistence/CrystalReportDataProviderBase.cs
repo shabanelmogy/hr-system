@@ -11,6 +11,9 @@ internal abstract class CrystalReportDataProviderBase : ICrystalReportDataProvid
     protected const int OverflowProbeRows = MaximumRows + 1;
     protected abstract IReadOnlySet<string> ApprovedFilters { get; }
 
+    internal virtual int MaximumRowCount => MaximumRows;
+    internal IReadOnlySet<string> SupportedFilters => ApprovedFilters;
+
     public abstract string EntityKey { get; }
 
     public async Task<CrystalReportDataBuildResult> BuildAsync(
@@ -58,6 +61,17 @@ internal abstract class CrystalReportDataProviderBase : ICrystalReportDataProvid
         using var writer = new StringWriter(CultureInfo.InvariantCulture);
         table.WriteXml(writer, XmlWriteMode.WriteSchema);
         return writer.ToString();
+    }
+
+    protected static DataColumn AddColumn(
+        DataTable table,
+        string name,
+        Type type,
+        bool nullable)
+    {
+        var column = table.Columns.Add(name, type);
+        column.AllowDBNull = nullable;
+        return column;
     }
 
     protected static IReadOnlySet<string> Filters(params string[] names) =>

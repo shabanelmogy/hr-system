@@ -27,4 +27,16 @@ public sealed class FiscalYearErrors(IStringLocalizer<CreateFiscalYearRequest> l
 
     public Error FiscalYearCompanyContextRequired =>
         new("FiscalYear.CompanyContextRequired", localizer[nameof(FiscalYearCompanyContextRequired)], ErrorType.Forbidden);
+
+    public Error FiscalYearUserContextRequired =>
+        new("FiscalYear.UserContextRequired", localizer[nameof(FiscalYearUserContextRequired)], ErrorType.Forbidden);
+
+    public Error FiscalYearInvalidSelection =>
+        new("FiscalYear.InvalidSelection", localizer[nameof(FiscalYearInvalidSelection)], ErrorType.Validation);
+
+    public Error FiscalYearMustBeOpenForCurrent =>
+        new("FiscalYear.MustBeOpenForCurrent", localizer[nameof(FiscalYearMustBeOpenForCurrent)], ErrorType.Conflict);
+
+    public Error FiscalYearCurrentCannotBeArchived =>
+        new("FiscalYear.CurrentCannotBeArchived", localizer[nameof(FiscalYearCurrentCannotBeArchived)], ErrorType.Validation);
 }

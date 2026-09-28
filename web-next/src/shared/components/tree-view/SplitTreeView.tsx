@@ -27,7 +27,8 @@ import {
   ViewSidebarOutlined,
   Business,
 } from "@mui/icons-material";
-import { motion, type PanInfo } from "framer-motion";
+import * as motion from "framer-motion/client";
+import type { PanInfo } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import HierarchicalTreeList from "./HierarchicalTreeList";
 import type { SplitTreeViewProps, TreeNode } from "./types";

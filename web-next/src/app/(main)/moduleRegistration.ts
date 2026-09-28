@@ -15,17 +15,15 @@ import {
   registerReferenceDataRealtimeResources,
 } from "@/modules/reference-data/registration";
 import { reportingModuleDefinition } from "@/modules/reporting/registration";
-import {
-  registerFrontendModule,
-  validateFrontendModuleRegistry,
-} from "@/platform/modules/registration";
+import { replaceFrontendModuleRegistry } from "@/platform/modules/registration";
 
-registerFrontendModule(hrModuleDefinition);
-registerFrontendModule(accountingModuleDefinition);
-registerFrontendModule(crmModuleDefinition);
-registerFrontendModule(referenceDataModuleDefinition);
-registerFrontendModule(reportingModuleDefinition);
-validateFrontendModuleRegistry();
+replaceFrontendModuleRegistry([
+  hrModuleDefinition,
+  accountingModuleDefinition,
+  crmModuleDefinition,
+  referenceDataModuleDefinition,
+  reportingModuleDefinition,
+]);
 registerHrRealtimeResources();
 registerAccountingRealtimeResources();
 registerCrmRealtimeResources();

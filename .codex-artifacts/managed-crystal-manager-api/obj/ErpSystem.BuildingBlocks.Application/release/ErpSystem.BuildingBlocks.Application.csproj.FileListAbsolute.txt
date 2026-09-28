@@ -1,0 +1,13 @@
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\bin\ErpSystem.BuildingBlocks.Application\release\ErpSystem.BuildingBlocks.Application.deps.json
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\bin\ErpSystem.BuildingBlocks.Application\release\ErpSystem.BuildingBlocks.Application.dll
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\bin\ErpSystem.BuildingBlocks.Application\release\ErpSystem.BuildingBlocks.Application.pdb
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.BuildingBlocks.Application\release\ErpSystem.BuildingBlocks.Application.csproj.AssemblyReference.cache
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.BuildingBlocks.Application\release\ErpSystem.BuildingBlocks.Application.GeneratedMSBuildEditorConfig.editorconfig
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.BuildingBlocks.Application\release\ErpSystem.BuildingBlocks.Application.AssemblyInfoInputs.cache
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.BuildingBlocks.Application\release\ErpSystem.BuildingBlocks.Application.AssemblyInfo.cs
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.BuildingBlocks.Application\release\ErpSystem.BuildingBlocks.Application.csproj.CoreCompileInputs.cache
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.BuildingBlocks.Application\release\ErpSystem.BuildingBlocks.Application.sourcelink.json
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.BuildingBlocks.Application\release\ErpSystem.BuildingBlocks.Application.dll
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.BuildingBlocks.Application\release\refint\ErpSystem.BuildingBlocks.Application.dll
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.BuildingBlocks.Application\release\ErpSystem.BuildingBlocks.Application.pdb
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.BuildingBlocks.Application\release\ref\ErpSystem.BuildingBlocks.Application.dll

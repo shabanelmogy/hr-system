@@ -20,4 +20,8 @@ public sealed class CrystalReportErrors(IStringLocalizer<CrystalReportDetailResp
     public Error CrystalReportInvalidRole => new("CrystalReport.InvalidRole", localizer[nameof(CrystalReportInvalidRole)], ErrorType.Validation);
     public Error CrystalReportInvalidRights => new("CrystalReport.InvalidRights", localizer[nameof(CrystalReportInvalidRights)], ErrorType.Validation);
     public Error CrystalReportVersionNotValidated => new("CrystalReport.VersionNotValidated", localizer[nameof(CrystalReportVersionNotValidated)], ErrorType.Validation);
+    public Error CrystalReportUnsupportedEntity => new("CrystalReport.UnsupportedEntity", localizer[nameof(CrystalReportUnsupportedEntity)], ErrorType.Validation);
+    public Error CrystalReportSchemaMismatch => new("CrystalReport.SchemaMismatch", localizer[nameof(CrystalReportSchemaMismatch)], ErrorType.Validation);
+    public Error CrystalReportParameterMismatch => new("CrystalReport.ParameterMismatch", localizer[nameof(CrystalReportParameterMismatch)], ErrorType.Validation);
+    public Error CrystalReportContractStale => new("CrystalReport.ContractStale", localizer[nameof(CrystalReportContractStale)], ErrorType.Validation);
 }

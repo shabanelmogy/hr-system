@@ -254,9 +254,16 @@ public sealed class ReportingDbContext : DbContext, IUnitOfWork
         }
 
         if (ChangeTracker.Entries<CrystalReportVersion>()
-            .Any(entry => entry.State is EntityState.Modified or EntityState.Deleted))
+            .Any(entry => entry.State == EntityState.Deleted ||
+                entry.State == EntityState.Modified && entry.Properties.Any(property =>
+                    property.IsModified &&
+                    property.Metadata.Name is not nameof(CrystalReportVersion.ValidationStatus) and
+                    not nameof(CrystalReportVersion.ValidationReason) and
+                    not nameof(CrystalReportVersion.ValidationContractSchemaVersion) and
+                    not nameof(CrystalReportVersion.ValidationContractFingerprint))))
         {
-            throw new InvalidOperationException("Crystal report versions are append-only.");
+            throw new InvalidOperationException(
+                "Crystal report version source and identity history are append-only.");
         }
     }
 

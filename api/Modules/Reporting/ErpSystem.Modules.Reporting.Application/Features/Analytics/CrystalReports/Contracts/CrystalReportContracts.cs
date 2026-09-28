@@ -20,6 +20,18 @@ public sealed record CrystalReportPageResponse(
     IReadOnlyList<CrystalReportListItemResponse> Items,
     int TotalCount);
 
+public sealed record ManagedCrystalReportEntityDescriptor(
+    string EntityKey,
+    string Scope,
+    IReadOnlyList<string> Filters);
+
+public sealed record SupportedCrystalReportEntityResponse(
+    string EntityKey,
+    string Scope,
+    IReadOnlyList<string> Filters,
+    int ContractSchemaVersion,
+    string ContractFingerprint);
+
 public sealed record CrystalReportVersionResponse(
     Guid Id,
     int VersionNumber,
@@ -30,6 +42,8 @@ public sealed record CrystalReportVersionResponse(
     string? SummarySubject,
     string ValidationStatus,
     string? ValidationReason,
+    int? ValidationContractSchemaVersion,
+    string? ValidationContractFingerprint,
     bool IsPublished,
     DateTime CreatedOn);
 
@@ -146,7 +160,9 @@ public sealed record StoredCrystalReportFile(
     long Size,
     string Sha256,
     string? SummaryTitle,
-    string? SummarySubject);
+    string? SummarySubject,
+    int ValidationContractSchemaVersion,
+    string ValidationContractFingerprint);
 
 public enum CrystalReportFileFailure
 {
@@ -155,7 +171,10 @@ public enum CrystalReportFileFailure
     TooLarge,
     InvalidSignature,
     InspectionUnavailable,
-    InspectionRejected
+    InspectionRejected,
+    UnsupportedEntity,
+    SchemaMismatch,
+    ParameterMismatch
 }
 
 public sealed record StoreCrystalReportFileResult(
@@ -170,7 +189,19 @@ public sealed record CrystalReportInspection(
     bool IsValid,
     string? SummaryTitle,
     string? SummarySubject,
-    string? ValidationReason);
+    string? ValidationReason,
+    int? ContractSchemaVersion,
+    string? ContractFingerprint,
+    CrystalReportInspectionFailure Failure);
+
+public enum CrystalReportInspectionFailure
+{
+    None = 0,
+    InvalidReport = 1,
+    UnsupportedEntity = 2,
+    SchemaMismatch = 3,
+    ParameterMismatch = 4
+}
 
 public sealed record CrystalReportIdentity(string EntityKey, string ReportKey);
 

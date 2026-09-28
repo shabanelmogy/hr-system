@@ -72,16 +72,17 @@ jest.mock('@/src/shared/components', () => {
 });
 
 const group: PermissionGroup = {
-  module: 'Users',
+  moduleCode: 'platform',
+  screen: 'Users',
   claims: [
     {
       action: 'View',
-      claim: { displayValue: 'Users:View', isSelected: true },
+      claim: { displayValue: 'Users:View', moduleCode: 'platform', isSelected: true },
       index: 0,
     },
     {
       action: 'Create',
-      claim: { displayValue: 'Users:Create', isSelected: false },
+      claim: { displayValue: 'Users:Create', moduleCode: 'platform', isSelected: false },
       index: 1,
     },
   ],

@@ -1,6 +1,7 @@
 using CrystalDecisions.CrystalReports.Engine;
 using CrystalDecisions.Shared;
 using CrystalReportGeneratorApi.Runtime;
+using CrystalReportGeneratorApi.Runtime.Inspection;
 using System;
 using System.Data;
 using System.IO;
@@ -43,6 +44,14 @@ namespace CrystalReportGeneratorApi.Runtime.Rendering
                     if (rejectionReason != null)
                         throw new UnsupportedCrystalReportProfileException(rejectionReason);
 
+                    try
+                    {
+                        CrystalReportInspectionService.ValidateTemplateContract(report, profile);
+                    }
+                    catch (CrystalReportRejectedException exception)
+                    {
+                        throw new UnsupportedCrystalReportProfileException(exception.Message);
+                    }
                     CrystalReportManagedParameters.Apply(report, language);
                     report.SetDataSource(data);
 

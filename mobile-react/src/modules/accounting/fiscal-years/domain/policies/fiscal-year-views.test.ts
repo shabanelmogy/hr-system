@@ -1,4 +1,3 @@
-import { describe, expect, it } from '@jest/globals';
 import { getFiscalYearViews, isFiscalYearView } from './fiscal-year-views';
 
 describe('Fiscal Year view policy', () => {

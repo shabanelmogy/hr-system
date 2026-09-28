@@ -186,6 +186,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Runtime\Inspection\CrystalReportInspectionService.cs" />
+    <Compile Include="Runtime\Inspection\CrystalReportTemplateContractValidator.cs" />
     <Compile Include="Runtime\Catalog\CrystalReportCatalogService.cs" />
     <Compile Include="Runtime\CrystalReportExecutionGate.cs" />
     <Compile Include="Runtime\CrystalRuntimeDiagnostics.cs" />
@@ -194,10 +195,15 @@
     <Compile Include="Runtime\CrystalReportRequestWorkspace.cs" />
     <Compile Include="Runtime\CrystalReportRuntimeSettings.cs" />
     <Compile Include="Runtime\Rendering\CrystalReportProfileRegistry.cs" />
+    <Compile Include="Runtime\Rendering\ManagedCrystalReportContractArtifact.cs" />
     <Compile Include="Runtime\Rendering\CrystalReportManagedParameters.cs" />
     <Compile Include="Runtime\Rendering\CrystalReportRenderService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="..\Modules\Reporting\ErpSystem.Modules.Reporting.Contracts\Features\Analytics\CrystalReports\managed-crystal-report-contracts.v1.json">
+      <Link>Runtime\Rendering\managed-crystal-report-contracts.v1.json</Link>
+      <LogicalName>CrystalReportGeneratorApi.ManagedCrystalReportContracts.v1.json</LogicalName>
+    </EmbeddedResource>
     <Content Include=".well-known\pki-validation\DEBF3A4E63040D6680AC039254D353EA.txt" />
     <Content Include="Global.asax" />
     <None Include="Properties\PublishProfiles\site12647-WebDeploy.pubxml" />

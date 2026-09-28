@@ -27,22 +27,22 @@ internal sealed class FiscalYearsCrystalReportDataProvider(IAccountingReportingS
             return TooLarge();
 
         var table = new DataTable("ReportData");
-        table.Columns.Add("FiscalYearId", typeof(int));
-        table.Columns.Add("FiscalYearCode", typeof(string));
-        table.Columns.Add("FiscalYearAr", typeof(string));
-        table.Columns.Add("FiscalYearEn", typeof(string));
-        table.Columns.Add("FiscalYearStartDate", typeof(DateTime));
-        table.Columns.Add("FiscalYearEndDate", typeof(DateTime));
-        table.Columns.Add("PeriodFrequency", typeof(string));
-        table.Columns.Add("FiscalYearStatus", typeof(string));
-        table.Columns.Add("FiscalPeriodId", typeof(int)).AllowDBNull = true;
-        table.Columns.Add("FiscalPeriodSequence", typeof(int)).AllowDBNull = true;
-        table.Columns.Add("FiscalPeriodCode", typeof(string));
-        table.Columns.Add("FiscalPeriodAr", typeof(string));
-        table.Columns.Add("FiscalPeriodEn", typeof(string));
-        table.Columns.Add("FiscalPeriodStartDate", typeof(DateTime)).AllowDBNull = true;
-        table.Columns.Add("FiscalPeriodEndDate", typeof(DateTime)).AllowDBNull = true;
-        table.Columns.Add("FiscalPeriodStatus", typeof(string));
+        AddColumn(table, "FiscalYearId", typeof(int), nullable: false);
+        AddColumn(table, "FiscalYearCode", typeof(string), nullable: false);
+        AddColumn(table, "FiscalYearAr", typeof(string), nullable: false);
+        AddColumn(table, "FiscalYearEn", typeof(string), nullable: false);
+        AddColumn(table, "FiscalYearStartDate", typeof(DateTime), nullable: false);
+        AddColumn(table, "FiscalYearEndDate", typeof(DateTime), nullable: false);
+        AddColumn(table, "PeriodFrequency", typeof(string), nullable: false);
+        AddColumn(table, "FiscalYearStatus", typeof(string), nullable: false);
+        AddColumn(table, "FiscalPeriodId", typeof(int), nullable: true);
+        AddColumn(table, "FiscalPeriodSequence", typeof(int), nullable: true);
+        AddColumn(table, "FiscalPeriodCode", typeof(string), nullable: true);
+        AddColumn(table, "FiscalPeriodAr", typeof(string), nullable: true);
+        AddColumn(table, "FiscalPeriodEn", typeof(string), nullable: true);
+        AddColumn(table, "FiscalPeriodStartDate", typeof(DateTime), nullable: true);
+        AddColumn(table, "FiscalPeriodEndDate", typeof(DateTime), nullable: true);
+        AddColumn(table, "FiscalPeriodStatus", typeof(string), nullable: true);
 
         foreach (var row in rows)
         {

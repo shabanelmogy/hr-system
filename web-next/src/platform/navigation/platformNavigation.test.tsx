@@ -11,7 +11,8 @@ describe("Platform internal navigation", () => {
     const items = entries();
     expect(items.find((item) => item.path === appRoutes.platform.administration.roles)?.permissions).toEqual([permissions.ViewRoles]);
     expect(items.find((item) => item.path === appRoutes.platform.administration.users)?.permissions).toEqual([permissions.ViewUsers]);
-    expect(items.find((item) => item.path === appRoutes.platform.administration.offlineOperations)?.permissions).toBeUndefined();
+    expect(items.find((item) => item.path === appRoutes.platform.administration.invitations)?.permissions).toEqual([permissions.ViewUserInvitations]);
+    expect(items.find((item) => item.path === appRoutes.platform.administration.offlineOperations)?.permissions).toEqual([permissions.ViewOfflineOperations]);
     expect(items.find((item) => item.path === appRoutes.platform.companyGeographicScope)?.permissions).toEqual([permissions.ViewCompanyGeographicScope]);
     expect(items.find((item) => item.path === appRoutes.platform.files.manager)).toBeDefined();
   });

@@ -72,6 +72,17 @@ describe('route access manifest', () => {
     expect(canAccessRoute(ROUTES.administration.root, manager)).toBe(true);
   });
 
+  it('keeps Invitations behind its dedicated view permission', () => {
+    const usersViewer = userWith({ permissionClaims: [permissions.ViewUsers] });
+    const invitationViewer = userWith({
+      permissionClaims: [permissions.ViewUserInvitations],
+    });
+
+    expect(canAccessRoute(ROUTES.administration.invitations, usersViewer)).toBe(false);
+    expect(canAccessRoute(ROUTES.administration.invitations, invitationViewer)).toBe(true);
+    expect(canAccessRoute(ROUTES.administration.root, invitationViewer)).toBe(true);
+  });
+
   it('reserves the global Countries catalog for super administrators', () => {
     expect(canAccessRoute(ROUTES.basicData.countries, userWith({
       roles: [appRoles.superAdmin],
@@ -182,6 +193,33 @@ describe('route access manifest', () => {
     expect(canAccessRoute(ROUTES.finance.root, currencyViewer)).toBe(true);
     expect(canAccessRoute(ROUTES.finance.ledgerSetup.currencies, currencyViewer)).toBe(true);
     expect(canAccessRoute(ROUTES.finance.ledgerSetup.fiscalYears, currencyViewer)).toBe(false);
+  });
+
+  it('keeps Chart of Accounts and hierarchy levels isolated', () => {
+    const accountViewer = userWith({ permissionClaims: [permissions.ViewAccounts] });
+    const hierarchyViewer = userWith({
+      permissionClaims: [permissions.ViewAccountHierarchyLevels],
+    });
+
+    expect(canAccessRoute(ROUTES.finance.ledgerSetup.accounts, accountViewer)).toBe(true);
+    expect(canAccessRoute(ROUTES.finance.ledgerSetup.hierarchyLevels, accountViewer)).toBe(false);
+    expect(canAccessRoute(ROUTES.finance.ledgerSetup.accounts, hierarchyViewer)).toBe(false);
+    expect(canAccessRoute(ROUTES.finance.ledgerSetup.hierarchyLevels, hierarchyViewer)).toBe(true);
+  });
+
+  it('opens composite Ledger Setup routes for any permitted child screen', () => {
+    expect(canAccessRoute(
+      ROUTES.finance.ledgerSetup.dimensions,
+      userWith({ permissionClaims: [permissions.ViewDimensionValues] }),
+    )).toBe(true);
+    expect(canAccessRoute(
+      ROUTES.finance.ledgerSetup.exchangeRates,
+      userWith({ permissionClaims: [permissions.ViewExchangeRates] }),
+    )).toBe(true);
+    expect(canAccessRoute(
+      ROUTES.finance.ledgerSetup.accountDetermination,
+      userWith({ permissionClaims: [permissions.ViewPostingProfiles] }),
+    )).toBe(true);
   });
 
   it('allows the Workforce Planning workspace for any module view permission', () => {
