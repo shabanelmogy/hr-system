@@ -18300,8 +18300,8 @@
     "semantic_hash": ""
   },
   "documentation/project/SHARED_REUSE_CATALOG.md": {
-    "mtime": 1790418775.7712555,
-    "ast_hash": "3c547cd61803623722fa8444dad10ada",
+    "mtime": 1790598837.6615932,
+    "ast_hash": "bd8c07aa699f993cbf6f8cbc72ad7a0d",
     "semantic_hash": ""
   },
   "documentation/system/features/crystal-report-manager/AI_REPORT_VIEW_DESIGNER_PLAN.md": {
@@ -22130,8 +22130,8 @@
     "semantic_hash": ""
   },
   "documentation/plans/business/education-module/PLAN.md": {
-    "mtime": 1790596255.732156,
-    "ast_hash": "0af59c650076c174c5169c59fadd891e",
+    "mtime": 1790598840.013367,
+    "ast_hash": "58f557222f6fa4ed68ebca67ee074bf3",
     "semantic_hash": ""
   },
   "documentation/plans/business/education-module/RESEARCH.md": {
@@ -22140,13 +22140,13 @@
     "semantic_hash": ""
   },
   "documentation/plans/business/education-module/SPEC_SUMMARY.md": {
-    "mtime": 1790596256.6068957,
-    "ast_hash": "5700232b29785046eaa386ec1c012c98",
+    "mtime": 1790598840.474638,
+    "ast_hash": "2932cc4dc1af0bbe40afd1cf67634bdf",
     "semantic_hash": ""
   },
   "documentation/plans/business/erp-platform-template/DECISIONS.md": {
-    "mtime": 1790596257.1664836,
-    "ast_hash": "da9878c30625f6c6326ef1004872e8e3",
+    "mtime": 1790597294.661967,
+    "ast_hash": "a2c059680461e08244f3c72a547fb199",
     "semantic_hash": ""
   },
   "documentation/plans/business/erp-platform-template/DISCOVERY.md": {
@@ -22160,8 +22160,8 @@
     "semantic_hash": ""
   },
   "documentation/plans/business/erp-platform-template/PLAN.md": {
-    "mtime": 1790596258.524333,
-    "ast_hash": "1f61f6e412cde909339ce23b94c039e7",
+    "mtime": 1790598839.0646434,
+    "ast_hash": "22778ec4c417c0e258d2c50c723eff13",
     "semantic_hash": ""
   },
   "documentation/plans/business/erp-platform-template/RESEARCH.md": {
@@ -22170,8 +22170,8 @@
     "semantic_hash": ""
   },
   "documentation/plans/business/erp-platform-template/REVIEW.md": {
-    "mtime": 1790596259.416469,
-    "ast_hash": "8e4179a7ac4ff84f2ba2eb834ee72aa2",
+    "mtime": 1790598839.5395393,
+    "ast_hash": "c5b9931dfde27ad54ae2b943f38b12aa",
     "semantic_hash": ""
   },
   "documentation/plans/business/erp-platform-template/SPEC_SUMMARY.md": {
@@ -22210,8 +22210,8 @@
     "semantic_hash": ""
   },
   "documentation/plans/notes/DECISION_BACKLOG.md": {
-    "mtime": 1790596262.0203793,
-    "ast_hash": "b83a1f717d9e214ad65d85e529aa9aca",
+    "mtime": 1790597295.5946848,
+    "ast_hash": "99443de17ba497c56dfdc0fc2a406a57",
     "semantic_hash": ""
   },
   "documentation/plans/notes/DEFERRED_ITEMS.md": {
@@ -22270,8 +22270,8 @@
     "semantic_hash": ""
   },
   "documentation/project/SCREEN_PATTERN_CATALOG.md": {
-    "mtime": 1790418775.7582388,
-    "ast_hash": "c79dfcdf61ca9615733975227d77349b",
+    "mtime": 1790598837.1175437,
+    "ast_hash": "8efff1d076e6856f1328036b6f4d1d0a",
     "semantic_hash": ""
   },
   "documentation/project/VAN_SALES_PRODUCT_PLAN.md": {
@@ -22475,8 +22475,8 @@
     "semantic_hash": ""
   },
   "templates/README.md": {
-    "mtime": 1790596268.27423,
-    "ast_hash": "6d75f00f3bf561c07f8e9e35a559af01",
+    "mtime": 1790597296.0433512,
+    "ast_hash": "d8f604496c177bd5cd622ab58db30901",
     "semantic_hash": ""
   },
   "templates/planning/ERP_MAPPING.md": {
@@ -22672,6 +22672,21 @@
   "templates/planning/skills/template-promotion/SKILL.md": {
     "mtime": 1790596312.6827493,
     "ast_hash": "bfe4e3de51220ce93986f87e057d7b2a",
+    "semantic_hash": ""
+  },
+  ".codex/skills/erp-business-planning/SKILL.md": {
+    "mtime": 1790598838.1548011,
+    "ast_hash": "dd5d2f7941777e27700297d349a9a763",
+    "semantic_hash": ""
+  },
+  ".codex/skills/erp-legacy-migration/SKILL.md": {
+    "mtime": 1790598838.668284,
+    "ast_hash": "cc39da91d35bab9faad7663a5b16301a",
+    "semantic_hash": ""
+  },
+  "documentation/plans/business/erp-platform-template/DOCUMENTATION_AND_TEMPLATE_REVIEW.md": {
+    "mtime": 1790597294.0763261,
+    "ast_hash": "f5d9c7632c9bab14a08548dc4d1eae5b",
     "semantic_hash": ""
   }
 }
