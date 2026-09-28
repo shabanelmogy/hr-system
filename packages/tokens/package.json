@@ -1,0 +1,27 @@
+{
+  "name": "@app/tokens",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Shared design tokens (colors, typography, spacing, radius, elevation, motion) for web-next (MUI adapter, CSS variables) and mobile-react (React Native).",
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": "./src/index.ts",
+    "./css": "./dist/tokens.css",
+    "./tailwind": "./dist/theme.css",
+    "./json": "./dist/tokens.json"
+  },
+  "files": ["src", "dist", "README.md"],
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "check": "node scripts/check-contrast.mjs && tsc --noEmit",
+    "check:contrast": "node scripts/check-contrast.mjs",
+    "typecheck": "tsc --noEmit"
+  },
+  "engines": {
+    "node": ">=22.18"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.0"
+  }
+}

@@ -37,6 +37,8 @@ This is the central index for ERP business/build plans.
 | `hr-delivery` | HR module delivery | HR | Draft | `documentation/modules/hr/DELIVERY-ROADMAP.md` | Module roadmap | Feature-specific canonical books remain authoritative over the high-level roadmap. |
 | `platform-delivery` | Platform technical capability delivery | Platform | Draft | `documentation/modules/platform/DELIVERY-ROADMAP.md` | Module roadmap | Additional ownership moves require concrete evidence, not cosmetic restructuring. |
 | `crystal-report-ai-view-designer` | AI report view/designer | Reporting | Draft | `documentation/system/features/crystal-report-manager/AI_REPORT_VIEW_DESIGNER_PLAN.md` | Future reporting slice | Must pass G0–G4 before runtime implementation begins. |
+| `erp-platform-template` | Reusable business/SaaS platform template and School merge | Cross-platform Platform | Draft | `documentation/plans/business/erp-platform-template/PLAN.md` | Platform Template V1 | Review report `REVIEW.md`; slices S0–S8 (hygiene, licences, planning kit, shared tokens, patterns, record scope, workspace generator, collaboration). Open DEC-011 … DEC-015. |
+| `education-module` | School operations as the Education module | Education (new) | Draft | `documentation/plans/business/education-module/PLAN.md` | Education V1 | Seeded from the School Management analysis; blocked at G2 by `erp-platform-template` S7 record scope; DEC-016 open. |
 
 ## Deferred
 
