@@ -101,8 +101,8 @@ fixed before a second product starts from this base; **Low** is cleanup.
 | Capability | Status in ERP | Proposed owner | Slice |
 | --- | --- | --- | --- |
 | Record chatter (comments, mentions, activity log on any record) and direct/group chat | Absent; SignalR hub and notifications exist | Platform (Discuss) | S8, DEC-015 |
-| Kanban view over a workflow state | Absent; `framer-motion` drag rules exist in `AGENTS.md` | Pattern P-010 + shared component | S6, S8 |
-| Dashboard / KPI home | Absent as a pattern; web and mobile `charts` exist | Pattern P-008 | S6 |
+| Kanban view over a workflow state | Absent; `framer-motion` drag rules exist in `AGENTS.md` | Pattern P-011 + shared component | S6, S8 |
+| Dashboard / KPI home | Absent as a pattern; web and mobile `charts` exist | Pattern P-010 | S6 |
 | Calendar / schedule | CRM Appointments exists (single module) | Pattern P-012 promoted from CRM | S6 |
 | Relationship-based record scope | Absent | Platform authorization | S7 |
 | New-product workspace generator | Absent; module generators exist (API, web) | `templates/` | S5 |

@@ -6,8 +6,16 @@ governed by the plan `documentation/plans/business/erp-platform-template/`.
 
 | Folder | Status | Purpose |
 | --- | --- | --- |
-| `planning/` | Imported, adaptation pending (slice S2) | Tool-agnostic planning kit and AI skills. Inside this repository `documentation/plans/` stays canonical; see `planning/ERP_MAPPING.md`. |
+| `planning/` | Imported; **scheduled for retirement** (D-013, slice S2) | Tool-agnostic planning kit and AI skills. Inside this repository `documentation/plans/` stays canonical; see `planning/ERP_MAPPING.md`. |
 | `../packages/tokens/` | Imported, not yet adopted (slices S3–S4) | One design-token source for `web-next` (MUI adapter) and `mobile-react`. |
+
+## Retirement of `planning/`
+
+The review `documentation/plans/business/erp-platform-template/DOCUMENTATION_AND_TEMPLATE_REVIEW.md`
+found that `documentation/plans`, `documentation/system`, and `.codex/skills` already cover every
+step of this kit except external-application migration. Slice S2 adds two skills
+(`erp-business-planning`, `erp-legacy-migration`) and then deletes `planning/`. Until then, do not
+start new work from this kit.
 
 ## Not imported (remain in the School repository as reference)
 

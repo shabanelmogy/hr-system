@@ -26,7 +26,7 @@ Users: School Administrator, Teacher, Student, Guardian; later Registrar and Fin
 ### Deferred
 
 - Fees and invoicing (Accounting).
-- Admissions pipeline (kanban candidate P-010).
+- Admissions pipeline (kanban candidate P-011).
 - Report cards / transcripts printing.
 - Timetable conflict solver.
 
@@ -65,8 +65,8 @@ the platform notification inbox.
 | Teacher ↔ Subject | Required | Deferred | P-006 |
 | Timetable | Required | Required (view) | P-012 (Candidate) |
 | Attendance taking | Required | Required | Candidate (roster) |
-| Results entry | Required | Adapted | P-001 / roster |
-| Dashboards | Required | Required | P-008 (Candidate) |
+| Results entry | Required | Adapted | P-001 / roster (Candidate) |
+| Dashboards | Required | Required | P-010 (Candidate) |
 
 ## Privacy / security / commercial applicability
 

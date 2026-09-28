@@ -93,7 +93,7 @@ every operation. Out-of-scope IDs return not-found.
 
 ## 12–13. Web and mobile
 
-Pattern mapping in `SPEC_SUMMARY.md`. Shared components first; candidates P-008, P-009, P-012 and
+Pattern mapping in `SPEC_SUMMARY.md`. Shared components first; candidates P-009, P-010, P-012 and
 the attendance roster must be registered before their slices become Active.
 
 ## 16. Slice roadmap
@@ -107,7 +107,7 @@ the attendance roster must be registered before their slices become Active.
 | E4 | Exams, assignments, results | E3, platform S7 |
 | E5 | Attendance | E3, platform S7 |
 | E6 | Events and announcements (notification inbox) | E1 |
-| E7 | Role-scoped dashboards | E4, E5, P-008 |
+| E7 | Role-scoped dashboards | E4, E5, P-010 |
 | E8 | Data migration from School (only if Q-005 = migrate) | E1–E6 |
 
 No slice is Active. The first feature contract is created for E0 after the owner approves

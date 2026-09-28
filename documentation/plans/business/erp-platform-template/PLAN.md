@@ -18,6 +18,7 @@
 ### Planning evidence
 
 - Review report: `REVIEW.md`
+- Documentation and template integration review: `DOCUMENTATION_AND_TEMPLATE_REVIEW.md`
 - Discovery: `DISCOVERY.md`
 - Current-system evidence: `EVIDENCE.md`
 - Approved pre-plan specification: `SPEC_SUMMARY.md`
@@ -82,13 +83,17 @@ include record scope.
 | S1.5 | Review `AuditableEntity` `*ByPc` fields: purpose, privacy, keep or remove (migration if removed). | Decision + migration plan. |
 | S1.6 | Align SignalR client versions when mobile upgrade is safe. | Versions recorded. |
 
-### S2 — Planning kit adaptation
+### S2 — Fold the planning kit into the ERP system and slim the documentation
+
+Scope and inventory: `DOCUMENTATION_AND_TEMPLATE_REVIEW.md` (D-013, D-014).
 
 | Step | Work | Exit check |
 | --- | --- | --- |
-| S2.1 | Replace `conversion-manifest.json` coupling with an ERP module manifest (modules, patterns, permissions) consumed by S5. | `Test-PlanReadiness.ps1` passes on the example. |
-| S2.2 | Update skills to write ERP plan files when run inside this repository (per `ERP_MAPPING.md`). | Skill review. |
-| S2.3 | Replace the School legacy analyzer reference with a generic inventory procedure. | No dangling paths. |
+| S2.1 | Add `.codex/skills/erp-business-planning` (drives P0–P9 with `BUSINESS_DISCOVERY_INTERVIEW.md`, evidence, spec, plan, gates) and `.codex/skills/erp-legacy-migration` (external application inventory, behavior catalog, defect disposition, data-migration plan into `EVIDENCE`/`RESEARCH`/`PROD-###`). | Skill review; no reference to `templates/planning`. |
+| S2.2 | Delete `templates/planning/` (50 files). | `Check-Planning.ps1` green. |
+| S2.3 | DOC-2 and DOC-3: reconcile, then delete the duplicate frontend roadmap and the Accounting v1.0 source + 22 phase stubs. | Links and `module.json` updated; both checks green. |
+| S2.4 | DOC-4: `New-ErpModule.ps1` creates four module files; remove empty sub-READMEs; update `modules/README.md`. | Generator test; docs CI green. |
+| S2.5 | DOC-6, DOC-7, DOC-9, DOC-10 per DEC-017 / DEC-018. | `Generate-Documentation.ps1 -Check` green. |
 
 ### S3 — Web theme from tokens
 
@@ -110,19 +115,19 @@ include record scope.
 
 ### S6 — Screen-pattern candidates
 
-Register as `Candidate` in `SCREEN_PATTERN_CATALOG.md` (D-011). Each becomes `Active` only with a
+Registered as `Candidate` in `SCREEN_PATTERN_CATALOG.md` on 2026-09-28 together with ordered selection rules and composition rules C-01..C-11 (D-011). Visual reference: the Screen Patterns gallery artifact. Each becomes `Active` only with a
 real source reference and an explicit decision for the other platform.
 
 | ID | Pattern | Source idea | First expected reference |
 | --- | --- | --- | --- |
-| P-004 | Stepper / wizard (existing candidate) | Blueprint §5.12 import, onboarding | Tenant onboarding or import |
-| P-008 | Dashboard / KPI home | Blueprint §5.3 | Module home (HR or Accounting) |
-| P-009 | Entity detail / 360 view with tabs, related lists, timeline | Blueprint §5.6 | Employee or Party |
-| P-010 | Kanban board over workflow states | Owner request | CRM pipeline or Education admissions |
-| P-011 | Conversation / chatter panel | Owner request | S8 chatter |
-| P-012 | Calendar / schedule | Blueprint §5.17; CRM Appointments | CRM Appointments, Education timetable |
-| P-013 | Import wizard (upload → map → validate → commit) | Blueprint §5.12; mobile `importing` | Reference data import |
-| P-014 | Notification center | Blueprint §5.10; notification inbox | Platform notifications |
+| P-004 | Stepper / wizard | Blueprint §5.12 import, onboarding | Tenant onboarding; import with column mapping |
+| P-008 | Transactional document (header + lines + lifecycle) | ERP core need | Journal entries (`accounting-core-gl`) |
+| P-009 | Record view (360: header, tabs, related lists, activity) | Blueprint §5.6 | Employee (HR) or Party (Contacts) |
+| P-010 | Dashboard / KPI overview | Blueprint §5.3 | Module home |
+| P-011 | Kanban board over workflow states | Owner request; `documentation/api/User Stories/KanbanBoard/` | CRM pipeline, Education admissions |
+| P-012 | Calendar / schedule | Blueprint §5.17; CRM Appointments (web, module-local) | CRM Appointments, Education timetable |
+| P-013 | Activity & chatter (embedded) | Owner request | S8 chatter |
+| P-014 | Work queue / approval inbox | ERP core need | Journal approval, leave approval |
 
 ### S7 — Relationship-based record scope
 
@@ -146,8 +151,8 @@ Each item is a separate business plan created with `New-BusinessPlan.ps1` when s
 
 | Item | Scope | Depends on |
 | --- | --- | --- |
-| Record chatter | Messages, mentions, followers, attachments, activities on any record; realtime via SignalR; notifications via inbox; change log shown inline. | S6 P-011, DEC-015 |
-| Kanban view | Shared web/mobile kanban component over module-owned states; move = transition command with concurrency token; accessible move menu. | S6 P-010 |
+| Record chatter | Messages, mentions, followers, attachments, activities on any record; realtime via SignalR; notifications via inbox; change log shown inline. | S6 P-013, DEC-015 |
+| Kanban view | Shared web/mobile kanban component over module-owned states; move = transition command with concurrency token; accessible move menu. | S6 P-011 |
 
 ## 4. Dependencies
 
@@ -158,7 +163,7 @@ S0 → S1 → (S2, S3, S4 in parallel) → S6 → S7 → S5 → S8. `education-m
 | Gate | Status | Notes |
 | --- | --- | --- |
 | G0 Scope and ownership | Pass (draft) | Owner approved scope and deliverable on 2026-09-28. |
-| G1 Business readiness | Partial | DEC-011 … DEC-016 open; none blocks S0–S2. |
+| G1 Business readiness | Partial | DEC-011 … DEC-018 open; none blocks S0–S2. |
 | G2 Architecture readiness | Not started | S7 design and DEC-014 required. |
 | G3 Product/client readiness | Not started | S3/S4 visual baselines and pattern decisions. |
 | G4 Delivery readiness | Not started | Per-slice feature contracts. |
