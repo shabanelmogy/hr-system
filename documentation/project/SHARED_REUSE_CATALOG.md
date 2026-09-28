@@ -20,9 +20,16 @@
 | P-007 Settings Navigation Hub | Ledger Setup overview + Accounting module definition | Ledger Setup overview + Accounting module definition | مدخل permission-filtered لأطفال مستقلين بلا generic CRUD ownership |
 | P-008 Global Scoped Context Selector | shared `ContextBadge`/`ContextSwitcher` + Tenant/Company/Fiscal Year Topbar composition | shared `AppContextBadge` + Tenant/Company/Fiscal Year App-header composition عبر `NavigationContextActionsProvider` (`Adapted`) | عرض هوية scope موحدة واختيار سياق عالمي موثوق مع dirty guard وعزل user/company وفصل domain owner عن Shell slot |
 
-المعرف `P-004` محجوز لـStepper لكنه ما يزال `Candidate` ولا يجوز اختياره في
-عقد تنفيذ حتى يُسجل بمرجع فعلي وعقد قبول كامل. التفاصيل والحدود واختبارات كل
-نمط موجودة في [SCREEN_PATTERN_CATALOG.md](SCREEN_PATTERN_CATALOG.md).
+الأنماط المرشحة `P-004` (Stepper/Wizard) و`P-008` (Transactional Document)
+و`P-009` (Record View) و`P-010` (Dashboard) و`P-011` (Kanban) و`P-012` (Calendar)
+و`P-013` (Activity & Chatter) و`P-014` (Work Queue) ما تزال `Candidate` ولا يجوز
+اختيارها في عقد تنفيذ حتى تُسجل بمرجع فعلي وعقد قبول كامل. الكتالوج يحدد
+لكل منها المكونات المشتركة الموجودة اليوم والناقص قبل التفعيل.
+
+قبل اختيار النمط اتبع **قواعد اختيار النمط** المرتبة، وبعده **قواعد التركيب
+المشتركة C-01..C-11** (حاوية النموذج، شكل القائمة، فتح السجل، المراجع،
+الإجراءات، الألوان الدلالية للحالة، الحالات الإلزامية، التجاوب، هيكل الصفحة)
+في [SCREEN_PATTERN_CATALOG.md](SCREEN_PATTERN_CATALOG.md).
 
 ### Managed reporting authorization boundary
 

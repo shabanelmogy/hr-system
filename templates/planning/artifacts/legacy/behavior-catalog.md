@@ -1,0 +1,16 @@
+# Legacy behavior catalog
+
+What the system does today (including what it does wrong). Cite `[legacy:path#Lnn]`.
+
+```markdown
+### SCR-01 — <screen or workflow>
+
+- **Actors / access path:** …
+- **Inputs and validation (client / server):** …
+- **Data read / written:** …
+- **Side effects:** …
+- **Authorization actually enforced on the server:** …
+- **Rules observed:** BR-### (Draft)
+- **Defects:** DEF-###
+- **Target disposition:** keep | change | drop (D-###)
+```
