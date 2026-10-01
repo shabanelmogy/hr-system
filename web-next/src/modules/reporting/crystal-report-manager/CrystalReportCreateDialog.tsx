@@ -2,7 +2,7 @@ import { FileUpload } from "@mui/icons-material";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Alert, Button, FormHelperText, Stack, Typography } from "@mui/material";
 import { useEffect } from "react";
-import { type Resolver, useForm } from "react-hook-form";
+import { type Resolver, useForm, useWatch } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { MyForm, MySelect, MyTextField, toFormErrorMessages } from "@/shared/components/forms";
 import type { CreateCrystalReportRequest, SupportedCrystalReportEntity } from "./types";
@@ -46,7 +46,7 @@ export function CrystalReportCreateDialog({
     id: entity.entityKey,
     label: t(`crystalReports.entities.${entity.entityKey}`),
   }));
-  const file = form.watch("file");
+  const file = useWatch({ control: form.control, name: "file" });
   const fileError = form.formState.errors.file?.message;
 
   return (
@@ -98,10 +98,10 @@ export function CrystalReportCreateDialog({
         <Button component="label" variant="outlined" startIcon={<FileUpload />} disabled={busy} color={fileError ? "error" : "primary"}>
           {file?.name ?? t("crystalReports.selectFile")}
           <input
-            hidden
             name="file"
             type="file"
             accept=".rpt,application/octet-stream"
+            style={{ position: "absolute", width: 1, height: 1, padding: 0, margin: -1, overflow: "hidden", clip: "rect(0, 0, 0, 0)", whiteSpace: "nowrap", border: 0 }}
             aria-invalid={Boolean(fileError)}
             aria-describedby="crystal-report-file-help"
             onChange={(event) => form.setValue("file", event.target.files?.[0] ?? null, { shouldDirty: true, shouldTouch: true, shouldValidate: form.formState.isSubmitted })}

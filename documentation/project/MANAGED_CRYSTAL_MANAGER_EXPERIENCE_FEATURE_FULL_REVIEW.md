@@ -1,6 +1,6 @@
 # Managed Crystal Report Manager Experience — Full Review
 
-Status: Phase 00 target contract; runtime stages are not yet claimed.
+Status: API and Web Verified; Mobile administration exclusion Verified; integrated live verification Active.
 
 ## 1. Scope and outcome
 
@@ -22,15 +22,18 @@ contract. Publish/render remain limited to current-fingerprint Valid evidence.
 
 ## 4. API and consistency
 
-Add a bounded supported-entity query and a version revalidation command. Upload
+The API exposes a bounded supported-entity query and a version revalidation command. Upload
 permission plus report Upload ACL applies. Report locking serializes revalidation;
 publish/grants/archive keep their current SQL RowVersion rules.
 
 ## 5. Web workspace
 
-Retain the canonical administration route, server-paged `MyDataGrid`, detail tabs,
-deployment import and lifecycle actions. Replace free-text entity input with an
-API-backed selector and raw create UI with the shared form-dialog system.
+The canonical administration route retains the server-paged `MyDataGrid`, detail
+tabs, deployment import and lifecycle actions. Entity list/create/import inputs now
+use the API-backed selector. Create uses React Hook Form, Zod and the shared
+`MyForm` system; version detail shows all four states, evidence/source identity,
+recovery guidance and authorized revalidation. Publish is disabled unless the exact
+stored version is `Valid` under the current contract.
 
 ## 6. Scope, permissions and errors
 
@@ -52,9 +55,11 @@ these may weaken or bypass strict validation during development.
 
 ## 9. Verification plan
 
-API handler/controller/ACL/state tests precede Web. Web requires service parser,
-component journey, EN/AR, RTL/LTR, focus and responsive evidence. Then verify the
-Mobile exclusion, authenticated integrated manager workflow and documentation.
+API handler/controller/ACL/state tests passed before Web. Web service/lifecycle/
+validation/component tests pass, as do the complete static gate, 666-test suite and
+77-page production build. Mobile source/route audit, reporting transport regression
+tests and contract matrix confirm that administration remains absent. Authenticated
+EN/AR and RTL/LTR browser/API workflow remains the active integrated stage.
 
 ## 10. Closure rule
 

@@ -31,6 +31,7 @@ Then reference its stable ID here.
 | PROD-019 | Production | Core authenticated release | Run the complete deployed baseline journey, not only special integration smokes. | `PRODUCTION_NOTES.md` |
 | PROD-020 | Production | Managed Crystal publication | Managed report views require published compatible report versions and `Run` ACL evidence. | `PRODUCTION_NOTES.md` |
 | FOLLOW-003 | Follow-up | API contract parity | Exhaustive generated API/Web contract diff remains future governance work. | `FOLLOW_UPS.md` |
+| RISK-009 | Risk | Protected-shell bundle budget | Shared protected-shell routes exceed the 2.25 MiB class budget; the Crystal manager route remains within its own budget. | `KNOWN_RISKS.md` |
 
 ## Web note checklist
 

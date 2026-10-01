@@ -10,6 +10,7 @@ import { ContentWrapper } from "@/shared/components/layout";
 import { PageHeader } from "@/shared/components/navigation/header";
 import { MyDataGrid } from "@/shared/components/data-grid";
 import { ConfirmationDialog } from "@/shared/components/dialogs";
+import { MySelect } from "@/shared/components/forms";
 import { usePermissions } from "@/shared/hooks/usePermissions";
 import { useAppReadOnly } from "@/shared/contexts/AppReadOnlyContext";
 import { permissions } from "@/lib/auth/permissions";
@@ -17,8 +18,9 @@ import { ApiClientError } from "@/lib/api/client";
 import { showToast } from "@/shared/components/feedback/transient";
 import { extractErrorMessage } from "@/shared/utils/errorUtils";
 import { downloadCrystalReportBlob } from "./files";
+import { getCrystalReportEntityLabel } from "./entityLabels";
 import { crystalReportService } from "./services";
-import type { CrystalReportCapabilities, CrystalReportDetail, CrystalReportListItem, CrystalReportRoleOption, CrystalReportStatus, ImportDiscoveredCrystalReportRequest } from "./types";
+import type { CrystalReportCapabilities, CrystalReportDetail, CrystalReportListItem, CrystalReportRoleOption, CrystalReportStatus, ImportDiscoveredCrystalReportRequest, SupportedCrystalReportEntity } from "./types";
 
 const CrystalReportCreateDialog = dynamic(
   () => import("./CrystalReportCreateDialog").then((module) => module.CrystalReportCreateDialog),
@@ -43,13 +45,29 @@ export default function CrystalReportManagerPage() {
   const [paginationModel, setPaginationModel] = useState<GridPaginationModel>({ page: 0, pageSize: 10 });
   const [createOpen, setCreateOpen] = useState(false); const [importOpen, setImportOpen] = useState(false); const [selected, setSelected] = useState<CrystalReportDetail | null>(null); const [archiveTarget, setArchiveTarget] = useState<CrystalReportListItem | null>(null); const [busy, setBusy] = useState(false);
   const [roles, setRoles] = useState<CrystalReportRoleOption[]>([]);
+  const [supportedEntities, setSupportedEntities] = useState<SupportedCrystalReportEntity[]>([]);
+  const [supportedEntitiesLoading, setSupportedEntitiesLoading] = useState(true);
+  const [supportedEntitiesError, setSupportedEntitiesError] = useState<string | null>(null);
   const can = useMemo<CrystalReportCapabilities>(() => {
     const view = hasAllPermissions([permissions.ViewCrystalReports]);
     const viewAccess = hasAllPermissions([permissions.ViewCrystalReportAccess]);
     return { view, viewAccess, create: !isReadOnly && hasAllPermissions([permissions.CreateCrystalReports]), download: hasAllPermissions([permissions.DownloadCrystalReports]), downloadVersion: viewAccess, upload: !isReadOnly && hasAllPermissions([permissions.UploadCrystalReports]), publish: !isReadOnly && hasAllPermissions([permissions.PublishCrystalReports]), access: !isReadOnly && hasAllPermissions([permissions.EditCrystalReportAccess]), remove: !isReadOnly && hasAllPermissions([permissions.ArchiveCrystalReports]) };
   }, [hasAllPermissions, isReadOnly]);
+  const loadSupportedEntities = useCallback(async () => {
+    if (!can.view) return;
+    setSupportedEntitiesLoading(true);
+    setSupportedEntitiesError(null);
+    try {
+      setSupportedEntities(await crystalReportService.listSupportedEntities());
+    } catch (cause) {
+      setSupportedEntitiesError(extractErrorMessage(cause) || t("crystalReports.entitiesLoadError"));
+    } finally {
+      setSupportedEntitiesLoading(false);
+    }
+  }, [can.view, t]);
   const load = useCallback(async () => { if (!can.view) return; setLoading(true); setError(null); try { const page = await crystalReportService.listForManagement({ entityKey: entityKey || undefined, search: search || undefined, status: status || undefined, page: paginationModel.page + 1, pageSize: paginationModel.pageSize }); setItems(page.items); setTotalCount(page.totalCount); } catch (cause) { setError(extractErrorMessage(cause) || t("crystalReports.loadError")); } finally { setLoading(false); } }, [can.view, entityKey, paginationModel.page, paginationModel.pageSize, search, status, t]);
   useEffect(() => { void Promise.resolve().then(load); }, [load]);
+  useEffect(() => { void Promise.resolve().then(loadSupportedEntities); }, [loadSupportedEntities]);
   useEffect(() => {
     if (!selected || !can.access) return;
     void crystalReportService.listGrantRoleOptions()
@@ -62,7 +80,7 @@ export default function CrystalReportManagerPage() {
   const importDeployment = useCallback(async (request: ImportDiscoveredCrystalReportRequest) => { if (!guard(can.create)) return false; try { setBusy(true); await crystalReportService.importDeployment(request); showToast.success(t("crystalReports.importSuccess")); await load(); return true; } catch (cause) { if (cause instanceof ApiClientError && cause.status === 409) { await load(); showToast.warning(t("crystalReports.conflictReloaded")); } else { showToast.error(cause, t("crystalReports.importError")); } return false; } finally { setBusy(false); } }, [can.create, guard, load, t]);
   const columns = useMemo<GridColDef<CrystalReportListItem>[]>(() => [
     { field: "displayName", headerName: t("crystalReports.displayName"), flex: 1.35, minWidth: 170 },
-    { field: "entityKey", headerName: t("crystalReports.entityKey"), flex: .85, minWidth: 120 },
+    { field: "entityKey", headerName: t("crystalReports.entity"), flex: .85, minWidth: 140, valueFormatter: (value) => getCrystalReportEntityLabel(t, String(value)) },
     { field: "reportKey", headerName: t("crystalReports.reportKey"), flex: 1, minWidth: 130 },
     { field: "currentVersionNumber", headerName: t("crystalReports.version"), width: 95, align: "center", headerAlign: "center", valueFormatter: (value) => value == null ? "—" : `v${value}` },
     { field: "isPublished", headerName: t("crystalReports.status"), width: 120, align: "center", headerAlign: "center", renderCell: ({ row }) => <Chip size="small" color={row.isArchived ? "default" : row.isPublished ? "success" : "warning"} label={t(row.isArchived ? "crystalReports.archived" : row.isPublished ? "crystalReports.published" : "crystalReports.draft")} /> },
@@ -78,17 +96,31 @@ export default function CrystalReportManagerPage() {
     <PageHeader title={t("crystalReports.title")} subTitle={t("crystalReports.subTitle")} />
     <Stack direction={{ xs: "column", md: "row" }} spacing={1} sx={{ mb: 1.5, alignItems: { md: "center" } }}>
       <TextField size="small" label={t("actions.search")} value={search} onChange={(event) => { setSearch(event.target.value); setPaginationModel((model) => ({ ...model, page: 0 })); }} />
-      <TextField size="small" label={t("crystalReports.entityKey")} value={entityKey} onChange={(event) => setEntityKey(event.target.value)} />
-      <TextField select size="small" label={t("crystalReports.status")} value={status} onChange={(event) => setStatus(event.target.value as CrystalReportStatus | "")} sx={{ minWidth: 150 }}><MenuItem value="">{t("crystalReports.active")}</MenuItem><MenuItem value="published">{t("crystalReports.published")}</MenuItem><MenuItem value="draft">{t("crystalReports.draft")}</MenuItem><MenuItem value="archived">{t("crystalReports.archived")}</MenuItem></TextField>
+      <MySelect
+        label={t("crystalReports.entity")}
+        dataSource={supportedEntities.map((entity) => ({ id: entity.entityKey, label: getCrystalReportEntityLabel(t, entity.entityKey) }))}
+        valueMember="id"
+        displayMember="label"
+        selectedItem={entityKey || 0}
+        handleSelectionChange={(event) => {
+          setEntityKey(event.target.value === 0 ? "" : String(event.target.value));
+          setPaginationModel((model) => ({ ...model, page: 0 }));
+        }}
+        loading={supportedEntitiesLoading}
+        disabled={Boolean(supportedEntitiesError)}
+        sx={{ minWidth: 190 }}
+      />
+      <TextField select size="small" label={t("crystalReports.status")} value={status} onChange={(event) => { setStatus(event.target.value as CrystalReportStatus | ""); setPaginationModel((model) => ({ ...model, page: 0 })); }} sx={{ minWidth: 150 }}><MenuItem value="">{t("crystalReports.allStatuses")}</MenuItem><MenuItem value="published">{t("crystalReports.published")}</MenuItem><MenuItem value="draft">{t("crystalReports.draft")}</MenuItem><MenuItem value="archived">{t("crystalReports.archived")}</MenuItem></TextField>
       <Box sx={{ flex: 1 }} />
       <Button startIcon={<Refresh />} onClick={() => void load()} disabled={loading}>{t("actions.refresh")}</Button>
       {can.create && <Button variant="outlined" startIcon={<FolderOpen />} onClick={() => { if (guard(can.create)) setImportOpen(true); }}>{t("crystalReports.importExisting")}</Button>}
       {can.create && <Button variant="contained" startIcon={<Add />} onClick={() => { if (guard(can.create)) setCreateOpen(true); }}>{t("crystalReports.create")}</Button>}
     </Stack>
+    {supportedEntitiesError && <Alert severity="error" action={<Button color="inherit" size="small" onClick={() => void loadSupportedEntities()}>{t("actions.retry")}</Button>}>{supportedEntitiesError}</Alert>}
     {error && <Alert severity="error" action={<Button color="inherit" size="small" onClick={() => void load()}>{t("actions.retry")}</Button>}>{error}</Alert>}
     <MyDataGrid rows={items} columns={columns} loading={loading || busy} getRowId={(row) => row.id} checkboxSelection={false} pagination paginationMode="server" rowCount={totalCount} paginationModel={paginationModel} onPaginationModelChange={setPaginationModel} pageSizeOptions={[5, 10, 25]} autoSelectFirstRow={false} />
-    {createOpen ? <CrystalReportCreateDialog key="open" open busy={busy} onClose={() => setCreateOpen(false)} onSubmit={async (request) => { if (!guard(can.create)) return; try { setBusy(true); await crystalReportService.create(request); showToast.success(t("crystalReports.created")); setCreateOpen(false); await load(); } catch (cause) { showToast.error(cause, t("crystalReports.createError")); } finally { setBusy(false); } }} /> : null}
-    {importOpen && <CrystalReportImportDialog open busy={busy} onClose={() => setImportOpen(false)} onImport={importDeployment} />}
+    {createOpen ? <CrystalReportCreateDialog key="open" open busy={busy} entities={supportedEntities} entitiesLoading={supportedEntitiesLoading} entitiesError={supportedEntitiesError} onRetryEntities={() => void loadSupportedEntities()} onClose={() => setCreateOpen(false)} onSubmit={async (request) => { if (!guard(can.create)) return; try { setBusy(true); await crystalReportService.create(request); showToast.success(t("crystalReports.created")); setCreateOpen(false); await load(); } catch (cause) { showToast.error(cause, t("crystalReports.createError")); } finally { setBusy(false); } }} /> : null}
+    {importOpen && <CrystalReportImportDialog open busy={busy} entities={supportedEntities} entitiesLoading={supportedEntitiesLoading} entitiesError={supportedEntitiesError} onRetryEntities={() => void loadSupportedEntities()} onClose={() => setImportOpen(false)} onImport={importDeployment} />}
     {selected && <CrystalReportDetailDialog key={`${selected.id}:${selected.rowVersion}`} report={selected} roles={roles} can={can} busy={busy} onClose={() => setSelected(null)} onRefresh={() => openDetails(selected)} onChanged={load} guard={guard} />}
     {archiveTarget ? <ConfirmationDialog
       open

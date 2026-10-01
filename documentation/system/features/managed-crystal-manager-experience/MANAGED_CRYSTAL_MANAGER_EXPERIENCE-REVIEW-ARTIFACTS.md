@@ -1,16 +1,16 @@
 # Managed Crystal Report Manager Experience — Review Artifacts
 
-Status: Phase 00 complete; API Verified; Web stage Active.
+Status: Phase 00 complete; API/Web Verified; Mobile exclusion Verified; integrated stage Active.
 
-Reviewed: 2026-09-27
+Reviewed: 2026-09-29
 
 ## Scope ledger
 
 | Requirement | Status | Evidence / acceptance |
 | --- | --- | --- |
-| Canonical supported-entity selector | Target approved | API registry query then Web selector; no duplicated key list |
-| Four-state validation display | Target approved | Pending/Valid/Invalid/NeedsRevalidation with reason/evidence |
-| Stored-version revalidation | Target approved | Same bytes, Upload permission/ACL, current registry contract |
+| Canonical supported-entity selector | Verified | API registry query drives list/create/import selectors; no duplicated key list |
+| Four-state validation display | Verified | Pending/Valid/Invalid/NeedsRevalidation with reason/evidence/source identity |
+| Stored-version revalidation | Verified | Same bytes, Upload permission/ACL, current registry contract |
 | Existing manager lifecycle | Preserve | Create/import/upload/publish/grants/download/archive and 409 reload |
 | Web shared form/grid/feedback | Required | P-001 plus shared form-dialog system |
 | Mobile administration | Excluded | No route or placeholder UI |
@@ -19,15 +19,16 @@ Reviewed: 2026-09-27
 
 ## Current behavior evidence
 
-- `CrystalReportManagerPage.tsx` owns a server-paged grid but uses raw MUI filters
-  and free-text entity input.
-- `CrystalReportCreateDialog.tsx` uses a raw dialog and disables Save rather than
-  shared form validation/focus behavior.
-- `types.ts` accepts only `Valid`/`Invalid`, while Domain/DB allow four states and
-  API responses include schema/fingerprint evidence.
-- `CrystalReportDetailDialog.tsx` has no revalidate action.
-- The embedded registry already owns the bounded entity collection; no public
-  supported-entity endpoint exists.
+- `CrystalReportManagerPage.tsx` keeps the authoritative server-paged grid and now
+  consumes the registry-backed selector rather than free text.
+- `CrystalReportCreateDialog.tsx` uses shared `MyForm`, React Hook Form, Zod,
+  field-level errors, accessible file focus and prerequisite-only submit blocking.
+- `types.ts` and the service parser accept all four Domain states plus exact
+  schema/fingerprint evidence.
+- Version detail exposes safe reason/evidence/source identity, authorized
+  revalidation, and blocks publish unless the exact version is `Valid`.
+- The public supported-entity endpoint projects the embedded registry; no client
+  entity list is authoritative.
 - Private storage can verify/open immutable bytes and the inspector can inspect a
   supplied stream, so no new storage model is required.
 
@@ -59,10 +60,10 @@ not create a second entity list, separate manager or runtime-owned DB workflow.
 
 | ID | Severity | Finding | Owner | Resolution |
 | --- | --- | --- | --- | --- |
-| MGR-001 | High | Web parser rejects Pending/NeedsRevalidation and omits evidence. | Web Reporting | Phase 02 after API verification. |
-| MGR-002 | High | Entity entry is free text and duplicates server knowledge. | API/Web Reporting | Registry metadata endpoint and selector. |
-| MGR-003 | High | Stale versions have no authorized recovery action. | Reporting | Revalidation command/route/UX. |
-| MGR-004 | Medium | Create dialog bypasses shared form system. | Web Reporting | Phase 02 refactor. |
+| MGR-001 | High | Web parser rejected Pending/NeedsRevalidation and omitted evidence. | Web Reporting | Resolved: strict four-state/evidence parser and detail UI. |
+| MGR-002 | High | Entity entry was free text and duplicated server knowledge. | API/Web Reporting | Resolved: registry metadata endpoint and selectors. |
+| MGR-003 | High | Stale versions had no authorized recovery action. | Reporting | Resolved: immutable-source revalidation command/route/UX. |
+| MGR-004 | Medium | Create dialog bypassed shared form system. | Web Reporting | Resolved: `MyForm`, RHF and Zod. |
 | RISK-008 | Deferred | No approved real designer `.rpt`/PDF positive fixture. | Reporting/Product | Phase 4/release; not a development blocker. |
 
 ## Verification ledger
@@ -72,11 +73,14 @@ not create a second entity list, separate manager or runtime-owned DB workflow.
 | Planning | `./documentation/plans/Check-Planning.ps1` | Passed 2026-09-27 |
 | Documentation | Feature Phase 00 generation/check | Passed: 8 packets generated; 125-recipe check passed |
 | API | Focused/full tests and architecture | Verified: 32 focused, 128 full Reporting, 59 Architecture passed |
-| Web | Focused tests/type/architecture | Active after API verification |
-| Mobile | Administration source audit | Queued after Web |
+| Web | Focused/full tests, static gate and production build | Verified: 19 focused; 190 files/666 tests; full check; 77/77 pages |
+| Web bundle | `npm run measure:build` | Feature route 2.31 MiB < 2.55 MiB; repository gate fails on inherited protected-shell budget drift, `RISK-009` |
+| Mobile | Administration source audit, focused regressions, contract matrix | Verified: no admin surface; 8/8 tests; 83 routes/230 endpoint members |
 | Integrated | Authenticated EN/AR manager journey | Pending; real `.rpt` governed by `RISK-008` |
 
 ## Phase decision
 
-Phase 00 is complete and the API stage is Verified. Web is the only active runtime
-stage. No completion claim is made for Web, integrated verification or closure.
+Phase 00, API, Web and the explicit Mobile exclusion are Verified. Authenticated
+integrated EN/AR and RTL/LTR workflow verification is the only active runtime
+stage. No completion claim is made for integrated verification or closure; real
+designer `.rpt`/PDF acceptance remains `RISK-008`/Phase 4.

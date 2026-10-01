@@ -107,14 +107,14 @@ failure into partial success.
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
 | managed-crystal-manager-experience-master | 3 | `95b2877cf63539d97f8812e17338a1f02b17431a802f48f6652646b80a9d1675` |
-| managed-crystal-manager-experience-master | 4 | `100d6ff5f514f29fc9f2c4283571b3649c9fcb92cf3274b437126efe403b107f` |
+| managed-crystal-manager-experience-master | 4 | `6155835514ebb01ebdfce1431aa47209f3799dcdf826d944233756fd85a5bdf1` |
 | managed-crystal-manager-experience-master | 6 | `11acfb50331a9258f4cb84c91af1c2919d9caddfde1af01db9b0e1de4445311d` |
 | managed-crystal-manager-experience-master | 7 | `cae2d057019488500bdc6fa7854889c1394d4d219864d534b6064680d3cffb1a` |
-| managed-crystal-manager-experience-web | 1 | `6ad4feb35947f3ff729423e5f382ae966f512a1598d3154bff516f216f048f91` |
+| managed-crystal-manager-experience-web | 1 | `c66feec0f7e19a67bdc8cf1ab28f8bd8f9c5ce655fa500ae54940d519211fd6e` |
 | managed-crystal-manager-experience-web | 2 | `126da15795e92d3b779689801c697c31474442e122c11ee93ff80b75b26bbfc7` |
-| managed-crystal-manager-experience-web | 3 | `607f6a24b20146c409843267122d9e860dd1ffbffde6f7bf0e9ec5fb451f6746` |
-| managed-crystal-manager-experience-web | 4 | `99ae3c9ccc2099e4e6553438a8215b96dc33e6ad71b57c6163d9f682d86fa7f5` |
-| managed-crystal-manager-experience-web | 5 | `1086d3bc5892a4496dc4d41e45a859a0a6dcbd81cc6c5c451ce7f0b952ad98fb` |
+| managed-crystal-manager-experience-web | 3 | `e10aa0cf5d0168198915f5caecf8649c392e7057d2714607166e24b1e2479b4f` |
+| managed-crystal-manager-experience-web | 4 | `d1f57833eb0335259f8ea5ce97804a656e73ac847ce2b300c4c18b377789d1e0` |
+| managed-crystal-manager-experience-web | 5 | `d16662ca614513d37076996f85430b936068d81ad6fcba687477d7afa909f49e` |
 | managed-crystal-manager-experience-web | 6 | `531c37e86683f6bf81a1ba0d0be82ae29d498ea933a04dfa7cfa6a9cf6125f1c` |
 | managed-crystal-manager-experience-web | 7 | `47229d57ffa02ba6b8d3bfd56cceed1b6c522bcb34e4ff6748bd9658266b6a81` |
 | managed-crystal-manager-experience-web | 8 | `804054f9ca706bc227203f5323086261dd587f0b2d89d3f6ab6ece0f411226cf` |
@@ -123,4 +123,4 @@ failure into partial success.
 | managed-crystal-manager-experience-web | 11 | `da70d397be8b247c48a1e493a858bdd0cad449371dd0dbd4e6156cd82bc2a765` |
 | managed-crystal-manager-experience-web | 12 | `6c66740d2664b339b62554c3506fdff4551e2908dbb8994b2864183e13e9ae69` |
 | managed-crystal-manager-experience-web | 13 | `559cf90a7ec238f7ea97e465dac3b38fe2a2dbb9bf3c2f178ad6f935dd335903` |
-| managed-crystal-manager-experience-web | 14 | `3305b429845ef01a4e50d6fc365aac5acc9651d6910b3b46a6e55b9b2d23802a` |
+| managed-crystal-manager-experience-web | 14 | `61a1da381f4f244fbc8ba144033ae26c77ce1108fb8cc95bbac5d2ee1f63a3c3` |

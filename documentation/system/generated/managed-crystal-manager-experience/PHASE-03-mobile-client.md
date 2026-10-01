@@ -66,7 +66,7 @@ profile and do not leave an unreachable route, component, or translation surface
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
 | managed-crystal-manager-experience-master | 3 | `95b2877cf63539d97f8812e17338a1f02b17431a802f48f6652646b80a9d1675` |
-| managed-crystal-manager-experience-master | 4 | `100d6ff5f514f29fc9f2c4283571b3649c9fcb92cf3274b437126efe403b107f` |
+| managed-crystal-manager-experience-master | 4 | `6155835514ebb01ebdfce1431aa47209f3799dcdf826d944233756fd85a5bdf1` |
 | managed-crystal-manager-experience-master | 6 | `11acfb50331a9258f4cb84c91af1c2919d9caddfde1af01db9b0e1de4445311d` |
 | managed-crystal-manager-experience-master | 7 | `cae2d057019488500bdc6fa7854889c1394d4d219864d534b6064680d3cffb1a` |
 | managed-crystal-manager-experience-mobile | 1 | `4593daa1728acaa76ca733030809f86a61b5ab8e9ce5edafaed8738b91517831` |
@@ -82,5 +82,5 @@ profile and do not leave an unreachable route, component, or translation surface
 | managed-crystal-manager-experience-mobile | 11 | `a8228f8a355cef3bc39fa8cf713120e24ef90ac0b2c059ffaa5dede3f2d7bb03` |
 | managed-crystal-manager-experience-mobile | 12 | `dabaad871ebdc616ca5d5d6be95085971c684aa2576ca16e5d00feb72c892f5e` |
 | managed-crystal-manager-experience-mobile | 13 | `5429f6fd06cf471be28eeed112b26b9fc12199d31b89c4231dfb7450501de1e5` |
-| managed-crystal-manager-experience-mobile | 14 | `b08ee644641d0e5acf27e25b891a4764e9e8288a81739fdab182a45aeafc41bd` |
-| managed-crystal-manager-experience-mobile | 15 | `366e849971dc0752669b7e2cc3ab7be575ca93110f72fffbd20fa795fdaa6f8d` |
+| managed-crystal-manager-experience-mobile | 14 | `4bcc9e39942fd641f5b37ba44f8ff8344b1e18f137441872b7f2ea0b9ce3fe3d` |
+| managed-crystal-manager-experience-mobile | 15 | `a1f8f3db22e9cf6685bf54c33da126706600e291aa6143fa27b8ad27941b1769` |

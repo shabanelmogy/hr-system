@@ -43,11 +43,11 @@ realtime, notification, localization, report, or Import integration is reachable
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| managed-crystal-manager-experience-master | 4 | `100d6ff5f514f29fc9f2c4283571b3649c9fcb92cf3274b437126efe403b107f` |
-| managed-crystal-manager-experience-master | 5 | `8e5ec68fb4bc3432ce57f1ef4942c19edf59c4154ae1e2465f37b46a69823c5a` |
+| managed-crystal-manager-experience-master | 4 | `6155835514ebb01ebdfce1431aa47209f3799dcdf826d944233756fd85a5bdf1` |
+| managed-crystal-manager-experience-master | 5 | `06bf78fe25c251e431dfa09fbb38ce9420ff13bd243d32c8cfa3a67a26462c2f` |
 | managed-crystal-manager-experience-master | 6 | `11acfb50331a9258f4cb84c91af1c2919d9caddfde1af01db9b0e1de4445311d` |
 | managed-crystal-manager-experience-master | 7 | `cae2d057019488500bdc6fa7854889c1394d4d219864d534b6064680d3cffb1a` |
-| managed-crystal-manager-experience-master | 9 | `b3f632e92be51b9dd07d47a5d300530d9e47275faf6cf87fab0863e2588e803e` |
+| managed-crystal-manager-experience-master | 9 | `cb4b66afbcf23d73c0323a24c6a70fca96f96a4fe455df168d81f07194dc53c3` |
 | managed-crystal-manager-experience-api | 8 | `dfe2d1e952c76df4b242c1b5540f1f202e05a2e66ac20a135f5b2baed6d4f991` |
 | managed-crystal-manager-experience-api | 9 | `94b91385cc20a0468c42bd7bf47471c6638f34c7a09689e1df5247db93f8a764` |
 | managed-crystal-manager-experience-api | 10 | `0ab127d92eedad1d1ff51c9c541f6b29fa5c2a243e44b342e16621429344f2c4` |
@@ -57,4 +57,4 @@ realtime, notification, localization, report, or Import integration is reachable
 | managed-crystal-manager-experience-mobile | 2 | `aea443fe72612197e12c8c1c6457782bfbcab024ab6d1411f789a28ac54cef2e` |
 | managed-crystal-manager-experience-mobile | 11 | `a8228f8a355cef3bc39fa8cf713120e24ef90ac0b2c059ffaa5dede3f2d7bb03` |
 | managed-crystal-manager-experience-mobile | 12 | `dabaad871ebdc616ca5d5d6be95085971c684aa2576ca16e5d00feb72c892f5e` |
-| managed-crystal-manager-experience-mobile | 15 | `366e849971dc0752669b7e2cc3ab7be575ca93110f72fffbd20fa795fdaa6f8d` |
+| managed-crystal-manager-experience-mobile | 15 | `a1f8f3db22e9cf6685bf54c33da126706600e291aa6143fa27b8ad27941b1769` |

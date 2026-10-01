@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "status": "phase-00-implementation-ready",
+  "status": "phase-03-verified-integrated-active",
   "feature": "managed-crystal-manager-experience",
   "featureName": "Managed Crystal Report Manager Experience",
   "referenceFeature": "N/A",
@@ -72,11 +72,24 @@
     { "id": "web-types", "layer": "web-next", "path": "web-next/src/modules/reporting/crystal-report-manager/types.ts", "purpose": "Current client contracts" },
     { "id": "web-services", "layer": "web-next", "path": "web-next/src/modules/reporting/crystal-report-manager/services.ts", "purpose": "Current API adapter" },
     { "id": "web-routes", "layer": "web-next", "path": "web-next/src/config/api/crystalReports.ts", "purpose": "Current API route registry" },
+    { "id": "web-route-types", "layer": "web-next", "path": "web-next/src/config/api/types.ts", "purpose": "Typed supported-entity and revalidation route contract" },
+    { "id": "web-create-validation", "layer": "web-next", "path": "web-next/src/modules/reporting/crystal-report-manager/validation.ts", "purpose": "Shared-form create validation" },
+    { "id": "web-version-lifecycle", "layer": "web-next", "path": "web-next/src/modules/reporting/crystal-report-manager/lifecycle.ts", "purpose": "Publish and revalidation action policy" },
+    { "id": "web-version-list", "layer": "web-next", "path": "web-next/src/modules/reporting/crystal-report-manager/CrystalReportVersionList.tsx", "purpose": "Four-state evidence and recovery presentation" },
+    { "id": "web-entity-labels", "layer": "web-next", "path": "web-next/src/modules/reporting/crystal-report-manager/entityLabels.ts", "purpose": "Localized canonical entity labels with legacy fallback" },
     { "id": "web-en", "layer": "localization", "path": "web-next/src/locales/resources/reporting/en.json", "purpose": "English reporting strings" },
     { "id": "web-ar", "layer": "localization", "path": "web-next/src/locales/resources/reporting/ar.json", "purpose": "Arabic reporting strings" },
+    { "id": "mobile-administration-layout", "layer": "mobile", "path": "mobile-react/app/(main)/administration/_layout.tsx", "purpose": "Evidence that manager administration is not routed" },
+    { "id": "mobile-routes", "layer": "mobile", "path": "mobile-react/src/core/constants/routes.ts", "purpose": "Typed route exclusion evidence" },
+    { "id": "mobile-reporting-endpoints", "layer": "mobile", "path": "mobile-react/src/platform/reporting/data/remote/crystal-report-endpoints.ts", "purpose": "Consumption-only Reporting endpoint boundary" },
+    { "id": "mobile-module-registration-tests", "layer": "tests", "path": "mobile-react/src/shell/module-registration.test.ts", "purpose": "No accidental manager route registration" },
+    { "id": "mobile-reporting-transport-tests", "layer": "tests", "path": "mobile-react/src/platform/reporting/data/remote/crystal-report-remote-data-source.test.ts", "purpose": "Existing consumption contract regression evidence" },
     { "id": "api-tests", "layer": "tests", "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/ManagedCrystalTemplateValidationHandlerTests.cs", "purpose": "Current validation handler baseline" },
     { "id": "controller-tests", "layer": "tests", "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/CrystalReportsControllerContractTests.cs", "purpose": "Current route/permission baseline" },
     { "id": "web-service-tests", "layer": "tests", "path": "web-next/src/modules/reporting/crystal-report-manager/services.test.ts", "purpose": "Current transport baseline" },
+    { "id": "web-validation-tests", "layer": "tests", "path": "web-next/src/modules/reporting/crystal-report-manager/validation.test.ts", "purpose": "Entity/file form validation" },
+    { "id": "web-lifecycle-tests", "layer": "tests", "path": "web-next/src/modules/reporting/crystal-report-manager/lifecycle.test.ts", "purpose": "Publish/revalidation action matrix" },
+    { "id": "web-version-list-tests", "layer": "tests", "path": "web-next/src/modules/reporting/crystal-report-manager/CrystalReportVersionList.test.tsx", "purpose": "Version evidence and recovery component contract" },
     { "id": "web-view-tests", "layer": "tests", "path": "web-next/src/modules/reporting/crystal-report-manager/ManagedCrystalReportView.test.tsx", "purpose": "Existing report consumer regression baseline" }
   ]
 }

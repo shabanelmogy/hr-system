@@ -162,9 +162,9 @@ toolbar and version rows stack; the grid retains its intended internal scroll.
 | Order | Stage | Status | Entry gate | Required evidence / exit gate | Evidence path |
 | ---: | --- | --- | --- | --- | --- |
 | 1 | API | Verified | Phase 2 Verified/Closed and this contract/Phase 00 approved | Supported-entity query, revalidation command, safe errors, exact permissions/ACL, unit/handler/controller tests; no schema change | 128/128 Reporting tests and 59/59 Architecture tests passed on 2026-09-27 |
-| 2 | Web | Active | API stage Verified | Shared-form create flow, API-backed selectors, four-state detail/recovery UI, service/type tests and component journeys | To be recorded in generated Phase 02 |
-| 3 | Mobile | Queued | Web stage Verified | Administration exclusion rechecked; no Mobile runtime source added | To be recorded in generated Phase 03 |
-| 4 | Integrated live verification | Queued | API/Web Verified and Mobile disposition Verified | Authenticated supported-entity/create/import/upload/revalidate/publish/grant/archive flows in EN/AR and RTL/LTR; real `.rpt` positive acceptance may remain Deferred only under `RISK-008` | To be recorded in generated Phase 06/review artifact |
+| 2 | Web | Verified | API stage Verified | Shared-form create flow, API-backed selectors, four-state detail/recovery UI, service/type tests and component journeys | 19/19 focused tests, full 190-file/666-test suite, complete static check and 77/77-page production build passed on 2026-09-29 |
+| 3 | Mobile | Verified | Web stage Verified | Administration exclusion rechecked; no Mobile runtime source added | Route/source audit plus 8/8 focused tests and 83-route/230-endpoint-member contract matrix passed on 2026-09-29 |
+| 4 | Integrated live verification | Active | API/Web Verified and Mobile disposition Verified | Authenticated supported-entity/create/import/upload/revalidate/publish/grant/archive flows in EN/AR and RTL/LTR; real `.rpt` positive acceptance may remain Deferred only under `RISK-008` | Automated Web production route is verified; authenticated live workflow remains pending |
 | 5 | Documentation and closure | Queued | Integrated verification Verified | Canonical books, manifest/recipes, admin education and roadmap status reconciled | To be recorded in generated Phase 07/roadmap |
 
 ## 12. Verification contract
@@ -174,25 +174,25 @@ toolbar and version rows stack; the grid retains its intended internal scroll.
 | Domain/Application | Revalidation command and lifecycle tests | immutable source; valid/idempotent; deterministic invalid; transient preservation; ACL denial | Verified — focused tests and full Reporting 128/128 |
 | API/transport | Query/controller/permission tests | bounded safe entity metadata; exact routes and permissions | Verified — controller/query contract tests |
 | Persistence/migration | Persistence immutability baseline plus no-model-change review | only validation evidence changes; no new migration | Verified — existing validation-only guard reused; no EF model source changed |
-| Web | Service parser/routes plus create/detail/import/page component tests | all four states; supported selector; direct guards; publish guidance; conflict/retry | Pending |
-| Mobile | Source/route audit | no administration route/control introduced | Pending |
+| Web | Service parser/routes plus create/detail/import/page component tests | all four states; supported selector; direct guards; publish guidance; conflict/retry | Verified — 19 focused, full 666, static gate and production build |
+| Mobile | Source/route audit | no administration route/control introduced | Verified — no admin route/client/control; focused regressions and contract matrix pass |
 | E2E/manual/live | Authenticated API and browser workflow in EN/AR | select → upload/import → inspect state → revalidate/correct → publish → grants/archive | Pending; real designer `.rpt`/PDF remains governed by `RISK-008`/Phase 4 |
 
 ## 13. Child exit gate
 
 This child is complete only when:
 
-- [ ] Contract version is current and both platform rows pass the UI Pattern Gate.
-- [ ] Phase 00 documentation/manifest/recipes are complete before runtime work.
-- [ ] API exposes the bounded canonical supported-entity list without duplicating keys.
-- [ ] Revalidation verifies immutable stored bytes and current contract under exact Upload permission/ACL.
-- [ ] Deterministic mismatch and transient failures follow the documented state policy.
-- [ ] Web create/filter/import use supported entities and no free-text entity entry remains.
-- [ ] Web understands and displays all four lifecycle states, evidence and actionable recovery.
-- [ ] Shared form/dialog/grid/feedback primitives, direct guards and row-version recovery are preserved.
+- [x] Contract version is current and both platform rows pass the UI Pattern Gate.
+- [x] Phase 00 documentation/manifest/recipes are complete before runtime work.
+- [x] API exposes the bounded canonical supported-entity list without duplicating keys.
+- [x] Revalidation verifies immutable stored bytes and current contract under exact Upload permission/ACL.
+- [x] Deterministic mismatch and transient failures follow the documented state policy.
+- [x] Web create/filter/import use supported entities and no free-text entity entry remains.
+- [x] Web understands and displays all four lifecycle states, evidence and actionable recovery.
+- [x] Shared form/dialog/grid/feedback primitives, direct guards and row-version recovery are preserved.
 - [ ] EN/AR, RTL/LTR, keyboard/focus, accessible state text and responsive layouts are verified.
-- [ ] Mobile administration remains explicitly Excluded with no placeholder runtime UI.
-- [ ] API, Web and focused architecture/type/test gates pass; no migration drift exists.
-- [ ] Real designer `.rpt` acceptance stays visibly owned by `RISK-008`/Phase 4 and does not disable strict validation.
-- [ ] Security/dependency hardening remains Phase 6 and is not pulled into this development child.
+- [x] Mobile administration remains explicitly Excluded with no placeholder runtime UI.
+- [x] API, Web and focused architecture/type/test gates pass; no migration drift exists.
+- [x] Real designer `.rpt` acceptance stays visibly owned by `RISK-008`/Phase 4 and does not disable strict validation.
+- [x] Security/dependency hardening remains Phase 6 and is not pulled into this development child.
 - [ ] Canonical documentation, customer education, required-file manifest, recipes and roadmap are Closed before Phase 4 starts.

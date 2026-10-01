@@ -107,10 +107,22 @@ The lifecycle is:
 2. Store version 1 in tenant-private storage as a draft.
 3. Uploading an edited report creates another immutable draft version; it never
    overwrites a prior or published file.
-4. Publish one validated version.
-5. Grant report rights to roles for the current company.
-6. The feature catalog exposes only active, published reports the current user may
+4. Each version has one explicit state: `Pending`, `Valid`, `Invalid`, or
+   `NeedsRevalidation`. Validation evidence records the contract schema version and
+   exact canonical fingerprint used for that decision.
+5. An authorized operator may revalidate the same immutable stored bytes against
+   the current entity contract. Deterministic incompatibility becomes `Invalid`;
+   transient storage/runtime failures preserve the prior evidence.
+6. Publish one version only when it is `Valid` against the current contract
+   fingerprint. Uploading a corrected new version is the alternate recovery path.
+7. Grant report rights to roles for the current company.
+8. The feature catalog exposes only active, published reports the current user may
    run.
+
+The manager obtains entity choices from `GET /supported-entities`; Web clients do
+not maintain a second supported-key list or accept free-text entity creation.
+`fiscalyears` is one optional supported entity. Selecting it does not require or
+infer a current/selected Fiscal Year context for the manager itself.
 
 Exact permissions are `CrystalReports:View/Create/Download/Upload/Publish/Archive`
 and `CrystalReportAccess:View/Edit`. Per-report role rights remain `Run`,
@@ -129,6 +141,7 @@ All routes are below `/api/v1/crystal-reports`:
 | Method and route | Consumer | Purpose |
 | --- | --- | --- |
 | `GET ?entityKey={key}&search={text}` | Feature viewer | Published reports allowed for the current user/company |
+| `GET /supported-entities` | Manager | Bounded registry-owned entity key, scope, filters and contract fingerprint metadata |
 | `POST /{reportId}/render` | Feature viewer | Render the current published version as PDF |
 | `GET /manage` | Manager | Paged tenant management list |
 | `GET /manage/{reportId}` | Manager | Details, versions, and grants |
@@ -139,6 +152,7 @@ All routes are below `/api/v1/crystal-reports`:
 | `GET /{reportId}/download` | Manager/authorized user | Download the published source |
 | `GET /{reportId}/versions/{versionId}/download` | Manager | Download one revision |
 | `POST /{reportId}/versions/{versionId}/publish` | Manager | Publish with `RowVersion` |
+| `POST /{reportId}/versions/{versionId}/revalidate` | Manager | Reinspect the same immutable source against the current contract under Upload permission/ACL |
 | `GET`, `PUT /{reportId}/access` | Manager | Read/replace current-company role grants |
 | `DELETE /{reportId}` | Manager | Soft archive with `RowVersion` |
 
@@ -186,7 +200,7 @@ report policy.
 ## 6. Adding Crystal reports to a new feature
 
 The implemented runtime baseline currently supports `countries`, `states`,
-`districts`, and `addresstypes`.
+`districts`, `addresstypes`, and optional `fiscalyears`.
 Use those profiles as evidence for the integration shape, but do not copy their
 global reference-data scope into tenant/company-owned HR features.
 

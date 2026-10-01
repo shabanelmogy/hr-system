@@ -59,11 +59,14 @@ modified in this child.
 
 ## 14. Verification
 
-After Web verification, audit Mobile routes, module definitions and reporting
-consumer boundaries to confirm no accidental administration surface or contract
-regression.
+Verified on 2026-09-29: route constants, the administration layout, module
+registration and Platform Reporting boundaries contain no manager administration
+route or supported-entity/revalidation mutation. Mobile retains only published
+report consumption. Focused module-registration and Reporting transport tests
+passed 8/8, and the compatibility matrix passed 83 routes, 30 endpoint files and
+230 endpoint members.
 
 ## 15. Status and handoff
 
-Explicitly Excluded for this feature. Phase 4 reopens only the required Fiscal
+Verified as explicitly Excluded for this feature. Phase 4 reopens only the required Fiscal
 Years report-consumption journey, not general Report Manager administration.

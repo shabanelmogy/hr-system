@@ -39,6 +39,8 @@ const version = {
   summarySubject: "Countries data",
   validationStatus: "Valid",
   validationReason: null,
+  validationContractSchemaVersion: 1,
+  validationContractFingerprint: "4d7511139871f7f745560191fafb51a4ccdf963a41740d8cc14ba1b07769573c",
   isPublished: true,
   createdOn: "2026-09-14T00:00:00Z",
 };
@@ -67,6 +69,20 @@ const detail = {
 
 describe("crystalReportService", () => {
   beforeEach(() => vi.clearAllMocks());
+
+  it("lists the bounded supported entity contracts through the canonical route", async () => {
+    const supportedEntity = {
+      entityKey: "countries",
+      scope: "global",
+      filters: ["NameEn"],
+      contractSchemaVersion: 1,
+      contractFingerprint: "4d7511139871f7f745560191fafb51a4ccdf963a41740d8cc14ba1b07769573c",
+    };
+    get.mockResolvedValue([supportedEntity]);
+
+    await expect(crystalReportService.listSupportedEntities()).resolves.toEqual([supportedEntity]);
+    expect(get).toHaveBeenCalledWith(apiRoutes.crystalReports.supportedEntities);
+  });
 
   it("uses the exact management page contract with server criteria", async () => {
     get.mockResolvedValue({ items: [], totalCount: 0 });
@@ -169,6 +185,21 @@ describe("crystalReportService", () => {
       rowVersion: "AQID",
     });
     expect(del).toHaveBeenCalledWith(apiRoutes.crystalReports.archive(listItem.id), { rowVersion: "AQID" });
+  });
+
+  it("revalidates an immutable version and accepts every validation lifecycle state", async () => {
+    post.mockResolvedValue({
+      ...version,
+      validationStatus: "NeedsRevalidation",
+      validationReason: "Contract evidence is stale.",
+    });
+
+    const result = await crystalReportService.revalidateVersion(listItem.id, version.id);
+
+    expect(result.validationStatus).toBe("NeedsRevalidation");
+    expect(post).toHaveBeenCalledWith(
+      apiRoutes.crystalReports.revalidateVersion(listItem.id, version.id),
+    );
   });
 
   it("lists canonical grant role options from the Reporting-owned endpoint", async () => {

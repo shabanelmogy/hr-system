@@ -76,12 +76,12 @@ on the original plan alone.
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
 | managed-crystal-manager-experience-master | 8 | `c04f821b9512863559aba221fd5f54a4d45a4cf7dbf9f14b482fd69b59cb21a4` |
-| managed-crystal-manager-experience-master | 9 | `b3f632e92be51b9dd07d47a5d300530d9e47275faf6cf87fab0863e2588e803e` |
+| managed-crystal-manager-experience-master | 9 | `cb4b66afbcf23d73c0323a24c6a70fca96f96a4fe455df168d81f07194dc53c3` |
 | managed-crystal-manager-experience-master | 10 | `00c0a86065d58f7cce000a810feb94d7e466a6c041006723e5ba354b262dd9d6` |
 | managed-crystal-manager-experience-api | 10 | `0ab127d92eedad1d1ff51c9c541f6b29fa5c2a243e44b342e16621429344f2c4` |
 | managed-crystal-manager-experience-api | 11 | `1e1138376f3825d87fe8808b7570500c8a1c57b477fb6d465064fa70261cf0fe` |
 | managed-crystal-manager-experience-web | 12 | `6c66740d2664b339b62554c3506fdff4551e2908dbb8994b2864183e13e9ae69` |
 | managed-crystal-manager-experience-web | 13 | `559cf90a7ec238f7ea97e465dac3b38fe2a2dbb9bf3c2f178ad6f935dd335903` |
-| managed-crystal-manager-experience-web | 14 | `3305b429845ef01a4e50d6fc365aac5acc9651d6910b3b46a6e55b9b2d23802a` |
-| managed-crystal-manager-experience-mobile | 14 | `b08ee644641d0e5acf27e25b891a4764e9e8288a81739fdab182a45aeafc41bd` |
-| managed-crystal-manager-experience-mobile | 15 | `366e849971dc0752669b7e2cc3ab7be575ca93110f72fffbd20fa795fdaa6f8d` |
+| managed-crystal-manager-experience-web | 14 | `61a1da381f4f244fbc8ba144033ae26c77ce1108fb8cc95bbac5d2ee1f63a3c3` |
+| managed-crystal-manager-experience-mobile | 14 | `4bcc9e39942fd641f5b37ba44f8ff8344b1e18f137441872b7f2ea0b9ce3fe3d` |
+| managed-crystal-manager-experience-mobile | 15 | `a1f8f3db22e9cf6685bf54c33da126706600e291aa6143fa27b8ad27941b1769` |

@@ -79,7 +79,7 @@ existing-system review, implementation order, and Definition of Done.
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
 | managed-crystal-manager-experience-master | 3 | `95b2877cf63539d97f8812e17338a1f02b17431a802f48f6652646b80a9d1675` |
-| managed-crystal-manager-experience-master | 4 | `100d6ff5f514f29fc9f2c4283571b3649c9fcb92cf3274b437126efe403b107f` |
+| managed-crystal-manager-experience-master | 4 | `6155835514ebb01ebdfce1431aa47209f3799dcdf826d944233756fd85a5bdf1` |
 | managed-crystal-manager-experience-master | 6 | `11acfb50331a9258f4cb84c91af1c2919d9caddfde1af01db9b0e1de4445311d` |
 | managed-crystal-manager-experience-api | 1 | `6840a63612be69e6e2fc2c30c9ee314fb819ab9c4200a3fc254b4b3ffd799f95` |
 | managed-crystal-manager-experience-api | 2 | `7be40246115e38a96c3450734df584a4c4ebe31adf7bff03ec856ca5554cd0a7` |

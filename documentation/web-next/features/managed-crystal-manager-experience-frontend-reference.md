@@ -2,8 +2,8 @@
 
 ## 1. Scope
 
-Refactor the existing Web manager after API verification. The canonical route and
-Reporting feature ownership remain unchanged.
+The existing Web manager is implemented against the verified API. The canonical
+route and Reporting feature ownership remain unchanged.
 
 ## 2. Pattern and reuse
 
@@ -12,17 +12,17 @@ form-dialog system. Preserve the feature-specific detail tabs and import workflo
 
 ## 3. Transport types
 
-Define supported-entity metadata and the four validation states. Parse schema
-version/fingerprint and revalidation response strictly from `unknown`.
+Supported-entity metadata and the four validation states are typed. The service
+strictly parses schema version/fingerprint and revalidation responses from `unknown`.
 
 ## 4. Service ownership
 
-Only `crystal-report-manager/services.ts` calls `apiService`. Add metadata and
-revalidation methods/routes; keep current list/create/import/version/lifecycle APIs.
+Only `crystal-report-manager/services.ts` calls `apiService`. It owns metadata and
+revalidation methods/routes while preserving list/create/import/version/lifecycle APIs.
 
 ## 5. Query and refresh behavior
 
-Load supported entities once per manager session through the feature data layer.
+Supported entities load once per mounted manager session through the feature data layer.
 Refresh detail and list after mutations. Retry explicit failures; 409 retains the
 existing reload-and-warning behavior.
 
@@ -72,6 +72,16 @@ CSS; inherit RTL from the theme.
 
 ## 14. Verification and status
 
-Pending API verification. Then run focused service/component tests, type-check and
-architecture check, plus manual EN/AR and RTL/LTR manager journeys. Real `.rpt`/PDF
-positive acceptance remains Phase 4 under `RISK-008`.
+Verified on 2026-09-29: 19/19 focused service, lifecycle, validation and version-list
+tests passed; the complete Web suite passed 190/190 files and 666/666 tests. The
+complete `npm run check` gate passed architecture, governance, release-contract,
+i18n, lint and strict TypeScript, and the production build generated 77/77 pages,
+including `/administration/crystal-reports`. The shared create form leaves its
+primary action enabled for ordinary validation failures and focuses accessible
+named fields; EN/AR resource parity is enforced. Authenticated live EN/AR and
+RTL/LTR manager execution is tracked in the integrated stage. Real `.rpt`/PDF
+positive acceptance remains Phase 4 under `RISK-008`. Bundle measurement records
+the manager route at 2.31 MiB, below its 2.55 MiB business-route budget. The global
+measurement gate remains red because unrelated shared protected-shell routes exceed
+their 2.25 MiB class budget; this inherited integrated-worktree finding is owned by
+`RISK-009` and is not presented as a feature pass.
