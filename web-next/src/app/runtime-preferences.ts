@@ -1,4 +1,6 @@
+import { defaultPalette, type ThemePalette } from "@app/tokens";
 import type { ThemeDirection, ThemeMode } from "@/theme/ThemePreferences";
+import { parseThemePalette, THEME_PALETTE_COOKIE } from "@/theme/themePalette";
 
 export type RuntimeLanguage = "en" | "ar";
 
@@ -6,12 +8,14 @@ export type RuntimePreferences = {
   language: RuntimeLanguage;
   direction: ThemeDirection;
   themeMode: ThemeMode;
+  palette: ThemePalette;
 };
 
 export const DEFAULT_RUNTIME_PREFERENCES: RuntimePreferences = {
   language: "en",
   direction: "ltr",
   themeMode: "light",
+  palette: defaultPalette,
 };
 
 type CookieReader = {
@@ -26,10 +30,15 @@ export function resolveRuntimePreferences(cookies: CookieReader): RuntimePrefere
     ? "dark"
     : DEFAULT_RUNTIME_PREFERENCES.themeMode;
 
+  const palette =
+    parseThemePalette(cookies.get(THEME_PALETTE_COOKIE)?.value) ??
+    DEFAULT_RUNTIME_PREFERENCES.palette;
+
   return {
     language,
     direction: language === "ar" ? "rtl" : "ltr",
     themeMode,
+    palette,
   };
 }
 
@@ -60,11 +69,14 @@ export function reconcileRuntimePreferences(
   const themeMode: ThemeMode = cookieTheme === "dark" || cookieTheme === "light"
     ? cookieTheme
     : serverPreferences.themeMode;
+  const palette =
+    parseThemePalette(cookies.get(THEME_PALETTE_COOKIE)) ?? serverPreferences.palette;
 
   return {
     language,
     direction: language === "ar" ? "rtl" : "ltr",
     themeMode,
+    palette,
   };
 }
 

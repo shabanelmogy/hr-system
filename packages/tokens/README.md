@@ -42,6 +42,21 @@ MUI's strong `palette.secondary` to `brand2`, never to the quiet surface.
 Deviation from the mobile source: the orange light palette used the primary color as `warning`;
 it now uses the standard warning amber so warnings stay distinguishable from primary actions.
 
+## Installing in an app
+
+The package ships compiled JavaScript and declarations in `dist/lib/` (committed), so apps need
+no `transpilePackages`, Metro `watchFolders`, or TypeScript extension flags. Each app installs a
+**copy** (not a symlink) so Next.js and Metro never resolve files outside their project root:
+
+```bash
+# once per app (web-next, mobile-react)
+echo "install-links=true" >> .npmrc
+npm install ../packages/tokens
+```
+
+After changing `src/`, run `npm run build` here, commit `dist/`, then `npm install` in each app.
+`npm run check` fails when `dist/` is stale.
+
 ## Web (web-next: MUI)
 
 ```ts
@@ -117,8 +132,9 @@ const styles = StyleSheet.create({
 });
 ```
 
-Metro resolves the TypeScript source directly. In a monorepo, include the package folder in
-`watchFolders` (Expo SDK 52+ configures workspaces automatically).
+The mobile app keeps its `AppTheme` shape through `createMobileColors()`, which returns the
+legacy keys (`surfaceMuted`, `text`, `onPrimary`, `danger`, …) with identical values; see
+`mobile-react/src/core/theme/theme.ts`.
 
 ## Tenant branding
 

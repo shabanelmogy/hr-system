@@ -1,164 +1,40 @@
 import type { Theme as NavigationTheme } from 'expo-router/react-navigation';
+import {
+  createMobileColors,
+  getTheme,
+  layout as tokenLayout,
+  radius as tokenRadius,
+  spacing as tokenSpacing,
+  textStyles,
+  type MobileColors,
+  type ResolvedThemeMode as TokenResolvedThemeMode,
+  type ThemePalette as TokenThemePalette,
+} from '@app/tokens';
 
-export const spacing = {
-  xs: 4,
-  sm: 8,
-  md: 12,
-  lg: 16,
-  xl: 20,
-  xxl: 24,
-  xxxl: 32,
-} as const;
+/**
+ * Design values come from @app/tokens (packages/tokens), the single source shared with
+ * web-next. This module keeps the exact exports and shapes the app already uses, so no
+ * screen changes. Add new design values in packages/tokens, never here.
+ */
 
-export const radius = {
-  xs: 4,
-  sm: 6,
-  md: 8,
-  full: 999,
-} as const;
+export const spacing = tokenSpacing;
+export const radius = tokenRadius;
 
 export const typography = {
-  caption: 12,
-  bodySmall: 14,
-  body: 16,
-  titleSmall: 20,
-  title: 24,
-  display: 30,
+  caption: textStyles.caption.fontSize,
+  bodySmall: textStyles.bodySmall.fontSize,
+  body: textStyles.body.fontSize,
+  titleSmall: textStyles.titleSmall.fontSize,
+  title: textStyles.title.fontSize,
+  display: textStyles.display.fontSize,
 } as const;
 
-export const layout = {
-  contentMaxWidth: 960,
-  overlayMaxWidth: 520,
-} as const;
-
-const greenLightColors = {
-  background: '#F5F7FA',
-  surface: '#FFFFFF',
-  surfaceMuted: '#EAF4F1',
-  text: '#172026',
-  textMuted: '#5C6970',
-  primary: '#0F766E',
-  onPrimary: '#FFFFFF',
-  onPrimaryMuted: 'rgba(255, 255, 255, 0.14)',
-  onSecondary: '#FFFFFF',
-  onWarning: '#FFFFFF',
-  onDanger: '#FFFFFF',
-  onSolid: '#FFFFFF',
-  secondary: '#2563EB',
-  accent: '#A21CAF',
-  success: '#15803D',
-  warning: '#B45309',
-  danger: '#DC2626',
-  border: '#D4E1DE',
-  disabled: '#9AA5AB',
-  overlay: 'rgba(15, 23, 42, 0.48)',
-  shadow: '#000000',
-} as const;
-
-const greenDarkColors = {
-  background: '#101514',
-  surface: '#18201E',
-  surfaceMuted: '#21302C',
-  text: '#F5F7F8',
-  textMuted: '#A8B8B4',
-  primary: '#5EEAD4',
-  onPrimary: '#0D2E2B',
-  onPrimaryMuted: 'rgba(13, 46, 43, 0.14)',
-  onSecondary: '#101514',
-  onWarning: '#101514',
-  onDanger: '#101514',
-  onSolid: '#101514',
-  secondary: '#93C5FD',
-  accent: '#F0ABFC',
-  success: '#4ADE80',
-  warning: '#FBBF24',
-  danger: '#F87171',
-  border: '#334540',
-  disabled: '#6F7A80',
-  overlay: 'rgba(0, 0, 0, 0.64)',
-  shadow: '#000000',
-} as const;
-
-const orangeLightColors = {
-  ...greenLightColors,
-  background: '#FAF7F4',
-  surfaceMuted: '#FCEDE3',
-  primary: '#C2410C',
-  secondary: '#0369A1',
-  accent: '#7C3AED',
-  warning: '#C2410C',
-  border: '#E8D9D0',
-} as const;
-
-const orangeDarkColors = {
-  ...greenDarkColors,
-  background: '#171310',
-  surface: '#211A16',
-  surfaceMuted: '#32231A',
-  primary: '#FDBA74',
-  onPrimary: '#431407',
-  onPrimaryMuted: 'rgba(67, 20, 7, 0.14)',
-  secondary: '#7DD3FC',
-  accent: '#C4B5FD',
-  border: '#49372C',
-} as const;
-
-const blueLightColors = {
-  ...greenLightColors,
-  background: '#F4F7FB',
-  surfaceMuted: '#E8F0FA',
-  primary: '#1D4ED8',
-  secondary: '#0F766E',
-  accent: '#C026D3',
-  border: '#D4DEEC',
-} as const;
-
-const blueDarkColors = {
-  ...greenDarkColors,
-  background: '#10141B',
-  surface: '#181E28',
-  surfaceMuted: '#202B3B',
-  primary: '#93C5FD',
-  onPrimary: '#102A56',
-  onPrimaryMuted: 'rgba(16, 42, 86, 0.14)',
-  secondary: '#5EEAD4',
-  accent: '#F0ABFC',
-  border: '#334156',
-} as const;
-
-const monochromeLightColors = {
-  ...greenLightColors,
-  background: '#F5F5F5',
-  surfaceMuted: '#ECECEC',
-  text: '#111111',
-  textMuted: '#5E5E5E',
-  primary: '#171717',
-  secondary: '#525252',
-  accent: '#737373',
-  border: '#D4D4D4',
-  disabled: '#A3A3A3',
-} as const;
-
-const monochromeDarkColors = {
-  ...greenDarkColors,
-  background: '#0A0A0A',
-  surface: '#171717',
-  surfaceMuted: '#262626',
-  text: '#FAFAFA',
-  textMuted: '#B5B5B5',
-  primary: '#FAFAFA',
-  onPrimary: '#111111',
-  onPrimaryMuted: 'rgba(17, 17, 17, 0.14)',
-  secondary: '#D4D4D4',
-  accent: '#A3A3A3',
-  border: '#3F3F3F',
-  disabled: '#737373',
-} as const;
+export const layout = tokenLayout;
 
 export type ThemeMode = 'system' | 'light' | 'dark';
-export type ResolvedThemeMode = Exclude<ThemeMode, 'system'>;
-export type ThemePalette = 'orange' | 'green' | 'blue' | 'monochrome';
-export type AppColors = { [Key in keyof typeof greenLightColors]: string };
+export type ResolvedThemeMode = TokenResolvedThemeMode;
+export type ThemePalette = TokenThemePalette;
+export type AppColors = MobileColors;
 
 export interface AppTheme {
   colors: AppColors;
@@ -169,27 +45,22 @@ export interface AppTheme {
   layout: typeof layout;
 }
 
-function createTheme(colors: AppColors, isDark: boolean): AppTheme {
-  return { colors, isDark, radius, spacing, typography, layout };
+function createTheme(palette: ThemePalette, mode: ResolvedThemeMode): AppTheme {
+  return {
+    colors: createMobileColors(getTheme(palette, mode).colors),
+    isDark: mode === 'dark',
+    radius,
+    spacing,
+    typography,
+    layout,
+  };
 }
 
 export const themeCatalog: Record<ThemePalette, Record<ResolvedThemeMode, AppTheme>> = {
-  orange: {
-    light: createTheme(orangeLightColors, false),
-    dark: createTheme(orangeDarkColors, true),
-  },
-  green: {
-    light: createTheme(greenLightColors, false),
-    dark: createTheme(greenDarkColors, true),
-  },
-  blue: {
-    light: createTheme(blueLightColors, false),
-    dark: createTheme(blueDarkColors, true),
-  },
-  monochrome: {
-    light: createTheme(monochromeLightColors, false),
-    dark: createTheme(monochromeDarkColors, true),
-  },
+  orange: { light: createTheme('orange', 'light'), dark: createTheme('orange', 'dark') },
+  green: { light: createTheme('green', 'light'), dark: createTheme('green', 'dark') },
+  blue: { light: createTheme('blue', 'light'), dark: createTheme('blue', 'dark') },
+  monochrome: { light: createTheme('monochrome', 'light'), dark: createTheme('monochrome', 'dark') },
 };
 
 // Kept for callers that only need the default light/dark pair.

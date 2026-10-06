@@ -25,7 +25,7 @@ executable plan.
 ## 4. Requested decisions (owner)
 
 - The ERP project is the base; the School becomes a module (D-001).
-- Rename from hr-system to erp-system: folder name and remaining old names (D-008).
+- Rename from hr-system to ERPSYSTEM: folder name (done) and remaining old names (D-008).
 - Move the School template files into the ERP repository (D-007).
 - Web: MUI (D-002). Mobile: native components, shared styles (D-003, D-004).
 - A single customer is one tenant and logs in without noticing it (D-005).

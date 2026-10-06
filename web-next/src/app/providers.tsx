@@ -47,7 +47,7 @@ export function RuntimePreferencesClientSync({
 }: {
   preferences: RuntimePreferences;
 }) {
-  const { setMode } = useThemeSettingsContext();
+  const { setMode, setPalette } = useThemeSettingsContext();
 
   useEffect(() => {
     let cancelled = false;
@@ -61,6 +61,7 @@ export function RuntimePreferencesClientSync({
     document.documentElement.dir = effectivePreferences.direction;
     document.documentElement.dataset.theme = effectivePreferences.themeMode;
     setMode(effectivePreferences.themeMode);
+    setPalette(effectivePreferences.palette);
 
     const languageChange = i18n.resolvedLanguage === effectivePreferences.language
       ? Promise.resolve()
@@ -80,7 +81,7 @@ export function RuntimePreferencesClientSync({
       cancelled = true;
       if (readyFrame) window.cancelAnimationFrame(readyFrame);
     };
-  }, [preferences, setMode]);
+  }, [preferences, setMode, setPalette]);
 
   return null;
 }

@@ -24,6 +24,8 @@
 The master plan describes the approved target. Claims about current behavior must remain
 traceable to `EVIDENCE.md`.
 
+> **On hold (D-015 in `erp-platform-template`, 2026-10-06):** starts only after the platform template and ERP are ready, and after the School application's problems are reviewed with the owner.
+
 ## 1. Executive outcome
 
 ### Business problem

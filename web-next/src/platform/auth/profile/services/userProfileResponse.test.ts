@@ -17,4 +17,8 @@ describe("user profile response parsing", () => {
     });
     expect(() => parseUserPhotoResponse({ profilePicture: 123 })).toThrow();
   });
+
+  it("treats a missing photo (null fields) as no photo", () => {
+    expect(parseUserPhotoResponse({ profilePicture: null, contentType: null })).toEqual({});
+  });
 });

@@ -12,7 +12,9 @@ import PersonIcon from "@mui/icons-material/Person2";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useTheme } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import type { ThemePalette } from "@app/tokens";
 import { useSession } from "@/lib/auth/SessionContext";
+import ThemePaletteSelector from "./ThemePaletteSelector";
 
 const SettingsMenu = ({
   anchorEl,
@@ -20,12 +22,16 @@ const SettingsMenu = ({
   onClose,
   navigateToProfile,
   handleLogout,
+  palette,
+  onPaletteChange,
 }: {
   anchorEl: HTMLElement | null;
   open: boolean;
   onClose: () => void;
   navigateToProfile: () => void;
   handleLogout: () => void;
+  palette: ThemePalette;
+  onPaletteChange: (palette: ThemePalette) => void;
 }) => {
   const theme = useTheme();
   const { t } = useTranslation();
@@ -116,6 +122,8 @@ const SettingsMenu = ({
           </Typography>
         </Box>
       </Box>
+
+      <ThemePaletteSelector value={palette} onChange={onPaletteChange} />
 
       <Divider sx={{ my: 0.75 }} />
 

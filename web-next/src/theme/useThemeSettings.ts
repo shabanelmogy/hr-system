@@ -1,5 +1,6 @@
 import { createTheme, Theme } from "@mui/material/styles";
 import * as React from "react";
+import { defaultPalette, type ThemePalette } from "@app/tokens";
 import i18n from "../locales/i18n";
 import { getDesignTokens } from "./theme";
 import {
@@ -13,6 +14,8 @@ export interface ThemeSettings {
   mode: ThemeMode;
   setMode: React.Dispatch<React.SetStateAction<ThemeMode>>;
   direction: ThemeDirection;
+  palette: ThemePalette;
+  setPalette: React.Dispatch<React.SetStateAction<ThemePalette>>;
   theme: Theme;
 }
 
@@ -22,6 +25,7 @@ export const useThemeSettings = (): ThemeSettings => {
   const [mode, setMode] = React.useState<ThemeMode>(initialMode);
   const [direction, setDirection] =
     React.useState<ThemeDirection>(initialDirection);
+  const [palette, setPalette] = React.useState<ThemePalette>(defaultPalette);
 
   React.useEffect(() => {
     const syncDirection = (language: string | undefined) => {
@@ -43,14 +47,16 @@ export const useThemeSettings = (): ThemeSettings => {
   }, []);
 
   const theme = React.useMemo(
-    () => createTheme(getDesignTokens(mode, direction)),
-    [mode, direction]
+    () => createTheme(getDesignTokens(mode, direction, palette)),
+    [mode, direction, palette]
   );
 
   return {
     mode,
     setMode,
     direction,
+    palette,
+    setPalette,
     theme,
   };
 };

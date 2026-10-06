@@ -12,9 +12,10 @@ const userInfoSchema = z.object({
   profilePicture: z.string().nullable().optional(),
 });
 
+// The API returns `{ profilePicture: null, contentType: null }` when the user has no photo.
 const userPhotoSchema = z.object({
-  profilePicture: z.string().optional(),
-  contentType: z.string().optional(),
+  profilePicture: z.string().nullish().transform((value) => value ?? undefined),
+  contentType: z.string().nullish().transform((value) => value ?? undefined),
 });
 
 export function parseUserInfoResponse(value: unknown): UserInfo {
@@ -22,5 +23,9 @@ export function parseUserInfoResponse(value: unknown): UserInfo {
 }
 
 export function parseUserPhotoResponse(value: unknown): UserPhoto {
-  return userPhotoSchema.parse(value);
+  const { profilePicture, contentType } = userPhotoSchema.parse(value);
+  return {
+    ...(profilePicture !== undefined && { profilePicture }),
+    ...(contentType !== undefined && { contentType }),
+  };
 }

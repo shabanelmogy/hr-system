@@ -377,7 +377,14 @@
     "workforceTraceDescription": "Follow planning lineage and reconcile commitments.",
     "staffingRequests": "Staffing Requests",
     "envelopeAmendments": "Envelope Amendments",
-    "workforceTrace": "Planning Trace & Commitment"
+    "workforceTrace": "Planning Trace & Commitment",
+    "colorPalette": "Color palette",
+    "palettes": {
+      "green": "Green",
+      "orange": "Orange",
+      "blue": "Blue",
+      "monochrome": "Black & white"
+    }
   },
   "actions": {
     "buttons": "Actions",

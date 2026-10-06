@@ -63,11 +63,11 @@ include record scope.
 
 | Step | Work | Exit check |
 | --- | --- | --- |
-| S0.1 | Owner renames folder `G:\test\hr-system` → `G:\test\erp-system` (outside Claude's permissions); re-grant connected folders. | New path opens; `git status` clean. |
+| S0.1 | Done: repository folder renamed to `ERPSYSTEM` by the owner; connected folder re-granted. | Done 2026-09-28. |
 | S0.2 | Confirm no untracked source, then delete `api/HrManagementSystem.*` (6 folders). | Listing; solution builds. |
 | S0.3 | Remove `api/CrystalReportGeneratorApi.rar`; decide the generator folder's home with DEC-013. | Archive absent; `.gitignore` blocks `*.rar`. |
 | S0.4 | Remove `api/packages/`, `api/.codex-build/`, root `node_modules/`. | Listing. |
-| S0.5 | Rename `CorrelationItemKey` to `ErpSystem.CorrelationId` and the development JWT key literal. | Tests pass. |
+| S0.5 | Prepared 2026-10-06: `CorrelationItemKey` → `ErpSystem.CorrelationId`, development JWT key literal → `ErpSystem-…`, example `Issuer`/`Audience` → `ErpSystem`/`ErpSystem.Clients` (example file only; live settings follow DEC-012). | `git grep HrManagementSystem` returns nothing in source/config; tests pass. |
 | S0.6 | Update `README.md` (remove `web/` row) and move or delete `HR-CONNECTION-ONLY-PROMPT.md`. | Docs CI green. |
 | S0.7 | Confirm AttendanceConnector status (E-020); add to the solution or remove. | Recorded decision. |
 | S0.8 | Verify D-005: a user with one tenant and one company logs in without a selection step on web and mobile. | Test or recorded manual check. |
@@ -96,6 +96,8 @@ Scope and inventory: `DOCUMENTATION_AND_TEMPLATE_REVIEW.md` (D-013, D-014).
 | S2.5 | DOC-6, DOC-7, DOC-9, DOC-10 per DEC-017 / DEC-018. | `Generate-Documentation.ps1 -Check` green. |
 
 ### S3 — Web theme from tokens
+
+Change set for S3.1, S3.3, S3.5 and S4.1–S4.2 applied and verified 2026-10-06: `S3-S4-UNIFIED-THEME.md`. S3.4 palette preference done; tenant branding open.
 
 | Step | Work | Exit check |
 | --- | --- | --- |
@@ -131,6 +133,8 @@ real source reference and an explicit decision for the other platform.
 
 ### S7 — Relationship-based record scope
 
+Design draft (2026-10-06): `S7-RECORD-SCOPE-DESIGN.md`.
+
 | Step | Work | Exit check |
 | --- | --- | --- |
 | S7.1 | Define a record-scope policy abstraction: permission + tenant + company + module-supplied relationship predicate, applied as a query filter before retrieval. | Design review (G2). |
@@ -138,6 +142,8 @@ real source reference and an explicit decision for the other platform.
 | S7.3 | Document in `PERMISSION_MODEL.md` and the planning skill `access-design`. | Docs CI green. |
 
 ### S5 — New-product workspace generator
+
+Design draft (2026-10-06): `S5-WORKSPACE-GENERATOR-DESIGN.md`.
 
 | Step | Work | Exit check |
 | --- | --- | --- |
@@ -163,7 +169,7 @@ S0 → S1 → (S2, S3, S4 in parallel) → S6 → S7 → S5 → S8. `education-m
 | Gate | Status | Notes |
 | --- | --- | --- |
 | G0 Scope and ownership | Pass (draft) | Owner approved scope and deliverable on 2026-09-28. |
-| G1 Business readiness | Partial | DEC-011 … DEC-018 open; none blocks S0–S2. |
+| G1 Business readiness | Partial | DEC-011 … DEC-020 open; none blocks S0–S2. |
 | G2 Architecture readiness | Not started | S7 design and DEC-014 required. |
 | G3 Product/client readiness | Not started | S3/S4 visual baselines and pattern decisions. |
 | G4 Delivery readiness | Not started | Per-slice feature contracts. |

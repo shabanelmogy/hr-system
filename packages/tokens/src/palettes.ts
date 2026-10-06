@@ -78,6 +78,9 @@ interface MobilePaletteSource {
   disabled: string;
   overlay: string;
   shadow: string;
+  /** Status "info" color; defaults to `secondary` when a palette does not set it. */
+  info?: string;
+  onInfo?: string;
 }
 
 const greenLight: MobilePaletteSource = {
@@ -126,12 +129,36 @@ const greenDark: MobilePaletteSource = {
   shadow: '#000000',
 };
 
+/**
+ * The green palette uses an olive second brand color so the whole identity stays in
+ * the green family (owner decision 2026-10-06). Info stays blue so it never reads as
+ * success. Other palettes spread the base objects above, not these.
+ */
+const greenBrandLight: MobilePaletteSource = {
+  ...greenLight,
+  secondary: '#4D7C0F',
+  onSecondary: '#FFFFFF',
+  info: '#2563EB',
+  onInfo: '#FFFFFF',
+};
+
+const greenBrandDark: MobilePaletteSource = {
+  ...greenDark,
+  secondary: '#A3E635',
+  onSecondary: '#101514',
+  info: '#93C5FD',
+  onInfo: '#101514',
+};
+
 const orangeLight: MobilePaletteSource = {
   ...greenLight,
   background: '#FAF7F4',
   surfaceMuted: '#FCEDE3',
   primary: '#C2410C',
-  secondary: '#0369A1',
+  // Warm coffee brown instead of blue (owner decision 2026-10-06); info stays blue.
+  secondary: '#78350F',
+  info: '#0369A1',
+  onInfo: '#FFFFFF',
   accent: '#7C3AED',
   warning: '#B45309',
   border: '#E8D9D0',
@@ -144,7 +171,9 @@ const orangeDark: MobilePaletteSource = {
   surfaceMuted: '#32231A',
   primary: '#FDBA74',
   onPrimary: '#431407',
-  secondary: '#7DD3FC',
+  secondary: '#D6BFA8',
+  info: '#7DD3FC',
+  onInfo: '#101514',
   accent: '#C4B5FD',
   border: '#49372C',
 };
@@ -223,8 +252,8 @@ function toSemantic(source: MobilePaletteSource): SemanticColors {
     warningForeground: source.onWarning,
     destructive: source.danger,
     destructiveForeground: source.onDanger,
-    info: source.secondary,
-    infoForeground: source.onSecondary,
+    info: source.info ?? source.secondary,
+    infoForeground: source.onInfo ?? source.onSecondary,
     border: source.border,
     input: source.border,
     ring: source.primary,
@@ -235,7 +264,7 @@ function toSemantic(source: MobilePaletteSource): SemanticColors {
 }
 
 export const palettes: Record<ThemePalette, Record<ResolvedThemeMode, SemanticColors>> = {
-  green: { light: toSemantic(greenLight), dark: toSemantic(greenDark) },
+  green: { light: toSemantic(greenBrandLight), dark: toSemantic(greenBrandDark) },
   orange: { light: toSemantic(orangeLight), dark: toSemantic(orangeDark) },
   blue: { light: toSemantic(blueLight), dark: toSemantic(blueDark) },
   monochrome: { light: toSemantic(monochromeLight), dark: toSemantic(monochromeDark) },

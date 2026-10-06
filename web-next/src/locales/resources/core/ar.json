@@ -381,7 +381,14 @@
     "workforceTraceDescription": "تتبع مسار التخطيط ومطابقة الالتزامات.",
     "staffingRequests": "طلبات التوظيف",
     "envelopeAmendments": "تعديلات المظاريف",
-    "workforceTrace": "مسار التخطيط والالتزام"
+    "workforceTrace": "مسار التخطيط والالتزام",
+    "colorPalette": "لوحة الألوان",
+    "palettes": {
+      "green": "أخضر",
+      "orange": "برتقالي",
+      "blue": "أزرق",
+      "monochrome": "أبيض وأسود"
+    }
   },
   "actions": {
     "buttons": "العمليات",

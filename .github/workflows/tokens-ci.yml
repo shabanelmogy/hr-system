@@ -1,0 +1,42 @@
+name: Design Tokens CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "packages/tokens/**"
+      - ".github/workflows/tokens-ci.yml"
+  pull_request:
+    paths:
+      - "packages/tokens/**"
+      - ".github/workflows/tokens-ci.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  tokens:
+    name: Verify @app/tokens
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: packages/tokens
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22.18"
+
+      - name: Install dev dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Contrast, type check, and committed build output
+        run: npm run check
+
+      - name: Generated CSS and JSON are current
+        run: |
+          node scripts/build.mjs
+          git diff --exit-code -- dist/tokens.css dist/theme.css dist/tokens.json

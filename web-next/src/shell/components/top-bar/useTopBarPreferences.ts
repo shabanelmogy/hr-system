@@ -1,12 +1,14 @@
 import cookies from "js-cookie";
 import { useTheme } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import type { ThemePalette } from "@app/tokens";
+import { THEME_PALETTE_COOKIE } from "@/theme/themePalette";
 import { useThemeSettingsContext } from "@/theme/ThemeShell";
 
 export function useTopBarPreferences() {
   const theme = useTheme();
   const { t, i18n } = useTranslation();
-  const { direction, setMode } = useThemeSettingsContext();
+  const { direction, setMode, palette, setPalette } = useThemeSettingsContext();
 
   const changeLanguage = (value: string) => {
     const language = value === "ltr" ? "en" : "ar";
@@ -21,11 +23,18 @@ export function useTopBarPreferences() {
     setMode(newMode);
   };
 
+  const changePalette = (nextPalette: ThemePalette) => {
+    cookies.set(THEME_PALETTE_COOKIE, nextPalette, { expires: 365, sameSite: "lax" });
+    setPalette(nextPalette);
+  };
+
   return {
     theme,
     t,
     direction,
     changeLanguage,
     toggleTheme,
+    palette,
+    changePalette,
   };
 }

@@ -56,11 +56,11 @@ fixed before a second product starts from this base; **Low** is cleanup.
 | R-1 | Medium | Six `api/HrManagementSystem.*` folders remain on disk. They are not in `ErpSystem.sln` and contain only build output (`bin`, `obj`, `Logs`, `.csproj.user`). | E-014 | S0 |
 | R-2 | Medium | `api/CrystalReportGeneratorApi/` and `CrystalReportGeneratorApi.rar` (14 MB) are not in the solution. Archives do not belong in source control. | E-015 | S0 |
 | R-3 | Low | `api/packages/` (legacy NuGet folder), root `node_modules/` without a root `package.json`, `api/.codex-build/`. | E-016 | S0 |
-| R-4 | Medium | Code and configuration still carry the old name: correlation key `HrManagementSystem.CorrelationId`, the development JWT key literal, and `Issuer`/`Audience` `HrManagementSystem*` in `appsettings.example.json`. Renaming issuer/audience invalidates live tokens, so it needs a decision. | E-017 | S0, DEC-012 |
+| R-4 | Medium (fix prepared 2026-10-06) | Code and configuration still carry the old name: correlation key `HrManagementSystem.CorrelationId`, the development JWT key literal, and `Issuer`/`Audience` `HrManagementSystem*` in `appsettings.example.json`. Renaming issuer/audience invalidates live tokens, so it needs a decision. | E-017 | S0, DEC-012 |
 | R-5 | Low | `README.md` lists a legacy `web/` application that no longer exists at the root. | E-018 | S0 |
 | R-6 | Low | `HR-CONNECTION-ONLY-PROMPT.md`, `ERP_FRONTEND_MASTER_PLAN.md`, and `ACCOUNTING_MODULE_PHASES_AR.md` sit at the root while `AGENTS.md` centralizes docs under `documentation/`. The registry deliberately registers the last two in place; the prompt file has no owner. | E-019 | S0 |
 | R-7 | Unknown | `api/ErpSystem.AttendanceConnector/` is not in `ErpSystem.sln`. Whether it is built by a separate pipeline is not evident. | E-020 | S0 |
-| R-8 | — | The folder rename `G:\test\hr-system` → `erp-system` must be done by the owner (outside this session's permissions). Connected folders must be re-granted after the rename. | — | S0 |
+| R-8 | Done | The repository folder was renamed to `ERPSYSTEM` by the owner on 2026-09-28. | — | S0 |
 
 ### 3.2 API
 

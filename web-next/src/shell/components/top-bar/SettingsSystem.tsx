@@ -10,6 +10,7 @@ import { useSession } from "@/lib/auth/SessionContext";
 
 // Import sub-components
 import SettingsMenu from "./SettingsMenu";
+import { useTopBarPreferences } from "./useTopBarPreferences";
 
 const SettingsSystem = () => {
   const [settingsAnchorEl, setSettingsAnchorEl] = useState<HTMLElement | null>(null);
@@ -18,6 +19,7 @@ const SettingsSystem = () => {
   const { t } = useTranslation();
   const { requestDiscard } = useUnsavedChanges();
   const { logout } = useSession();
+  const { palette, changePalette } = useTopBarPreferences();
   const settingsOpen = Boolean(settingsAnchorEl);
 
   const handleSettingsMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -80,6 +82,8 @@ const SettingsSystem = () => {
         onClose={handleSettingsMenuClose}
         navigateToProfile={navigateToProfile}
         handleLogout={handleLogout}
+        palette={palette}
+        onPaletteChange={changePalette}
       />
     </>
   );
