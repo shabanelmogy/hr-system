@@ -12,7 +12,7 @@ import {
 } from '@/src/shared/components';
 import {
   getPermissionActionLabel,
-  getPermissionModuleLabel,
+  getPermissionScreenLabel,
   type PermissionGroup,
 } from '../permission-groups';
 
@@ -38,7 +38,7 @@ export function PermissionModuleCard({
   const { theme } = useAppTheme();
   const selectedCount = group.claims.filter(({ claim }) => claim.isSelected).length;
   const allSelected = selectedCount === group.claims.length && group.claims.length > 0;
-  const moduleLabel = getPermissionModuleLabel(group.module, t);
+  const screenLabel = getPermissionScreenLabel(group.screen, t);
   const selectionLabel = t('roleManagement.selectedOfTotal', {
     selected: selectedCount,
     total: group.claims.length,
@@ -60,7 +60,7 @@ export function PermissionModuleCard({
             expanded
               ? 'roleManagement.collapseScreenPermissions'
               : 'roleManagement.expandScreenPermissions',
-            { module: moduleLabel },
+            { module: screenLabel },
           )}
           accessibilityHint={t('roleManagement.screenPermissionsHint')}
           accessibilityRole="button"
@@ -80,7 +80,7 @@ export function PermissionModuleCard({
           </View>
           <View style={styles.moduleText}>
             <AppText numberOfLines={1} variant="label" weight="800">
-              {moduleLabel}
+              {screenLabel}
             </AppText>
             <AppText color={selectedCount ? 'success' : 'muted'} variant="caption" weight="700">
               {selectionLabel}

@@ -1,5 +1,5 @@
 import { Box, IconButton, Tooltip, Typography, alpha } from "@mui/material";
-import { useLayoutEffect, useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState, type ReactNode } from "react";
 
 import Diversity3Icon from "@mui/icons-material/Diversity3";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
@@ -21,7 +21,7 @@ import ThemeToggler from "./ThemeToggler";
 import { AppBar, StyledToolbar } from "./TopBarStyles";
 import UserWelcome from "./UserWelcome";
 import { useTopBarPreferences } from "./useTopBarPreferences";
-import { CompanyContextSwitcher } from "@/platform/tenant-access";
+import { CompanyContextSwitcher, TenantNameBadge } from "@/platform/tenant-access";
 import { ModuleContextSwitcher } from "@/platform/modules";
 import { useUnsavedChanges } from "@/shared/contexts/UnsavedChangesContext";
 import { useAuthorizedNavigation } from "@/shell/navigation/useAuthorizedNavigation";
@@ -52,11 +52,15 @@ const TopBar = ({
   handleDrawerToggle,
   onHeightChange,
   showSidebarToggle = true,
+  contextActions,
+  compactContextActions,
 }: {
   open: boolean;
   handleDrawerToggle: () => void;
   onHeightChange: (height: number) => void;
   showSidebarToggle?: boolean;
+  contextActions?: ReactNode;
+  compactContextActions?: ReactNode;
 }) => {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState<HTMLElement | null>(null);
   const toolbarRef = useRef<HTMLDivElement | null>(null);
@@ -206,13 +210,44 @@ const TopBar = ({
                 flex: "0 1 auto",
                 maxWidth: "min(560px, 45%)",
                 minWidth: 0,
-                overflow: "hidden",
+                overflow: "visible",
                 whiteSpace: "nowrap",
               }}
             >
-              <ModuleContextSwitcher />
-              <UserWelcome />
-              <CompanyContextSwitcher />
+              <ModuleContextSwitcher iconOnly />
+              <Box
+                aria-label={t("auth.currentContext")}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  flex: "1 1 auto",
+                  minWidth: 0,
+                  overflow: "hidden",
+                  p: 0.25,
+                  borderRadius: 2,
+                  bgcolor: alpha(theme.palette.background.paper, theme.palette.mode === "dark" ? 0.52 : 0.82),
+                  border: `1px solid ${alpha(theme.palette.common.white, theme.palette.mode === "dark" ? 0.1 : 0.28)}`,
+                  boxShadow: `0 2px 8px ${alpha(theme.palette.common.black, 0.08)}`,
+                  "& .ContextBadge-root": {
+                    bgcolor: "transparent",
+                    border: 0,
+                    borderRadius: 1.5,
+                  },
+                  "& .ContextBadge-root:hover": {
+                    bgcolor: alpha(theme.palette.primary.main, 0.09),
+                  },
+                  "& .ContextBadge-root + .ContextBadge-root": {
+                    borderInlineStart: `1px solid ${theme.palette.divider}`,
+                    borderStartStartRadius: 0,
+                    borderEndStartRadius: 0,
+                  },
+                }}
+              >
+                <TenantNameBadge />
+                <CompanyContextSwitcher />
+                {contextActions}
+              </Box>
+              <UserWelcome isMobile />
             </Box>
           )}
 
@@ -253,10 +288,39 @@ const TopBar = ({
               }}
             >
               <ModuleContextSwitcher iconOnly />
+              <Box
+                aria-label={t("auth.currentContext")}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 0.25,
+                  p: 0.25,
+                  borderRadius: 2,
+                  bgcolor: alpha(theme.palette.common.white, 0.1),
+                  border: `1px solid ${alpha(theme.palette.common.white, 0.18)}`,
+                  "& .ContextBadge-root": {
+                    bgcolor: "transparent",
+                    border: 0,
+                    color: "inherit",
+                  },
+                  "& .ContextBadge-icon": {
+                    bgcolor: alpha(theme.palette.background.paper, 0.92),
+                  },
+                  "& .ContextBadge-expand": {
+                    color: "inherit",
+                  },
+                  "& .ContextBadge-root:hover": {
+                    bgcolor: alpha(theme.palette.common.white, 0.12),
+                  },
+                }}
+              >
+                <TenantNameBadge compact iconOnly />
+                <CompanyContextSwitcher compact iconOnly />
+                {compactContextActions}
+              </Box>
               <Box sx={{ display: "none", "@container app-toolbar (min-width: 760px)": { display: "flex" }, flexShrink: 0 }}>
                 <UserWelcome isMobile={true} />
               </Box>
-              <CompanyContextSwitcher compact />
             </Box>
           )}
 

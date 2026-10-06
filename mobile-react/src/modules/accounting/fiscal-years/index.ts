@@ -1,3 +1,4 @@
 export { FiscalYearsScreen } from './presentation/screens/FiscalYearsScreen';
-export { useFiscalYear, useFiscalYearLookup } from './presentation/queries/use-fiscal-years';
-export type { FiscalPeriod, FiscalYearDetail, FiscalYearLookup } from './domain/models/fiscal-year';
+export { FiscalYearContextSwitcher } from './presentation/components/FiscalYearContextSwitcher';
+export { useFiscalYear, useFiscalYearContext, useFiscalYearLookup } from './presentation/queries/use-fiscal-years';
+export type { FiscalPeriod, FiscalYearContext, FiscalYearDetail, FiscalYearLookup } from './domain/models/fiscal-year';

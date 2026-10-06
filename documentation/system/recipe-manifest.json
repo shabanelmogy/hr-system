@@ -282,6 +282,66 @@
       "id": "ledger-setup-coa-hierarchy-mobile",
       "path": "../mobile-react/ledger-setup-coa-hierarchy-mobile-reference.md",
       "title": "Accounting Chart of Accounts and Hierarchy Expo implementation contract"
+    },
+    {
+      "id": "managed-crystal-contract-registry-master",
+      "path": "../project/MANAGED_CRYSTAL_CONTRACT_REGISTRY_FEATURE_FULL_REVIEW.md",
+      "title": "Managed Crystal Contract Registry cross-platform master review"
+    },
+    {
+      "id": "managed-crystal-contract-registry-api",
+      "path": "../api/ManagedCrystalContractRegistry_API_Implementation_Profile.md",
+      "title": "Managed Crystal Contract Registry API implementation profile"
+    },
+    {
+      "id": "managed-crystal-contract-registry-web",
+      "path": "../web-next/features/managed-crystal-contract-registry-frontend-reference.md",
+      "title": "Managed Crystal Contract Registry Next.js implementation profile"
+    },
+    {
+      "id": "managed-crystal-contract-registry-mobile",
+      "path": "../mobile-react/managed-crystal-contract-registry-mobile-reference.md",
+      "title": "Managed Crystal Contract Registry Expo implementation profile"
+    },
+    {
+      "id": "managed-crystal-template-validation-master",
+      "path": "../project/MANAGED_CRYSTAL_TEMPLATE_VALIDATION_FEATURE_FULL_REVIEW.md",
+      "title": "Managed Crystal Template Validation cross-platform master review"
+    },
+    {
+      "id": "managed-crystal-template-validation-api",
+      "path": "../api/ManagedCrystalTemplateValidation_API_Implementation_Profile.md",
+      "title": "Managed Crystal Template Validation API implementation profile"
+    },
+    {
+      "id": "managed-crystal-template-validation-web",
+      "path": "../web-next/features/managed-crystal-template-validation-frontend-reference.md",
+      "title": "Managed Crystal Template Validation Next.js implementation profile"
+    },
+    {
+      "id": "managed-crystal-template-validation-mobile",
+      "path": "../mobile-react/managed-crystal-template-validation-mobile-reference.md",
+      "title": "Managed Crystal Template Validation Expo implementation profile"
+    },
+    {
+      "id": "managed-crystal-manager-experience-master",
+      "path": "../project/MANAGED_CRYSTAL_MANAGER_EXPERIENCE_FEATURE_FULL_REVIEW.md",
+      "title": "Managed Crystal Report Manager Experience cross-platform master review"
+    },
+    {
+      "id": "managed-crystal-manager-experience-api",
+      "path": "../api/ManagedCrystalManagerExperience_API_Implementation_Profile.md",
+      "title": "Managed Crystal Report Manager Experience API implementation profile"
+    },
+    {
+      "id": "managed-crystal-manager-experience-web",
+      "path": "../web-next/features/managed-crystal-manager-experience-frontend-reference.md",
+      "title": "Managed Crystal Report Manager Experience Next.js implementation profile"
+    },
+    {
+      "id": "managed-crystal-manager-experience-mobile",
+      "path": "../mobile-react/managed-crystal-manager-experience-mobile-reference.md",
+      "title": "Managed Crystal Report Manager Experience Expo implementation profile"
     }
   ],
   "requiredFileManifests": [
@@ -298,7 +358,10 @@
     "features/tenant-module-entitlements/required-files.json",
     "features/accounting-ledger-setup/required-files.json",
     "features/ledger-setup-currency/required-files.json",
-    "features/ledger-setup-coa-hierarchy/required-files.json"
+    "features/ledger-setup-coa-hierarchy/required-files.json",
+    "features/managed-crystal-contract-registry/required-files.json",
+    "features/managed-crystal-template-validation/required-files.json",
+    "features/managed-crystal-manager-experience/required-files.json"
   ],
   "recipes": [
     {
@@ -3310,6 +3373,273 @@
         { "book": "ledger-setup-coa-hierarchy-master", "sections": [8, 9, 10] },
         { "book": "ledger-setup-coa-hierarchy-web", "sections": [12, 13, 14] },
         { "book": "ledger-setup-coa-hierarchy-mobile", "sections": [14, 15] }
+      ]
+    },
+    {
+      "id": "managed-crystal-contract-registry-phase-00-implementation-preflight",
+      "title": "Managed Crystal Contract Registry Phase 00 - Implementation Preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "generated/managed-crystal-contract-registry/PHASE-00-implementation-preflight.md",
+      "sources": [
+        { "book": "managed-crystal-contract-registry-master", "sections": [1, 2, 5, 8, 9] },
+        { "book": "managed-crystal-contract-registry-api", "sections": [1, 10, 11] },
+        { "book": "managed-crystal-contract-registry-web", "sections": [1, 2, 12, 13] },
+        { "book": "managed-crystal-contract-registry-mobile", "sections": [1, 14, 15] }
+      ]
+    },
+    {
+      "id": "managed-crystal-contract-registry-phase-01-domain-api",
+      "title": "Managed Crystal Contract Registry Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "generated/managed-crystal-contract-registry/PHASE-01-domain-api.md",
+      "sources": [
+        { "book": "managed-crystal-contract-registry-master", "sections": [3, 4, 6] },
+        { "book": "managed-crystal-contract-registry-api", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }
+      ]
+    },
+    {
+      "id": "managed-crystal-contract-registry-phase-02-web-client",
+      "title": "Managed Crystal Contract Registry Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "generated/managed-crystal-contract-registry/PHASE-02-web-client.md",
+      "sources": [
+        { "book": "managed-crystal-contract-registry-master", "sections": [3, 4, 6, 7] },
+        { "book": "managed-crystal-contract-registry-web", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14] }
+      ]
+    },
+    {
+      "id": "managed-crystal-contract-registry-phase-03-mobile-client",
+      "title": "Managed Crystal Contract Registry Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "generated/managed-crystal-contract-registry/PHASE-03-mobile-client.md",
+      "sources": [
+        { "book": "managed-crystal-contract-registry-master", "sections": [3, 4, 6, 7] },
+        { "book": "managed-crystal-contract-registry-mobile", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15] }
+      ]
+    },
+    {
+      "id": "managed-crystal-contract-registry-phase-04-domain-actions",
+      "title": "Managed Crystal Contract Registry Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "generated/managed-crystal-contract-registry/PHASE-04-domain-actions.md",
+      "sources": [
+        { "book": "managed-crystal-contract-registry-master", "sections": [3, 4, 6, 7, 8] },
+        { "book": "managed-crystal-contract-registry-api", "sections": [6, 7, 8] },
+        { "book": "managed-crystal-contract-registry-web", "sections": [6, 7, 8, 9] },
+        { "book": "managed-crystal-contract-registry-mobile", "sections": [9, 10, 11] }
+      ]
+    },
+    {
+      "id": "managed-crystal-contract-registry-phase-05-integration-runtime",
+      "title": "Managed Crystal Contract Registry Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "generated/managed-crystal-contract-registry/PHASE-05-integration-runtime.md",
+      "sources": [
+        { "book": "managed-crystal-contract-registry-master", "sections": [4, 5, 6, 7, 9] },
+        { "book": "managed-crystal-contract-registry-api", "sections": [8, 9, 10] },
+        { "book": "managed-crystal-contract-registry-web", "sections": [8, 10, 13] },
+        { "book": "managed-crystal-contract-registry-mobile", "sections": [2, 11, 12, 15] }
+      ]
+    },
+    {
+      "id": "managed-crystal-contract-registry-phase-06-verification-acceptance",
+      "title": "Managed Crystal Contract Registry Phase 06 - Verification and Acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "generated/managed-crystal-contract-registry/PHASE-06-verification-acceptance.md",
+      "sources": [
+        { "book": "managed-crystal-contract-registry-master", "sections": [8, 9, 10] },
+        { "book": "managed-crystal-contract-registry-api", "sections": [10, 11] },
+        { "book": "managed-crystal-contract-registry-web", "sections": [12, 13, 14] },
+        { "book": "managed-crystal-contract-registry-mobile", "sections": [14, 15] }
+      ]
+    },
+    {
+      "id": "managed-crystal-contract-registry-phase-07-customer-education-closure",
+      "title": "Managed Crystal Contract Registry Phase 07 - Customer Education and Closure",
+      "template": "templates/PHASE-07-customer-education-closure.template.md",
+      "output": "generated/managed-crystal-contract-registry/PHASE-07-customer-education-closure.md",
+      "sources": [
+        { "book": "managed-crystal-contract-registry-master", "sections": [8, 9, 10] },
+        { "book": "managed-crystal-contract-registry-web", "sections": [12, 13, 14] },
+        { "book": "managed-crystal-contract-registry-mobile", "sections": [14, 15] }
+      ]
+    },
+    {
+      "id": "managed-crystal-template-validation-phase-00-implementation-preflight",
+      "title": "Managed Crystal Template Validation Phase 00 - Implementation Preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "generated/managed-crystal-template-validation/PHASE-00-implementation-preflight.md",
+      "sources": [
+        { "book": "managed-crystal-template-validation-master", "sections": [1, 2, 5, 8, 9] },
+        { "book": "managed-crystal-template-validation-api", "sections": [1, 10, 11] },
+        { "book": "managed-crystal-template-validation-web", "sections": [1, 2, 12, 13] },
+        { "book": "managed-crystal-template-validation-mobile", "sections": [1, 14, 15] }
+      ]
+    },
+    {
+      "id": "managed-crystal-template-validation-phase-01-domain-api",
+      "title": "Managed Crystal Template Validation Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "generated/managed-crystal-template-validation/PHASE-01-domain-api.md",
+      "sources": [
+        { "book": "managed-crystal-template-validation-master", "sections": [3, 4, 6] },
+        { "book": "managed-crystal-template-validation-api", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }
+      ]
+    },
+    {
+      "id": "managed-crystal-template-validation-phase-02-web-client",
+      "title": "Managed Crystal Template Validation Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "generated/managed-crystal-template-validation/PHASE-02-web-client.md",
+      "sources": [
+        { "book": "managed-crystal-template-validation-master", "sections": [3, 4, 6, 7] },
+        { "book": "managed-crystal-template-validation-web", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14] }
+      ]
+    },
+    {
+      "id": "managed-crystal-template-validation-phase-03-mobile-client",
+      "title": "Managed Crystal Template Validation Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "generated/managed-crystal-template-validation/PHASE-03-mobile-client.md",
+      "sources": [
+        { "book": "managed-crystal-template-validation-master", "sections": [3, 4, 6, 7] },
+        { "book": "managed-crystal-template-validation-mobile", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15] }
+      ]
+    },
+    {
+      "id": "managed-crystal-template-validation-phase-04-domain-actions",
+      "title": "Managed Crystal Template Validation Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "generated/managed-crystal-template-validation/PHASE-04-domain-actions.md",
+      "sources": [
+        { "book": "managed-crystal-template-validation-master", "sections": [3, 4, 6, 7, 8] },
+        { "book": "managed-crystal-template-validation-api", "sections": [6, 7, 8] },
+        { "book": "managed-crystal-template-validation-web", "sections": [6, 7, 8, 9] },
+        { "book": "managed-crystal-template-validation-mobile", "sections": [9, 10, 11] }
+      ]
+    },
+    {
+      "id": "managed-crystal-template-validation-phase-05-integration-runtime",
+      "title": "Managed Crystal Template Validation Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "generated/managed-crystal-template-validation/PHASE-05-integration-runtime.md",
+      "sources": [
+        { "book": "managed-crystal-template-validation-master", "sections": [4, 5, 6, 7, 9] },
+        { "book": "managed-crystal-template-validation-api", "sections": [8, 9, 10] },
+        { "book": "managed-crystal-template-validation-web", "sections": [8, 10, 13] },
+        { "book": "managed-crystal-template-validation-mobile", "sections": [2, 11, 12, 15] }
+      ]
+    },
+    {
+      "id": "managed-crystal-template-validation-phase-06-verification-acceptance",
+      "title": "Managed Crystal Template Validation Phase 06 - Verification and Acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "generated/managed-crystal-template-validation/PHASE-06-verification-acceptance.md",
+      "sources": [
+        { "book": "managed-crystal-template-validation-master", "sections": [8, 9, 10] },
+        { "book": "managed-crystal-template-validation-api", "sections": [10, 11] },
+        { "book": "managed-crystal-template-validation-web", "sections": [12, 13, 14] },
+        { "book": "managed-crystal-template-validation-mobile", "sections": [14, 15] }
+      ]
+    },
+    {
+      "id": "managed-crystal-template-validation-phase-07-customer-education-closure",
+      "title": "Managed Crystal Template Validation Phase 07 - Customer Education and Closure",
+      "template": "templates/PHASE-07-customer-education-closure.template.md",
+      "output": "generated/managed-crystal-template-validation/PHASE-07-customer-education-closure.md",
+      "sources": [
+        { "book": "managed-crystal-template-validation-master", "sections": [8, 9, 10] },
+        { "book": "managed-crystal-template-validation-web", "sections": [12, 13, 14] },
+        { "book": "managed-crystal-template-validation-mobile", "sections": [14, 15] }
+      ]
+    },
+    {
+      "id": "managed-crystal-manager-experience-phase-00-implementation-preflight",
+      "title": "Managed Crystal Report Manager Experience Phase 00 - Implementation Preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "generated/managed-crystal-manager-experience/PHASE-00-implementation-preflight.md",
+      "sources": [
+        { "book": "managed-crystal-manager-experience-master", "sections": [1, 2, 5, 8, 9] },
+        { "book": "managed-crystal-manager-experience-api", "sections": [1, 10, 11] },
+        { "book": "managed-crystal-manager-experience-web", "sections": [1, 2, 12, 13] },
+        { "book": "managed-crystal-manager-experience-mobile", "sections": [1, 14, 15] }
+      ]
+    },
+    {
+      "id": "managed-crystal-manager-experience-phase-01-domain-api",
+      "title": "Managed Crystal Report Manager Experience Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "generated/managed-crystal-manager-experience/PHASE-01-domain-api.md",
+      "sources": [
+        { "book": "managed-crystal-manager-experience-master", "sections": [3, 4, 6] },
+        { "book": "managed-crystal-manager-experience-api", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }
+      ]
+    },
+    {
+      "id": "managed-crystal-manager-experience-phase-02-web-client",
+      "title": "Managed Crystal Report Manager Experience Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "generated/managed-crystal-manager-experience/PHASE-02-web-client.md",
+      "sources": [
+        { "book": "managed-crystal-manager-experience-master", "sections": [3, 4, 6, 7] },
+        { "book": "managed-crystal-manager-experience-web", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14] }
+      ]
+    },
+    {
+      "id": "managed-crystal-manager-experience-phase-03-mobile-client",
+      "title": "Managed Crystal Report Manager Experience Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "generated/managed-crystal-manager-experience/PHASE-03-mobile-client.md",
+      "sources": [
+        { "book": "managed-crystal-manager-experience-master", "sections": [3, 4, 6, 7] },
+        { "book": "managed-crystal-manager-experience-mobile", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15] }
+      ]
+    },
+    {
+      "id": "managed-crystal-manager-experience-phase-04-domain-actions",
+      "title": "Managed Crystal Report Manager Experience Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "generated/managed-crystal-manager-experience/PHASE-04-domain-actions.md",
+      "sources": [
+        { "book": "managed-crystal-manager-experience-master", "sections": [3, 4, 6, 7, 8] },
+        { "book": "managed-crystal-manager-experience-api", "sections": [6, 7, 8] },
+        { "book": "managed-crystal-manager-experience-web", "sections": [6, 7, 8, 9] },
+        { "book": "managed-crystal-manager-experience-mobile", "sections": [9, 10, 11] }
+      ]
+    },
+    {
+      "id": "managed-crystal-manager-experience-phase-05-integration-runtime",
+      "title": "Managed Crystal Report Manager Experience Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "generated/managed-crystal-manager-experience/PHASE-05-integration-runtime.md",
+      "sources": [
+        { "book": "managed-crystal-manager-experience-master", "sections": [4, 5, 6, 7, 9] },
+        { "book": "managed-crystal-manager-experience-api", "sections": [8, 9, 10] },
+        { "book": "managed-crystal-manager-experience-web", "sections": [8, 10, 13] },
+        { "book": "managed-crystal-manager-experience-mobile", "sections": [2, 11, 12, 15] }
+      ]
+    },
+    {
+      "id": "managed-crystal-manager-experience-phase-06-verification-acceptance",
+      "title": "Managed Crystal Report Manager Experience Phase 06 - Verification and Acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "generated/managed-crystal-manager-experience/PHASE-06-verification-acceptance.md",
+      "sources": [
+        { "book": "managed-crystal-manager-experience-master", "sections": [8, 9, 10] },
+        { "book": "managed-crystal-manager-experience-api", "sections": [10, 11] },
+        { "book": "managed-crystal-manager-experience-web", "sections": [12, 13, 14] },
+        { "book": "managed-crystal-manager-experience-mobile", "sections": [14, 15] }
+      ]
+    },
+    {
+      "id": "managed-crystal-manager-experience-phase-07-customer-education-closure",
+      "title": "Managed Crystal Report Manager Experience Phase 07 - Customer Education and Closure",
+      "template": "templates/PHASE-07-customer-education-closure.template.md",
+      "output": "generated/managed-crystal-manager-experience/PHASE-07-customer-education-closure.md",
+      "sources": [
+        { "book": "managed-crystal-manager-experience-master", "sections": [8, 9, 10] },
+        { "book": "managed-crystal-manager-experience-web", "sections": [12, 13, 14] },
+        { "book": "managed-crystal-manager-experience-mobile", "sections": [14, 15] }
       ]
     }
   ]

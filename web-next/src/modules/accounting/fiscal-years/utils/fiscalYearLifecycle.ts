@@ -1,4 +1,4 @@
-import type { FiscalYearLifecycleAction, FiscalYearStatus } from "../types/FiscalYear";
+import type { FiscalYearLifecycleAction, FiscalYearListItem, FiscalYearStatus } from "../types/FiscalYear";
 
 const actionsByStatus: Readonly<Record<FiscalYearStatus, readonly FiscalYearLifecycleAction[]>> = {
   1: ["open"],
@@ -12,4 +12,10 @@ export function getAvailableFiscalYearLifecycleActions(
   status: FiscalYearStatus,
 ): readonly FiscalYearLifecycleAction[] {
   return actionsByStatus[status];
+}
+
+export function canSetFiscalYearAsCurrent(
+  item: Pick<FiscalYearListItem, "status" | "isDeleted" | "isCurrent">,
+): boolean {
+  return item.status === 2 && !item.isDeleted && !item.isCurrent;
 }

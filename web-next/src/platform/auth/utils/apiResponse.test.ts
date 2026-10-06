@@ -68,6 +68,24 @@ describe("authentication API response parsing", () => {
     expect(parseRoleWithClaimsResponse(role).roleClaims).toEqual([]);
   });
 
+  it("keeps authoritative module ownership for role claims", () => {
+    const parsed = parseRoleWithClaimsResponse({
+      ...role,
+      roleClaims: [
+        { displayValue: "Users:View", moduleCode: "platform", isSelected: true },
+      ],
+    });
+
+    expect(parsed.roleClaims[0]?.moduleCode).toBe("platform");
+  });
+
+  it("rejects role claims without module ownership metadata", () => {
+    expect(() => parseRoleWithClaimsResponse({
+      ...role,
+      roleClaims: [{ displayValue: "Users:View", isSelected: true }],
+    })).toThrow("Invalid roleClaim.moduleCode response");
+  });
+
   it("rejects roles without the required system-role marker", () => {
     const legacyRole: Partial<typeof role> = { ...role };
     delete legacyRole.isSystem;

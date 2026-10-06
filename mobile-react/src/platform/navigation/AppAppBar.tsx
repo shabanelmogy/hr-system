@@ -5,8 +5,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLocalization } from '@/src/core/localization';
 import { useAppTheme } from '@/src/core/theme';
 import { useAuth, useLogout } from '@/src/platform/auth';
-import { CompanyContextSwitcher } from '@/src/platform/tenant-access';
+import { CompanyContextSwitcher, TenantNameBadge } from '@/src/platform/tenant-access';
 import { AppIcon, AppIconButton, AppText } from '@/src/shared/components';
+import { useNavigationContextActions } from './NavigationContextActions';
 
 export interface AppAppBarProps {
   notificationCount?: number;
@@ -31,6 +32,7 @@ export function AppAppBar({
   const { session } = useAuth();
   const { isLoggingOut, logout } = useLogout();
   const { width } = useWindowDimensions();
+  const { primary: primaryContextAction } = useNavigationContextActions();
   const compactAuthenticatedBar = width < 520 && (showDrawer || showLogout);
   const developmentRoleLabel =
     __DEV__ && session?.roles.length ? session.roles.join(', ') : null;
@@ -65,7 +67,7 @@ export function AppAppBar({
                 {t('common.appName')}
               </AppText>
             ) : null}
-            {developmentRoleLabel ? (
+            {developmentRoleLabel && width >= 720 ? (
               <View
                 accessibilityLabel={t('navigation.developmentRole', { role: developmentRoleLabel })}
                 style={[
@@ -87,7 +89,26 @@ export function AppAppBar({
           </View>
 
           <View style={[styles.actions, { direction }]}>
-            {session ? <CompanyContextSwitcher compact={width < 720} /> : null}
+            {session ? (
+              <View
+                accessibilityLabel={t('auth.currentContext')}
+                style={[
+                  styles.contextGroup,
+                  { backgroundColor: theme.colors.onPrimaryMuted, direction },
+                ]}>
+                <TenantNameBadge
+                  compact={width < 900}
+                  iconOnly={width < 900}
+                  tone="onPrimary"
+                />
+                <CompanyContextSwitcher
+                  compact={width < 900}
+                  iconOnly={width < 900}
+                  tone="onPrimary"
+                />
+                {primaryContextAction}
+              </View>
+            ) : null}
             {showNotifications && onNotificationsPress ? (
               <View style={styles.notificationAction}>
                 <AppIconButton
@@ -168,7 +189,14 @@ const styles = StyleSheet.create({
   actions: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 2,
+    gap: 4,
+  },
+  contextGroup: {
+    minHeight: 48,
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderRadius: 999,
+    paddingHorizontal: 2,
   },
   notificationAction: {
     position: 'relative',

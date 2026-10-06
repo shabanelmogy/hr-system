@@ -25,12 +25,12 @@ internal sealed class CountriesCrystalReportDataProvider(IReferenceDataReporting
             return TooLarge();
 
         var table = new DataTable("ReportData");
-        table.Columns.Add("CountryId", typeof(int));
-        table.Columns.Add("CountryAr", typeof(string));
-        table.Columns.Add("CountryEn", typeof(string));
-        table.Columns.Add("StateId", typeof(int)).AllowDBNull = true;
-        table.Columns.Add("StateAr", typeof(string));
-        table.Columns.Add("StateEn", typeof(string));
+        AddColumn(table, "CountryId", typeof(int), nullable: false);
+        AddColumn(table, "CountryAr", typeof(string), nullable: false);
+        AddColumn(table, "CountryEn", typeof(string), nullable: false);
+        AddColumn(table, "StateId", typeof(int), nullable: true);
+        AddColumn(table, "StateAr", typeof(string), nullable: true);
+        AddColumn(table, "StateEn", typeof(string), nullable: true);
 
         foreach (var row in rows)
             table.Rows.Add(
@@ -67,13 +67,13 @@ internal sealed class StatesCrystalReportDataProvider(IReferenceDataReportingSou
             return TooLarge();
 
         var table = new DataTable("ReportData");
-        table.Columns.Add("StateId", typeof(int));
-        table.Columns.Add("StateAr", typeof(string));
-        table.Columns.Add("StateEn", typeof(string));
-        table.Columns.Add("StateCode", typeof(string));
-        table.Columns.Add("CountryId", typeof(int));
-        table.Columns.Add("CountryAr", typeof(string));
-        table.Columns.Add("CountryEn", typeof(string));
+        AddColumn(table, "StateId", typeof(int), nullable: false);
+        AddColumn(table, "StateAr", typeof(string), nullable: false);
+        AddColumn(table, "StateEn", typeof(string), nullable: false);
+        AddColumn(table, "StateCode", typeof(string), nullable: false);
+        AddColumn(table, "CountryId", typeof(int), nullable: false);
+        AddColumn(table, "CountryAr", typeof(string), nullable: false);
+        AddColumn(table, "CountryEn", typeof(string), nullable: false);
 
         foreach (var row in rows)
             table.Rows.Add(
@@ -113,14 +113,14 @@ internal sealed class DistrictsCrystalReportDataProvider(IReferenceDataReporting
             return TooLarge();
 
         var table = new DataTable("ReportData");
-        table.Columns.Add("DistrictId", typeof(int));
-        table.Columns.Add("DistrictAr", typeof(string));
-        table.Columns.Add("DistrictEn", typeof(string));
-        table.Columns.Add("DistrictCode", typeof(string));
-        table.Columns.Add("StateId", typeof(int));
-        table.Columns.Add("StateAr", typeof(string));
-        table.Columns.Add("StateEn", typeof(string));
-        table.Columns.Add("AddressesCount", typeof(int));
+        AddColumn(table, "DistrictId", typeof(int), nullable: false);
+        AddColumn(table, "DistrictAr", typeof(string), nullable: false);
+        AddColumn(table, "DistrictEn", typeof(string), nullable: false);
+        AddColumn(table, "DistrictCode", typeof(string), nullable: false);
+        AddColumn(table, "StateId", typeof(int), nullable: false);
+        AddColumn(table, "StateAr", typeof(string), nullable: false);
+        AddColumn(table, "StateEn", typeof(string), nullable: false);
+        AddColumn(table, "AddressesCount", typeof(int), nullable: false);
 
         foreach (var row in rows)
             table.Rows.Add(
@@ -159,10 +159,10 @@ internal sealed class AddressTypesCrystalReportDataProvider(IReferenceDataReport
             return TooLarge();
 
         var table = new DataTable("ReportData");
-        table.Columns.Add("AddressTypeId", typeof(int));
-        table.Columns.Add("AddressTypeAr", typeof(string));
-        table.Columns.Add("AddressTypeEn", typeof(string));
-        table.Columns.Add("AddressesCount", typeof(int));
+        AddColumn(table, "AddressTypeId", typeof(int), nullable: false);
+        AddColumn(table, "AddressTypeAr", typeof(string), nullable: false);
+        AddColumn(table, "AddressTypeEn", typeof(string), nullable: false);
+        AddColumn(table, "AddressesCount", typeof(int), nullable: false);
 
         foreach (var row in rows)
             table.Rows.Add(row.AddressTypeId, row.AddressTypeAr, row.AddressTypeEn, row.AddressesCount);

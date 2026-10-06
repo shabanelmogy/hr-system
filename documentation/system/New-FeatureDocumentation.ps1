@@ -185,17 +185,20 @@ if ($decompositionDecision -eq 'Single feature') {
 
     $screenWorkflowContractText = Get-Content -LiteralPath $screenWorkflowContractPath -Raw -Encoding UTF8
     $requiredContractHeadings = @(
+        '## 0. Contract metadata',
         '## 1. Child boundary and outcome',
-        '## 2. Closest existing reference',
-        '## 3. Reuse and composition contract',
-        '## 4. Screen and workspace contract',
-        '## 5. Create, edit, view, and lifecycle contract',
+        '## 2. UI Pattern Gate (mandatory before implementation)',
+        '## 3. Closest existing reference',
+        '## 4. Reuse and composition contract',
+        '## 5. Screen and workspace contract',
         '## 6. Typed transport and server criteria',
-        '## 7. UX states, permissions, and read-only behavior',
-        '## 8. Concurrency and consistency',
-        '## 9. i18n, RTL, accessibility, and responsive behavior',
-        '## 10. Verification contract',
-        '## 11. Child exit gate'
+        '## 7. Create, edit, view, and lifecycle contract',
+        '## 8. UX states, permissions, offline, and mock data',
+        '## 9. Concurrency, transactions, and consistency',
+        '## 10. i18n, RTL, accessibility, and responsive behavior',
+        '## 11. Vertical execution ledger (strict one-active-step gate)',
+        '## 12. Verification contract',
+        '## 13. Child exit gate'
     )
     foreach ($heading in $requiredContractHeadings) {
         if (-not $screenWorkflowContractText.Contains($heading)) {

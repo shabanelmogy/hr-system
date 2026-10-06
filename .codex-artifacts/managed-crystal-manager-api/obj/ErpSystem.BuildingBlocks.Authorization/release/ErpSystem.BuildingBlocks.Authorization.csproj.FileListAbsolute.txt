@@ -1,0 +1,12 @@
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\bin\ErpSystem.BuildingBlocks.Authorization\release\ErpSystem.BuildingBlocks.Authorization.deps.json
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\bin\ErpSystem.BuildingBlocks.Authorization\release\ErpSystem.BuildingBlocks.Authorization.dll
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\bin\ErpSystem.BuildingBlocks.Authorization\release\ErpSystem.BuildingBlocks.Authorization.pdb
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.BuildingBlocks.Authorization\release\ErpSystem.BuildingBlocks.Authorization.GeneratedMSBuildEditorConfig.editorconfig
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.BuildingBlocks.Authorization\release\ErpSystem.BuildingBlocks.Authorization.AssemblyInfoInputs.cache
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.BuildingBlocks.Authorization\release\ErpSystem.BuildingBlocks.Authorization.AssemblyInfo.cs
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.BuildingBlocks.Authorization\release\ErpSystem.BuildingBlocks.Authorization.csproj.CoreCompileInputs.cache
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.BuildingBlocks.Authorization\release\ErpSystem.BuildingBlocks.Authorization.sourcelink.json
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.BuildingBlocks.Authorization\release\ErpSystem.BuildingBlocks.Authorization.dll
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.BuildingBlocks.Authorization\release\refint\ErpSystem.BuildingBlocks.Authorization.dll
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.BuildingBlocks.Authorization\release\ErpSystem.BuildingBlocks.Authorization.pdb
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.BuildingBlocks.Authorization\release\ref\ErpSystem.BuildingBlocks.Authorization.dll

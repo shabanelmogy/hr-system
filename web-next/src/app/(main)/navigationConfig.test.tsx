@@ -1,6 +1,8 @@
 import { beforeEach, describe, expect, it } from "vitest";
 
 import { appRoutes } from "@/config/routes";
+import { canAccessRoute } from "@/lib/auth/route-access";
+import type { SessionClaims } from "@/lib/auth/session";
 import { permissions } from "@/lib/auth/permissions";
 import { accountingModuleDefinition } from "@/modules/accounting";
 import { crmModuleDefinition } from "@/modules/crm";
@@ -11,6 +13,8 @@ import {
   registerFrontendModule,
   resetFrontendModuleRegistryForTests,
 } from "@/platform/modules";
+import { getPlatformNavigation } from "@/platform/navigation";
+import type { NavigationItem } from "@/shared/components/layout/navigation";
 import { getNavigationConfig } from "@/shell/components/sidebar/navigationConfig";
 import { NavigationSectionId } from "@/shell/components/sidebar/navigationTypes";
 import {
@@ -78,6 +82,31 @@ describe("application navigation configuration", () => {
       .map((entry) => entry.path)).toContain(appRoutes.modules.accounting.ledgerSetup.fiscalYears);
   });
 
+const session: SessionClaims = {
+  userId: "user-id",
+  tenantId: "tenant-id",
+  tenantName: "Test Tenant",
+  tenantPlanName: "Professional",
+  companyId: 7,
+  companyCode: "COMP-7",
+  companyNameAr: "الشركة السابعة",
+  companyNameEn: "Company Seven",
+  companies: [{ id: 7, companyCode: "COMP-7", nameAr: "الشركة السابعة", nameEn: "Company Seven" }],
+  userName: "user",
+  email: "user@example.com",
+  firstName: "Test",
+  lastName: "User",
+  roles: [],
+  permissions: [],
+  tenantSubscriptionStatus: "active",
+  tenantSubscriptionEndsOn: null,
+  tenantReadOnly: false,
+  expiresAt: Date.now() + 60_000,
+};
+
+const collectNavigationItems = (items: readonly NavigationItem[]): NavigationItem[] =>
+  items.flatMap((item) => [item, ...collectNavigationItems(item.items ?? [])]);
+
   it("gets Ledger Setup currencies from Accounting, not Basic Data", () => {
     const config = getNavigationConfig([], [permissions.ViewCurrencies]);
     const pathsForAccounting = paths(config);
@@ -127,6 +156,47 @@ describe("application navigation configuration", () => {
       appRoutes.platform.advancedTools.localizationApi,
       appRoutes.platform.companyGeographicScope,
     ]));
+  });
+
+  it("keeps every navigation permission aligned with its route policy", () => {
+    const navigation = [
+      ...getPlatformNavigation(),
+      ...[
+        accountingModuleDefinition,
+        crmModuleDefinition,
+        hrModuleDefinition,
+        referenceDataModuleDefinition,
+        reportingModuleDefinition,
+      ].flatMap((definition) => definition.navigation ?? []),
+    ];
+
+    for (const item of collectNavigationItems(navigation).filter((entry) => entry.path)) {
+      const path = item.path!;
+      const roles = item.roles ?? [];
+      const permissionClaims = item.permissions ?? [];
+
+      if (permissionClaims.length > 0) {
+        for (const permission of permissionClaims) {
+          expect(
+            canAccessRoute(path, {
+              ...session,
+              roles: roles.length > 0 ? [roles[0]] : [],
+              permissions: [permission],
+            }),
+            `${path} must accept the navigation permission ${permission}`,
+          ).toBe(true);
+        }
+      } else if (roles.length > 0) {
+        for (const role of roles) {
+          expect(
+            canAccessRoute(path, { ...session, roles: [role] }),
+            `${path} must accept the navigation role ${role}`,
+          ).toBe(true);
+        }
+      } else {
+        expect(canAccessRoute(path, session), `${path} must be registered`).toBe(true);
+      }
+    }
   });
 
   it("fails closed for business links when accessible modules are unavailable", () => {

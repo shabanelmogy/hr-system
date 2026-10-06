@@ -31,6 +31,7 @@ import {
 
 const createInvitationPermissions = [
   permissions.CreateUserInvitations,
+  permissions.ViewUsers,
   permissions.ViewRoles,
 ] as const;
 const resendInvitationPermissions = [permissions.ResendUserInvitations] as const;
@@ -51,7 +52,7 @@ export function InvitationManagementScreen() {
     requiredPermissions: revokeInvitationPermissions,
   });
   const invitationsQuery = useUserInvitations();
-  const companiesQuery = useAssignableCompanies();
+  const companiesQuery = useAssignableCompanies(canCreate);
   const rolesQuery = useRoleOptions(canCreate);
   const saveMutation = useSaveManagedUser();
   const resendMutation = useResendUserInvitation();
@@ -100,10 +101,10 @@ export function InvitationManagementScreen() {
     }
   };
 
-  const loading = invitationsQuery.isLoading || companiesQuery.isLoading ||
+  const loading = invitationsQuery.isLoading || (canCreate && companiesQuery.isLoading) ||
     (canCreate && rolesQuery.isLoading);
-  const queryError = invitationsQuery.error ?? companiesQuery.error ??
-    (canCreate ? rolesQuery.error : null);
+  const queryError = invitationsQuery.error ??
+    (canCreate ? companiesQuery.error ?? rolesQuery.error : null);
 
   return (
     <AppScreen
@@ -113,11 +114,10 @@ export function InvitationManagementScreen() {
           colors={[theme.colors.primary]}
           onRefresh={() => void Promise.all([
             invitationsQuery.refetch(),
-            companiesQuery.refetch(),
-            ...(canCreate ? [rolesQuery.refetch()] : []),
+            ...(canCreate ? [companiesQuery.refetch(), rolesQuery.refetch()] : []),
           ])}
-          refreshing={invitationsQuery.isRefetching || companiesQuery.isRefetching ||
-            rolesQuery.isRefetching}
+          refreshing={invitationsQuery.isRefetching ||
+            (canCreate && (companiesQuery.isRefetching || rolesQuery.isRefetching))}
           tintColor={theme.colors.primary}
         />
       )}>

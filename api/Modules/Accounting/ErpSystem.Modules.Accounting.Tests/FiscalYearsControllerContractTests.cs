@@ -13,6 +13,7 @@ using ErpSystem.BuildingBlocks.Authorization;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Routing;
+using ErpSystem.Modules.Platform.Contracts.Tenancy;
 
 namespace ErpSystem.Modules.Accounting.Tests;
 
@@ -34,6 +35,8 @@ public sealed class FiscalYearsControllerContractTests
 
         Assert.IsType<OkObjectResult>(await controller.GetPage(pageQuery, CancellationToken.None));
         Assert.IsType<OkObjectResult>(await controller.GetLookup(CancellationToken.None));
+        Assert.IsType<OkObjectResult>(await controller.GetContext(CancellationToken.None));
+        Assert.IsType<OkObjectResult>(await controller.UpdateContext(new UpdateFiscalYearContextRequest(7), CancellationToken.None));
         Assert.IsType<OkObjectResult>(await controller.GetById(7, CancellationToken.None));
         Assert.IsType<CreatedAtActionResult>(await controller.Create(mutation, CancellationToken.None));
         Assert.IsType<OkObjectResult>(await controller.Update(7, update, CancellationToken.None));
@@ -44,11 +47,14 @@ public sealed class FiscalYearsControllerContractTests
         Assert.IsType<OkObjectResult>(await controller.Close(7, concurrency, CancellationToken.None));
         Assert.IsType<OkObjectResult>(await controller.Lock(7, concurrency, CancellationToken.None));
         Assert.IsType<OkObjectResult>(await controller.Reopen(7, concurrency, CancellationToken.None));
+        Assert.IsType<OkObjectResult>(await controller.SetCurrent(7, concurrency, CancellationToken.None));
 
         Assert.Collection(
             sender.Requests,
             request => Assert.Same(pageQuery, request),
             request => Assert.IsType<GetFiscalYearLookupQuery>(request),
+            request => Assert.IsType<GetFiscalYearContextQuery>(request),
+            request => Assert.Equal(7, Assert.IsType<UpdateFiscalYearContextCommand>(request).FiscalYearId),
             request => Assert.Equal(7, Assert.IsType<GetFiscalYearByIdQuery>(request).Id),
             request => Assert.Equal("FY2027", Assert.IsType<CreateFiscalYearCommand>(request).Code),
             request => Assert.Equal("AQ==", Assert.IsType<UpdateFiscalYearCommand>(request).RowVersion),
@@ -63,7 +69,8 @@ public sealed class FiscalYearsControllerContractTests
             request => AssertLifecycle(request, FiscalYearLifecycleAction.BeginClosing),
             request => AssertLifecycle(request, FiscalYearLifecycleAction.Close),
             request => AssertLifecycle(request, FiscalYearLifecycleAction.Lock),
-            request => AssertLifecycle(request, FiscalYearLifecycleAction.Reopen));
+            request => AssertLifecycle(request, FiscalYearLifecycleAction.Reopen),
+            request => Assert.Equal(7, Assert.IsType<SetCurrentFiscalYearCommand>(request).Id));
     }
 
     [Fact]
@@ -78,6 +85,10 @@ public sealed class FiscalYearsControllerContractTests
 
         AssertRoute<HttpGetAttribute>(nameof(FiscalYearsController.GetPage), null, AccountingPermissions.ViewFiscalYears);
         AssertRoute<HttpGetAttribute>(nameof(FiscalYearsController.GetLookup), "lookup", AccountingPermissions.ViewFiscalYears);
+        AssertRoute<HttpGetAttribute>(nameof(FiscalYearsController.GetContext), "context", AccountingPermissions.ViewFiscalYears);
+        AssertRoute<HttpPutAttribute>(nameof(FiscalYearsController.UpdateContext), "context", AccountingPermissions.ViewFiscalYears);
+        Assert.NotNull(typeof(FiscalYearsController).GetMethod(nameof(FiscalYearsController.UpdateContext))!
+            .GetCustomAttribute<AllowTenantReadOnlyAttribute>());
         AssertRoute<HttpGetAttribute>(nameof(FiscalYearsController.GetById), "{id:int}", AccountingPermissions.ViewFiscalYears);
         AssertRoute<HttpPostAttribute>(nameof(FiscalYearsController.Create), null, AccountingPermissions.CreateFiscalYears);
         AssertRoute<HttpPutAttribute>(nameof(FiscalYearsController.Update), "{id:int}", AccountingPermissions.EditFiscalYears);
@@ -88,6 +99,7 @@ public sealed class FiscalYearsControllerContractTests
         AssertRoute<HttpPostAttribute>(nameof(FiscalYearsController.Close), "{id:int}/close", AccountingPermissions.CloseFiscalYears);
         AssertRoute<HttpPostAttribute>(nameof(FiscalYearsController.Lock), "{id:int}/lock", AccountingPermissions.LockFiscalYears);
         AssertRoute<HttpPostAttribute>(nameof(FiscalYearsController.Reopen), "{id:int}/reopen", AccountingPermissions.ReopenFiscalYears);
+        AssertRoute<HttpPostAttribute>(nameof(FiscalYearsController.SetCurrent), "{id:int}/set-current", AccountingPermissions.SetCurrentFiscalYears);
     }
 
     private static void AssertLifecycle(object request, FiscalYearLifecycleAction action)
@@ -117,12 +129,15 @@ public sealed class FiscalYearsControllerContractTests
             {
                 GetFiscalYearsQuery => Page(),
                 GetFiscalYearLookupQuery => new List<FiscalYearLookupResponse> { Lookup() },
+                GetFiscalYearContextQuery => Result.Success(Context()),
+                UpdateFiscalYearContextCommand => Result.Success(Context()),
                 GetFiscalYearByIdQuery => Result.Success(Detail()),
                 CreateFiscalYearCommand => Result.Success(Detail()),
                 UpdateFiscalYearCommand => Result.Success(Detail()),
                 ArchiveFiscalYearCommand => Result.Success(),
                 RestoreFiscalYearCommand => Result.Success(Detail()),
                 ChangeFiscalYearLifecycleCommand => Result.Success(Detail()),
+                SetCurrentFiscalYearCommand => Result.Success(Detail()),
                 _ => throw new NotSupportedException(request.GetType().FullName)
             };
             return Task.FromResult((TResponse)response);
@@ -152,7 +167,7 @@ public sealed class FiscalYearsControllerContractTests
             var item = new FiscalYearListItemResponse(
                 7, "FY2027", "السنة المالية 2027", "Fiscal Year 2027",
                 new DateOnly(2027, 1, 1), new DateOnly(2027, 12, 31),
-                FiscalPeriodFrequency.Monthly, FiscalYearStatus.Draft, 12,
+                FiscalPeriodFrequency.Monthly, FiscalYearStatus.Draft, false, 12,
                 DateTime.UtcNow, null, false, "AQ==");
             var page = new PagedList<FiscalYearListItemResponse>([item], 1, 1, 10);
             return new PageResponse<FiscalYearListItemResponse>(page, page.MetaData);
@@ -160,13 +175,19 @@ public sealed class FiscalYearsControllerContractTests
 
         private static FiscalYearLookupResponse Lookup() => new(
             7, "FY2027", "السنة المالية 2027", "Fiscal Year 2027",
-            new DateOnly(2027, 1, 1), new DateOnly(2027, 12, 31), FiscalYearStatus.Draft);
+            new DateOnly(2027, 1, 1), new DateOnly(2027, 12, 31), FiscalYearStatus.Draft, false);
 
         private static FiscalYearDetailResponse Detail() => new(
             7, "FY2027", "السنة المالية 2027", "Fiscal Year 2027",
             new DateOnly(2027, 1, 1), new DateOnly(2027, 12, 31),
-            FiscalPeriodFrequency.Monthly, FiscalYearStatus.Draft, [],
+            FiscalPeriodFrequency.Monthly, FiscalYearStatus.Draft, false, [],
             DateTime.UtcNow, null, false, "AQ==");
+
+        private static FiscalYearContextResponse Context() => new(
+            null,
+            Lookup(),
+            true,
+            [Lookup()]);
     }
 }
 

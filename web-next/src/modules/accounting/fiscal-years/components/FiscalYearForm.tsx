@@ -4,6 +4,7 @@ import { MyDateTimeField, MyForm, MySelect, MyTextField, toFormErrorMessages } f
 import { applyApiFieldErrors } from "@/shared/utils/formErrors";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Alert, Box, Button, Chip, Divider, Stack, Typography } from "@mui/material";
+import StarRounded from "@mui/icons-material/StarRounded";
 import { Controller, useForm, useWatch, type Resolver } from "react-hook-form";
 import { useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
@@ -109,6 +110,7 @@ export default function FiscalYearForm({ open, mode, item, loading = false, deta
       mockDataAction={!readOnly ? { onGenerate: fillMock, disabled: loading || Boolean(detailError) } : undefined}
     >
       {detailError ? <Alert severity="error" action={onRetryDetail ? <Button color="inherit" onClick={onRetryDetail}>{t("common.retry")}</Button> : undefined}>{detailError}</Alert> : null}
+      {item?.isCurrent ? <Alert severity="warning" icon={<StarRounded />}>{t("fiscalYears.context.companyCurrent")}</Alert> : null}
       <MyTextField fieldName="code" labelKey={t("fiscalYears.fields.code")} control={form.control} errors={form.formState.errors} maxLength={20} required readOnly={fieldsReadOnly} loading={loading} />
       <MyTextField fieldName="nameAr" labelKey={t("general.nameAr")} control={form.control} errors={form.formState.errors} maxLength={100} required readOnly={fieldsReadOnly} loading={loading} />
       <MyTextField fieldName="nameEn" labelKey={t("general.nameEn")} control={form.control} errors={form.formState.errors} maxLength={100} required readOnly={fieldsReadOnly} loading={loading} />

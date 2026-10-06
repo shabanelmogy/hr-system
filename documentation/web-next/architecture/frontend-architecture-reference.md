@@ -137,6 +137,27 @@ final unsuccessful verification redirects to service-unavailable; a session 401
 terminates verification through logout. Stale generations cannot overwrite the
 verification result; a concurrent logout invalidates the switch via its epoch.
 
+#### Global context badge composition
+
+**Observed problem.** Tenant identity, company switching, and the personal working
+Fiscal Year were rendered by separate pill implementations. Labels were hidden in
+the wide layout, the tenant identity was not part of the Topbar context group, and
+Mobile repeated feature-local trigger styling with inconsistent touch dimensions.
+
+**Decision.** The shared Web `ContextBadge` owns the label/value/icon presentation,
+compact/icon-only variants, tooltip, focus treatment, and selected-context visual
+rhythm; `ContextSwitcher` owns menu state on top of that primitive. Mobile uses the
+equivalent shared `AppContextBadge` with a 44-point minimum target. Topbars compose
+the hierarchy as Tenant, Company, then Working Fiscal Year. Tenant remains a
+read-only identity; company and year owners retain their API, authorization,
+dirty-state, and mutation logic. Narrow layouts use icon-only triggers while the
+complete label and value remain in the accessible name.
+
+**Verification and prevention.** Focused shared-component tests cover full and
+icon-only accessible identity and the Mobile target size. Context owners must reuse
+these primitives instead of introducing another local pill, and Shell/AppBar code
+must not absorb domain queries or context mutation rules.
+
 ### Navigation and mobile runtime safety baseline
 
 **Problem.** An ERP route can contain dirty form state or an in-flight write
@@ -405,13 +426,32 @@ shape but always executes the requested server page and reports server mode;
 5,000-row threshold was removed. Fiscal Years, Workforce Planning, Countries,
 States, and Districts no longer perform the probe/fetch-all startup sequence.
 
-**Verification.** Focused adaptive-pagination and Countries/States tests passed;
-callers were reviewed for current-page grid/card semantics. Existing optional
+Page transitions preserve the previous authoritative total while clearing the
+previous page's row IDs until the next query key resolves. `MyDataGrid` keeps a
+stable server `rowCount` during replacement-page loading and never adds a second
+server-page clamp; the owning controller may recover an invalid page only after
+the requested query has returned non-placeholder metadata. `GridFooter` retains
+the established centered record navigator and uses MUI's single pagination-model
+change path before activating the requested boundary record when its rows arrive.
+
+Controlled `sortModel` identity is also part of the pagination contract. MUI
+publishes `sortModelChange` when a new model reference is supplied and its
+pagination feature returns to page zero on that event. `MyDataGrid` therefore
+stabilizes semantically identical sort models centrally. Feature components may
+compose a controlled model inline without turning a loading, selection, or row
+replacement render into a false sort change.
+
+**Verification.** Focused adaptive-pagination, controlled-model, page-bound, and
+record-navigation tests passed. The Countries browser regression crosses records
+10 to 11 with the fixture actually ordered by `createdOn DESC`, verifies page 2
+rows, and proves the page remains stable after the response. Existing optional
 geography charts remain lazy and consume visible/current-page data; a future
 whole-dataset analytics requirement must use an explicit on-demand contract.
 
 **Prevention rule.** Do not infer client pagination by probing collection size,
-and never hide a fetch-all request inside a generic list hook.
+never hide a fetch-all request inside a generic list hook, never turn a temporary
+loading total into a page-zero correction, and never pass a semantically unchanged
+controlled sort model under a new identity directly to MUI.
 
 #### 4. Shell data should not duplicate session identity
 
@@ -467,6 +507,41 @@ the emitted shared-bundle reduction.
 import React Query feature hooks, API services, a viewer, form, or page, the
 registration boundary is wrong. Extract metadata to a leaf and expose only the
 minimal public contract.
+
+#### 5.1. Global module composition is refresh-safe and atomic
+
+**Observed problem.** During a Next.js `16.3.5` Turbopack development refresh,
+server rendering fell back to client rendering because `moduleRegistration.ts`
+was evaluated again and the persistent frontend registry rejected the newly
+created `hr` definition object as an already-registered module.
+
+**Root cause.** The registry used JavaScript object identity to distinguish an
+idempotent registration from a conflicting one. Fast Refresh is allowed to
+re-run files that export non-component values and their importers, so a valid
+module definition can have the same stable code but a new object identity after
+an edit.
+
+**Decision / impact.** Application startup composes all frontend module
+definitions through `replaceFrontendModuleRegistry`. The function builds and
+validates a temporary registry, then commits it as one transaction. Re-evaluating
+the complete composition therefore replaces stale objects, while duplicate
+module codes, route ownership conflicts, missing dependencies, and dependency
+cycles in the new composition still fail before the active registry is changed.
+Feature-scoped tests may continue to use `registerFrontendModule` for isolated
+definitions.
+
+**Verification.** The focused registry suite passed `8/8`, including a refresh
+with a newly allocated definition, duplicate codes in one composition, and
+rollback when validation fails. The complete Web static gate passed architecture,
+governance, release-contract, i18n, lint, and TypeScript checks; the Next.js
+`16.3.5` Turbopack production build compiled successfully and generated all
+`77/77` static pages. The centralized documentation check also passed all
+`101/101` registered recipes.
+
+**Prevention rule.** Do not perform application-wide registry composition as a
+sequence of identity-guarded top-level inserts. Use one validated replacement
+transaction so module evaluation is safe to repeat under Fast Refresh without
+silencing genuine composition conflicts.
 
 #### 6. Post-hydration optional runtime and viewer readiness
 
@@ -633,6 +708,18 @@ card-only header and MUI Grid even while the active view was Grid; and the share
 server even though the actual DataGrid had already been marked `ssr: false`.
 Clean Turbopack boots overflowed during these module evaluations and Next fell
 back to client rendering.
+
+Chart of Accounts later exposed the same class of failure through a different
+third-party boundary. `SplitTreeView` imported the broad `framer-motion` barrel;
+Next `16.3.5` Turbopack evaluated that graph during development SSR and overflowed
+the call stack before the client component could render. Tree and diagram gesture
+components now import runtime elements from the package's granular
+`framer-motion/client` entry, while `PanInfo` remains a type-only import. This
+preserves the required Motion drag engine and avoids evaluating the broad runtime
+barrel in the server chunk. When adding a Motion-powered tree or diagram, use the
+client entry for runtime elements and verify the actual protected route in a clean
+Turbopack development session; a TypeScript pass alone does not exercise this
+boundary.
 
 The fix follows the runtime boundaries already intended by the UI: low-level
 shared components use narrow imports, the card-only header is loaded only with its
@@ -870,6 +957,37 @@ Rules:
 Examples of protected reusable behavior include `MyDataGrid` with `GridFooter`,
 `CardViewPagination`, `PageHeader`, the shared card scaffold, form/dialog shells,
 and shared loading/error/empty states.
+
+### Dense workspace headers
+
+**Observed problem.** Role Permissions placed a normal page title above a second
+decorative Hero containing another title, progress visualization, and three metric
+cards. The duplicate hierarchy delayed the actual module/screen editor and was
+especially wasteful at laptop and narrow viewport heights.
+
+**Root cause.** The simple `PageHeader` had no dense mode, so feature code tried to
+carry both page identity and workspace status inside a local Hero.
+
+**Decision.** The simple `PageHeader` supports an opt-in `compact` prop that reduces
+its title size, margin, and gap while preserving the existing default for all other
+consumers. A dense editor may then compose one low-height, wrapping status strip
+for essential state only. It must not repeat the title or use decorative metric
+cards/progress charts when the same values fit in translated compact chips.
+
+**Verification and prevention.** Role Permissions is the applied consumer on Web;
+its status strip retains edit/read-only, selected/total coverage, and pending-change
+state in EN/AR and wraps instead of overflowing. Future dense workspaces should use
+the shared option and feature-owned status composition rather than copying a local
+header shell. Type-check, lint, locale, architecture, and responsive manual checks
+remain the proportional verification gates.
+
+Role Permissions also applies the Shell fixed-height route contract at `md` and
+above. `ContentWrapper fillAvailable`, the editor card/form, master/detail grid,
+and detail panel all preserve `minHeight: 0`; pagination and save actions remain
+fixed siblings while module and screen lists own bounded overflow. The default page
+size is five. This prevents the main page/body from gaining a second vertical
+scrollbar while still allowing an expanded accordion or an explicitly larger page
+size to remain reachable. Narrow layouts deliberately keep natural page scrolling.
 
 ### Form validation safety
 

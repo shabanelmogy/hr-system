@@ -45,14 +45,15 @@ public sealed class CrystalReport : TenantAuditableEntity
         Versions.Add(version);
     }
 
-    public void Publish(CrystalReportVersion version)
+    public void Publish(CrystalReportVersion version, string currentContractFingerprint)
     {
         ArgumentNullException.ThrowIfNull(version);
         EnsureActive();
         if (version.CrystalReportId != Id)
             throw new InvalidOperationException("Only a version owned by this Crystal report can be published.");
-        if (version.ValidationStatus != CrystalReportValidationStatus.Valid)
-            throw new InvalidOperationException("Only a validated Crystal report version can be published.");
+        if (!version.IsValidFor(currentContractFingerprint))
+            throw new InvalidOperationException(
+                "Only a Crystal report version validated for the current contract can be published.");
 
         CurrentPublishedVersionId = version.Id;
         DisplayName = string.IsNullOrWhiteSpace(version.SummaryTitle)

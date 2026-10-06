@@ -31,6 +31,8 @@ public sealed record UpdateFiscalYearRequest(
 
 public sealed record FiscalYearConcurrencyRequest(string RowVersion);
 
+public sealed record UpdateFiscalYearContextRequest(int? FiscalYearId);
+
 public sealed record FiscalPeriodResponse(
     int Id,
     int Sequence,
@@ -50,6 +52,7 @@ public sealed record FiscalYearListItemResponse(
     DateOnly EndDate,
     FiscalPeriodFrequency PeriodFrequency,
     FiscalYearStatus Status,
+    bool IsCurrent,
     int PeriodsCount,
     DateTime CreatedOn,
     DateTime? UpdatedOn,
@@ -65,6 +68,7 @@ public sealed record FiscalYearDetailResponse(
     DateOnly EndDate,
     FiscalPeriodFrequency PeriodFrequency,
     FiscalYearStatus Status,
+    bool IsCurrent,
     IReadOnlyList<FiscalPeriodResponse> Periods,
     DateTime CreatedOn,
     DateTime? UpdatedOn,
@@ -78,4 +82,11 @@ public sealed record FiscalYearLookupResponse(
     string NameEn,
     DateOnly StartDate,
     DateOnly EndDate,
-    FiscalYearStatus Status);
+    FiscalYearStatus Status,
+    bool IsCurrent);
+
+public sealed record FiscalYearContextResponse(
+    FiscalYearLookupResponse? CompanyCurrentFiscalYear,
+    FiscalYearLookupResponse? SelectedFiscalYear,
+    bool HasUserOverride,
+    IReadOnlyList<FiscalYearLookupResponse> AvailableFiscalYears);

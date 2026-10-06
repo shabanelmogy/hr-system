@@ -38,6 +38,8 @@ generic `resourceName` dispatch and catch-all transport are not reusable target
 architecture. New or rebuilt children keep typed services, query keys, schemas,
 forms, permissions, and routes. P-006 consumers additionally document whether a
 save replaces a set, applies a delta, or creates effective/versioned records;
+multi-module P-006 editors use server-owned module metadata for a module-first
+master/detail layout and preserve hidden edits while switching modules;
 P-007 launchers only discover permission-filtered child routes and never call
 their CRUD services.
 
@@ -199,7 +201,7 @@ all -> details -> detail(id)
 
 Recommended behavior:
 
-- list: short `staleTime`, previous-page placeholder data, visible background fetch;
+- list: short `staleTime`, previous pagination metadata without stale row IDs, visible background fetch;
 - lookup: longer `staleTime` when selectors change less frequently;
 - detail: enabled only when an ID is present;
 - successful mutation: invalidate the feature-wide prefix;
@@ -309,30 +311,33 @@ disable, fork, or restyle that behavior locally unless the product requirement
 explicitly calls for a different Grid interaction. A change to the shared primitive
 requires checking all current consumers rather than fixing only the active feature.
 
-`GridFooter` presents one tested product interaction in both modes: the same
-first/previous/next/last record buttons, current-record/total counter, page
-indicator, and page-size selector used by Districts. Client mode moves through
-the loaded collection. Server mode moves within the current page and, when a
-record boundary is crossed, drives the controlled `paginationModel` to fetch the
-adjacent authoritative page before selecting the target record. Do not expose a
-second MUI-default pager or a feature-local footer in server mode.
+`GridFooter` keeps the established product behavior: centered
+first/previous/next/last **record** buttons with the current-record/total counter,
+plus the existing page indicator and page-size selector. Server record navigation
+crosses a page boundary through MUI's single `setPaginationModel` control path,
+which notifies the owner of the controlled model. It waits for that server page
+and then activates its requested boundary record. Features must not invoke a
+second feature-local page writer, replace this contract with the library-default
+pager, move the centered navigator, or add a local second pager.
 
-Never switch a server-managed feature to client pagination merely to obtain the
-footer controls; that would paginate only the loaded page and break the list
-contract.
+Server-managed features always stay in server pagination. One requested page
+means one API query; a generic list hook must never probe the total or download a
+complete collection to choose client mode. Client pagination is allowed only for
+an explicitly complete local collection whose owning contract says so.
 
-Use one reusable `MyDataGrid` for both modes. The shared adaptive list strategy
-may choose client pagination only after it has obtained the authoritative total
-and loaded the complete filtered/sorted collection. The standard client ceiling
-is 5000 rows, inclusive; totals above 5000 remain server-paginated. The data
-controller owns this decision and fetching. The visual Grid must never infer
-client mode from `rowCount` while it only holds one server page.
+React Query must keep the previous authoritative pagination metadata while the
+next page is loading, but it must expose an empty row collection instead of stale
+row IDs from the previous page. `MyDataGrid` retains the last authoritative
+`rowCount` during a replacement-page load and must not clamp a server-owned page;
+the list controller may clamp only after a non-placeholder response proves the
+requested page is no longer valid.
 
-During a rolling deployment, an older API may still enforce the ordinary page
-cap. If the bounded complete-result request is rejected, the adaptive hook must
-fail safely back to server pagination and must not surface that compatibility
-probe as a page failure. Client mode activates automatically after the matching
-API contract is deployed.
+Keep every controlled `sortModel` semantically stable across unrelated renders.
+MUI resets pagination to page zero on `sortModelChange`, and a newly allocated
+but equivalent array can otherwise turn row loading into a false sort event.
+This stabilization belongs in `MyDataGrid`, not in every feature. Together with
+stable totals and one page-change path, it prevents the descending-sort
+load-and-bounce regression.
 
 ### Cards
 

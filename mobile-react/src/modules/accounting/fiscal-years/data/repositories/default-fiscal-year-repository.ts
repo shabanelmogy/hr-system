@@ -6,9 +6,12 @@ export class DefaultFiscalYearRepository implements FiscalYearRepository {
   getPage(query: Parameters<FiscalYearRepository['getPage']>[0]) { return this.remote.getPage(query); }
   getById(id: number) { return this.remote.getById(id); }
   getLookup() { return this.remote.getLookup(); }
+  getContext() { return this.remote.getContext(); }
+  updateContext(fiscalYearId: number | null) { return this.remote.updateContext(fiscalYearId); }
   create(request: Parameters<FiscalYearRepository['create']>[0]) { return this.remote.create(request); }
   update(id: number, request: Parameters<FiscalYearRepository['update']>[1], rowVersion: string) { return this.remote.update(id, request, rowVersion); }
   archive(id: number, rowVersion: string) { return this.remote.archive(id, rowVersion); }
   restore(id: number, rowVersion: string) { return this.remote.restore(id, rowVersion); }
   lifecycle(id: number, rowVersion: string, action: Parameters<FiscalYearRepository['lifecycle']>[2]) { return this.remote.lifecycle(id, rowVersion, action); }
+  setCurrent(id: number, rowVersion: string) { return this.remote.setCurrent(id, rowVersion); }
 }

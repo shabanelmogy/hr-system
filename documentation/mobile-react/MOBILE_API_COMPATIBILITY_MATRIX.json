@@ -2891,6 +2891,41 @@
           "status": "aligned",
           "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Accounting FiscalYearsController and AccountingPermissions.FiscalYears."
         },
+    {
+      "key": "context",
+      "pattern": "'fiscal-years/context'",
+      "verb": [
+        "GET",
+        "PUT"
+      ],
+      "operations": [
+        {
+          "verb": [
+            "GET"
+          ],
+          "caller": "src/modules/accounting/fiscal-years/data/remote/fiscal-year-remote-data-source.ts#getContext",
+          "requestBoundary": "none",
+          "responseBoundary": "fiscalYearContextSchema",
+          "permissionAuthority": "Accounting FiscalYearsController and AccountingPermissions.FiscalYears.View"
+        },
+        {
+          "verb": [
+            "PUT"
+          ],
+          "caller": "src/modules/accounting/fiscal-years/data/remote/fiscal-year-remote-data-source.ts#updateContext",
+          "requestBoundary": "{ fiscalYearId }",
+          "responseBoundary": "fiscalYearContextSchema",
+          "permissionAuthority": "Accounting FiscalYearsController and AccountingPermissions.FiscalYears.View"
+        }
+      ],
+      "currentOwner": "Accounting/fiscal-years",
+      "targetOwner": "Accounting/fiscal-years",
+      "permissionAuthority": "Accounting FiscalYearsController and AccountingPermissions.FiscalYears.View",
+      "scope": "tenant/company/authenticated-user",
+      "offlineMode": "online-only",
+      "status": "aligned",
+      "note": "The API derives tenant, company, and user from the authenticated actor; the client sends only the optional working fiscalYearId and validates the complete returned context."
+    },
         {
           "key": "byId",
           "pattern": "(id: number) => `fiscal-years/${id}`",
@@ -3085,6 +3120,31 @@
           "offlineMode": "online-only",
           "status": "aligned",
           "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Accounting FiscalYearsController and AccountingPermissions.FiscalYears."
+    },
+    {
+      "key": "setCurrent",
+      "pattern": "(id: number) => `fiscal-years/${id}/set-current`",
+      "verb": [
+        "POST"
+      ],
+      "operations": [
+        {
+          "verb": [
+            "POST"
+          ],
+          "caller": "src/modules/accounting/fiscal-years/data/remote/fiscal-year-remote-data-source.ts#setCurrent",
+          "requestBoundary": "{ rowVersion }",
+          "responseBoundary": "fiscalYearDetailSchema",
+          "permissionAuthority": "Accounting FiscalYearsController and AccountingPermissions.FiscalYears.SetCurrent"
+        }
+      ],
+      "currentOwner": "Accounting/fiscal-years",
+      "targetOwner": "Accounting/fiscal-years",
+      "permissionAuthority": "Accounting FiscalYearsController and AccountingPermissions.FiscalYears.SetCurrent",
+      "scope": "tenant/company",
+      "offlineMode": "online-only",
+      "status": "aligned",
+      "note": "Changing the shared company Current year is distinct from the caller's personal working context and requires the exact SetCurrent permission plus RowVersion."
         }
       ]
     },

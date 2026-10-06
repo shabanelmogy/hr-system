@@ -18,6 +18,9 @@ internal sealed class FiscalYearConfiguration : IEntityTypeConfiguration<FiscalY
 
         builder.HasIndex(item => new { item.TenantId, item.CompanyId, item.Code }).IsUnique();
         builder.HasIndex(item => new { item.TenantId, item.CompanyId, item.StartDate, item.EndDate });
+        builder.HasIndex(item => new { item.TenantId, item.CompanyId, item.IsCurrent })
+            .IsUnique()
+            .HasFilter("[IsCurrent] = CAST(1 AS bit) AND [IsDeleted] = CAST(0 AS bit)");
 
         builder.HasMany(item => item.Periods)
             .WithOne(item => item.FiscalYear)
@@ -26,6 +29,23 @@ internal sealed class FiscalYearConfiguration : IEntityTypeConfiguration<FiscalY
             .OnDelete(DeleteBehavior.Restrict);
 
         builder.Navigation(item => item.Periods).UsePropertyAccessMode(PropertyAccessMode.Field);
+    }
+}
+
+internal sealed class FiscalYearUserSelectionConfiguration : IEntityTypeConfiguration<FiscalYearUserSelection>
+{
+    public void Configure(EntityTypeBuilder<FiscalYearUserSelection> builder)
+    {
+        builder.ToTable("FiscalYearUserSelections");
+        builder.HasKey(item => item.Id);
+        builder.Property(item => item.UserId).HasMaxLength(450).IsRequired();
+        builder.HasIndex(item => new { item.TenantId, item.CompanyId, item.UserId }).IsUnique();
+
+        builder.HasOne(item => item.SelectedFiscalYear)
+            .WithMany()
+            .HasForeignKey(item => new { item.TenantId, item.CompanyId, item.SelectedFiscalYearId })
+            .HasPrincipalKey(item => new { item.TenantId, item.CompanyId, item.Id })
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }
 

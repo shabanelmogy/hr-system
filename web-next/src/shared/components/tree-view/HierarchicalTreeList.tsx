@@ -23,7 +23,8 @@ import {
   SwapVert,
   Edit,
 } from "@mui/icons-material";
-import { motion, type PanInfo } from "framer-motion";
+import * as motion from "framer-motion/client";
+import type { PanInfo } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import type { TreeNode } from "./types";
 

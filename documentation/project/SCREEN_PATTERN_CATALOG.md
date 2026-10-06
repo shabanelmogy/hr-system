@@ -30,8 +30,9 @@
 | P-002 Tree + Master/Detail | Cost Centers `CostCentersPage` + `CostCenterTreeDiagram` + `SplitTreeView` — `Implemented` | `CostCentersScreen` + `OrganizationalStructureManagementScreen` + `OrganizationalStructureTreeDiagram` + `AppHierarchicalTree` — `Implemented` | Web `SplitTreeView`؛ Mobile `AppHierarchicalTree` | Web يعرض split view عند توفر المساحة؛ Mobile يستخدم stacked/detail navigation ولا يضغط عمودين داخل الهاتف |
 | P-003 Tabbed multi-section form | Add Tenant في `TenantManagementPage` + `FormTabs` + `MyForm` — `Implemented` | `TenantManagementScreen` + `TenantFormModal` + `AppForm` — `Adapted` | Web `FormTabs`/`MyForm`؛ Mobile `AppForm` و`AppFormTabs` عند اعتماد tabs | Web maps the first invalid field to its tab and focuses it after the tab is mounted. Mobile Add Tenant remains one full-screen stacked form with one validation context; `AppFormTabs` is covered as the reusable primitive, not forced into this flow |
 | P-005 Singleton Settings Editor | Ledger Setup `LedgerSetupResourcePage` لمسار Accounting Company Settings — `Adapted` evidence | `LedgerSetupResourceScreen` + `LedgerSetupForm` لمسار Accounting Company Settings — `Adapted` evidence | Web `PageHeader` + `MyForm`؛ Mobile `AppPageHeader` + `AppForm` | المرجع يثبت رحلة التحميل/التحرير/الحفظ لسجل واحد فقط؛ الـgeneric resource switch والـcatch-all DTO ليسا جزءًا من النمط أو المعمارية المستهدفة |
-| P-006 Scoped Relationship / Mapping Editor | Role Permissions `RolePermissionsPage` + `useRolePermissions` — `Implemented` | `RolePermissionsScreen` + `PermissionModuleCard` — `Adapted` | shared filters, feedback, dirty-state, save/read-only shells | Web يستخدم قائمة شاشات رأسية ويفتح صلاحيات كل شاشة داخل Accordion؛ Mobile يستخدم بطاقات شاشات رأسية قابلة للفتح. كلاهما يحافظ على scope، الاختيار، dirty state، الصلاحيات والحفظ الصريح |
+| P-006 Scoped Relationship / Mapping Editor | Role Permissions module-first rail + screen accordion editor — `Implemented` | Role Permissions responsive module selector + screen disclosure cards — `Adapted` | shared filters, feedback, dirty-state, save/read-only shells | يبدأ من موديول أعمال يملكه العقد ثم يعرض شاشاته رأسيًا؛ Web عمودان على الشاشات الواسعة، وMobile عمودان على التابلت ومحدد أفقي على الهاتف. كلاهما يحافظ على الاختيارات المخفية وdirty state والحفظ الصريح |
 | P-007 Settings Navigation Hub | `LedgerSetupOverviewPage` + Accounting module definition — `Implemented` | `LedgerSetupOverviewScreen` + Accounting module definition — `Implemented` | module navigation, page headers, permission-filtered route manifests | الـHub يكتشف ويفتح الرحلات فقط؛ لا يملك DTO عامًا أو CRUD أو business state للأطفال |
+| P-008 Global Scoped Context Selector | Tenant identity + Company + Fiscal Year through shared Topbar slots — `Implemented` | Tenant identity + Company + Fiscal Year through the generic App-header action slot — `Adapted` | Web `ContextBadge`/`ContextSwitcher` + unsaved-change registry؛ Mobile `AppContextBadge` + shared modal/card/button + `NavigationContextActionsProvider` | المالك يحمّل ويغيّر سياقه الموثوق فقط؛ Shell/Platform يملكان موضع التركيب العام ولا يستوردان business internals. Mobile يستخدم trigger مضغوطًا/modal على الهاتف مع نفس السلطة والحماية |
 
 هذه المصفوفة هي سجل حقيقة التنفيذ. لا يجوز تغيير حالة منصة إلى `Implemented`
 من دون مسار مصدر فعلي واختبار أو evidence مناسب، ولا يعني `Adapted` أن المنصة
@@ -292,9 +293,10 @@ Role Permissions مرجع لتركيب الاختيار/التصفية/dirty-sta
    error، forbidden، read-only، conflict، وsaved baseline.
 4. تحفظ filters/search اختيار المستخدم ولا تفقد تغييرات مخفية بالفلتر. يعرض
    ملخصًا واضحًا للتغييرات قبل الحفظ عندما تكون المجموعة كبيرة أو حساسة.
-5. يعرض Web العناصر المصدرية كشاشات رأسية قابلة للفتح، ويعرض الصلاحيات داخل
-   Accordion الشاشة المختارة بدل مصفوفة إجراءات أفقية. يستخدم Mobile stacked
-   cards أو sections، مع تكافؤ كامل في العلاقات والصلاحيات والتحقق.
+5. عندما تنتمي العناصر إلى موديولات أعمال متعددة، يبدأ المحرر بمحدد Module
+   مبني على metadata يملكها الخادم، ثم يعرض شاشات الموديول المحدد رأسيًا.
+   يعرض Web Accordion الشاشة بدل مصفوفة إجراءات أفقية. يستخدم Mobile disclosure
+   cards، مع تكافؤ كامل في العلاقات والصلاحيات والتحقق.
 6. توجد dirty-navigation protection، Save صريح، server-authoritative validation،
    وإعادة تحميل بعد conflict. لا تعتبر checkbox state المحلية حقيقة مالية.
 
@@ -305,6 +307,25 @@ Role Permissions مرجع لتركيب الاختيار/التصفية/dirty-sta
 - القرار: الدور المختار هو scope الصفحة، وتظهر الموارد/الشاشات كقائمة رأسية.
   الضغط على شاشة يفتح Accordion واحدًا يعرض إجراءاتها فقط، مع عداد المحدد،
   وأمر تحديد أو إلغاء كل صلاحيات الشاشة.
+- يسبق قائمة الشاشات عمود Modules مصدره `moduleCode` الذي يعيده كتالوج الـAPI؛
+  لا يستنتج العميل الملكية من اسم الشاشة. اختيار الموديول يرشح التفاصيل فقط
+  ولا يحذف تغييرات تمت في موديول آخر.
+- يملك عمود الموديولات بحثًا مستقلاً بالاسم المترجم أو الكود، بينما يظل بحث
+  الشاشات/الإجراءات داخل لوحة التفاصيل. لا يستخدم المحرر Hero كبيرًا أو بطاقات
+  metrics أو progress chart؛ يظهر شريط حالة منخفض الارتفاع فقط لحالة التعديل،
+  المحدد/الإجمالي، ونسبة/عدد التغييرات، كي تبدأ مساحة التحرير مبكرًا.
+- في تخطيط Web ذي العمودين يستخدم رأسا Modules وScreens نفس padding والـtypography
+  والـvertical rhythm وحجم حقل البحث، لذلك يظهر بحث Modules وبحث
+  Screens and permissions وفلتر الشاشة ومحدد All/Selected على baseline أفقي
+  واحد. يبقى helper الخاص بالموديولات ترجمة قصيرة من سطر واحد، ولا يهبط أي
+  control بسبب وصف ملتف أو margin محلي مختلف.
+- عند `md` فأعلى يظهر Web كتخطيط عمودين master/detail، وفي العرض الضيق تتكدس
+  قائمة الموديولات فوق لوحة الشاشات مع بقاء نفس الرحلة والوصول بلوحة المفاتيح.
+- في Web المكتبي يملك الـShell ارتفاع الصفحة الثابت: لا يتمدد body رأسيًا بسبب
+  الشاشات، وتظل pagination ظاهرة أسفل لوحة التفاصيل مع خمس شاشات افتراضيًا.
+  القوائم فقط تملك overflow محدودًا إذا فتح المستخدم تفاصيل كبيرة أو اختار page
+  size أكبر؛ أما العرض الضيق فيحتفظ بتمرير الصفحة الطبيعي. يكون عمود Modules
+  بعرض كافٍ (`320px` في المرجع الحالي) ويلتف الاسم المترجم بدل قطعه.
 - تحفظ التصفية والبحث والترقيم والتغييرات غير المحفوظة كما هي، ولا يؤدي إغلاق
   Accordion أو انتقال المستخدم بين الصفحات إلى إسقاط الاختيارات.
 - يستخدم Web النمط نفسه في العرض المكتبي والصغير؛ لا تعاد مصفوفة action-per-column
@@ -318,6 +339,13 @@ Role Permissions مرجع لتركيب الاختيار/التصفية/dirty-sta
 
 - يظل الدور المختار هو scope الرحلة، وتظهر الموارد للمستخدم باسم «الشاشات» في
   قائمة بطاقات رأسية Native بلا جدول أو تمرير أفقي.
+- يستخدم التابلت تخطيط عمودين لموديولات الأعمال والشاشات. يستخدم الهاتف محدد
+  موديولات أفقيًا فوق البطاقات حتى لا تضيق أهداف اللمس أو النص، ويستجيب التخطيط
+  لتغير أبعاد النافذة/الدوران بدل فحص اسم الجهاز.
+- مصدر ملكية الموديول هو `moduleCode` في استجابة API. تغيير الموديول يعيد فقط
+  search/screen filter والبطاقة المفتوحة؛ تبقى قيم form المعدلة للموديولات الأخرى.
+- يملك محدد الموديولات بحثًا مستقلاً يدعم الاسم العربي/الإنجليزي المعروض والكود،
+  ولا يستبدل بحث الشاشات والصلاحيات داخل لوحة التفاصيل.
 - عنوان البطاقة هدف لمس قابل للوصول لا يقل عن 44 نقطة، ويحمل اسم الشاشة وحالة
   `expanded`. يفتح الضغط صلاحيات شاشة واحدة فقط، ويغلق فتح شاشة أخرى البطاقة
   السابقة من دون فقد الاختيارات غير المحفوظة.
@@ -366,6 +394,76 @@ Role Permissions مرجع لتركيب الاختيار/التصفية/dirty-sta
 6. يختبر تسجيل المسارات، permission filtering، عدم وجود links ميتة، والتنقل
    إلى طفل ممثل على كل منصة مطلوبة.
 
+## P-008 — Global Scoped Context Selector
+
+**الحالة:** `Active` — راجع في 2026-09-27.
+
+### الاستخدام
+
+يُستخدم لاختيار **سياق عمل عالمي موثوق** يؤثر في الطلبات اللاحقة للمستخدم،
+مثل الشركة الحالية أو سنة العمل المالية، من داخل Topbar/App header. لا يُستخدم
+كفلتر محلي لصفحة، ولا كبديل لشاشة إدارة السجلات، ولا يسمح للعميل بإرسال tenant
+أو company أو user مختلف عن السياق الموثوق الذي يملكه الخادم.
+
+### المرجع الحالي
+
+- Web (`Implemented`):
+  `web-next/src/shared/components/layout/ContextBadge.tsx`،
+  `web-next/src/shared/components/layout/ContextSwitcher.tsx`،
+  `web-next/src/platform/tenant-access/TenantNameBadge.tsx`،
+  `web-next/src/platform/tenant-access/CompanyContextSwitcher.tsx`،
+  `web-next/src/modules/accounting/fiscal-years/components/FiscalYearContextSwitcher.tsx`،
+  `web-next/src/shell/components/top-bar/TopBar.tsx`،
+  و`web-next/src/app/(main)/MainShell.tsx`.
+- Mobile (`Adapted`):
+  `mobile-react/src/shared/components/layout/AppContextBadge.tsx`،
+  `mobile-react/src/platform/tenant-access/presentation/components/TenantNameBadge.tsx`،
+  `mobile-react/src/platform/tenant-access/presentation/components/CompanyContextSwitcher.tsx`،
+  `mobile-react/src/modules/accounting/fiscal-years/presentation/components/FiscalYearContextSwitcher.tsx`،
+  `mobile-react/src/platform/navigation/NavigationContextActions.tsx`،
+  `mobile-react/src/platform/navigation/AppAppBar.tsx`،
+  و`mobile-react/app/(main)/_layout.tsx`.
+- دليل عقد سنة العمل والـscope:
+  `api/Modules/Accounting/ErpSystem.Modules.Accounting.Tests/FiscalYearCompanyIsolationTests.cs`،
+  `api/Modules/Accounting/ErpSystem.Modules.Accounting.Tests/FiscalYearsControllerContractTests.cs`،
+  `web-next/src/modules/accounting/fiscal-years/services/fiscalYearService.test.ts`،
+  واختبارات الـremote/repository/use-case المسجلة تحت
+  `mobile-react/src/modules/accounting/fiscal-years/`.
+
+### العقد الإلزامي
+
+1. يملك الموديول أو Platform البيانات، query/mutation، permission، scope،
+   fallback، والاسم المعروض؛ Shell يملك slot عامًا فقط ولا يستورد business
+   implementation ولا يمنح صلاحية.
+2. مصدر tenant/company/user هو الجلسة أو current actor الموثوق. لا يستقبل
+   endpoint اختيار السياق هوية مستخدم آخر أو scope غير موثوق. كل سياق يحدد
+   بوضوح هل هو shared company state أم preference شخصية.
+3. يفرق UI بين loading، unavailable/empty، forbidden/hidden، error/retry، busy،
+   stale selection/fallback، ونجاح التغيير. لا يعرض اختيارًا محليًا بوصفه نجاحًا
+   قبل استجابة الخادم، ولا يخلط cache بين مستخدمين أو شركات.
+4. يطلب shared unsaved-change approval قبل أي تغيير قد يعيد تحميل بيانات أو
+   يتخلص من تعديلات. عند الرفض يبقى السياق والواجهة كما هما؛ وعند النجاح تُبطل
+   query keys المتأثرة فقط وتظهر الحقيقة المعادة من الخادم.
+5. يعرض السياق العام بترتيب الهوية `Tenant → Company → Working Fiscal Year`.
+   تظهر السياقات كعناصر مدمجة داخل حاوية واحدة هادئة بدل بطاقات مستقلة ذات
+   ظلال. في العرض الواسع يظهر كل عنصر الأيقونة والقيمة الحالية في سطر واحد؛
+   اسم نوع السياق لا يكرر بصريًا ويظل كاملًا مع القيمة في
+   accessible name/tooltip. Tenant هوية read-only بينما Company وFiscal Year
+   يضيفان إشارة قائمة فقط عندما يملكان اختيارًا فعليًا. يوفر Web نسخة icon-only
+   للعرض المضغوط، وMobile trigger لا يقل عن 44 نقطة ويتحول كله إلى icon-only على
+   الهاتف الضيق. لا يجوز أن تقص حاوية السياق حلقة/صورة المستخدم؛ القيم وحدها هي
+   التي تختصر عند ضيق المساحة. تبقى القائمة/modal قابلة للقراءة على الهاتف
+   والتابلت. كلاهما يدعم keyboard/screen reader، EN/AR، RTL، النص المكبر، والوضع
+   الداكن. تستخدم الأيقونات semantic accents ثابتة لتسريع التمييز من دون تلوين
+   الحاوية كلها: Tenant ثانوي/بنفسجي، Company معلوماتي/سماوي، وFiscal Year
+   تحذيري/ذهبي، مع contrast مأخوذ من الـtheme لا من ألوان hard-coded.
+6. read-only policy تُقرر لكل سياق حسب المعنى: تغيير scope أمني أو مالي قد
+   يُمنع، بينما preference شخصية غير مالية قد تبقى مسموحة بعقد صريح. الزر
+   الظاهر والhandler المباشر والـAPI يطبقون القرار نفسه.
+7. لا يُضاف dropdown مستقل لكل feature عندما يطابق هذا النمط. Web يعيد استخدام
+   `ContextSwitcher`، وMobile يعيد استخدام shared modal/list/action primitives؛
+   تبقى قواعد المجال والترجمة والـAPI داخل المالك.
+
 ## قواعد اختيار النمط
 
 اختيار النمط يتم بالأسئلة التالية **بالترتيب**؛ أول إجابة «نعم» تحدد النمط الرئيسي
@@ -401,6 +499,7 @@ Screen ID ولكل منصة في عقد الميزة (`FEATURE_DECOMPOSITION_TEM
 | سجل إعداد واحد لكل company/scope | P-005 Singleton Settings Editor | ما حالة unconfigured؟ وما عقد GET/PUT والتزامن؟ |
 | تحرير علاقات أو mappings داخل scope | P-006 Scoped Relationship / Mapping Editor | هل الحفظ replace-set أم delta أم records فعالة/versioned؟ |
 | Hub لاكتشاف إعدادات أطفال مستقلة | P-007 Settings Navigation Hub | كيف تُصفى الوجهات بالصلاحيات؟ وهل كل route فعلي ومسجل؟ |
+| اختيار سياق عمل عالمي من Topbar/App header | P-008 Global Scoped Context Selector | هل التغيير shared scope أم preference شخصية؟ وما fallback وdirty/read-only/cache isolation؟ |
 | Workflow مرتب يحتاج إكمال خطوة قبل التالية | Candidate P-004 Stepper / Wizard | هل كل خطوة تتحقق وحدها؟ هل يُحفظ draft بين الخطوات؟ |
 | مستند رأس + سطور + دورة حياة | Candidate P-008 Transactional Document | من يحسب الإجماليات؟ ما حالات القراءة فقط؟ ما عقد الترحيل والعكس؟ |
 | سجل واحد يحتاج صفحة قراءة غنية | Candidate P-009 Record View | ما الأقسام؟ ما القوائم المرتبطة؟ هل يوجد Activity/Chatter؟ |
@@ -652,4 +751,7 @@ Import يبقى view داخل P-001 كما هو. Import بخطوات (رفع ←
 | 2026-09-25 | اعتماد P-005 Singleton Settings Editor وP-006 Scoped Relationship/Mapping Editor وP-007 Settings Navigation Hub بمراجع Web/Mobile فعلية وحدود تمنع اعتماد Ledger Setup generic renderer كمعمارية مستهدفة | Ledger Setup Company Settings، Dimensions Constraints، Link Accounts، Ledger Setup Overview، وأي مستهلك لاحق مطابق |
 | 2026-09-26 | تحديث مرجع P-006 على Web إلى قائمة شاشات رأسية؛ يفتح Accordion الشاشة صلاحياتها بدل مصفوفة الإجراءات الأفقية، مع تثبيت الوصول وdirty-state والحفظ الصريح | Role Permissions وأي محرر علاقات كثيف يختار P-006 لاحقًا |
 | 2026-09-26 | توحيد مرجع P-006 على Mobile إلى بطاقات شاشات رأسية قابلة للفتح مع مصطلحات EN/AR متطابقة، ترتيب إجراءات، عداد تغييرات، accessibility state وحماية handler الحفظ | Role Permissions وأي محرر علاقات Mobile يختار P-006 لاحقًا |
+| 2026-09-26 | ترقية P-006 إلى Module-first master/detail باستخدام `moduleCode` المملوك للـAPI؛ Web rail بعمودين وMobile rail للتابلت/selector أفقي للهاتف مع حفظ التعديلات المخفية | Role Permissions Web/Mobile وأي mapping editor متعدد الموديولات |
+| 2026-09-27 | اعتماد P-008 لاختيار سياق عمل عالمي موثوق، مع فصل ملكية المجال عن Shell slot، حماية dirty state، عزل user/company، ونسخة Mobile مضغوطة | Company Context وFiscal Year Working Context على Web/Mobile وأي سياق عالمي لاحق مطابق |
+| 2026-09-27 | تنقيح P-008 إلى حاوية سياق واحدة خفيفة: icon/value في سطر واحد، label كامل في tooltip/accessibility، icon-only مضغوط، 44pt على Mobile، ومنع قص حلقة صورة المستخدم | Web/Mobile global header context badges وWeb user avatar |
 | 2026-09-28 | إضافة قواعد اختيار النمط المرتبة، قواعد التركيب المشتركة C-01..C-11 (حاوية النموذج، شكل القائمة، فتح السجل، المراجع، الإجراءات، الإجراءات الجماعية، ألوان الحالة الدلالية، الحالات الإلزامية، التجاوب، هيكل الصفحة، السرعة والدقة)، وتسجيل P-004 وP-008..P-014 كـCandidate بمكوناتها الموجودة وشروط التفعيل. لا تغيير في حالة P-001..P-007 | كل الشاشات الجديدة؛ `erp-platform-template` S6؛ `education-module` |

@@ -125,6 +125,25 @@ tests before creating a parallel look-alike. Keep business rules in the feature.
   checks during movement, isolated inner controls, and an accessible direct Move
   action. Do not use HTML5 native drag-and-drop for these interactions.
 
+### Keep global header context visually unified
+
+For a P-008 global context in the Topbar, reuse shared `ContextBadge` and
+`ContextSwitcher`; do not introduce another feature-owned pill. Compose Tenant,
+Company, and Working Fiscal Year inside one restrained grouped surface in that
+order. On wide layouts each item shows its icon and current value on one line;
+keep the translated scope label plus value in the tooltip/accessible name instead
+of repeating a second visible label line. Compact layouts use equal icon-only
+triggers without losing that accessible identity.
+
+Use theme semantic accents to make the hierarchy scannable without coloring or
+shadowing every item as a separate card: preserve the existing Tenant secondary,
+Company info, and Fiscal Year warning accents. Only the value region may shrink or
+ellipsis. Keep adjacent fixed actions—especially the user avatar and its ring—in a
+non-shrinking padded frame, and put overflow clipping on the shrinkable context
+value group rather than the whole Topbar group. Check the actual header at the
+registered compact/wide breakpoints in EN/AR, LTR/RTL, and light/dark themes; static
+type checks do not prove that the avatar, tooltips, or actions remain uncut.
+
 ## Protect runtime, security, and locale behavior
 
 - Preserve same-origin BFF transport, centralized Problem Details handling, request

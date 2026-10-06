@@ -51,8 +51,14 @@ export const routePolicies: readonly RoutePolicy[] = [
   },
   { path: appRoutes.platform.administration.roles, permissions: [permissions.ViewRoles] },
   { path: appRoutes.platform.administration.users, permissions: [permissions.ViewUsers] },
-  { path: appRoutes.platform.administration.invitations, permissions: [permissions.ViewUsers] },
-  { path: appRoutes.platform.administration.offlineOperations },
+  {
+    path: appRoutes.platform.administration.invitations,
+    permissions: [permissions.ViewUserInvitations],
+  },
+  {
+    path: appRoutes.platform.administration.offlineOperations,
+    permissions: [permissions.ViewOfflineOperations],
+  },
   {
     path: appRoutes.modules.reporting.crystalReports,
     permissions: [permissions.ViewCrystalReports],
@@ -161,20 +167,30 @@ export const routePolicies: readonly RoutePolicy[] = [
   },
   {
     path: appRoutes.modules.accounting.ledgerSetup.accounts,
-    permissions: [permissions.ViewAccountHierarchyLevels],
-  },
-  {
-    path: appRoutes.modules.accounting.ledgerSetup.hierarchyLevels,
     permissions: [permissions.ViewAccounts],
   },
   {
+    path: appRoutes.modules.accounting.ledgerSetup.hierarchyLevels,
+    permissions: [permissions.ViewAccountHierarchyLevels],
+  },
+  {
     path: appRoutes.modules.accounting.ledgerSetup.dimensions,
-    permissions: [permissions.ViewDimensionDefinitions],
+    permissions: [
+      permissions.ViewDimensionDefinitions,
+      permissions.ViewDimensionValues,
+      permissions.ViewAccountDimensionPolicies,
+    ],
   },
   { path: appRoutes.modules.accounting.ledgerSetup.books, permissions: [permissions.ViewBooks] },
   { path: appRoutes.modules.accounting.ledgerSetup.journals, permissions: [permissions.ViewJournalDefinitions] },
-  { path: appRoutes.modules.accounting.ledgerSetup.exchangeRates, permissions: [permissions.ViewExchangeRateTypes] },
-  { path: appRoutes.modules.accounting.ledgerSetup.accountDetermination, permissions: [permissions.ViewAccountMappings] },
+  {
+    path: appRoutes.modules.accounting.ledgerSetup.exchangeRates,
+    permissions: [permissions.ViewExchangeRateTypes, permissions.ViewExchangeRates],
+  },
+  {
+    path: appRoutes.modules.accounting.ledgerSetup.accountDetermination,
+    permissions: [permissions.ViewAccountMappings, permissions.ViewPostingProfiles],
+  },
   {
     path: appRoutes.modules.accounting.ledgerSetup.index,
     anyOf: [
@@ -184,10 +200,14 @@ export const routePolicies: readonly RoutePolicy[] = [
       { permissions: [permissions.ViewAccounts] },
       { permissions: [permissions.ViewAccountHierarchyLevels] },
       { permissions: [permissions.ViewDimensionDefinitions] },
+      { permissions: [permissions.ViewDimensionValues] },
+      { permissions: [permissions.ViewAccountDimensionPolicies] },
       { permissions: [permissions.ViewBooks] },
       { permissions: [permissions.ViewJournalDefinitions] },
       { permissions: [permissions.ViewExchangeRateTypes] },
+      { permissions: [permissions.ViewExchangeRates] },
       { permissions: [permissions.ViewAccountMappings] },
+      { permissions: [permissions.ViewPostingProfiles] },
     ],
   },
   {

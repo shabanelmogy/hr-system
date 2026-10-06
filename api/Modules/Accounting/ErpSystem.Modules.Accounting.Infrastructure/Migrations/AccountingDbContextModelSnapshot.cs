@@ -164,6 +164,9 @@ namespace ErpSystem.Modules.Accounting.Infrastructure.Migrations
                     b.Property<DateOnly>("EndDate")
                         .HasColumnType("date");
 
+                    b.Property<bool>("IsCurrent")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -216,9 +219,91 @@ namespace ErpSystem.Modules.Accounting.Infrastructure.Migrations
                     b.HasIndex("TenantId", "CompanyId", "Code")
                         .IsUnique();
 
+                    b.HasIndex("TenantId", "CompanyId", "IsCurrent")
+                        .IsUnique()
+                        .HasFilter("[IsCurrent] = CAST(1 AS bit) AND [IsDeleted] = CAST(0 AS bit)");
+
                     b.HasIndex("TenantId", "CompanyId", "StartDate", "EndDate");
 
                     b.ToTable("FiscalYears", "acc");
+                });
+
+            modelBuilder.Entity("ErpSystem.Modules.Accounting.Domain.Finance.FiscalYears.Entities.FiscalYearUserSelection", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CompanyId")
+                        .IsConcurrencyToken()
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedById")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedByPc")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedById")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DeletedByPc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<int?>("SelectedFiscalYearId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TenantId")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<string>("UpdatedById")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdatedByPc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TenantId");
+
+                    b.HasIndex("TenantId", "CompanyId");
+
+                    b.HasIndex("TenantId", "CompanyId", "SelectedFiscalYearId");
+
+                    b.HasIndex("TenantId", "CompanyId", "UserId")
+                        .IsUnique();
+
+                    b.ToTable("FiscalYearUserSelections", "acc");
                 });
 
             modelBuilder.Entity("ErpSystem.Modules.Accounting.Domain.Finance.LedgerSetup.Entities.Account", b =>
@@ -1613,6 +1698,17 @@ namespace ErpSystem.Modules.Accounting.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("FiscalYear");
+                });
+
+            modelBuilder.Entity("ErpSystem.Modules.Accounting.Domain.Finance.FiscalYears.Entities.FiscalYearUserSelection", b =>
+                {
+                    b.HasOne("ErpSystem.Modules.Accounting.Domain.Finance.FiscalYears.Entities.FiscalYear", "SelectedFiscalYear")
+                        .WithMany()
+                        .HasForeignKey("TenantId", "CompanyId", "SelectedFiscalYearId")
+                        .HasPrincipalKey("TenantId", "CompanyId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("SelectedFiscalYear");
                 });
 
             modelBuilder.Entity("ErpSystem.Modules.Accounting.Domain.Finance.LedgerSetup.Entities.Account", b =>

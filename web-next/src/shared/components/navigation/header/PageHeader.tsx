@@ -26,27 +26,30 @@ function SimplePageHeader({
   subTitle,
   actions,
   isDashboard = false,
+  compact = false,
 }: SimplePageHeaderProps) {
   const theme = useTheme();
   return (
-    <Box sx={{ flexShrink: 0, mb: isDashboard ? 2 : 4 }}>
+    <Box sx={{ flexShrink: 0, mb: compact ? 1 : isDashboard ? 2 : 4 }}>
       <Box
         sx={{
           display: "flex",
           flexDirection: { xs: "column", md: "row" },
           alignItems: { md: "center" },
           justifyContent: "space-between",
-          gap: 2,
+          gap: compact ? 0.75 : 2,
         }}
       >
         <Box sx={{ minWidth: 0 }}>
           <Typography
-            variant="h5"
+            variant={compact ? "h6" : "h5"}
             sx={{ color: theme.palette.info.light, fontWeight: "bold" }}
           >
             {title}
           </Typography>
-          {subTitle ? <Typography variant="body1">{subTitle}</Typography> : null}
+          {subTitle ? (
+            <Typography variant={compact ? "body2" : "body1"}>{subTitle}</Typography>
+          ) : null}
         </Box>
         {actions ? (
           <Box sx={{ flexShrink: 0, width: { xs: "100%", md: "auto" } }}>

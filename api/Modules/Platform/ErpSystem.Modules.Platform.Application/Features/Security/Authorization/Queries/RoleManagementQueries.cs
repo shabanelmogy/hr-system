@@ -69,10 +69,20 @@ public sealed class GetRoleClaimsQueryHandler(
         var claims = moduleCatalog.GetTenantAssignablePermissions()
             .Where(permission => !string.IsNullOrWhiteSpace(permission))
             .Order(StringComparer.Ordinal)
-            .Select(permission => new CheckBoxViewModel
+            .Select(permission =>
             {
-                DisplayValue = permission,
-                IsSelected = rolePermissions.Contains(permission)
+                if (!moduleCatalog.TryResolvePermission(permission, out var resolvedPermission))
+                {
+                    throw new InvalidOperationException(
+                        $"Tenant-assignable permission '{permission}' is missing module catalog ownership.");
+                }
+
+                return new CheckBoxViewModel
+                {
+                    DisplayValue = permission,
+                    ModuleCode = resolvedPermission.ModuleCode,
+                    IsSelected = rolePermissions.Contains(permission)
+                };
             })
             .ToList();
 

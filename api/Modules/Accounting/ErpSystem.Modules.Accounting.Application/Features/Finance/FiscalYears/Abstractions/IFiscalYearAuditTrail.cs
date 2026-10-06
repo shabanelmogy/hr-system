@@ -6,4 +6,5 @@ public interface IFiscalYearAuditTrail
 {
     Task RecordUpdateAsync(FiscalYear existingFiscalYear, FiscalYear updatedFiscalYear, CancellationToken cancellationToken);
     Task RecordLifecycleAsync(FiscalYear fiscalYear, string oldStatus, string newStatus, CancellationToken cancellationToken);
+    Task RecordCurrentChangedAsync(FiscalYear fiscalYear, int? previousFiscalYearId, CancellationToken cancellationToken);
 }

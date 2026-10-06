@@ -33,12 +33,21 @@ the registered Web and Mobile sources for the same workflow:
 - `P-005`: Singleton Settings Editor; Mobile uses a full-screen `AppForm` with
   explicit unconfigured/configured/read-only/conflict states and no fake list.
 - `P-006`: Scoped Relationship/Mapping Editor; Mobile adapts the Role Permissions
-  journey to stacked screen-first disclosure cards. Tapping a screen opens its
-  permissions while retaining role scope, filters, dirty/change summary, explicit
-  save semantics, accessibility state, and read-only behavior.
+  journey to an API-owned business-module selector followed by screen-first
+  disclosure cards. Tablets use a two-column rail/detail layout; phones use a
+  horizontal selector above the cards. Tapping a screen opens its permissions
+  while retaining edits in every module, role scope, filters, dirty/change summary,
+  explicit save semantics, accessibility state, and read-only behavior.
 - `P-007`: Settings Navigation Hub; Mobile uses the Ledger Setup overview and
   module definition as a permission-filtered launcher only, never as a generic
   child data owner.
+- `P-008`: Global Scoped Context Selector; Mobile uses shared `AppContextBadge`
+  surfaces for Tenant identity, Company, and Fiscal Year, and adapts context
+  selection to an accessible App-header trigger and shared modal/list primitives.
+  Wide layouts show label/value; narrow phones keep a 44-point icon-only surface
+  with the complete accessible name. `NavigationContextActionsProvider` is only a generic composition
+  slot; the owning Platform/module retains API, permission, fallback, scope,
+  dirty-state, read-only, cache-isolation, and translated-label decisions.
 
 `P-004` remains a Candidate Stepper and is not implementation authority. For
 Ledger Setup, `LedgerSetupResourceScreen` and `LedgerSetupForm` are compatibility

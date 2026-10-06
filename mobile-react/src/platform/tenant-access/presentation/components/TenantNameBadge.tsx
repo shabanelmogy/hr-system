@@ -1,13 +1,18 @@
-import { StyleSheet, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
-import { useLocalization } from '@/src/core/localization';
-import { useAppTheme } from '@/src/core/theme';
 import { useAuth } from '@/src/platform/auth';
-import { AppIcon, AppText } from '@/src/shared/components';
+import { AppContextBadge, type AppContextBadgeProps } from '@/src/shared/components';
 
-export function TenantNameBadge() {
-  const { direction } = useLocalization();
-  const { theme } = useAppTheme();
+export function TenantNameBadge({
+  compact = false,
+  iconOnly = false,
+  tone = 'surface',
+}: {
+  compact?: boolean;
+  iconOnly?: boolean;
+  tone?: AppContextBadgeProps['tone'];
+}) {
+  const { t } = useTranslation();
   const { session } = useAuth();
   const tenantName = session?.tenantName?.trim() ?? '';
   const isSuperAdmin = session?.roles.some(
@@ -16,41 +21,13 @@ export function TenantNameBadge() {
 
   if (!tenantName || isSuperAdmin) return null;
 
-  return (
-    <View
-      accessibilityLabel={tenantName}
-      style={[
-        styles.badge,
-        {
-          direction,
-          backgroundColor: theme.colors.surface,
-          borderColor: theme.colors.primary,
-        },
-      ]}>
-      <AppIcon color={theme.colors.primary} name="business-outline" size={16} />
-      <AppText
-        numberOfLines={1}
-        style={[styles.label, { color: theme.colors.text }]}
-        variant="caption"
-        weight="800">
-        {tenantName}
-      </AppText>
-    </View>
-  );
+  return <AppContextBadge
+    accent="accent"
+    compact={compact}
+    icon="layers-outline"
+    iconOnly={iconOnly}
+    label={t('auth.currentTenant')}
+    tone={tone}
+    value={tenantName}
+  />;
 }
-
-const styles = StyleSheet.create({
-  badge: {
-    maxWidth: 220,
-    minHeight: 28,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-    borderWidth: 1,
-    borderRadius: 999,
-    paddingHorizontal: 10,
-  },
-  label: {
-    flexShrink: 1,
-  },
-});

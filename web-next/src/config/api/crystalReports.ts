@@ -4,6 +4,7 @@ import type { CrystalReportsRoutes } from "./types";
 /** Crystal report management routes. Tenant and company scope come from the session. */
 export const crystalReports: CrystalReportsRoutes = {
   list: `${version}/crystal-reports`,
+  supportedEntities: `${version}/crystal-reports/supported-entities`,
   render: (id) => `${version}/crystal-reports/${id}/render`,
   globalList: `${version}/global-crystal-reports`,
   globalRender: (sourceId) => `${version}/global-crystal-reports/${sourceId}/render`,
@@ -14,6 +15,7 @@ export const crystalReports: CrystalReportsRoutes = {
   download: (id) => `${version}/crystal-reports/${id}/download`,
   downloadVersion: (id, versionId) => `${version}/crystal-reports/${id}/versions/${versionId}/download`,
   publishVersion: (id, versionId) => `${version}/crystal-reports/${id}/versions/${versionId}/publish`,
+  revalidateVersion: (id, versionId) => `${version}/crystal-reports/${id}/versions/${versionId}/revalidate`,
   access: (id) => `${version}/crystal-reports/${id}/access`,
   grantRoleOptions: `${version}/crystal-reports/grant-role-options`,
   archive: (id) => `${version}/crystal-reports/${id}`,

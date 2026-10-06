@@ -52,6 +52,8 @@ public sealed class AccountingDbContext : DbContext, IAccountingUnitOfWork
 
     public DbSet<FiscalPeriod> FiscalPeriods => Set<FiscalPeriod>();
 
+    public DbSet<FiscalYearUserSelection> FiscalYearUserSelections => Set<FiscalYearUserSelection>();
+
     public DbSet<Currency> Currencies => Set<Currency>();
 
     public DbSet<AccountingCompanySettings> AccountingCompanySettings => Set<AccountingCompanySettings>();

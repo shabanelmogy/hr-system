@@ -19,6 +19,7 @@ export default function RolePermissionsActions(props: RolePermissionsActionsProp
         position: "sticky",
         bottom: 0,
         zIndex: 5,
+        flexShrink: 0,
         p: { xs: 2, md: 2.5 },
         bgcolor: "background.paper",
         borderTop: 1,

@@ -35,6 +35,7 @@ export const companyOptionSchema: z.ZodType<UserCompanyOption> = z.object({
 
 const roleClaimSchema = z.object({
   displayValue: z.string().trim().min(1),
+  moduleCode: z.string().trim().min(1),
   isSelected: z.boolean(),
 });
 

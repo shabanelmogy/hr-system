@@ -11,10 +11,11 @@ export type FiscalYearLifecycleAction = 'open' | 'beginClosing' | 'close' | 'loc
 export interface FiscalPeriod { id: number; sequence: number; code: string; nameAr: string; nameEn: string; startDate: string; endDate: string; status: FiscalPeriodStatus }
 export interface FiscalYear {
   id: number; code: string; nameAr: string; nameEn: string; startDate: string; endDate: string; periodFrequency: FiscalPeriodFrequency; status: FiscalYearStatus;
-  periodsCount: number; createdOn: string; updatedOn: string | null; isDeleted: boolean; rowVersion: string;
+  isCurrent: boolean; periodsCount: number; createdOn: string; updatedOn: string | null; isDeleted: boolean; rowVersion: string;
 }
 export interface FiscalYearDetail extends Omit<FiscalYear, 'periodsCount'> { periods: FiscalPeriod[] }
-export interface FiscalYearLookup { id: number; code: string; nameAr: string; nameEn: string; startDate: string; endDate: string; status: FiscalYearStatus }
+export interface FiscalYearLookup { id: number; code: string; nameAr: string; nameEn: string; startDate: string; endDate: string; status: FiscalYearStatus; isCurrent: boolean }
+export interface FiscalYearContext { companyCurrentFiscalYear: FiscalYearLookup | null; selectedFiscalYear: FiscalYearLookup | null; hasUserOverride: boolean; availableFiscalYears: FiscalYearLookup[] }
 export interface FiscalYearRequest { code: string; nameAr: string; nameEn: string; startDate: string; endDate: string; periodFrequency: FiscalPeriodFrequency }
 export interface FiscalYearFilters { recordStatus: FiscalYearRecordStatus; lifecycleStatus: FiscalYearLifecycleFilter }
 export interface FiscalYearPageQuery extends FiscalYearFilters { pageNumber: number; pageSize: number; search: string; searchField: FiscalYearSearchField; searchOperator: FiscalYearSearchOperator; sortBy: FiscalYearSortColumn; sortDirection: 'asc' | 'desc' }

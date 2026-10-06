@@ -199,7 +199,12 @@ email, code, user, invitation, token, and id route parameters. `ObserveRoot`
 and `ObserveErrorBoundary` capture startup/native and render errors while the
 existing localized retry UI remains the user-facing recovery path. Release
 evidence must include device-level sign-in, tenant/company switching, and
-critical HR workflows exercised with Maestro or an equivalent device
+critical HR workflows exercised with Maestro or an equivalent device.
+When the JavaScript bundle runs in Expo Go, the native `ExpoAppMetrics` module
+is unavailable; `src/core/observability/expoObserve.tsx` detects that runtime,
+skips native Observe initialization, and supplies a JavaScript-only error
+boundary so Expo Go remains usable. Custom development clients and release
+builds load the full Observe integration.
 automation tool. Do not claim device behavior is verified until that evidence
 is recorded.
 

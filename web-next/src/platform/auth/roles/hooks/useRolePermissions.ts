@@ -16,13 +16,12 @@ import { permissions } from "@/lib/auth/permissions";
 import { usePermissions } from "@/shared/hooks/usePermissions";
 import { appRoutes } from "@/config/routes";
 import { getPermissionActionLabel, getPermissionResourceLabel } from "../utils/permissionLabels";
-import { countChangedClaims, sortPermissionActions } from "../utils/permissionPresentation";
-
-function splitPermission(value: string): { module: string; action: string } | null {
-  const separator = value.indexOf(":");
-  if (separator <= 0 || separator === value.length - 1) return null;
-  return { module: value.slice(0, separator), action: value.slice(separator + 1) };
-}
+import {
+  countChangedClaims,
+  sortPermissionActions,
+  splitPermission,
+  summarizePermissionBusinessModules,
+} from "../utils/permissionPresentation";
 
 export function useRolePermissions(roleId: string) {
   const { i18n, t } = useTranslation();
@@ -32,12 +31,13 @@ export function useRolePermissions(roleId: string) {
   const { showError, showSuccess, SnackbarComponent } = useNotifications();
   const { getRoleWithClaims, updateRoleClaims } = useRoleStore();
   const [role, setRole] = useState<RoleWithClaims | null>(null);
-  const [selectedModule, setSelectedModule] = useState("");
+  const [requestedBusinessModule, setRequestedBusinessModule] = useState("");
+  const [selectedScreen, setSelectedScreen] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
   const [showOnlySelected, setShowOnlySelected] = useState(false);
   const [baselineClaims, setBaselineClaims] = useState<RoleClaimsFormData["roleClaims"]>([]);
   const canEdit = !isReadOnly && hasPermission(permissions.EditRolePermissions);
@@ -90,12 +90,13 @@ export function useRolePermissions(roleId: string) {
     form.setValue("roleClaims", roleClaims, { shouldDirty: true, shouldValidate: true });
   };
 
-  const selectModule = (module: string, isSelected: boolean) => {
+  const selectScreen = (screen: string, isSelected: boolean) => {
     if (!role || role.isSystem || !canEdit) return;
     replaceClaims(
       role.roleClaims.map((claim) => {
         const parsed = splitPermission(claim.displayValue);
-        return parsed?.module.toLowerCase() === module.toLowerCase()
+        return claim.moduleCode.toLowerCase() === selectedBusinessModule.toLowerCase() &&
+          parsed?.resource.toLowerCase() === screen.toLowerCase()
           ? { ...claim, isSelected }
           : claim;
       }),
@@ -111,11 +112,21 @@ export function useRolePermissions(roleId: string) {
     );
   };
 
-  const availableModules = useMemo(() => Array.from(new Set(
+  const businessModules = useMemo(
+    () => summarizePermissionBusinessModules(role?.roleClaims ?? []),
+    [role],
+  );
+
+  const selectedBusinessModule = businessModules.find(
+    (module) => module.code.toLowerCase() === requestedBusinessModule.toLowerCase(),
+  )?.code ?? businessModules[0]?.code ?? "";
+
+  const availableScreens = useMemo(() => Array.from(new Set(
     (role?.roleClaims ?? [])
-      .map((claim) => splitPermission(claim.displayValue)?.module)
-      .filter((module): module is string => Boolean(module)),
-  )).sort((left, right) => left.localeCompare(right)), [role]);
+      .filter((claim) => claim.moduleCode.toLowerCase() === selectedBusinessModule.toLowerCase())
+      .map((claim) => splitPermission(claim.displayValue)?.resource)
+      .filter((screen): screen is string => Boolean(screen)),
+  )).sort((left, right) => left.localeCompare(right)), [role, selectedBusinessModule]);
 
   const permissionActions = useMemo(() => sortPermissionActions(Array.from(new Set(
     (role?.roleClaims ?? [])
@@ -123,20 +134,20 @@ export function useRolePermissions(roleId: string) {
       .filter((action): action is string => Boolean(action)),
   ))), [role]);
 
-  const filteredModules = useMemo(() => {
-    let modules = availableModules.filter(
-      (module) => !selectedModule || module.toLowerCase() === selectedModule.toLowerCase(),
+  const filteredScreens = useMemo(() => {
+    let screens = availableScreens.filter(
+      (screen) => !selectedScreen || screen.toLowerCase() === selectedScreen.toLowerCase(),
     );
 
     if (searchTerm.trim()) {
       const query = searchTerm.trim().toLocaleLowerCase(i18n.language);
-      modules = modules.filter((module) => {
+      screens = screens.filter((screen) => {
         const searchableValues = [
-          module,
-          getPermissionResourceLabel(module, t),
+          screen,
+          getPermissionResourceLabel(screen, t),
           ...(role?.roleClaims ?? [])
             .map((claim) => splitPermission(claim.displayValue))
-            .filter((claim) => claim?.module.toLowerCase() === module.toLowerCase())
+            .filter((claim) => claim?.resource.toLowerCase() === screen.toLowerCase())
             .flatMap((claim) => claim
               ? [claim.action, getPermissionActionLabel(claim.action, t)]
               : []),
@@ -148,29 +159,40 @@ export function useRolePermissions(roleId: string) {
     }
 
     if (showOnlySelected && role) {
-      modules = modules.filter((module) =>
+      screens = screens.filter((screen) =>
         role.roleClaims.some((claim) => {
           const parsed = splitPermission(claim.displayValue);
-          return claim.isSelected && parsed?.module.toLowerCase() === module.toLowerCase();
+          return claim.moduleCode.toLowerCase() === selectedBusinessModule.toLowerCase() &&
+            claim.isSelected && parsed?.resource.toLowerCase() === screen.toLowerCase();
         }),
       );
     }
 
-    return modules;
-  }, [availableModules, i18n.language, role, searchTerm, selectedModule, showOnlySelected, t]);
+    return screens;
+  }, [
+    availableScreens,
+    i18n.language,
+    role,
+    searchTerm,
+    selectedBusinessModule,
+    selectedScreen,
+    showOnlySelected,
+    t,
+  ]);
 
-  const paginatedModules = useMemo(() => {
+  const paginatedScreens = useMemo(() => {
     const start = page * rowsPerPage;
-    return filteredModules.slice(start, start + rowsPerPage);
-  }, [filteredModules, page, rowsPerPage]);
+    return filteredScreens.slice(start, start + rowsPerPage);
+  }, [filteredScreens, page, rowsPerPage]);
 
   const selectFiltered = (isSelected: boolean) => {
     if (!role || role.isSystem || !canEdit) return;
-    const filteredModuleNames = new Set(filteredModules.map((module) => module.toLowerCase()));
+    const filteredScreenNames = new Set(filteredScreens.map((screen) => screen.toLowerCase()));
     replaceClaims(
       role.roleClaims.map((claim) => {
         const parsed = splitPermission(claim.displayValue);
-        return parsed && filteredModuleNames.has(parsed.module.toLowerCase())
+        return claim.moduleCode.toLowerCase() === selectedBusinessModule.toLowerCase() &&
+          parsed && filteredScreenNames.has(parsed.resource.toLowerCase())
           ? { ...claim, isSelected }
           : claim;
       }),
@@ -210,9 +232,10 @@ export function useRolePermissions(roleId: string) {
 
   return {
     ...form,
-    availableModules,
+    availableScreens,
+    businessModules,
     canEdit,
-    filteredModules,
+    filteredScreens,
     goBack,
     goDashboard: async () => {
       if (!(await requestDiscard())) return;
@@ -222,22 +245,29 @@ export function useRolePermissions(roleId: string) {
     isSaving,
     notifications: { SnackbarComponent },
     page,
-    paginatedModules,
+    paginatedScreens,
     permissionActions,
     role,
     rowsPerPage,
     searchTerm,
     selectFiltered,
-    selectModule,
-    selectedModule,
+    selectScreen,
+    selectedBusinessModule,
+    selectedScreen,
     setPage,
     setRowsPerPage,
     setSearchTerm: (value: string) => {
       setSearchTerm(value);
       setPage(0);
     },
-    setSelectedModule: (value: string) => {
-      setSelectedModule(value);
+    setSelectedBusinessModule: (value: string) => {
+      setRequestedBusinessModule(value);
+      setSelectedScreen("");
+      setSearchTerm("");
+      setPage(0);
+    },
+    setSelectedScreen: (value: string) => {
+      setSelectedScreen(value);
       setPage(0);
     },
     setShowOnlySelected: (value: boolean) => {
@@ -246,7 +276,7 @@ export function useRolePermissions(roleId: string) {
     },
     resetFilters: () => {
       setSearchTerm("");
-      setSelectedModule("");
+      setSelectedScreen("");
       setShowOnlySelected(false);
       setPage(0);
     },

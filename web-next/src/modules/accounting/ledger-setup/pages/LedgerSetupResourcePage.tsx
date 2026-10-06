@@ -230,8 +230,16 @@ export default function LedgerSetupResourcePage({ resource }: { resource: Ledger
   const { t } = useTranslation();
   const auth = usePermissions();
   const entities = resourceEntities[resource];
-  const [activeEntity, setActiveEntity] = useState<LedgerSetupEntity>(entities[0]);
+  const [requestedEntity, setRequestedEntity] = useState<LedgerSetupEntity>(entities[0]);
+  const accessibleEntities = entities.filter(
+    (entity) => getLedgerSetupAccess(entity, auth).canView,
+  );
+  const activeEntity = accessibleEntities.includes(requestedEntity)
+    ? requestedEntity
+    : accessibleEntities[0] ?? entities[0];
   const access = getLedgerSetupAccess(activeEntity, auth);
-  if (!access.canView) return <Alert severity="error">{t("common.accessDenied")}</Alert>;
-  return <Box sx={{ display: "flex", flexDirection: "column", gap: 2, height: "100%", minHeight: 0 }}><PageHeader title={t("menu.ledgerSetup")} subTitle={t("ledgerSetup.subtitle")} />{entities.length > 1 ? <Tabs value={activeEntity} onChange={(_, value: LedgerSetupEntity) => setActiveEntity(value)} variant="scrollable" scrollButtons="auto">{entities.map((entity) => <Tab key={entity} value={entity} label={t(entityDefinitions[entity].titleKey)} disabled={!getLedgerSetupAccess(entity, auth).canView} />)}</Tabs> : null}<EntityPanel key={activeEntity} definition={entityDefinitions[activeEntity]} access={access} />{resource === "account-determination" ? <ResolutionPreview canResolve={!auth.isReadOnly && auth.hasPermission(permissions.ResolvePostingProfiles)} /> : null}</Box>;
+  if (accessibleEntities.length === 0) {
+    return <Alert severity="error">{t("common.accessDenied")}</Alert>;
+  }
+  return <Box sx={{ display: "flex", flexDirection: "column", gap: 2, height: "100%", minHeight: 0 }}><PageHeader title={t("menu.ledgerSetup")} subTitle={t("ledgerSetup.subtitle")} />{accessibleEntities.length > 1 ? <Tabs value={activeEntity} onChange={(_, value: LedgerSetupEntity) => setRequestedEntity(value)} variant="scrollable" scrollButtons="auto">{accessibleEntities.map((entity) => <Tab key={entity} value={entity} label={t(entityDefinitions[entity].titleKey)} />)}</Tabs> : null}<EntityPanel key={activeEntity} definition={entityDefinitions[activeEntity]} access={access} />{resource === "account-determination" ? <ResolutionPreview canResolve={!auth.isReadOnly && auth.hasPermission(permissions.ResolvePostingProfiles)} /> : null}</Box>;
 }

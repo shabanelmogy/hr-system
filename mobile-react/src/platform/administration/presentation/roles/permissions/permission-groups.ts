@@ -10,10 +10,18 @@ export interface IndexedRoleClaim {
 
 export interface PermissionGroup {
   claims: IndexedRoleClaim[];
-  module: string;
+  moduleCode: string;
+  screen: string;
 }
 
-const moduleTranslationKeys: Record<string, string> = {
+export interface PermissionBusinessModuleSummary {
+  code: string;
+  permissionCount: number;
+  screenCount: number;
+  selectedCount: number;
+}
+
+const screenTranslationKeys: Record<string, string> = {
   AccountDimensionPolicies: 'accountDimensionPolicies',
   AccountHierarchyLevels: 'accountHierarchyLevels',
   AccountingSettings: 'accountingSettings',
@@ -126,6 +134,7 @@ const actionTranslationKeys: Record<string, string> = {
   Review: 'review',
   Revoke: 'revoke',
   Schedule: 'schedule',
+  SetCurrent: 'setCurrent',
   SetStatus: 'setStatus',
   Submit: 'submit',
   Test: 'test',
@@ -147,6 +156,7 @@ const preferredActionOrder = [
   'View',
   'Create',
   'Edit',
+  'SetCurrent',
   'Approve',
   'Submit',
   'Review',
@@ -156,30 +166,62 @@ const preferredActionOrder = [
 ] as const;
 
 export function groupRoleClaims(claims: readonly RoleClaim[]): PermissionGroup[] {
-  const groups = new Map<string, IndexedRoleClaim[]>();
+  const groups = new Map<string, {
+    moduleCode: string;
+    screen: string;
+    claims: IndexedRoleClaim[];
+  }>();
 
   claims.forEach((claim, index) => {
     const separatorIndex = claim.displayValue.indexOf(':');
-    const module = separatorIndex > 0
+    const screen = separatorIndex > 0
       ? claim.displayValue.slice(0, separatorIndex)
       : claim.displayValue;
     const action = separatorIndex > 0
       ? claim.displayValue.slice(separatorIndex + 1)
       : claim.displayValue;
-    const entries = groups.get(module) ?? [];
-    entries.push({ action, claim, index });
-    groups.set(module, entries);
+    const normalizedKey = `${claim.moduleCode.toLocaleLowerCase()}::${screen.toLocaleLowerCase()}`;
+    const current = groups.get(normalizedKey) ?? {
+      moduleCode: claim.moduleCode,
+      screen,
+      claims: [],
+    };
+    current.claims.push({ action, claim, index });
+    groups.set(normalizedKey, current);
   });
 
   return [...groups.entries()]
-    .map(([module, groupedClaims]) => ({
-      module,
-      claims: [...groupedClaims].sort((left, right) => comparePermissionActions(
+    .map(([, group]) => ({
+      moduleCode: group.moduleCode,
+      screen: group.screen,
+      claims: [...group.claims].sort((left, right) => comparePermissionActions(
         left.action,
         right.action,
       )),
     }))
-    .sort((left, right) => left.module.localeCompare(right.module));
+    .sort((left, right) => left.screen.localeCompare(right.screen));
+}
+
+export function summarizePermissionBusinessModules(
+  groups: readonly PermissionGroup[],
+): PermissionBusinessModuleSummary[] {
+  const modules = new Map<string, PermissionBusinessModuleSummary>();
+
+  for (const group of groups) {
+    const normalizedCode = group.moduleCode.toLocaleLowerCase();
+    const current = modules.get(normalizedCode) ?? {
+      code: group.moduleCode,
+      permissionCount: 0,
+      screenCount: 0,
+      selectedCount: 0,
+    };
+    current.permissionCount += group.claims.length;
+    current.screenCount += 1;
+    current.selectedCount += group.claims.filter(({ claim }) => claim.isSelected).length;
+    modules.set(normalizedCode, current);
+  }
+
+  return [...modules.values()].sort((left, right) => left.code.localeCompare(right.code));
 }
 
 export function countChangedRoleClaims(
@@ -197,9 +239,26 @@ export function countChangedRoleClaims(
   ), 0);
 }
 
-export function getPermissionModuleLabel(module: string, t: TFunction): string {
-  const key = moduleTranslationKeys[module];
-  return key ? t(`roleManagement.permissionModules.${key}`) : humanize(module);
+export function getPermissionScreenLabel(screen: string, t: TFunction): string {
+  const key = screenTranslationKeys[screen];
+  return key ? t(`roleManagement.permissionModules.${key}`) : humanize(screen);
+}
+
+const businessModuleTranslationKeys: Record<string, string> = {
+  acc: 'accounting',
+  contacts: 'contacts',
+  crm: 'crm',
+  hr: 'hr',
+  inventory: 'inventory',
+  platform: 'platform',
+  'point-of-sale': 'pointOfSale',
+  'reference-data': 'referenceData',
+  reporting: 'reporting',
+};
+
+export function getPermissionBusinessModuleLabel(moduleCode: string, t: TFunction): string {
+  const key = businessModuleTranslationKeys[moduleCode.toLocaleLowerCase()];
+  return key ? t(`roleManagement.businessModules.${key}`) : humanize(moduleCode);
 }
 
 export function getPermissionActionLabel(action: string, t: TFunction): string {

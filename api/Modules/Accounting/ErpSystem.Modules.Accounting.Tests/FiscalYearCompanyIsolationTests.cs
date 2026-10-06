@@ -1,4 +1,5 @@
 using ErpSystem.BuildingBlocks.Context.Authentication;
+using ErpSystem.BuildingBlocks.Domain.Exceptions;
 using ErpSystem.Modules.Accounting.Application.Features.Finance.FiscalYears.Abstractions;
 using ErpSystem.Modules.Accounting.Application.Features.Finance.FiscalYears.Commands;
 using ErpSystem.Modules.Accounting.Application.Features.Finance.FiscalYears.Contracts;
@@ -247,6 +248,161 @@ public sealed class FiscalYearCompanyIsolationTests
     }
 
     [Fact]
+    public async Task ArchiveHandler_RejectsTheCompanyCurrentFiscalYear()
+    {
+        var options = new DbContextOptionsBuilder<AccountingDbContext>()
+            .UseInMemoryDatabase(Guid.NewGuid().ToString("N"))
+            .Options;
+        var actor = new TestActor("tenant-1", 11);
+        await using var context = new AccountingDbContext(options, actor, TimeProvider.System);
+        var fiscalYear = Create("FY-2027", "tenant-1", 11);
+        fiscalYear.Open();
+        fiscalYear.MarkCurrent();
+        context.FiscalYears.Add(fiscalYear);
+        await context.SaveChangesAsync();
+        var handler = new ArchiveFiscalYearCommandHandler(
+            new FiscalYearWriteStore(context), context, new RecordingScheduler(), actor, TimeProvider.System,
+            new FiscalYearErrors(new EchoLocalizer<CreateFiscalYearRequest>()));
+
+        var result = await handler.Handle(
+            new ArchiveFiscalYearCommand(fiscalYear.Id, Convert.ToBase64String(fiscalYear.RowVersion)),
+            CancellationToken.None);
+
+        Assert.True(result.IsFailure);
+        Assert.Equal("FiscalYear.CurrentCannotBeArchived", result.Error.Code);
+        Assert.False(fiscalYear.IsDeleted);
+    }
+
+    [Fact]
+    public async Task SetCurrentHandler_RejectsDraftAndPreservesTheExistingCurrentYear()
+    {
+        var options = new DbContextOptionsBuilder<AccountingDbContext>()
+            .UseInMemoryDatabase(Guid.NewGuid().ToString("N"))
+            .Options;
+        var actor = new TestActor("tenant-1", 11);
+        await using var context = new AccountingDbContext(options, actor, TimeProvider.System);
+        var existingCurrent = Create("FY-2027", "tenant-1", 11);
+        existingCurrent.Open();
+        existingCurrent.MarkCurrent();
+        var draft = Create("FY-2028", "tenant-1", 11);
+        context.FiscalYears.AddRange(existingCurrent, draft);
+        await context.SaveChangesAsync();
+        var scheduler = new RecordingScheduler();
+        var auditStore = new RecordingChangeLogStore();
+        var handler = new SetCurrentFiscalYearCommandHandler(
+            new FiscalYearWriteStore(context),
+            new FiscalYearReadStore(context),
+            new FiscalYearAuditTrail(auditStore, actor, TimeProvider.System),
+            context,
+            scheduler,
+            actor,
+            new FiscalYearErrors(new EchoLocalizer<CreateFiscalYearRequest>()));
+
+        var result = await handler.Handle(
+            new SetCurrentFiscalYearCommand(draft.Id, Convert.ToBase64String(draft.RowVersion)),
+            CancellationToken.None);
+
+        Assert.True(result.IsFailure);
+        Assert.Equal("FiscalYear.MustBeOpenForCurrent", result.Error.Code);
+        Assert.True(existingCurrent.IsCurrent);
+        Assert.False(draft.IsCurrent);
+        Assert.Empty(auditStore.Records);
+        Assert.Null(scheduler.Change);
+    }
+
+    [Fact]
+    public void MarkCurrent_RejectsDraftAtTheAggregateBoundary()
+    {
+        var draft = Create("FY-2027", "tenant-1", 11);
+
+        var exception = Assert.Throws<DomainRuleException>(() => draft.MarkCurrent());
+
+        Assert.Equal("Finance.FiscalYear.MustBeOpenForCurrent", exception.Code);
+        Assert.False(draft.IsCurrent);
+    }
+
+    [Fact]
+    public void MarkCurrent_RemainsIdempotentAfterTheCurrentYearProgressesBeyondOpen()
+    {
+        var fiscalYear = Create("FY-2027", "tenant-1", 11);
+        fiscalYear.Open();
+        Assert.True(fiscalYear.MarkCurrent());
+        fiscalYear.BeginClosing();
+
+        Assert.False(fiscalYear.MarkCurrent());
+        Assert.True(fiscalYear.IsCurrent);
+        Assert.Equal(FiscalYearStatus.Closing, fiscalYear.Status);
+    }
+
+    [Fact]
+    public async Task PersonalWorkingYear_IsIsolatedByUserAndCompany_AndSurvivesCurrentChange()
+    {
+        var options = new DbContextOptionsBuilder<AccountingDbContext>()
+            .UseInMemoryDatabase(Guid.NewGuid().ToString("N"))
+            .Options;
+        var admin = new TestActor("tenant-1", 11, "admin");
+        await using (var seed = new AccountingDbContext(options, admin, TimeProvider.System))
+        {
+            var current = Create("FY-2027", "tenant-1", 11);
+            current.Open();
+            current.MarkCurrent();
+            var personal = Create("FY-2028", "tenant-1", 11);
+            var nextCurrent = Create("FY-2029", "tenant-1", 11);
+            nextCurrent.Open();
+            seed.FiscalYears.AddRange(current, personal, nextCurrent);
+            await seed.SaveChangesAsync();
+
+            var userOne = new TestActor("tenant-1", 11, "user-1");
+            await using var userOneContext = new AccountingDbContext(options, userOne, TimeProvider.System);
+            var selectionHandler = new UpdateFiscalYearContextCommandHandler(
+                new FiscalYearContextStore(userOneContext),
+                new FiscalYearWriteStore(userOneContext),
+                userOneContext,
+                userOne,
+                new FiscalYearErrors(new EchoLocalizer<CreateFiscalYearRequest>()));
+            var selection = await selectionHandler.Handle(
+                new UpdateFiscalYearContextCommand(personal.Id),
+                CancellationToken.None);
+            Assert.True(selection.IsSuccess);
+            Assert.True(selection.Value.HasUserOverride);
+            Assert.Equal(personal.Id, selection.Value.SelectedFiscalYear?.Id);
+
+            var setCurrentHandler = new SetCurrentFiscalYearCommandHandler(
+                new FiscalYearWriteStore(seed),
+                new FiscalYearReadStore(seed),
+                new FiscalYearAuditTrail(new RecordingChangeLogStore(), admin, TimeProvider.System),
+                seed,
+                new RecordingScheduler(),
+                admin,
+                new FiscalYearErrors(new EchoLocalizer<CreateFiscalYearRequest>()));
+            var currentChange = await setCurrentHandler.Handle(
+                new SetCurrentFiscalYearCommand(nextCurrent.Id, Convert.ToBase64String(nextCurrent.RowVersion)),
+                CancellationToken.None);
+            Assert.True(currentChange.IsSuccess);
+
+            var userOneAfterChange = await new FiscalYearContextStore(userOneContext)
+                .GetContextAsync("user-1", CancellationToken.None);
+            Assert.Equal(nextCurrent.Id, userOneAfterChange.CompanyCurrentFiscalYear?.Id);
+            Assert.Equal(personal.Id, userOneAfterChange.SelectedFiscalYear?.Id);
+            Assert.True(userOneAfterChange.HasUserOverride);
+
+            var userTwo = new TestActor("tenant-1", 11, "user-2");
+            await using var userTwoContext = new AccountingDbContext(options, userTwo, TimeProvider.System);
+            var userTwoContextResult = await new FiscalYearContextStore(userTwoContext)
+                .GetContextAsync("user-2", CancellationToken.None);
+            Assert.Equal(nextCurrent.Id, userTwoContextResult.SelectedFiscalYear?.Id);
+            Assert.False(userTwoContextResult.HasUserOverride);
+        }
+
+        var sameUserOtherCompany = new TestActor("tenant-1", 22, "user-1");
+        await using var otherCompanyContext = new AccountingDbContext(options, sameUserOtherCompany, TimeProvider.System);
+        var otherCompany = await new FiscalYearContextStore(otherCompanyContext)
+            .GetContextAsync("user-1", CancellationToken.None);
+        Assert.Null(otherCompany.SelectedFiscalYear);
+        Assert.False(otherCompany.HasUserOverride);
+    }
+
+    [Fact]
     public async Task PageProjection_ExcludesArchivedPeriodsFromPeriodsCount()
     {
         var options = new DbContextOptionsBuilder<AccountingDbContext>()
@@ -293,6 +449,7 @@ public sealed class FiscalYearCompanyIsolationTests
         using var context = CreateContext(options, "tenant-1", 11);
         var fiscalYear = context.Model.FindEntityType(typeof(FiscalYear))!;
         var fiscalPeriod = context.Model.FindEntityType(typeof(FiscalPeriod))!;
+        var userSelection = context.Model.FindEntityType(typeof(FiscalYearUserSelection))!;
 
         Assert.Contains(fiscalYear.GetIndexes(), index => index.IsUnique &&
             index.Properties.Select(property => property.Name)
@@ -303,6 +460,16 @@ public sealed class FiscalYearCompanyIsolationTests
             relationship.Properties.Select(property => property.Name));
         Assert.Equal(["TenantId", "CompanyId", "Id"],
             relationship.PrincipalKey.Properties.Select(property => property.Name));
+        Assert.Contains(fiscalYear.GetIndexes(), index => index.IsUnique &&
+            index.Properties.Select(property => property.Name)
+                .SequenceEqual(["TenantId", "CompanyId", "IsCurrent"]));
+        Assert.Contains(userSelection.GetIndexes(), index => index.IsUnique &&
+            index.Properties.Select(property => property.Name)
+                .SequenceEqual(["TenantId", "CompanyId", "UserId"]));
+        var selectionRelationship = Assert.Single(userSelection.GetForeignKeys(), foreignKey =>
+            foreignKey.PrincipalEntityType.ClrType == typeof(FiscalYear));
+        Assert.Equal(["TenantId", "CompanyId", "SelectedFiscalYearId"],
+            selectionRelationship.Properties.Select(property => property.Name));
     }
 
     private static FiscalYear Create(string code, string tenantId, int companyId)
@@ -323,10 +490,7 @@ public sealed class FiscalYearCompanyIsolationTests
         string? tenantId,
         int? companyId) => new(options, new TestActor(tenantId, companyId), TimeProvider.System);
 
-    private sealed record TestActor(string? TenantId, int? CompanyId) : ICurrentActor
-    {
-        public string? UserId => "admin";
-    }
+    private sealed record TestActor(string? TenantId, int? CompanyId, string? UserId = "admin") : ICurrentActor;
 
     private sealed class RecordingScheduler : IFiscalYearChangeScheduler
     {

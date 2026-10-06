@@ -1,7 +1,7 @@
 import { describe, expect, it } from '@jest/globals';
 
 import { fiscalYearEndpoints } from '../fiscal-year-endpoints';
-import { fiscalYearDetailSchema, fiscalYearPageSchema } from '../fiscal-year-schemas';
+import { fiscalYearContextSchema, fiscalYearDetailSchema, fiscalYearPageSchema } from '../fiscal-year-schemas';
 import { toFiscalYearPageQuery } from '../fiscal-year-remote-data-source';
 
 const fiscalYear = {
@@ -13,6 +13,7 @@ const fiscalYear = {
   endDate: '2027-12-31',
   periodFrequency: 1,
   status: 1,
+  isCurrent: false,
   periodsCount: 12,
   createdOn: '2026-09-05T18:00:00Z',
   updatedOn: null,
@@ -40,6 +41,31 @@ describe('Fiscal Years API boundary', () => {
     expect(fiscalYearEndpoints.beginClosing(7)).toBe('fiscal-years/7/begin-closing');
     expect(fiscalYearEndpoints.lock(7)).toBe('fiscal-years/7/lock');
     expect(fiscalYearEndpoints.reopen(7)).toBe('fiscal-years/7/reopen');
+    expect(fiscalYearEndpoints.context).toBe('fiscal-years/context');
+    expect(fiscalYearEndpoints.setCurrent(7)).toBe('fiscal-years/7/set-current');
+  });
+
+  it('validates current and personal fiscal-year context separately', () => {
+    const lookup = {
+      id: fiscalYear.id,
+      code: fiscalYear.code,
+      nameAr: fiscalYear.nameAr,
+      nameEn: fiscalYear.nameEn,
+      startDate: fiscalYear.startDate,
+      endDate: fiscalYear.endDate,
+      status: fiscalYear.status,
+      isCurrent: true,
+    };
+    const context = fiscalYearContextSchema.parse({
+      companyCurrentFiscalYear: lookup,
+      selectedFiscalYear: { ...lookup, id: 8, isCurrent: false },
+      hasUserOverride: true,
+      availableFiscalYears: [lookup, { ...lookup, id: 8, isCurrent: false }],
+    });
+
+    expect(context.companyCurrentFiscalYear?.id).toBe(7);
+    expect(context.selectedFiscalYear?.id).toBe(8);
+    expect(context.hasUserOverride).toBe(true);
   });
 
   it('keeps archive on the DELETE resource route with an explicit RowVersion body', () => {

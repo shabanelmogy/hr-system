@@ -3,6 +3,7 @@ namespace ErpSystem.Modules.Platform.Application.Features.Security.Authorization
     public class CheckBoxViewModel
     {
         public string DisplayValue { get; set; } = string.Empty;
+        public string ModuleCode { get; set; } = string.Empty;
         public bool IsSelected { get; set; }
     }
 }

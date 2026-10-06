@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v10.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v10.0": {
+      "ErpSystem.BuildingBlocks.Modularity/1.0.0": {
+        "runtime": {
+          "ErpSystem.BuildingBlocks.Modularity.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "ErpSystem.BuildingBlocks.Modularity/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

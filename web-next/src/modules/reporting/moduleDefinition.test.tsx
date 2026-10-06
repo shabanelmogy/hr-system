@@ -22,10 +22,7 @@ describe("Reporting frontend module definition", () => {
       entryCandidates: [appRoutes.modules.reporting.crystalReports],
     });
     expect(reportingModuleDefinition.submodules[0]?.requiredPermissions).toEqual(
-      expect.arrayContaining([
-        permissions.ViewCrystalReports,
-        permissions.ViewCrystalReportAccess,
-      ]),
+      [permissions.ViewCrystalReports],
     );
     expect(requiredModuleForPath(appRoutes.modules.reporting.crystalReports)).toEqual({
       moduleCode: "reporting",

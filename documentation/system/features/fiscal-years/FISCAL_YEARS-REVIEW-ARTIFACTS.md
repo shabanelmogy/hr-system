@@ -21,7 +21,7 @@
 | Reporting decision | `Required` |
 | Reporting engine | `Managed Crystal catalog/render using the Accounting-owned fiscalyears dataset` |
 | Vertical gate | `Step 01 Active — API → Web → Mobile → detailed manual scenario → explicit user acceptance → documentation; not Verified yet` |
-| UI pattern | `P-001 Server-managed Grid/CRUD; Web Grid/Cards/Report; Mobile Table/Cards/Report; P-003 tabs intentionally not applied` |
+| UI pattern | `P-001 Server-managed Grid/CRUD for management; P-008 Global Scoped Context Selector for the working year; P-003 tabs intentionally not applied` |
 
 ## Requirement manifest
 
@@ -35,6 +35,8 @@
 | R-06 | EN/AR, RTL, responsive, accessible, permission/read-only workflows | Repository guides | Required errors | Required | Required | Frozen |
 | R-07 | Post-commit notification/realtime invalidation | Repository guides | Required | Required | Required | Frozen |
 | R-08 | Fiscal Year Report is available through managed Crystal; Import has no placeholder runtime | Accounting reporting contract | Required | Required | Required | Frozen |
+| R-09 | Exactly one company-default Current Fiscal Year may exist; changing it is an exact audited permission | User clarification, 2026-09-27 | Required | Required management action/state | Required management action/state | Frozen |
+| R-10 | Each user can switch only their own working Fiscal Year per company; missing/stale selection falls back to company Current | User clarification, 2026-09-27 | Required context endpoints/persistence | Required global Topbar selector | Required global App-header selector | Frozen |
 
 ## Platform capability decisions
 
@@ -48,6 +50,8 @@
 | Import | Excluded | Excluded | Excluded | No runtime | No financial-calendar import workflow or transport is owned by this feature |
 | Export | Excluded | Excluded | Excluded | No runtime | Reporting remains the read/output surface; no Fiscal Years export contract is defined |
 | Bulk lifecycle | Excluded | Excluded | Excluded | No runtime | Critical, low-volume records require explicit review |
+| Company Current | Required | Required | Required | One active marker per tenant/company | Company default; exact `FiscalYears:SetCurrent` action |
+| Personal working year | Required | Required Topbar | Required App header | Trusted tenant/company/user; online authoritative | User preference only; never changes company default or another user |
 
 ## Verified current behavior before implementation
 
@@ -84,6 +88,7 @@
 | Lifecycle | Yes | Chip | Yes | Yes | Filter | Theme-aware status plus text |
 | Period count | Yes | Metric | Period list | No | No | Period list scrolls inside workflow |
 | Archived state | Chip | Chip | Yes | No | Status filter | Lifecycle actions adapt to state |
+| Current state | Badge | Badge | Yes | No | No | Text plus icon/color; Set Current is separately permission guarded |
 
 ## Detail and write contract
 
@@ -95,17 +100,22 @@
 - Dirty exit, busy close, first invalid-field focus, and per-field messages are
   owned by the shared form systems.
 - View mode renders read-only aggregate fields and period rows/cards.
+- Set Current is a separate RowVersion-backed action and never piggybacks on Edit
+  or a lifecycle permission. The Current row cannot be archived.
+- The Topbar/App-header selector reads one context response, shows localized
+  bilingual year identity and Current status, and changes only the caller's
+  per-company selection after shared dirty-state approval.
 
 ## Permission and lifecycle matrix
 
-| State/action | View | Create | Edit | Archive | Restore | Manage lifecycle | Read-only |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| Draft active | View | Create | Edit | Delete | N/A | Open | View only |
-| Open | View | Create | No | No | N/A | Begin closing | View only |
-| Closing | View | Create | No | No | N/A | Close | View only |
-| Closed | View | Create | No | No | N/A | Reopen to Open or Lock | View only |
-| Locked | View | Create | No | No | N/A | Reopen to Open | View only |
-| Archived Draft | View | Create | No | Idempotent | Delete | No | View only |
+| State/action | View | Create | Edit | Archive | Restore | Exact lifecycle action | Set Current | Read-only |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Draft active | View/select own context | Create | Edit | Archive unless Current | N/A | Open | Exact `SetCurrent` | View + own context selection; financial mutations blocked |
+| Open | View/select own context | Create | No | No | N/A | Begin closing | Exact `SetCurrent` | View + own context selection; financial mutations blocked |
+| Closing | View/select own context | Create | No | No | N/A | Close | Exact `SetCurrent` | View + own context selection; financial mutations blocked |
+| Closed | View/select own context | Create | No | No | N/A | Reopen to Open or Lock | Exact `SetCurrent` | View + own context selection; financial mutations blocked |
+| Locked | View/select own context | Create | No | No | N/A | Reopen to Open | Exact `SetCurrent` | View + own context selection; financial mutations blocked |
+| Archived Draft | View only in management history; not selectable | Create | No | Idempotent | Restore | No | No | View/history only; archived year is never selectable |
 
 ## Integration register
 
@@ -115,6 +125,12 @@ permissions, localization, post-commit job, web/mobile route and navigation,
 route access, endpoints, query keys, realtime mapping, translations, and thin
 route adapters. Exact source paths are registered in the final required-file
 manifest.
+
+The context addition also requires a filtered unique Current index, a
+tenant/company/user selection row, exact `SetCurrent` permission parity, Web
+Topbar and Mobile App-header composition slots, dirty-state guards, and cache
+invalidation of the stable Fiscal Years root after Current or personal selection
+changes.
 
 ## Import decision contract
 
@@ -160,6 +176,7 @@ manifest.
 | F-04 | High | Draft update replaced every generated period, causing SQL unique-index conflicts when the same codes were inserted before prior rows were soft-archived | Production edit response and update-handler review | API | Resolved by sequence reconciliation, identity preservation, archived-period restoration, and regression tests |
 | F-05 | Manual | Runtime visual/device matrix requires live authenticated environments and explicit user acceptance before roadmap transition | Web/Mobile guides + `manual-acceptance/FISCAL-YEARS-STEP-01.md` | User + implementation agent | Automated UI contract audited and detailed scenario authored; execute it and record the user's acceptance or rejection |
 | F-06 | High | Fiscal Year mutation handlers requested the shared `IUnitOfWork`; later module registrations could route the commit away from `AccountingDbContext`, leaving the new year unreadable and returning an unexpected error | Host module composition, Accounting handler/store/DI review, and error report `b23c4526-17cb-469e-9ca7-ba0196c0cb8b` | Accounting API | Resolved with `IAccountingUnitOfWork` and competing-registration regression coverage |
+| F-07 | High | No authoritative company Current or per-user working-year context existed; a client-only dropdown would drift across devices and could affect the wrong user/company | Fiscal Years API/session/shell review plus user clarification | Accounting API + Web/Mobile composition | Reopened Step 01: persist both concepts separately, expose exact endpoints, and compose selectors without Shell/Platform owning Accounting |
 
 ## Verification ledger
 
@@ -183,6 +200,7 @@ manifest.
 - [x] Import, Export, Chart, and Reporting are explicitly classified per platform.
 - [x] Runtime evidence and canonical profiles exist.
 - [ ] Step 01 live authenticated API-backed Web/Mobile journey and final reconciliation are complete (`Verified` pending).
+- [ ] Company Current and isolated per-user/per-company working-year selection are implemented and included in the revised manual scenario.
 - [x] A detailed versioned manual scenario is authored and registered in the feature evidence surface.
 - [ ] The scenario has been executed, its results sent/recorded, and explicit user acceptance captured verbatim.
 - [x] Final required-file manifest and feature recipes are registered/generated.

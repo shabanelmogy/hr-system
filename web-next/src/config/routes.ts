@@ -5,6 +5,10 @@ export type AppPath = Route;
 
 const toAppPath = (path: string): AppPath => path as AppPath;
 
+export const rolePermissionsRoutePrefix = toAppPath(
+  "/administration/manage-role-permissions",
+);
+
 export const normalizeAppPath = (path: string): AppPath =>
   toAppPath(`/${path.replace(/^\/+/, "")}`);
 
@@ -176,8 +180,7 @@ export const appRoutes: AppRoutes = {
       users: "/administration/users",
       invitations: toAppPath("/administration/invitations"),
       offlineOperations: toAppPath("/administration/offline-operations"),
-      rolePermissions: (id) =>
-        toAppPath(`/administration/manage-role-permissions/${id}`),
+      rolePermissions: (id) => toAppPath(`${rolePermissionsRoutePrefix}/${id}`),
     },
     superAdmin: {
       dashboard: "/super-admin",

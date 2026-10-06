@@ -56,12 +56,16 @@ export const routePolicies: readonly RoutePolicy[] = [
     permissions: [permissions.ViewOfflineOperations],
   },
   { path: ROUTES.administration.roles, permissions: [permissions.ViewRoles] },
-  { path: ROUTES.administration.invitations, permissions: [permissions.ViewUsers] },
+  {
+    path: ROUTES.administration.invitations,
+    permissions: [permissions.ViewUserInvitations],
+  },
   {
     path: ROUTES.administration.root,
     anyOf: [
       { permissions: [permissions.ViewUsers] },
       { permissions: [permissions.ViewRoles] },
+      { permissions: [permissions.ViewUserInvitations] },
       { permissions: [permissions.ViewOfflineOperations] },
     ],
   },
@@ -144,11 +148,24 @@ export const routePolicies: readonly RoutePolicy[] = [
   { path: ROUTES.finance.ledgerSetup.currencies, permissions: [permissions.ViewCurrencies] },
   { path: ROUTES.finance.ledgerSetup.accounts, permissions: [permissions.ViewAccounts] },
   { path: ROUTES.finance.ledgerSetup.hierarchyLevels, permissions: [permissions.ViewAccountHierarchyLevels] },
-  { path: ROUTES.finance.ledgerSetup.dimensions, permissions: [permissions.ViewDimensionDefinitions] },
+  {
+    path: ROUTES.finance.ledgerSetup.dimensions,
+    permissions: [
+      permissions.ViewDimensionDefinitions,
+      permissions.ViewDimensionValues,
+      permissions.ViewAccountDimensionPolicies,
+    ],
+  },
   { path: ROUTES.finance.ledgerSetup.books, permissions: [permissions.ViewBooks] },
   { path: ROUTES.finance.ledgerSetup.journals, permissions: [permissions.ViewJournalDefinitions] },
-  { path: ROUTES.finance.ledgerSetup.exchangeRates, permissions: [permissions.ViewExchangeRateTypes] },
-  { path: ROUTES.finance.ledgerSetup.accountDetermination, permissions: [permissions.ViewAccountMappings] },
+  {
+    path: ROUTES.finance.ledgerSetup.exchangeRates,
+    permissions: [permissions.ViewExchangeRateTypes, permissions.ViewExchangeRates],
+  },
+  {
+    path: ROUTES.finance.ledgerSetup.accountDetermination,
+    permissions: [permissions.ViewAccountMappings, permissions.ViewPostingProfiles],
+  },
   {
     path: ROUTES.finance.ledgerSetup.root,
     anyOf: [

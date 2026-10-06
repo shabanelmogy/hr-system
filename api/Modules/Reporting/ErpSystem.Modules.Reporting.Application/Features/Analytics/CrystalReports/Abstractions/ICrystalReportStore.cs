@@ -41,7 +41,9 @@ public interface ICrystalReportStore
 public interface ICrystalReportFileStorage
 {
     Task<StoreCrystalReportFileResult> StoreAsync(
-        FileUpload upload, CancellationToken cancellationToken);
+        string entityKey,
+        FileUpload upload,
+        CancellationToken cancellationToken);
     Task<Stream?> OpenVerifiedReadAsync(
         string storageKey,
         long expectedSize,
@@ -53,7 +55,17 @@ public interface ICrystalReportFileStorage
 public interface ICrystalReportInspector
 {
     Task<CrystalReportInspection?> InspectAsync(
-        FileUpload upload, CancellationToken cancellationToken);
+        string entityKey,
+        FileUpload upload,
+        CancellationToken cancellationToken);
+}
+
+public interface IManagedCrystalReportContractSource
+{
+    int SchemaVersion { get; }
+    string Fingerprint { get; }
+    IReadOnlyCollection<ManagedCrystalReportEntityDescriptor> EntityDescriptors { get; }
+    bool Supports(string entityKey);
 }
 
 public interface ICrystalReportRenderer

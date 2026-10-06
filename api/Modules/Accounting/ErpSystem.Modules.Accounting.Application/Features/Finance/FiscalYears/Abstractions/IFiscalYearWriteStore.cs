@@ -6,6 +6,7 @@ public interface IFiscalYearWriteStore
 {
     void Add(FiscalYear fiscalYear);
     Task<FiscalYear?> GetForUpdateAsync(int id, CancellationToken cancellationToken);
+    Task<FiscalYear?> GetCurrentForUpdateAsync(CancellationToken cancellationToken);
     Task<bool> CodeExistsAsync(string code, int? excludedId, CancellationToken cancellationToken);
     Task<bool> OverlapExistsAsync(
         DateOnly startDate,

@@ -18,6 +18,8 @@ export const arAuthProfileOnboarding = {
     userNameTooLong: 'يجب ألا يزيد اسم المستخدم عن 50 حرفاً.',
     continueToCompany: 'متابعة',
     currentCompany: 'الشركة الحالية',
+    currentTenant: 'المنشأة الحالية',
+    currentContext: 'سياق العمل الحالي',
     switchCompany: 'تغيير الشركة',
     switchCompanyDescription: 'اختر الشركة التي تريد العمل عليها خلال هذه الجلسة.',
     switchCompanyUnsavedTitle: 'تجاهل التغييرات وتغيير الشركة؟',

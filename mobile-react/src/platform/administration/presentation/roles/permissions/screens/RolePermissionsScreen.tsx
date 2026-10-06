@@ -1,7 +1,7 @@
 import { router } from 'expo-router';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useWatch } from 'react-hook-form';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, useWindowDimensions, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import { ApiError } from '@/src/core/api';
@@ -34,11 +34,14 @@ import {
 import type { RolePermissionsFormValues } from '../../../models/administration-form';
 import { rolePermissionsSchema } from '../../../validation/role-validation';
 import { PermissionModuleCard } from '../components/PermissionModuleCard';
+import { PermissionBusinessModuleRail } from '../components/PermissionBusinessModuleRail';
 import {
   countChangedRoleClaims,
   getPermissionActionLabel,
-  getPermissionModuleLabel,
+  getPermissionBusinessModuleLabel,
+  getPermissionScreenLabel,
   groupRoleClaims,
+  summarizePermissionBusinessModules,
   type PermissionGroup,
 } from '../permission-groups';
 
@@ -52,6 +55,7 @@ export function RolePermissionsScreen({ roleId }: RolePermissionsScreenProps) {
   const { t, i18n } = useTranslation();
   const { direction, isRTL } = useLocalization();
   const { theme } = useAppTheme();
+  const { width: viewportWidth } = useWindowDimensions();
   const { isReadOnly } = useAppReadOnly();
   const { allowed: canEdit } = useAuthorization({
     requiredPermissions: editRolePermissions,
@@ -60,6 +64,8 @@ export function RolePermissionsScreen({ roleId }: RolePermissionsScreenProps) {
   const updateMutation = useUpdateRoleClaims();
   const initializedRoleId = useRef<string | null>(null);
   const [search, setSearch] = useState('');
+  const [moduleSearch, setModuleSearch] = useState('');
+  const [requestedBusinessModule, setRequestedBusinessModule] = useState('');
   const [selectedScreen, setSelectedScreen] = useState('');
   const [selectedAction, setSelectedAction] = useState('');
   const [selectionFilter, setSelectionFilter] = useState<'all' | 'selected'>('all');
@@ -82,6 +88,7 @@ export function RolePermissionsScreen({ roleId }: RolePermissionsScreenProps) {
   const busy = isSubmitting || updateMutation.isPending;
   // Treat missing/unparsed role data as protected until the API contract is known.
   const isSystemRole = roleQuery.data?.isSystem ?? true;
+  const permissionsReadOnly = !canEdit || isReadOnly || isSystemRole;
   const editingDisabled = !canEdit || isReadOnly || isSystemRole || busy;
 
   useEffect(() => {
@@ -95,37 +102,58 @@ export function RolePermissionsScreen({ roleId }: RolePermissionsScreenProps) {
   }, [reset, roleQuery.data]);
 
   const groups = useMemo(() => groupRoleClaims(claims), [claims]);
+  const businessModules = useMemo(
+    () => summarizePermissionBusinessModules(groups),
+    [groups],
+  );
+  const isWideWorkspace = viewportWidth >= 760;
+
+  const selectedBusinessModule = businessModules.find(
+    (module) => module.code.toLocaleLowerCase() === requestedBusinessModule.toLocaleLowerCase(),
+  )?.code ?? businessModules[0]?.code ?? '';
+  const visibleBusinessModules = useMemo(() => {
+    const query = moduleSearch.trim().toLocaleLowerCase(i18n.language);
+    if (!query) return businessModules;
+    return businessModules.filter((module) => [
+      module.code,
+      getPermissionBusinessModuleLabel(module.code, t),
+    ].some((value) => value.toLocaleLowerCase(i18n.language).includes(query)));
+  }, [businessModules, i18n.language, moduleSearch, t]);
+
+  const moduleGroups = useMemo(() => groups.filter(
+    (group) => group.moduleCode.toLocaleLowerCase() === selectedBusinessModule.toLocaleLowerCase(),
+  ), [groups, selectedBusinessModule]);
   const screenOptions = useMemo(() => [
     { value: '', label: t('roleManagement.allScreens'), icon: 'apps-outline' as const },
-    ...groups.map((group) => ({
-      value: group.module,
-      label: getPermissionModuleLabel(group.module, t),
+    ...moduleGroups.map((group) => ({
+      value: group.screen,
+      label: getPermissionScreenLabel(group.screen, t),
       icon: 'folder-open-outline' as const,
     })),
-  ], [groups, t]);
+  ], [moduleGroups, t]);
   const actionOptions = useMemo(() => [
     { value: '', label: t('roleManagement.choosePermissionAction'), icon: 'key-outline' as const },
-    ...[...new Set(groups.flatMap((group) => group.claims.map(({ action }) => action)))]
+    ...[...new Set(moduleGroups.flatMap((group) => group.claims.map(({ action }) => action)))]
       .sort((left, right) => left.localeCompare(right))
       .map((action) => ({
         value: action,
         label: getPermissionActionLabel(action, t),
         icon: 'shield-checkmark-outline' as const,
       })),
-  ], [groups, t]);
+  ], [moduleGroups, t]);
   const filteredGroups = useMemo(() => {
     const query = search.trim().toLocaleLowerCase(i18n.language);
 
-    return groups.filter((group) => {
-      if (selectedScreen && group.module !== selectedScreen) return false;
+    return moduleGroups.filter((group) => {
+      if (selectedScreen && group.screen !== selectedScreen) return false;
       if (selectionFilter === 'selected' && !group.claims.some(({ claim }) => claim.isSelected)) {
         return false;
       }
       if (!query) return true;
 
       return [
-        group.module,
-        getPermissionModuleLabel(group.module, t),
+        group.screen,
+        getPermissionScreenLabel(group.screen, t),
         ...group.claims.flatMap(({ action, claim }) => [
           action,
           getPermissionActionLabel(action, t),
@@ -133,7 +161,7 @@ export function RolePermissionsScreen({ roleId }: RolePermissionsScreenProps) {
         ]),
       ].some((value) => value.toLocaleLowerCase(i18n.language).includes(query));
     });
-  }, [groups, i18n.language, search, selectedScreen, selectionFilter, t]);
+  }, [i18n.language, moduleGroups, search, selectedScreen, selectionFilter, t]);
   const selectedCount = claims.filter((claim) => claim.isSelected).length;
   const changedCount = useMemo(() => countChangedRoleClaims(
     claims,
@@ -172,11 +200,18 @@ export function RolePermissionsScreen({ roleId }: RolePermissionsScreenProps) {
   const setActionSelection = (selected: boolean) => {
     if (editingDisabled || !selectedAction) return;
     replaceClaims(
-      new Set(groups.flatMap((group) => group.claims)
+      new Set(moduleGroups.flatMap((group) => group.claims)
         .filter(({ action }) => action === selectedAction)
         .map(({ index }) => index)),
       selected,
     );
+  };
+
+  const selectBusinessModule = (moduleCode: string) => {
+    setRequestedBusinessModule(moduleCode);
+    setSelectedScreen('');
+    setExpandedScreen(null);
+    setSearch('');
   };
 
   const leaveScreen = () => router.replace(asHref(ROUTES.administration.roles));
@@ -255,47 +290,34 @@ export function RolePermissionsScreen({ roleId }: RolePermissionsScreenProps) {
             <AppText numberOfLines={1} variant="titleSmall">
               {t('roleManagement.permissionsTitle', { role: roleName })}
             </AppText>
-            <AppText color="muted" variant="caption">
-              {canEdit && !isSystemRole
-                ? t('roleManagement.permissionsSubtitle')
-                : t('roleManagement.permissionsReadOnly')}
-            </AppText>
           </View>
         </View>
 
         <AppCard padding="sm" style={styles.summary} variant="filled">
           <View style={[styles.summaryRow, { direction }]}>
-            <View style={styles.summaryText}>
-              <AppText variant="label" weight="800">
-                {t('roleManagement.selectedOfTotal', {
-                  selected: selectedCount,
-                  total: claims.length,
-                })} {t('roleManagement.selected')}
-              </AppText>
-              <AppText color="muted" variant="caption">{t('roleManagement.coverage')}</AppText>
-            </View>
+            <AppText style={styles.summaryText} variant="bodySmall" weight="800">
+              {t('roleManagement.selectedOfTotal', {
+                selected: selectedCount,
+                total: claims.length,
+              })} · {percentage}%
+            </AppText>
             <AppStatusBadge
-              color={changedCount > 0 ? theme.colors.warning : theme.colors.success}
-              icon={changedCount > 0 ? 'create-outline' : 'checkmark-circle-outline'}
-              label={changedCount > 0
-                ? t('roleManagement.pendingChangesCount', { count: changedCount })
-                : t('roleManagement.noPendingChanges')}
+              color={permissionsReadOnly
+                ? theme.colors.textMuted
+                : changedCount > 0
+                  ? theme.colors.warning
+                  : theme.colors.success}
+              icon={permissionsReadOnly
+                ? 'lock-closed-outline'
+                : changedCount > 0
+                  ? 'create-outline'
+                  : 'checkmark-circle-outline'}
+              label={permissionsReadOnly
+                ? t('roleManagement.permissionsReadOnly')
+                : changedCount > 0
+                  ? t('roleManagement.pendingChangesCount', { count: changedCount })
+                  : t('roleManagement.noPendingChanges')}
               variant="outlined"
-            />
-          </View>
-          <View style={[styles.coverageRow, { direction }]}>
-            <AppText color="muted" variant="caption">{t('roleManagement.coverage')}</AppText>
-            <AppText color="success" variant="label" weight="800">{percentage}%</AppText>
-          </View>
-          <View style={[styles.progressTrack, { backgroundColor: theme.colors.border }]}>
-            <View
-              style={[
-                styles.progressValue,
-                {
-                  backgroundColor: theme.colors.success,
-                  width: `${percentage}%` as `${number}%`,
-                },
-              ]}
             />
           </View>
         </AppCard>
@@ -330,139 +352,182 @@ export function RolePermissionsScreen({ roleId }: RolePermissionsScreenProps) {
           />
         </View>
 
-        {showFilters ? (
-          <AppCard padding="sm" style={styles.filters} variant="outlined">
-            <AppSelectField
-              label={t('roleManagement.filterByScreen')}
-              leadingIcon="filter-outline"
-              onChange={setSelectedScreen}
-              options={screenOptions}
-              value={selectedScreen}
-            />
-            <AppSegmentedControl
-              label={t('roleManagement.selectionFilter')}
-              onChange={setSelectionFilter}
-              options={[
-                { value: 'all', label: t('roleManagement.allPermissions'), icon: 'list-outline' },
-                {
-                  value: 'selected',
-                  label: t('roleManagement.selectedOnly'),
-                  icon: 'checkmark-circle-outline',
-                },
-              ]}
-              value={selectionFilter}
-            />
-          </AppCard>
-        ) : null}
-
         <View
           style={[
-            styles.listToolbar,
-            {
-              direction,
-              backgroundColor: theme.colors.surface,
-              borderColor: theme.colors.border,
-              borderRadius: theme.radius.md,
-            },
+            styles.workspace,
+            isWideWorkspace ? styles.workspaceWide : null,
+            { direction },
           ]}>
-          <View style={styles.listToolbarText}>
-            <AppText variant="label" weight="800">
-              {t('roleManagement.screensVisible', {
-                visible: filteredGroups.length,
-                total: groups.length,
-              })}
-            </AppText>
-            <AppText color="muted" variant="caption">
-              {t('roleManagement.selectedOfTotal', {
-                selected: selectedCount,
-                total: claims.length,
-              })} {t('roleManagement.selected')}
-            </AppText>
-          </View>
-          {canEdit && !isSystemRole ? (
-            <View style={[styles.listToolbarActions, { direction }]}>
-              <AppIconButton
-                color={theme.colors.success}
-                disabled={editingDisabled || filteredGroups.length === 0}
-                icon="checkmark-done-outline"
-                label={t('roleManagement.selectFiltered')}
-                onPress={() => setVisibleSelection(true)}
-              />
-              <AppIconButton
-                color={theme.colors.danger}
-                disabled={editingDisabled || filteredGroups.length === 0}
-                icon="close-circle-outline"
-                label={t('roleManagement.clearFiltered')}
-                onPress={() => setVisibleSelection(false)}
-              />
-              <AppIconButton
-                color={showBulkTools ? theme.colors.primary : theme.colors.textMuted}
-                disabled={editingDisabled}
-                icon={showBulkTools ? 'construct' : 'construct-outline'}
-                label={t(
-                  showBulkTools
-                    ? 'roleManagement.hideBulkTools'
-                    : 'roleManagement.showBulkTools',
-                )}
-                onPress={() => setShowBulkTools((visible) => !visible)}
-              />
+          <AppCard
+            padding="sm"
+            style={isWideWorkspace ? styles.moduleRail : styles.moduleSelector}
+            variant="outlined">
+            <View style={styles.moduleHeading}>
+              <AppText variant="label" weight="800">
+                {t('roleManagement.businessModuleNavigation')}
+              </AppText>
+              <AppText color="muted" variant="caption">
+                {t('roleManagement.chooseBusinessModule')}
+              </AppText>
             </View>
-          ) : null}
-        </View>
-
-        {canEdit && !isSystemRole && showBulkTools ? (
-          <AppCard padding="sm" style={styles.actionBulkCard} variant="filled">
-            <AppText variant="label" weight="800">
-              {t('roleManagement.bulkByPermissionAction')}
-            </AppText>
-            <View style={[styles.actionBulkRow, { direction }]}>
-              <View style={styles.actionSelect}>
-                <AppSelectField
-                  label={t('roleManagement.bulkByPermissionAction')}
-                  leadingIcon="key-outline"
-                  onChange={setSelectedAction}
-                  options={actionOptions}
-                  value={selectedAction}
-                />
-              </View>
-              <View style={[styles.actionButtons, { direction }]}>
-                <AppIconButton
-                  color={theme.colors.success}
-                  disabled={editingDisabled || !selectedAction}
-                  icon="checkmark-done-outline"
-                  label={t('roleManagement.selectAction')}
-                  onPress={() => setActionSelection(true)}
-                />
-                <AppIconButton
-                  color={theme.colors.danger}
-                  disabled={editingDisabled || !selectedAction}
-                  icon="close-circle-outline"
-                  label={t('roleManagement.clearAction')}
-                  onPress={() => setActionSelection(false)}
-                />
-              </View>
-            </View>
+            <AppTextField
+              compact
+              label={t('roleManagement.searchBusinessModules')}
+              leadingIcon="search-outline"
+              onChangeText={setModuleSearch}
+              showClearButton
+              value={moduleSearch}
+            />
+            {visibleBusinessModules.length ? (
+              <PermissionBusinessModuleRail
+                horizontal={!isWideWorkspace}
+                modules={visibleBusinessModules}
+                onSelect={selectBusinessModule}
+                selectedModule={selectedBusinessModule}
+              />
+            ) : (
+              <AppText color="muted" variant="bodySmall">
+                {t('roleManagement.noBusinessModulesMatch')}
+              </AppText>
+            )}
           </AppCard>
-        ) : null}
 
-        {filteredGroups.length ? (
-          <View style={styles.moduleList}>
-            {filteredGroups.map((group) => (
-              <PermissionModuleCard
-                disabled={editingDisabled}
-                expanded={expandedScreen === group.module}
-                group={group}
-                key={group.module}
-                onSetModule={setModuleSelection}
-                onToggle={toggleClaim}
-                onToggleExpanded={() => setExpandedScreen((current) =>
-                  current === group.module ? null : group.module)}
-              />
-            ))}
+          <View style={styles.permissionPanel}>
+            {showFilters ? (
+              <AppCard padding="sm" style={styles.filters} variant="outlined">
+                <AppSelectField
+                  label={t('roleManagement.filterByScreen')}
+                  leadingIcon="filter-outline"
+                  onChange={setSelectedScreen}
+                  options={screenOptions}
+                  value={selectedScreen}
+                />
+                <AppSegmentedControl
+                  label={t('roleManagement.selectionFilter')}
+                  onChange={setSelectionFilter}
+                  options={[
+                    { value: 'all', label: t('roleManagement.allPermissions'), icon: 'list-outline' },
+                    {
+                      value: 'selected',
+                      label: t('roleManagement.selectedOnly'),
+                      icon: 'checkmark-circle-outline',
+                    },
+                  ]}
+                  value={selectionFilter}
+                />
+              </AppCard>
+            ) : null}
+
+            <View
+              style={[
+                styles.listToolbar,
+                {
+                  direction,
+                  backgroundColor: theme.colors.surface,
+                  borderColor: theme.colors.border,
+                  borderRadius: theme.radius.md,
+                },
+              ]}>
+              <View style={styles.listToolbarText}>
+                <AppText variant="label" weight="800">
+                  {t('roleManagement.screensVisible', {
+                    visible: filteredGroups.length,
+                    total: moduleGroups.length,
+                  })}
+                </AppText>
+                <AppText color="muted" variant="caption">
+                  {t('roleManagement.selectedOfTotal', {
+                    selected: selectedCount,
+                    total: claims.length,
+                  })} {t('roleManagement.selected')}
+                </AppText>
+              </View>
+              {canEdit && !isSystemRole ? (
+                <View style={[styles.listToolbarActions, { direction }]}>
+                  <AppIconButton
+                    color={theme.colors.success}
+                    disabled={editingDisabled || filteredGroups.length === 0}
+                    icon="checkmark-done-outline"
+                    label={t('roleManagement.selectFiltered')}
+                    onPress={() => setVisibleSelection(true)}
+                  />
+                  <AppIconButton
+                    color={theme.colors.danger}
+                    disabled={editingDisabled || filteredGroups.length === 0}
+                    icon="close-circle-outline"
+                    label={t('roleManagement.clearFiltered')}
+                    onPress={() => setVisibleSelection(false)}
+                  />
+                  <AppIconButton
+                    color={showBulkTools ? theme.colors.primary : theme.colors.textMuted}
+                    disabled={editingDisabled}
+                    icon={showBulkTools ? 'construct' : 'construct-outline'}
+                    label={t(
+                      showBulkTools
+                        ? 'roleManagement.hideBulkTools'
+                        : 'roleManagement.showBulkTools',
+                    )}
+                    onPress={() => setShowBulkTools((visible) => !visible)}
+                  />
+                </View>
+              ) : null}
+            </View>
+
+            {canEdit && !isSystemRole && showBulkTools ? (
+              <AppCard padding="sm" style={styles.actionBulkCard} variant="filled">
+                <AppText variant="label" weight="800">
+                  {t('roleManagement.bulkByPermissionAction')}
+                </AppText>
+                <View style={[styles.actionBulkRow, { direction }]}>
+                  <View style={styles.actionSelect}>
+                    <AppSelectField
+                      label={t('roleManagement.bulkByPermissionAction')}
+                      leadingIcon="key-outline"
+                      onChange={setSelectedAction}
+                      options={actionOptions}
+                      value={selectedAction}
+                    />
+                  </View>
+                  <View style={[styles.actionButtons, { direction }]}>
+                    <AppIconButton
+                      color={theme.colors.success}
+                      disabled={editingDisabled || !selectedAction}
+                      icon="checkmark-done-outline"
+                      label={t('roleManagement.selectAction')}
+                      onPress={() => setActionSelection(true)}
+                    />
+                    <AppIconButton
+                      color={theme.colors.danger}
+                      disabled={editingDisabled || !selectedAction}
+                      icon="close-circle-outline"
+                      label={t('roleManagement.clearAction')}
+                      onPress={() => setActionSelection(false)}
+                    />
+                  </View>
+                </View>
+              </AppCard>
+            ) : null}
+
+            {filteredGroups.length ? (
+              <View style={styles.screenList}>
+                {filteredGroups.map((group) => (
+                  <PermissionModuleCard
+                    disabled={editingDisabled}
+                    expanded={expandedScreen === group.screen}
+                    group={group}
+                    key={`${group.moduleCode}:${group.screen}`}
+                    onSetModule={setModuleSelection}
+                    onToggle={toggleClaim}
+                    onToggleExpanded={() => setExpandedScreen((current) =>
+                      current === group.screen ? null : group.screen)}
+                  />
+                ))}
+              </View>
+            ) : (
+              <AppStateView message={t('roleManagement.noPermissionMatches')} state="empty" />
+            )}
           </View>
-        ) : (
-          <AppStateView message={t('roleManagement.noPermissionMatches')} state="empty" />
-        )}
+        </View>
       </AppForm>
 
       <DiscardChangesDialog
@@ -487,10 +552,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
-    marginBottom: 14,
+    marginBottom: 8,
   },
-  headingText: { flex: 1, minWidth: 0, gap: 2 },
-  summary: { gap: 8, marginBottom: 12 },
+  headingText: { flex: 1, minWidth: 0 },
+  summary: { marginBottom: 8 },
   summaryRow: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -498,15 +563,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     gap: 8,
   },
-  summaryText: { flex: 1, minWidth: 0, gap: 1 },
-  coverageRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    gap: 8,
-  },
-  progressTrack: { width: '100%', height: 6, borderRadius: 3, overflow: 'hidden' },
-  progressValue: { height: '100%', borderRadius: 3 },
+  summaryText: { flex: 1, minWidth: 0 },
   searchRow: {
     flexDirection: 'row',
     alignItems: 'flex-start',
@@ -521,6 +578,15 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 8,
   },
+  workspace: { gap: 10 },
+  workspaceWide: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+  },
+  moduleRail: { width: 250, gap: 10 },
+  moduleSelector: { gap: 10 },
+  moduleHeading: { gap: 2 },
+  permissionPanel: { flex: 1, minWidth: 0 },
   filters: { gap: 10, marginBottom: 10 },
   listToolbar: {
     minHeight: 60,
@@ -542,5 +608,5 @@ const styles = StyleSheet.create({
   },
   actionSelect: { flex: 1, flexBasis: 190, minWidth: 0 },
   actionButtons: { flexDirection: 'row', alignItems: 'center', paddingTop: 12 },
-  moduleList: { gap: 8 },
+  screenList: { gap: 8 },
 });

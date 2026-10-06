@@ -1,7 +1,6 @@
 import { ThemeProvider } from 'expo-router/react-navigation';
 import { Stack } from 'expo-router';
 import Constants from 'expo-constants';
-import { Observe, ObserveRoot } from 'expo-observe';
 import { StatusBar } from 'expo-status-bar';
 import { useTranslation } from 'react-i18next';
 import 'react-native-reanimated';
@@ -10,6 +9,7 @@ import '@/src/shell';
 
 import { AppProviders } from '@/src/core/providers/AppProviders';
 import { BootstrapErrorBoundary } from '@/src/core/providers/BootstrapErrorBoundary';
+import { configureObserve, ObserveRoot } from '@/src/core/observability/expoObserve';
 import { SENSITIVE_ROUTE_PARAMS } from '@/src/core/observability/telemetry-redaction';
 import { useOnboarding } from '@/src/core/onboarding';
 import { useAppTheme } from '@/src/core/theme';
@@ -22,7 +22,7 @@ import { AppFeedbackHost } from '@/src/shared/components/feedback/transient';
 const observeDispatchingEnabled =
   Constants.expoConfig?.extra?.eas?.observe?.dispatchingEnabled === true;
 
-Observe.configure({
+configureObserve({
   dispatchingEnabled: observeDispatchingEnabled,
   dispatchInDebug: false,
   integrations: {

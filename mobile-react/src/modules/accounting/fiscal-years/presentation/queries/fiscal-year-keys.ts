@@ -5,4 +5,5 @@ export const fiscalYearKeys = {
   list: (query: FiscalYearPageQuery) => [...fiscalYearKeys.all, 'list', query] as const,
   detail: (id: number) => [...fiscalYearKeys.all, 'detail', id] as const,
   lookup: () => [...fiscalYearKeys.all, 'lookup'] as const,
+  context: () => [...fiscalYearKeys.all, 'context'] as const,
 };

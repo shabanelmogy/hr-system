@@ -12,6 +12,7 @@ namespace ErpSystem.Modules.Reporting.Application.Features.Analytics.CrystalRepo
 public sealed class CreateCrystalReportCommandHandler(
     ICrystalReportStore store,
     ICrystalReportFileStorage fileStorage,
+    IManagedCrystalReportContractSource contracts,
     IUnitOfWork unitOfWork,
     CrystalReportErrors errors)
     : ICommandHandler<CreateCrystalReportCommand, Result<CrystalReportDetailResponse>>
@@ -21,6 +22,8 @@ public sealed class CreateCrystalReportCommandHandler(
         CancellationToken cancellationToken)
     {
         var entityKey = request.EntityKey.Trim().ToLowerInvariant();
+        if (!contracts.Supports(entityKey))
+            return Result.Failure<CrystalReportDetailResponse>(errors.CrystalReportUnsupportedEntity);
         var reportKey = CrystalReportRules.FileStemToKey(request.File.FileName);
         if (string.IsNullOrWhiteSpace(reportKey) ||
             !CrystalReportRules.MatchesEntityPrefix(reportKey, entityKey))
@@ -29,7 +32,7 @@ public sealed class CreateCrystalReportCommandHandler(
         if (await store.ReportKeyExistsAsync(entityKey, reportKey, cancellationToken))
             return Result.Failure<CrystalReportDetailResponse>(errors.CrystalReportDuplicateKey);
 
-        var stored = await fileStorage.StoreAsync(request.File, cancellationToken);
+        var stored = await fileStorage.StoreAsync(entityKey, request.File, cancellationToken);
         if (!stored.IsSuccess)
             return Result.Failure<CrystalReportDetailResponse>(ToStorageError(stored.Failure, errors));
 
@@ -79,13 +82,17 @@ public sealed class CreateCrystalReportCommandHandler(
         CrystalReportVersion.Create(
             reportId, versionNumber, file.StorageKey, file.OriginalFileName,
             file.Size, file.Sha256, file.SummaryTitle, file.SummarySubject,
-            CrystalReportValidationStatus.Valid, null);
+            file.ValidationContractSchemaVersion,
+            file.ValidationContractFingerprint);
 
     internal static Error ToStorageError(
         CrystalReportFileFailure failure, CrystalReportErrors errors) => failure switch
         {
             CrystalReportFileFailure.TooLarge => errors.CrystalReportFileTooLarge,
             CrystalReportFileFailure.InspectionUnavailable => errors.CrystalReportInspectorUnavailable,
+            CrystalReportFileFailure.UnsupportedEntity => errors.CrystalReportUnsupportedEntity,
+            CrystalReportFileFailure.SchemaMismatch => errors.CrystalReportSchemaMismatch,
+            CrystalReportFileFailure.ParameterMismatch => errors.CrystalReportParameterMismatch,
             _ => errors.CrystalReportInvalidFile
         };
 }
@@ -116,7 +123,7 @@ public sealed class AddCrystalReportVersionCommandHandler(
         if (!CrystalReportRules.MatchesEntityPrefix(reportKey, snapshot.EntityKey))
             return Result.Failure<CrystalReportVersionResponse>(errors.CrystalReportInvalidFile);
 
-        var stored = await fileStorage.StoreAsync(request.File, cancellationToken);
+        var stored = await fileStorage.StoreAsync(snapshot.EntityKey, request.File, cancellationToken);
         if (!stored.IsSuccess)
             return Result.Failure<CrystalReportVersionResponse>(
                 CreateCrystalReportCommandHandler.ToStorageError(stored.Failure, errors));
@@ -169,9 +176,140 @@ public sealed class AddCrystalReportVersionCommandHandler(
     }
 }
 
+public sealed class RevalidateCrystalReportVersionCommandHandler(
+    ICrystalReportStore store,
+    ICrystalReportFileStorage fileStorage,
+    ICrystalReportInspector inspector,
+    ICurrentPermissionChecker permissions,
+    IManagedCrystalReportContractSource contracts,
+    IUnitOfWork unitOfWork,
+    CrystalReportErrors errors)
+    : ICommandHandler<RevalidateCrystalReportVersionCommand,
+        Result<CrystalReportVersionResponse>>
+{
+    public async Task<Result<CrystalReportVersionResponse>> Handle(
+        RevalidateCrystalReportVersionCommand request,
+        CancellationToken cancellationToken)
+    {
+        var bypass = permissions.HasPermission(ReportingPermissions.EditCrystalReportAccess);
+        var snapshot = await store.GetDetailAsync(
+            request.ReportId,
+            includeArchived: false,
+            CrystalReportRight.Upload,
+            bypass,
+            cancellationToken);
+        if (snapshot is null)
+            return Result.Failure<CrystalReportVersionResponse>(errors.CrystalReportNotFound);
+
+        var sourceVersion = await store.GetDownloadVersionAsync(
+            request.ReportId,
+            request.VersionId,
+            cancellationToken);
+        if (sourceVersion is null)
+            return Result.Failure<CrystalReportVersionResponse>(errors.CrystalReportNotFound);
+
+        await using var source = await fileStorage.OpenVerifiedReadAsync(
+            sourceVersion.StorageKey,
+            sourceVersion.Size,
+            sourceVersion.Sha256,
+            cancellationToken);
+        if (source is null)
+            return Result.Failure<CrystalReportVersionResponse>(errors.CrystalReportSourceUnavailable);
+
+        var inspection = await inspector.InspectAsync(
+            snapshot.EntityKey,
+            new FileUpload(
+                sourceVersion.OriginalFileName,
+                "application/octet-stream",
+                sourceVersion.Size,
+                () => source),
+            cancellationToken);
+        if (inspection is null)
+            return Result.Failure<CrystalReportVersionResponse>(
+                errors.CrystalReportInspectorUnavailable);
+
+        if (inspection.Failure == CrystalReportInspectionFailure.UnsupportedEntity)
+            return Result.Failure<CrystalReportVersionResponse>(errors.CrystalReportUnsupportedEntity);
+
+        var isValid = inspection.IsValid &&
+                      inspection.Failure == CrystalReportInspectionFailure.None;
+        var deterministicFailure = InspectionFailure(inspection, errors);
+        if (isValid &&
+            (inspection.ContractSchemaVersion != contracts.SchemaVersion ||
+             !string.Equals(
+                 inspection.ContractFingerprint,
+                 contracts.Fingerprint,
+                 StringComparison.Ordinal)))
+        {
+            return Result.Failure<CrystalReportVersionResponse>(errors.CrystalReportContractStale);
+        }
+
+        return await unitOfWork.ExecuteAtomicallyAsync(
+            [CrystalReportLocks.Report(request.ReportId)],
+            async token =>
+            {
+                var report = await store.GetForUpdateAsync(request.ReportId, token);
+                if (report is null || report.IsDeleted ||
+                    (!bypass && !await store.HasRightAsync(
+                        request.ReportId,
+                        CrystalReportRight.Upload,
+                        token)))
+                {
+                    return Result.Failure<CrystalReportVersionResponse>(
+                        errors.CrystalReportNotFound);
+                }
+
+                var version = await store.GetVersionAsync(
+                    report.Id,
+                    request.VersionId,
+                    token);
+                if (version is null ||
+                    !HasSameSource(version, sourceVersion))
+                {
+                    return Result.Failure<CrystalReportVersionResponse>(
+                        errors.CrystalReportNotFound);
+                }
+
+                if (isValid)
+                {
+                    version.MarkValid(
+                        inspection.ContractSchemaVersion!.Value,
+                        inspection.ContractFingerprint!);
+                }
+                else
+                {
+                    version.MarkInvalid(deterministicFailure.Description);
+                }
+
+                await unitOfWork.SaveChangesAsync(token);
+                return Result.Success(CrystalReportResponses.Version(
+                    version,
+                    report.CurrentPublishedVersionId == version.Id));
+            },
+            cancellationToken);
+    }
+
+    private static Error InspectionFailure(
+        CrystalReportInspection inspection,
+        CrystalReportErrors errors) => inspection.Failure switch
+        {
+            CrystalReportInspectionFailure.SchemaMismatch => errors.CrystalReportSchemaMismatch,
+            CrystalReportInspectionFailure.ParameterMismatch => errors.CrystalReportParameterMismatch,
+            _ => errors.CrystalReportInvalidFile
+        };
+
+    private static bool HasSameSource(
+        CrystalReportVersion current,
+        CrystalReportVersion inspected) =>
+        string.Equals(current.StorageKey, inspected.StorageKey, StringComparison.Ordinal) &&
+        current.Size == inspected.Size &&
+        string.Equals(current.Sha256, inspected.Sha256, StringComparison.Ordinal);
+}
+
 public sealed class PublishCrystalReportVersionCommandHandler(
     ICrystalReportStore store,
     ICurrentPermissionChecker permissions,
+    IManagedCrystalReportContractSource contracts,
     IUnitOfWork unitOfWork,
     CrystalReportErrors errors)
     : ICommandHandler<PublishCrystalReportVersionCommand, Result<CrystalReportDetailResponse>>
@@ -201,9 +339,11 @@ public sealed class PublishCrystalReportVersionCommandHandler(
                     return Result.Failure<Guid>(errors.CrystalReportNotFound);
                 if (version.ValidationStatus != CrystalReportValidationStatus.Valid)
                     return Result.Failure<Guid>(errors.CrystalReportVersionNotValidated);
+                if (!version.IsValidFor(contracts.Fingerprint))
+                    return Result.Failure<Guid>(errors.CrystalReportContractStale);
 
                 store.ApplyOriginalRowVersion(report, rowVersion);
-                report.Publish(version);
+                report.Publish(version, contracts.Fingerprint);
                 await unitOfWork.SaveChangesAsync(token);
                 return Result.Success(report.Id);
             },
@@ -339,5 +479,7 @@ internal static class CrystalReportResponses
         new(version.Id, version.VersionNumber, version.OriginalFileName, version.Size,
             version.Sha256, version.SummaryTitle, version.SummarySubject,
             version.ValidationStatus.ToString(), version.ValidationReason,
+            version.ValidationContractSchemaVersion,
+            version.ValidationContractFingerprint,
             isPublished, version.CreatedOn);
 }

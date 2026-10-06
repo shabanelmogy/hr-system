@@ -61,6 +61,39 @@ test("Countries covers list search, validation, create and update through the re
   await expect(page.getByText("Saudi Arabia Updated", { exact: true }).first()).toBeVisible();
 });
 
+test("Countries record navigator stays on the next server page after descending sort", async ({ page }) => {
+  test.setTimeout(90_000);
+  await loginWithDemoRole(page, "Super Admin", "/super-admin/geography/countries");
+  await expect(page.getByText("Test Country 12", { exact: true }).first()).toBeVisible({ timeout: 30_000 });
+  await expect(page.getByText("Page 1 of 2", { exact: true })).toBeVisible();
+  await expect(page.getByText("1 / 12", { exact: true })).toBeVisible();
+
+  // Countries starts with the product default createdOn DESC ordering. Activate
+  // the final visible record, then use the original centered navigator for the
+  // page-boundary transition that previously bounced back.
+  const nextRecord = page.getByRole("button", { name: "Go to next record" });
+  await page.getByRole("row").filter({ hasText: "Test Country 03" }).click();
+  await expect(page.getByText("10 / 12", { exact: true })).toBeVisible();
+
+  const secondPageResponse = page.waitForResponse((response) => {
+    const url = new URL(response.url());
+    return response.request().method() === "GET" &&
+      url.pathname === "/api/v1/countries" &&
+      url.searchParams.get("pageNumber") === "2" &&
+      url.searchParams.get("pageSize") === "10" &&
+      url.searchParams.get("sortDirection") === "desc";
+  });
+  await nextRecord.click();
+  expect((await secondPageResponse).ok()).toBeTruthy();
+
+  await expect(page.getByText("Page 2 of 2", { exact: true })).toBeVisible();
+  await expect(page.getByText("11 / 12", { exact: true })).toBeVisible();
+  await expect(page.getByText("Test Country 02", { exact: true }).first()).toBeVisible();
+  await expect(page.getByText("Test Country 12", { exact: true })).toHaveCount(0);
+  await page.waitForTimeout(300);
+  await expect(page.getByText("Page 2 of 2", { exact: true })).toBeVisible();
+});
+
 test("Countries exposes a recoverable API failure state", async ({ page, request }) => {
   await loginWithDemoRole(page, "Super Admin", "/super-admin/geography/countries");
   await expect(page.getByText("Egypt", { exact: true }).first()).toBeVisible();

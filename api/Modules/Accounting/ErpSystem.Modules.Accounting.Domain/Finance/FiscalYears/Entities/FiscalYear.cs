@@ -30,6 +30,7 @@ public sealed class FiscalYear : CompanyAuditableEntity
     public DateOnly EndDate { get; private set; }
     public FiscalPeriodFrequency PeriodFrequency { get; private set; }
     public FiscalYearStatus Status { get; private set; } = FiscalYearStatus.Draft;
+    public bool IsCurrent { get; private set; }
     public IReadOnlyCollection<FiscalPeriod> Periods =>
         _periods.Where(period => !period.IsDeleted).ToArray();
 
@@ -86,6 +87,31 @@ public sealed class FiscalYear : CompanyAuditableEntity
 
     public void EnsureCanArchive() =>
         EnsureDraft("Finance.FiscalYear.NotArchivable", "Only a draft fiscal year can be archived.");
+
+    public bool MarkCurrent()
+    {
+        if (IsCurrent)
+            return false;
+
+        if (Status != FiscalYearStatus.Open)
+        {
+            throw new DomainRuleException(
+                "Finance.FiscalYear.MustBeOpenForCurrent",
+                "Only an open fiscal year can be set as the company current fiscal year.");
+        }
+
+        IsCurrent = true;
+        return true;
+    }
+
+    public bool ClearCurrent()
+    {
+        if (!IsCurrent)
+            return false;
+
+        IsCurrent = false;
+        return true;
+    }
 
     private void ApplyDraft(
         string code,

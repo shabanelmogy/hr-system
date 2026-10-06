@@ -1,11 +1,13 @@
-import { Download, FileUpload, Lock, Publish, Save } from "@mui/icons-material";
-import { Alert, Box, Button, Checkbox, Chip, Dialog, DialogActions, DialogContent, DialogTitle, Divider, FormControlLabel, IconButton, Stack, Tab, Tabs, Typography } from "@mui/material";
+import { Download, FileUpload, Lock, Save } from "@mui/icons-material";
+import { Alert, Box, Button, Checkbox, Dialog, DialogActions, DialogContent, DialogTitle, Divider, FormControlLabel, Stack, Tab, Tabs, Typography } from "@mui/material";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ApiClientError } from "@/lib/api/client";
 import { showToast } from "@/shared/components/feedback/transient";
 import { canUseCrystalReportFile, downloadCrystalReportBlob } from "./files";
+import { getCrystalReportEntityLabel } from "./entityLabels";
 import { crystalReportService } from "./services";
+import { CrystalReportVersionList } from "./CrystalReportVersionList";
 import type { CrystalReportAccessGrant, CrystalReportCapabilities, CrystalReportDetail, CrystalReportRight, CrystalReportRoleOption } from "./types";
 
 const RIGHTS: CrystalReportRight[] = ["Run", "Download", "Upload", "Publish"];
@@ -90,6 +92,17 @@ export function CrystalReportDetailDialog({ report, roles, can, busy, onClose, o
     }, "crystalReports.publishError");
   };
 
+  const revalidate = (versionId: string) => {
+    if (report.isArchived || !guard(can.upload)) return;
+    void runMutation(async () => {
+      const result = await crystalReportService.revalidateVersion(report.id, versionId);
+      showToast.success(t("crystalReports.revalidationCompleted", {
+        status: t(`crystalReports.validationStates.${result.validationStatus}`),
+      }));
+      await Promise.all([onRefresh(), onChanged()]);
+    }, "crystalReports.revalidationError");
+  };
+
   const saveAccess = () => {
     if (!guard(can.access)) return;
     void runMutation(async () => {
@@ -112,7 +125,7 @@ export function CrystalReportDetailDialog({ report, roles, can, busy, onClose, o
 
         {tab === 0 && (
           <Stack spacing={1}>
-            <Typography><b>{t("crystalReports.entityKey")}:</b> {report.entityKey}</Typography>
+            <Typography><b>{t("crystalReports.entity")}:</b> {getCrystalReportEntityLabel(t, report.entityKey)}</Typography>
             <Typography><b>{t("crystalReports.reportKey")}:</b> {report.reportKey}</Typography>
             <Typography>{report.description || "—"}</Typography>
             <Stack direction="row" spacing={1}>
@@ -136,45 +149,22 @@ export function CrystalReportDetailDialog({ report, roles, can, busy, onClose, o
 
         {tab === 1 && (
           <Stack spacing={1.25}>
-            {report.versions.map((item) => (
-              <Box key={item.id} sx={{ border: 1, borderColor: "divider", borderRadius: 1, p: 1, display: "flex", gap: 1, alignItems: "center", flexWrap: "wrap" }}>
-                <Typography sx={{ minWidth: 58 }}>v{item.versionNumber}</Typography>
-                <Box sx={{ flex: 1 }}>
-                  <Typography>{item.summaryTitle || item.originalFileName}</Typography>
-                  {item.summarySubject && <Typography variant="caption" color="text.secondary">{item.summarySubject}</Typography>}
-                  {item.validationReason && <Typography variant="caption" color="error" sx={{ display: "block" }}>{item.validationReason}</Typography>}
-                </Box>
-                <Chip
-                  size="small"
-                  label={item.isPublished ? t("crystalReports.published") : item.validationStatus}
-                  color={item.validationStatus === "Invalid" ? "error" : item.isPublished ? "success" : "default"}
-                />
-                {can.downloadVersion && !report.isArchived && (
-                  <IconButton
-                    aria-label={t("crystalReports.download")}
-                    disabled={locked}
-                    onClick={() => {
-                      if (!guard(can.downloadVersion)) return;
-                      void crystalReportService.downloadVersion(report.id, item.id)
-                        .then(({ blob, fileName }) => downloadCrystalReportBlob(blob, fileName))
-                        .catch((cause) => showToast.error(cause, t("crystalReports.downloadError")));
-                    }}
-                  >
-                    <Download />
-                  </IconButton>
-                )}
-                {can.publish && !report.isArchived && (
-                  <Button
-                    size="small"
-                    startIcon={<Publish />}
-                    disabled={locked || item.validationStatus === "Invalid"}
-                    onClick={() => publish(item.id)}
-                  >
-                    {t("crystalReports.publish")}
-                  </Button>
-                )}
-              </Box>
-            ))}
+            <CrystalReportVersionList
+              versions={report.versions}
+              reportArchived={report.isArchived}
+              canDownloadVersion={can.downloadVersion}
+              canUpload={can.upload}
+              canPublish={can.publish}
+              locked={locked}
+              onDownload={(versionId) => {
+                if (!guard(can.downloadVersion)) return;
+                void crystalReportService.downloadVersion(report.id, versionId)
+                  .then(({ blob, fileName }) => downloadCrystalReportBlob(blob, fileName))
+                  .catch((cause) => showToast.error(cause, t("crystalReports.downloadError")));
+              }}
+              onRevalidate={revalidate}
+              onPublish={publish}
+            />
 
             {can.upload && !report.isArchived && (
               <Stack direction={{ xs: "column", sm: "row" }} spacing={1}>

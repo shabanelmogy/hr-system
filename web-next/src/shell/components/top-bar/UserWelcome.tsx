@@ -101,25 +101,42 @@ const UserWelcome = ({ isMobile = false }: { isMobile?: boolean }) => {
     const userColor = getUserColor();
     return (
       <Fade in={showWelcome} timeout={800}>
-        <Avatar
-          src={avatarSrc}
+        <Box
+          data-testid="user-avatar-badge"
           sx={{
-            width: 32,
-            height: 32,
-            bgcolor: avatarSrc ? "transparent" : userColor,
-            color: avatarSrc ? undefined : theme.palette.getContrastText(userColor),
-            fontWeight: "bold",
-            fontSize: "0.75rem",
-            boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
-            cursor: "pointer",
-            "&:hover": {
-              transform: "scale(1.05)",
-              transition: "transform 0.2s ease",
-            },
+            width: 40,
+            height: 40,
+            p: 0.5,
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            flex: "0 0 40px",
+            overflow: "visible",
           }}
         >
-          {getInitials()}
-        </Avatar>
+          <Avatar
+            src={avatarSrc}
+            sx={{
+              width: 32,
+              height: 32,
+              flexShrink: 0,
+              bgcolor: avatarSrc ? "transparent" : userColor,
+              color: avatarSrc ? undefined : theme.palette.getContrastText(userColor),
+              fontWeight: "bold",
+              fontSize: "0.75rem",
+              boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
+              cursor: "pointer",
+              transition: theme.transitions.create("transform", {
+                duration: theme.transitions.duration.shortest,
+              }),
+              "&:hover": {
+                transform: "scale(1.05)",
+              },
+            }}
+          >
+            {getInitials()}
+          </Avatar>
+        </Box>
       </Fade>
     );
   }

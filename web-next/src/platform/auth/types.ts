@@ -84,6 +84,7 @@ export interface ChangeUserPasswordRequest {
 
 export interface RoleClaim {
   displayValue: string;
+  moduleCode: string;
   isSelected: boolean;
 }
 

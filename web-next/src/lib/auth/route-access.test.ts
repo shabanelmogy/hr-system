@@ -81,11 +81,15 @@ describe("route access policies", () => {
     })).toBe(false);
   });
 
-  it("requires ViewUsers for the invitations administration page", () => {
+  it("requires the dedicated invitation view permission", () => {
     expect(canAccessRoute(appRoutes.platform.administration.invitations, session)).toBe(false);
     expect(canAccessRoute(appRoutes.platform.administration.invitations, {
       ...session,
       permissions: [permissions.ViewUsers],
+    })).toBe(false);
+    expect(canAccessRoute(appRoutes.platform.administration.invitations, {
+      ...session,
+      permissions: [permissions.ViewUserInvitations],
     })).toBe(true);
   });
 
@@ -181,8 +185,12 @@ describe("route access policies", () => {
     expect(canAccessRoute(appRoutes.modules.hr.attendanceDevices.pullRuns, rawViewer)).toBe(true);
   });
 
-  it("allows tenant members to read offline operations policy without manage permission", () => {
-    expect(canAccessRoute(appRoutes.platform.administration.offlineOperations, session)).toBe(true);
+  it("requires the canonical offline-operations view permission", () => {
+    expect(canAccessRoute(appRoutes.platform.administration.offlineOperations, session)).toBe(false);
+    expect(canAccessRoute(appRoutes.platform.administration.offlineOperations, {
+      ...session,
+      permissions: [permissions.ViewOfflineOperations],
+    })).toBe(true);
   });
 
   it("requires FiscalYears:View for the Ledger Setup fiscal-years route", () => {
@@ -213,6 +221,37 @@ describe("route access policies", () => {
     expect(canAccessRoute(appRoutes.modules.accounting.ledgerSetup.currencies, {
       ...session,
       permissions: [permissions.ViewCurrencies],
+    })).toBe(true);
+  });
+
+  it("keeps Chart of Accounts and hierarchy-level route permissions isolated", () => {
+    const accountViewer = {
+      ...session,
+      permissions: [permissions.ViewAccounts],
+    };
+    const hierarchyViewer = {
+      ...session,
+      permissions: [permissions.ViewAccountHierarchyLevels],
+    };
+
+    expect(canAccessRoute(appRoutes.modules.accounting.ledgerSetup.accounts, accountViewer)).toBe(true);
+    expect(canAccessRoute(appRoutes.modules.accounting.ledgerSetup.hierarchyLevels, accountViewer)).toBe(false);
+    expect(canAccessRoute(appRoutes.modules.accounting.ledgerSetup.accounts, hierarchyViewer)).toBe(false);
+    expect(canAccessRoute(appRoutes.modules.accounting.ledgerSetup.hierarchyLevels, hierarchyViewer)).toBe(true);
+  });
+
+  it("opens composite Ledger Setup routes for any permitted child screen", () => {
+    expect(canAccessRoute(appRoutes.modules.accounting.ledgerSetup.dimensions, {
+      ...session,
+      permissions: [permissions.ViewDimensionValues],
+    })).toBe(true);
+    expect(canAccessRoute(appRoutes.modules.accounting.ledgerSetup.exchangeRates, {
+      ...session,
+      permissions: [permissions.ViewExchangeRates],
+    })).toBe(true);
+    expect(canAccessRoute(appRoutes.modules.accounting.ledgerSetup.accountDetermination, {
+      ...session,
+      permissions: [permissions.ViewPostingProfiles],
     })).toBe(true);
   });
 

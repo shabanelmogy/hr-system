@@ -12,6 +12,7 @@ public static class AccountingPermissions
     public const string CloseFiscalYears = "FiscalYears:Close";
     public const string LockFiscalYears = "FiscalYears:Lock";
     public const string ReopenFiscalYears = "FiscalYears:Reopen";
+    public const string SetCurrentFiscalYears = "FiscalYears:SetCurrent";
 
     public const string GenerateInvoiceQrCode = "Invoices:GenerateQrCode";
 
@@ -85,7 +86,8 @@ public static class AccountingPermissions
     public static IReadOnlyList<string> FiscalYears { get; } =
     [
         ViewFiscalYears, CreateFiscalYears, EditFiscalYears, ArchiveFiscalYears, RestoreFiscalYears,
-        OpenFiscalYears, BeginClosingFiscalYears, CloseFiscalYears, LockFiscalYears, ReopenFiscalYears
+        OpenFiscalYears, BeginClosingFiscalYears, CloseFiscalYears, LockFiscalYears, ReopenFiscalYears,
+        SetCurrentFiscalYears
     ];
 
     public static IReadOnlyList<string> Invoicing { get; } = [GenerateInvoiceQrCode];

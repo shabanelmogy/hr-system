@@ -16,8 +16,9 @@
 | P-002 Tree + Master/Detail | Cost Centers و`SplitTreeView` | Cost Centers و`AppHierarchicalTree` | البيانات الهرمية |
 | P-003 Tabbed multi-section form | Add Tenant و`FormTabs` | Add Tenant full-screen stacked عبر `AppForm` (`Adapted`) | aggregate أو إعداد متعدد الأقسام |
 | P-005 Singleton Settings Editor | Ledger Setup Company Settings journey + `MyForm` (`Adapted`) | Ledger Setup Company Settings journey + `AppForm` (`Adapted`) | سجل إعداد واحد لكل company/scope؛ المرجع العام الحالي evidence مؤقت وليس target architecture |
-| P-006 Scoped Relationship / Mapping Editor | Role Permissions screen-first accordion editor | Role Permissions screen-first disclosure-card editor (`Adapted`) | علاقات أو mappings كثيرة داخل scope مع dirty/read-only/save contract |
+| P-006 Scoped Relationship / Mapping Editor | Role Permissions module-first rail + screen accordion editor | Role Permissions responsive module selector + screen disclosure-card editor (`Adapted`) | علاقات أو mappings كثيرة داخل scope، تدعم grouping بموديول مالك مع dirty/read-only/save contract |
 | P-007 Settings Navigation Hub | Ledger Setup overview + Accounting module definition | Ledger Setup overview + Accounting module definition | مدخل permission-filtered لأطفال مستقلين بلا generic CRUD ownership |
+| P-008 Global Scoped Context Selector | shared `ContextBadge`/`ContextSwitcher` + Tenant/Company/Fiscal Year Topbar composition | shared `AppContextBadge` + Tenant/Company/Fiscal Year App-header composition عبر `NavigationContextActionsProvider` (`Adapted`) | عرض هوية scope موحدة واختيار سياق عالمي موثوق مع dirty guard وعزل user/company وفصل domain owner عن Shell slot |
 
 الأنماط المرشحة `P-004` (Stepper/Wizard) و`P-008` (Transactional Document)
 و`P-009` (Record View) و`P-010` (Dashboard) و`P-011` (Kanban) و`P-012` (Calendar)
@@ -60,7 +61,9 @@ Policy and query-defense evidence lives in
 | التنفيذ العام لميزات الموبايل | [MOBILE_FEATURE_GUIDE.md](../mobile-react/MOBILE_FEATURE_GUIDE.md) | ميزات الموبايل متعددة الطبقات |
 | غلاف الموديول والتنقل المشترك في Next.js | [frontend-architecture-reference.md](../web-next/architecture/frontend-architecture-reference.md#shared-module-shell-behavior) | Basic Data وWorkforce Planning وAttendance وأي موديول ويب جديد |
 | تعريف تنقل الموديول واشتقاق قوائم الموديول الفرعي | [frontend-architecture-reference.md](../web-next/architecture/frontend-architecture-reference.md#route-and-entitlement-ownership-baseline) | `src/modules/hr/navigation` و`hrModuleDefinition.navigation` وطبقة shell |
+| عنوان صفحة Web كثيفة | `PageHeader` simple مع `compact` | Role Permissions وأي workspace يحتاج عنوانًا أصغر دون إنشاء header محلي |
 | دورة سياق المستخدم والشركة والحماية من فقدان التعديلات | [frontend-architecture-reference.md](../web-next/architecture/frontend-architecture-reference.md#user-and-company-context-lifecycle) | `SessionContext` و`MainShell` و`UnsavedChangesProvider` ومبدّل الشركة |
+| اختيار سياق عمل عالمي P-008 | [SCREEN_PATTERN_CATALOG.md](SCREEN_PATTERN_CATALOG.md#p-008--global-scoped-context-selector) | Web `ContextBadge`/`ContextSwitcher` وTopbar slots؛ Mobile `AppContextBadge` و`NavigationContextActionsProvider` و`AppAppBar`؛ Tenant identity وCompany/Fiscal Year selectors |
 | تحميل أدوات التصدير عند الطلب | [frontend-architecture-reference.md](../web-next/architecture/frontend-architecture-reference.md#on-demand-feature-tooling) | `useGridExport` وقوائم الجداول التي تدعم التصدير |
 
 ## قرار الإضافة أو التمديد

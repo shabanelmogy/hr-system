@@ -21,6 +21,7 @@ Typical examples:
 | PROD-011 | Production | API contract drift | Hosted Swagger and mobile contract evidence must move together after endpoint/version changes. | API + Mobile | `PRODUCTION_NOTES.md` |
 | PROD-020 | Production | Managed Crystal publication | Feature report views require publication plus `Run` access; source/report files alone are insufficient release evidence. | API + Web + Mobile | `PRODUCTION_NOTES.md` |
 | PROD-021 | Production | Address Type company expansion | Existing-environment rollout requires a data-safe migration sequence and client context refresh. | API + Web + Mobile | `PRODUCTION_NOTES.md` |
+| PROD-025 | Production | Managed Crystal runtime | API, runtime, Web and Mobile release evidence must use matching entity contracts and a real deployed AR/EN render. | API + Runtime + Web + Mobile | `PRODUCTION_NOTES.md` |
 | DEF-002 | Deferred | Reporting/charts | Whole-dataset contracts reopen only when a real client/reporting need proves them necessary. | API + Web | `DEFERRED_ITEMS.md` |
 | DEF-008 | Deferred | Workforce governance | Delegated SoD affects API authorization and both client action visibility. | API + Web + Mobile | `DEFERRED_ITEMS.md` |
 | DEF-017 | Deferred | Work Location | Separate Work Location ownership waits for a lifecycle that Branch/BranchAddress cannot represent. | API + Web + Mobile | `DEFERRED_ITEMS.md` |

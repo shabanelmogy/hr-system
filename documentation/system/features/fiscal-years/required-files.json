@@ -154,6 +154,12 @@
       "purpose": "Generated period child and internal lifecycle"
     },
     {
+      "id": "domain-user-selection",
+      "layer": "api-domain",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Domain/Finance/FiscalYears/Entities/FiscalYearUserSelection.cs",
+      "purpose": "Per-user and per-company working Fiscal Year override"
+    },
+    {
       "id": "application-commands",
       "layer": "api-application",
       "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Application/Features/Finance/FiscalYears/Commands/FiscalYearCommands.cs",
@@ -208,10 +214,22 @@
       "purpose": "Accounting-owned acc schema baseline for FiscalYears and FiscalPeriods"
     },
     {
+      "id": "working-context-migration",
+      "layer": "api-infrastructure",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Infrastructure/Migrations/20260927132148_AddFiscalYearWorkingContext.cs",
+      "purpose": "Applied Current marker, unique company default, and scoped user-selection persistence"
+    },
+    {
+      "id": "current-eligibility-cleanup-migration",
+      "layer": "api-infrastructure",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Infrastructure/Migrations/20260927190043_EnforceOpenFiscalYearCurrentEligibility.cs",
+      "purpose": "Applied cleanup for legacy Draft Current markers while preserving progressed Current lifecycle states"
+    },
+    {
       "id": "api-permissions",
       "layer": "api-config",
       "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Contracts/Authorization/AccountingPermissions.cs",
-      "purpose": "Five server permission constants"
+      "purpose": "Exact server permissions including independent SetCurrent"
     },
     {
       "id": "api-di",
@@ -272,6 +290,60 @@
       "layer": "web-next",
       "path": "web-next/src/modules/accounting/fiscal-years/components/FiscalYearForm.tsx",
       "purpose": "Shared add/edit/view form and period detail"
+    },
+    {
+      "id": "web-context-switcher",
+      "layer": "web-next",
+      "path": "web-next/src/modules/accounting/fiscal-years/components/FiscalYearContextSwitcher.tsx",
+      "purpose": "Accounting-owned bilingual personal working-year selector with dirty-state protection"
+    },
+    {
+      "id": "web-context-badge",
+      "layer": "web-next-shared",
+      "path": "web-next/src/shared/components/layout/ContextBadge.tsx",
+      "purpose": "Shared P-008 compact icon/value, icon-only and accessible context presentation"
+    },
+    {
+      "id": "web-context-badge-test",
+      "layer": "web-next-test",
+      "path": "web-next/src/shared/components/layout/ContextBadge.test.tsx",
+      "purpose": "Full and icon-only accessible context identity coverage"
+    },
+    {
+      "id": "web-context-switcher-shared",
+      "layer": "web-next-shared",
+      "path": "web-next/src/shared/components/layout/ContextSwitcher.tsx",
+      "purpose": "Shared P-008 selector lifecycle composed on ContextBadge"
+    },
+    {
+      "id": "web-tenant-context-identity",
+      "layer": "web-next-platform",
+      "path": "web-next/src/platform/tenant-access/TenantNameBadge.tsx",
+      "purpose": "Read-only current-tenant identity using the shared context badge"
+    },
+    {
+      "id": "web-company-context-switcher",
+      "layer": "web-next-platform",
+      "path": "web-next/src/platform/tenant-access/CompanyContextSwitcher.tsx",
+      "purpose": "Current-company selector using the shared P-008 presentation"
+    },
+    {
+      "id": "web-context-topbar",
+      "layer": "web-next-shell",
+      "path": "web-next/src/shell/components/top-bar/TopBar.tsx",
+      "purpose": "Unified Tenant, Company and Working Fiscal Year scope hierarchy in full and compact Topbar layouts"
+    },
+    {
+      "id": "web-context-user-avatar",
+      "layer": "web-next-shell",
+      "path": "web-next/src/shell/components/top-bar/UserWelcome.tsx",
+      "purpose": "Fixed non-clipping user-avatar frame adjacent to the shrinkable P-008 context group"
+    },
+    {
+      "id": "web-context-composition",
+      "layer": "web-next-config",
+      "path": "web-next/src/app/(main)/MainShell.tsx",
+      "purpose": "Composition-root injection into generic full and compact Topbar slots"
     },
     {
       "id": "web-multiview",
@@ -430,10 +502,64 @@
       "purpose": "Shared full-screen create/edit/view form and periods"
     },
     {
+      "id": "mobile-context-switcher",
+      "layer": "mobile-react",
+      "path": "mobile-react/src/modules/accounting/fiscal-years/presentation/components/FiscalYearContextSwitcher.tsx",
+      "purpose": "Accounting-owned responsive personal working-year selector and unsaved-change guard"
+    },
+    {
+      "id": "mobile-context-badge",
+      "layer": "mobile-react-shared",
+      "path": "mobile-react/src/shared/components/layout/AppContextBadge.tsx",
+      "purpose": "Shared P-008 44-point icon/value and icon-only context surface with on-primary treatment"
+    },
+    {
+      "id": "mobile-context-badge-test",
+      "layer": "mobile-react-test",
+      "path": "mobile-react/src/shared/components/layout/AppContextBadge.test.tsx",
+      "purpose": "Touch-target and full accessible context identity coverage"
+    },
+    {
+      "id": "mobile-tenant-context-identity",
+      "layer": "mobile-react-platform",
+      "path": "mobile-react/src/platform/tenant-access/presentation/components/TenantNameBadge.tsx",
+      "purpose": "Read-only current-tenant identity using AppContextBadge"
+    },
+    {
+      "id": "mobile-company-context-switcher",
+      "layer": "mobile-react-platform",
+      "path": "mobile-react/src/platform/tenant-access/presentation/components/CompanyContextSwitcher.tsx",
+      "purpose": "Company selector using the shared P-008 presentation"
+    },
+    {
+      "id": "mobile-context-appbar",
+      "layer": "mobile-react-platform",
+      "path": "mobile-react/src/platform/navigation/AppAppBar.tsx",
+      "purpose": "Unified Tenant, Company and Working Fiscal Year scope hierarchy in the shared App header"
+    },
+    {
+      "id": "mobile-context-slot",
+      "layer": "mobile-react-config",
+      "path": "mobile-react/src/platform/navigation/NavigationContextActions.tsx",
+      "purpose": "Generic header composition slot consumed by nested navigation headers"
+    },
+    {
+      "id": "mobile-context-composition",
+      "layer": "mobile-react-config",
+      "path": "mobile-react/app/(main)/_layout.tsx",
+      "purpose": "App composition-root injection of the Accounting context selector"
+    },
+    {
       "id": "mobile-api",
       "layer": "mobile-react",
       "path": "mobile-react/src/modules/accounting/fiscal-years/data/remote/fiscal-year-remote-data-source.ts",
       "purpose": "Transport and query serialization"
+    },
+    {
+      "id": "mobile-api-contract-matrix",
+      "layer": "mobile-react-config",
+      "path": "documentation/mobile-react/MOBILE_API_COMPATIBILITY_MATRIX.json",
+      "purpose": "Phase 00 route and endpoint-member evidence including working context and SetCurrent"
     },
     {
       "id": "mobile-schemas",

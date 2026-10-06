@@ -14,7 +14,9 @@ public sealed class PrivateCrystalReportFileStorage(
     private static readonly byte[] OleSignature = [0xD0, 0xCF, 0x11, 0xE0, 0xA1, 0xB1, 0x1A, 0xE1];
 
     public async Task<StoreCrystalReportFileResult> StoreAsync(
-        FileUpload upload, CancellationToken cancellationToken)
+        string entityKey,
+        FileUpload upload,
+        CancellationToken cancellationToken)
     {
         var fileName = Path.GetFileName(upload.FileName);
         if (!string.Equals(Path.GetExtension(fileName), ".rpt", StringComparison.OrdinalIgnoreCase))
@@ -32,12 +34,15 @@ public sealed class PrivateCrystalReportFileStorage(
                 upload.OpenReadStream),
             cancellationToken);
 
-        var inspection = await inspector.InspectAsync(upload, cancellationToken);
+        var inspection = await inspector.InspectAsync(entityKey, upload, cancellationToken);
         if (inspection is null)
             return Failure(CrystalReportFileFailure.InspectionUnavailable);
         if (!inspection.IsValid)
             return new StoreCrystalReportFileResult(
-                null, CrystalReportFileFailure.InspectionRejected, inspection.ValidationReason);
+                null, ToFileFailure(inspection.Failure), inspection.ValidationReason);
+        if (inspection.ContractSchemaVersion is not > 0 ||
+            inspection.ContractFingerprint is not { Length: 64 })
+            return Failure(CrystalReportFileFailure.InspectionUnavailable);
 
         var storageKey = $"{Guid.NewGuid():N}.rpt";
         var finalPath = ResolvePath(storageKey);
@@ -83,7 +88,9 @@ public sealed class PrivateCrystalReportFileStorage(
         return new StoreCrystalReportFileResult(
             new StoredCrystalReportFile(
                 storageKey, fileName, length, hash,
-                inspection.SummaryTitle, inspection.SummarySubject),
+                inspection.SummaryTitle, inspection.SummarySubject,
+                inspection.ContractSchemaVersion.Value,
+                inspection.ContractFingerprint),
             CrystalReportFileFailure.None, null);
     }
 
@@ -168,6 +175,14 @@ public sealed class PrivateCrystalReportFileStorage(
 
     private static StoreCrystalReportFileResult Failure(CrystalReportFileFailure failure) =>
         new(null, failure, null);
+    private static CrystalReportFileFailure ToFileFailure(CrystalReportInspectionFailure failure) =>
+        failure switch
+        {
+            CrystalReportInspectionFailure.UnsupportedEntity => CrystalReportFileFailure.UnsupportedEntity,
+            CrystalReportInspectionFailure.SchemaMismatch => CrystalReportFileFailure.SchemaMismatch,
+            CrystalReportInspectionFailure.ParameterMismatch => CrystalReportFileFailure.ParameterMismatch,
+            _ => CrystalReportFileFailure.InspectionRejected
+        };
     private static Stream? DisposeAndReturnNull(Stream stream)
     {
         stream.Dispose();

@@ -24,19 +24,19 @@ import {
 } from "../../utils/permissionLabels";
 
 type RolePermissionsCardsProps = {
-  modules: string[];
+  screens: string[];
   actions: string[];
   claims: RoleClaimsFormData["roleClaims"];
-  onSelectModule: (module: string, selected: boolean) => void;
+  onSelectScreen: (screen: string, selected: boolean) => void;
   onToggle: (claimIndex: number) => void;
   readOnly: boolean;
 };
 
 export default function RolePermissionsCards({
-  modules,
+  screens,
   actions,
   claims,
-  onSelectModule,
+  onSelectScreen,
   onToggle,
   readOnly,
 }: RolePermissionsCardsProps) {
@@ -44,26 +44,35 @@ export default function RolePermissionsCards({
   const [expandedScreen, setExpandedScreen] = useState<string | false>(false);
 
   return (
-    <Stack spacing={1.25} sx={{ p: 1.5 }}>
-      {modules.map((module) => {
-        const moduleClaims = actions.flatMap((action) => {
+    <Stack
+      spacing={1.25}
+      sx={{
+        height: { md: "100%" },
+        minHeight: 0,
+        overflowY: { md: "auto" },
+        overscrollBehavior: "contain",
+        p: 1.5,
+      }}
+    >
+      {screens.map((screen) => {
+        const screenClaims = actions.flatMap((action) => {
           const claimIndex = claims.findIndex(
-            (claim) => claim.displayValue.toLowerCase() === `${module}:${action}`.toLowerCase(),
+            (claim) => claim.displayValue.toLowerCase() === `${screen}:${action}`.toLowerCase(),
           );
           return claimIndex >= 0 ? [{ action, claimIndex, claim: claims[claimIndex] }] : [];
         });
-        const selectedCount = moduleClaims.filter(({ claim }) => claim.isSelected).length;
-        const allSelected = moduleClaims.length > 0 && selectedCount === moduleClaims.length;
-        const resourceLabel = getPermissionResourceLabel(module, t);
-        const screenId = `role-permission-screen-${module
+        const selectedCount = screenClaims.filter(({ claim }) => claim.isSelected).length;
+        const allSelected = screenClaims.length > 0 && selectedCount === screenClaims.length;
+        const resourceLabel = getPermissionResourceLabel(screen, t);
+        const screenId = `role-permission-screen-${screen
           .toLowerCase()
           .replace(/[^a-z0-9_-]+/g, "-")}`;
 
         return (
           <Accordion
-            key={module}
-            expanded={expandedScreen === module}
-            onChange={(_, expanded) => setExpandedScreen(expanded ? module : false)}
+            key={screen}
+            expanded={expandedScreen === screen}
+            onChange={(_, expanded) => setExpandedScreen(expanded ? screen : false)}
             disableGutters
             variant="outlined"
             slotProps={{
@@ -110,7 +119,7 @@ export default function RolePermissionsCards({
                     color="text.secondary"
                     sx={{ display: "block" }}
                   >
-                    {t("roles.screenPermissionsHint", { count: moduleClaims.length })}
+                    {t("roles.screenPermissionsHint", { count: screenClaims.length })}
                   </Typography>
                 </Box>
                 <Chip
@@ -118,7 +127,7 @@ export default function RolePermissionsCards({
                   color={selectedCount > 0 ? "primary" : "default"}
                   label={t("roles.selectedOfTotal", {
                     selected: selectedCount,
-                    total: moduleClaims.length,
+                    total: screenClaims.length,
                   })}
                 />
               </Stack>
@@ -136,7 +145,7 @@ export default function RolePermissionsCards({
                     startIcon={allSelected
                       ? <RemoveCircleOutlineRoundedIcon />
                       : <CheckCircleOutlineRoundedIcon />}
-                    onClick={() => onSelectModule(module, !allSelected)}
+                    onClick={() => onSelectScreen(screen, !allSelected)}
                   >
                     {t(allSelected ? "roles.clearGroup" : "roles.selectGroup")}
                   </Button>
@@ -153,7 +162,7 @@ export default function RolePermissionsCards({
                   gap: 1,
                 }}
               >
-                {moduleClaims.map(({ action, claim, claimIndex }) => {
+                {screenClaims.map(({ action, claim, claimIndex }) => {
                   const actionLabel = getPermissionActionLabel(action, t);
                   const permissionLabel = t("roles.permissionFor", {
                     type: actionLabel,

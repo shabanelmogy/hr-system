@@ -1,27 +1,21 @@
 "use client";
 
 import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
-import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
 import SwapHorizRoundedIcon from "@mui/icons-material/SwapHorizRounded";
 import {
   Box,
-  Chip,
-  CircularProgress,
-  IconButton,
   ListItemIcon,
   ListItemText,
   Menu,
   MenuItem,
-  Tooltip,
-  alpha,
 } from "@mui/material";
 import {
-  isValidElement,
   useMemo,
   useState,
   type MouseEvent,
   type ReactNode,
 } from "react";
+import { ContextBadge, type ContextBadgeTone } from "./ContextBadge";
 
 export type ContextSwitcherValue = string | number;
 
@@ -40,6 +34,8 @@ export interface ContextSwitcherProps<TValue extends ContextSwitcherValue = stri
   label: string;
   /** Optional heading displayed above the options. */
   menuLabel?: string;
+  /** Value displayed while no item is selected. */
+  emptyLabel?: string;
   /** Optional trigger icon. The selected item's icon is used when omitted. */
   icon?: ReactNode;
   /** Reduces the trigger width for dense toolbar layouts. */
@@ -48,6 +44,8 @@ export interface ContextSwitcherProps<TValue extends ContextSwitcherValue = stri
   iconOnly?: boolean;
   loading?: boolean;
   disabled?: boolean;
+  error?: boolean;
+  tone?: ContextBadgeTone;
   /** Optional item-level disabled state without taking ownership of menu state. */
   isItemDisabled?: (item: ContextSwitcherItem<TValue>) => boolean;
 }
@@ -62,11 +60,14 @@ export function ContextSwitcher<TValue extends ContextSwitcherValue = string>({
   onChange,
   label,
   menuLabel,
+  emptyLabel,
   icon,
   compact = false,
   iconOnly = false,
   loading = false,
   disabled = false,
+  error = false,
+  tone = "primary",
   isItemDisabled,
 }: ContextSwitcherProps<TValue>) {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
@@ -80,12 +81,6 @@ export function ContextSwitcher<TValue extends ContextSwitcherValue = string>({
     if (canOpen) setAnchorEl(event.currentTarget);
   };
   const selectedIcon = icon ?? selected?.icon ?? <SwapHorizRoundedIcon />;
-  const chipIcon = loading
-    ? <CircularProgress size={15} />
-    : isValidElement(selectedIcon)
-      ? selectedIcon
-      : <SwapHorizRoundedIcon />;
-  const triggerLabel = selected?.label ? `${label}: ${selected.label}` : label;
 
   const handleChange = async (nextValue: TValue) => {
     closeMenu();
@@ -93,77 +88,29 @@ export function ContextSwitcher<TValue extends ContextSwitcherValue = string>({
     await onChange(nextValue);
   };
 
-  const trigger = iconOnly ? (
-    <IconButton
-      aria-label={triggerLabel}
-      aria-haspopup={canOpen ? "menu" : undefined}
-      aria-expanded={canOpen ? Boolean(anchorEl) : undefined}
-      disabled={disabled || loading}
-      onClick={openMenu}
-      size="small"
-      sx={(theme) => ({
-        width: 36,
-        height: 36,
-        color: theme.palette.text.primary,
-        bgcolor: alpha(theme.palette.background.paper, 0.72),
-        border: `1px solid ${alpha(theme.palette.primary.main, 0.38)}`,
-        boxShadow: theme.shadows[1],
-        "&:hover": { bgcolor: alpha(theme.palette.primary.main, 0.1) },
-      })}
-    >
-      {loading ? <CircularProgress size={17} /> : selectedIcon}
-    </IconButton>
-  ) : (
-    <Chip
-      aria-label={triggerLabel}
-      aria-haspopup={canOpen ? "menu" : undefined}
-      aria-expanded={canOpen ? Boolean(anchorEl) : undefined}
-      icon={chipIcon}
-      deleteIcon={canOpen ? <ExpandMoreRoundedIcon /> : undefined}
-      onClick={canOpen ? openMenu : undefined}
-      onDelete={canOpen ? openMenu : undefined}
-      label={selected?.label ?? label}
-      size="small"
-      sx={(theme) => ({
-        flexShrink: 1,
-        maxWidth: compact ? 112 : 210,
-        height: 30,
-        color: theme.palette.text.primary,
-        bgcolor: theme.palette.background.paper,
-        border: `1px solid ${alpha(theme.palette.primary.main, 0.38)}`,
-        fontWeight: 700,
-        boxShadow: theme.shadows[1],
-        "& .MuiChip-icon": {
-          color: theme.palette.primary.main,
-          marginInlineStart: "7px",
-          marginInlineEnd: "-3px",
-        },
-        "& .MuiChip-label": {
-          display: "block",
-          overflow: "hidden",
-          textOverflow: "ellipsis",
-          whiteSpace: "nowrap",
-        },
-        "& .MuiChip-deleteIcon": {
-          color: theme.palette.text.secondary,
-          marginInline: "-2px 4px",
-        },
-      })}
-    />
-  );
-
   return (
     <>
-      <Tooltip title={canOpen ? label : triggerLabel} enterDelay={500}>
-        <Box component="span" sx={{ display: "inline-flex", minWidth: 0 }}>
-          {trigger}
-        </Box>
-      </Tooltip>
+      <ContextBadge
+        compact={compact}
+        disabled={disabled}
+        error={error}
+        expandable={canOpen}
+        expanded={Boolean(anchorEl)}
+        icon={selectedIcon}
+        iconOnly={iconOnly}
+        label={label}
+        loading={loading}
+        onClick={canOpen ? openMenu : undefined}
+        tone={tone}
+        value={selected?.label ?? emptyLabel ?? label}
+      />
       <Menu
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
         onClose={closeMenu}
-        slotProps={{ paper: { sx: { minWidth: 240, maxWidth: 360 } } }}
+        anchorOrigin={{ horizontal: "center", vertical: "bottom" }}
+        transformOrigin={{ horizontal: "center", vertical: "top" }}
+        slotProps={{ paper: { sx: { mt: 0.75, minWidth: 240, maxWidth: 360, borderRadius: 2 } } }}
       >
         {menuLabel ? (
           <Box sx={{ px: 2, py: 1, color: "text.secondary", fontSize: 12, fontWeight: 700 }}>

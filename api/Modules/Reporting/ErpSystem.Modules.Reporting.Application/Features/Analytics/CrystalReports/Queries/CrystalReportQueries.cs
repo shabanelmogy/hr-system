@@ -1,4 +1,5 @@
 using ErpSystem.BuildingBlocks.Application.Abstractions.Messaging;
+using ErpSystem.Modules.Reporting.Application.Features.Analytics.CrystalReports.Abstractions;
 using ErpSystem.Modules.Reporting.Application.Features.Analytics.CrystalReports.Contracts;
 using ErpSystem.Modules.Reporting.Application.Features.Analytics.CrystalReports.Validation;
 
@@ -6,6 +7,9 @@ namespace ErpSystem.Modules.Reporting.Application.Features.Analytics.CrystalRepo
 
 public sealed record GetPublishedCrystalReportsQuery(string? EntityKey, string? Search)
     : IQuery<IReadOnlyList<CrystalReportListItemResponse>>;
+
+public sealed record GetSupportedCrystalReportEntitiesQuery
+    : IQuery<IReadOnlyList<SupportedCrystalReportEntityResponse>>;
 
 public sealed record GetGlobalCrystalReportsQuery(string EntityKey)
     : IQuery<Result<IReadOnlyList<GlobalCrystalReportListItemResponse>>>;
@@ -48,20 +52,28 @@ public sealed record GetDiscoveredCrystalReportsQuery(string? EntityKey)
 
 public sealed class GetPublishedCrystalReportsQueryValidator : AbstractValidator<GetPublishedCrystalReportsQuery>
 {
-    public GetPublishedCrystalReportsQueryValidator()
+    public GetPublishedCrystalReportsQueryValidator(IManagedCrystalReportContractSource contracts)
     {
         RuleFor(x => x.EntityKey).MaximumLength(64)
-            .Must(value => value is null || CrystalReportRules.IsValidKey(value));
+            .Must(value => IsSupportedEntityFilter(value, contracts))
+            .WithMessage("EntityKey must identify a supported managed Crystal report entity.");
         RuleFor(x => x.Search).MaximumLength(150);
     }
+
+    internal static bool IsSupportedEntityFilter(
+        string? entityKey,
+        IManagedCrystalReportContractSource contracts) =>
+        entityKey is null ||
+        CrystalReportRules.IsValidKey(entityKey) && contracts.Supports(entityKey);
 }
 
 public sealed class GetCrystalReportsManagementQueryValidator : AbstractValidator<GetCrystalReportsManagementQuery>
 {
-    public GetCrystalReportsManagementQueryValidator()
+    public GetCrystalReportsManagementQueryValidator(IManagedCrystalReportContractSource contracts)
     {
         RuleFor(x => x.EntityKey).MaximumLength(64)
-            .Must(value => value is null || CrystalReportRules.IsValidKey(value));
+            .Must(value => GetPublishedCrystalReportsQueryValidator.IsSupportedEntityFilter(value, contracts))
+            .WithMessage("EntityKey must identify a supported managed Crystal report entity.");
         RuleFor(x => x.Search).MaximumLength(150);
         RuleFor(x => x.Status)
             .Must(value => value is null or "published" or "draft" or "archived")
@@ -74,10 +86,11 @@ public sealed class GetCrystalReportsManagementQueryValidator : AbstractValidato
 public sealed class GetDiscoveredCrystalReportsQueryValidator
     : AbstractValidator<GetDiscoveredCrystalReportsQuery>
 {
-    public GetDiscoveredCrystalReportsQueryValidator()
+    public GetDiscoveredCrystalReportsQueryValidator(IManagedCrystalReportContractSource contracts)
     {
         RuleFor(x => x.EntityKey).MaximumLength(64)
-            .Must(value => value is null || CrystalReportRules.IsValidKey(value));
+            .Must(value => GetPublishedCrystalReportsQueryValidator.IsSupportedEntityFilter(value, contracts))
+            .WithMessage("EntityKey must identify a supported managed Crystal report entity.");
     }
 }
 

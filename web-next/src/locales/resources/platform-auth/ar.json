@@ -77,6 +77,11 @@
     "permissionsSubtitle": "امنح الدور الصلاحيات التي يحتاجها فقط، ثم احفظ مجموعة الصلاحيات كاملة.",
     "permissionsReadOnly": "راجع مجموعة الصلاحيات الفعلية لهذا الدور.",
     "permissionWorkspace": "مساحة إدارة الصلاحيات",
+    "businessModuleNavigation": "الموديولات",
+    "chooseBusinessModule": "اختر الموديول",
+    "searchBusinessModules": "البحث في الموديولات",
+    "noBusinessModulesMatch": "لا توجد موديولات مطابقة لهذا البحث.",
+    "moduleScreensCount": "{{count}} شاشة",
     "readOnlyMode": "للعرض فقط",
     "editingEnabled": "التعديل متاح",
     "permissionCoverage": "نسبة الصلاحيات الممنوحة",
@@ -111,6 +116,17 @@
     "savePermissions": "حفظ الصلاحيات",
     "archiveTitle": "أرشفة الدور؟",
     "archiveDescription": "لن يكون الدور متاحًا للإسناد بعد الأرشفة، ويمكن استعادته لاحقًا.",
+    "businessModules": {
+      "accounting": "الحسابات",
+      "contacts": "جهات الاتصال",
+      "crm": "إدارة علاقات العملاء",
+      "hr": "الموارد البشرية",
+      "inventory": "المخزون",
+      "platform": "إدارة النظام",
+      "pointOfSale": "نقاط البيع",
+      "referenceData": "البيانات المرجعية",
+      "reporting": "التقارير"
+    },
     "permissionActions": {
       "Approve": "اعتماد", "ApproveJobDescriptions": "اعتماد الأوصاف الوظيفية", "Archive": "أرشفة",
       "BeginClosing": "بدء الإقفال", "Cancel": "إلغاء", "Close": "إقفال", "Complete": "إكمال",
@@ -120,7 +136,7 @@
       "Open": "فتح", "Pause": "إيقاف مؤقت", "Publish": "نشر", "PullAttendance": "سحب الحضور",
       "PullUsers": "سحب المستخدمين", "Reject": "رفض", "Reopen": "إعادة فتح", "Resend": "إعادة إرسال",
       "ResetPassword": "إعادة تعيين كلمة المرور", "Resolve": "تسوية", "Respond": "رد", "Restore": "استعادة",
-      "Review": "مراجعة", "Revoke": "إلغاء", "Schedule": "جدولة", "SetStatus": "تغيير الحالة",
+      "Review": "مراجعة", "Revoke": "إلغاء", "Schedule": "جدولة", "SetCurrent": "تعيين الحالية للشركة", "SetStatus": "تغيير الحالة",
       "Submit": "إرسال", "Test": "اختبار", "Unlock": "فك القفل", "Unpublish": "إلغاء النشر", "Upload": "رفع",
       "View": "عرض", "ViewDashboard": "عرض لوحة المؤشرات", "ViewFinancials": "عرض البيانات المالية",
       "ViewRaw": "عرض البيانات الخام", "ViewTrace": "عرض مسار التتبع", "Withdraw": "سحب"

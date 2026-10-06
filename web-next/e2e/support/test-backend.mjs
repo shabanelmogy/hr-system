@@ -263,13 +263,20 @@ const server = http.createServer(async (request, response) => {
     if (state.countriesMode === "fail") return problem(response, 500, "Countries fixture failure");
     const search = (url.searchParams.get("search") ?? "").trim().toLowerCase();
     const recordStatus = (url.searchParams.get("recordStatus") ?? url.searchParams.get("status") ?? "active").toLowerCase();
-    const items = state.countries.filter((country) => {
+    const filteredItems = state.countries.filter((country) => {
       const statusMatch =
         recordStatus === "all" ||
         (recordStatus === "archived" ? country.isDeleted : !country.isDeleted);
       return statusMatch && (!search || country.nameEn.toLowerCase().includes(search));
     });
-    return json(response, 200, page(items));
+    const items = sortCountries(
+      filteredItems,
+      url.searchParams.get("sortBy") ?? "nameEn",
+      url.searchParams.get("sortDirection") ?? "asc",
+    );
+    const pageNumber = Math.max(1, Number(url.searchParams.get("pageNumber")) || 1);
+    const pageSize = Math.max(1, Number(url.searchParams.get("pageSize")) || 10);
+    return json(response, 200, page(items, pageNumber, pageSize));
   }
 
   const countryMatch = /^\/api\/v1\/countries\/(\d+)$/.exec(url.pathname);
@@ -294,7 +301,10 @@ const server = http.createServer(async (request, response) => {
       isDeleted: false,
       statesCount: 0,
     };
-    state.countries.push(country);
+    // The real Countries list defaults to createdOn DESC. Keep a newly created
+    // fixture visible on page one without teaching the browser test a fake
+    // client-side reorder.
+    state.countries.unshift(country);
     return json(response, 201, country);
   }
 
@@ -385,7 +395,44 @@ function resetState() {
       isDeleted: false,
       statesCount: 4,
     },
+    ...Array.from({ length: 11 }, (_, index) => {
+      const id = index + 2;
+      const suffix = String(id).padStart(2, "0");
+      return {
+        id,
+        nameAr: `دولة اختبار ${suffix}`,
+        nameEn: `Test Country ${suffix}`,
+        alpha2Code: null,
+        alpha3Code: null,
+        phoneCode: null,
+        currencyCode: null,
+        createdOn: `2026-01-${suffix}T00:00:00.000Z`,
+        updatedOn: null,
+        isDeleted: false,
+        statesCount: 0,
+      };
+    }),
   ];
+}
+
+function sortCountries(items, sortBy, sortDirection) {
+  const property = {
+    namear: "nameAr",
+    nameen: "nameEn",
+    alpha2code: "alpha2Code",
+    alpha3code: "alpha3Code",
+    currencycode: "currencyCode",
+    createdon: "createdOn",
+  }[String(sortBy).toLowerCase()] ?? "nameEn";
+  const multiplier = String(sortDirection).toLowerCase() === "desc" ? -1 : 1;
+
+  return [...items].sort((left, right) => {
+    const comparison = String(left[property] ?? "")
+      .localeCompare(String(right[property] ?? ""), "en", { numeric: true });
+    return comparison === 0
+      ? (left.id - right.id) * multiplier
+      : comparison * multiplier;
+  });
 }
 
 function makeRoleFixture() {
@@ -564,17 +611,21 @@ function sessionFromAuthorization(request) {
   return value.startsWith("Bearer ") ? state.sessions.get(value.slice(7)) ?? null : null;
 }
 
-function page(items) {
+function page(items, pageNumber = 1, pageSize = 10) {
+  const totalCount = items.length;
+  const totalPages = Math.max(1, Math.ceil(totalCount / pageSize));
+  const currentPage = Math.min(pageNumber, totalPages);
+  const start = (currentPage - 1) * pageSize;
   return {
-    items,
+    items: items.slice(start, start + pageSize),
     metaData: {
-      currentPage: 1,
-      totalPages: 1,
-      pageSize: 10,
-      pageNumber: 1,
-      totalCount: items.length,
-      hasPrev: false,
-      hasNext: false,
+      currentPage,
+      totalPages,
+      pageSize,
+      pageNumber: currentPage,
+      totalCount,
+      hasPrev: currentPage > 1,
+      hasNext: currentPage < totalPages,
     },
   };
 }

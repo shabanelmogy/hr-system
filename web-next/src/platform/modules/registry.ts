@@ -47,14 +47,45 @@ const definitions = new Map<string, FrontendModuleDefinition>();
 
 const normalize = (value: string) => value.trim().toLowerCase();
 
-export function registerFrontendModule(definition: FrontendModuleDefinition) {
+function addFrontendModuleDefinition(
+  registry: Map<string, FrontendModuleDefinition>,
+  definition: FrontendModuleDefinition,
+  allowSameDefinition = false,
+) {
   const code = normalize(definition.code);
   if (!code) throw new Error("Frontend module code is required.");
-  const existing = definitions.get(code);
-  if (existing && existing !== definition) {
+  const existing = registry.get(code);
+  if (existing && (!allowSameDefinition || existing !== definition)) {
     throw new Error(`Frontend module '${definition.code}' is already registered.`);
   }
-  definitions.set(code, definition);
+  registry.set(code, definition);
+}
+
+export function registerFrontendModule(definition: FrontendModuleDefinition) {
+  addFrontendModuleDefinition(definitions, definition, true);
+}
+
+/**
+ * Rebuilds the application-owned registry as one validated transaction.
+ *
+ * Next.js development refreshes may re-evaluate the composition module while
+ * preserving this registry module. Replacing the complete composition keeps
+ * that refresh idempotent without weakening duplicate detection inside the
+ * newly evaluated module list.
+ */
+export function replaceFrontendModuleRegistry(
+  nextDefinitions: readonly FrontendModuleDefinition[],
+) {
+  const nextRegistry = new Map<string, FrontendModuleDefinition>();
+  for (const definition of nextDefinitions) {
+    addFrontendModuleDefinition(nextRegistry, definition);
+  }
+  validateFrontendModuleDefinitions(nextRegistry);
+
+  definitions.clear();
+  for (const [code, definition] of nextRegistry) {
+    definitions.set(code, definition);
+  }
 }
 
 export function getFrontendModuleDefinition(code: string) {
@@ -98,9 +129,11 @@ export function getFrontendSubmoduleDefinition(moduleCode: string, submoduleCode
   );
 }
 
-export function validateFrontendModuleRegistry() {
+function validateFrontendModuleDefinitions(
+  registry: ReadonlyMap<string, FrontendModuleDefinition>,
+) {
   const routeOwners = new Map<string, string>();
-  for (const definition of definitions.values()) {
+  for (const definition of registry.values()) {
     const submoduleCodes = new Set<string>();
     for (const submodule of definition.submodules) {
       const code = normalize(submodule.code);
@@ -115,9 +148,9 @@ export function validateFrontendModuleRegistry() {
       }
     }
   }
-  const registered = new Set(definitions.keys());
+  const registered = new Set(registry.keys());
   const missing: string[] = [];
-  for (const definition of definitions.values()) {
+  for (const definition of registry.values()) {
     for (const dependency of definition.requiredDependencies) {
       if (!registered.has(normalize(dependency))) {
         missing.push(`${definition.code} -> ${dependency}`);
@@ -137,17 +170,21 @@ export function validateFrontendModuleRegistry() {
     }
     if (visited.has(code)) return;
     visiting.add(code);
-    const definition = definitions.get(code);
+    const definition = registry.get(code);
     for (const dependency of definition?.requiredDependencies ?? []) {
       visit(normalize(dependency), [...stack, code]);
     }
     visiting.delete(code);
     visited.add(code);
   };
-  for (const code of definitions.keys()) visit(code, []);
+  for (const code of registry.keys()) visit(code, []);
 }
 
-/** Test-only reset; production composition registers modules once at startup. */
+export function validateFrontendModuleRegistry() {
+  validateFrontendModuleDefinitions(definitions);
+}
+
+/** Test-only reset; application composition uses atomic registry replacement. */
 export function resetFrontendModuleRegistryForTests() {
   definitions.clear();
 }

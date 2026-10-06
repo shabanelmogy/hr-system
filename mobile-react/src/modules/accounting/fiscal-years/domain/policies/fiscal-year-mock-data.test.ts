@@ -1,4 +1,3 @@
-import { describe, expect, it } from '@jest/globals';
 import { createFiscalYearMockData } from './fiscal-year-mock-data';
 
 describe('Fiscal Year mock data', () => {

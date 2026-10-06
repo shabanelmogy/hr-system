@@ -124,7 +124,11 @@ public sealed class CrystalReportStore(
             .Select(x => new CrystalReportVersionResponse(
                 x.Id, x.VersionNumber, x.OriginalFileName, x.Size, x.Sha256,
                 x.SummaryTitle, x.SummarySubject, x.ValidationStatus.ToString(),
-                x.ValidationReason, x.Id == report.CurrentPublishedVersionId, x.CreatedOn))
+                x.ValidationReason,
+                x.ValidationContractSchemaVersion,
+                x.ValidationContractFingerprint,
+                x.Id == report.CurrentPublishedVersionId,
+                x.CreatedOn))
             .ToListAsync(cancellationToken);
         var grants = await GetGrantsAsync(id, cancellationToken);
         var currentVersion = versions.FirstOrDefault(x => x.IsPublished)?.VersionNumber;

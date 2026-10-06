@@ -25,6 +25,27 @@ public sealed class FiscalYearsController(ISender sender) : ControllerBase
     public async Task<IActionResult> GetLookup(CancellationToken cancellationToken) =>
         Ok(await sender.Send(new GetFiscalYearLookupQuery(), cancellationToken));
 
+    [HttpGet("context")]
+    [HasPermission(AccountingPermissions.ViewFiscalYears)]
+    [ProducesResponseType(typeof(FiscalYearContextResponse), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetContext(CancellationToken cancellationToken)
+    {
+        var result = await sender.Send(new GetFiscalYearContextQuery(), cancellationToken);
+        return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
+    }
+
+    [HttpPut("context")]
+    [HasPermission(AccountingPermissions.ViewFiscalYears)]
+    [AllowTenantReadOnly]
+    [ProducesResponseType(typeof(FiscalYearContextResponse), StatusCodes.Status200OK)]
+    public async Task<IActionResult> UpdateContext(
+        [FromBody] UpdateFiscalYearContextRequest request,
+        CancellationToken cancellationToken)
+    {
+        var result = await sender.Send(new UpdateFiscalYearContextCommand(request.FiscalYearId), cancellationToken);
+        return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
+    }
+
     [HttpGet("{id:int}")]
     [HasPermission(AccountingPermissions.ViewFiscalYears)]
     [ProducesResponseType(typeof(FiscalYearDetailResponse), StatusCodes.Status200OK)]
@@ -102,6 +123,15 @@ public sealed class FiscalYearsController(ISender sender) : ControllerBase
     [HasPermission(AccountingPermissions.ReopenFiscalYears)]
     public Task<IActionResult> Reopen([FromRoute] int id, [FromBody] FiscalYearConcurrencyRequest request, CancellationToken cancellationToken) =>
         ChangeLifecycle(id, request, FiscalYearLifecycleAction.Reopen, cancellationToken);
+
+    [HttpPost("{id:int}/set-current")]
+    [HasPermission(AccountingPermissions.SetCurrentFiscalYears)]
+    [ProducesResponseType(typeof(FiscalYearDetailResponse), StatusCodes.Status200OK)]
+    public Task<IActionResult> SetCurrent(
+        [FromRoute] int id,
+        [FromBody] FiscalYearConcurrencyRequest request,
+        CancellationToken cancellationToken) =>
+        SendLifecycleResult(new SetCurrentFiscalYearCommand(id, request.RowVersion), cancellationToken);
 
     private Task<IActionResult> ChangeLifecycle(int id, FiscalYearConcurrencyRequest request, FiscalYearLifecycleAction action, CancellationToken cancellationToken) =>
         SendLifecycleResult(new ChangeFiscalYearLifecycleCommand(id, request.RowVersion, action), cancellationToken);

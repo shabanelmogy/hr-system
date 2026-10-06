@@ -13,6 +13,10 @@ public sealed record AddCrystalReportVersionCommand(
     Guid ReportId,
     FileUpload File) : ICommand<Result<CrystalReportVersionResponse>>;
 
+public sealed record RevalidateCrystalReportVersionCommand(
+    Guid ReportId,
+    Guid VersionId) : ICommand<Result<CrystalReportVersionResponse>>;
+
 public sealed record PublishCrystalReportVersionCommand(
     Guid ReportId,
     Guid VersionId,
@@ -66,6 +70,16 @@ public sealed class PublishCrystalReportVersionCommandValidator : AbstractValida
     {
         try { return Convert.FromBase64String(value).Length == 8; }
         catch (FormatException) { return false; }
+    }
+}
+
+public sealed class RevalidateCrystalReportVersionCommandValidator
+    : AbstractValidator<RevalidateCrystalReportVersionCommand>
+{
+    public RevalidateCrystalReportVersionCommandValidator()
+    {
+        RuleFor(x => x.ReportId).NotEmpty();
+        RuleFor(x => x.VersionId).NotEmpty();
     }
 }
 

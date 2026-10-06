@@ -38,11 +38,14 @@ namespace CrystalReportGeneratorApi.Controllers
                     // Rendering depends on a writable host temp location.
                 }
 
+                var profiles = CrystalReportProfileRegistry.CreateDefault();
                 return Ok(new
                 {
                     status = "Healthy",
                     engineAssemblyVersion = engineAssembly.GetName().Version.ToString(),
-                    profileCount = CrystalReportProfileRegistry.CreateDefault().Count
+                    profileCount = profiles.Count,
+                    contractSchemaVersion = profiles.SchemaVersion,
+                    contractFingerprint = profiles.Fingerprint
                 });
             }
             catch (Exception exception)

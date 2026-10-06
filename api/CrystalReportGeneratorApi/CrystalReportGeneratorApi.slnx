@@ -6,4 +6,7 @@
   <Project Path="CrystalReportGeneratorApi.csproj" Id="4560ffb6-ab1f-4e59-bf8c-c78eee9f8eb1">
     <Platform Solution="*|x64" Project="x64" />
   </Project>
+  <Project Path="../CrystalReportGeneratorApi.ContractTests/CrystalReportGeneratorApi.ContractTests.csproj" Id="81129d77-78d8-47a9-9e7a-2e3585de6b45">
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
 </Solution>

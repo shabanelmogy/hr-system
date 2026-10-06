@@ -50,7 +50,8 @@ import {
 import { useTranslation } from "react-i18next";
 import { AppChip } from "@/shared/components/cards";
 import { EmptyState } from "@/shared/components/feedback/states";
-import { motion, type PanInfo } from "framer-motion";
+import * as motion from "framer-motion/client";
+import type { PanInfo } from "framer-motion";
 import type { OrganizationalStructureItem } from "../../types/OrganizationalStructure";
 
 interface Props {

@@ -1,0 +1,12 @@
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\bin\ErpSystem.BuildingBlocks.Domain\release\ErpSystem.BuildingBlocks.Domain.deps.json
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\bin\ErpSystem.BuildingBlocks.Domain\release\ErpSystem.BuildingBlocks.Domain.dll
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\bin\ErpSystem.BuildingBlocks.Domain\release\ErpSystem.BuildingBlocks.Domain.pdb
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.BuildingBlocks.Domain\release\ErpSystem.BuildingBlocks.Domain.GeneratedMSBuildEditorConfig.editorconfig
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.BuildingBlocks.Domain\release\ErpSystem.BuildingBlocks.Domain.AssemblyInfoInputs.cache
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.BuildingBlocks.Domain\release\ErpSystem.BuildingBlocks.Domain.AssemblyInfo.cs
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.BuildingBlocks.Domain\release\ErpSystem.BuildingBlocks.Domain.csproj.CoreCompileInputs.cache
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.BuildingBlocks.Domain\release\ErpSystem.BuildingBlocks.Domain.sourcelink.json
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.BuildingBlocks.Domain\release\ErpSystem.BuildingBlocks.Domain.dll
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.BuildingBlocks.Domain\release\refint\ErpSystem.BuildingBlocks.Domain.dll
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.BuildingBlocks.Domain\release\ErpSystem.BuildingBlocks.Domain.pdb
+F:\Portofolio Projects\ERPSYSTEM\.codex-artifacts\managed-crystal-manager-api\obj\ErpSystem.BuildingBlocks.Domain\release\ref\ErpSystem.BuildingBlocks.Domain.dll

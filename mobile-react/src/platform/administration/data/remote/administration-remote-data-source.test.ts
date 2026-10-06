@@ -62,4 +62,24 @@ describe('administration remote data source', () => {
     ]);
     await expect(administrationRemoteDataSource.getUsers()).rejects.toThrow();
   });
+
+  it('requires authoritative module ownership on role permission claims', async () => {
+    const role = {
+      id: 'role-1',
+      name: 'Auditor',
+      isSystem: false,
+      isDeleted: false,
+      roleClaims: [
+        { displayValue: 'Users:View', moduleCode: 'platform', isSelected: true },
+      ],
+    };
+    (apiService.get as jest.Mock).mockResolvedValueOnce(role);
+    await expect(administrationRemoteDataSource.getRoleClaims('role-1')).resolves.toEqual(role);
+
+    (apiService.get as jest.Mock).mockResolvedValueOnce({
+      ...role,
+      roleClaims: [{ displayValue: 'Users:View', isSelected: true }],
+    });
+    await expect(administrationRemoteDataSource.getRoleClaims('role-1')).rejects.toThrow();
+  });
 });

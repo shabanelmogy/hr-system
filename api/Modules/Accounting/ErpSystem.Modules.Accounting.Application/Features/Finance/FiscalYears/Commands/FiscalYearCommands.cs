@@ -36,6 +36,8 @@ public sealed record UpdateFiscalYearCommand(
 
 public sealed record ArchiveFiscalYearCommand(int Id, string RowVersion) : ICommand<Result>;
 public sealed record RestoreFiscalYearCommand(int Id, string RowVersion) : ICommand<Result<FiscalYearDetailResponse>>;
+public sealed record SetCurrentFiscalYearCommand(int Id, string RowVersion) : ICommand<Result<FiscalYearDetailResponse>>;
+public sealed record UpdateFiscalYearContextCommand(int? FiscalYearId) : ICommand<Result<FiscalYearContextResponse>>;
 
 public enum FiscalYearLifecycleAction
 {
@@ -87,6 +89,25 @@ public sealed class RestoreFiscalYearCommandValidator : AbstractValidator<Restor
             .Must(FiscalYearValidation.IsValidRowVersion)
             .WithMessage(localizer["FiscalYearRowVersionInvalid"]);
     }
+}
+
+public sealed class SetCurrentFiscalYearCommandValidator : AbstractValidator<SetCurrentFiscalYearCommand>
+{
+    public SetCurrentFiscalYearCommandValidator(IStringLocalizer<CreateFiscalYearRequest> localizer)
+    {
+        RuleFor(command => command.Id).GreaterThan(0);
+        RuleFor(command => command.RowVersion)
+            .Must(FiscalYearValidation.IsValidRowVersion)
+            .WithMessage(localizer["FiscalYearRowVersionInvalid"]);
+    }
+}
+
+public sealed class UpdateFiscalYearContextCommandValidator : AbstractValidator<UpdateFiscalYearContextCommand>
+{
+    public UpdateFiscalYearContextCommandValidator() =>
+        RuleFor(command => command.FiscalYearId)
+            .GreaterThan(0)
+            .When(command => command.FiscalYearId.HasValue);
 }
 
 public sealed class ChangeFiscalYearLifecycleCommandValidator : AbstractValidator<ChangeFiscalYearLifecycleCommand>
@@ -216,6 +237,8 @@ public sealed class ArchiveFiscalYearCommandHandler(
                 var fiscalYear = await writeStore.GetForUpdateAsync(request.Id, token);
                 if (fiscalYear is null) return Result.Failure(errors.FiscalYearNotFound);
                 if (fiscalYear.IsDeleted) return Result.Success();
+                if (fiscalYear.IsCurrent)
+                    return Result.Failure(errors.FiscalYearCurrentCannotBeArchived);
                 if (fiscalYear.Status != FiscalYearStatus.Draft)
                     return Result.Failure(errors.FiscalYearNotArchivable);
 
@@ -316,7 +339,10 @@ public sealed class ChangeFiscalYearLifecycleCommandHandler(
                         FiscalYearLifecycleAction.Close => fiscalYear.Close(),
                         FiscalYearLifecycleAction.Lock => fiscalYear.Lock(),
                         FiscalYearLifecycleAction.Reopen => fiscalYear.Reopen(),
-                        _ => throw new ArgumentOutOfRangeException(nameof(request.Action))
+                        _ => throw new ArgumentOutOfRangeException(
+                            nameof(request),
+                            request.Action,
+                            "Unsupported fiscal year lifecycle action.")
                     };
 
                     if (!changed)
@@ -338,6 +364,123 @@ public sealed class ChangeFiscalYearLifecycleCommandHandler(
 
         if (change is not null) scheduler.Schedule(change);
         return result;
+    }
+}
+
+public sealed class SetCurrentFiscalYearCommandHandler(
+    IFiscalYearWriteStore writeStore,
+    IFiscalYearReadStore readStore,
+    IFiscalYearAuditTrail auditTrail,
+    IAccountingUnitOfWork unitOfWork,
+    IFiscalYearChangeScheduler scheduler,
+    ICurrentActor actor,
+    FiscalYearErrors errors)
+    : ICommandHandler<SetCurrentFiscalYearCommand, Result<FiscalYearDetailResponse>>
+{
+    public async Task<Result<FiscalYearDetailResponse>> Handle(
+        SetCurrentFiscalYearCommand request,
+        CancellationToken cancellationToken)
+    {
+        if (!FiscalYearCommandSupport.TryGetScope(actor, out var tenantId, out var companyId))
+            return Result.Failure<FiscalYearDetailResponse>(errors.FiscalYearCompanyContextRequired);
+
+        FiscalYearChange? change = null;
+        var result = await unitOfWork.ExecuteAtomicallyAsync(
+            [FiscalYearLocks.CompanyCalendar(tenantId, companyId)],
+            async token =>
+            {
+                var target = await writeStore.GetForUpdateAsync(request.Id, token);
+                if (target is null || target.IsDeleted)
+                    return Result.Failure<FiscalYearDetailResponse>(errors.FiscalYearNotFound);
+
+                writeStore.ApplyOriginalRowVersion(target, Convert.FromBase64String(request.RowVersion));
+                if (target.IsCurrent)
+                    return Result.Success(FiscalYearResponseMapper.ToDetail(target));
+
+                if (target.Status != FiscalYearStatus.Open)
+                    return Result.Failure<FiscalYearDetailResponse>(errors.FiscalYearMustBeOpenForCurrent);
+
+                var previous = await writeStore.GetCurrentForUpdateAsync(token);
+                if (previous is not null)
+                {
+                    // Clear the filtered-unique value first. Both saves remain inside
+                    // the company lock and owning transaction, so SQL Server never
+                    // observes two active Current rows and rollback stays atomic.
+                    previous.ClearCurrent();
+                    await unitOfWork.SaveChangesAsync(token);
+                }
+
+                target.MarkCurrent();
+                await auditTrail.RecordCurrentChangedAsync(target, previous?.Id, token);
+                await unitOfWork.SaveChangesAsync(token);
+                var response = await readStore.GetByIdAsync(target.Id, token)
+                    ?? throw new InvalidOperationException("The current fiscal year could not be read.");
+                change = FiscalYearCommandSupport.Change(response, "SetCurrent", tenantId, companyId, actor.UserId);
+                return Result.Success(response);
+            },
+            cancellationToken);
+
+        if (change is not null) scheduler.Schedule(change);
+        return result;
+    }
+}
+
+public sealed class UpdateFiscalYearContextCommandHandler(
+    IFiscalYearContextStore contextStore,
+    IFiscalYearWriteStore writeStore,
+    IAccountingUnitOfWork unitOfWork,
+    ICurrentActor actor,
+    FiscalYearErrors errors)
+    : ICommandHandler<UpdateFiscalYearContextCommand, Result<FiscalYearContextResponse>>
+{
+    public async Task<Result<FiscalYearContextResponse>> Handle(
+        UpdateFiscalYearContextCommand request,
+        CancellationToken cancellationToken)
+    {
+        if (!FiscalYearCommandSupport.TryGetScope(actor, out var tenantId, out var companyId) ||
+            string.IsNullOrWhiteSpace(actor.UserId))
+        {
+            return Result.Failure<FiscalYearContextResponse>(errors.FiscalYearUserContextRequired);
+        }
+
+        return await unitOfWork.ExecuteAtomicallyAsync(
+            [FiscalYearLocks.UserContext(tenantId, companyId, actor.UserId)],
+            async token =>
+            {
+                FiscalYear? selected = null;
+                if (request.FiscalYearId.HasValue)
+                {
+                    selected = await contextStore.GetSelectableForUpdateAsync(request.FiscalYearId.Value, token);
+                    if (selected is null)
+                        return Result.Failure<FiscalYearContextResponse>(errors.FiscalYearInvalidSelection);
+                }
+
+                var companyCurrent = await writeStore.GetCurrentForUpdateAsync(token);
+                var effectiveSelectionId = selected?.Id == companyCurrent?.Id ? null : selected?.Id;
+                var preference = await contextStore.GetSelectionForUpdateAsync(actor.UserId, token);
+                if (preference is null)
+                {
+                    if (effectiveSelectionId.HasValue)
+                    {
+                        preference = new FiscalYearUserSelection(actor.UserId, effectiveSelectionId)
+                        {
+                            TenantId = tenantId,
+                            CompanyId = companyId
+                        };
+                        contextStore.AddSelection(preference);
+                    }
+                }
+                else
+                {
+                    preference.SetSelectedFiscalYear(effectiveSelectionId);
+                }
+
+                if (preference is not null)
+                    await unitOfWork.SaveChangesAsync(token);
+
+                return Result.Success(await contextStore.GetContextAsync(actor.UserId, token));
+            },
+            cancellationToken);
     }
 }
 

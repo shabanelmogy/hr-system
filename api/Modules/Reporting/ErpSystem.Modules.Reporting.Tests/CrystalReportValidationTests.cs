@@ -1,4 +1,5 @@
 using ErpSystem.Modules.Platform.Contracts.Files.Models;
+using ErpSystem.Modules.Reporting.Application.Features.Analytics.CrystalReports.Abstractions;
 using ErpSystem.Modules.Reporting.Application.Features.Analytics.CrystalReports.Commands;
 using ErpSystem.Modules.Reporting.Application.Features.Analytics.CrystalReports.Contracts;
 using ErpSystem.Modules.Reporting.Application.Features.Analytics.CrystalReports.Queries;
@@ -31,10 +32,26 @@ public sealed class CrystalReportValidationTests
     [Fact]
     public void QueryEntityKey_UsesTheSameCanonicalGrammar()
     {
-        var validator = new GetPublishedCrystalReportsQueryValidator();
+        var validator = new GetPublishedCrystalReportsQueryValidator(new StubContractSource("sales-orders"));
 
         Assert.True(validator.Validate(new GetPublishedCrystalReportsQuery("sales-orders", null)).IsValid);
         Assert.False(validator.Validate(new GetPublishedCrystalReportsQuery("sales_orders", null)).IsValid);
+    }
+
+    [Fact]
+    public void EntityFilters_RejectWellFormedButUnsupportedManagedEntityKeys()
+    {
+        var contracts = new StubContractSource("countries", "fiscalyears");
+
+        Assert.True(new GetPublishedCrystalReportsQueryValidator(contracts)
+            .Validate(new GetPublishedCrystalReportsQuery("fiscalyears", null)).IsValid);
+        Assert.False(new GetPublishedCrystalReportsQueryValidator(contracts)
+            .Validate(new GetPublishedCrystalReportsQuery("not-a-managed-entity", null)).IsValid);
+        Assert.False(new GetCrystalReportsManagementQueryValidator(contracts)
+            .Validate(new GetCrystalReportsManagementQuery(
+                "not-a-managed-entity", null, null, 1, 10)).IsValid);
+        Assert.False(new GetDiscoveredCrystalReportsQueryValidator(contracts)
+            .Validate(new GetDiscoveredCrystalReportsQuery("not-a-managed-entity")).IsValid);
     }
 
     [Theory]
@@ -56,5 +73,23 @@ public sealed class CrystalReportValidationTests
         Assert.Equal(expectedValid, publish.IsValid);
         Assert.Equal(expectedValid, archive.IsValid);
         Assert.Equal(expectedValid, grants.IsValid);
+    }
+
+    private sealed class StubContractSource(params string[] supportedEntities)
+        : IManagedCrystalReportContractSource
+    {
+        public int SchemaVersion => 1;
+
+        public string Fingerprint { get; } = new('a', 64);
+
+        public IReadOnlyCollection<ManagedCrystalReportEntityDescriptor> EntityDescriptors { get; } =
+            supportedEntities.Select(entityKey =>
+                new ManagedCrystalReportEntityDescriptor(
+                    entityKey,
+                    "tenant-company",
+                    [])).ToArray();
+
+        public bool Supports(string entityKey) =>
+            supportedEntities.Contains(entityKey, StringComparer.OrdinalIgnoreCase);
     }
 }
