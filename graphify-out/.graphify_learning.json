@@ -1,6 +1,43 @@
 {
-  "generated_at": "2026-09-28T12:46:42.941521+00:00",
+  "generated_at": "2026-10-06T12:14:51.891589+00:00",
   "nodes": {
+    "accounting": {
+      "code_fingerprint": "",
+      "label": "Accounting",
+      "last": "2026-09-08T07:30:49.021957+00:00",
+      "provenance": [
+        {
+          "date": "2026-09-08T07:30:49.021957+00:00",
+          "outcome": "useful",
+          "q": "المفروض HR يكون داخل Modules مثل Accounting واسم المشروع العام ERP System"
+        },
+        {
+          "date": "2026-09-08T06:49:17.566658+00:00",
+          "outcome": "useful",
+          "q": "Accounting لا يفتح داخل Visual Studio وأريد كل المشاريع بنفس الطريقة"
+        }
+      ],
+      "score": 1.042184686,
+      "source_file": "Accounting",
+      "status": "preferred",
+      "uses": 2
+    },
+    "api_buildingblocks_erpsystem_buildingblocks_authorization_authorizationcontracts_erpsystem_buildingblocks_authorization_tenantmemberattribute": {
+      "code_fingerprint": "cd2aa281ea38ca72f863f79cb5553d08123df7efd57c03d1a1be03e74788d38a",
+      "label": "TenantMemberAttribute",
+      "last": "2026-08-11T18:26:28.622140+00:00",
+      "provenance": [
+        {
+          "date": "2026-08-11T18:26:28.622140+00:00",
+          "outcome": "useful",
+          "q": "super admin will not see other tenant details it will be to admin tenant only"
+        }
+      ],
+      "score": 0.275846096,
+      "source_file": "api/BuildingBlocks/ErpSystem.BuildingBlocks.Authorization/AuthorizationContracts.cs",
+      "status": "tentative",
+      "uses": 1
+    },
     "api_erpsystem": {
       "code_fingerprint": "92477bcbb995489ccf6a5eeac80028eea2dd28c87c9a02f16e65fa45e5dd8cf5",
       "label": "ErpSystem.sln",
@@ -12,7 +49,7 @@
           "q": "المفروض HR يكون داخل Modules مثل Accounting واسم المشروع العام ERP System"
         }
       ],
-      "score": 0.626775575,
+      "score": 0.521265934,
       "source_file": "api/ErpSystem.sln",
       "status": "tentative",
       "uses": 1
@@ -28,40 +65,8 @@
           "q": "مراجعة شاملة لهيكل المشروع وتجهيزه كـ Modular Monolith لإضافة موديول حسابات وأنشطة مستقبلية"
         }
       ],
-      "score": 0.624478677,
+      "score": 0.51935569,
       "source_file": "api/Modules/Accounting/ErpSystem.Modules.Accounting/AccountingModule.cs",
-      "status": "tentative",
-      "uses": 1
-    },
-    "api_modules_accounting_erpsystem_modules_accounting_infrastructure_accountingdbcontext_erpsystem_modules_accounting_infrastructure_accountingdbcontext": {
-      "code_fingerprint": "70eb19e01624ce45c5ec604d2d4c9c087d40bb47cf58a2bd3c67abed9dab6ba7",
-      "label": "AccountingDbContext",
-      "last": "2026-09-08T03:42:00.110281+00:00",
-      "provenance": [
-        {
-          "date": "2026-09-08T03:42:00.110281+00:00",
-          "outcome": "useful",
-          "q": "مراجعة شاملة لهيكل المشروع وتجهيزه كـ Modular Monolith لإضافة موديول حسابات وأنشطة مستقبلية"
-        }
-      ],
-      "score": 0.624478677,
-      "source_file": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Infrastructure/AccountingDbContext.cs",
-      "status": "tentative",
-      "uses": 1
-    },
-    "api_modules_hr_erpsystem_modules_hr_application_features_organizationalstructure_management_contracts_organizationalstructurecontracts_erpsystem_modules_hr_application_features_organizationalstructure_management_contracts_organizationalstructureitem": {
-      "code_fingerprint": "6570dc54a62d9cc6452f45c9ee373c1edd51ee4b09e6f83f52e6cb8ee62e221c",
-      "label": "OrganizationalStructureItem",
-      "last": "2026-08-31T09:31:13.495544+00:00",
-      "provenance": [
-        {
-          "date": "2026-08-31T09:31:13.495544+00:00",
-          "outcome": "useful",
-          "q": "Why did the Organizational Structure management route return HTTP 500?"
-        }
-      ],
-      "score": 0.52200713,
-      "source_file": "api/Modules/HR/ErpSystem.Modules.HR.Application/Features/OrganizationalStructure/Management/Contracts/OrganizationalStructureContracts.cs",
       "status": "tentative",
       "uses": 1
     },
@@ -76,7 +81,7 @@
           "q": "Why did the Organizational Structure management route return HTTP 500?"
         }
       ],
-      "score": 0.52200713,
+      "score": 0.434133915,
       "source_file": "api/Modules/HR/ErpSystem.Modules.HR.Application/Features/OrganizationalStructure/Management/Queries/OrganizationalStructureQueries.cs",
       "status": "tentative",
       "uses": 1
@@ -92,7 +97,7 @@
           "q": "اعمل migartion"
         }
       ],
-      "score": 0.521134308,
+      "score": 0.433408022,
       "source_file": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Dependencies/DatabaseService.cs",
       "status": "tentative",
       "uses": 1
@@ -108,7 +113,7 @@
           "q": "Why did the Organizational Structure management route return HTTP 500?"
         }
       ],
-      "score": 0.52200713,
+      "score": 0.434133915,
       "source_file": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Features/OrganizationalStructure/Management/OrganizationalStructureManagement.cs",
       "status": "tentative",
       "uses": 1
@@ -124,7 +129,7 @@
           "q": "مراجعة شاملة لهيكل المشروع وتجهيزه كـ Modular Monolith لإضافة موديول حسابات وأنشطة مستقبلية"
         }
       ],
-      "score": 0.624478677,
+      "score": 0.51935569,
       "source_file": "documentation/api/MODULAR_MONOLITH_ARCHITECTURE.md",
       "status": "tentative",
       "uses": 1
@@ -140,7 +145,7 @@
           "q": "اعمل migartion"
         }
       ],
-      "score": 0.521134308,
+      "score": 0.433408022,
       "source_file": "",
       "status": "tentative",
       "uses": 1
@@ -156,13 +161,61 @@
           "q": "when focus input keyboard cover input"
         }
       ],
-      "score": 0.331100839,
+      "score": 0.275364253,
       "source_file": "mobile-react/app.json",
       "status": "tentative",
       "uses": 1
     },
+    "mobile_react_src_modules_hr_basic_data_organizational_structure_domain_models_organizational_structure_organizationalstructurepage": {
+      "code_fingerprint": "9dfbd96430ed5b5fa788f9aa71ad4257af880f00ec194aab7e4df12868d5c9ab",
+      "label": "OrganizationalStructurePage",
+      "last": "2026-08-31T12:34:01.280960+00:00",
+      "provenance": [
+        {
+          "date": "2026-08-31T12:34:01.280960+00:00",
+          "outcome": "useful",
+          "q": "Should Organizational Structure expose one page and route per entity?"
+        }
+      ],
+      "score": 0.435409092,
+      "source_file": "mobile-react/src/modules/hr/basic-data/organizational-structure/domain/models/organizational-structure.ts",
+      "status": "tentative",
+      "uses": 1
+    },
+    "mobile_react_src_platform_tenants_presentation_screens_tenantdashboardscreen_tenantdashboardscreen": {
+      "code_fingerprint": "804d13d0097124815d019ca4f533dcd895ec0719fb583def410b591e46aaa9fe",
+      "label": "TenantDashboardScreen()",
+      "last": "2026-08-11T18:16:55.686631+00:00",
+      "provenance": [
+        {
+          "date": "2026-08-11T18:16:55.686631+00:00",
+          "outcome": "useful",
+          "q": "create dashborad and tenetamanagement in web-next and mobile"
+        }
+      ],
+      "score": 0.275803836,
+      "source_file": "mobile-react/src/platform/tenants/presentation/screens/TenantDashboardScreen.tsx",
+      "status": "tentative",
+      "uses": 1
+    },
+    "modules": {
+      "code_fingerprint": "",
+      "label": "Modules",
+      "last": "2026-09-08T07:30:49.021957+00:00",
+      "provenance": [
+        {
+          "date": "2026-09-08T07:30:49.021957+00:00",
+          "outcome": "useful",
+          "q": "المفروض HR يكون داخل Modules مثل Accounting واسم المشروع العام ERP System"
+        }
+      ],
+      "score": 0.521265934,
+      "source_file": "Modules",
+      "status": "tentative",
+      "uses": 1
+    },
     "next": {
-      "code_fingerprint": "69b2874b452decebd46f05b625f7590838dbdae9d55ca21974b8f5e1ca661cb0",
+      "code_fingerprint": "54f67848c6132a3fbc1c987ece7992294e92d153ce52a0bca10e31364d517fbf",
       "label": "next",
       "last": "2026-08-11T18:57:00.761650+00:00",
       "provenance": [
@@ -172,7 +225,7 @@
           "q": "Diagnose and fix recurring Turbopack panic: Next.js package not found while /login returns 200."
         }
       ],
-      "score": 0.331842757,
+      "score": 0.275981279,
       "source_file": "web-next/package.json",
       "status": "tentative",
       "uses": 1
@@ -188,7 +241,7 @@
           "q": "mkcert is not recognized while creating localhost certificates"
         }
       ],
-      "score": 0.331751182,
+      "score": 0.27590512,
       "source_file": "web-next/README.md",
       "status": "tentative",
       "uses": 1
@@ -204,7 +257,7 @@
           "q": "mkcert is not recognized while creating localhost certificates"
         }
       ],
-      "score": 0.331751182,
+      "score": 0.27590512,
       "source_file": "web-next/scripts/setup-local-https.ps1",
       "status": "tentative",
       "uses": 1
@@ -220,56 +273,8 @@
           "q": "Diagnose and fix recurring Turbopack panic: Next.js package not found while /login returns 200."
         }
       ],
-      "score": 0.331842757,
+      "score": 0.275981279,
       "source_file": "web-next/src/app/(auth)/login/page.tsx",
-      "status": "tentative",
-      "uses": 1
-    },
-    "web_next_src_lib_auth_route_access_canaccessroute": {
-      "code_fingerprint": "12c43428d457f2b29a3494f2dd3d22035d528d850a4239c0bd9e7e6e8bd546dc",
-      "label": "canAccessRoute()",
-      "last": "2026-08-11T18:26:28.622140+00:00",
-      "provenance": [
-        {
-          "date": "2026-08-11T18:26:28.622140+00:00",
-          "outcome": "useful",
-          "q": "super admin will not see other tenant details it will be to admin tenant only"
-        }
-      ],
-      "score": 0.331680211,
-      "source_file": "web-next/src/lib/auth/route-access.ts",
-      "status": "tentative",
-      "uses": 1
-    },
-    "web_next_src_platform_auth_login_components_loginform": {
-      "code_fingerprint": "94741011d9546416a4c88def9894fa44751ee125894573125941948273e1cb81",
-      "label": "LoginForm.tsx",
-      "last": "2026-08-11T20:08:00.701332+00:00",
-      "provenance": [
-        {
-          "date": "2026-08-11T20:08:00.701332+00:00",
-          "outcome": "useful",
-          "q": "i want like attach screen"
-        }
-      ],
-      "score": 0.332221002,
-      "source_file": "web-next/src/platform/auth/login/components/LoginForm.tsx",
-      "status": "tentative",
-      "uses": 1
-    },
-    "web_next_src_platform_auth_login_login_login": {
-      "code_fingerprint": "731e3bd7b7a9aaf1312e71f0d101cfaa2e768531481d10306a41f7afab2a58fd",
-      "label": "Login()",
-      "last": "2026-08-11T16:46:00.039569+00:00",
-      "provenance": [
-        {
-          "date": "2026-08-11T16:46:00.039569+00:00",
-          "outcome": "useful",
-          "q": "fix style for buton : login as admin"
-        }
-      ],
-      "score": 0.331145924,
-      "source_file": "web-next/src/platform/auth/login/Login.tsx",
       "status": "tentative",
       "uses": 1
     },
@@ -289,7 +294,7 @@
           "q": "create dashborad and tenetamanagement in web-next and mobile"
         }
       ],
-      "score": 0.663609586,
+      "score": 0.551899412,
       "source_file": "web-next/src/platform/tenants/TenantDashboardPage.tsx",
       "status": "preferred",
       "uses": 2
@@ -310,7 +315,7 @@
           "q": "Diagnose and fix recurring Turbopack panic: Next.js package not found while /login returns 200."
         }
       ],
-      "score": 0.663822946,
+      "score": 0.552076855,
       "source_file": "web-next/src/proxy.ts",
       "status": "preferred",
       "uses": 2
@@ -332,7 +337,7 @@
           "q": "add min value and max value and counter in web-next\\\\src\\\\shared\\\\components\\\\forms\\\\text-fields"
         }
       ],
-      "score": -3.5175e-05,
+      "score": -2.9254e-05,
       "source_file": "web-next/src/shared/components/forms/text-fields/internals/characterCount.ts",
       "status": "contested",
       "uses": 1,
@@ -355,7 +360,7 @@
           "q": "add min value and max value and counter in web-next\\\\src\\\\shared\\\\components\\\\forms\\\\text-fields"
         }
       ],
-      "score": -3.5175e-05,
+      "score": -2.9254e-05,
       "source_file": "web-next/src/shared/components/forms/text-fields/internals/inputConstraints.ts",
       "status": "contested",
       "uses": 1,
@@ -383,7 +388,7 @@
           "q": "add min value and max value and counter in web-next\\\\src\\\\shared\\\\components\\\\forms\\\\text-fields"
         }
       ],
-      "score": 0.332185827,
+      "score": 0.276266598,
       "source_file": "web-next/src/shared/components/forms/text-fields/internals/TextFieldEndAdornment.tsx",
       "status": "contested",
       "uses": 2,
@@ -411,7 +416,7 @@
           "q": "add min value and max value and counter in web-next\\\\src\\\\shared\\\\components\\\\forms\\\\text-fields"
         }
       ],
-      "score": 0.332185827,
+      "score": 0.276266598,
       "source_file": "web-next/src/shared/components/forms/text-fields/MyTextField.tsx",
       "status": "contested",
       "uses": 2,
@@ -428,8 +433,24 @@
           "q": "انا سجلت دخول بالادمن والصفحات مش ظاهرة ؟"
         }
       ],
-      "score": 0.52100764,
+      "score": 0.433302677,
       "source_file": "web-next/src/shell/basic-data/navigation/basicDataNavigation.tsx",
+      "status": "tentative",
+      "uses": 1
+    },
+    "web_next_src_shell_components_sidebar_navigationconfig_getnavigationconfig": {
+      "code_fingerprint": "f679b118ef8c6cca145a6c29765444c7c7f6d243853db2cd6b48289bc8de59ff",
+      "label": "getNavigationConfig()",
+      "last": "2026-08-11T18:26:28.622140+00:00",
+      "provenance": [
+        {
+          "date": "2026-08-11T18:26:28.622140+00:00",
+          "outcome": "useful",
+          "q": "super admin will not see other tenant details it will be to admin tenant only"
+        }
+      ],
+      "score": 0.275846096,
+      "source_file": "web-next/src/shell/components/sidebar/navigationConfig.tsx",
       "status": "tentative",
       "uses": 1
     }

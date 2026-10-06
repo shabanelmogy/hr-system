@@ -2,7 +2,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 import EngineeringIcon from "@mui/icons-material/Engineering";
-import { Avatar, Box, Tooltip, Typography, useTheme } from "@mui/material";
+import { alpha, Avatar, Box, darken, Tooltip, Typography, useTheme } from "@mui/material";
 import { useMemo } from "react";
 import {
   getUserPhotoDataUrl,
@@ -66,12 +66,12 @@ const UserProfile = ({ open }: UserProfileProps) => {
         overflow: "hidden",
         position: "relative",
         background: theme.palette.mode === "dark"
-          ? "linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #6366f1 100%)"
-          : "linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%)",
+          ? `linear-gradient(135deg, ${darken(theme.palette.primary.main, 0.7)} 0%, ${darken(theme.palette.primary.main, 0.45)} 100%)`
+          : `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.primary.dark} 100%)`,
         boxShadow: theme.palette.mode === "dark"
           ? "0 4px 12px rgba(0, 0, 0, 0.3)"
-          : "0 4px 12px rgba(99, 102, 241, 0.2)",
-        border: `1px solid ${theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.1)" : "rgba(99, 102, 241, 0.2)"}`,
+          : `0 4px 12px ${alpha(theme.palette.primary.main, 0.2)}`,
+        border: `1px solid ${theme.palette.mode === "dark" ? "rgba(255, 255, 255, 0.1)" : alpha(theme.palette.primary.main, 0.2)}`,
         transition: theme.transitions.create(["padding", "box-shadow", "transform"], {
           duration: open
             ? theme.transitions.duration.enteringScreen

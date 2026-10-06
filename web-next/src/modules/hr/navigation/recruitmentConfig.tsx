@@ -7,11 +7,11 @@ import { createColoredIcon, createNavItem, createNavSection } from "@/shared/com
 export const getRecruitmentConfig = () => {
   const sectionIcon = createColoredIcon(
     <WorkOutlineRoundedIcon />,
-    "#4a6da7"
+    "hr"
   );
   const itemIcon = createColoredIcon(
     <BadgeRoundedIcon />,
-    "#5c7cbc"
+    "hr"
   );
 
   const items = [

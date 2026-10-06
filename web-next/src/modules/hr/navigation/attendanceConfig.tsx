@@ -5,9 +5,9 @@ import { createColoredIcon, createNavItem, createNavSection } from "@/shared/com
 export const getAttendanceConfig = () => createNavSection(
   "hrManagement",
   "attendanceDevices.title",
-  createColoredIcon(<FingerprintRoundedIcon />, "#2e7d32"),
+  createColoredIcon(<FingerprintRoundedIcon />, "hr"),
   [
-    createNavItem("attendanceDevices.devices", createColoredIcon(<FingerprintRoundedIcon />, "#388e3c"), appRoutes.modules.hr.attendanceDevices.index, undefined, [permissions.ViewAttendanceDevices]),
+    createNavItem("attendanceDevices.devices", createColoredIcon(<FingerprintRoundedIcon />, "hr"), appRoutes.modules.hr.attendanceDevices.index, undefined, [permissions.ViewAttendanceDevices]),
   ],
   undefined,
   [permissions.ViewAttendanceDevices],

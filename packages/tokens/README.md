@@ -54,7 +54,7 @@ echo "install-links=true" >> .npmrc
 npm install ../packages/tokens
 ```
 
-After changing `src/`, run `npm run build` here, commit `dist/`, then `npm install` in each app.
+After changing `src/`, run `npm run sync` here: it builds, runs the checks, and copies the package into `web-next` and `mobile-react` (`npm install` alone skips the copy while the version is unchanged). Commit `src/` and `dist/` together, then restart the dev servers.
 `npm run check` fails when `dist/` is stale.
 
 ## Web (web-next: MUI)
@@ -145,6 +145,7 @@ so a tenant can carry its brand without breaking the rest of the palette. Valida
 ## Commands
 
 ```bash
+npm run sync            # build + check + copy into web-next and mobile-react
 npm run build           # regenerate dist/tokens.css, dist/theme.css, dist/tokens.json
 npm run check:contrast  # WCAG AA for every text pair and 3:1 for focus/UI pairs, all palettes
 npm run typecheck

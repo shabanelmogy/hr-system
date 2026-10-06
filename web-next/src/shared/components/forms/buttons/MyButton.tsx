@@ -1,6 +1,6 @@
 import { Button, CircularProgress } from "@mui/material";
 import type { ButtonProps } from "@mui/material";
-import { alpha } from "@mui/material/styles";
+import { alpha, useTheme } from "@mui/material/styles";
 
 interface MyButtonProps extends ButtonProps {
   loading?: boolean;
@@ -12,8 +12,8 @@ const MyButton = ({
   children,
   loading = false,
   variant = "contained",
-  gradientColors = ["#2575fc", "#6a11cb"],
-  hoverColors = ["#1e5ed6", "#5a0cb0"],
+  gradientColors,
+  hoverColors,
   fullWidth = false,
   size = "large",
   type = "button",
@@ -22,12 +22,16 @@ const MyButton = ({
   sx,
   ...otherProps
 }: MyButtonProps) => {
-  const startColor = gradientColors[0] ?? "#2575fc";
-  const endColor = gradientColors[1] ?? startColor;
-  const hoverStartColor = hoverColors[0] ?? "#1e5ed6";
-  const hoverEndColor = hoverColors[1] ?? hoverStartColor;
+  const theme = useTheme();
+  // Defaults follow the active palette (primary → primary.dark) instead of a fixed blue/purple.
+  const gradient = gradientColors ?? [theme.palette.primary.main, theme.palette.primary.dark];
+  const hover = hoverColors ?? [theme.palette.primary.dark, theme.palette.primary.dark];
+  const startColor = gradient[0] ?? theme.palette.primary.main;
+  const endColor = gradient[1] ?? startColor;
+  const hoverStartColor = hover[0] ?? theme.palette.primary.dark;
+  const hoverEndColor = hover[1] ?? hoverStartColor;
   const buttonStyle = {
-    color: "#fff",
+    color: gradientColors ? "#fff" : theme.palette.primary.contrastText,
     background: `linear-gradient(45deg, ${startColor}, ${endColor})`,
     "&:hover": {
       background: `linear-gradient(45deg, ${hoverStartColor}, ${hoverEndColor})`,

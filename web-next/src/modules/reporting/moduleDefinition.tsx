@@ -12,11 +12,11 @@ import {
 const navigation = createNavSection(
   "reporting",
   "menu.crystalReportsManagement",
-  createColoredIcon(<InsightsRoundedIcon />, "#0284c7"),
+  createColoredIcon(<InsightsRoundedIcon />, "reporting"),
   [
     createNavItem(
       "menu.crystalReportsManagement",
-      createColoredIcon(<AssessmentRoundedIcon />, "#0ea5e9"),
+      createColoredIcon(<AssessmentRoundedIcon />, "reporting"),
       appRoutes.modules.reporting.crystalReports,
       undefined,
       [permissions.ViewCrystalReports],
@@ -32,6 +32,7 @@ export const reportingModuleDefinition: FrontendModuleDefinition = {
   name: "Reporting",
   icon: <InsightsRoundedIcon />,
   tone: "info",
+  accentColor: "reporting",
   requiredDependencies: [],
   optionalDependencies: [],
   submodules: [{

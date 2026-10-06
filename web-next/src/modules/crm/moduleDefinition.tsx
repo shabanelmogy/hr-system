@@ -12,11 +12,11 @@ import {
 const navigation = createNavSection(
   "crm",
   "menu.appointments",
-  createColoredIcon(<HandshakeRoundedIcon />, "#7c3aed"),
+  createColoredIcon(<HandshakeRoundedIcon />, "crm"),
   [
     createNavItem(
       "menu.appointments",
-      createColoredIcon(<EventNoteRoundedIcon />, "#8b5cf6"),
+      createColoredIcon(<EventNoteRoundedIcon />, "crm"),
       appRoutes.modules.crm.appointments,
       undefined,
       [permissions.ViewAppointments],
@@ -32,6 +32,7 @@ export const crmModuleDefinition: FrontendModuleDefinition = {
   name: "CRM",
   icon: <HandshakeRoundedIcon />,
   tone: "secondary",
+  accentColor: "crm",
   requiredDependencies: [],
   optionalDependencies: [],
   submodules: [{

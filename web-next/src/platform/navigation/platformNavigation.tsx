@@ -20,8 +20,8 @@ import {
 } from "@/shared/components/layout/navigation";
 
 export function getPlatformNavigation(): NavigationConfig {
-  const administrationIcon = createColoredIcon(<ArchiveIcon />, "#4a6da7");
-  const administrationItemIcon = createColoredIcon(<CategoryIcon />, "#5c7cbc");
+  const administrationIcon = createColoredIcon(<ArchiveIcon />, "platform");
+  const administrationItemIcon = createColoredIcon(<CategoryIcon />, "platform");
 
   const administration = createNavSection(
     "platform-administration",
@@ -44,21 +44,21 @@ export function getPlatformNavigation(): NavigationConfig {
       ),
       createNavItem(
         "menu.invitationsManagement",
-        createColoredIcon(<EmailIcon />, "#5c7cbc"),
+        createColoredIcon(<EmailIcon />, "platform"),
         appRoutes.platform.administration.invitations,
         undefined,
         [permissions.ViewUserInvitations],
       ),
       createNavItem(
         "menu.offlineOperations",
-        createColoredIcon(<CloudOffRoundedIcon />, "#5c7cbc"),
+        createColoredIcon(<CloudOffRoundedIcon />, "platform"),
         appRoutes.platform.administration.offlineOperations,
         undefined,
         [permissions.ViewOfflineOperations],
       ),
       createNavItem(
         "menu.companyGeographicScope",
-        createColoredIcon(<PublicIcon />, "#5c7cbc"),
+        createColoredIcon(<PublicIcon />, "platform"),
         appRoutes.platform.companyGeographicScope,
         undefined,
         [permissions.ViewCompanyGeographicScope],
@@ -69,11 +69,11 @@ export function getPlatformNavigation(): NavigationConfig {
   const files = createNavSection(
     "platform-files",
     "menu.extras",
-    createColoredIcon(<TuneIcon />, "#4a6da7"),
+    createColoredIcon(<TuneIcon />, "platform"),
     [
       createNavItem(
         "menu.filemanager",
-        createColoredIcon(<CloudDownloadIcon />, "#5c7cbc"),
+        createColoredIcon(<CloudDownloadIcon />, "platform"),
         appRoutes.platform.files.manager,
       ),
     ],
@@ -82,30 +82,30 @@ export function getPlatformNavigation(): NavigationConfig {
   const advancedTools = createNavSection(
     "platform-advanced-tools",
     "advancedTools.title",
-    createColoredIcon(<HealthAndSafetyIcon />, "#7b1fa2"),
+    createColoredIcon(<HealthAndSafetyIcon />, "platform"),
     [
       createNavItem(
         "advancedTools.localizationApi",
-        createColoredIcon(<TranslateIcon />, "#ba68c8"),
+        createColoredIcon(<TranslateIcon />, "platform"),
         appRoutes.platform.advancedTools.localizationApi,
         undefined,
         [permissions.ViewLocalizations],
       ),
       createNavItem(
         "advancedTools.healthCheck",
-        createColoredIcon(<HealthAndSafetyIcon />, "#9c27b0"),
+        createColoredIcon(<HealthAndSafetyIcon />, "platform"),
         appRoutes.platform.advancedTools.healthCheck,
         ["admin"],
       ),
       createNavItem(
         "advancedTools.apiEndPoints",
-        createColoredIcon(<ApiIcon />, "#352F36FF"),
+        createColoredIcon(<ApiIcon />, "platform"),
         appRoutes.platform.advancedTools.apiEndpoints,
         ["admin"],
       ),
       createNavItem(
         "advancedTools.hangfireDashboard",
-        createColoredIcon(<WorkHistoryIcon />, "#ba68c8"),
+        createColoredIcon(<WorkHistoryIcon />, "platform"),
         appRoutes.platform.advancedTools.hangfireDashboard,
         undefined,
         [permissions.ViewHangfireDashboard],

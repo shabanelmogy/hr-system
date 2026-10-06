@@ -10,6 +10,7 @@ import type { Route } from "next";
 import type { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import { appRoutes } from "@/config/routes";
+import { resolveModuleAccent } from "@/shared/components/layout/navigation";
 
 export type LauncherTone = "primary" | "secondary" | "success" | "info" | "warning" | "error";
 type LauncherVariant = "module" | "submodule";
@@ -269,7 +270,7 @@ function LauncherTile({
   const theme = useTheme();
   const palette = theme.palette[tone];
   const isPrimary = variant === "module";
-  const accent = accentColor ?? palette.main;
+  const accent = resolveModuleAccent(accentColor, theme.palette.mode) ?? palette.main;
   const accentContrast = theme.palette.getContrastText(accent);
 
   return (

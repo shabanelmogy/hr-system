@@ -9,7 +9,6 @@ import LocationCityIcon from "@mui/icons-material/LocationCity";
 import { appRoutes } from "@/config/routes";
 import { permissions } from "@/lib/auth/permissions";
 import {
-  NavigationColors,
   NavigationSectionId,
   NavigationTitles,
   UserRoles,
@@ -20,50 +19,50 @@ export const getSuperAdminConfig = () =>
   createNavSection(
     NavigationSectionId.SUPER_ADMIN,
     NavigationTitles.SUPER_ADMIN,
-    createColoredIcon(<AdminPanelSettingsIcon />, NavigationColors.PURPLE),
+    createColoredIcon(<AdminPanelSettingsIcon />, "superAdmin"),
     [
       createNavItem(
         NavigationTitles.SUPER_ADMIN_DASHBOARD,
-        createColoredIcon(<DashboardIcon />, NavigationColors.PURPLE),
+        createColoredIcon(<DashboardIcon />, "superAdmin"),
         appRoutes.platform.superAdmin.dashboard,
         [UserRoles.SUPER_ADMIN],
       ),
       createNavItem(
         NavigationTitles.TENANT_MANAGEMENT,
-        createColoredIcon(<ApartmentIcon />, NavigationColors.LIGHT_PURPLE),
+        createColoredIcon(<ApartmentIcon />, "superAdmin"),
         appRoutes.platform.superAdmin.tenants,
         [UserRoles.SUPER_ADMIN],
       ),
       createNavItem(
         NavigationTitles.TENANT_ADMIN_MANAGEMENT,
-        createColoredIcon(<ManageAccountsIcon />, NavigationColors.PURPLE),
+        createColoredIcon(<ManageAccountsIcon />, "superAdmin"),
         appRoutes.platform.superAdmin.tenantAdmins,
         [UserRoles.SUPER_ADMIN],
       ),
       createNavItem(
         NavigationTitles.GLOBAL_GEOGRAPHY,
-        createColoredIcon(<MapIcon />, NavigationColors.LIGHT_PURPLE),
+        createColoredIcon(<MapIcon />, "superAdmin"),
         undefined,
         [UserRoles.SUPER_ADMIN],
         undefined,
         [
           createNavItem(
             NavigationTitles.COUNTRIES,
-            createColoredIcon(<PublicIcon />, NavigationColors.PURPLE),
+            createColoredIcon(<PublicIcon />, "superAdmin"),
             appRoutes.modules.referenceData.geography.countries,
             [UserRoles.SUPER_ADMIN],
             [permissions.ViewCountries],
           ),
           createNavItem(
             NavigationTitles.STATES,
-            createColoredIcon(<LocationCityIcon />, NavigationColors.PURPLE),
+            createColoredIcon(<LocationCityIcon />, "superAdmin"),
             appRoutes.modules.referenceData.geography.states,
             [UserRoles.SUPER_ADMIN],
             [permissions.ViewStates],
           ),
           createNavItem(
             NavigationTitles.DISTRICTS,
-            createColoredIcon(<MapIcon />, NavigationColors.PURPLE),
+            createColoredIcon(<MapIcon />, "superAdmin"),
             appRoutes.modules.referenceData.geography.districts,
             [UserRoles.SUPER_ADMIN],
             [permissions.ViewDistricts],

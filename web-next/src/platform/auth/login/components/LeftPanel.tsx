@@ -1,4 +1,4 @@
-import { Box, keyframes, Typography, useTheme } from "@mui/material";
+import { alpha, Box, keyframes, Typography, useTheme } from "@mui/material";
 import { useSyncExternalStore } from "react";
 import type { Translator } from "../../types";
 
@@ -52,7 +52,7 @@ const LeftPanel = ({ t }: { t: Translator }) => {
           position: "absolute",
           inset: 0,
           background: isDarkMode
-            ? "linear-gradient(135deg, rgba(30, 60, 114, 0.95) 0%, rgba(42, 82, 152, 0.9) 25%, rgba(56, 104, 190, 0.85) 50%, rgba(25, 118, 210, 0.9) 100%)"
+            ? `linear-gradient(135deg, ${alpha(theme.palette.primary.dark, 0.95)} 0%, ${alpha(theme.palette.primary.main, 0.85)} 100%)`
             : "linear-gradient(135deg, rgba(255, 255, 255, 0.92) 0%, rgba(248, 249, 250, 0.88) 50%, rgba(241, 243, 245, 0.85) 100%)",
           zIndex: 1,
           animation: `${pulse} 10s ease-in-out infinite`,
@@ -67,8 +67,8 @@ const LeftPanel = ({ t }: { t: Translator }) => {
           height: "300px",
           borderRadius: "50%",
           background: isDarkMode
-            ? "radial-gradient(circle, rgba(100, 181, 246, 0.1) 0%, transparent 70%)"
-            : "radial-gradient(circle, rgba(33, 150, 243, 0.05) 0%, transparent 70%)",
+            ? `radial-gradient(circle, ${alpha(theme.palette.primary.light, 0.1)} 0%, transparent 70%)`
+            : `radial-gradient(circle, ${alpha(theme.palette.primary.main, 0.05)} 0%, transparent 70%)`,
           zIndex: 2,
           animation: `${float} 15s ease-in-out infinite`,
         },
@@ -84,8 +84,8 @@ const LeftPanel = ({ t }: { t: Translator }) => {
           height: "200px",
           borderRadius: "30% 70% 70% 30% / 30% 30% 70% 70%",
           background: isDarkMode
-            ? "linear-gradient(45deg, rgba(156, 39, 176, 0.1) 0%, rgba(103, 58, 183, 0.1) 100%)"
-            : "linear-gradient(45deg, rgba(156, 39, 176, 0.03) 0%, rgba(103, 58, 183, 0.03) 100%)",
+            ? `linear-gradient(45deg, ${alpha(theme.palette.secondary.main, 0.1)} 0%, ${alpha(theme.palette.primary.main, 0.1)} 100%)`
+            : `linear-gradient(45deg, ${alpha(theme.palette.secondary.main, 0.03)} 0%, ${alpha(theme.palette.primary.main, 0.03)} 100%)`,
           zIndex: 2,
           animation: `${float} 20s ease-in-out infinite reverse`,
         }}
@@ -109,8 +109,8 @@ const LeftPanel = ({ t }: { t: Translator }) => {
             fontSize: { md: "1.8rem", lg: "2.2rem" },
 
             background: isDarkMode
-              ? "linear-gradient(135deg, #ffffff 0%, #e3f2fd 50%, #bbdefb 100%)"
-              : "linear-gradient(135deg, #1976d2 0%, #2196f3 50%, #42a5f5 100%)",
+              ? `linear-gradient(135deg, #ffffff 0%, ${theme.palette.primary.light} 100%)`
+              : `linear-gradient(135deg, ${theme.palette.primary.dark} 0%, ${theme.palette.primary.main} 50%, ${theme.palette.primary.light} 100%)`,
 
             backgroundClip: "text",
             WebkitBackgroundClip: "text",
@@ -129,9 +129,9 @@ const LeftPanel = ({ t }: { t: Translator }) => {
               height: 4,
               background: isDarkMode
                 ? "linear-gradient(to right, rgba(255,255,255,0.8), rgba(255,255,255,0.2))"
-                : "linear-gradient(to right, #2196f3, #64b5f6)",
+                : `linear-gradient(to right, ${theme.palette.primary.main}, ${theme.palette.primary.light})`,
               borderRadius: 2,
-              boxShadow: "0 2px 15px rgba(33, 150, 243, 0.2)",
+              boxShadow: `0 2px 15px ${alpha(theme.palette.primary.main, 0.2)}`,
             }
           }}>
           {t("auth.welcomeBack")}
@@ -173,25 +173,19 @@ const FeatureList = ({ t }: { t: Translator }) => {
   const features = [
     {
       icon: "🔒",
-      gradient: isDarkMode
-        ? "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
-        : "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+      gradient: `linear-gradient(135deg, ${theme.palette.primary.light} 0%, ${theme.palette.primary.dark} 100%)`,
       title: t("auth.secureAccess"),
       desc: t("auth.secureAccessDesc"),
     },
     {
       icon: "🔐",
-      gradient: isDarkMode
-        ? "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)"
-        : "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
+      gradient: `linear-gradient(135deg, ${theme.palette.secondary.light} 0%, ${theme.palette.secondary.dark} 100%)`,
       title: t("auth.dataPrivacy"),
       desc: t("auth.dataPrivacyDesc"),
     },
     {
       icon: "📊",
-      gradient: isDarkMode
-        ? "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)"
-        : "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
+      gradient: `linear-gradient(135deg, ${alpha(theme.palette.app.brand3.main, 0.75)} 0%, ${theme.palette.app.brand3.main} 100%)`,
       title: t("auth.analytics"),
       desc: t("auth.analyticsDesc"),
     },

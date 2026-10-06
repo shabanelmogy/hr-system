@@ -1,12 +1,16 @@
-export const gradientIconStyle = {
-  color: "#fff",
-  background: "linear-gradient(45deg, #2575fc, #6a11cb)",
-  "&:hover": {
-    background: "linear-gradient(45deg, #1e5ed6, #5a0cb0)",
-  },
-} as const;
+import type { Theme } from "@mui/material/styles";
 
-export const authHeaderStyles = {
+/** Icon badge in the active palette's primary color (was a fixed blue/purple gradient). */
+export const gradientIconStyle = (theme: Theme) =>
+  ({
+    color: theme.palette.primary.contrastText,
+    background: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.primary.dark})`,
+    "&:hover": {
+      background: theme.palette.primary.dark,
+    },
+  }) as const;
+
+export const authHeaderStyles = (theme: Theme) => ({
   gradientBackground: {
     position: "relative",
     overflow: "hidden",
@@ -14,8 +18,7 @@ export const authHeaderStyles = {
       content: '""',
       position: "absolute",
       inset: 0,
-      background:
-        "linear-gradient(135deg, rgba(37, 117, 252, 0.9), rgba(106, 17, 203, 0.85))",
+      background: `linear-gradient(135deg, ${theme.palette.primary.main}, ${theme.palette.primary.dark})`,
       zIndex: 1,
     },
     "&::after": {
@@ -31,4 +34,4 @@ export const authHeaderStyles = {
       zIndex: 2,
     },
   },
-} as const;
+}) as const;

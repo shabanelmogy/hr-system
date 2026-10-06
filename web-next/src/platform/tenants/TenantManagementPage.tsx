@@ -78,6 +78,7 @@ import {
   type TenantManagementResponse,
   type TenantSortColumn,
 } from "./types";
+import { resolveModuleAccent } from "@/shared/components/layout/navigation";
 
 const defaultTenantFilters: TenantListFilters = { includeArchived: false };
 
@@ -574,7 +575,7 @@ function TenantEditor({
                       (item) => item.moduleCode.toLowerCase() === selectedModule.code.toLowerCase(),
                     );
                     const selectedPresentation = toLauncherModule(selectedModule);
-                    const selectedAccent = selectedPresentation.accentColor
+                    const selectedAccent = resolveModuleAccent(selectedPresentation.accentColor, theme.palette.mode)
                       ?? theme.palette[selectedPresentation.tone ?? "primary"].main;
                     const selectedModuleLabel = t(`modules.${selectedModule.code}`, {
                       defaultValue: selectedModule.name,
@@ -607,7 +608,7 @@ function TenantEditor({
                                 (item) => item.moduleCode.toLowerCase() === module.code.toLowerCase(),
                               );
                               const presentation = toLauncherModule(module);
-                              const accent = presentation.accentColor
+                              const accent = resolveModuleAccent(presentation.accentColor, theme.palette.mode)
                                 ?? theme.palette[presentation.tone ?? "primary"].main;
                               const moduleLabel = t(`modules.${module.code}`, { defaultValue: module.name });
                               const selected = module.code.toLowerCase() === selectedModule.code.toLowerCase();

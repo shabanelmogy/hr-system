@@ -23,11 +23,6 @@ import {
   DEFAULT_ROWS_PER_PAGE,
   DEFAULT_ROWS_PER_PAGE_OPTIONS,
 } from "@/shared/constants/pagination";
-import {
-  getLastControlledPage,
-  getStableServerRowCount,
-} from "./pagination";
-import { getGridSortModelKey } from "./controlledModels";
 
 const dataGridStyles: SxProps<Theme> = {
   width: "100%",
@@ -109,7 +104,6 @@ function getColumnMinWidth(column: GridColDef) {
 export default function MyDataGrid<TRow extends GridValidRowModel>({
   rows = [],
   columns = [],
-  loading = false,
   apiRef,
   initialState,
   initialSortModel = [{ field: "id", sort: "asc" }],
@@ -131,7 +125,6 @@ export default function MyDataGrid<TRow extends GridValidRowModel>({
   pagination = true,
   paginationMode = "client",
   rowCount,
-  sortModel,
   checkboxSelection = true,
   showToolbar,
   slots,
@@ -145,32 +138,6 @@ export default function MyDataGrid<TRow extends GridValidRowModel>({
   const handledOperationRef = useRef<string | null>(null);
   const initialSelectionDoneRef = useRef(false);
   const [activeRowId, setActiveRowId] = useState<GridRowId | null>(null);
-  const [stableServerRowCount, setStableServerRowCount] = useState(rowCount ?? 0);
-
-  useEffect(() => {
-    if (paginationMode !== "server") return;
-    // rowCount is protocol state for MUI's controlled server pager, not derived
-    // render state: retain it across a loading transition before syncing the
-    // next authoritative total. Equal values bail out without a re-render.
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setStableServerRowCount((previousRowCount) =>
-      getStableServerRowCount(previousRowCount, rowCount, loading),
-    );
-  }, [loading, paginationMode, rowCount]);
-
-  const resolvedRowCount = paginationMode === "server"
-    ? stableServerRowCount
-    : rowCount;
-  const sortModelKey = getGridSortModelKey(sortModel);
-  // MUI resets pagination on sortModelChange. Preserve the model reference
-  // while its semantic content is unchanged so row/loading renders cannot
-  // masquerade as a new server sort.
-  const resolvedSortModel = useMemo(
-    () => sortModel?.map((item) => ({ ...item })),
-    // The semantic key deliberately replaces the unstable array reference.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [sortModelKey],
-  );
 
   const resolvedInitialState = useMemo(
     () => ({
@@ -286,17 +253,16 @@ export default function MyDataGrid<TRow extends GridValidRowModel>({
     if (!api) return;
 
     const model = api.state.pagination.paginationModel;
-    const lastPage = getLastControlledPage({
-      mode: paginationMode,
-      rowCount: resolvedRowCount,
-      loadedRowCount: rows.length,
-      pageSize: model.pageSize,
-      loading,
-    });
-    if (lastPage != null && model.page > lastPage) {
+    const effectiveRowCount =
+      paginationMode === "server" ? (rowCount ?? rows.length) : rows.length;
+    const lastPage = Math.max(
+      0,
+      Math.ceil(effectiveRowCount / Math.max(1, model.pageSize)) - 1,
+    );
+    if (model.page > lastPage) {
       api.setPage(lastPage);
     }
-  }, [loading, pagination, paginationMode, resolvedApiRef, resolvedRowCount, rows.length]);
+  }, [pagination, paginationMode, resolvedApiRef, rowCount, rows.length]);
 
   useEffect(() => {
     const operation = getPendingOperation(
@@ -334,8 +300,10 @@ export default function MyDataGrid<TRow extends GridValidRowModel>({
     }
 
     const scrollTimer = setTimeout(() => {
+      const currentApi = resolvedApiRef.current;
+      if (!currentApi) return;
       setActiveRowId(targetId);
-      api.scrollToIndexes({
+      currentApi.scrollToIndexes({
         rowIndex: targetIndex % Math.max(1, pageSize),
       });
     }, 150);
@@ -365,6 +333,10 @@ export default function MyDataGrid<TRow extends GridValidRowModel>({
     if (!api) return;
 
     const activationTimer = setTimeout(() => {
+      // The grid can unmount during the delay (view switch, navigation): the
+      // apiRef is then null and selectors would throw on `.state`.
+      const currentApi = resolvedApiRef.current;
+      if (!currentApi) return;
       const orderedIds = gridFilteredSortedRowIdsSelector(resolvedApiRef);
       const firstId = orderedIds[0] ?? resolveRowId(rows[0]);
       const activeIsVisible = orderedIds.some((id) => idsEqual(id, activeRowId));
@@ -375,7 +347,7 @@ export default function MyDataGrid<TRow extends GridValidRowModel>({
       }
 
       setActiveRowId(firstId);
-      api.scrollToIndexes({ rowIndex: 0 });
+      currentApi.scrollToIndexes({ rowIndex: 0 });
 
       // Checkbox grids use row selection for bulk actions. Keep that selection
       // empty while still exposing the first row as the active record.
@@ -386,9 +358,9 @@ export default function MyDataGrid<TRow extends GridValidRowModel>({
         lastAddedId == null &&
         lastEditedId == null &&
         lastDeletedIndex == null &&
-        api.getSelectedRows().size === 0
+        currentApi.getSelectedRows().size === 0
       ) {
-        api.setRowSelectionModel({ type: "include", ids: new Set([firstId]) });
+        currentApi.setRowSelectionModel({ type: "include", ids: new Set([firstId]) });
         initialSelectionDoneRef.current = true;
       }
     }, 150);
@@ -413,7 +385,6 @@ export default function MyDataGrid<TRow extends GridValidRowModel>({
         {...dataGridProps}
         rows={rows}
         columns={resolvedColumns}
-        loading={loading}
         apiRef={resolvedApiRef}
         getRowId={getRowId}
         getRowClassName={resolvedGetRowClassName}
@@ -423,8 +394,7 @@ export default function MyDataGrid<TRow extends GridValidRowModel>({
         pageSizeOptions={pageSizeOptions}
         pagination={pagination}
         paginationMode={paginationMode}
-        rowCount={resolvedRowCount}
-        sortModel={resolvedSortModel}
+        rowCount={rowCount}
         checkboxSelection={checkboxSelection}
         showToolbar={showToolbar ?? Boolean(onToolbarAdd || showGridOptions || toolbarSearch || toolbarContent || gridOptionsContent)}
         className={showNavigationButtons ? "" : "no-navigation"}

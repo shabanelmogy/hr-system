@@ -125,7 +125,7 @@ const LoginForm = ({
           sx={{ mb: 1.5 }}
           maxValue={50}
           counter
-          startIcon={<PersonIcon sx={{ ...gradientIconStyle }} />}
+          startIcon={<PersonIcon sx={gradientIconStyle} />}
         />
         <MyTextField
           fieldName="password"
@@ -136,7 +136,7 @@ const LoginForm = ({
           setShowPassword={setShowPassword}
           errors={errors}
           fullWidth
-          startIcon={<LockOutlinedIcon sx={{ ...gradientIconStyle }} />}
+          startIcon={<LockOutlinedIcon sx={gradientIconStyle} />}
         />
 
         <ForgotPasswordLink t={t} theme={theme} appRoutes={appRoutes} />

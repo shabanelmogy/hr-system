@@ -12,11 +12,11 @@ import {
 const navigation = createNavSection(
   "referenceData",
   "menu.geographicData",
-  createColoredIcon(<PublicRoundedIcon />, "#0891b2"),
+  createColoredIcon(<PublicRoundedIcon />, "referenceData"),
   [
     createNavItem(
       "menu.addressTypes",
-      createColoredIcon(<CategoryRoundedIcon />, "#06b6d4"),
+      createColoredIcon(<CategoryRoundedIcon />, "referenceData"),
       appRoutes.modules.referenceData.addressTypes,
       undefined,
       [permissions.ViewAddressTypes],
@@ -32,6 +32,7 @@ export const referenceDataModuleDefinition: FrontendModuleDefinition = {
   name: "ReferenceData",
   icon: <PublicRoundedIcon />,
   tone: "info",
+  accentColor: "referenceData",
   requiredDependencies: [],
   optionalDependencies: [],
   submodules: [{
