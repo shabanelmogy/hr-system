@@ -69,10 +69,7 @@ const SecurityHeader = ({
           sx={{
             fontWeight: 700,
             letterSpacing: 0,
-            background:
-              theme.palette.mode === "dark"
-                ? "linear-gradient(90deg, #fff, #e2e8f0)"
-                : "linear-gradient(90deg, #1e293b, #334155)",
+            background: `linear-gradient(90deg, ${theme.palette.text.primary}, ${theme.palette.text.secondary})`,
             backgroundClip: "text",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",

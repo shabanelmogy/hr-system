@@ -173,7 +173,7 @@ export default function RecruitmentKanbanBoard({
                 bgcolor:
                   theme.palette.mode === "dark"
                     ? "background.paper"
-                    : "#F8FAFC",
+                    : theme.palette.background.default,
                 border: `1px solid ${theme.palette.divider}`,
                 display: "flex",
                 flexDirection: "column",

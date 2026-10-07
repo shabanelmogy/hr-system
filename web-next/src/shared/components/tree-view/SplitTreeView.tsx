@@ -445,7 +445,7 @@ export default function SplitTreeView<T>({
         flexDirection: "column",
         backgroundColor: theme.palette.background.default,
         borderRadius: isFullscreen ? 0 : 2,
-        border: isFullscreen ? "none" : `1px solid ${theme.palette.mode === "dark" ? theme.palette.divider : "#e2e8f0"}`,
+        border: isFullscreen ? "none" : `1px solid ${theme.palette.mode === "dark" ? theme.palette.divider : theme.palette.divider}`,
         overflow: "hidden",
         position: isFullscreen ? "fixed" : "relative",
         top: isFullscreen ? 0 : undefined,
@@ -468,8 +468,8 @@ export default function SplitTreeView<T>({
           justifyContent: "space-between",
           flexWrap: "wrap",
           gap: 1,
-          borderBottom: `1px solid ${theme.palette.mode === "dark" ? theme.palette.divider : "#e2e8f0"}`,
-          backgroundColor: theme.palette.mode === "dark" ? theme.palette.background.paper : "#ffffff",
+          borderBottom: `1px solid ${theme.palette.mode === "dark" ? theme.palette.divider : theme.palette.divider}`,
+          backgroundColor: theme.palette.mode === "dark" ? theme.palette.background.paper : theme.palette.background.paper,
         }}
       >
         <Box sx={{ display: "flex", alignItems: "center", gap: 1, flex: 1, minWidth: 200, maxWidth: 380 }}>
@@ -486,11 +486,11 @@ export default function SplitTreeView<T>({
                   </InputAdornment>
                 ),
                 sx: {
-                  backgroundColor: theme.palette.mode === "dark" ? alpha(theme.palette.common.white, 0.05) : "#f8fafc",
+                  backgroundColor: theme.palette.mode === "dark" ? alpha(theme.palette.common.white, 0.05) : theme.palette.background.default,
                   borderRadius: 1.5,
                   fontSize: "0.85rem",
                   "& fieldset": {
-                    borderColor: theme.palette.mode === "dark" ? alpha(theme.palette.common.white, 0.1) : "#e2e8f0",
+                    borderColor: theme.palette.mode === "dark" ? alpha(theme.palette.common.white, 0.1) : theme.palette.divider,
                   },
                 },
               },
@@ -600,7 +600,7 @@ export default function SplitTreeView<T>({
             backgroundColor: variant === "tree-list"
               ? theme.palette.mode === "dark"
                 ? alpha(theme.palette.background.default, 0.6)
-                : "#ffffff"
+                : theme.palette.background.paper
               : alpha(theme.palette.action.hover, 0.4),
             p: variant === "tree-list" ? 1 : { xs: 2, sm: 4 },
             display: variant === "tree-list" ? "block" : "flex",
@@ -719,9 +719,9 @@ export default function SplitTreeView<T>({
               flexShrink: 0,
               display: "flex",
               flexDirection: "column",
-              borderInlineStart: `1px solid ${theme.palette.mode === "dark" ? theme.palette.divider : "#e2e8f0"}`,
+              borderInlineStart: `1px solid ${theme.palette.mode === "dark" ? theme.palette.divider : theme.palette.divider}`,
               borderRadius: 0,
-              backgroundColor: theme.palette.mode === "dark" ? theme.palette.background.paper : "#ffffff",
+              backgroundColor: theme.palette.mode === "dark" ? theme.palette.background.paper : theme.palette.background.paper,
               zIndex: 10,
               boxShadow: theme.palette.mode === "dark" ? "0 4px 24px rgba(0,0,0,0.6)" : "-4px 0 24px rgba(0,0,0,0.03)",
               transition: "width 0.2s ease",

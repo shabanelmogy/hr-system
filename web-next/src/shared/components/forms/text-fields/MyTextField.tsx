@@ -272,7 +272,7 @@ export default function MyTextField({
             }),
         ...(appearance !== "plain" && isPasswordField && {
           "& input:-webkit-autofill": {
-            WebkitBoxShadow: `0 0 0 100px ${theme.palette.mode === "dark" ? "rgb(30, 30, 30)" : theme.palette.background.default} inset !important`,
+            WebkitBoxShadow: `0 0 0 100px ${theme.palette.background.default} inset !important`,
           },
           "& input[type='password']::-ms-reveal": { display: "none" },
           "& input[type='password']::-webkit-credentials-auto-fill-button": { display: "none !important" },
