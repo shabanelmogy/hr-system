@@ -3,6 +3,8 @@ import { breakpoints, elevation, fontFamily, fontStack, fontWeight, iconSize, la
 export * from './contrast.ts';
 export * from './mui.ts';
 export * from './native.ts';
+export * from './modules.ts';
+import { type ModuleColors } from './modules.ts';
 export { breakpoints, chartColors, defaultPalette, elevation, fontFamily, fontStack, fontWeight, iconSize, layout, motion, palettes, radius, spacing, textStyles, themePaletteOrder, zIndex, };
 export type { ResolvedThemeMode, SemanticColors, TextStyleToken, TextVariant, ThemeMode, ThemePalette };
 /** One resolved theme — the object native components read and the CSS build serializes. */
@@ -12,6 +14,8 @@ export interface AppTheme {
     isDark: boolean;
     colors: SemanticColors;
     chart: readonly string[];
+    /** One icon color per ERP module for this palette and mode. */
+    modules: ModuleColors;
     spacing: typeof spacing;
     radius: typeof radius;
     text: typeof textStyles;

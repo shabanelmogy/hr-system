@@ -270,7 +270,7 @@ function LauncherTile({
   const theme = useTheme();
   const palette = theme.palette[tone];
   const isPrimary = variant === "module";
-  const accent = resolveModuleAccent(accentColor, theme.palette.mode) ?? palette.main;
+  const accent = resolveModuleAccent(accentColor, theme) ?? palette.main;
   const accentContrast = theme.palette.getContrastText(accent);
 
   return (

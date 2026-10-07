@@ -1,5 +1,6 @@
 import { MoreVert } from "@mui/icons-material";
 import {
+  alpha,
   Box,
   Chip,
   IconButton,
@@ -159,10 +160,10 @@ export default function MobileHeaderLayout(props: MobileHeaderLayoutProps) {
         <Chip
           label={selectedLabel}
           size="small"
-          color="secondary"
+          color="primary"
           sx={{
-            backgroundColor: `${theme.palette.secondary.main}20`,
-            color: theme.palette.secondary.main,
+            backgroundColor: alpha(theme.palette.primary.main, theme.palette.mode === "dark" ? 0.18 : 0.08),
+            color: theme.palette.primary.main,
           }}
         />
         {props.additionalChips.map((chip, index) => (

@@ -3,6 +3,8 @@ import { breakpoints, elevation, fontFamily, fontStack, fontWeight, iconSize, la
 export * from "./contrast.js";
 export * from "./mui.js";
 export * from "./native.js";
+export * from "./modules.js";
+import { moduleColors } from "./modules.js";
 export { breakpoints, chartColors, defaultPalette, elevation, fontFamily, fontStack, fontWeight, iconSize, layout, motion, palettes, radius, spacing, textStyles, themePaletteOrder, zIndex, };
 export function getTheme(palette = defaultPalette, mode = 'light') {
     const colors = palettes[palette][mode];
@@ -12,6 +14,7 @@ export function getTheme(palette = defaultPalette, mode = 'light') {
         isDark: mode === 'dark',
         colors,
         chart: chartColors(colors),
+        modules: moduleColors[palette][mode],
         spacing,
         radius,
         text: textStyles,

@@ -28,6 +28,8 @@ import {
 export * from './contrast.ts';
 export * from './mui.ts';
 export * from './native.ts';
+export * from './modules.ts';
+import { moduleColors, type ModuleColors } from './modules.ts';
 export {
   breakpoints,
   chartColors,
@@ -55,6 +57,8 @@ export interface AppTheme {
   isDark: boolean;
   colors: SemanticColors;
   chart: readonly string[];
+  /** One icon color per ERP module for this palette and mode. */
+  modules: ModuleColors;
   spacing: typeof spacing;
   radius: typeof radius;
   text: typeof textStyles;
@@ -75,6 +79,7 @@ export function getTheme(palette: ThemePalette = defaultPalette, mode: ResolvedT
     isDark: mode === 'dark',
     colors,
     chart: chartColors(colors),
+    modules: moduleColors[palette][mode],
     spacing,
     radius,
     text: textStyles,

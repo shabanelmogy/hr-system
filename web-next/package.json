@@ -30,6 +30,7 @@
     "test:module-generator": "node scripts/generate-module.selftest.mjs",
     "release:preflight": "node scripts/release-readiness.mjs --production-preflight",
     "type-check": "tsc --noEmit",
+    "sync:tokens": "npm --prefix ../packages/tokens run sync",
     "check": "npm run check:architecture && npm run check:governance && npm run check:release-contract && npm run check:i18n && npm run lint && npm run type-check"
   },
   "dependencies": {

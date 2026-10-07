@@ -38,6 +38,7 @@ export function createMuiThemeOptions(theme, direction = 'ltr', config = {}) {
                 ring: c.ring,
                 overlay: c.overlay,
                 chart: theme.chart,
+                modules: theme.modules,
             },
         },
         typography: {

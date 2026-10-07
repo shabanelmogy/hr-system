@@ -1,4 +1,4 @@
-import { Box, Chip, Divider, Typography, useTheme } from "@mui/material";
+import { alpha, Box, Chip, Divider, Typography, useTheme } from "@mui/material";
 import type { Chip as MuiChip } from "@mui/material";
 import type { ComponentProps, MouseEvent, ReactNode } from "react";
 import BackButton from "@/shared/components/navigation/BackButton";
@@ -92,10 +92,10 @@ export default function DesktopHeaderLayout(props: DesktopHeaderLayoutProps) {
             <Chip
               label={selectedLabel}
               size="small"
-              color="secondary"
+              color="primary"
               sx={{
-                backgroundColor: `${theme.palette.secondary.main}20`,
-                color: theme.palette.secondary.main,
+                backgroundColor: alpha(theme.palette.primary.main, theme.palette.mode === "dark" ? 0.18 : 0.08),
+                color: theme.palette.primary.main,
               }}
             />
             {props.additionalChips.map((chip, index) => (

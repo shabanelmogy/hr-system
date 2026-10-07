@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Offline | ERP System</title>
+  <style>
+    :root { color-scheme: light dark; --bg: #f5f7fa; --card: #ffffff; --text: #172026; --muted: #5c6970; --primary: #0f766e; --on-primary: #ffffff; }
+    @media (prefers-color-scheme: dark) { :root { --bg: #101514; --card: #18201e; --text: #f5f7f8; --muted: #a8b8b4; --primary: #5eead4; --on-primary: #0d2e2b; } }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 16px;
+      background: var(--bg); color: var(--text); font-family: "IBM Plex Sans Arabic", "Segoe UI", Tahoma, sans-serif; }
+    main { width: 100%; max-width: 420px; background: var(--card); border-radius: 16px; padding: 32px 24px; text-align: center;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08); }
+    img { width: 72px; height: 72px; border-radius: 16px; }
+    h1 { font-size: 1.25rem; margin: 16px 0 8px; }
+    p { color: var(--muted); margin: 0 0 4px; line-height: 1.6; }
+    button { margin-top: 20px; border: 0; border-radius: 8px; padding: 10px 24px; font: inherit; font-weight: 600;
+      background: var(--primary); color: var(--on-primary); cursor: pointer; }
+    .ar { direction: rtl; margin-top: 16px; }
+  </style>
+</head>
+<body>
+  <main>
+    <img src="/icons/icon-192.png" alt="">
+    <h1>You are offline</h1>
+    <p>Check your internet connection, then try again.</p>
+    <div class="ar">
+      <h1>لا يوجد اتصال بالإنترنت</h1>
+      <p>تأكد من الاتصال ثم حاول مرة أخرى.</p>
+    </div>
+    <button id="retry" type="button">Try again · حاول مرة أخرى</button>
+  </main>
+  <script>
+    document.getElementById("retry").addEventListener("click", function () { location.reload(); });
+    window.addEventListener("online", function () { location.reload(); });
+  </script>
+</body>
+</html>

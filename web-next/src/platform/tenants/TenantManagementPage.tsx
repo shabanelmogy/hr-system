@@ -575,7 +575,7 @@ function TenantEditor({
                       (item) => item.moduleCode.toLowerCase() === selectedModule.code.toLowerCase(),
                     );
                     const selectedPresentation = toLauncherModule(selectedModule);
-                    const selectedAccent = resolveModuleAccent(selectedPresentation.accentColor, theme.palette.mode)
+                    const selectedAccent = resolveModuleAccent(selectedPresentation.accentColor, theme)
                       ?? theme.palette[selectedPresentation.tone ?? "primary"].main;
                     const selectedModuleLabel = t(`modules.${selectedModule.code}`, {
                       defaultValue: selectedModule.name,
@@ -608,7 +608,7 @@ function TenantEditor({
                                 (item) => item.moduleCode.toLowerCase() === module.code.toLowerCase(),
                               );
                               const presentation = toLauncherModule(module);
-                              const accent = resolveModuleAccent(presentation.accentColor, theme.palette.mode)
+                              const accent = resolveModuleAccent(presentation.accentColor, theme)
                                 ?? theme.palette[presentation.tone ?? "primary"].main;
                               const moduleLabel = t(`modules.${module.code}`, { defaultValue: module.name });
                               const selected = module.code.toLowerCase() === selectedModule.code.toLowerCase();

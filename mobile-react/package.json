@@ -9,6 +9,7 @@
     "web": "expo start --web",
     "lint": "eslint app src",
     "typecheck": "tsc --noEmit",
+    "sync:tokens": "npm --prefix ../packages/tokens run sync",
     "check:architecture": "node scripts/check-architecture.mjs",
     "check:contracts": "node scripts/check-contract-matrix.mjs",
     "sync:contracts": "node scripts/sync-phase00-matrix.mjs",

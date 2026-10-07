@@ -1378,6 +1378,25 @@ policy.
 Web Vitals and user-perceived latency should likewise be driven by stable browser
 or production telemetry rather than machine-specific CI timing thresholds.
 
+## Installable app (PWA) and offline files
+
+Decision (owner, 2026-10-07): the web app is installable and keeps static files offline;
+API data is never cached by the service worker.
+
+- `src/app/manifest.ts` is the web app manifest (name, icons, theme color from `@app/tokens`).
+  Icons live in `public/icons/` (192, 512, maskable 512, Apple touch 180).
+- `public/sw.js` caches only `/_next/static/*` (hashed, immutable), `/icons/*`, `favicon.ico`
+  and `/offline.html`. API calls, `/api` routes, RSC payloads and HTML pages always go to the
+  network, so permissions and company data are never served stale and a company switch cannot
+  show another company's cached data. A failed page navigation shows `/offline.html`.
+- `src/app/ServiceWorkerRegistration.tsx` registers the worker in production builds only and
+  unregisters any worker in development, where it would serve stale bundles.
+- `next.config.ts` serves `/sw.js` with `Cache-Control: no-cache, no-store, must-revalidate` so
+  updates are picked up. When the cached file set changes in a breaking way, bump `VERSION` in
+  `sw.js`; old `erp-static-*` caches are deleted on activation.
+- Verified 2026-10-07 with a production build in Chromium: worker active, 40 static chunks
+  cached, 0 API responses cached, offline navigation shows the offline page.
+
 ## App Router Rules
 
 - Keep route groups organizational, for example `(main)`, `(auth)`, `(analytics)`, `(security)`, and `(platform)`.

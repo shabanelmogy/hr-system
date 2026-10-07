@@ -1,8 +1,9 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Suspense, type ReactNode } from "react";
 import { Providers } from "./providers";
 import { RuntimePreferencesBoundary } from "./RuntimePreferencesBoundary";
 import { ClientObservability } from "./ClientObservability";
+import { ServiceWorkerRegistration } from "./ServiceWorkerRegistration";
 import {
   DEFAULT_RUNTIME_PREFERENCES,
   runtimePreferenceBootstrapScript,
@@ -11,7 +12,17 @@ import "@/index.css";
 
 export const metadata: Metadata = {
   title: "ERP System",
-  description: "Operational ERP dashboard"
+  description: "Operational ERP dashboard",
+  applicationName: "ERP System",
+  appleWebApp: { capable: true, title: "ERP", statusBarStyle: "default" },
+  icons: { apple: "/icons/apple-touch-icon.png" },
+};
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#0F766E" },
+    { media: "(prefers-color-scheme: dark)", color: "#101514" },
+  ],
 };
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
@@ -58,6 +69,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
       <body>
         <Suspense fallback={null}>
           <ClientObservability />
+          <ServiceWorkerRegistration />
         </Suspense>
         <div id="app-loader">
           <svg width="48" height="48" viewBox="0 0 48 48" fill="none">

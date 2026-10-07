@@ -1,0 +1,8 @@
+{
+  "name": "erp-system-root",
+  "private": true,
+  "description": "Repository-level shortcuts. Each app keeps its own package.json and dependencies.",
+  "scripts": {
+    "sync:tokens": "npm --prefix packages/tokens run sync"
+  }
+}

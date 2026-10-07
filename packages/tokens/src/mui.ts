@@ -42,6 +42,8 @@ export interface MuiAppPalette {
   ring: string;
   overlay: string;
   chart: readonly string[];
+  /** One icon color per ERP module (see modules.ts). */
+  modules: Readonly<Record<string, string>>;
 }
 
 export interface CreateMuiThemeOptionsConfig {
@@ -142,6 +144,7 @@ export function createMuiThemeOptions(
         ring: c.ring,
         overlay: c.overlay,
         chart: theme.chart,
+        modules: theme.modules,
       },
     },
     typography: {

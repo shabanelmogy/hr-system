@@ -136,6 +136,13 @@ The mobile app keeps its `AppTheme` shape through `createMobileColors()`, which 
 legacy keys (`surfaceMuted`, `text`, `onPrimary`, `danger`, …) with identical values; see
 `mobile-react/src/core/theme/theme.ts`.
 
+## Module icon colors
+
+`moduleColors[palette][mode]` (also `theme.modules` and, on web, `theme.palette.app.modules`)
+gives every ERP module (`hr`, `accounting`, `crm`, `referenceData`, `reporting`) its own icon
+color, chosen per palette so the set stays in harmony with it. The contrast check requires 3:1
+on the surface for each value. Platform and administration entries use `mutedForeground`.
+
 ## Tenant branding
 
 `withBrandPrimary(theme, primary, primaryForeground)` overrides only the primary color (and ring),

@@ -2,7 +2,6 @@ import { ListItemIcon, ListItemText, Tooltip, Collapse, List } from "@mui/materi
 import ListItemButton from "@mui/material/ListItemButton";
 import { useTheme } from "@mui/material/styles";
 import { usePathname, useRouter } from "next/navigation";
-import { grey } from "@mui/material/colors";
 import { alpha } from "@mui/material/styles";
 import { useState } from "react";
 import { useUnsavedChanges } from "@/shared/contexts/UnsavedChangesContext";
@@ -59,7 +58,8 @@ function NavigationItem({
   // Normalize path for consistent comparison
   const normalizedPath = path ? normalizeAppPath(path) : null;
   const isActive = normalizedPath !== null && pathname === normalizedPath;
-  const activeBgColor = theme.palette.mode === "dark" ? grey[900] : grey[300];
+  // Selected row tint follows the active palette (was a fixed MUI grey).
+  const activeBgColor = alpha(theme.palette.primary.main, theme.palette.mode === "dark" ? 0.16 : 0.12);
 
   // Check if this item matches the search
   const itemMatches =

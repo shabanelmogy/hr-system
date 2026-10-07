@@ -1,6 +1,6 @@
 // Fails when a text/background pair in any palette misses WCAG AA.
 // Requires Node >= 22.18 (built-in TypeScript type stripping).
-import { contrastRatio, palettes, themePaletteOrder } from '../src/index.ts';
+import { contrastRatio, moduleColors, palettes, themePaletteOrder } from '../src/index.ts';
 
 const TEXT = 4.5; // WCAG 1.4.3 normal text
 const UI = 3.0;   // WCAG 1.4.11 non-text (focus ring, icons, input boundary)
@@ -43,6 +43,10 @@ for (const palette of themePaletteOrder) {
     check(textPairs, TEXT, failures);
     check(uiPairs, UI, failures);
     check(advisoryPairs, UI, advisories);
+    for (const [module, color] of Object.entries(moduleColors[palette][mode])) {
+      const ratio = contrastRatio(color, colors.surface);
+      if (ratio < UI) failures.push(`${palette}/${mode}: module ${module} icon on surface = ${ratio.toFixed(2)} (< ${UI})`);
+    }
   }
 }
 
@@ -52,4 +56,4 @@ if (failures.length > 0) {
   console.error(`\n${failures.length} contrast failure(s).`);
   process.exit(1);
 }
-console.log(`Contrast OK: ${themePaletteOrder.length * 2} themes, ${textPairs.length} text pairs (AA ${TEXT}) and ${uiPairs.length} UI pairs (${UI}).`);
+console.log(`Contrast OK: ${themePaletteOrder.length * 2} themes, ${textPairs.length} text pairs (AA ${TEXT}) and ${uiPairs.length} UI pairs (${UI}); module icons (${UI}).`);
