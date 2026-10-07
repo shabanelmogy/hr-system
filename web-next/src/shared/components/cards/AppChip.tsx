@@ -25,6 +25,9 @@ export const AppChip: React.FC<AppChipProps> = ({
 }) => {
   const theme = useTheme();
   const colorMain = theme.palette[colorKey].main;
+  // Text on a tinted (soft/outlined) chip: the darker shade in light mode keeps 4.5:1 on the
+  // tint and on hovered/selected grid rows; dark palettes already use light main colors.
+  const tintedText = theme.palette.mode === "light" ? theme.palette[colorKey].dark : colorMain;
 
   const baseSx = (() => {
     switch (variant) {
@@ -38,7 +41,7 @@ export const AppChip: React.FC<AppChipProps> = ({
         } as const;
       case "outlined":
         return {
-          color: colorMain,
+          color: tintedText,
           borderColor: alpha(colorMain, 0.35),
           bgcolor: "transparent",
           "&:hover": {
@@ -48,7 +51,7 @@ export const AppChip: React.FC<AppChipProps> = ({
       case "soft":
       default:
         return {
-          color: colorMain,
+          color: tintedText,
           bgcolor: alpha(colorMain, 0.1),
           borderColor: alpha(colorMain, 0.3),
           "&:hover": {

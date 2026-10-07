@@ -65,6 +65,8 @@ export function ContextBadge({
         sx={{
           ...iconSx,
           color: accentColor,
+          // Dim only the icon when unavailable; dimming the text breaks the 4.5:1 contrast.
+          opacity: disabled && !loading ? 0.62 : 1,
           bgcolor: (theme) => alpha(
             (error ? theme.palette.error : theme.palette[tone]).main,
             theme.palette.mode === "dark" ? 0.22 : 0.13,
@@ -74,7 +76,11 @@ export function ContextBadge({
         {renderedIcon}
       </Box>
       {!iconOnly ? (
-        <Typography className="ContextBadge-value" component="span" sx={contextValueSx}>
+        <Typography
+          className="ContextBadge-value"
+          component="span"
+          sx={contextValueSx}
+        >
           {value || label}
         </Typography>
       ) : null}
@@ -102,7 +108,6 @@ export function ContextBadge({
     maxWidth: iconOnly ? 34 : compact ? 124 : 168,
     borderColor: (theme: import("@mui/material/styles").Theme) =>
       alpha(error ? theme.palette.error.main : theme.palette.divider, 0.82),
-    opacity: disabled && !loading ? 0.62 : 1,
     cursor: interactive ? "pointer" : "default",
   } as const;
 
@@ -120,7 +125,7 @@ export function ContextBadge({
           {content}
         </ButtonBase>
       ) : (
-        <Box aria-label={accessibleLabel} className="ContextBadge-root" component="span" sx={commonSx}>
+        <Box role="group" aria-label={accessibleLabel} className="ContextBadge-root" component="span" sx={commonSx}>
           {content}
         </Box>
       )}

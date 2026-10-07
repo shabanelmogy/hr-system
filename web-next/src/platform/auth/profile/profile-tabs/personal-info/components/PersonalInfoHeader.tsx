@@ -39,15 +39,15 @@ const PersonalInfoHeader = ({
         background: (theme) =>
           theme.palette.mode === "dark"
             ? `linear-gradient(145deg, ${alpha(
-                theme.palette.info.dark,
-                0.2
+                theme.palette.primary.main,
+                0.16
               )}, ${alpha(theme.palette.primary.dark, 0.2)})`
             : `linear-gradient(145deg, ${alpha(
-                theme.palette.info.light,
+                theme.palette.primary.light,
                 0.15
               )}, ${alpha(theme.palette.primary.light, 0.05)})`,
         borderBottom: (theme) =>
-          `1px solid ${alpha(theme.palette.info.main, 0.2)}`,
+          `1px solid ${alpha(theme.palette.primary.main, 0.2)}`,
       }}
     >
       <Box sx={{ minWidth: 0 }}>
@@ -105,19 +105,19 @@ const PersonalInfoHeader = ({
               background: (theme) =>
                 isEditing
                   ? alpha(theme.palette.primary.main, 0.1)
-                  : alpha(theme.palette.info.light, 0.1),
+                  : alpha(theme.palette.primary.main, 0.1),
               transition: "all 0.2s ease",
               "&:hover": {
                 background: (theme) =>
                   isEditing
                     ? alpha(theme.palette.primary.main, 0.2)
-                    : alpha(theme.palette.info.light, 0.2),
+                    : alpha(theme.palette.primary.main, 0.2),
                 transform: "scale(1.05)",
               },
               border: (theme) =>
                 isEditing
                   ? `1px solid ${alpha(theme.palette.primary.main, 0.3)}`
-                  : `1px solid ${alpha(theme.palette.info.light, 0.3)}`,
+                  : `1px solid ${alpha(theme.palette.primary.main, 0.3)}`,
             }}
           >
             {isSaving ? (
