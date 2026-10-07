@@ -175,8 +175,8 @@
     "semantic_hash": ""
   },
   "web-next/src/app/layout.tsx": {
-    "mtime": 1791358400.904744,
-    "ast_hash": "1ab2c8b3df0ac884d55fd5b31f7fe9a4",
+    "mtime": 1791363496.808074,
+    "ast_hash": "a2e6ec0d5ba976f7b9262ea9c6c1a1b1",
     "semantic_hash": ""
   },
   "web-next/src/app/not-found.tsx": {
@@ -185,8 +185,8 @@
     "semantic_hash": ""
   },
   "web-next/src/app/providers.tsx": {
-    "mtime": 1791288441.4022257,
-    "ast_hash": "1fa105de0e839d8f12cd9eb6fb264bb4",
+    "mtime": 1791373932.1767783,
+    "ast_hash": "2827273c79b45e2540979e91ffa431f0",
     "semantic_hash": ""
   },
   "web-next/src/config/api/advanced.ts": {
@@ -435,9 +435,9 @@
     "semantic_hash": ""
   },
   "web-next/src/shared/components/cards/parts/BadgePercentage.tsx": {
-    "mtime": 1783927400.1784737,
-    "ast_hash": "c057668188dcc4a9dc525843a4292b41",
-    "semantic_hash": "c057668188dcc4a9dc525843a4292b41"
+    "mtime": 1791363510.418133,
+    "ast_hash": "a71a0d4c3f5777794fe7855adb084645",
+    "semantic_hash": ""
   },
   "web-next/src/shared/components/cards/parts/CardActionButtons.test.tsx": {
     "mtime": 1784200655.6044676,
@@ -455,8 +455,8 @@
     "semantic_hash": "4ca53b2fa95ae045ff1e827c1ed40769"
   },
   "web-next/src/shared/components/cards/parts/HighlightBadge.tsx": {
-    "mtime": 1784200062.6823068,
-    "ast_hash": "bc21ba2db64a6976627294fdc3aecda0",
+    "mtime": 1791363511.3530319,
+    "ast_hash": "41ec8de479b1703e4833c25d125f8b94",
     "semantic_hash": ""
   },
   "web-next/src/shared/components/cards/parts/InfoIconText.tsx": {
@@ -475,28 +475,28 @@
     "semantic_hash": ""
   },
   "web-next/src/shared/components/charts/cartesian/AreaChart.tsx": {
-    "mtime": 1787405787.452957,
-    "ast_hash": "e724573f71b31699bae1b4a9921a8fef",
+    "mtime": 1791363518.459548,
+    "ast_hash": "37be8cb8b1639116cf722538f9dd2440",
     "semantic_hash": ""
   },
   "web-next/src/shared/components/charts/cartesian/BarChart.tsx": {
-    "mtime": 1787405787.452957,
-    "ast_hash": "5e8996c912e2d4d67067a27404a53c03",
+    "mtime": 1791363518.8749692,
+    "ast_hash": "3d86699353c60298eb0b3ec9462cce81",
     "semantic_hash": ""
   },
   "web-next/src/shared/components/charts/cartesian/ComposedChart.tsx": {
-    "mtime": 1784203975.0510345,
-    "ast_hash": "182cbbef9831ed4c51a6ceb49d5dbeb5",
+    "mtime": 1791363519.3444188,
+    "ast_hash": "dbaf13162e17fa333df4d9b07ba2ded1",
     "semantic_hash": ""
   },
   "web-next/src/shared/components/charts/cartesian/LineChart.tsx": {
-    "mtime": 1784203938.80296,
-    "ast_hash": "3b16a5a6fcdb7ef2fb87a7f607ef1dc1",
+    "mtime": 1791363520.0140252,
+    "ast_hash": "96af490d0b1befa8d9c47e712a532fed",
     "semantic_hash": ""
   },
   "web-next/src/shared/components/charts/cartesian/ScatterChart.tsx": {
-    "mtime": 1789544715.6235504,
-    "ast_hash": "de61127d43753ac7f4e62c96de0b52b7",
+    "mtime": 1791363520.4448955,
+    "ast_hash": "f7fe465157e3d89421d9e739a77b32ab",
     "semantic_hash": ""
   },
   "web-next/src/shared/components/charts/cartesian/SparklineChart.tsx": {
@@ -520,8 +520,8 @@
     "semantic_hash": ""
   },
   "web-next/src/shared/components/charts/core/chartUtils.ts": {
-    "mtime": 1784203776.518479,
-    "ast_hash": "037562d8515c5c0d5780df307078f97f",
+    "mtime": 1791363521.7211158,
+    "ast_hash": "69fb63df8414563d90315c6217f640d9",
     "semantic_hash": ""
   },
   "web-next/src/shared/components/charts/core/layout.ts": {
@@ -555,13 +555,13 @@
     "semantic_hash": ""
   },
   "web-next/src/shared/components/charts/polar/GaugeChart.tsx": {
-    "mtime": 1784203462.5675728,
-    "ast_hash": "023dc9174583f9a594174e944da3a86a",
+    "mtime": 1791363522.228189,
+    "ast_hash": "bef57b1f497c0c0f5907f9343622f645",
     "semantic_hash": ""
   },
   "web-next/src/shared/components/charts/polar/PieChart.tsx": {
-    "mtime": 1787405787.452957,
-    "ast_hash": "07fab789c32d9c71b4e6829470bd5814",
+    "mtime": 1791363522.804541,
+    "ast_hash": "44fd4c2f3af29a2367d2df2edcd78b82",
     "semantic_hash": ""
   },
   "web-next/src/shared/components/charts/specialized/BulletChart.tsx": {
@@ -570,18 +570,18 @@
     "semantic_hash": ""
   },
   "web-next/src/shared/components/charts/specialized/FunnelChart.tsx": {
-    "mtime": 1784203938.8069503,
-    "ast_hash": "427ce118297d8d696e4828ee47d3ddbf",
+    "mtime": 1791363523.5276327,
+    "ast_hash": "85fa21073539bde2038452285d3ab541",
     "semantic_hash": ""
   },
   "web-next/src/shared/components/charts/specialized/HeatmapChart.tsx": {
-    "mtime": 1784203905.3448465,
-    "ast_hash": "e3e1b58d6e97600482970f0fdb78b851",
+    "mtime": 1791363524.0903118,
+    "ast_hash": "5205e53dde6b3492a574e7c212eff64d",
     "semantic_hash": ""
   },
   "web-next/src/shared/components/charts/specialized/TreemapChart.tsx": {
-    "mtime": 1784203938.8059516,
-    "ast_hash": "54a8283ed5d76e2c9e70f562582568f8",
+    "mtime": 1791363524.6453896,
+    "ast_hash": "4139154a10f384aa5c77c3f990aa6391",
     "semantic_hash": ""
   },
   "web-next/src/shared/components/charts/specialized/WaterfallChart.tsx": {
@@ -595,8 +595,8 @@
     "semantic_hash": ""
   },
   "web-next/src/shared/components/data-grid/core/MyDataGrid.tsx": {
-    "mtime": 1791288647.0610545,
-    "ast_hash": "8cce988306eeb955151f55e62187e6aa",
+    "mtime": 1791363525.271377,
+    "ast_hash": "8226c35c8f7b5e5687767e439073e549",
     "semantic_hash": ""
   },
   "web-next/src/shared/components/data-grid/core/context.ts": {
@@ -755,8 +755,8 @@
     "semantic_hash": ""
   },
   "web-next/src/shared/components/feedback/transient/ToastProvider.tsx": {
-    "mtime": 1789641559.0941825,
-    "ast_hash": "14924339a2bfec2ebfcb50439f696a00",
+    "mtime": 1791362237.6271112,
+    "ast_hash": "881e8ac34c95abd0af3fc1269b07471c",
     "semantic_hash": ""
   },
   "web-next/src/shared/components/feedback/transient/error-dialog/ErrorDialogHost.tsx": {
@@ -840,13 +840,13 @@
     "semantic_hash": ""
   },
   "web-next/src/shared/components/forms/dialog/FormContainer.tsx": {
-    "mtime": 1789544715.6235504,
-    "ast_hash": "6b6ee21d1b9a7be114ae92ebcb42e463",
+    "mtime": 1791363525.8152943,
+    "ast_hash": "d3c9ef1f8519032ba252446e54120b97",
     "semantic_hash": ""
   },
   "web-next/src/shared/components/forms/dialog/FormContent.tsx": {
-    "mtime": 1789544715.6235504,
-    "ast_hash": "519ca48b326689db7d048e4e5f090bc8",
+    "mtime": 1791362238.125579,
+    "ast_hash": "db33340232fe7cfdd61c2db84d44859b",
     "semantic_hash": ""
   },
   "web-next/src/shared/components/forms/dialog/FormContext.tsx": {
@@ -860,8 +860,8 @@
     "semantic_hash": ""
   },
   "web-next/src/shared/components/forms/dialog/FormHeader.tsx": {
-    "mtime": 1789893138.7940311,
-    "ast_hash": "181af1c18f8446f5d642b864f56cefc9",
+    "mtime": 1791363526.4727004,
+    "ast_hash": "9dd2377e6de2aa1a2a0dc56ba48d0c07",
     "semantic_hash": ""
   },
   "web-next/src/shared/components/forms/dialog/MyForm.tsx": {
@@ -980,8 +980,8 @@
     "semantic_hash": ""
   },
   "web-next/src/shared/components/lists/card-view/CardViewHeader.tsx": {
-    "mtime": 1787383206.611047,
-    "ast_hash": "ec4b65907e1d74445dbc39552c274ef1",
+    "mtime": 1791363527.010609,
+    "ast_hash": "274622eb9235961576a6e4b219aec822",
     "semantic_hash": ""
   },
   "web-next/src/shared/components/lists/card-view/CardViewPagination.test.tsx": {
@@ -1125,8 +1125,8 @@
     "semantic_hash": ""
   },
   "web-next/src/shared/components/navigation/header/multi-view-header/HeaderActions.tsx": {
-    "mtime": 1789544715.6902242,
-    "ast_hash": "e6029cd963dda3f003383354db2c97a0",
+    "mtime": 1791363527.5709581,
+    "ast_hash": "e3c19ce47f34070d0038f0da1c2b40ec",
     "semantic_hash": ""
   },
   "web-next/src/shared/components/navigation/header/multi-view-header/MobileHeaderLayout.tsx": {
@@ -1410,8 +1410,8 @@
     "semantic_hash": ""
   },
   "web-next/src/theme/ThemeShell.tsx": {
-    "mtime": 1784361276.2247987,
-    "ast_hash": "77991c558331193a686a37144f465a18",
+    "mtime": 1791373932.6458242,
+    "ast_hash": "e2e2820748b95e184b8691423d04e2b3",
     "semantic_hash": ""
   },
   "web-next/src/theme/calculatedColors.ts": {
@@ -1425,8 +1425,8 @@
     "semantic_hash": ""
   },
   "web-next/src/theme/theme.ts": {
-    "mtime": 1791288441.7478085,
-    "ast_hash": "eb03beed01425cb0996c00105f113f09",
+    "mtime": 1791363532.4975863,
+    "ast_hash": "3644ed199b7b80e2880339c97be22e01",
     "semantic_hash": ""
   },
   "web-next/src/theme/useThemeSettings.ts": {
@@ -13885,8 +13885,8 @@
     "semantic_hash": ""
   },
   "web-next/src/app/runtime-preferences.ts": {
-    "mtime": 1791288441.4047332,
-    "ast_hash": "e582c3e7b124de895a92331331b3a83c",
+    "mtime": 1791363497.198164,
+    "ast_hash": "359a05185e6669b5b1aef3b5aa2c8085",
     "semantic_hash": ""
   },
   "web-next/src/config/api/offlineOperations.ts": {
@@ -14435,8 +14435,8 @@
     "semantic_hash": ""
   },
   "web-next/src/modules/hr/moduleDefinition.tsx": {
-    "mtime": 1789546774.9233532,
-    "ast_hash": "68d8d8cdc54fce1e5fb04ca52291e7b9",
+    "mtime": 1791363497.6916738,
+    "ast_hash": "0c5aa72966ae1b0b8b55c5da81b14230",
     "semantic_hash": ""
   },
   "web-next/src/modules/hr/navigation/attendanceConfig.tsx": {
@@ -14855,8 +14855,8 @@
     "semantic_hash": ""
   },
   "web-next/src/modules/reference-data/geographical-information/address-types/components/AddressTypesChartView.tsx": {
-    "mtime": 1789544710.5699558,
-    "ast_hash": "14fee777c427b234478a7a3b472c85aa",
+    "mtime": 1791363498.2436626,
+    "ast_hash": "d3d13ecebd67ae4d725d5cce02af581f",
     "semantic_hash": ""
   },
   "web-next/src/modules/reference-data/geographical-information/address-types/components/AddressTypesMultiView.tsx": {
@@ -15110,8 +15110,8 @@
     "semantic_hash": ""
   },
   "web-next/src/modules/reference-data/geographical-information/countries/components/CountriesChartView.tsx": {
-    "mtime": 1789544710.7406275,
-    "ast_hash": "e747878ef2d599fcb6ed0ff102e84fc9",
+    "mtime": 1791363498.7417338,
+    "ast_hash": "3ffbaca0d162d32ae9ebe2a71353354d",
     "semantic_hash": ""
   },
   "web-next/src/modules/reference-data/geographical-information/countries/components/CountriesMultiView.tsx": {
@@ -15440,8 +15440,8 @@
     "semantic_hash": ""
   },
   "web-next/src/modules/reference-data/geographical-information/districts/components/DistrictsChartView.tsx": {
-    "mtime": 1789544711.2895858,
-    "ast_hash": "85ff42b76a468e32279716f8dde0a05a",
+    "mtime": 1791363499.2461495,
+    "ast_hash": "95479e8f302b0daffc29a85ffa2b5284",
     "semantic_hash": ""
   },
   "web-next/src/modules/reference-data/geographical-information/districts/components/DistrictsMultiView.tsx": {
@@ -15730,8 +15730,8 @@
     "semantic_hash": ""
   },
   "web-next/src/modules/reference-data/geographical-information/states/components/StatesChartView.tsx": {
-    "mtime": 1789544713.8705697,
-    "ast_hash": "2912c2c006365dda4aec4139b97e599a",
+    "mtime": 1791363499.7385907,
+    "ast_hash": "22199ea224bbeaba16ce7b7ca25fbe51",
     "semantic_hash": ""
   },
   "web-next/src/modules/reference-data/geographical-information/states/components/StatesMultiView.tsx": {
@@ -16300,8 +16300,8 @@
     "semantic_hash": ""
   },
   "web-next/src/platform/auth/login/components/DemoLoginSection.tsx": {
-    "mtime": 1789544714.3558764,
-    "ast_hash": "89a46c277bd31cef50940c1076a82175",
+    "mtime": 1791363500.270687,
+    "ast_hash": "ddc79432439ba3b0536b4c829442b99d",
     "semantic_hash": ""
   },
   "web-next/src/platform/auth/login/components/GoogleLoginButton.tsx": {
@@ -16315,8 +16315,8 @@
     "semantic_hash": ""
   },
   "web-next/src/platform/auth/login/components/LeftPanel.tsx": {
-    "mtime": 1791288954.8074706,
-    "ast_hash": "05c1ec17dbe4d299d544e330f37ab2a8",
+    "mtime": 1791363500.7557323,
+    "ast_hash": "db85c4bf2b4ed925b6fa5070c66ceb1c",
     "semantic_hash": ""
   },
   "web-next/src/platform/auth/login/components/LoginForm.tsx": {
@@ -16385,18 +16385,18 @@
     "semantic_hash": ""
   },
   "web-next/src/platform/auth/profile/profile-header/EditControls.tsx": {
-    "mtime": 1789544714.4253201,
-    "ast_hash": "64eaaf7be7482baccd59f29ff542b4fa",
+    "mtime": 1791363501.3790927,
+    "ast_hash": "65479d5221f5eadb57b26d5e2e0b7127",
     "semantic_hash": ""
   },
   "web-next/src/platform/auth/profile/profile-header/ProfileAvatar.tsx": {
-    "mtime": 1789544714.4268277,
-    "ast_hash": "6cff2f97ee53c8819eb6812862d73267",
+    "mtime": 1791363501.9827268,
+    "ast_hash": "27d6c014e84fc497c1391506a67c84f5",
     "semantic_hash": ""
   },
   "web-next/src/platform/auth/profile/profile-header/ProfileHeader.tsx": {
-    "mtime": 1789544714.4477746,
-    "ast_hash": "18c094657a7dd34a2ec128403b230d4c",
+    "mtime": 1791363502.5578692,
+    "ast_hash": "a55efb33491a51d2a9002cc4b871d2b3",
     "semantic_hash": ""
   },
   "web-next/src/platform/auth/profile/profile-header/ProfileImageDropZone.tsx": {
@@ -16410,8 +16410,8 @@
     "semantic_hash": ""
   },
   "web-next/src/platform/auth/profile/profile-tabs/ProfileTabs.tsx": {
-    "mtime": 1789645835.3634388,
-    "ast_hash": "0e38de41a094388b2b233ab73169e3a8",
+    "mtime": 1791363503.1378026,
+    "ast_hash": "7fbb99d0c5c2db5f449dc60beff8487e",
     "semantic_hash": ""
   },
   "web-next/src/platform/auth/profile/profile-tabs/change-password/ChangePassword.tsx": {
@@ -16490,8 +16490,8 @@
     "semantic_hash": ""
   },
   "web-next/src/platform/auth/register/components/FormHeader.tsx": {
-    "mtime": 1791288955.7247431,
-    "ast_hash": "48d830df3c493fc8ce2f1b740ddc83ee",
+    "mtime": 1791363503.6124334,
+    "ast_hash": "9389bdcbf3f0e2d0c2f0e7bf8563f60d",
     "semantic_hash": ""
   },
   "web-next/src/platform/auth/register/components/FormStepsWrapper.tsx": {
@@ -16560,8 +16560,8 @@
     "semantic_hash": ""
   },
   "web-next/src/platform/auth/roles/components/RolesDataGrid.tsx": {
-    "mtime": 1790406043.4291708,
-    "ast_hash": "bbfb91dccdfc0a20c55f18bbcfa0bc64",
+    "mtime": 1791362237.08743,
+    "ast_hash": "798386d1350343ef15825bd4472a6ac2",
     "semantic_hash": ""
   },
   "web-next/src/platform/auth/roles/components/role-permissions/RolePermissionsActions.tsx": {
@@ -16925,8 +16925,8 @@
     "semantic_hash": ""
   },
   "web-next/src/platform/file-manager/media-viewer/components/audio/PlaybackControls.tsx": {
-    "mtime": 1789544714.9898658,
-    "ast_hash": "a68bfd612cac4b143905579f70ff0fc1",
+    "mtime": 1791363504.0268402,
+    "ast_hash": "08ca4c5e77e956202929891a46bd9f26",
     "semantic_hash": ""
   },
   "web-next/src/platform/file-manager/media-viewer/components/audio/ProgressBar.tsx": {
@@ -16950,18 +16950,18 @@
     "semantic_hash": ""
   },
   "web-next/src/platform/file-manager/media-viewer/components/audio/Visualizer.tsx": {
-    "mtime": 1789544715.0230675,
-    "ast_hash": "fe2772fd1f182fb6b4d7e399ffe77dca",
+    "mtime": 1791363504.9479215,
+    "ast_hash": "80ef931e63a9e65ed2e5aaad6db867cf",
     "semantic_hash": ""
   },
   "web-next/src/platform/file-manager/media-viewer/components/audio/VolumeControl.tsx": {
-    "mtime": 1789544715.0230675,
-    "ast_hash": "46c44dbd6b5b449fa5166a0eba3a42a8",
+    "mtime": 1791363505.5235212,
+    "ast_hash": "313b3e411b0c3980071575b01de7dce2",
     "semantic_hash": ""
   },
   "web-next/src/platform/file-manager/media-viewer/components/audio/styles.ts": {
-    "mtime": 1789544715.0290766,
-    "ast_hash": "0efa072fffdbaf76fa959ae999b63972",
+    "mtime": 1791363506.0028658,
+    "ast_hash": "5c20d5377ca30e0c4af7b2a9a69eafe9",
     "semantic_hash": ""
   },
   "web-next/src/platform/file-manager/media-viewer/components/audio/useAudioPlayer.ts": {
@@ -17045,8 +17045,8 @@
     "semantic_hash": ""
   },
   "web-next/src/platform/file-manager/media-viewer/components/text/Toolbar.tsx": {
-    "mtime": 1789544715.0897887,
-    "ast_hash": "c40323fc4587371cec89bc47bf59a21c",
+    "mtime": 1791363506.4456182,
+    "ast_hash": "4d706f1006c64f22833ad591f3eee184",
     "semantic_hash": ""
   },
   "web-next/src/platform/file-manager/media-viewer/components/utils/time.ts": {
@@ -17055,8 +17055,8 @@
     "semantic_hash": ""
   },
   "web-next/src/platform/file-manager/media-viewer/components/video/ControlsBar.tsx": {
-    "mtime": 1789544715.0897887,
-    "ast_hash": "8428e8dc593bd220b8b8210482ae0835",
+    "mtime": 1791363508.568614,
+    "ast_hash": "143bedb140c9694adefd7b9f12976d96",
     "semantic_hash": ""
   },
   "web-next/src/platform/file-manager/media-viewer/components/video/ProgressBar.tsx": {
@@ -17530,8 +17530,8 @@
     "semantic_hash": ""
   },
   "web-next/src/platform/tenants/TenantManagementPage.tsx": {
-    "mtime": 1791356362.8562136,
-    "ast_hash": "7f2d0ad1ff96ae4aa3919407d943bd7d",
+    "mtime": 1791363509.5875516,
+    "ast_hash": "b550272efeb91e71dafeb5505fe5dfee",
     "semantic_hash": ""
   },
   "web-next/src/platform/tenants/components/TenantCardViewHeader.tsx": {
@@ -17605,13 +17605,13 @@
     "semantic_hash": ""
   },
   "web-next/src/shared/components/layout/navigation/ColoredIcon.tsx": {
-    "mtime": 1791356360.1425376,
-    "ast_hash": "0e9e2d9068e9a6ee73d7b70dc295cf47",
+    "mtime": 1791359367.0232165,
+    "ast_hash": "79b3e18e2f1b83fd1070460ec1db171c",
     "semantic_hash": ""
   },
   "web-next/src/shared/components/layout/navigation/index.tsx": {
-    "mtime": 1791356361.8122356,
-    "ast_hash": "63ac7476f2b7a5a0ed60109356f77a8c",
+    "mtime": 1791359367.5534637,
+    "ast_hash": "6b1f52698bf6d98e405b571fc28750e9",
     "semantic_hash": ""
   },
   "web-next/src/shared/components/layout/navigation/types.ts": {
@@ -17665,13 +17665,13 @@
     "semantic_hash": ""
   },
   "web-next/src/shared/reporting/components/MyReportViewer.tsx": {
-    "mtime": 1789544715.7234747,
-    "ast_hash": "b855246e90018bd10409d75038bd4ba9",
+    "mtime": 1791363528.1536336,
+    "ast_hash": "b8d93a403b670747068a783852db5124",
     "semantic_hash": ""
   },
   "web-next/src/shared/reporting/components/ReportViewer.tsx": {
-    "mtime": 1789544715.7234747,
-    "ast_hash": "6db6854ab95a1349de206571956b6b35",
+    "mtime": 1791363528.6938329,
+    "ast_hash": "289bc229019fb612f9fab66d690919db",
     "semantic_hash": ""
   },
   "web-next/src/shared/reporting/components/ServerReportDesigner.tsx": {
@@ -17785,13 +17785,13 @@
     "semantic_hash": ""
   },
   "web-next/src/shell/components/sidebar/NavigationItem.tsx": {
-    "mtime": 1791356669.3276513,
-    "ast_hash": "a09e7de864b3b9b2fe3bec3554991849",
+    "mtime": 1791359369.0594146,
+    "ast_hash": "99e55b3e9fb8184ba4b8fe1c3656db2f",
     "semantic_hash": ""
   },
   "web-next/src/shell/components/sidebar/NavigationSection.tsx": {
-    "mtime": 1789893138.8063092,
-    "ast_hash": "a61bd7304f0c267a95429d5b44a74837",
+    "mtime": 1791359368.6040068,
+    "ast_hash": "9f0624c9534a2bd1df668bc76c883248",
     "semantic_hash": ""
   },
   "web-next/src/shell/components/sidebar/SideBar.tsx": {
@@ -17800,8 +17800,8 @@
     "semantic_hash": ""
   },
   "web-next/src/shell/components/sidebar/UserProfile.tsx": {
-    "mtime": 1791288956.6640956,
-    "ast_hash": "9733b8434abdac4ccded81a4858e92b1",
+    "mtime": 1791363529.210472,
+    "ast_hash": "679ebf0d6091526fa61dd8495d20b67d",
     "semantic_hash": ""
   },
   "web-next/src/shell/components/sidebar/configs/superAdminConfig.tsx": {
@@ -17815,8 +17815,8 @@
     "semantic_hash": ""
   },
   "web-next/src/shell/components/sidebar/navigationTypes.ts": {
-    "mtime": 1789544715.740402,
-    "ast_hash": "48f7df12dc6aed185f29dbc0ce173b5f",
+    "mtime": 1791363529.7463942,
+    "ast_hash": "25e5dffe677add150ff4d41a44ae4935",
     "semantic_hash": ""
   },
   "web-next/src/shell/components/sidebar/navigationUtils.tsx": {
@@ -17835,8 +17835,8 @@
     "semantic_hash": ""
   },
   "web-next/src/shell/components/top-bar/AuthTopBar.tsx": {
-    "mtime": 1789893138.8329396,
-    "ast_hash": "5bd3177277700c7d5a6d2b327ef82fcd",
+    "mtime": 1791363530.271914,
+    "ast_hash": "a13783034938fb824cd025b028f08371",
     "semantic_hash": ""
   },
   "web-next/src/shell/components/top-bar/DisplayDebugger.tsx": {
@@ -17845,8 +17845,8 @@
     "semantic_hash": ""
   },
   "web-next/src/shell/components/top-bar/LanguageSelector.tsx": {
-    "mtime": 1789893138.8329396,
-    "ast_hash": "035452ec53b3ad1e3cca2908b4a797d8",
+    "mtime": 1791363530.7920358,
+    "ast_hash": "84bf50652f9d4e03ce7927e13505d5e2",
     "semantic_hash": ""
   },
   "web-next/src/shell/components/top-bar/MobileMenu.tsx": {
@@ -17855,8 +17855,8 @@
     "semantic_hash": ""
   },
   "web-next/src/shell/components/top-bar/SettingsMenu.tsx": {
-    "mtime": 1791288441.7382388,
-    "ast_hash": "6658e7b5c9740620d86004d94381f2ea",
+    "mtime": 1791363531.3951604,
+    "ast_hash": "3572d092edaefbfff962cc621bbb87d6",
     "semantic_hash": ""
   },
   "web-next/src/shell/components/top-bar/SettingsSystem.tsx": {
@@ -17875,8 +17875,8 @@
     "semantic_hash": ""
   },
   "web-next/src/shell/components/top-bar/TopBar.tsx": {
-    "mtime": 1791288441.7382388,
-    "ast_hash": "11290daface203c3934a815c7a27b6b3",
+    "mtime": 1791363531.9636445,
+    "ast_hash": "9f4c53a266bcd95ff7939c44d403f416",
     "semantic_hash": ""
   },
   "web-next/src/shell/components/top-bar/TopBarStyles.tsx": {
@@ -20995,8 +20995,8 @@
     "semantic_hash": ""
   },
   "packages/tokens/src/palettes.ts": {
-    "mtime": 1791288441.3885355,
-    "ast_hash": "6fbf87e1b7172f83ff9fe325f6323354",
+    "mtime": 1791362236.6743827,
+    "ast_hash": "c4925a2fe58aec5de1e65c045994621d",
     "semantic_hash": ""
   },
   "packages/tokens/src/scales.ts": {
@@ -22160,8 +22160,8 @@
     "semantic_hash": ""
   },
   "documentation/plans/business/erp-platform-template/PLAN.md": {
-    "mtime": 1791288440.5156596,
-    "ast_hash": "003b54b3667abbfab8ae45bcc7a5f9bd",
+    "mtime": 1791363495.4855025,
+    "ast_hash": "b94a294c909f65e109bccea9105e126d",
     "semantic_hash": ""
   },
   "documentation/plans/business/erp-platform-template/RESEARCH.md": {
@@ -22950,8 +22950,8 @@
     "semantic_hash": ""
   },
   "documentation/plans/business/erp-platform-template/S3-S4-UNIFIED-THEME.md": {
-    "mtime": 1791288440.5156596,
-    "ast_hash": "f0aa24acbbe8c1646004325a7100799d",
+    "mtime": 1791363496.3534462,
+    "ast_hash": "ae2d1fab74718e2a8423eba2ca89577e",
     "semantic_hash": ""
   },
   "documentation/plans/business/erp-platform-template/S5-WORKSPACE-GENERATOR-DESIGN.md": {
@@ -23210,13 +23210,13 @@
     "semantic_hash": ""
   },
   "web-next/src/shared/components/layout/navigation/moduleAccents.test.ts": {
-    "mtime": 1791357438.5978405,
-    "ast_hash": "e2c11e9cf4f8dce38107e2449df40a9d",
+    "mtime": 1791359366.48579,
+    "ast_hash": "2819c4ed98d92792060804ca3836533d",
     "semantic_hash": ""
   },
   "web-next/src/shared/components/layout/navigation/moduleAccents.ts": {
-    "mtime": 1791357783.306193,
-    "ast_hash": "4aa33cdd5811d2911877a91f1cfa82fc",
+    "mtime": 1791359365.9945953,
+    "ast_hash": "f8b11ef9d9653245bed237361d9b49c4",
     "semantic_hash": ""
   },
   "package.json": {
@@ -23225,8 +23225,8 @@
     "semantic_hash": ""
   },
   "packages/tokens/src/modules.ts": {
-    "mtime": 1791357440.5107296,
-    "ast_hash": "fc198fd5b3a0ce9e43d495d8531b0a63",
+    "mtime": 1791360119.0044007,
+    "ast_hash": "5606b882e006b030272b29942f523168",
     "semantic_hash": ""
   },
   "web-next/public/sw.js": {
@@ -23267,6 +23267,16 @@
   "web-next/public/icons/icon-maskable-512.png": {
     "mtime": 1791358404.4068453,
     "ast_hash": "5612f84960c1fcb6dddbcd4007257c9c",
+    "semantic_hash": ""
+  },
+  "web-next/src/shared/components/charts/core/chartUtils.test.ts": {
+    "mtime": 1791363521.2497852,
+    "ast_hash": "ce0cd074688eaa81d4e500b1c0a68cbe",
+    "semantic_hash": ""
+  },
+  "web-next/src/shared/components/layout/navigation/NavigationIconSequence.tsx": {
+    "mtime": 1791359368.082996,
+    "ast_hash": "56c306bccc924dab858305df9767a277",
     "semantic_hash": ""
   }
 }
