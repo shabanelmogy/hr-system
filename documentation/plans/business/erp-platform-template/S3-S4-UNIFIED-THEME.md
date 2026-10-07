@@ -125,7 +125,6 @@ Differences from the prepared change set:
 
 - S3.4: palette preference and tenant primary branding on web (`withBrandPrimary` + contrast
   check); mobile already has palette selection.
-- Load `IBM Plex Sans Arabic` on both clients (web `next/font`, mobile `expo-font`).
 
 ## Color review follow-up 2026-10-07
 
@@ -141,3 +140,22 @@ Differences from the prepared change set:
   toast icons take their colors from the theme.
 - The pre-hydration background/accent CSS is generated from tokens per palette and mode; the
   bootstrap script sets `data-palette` from the `themePalette` cookie.
+
+## Color review P2, mobile and font 2026-10-07
+
+- Web: tree views (cost centers, split tree, hierarchical list), profile/auth card surfaces, the
+  metric card and the login side panel use theme tokens; the dark login panel no longer fills
+  with the light (300) dark-mode primary.
+- Hydration: saved mode/palette/language are applied in one update that remounts the page tree
+  when they differ from the static-shell defaults (no mismatched colors or text).
+- Mobile: palette list/default from tokens; `AppTheme.modules`; module drawers color the header
+  icon by module and alternate item icons like the web sidebar; recruitment, workforce trace and
+  tree views use theme colors; rgba helpers use tokens `withAlpha`.
+- Font: IBM Plex Sans Arabic is self-hosted on web (`public/fonts`, `src/fonts.css`, preload,
+  immutable cache, cached by the service worker; CSP unchanged) and bundled on mobile
+  (`assets/fonts`, `expo-font`, one family per weight in `AppText` and the navigation theme).
+- Baseline: login in 4 palettes × light/dark × LTR/RTL captured on a production build (font
+  loaded, correct primary per palette, no hydration errors). Reference screens P-001/P-002/
+  P-003/P-006 need a running API and stay open.
+- Still open: tenant primary branding (`withBrandPrimary`), shared web/mobile palette
+  preference, P-00x visual baselines.

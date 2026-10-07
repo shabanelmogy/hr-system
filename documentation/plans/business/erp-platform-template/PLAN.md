@@ -97,7 +97,7 @@ Scope and inventory: `DOCUMENTATION_AND_TEMPLATE_REVIEW.md` (D-013, D-014).
 
 ### S3 — Web theme from tokens
 
-Change set for S3.1, S3.3, S3.5 and S4.1–S4.2 applied and verified 2026-10-06: `S3-S4-UNIFIED-THEME.md`. S3.4 palette preference done; tenant branding open. S3.2 done 2026-10-07 (legacy palette deleted; color review follow-up in the same file).
+Change set for S3.1, S3.3, S3.5 and S4.1–S4.2 applied and verified 2026-10-06: `S3-S4-UNIFIED-THEME.md`. S3.4 palette preference done; tenant branding open. S3.2 done 2026-10-07 (legacy palette deleted; color review follow-up in the same file). Color review P2, mobile colors and the Arabic font done 2026-10-07; open: tenant branding, P-00x baselines.
 
 | Step | Work | Exit check |
 | --- | --- | --- |
