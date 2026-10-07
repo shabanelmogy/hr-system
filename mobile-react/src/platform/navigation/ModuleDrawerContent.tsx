@@ -10,24 +10,31 @@ import { useTranslation } from 'react-i18next';
 
 import { asHref, ROUTES } from '@/src/core/constants/routes';
 import { useLocalization } from '@/src/core/localization';
-import { useAppTheme } from '@/src/core/theme';
+import { getModuleAccent, type ModuleAccentKey, useAppTheme } from '@/src/core/theme';
 import { AppDivider, AppIcon, type AppIconName, AppText } from '@/src/shared/components';
+
+import { useSequencedDrawerDescriptors } from './useSequencedDrawerDescriptors';
 
 interface ModuleDrawerContentProps extends DrawerContentComponentProps {
   title: string;
   description?: string;
   icon: AppIconName;
+  /** Module whose palette color the header icon uses; items cycle through the module colors. */
+  moduleKey?: ModuleAccentKey;
 }
 
 export function ModuleDrawerContent({
   title,
   description,
   icon,
+  moduleKey,
   ...drawerProps
 }: ModuleDrawerContentProps) {
   const { t } = useTranslation();
   const { direction, isRTL } = useLocalization();
   const { theme } = useAppTheme();
+
+  const coloredDescriptors = useSequencedDrawerDescriptors(drawerProps, moduleKey);
 
   return (
     <DrawerContentScrollView
@@ -39,7 +46,7 @@ export function ModuleDrawerContent({
             styles.moduleIcon,
             { backgroundColor: theme.colors.surfaceMuted, borderRadius: theme.radius.sm },
         ]}>
-          <AppIcon color={theme.colors.primary} name={icon} size={24} />
+          <AppIcon color={getModuleAccent(theme, moduleKey)} name={icon} size={24} />
         </View>
         <View style={styles.moduleText}>
           <AppText variant="label">{title}</AppText>
@@ -62,7 +69,7 @@ export function ModuleDrawerContent({
         onPress={() => router.replace(asHref(ROUTES.home))}
       />
       <AppDivider style={styles.divider} />
-      <DrawerItemList {...drawerProps} />
+      <DrawerItemList {...drawerProps} descriptors={coloredDescriptors} />
     </DrawerContentScrollView>
   );
 }

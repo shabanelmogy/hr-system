@@ -3,6 +3,7 @@ import { RefreshControl, StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { AppDataCard, AppPaginationNavigation, AppScreen, AppSegmentedControl, AppSelectField, AppStateView, AppStatusBadge, AppText, AppTextField, type AppSelectOption } from '@/src/shared/components';
 import { permissions, useAuthorization } from '@/src/platform/auth';
+import { useAppTheme } from '@/src/core/theme';
 import { useFiscalYearLookup } from '@/src/modules/accounting';
 import { useWorkforceTraceByApplication, useWorkforceTraceByEmployee, useWorkforceTraceByOffer, usePlanCommitmentSummary } from '../queries/use-workforce-trace';
 import type { PlanCommitmentPageQuery } from '../../domain/models/workforce-trace';
@@ -11,6 +12,7 @@ type RootKind = 'application' | 'offer' | 'employee';
 
 export function WorkforceTraceScreen() {
   const { t, i18n } = useTranslation();
+  const { theme } = useAppTheme();
   const { allowed } = useAuthorization({ requiredPermissions: [permissions.ViewWorkforceTrace] });
   const [root, setRoot] = useState<RootKind>('application');
   const [rootId, setRootId] = useState('');
@@ -40,7 +42,7 @@ export function WorkforceTraceScreen() {
     {application.isLoading || offer.isLoading || employee.isLoading ? <AppStateView state="loading" /> : null}
     {application.error || offer.error || employee.error ? <AppStateView state="error" message={t('workforceTrace.fetchError')} onRetry={loadTrace} /> : null}
     {trace ? <View style={styles.timeline} accessibilityLabel={t('workforceTrace.timelineAriaLabel')}>
-      {trace.nodes.map((node, index) => <AppDataCard key={node.key} padding="md"><View style={styles.row}><AppStatusBadge label={node.kind} color="#1976d2" /><AppText weight="800" style={styles.flex}>{node.title}</AppText><AppText color="muted" variant="caption">{index + 1}/{trace.nodes.length}</AppText></View><AppText color="muted" variant="caption">{node.status ?? t('workforceTrace.noStatus')}{node.occurredOn ? ` • ${new Date(node.occurredOn).toLocaleString()}` : ''}</AppText>{node.fiscalCost !== null && node.fiscalCost !== undefined ? <AppText>{node.fiscalCost} {node.currencyCode ?? ''}</AppText> : null}</AppDataCard>)}
+      {trace.nodes.map((node, index) => <AppDataCard key={node.key} padding="md"><View style={styles.row}><AppStatusBadge label={node.kind} color={theme.colors.primary} /><AppText weight="800" style={styles.flex}>{node.title}</AppText><AppText color="muted" variant="caption">{index + 1}/{trace.nodes.length}</AppText></View><AppText color="muted" variant="caption">{node.status ?? t('workforceTrace.noStatus')}{node.occurredOn ? ` • ${new Date(node.occurredOn).toLocaleString()}` : ''}</AppText>{node.fiscalCost !== null && node.fiscalCost !== undefined ? <AppText>{node.fiscalCost} {node.currencyCode ?? ''}</AppText> : null}</AppDataCard>)}
       <AppDataCard padding="md"><AppText variant="label" weight="800">{t('workforceTrace.relationships')}</AppText>{trace.edges.length === 0 ? <AppText color="muted">{t('workforceTrace.noRelationships')}</AppText> : trace.edges.map(edge => <AppText key={`${edge.fromKey}-${edge.toKey}-${edge.relation}`} variant="bodySmall">{edge.fromKey} — {edge.relation} → {edge.toKey}</AppText>)}</AppDataCard>
     </View> : active && !application.isLoading && !offer.isLoading && !employee.isLoading ? <AppStateView state="empty" message={t('workforceTrace.empty')} /> : null}
     <AppDataCard padding="md"><AppText variant="titleSmall" weight="800">{t('workforceTrace.commitmentTitle')}</AppText><AppSelectField allowWhenReadOnly label={t('workforceTrace.fiscalYear')} value={fiscalYear} onChange={setFiscalYear} options={fiscalYearOptions} placeholder={t('workforceTrace.selectFiscalYear')} disabled={fiscalYears.isLoading || fiscalYearOptions.length === 0} /><AppText color="primary" onPress={loadCommitment}>{t('workforceTrace.loadCommitment')}</AppText></AppDataCard>

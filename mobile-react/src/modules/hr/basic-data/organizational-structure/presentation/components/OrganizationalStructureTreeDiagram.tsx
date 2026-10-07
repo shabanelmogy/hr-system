@@ -2,7 +2,7 @@ import React, { useMemo, useState, useCallback } from 'react';
 import { StyleSheet, View, Pressable, ScrollView, Modal } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import * as Haptics from 'expo-haptics';
-import { useAppTheme } from '@/src/core/theme';
+import { useAppTheme, withAlpha } from '@/src/core/theme';
 import { useLocalization } from '@/src/core/localization';
 import {
   AppButton,
@@ -357,15 +357,15 @@ function DepartmentTreeDiagram({
                   borderWidth: 1,
                   alignItems: 'center',
                   justifyContent: 'center',
-                  backgroundColor: theme.isDark ? 'rgba(245,158,11,0.15)' : 'rgba(245,158,11,0.1)',
-                  borderColor: theme.isDark ? 'rgba(245,158,11,0.6)' : 'rgba(245,158,11,0.35)',
+                  backgroundColor: withAlpha(theme.colors.warning, theme.isDark ? 0.15 : 0.1),
+                  borderColor: withAlpha(theme.colors.warning, theme.isDark ? 0.6 : 0.35),
                 }}
               >
                 <AppText
                   style={{
                     fontSize: 9.5,
                     fontWeight: '700',
-                    color: '#b45309',
+                    color: theme.colors.warning,
                     textAlign: 'center',
                     lineHeight: 13,
                   }}

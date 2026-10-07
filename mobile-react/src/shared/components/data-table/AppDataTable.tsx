@@ -10,7 +10,7 @@ import { Animated, Pressable, ScrollView, StyleSheet, View } from 'react-native'
 import { useTranslation } from 'react-i18next';
 
 import { useLocalization } from '@/src/core/localization';
-import { useAppTheme } from '@/src/core/theme';
+import { useAppTheme, withAlpha } from '@/src/core/theme';
 import { AppIconButton } from '@/src/shared/components/controls/AppIconButton';
 import { AppIcon } from '@/src/shared/components/icons/AppIcon';
 import { AppScreenFooterContext } from '@/src/shared/components/layout/AppScreenFooterContext';
@@ -508,7 +508,7 @@ export function AppDataTable<Row>({
             const isFlashed = activeFlashRowKey !== null && activeFlashRowKey === rowKey;
             const flashBackground = flashProgress.interpolate({
               inputRange: [0, 0.35, 0.7, 1],
-              outputRange: [theme.colors.surface, toRgba(theme.colors.success, 0.16), toRgba(theme.colors.success, 0.3), theme.colors.surface],
+              outputRange: [theme.colors.surface, withAlpha(theme.colors.success, 0.16), withAlpha(theme.colors.success, 0.3), theme.colors.surface],
             });
 
             return (
@@ -521,9 +521,9 @@ export function AppDataTable<Row>({
                   backgroundColor: isFlashed
                     ? flashBackground
                     : isSelected
-                      ? toRgba(theme.colors.primary, 0.18)
+                      ? withAlpha(theme.colors.primary, 0.18)
                       : isActive
-                        ? toRgba(theme.colors.primary, 0.1)
+                        ? withAlpha(theme.colors.primary, 0.1)
                       : theme.colors.surface,
                   borderStartColor: theme.colors.primary,
                   borderStartWidth: isSelected || isActive ? 3 : 0,
@@ -572,18 +572,6 @@ export function AppDataTable<Row>({
   );
 }
 
-function toRgba(color: string, alpha: number): string {
-  const hex = color.trim().replace(/^#/, '');
-  if (/^[0-9a-f]{3}$/i.test(hex)) {
-    const [r, g, b] = hex.split('').map((value) => Number.parseInt(`${value}${value}`, 16));
-    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
-  }
-  if (/^[0-9a-f]{6}$/i.test(hex)) {
-    const value = Number.parseInt(hex, 16);
-    return `rgba(${value >> 16}, ${(value >> 8) & 255}, ${value & 255}, ${alpha})`;
-  }
-  return color;
-}
 
 const styles = StyleSheet.create({
   root: { width: '100%', overflow: 'hidden', borderWidth: 1 },

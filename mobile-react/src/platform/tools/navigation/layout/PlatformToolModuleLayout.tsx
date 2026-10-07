@@ -26,6 +26,7 @@ export function PlatformToolModuleLayout({ moduleId }: { moduleId: PlatformToolM
     <Drawer
       drawerContent={(props) => (
         <ModuleDrawerContent
+          moduleKey="platform"
           {...props}
           description={t(moduleDefinition.descriptionKey)}
           icon={moduleDefinition.icon}

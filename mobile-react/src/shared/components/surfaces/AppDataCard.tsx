@@ -7,7 +7,7 @@ import {
   type ViewStyle,
 } from 'react-native';
 
-import { useAppTheme } from '@/src/core/theme';
+import { useAppTheme, withAlpha } from '@/src/core/theme';
 import { AppCard, type AppCardProps } from './AppCard';
 
 export interface AppDataCardProps extends Omit<AppCardProps, 'style'> {
@@ -76,15 +76,15 @@ export function AppDataCard({
     inputRange: [0, 0.35, 0.7, 1],
     outputRange: [
       theme.colors.surface,
-      toRgba(theme.colors.success, 0.16),
-      toRgba(theme.colors.success, 0.3),
+      withAlpha(theme.colors.success, 0.16),
+      withAlpha(theme.colors.success, 0.3),
       theme.colors.surface,
     ],
   });
   const activeBackground = selected
-    ? toRgba(theme.colors.accent, 0.18)
+    ? withAlpha(theme.colors.accent, 0.18)
     : active
-      ? toRgba(theme.colors.secondary, 0.14)
+      ? withAlpha(theme.colors.secondary, 0.14)
       : theme.colors.surface;
 
   return (
@@ -110,18 +110,6 @@ export function AppDataCard({
   );
 }
 
-function toRgba(color: string, alpha: number): string {
-  const hex = color.trim().replace(/^#/, '');
-  if (/^[0-9a-f]{3}$/i.test(hex)) {
-    const [r, g, b] = hex.split('').map((value) => Number.parseInt(`${value}${value}`, 16));
-    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
-  }
-  if (/^[0-9a-f]{6}$/i.test(hex)) {
-    const value = Number.parseInt(hex, 16);
-    return `rgba(${value >> 16}, ${(value >> 8) & 255}, ${value & 255}, ${alpha})`;
-  }
-  return color;
-}
 
 const styles = StyleSheet.create({
   wrapper: {

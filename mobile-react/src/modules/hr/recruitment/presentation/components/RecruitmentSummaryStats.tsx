@@ -1,7 +1,7 @@
 import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { useAppTheme } from '@/src/core/theme';
+import { useAppTheme, withAlpha } from '@/src/core/theme';
 import { AppIcon, AppText } from '@/src/shared/components';
 import type { RecruitmentSummaryDto } from '../../domain/models/recruitment';
 
@@ -26,22 +26,22 @@ export function RecruitmentSummaryStats({ summary }: RecruitmentSummaryStatsProp
       title: t('recruitment.stats.candidates'),
       count: summary?.totalActiveCandidates ?? 0,
       icon: 'people-outline' as const,
-      color: '#8B5CF6',
-      bgColor: '#8B5CF615',
+      color: theme.colors.accent,
+      bgColor: withAlpha(theme.colors.accent, 0.08),
     },
     {
       title: t('recruitment.stats.interviews'),
       count: summary?.totalScheduledInterviews ?? 0,
       icon: 'calendar-outline' as const,
-      color: '#F59E0B',
-      bgColor: '#F59E0B15',
+      color: theme.colors.warning,
+      bgColor: withAlpha(theme.colors.warning, 0.08),
     },
     {
       title: t('recruitment.stats.offers'),
       count: summary?.totalPendingOffers ?? 0,
       icon: 'mail-outline' as const,
-      color: '#06B6D4',
-      bgColor: '#06B6D415',
+      color: theme.colors.secondary,
+      bgColor: withAlpha(theme.colors.secondary, 0.08),
     },
     {
       title: t('recruitment.stats.hired'),

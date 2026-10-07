@@ -23,6 +23,7 @@ import {
   TenantReadOnlyBadge,
   TenantSubscriptionStatusBadge,
 } from '@/src/platform/tenant-access';
+import { useSequencedDrawerDescriptors } from '@/src/platform/navigation';
 import { AppText } from '@/src/shared/components';
 
 export function AppDrawerContent(props: DrawerContentComponentProps) {
@@ -35,6 +36,7 @@ export function AppDrawerContent(props: DrawerContentComponentProps) {
   const photoUri = getPhotoUri(userPhoto);
   const displayName = getDisplayName(session);
   const initials = getInitials(session);
+  const descriptors = useSequencedDrawerDescriptors(props);
 
   return (
     <DrawerContentScrollView
@@ -78,7 +80,7 @@ export function AppDrawerContent(props: DrawerContentComponentProps) {
       </Pressable>
 
       <View style={styles.navigationItems}>
-        <DrawerItemList {...props} />
+        <DrawerItemList {...props} descriptors={descriptors} />
       </View>
     </DrawerContentScrollView>
   );

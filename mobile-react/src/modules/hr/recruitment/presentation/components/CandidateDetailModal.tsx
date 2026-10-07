@@ -81,7 +81,7 @@ export function CandidateDetailModal({
         <View style={styles.overlay}>
           <View style={[styles.content, { backgroundColor: theme.colors.surface, borderColor: theme.colors.border }]}>
             {/* Modal Header */}
-            <View style={styles.header}>
+            <View style={[styles.header, { borderBottomColor: theme.colors.border }]}>
               <View style={styles.candidateHeader}>
                 <View style={[styles.avatar, { backgroundColor: `${theme.colors.primary}20` }]}>
                   <AppText variant="titleSmall" weight="800" style={{ color: theme.colors.primary }}>
@@ -154,8 +154,8 @@ export function CandidateDetailModal({
 
                 {application.averageEvaluationScore ? (
                   <View style={styles.scoreRow}>
-                    <AppIcon name="star" size={20} color="#D97706" />
-                    <AppText variant="titleSmall" weight="800" style={{ color: "#D97706" }}>
+                    <AppIcon name="star" size={20} color={theme.colors.warning} />
+                    <AppText variant="titleSmall" weight="800" style={{ color: theme.colors.warning }}>
                       {application.averageEvaluationScore} / 5.0
                     </AppText>
                   </View>
@@ -196,7 +196,7 @@ export function CandidateDetailModal({
             </ScrollView>
 
             {/* Footer Action: One-Click Hire Candidate */}
-            <View style={styles.footer}>
+            <View style={[styles.footer, { borderTopColor: theme.colors.border }]}>
               <AppButton variant="outline" onPress={onClose}>
                 {t('common.close')}
               </AppButton>
@@ -254,7 +254,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingBottom: 10,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: '#00000015',
   },
   candidateHeader: {
     flexDirection: 'row',
@@ -317,6 +316,5 @@ const styles = StyleSheet.create({
     gap: 10,
     paddingTop: 10,
     borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: '#00000015',
   },
 });

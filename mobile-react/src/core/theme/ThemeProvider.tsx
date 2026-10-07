@@ -14,7 +14,9 @@ import { useColorScheme } from 'react-native';
 import { STORAGE_KEYS } from '@/src/core/constants/storage-keys';
 import {
   createNavigationTheme,
+  defaultThemePalette,
   getAppTheme,
+  themePaletteOrder,
   type AppTheme,
   type ResolvedThemeMode,
   type ThemeMode,
@@ -33,12 +35,11 @@ interface AppThemeContextValue {
 
 const AppThemeContext = createContext<AppThemeContextValue | null>(null);
 const themeModes: ThemeMode[] = ['system', 'light', 'dark'];
-const themePalettes: ThemePalette[] = ['orange', 'green', 'blue', 'monochrome'];
 
 export function AppThemeProvider({ children }: PropsWithChildren) {
   const systemMode = useColorScheme();
   const [mode, setModeState] = useState<ThemeMode>('system');
-  const [palette, setPaletteState] = useState<ThemePalette>('green');
+  const [palette, setPaletteState] = useState<ThemePalette>(defaultThemePalette);
 
   useEffect(() => {
     void AsyncStorage.multiGet([STORAGE_KEYS.themeMode, STORAGE_KEYS.themePalette]).then((values) => {
@@ -47,7 +48,7 @@ export function AppThemeProvider({ children }: PropsWithChildren) {
       if (themeModes.includes(storedMode as ThemeMode)) {
         setModeState(storedMode as ThemeMode);
       }
-      if (themePalettes.includes(storedPalette as ThemePalette)) {
+      if (themePaletteOrder.includes(storedPalette as ThemePalette)) {
         setPaletteState(storedPalette as ThemePalette);
       }
     });

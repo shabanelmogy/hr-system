@@ -133,7 +133,7 @@ export function JobOpeningCard({
       </View>
 
       {/* Bottom row: Applicants count & Quick actions */}
-      <View style={styles.bottomRow}>
+      <View style={[styles.bottomRow, { borderTopColor: theme.colors.border }]}>
         <View style={styles.applicantsInfo}>
           <AppIcon name="people-outline" size={16} color={theme.colors.primary} />
           <AppText variant="bodySmall" weight="700" style={{ color: theme.colors.primary }}>
@@ -174,9 +174,9 @@ export function JobOpeningCard({
                   e.stopPropagation();
                   onClose(opening.id);
                 }}
-                style={[styles.actionBtn, { backgroundColor: `${theme.colors.danger ?? '#EF4444'}15` }]}
+                style={[styles.actionBtn, { backgroundColor: `${theme.colors.danger}15` }]}
               >
-                <AppIcon name="close-circle-outline" size={16} color={theme.colors.danger ?? '#EF4444'} />
+                <AppIcon name="close-circle-outline" size={16} color={theme.colors.danger} />
               </Pressable>
             )}
           </View>
@@ -249,7 +249,6 @@ const styles = StyleSheet.create({
     marginTop: 6,
     paddingTop: 8,
     borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: '#00000010',
   },
   applicantsInfo: {
     flexDirection: 'row',

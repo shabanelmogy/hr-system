@@ -28,7 +28,7 @@ export function WorkforcePlanningLayout() {
 
   return (
     <Drawer
-      drawerContent={(props) => <ModuleDrawerContent {...props} description={t('workforcePlanning.description')} icon="briefcase-outline" title={t('workforcePlanning.title')} />}
+      drawerContent={(props) => <ModuleDrawerContent moduleKey="hr" {...props} description={t('workforcePlanning.description')} icon="briefcase-outline" title={t('workforcePlanning.title')} />}
       screenOptions={({ navigation }) => ({
         drawerPosition: isRTL ? 'right' : 'left',
         drawerType: permanentDrawer ? 'permanent' : 'front',
