@@ -69,17 +69,17 @@ export function ToastProvider({
     style: baseStyle,
     success: mergeVariantOptions(
       baseStyle,
-      theme.palette.success.main,
+      theme.palette.success,
       toastOptions?.success,
     ),
     error: mergeVariantOptions(
       baseStyle,
-      theme.palette.error.main,
+      theme.palette.error,
       toastOptions?.error,
     ),
     loading: mergeVariantOptions(
       baseStyle,
-      theme.palette.info.main,
+      theme.palette.info,
       toastOptions?.loading,
       Infinity,
     ),
@@ -123,16 +123,19 @@ function DeferredErrorDialogHost() {
 
 function mergeVariantOptions(
   baseStyle: CSSProperties,
-  accent: string,
+  accent: { main: string; contrastText: string },
   options: DefaultToastOptions["success"],
   duration?: number,
 ): NonNullable<DefaultToastOptions["success"]> {
   return {
     duration,
+    // Without iconTheme react-hot-toast draws its own fixed green/red icons, so the
+    // check mark would ignore the selected palette.
+    iconTheme: { primary: accent.main, secondary: accent.contrastText },
     ...options,
     style: {
       ...baseStyle,
-      borderInlineStart: `4px solid ${accent}`,
+      borderInlineStart: `4px solid ${accent.main}`,
       ...options?.style,
     },
   };

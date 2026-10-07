@@ -8,11 +8,11 @@ import { useTranslation } from "react-i18next";
 const getFormOverlayIcon = (actionType?: string | null) => {
   switch (actionType) {
     case "create":
-      return <Add sx={{ fontSize: 48, color: "#2196f3", mb: 1 }} />;
+      return <Add sx={{ fontSize: 48, color: "primary.main", mb: 1 }} />;
     case "update":
-      return <Edit sx={{ fontSize: 48, color: "#ff9800", mb: 1 }} />;
+      return <Edit sx={{ fontSize: 48, color: "warning.main", mb: 1 }} />;
     default:
-      return <Save sx={{ fontSize: 48, color: "#4caf50", mb: 1 }} />;
+      return <Save sx={{ fontSize: 48, color: "success.main", mb: 1 }} />;
   }
 };
 

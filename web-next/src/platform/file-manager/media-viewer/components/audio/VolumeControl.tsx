@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, IconButton, Slider } from "@mui/material";
+import { alpha, Box, IconButton, Slider } from "@mui/material";
 import {
   VolumeUp as VolumeUpIcon,
   VolumeOff as VolumeOffIcon,
@@ -61,7 +61,7 @@ const VolumeControl: React.FC<VolumeControlProps> = ({
             height: { xs: 16, sm: 20 },
             "&:hover": {
               transform: "scale(1.2)",
-              boxShadow: "0 0 10px rgba(25, 118, 210, 0.5)",
+              boxShadow: (theme) => `0 0 10px ${alpha(theme.palette.primary.main, 0.5)}`,
             },
           },
         }}

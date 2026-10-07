@@ -8,7 +8,22 @@ import {
   DEFAULT_RUNTIME_PREFERENCES,
   runtimePreferenceBootstrapScript,
 } from "./runtime-preferences";
+import { defaultPalette, getTheme, themePaletteOrder } from "@app/tokens";
 import "@/index.css";
+
+// Background and loader accent before React hydrates, per palette and mode, from the same
+// tokens as the MUI theme (the bootstrap script sets data-theme and data-palette).
+const preHydrationPaletteCss = themePaletteOrder
+  .flatMap((palette) =>
+    (["light", "dark"] as const).map((mode) => {
+      const { colors } = getTheme(palette, mode);
+      const selector = palette === defaultPalette
+        ? `html[data-theme="${mode}"]:not([data-palette]), html[data-theme="${mode}"][data-palette="${palette}"]`
+        : `html[data-theme="${mode}"][data-palette="${palette}"]`;
+      return `${selector} { --app-background: ${colors.background}; --app-accent: ${colors.primary}; color-scheme: ${mode}; }`;
+    }),
+  )
+  .join("\n");
 
 export const metadata: Metadata = {
   title: "ERP System",
@@ -33,16 +48,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
         {/* FullCalendar reuses this SSR placeholder during client module evaluation. */}
         <style data-fullcalendar="" />
         <style dangerouslySetInnerHTML={{ __html: `
-          html[data-theme="light"] {
-            --app-background: #ffffff;
-            --app-accent: #1976d2;
-            color-scheme: light;
-          }
-          html[data-theme="dark"] {
-            --app-background: #121212;
-            --app-accent: #90caf9;
-            color-scheme: dark;
-          }
+          ${preHydrationPaletteCss}
           html, body {
             background: var(--app-background) !important;
           }

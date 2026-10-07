@@ -46,7 +46,7 @@ export default function AuthTopBar() {
           <Typography
             variant="body1"
             sx={{ display: { xs: "none", sm: "block" }, fontWeight: "bold", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}
-            color={theme.palette.mode === "light" ? "white" : theme.palette.primary.main}
+            color={theme.palette.mode === "light" ? theme.palette.primary.contrastText : theme.palette.primary.main}
             suppressHydrationWarning
           >
             {t("general.mainTitle")}

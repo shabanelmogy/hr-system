@@ -38,7 +38,7 @@ const HeatmapChart = ({
   title,
   subtitle,
   height = 400,
-  colors = ['#ffffff', '#1976d2'], // From light to dark
+  colors: colorsProp, // [low, high]; defaults to surface → palette primary
   showLabels = true,
   loading = false,
   error,
@@ -55,6 +55,7 @@ const HeatmapChart = ({
   ...props
 }: HeatmapChartProps) => {
   const theme = useTheme();
+  const colors = colorsProp ?? [theme.palette.background.paper, theme.palette.primary.main];
 
   // Get unique x and y values
   const xValues = [...new Set(data.map(d => toAxisValue(getChartValue(d, xKey))))].sort((a, b) => String(a).localeCompare(String(b), undefined, { numeric: true }));
@@ -85,14 +86,14 @@ const HeatmapChart = ({
   // Color interpolation function
   const getColor = (value: number | null | undefined): string => {
     if (value === null || value === undefined) {
-      return theme.palette.grey[100];
+      return theme.palette.action.hover;
     }
     
     const normalizedValue = normalizeValue(value, minValue, maxValue);
     
     // Simple linear interpolation between two colors
-    const startColor = colors[0] ?? '#ffffff';
-    const endColor = colors[1] ?? '#1976d2';
+    const startColor = colors[0] ?? theme.palette.background.paper;
+    const endColor = colors[1] ?? theme.palette.primary.main;
     
     // Convert hex to RGB
     const hexToRgb = (hex: string): RgbColor | null => {

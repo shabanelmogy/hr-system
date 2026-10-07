@@ -81,7 +81,7 @@ const UserProfile = ({ open }: UserProfileProps) => {
           transform: open ? "translateY(-1px)" : "none",
           boxShadow: theme.palette.mode === "dark"
             ? "0 6px 16px rgba(0, 0, 0, 0.4)"
-            : "0 6px 16px rgba(99, 102, 241, 0.3)",
+            : `0 6px 16px ${alpha(theme.palette.primary.main, 0.3)}`,
         },
       }}
     >
@@ -126,9 +126,9 @@ const UserProfile = ({ open }: UserProfileProps) => {
                 width: 10,
                 height: 10,
                 borderRadius: "50%",
-                bgcolor: "#4ade80",
-                border: "2px solid white",
-                boxShadow: "0 0 0 2px rgba(74, 222, 128, 0.3)",
+                bgcolor: theme.palette.success.main,
+                border: `2px solid ${theme.palette.background.paper}`,
+                boxShadow: `0 0 0 2px ${alpha(theme.palette.success.main, 0.3)}`,
               }}
             />
           </Box>

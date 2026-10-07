@@ -31,7 +31,7 @@ const GaugeChart = ({
   title,
   subtitle,
   height = 300,
-  colors = ['#ff4444', '#ffaa00', '#00aa00'], // Red, Yellow, Green
+  colors: colorsProp, // [low, middle, high]; defaults to error, warning, success
   showValue = true,
   showPercentage = true,
   loading = false,
@@ -46,6 +46,7 @@ const GaugeChart = ({
   ...props
 }: GaugeChartProps) => {
   const theme = useTheme();
+  const colors = colorsProp ?? [theme.palette.error.main, theme.palette.warning.main, theme.palette.success.main];
   const { t } = useTranslation();
   const isAnimationActive = useChartMotion();
 
@@ -54,9 +55,9 @@ const GaugeChart = ({
   
   // Determine color based on percentage and thresholds
   const getColor = () => {
-    if (percentage <= (thresholds[0] ?? 33)) return colors[0] ?? '#ff4444';
-    if (percentage <= (thresholds[1] ?? 66)) return colors[1] ?? '#ffaa00';
-    return colors[2] ?? '#00aa00';
+    if (percentage <= (thresholds[0] ?? 33)) return colors[0] ?? theme.palette.error.main;
+    if (percentage <= (thresholds[1] ?? 66)) return colors[1] ?? theme.palette.warning.main;
+    return colors[2] ?? theme.palette.success.main;
   };
 
   const activeColor = getColor();

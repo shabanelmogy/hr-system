@@ -10,7 +10,7 @@ export const HighlightBadge: React.FC<{ label: string }> = ({ label }) => {
       size="small"
       sx={{
         bgcolor: theme.palette.error.main,
-        color: "white",
+        color: theme.palette.error.contrastText,
         fontWeight: "bold",
         fontSize: "0.65rem",
         animation: "bounce 1s ease-in-out infinite",

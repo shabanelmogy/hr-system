@@ -6,8 +6,6 @@ import {
   type ThemePalette,
 } from "@app/tokens";
 
-import { getLegacyPalette } from "./legacyPalette";
-
 /**
  * Application-only component defaults. Design values (colors, typography, shape,
  * spacing, motion) come from @app/tokens; this file owns behavior defaults only.
@@ -55,11 +53,5 @@ export const getDesignTokens = (
   return {
     ...tokenOptions,
     components: componentDefaults,
-    palette: {
-      ...tokenOptions.palette,
-      // Transitional keys kept until every consumer moves to semantic tokens
-      // (erp-platform-template slice S3.2). Do not use them in new code.
-      ...getLegacyPalette(mode),
-    },
   };
 };

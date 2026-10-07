@@ -94,7 +94,7 @@ export const FormContainer: React.FC<MyFormProps> = ({
             background: `linear-gradient(135deg, ${alpha(
               theme.palette.primary.main,
               0.02
-            )} 0%, ${alpha(theme.palette.secondary.main, 0.02)} 100%)`,
+            )} 0%, ${alpha(theme.palette.primary.dark, 0.02)} 100%)`,
             backdropFilter: "blur(10px)",
             border: `1px solid ${alpha(theme.palette.divider, 0.1)}`,
             boxShadow: `0 8px 32px ${alpha(theme.palette.common.black, 0.1)}`,

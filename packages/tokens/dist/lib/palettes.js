@@ -82,6 +82,9 @@ const orangeLight = {
     info: '#0369A1',
     onInfo: '#FFFFFF',
     accent: '#7C3AED',
+    // Success follows the palette (owner decision 2026-10-07): still green, so it reads as
+    // success, but tuned to each palette instead of one shared green.
+    success: '#4D7C0F',
     warning: '#B45309',
     border: '#E8D9D0',
 };
@@ -96,6 +99,7 @@ const orangeDark = {
     info: '#7DD3FC',
     onInfo: '#101514',
     accent: '#C4B5FD',
+    success: '#A3E635',
     border: '#49372C',
 };
 const blueLight = {
@@ -105,6 +109,7 @@ const blueLight = {
     primary: '#1D4ED8',
     secondary: '#0F766E',
     accent: '#C026D3',
+    success: '#047857',
     border: '#D4DEEC',
 };
 const blueDark = {
@@ -116,6 +121,7 @@ const blueDark = {
     onPrimary: '#102A56',
     secondary: '#5EEAD4',
     accent: '#F0ABFC',
+    success: '#34D399',
     border: '#334156',
 };
 const monochromeLight = {
@@ -127,6 +133,8 @@ const monochromeLight = {
     primary: '#171717',
     secondary: '#525252',
     accent: '#737373',
+    // Black & white keeps success neutral; the check icon itself carries the meaning.
+    success: '#171717',
     border: '#D4D4D4',
     disabled: '#A3A3A3',
 };
@@ -141,6 +149,7 @@ const monochromeDark = {
     onPrimary: '#111111',
     secondary: '#D4D4D4',
     accent: '#A3A3A3',
+    success: '#FAFAFA',
     border: '#3F3F3F',
     disabled: '#737373',
 };

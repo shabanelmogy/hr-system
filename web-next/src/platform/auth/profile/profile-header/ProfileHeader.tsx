@@ -107,7 +107,7 @@ const ProfileHeader = ({ userData }: ProfileHeaderProps) => {
             insetInline: 0,
             top: 0,
             height: 4,
-            background: `linear-gradient(90deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
+            background: `linear-gradient(90deg, ${theme.palette.primary.main}, ${theme.palette.primary.dark})`,
           },
         }}
       >

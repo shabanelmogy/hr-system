@@ -1,9 +1,9 @@
 import { Box, Grid } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
+import { getColorPalette } from "@/shared/components/charts/palette";
 import type { AddressType } from "../types/AddressType";
 import {
   EmptyChartState,
-  getChartColors,
   InitialLetterChart,
   LanguageDistributionChart,
   LoadingChartState,
@@ -39,7 +39,7 @@ export default function AddressTypesChartView({
   const languageData = prepareLanguageData(items);
   const nameLengthData = prepareNameLengthData(items);
   const timelineData = prepareTimelineData(items);
-  const colors = getChartColors(theme.palette.mode);
+  const colors = getColorPalette("rainbow", theme);
   const visibleWithAddresses = items.filter((item) => item.addressesCount > 0).length;
   const chartGridItemSx = {
     display: "flex",

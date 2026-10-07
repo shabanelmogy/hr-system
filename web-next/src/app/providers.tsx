@@ -47,7 +47,7 @@ export function RuntimePreferencesClientSync({
 }: {
   preferences: RuntimePreferences;
 }) {
-  const { setMode, setPalette } = useThemeSettingsContext();
+  const { applyInitialPreferences } = useThemeSettingsContext();
 
   useEffect(() => {
     let cancelled = false;
@@ -60,15 +60,20 @@ export function RuntimePreferencesClientSync({
     document.documentElement.lang = effectivePreferences.language;
     document.documentElement.dir = effectivePreferences.direction;
     document.documentElement.dataset.theme = effectivePreferences.themeMode;
-    setMode(effectivePreferences.themeMode);
-    setPalette(effectivePreferences.palette);
 
-    const languageChange = i18n.resolvedLanguage === effectivePreferences.language
-      ? Promise.resolve()
-      : i18n.changeLanguage(effectivePreferences.language);
+    const languageChanged = i18n.resolvedLanguage !== effectivePreferences.language;
+    const languageChange = languageChanged
+      ? i18n.changeLanguage(effectivePreferences.language)
+      : Promise.resolve();
 
     void languageChange.finally(() => {
       if (cancelled) return;
+      // Mode, palette and a remount of the page tree in one update (see ThemeShell).
+      applyInitialPreferences({
+        mode: effectivePreferences.themeMode,
+        palette: effectivePreferences.palette,
+        languageChanged,
+      });
       readyFrame = window.requestAnimationFrame(() => {
         if (cancelled) return;
         document.body.classList.remove("dark", "light");
@@ -81,7 +86,10 @@ export function RuntimePreferencesClientSync({
       cancelled = true;
       if (readyFrame) window.cancelAnimationFrame(readyFrame);
     };
-  }, [preferences, setMode, setPalette]);
+    // Runs once per streamed preference snapshot; applyInitialPreferences changes
+    // with the theme state it compares against.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [preferences]);
 
   return null;
 }

@@ -105,7 +105,7 @@ const SettingsMenu = ({
             fontSize: "0.85rem",
             fontWeight: 700,
             color: theme.palette.primary.contrastText,
-            background: `linear-gradient(135deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
+            background: `linear-gradient(135deg, ${theme.palette.primary.main}, ${theme.palette.primary.dark})`,
           }}
         >
           {initials}

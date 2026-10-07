@@ -42,7 +42,7 @@ const EditControls = ({
                 aria-label={t("auth.undoPhotoChanges")}
                 sx={{
                   bgcolor: alpha(theme.palette.warning.main, 0.9),
-                  color: "white",
+                  color: theme.palette.warning.contrastText,
                   "&:hover": {
                     bgcolor: theme.palette.warning.dark,
                     transform: uploadProgress ? undefined : "translateY(-2px)",

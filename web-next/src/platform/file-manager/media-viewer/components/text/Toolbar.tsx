@@ -111,7 +111,7 @@ const TextToolbar: React.FC<TextToolbarProps> = (props) => {
         {!isMd && (
           <>
             <Tooltip title={t("common.search")}>
-              <IconButton onClick={onToggleSearch} size="small" sx={{ bgcolor: showSearch ? 'primary.main' : 'action.hover', color: showSearch ? 'white' : 'inherit' }}>
+              <IconButton onClick={onToggleSearch} size="small" sx={{ bgcolor: showSearch ? 'primary.main' : 'action.hover', color: showSearch ? 'primary.contrastText' : 'inherit' }}>
                 <SearchIcon />
               </IconButton>
             </Tooltip>
@@ -151,7 +151,7 @@ const TextToolbar: React.FC<TextToolbarProps> = (props) => {
         {isMd && !isSm && (
           <>
             <Tooltip title={t("common.search")}>
-              <IconButton onClick={onToggleSearch} size="small" sx={{ bgcolor: showSearch ? 'primary.main' : 'action.hover', color: showSearch ? 'white' : 'inherit' }}>
+              <IconButton onClick={onToggleSearch} size="small" sx={{ bgcolor: showSearch ? 'primary.main' : 'action.hover', color: showSearch ? 'primary.contrastText' : 'inherit' }}>
                 <SearchIcon />
               </IconButton>
             </Tooltip>
@@ -170,7 +170,7 @@ const TextToolbar: React.FC<TextToolbarProps> = (props) => {
 
         {isSm && !isXs && (
           <Tooltip title={t("common.search")}>
-            <IconButton onClick={onToggleSearch} size="small" sx={{ bgcolor: showSearch ? 'primary.main' : 'action.hover', color: showSearch ? 'white' : 'inherit' }}>
+            <IconButton onClick={onToggleSearch} size="small" sx={{ bgcolor: showSearch ? 'primary.main' : 'action.hover', color: showSearch ? 'primary.contrastText' : 'inherit' }}>
               <SearchIcon />
             </IconButton>
           </Tooltip>

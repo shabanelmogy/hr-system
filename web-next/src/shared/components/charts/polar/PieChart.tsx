@@ -70,7 +70,7 @@ const PieChart = ({
   const theme = useTheme();
   const { t } = useTranslation();
   const chartTheme = getChartTheme(theme);
-  const colorPalette = resolveChartColors(colors, theme.palette.mode);
+  const colorPalette = resolveChartColors(colors, theme);
   const isAnimationActive = useChartMotion();
 
   const total = data.reduce((sum, item) => sum + getChartNumber(item, valueKey), 0);

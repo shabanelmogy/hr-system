@@ -1,5 +1,6 @@
 import { Alert, Box, Grid } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
+import { getColorPalette } from "@/shared/components/charts/palette";
 import { useTranslation } from "react-i18next";
 import type { StateListItem } from "../types/State";
 import {
@@ -7,7 +8,6 @@ import {
   CountryPieChart,
   DistrictsChart,
   EmptyChartState,
-  getChartColors,
   LoadingChartState,
   prepareCountryData,
   prepareDistrictData,
@@ -39,7 +39,7 @@ const StatesChartView = ({
   const countryData = prepareCountryData(states, language);
   const districtData = prepareDistrictData(states, language);
   const timelineData = prepareTimelineData(states);
-  const colors = getChartColors(theme.palette.mode);
+  const colors = getColorPalette("rainbow", theme);
   const visibleDistricts = states.reduce((total, state) => total + state.districtsCount, 0);
   const chartGridItemSx = {
     display: "flex",

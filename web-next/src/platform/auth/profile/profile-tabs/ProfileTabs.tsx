@@ -59,10 +59,7 @@ const ProfileTabs = ({
           "& .MuiTabs-indicator": {
             height: 3,
             borderRadius: "3px 3px 0 0",
-            background:
-              theme.palette.mode === "dark"
-                ? "linear-gradient(90deg, #6366f1, #8b5cf6)"
-                : "linear-gradient(90deg, #3b82f6, #8b5cf6)",
+            background: theme.palette.primary.main,
           },
           "& .MuiTab-root": {
             textTransform: "none",
@@ -72,7 +69,7 @@ const ProfileTabs = ({
             px: { xs: 2, sm: 4 },
             transition: "background-color 0.2s ease, color 0.2s ease",
             "&.Mui-selected": {
-              color: theme.palette.mode === "dark" ? "#8b5cf6" : "#3b82f6",
+              color: theme.palette.primary.main,
             },
             "&:hover": {
               backgroundColor: alpha(theme.palette.primary.main, 0.04),

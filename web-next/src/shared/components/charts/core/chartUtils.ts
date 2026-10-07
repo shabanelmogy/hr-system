@@ -1,38 +1,24 @@
 import type { PaletteMode } from "@mui/material";
+import { createTheme, darken, lighten, type Theme } from "@mui/material/styles";
+import { getDesignTokens } from "@/theme/theme";
 
+/**
+ * Named chart palettes. The names resolve against the active MUI theme, so every chart
+ * follows the selected palette (green / orange / blue / monochrome) and light/dark mode.
+ *
+ * - `primary`, `secondary`, `rainbow`: categorical series (distinct hues) taken from the
+ *   palette's chart, brand and module colors, starting at primary / brand 2 / brand 3.
+ * - `success`, `warning`, `error`, `info`, `neutral`: tonal ramps of one status color.
+ */
 export const COLOR_PALETTES = {
-  primary: {
-    light: ["#1976d2", "#42a5f5", "#90caf9", "#e3f2fd", "#0d47a1", "#1565c0", "#1e88e5", "#64b5f6"],
-    dark: ["#64b5f6", "#1e88e5", "#1565c0", "#0d47a1", "#e3f2fd", "#90caf9", "#42a5f5", "#1976d2"],
-  },
-  secondary: {
-    light: ["#9c27b0", "#ba68c8", "#ce93d8", "#f3e5f5", "#4a148c", "#6a1b9a", "#8e24aa", "#ab47bc"],
-    dark: ["#ab47bc", "#8e24aa", "#6a1b9a", "#4a148c", "#f3e5f5", "#ce93d8", "#ba68c8", "#9c27b0"],
-  },
-  success: {
-    light: ["#2e7d32", "#4caf50", "#81c784", "#c8e6c9", "#1b5e20", "#388e3c", "#66bb6a", "#a5d6a7"],
-    dark: ["#a5d6a7", "#66bb6a", "#388e3c", "#1b5e20", "#c8e6c9", "#81c784", "#4caf50", "#2e7d32"],
-  },
-  warning: {
-    light: ["#ed6c02", "#ff9800", "#ffb74d", "#ffe0b2", "#e65100", "#f57c00", "#ff8f00", "#ffab00"],
-    dark: ["#ffab00", "#ff8f00", "#f57c00", "#e65100", "#ffe0b2", "#ffb74d", "#ff9800", "#ed6c02"],
-  },
-  error: {
-    light: ["#d32f2f", "#f44336", "#e57373", "#ffcdd2", "#b71c1c", "#c62828", "#e53935", "#ef5350"],
-    dark: ["#ef5350", "#e53935", "#c62828", "#b71c1c", "#ffcdd2", "#e57373", "#f44336", "#d32f2f"],
-  },
-  info: {
-    light: ["#0288d1", "#03a9f4", "#4fc3f7", "#b3e5fc", "#01579b", "#0277bd", "#0288d1", "#039be5"],
-    dark: ["#039be5", "#0288d1", "#0277bd", "#01579b", "#b3e5fc", "#4fc3f7", "#03a9f4", "#0288d1"],
-  },
-  neutral: {
-    light: ["#424242", "#616161", "#757575", "#9e9e9e", "#212121", "#424242", "#616161", "#757575"],
-    dark: ["#757575", "#616161", "#424242", "#212121", "#9e9e9e", "#757575", "#616161", "#424242"],
-  },
-  rainbow: {
-    light: ["#ff6b6b", "#4ecdc4", "#45b7d1", "#96ceb4", "#ffeaa7", "#dda0dd", "#98d8c8", "#f7dc6f"],
-    dark: ["#f7dc6f", "#98d8c8", "#dda0dd", "#ffeaa7", "#96ceb4", "#45b7d1", "#4ecdc4", "#ff6b6b"],
-  },
+  primary: "primary",
+  secondary: "secondary",
+  success: "success",
+  warning: "warning",
+  error: "error",
+  info: "info",
+  neutral: "neutral",
+  rainbow: "rainbow",
 } as const;
 
 export type ChartPaletteName = keyof typeof COLOR_PALETTES;
@@ -48,15 +34,75 @@ const toFiniteNumber = (value: unknown): number => {
   return Number.isFinite(numericValue) ? numericValue : 0;
 };
 
-export const getColorPalette = (paletteName: ChartPaletteName, mode: PaletteMode = "light"): string[] =>
-  [...COLOR_PALETTES[paletteName][mode]];
+const unique = (colors: readonly (string | undefined)[]): string[] => {
+  const seen = new Set<string>();
+  const result: string[] = [];
+  for (const color of colors) {
+    if (!color) continue;
+    const key = color.toLowerCase();
+    if (seen.has(key)) continue;
+    seen.add(key);
+    result.push(color);
+  }
+  return result;
+};
 
-export const resolveChartColors = (colors: ChartColors, mode: PaletteMode): readonly string[] => {
+/** Distinct hues of the active palette: chart series first, then module colors. */
+const categoricalSeries = (theme: Theme): string[] => {
+  const { palette } = theme;
+  const app = palette.app;
+  return unique([
+    ...(app?.chart ?? [palette.primary.main, palette.secondary.main]),
+    ...Object.values(app?.modules ?? {}),
+    palette.info.main,
+    palette.error.main,
+  ]);
+};
+
+const rotateTo = (colors: string[], first: string | undefined): string[] => {
+  const index = first ? colors.findIndex((color) => color.toLowerCase() === first.toLowerCase()) : -1;
+  return index <= 0 ? colors : [...colors.slice(index), ...colors.slice(0, index)];
+};
+
+// Positive steps move toward the background (lighter in light mode, darker in dark
+// mode); negative steps move away from it.
+const rampSteps = [0, 0.25, 0.45, -0.2, 0.6, -0.35, 0.15, 0.7] as const;
+
+const tonalRamp = (base: string, theme: Theme): string[] => {
+  const towardBackground = theme.palette.mode === "dark" ? darken : lighten;
+  const awayFromBackground = theme.palette.mode === "dark" ? lighten : darken;
+  return rampSteps.map((step) =>
+    step === 0 ? base : step > 0 ? towardBackground(base, step) : awayFromBackground(base, -step),
+  );
+};
+
+/**
+ * Colors of a named chart palette in the active theme. Passing only a mode (older callers)
+ * resolves against the default palette; pass the MUI theme so charts follow the selection.
+ */
+export const getColorPalette = (paletteName: ChartPaletteName, themeOrMode: Theme | PaletteMode): string[] => {
+  const theme = typeof themeOrMode === "string" ? createTheme(getDesignTokens(themeOrMode)) : themeOrMode;
+  const { palette } = theme;
+  switch (paletteName) {
+    case "primary":
+      return rotateTo(categoricalSeries(theme), palette.primary.main);
+    case "secondary":
+      return rotateTo(categoricalSeries(theme), palette.app?.brand2?.main ?? palette.secondary.main);
+    case "rainbow":
+      return rotateTo(categoricalSeries(theme), palette.app?.brand3?.main ?? palette.secondary.main);
+    case "neutral":
+      return tonalRamp(palette.text.secondary, theme);
+    default:
+      return tonalRamp(palette[paletteName].main, theme);
+  }
+};
+
+export const resolveChartColors = (colors: ChartColors, theme: Theme): readonly string[] => {
   if (isColorArray(colors)) return colors;
   if (typeof colors === "string") {
-    return isChartPaletteName(colors) ? getColorPalette(colors, mode) : getColorPalette("primary", mode);
+    return getColorPalette(isChartPaletteName(colors) ? colors : "primary", theme);
   }
-  return colors[mode];
+  return colors[theme.palette.mode];
 };
 
 export const formatNumber = (

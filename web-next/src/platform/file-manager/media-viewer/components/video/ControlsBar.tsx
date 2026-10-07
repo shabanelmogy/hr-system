@@ -123,7 +123,7 @@ function RepeatButton({
     <Tooltip title={title}>
       <IconButton
         onClick={onToggleRepeat}
-        sx={{ ...baseIconSx, color: repeatMode !== "off" ? "#1976d2" : "#fff" }}
+        sx={{ ...baseIconSx, color: repeatMode !== "off" ? "primary.light" : "#fff" }}
       >
         {repeatMode === "one" ? (
           <RepeatOneIcon fontSize="small" />

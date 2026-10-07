@@ -1,5 +1,5 @@
 import React from "react";
-import { IconButton } from "@mui/material";
+import { alpha, IconButton } from "@mui/material";
 import { PlayArrow as PlayIcon, Pause as PauseIcon } from "@mui/icons-material";
 
 export interface PlaybackControlsProps {
@@ -29,7 +29,7 @@ const PlaybackControls: React.FC<PlaybackControlsProps> = ({
         height: { xs: 48, sm: 56 },
         "&:hover": {
           transform: "scale(1.1)",
-          boxShadow: "0 0 20px rgba(25, 118, 210, 0.5)",
+          boxShadow: (theme) => `0 0 20px ${alpha(theme.palette.primary.main, 0.5)}`,
         },
       }}
     >

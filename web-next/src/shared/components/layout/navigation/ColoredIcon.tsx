@@ -1,7 +1,8 @@
 import Box from "@mui/material/Box";
 import { alpha, useTheme } from "@mui/material/styles";
 import type { ReactNode } from "react";
-import { resolveModuleAccent, type ModuleAccent } from "./moduleAccents";
+import { resolveSequenceAccent, type ModuleAccent } from "./moduleAccents";
+import { useNavigationIconSequence } from "./NavigationIconSequence";
 
 export default function ColoredIcon({
   children,
@@ -12,7 +13,10 @@ export default function ColoredIcon({
   color: ModuleAccent | string;
 }) {
   const theme = useTheme();
-  const resolved = resolveModuleAccent(color, theme) ?? color;
+  // Inside a navigation list each entry gets its own color; elsewhere (section headers,
+  // launcher) the module's own color is used.
+  const sequenceIndex = useNavigationIconSequence();
+  const resolved = resolveSequenceAccent(color, sequenceIndex ?? -1, theme) ?? color;
 
   return (
     <Box

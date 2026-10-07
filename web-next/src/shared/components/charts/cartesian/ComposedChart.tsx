@@ -45,7 +45,7 @@ const ComposedChart = ({
 }: ComposedChartProps) => {
   const theme = useTheme();
   const chartTheme = getChartTheme(theme);
-  const colorPalette = resolveChartColors(colors, theme.palette.mode);
+  const colorPalette = resolveChartColors(colors, theme);
   const isAnimationActive = useChartMotion();
 
   const CustomTooltip = ({ active, payload, label }: ChartTooltipProps) => {

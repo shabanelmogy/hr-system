@@ -66,11 +66,11 @@ const FunnelChart = ({
   const isAnimationActive = useChartMotion();
 
   const firstValue = data.length ? getChartNumber(data[0], dataKey) : 0;
-  const colorPalette = resolveChartColors(colors, theme.palette.mode);
+  const colorPalette = resolveChartColors(colors, theme);
   const resolvedPalette =
     colorPalette && colorPalette.length
       ? colorPalette
-      : getColorPalette("primary", theme.palette.mode);
+      : getColorPalette("primary", theme);
 
   // Calculate conversion rates
   const dataWithConversion: FunnelDatum[] = data.map((item, index) => {

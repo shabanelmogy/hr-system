@@ -15,7 +15,7 @@ export const BadgePercentage: React.FC<{
       size="small"
       sx={{
         bgcolor: highlighted ? theme.palette.success.main : badgeColor,
-        color: "white",
+        color: highlighted ? theme.palette.success.contrastText : color ? theme.palette.getContrastText(badgeColor) : theme.palette.primary.contrastText,
         fontWeight: "bold",
         fontSize: "0.7rem",
         boxShadow: `0 2px 8px ${alpha(highlighted ? theme.palette.success.main : badgeColor, 0.3)}`,

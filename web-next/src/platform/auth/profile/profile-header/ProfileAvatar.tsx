@@ -59,13 +59,12 @@ const ProfileAvatar = ({
 
   // Function to get a random gradient for avatar background
   const getAvatarGradient = () => {
-    const gradients = [
-      "linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%)",
-      "linear-gradient(135deg, #3B82F6 0%, #10B981 100%)",
-      "linear-gradient(135deg, #F59E0B 0%, #EF4444 100%)",
-      "linear-gradient(135deg, #EC4899 0%, #8B5CF6 100%)",
-      "linear-gradient(135deg, #0EA5E9 0%, #6366F1 100%)",
-    ];
+    // Pairs of the active palette's module colors, so avatars follow the selected palette.
+    const tones = Object.values(theme.palette.app?.modules ?? {});
+    const series = tones.length > 1 ? tones : [theme.palette.primary.main, theme.palette.primary.dark];
+    const gradients = series.map(
+      (tone, i) => `linear-gradient(135deg, ${tone} 0%, ${series[(i + 1) % series.length]} 100%)`,
+    );
 
     // Use username to pick a consistent gradient
     const username = userData.userName || "";
@@ -221,7 +220,7 @@ const ProfileAvatar = ({
               top: 0,
               insetInlineEnd: 0,
               bgcolor: theme.palette.error.main,
-              color: "white",
+              color: theme.palette.error.contrastText,
               border: `2px solid ${theme.palette.background.paper}`,
               "&:hover": {
                 bgcolor: theme.palette.error.dark,

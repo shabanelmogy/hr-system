@@ -48,7 +48,7 @@ const TreemapChart = ({
   const theme = useTheme();
   const { t } = useTranslation();
   const chartTheme = getChartTheme(theme);
-  const colorPalette = resolveChartColors(colors, theme.palette.mode);
+  const colorPalette = resolveChartColors(colors, theme);
   const isAnimationActive = useChartMotion();
 
   const CustomTooltip = ({ active, payload }: ChartTooltipProps) => {

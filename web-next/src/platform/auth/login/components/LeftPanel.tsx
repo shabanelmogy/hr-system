@@ -84,8 +84,8 @@ const LeftPanel = ({ t }: { t: Translator }) => {
           height: "200px",
           borderRadius: "30% 70% 70% 30% / 30% 30% 70% 70%",
           background: isDarkMode
-            ? `linear-gradient(45deg, ${alpha(theme.palette.secondary.main, 0.1)} 0%, ${alpha(theme.palette.primary.main, 0.1)} 100%)`
-            : `linear-gradient(45deg, ${alpha(theme.palette.secondary.main, 0.03)} 0%, ${alpha(theme.palette.primary.main, 0.03)} 100%)`,
+            ? `linear-gradient(45deg, ${alpha(theme.palette.primary.dark, 0.1)} 0%, ${alpha(theme.palette.primary.main, 0.1)} 100%)`
+            : `linear-gradient(45deg, ${alpha(theme.palette.primary.dark, 0.03)} 0%, ${alpha(theme.palette.primary.main, 0.03)} 100%)`,
           zIndex: 2,
           animation: `${float} 20s ease-in-out infinite reverse`,
         }}
@@ -216,9 +216,7 @@ const FeatureList = ({ t }: { t: Translator }) => {
               background: isDarkMode
                 ? "rgba(255, 255, 255, 0.06)"
                 : "rgba(255, 255, 255, 0.9)",
-              boxShadow: isDarkMode
-                ? "0 8px 32px rgba(31, 38, 135, 0.2)"
-                : "0 8px 32px rgba(31, 38, 135, 0.1)",
+              boxShadow: `0 8px 32px ${alpha(theme.palette.primary.main, isDarkMode ? 0.2 : 0.1)}`,
               "& .icon-box": {
                 transform: "rotate(10deg) scale(1.1)",
               },

@@ -18,8 +18,9 @@ export const wave = keyframes`
 `;
 
 export const glow = keyframes`
-  0%, 100% { box-shadow: 0 0 5px rgba(25, 118, 210, 0.3); }
-  50% { box-shadow: 0 0 20px rgba(25, 118, 210, 0.8); }
+  /* currentColor is the slider's palette primary, so the glow follows the theme. */
+  0%, 100% { box-shadow: 0 0 5px color-mix(in srgb, currentColor 30%, transparent); }
+  50% { box-shadow: 0 0 20px color-mix(in srgb, currentColor 80%, transparent); }
 `;
 
 export const slideIn = keyframes`

@@ -1,5 +1,5 @@
 import React from "react";
-import { Box } from "@mui/material";
+import { alpha, Box } from "@mui/material";
 
 export interface VisualizerProps {
   isPlaying: boolean;
@@ -18,7 +18,8 @@ const Visualizer: React.FC<VisualizerProps> = ({
     <Box
       sx={{
         flex: 1,
-        background: "linear-gradient(135deg, #1976d220 0%, #9c27b020 100%)",
+        background: (theme) =>
+          `linear-gradient(135deg, ${alpha(theme.palette.primary.main, 0.12)} 0%, ${alpha(theme.palette.primary.dark, 0.12)} 100%)`,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",

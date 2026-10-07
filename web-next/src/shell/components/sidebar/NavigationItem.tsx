@@ -12,6 +12,7 @@ import { useAuthorization } from "@/lib/auth/useAuthorization";
 import { normalizeAppPath } from "@/config/routes";
 import type { PermissionString } from "@/lib/auth/permissions";
 import type { NavigationItem as NavigationItemModel } from "./navigationTypes";
+import { NavigationIconSequence } from "@/shared/components/layout/navigation";
 
 function NavigationItem({
   open,
@@ -176,9 +177,9 @@ function NavigationItem({
       {hasChildren && (
         <Collapse in={expanded && open} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
-            {items.map((childItem) => (
+            {items.map((childItem, index) => (
+              <NavigationIconSequence key={childItem.path} index={index}>
               <NavigationItem
-                key={childItem.path}
                 open={open}
                 title={t(childItem.title)}
                 titleComponent={
@@ -218,6 +219,7 @@ function NavigationItem({
                 permissions={childItem.permissions || []}
                 items={childItem.items || []}
               />
+              </NavigationIconSequence>
             ))}
           </List>
         </Collapse>

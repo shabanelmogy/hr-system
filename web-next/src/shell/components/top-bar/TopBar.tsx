@@ -188,7 +188,7 @@ const TopBar = ({
                     display: "none",
                   },
                 }}
-                color={theme.palette.mode === "light" ? "white" : theme.palette.primary.main}
+                color={theme.palette.mode === "light" ? theme.palette.primary.contrastText : theme.palette.primary.main}
                 suppressHydrationWarning
               >
                 {t("general.mainTitle")}

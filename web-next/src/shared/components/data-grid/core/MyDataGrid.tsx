@@ -28,7 +28,8 @@ const dataGridStyles: SxProps<Theme> = {
   width: "100%",
   minWidth: 0,
   "& .highlighted-row": {
-    backgroundColor: "#ffe0b2 !important",
+    backgroundColor: (theme: Theme) =>
+      `${alpha(theme.palette.warning.main, theme.palette.mode === "dark" ? 0.24 : 0.16)} !important`,
     fontWeight: "bold",
   },
   "& .edited-row": {

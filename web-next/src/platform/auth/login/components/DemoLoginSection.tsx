@@ -28,7 +28,8 @@ interface DemoRoleOption {
   key: DemoRole;
   labelKey: string;
   icon: React.ReactNode;
-  color: string;
+  /** Role color from the active palette. */
+  color: (theme: Theme) => string;
 }
 
 const roleOptions: DemoRoleOption[] = [
@@ -36,19 +37,19 @@ const roleOptions: DemoRoleOption[] = [
     key: "user",
     labelKey: "auth.demoRoleUser",
     icon: <PersonIcon sx={{ fontSize: 16 }} />,
-    color: "#1e88e5",
+    color: (theme) => theme.palette.primary.main,
   },
   {
     key: "admin",
     labelKey: "auth.demoRoleAdmin",
     icon: <AdminPanelSettingsIcon sx={{ fontSize: 16 }} />,
-    color: "#e53935",
+    color: (theme) => theme.palette.error.main,
   },
   {
     key: "superAdmin",
     labelKey: "auth.demoRoleSuperAdmin",
     icon: <WorkspacePremiumIcon sx={{ fontSize: 16 }} />,
-    color: "#8e24aa",
+    color: (theme) => theme.palette.app?.brand3?.main ?? theme.palette.secondary.main,
   },
 ];
 
@@ -90,8 +91,8 @@ const DemoLoginSection = ({
           display: "grid",
           placeItems: "center",
           flexShrink: 0,
-          background: `linear-gradient(135deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
-          color: "#fff",
+          background: `linear-gradient(135deg, ${theme.palette.primary.main}, ${theme.palette.primary.dark})`,
+          color: theme.palette.primary.contrastText,
           boxShadow: `0 2px 8px ${alpha(theme.palette.primary.main, 0.4)}`,
         }}
       >
@@ -133,6 +134,7 @@ const DemoLoginSection = ({
     >
       {roleOptions.map((role) => {
         const isLoading = activeRole === role.key;
+        const roleColor = role.color(theme);
         return (
           <Button
             key={role.key}
@@ -143,7 +145,7 @@ const DemoLoginSection = ({
             disabled={disabled}
             startIcon={
               isLoading ? (
-                <CircularProgress size={16} sx={{ color: role.color }} />
+                <CircularProgress size={16} sx={{ color: roleColor }} />
               ) : (
                 <Box
                   data-role-badge="true"
@@ -153,8 +155,8 @@ const DemoLoginSection = ({
                     borderRadius: "50%",
                     display: "grid",
                     placeItems: "center",
-                    background: alpha(role.color, 0.14),
-                    color: role.color,
+                    background: alpha(roleColor, 0.14),
+                    color: roleColor,
                     transition: "transform 0.25s ease",
                   }}
                 >
@@ -180,10 +182,10 @@ const DemoLoginSection = ({
               transition: "all 0.25s cubic-bezier(0.4, 0, 0.2, 1)",
               "& .MuiButton-startIcon": { mr: 1 },
               "&:hover": {
-                borderColor: alpha(role.color, 0.6),
-                bgcolor: alpha(role.color, isDarkMode ? 0.12 : 0.06),
+                borderColor: alpha(roleColor, 0.6),
+                bgcolor: alpha(roleColor, isDarkMode ? 0.12 : 0.06),
                 transform: "translateY(-2px)",
-                boxShadow: `0 6px 16px ${alpha(role.color, 0.28)}`,
+                boxShadow: `0 6px 16px ${alpha(roleColor, 0.28)}`,
                 "& [data-role-badge='true']": {
                   transform: "scale(1.12)",
                 },

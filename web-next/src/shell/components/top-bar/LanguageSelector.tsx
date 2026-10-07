@@ -13,10 +13,12 @@ const LanguageSelector = ({ direction, handleLanguageChange }: { direction: stri
   const { t } = useTranslation();
   const labelId = useId();
   const selectId = useId();
+  // The app bar is primary in light mode and a surface in dark mode.
+  const barText = theme.palette.mode === "light" ? theme.palette.primary.contrastText : theme.palette.text.primary;
 
   return (
     <FormControl variant="outlined" size="small">
-      <InputLabel id={labelId} htmlFor={selectId} sx={{ color: "white" }}>
+      <InputLabel id={labelId} htmlFor={selectId} sx={{ color: barText, "&.Mui-focused": { color: barText } }}>
         {t("general.lang")}
       </InputLabel>
       <Select
@@ -26,22 +28,12 @@ const LanguageSelector = ({ direction, handleLanguageChange }: { direction: stri
         onChange={(e) => handleLanguageChange(e.target.value)}
         MenuProps={{ disableScrollLock: true }}
         label={t("general.lang")}
-        sx={{ width: 125, color: "white", marginInlineEnd: 2 }}
+        sx={{ width: 125, color: barText, marginInlineEnd: 2, "& .MuiSvgIcon-root": { color: barText } }}
       >
-        <MenuItem
-          value="ltr"
-          sx={{
-            color: theme.palette.mode === "dark" ? "white" : "black",
-          }}
-        >
+        <MenuItem value="ltr">
           {t("common.english")}
         </MenuItem>
-        <MenuItem
-          value="rtl"
-          sx={{
-            color: theme.palette.mode === "dark" ? "white" : "black",
-          }}
-        >
+        <MenuItem value="rtl">
           {t("common.arabic")}
         </MenuItem>
       </Select>

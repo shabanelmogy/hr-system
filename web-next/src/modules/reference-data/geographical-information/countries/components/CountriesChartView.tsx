@@ -1,11 +1,11 @@
 import { Box, Grid } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
+import { getColorPalette } from "@/shared/components/charts/palette";
 import { useTranslation } from "react-i18next";
 import type { CountryListItem } from "../types/Country";
 import {
   CurrencyChart,
   EmptyChartState,
-  getChartColors,
   getTotalStatesCount,
   LoadingChartState,
   prepareCurrencyData,
@@ -49,7 +49,7 @@ const CountriesChartView: React.FC<CountriesChartViewProps> = ({
     withStates: t("countries.charts.withStates"),
     withoutStates: t("countries.charts.withoutStates"),
   });
-  const colors = getChartColors(theme.palette.mode);
+  const colors = getColorPalette("rainbow", theme);
 
   const visibleCountries = countries.length;
   const visibleCurrencies = currencyData.length;

@@ -123,8 +123,21 @@ Differences from the prepared change set:
 
 ## Next steps inside S3/S4
 
-- S3.2: replace each `palette.myColor` / `palette.purple.*` consumer with a semantic token,
-  then delete `legacyPalette.ts`.
 - S3.4: palette preference and tenant primary branding on web (`withBrandPrimary` + contrast
   check); mobile already has palette selection.
 - Load `IBM Plex Sans Arabic` on both clients (web `next/font`, mobile `expo-font`).
+
+## Color review follow-up 2026-10-07
+
+- S3.2 done: no consumer of `palette.myColor` / `palette.purple.*` remained; `legacyPalette.ts`
+  and its theme spread are deleted (also the unused register `constants/colors.ts` and the
+  `NavigationColors` enum).
+- Charts resolve named palettes (`primary`, `secondary`, `rainbow`, status ramps) from the active
+  theme (`palette.app.chart` + module colors), so every chart follows the selected palette.
+- Owner decision: decorative gradients use primary only (primary → primary.dark); `secondary`
+  (brand 2) stays for real secondary actions and distinct states.
+- Text on solid status/brand fills uses `*.contrastText` (monochrome dark primary is near white).
+- Success color is tuned per palette (orange: olive, blue: emerald, monochrome: neutral) and
+  toast icons take their colors from the theme.
+- The pre-hydration background/accent CSS is generated from tokens per palette and mode; the
+  bootstrap script sets `data-palette` from the `themePalette` cookie.

@@ -1,5 +1,5 @@
 import { Archive, Edit, Key, Restore, Visibility } from "@mui/icons-material";
-import { Tooltip } from "@mui/material";
+import { Box, Tooltip } from "@mui/material";
 import {
   GridActionsCellItem,
   type GridActionsCellItemProps,
@@ -143,14 +143,15 @@ const RolesDataGrid = ({
         align: "center",
         headerAlign: "center",
         renderCell: (params: GridRenderCellParams<Role, boolean>) => (
-          <span
-            style={{
-              color: params.value ? "#d32f2f" : "#2e7d32",
+          <Box
+            component="span"
+            sx={{
+              color: params.value ? "error.main" : "success.main",
               fontWeight: "bold",
             }}
           >
             {params.value ? t("actions.deleted") : t("actions.active")}
-          </span>
+          </Box>
         ),
       },
       {

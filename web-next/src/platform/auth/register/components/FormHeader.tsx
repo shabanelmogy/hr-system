@@ -25,7 +25,7 @@ export default function FormHeader({ children, t }: FormHeaderProps) {
         p: { xs: 2.5, sm: 3.5 },
         background:
           "radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 50%)",
-        color: "#ffffff",
+        color: theme.palette.primary.contrastText,
         textAlign: "center",
         borderRadius: { xs: "0px", sm: "16px 16px 0 0" },
         boxShadow: `0 4px 20px ${alpha("#000", 0.15)}`,
@@ -43,14 +43,13 @@ export default function FormHeader({ children, t }: FormHeaderProps) {
           sx={{
             mx: "auto",
             mb: 1,
-            background: `linear-gradient(135deg, ${theme.palette.secondary.main
-              }, ${alpha(theme.palette.primary.main, 0.9)})`,
-            color: "white",
+            background: `linear-gradient(135deg, ${theme.palette.primary.light}, ${theme.palette.primary.dark})`,
+            color: theme.palette.primary.contrastText,
             width: { xs: 64, md: 72 },
             height: { xs: 64, md: 72 },
             boxShadow: `0 8px 16px ${alpha(theme.palette.primary.main, 0.4)}`,
             display: { xs: "none", sm: "flex" }, // Show on sm and up
-            border: `3px solid ${alpha("#fff", 0.2)}`,
+            border: `3px solid ${alpha(theme.palette.primary.contrastText, 0.2)}`,
           }}
         >
           <HowToRegIcon

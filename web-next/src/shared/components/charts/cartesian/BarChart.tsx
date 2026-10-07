@@ -49,7 +49,7 @@ const BarChart = ({
 }: BarChartProps) => {
   const theme = useTheme();
   const chartTheme = getChartTheme(theme);
-  const colorPalette = resolveChartColors(colors, theme.palette.mode);
+  const colorPalette = resolveChartColors(colors, theme);
   const hoverCursor = chartTheme.tooltip.cursor;
   const isAnimationActive = useChartMotion();
 

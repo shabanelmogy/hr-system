@@ -87,13 +87,13 @@ export default function HeaderActions(props: HeaderActionsProps) {
               minWidth: props.compact ? "auto" : undefined,
               px: props.compact ? { xs: 1, sm: 1.25 } : 2,
               boxShadow: `0 4px 12px ${alpha(theme.palette.primary.main, 0.25)}`,
-              background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.secondary.main} 100%)`,
+              background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.primary.dark} 100%)`,
               color: theme.palette.primary.contrastText,
               transition: "transform 0.15s ease, box-shadow 0.15s ease, filter 0.2s ease",
               "&:hover": {
                 transform: "translateY(-1px)",
                 boxShadow: `0 6px 16px ${alpha(theme.palette.primary.main, 0.31)}`,
-                background: `linear-gradient(135deg, ${theme.palette.primary.dark} 0%, ${theme.palette.secondary.dark} 100%)`,
+                background: theme.palette.primary.dark,
               },
               "&:active": { transform: "translateY(0)" },
               "& .MuiButton-startIcon": {

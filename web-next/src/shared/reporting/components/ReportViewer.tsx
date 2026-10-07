@@ -231,8 +231,8 @@ const ReportViewer = ({
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            bgcolor: "#1976d2",
-            color: "white",
+            bgcolor: "primary.main",
+            color: "primary.contrastText",
             cursor: "pointer",
             zIndex: 11,
           }}
@@ -322,10 +322,10 @@ const ReportViewer = ({
             onClick={toggleSidebar}
             size="medium"
             sx={{
-              backgroundColor: "#1976d2",
-              color: "white",
+              backgroundColor: "primary.main",
+              color: "primary.contrastText",
               "&:hover": {
-                backgroundColor: "#1565c0",
+                backgroundColor: "primary.dark",
               },
               boxShadow: 2,
               borderRadius: sidebarOpen ? "0 4px 4px 0" : "4px 0 0 4px",

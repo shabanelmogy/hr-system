@@ -18,22 +18,6 @@ export enum NavigationSectionId {
   EXTRAS = "extras",
 }
 
-export enum NavigationColors {
-  PRIMARY_BLUE = "#4a6da7",
-  SECONDARY_BLUE = "#5c7cbc",
-  GREEN = "#2e7d32",
-  LIGHT_GREEN = "#388e3c",
-  CHART_BLUE = "#1976d2",
-  PURPLE = "#7b1fa2",
-  LIGHT_PURPLE = "#8e24aa",
-  PINK = "#ba68c8",
-  DARK_PURPLE = "#9c27b0",
-  DARK_GRAY = "#352F36FF",
-  ORANGE = "#ff5722",
-  // HR Management colors
-  HR_BLUE = "#1565c0",
-}
-
 export enum UserRoles {
   SUPER_ADMIN = "super_admin",
   ADMIN = "admin",
@@ -103,5 +87,4 @@ export type { NavigationItem, NavigationSection, NavigationConfig } from "@/shar
 // Utility types for better type checking
 export type RoleArray = string[];
 export type PermissionArray = PermissionString[];
-export type ColorValue = NavigationColors | string;
 export type TitleValue = NavigationTitles | string;

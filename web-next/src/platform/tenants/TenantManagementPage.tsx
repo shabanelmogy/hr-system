@@ -538,7 +538,7 @@ function TenantEditor({
                       border: 1,
                       borderColor: alpha(theme.palette.primary.main, 0.24),
                       borderRadius: 2.5,
-                      background: `linear-gradient(135deg, ${alpha(theme.palette.primary.main, 0.14)} 0%, ${alpha(theme.palette.secondary.main, 0.08)} 100%)`,
+                      background: `linear-gradient(135deg, ${alpha(theme.palette.primary.main, 0.14)} 0%, ${alpha(theme.palette.primary.dark, 0.08)} 100%)`,
                     }}
                   >
                     <Box>

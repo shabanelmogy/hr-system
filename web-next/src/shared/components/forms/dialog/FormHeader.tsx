@@ -95,10 +95,7 @@ export const FormHeader: React.FC = () => {
               px: 2,
               py: 1,
               borderRadius: "20px",
-              background: `linear-gradient(135deg, ${alpha(
-                theme.palette.secondary.main,
-                0.1
-              )} 0%, ${alpha(theme.palette.primary.main, 0.1)} 100%)`,
+              backgroundColor: alpha(theme.palette.primary.main, 0.1),
               border: `1px solid ${alpha(theme.palette.divider, 0.2)}`,
               backdropFilter: "blur(10px)",
             }}
@@ -108,17 +105,14 @@ export const FormHeader: React.FC = () => {
                 width: 24,
                 height: 24,
                 borderRadius: "50%",
-                background: `linear-gradient(135deg, ${theme.palette.secondary.main} 0%, ${theme.palette.secondary.dark} 100%)`,
-                color: theme.palette.secondary.contrastText,
+                background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.primary.dark} 100%)`,
+                color: theme.palette.primary.contrastText,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 fontSize: "10px",
                 fontWeight: "bold",
-                boxShadow: `0 2px 8px ${alpha(
-                  theme.palette.secondary.main,
-                  0.3
-                )}`,
+                boxShadow: `0 2px 8px ${alpha(theme.palette.primary.main, 0.3)}`,
               }}
             >
               #

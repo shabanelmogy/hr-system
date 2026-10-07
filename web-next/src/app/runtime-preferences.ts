@@ -1,4 +1,4 @@
-import { defaultPalette, type ThemePalette } from "@app/tokens";
+import { defaultPalette, themePaletteOrder, type ThemePalette } from "@app/tokens";
 import type { ThemeDirection, ThemeMode } from "@/theme/ThemePreferences";
 import { parseThemePalette, THEME_PALETTE_COOKIE } from "@/theme/themePalette";
 
@@ -80,6 +80,8 @@ export function reconcileRuntimePreferences(
   };
 }
 
+const bootstrapPalettes = JSON.stringify(themePaletteOrder);
+
 export const runtimePreferenceBootstrapScript = String.raw`
 (() => {
   const values = Object.create(null);
@@ -98,5 +100,7 @@ export const runtimePreferenceBootstrapScript = String.raw`
   root.lang = language;
   root.dir = language === "ar" ? "rtl" : "ltr";
   root.dataset.theme = theme;
+  const palettes = ${bootstrapPalettes};
+  root.dataset.palette = palettes.includes(values.${THEME_PALETTE_COOKIE}) ? values.${THEME_PALETTE_COOKIE} : "${defaultPalette}";
 })();
 `;

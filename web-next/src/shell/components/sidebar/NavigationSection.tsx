@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
+import { NavigationIconSequence } from "@/shared/components/layout/navigation";
 import NavigationItem from "./NavigationItem";
 import { alpha, useTheme } from "@mui/material/styles";
 import { useRouter } from "next/navigation";
@@ -236,9 +237,9 @@ function NavigationSection({
       {/* Section Items - Show ALL items if section header matches search */}
       <Collapse in={isExpanded && open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          {itemsToShow.map((item) => (
+          {itemsToShow.map((item, index) => (
+            <NavigationIconSequence key={item.path || item.title} index={index}>
             <NavigationItem
-              key={item.path || item.title}
               open={open}
               title={t(item.title)}
               titleComponent={
@@ -253,6 +254,7 @@ function NavigationSection({
               permissions={item.permissions || []}
               items={item.items || []}
             />
+            </NavigationIconSequence>
           ))}
         </List>
       </Collapse>

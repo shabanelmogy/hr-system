@@ -46,7 +46,7 @@ const CardViewHeader = ({
       sx={{
         p: compact ? 1.5 : 3,
         mb: compact ? 1.5 : 3,
-        background: `linear-gradient(135deg, ${theme.palette.primary.main}08 0%, ${theme.palette.secondary.main}08 100%)`,
+        background: `linear-gradient(135deg, ${theme.palette.primary.main}08 0%, ${theme.palette.primary.dark}08 100%)`,
         border: `1px solid ${alpha(theme.palette.primary.main, 0.1)}`,
         borderRadius: compact ? 2 : 3,
       }}
