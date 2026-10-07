@@ -1,4 +1,6 @@
 import type { Theme as NavigationTheme } from 'expo-router/react-navigation';
+
+import { appFontFaces, areAppFontsAvailable } from './fonts';
 import {
   createMobileColors,
   defaultPalette as tokenDefaultPalette,
@@ -96,12 +98,19 @@ export function createNavigationTheme(theme: AppTheme): NavigationTheme {
       border: theme.colors.border,
       notification: theme.colors.danger,
     },
-    fonts: {
-      regular: { fontFamily: 'System', fontWeight: '400' },
-      medium: { fontFamily: 'System', fontWeight: '500' },
-      bold: { fontFamily: 'System', fontWeight: '700' },
-      heavy: { fontFamily: 'System', fontWeight: '800' },
-    },
+    fonts: areAppFontsAvailable()
+      ? {
+          regular: { fontFamily: appFontFaces.regular, fontWeight: 'normal' },
+          medium: { fontFamily: appFontFaces.medium, fontWeight: 'normal' },
+          bold: { fontFamily: appFontFaces.bold, fontWeight: 'normal' },
+          heavy: { fontFamily: appFontFaces.bold, fontWeight: 'normal' },
+        }
+      : {
+          regular: { fontFamily: 'System', fontWeight: '400' },
+          medium: { fontFamily: 'System', fontWeight: '500' },
+          bold: { fontFamily: 'System', fontWeight: '700' },
+          heavy: { fontFamily: 'System', fontWeight: '800' },
+        },
   };
 }
 

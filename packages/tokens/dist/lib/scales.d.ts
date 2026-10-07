@@ -77,8 +77,8 @@ export declare const textStyles: {
 export type TextVariant = keyof typeof textStyles;
 /**
  * Font families. Arabic and Latin share one family so mixed text keeps the
- * same rhythm. The native app loads the files with expo-font under these names;
- * the web app loads them with next/font and exposes the CSS variables.
+ * same rhythm. The native app bundles the files (assets/fonts) and loads one family per
+ * weight with expo-font; the web app self-hosts them (public/fonts + src/fonts.css).
  */
 export declare const fontFamily: {
     readonly sans: "IBM Plex Sans Arabic";
