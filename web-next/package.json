@@ -20,6 +20,7 @@
     "test:e2e": "playwright test",
     "test:e2e:headed": "playwright test --headed",
     "test:e2e:install": "playwright install chromium",
+    "capture:theme-baselines": "playwright test --project=theme-baselines",
     "check:architecture": "node scripts/check-architecture.mjs",
     "check:governance": "node scripts/architecture-governance.mjs --check",
     "check:release-contract": "node scripts/release-readiness.mjs --check-contract",

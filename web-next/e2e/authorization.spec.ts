@@ -24,5 +24,5 @@ test("super admin can load the protected Countries reference-data surface", asyn
   await expect(
     page.getByRole("heading", { name: "Countries Management" }).filter({ visible: true }),
   ).toBeVisible();
-  await expect(page.getByText("Egypt", { exact: true }).first()).toBeVisible();
+  await expect(page.getByText("Test Country 12", { exact: true }).first()).toBeVisible();
 });

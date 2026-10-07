@@ -30,7 +30,7 @@ async function expectNoAccessibilityViolations(page: Page, include?: string) {
 }
 
 async function waitForStableUserWelcome(page: Page) {
-  const userWelcome = page.getByTestId("user-welcome").filter({ visible: true });
+  const userWelcome = page.getByTestId("user-avatar-badge").filter({ visible: true }).first();
 
   await expect(userWelcome).toHaveCSS("opacity", "1");
 }

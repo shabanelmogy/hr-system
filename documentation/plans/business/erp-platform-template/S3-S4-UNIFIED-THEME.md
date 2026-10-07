@@ -154,8 +154,17 @@ Differences from the prepared change set:
 - Font: IBM Plex Sans Arabic is self-hosted on web (`public/fonts`, `src/fonts.css`, preload,
   immutable cache, cached by the service worker; CSP unchanged) and bundled on mobile
   (`assets/fonts`, `expo-font`, one family per weight in `AppText` and the navigation theme).
-- Baseline: login in 4 palettes × light/dark × LTR/RTL captured on a production build (font
-  loaded, correct primary per palette, no hydration errors). Reference screens P-001/P-002/
-  P-003/P-006 need a running API and stay open.
-- Still open: tenant primary branding (`withBrandPrimary`), shared web/mobile palette
-  preference, P-00x visual baselines.
+- Baselines (S3.3): `web-next/e2e/theme-baselines.spec.ts` (`npm run capture:theme-baselines`)
+  captures reference screens in 4 palettes × light/dark × LTR/RTL against the deterministic e2e
+  backend. Contact sheets: `baselines/login.png`, `baselines/P-001-countries.png`,
+  `baselines/P-006-role-permissions.png`. P-002 (Cost Centers) and P-003 (Add Tenant) need e2e
+  fixture endpoints for organizational structure and tenants and stay open.
+- Found while capturing: page titles used `info.light` (blue on every palette) and read-only field
+  labels used `info.light`; both use primary now. Tinted chips (`AppChip` soft/outlined) use the
+  dark shade in light mode for 4.5:1; the unavailable context badge no longer dims its text;
+  the top-bar context box and badge have `role="group"`.
+- e2e suite repaired (25/25 desktop, 3/3 mobile): fixture role claims carry `moduleCode`;
+  role-permissions, Countries (newest-first default order), a11y (`user-avatar-badge`) and the
+  fiscal-year date entry (MUI X sectioned picker) specs follow the current UI.
+- Still open: tenant primary branding (`withBrandPrimary`, needs a tenant setting and API),
+  shared web/mobile palette preference (needs a user-preference API), P-002/P-003 baselines.

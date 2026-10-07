@@ -469,11 +469,23 @@ function makeRoleFixture() {
     name: "Finance managers",
     isSystem: false,
     isDeleted: false,
+    // The role editor groups screens by owning business module (moduleCode is required).
     roleClaims: groups.flatMap((group) => actions.map((action) => {
       const displayValue = `${group}:${action}`;
-      return { displayValue, isSelected: selectedPermissions.has(displayValue) };
+      return {
+        displayValue,
+        moduleCode: moduleCodeForPermissionGroup(group),
+        isSelected: selectedPermissions.has(displayValue),
+      };
     })),
   };
+}
+
+function moduleCodeForPermissionGroup(group) {
+  if (["Accounts", "FiscalYears", "JournalDefinitions"].includes(group)) return "acc";
+  if (["Countries", "Currencies"].includes(group)) return "reference-data";
+  if (group.startsWith("Workforce")) return "hr";
+  return "platform";
 }
 
 function fiscalYearsFor(companyId) {
