@@ -110,8 +110,9 @@ export default function TenantDashboardPage() {
             flex: 1,
             gap: 2,
             gridTemplateRows: {
-              xs: "96px minmax(160px, 0.95fr) minmax(168px, 1fr)",
-              md: "96px minmax(170px, 0.9fr) minmax(180px, 1fr)",
+              // KPI row sizes to its cards (a fixed 96px clipped their bottom edge).
+              xs: "auto minmax(160px, 0.95fr) minmax(168px, 1fr)",
+              md: "auto minmax(170px, 0.9fr) minmax(180px, 1fr)",
             },
             minHeight: 0,
             overflow: "hidden",
@@ -126,9 +127,9 @@ export default function TenantDashboardPage() {
                 md: "repeat(6, minmax(0, 1fr))",
               },
               minWidth: 0,
-              overflowX: { xs: "auto", md: "hidden" },
-              overflowY: "hidden",
-              pb: { xs: 0.5, md: 0 },
+              overflowX: { xs: "auto", md: "visible" },
+              // Room under the cards for their border and shadow before the panels.
+              pb: 1,
               scrollSnapType: { xs: "inline proximity", md: "none" },
             }}
           >
