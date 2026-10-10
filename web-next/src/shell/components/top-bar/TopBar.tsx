@@ -216,6 +216,7 @@ const TopBar = ({
             >
               <ModuleContextSwitcher iconOnly />
               <Box
+                role="group"
                 aria-label={t("auth.currentContext")}
                 sx={{
                   display: "flex",
@@ -289,6 +290,7 @@ const TopBar = ({
             >
               <ModuleContextSwitcher iconOnly />
               <Box
+                role="group"
                 aria-label={t("auth.currentContext")}
                 sx={{
                   display: "flex",

@@ -105,12 +105,12 @@ export function RecruitmentSettingsViewMobile() {
                 <AppIcon
                   name={sec.icon}
                   size={14}
-                  color={isSelected ? '#fff' : theme.colors.textMuted}
+                  color={isSelected ? theme.colors.onPrimary : theme.colors.textMuted}
                 />
                 <AppText
                   variant="caption"
                   weight={isSelected ? '700' : '500'}
-                  style={{ color: isSelected ? '#fff' : theme.colors.text }}
+                  style={{ color: isSelected ? theme.colors.onPrimary : theme.colors.text }}
                 >
                   {sec.label} {sec.count !== undefined ? `(${sec.count})` : ''}
                 </AppText>
@@ -280,7 +280,7 @@ export function RecruitmentSettingsViewMobile() {
       {activeSection === 'general' && (
         <View style={styles.listContainer}>
           <View style={[styles.itemCard, { backgroundColor: theme.colors.surface, borderColor: theme.colors.border }]}>
-            <View style={styles.policyRow}>
+            <View style={[styles.policyRow, { borderBottomColor: theme.colors.border }]}>
               <AppText variant="body" weight="700">
                 {t('recruitment.settings.defaultCurrency')}
               </AppText>
@@ -289,7 +289,7 @@ export function RecruitmentSettingsViewMobile() {
               </AppText>
             </View>
 
-            <View style={styles.policyRow}>
+            <View style={[styles.policyRow, { borderBottomColor: theme.colors.border }]}>
               <AppText variant="body" weight="700">
                 {t('recruitment.settings.offerExpiryDays')}
               </AppText>
@@ -298,7 +298,7 @@ export function RecruitmentSettingsViewMobile() {
               </AppText>
             </View>
 
-            <View style={styles.policyRow}>
+            <View style={[styles.policyRow, { borderBottomColor: theme.colors.border }]}>
               <AppText variant="body" weight="700">
                 {t('recruitment.settings.probationMonths')}
               </AppText>
@@ -307,7 +307,7 @@ export function RecruitmentSettingsViewMobile() {
               </AppText>
             </View>
 
-            <View style={styles.policyRow}>
+            <View style={[styles.policyRow, { borderBottomColor: theme.colors.border }]}>
               <AppText variant="body" weight="700">
                 {t('recruitment.settings.autoPublishLabel')}
               </AppText>
@@ -412,6 +412,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 10,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: '#e0e0e0',
   },
 });

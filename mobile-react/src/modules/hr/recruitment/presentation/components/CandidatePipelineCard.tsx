@@ -1,7 +1,7 @@
 import React from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { useAppTheme } from '@/src/core/theme';
+import { useAppTheme, withAlpha } from '@/src/core/theme';
 import { AppButton, AppIcon, AppStatusBadge, AppText } from '@/src/shared/components';
 import {
   ApplicationStage,
@@ -49,17 +49,17 @@ export function CandidatePipelineCard({
   const getStageBadgeProps = () => {
     switch (pipelineStage) {
       case ApplicationStage.Applied:
-        return { label: t('recruitment.stages.applied'), color: '#3B82F6' };
+        return { label: t('recruitment.stages.applied'), color: theme.colors.primary };
       case ApplicationStage.Shortlisted:
-        return { label: t('recruitment.stages.shortlisted'), color: '#8B5CF6' };
+        return { label: t('recruitment.stages.shortlisted'), color: theme.colors.accent };
       case ApplicationStage.Interview:
-        return { label: t('recruitment.stages.interview'), color: '#F59E0B' };
+        return { label: t('recruitment.stages.interview'), color: theme.colors.warning };
       case ApplicationStage.Offer:
-        return { label: t('recruitment.stages.offer'), color: '#06B6D4' };
+        return { label: t('recruitment.stages.offer'), color: theme.colors.secondary };
       case ApplicationStage.Hired:
         return { label: t('recruitment.stages.hired'), color: theme.colors.success };
       case ApplicationStage.Rejected:
-        return { label: t('recruitment.stages.rejected'), color: theme.colors.danger ?? '#EF4444' };
+        return { label: t('recruitment.stages.rejected'), color: theme.colors.danger };
       case ApplicationStage.Withdrawn:
         return { label: t('recruitment.stages.withdrawn'), color: theme.colors.textMuted };
       default:
@@ -112,9 +112,9 @@ export function CandidatePipelineCard({
         </View>
 
         {application.averageEvaluationScore ? (
-          <View style={[styles.scoreBadge, { backgroundColor: '#FEF3C7' }]}>
-            <AppIcon name="star" size={12} color="#D97706" />
-            <AppText variant="caption" weight="800" style={{ color: '#D97706' }}>
+          <View style={[styles.scoreBadge, { backgroundColor: withAlpha(theme.colors.warning, 0.15) }]}>
+            <AppIcon name="star" size={12} color={theme.colors.warning} />
+            <AppText variant="caption" weight="800" style={{ color: theme.colors.warning }}>
               {application.averageEvaluationScore}
             </AppText>
           </View>
@@ -122,7 +122,7 @@ export function CandidatePipelineCard({
       </View>
 
       {/* Action buttons row based on current stage */}
-      <View style={styles.actionRow}>
+      <View style={[styles.actionRow, { borderTopColor: theme.colors.border }]}>
         {onMoveStage && application.status === ApplicationStatus.Submitted && (
           <AppButton
             size="sm"
@@ -257,6 +257,5 @@ const styles = StyleSheet.create({
     marginTop: 4,
     paddingTop: 8,
     borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: '#00000010',
   },
 });

@@ -14,7 +14,7 @@ const StyledCard = ({ children }: StyledCardProps) => {
         p: 0,
         borderRadius: 1,
         background:
-          theme.palette.mode === "dark" ? "rgba(30, 30, 30, 0.9)" : "#ffffff",
+          alpha(theme.palette.background.paper, theme.palette.mode === "dark" ? 0.9 : 1),
         backdropFilter: "blur(10px)",
         border: `1px solid ${alpha(theme.palette.divider, 0.1)}`,
         boxShadow:

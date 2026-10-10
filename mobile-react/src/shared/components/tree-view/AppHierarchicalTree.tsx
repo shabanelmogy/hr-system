@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 import * as Haptics from 'expo-haptics';
 
 import { useLocalization } from '@/src/core/localization';
-import { useAppTheme } from '@/src/core/theme';
+import { useAppTheme, withAlpha } from '@/src/core/theme';
 import { AppText } from '@/src/shared/components/typography/AppText';
 import { AppIcon, type AppIconName } from '@/src/shared/components/icons/AppIcon';
 import { AppButton } from '@/src/shared/components/controls/AppButton';
@@ -261,7 +261,7 @@ export function AppHierarchicalTree<T>({
               borderRadius: 8,
               minHeight: 38,
               backgroundColor: pressed
-                ? theme.isDark ? 'rgba(255,255,255,0.06)' : '#f1f5f9'
+                ? theme.colors.surfaceMuted
                 : 'transparent',
             })}
           >
@@ -299,7 +299,7 @@ export function AppHierarchicalTree<T>({
                     width: 5,
                     height: 5,
                     borderRadius: 2.5,
-                    backgroundColor: theme.isDark ? '#94a3b8' : '#64748b',
+                    backgroundColor: theme.colors.textMuted,
                   }}
                 />
               </View>
@@ -322,8 +322,8 @@ export function AppHierarchicalTree<T>({
             {code ? (
               <View
                 style={{
-                  backgroundColor: theme.isDark ? 'rgba(255,255,255,0.06)' : '#f1f5f9',
-                  borderColor: theme.isDark ? 'rgba(255,255,255,0.18)' : '#e2e8f0',
+                  backgroundColor: theme.colors.surfaceMuted,
+                  borderColor: theme.colors.border,
                   borderWidth: 1,
                   borderRadius: 4,
                   paddingHorizontal: 6,
@@ -373,15 +373,15 @@ export function AppHierarchicalTree<T>({
                     borderWidth: 1,
                     alignItems: 'center',
                     justifyContent: 'center',
-                    backgroundColor: theme.isDark ? 'rgba(245,158,11,0.15)' : 'rgba(245,158,11,0.1)',
-                    borderColor: theme.isDark ? 'rgba(245,158,11,0.6)' : 'rgba(245,158,11,0.35)',
+                    backgroundColor: withAlpha(theme.colors.warning, theme.isDark ? 0.15 : 0.1),
+                    borderColor: withAlpha(theme.colors.warning, theme.isDark ? 0.6 : 0.35),
                   }}
                 >
                   <AppText
                     style={{
                       fontSize: 9.5,
                       fontWeight: '700',
-                      color: '#b45309',
+                      color: theme.colors.warning,
                       textAlign: 'center',
                       lineHeight: 13,
                     }}
@@ -419,10 +419,10 @@ export function AppHierarchicalTree<T>({
                   borderRadius: 12,
                   alignItems: 'center',
                   justifyContent: 'center',
-                  backgroundColor: pressed ? 'rgba(16,185,129,0.3)' : 'rgba(16,185,129,0.15)',
+                  backgroundColor: withAlpha(theme.colors.success, pressed ? 0.3 : 0.15),
                 })}
               >
-                <AppText style={{ fontSize: 13, color: '#10b981', fontWeight: '800' }}>+</AppText>
+                <AppText style={{ fontSize: 13, color: theme.colors.success, fontWeight: '800' }}>+</AppText>
               </Pressable>
             ) : null}
 
@@ -459,10 +459,10 @@ export function AppHierarchicalTree<T>({
                   borderRadius: 12,
                   alignItems: 'center',
                   justifyContent: 'center',
-                  backgroundColor: pressed ? 'rgba(239,68,68,0.3)' : 'rgba(239,68,68,0.15)',
+                  backgroundColor: withAlpha(theme.colors.danger, pressed ? 0.3 : 0.15),
                 })}
               >
-                <AppText style={{ fontSize: 12, color: '#ef4444', fontWeight: '800' }}>✕</AppText>
+                <AppText style={{ fontSize: 12, color: theme.colors.danger, fontWeight: '800' }}>✕</AppText>
               </Pressable>
             ) : null}
           </View>
@@ -502,8 +502,8 @@ export function AppHierarchicalTree<T>({
             styles.webRootBanner,
             isRTL && styles.webRootBannerRTL,
             {
-              backgroundColor: theme.isDark ? 'rgba(255,255,255,0.03)' : '#f8fafc',
-              borderColor: theme.isDark ? 'rgba(255,255,255,0.15)' : '#cbd5e1',
+              backgroundColor: theme.colors.background,
+              borderColor: theme.colors.border,
             },
           ]}
         >
@@ -570,7 +570,7 @@ export function AppHierarchicalTree<T>({
               </AppText>
 
               {reparentError ? (
-                <View style={styles.errorNoticeBox}>
+                <View style={[styles.errorNoticeBox, { backgroundColor: withAlpha(theme.colors.danger, 0.1) }]}>
                   <AppText color="danger" variant="caption">
                     {reparentError}
                   </AppText>
@@ -696,7 +696,7 @@ const styles = StyleSheet.create({
   modalCard: { borderRadius: 16, borderWidth: 1, padding: 20, maxHeight: '80%' },
   modalTitle: { fontSize: 17, marginBottom: 4 },
   modalSubtitle: { marginBottom: 16 },
-  errorNoticeBox: { padding: 10, borderRadius: 8, backgroundColor: 'rgba(239,68,68,0.1)', marginBottom: 12 },
+  errorNoticeBox: { padding: 10, borderRadius: 8, marginBottom: 12 },
   parentPickerScroll: { maxHeight: 300, marginBottom: 16 },
   parentOptionRow: { flexDirection: 'row', alignItems: 'center', gap: 10, padding: 12, borderRadius: 8, borderWidth: 1, borderColor: 'transparent', marginBottom: 6 },
   parentOptionTextGroup: { flex: 1 },

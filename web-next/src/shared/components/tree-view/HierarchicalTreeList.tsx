@@ -245,7 +245,7 @@ export default function HierarchicalTreeList<T>({
                   ? alpha(theme.palette.primary.main, theme.palette.mode === "dark" ? 0.28 : 0.12)
                   : theme.palette.mode === "dark"
                     ? alpha(theme.palette.common.white, 0.05)
-                    : "#f8fafc",
+                    : theme.palette.background.default,
                 "& .node-actions": {
                   opacity: 1,
                   visibility: "visible",
@@ -288,7 +288,7 @@ export default function HierarchicalTreeList<T>({
                       borderRadius: "50%",
                       backgroundColor: theme.palette.mode === "dark"
                         ? alpha(theme.palette.text.disabled, 0.6)
-                        : "#94a3b8",
+                        : theme.palette.text.disabled,
                     }}
                   />
                 </Box>
@@ -297,9 +297,9 @@ export default function HierarchicalTreeList<T>({
               {/* Folder / Wallet Icon */}
               {hasChildren ? (
                 isExpanded ? (
-                  <FolderOpen sx={{ color: theme.palette.mode === "dark" ? "#fbbf24" : "#d97706", fontSize: 20 }} />
+                  <FolderOpen sx={{ color: theme.palette.warning.main, fontSize: 20 }} />
                 ) : (
-                  <Folder sx={{ color: theme.palette.mode === "dark" ? "#f59e0b" : "#b45309", fontSize: 20 }} />
+                  <Folder sx={{ color: theme.palette.warning.main, fontSize: 20 }} />
                 )
               ) : (
                 <AccountBalanceWallet sx={{ color: theme.palette.mode === "dark" ? theme.palette.primary.light : "primary.main", fontSize: 18 }} />
@@ -314,14 +314,14 @@ export default function HierarchicalTreeList<T>({
                   fontSize: "0.8rem",
                   color: isSelected
                     ? (theme.palette.mode === "dark" ? theme.palette.primary.light : theme.palette.primary.dark)
-                    : (theme.palette.mode === "dark" ? theme.palette.text.primary : "#334155"),
+                    : (theme.palette.mode === "dark" ? theme.palette.text.primary : theme.palette.text.primary),
                   backgroundColor: isSelected
                     ? alpha(theme.palette.primary.main, theme.palette.mode === "dark" ? 0.3 : 0.12)
-                    : (theme.palette.mode === "dark" ? alpha(theme.palette.common.white, 0.07) : "#f1f5f9"),
+                    : (theme.palette.mode === "dark" ? alpha(theme.palette.common.white, 0.07) : (theme.palette.app?.muted ?? theme.palette.action.hover)),
                   border: `1px solid ${
                     isSelected
                       ? alpha(theme.palette.primary.main, theme.palette.mode === "dark" ? 0.5 : 0.35)
-                      : (theme.palette.mode === "dark" ? alpha(theme.palette.common.white, 0.12) : "#e2e8f0")
+                      : (theme.palette.mode === "dark" ? alpha(theme.palette.common.white, 0.12) : theme.palette.divider)
                   }`,
                   px: 0.85,
                   py: 0.2,
@@ -379,13 +379,13 @@ export default function HierarchicalTreeList<T>({
                   fontWeight: 700,
                   display: { xs: "none", md: "inline-flex" },
                   backgroundColor: hasChildren
-                    ? (theme.palette.mode === "dark" ? alpha(theme.palette.common.white, 0.08) : "#f1f5f9")
+                    ? (theme.palette.mode === "dark" ? alpha(theme.palette.common.white, 0.08) : (theme.palette.app?.muted ?? theme.palette.action.hover))
                     : (theme.palette.mode === "dark" ? alpha(theme.palette.primary.main, 0.15) : alpha(theme.palette.primary.main, 0.08)),
                   color: hasChildren
-                    ? (theme.palette.mode === "dark" ? theme.palette.text.secondary : "#475569")
+                    ? (theme.palette.mode === "dark" ? theme.palette.text.secondary : theme.palette.text.secondary)
                     : (theme.palette.mode === "dark" ? theme.palette.primary.light : theme.palette.primary.dark),
                   borderColor: hasChildren
-                    ? (theme.palette.mode === "dark" ? alpha(theme.palette.common.white, 0.2) : "#e2e8f0")
+                    ? (theme.palette.mode === "dark" ? alpha(theme.palette.common.white, 0.2) : theme.palette.divider)
                     : (theme.palette.mode === "dark" ? alpha(theme.palette.primary.main, 0.3) : alpha(theme.palette.primary.main, 0.25)),
                 }}
               />
@@ -401,9 +401,9 @@ export default function HierarchicalTreeList<T>({
                     fontSize: "0.7rem",
                     fontWeight: 700,
                     minWidth: 24,
-                    backgroundColor: theme.palette.mode === "dark" ? alpha("#f59e0b", 0.15) : alpha("#f59e0b", 0.1),
-                    borderColor: theme.palette.mode === "dark" ? alpha("#f59e0b", 0.6) : alpha("#f59e0b", 0.35),
-                    color: theme.palette.mode === "dark" ? "#fbbf24" : "#b45309",
+                    backgroundColor: alpha(theme.palette.warning.main, theme.palette.mode === "dark" ? 0.15 : 0.1),
+                    borderColor: alpha(theme.palette.warning.main, theme.palette.mode === "dark" ? 0.6 : 0.35),
+                    color: theme.palette.warning.main,
                   }}
                 />
               )}
@@ -518,7 +518,7 @@ export default function HierarchicalTreeList<T>({
                   width: "1.5px",
                   backgroundColor: theme.palette.mode === "dark"
                     ? alpha(theme.palette.common.white, 0.12)
-                    : "#cbd5e1",
+                    : alpha(theme.palette.text.secondary, 0.35),
                 },
               }}
             >
@@ -544,13 +544,13 @@ export default function HierarchicalTreeList<T>({
           border:
             dragOverTargetId === "root"
               ? `2px dashed ${theme.palette.mode === "dark" ? theme.palette.primary.light : theme.palette.primary.main}`
-              : `1px dashed ${theme.palette.mode === "dark" ? alpha(theme.palette.common.white, 0.15) : "#cbd5e1"}`,
+              : `1px dashed ${theme.palette.mode === "dark" ? alpha(theme.palette.common.white, 0.15) : alpha(theme.palette.text.secondary, 0.35)}`,
           backgroundColor:
             dragOverTargetId === "root"
               ? alpha(theme.palette.primary.main, theme.palette.mode === "dark" ? 0.25 : 0.08)
               : theme.palette.mode === "dark"
                 ? alpha(theme.palette.common.white, 0.03)
-                : "#f8fafc",
+                : theme.palette.background.default,
           display: "flex",
           alignItems: "center",
           gap: 1,

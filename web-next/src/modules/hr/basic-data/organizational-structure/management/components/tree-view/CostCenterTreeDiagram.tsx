@@ -535,8 +535,8 @@ export default function CostCenterTreeDiagram({
               gap: 0.5,
               p: 1.25,
               borderRadius: 1.5,
-              backgroundColor: theme.palette.mode === "dark" ? alpha(theme.palette.common.white, 0.04) : "#f8fafc",
-              border: `1px solid ${theme.palette.mode === "dark" ? alpha(theme.palette.common.white, 0.1) : "#e2e8f0"}`,
+              backgroundColor: theme.palette.mode === "dark" ? alpha(theme.palette.common.white, 0.04) : theme.palette.background.default,
+              border: `1px solid ${theme.palette.mode === "dark" ? alpha(theme.palette.common.white, 0.1) : theme.palette.divider}`,
             }}
           >
             <Chip
@@ -550,8 +550,8 @@ export default function CostCenterTreeDiagram({
                 height: 24,
                 fontSize: "0.75rem",
                 fontWeight: 700,
-                borderColor: theme.palette.mode === "dark" ? alpha(theme.palette.common.white, 0.2) : "#cbd5e1",
-                backgroundColor: theme.palette.mode === "dark" ? undefined : "#ffffff",
+                borderColor: theme.palette.mode === "dark" ? alpha(theme.palette.common.white, 0.2) : alpha(theme.palette.text.secondary, 0.35),
+                backgroundColor: theme.palette.mode === "dark" ? undefined : theme.palette.background.paper,
               }}
             />
             <ChevronRight sx={{ fontSize: 14, color: "text.disabled", transform: isAr ? "rotate(180deg)" : "none" }} />
@@ -585,10 +585,10 @@ export default function CostCenterTreeDiagram({
                       fontWeight: node.id === selectedItem.id ? 800 : 500,
                       backgroundColor: node.id === selectedItem.id
                         ? undefined
-                        : (theme.palette.mode === "dark" ? undefined : "#ffffff"),
+                        : (theme.palette.mode === "dark" ? undefined : theme.palette.background.paper),
                       borderColor: theme.palette.mode === "dark" && node.id !== selectedItem.id
                         ? alpha(theme.palette.common.white, 0.2)
-                        : (node.id === selectedItem.id ? undefined : "#cbd5e1"),
+                        : (node.id === selectedItem.id ? undefined : alpha(theme.palette.text.secondary, 0.35)),
                     }}
                   />
                 </React.Fragment>
@@ -607,8 +607,8 @@ export default function CostCenterTreeDiagram({
             sx={{
               p: 1.5,
               borderRadius: 2,
-              backgroundColor: theme.palette.mode === "dark" ? alpha(theme.palette.common.white, 0.04) : "#f8fafc",
-              border: `1px solid ${theme.palette.mode === "dark" ? alpha(theme.palette.common.white, 0.1) : "#e2e8f0"}`,
+              backgroundColor: theme.palette.mode === "dark" ? alpha(theme.palette.common.white, 0.04) : theme.palette.background.default,
+              border: `1px solid ${theme.palette.mode === "dark" ? alpha(theme.palette.common.white, 0.1) : theme.palette.divider}`,
               display: "flex",
               flexDirection: "column",
               gap: 1,
@@ -683,8 +683,8 @@ export default function CostCenterTreeDiagram({
                     alignItems: "center",
                     justifyContent: "space-between",
                     transition: "all 0.15s ease",
-                    backgroundColor: theme.palette.mode === "dark" ? alpha(theme.palette.common.white, 0.03) : "#ffffff",
-                    borderColor: theme.palette.mode === "dark" ? alpha(theme.palette.common.white, 0.1) : "#e2e8f0",
+                    backgroundColor: theme.palette.mode === "dark" ? alpha(theme.palette.common.white, 0.03) : theme.palette.background.paper,
+                    borderColor: theme.palette.mode === "dark" ? alpha(theme.palette.common.white, 0.1) : theme.palette.divider,
                     "&:hover": {
                       borderColor: theme.palette.mode === "dark" ? theme.palette.primary.light : theme.palette.primary.main,
                       backgroundColor: theme.palette.mode === "dark" ? alpha(theme.palette.primary.main, 0.15) : alpha(theme.palette.primary.main, 0.03),
@@ -820,8 +820,8 @@ export default function CostCenterTreeDiagram({
             width: "100%",
             p: 2,
             borderRadius: 2,
-            backgroundColor: theme.palette.mode === "dark" ? alpha(theme.palette.common.white, 0.04) : "#f8fafc",
-            border: `1px solid ${theme.palette.mode === "dark" ? alpha(theme.palette.common.white, 0.1) : "#e2e8f0"}`,
+            backgroundColor: theme.palette.mode === "dark" ? alpha(theme.palette.common.white, 0.04) : theme.palette.background.default,
+            border: `1px solid ${theme.palette.mode === "dark" ? alpha(theme.palette.common.white, 0.1) : theme.palette.divider}`,
             display: "grid",
             gridTemplateColumns: "1fr 1fr",
             gap: 1.5,

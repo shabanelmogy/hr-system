@@ -1,6 +1,7 @@
 import { ThemeProvider } from 'expo-router/react-navigation';
 import { Stack } from 'expo-router';
 import Constants from 'expo-constants';
+import { useFonts } from 'expo-font';
 import { StatusBar } from 'expo-status-bar';
 import { useTranslation } from 'react-i18next';
 import 'react-native-reanimated';
@@ -12,7 +13,7 @@ import { BootstrapErrorBoundary } from '@/src/core/providers/BootstrapErrorBound
 import { configureObserve, ObserveRoot } from '@/src/core/observability/expoObserve';
 import { SENSITIVE_ROUTE_PARAMS } from '@/src/core/observability/telemetry-redaction';
 import { useOnboarding } from '@/src/core/onboarding';
-import { useAppTheme } from '@/src/core/theme';
+import { appFontAssets, setAppFontsAvailable, useAppTheme } from '@/src/core/theme';
 import { AuthProvider, useAuth } from '@/src/platform/auth';
 import { RealtimeProvider } from '@/src/platform/realtime';
 import { AppScreen, AppStateView } from '@/src/shared/components';
@@ -37,6 +38,12 @@ export const unstable_settings = {
 };
 
 export default function RootLayout() {
+  // IBM Plex Sans Arabic (the shared token font). Wait for it so text does not re-flow;
+  // if loading fails the app continues with the system font.
+  const [fontsLoaded, fontError] = useFonts(appFontAssets);
+  if (!fontsLoaded && !fontError) return null;
+  setAppFontsAvailable(fontsLoaded && !fontError);
+
   return (
     <ObserveRoot>
       <BootstrapErrorBoundary>

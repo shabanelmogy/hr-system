@@ -22,10 +22,12 @@ test("admin can open a screen and edit its permissions without a horizontal matr
   );
   await expect(page.getByRole("heading", { name: "Permissions for Finance managers" }))
     .toBeVisible();
-  await expect(page.getByText("Permission workspace", { exact: true })).toBeVisible();
+  await expect(page.getByText("Screens and permissions", { exact: true })).toBeVisible();
   await expect(page.getByRole("table")).toHaveCount(0);
 
-  const usersScreen = page.getByRole("button", { name: /Users/ });
+  // Screens are grouped by owning business module; Users belongs to Administration.
+  await page.getByRole("button", { name: /Administration/ }).click();
+  const usersScreen = page.getByRole("button", { name: /^Users Click to review/ });
   await expect(usersScreen).toBeVisible();
   await usersScreen.click();
   await expect(page.getByRole("checkbox", { name: "View permission for Users" }))

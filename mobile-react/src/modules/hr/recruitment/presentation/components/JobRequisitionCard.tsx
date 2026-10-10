@@ -172,8 +172,8 @@ export function JobRequisitionCard({
               },
             ]}
           >
-            <AppIcon name="briefcase" size={14} color="#fff" />
-            <AppText variant="caption" weight="700" style={{ color: '#fff' }}>
+            <AppIcon name="briefcase" size={14} color={theme.colors.onPrimary} />
+            <AppText variant="caption" weight="700" style={{ color: theme.colors.onPrimary }}>
               {t('recruitment.requisitions.openOpeningBtn')}
             </AppText>
           </Pressable>
@@ -192,8 +192,8 @@ export function JobRequisitionCard({
                   },
                 ]}
               >
-                <AppIcon name="checkmark" size={14} color="#fff" />
-                <AppText variant="caption" weight="700" style={{ color: '#fff' }}>
+                <AppIcon name="checkmark" size={14} color={theme.colors.onSolid} />
+                <AppText variant="caption" weight="700" style={{ color: theme.colors.onSolid }}>
                   {t('common.approve')}
                 </AppText>
               </Pressable>
@@ -205,13 +205,13 @@ export function JobRequisitionCard({
                 style={({ pressed }) => [
                   styles.actionBtn,
                   {
-                    backgroundColor: theme.colors.danger ?? '#EF4444',
+                    backgroundColor: theme.colors.danger,
                     opacity: pressed ? 0.85 : 1,
                   },
                 ]}
               >
-                <AppIcon name="close" size={14} color="#fff" />
-                <AppText variant="caption" weight="700" style={{ color: '#fff' }}>
+                <AppIcon name="close" size={14} color={theme.colors.onDanger} />
+                <AppText variant="caption" weight="700" style={{ color: theme.colors.onDanger }}>
                   {t('common.reject')}
                 </AppText>
               </Pressable>

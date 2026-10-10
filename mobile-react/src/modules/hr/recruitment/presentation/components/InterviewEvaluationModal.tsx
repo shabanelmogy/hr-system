@@ -275,7 +275,7 @@ export function InterviewEvaluationModal({
                           variant="caption"
                           weight="800"
                           style={{
-                            color: item.score >= val ? '#fff' : theme.colors.textMuted,
+                            color: item.score >= val ? theme.colors.onPrimary : theme.colors.textMuted,
                             fontSize: 11,
                           }}
                         >
@@ -310,7 +310,7 @@ export function InterviewEvaluationModal({
                     <AppText
                       variant="caption"
                       weight={selected ? '800' : '600'}
-                      style={{ color: selected ? '#fff' : theme.colors.text }}
+                      style={{ color: selected ? theme.colors.onPrimary : theme.colors.text }}
                     >
                       {rec.label}
                     </AppText>

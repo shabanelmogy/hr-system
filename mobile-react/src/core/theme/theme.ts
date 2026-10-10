@@ -1,15 +1,23 @@
 import type { Theme as NavigationTheme } from 'expo-router/react-navigation';
+
+import { appFontFaces, areAppFontsAvailable } from './fonts';
 import {
   createMobileColors,
+  defaultPalette as tokenDefaultPalette,
   getTheme,
+  themePaletteOrder as tokenThemePaletteOrder,
   layout as tokenLayout,
   radius as tokenRadius,
   spacing as tokenSpacing,
   textStyles,
   type MobileColors,
+  type ModuleColors,
   type ResolvedThemeMode as TokenResolvedThemeMode,
   type ThemePalette as TokenThemePalette,
 } from '@app/tokens';
+
+/** `#RRGGBB` + alpha → rgba(); use instead of hand-written hex alpha suffixes. */
+export { withAlpha } from '@app/tokens';
 
 /**
  * Design values come from @app/tokens (packages/tokens), the single source shared with
@@ -35,9 +43,12 @@ export type ThemeMode = 'system' | 'light' | 'dark';
 export type ResolvedThemeMode = TokenResolvedThemeMode;
 export type ThemePalette = TokenThemePalette;
 export type AppColors = MobileColors;
+export type AppModuleColors = ModuleColors;
 
 export interface AppTheme {
   colors: AppColors;
+  /** One icon color per ERP module, from the same palette as web (tokens `moduleColors`). */
+  modules: AppModuleColors;
   isDark: boolean;
   radius: typeof radius;
   spacing: typeof spacing;
@@ -46,8 +57,10 @@ export interface AppTheme {
 }
 
 function createTheme(palette: ThemePalette, mode: ResolvedThemeMode): AppTheme {
+  const tokens = getTheme(palette, mode);
   return {
-    colors: createMobileColors(getTheme(palette, mode).colors),
+    colors: createMobileColors(tokens.colors),
+    modules: tokens.modules,
     isDark: mode === 'dark',
     radius,
     spacing,
@@ -56,22 +69,19 @@ function createTheme(palette: ThemePalette, mode: ResolvedThemeMode): AppTheme {
   };
 }
 
-export const themeCatalog: Record<ThemePalette, Record<ResolvedThemeMode, AppTheme>> = {
-  orange: { light: createTheme('orange', 'light'), dark: createTheme('orange', 'dark') },
-  green: { light: createTheme('green', 'light'), dark: createTheme('green', 'dark') },
-  blue: { light: createTheme('blue', 'light'), dark: createTheme('blue', 'dark') },
-  monochrome: { light: createTheme('monochrome', 'light'), dark: createTheme('monochrome', 'dark') },
-};
+/** Same palettes, order and default as the web picker (all from @app/tokens). */
+export const themePaletteOrder: readonly ThemePalette[] = tokenThemePaletteOrder;
+export const defaultThemePalette: ThemePalette = tokenDefaultPalette;
+
+export const themeCatalog = Object.fromEntries(
+  themePaletteOrder.map((palette) => [
+    palette,
+    { light: createTheme(palette, 'light'), dark: createTheme(palette, 'dark') },
+  ]),
+) as Record<ThemePalette, Record<ResolvedThemeMode, AppTheme>>;
 
 // Kept for callers that only need the default light/dark pair.
-export const themes = themeCatalog.green;
-
-export const themePaletteOrder: readonly ThemePalette[] = [
-  'orange',
-  'green',
-  'blue',
-  'monochrome',
-];
+export const themes = themeCatalog[defaultThemePalette];
 
 export function getAppTheme(palette: ThemePalette, mode: ResolvedThemeMode): AppTheme {
   return themeCatalog[palette][mode];
@@ -88,11 +98,51 @@ export function createNavigationTheme(theme: AppTheme): NavigationTheme {
       border: theme.colors.border,
       notification: theme.colors.danger,
     },
-    fonts: {
-      regular: { fontFamily: 'System', fontWeight: '400' },
-      medium: { fontFamily: 'System', fontWeight: '500' },
-      bold: { fontFamily: 'System', fontWeight: '700' },
-      heavy: { fontFamily: 'System', fontWeight: '800' },
-    },
+    fonts: areAppFontsAvailable()
+      ? {
+          regular: { fontFamily: appFontFaces.regular, fontWeight: 'normal' },
+          medium: { fontFamily: appFontFaces.medium, fontWeight: 'normal' },
+          bold: { fontFamily: appFontFaces.bold, fontWeight: 'normal' },
+          heavy: { fontFamily: appFontFaces.bold, fontWeight: 'normal' },
+        }
+      : {
+          regular: { fontFamily: 'System', fontWeight: '400' },
+          medium: { fontFamily: 'System', fontWeight: '500' },
+          bold: { fontFamily: 'System', fontWeight: '700' },
+          heavy: { fontFamily: 'System', fontWeight: '800' },
+        },
   };
+}
+
+export type ModuleAccentKey = keyof AppModuleColors | 'platform';
+
+const moduleSequenceOrder: readonly (keyof AppModuleColors)[] = [
+  'hr',
+  'accounting',
+  'crm',
+  'referenceData',
+  'reporting',
+];
+
+/** Header icon color for a module: its own palette color, or muted for platform tools (same as web). */
+export function getModuleAccent(theme: AppTheme, moduleKey: ModuleAccentKey | undefined): string {
+  if (!moduleKey) return theme.colors.primary;
+  if (moduleKey === 'platform') return theme.colors.textMuted;
+  return theme.modules[moduleKey] ?? theme.colors.primary;
+}
+
+/**
+ * Icon color for the `index`-th visible item under a module: cycles through the palette's
+ * module colors starting after the module's own color, so neighbours never match (web does
+ * the same in the sidebar).
+ */
+export function getModuleSequenceAccent(
+  theme: AppTheme,
+  moduleKey: ModuleAccentKey | undefined,
+  index: number,
+): string {
+  const sequence = moduleSequenceOrder.map((key) => theme.modules[key]).filter(Boolean);
+  if (sequence.length < 2) return getModuleAccent(theme, moduleKey);
+  const start = moduleKey && moduleKey !== 'platform' ? moduleSequenceOrder.indexOf(moduleKey) + 1 : 0;
+  return sequence[(start + index) % sequence.length];
 }

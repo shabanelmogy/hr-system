@@ -125,7 +125,6 @@ Differences from the prepared change set:
 
 - S3.4: palette preference and tenant primary branding on web (`withBrandPrimary` + contrast
   check); mobile already has palette selection.
-- Load `IBM Plex Sans Arabic` on both clients (web `next/font`, mobile `expo-font`).
 
 ## Color review follow-up 2026-10-07
 
@@ -141,3 +140,31 @@ Differences from the prepared change set:
   toast icons take their colors from the theme.
 - The pre-hydration background/accent CSS is generated from tokens per palette and mode; the
   bootstrap script sets `data-palette` from the `themePalette` cookie.
+
+## Color review P2, mobile and font 2026-10-07
+
+- Web: tree views (cost centers, split tree, hierarchical list), profile/auth card surfaces, the
+  metric card and the login side panel use theme tokens; the dark login panel no longer fills
+  with the light (300) dark-mode primary.
+- Hydration: saved mode/palette/language are applied in one update that remounts the page tree
+  when they differ from the static-shell defaults (no mismatched colors or text).
+- Mobile: palette list/default from tokens; `AppTheme.modules`; module drawers color the header
+  icon by module and alternate item icons like the web sidebar; recruitment, workforce trace and
+  tree views use theme colors; rgba helpers use tokens `withAlpha`.
+- Font: IBM Plex Sans Arabic is self-hosted on web (`public/fonts`, `src/fonts.css`, preload,
+  immutable cache, cached by the service worker; CSP unchanged) and bundled on mobile
+  (`assets/fonts`, `expo-font`, one family per weight in `AppText` and the navigation theme).
+- Baselines (S3.3): `web-next/e2e/theme-baselines.spec.ts` (`npm run capture:theme-baselines`)
+  captures reference screens in 4 palettes × light/dark × LTR/RTL against the deterministic e2e
+  backend. Contact sheets: `baselines/login.png`, `baselines/P-001-countries.png`,
+  `baselines/P-006-role-permissions.png`. P-002 (Cost Centers) and P-003 (Add Tenant) need e2e
+  fixture endpoints for organizational structure and tenants and stay open.
+- Found while capturing: page titles used `info.light` (blue on every palette) and read-only field
+  labels used `info.light`; both use primary now. Tinted chips (`AppChip` soft/outlined) use the
+  dark shade in light mode for 4.5:1; the unavailable context badge no longer dims its text;
+  the top-bar context box and badge have `role="group"`.
+- e2e suite repaired (25/25 desktop, 3/3 mobile): fixture role claims carry `moduleCode`;
+  role-permissions, Countries (newest-first default order), a11y (`user-avatar-badge`) and the
+  fiscal-year date entry (MUI X sectioned picker) specs follow the current UI.
+- Still open: tenant primary branding (`withBrandPrimary`, needs a tenant setting and API),
+  shared web/mobile palette preference (needs a user-preference API), P-002/P-003 baselines.

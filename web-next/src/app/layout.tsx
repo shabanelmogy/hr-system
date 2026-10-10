@@ -9,6 +9,7 @@ import {
   runtimePreferenceBootstrapScript,
 } from "./runtime-preferences";
 import { defaultPalette, getTheme, themePaletteOrder } from "@app/tokens";
+import "@/fonts.css";
 import "@/index.css";
 
 // Background and loader accent before React hydrates, per palette and mode, from the same
@@ -45,6 +46,9 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
     <html lang="en" dir="ltr" data-theme="light" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: runtimePreferenceBootstrapScript }} />
+        {/* Most screens use the regular weight in Latin and Arabic; fetch those first. */}
+        <link rel="preload" href="/fonts/ibm-plex-sans-arabic/ibm-plex-sans-arabic-latin-400-normal.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+        <link rel="preload" href="/fonts/ibm-plex-sans-arabic/ibm-plex-sans-arabic-arabic-400-normal.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
         {/* FullCalendar reuses this SSR placeholder during client module evaluation. */}
         <style data-fullcalendar="" />
         <style dangerouslySetInnerHTML={{ __html: `

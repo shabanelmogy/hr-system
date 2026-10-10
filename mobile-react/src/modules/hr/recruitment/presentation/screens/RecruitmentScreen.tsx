@@ -220,7 +220,7 @@ export function RecruitmentScreen() {
               styles.tabBtn,
               activeTab === 'openings' && {
                 backgroundColor: theme.colors.surface,
-                shadowColor: '#000',
+                shadowColor: theme.colors.shadow,
                 shadowOpacity: 0.05,
                 shadowRadius: 4,
                 elevation: 2,
@@ -245,7 +245,7 @@ export function RecruitmentScreen() {
 
           {perms.canView ? <Pressable
             onPress={() => setActiveTab('offers')}
-            style={[styles.tabBtn, activeTab === 'offers' && { backgroundColor: theme.colors.surface, shadowColor: '#000', shadowOpacity: 0.05, shadowRadius: 4, elevation: 2 }]}
+            style={[styles.tabBtn, activeTab === 'offers' && { backgroundColor: theme.colors.surface, shadowColor: theme.colors.shadow, shadowOpacity: 0.05, shadowRadius: 4, elevation: 2 }]}
           >
             <AppIcon name="mail-outline" size={15} color={activeTab === 'offers' ? theme.colors.primary : theme.colors.textMuted} />
             <AppText variant="caption" weight={activeTab === 'offers' ? '800' : '600'} style={{ color: activeTab === 'offers' ? theme.colors.primary : theme.colors.textMuted }}>{t('recruitment.tabs.offersShort')} ({offers.length})</AppText>
@@ -257,7 +257,7 @@ export function RecruitmentScreen() {
               styles.tabBtn,
               activeTab === 'requisitions' && {
                 backgroundColor: theme.colors.surface,
-                shadowColor: '#000',
+                shadowColor: theme.colors.shadow,
                 shadowOpacity: 0.05,
                 shadowRadius: 4,
                 elevation: 2,
@@ -286,7 +286,7 @@ export function RecruitmentScreen() {
               styles.tabBtn,
               activeTab === 'pipeline' && {
                 backgroundColor: theme.colors.surface,
-                shadowColor: '#000',
+                shadowColor: theme.colors.shadow,
                 shadowOpacity: 0.05,
                 shadowRadius: 4,
                 elevation: 2,
@@ -316,7 +316,7 @@ export function RecruitmentScreen() {
                 styles.tabBtn,
                 activeTab === 'settings' && {
                   backgroundColor: theme.colors.surface,
-                  shadowColor: '#000',
+                  shadowColor: theme.colors.shadow,
                   shadowOpacity: 0.05,
                   shadowRadius: 4,
                   elevation: 2,

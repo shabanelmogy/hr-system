@@ -36,14 +36,16 @@ const LeftPanel = ({ t }: { t: Translator }) => {
     <Box
       sx={{
         flex: "0 0 40%",
-        color: isDarkMode ? "white" : theme.palette.text.primary,
+        color: theme.palette.text.primary,
         p: { md: 3, lg: 4 },
         display: { xs: "none", md: "flex" },
         flexDirection: "column",
         justifyContent: "center",
         position: "relative",
+        // Dark palettes use light (300) primaries, so a primary-filled panel would wash out
+        // the text; both modes use the surface tinted with the palette primary instead.
         backgroundColor: isDarkMode
-          ? theme.palette.primary.dark
+          ? theme.palette.background.paper
           : theme.palette.grey[100],
         overflow: "hidden",
         // Animated gradient overlay
@@ -52,7 +54,7 @@ const LeftPanel = ({ t }: { t: Translator }) => {
           position: "absolute",
           inset: 0,
           background: isDarkMode
-            ? `linear-gradient(135deg, ${alpha(theme.palette.primary.dark, 0.95)} 0%, ${alpha(theme.palette.primary.main, 0.85)} 100%)`
+            ? `linear-gradient(135deg, ${alpha(theme.palette.primary.main, 0.16)} 0%, ${alpha(theme.palette.primary.main, 0.04)} 100%)`
             : "linear-gradient(135deg, rgba(255, 255, 255, 0.92) 0%, rgba(248, 249, 250, 0.88) 50%, rgba(241, 243, 245, 0.85) 100%)",
           zIndex: 1,
           animation: `${pulse} 10s ease-in-out infinite`,
@@ -109,7 +111,7 @@ const LeftPanel = ({ t }: { t: Translator }) => {
             fontSize: { md: "1.8rem", lg: "2.2rem" },
 
             background: isDarkMode
-              ? `linear-gradient(135deg, #ffffff 0%, ${theme.palette.primary.light} 100%)`
+              ? `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.primary.light} 100%)`
               : `linear-gradient(135deg, ${theme.palette.primary.dark} 0%, ${theme.palette.primary.main} 50%, ${theme.palette.primary.light} 100%)`,
 
             backgroundClip: "text",
@@ -128,7 +130,7 @@ const LeftPanel = ({ t }: { t: Translator }) => {
               width: 60,
               height: 4,
               background: isDarkMode
-                ? "linear-gradient(to right, rgba(255,255,255,0.8), rgba(255,255,255,0.2))"
+                ? `linear-gradient(to right, ${theme.palette.primary.main}, ${alpha(theme.palette.primary.main, 0.2)})`
                 : `linear-gradient(to right, ${theme.palette.primary.main}, ${theme.palette.primary.light})`,
               borderRadius: 2,
               boxShadow: `0 2px 15px ${alpha(theme.palette.primary.main, 0.2)}`,
@@ -144,10 +146,7 @@ const LeftPanel = ({ t }: { t: Translator }) => {
             opacity: 0.85,
             fontWeight: 300,
             fontSize: "0.95rem",
-            color: isDarkMode
-              ? "rgba(255,255,255,0.9)"
-              : theme.palette.text.secondary,
-            textShadow: isDarkMode ? "0 1px 2px rgba(0,0,0,0.1)" : "none",
+            color: theme.palette.text.secondary,
             maxWidth: "90%",
             lineHeight: 1.4,
             animation: `${slideIn} 1s ease-out 0.2s both`,

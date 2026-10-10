@@ -43,7 +43,7 @@ function SimplePageHeader({
         <Box sx={{ minWidth: 0 }}>
           <Typography
             variant={compact ? "h6" : "h5"}
-            sx={{ color: theme.palette.info.light, fontWeight: "bold" }}
+            sx={{ color: theme.palette.primary.main, fontWeight: "bold" }}
           >
             {title}
           </Typography>

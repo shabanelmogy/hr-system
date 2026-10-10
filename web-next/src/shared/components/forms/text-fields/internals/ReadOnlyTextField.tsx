@@ -15,7 +15,7 @@ export default function ReadOnlyTextField(props: ReadOnlyTextFieldProps) {
   const renderValue = (value: unknown) => (
     <Box sx={{ width: "100%", mb: 2 }}>
       <Stack direction="row" sx={{ alignItems: "center" }} spacing={2}>
-        <Typography variant="subtitle2" sx={{ color: "info.light", minWidth: 120, fontWeight: "bold" }}>
+        <Typography variant="subtitle2" sx={{ color: "primary.main", minWidth: 120, fontWeight: "bold" }}>
           {props.label}
         </Typography>
         <Typography
@@ -23,15 +23,12 @@ export default function ReadOnlyTextField(props: ReadOnlyTextFieldProps) {
           sx={{
             p: 1.5,
             borderRadius: 2,
-            bgcolor: (theme) => alpha(
-              theme.palette.mode === "dark" ? theme.palette.primary.main : theme.palette.info.light,
-              0.08,
-            ),
+            bgcolor: (theme) => alpha(theme.palette.primary.main, 0.08),
             color: "text.primary",
             flexGrow: 1,
             transition: "all 0.2s ease-in-out",
             boxShadow: "0 2px 4px rgba(0,0,0,0.06)",
-            border: (theme) => `1px solid ${alpha(theme.palette.info.light, 0.2)}`,
+            border: (theme) => `1px solid ${alpha(theme.palette.primary.main, 0.2)}`,
           }}
         >
           {props.type === "password"

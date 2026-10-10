@@ -1,13 +1,13 @@
 /* ERP System service worker.
  *
  * Scope (owner decision 2026-10-07: "install + offline files"):
- * - Caches only static files: hashed Next.js assets (/_next/static), app icons and the
- *   offline page. These never contain user or company data.
+ * - Caches only static files: hashed Next.js assets (/_next/static), app icons, the
+ *   self-hosted fonts (/fonts) and the offline page. These never contain user or company data.
  * - Never caches API responses, /api routes, RSC payloads or HTML pages, so data and
  *   permissions are always fresh and a company switch cannot show another company's data.
  * - A page navigation that fails because the network is down shows /offline.html.
  */
-const VERSION = "v1";
+const VERSION = "v2";
 const STATIC_CACHE = `erp-static-${VERSION}`;
 const OFFLINE_URL = "/offline.html";
 const PRECACHE = [
@@ -39,7 +39,11 @@ self.addEventListener("activate", (event) => {
 });
 
 function isStaticAsset(url) {
-  return url.pathname.startsWith("/_next/static/") || url.pathname.startsWith("/icons/");
+  return (
+    url.pathname.startsWith("/_next/static/") ||
+    url.pathname.startsWith("/icons/") ||
+    url.pathname.startsWith("/fonts/")
+  );
 }
 
 async function cacheFirst(request) {

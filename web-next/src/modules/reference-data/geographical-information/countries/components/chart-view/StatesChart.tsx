@@ -25,7 +25,6 @@ const StatesChart: React.FC<StatesChartProps> = ({ data }) => {
         {
           key: "states",
           name: t("countries.charts.activeStates"),
-          color: "#2196F3",
         }
       ]}
       height={280}

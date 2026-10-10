@@ -1,8 +1,9 @@
 import type { PropsWithChildren } from 'react';
-import { Text, type TextProps, type TextStyle } from 'react-native';
+import { StyleSheet, Text, type TextProps, type TextStyle } from 'react-native';
 
 import { useLocalization } from '@/src/core/localization';
 import { useAppTheme } from '@/src/core/theme';
+import { fontStyleForWeight } from '@/src/core/theme/fonts';
 
 export type AppTextVariant =
   | 'caption'
@@ -75,6 +76,9 @@ export function AppText({
           fontWeight: weight,
         },
         style,
+        fontStyleForWeight(
+          StyleSheet.flatten(style)?.fontWeight ?? weight ?? variantStyles[variant].fontWeight,
+        ),
       ]}>
       {children}
     </Text>

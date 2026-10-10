@@ -26,7 +26,13 @@ export default defineConfig({
   projects: [
     {
       name: "chromium",
-      grepInvert: /@mobile/,
+      grepInvert: /@mobile|@baseline/,
+      use: { ...devices["Desktop Chrome"] },
+    },
+    {
+      // Capture-only theme screenshots (e2e/theme-baselines.spec.ts); run on demand.
+      name: "theme-baselines",
+      grep: /@baseline/,
       use: { ...devices["Desktop Chrome"] },
     },
     {

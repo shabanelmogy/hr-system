@@ -50,6 +50,10 @@ const nextConfig: NextConfig = {
         { key: "Strict-Transport-Security", value: "max-age=31536000; includeSubDomains" },
       ],
     }, {
+      // Self-hosted font files never change under the same name.
+      source: "/fonts/:path*",
+      headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }],
+    }, {
       // The service worker must never be served from the HTTP cache, or updates stall.
       source: "/sw.js",
       headers: [

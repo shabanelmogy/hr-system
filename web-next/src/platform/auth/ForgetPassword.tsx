@@ -85,12 +85,7 @@ const ForgetPassword = () => {
 
   // Color scheme for light and dark modes
   const colors = {
-    cardBackground: isDarkMode
-      ? `linear-gradient(135deg, ${alpha("#1e293b", 0.8)}, ${alpha(
-          "#0f172a",
-          0.9
-        )})`
-      : theme.palette.background.paper,
+    cardBackground: theme.palette.background.paper,
 
     headerBackground: isDarkMode
       ? `linear-gradient(135deg, ${theme.palette.primary.dark}, ${alpha(

@@ -16,7 +16,8 @@ test("Countries covers list search, validation, create and update through the re
   await expect(
     page.getByRole("heading", { name: "Countries Management" }).filter({ visible: true }),
   ).toBeVisible();
-  await expect(page.getByText("Egypt", { exact: true }).first()).toBeVisible();
+  // Default order is newest first (createdOn DESC); the fixture's newest country is Test Country 12.
+  await expect(page.getByText("Test Country 12", { exact: true }).first()).toBeVisible();
 
   const search = page.getByPlaceholder("Search countries by name, code, phone, or currency...");
   await search.fill("Egypt");
@@ -96,7 +97,7 @@ test("Countries record navigator stays on the next server page after descending 
 
 test("Countries exposes a recoverable API failure state", async ({ page, request }) => {
   await loginWithDemoRole(page, "Super Admin", "/super-admin/geography/countries");
-  await expect(page.getByText("Egypt", { exact: true }).first()).toBeVisible();
+  await expect(page.getByText("Test Country 12", { exact: true }).first()).toBeVisible();
 
   await setCountriesMode(request, "fail");
   await page.reload();
@@ -106,7 +107,7 @@ test("Countries exposes a recoverable API failure state", async ({ page, request
 
   await setCountriesMode(request, "ok");
   await page.getByRole("button", { name: "Retry" }).click();
-  await expect(page.getByText("Egypt", { exact: true }).first()).toBeVisible();
+  await expect(page.getByText("Test Country 12", { exact: true }).first()).toBeVisible();
 });
 
 test("dirty country form blocks browser history traversal until changes are discarded", async ({ page }) => {
@@ -160,8 +161,10 @@ test("Fiscal Years covers tenant-scoped create and update through the shared for
   await addForm.getByLabel("Name English").fill("Fiscal Year 2027");
   const startDate = addForm.getByRole("group", { name: "Start date" });
   const startDateInput = startDate.getByRole("textbox", { includeHidden: true });
-  await startDate.click();
-  await startDateInput.fill("01/01/2027");
+  // MUI X v8 pickers render editable sections; the hidden input only mirrors the value,
+  // so type into the first (day) section instead of filling the hidden input.
+  await startDate.getByRole("spinbutton").first().click();
+  await page.keyboard.type("01012027");
   await expect(startDateInput).toHaveValue("01/01/2027");
   await addForm.getByRole("button", { name: "Create", exact: true }).click();
 

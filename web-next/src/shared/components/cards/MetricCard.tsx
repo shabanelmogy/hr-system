@@ -245,21 +245,15 @@ const MetricCard = ({
       case "glassmorphism":
         return {
           ...baseStyles,
-          background: isDark
-            ? `rgba(30, 30, 30, 0.8)`
-            : `rgba(255, 255, 255, 0.8)`,
+          background: alpha(theme.palette.background.paper, 0.8),
           backdropFilter: "blur(20px)",
           WebkitBackdropFilter: "blur(20px)",
-          border: `1px solid ${
-            isDark ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.1)"
-          }`,
+          border: `1px solid ${theme.palette.divider}`,
           boxShadow: isDark
             ? "0 8px 32px rgba(0, 0, 0, 0.3)"
             : "0 8px 32px rgba(0, 0, 0, 0.1)",
           "&:hover": {
-            background: isDark
-              ? `rgba(30, 30, 30, 0.9)`
-              : `rgba(255, 255, 255, 0.9)`,
+            background: alpha(theme.palette.background.paper, 0.9),
             transform: onClick ? "translateY(-4px)" : "translateY(-2px)",
           },
         };
