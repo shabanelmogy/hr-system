@@ -40,35 +40,8 @@ const UserWelcome = ({ isMobile = false }: { isMobile?: boolean }) => {
     return (firstInitial + lastInitial).toUpperCase() || "U";
   };
 
-  // Get color based on name for consistent colors
-  const getUserColor = () => {
-    const name = firstName + lastName;
-    if (!name) return theme.palette.primary.main;
-
-    const colors = [
-      "#1976d2",
-      "#2196f3",
-      "#03a9f4",
-      "#00bcd4",
-      "#009688",
-      "#4caf50",
-      "#8bc34a",
-      "#ff9800",
-      "#ff5722",
-      "#f44336",
-      "#e91e63",
-      "#9c27b0",
-      "#673ab7",
-      "#3f51b5",
-    ];
-
-    let hash = 0;
-    for (let i = 0; i < name.length; i++) {
-      hash = name.charCodeAt(i) + ((hash << 5) - hash);
-    }
-
-    return colors[Math.abs(hash) % colors.length];
-  };
+  // The user's badge follows the selected palette (it was a fixed name-hash color, usually blue).
+  const getUserColor = () => theme.palette.primary.main;
 
   // Helper function to create rgba colors with alpha
   const alpha = (color: string, alphaValue: number) => {
