@@ -61,6 +61,11 @@ export function ThemeShell({ children }: { children: ReactNode }) {
     document.documentElement.dataset.theme = mode;
   }, [mode]);
 
+  // index.css and the pre-hydration CSS key the scrollbar colors on data-palette.
+  useEffect(() => {
+    document.documentElement.dataset.palette = palette;
+  }, [palette]);
+
   return (
     <ThemeSettingsContext.Provider value={settings}>
       <AppEmotionCacheProvider direction={settings.direction}>

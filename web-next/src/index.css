@@ -2,7 +2,9 @@ body {
   overflow-x: hidden;
 }
 
-/* Shared application scrollbar tokens. ThemeShell keeps data-theme in sync. */
+/* Shared application scrollbar tokens. These are fallbacks only: layout.tsx sets the real
+   values per palette and mode from @app/tokens, and ThemeShell keeps data-theme and
+   data-palette in sync. */
 :root {
   --app-scrollbar-size: 10px;
   --app-scrollbar-track: rgba(15, 23, 42, 0.06);

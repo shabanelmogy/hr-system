@@ -8,11 +8,11 @@ import {
   DEFAULT_RUNTIME_PREFERENCES,
   runtimePreferenceBootstrapScript,
 } from "./runtime-preferences";
-import { defaultPalette, getTheme, themePaletteOrder } from "@app/tokens";
+import { defaultPalette, getTheme, themePaletteOrder, withAlpha } from "@app/tokens";
 import "@/fonts.css";
 import "@/index.css";
 
-// Background and loader accent before React hydrates, per palette and mode, from the same
+// Background, loader accent and scrollbar colors before React hydrates, per palette and mode, from the same
 // tokens as the MUI theme (the bootstrap script sets data-theme and data-palette).
 const preHydrationPaletteCss = themePaletteOrder
   .flatMap((palette) =>
@@ -21,7 +21,13 @@ const preHydrationPaletteCss = themePaletteOrder
       const selector = palette === defaultPalette
         ? `html[data-theme="${mode}"]:not([data-palette]), html[data-theme="${mode}"][data-palette="${palette}"]`
         : `html[data-theme="${mode}"][data-palette="${palette}"]`;
-      return `${selector} { --app-background: ${colors.background}; --app-accent: ${colors.primary}; color-scheme: ${mode}; }`;
+      const scrollbar = [
+        `--app-scrollbar-track: ${withAlpha(colors.primary, mode === "dark" ? 0.1 : 0.07)}`,
+        `--app-scrollbar-thumb: ${withAlpha(colors.primary, 0.45)}`,
+        `--app-scrollbar-thumb-hover: ${withAlpha(colors.primary, 0.7)}`,
+        `--app-scrollbar-thumb-active: ${withAlpha(colors.primary, 0.88)}`,
+      ].join("; ");
+      return `${selector} { --app-background: ${colors.background}; --app-accent: ${colors.primary}; ${scrollbar}; color-scheme: ${mode}; }`;
     }),
   )
   .join("\n");

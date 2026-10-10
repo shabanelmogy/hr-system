@@ -184,3 +184,14 @@ Differences from the prepared change set:
   used status colors such as info/error).
 - e2e: the fiscal-year and dirty-form specs are timing-sensitive in the full serial run
   (pass when re-run); tracked as flaky, not a regression.
+
+## Scrollbar colors follow the palette 2026-10-10
+
+- Found by the owner: scrollbars were blue in every palette. `index.css` hard-coded blue
+  `--app-scrollbar-*` values per mode only, and `data-palette` was set by the bootstrap
+  script but never updated when the palette changed at runtime.
+- Decision: `layout.tsx` writes the scrollbar variables per palette and mode from the token
+  primary (track 7%/10%, thumb 45%, hover 70%, active 88%) next to the other pre-hydration
+  colors; `ThemeShell` keeps `data-palette` in sync. `index.css` values are fallbacks only.
+- Verified in a production build: computed `--app-scrollbar-thumb` matches the primary of
+  all 4 palettes in light and dark.
