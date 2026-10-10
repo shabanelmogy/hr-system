@@ -30,7 +30,7 @@ export default function WorkforcePlansCardView(props: Props) {
               ? { key: "create-revision", title: t("workforcePlanning.actions.createRevision"), color: "info", icon: <Redo />, onClick: () => props.onLifecycle(item), disabled: !props.permissions.canCreate }
               : { key: "submit", title: t("workforcePlanning.actions.submit"), color: "primary", icon: <Send />, onClick: () => props.onLifecycle(item), disabled: !props.permissions.canEdit };
         const actions: CardActionItem[] = [
-          { key: "view", title: t("actions.view"), color: "info", icon: <Visibility />, onClick: () => props.onView(item) },
+          { key: "view", title: t("actions.view"), color: "secondary", icon: <Visibility />, onClick: () => props.onView(item) },
           { key: "edit", title: t("actions.edit"), color: "primary", icon: <Edit />, onClick: () => props.onEdit(item), disabled: item.isDeleted || !props.permissions.canEdit || ![1, 5].includes(item.status) },
           { ...lifecycleAction, disabled: item.isDeleted || lifecycleAction.disabled },
           { key: "reject", title: t("workforcePlanning.actions.reject"), color: "error", icon: <Undo />, onClick: () => props.onReject(item), disabled: item.isDeleted || !props.permissions.canApprove || item.status !== 3 },

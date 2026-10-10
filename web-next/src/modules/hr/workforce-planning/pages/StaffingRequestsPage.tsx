@@ -68,7 +68,7 @@ export default function StaffingRequestsPage() {
   const createRequest = async (request: StaffingRequestMutation) => run(() => create.mutateAsync(request), "staffing.messages.created");
 
   const actions = useCallback((item: StaffingRequestListItem): CardActionItem[] => {
-    const result: CardActionItem[] = [{ key: "view", title: t("actions.view"), color: "info", icon: <Visibility />, onClick: () => select(item, "view") }];
+    const result: CardActionItem[] = [{ key: "view", title: t("actions.view"), color: "secondary", icon: <Visibility />, onClick: () => select(item, "view") }];
     if (canCreate && (item.status === 1 || item.status === 4)) result.push({ key: "submit", title: t("staffing.actions.submit"), color: "primary", icon: <Send />, onClick: () => select(item, "submit") });
     if (canApprove && item.status === 2) {
       result.push({ key: "approve", title: t("staffing.actions.approve"), color: "success", icon: <CheckCircle />, onClick: () => select(item, "approve") });

@@ -22,7 +22,8 @@ export const getQualityColor = (key: QualityKey, theme: Theme): string => {
     case "excellent":
       return theme.palette.success.main;
     case "good":
-      return theme.palette.info.main;
+      // Palette primary rather than info, which is blue on every palette.
+      return theme.palette.primary.main;
     case "average":
       return theme.palette.warning.main;
     case "poor":

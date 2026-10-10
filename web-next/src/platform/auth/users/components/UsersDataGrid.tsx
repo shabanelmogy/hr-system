@@ -204,7 +204,7 @@ const UsersDataGrid = ({
         // View button - always available
         <Tooltip title={t("actions.view")} key={`view-${params.row.id}`} arrow>
           <GridActionsCellItem
-            icon={<Visibility sx={{ fontSize: 20, color: "info.main" }} />}
+            icon={<Visibility sx={{ fontSize: 20, color: "secondary.main" }} />}
             label={t("actions.view")}
             onClick={() => onView(params.row)}
           />

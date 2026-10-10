@@ -123,7 +123,7 @@ const StateCard = ({
       isHovered={isHovered}
       onMouseEnter={() => onHover(state.id)}
       onMouseLeave={() => onHover(null)}
-      height={420}
+      height="100%"
       endBadge={endBadge}
       startBadge={startBadge}
       title={primaryTitle}

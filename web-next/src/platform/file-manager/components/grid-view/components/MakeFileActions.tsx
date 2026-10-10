@@ -43,7 +43,7 @@ export default function makeFileActions({
       actions.push(
         <GridActionsCellItem
           key={`view-${file.id}`}
-          icon={<Visibility sx={{ fontSize: 25, color: "info.main" }} />}
+          icon={<Visibility sx={{ fontSize: 25, color: "secondary.main" }} />}
           label={t("files.view")}
           title={t("files.view")}
           onClick={() => onView(file)}

@@ -26,7 +26,7 @@ export default function WorkforceBudgetsCardView(props: Props) {
           ? { key: "approve", title: t("workforceBudget.actions.approve"), color: "success", icon: <CheckCircle />, onClick: () => props.onLifecycle(item), disabled: !props.permissions.canReview }
           : { key: "submit", title: t("workforceBudget.actions.submit"), color: "primary", icon: <Send />, onClick: () => props.onLifecycle(item), disabled: !props.permissions.canSubmit };
         const actions: CardActionItem[] = [
-          { key: "view", title: t("actions.view"), color: "info", icon: <Visibility />, onClick: () => props.onView(item) },
+          { key: "view", title: t("actions.view"), color: "secondary", icon: <Visibility />, onClick: () => props.onView(item) },
           { key: "edit", title: t("actions.edit"), color: "primary", icon: <Edit />, onClick: () => props.onEdit(item), disabled: !props.permissions.canEdit || ![1, 4].includes(item.status) },
           { ...lifecycleAction, disabled: item.status === 2 ? lifecycleAction.disabled : lifecycleAction.disabled || ![1, 4].includes(item.status) },
           { key: "reject", title: t("workforceBudget.actions.reject"), color: "error", icon: <Undo />, onClick: () => props.onReject(item), disabled: !props.permissions.canReview || item.status !== 2 },

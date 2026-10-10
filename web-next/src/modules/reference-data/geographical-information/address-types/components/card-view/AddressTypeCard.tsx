@@ -36,7 +36,7 @@ export default function AddressTypeCard({ addressType, index, isHovered, onHover
     isHovered={isHovered}
     onMouseEnter={() => onHover(addressType.id)}
     onMouseLeave={() => onHover(null)}
-    height={420}
+    height="100%"
     endBadge={endBadge}
     title={primaryTitle}
     subtitle={secondaryTitle}

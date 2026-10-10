@@ -39,7 +39,7 @@ export const makeOrganizationalStructureActions = ({
     const actions: React.ReactElement<GridActionsCellItemProps>[] = [
       <GridActionsCellItem
         key={`view-${item.id}`}
-        icon={<Visibility sx={{ color: "info.main" }} />}
+        icon={<Visibility sx={{ color: "secondary.main" }} />}
         label={t("actions.view")}
         onClick={() => onView(item)}
       />,

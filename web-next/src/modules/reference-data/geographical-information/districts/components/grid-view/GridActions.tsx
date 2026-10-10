@@ -17,7 +17,7 @@ export const makeStateActions = ({ t, permissions, onView, onEdit, onDelete, onR
   (params: { row: DistrictListItem }): React.ReactElement<GridActionsCellItemProps>[] => {
     const state = params.row;
     const actions: React.ReactElement<GridActionsCellItemProps>[] = [];
-    if (permissions.canView) actions.push(<GridActionsCellItem key={`view-${state.id}`} icon={<Visibility sx={{ color: "info.main" }} />} label={t("actions.view")} onClick={() => onView(state)} />);
+    if (permissions.canView) actions.push(<GridActionsCellItem key={`view-${state.id}`} icon={<Visibility sx={{ color: "secondary.main" }} />} label={t("actions.view")} onClick={() => onView(state)} />);
     if (permissions.canEdit && !state.isDeleted) actions.push(<GridActionsCellItem key={`edit-${state.id}`} icon={<Edit />} label={t("actions.edit")} color="primary" onClick={() => onEdit(state)} />);
     if (permissions.canDelete && !state.isDeleted) actions.push(<GridActionsCellItem key={`archive-${state.id}`} icon={<Archive sx={{ color: "warning.main" }} />} label={t("actions.archive")} onClick={() => onDelete(state)} />);
     if (permissions.canRestore && state.isDeleted) actions.push(<GridActionsCellItem key={`restore-${state.id}`} icon={<Restore sx={{ color: "success.main" }} />} label={t("actions.restore")} onClick={() => onRestore(state)} />);

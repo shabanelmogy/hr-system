@@ -86,7 +86,7 @@ const CountryCard = ({
       isHovered={isHovered}
       onMouseEnter={() => onHover(country.id)}
       onMouseLeave={() => onHover(null)}
-      height={420}
+      height="100%"
       endBadge={endBadge}
       startBadge={startBadge}
       title={theme.direction === "rtl" ? country.nameAr : country.nameEn}

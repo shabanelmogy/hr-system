@@ -23,7 +23,7 @@ export default function FiscalYearsCardView(props: Props) {
     <Box sx={{ flex: 1, minHeight: 0, overflowY: "auto", overflowX: "hidden", p: { xs: 1, md: 1.5 }, scrollbarGutter: "stable" }}>
       <Grid container spacing={3}>{props.items.map((item, index) => {
         const actions: CardActionItem[] = [
-          { key: "view", title: t("actions.view"), color: "info", icon: <Visibility fontSize="small" />, onClick: () => props.onView(item) },
+          { key: "view", title: t("actions.view"), color: "secondary", icon: <Visibility fontSize="small" />, onClick: () => props.onView(item) },
           { key: "edit", title: t("actions.edit"), color: "primary", icon: <Edit fontSize="small" />, onClick: () => props.onEdit(item), disabled: !props.permissions.canEdit || item.isDeleted || item.status !== 1 },
           ...getAvailableFiscalYearLifecycleActions(item.status).map(action => ({ key: `lifecycle-${action}`, title: t(`fiscalYears.lifecycle.${action}`), color: action === "reopen" ? "warning" as const : "success" as const, icon: action === "reopen" ? <LockOpen fontSize="small" /> : <LockClock fontSize="small" />, onClick: () => props.onLifecycle(item, action), disabled: !canRunFiscalYearLifecycle(props.permissions, action) || item.isDeleted })),
           { key: "set-current", title: t("fiscalYears.actions.setCurrent"), color: "warning", icon: <StarRounded fontSize="small" />, onClick: () => props.onSetCurrent(item), disabled: !props.permissions.canSetCurrent || !canSetFiscalYearAsCurrent(item) },

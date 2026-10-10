@@ -22,7 +22,7 @@ const DistrictCardFooter: React.FC<DistrictCardFooterProps> = ({ state, onEdit, 
     actions.push({
       key: "view",
       title: t("actions.view"),
-      color: "info",
+      color: "secondary",
       icon: <Visibility sx={{ fontSize: 16 }} />,
       onClick: () => onView(state),
     });

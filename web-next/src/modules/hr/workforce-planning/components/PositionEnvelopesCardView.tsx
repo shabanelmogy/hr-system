@@ -23,7 +23,7 @@ export default function PositionEnvelopesCardView(props: Props) {
         const usedHeadcount = item.authorizedHeadcount - item.availableHeadcount;
         const headcountRatio = item.authorizedHeadcount > 0 ? Math.min(100, Math.round((usedHeadcount / item.authorizedHeadcount) * 100)) : 0;
         const actions: CardActionItem[] = [
-          { key: "view", title: t("actions.view"), color: "info", icon: <Visibility />, onClick: () => props.onView(item) },
+          { key: "view", title: t("actions.view"), color: "secondary", icon: <Visibility />, onClick: () => props.onView(item) },
         ];
         return <Grid key={item.id} size={{ xs: 12, sm: 6, lg: 4, xl: 3 }}><EntityCard index={index} height={300} title={item.envelopeCode} subtitle={item.currencyCode}
           endBadge={<Chip size="small" color="info" label={t("envelopes.capacity.headcount", { available: item.availableHeadcount, total: item.authorizedHeadcount })} />}

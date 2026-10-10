@@ -27,7 +27,7 @@ export const makeCountryActions = ({ t, permissions, onView, onEdit, onDelete, o
       actions.push(
         <GridActionsCellItem
           key={`view-${params.row.id}`}
-          icon={<Visibility sx={{ fontSize: 25, color: "info.main" }} />}
+          icon={<Visibility sx={{ fontSize: 25, color: "secondary.main" }} />}
           label={t("actions.view")}
           onClick={() => onView(params.row)}
         />
