@@ -43,6 +43,11 @@ export type MetricCardProps = Omit<CardProps, "children" | "onClick" | "title" |
   unit?: string;
   icon?: ElementType<SvgIconProps>;
   color?: MetricColor;
+  /**
+   * Accent color that replaces `color`, e.g. a palette module color from
+   * `theme.palette.app.modules` for neutral KPIs that need their own hue.
+   */
+  accentColor?: string;
   showTrend?: boolean;
   showProgress?: boolean;
   showTarget?: boolean;
@@ -67,6 +72,7 @@ const MetricCard = ({
   unit = "",
   icon: Icon,
   color = "primary",
+  accentColor,
   showTrend = true,
   showProgress = false,
   showTarget = false,
@@ -194,7 +200,7 @@ const MetricCard = ({
   };
 
   const config = sizeConfig[size];
-  const themeColor = theme.palette[color] || theme.palette.primary;
+  const themeColor = accentColor ? { main: accentColor } : theme.palette[color] || theme.palette.primary;
   const hasSupportingMetrics =
     (showTrend && previousValue !== null) ||
     ((showProgress || showTarget) && target !== null);

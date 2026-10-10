@@ -31,6 +31,14 @@ const screens: ReferenceScreen[] = [
     },
   },
   {
+    id: "super-admin-dashboard",
+    role: "Super Admin",
+    path: "/super-admin",
+    ready: async (page) => {
+      await expect(page.getByText("Tenant Gamma", { exact: true }).first()).toBeVisible({ timeout: 30_000 });
+    },
+  },
+  {
     id: "P-006-role-permissions",
     role: "Admin",
     path: "/administration/manage-role-permissions/finance-manager",

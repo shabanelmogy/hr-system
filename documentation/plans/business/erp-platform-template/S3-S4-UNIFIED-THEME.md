@@ -157,7 +157,11 @@ Differences from the prepared change set:
 - Baselines (S3.3): `web-next/e2e/theme-baselines.spec.ts` (`npm run capture:theme-baselines`)
   captures reference screens in 4 palettes × light/dark × LTR/RTL against the deterministic e2e
   backend. Contact sheets: `baselines/login.png`, `baselines/P-001-countries.png`,
-  `baselines/P-006-role-permissions.png`. P-002 (Cost Centers) and P-003 (Add Tenant) need e2e
+  `baselines/P-006-role-permissions.png`, `baselines/super-admin-dashboard.png`.
+- Super Admin dashboard: KPI cards use status colors only for status (enabled = success,
+  expiring = warning); neutral counts use primary, brand 2 and the palette module colors
+  (`MetricCard.accentColor`); the user badge, company context and Global Geography action use
+  primary. Subscription status chips keep semantic colors (trial = info). P-002 (Cost Centers) and P-003 (Add Tenant) need e2e
   fixture endpoints for organizational structure and tenants and stay open.
 - Found while capturing: page titles used `info.light` (blue on every palette) and read-only field
   labels used `info.light`; both use primary now. Tinted chips (`AppChip` soft/outlined) use the
