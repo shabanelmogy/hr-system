@@ -150,6 +150,12 @@ const server = http.createServer(async (request, response) => {
       : problem(response, 401, "Unauthorized");
   }
 
+  if (request.method === "GET" && url.pathname === "/api/v1/tenants/getDashboardSummary") {
+    const session = sessionFromAuthorization(request);
+    if (!session) return problem(response, 401, "Unauthorized");
+    return json(response, 200, tenantDashboardSummary());
+  }
+
   if (request.method === "GET" && url.pathname === "/api/v1/modules/accessible") {
     const session = sessionFromAuthorization(request);
     if (!session) return problem(response, 401, "Unauthorized");
@@ -478,6 +484,31 @@ function makeRoleFixture() {
         isSelected: selectedPermissions.has(displayValue),
       };
     })),
+  };
+}
+
+function tenantDashboardSummary() {
+  return {
+    totalTenants: 12,
+    enabledTenants: 10,
+    admins: 18,
+    users: 240,
+    companies: 31,
+    maxAdmins: 25,
+    maxUsers: 300,
+    expiringWithin30Days: 2,
+    subscriptionStatusCounts: {
+      free: 1, trial: 2, active: 6, pastDue: 1, suspended: 1, expired: 1, cancelled: 0,
+    },
+    recentTenants: [
+      { id: "tenant-a", identifier: "ALPHA", name: "Tenant Alpha", subscriptionStatus: "active" },
+      { id: "tenant-b", identifier: "BETA", name: "Tenant Beta", subscriptionStatus: "trial" },
+      { id: "tenant-c", identifier: "GAMMA", name: "Tenant Gamma", subscriptionStatus: "pastDue" },
+    ],
+    expiringWithin30DaysTenants: [
+      { id: "tenant-b", name: "Tenant Beta", planName: "Trial", subscriptionEndsOn: "2026-11-01T00:00:00.000Z" },
+      { id: "tenant-c", name: "Tenant Gamma", planName: "Business", subscriptionEndsOn: "2026-10-20T00:00:00.000Z" },
+    ],
   };
 }
 

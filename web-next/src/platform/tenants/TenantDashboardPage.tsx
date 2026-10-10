@@ -57,6 +57,13 @@ export default function TenantDashboardPage() {
   const { hasPermission } = usePermissions();
   const canViewGlobalGeography = hasPermission(permissions.ViewCountries);
   const summary = summaryQuery.data;
+  const theme = useTheme();
+  // Neutral counts (users, companies) use the palette's categorical module colors so each
+  // KPI has its own hue without borrowing a status color (info/warning/error).
+  const moduleAccents = {
+    crm: theme.palette.app?.modules?.crm ?? theme.palette.primary.main,
+    referenceData: theme.palette.app?.modules?.referenceData ?? theme.palette.secondary.main,
+  };
 
   return (
     <ContentWrapper fillAvailable>
@@ -159,7 +166,7 @@ export default function TenantDashboardPage() {
               sx={{ height: "100%", minWidth: 0, scrollSnapAlign: "start" }}
             />
             <MetricCard
-              color="info"
+              accentColor={moduleAccents.crm}
               compact
               gradient
               icon={PeopleIcon}
@@ -170,7 +177,7 @@ export default function TenantDashboardPage() {
               sx={{ height: "100%", minWidth: 0, scrollSnapAlign: "start" }}
             />
             <MetricCard
-              color="warning"
+              accentColor={moduleAccents.referenceData}
               compact
               gradient
               icon={BusinessIcon}
@@ -181,7 +188,7 @@ export default function TenantDashboardPage() {
               sx={{ height: "100%", minWidth: 0, scrollSnapAlign: "start" }}
             />
             <MetricCard
-              color="error"
+              color="warning"
               compact
               gradient
               icon={EventIcon}
@@ -299,7 +306,7 @@ export default function TenantDashboardPage() {
             </DashboardPanel>
 
             <DashboardPanel
-              color="info"
+              color="primary"
               icon={<HistoryIcon fontSize="small" />}
               title={t("superAdminDashboard.recentTenants")}
             >
