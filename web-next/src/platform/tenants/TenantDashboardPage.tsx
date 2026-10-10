@@ -73,7 +73,7 @@ export default function TenantDashboardPage() {
           >
             {canViewGlobalGeography ? (
               <DashboardActionButton
-                color="info"
+                color="primary"
                 href={appRoutes.modules.referenceData.geography.countries}
                 icon={<PublicIcon fontSize="small" />}
                 label={t("menu.globalGeography")}

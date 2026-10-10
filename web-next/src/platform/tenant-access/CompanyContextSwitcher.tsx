@@ -68,7 +68,7 @@ export function CompanyContextSwitcher({
         compact={compact}
         iconOnly={iconOnly}
         loading={isSwitchingCompany}
-        tone="info"
+        tone="primary"
       />
       {SnackbarComponent}
     </>
