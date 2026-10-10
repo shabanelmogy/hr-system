@@ -25,13 +25,13 @@
     "semantic_hash": ""
   },
   "web-next/next.config.ts": {
-    "mtime": 1791358400.4849331,
-    "ast_hash": "0a635f31285dbead0c90cd8806298f1b",
+    "mtime": 1791627700.1068542,
+    "ast_hash": "07e240d38d7d9c87d9e6010a54493549",
     "semantic_hash": ""
   },
   "web-next/package.json": {
-    "mtime": 1791356844.723875,
-    "ast_hash": "da25872dcd22e6f7014e5904501e9ee9",
+    "mtime": 1791627700.1068542,
+    "ast_hash": "6921b2a6bb0c28efb98da9588ab438ef",
     "semantic_hash": ""
   },
   "web-next/public/maps/world-countries-110m.json": {
@@ -175,8 +175,8 @@
     "semantic_hash": ""
   },
   "web-next/src/app/layout.tsx": {
-    "mtime": 1791363496.808074,
-    "ast_hash": "a2e6ec0d5ba976f7b9262ea9c6c1a1b1",
+    "mtime": 1791627700.1263838,
+    "ast_hash": "35ef90c4e339c474931eac7d6c1d16b6",
     "semantic_hash": ""
   },
   "web-next/src/app/not-found.tsx": {
@@ -410,8 +410,8 @@
     "semantic_hash": ""
   },
   "web-next/src/shared/components/cards/AppChip.tsx": {
-    "mtime": 1784200064.8802156,
-    "ast_hash": "74426619668b4f6c7548028aabf45e19",
+    "mtime": 1791627700.132402,
+    "ast_hash": "95ba0693a31e5d6e18bb8b50faf08a09",
     "semantic_hash": ""
   },
   "web-next/src/shared/components/cards/EntityCard.test.tsx": {
@@ -425,8 +425,8 @@
     "semantic_hash": ""
   },
   "web-next/src/shared/components/cards/MetricCard.tsx": {
-    "mtime": 1789544715.6231885,
-    "ast_hash": "eff4abad76cf15e829288731a994fbe4",
+    "mtime": 1791629630.7832315,
+    "ast_hash": "23c2970b100d85daac84f4c133071e4b",
     "semantic_hash": ""
   },
   "web-next/src/shared/components/cards/index.ts": {
@@ -910,8 +910,8 @@
     "semantic_hash": ""
   },
   "web-next/src/shared/components/forms/text-fields/MyTextField.tsx": {
-    "mtime": 1789544715.6235504,
-    "ast_hash": "da0d0e78476714c21c9eddf4c3f608c0",
+    "mtime": 1791627700.132402,
+    "ast_hash": "78db21dcdbebf0f24420f4d0f84292ac",
     "semantic_hash": ""
   },
   "web-next/src/shared/components/forms/text-fields/formFieldError.test.ts": {
@@ -940,8 +940,8 @@
     "semantic_hash": ""
   },
   "web-next/src/shared/components/forms/text-fields/internals/ReadOnlyTextField.tsx": {
-    "mtime": 1789544715.6315587,
-    "ast_hash": "83102d1a20d90f2cf6d296def286ba98",
+    "mtime": 1791627700.132402,
+    "ast_hash": "0533ac48a637bb0a41ccccc78982edb0",
     "semantic_hash": ""
   },
   "web-next/src/shared/components/forms/text-fields/internals/TextFieldEndAdornment.tsx": {
@@ -1110,8 +1110,8 @@
     "semantic_hash": ""
   },
   "web-next/src/shared/components/navigation/header/PageHeader.tsx": {
-    "mtime": 1791288441.7332315,
-    "ast_hash": "c38864544cc9ba8fa3b700389c0142d1",
+    "mtime": 1791627700.1389074,
+    "ast_hash": "7ed5081888fbd5d6aa7d67f4de7fa909",
     "semantic_hash": ""
   },
   "web-next/src/shared/components/navigation/header/index.ts": {
@@ -1570,8 +1570,8 @@
     "semantic_hash": ""
   },
   "mobile-react/app/_layout.tsx": {
-    "mtime": 1791288441.089196,
-    "ast_hash": "7ae0939046afc6964c4893b15c48e08c",
+    "mtime": 1791627700.0747044,
+    "ast_hash": "a8b3cb5d22a048504b321f7a2177985e",
     "semantic_hash": ""
   },
   "mobile-react/eslint.config.js": {
@@ -1670,18 +1670,18 @@
     "semantic_hash": ""
   },
   "mobile-react/src/core/theme/ThemeProvider.tsx": {
-    "mtime": 1789544707.2562993,
-    "ast_hash": "9823304415699c4577a05383e5fdb32e",
+    "mtime": 1791627700.0907736,
+    "ast_hash": "88499600085eb57dbb7aff9817555725",
     "semantic_hash": ""
   },
   "mobile-react/src/core/theme/index.ts": {
-    "mtime": 1786453450.13186,
-    "ast_hash": "6a91be40039dcd7c26dd8712d3a5f6ee",
+    "mtime": 1791627700.0928018,
+    "ast_hash": "2556c3f090684ae60f658826befc9997",
     "semantic_hash": ""
   },
   "mobile-react/src/core/theme/theme.ts": {
-    "mtime": 1791288441.1503115,
-    "ast_hash": "1b49f92df11e7ecddd012b4839098ff8",
+    "mtime": 1791627700.0928018,
+    "ast_hash": "7ee061139b8fca17380faeeca7a5b347",
     "semantic_hash": ""
   },
   "mobile-react/src/shared/components/controls/AppButton.tsx": {
@@ -1735,8 +1735,8 @@
     "semantic_hash": ""
   },
   "mobile-react/src/shared/components/typography/AppText.tsx": {
-    "mtime": 1786516749.5401542,
-    "ast_hash": "808970afe62c9cb705c5e96c2362fe07",
+    "mtime": 1791627700.1068542,
+    "ast_hash": "4c0832c42bea71cbe327c8fa5e661ad4",
     "semantic_hash": ""
   },
   "mobile-react/tsconfig.json": {
@@ -2045,8 +2045,8 @@
     "semantic_hash": ""
   },
   "mobile-react/src/shared/components/data-table/AppDataTable.tsx": {
-    "mtime": 1789544709.685886,
-    "ast_hash": "57a67ad078e759cd072287bc7267db1d",
+    "mtime": 1791627700.0993478,
+    "ast_hash": "dd6b84517a4d9bb74a6b354e43689322",
     "semantic_hash": ""
   },
   "mobile-react/src/shared/components/data-table/index.ts": {
@@ -3560,8 +3560,8 @@
     "semantic_hash": ""
   },
   "mobile-react/src/shared/components/surfaces/AppDataCard.tsx": {
-    "mtime": 1789544709.685886,
-    "ast_hash": "0fab2df4b7b3dd9ab5a7e4f3754eb82c",
+    "mtime": 1791627700.0993478,
+    "ast_hash": "06a6d1f2c0573c6fe6d0cc032fc0094c",
     "semantic_hash": ""
   },
   "documentation/system/features/fiscal-years/required-files.json": {
@@ -3690,8 +3690,8 @@
     "semantic_hash": ""
   },
   "mobile-react/src/shared/components/tree-view/AppHierarchicalTree.tsx": {
-    "mtime": 1790406042.6800756,
-    "ast_hash": "dfd4f908ce615933953bf94a92933c38",
+    "mtime": 1791627700.1068542,
+    "ast_hash": "37d0cb4dd9a2dad832578814a8de8c0f",
     "semantic_hash": ""
   },
   "mobile-react/src/shared/components/tree-view/index.ts": {
@@ -3730,8 +3730,8 @@
     "semantic_hash": ""
   },
   "web-next/src/shared/components/tree-view/HierarchicalTreeList.tsx": {
-    "mtime": 1791288441.7382388,
-    "ast_hash": "62cb8069e8d5eea6663c1c442e3242fc",
+    "mtime": 1791627700.1414292,
+    "ast_hash": "e2b0e5fb9bbbabcc94cc99a5224a7603",
     "semantic_hash": ""
   },
   "web-next/src/shared/components/tree-view/SplitTreeView.test.tsx": {
@@ -3740,8 +3740,8 @@
     "semantic_hash": ""
   },
   "web-next/src/shared/components/tree-view/SplitTreeView.tsx": {
-    "mtime": 1791288441.7382388,
-    "ast_hash": "777cea871f70ddd8631850f2a66d821c",
+    "mtime": 1791627700.1424308,
+    "ast_hash": "4e7d08d6c273c4f3270288f2f33ae40e",
     "semantic_hash": ""
   },
   "web-next/src/shared/components/tree-view/index.ts": {
@@ -11340,8 +11340,8 @@
     "semantic_hash": ""
   },
   "mobile-react/src/modules/hr/basic-data/organizational-structure/presentation/components/OrganizationalStructureTreeDiagram.tsx": {
-    "mtime": 1789544707.9513724,
-    "ast_hash": "4c18c4724e28054639eb6231dd367638",
+    "mtime": 1791627700.0928018,
+    "ast_hash": "310b02217e7dc41fd104647ce63d01d1",
     "semantic_hash": ""
   },
   "mobile-react/src/modules/hr/basic-data/organizational-structure/presentation/components/import-data/OrganizationalStructureImportView.tsx": {
@@ -11450,8 +11450,8 @@
     "semantic_hash": ""
   },
   "mobile-react/src/modules/hr/basic-data/presentation/layout/BasicDataLayout.tsx": {
-    "mtime": 1789544708.0391977,
-    "ast_hash": "b710e6b9ec540e290e90cb02731fc7d9",
+    "mtime": 1791627700.0958197,
+    "ast_hash": "4129e7ff68bc0754bfa072be29ac7f59",
     "semantic_hash": ""
   },
   "mobile-react/src/modules/hr/basic-data/presentation/screens/BasicDataOverviewScreen.tsx": {
@@ -11560,8 +11560,8 @@
     "semantic_hash": ""
   },
   "mobile-react/src/modules/hr/recruitment/presentation/components/CandidateDetailModal.tsx": {
-    "mtime": 1789544708.324199,
-    "ast_hash": "e37d66d1c75a85a3f8910afe2731f7b1",
+    "mtime": 1791627700.0958197,
+    "ast_hash": "b54c55e089d01c1372e15a3082642f7d",
     "semantic_hash": ""
   },
   "mobile-react/src/modules/hr/recruitment/presentation/components/CandidatePipelineCard.test.tsx": {
@@ -11570,8 +11570,8 @@
     "semantic_hash": ""
   },
   "mobile-react/src/modules/hr/recruitment/presentation/components/CandidatePipelineCard.tsx": {
-    "mtime": 1789544708.3251688,
-    "ast_hash": "02bb197c4d50f0d6fae279255243a830",
+    "mtime": 1791627700.0958197,
+    "ast_hash": "f88f989a5ab0485f2bd2dde8acdedb7d",
     "semantic_hash": ""
   },
   "mobile-react/src/modules/hr/recruitment/presentation/components/InterviewEvaluationModal.test.tsx": {
@@ -11580,8 +11580,8 @@
     "semantic_hash": ""
   },
   "mobile-react/src/modules/hr/recruitment/presentation/components/InterviewEvaluationModal.tsx": {
-    "mtime": 1789544708.326166,
-    "ast_hash": "c740313257adb135ce9c9080c0c7957f",
+    "mtime": 1791627700.0958197,
+    "ast_hash": "f13287ca567d0784f96e274f9ac06846",
     "semantic_hash": ""
   },
   "mobile-react/src/modules/hr/recruitment/presentation/components/JobOfferModal.tsx": {
@@ -11590,13 +11590,13 @@
     "semantic_hash": ""
   },
   "mobile-react/src/modules/hr/recruitment/presentation/components/JobOpeningCard.tsx": {
-    "mtime": 1789544708.326166,
-    "ast_hash": "898bc194ebcd0b79992d5943ee06a271",
+    "mtime": 1791627700.0958197,
+    "ast_hash": "e0f301c41e0850dceface5cbc6cb98db",
     "semantic_hash": ""
   },
   "mobile-react/src/modules/hr/recruitment/presentation/components/JobRequisitionCard.tsx": {
-    "mtime": 1789544708.3271632,
-    "ast_hash": "c97cb72cc8b6b3eaeefbee16695babaf",
+    "mtime": 1791627700.0988345,
+    "ast_hash": "405cc8675b497206e0395c3a929e9804",
     "semantic_hash": ""
   },
   "mobile-react/src/modules/hr/recruitment/presentation/components/PlannedRequisitionForm.tsx": {
@@ -11605,13 +11605,13 @@
     "semantic_hash": ""
   },
   "mobile-react/src/modules/hr/recruitment/presentation/components/RecruitmentSettingsViewMobile.tsx": {
-    "mtime": 1790406042.5970447,
-    "ast_hash": "c063afe926ce2a6d0b0efae78c90aed8",
+    "mtime": 1791627700.0993478,
+    "ast_hash": "fbe977b2b5ff5a0c7e6086dc5af6f124",
     "semantic_hash": ""
   },
   "mobile-react/src/modules/hr/recruitment/presentation/components/RecruitmentSummaryStats.tsx": {
-    "mtime": 1789544708.3281617,
-    "ast_hash": "61a948652ccfb234cc8f93e461dd0ce3",
+    "mtime": 1791627700.0993478,
+    "ast_hash": "0e3d884f52a2c2c116360dcc55f4c0ce",
     "semantic_hash": ""
   },
   "mobile-react/src/modules/hr/recruitment/presentation/components/ScheduleInterviewModal.tsx": {
@@ -11640,8 +11640,8 @@
     "semantic_hash": ""
   },
   "mobile-react/src/modules/hr/recruitment/presentation/screens/RecruitmentScreen.tsx": {
-    "mtime": 1789893132.228318,
-    "ast_hash": "6f6828d3eb68f0d4b53545a3c75a27d2",
+    "mtime": 1791627700.0993478,
+    "ast_hash": "97cd770c20cab32f4384aad5d860eebb",
     "semantic_hash": ""
   },
   "mobile-react/src/modules/hr/recruitment/presentation/utils/application-pipeline-stage.test.ts": {
@@ -11950,8 +11950,8 @@
     "semantic_hash": ""
   },
   "mobile-react/src/modules/hr/workforce-planning/presentation/layout/WorkforcePlanningLayout.tsx": {
-    "mtime": 1789544708.5313041,
-    "ast_hash": "a18fe1f90dfc5b43e0bd329d094c9f93",
+    "mtime": 1791627700.0993478,
+    "ast_hash": "d3c124f760f08594161f1a845e6feda8",
     "semantic_hash": ""
   },
   "mobile-react/src/modules/hr/workforce-planning/presentation/queries/use-staffing.ts": {
@@ -12005,8 +12005,8 @@
     "semantic_hash": ""
   },
   "mobile-react/src/modules/hr/workforce-planning/presentation/screens/WorkforceTraceScreen.tsx": {
-    "mtime": 1789893132.3737419,
-    "ast_hash": "e09366fd28fc1d8f9c15d4c0f1dbfd26",
+    "mtime": 1791627700.0993478,
+    "ast_hash": "64d2e89d759fac5dde4f8e1e777673bb",
     "semantic_hash": ""
   },
   "mobile-react/src/modules/hr/workforce-planning/presentation/validation/staffing-schema.ts": {
@@ -12595,13 +12595,13 @@
     "semantic_hash": ""
   },
   "mobile-react/src/platform/navigation/ModuleDrawerContent.tsx": {
-    "mtime": 1789544709.0581534,
-    "ast_hash": "894de3731f73b5d60de2079c692070fb",
+    "mtime": 1791627700.0993478,
+    "ast_hash": "58f25bdfae017366336dbc8ed10d95b3",
     "semantic_hash": ""
   },
   "mobile-react/src/platform/navigation/index.ts": {
-    "mtime": 1791288441.282922,
-    "ast_hash": "dcbd9781d4153cef8154f0489e937317",
+    "mtime": 1791627700.0993478,
+    "ast_hash": "102d1ff4ee07ada94b93e1919dd37cab",
     "semantic_hash": ""
   },
   "mobile-react/src/platform/notifications/application/notification-use-cases.test.ts": {
@@ -13260,8 +13260,8 @@
     "semantic_hash": ""
   },
   "mobile-react/src/platform/tools/navigation/layout/PlatformToolModuleLayout.tsx": {
-    "mtime": 1789544709.5916412,
-    "ast_hash": "a9cd1211d67336d2aac86fa5b83b7774",
+    "mtime": 1791627700.0993478,
+    "ast_hash": "f11304a73333b5f45d9812d0ac745460",
     "semantic_hash": ""
   },
   "mobile-react/src/platform/tools/navigation/screens/PlatformToolsOverviewScreen.tsx": {
@@ -13450,8 +13450,8 @@
     "semantic_hash": ""
   },
   "mobile-react/src/shell/layouts/drawer/AppDrawerContent.tsx": {
-    "mtime": 1789544709.724638,
-    "ast_hash": "890862acc937e00f60baf6fe61eadef0",
+    "mtime": 1791627700.1068542,
+    "ast_hash": "542afab585e21f6095bf5f7219b8eb92",
     "semantic_hash": ""
   },
   "mobile-react/src/shell/layouts/drawer/index.ts": {
@@ -14315,8 +14315,8 @@
     "semantic_hash": ""
   },
   "web-next/src/modules/hr/basic-data/organizational-structure/management/components/tree-view/CostCenterTreeDiagram.tsx": {
-    "mtime": 1790406043.1289382,
-    "ast_hash": "434db2f3d39b8bb9123ec1223957b9e6",
+    "mtime": 1791627700.1263838,
+    "ast_hash": "ee514711163321a201e080d23135c2b8",
     "semantic_hash": ""
   },
   "web-next/src/modules/hr/basic-data/organizational-structure/management/components/tree-view/DepartmentTreeDiagram.tsx": {
@@ -14525,8 +14525,8 @@
     "semantic_hash": ""
   },
   "web-next/src/modules/hr/recruitment/components/RecruitmentKanbanBoard.tsx": {
-    "mtime": 1789544710.2865548,
-    "ast_hash": "30526e9e6803650d28fb6f82dfc2be05",
+    "mtime": 1791627700.1263838,
+    "ast_hash": "b70a56a9f659c19646296e2853437a75",
     "semantic_hash": ""
   },
   "web-next/src/modules/hr/recruitment/components/ScheduleInterviewDialog.tsx": {
@@ -15215,8 +15215,8 @@
     "semantic_hash": ""
   },
   "web-next/src/modules/reference-data/geographical-information/countries/components/chart-view/StatesChart.tsx": {
-    "mtime": 1789633895.9629316,
-    "ast_hash": "3915c2cdbb324d4e801e34a1c9def8c5",
+    "mtime": 1791627700.1263838,
+    "ast_hash": "013074bed5772a36671c57f97fd4aaa2",
     "semantic_hash": ""
   },
   "web-next/src/modules/reference-data/geographical-information/countries/components/chart-view/StatesCoverageChart.tsx": {
@@ -16240,13 +16240,13 @@
     "semantic_hash": ""
   },
   "web-next/src/platform/auth/ForgetPassword.tsx": {
-    "mtime": 1789544714.2893422,
-    "ast_hash": "6dd91e5f81049fba674ff2d87eb50f83",
+    "mtime": 1791627700.1263838,
+    "ast_hash": "d468cb74b750dc755afa28090a818233",
     "semantic_hash": ""
   },
   "web-next/src/platform/auth/ResendEmailConfirmation.tsx": {
-    "mtime": 1789544714.3266592,
-    "ast_hash": "2d602255ce232f59e62a68ef082ed0ba",
+    "mtime": 1791627700.132402,
+    "ast_hash": "7954d29fd6854b4a124e03510f5f053e",
     "semantic_hash": ""
   },
   "web-next/src/platform/auth/ResetPassword.tsx": {
@@ -16315,8 +16315,8 @@
     "semantic_hash": ""
   },
   "web-next/src/platform/auth/login/components/LeftPanel.tsx": {
-    "mtime": 1791363500.7557323,
-    "ast_hash": "db85c4bf2b4ed925b6fa5070c66ceb1c",
+    "mtime": 1791627700.132402,
+    "ast_hash": "a20b8dc5c51b534cdf3ae93c529b3377",
     "semantic_hash": ""
   },
   "web-next/src/platform/auth/login/components/LoginForm.tsx": {
@@ -16395,8 +16395,8 @@
     "semantic_hash": ""
   },
   "web-next/src/platform/auth/profile/profile-header/ProfileHeader.tsx": {
-    "mtime": 1791363502.5578692,
-    "ast_hash": "a55efb33491a51d2a9002cc4b871d2b3",
+    "mtime": 1791627700.132402,
+    "ast_hash": "72e236a407858274416757cd6fee6dd3",
     "semantic_hash": ""
   },
   "web-next/src/platform/auth/profile/profile-header/ProfileImageDropZone.tsx": {
@@ -16425,13 +16425,13 @@
     "semantic_hash": ""
   },
   "web-next/src/platform/auth/profile/profile-tabs/change-password/components/SecurityHeader.tsx": {
-    "mtime": 1789544714.472629,
-    "ast_hash": "3d9a3b0ad9152f1083ffe4a818459110",
+    "mtime": 1791627700.132402,
+    "ast_hash": "713ee6a3521dcdb4e99b07bfc1d49954",
     "semantic_hash": ""
   },
   "web-next/src/platform/auth/profile/profile-tabs/change-password/components/StyledCard.tsx": {
-    "mtime": 1789544714.4893844,
-    "ast_hash": "a51d4e97d4d54ea22c4d1aa38a34b971",
+    "mtime": 1791627700.132402,
+    "ast_hash": "16d4917543915563bba764fed8c77d78",
     "semantic_hash": ""
   },
   "web-next/src/platform/auth/profile/profile-tabs/change-password/utils/validation.ts": {
@@ -16450,8 +16450,8 @@
     "semantic_hash": ""
   },
   "web-next/src/platform/auth/profile/profile-tabs/personal-info/components/PersonalInfoHeader.tsx": {
-    "mtime": 1789544714.5273001,
-    "ast_hash": "69076fdfd972cb11e22a76fe706c02b9",
+    "mtime": 1791627700.132402,
+    "ast_hash": "5c602fc5329821df6d5967916bc45093",
     "semantic_hash": ""
   },
   "web-next/src/platform/auth/profile/profile-tabs/personal-info/utils/validation.ts": {
@@ -16512,11 +16512,6 @@
   "web-next/src/platform/auth/register/components/SecurityStep.tsx": {
     "mtime": 1789544714.5560827,
     "ast_hash": "c9e7e1f85e91d4931426a5204cd39589",
-    "semantic_hash": ""
-  },
-  "web-next/src/platform/auth/register/constants/colors.ts": {
-    "mtime": 1789544714.5560827,
-    "ast_hash": "68fd60aa82914d9b5982fe8b33730589",
     "semantic_hash": ""
   },
   "web-next/src/platform/auth/register/constants/validation.test.ts": {
@@ -17465,8 +17460,8 @@
     "semantic_hash": ""
   },
   "web-next/src/platform/tenant-access/CompanyContextSwitcher.tsx": {
-    "mtime": 1791288441.6227562,
-    "ast_hash": "c2773c8821de488bfdf2df2b42f69b51",
+    "mtime": 1791628793.8623006,
+    "ast_hash": "6de75b9299f7570e0de03a869724979b",
     "semantic_hash": ""
   },
   "web-next/src/platform/tenant-access/TenantAccessBoundary.tsx": {
@@ -17525,8 +17520,8 @@
     "semantic_hash": ""
   },
   "web-next/src/platform/tenants/TenantDashboardPage.tsx": {
-    "mtime": 1789644832.2030368,
-    "ast_hash": "b48c4905cf0edb8dab5f2b2ebb63494c",
+    "mtime": 1791629630.7832315,
+    "ast_hash": "69c61144512158919b4e36f66c453f1d",
     "semantic_hash": ""
   },
   "web-next/src/platform/tenants/TenantManagementPage.tsx": {
@@ -17875,8 +17870,8 @@
     "semantic_hash": ""
   },
   "web-next/src/shell/components/top-bar/TopBar.tsx": {
-    "mtime": 1791363531.9636445,
-    "ast_hash": "9f4c53a266bcd95ff7939c44d403f416",
+    "mtime": 1791627700.1424308,
+    "ast_hash": "4e5d038e4bb928f0f8b06000ebf2248b",
     "semantic_hash": ""
   },
   "web-next/src/shell/components/top-bar/TopBarStyles.tsx": {
@@ -17885,8 +17880,8 @@
     "semantic_hash": ""
   },
   "web-next/src/shell/components/top-bar/UserWelcome.tsx": {
-    "mtime": 1791288441.7382388,
-    "ast_hash": "3a3734cc77622bf8c829e3d2906e150d",
+    "mtime": 1791628793.8623006,
+    "ast_hash": "3e7c2fdcf042d8c6add54e1bedf8dcdd",
     "semantic_hash": ""
   },
   "web-next/src/shell/components/top-bar/useTopBarPreferences.ts": {
@@ -21000,8 +20995,8 @@
     "semantic_hash": ""
   },
   "packages/tokens/src/scales.ts": {
-    "mtime": 1790596267.297707,
-    "ast_hash": "7c4b0b4e25a29b8349617576fbf3bda2",
+    "mtime": 1791627700.1068542,
+    "ast_hash": "d37ed7e16e84fc051cb4547129ece8f5",
     "semantic_hash": ""
   },
   "packages/tokens/tsconfig.json": {
@@ -21020,8 +21015,8 @@
     "semantic_hash": ""
   },
   "web-next/e2e/accessibility.spec.ts": {
-    "mtime": 1789893138.5581822,
-    "ast_hash": "b9d1c65b431f2b9dd805bd93a92f4955",
+    "mtime": 1791627700.1068542,
+    "ast_hash": "fa4abb7fe1a45dc5db1d94da625ece75",
     "semantic_hash": ""
   },
   "web-next/e2e/auth.spec.ts": {
@@ -21030,8 +21025,8 @@
     "semantic_hash": ""
   },
   "web-next/e2e/authorization.spec.ts": {
-    "mtime": 1789893138.560179,
-    "ast_hash": "8dc65f9477baeb5ece7f961ebccbb5f4",
+    "mtime": 1791627700.1068542,
+    "ast_hash": "65d0500b5c566997917de80e2e2fd69f",
     "semantic_hash": ""
   },
   "web-next/e2e/browser-security.spec.ts": {
@@ -21040,8 +21035,8 @@
     "semantic_hash": ""
   },
   "web-next/e2e/business-smoke.spec.ts": {
-    "mtime": 1791288441.3920555,
-    "ast_hash": "f9495a618474e1abe53f4f4fbda92f08",
+    "mtime": 1791627700.1068542,
+    "ast_hash": "552abd7356bf64efd25107d2b1eab6d8",
     "semantic_hash": ""
   },
   "web-next/e2e/company-context.spec.ts": {
@@ -21050,8 +21045,8 @@
     "semantic_hash": ""
   },
   "web-next/e2e/role-permissions.spec.ts": {
-    "mtime": 1790418775.7774045,
-    "ast_hash": "e0497307c06c25eb4d9de2e3fbb2cc08",
+    "mtime": 1791627700.1068542,
+    "ast_hash": "fb83074eedd37b5679b1bba191142649",
     "semantic_hash": ""
   },
   "web-next/e2e/runtime-navigation.spec.ts": {
@@ -21065,13 +21060,13 @@
     "semantic_hash": ""
   },
   "web-next/e2e/support/test-backend.mjs": {
-    "mtime": 1791288441.3930748,
-    "ast_hash": "c49a24815be0fd61da6bc8a6224f7ee4",
+    "mtime": 1791629630.7832315,
+    "ast_hash": "a8e972c5983a7794b6b36755f8b5d510",
     "semantic_hash": ""
   },
   "web-next/playwright.config.ts": {
-    "mtime": 1789893138.5781295,
-    "ast_hash": "9589ad6815bd5aa27508242db3e497aa",
+    "mtime": 1791627700.1068542,
+    "ast_hash": "7278550ab837e0bb437d369cd14906c6",
     "semantic_hash": ""
   },
   "web-next/scripts/architecture-governance.mjs": {
@@ -22160,8 +22155,8 @@
     "semantic_hash": ""
   },
   "documentation/plans/business/erp-platform-template/PLAN.md": {
-    "mtime": 1791363495.4855025,
-    "ast_hash": "b94a294c909f65e109bccea9105e126d",
+    "mtime": 1791627700.0398028,
+    "ast_hash": "2e767b662c657beaf7f821c8cb691838",
     "semantic_hash": ""
   },
   "documentation/plans/business/erp-platform-template/RESEARCH.md": {
@@ -22890,8 +22885,8 @@
     "semantic_hash": ""
   },
   "web-next/src/shared/components/layout/ContextBadge.tsx": {
-    "mtime": 1791288441.7295318,
-    "ast_hash": "53f98cc37927804184989c957ef08e17",
+    "mtime": 1791627700.1389074,
+    "ast_hash": "d66ea56328be11bc6e2d82ec49cd4059",
     "semantic_hash": ""
   },
   "web-next/src/shell/components/top-bar/ThemePaletteSelector.test.tsx": {
@@ -22902,11 +22897,6 @@
   "web-next/src/shell/components/top-bar/ThemePaletteSelector.tsx": {
     "mtime": 1791288441.7382388,
     "ast_hash": "907ef5a018151fb5fa09994f3f8a93c0",
-    "semantic_hash": ""
-  },
-  "web-next/src/theme/legacyPalette.ts": {
-    "mtime": 1791288441.7478085,
-    "ast_hash": "e2d5fc21337da45493a6488d8aceee2e",
     "semantic_hash": ""
   },
   "web-next/src/theme/themePalette.ts": {
@@ -22950,8 +22940,8 @@
     "semantic_hash": ""
   },
   "documentation/plans/business/erp-platform-template/S3-S4-UNIFIED-THEME.md": {
-    "mtime": 1791363496.3534462,
-    "ast_hash": "ae2d1fab74718e2a8423eba2ca89577e",
+    "mtime": 1791629630.761549,
+    "ast_hash": "846d947ad433a55d7fb4bd6ee8b19fcd",
     "semantic_hash": ""
   },
   "documentation/plans/business/erp-platform-template/S5-WORKSPACE-GENERATOR-DESIGN.md": {
@@ -23230,8 +23220,8 @@
     "semantic_hash": ""
   },
   "web-next/public/sw.js": {
-    "mtime": 1791358401.7289438,
-    "ast_hash": "a31f9ce30d20a7916761e56225ba2ed7",
+    "mtime": 1791627700.1263838,
+    "ast_hash": "bb2bce7b09217540fc9f05d5796a4c47",
     "semantic_hash": ""
   },
   "web-next/src/app/ServiceWorkerRegistration.tsx": {
@@ -23277,6 +23267,76 @@
   "web-next/src/shared/components/layout/navigation/NavigationIconSequence.tsx": {
     "mtime": 1791359368.082996,
     "ast_hash": "56c306bccc924dab858305df9767a277",
+    "semantic_hash": ""
+  },
+  "mobile-react/src/core/theme/fonts.ts": {
+    "mtime": 1791627700.0907736,
+    "ast_hash": "40158a6e6a78742e651ea673c7f7bec9",
+    "semantic_hash": ""
+  },
+  "mobile-react/src/platform/navigation/useSequencedDrawerDescriptors.ts": {
+    "mtime": 1791627700.0993478,
+    "ast_hash": "314728b4b1885d87af577a337d5fc293",
+    "semantic_hash": ""
+  },
+  "web-next/e2e/theme-baselines.spec.ts": {
+    "mtime": 1791629630.7832315,
+    "ast_hash": "c80dd86fe338e4f7f8245cc6e1fa09f2",
+    "semantic_hash": ""
+  },
+  "mobile-react/assets/fonts/OFL.txt": {
+    "mtime": 1791627700.0907736,
+    "ast_hash": "a1d4ecac8cc4562ef1dad386032b1c98",
+    "semantic_hash": ""
+  },
+  "web-next/public/fonts/ibm-plex-sans-arabic/OFL.txt": {
+    "mtime": 1791627700.1068542,
+    "ast_hash": "a1d4ecac8cc4562ef1dad386032b1c98",
+    "semantic_hash": ""
+  },
+  "Claude outputs/P-001-countries-baseline.png": {
+    "mtime": 1791378375.3645499,
+    "ast_hash": "1072b3dbd0c9242f67de0f3ba40e7828",
+    "semantic_hash": ""
+  },
+  "Claude outputs/P-006-role-permissions-baseline.png": {
+    "mtime": 1791378375.9342563,
+    "ast_hash": "425071e5586e7a8f516968a2cb3f3157",
+    "semantic_hash": ""
+  },
+  "Claude outputs/login-themes-baseline.png": {
+    "mtime": 1791376423.371146,
+    "ast_hash": "254e0df878065756095744f080948d16",
+    "semantic_hash": ""
+  },
+  "documentation/plans/business/erp-platform-template/baselines/P-001-countries.png": {
+    "mtime": 1791627700.0398028,
+    "ast_hash": "1072b3dbd0c9242f67de0f3ba40e7828",
+    "semantic_hash": ""
+  },
+  "documentation/plans/business/erp-platform-template/baselines/P-006-role-permissions.png": {
+    "mtime": 1791627700.0656495,
+    "ast_hash": "425071e5586e7a8f516968a2cb3f3157",
+    "semantic_hash": ""
+  },
+  "documentation/plans/business/erp-platform-template/baselines/login.png": {
+    "mtime": 1791627700.0747044,
+    "ast_hash": "fefff28aa0fff9723da73adfe68ee921",
+    "semantic_hash": ""
+  },
+  "documentation/plans/business/erp-platform-template/login-themes-baseline.png": {
+    "mtime": 1791376363.7418656,
+    "ast_hash": "fefff28aa0fff9723da73adfe68ee921",
+    "semantic_hash": ""
+  },
+  "Claude outputs/super-admin-dashboard-baseline.png": {
+    "mtime": 1791629154.6395085,
+    "ast_hash": "6e199c4a50fe9da4b0b19f63b8fd93d9",
+    "semantic_hash": ""
+  },
+  "documentation/plans/business/erp-platform-template/baselines/super-admin-dashboard.png": {
+    "mtime": 1791629630.7832315,
+    "ast_hash": "6e199c4a50fe9da4b0b19f63b8fd93d9",
     "semantic_hash": ""
   }
 }
