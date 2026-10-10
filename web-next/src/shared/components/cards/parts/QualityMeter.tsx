@@ -35,7 +35,8 @@ export const QualityMeter: React.FC<{
         sx={{
           height: 6,
           borderRadius: 3,
-          backgroundColor: alpha(theme.palette.grey[300], 0.3),
+          // Track tinted with the level color (was a neutral grey) so the bar reads as one palette color.
+          backgroundColor: alpha(qualityInfo.color, theme.palette.mode === "dark" ? 0.22 : 0.15),
           "& .MuiLinearProgress-bar": { borderRadius: 3, backgroundColor: qualityInfo.color },
         }}
       />

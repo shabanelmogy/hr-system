@@ -125,16 +125,6 @@ const EntityCard = ({
           </Box>
         )}
 
-        {onSelectedChange && (
-          <Checkbox
-            checked={selected}
-            onChange={(event) => onSelectedChange(event.target.checked)}
-            size="small"
-            slotProps={{ input: { "aria-label": selectionLabel } }}
-            sx={{ position: "absolute", top: 8, insetInlineStart: 4, zIndex: 3 }}
-          />
-        )}
-
         {startBadge && (
           <Box sx={{ position: "absolute", top: 12, insetInlineStart: 50, zIndex: 3 }}>
             {startBadge}
@@ -142,8 +132,27 @@ const EntityCard = ({
         )}
 
         <CardContent sx={{ flex: 1, minHeight: 0, overflowY: "auto", pt: 4, pb: 1 }}>
-          {/* Title & Subtitle */}
-          <Box sx={{ mb: 2 }}>
+          {/* Selection + Title & Subtitle. The checkbox sits in the title row (it used to be
+              absolutely positioned and covered the first letters of the title). */}
+          <Box sx={{ mb: 2, display: "flex", alignItems: "flex-start", gap: 0.75, minWidth: 0 }}>
+            {onSelectedChange && (
+              <Checkbox
+                checked={selected}
+                onChange={(event) => onSelectedChange(event.target.checked)}
+                size="small"
+                color="primary"
+                slotProps={{ input: { "aria-label": selectionLabel } }}
+                sx={{
+                  p: 0.5,
+                  mt: -0.25,
+                  marginInlineStart: -0.75,
+                  flexShrink: 0,
+                  color: "text.secondary",
+                  "&.Mui-checked": { color: "primary.main" },
+                }}
+              />
+            )}
+          <Box sx={{ minWidth: 0, flex: 1 }}>
             <Typography
               variant="h6"
               component="div"
@@ -170,6 +179,7 @@ const EntityCard = ({
                 {subtitle}
               </Typography>
             )}
+          </Box>
           </Box>
 
           {/* Chips/Meta Row */}

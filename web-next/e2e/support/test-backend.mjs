@@ -25,7 +25,7 @@ const permissions = {
     "RolePermissions:Edit",
     "Users:View",
   ],
-  superadmin: ["Countries:View", "Countries:Create", "Countries:Edit", "Countries:Delete"],
+  superadmin: ["Countries:View", "Countries:Create", "Countries:Edit", "Countries:Delete", "Countries:Archive", "Countries:Restore"],
 };
 
 const state = {
