@@ -12,7 +12,9 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import { I18nextProvider } from "react-i18next";
 import type { ThemePalette } from "@app/tokens";
+import i18n from "@/locales/i18n";
 import type { ThemeMode } from "./ThemePreferences";
 import { ToastProvider } from "@/shared/components/feedback/transient";
 import {
@@ -28,6 +30,11 @@ export type ThemeShellSettings = ThemeSettings & {
    * that hydrate later (Suspense boundaries) would otherwise keep server HTML built
    * for the default theme/language, and React does not patch those attributes.
    * Pass `languageChanged` when the language was switched before this call.
+   *
+   * Until this runs, the tree translates through a frozen copy of i18next in the server
+   * language: switching the shared instance happens before React commits the remount, and a
+   * route segment that streams in during that window would otherwise hydrate with the new
+   * language and fail ("server rendered text didn't match the client").
    */
   applyInitialPreferences: (next: { mode: ThemeMode; palette: ThemePalette; languageChanged: boolean }) => void;
 };
@@ -38,9 +45,12 @@ export function ThemeShell({ children }: { children: ReactNode }) {
   const baseSettings = useThemeSettings();
   const { mode, theme, palette, setMode, setPalette } = baseSettings;
   const [contentKey, setContentKey] = useState(0);
+  const [hydrationI18n] = useState(() => i18n.cloneInstance({ lng: i18n.language, initAsync: false }));
+  const [preferencesApplied, setPreferencesApplied] = useState(false);
 
   const applyInitialPreferences = useCallback<ThemeShellSettings["applyInitialPreferences"]>(
     (next) => {
+      setPreferencesApplied(true);
       const changed = next.languageChanged || next.mode !== mode || next.palette !== palette;
       if (!changed) return;
       setMode(next.mode);
@@ -72,7 +82,9 @@ export function ThemeShell({ children }: { children: ReactNode }) {
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <ToastProvider position="top-right">
-            <Fragment key={contentKey}>{children}</Fragment>
+            <I18nextProvider i18n={preferencesApplied ? i18n : hydrationI18n}>
+              <Fragment key={contentKey}>{children}</Fragment>
+            </I18nextProvider>
           </ToastProvider>
         </ThemeProvider>
       </AppEmotionCacheProvider>

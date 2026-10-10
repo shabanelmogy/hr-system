@@ -195,7 +195,7 @@ export default function OrganizationalStructureMultiView(props: Props) {
                 },
               }}
             >{props.items.map((item, index) => <Box key={item.id} sx={{ minWidth: 0 }}>
-              <EntityCard index={index} height={280} title={name(item)} subtitle={item.code}
+              <EntityCard index={index} height="100%" title={name(item)} subtitle={item.code}
                 endBadge={<Chip size="small" color={item.isDeleted ? "default" : "success"} label={t(item.isDeleted ? "organizationalStructure.status.archived" : "organizationalStructure.status.active")} />}
                 content={<Stack spacing={1} sx={{ minWidth: 0 }}><Typography variant="body2" color="text.secondary">{t("organizationalStructure.fields.parent")}</Typography><Typography>{parentName(item)}</Typography>
                   {item.targetHeadcount != null ? <Typography>{t("organizationalStructure.fields.targetHeadcount")}: {item.targetHeadcount}</Typography> : null}

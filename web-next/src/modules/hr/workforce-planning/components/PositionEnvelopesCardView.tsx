@@ -25,7 +25,7 @@ export default function PositionEnvelopesCardView(props: Props) {
         const actions: CardActionItem[] = [
           { key: "view", title: t("actions.view"), color: "secondary", icon: <Visibility />, onClick: () => props.onView(item) },
         ];
-        return <Grid key={item.id} size={{ xs: 12, sm: 6, lg: 4, xl: 3 }}><EntityCard index={index} height={300} title={item.envelopeCode} subtitle={item.currencyCode}
+        return <Grid key={item.id} size={{ xs: 12, sm: 6, lg: 4, xl: 3 }}><EntityCard index={index} height="100%" title={item.envelopeCode} subtitle={item.currencyCode}
           endBadge={<Chip size="small" color="info" label={t("envelopes.capacity.headcount", { available: item.availableHeadcount, total: item.authorizedHeadcount })} />}
           chips={<Stack direction="row" sx={{ gap: 1, flexWrap: "wrap" }}><Chip size="small" variant="outlined" label={t("envelopes.capacity.reserved", { count: item.reservedHeadcount })} /><Chip size="small" variant="outlined" label={t("envelopes.capacity.hired", { count: item.hiredHeadcount })} /></Stack>}
           content={<Stack spacing={1.25}><LinearProgress variant="determinate" value={headcountRatio} aria-label={t("envelopes.capacity.headcount", { available: item.availableHeadcount, total: item.authorizedHeadcount })} /><Typography variant="body2" color="text.secondary">{t("envelopes.capacity.salary", { available: item.availableSalaryBudget.toLocaleString(), total: item.authorizedSalaryBudget.toLocaleString(), currency: item.currencyCode })}</Typography></Stack>}

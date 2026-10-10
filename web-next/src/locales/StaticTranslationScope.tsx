@@ -1,7 +1,7 @@
 "use client";
 
-import type { ReactNode } from "react";
-import { I18nextProvider } from "react-i18next";
+import { useContext, type ReactNode } from "react";
+import { I18nContext, I18nextProvider } from "react-i18next";
 import i18n from "./i18n";
 
 type StaticTranslationScopeProps = {
@@ -27,8 +27,10 @@ export function StaticTranslationScope({
   children,
   namespace,
 }: StaticTranslationScopeProps) {
+  const inherited = useContext(I18nContext);
   return (
-    <I18nextProvider i18n={i18n} defaultNS={namespace}>
+    // Keep the instance chosen above (ThemeShell pins one while the page hydrates).
+    <I18nextProvider i18n={inherited?.i18n ?? i18n} defaultNS={namespace}>
       {children}
     </I18nextProvider>
   );

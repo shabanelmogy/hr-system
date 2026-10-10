@@ -18,7 +18,6 @@ import {
   Button,
   Card,
   CardContent,
-  Chip,
   CircularProgress,
   LinearProgress,
   Stack,
@@ -41,6 +40,7 @@ import {
   type SubscriptionStatus,
 } from "./types";
 import { useTenantDashboardSummaryQuery } from "./useTenantsQuery";
+import { getTenantStatusColor, TenantSubscriptionChip } from "./components/TenantStatusChips";
 
 const dashboardListSx = {
   height: "100%",
@@ -334,11 +334,7 @@ export default function TenantDashboardPage() {
                             {tenant.identifier}
                           </Typography>
                         </Box>
-                        <Chip
-                          color={getStatusColor(tenant.subscriptionStatus)}
-                          label={t(`tenantManagement.statuses.${tenant.subscriptionStatus}`)}
-                          size="small"
-                        />
+                        <TenantSubscriptionChip status={tenant.subscriptionStatus} />
                       </Stack>
                     ))}
                   </Box>
@@ -524,8 +520,8 @@ function SubscriptionOverview({
   const { t } = useTranslation();
   const theme = useTheme();
   const statusColor = (status: SubscriptionStatus) => {
-    const color = getStatusColor(status);
-    return color === "default" ? theme.palette.grey[500] : theme.palette[color].main;
+    const color = getTenantStatusColor(status);
+    return color ? theme.palette[color].main : theme.palette.grey[500];
   };
 
   return (
@@ -638,16 +634,6 @@ function getDaysUntil(value: string | null): number {
 function formatDate(value: string | null, locale: string): string {
   if (!value) return "";
   return new Intl.DateTimeFormat(locale, { dateStyle: "medium" }).format(new Date(value));
-}
-
-function getStatusColor(
-  status: SubscriptionStatus,
-): "default" | "success" | "warning" | "error" | "info" {
-  if (status === "active") return "success";
-  if (status === "trial") return "info";
-  if (status === "pastDue") return "warning";
-  if (status === "suspended" || status === "expired" || status === "cancelled") return "error";
-  return "default";
 }
 
 function getErrorMessage(error: unknown): string {

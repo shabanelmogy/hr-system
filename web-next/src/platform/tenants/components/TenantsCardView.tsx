@@ -7,7 +7,8 @@ import { useTranslation } from "react-i18next";
 import { EntityCard } from "@/shared/components/cards";
 import { EmptyState, NoResultsState } from "@/shared/components/feedback/states";
 import { CardViewPagination, CardViewSkeleton } from "@/shared/components/lists/card-view";
-import type { SubscriptionStatus, TenantManagementResponse } from "../types";
+import type { TenantManagementResponse } from "../types";
+import { TenantAccessChip, TenantSubscriptionChip } from "./TenantStatusChips";
 
 interface TenantsCardViewProps {
   tenants: TenantManagementResponse[];
@@ -82,29 +83,16 @@ export default function TenantsCardView({
             <Grid key={tenant.id} size={{ xs: 12, sm: 6, lg: 4, xl: 3 }}>
               <EntityCard
                 index={index}
-                height={350}
+                height="100%"
                 isHovered={hoveredId === tenant.id}
                 onMouseEnter={() => setHoveredId(tenant.id)}
                 onMouseLeave={() => setHoveredId(null)}
                 title={tenant.name}
                 subtitle={tenant.identifier}
-                endBadge={(
-                  <Chip
-                    size="small"
-                    color={getStatusColor(tenant.subscriptionStatus)}
-                    label={t(`tenantManagement.statuses.${tenant.subscriptionStatus}`)}
-                  />
-                )}
+                endBadge={<TenantSubscriptionChip status={tenant.subscriptionStatus} />}
                 chips={(
                   <Stack direction="row" useFlexGap sx={{ flexWrap: "wrap", gap: 0.75 }}>
-                    <Chip
-                      size="small"
-                      variant="outlined"
-                      color={tenant.isActive ? "success" : "default"}
-                      label={tenant.isActive
-                        ? t("tenantManagement.enabled")
-                        : t("tenantManagement.disabled")}
-                    />
+                    <TenantAccessChip isActive={tenant.isActive} />
                     <Chip
                       size="small"
                       variant="outlined"
@@ -179,14 +167,4 @@ function Metric({ label, value }: { label: string; value: string | number }) {
 
 function formatDate(value: string): string {
   return new Intl.DateTimeFormat(undefined, { dateStyle: "medium" }).format(new Date(value));
-}
-
-function getStatusColor(
-  status: SubscriptionStatus,
-): "default" | "success" | "warning" | "error" | "info" {
-  if (status === "active") return "success";
-  if (status === "trial") return "info";
-  if (status === "pastDue") return "warning";
-  if (status === "suspended" || status === "expired" || status === "cancelled") return "error";
-  return "default";
 }

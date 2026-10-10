@@ -156,6 +156,19 @@ const server = http.createServer(async (request, response) => {
     return json(response, 200, tenantDashboardSummary());
   }
 
+  if (request.method === "GET" && url.pathname === "/api/v1/tenants/getPage") {
+    const session = sessionFromAuthorization(request);
+    if (!session) return problem(response, 401, "Unauthorized");
+    const items = tenantManagementPage();
+    return json(response, 200, {
+      items,
+      metaData: {
+        currentPage: 1, totalPages: 1, pageSize: 10, pageNumber: 1,
+        totalCount: items.length, hasPrev: false, hasNext: false,
+      },
+    });
+  }
+
   if (request.method === "GET" && url.pathname === "/api/v1/modules/accessible") {
     const session = sessionFromAuthorization(request);
     if (!session) return problem(response, 401, "Unauthorized");
@@ -510,6 +523,24 @@ function tenantDashboardSummary() {
       { id: "tenant-c", name: "Tenant Gamma", planName: "Business", subscriptionEndsOn: "2026-10-20T00:00:00.000Z" },
     ],
   };
+}
+
+function tenantManagementPage() {
+  const tenant = (id, identifier, name, subscriptionStatus, extra = {}) => ({
+    id, identifier, name, isActive: true, subscriptionStatus,
+    subscriptionStartedOn: "2026-01-01T00:00:00.000Z", subscriptionEndsOn: "2026-12-31T00:00:00.000Z",
+    planName: "Business", maxAdmins: 5, maxUsers: 100, adminCount: 1, userCount: 12,
+    totalUserCount: 13, companyCount: 2, billingEmail: null, contactName: null, contactPhone: null,
+    notes: null, createdOn: "2026-01-01T00:00:00.000Z", updatedOn: null, lifecycleStatus: "active",
+    archivedOn: null, archiveReason: null, purgeScheduledOn: null, rowVersion: "AAAAAAAAB9E=",
+    entitlements: [], ...extra,
+  });
+  return [
+    tenant("tenant-a", "ALPHA", "Tenant Alpha", "active"),
+    tenant("tenant-b", "BETA", "Tenant Beta", "trial", { planName: null }),
+    tenant("tenant-c", "GAMMA", "Tenant Gamma", "pastDue"),
+    tenant("tenant-d", "DELTA", "Tenant Delta", "suspended", { isActive: false, subscriptionEndsOn: null }),
+  ];
 }
 
 function moduleCodeForPermissionGroup(group) {

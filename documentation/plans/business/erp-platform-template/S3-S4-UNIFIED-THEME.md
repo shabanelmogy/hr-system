@@ -195,3 +195,21 @@ Differences from the prepared change set:
   colors; `ThemeShell` keeps `data-palette` in sync. `index.css` values are fallbacks only.
 - Verified in a production build: computed `--app-scrollbar-thumb` matches the primary of
   all 4 palettes in light and dark.
+
+## Card scroll, tenant status badge and late-hydration language 2026-10-10
+
+- Cards with a fixed `height` (tenants 350, workforce, fiscal years, staffing, org structure)
+  scrolled inside after the 8px spacing fix. Every `EntityCard` now uses `height="100%"`
+  (content height, equal per grid row). Rule: no fixed pixel height on `EntityCard`.
+- Tenant "Active" badge was a solid status green in every palette. Tenant subscription and
+  access chips are shared (`platform/tenants/components/TenantStatusChips.tsx`) and tinted
+  (`AppChip`): active and enabled use the palette primary, trial/past-due/suspended keep
+  info/warning/error. Used by the card view, grid and dashboard.
+- Hydration error "server rendered text didn't match" (`LanguageSelector` label in Arabic):
+  `RuntimePreferencesClientSync` switches the shared i18next instance before React commits
+  the remount, so a protected segment streaming in during that window hydrated in Arabic
+  against English server HTML. `ThemeShell` now gives the tree a frozen clone of i18next in
+  the server language until saved preferences are applied; `StaticTranslationScope` keeps
+  the inherited instance. Regression spec: `e2e/hydration-preferences.spec.ts` (the race is
+  timing-dependent and did not reproduce in the cloud runs, so the spec guards, not proves).
+- e2e fixture backend serves `/api/v1/tenants/getPage`.

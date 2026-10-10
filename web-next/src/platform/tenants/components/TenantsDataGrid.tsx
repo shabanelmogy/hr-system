@@ -1,5 +1,4 @@
 import EditIcon from "@mui/icons-material/Edit";
-import { Chip } from "@mui/material";
 import {
   GridActionsCellItem,
   type GridColDef,
@@ -17,6 +16,7 @@ import type {
   TenantManagementResponse,
   TenantSortColumn,
 } from "../types";
+import { TenantAccessChip, TenantSubscriptionChip } from "./TenantStatusChips";
 
 interface TenantsDataGridProps {
   tenants: TenantManagementResponse[];
@@ -82,11 +82,7 @@ export default function TenantsDataGrid({
       align: "center",
       headerAlign: "center",
       renderCell: ({ value }) => (
-        <Chip
-          size="small"
-          color={getStatusColor(value as SubscriptionStatus)}
-          label={t(`tenantManagement.statuses.${String(value)}`)}
-        />
+        <TenantSubscriptionChip status={value as SubscriptionStatus} />
       ),
     },
     {
@@ -127,12 +123,7 @@ export default function TenantsDataGrid({
       align: "center",
       headerAlign: "center",
       renderCell: ({ value }) => (
-        <Chip
-          size="small"
-          color={value ? "success" : "default"}
-          variant="outlined"
-          label={value ? t("tenantManagement.enabled") : t("tenantManagement.disabled")}
-        />
+        <TenantAccessChip isActive={Boolean(value)} />
       ),
     },
     {
@@ -194,14 +185,4 @@ export default function TenantsDataGrid({
       />
     </ContentWrapper>
   );
-}
-
-function getStatusColor(
-  status: SubscriptionStatus,
-): "default" | "success" | "warning" | "error" | "info" {
-  if (status === "active") return "success";
-  if (status === "trial") return "info";
-  if (status === "pastDue") return "warning";
-  if (status === "suspended" || status === "expired" || status === "cancelled") return "error";
-  return "default";
 }
