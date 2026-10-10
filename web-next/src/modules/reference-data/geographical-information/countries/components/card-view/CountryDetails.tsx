@@ -16,7 +16,8 @@ export const CountryDetails: React.FC<CountryDetailsProps> = ({ phoneCode, curre
       {phoneCode && (
         <InfoIconText
           icon={<Phone sx={{ fontSize: 16, color: "text.secondary" }} />}
-          primary={`+${phoneCode}`}
+          // Stored codes may already include "+"; keep the code left-to-right inside RTL text.
+          primary={<bdi dir="ltr">{phoneCode.startsWith("+") ? phoneCode : `+${phoneCode}`}</bdi>}
           mb={1}
         />
       )}
