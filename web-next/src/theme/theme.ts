@@ -53,5 +53,9 @@ export const getDesignTokens = (
   return {
     ...tokenOptions,
     components: componentDefaults,
+    // Every web layout was written for MUI's 8px spacing unit (sx p/m/gap, Grid spacing).
+    // The token options use the 4px token grid (spacing(1) = 4px), which halved all web
+    // spacing after the S3 theme switch. Keep 8px on web: spacing(n) = 2 token steps.
+    spacing: 8,
   };
 };

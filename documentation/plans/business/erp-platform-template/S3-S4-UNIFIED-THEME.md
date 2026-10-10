@@ -172,3 +172,15 @@ Differences from the prepared change set:
   fiscal-year date entry (MUI X sectioned picker) specs follow the current UI.
 - Still open: tenant primary branding (`withBrandPrimary`, needs a tenant setting and API),
   shared web/mobile palette preference (needs a user-preference API), P-002/P-003 baselines.
+
+## Spacing regression fix 2026-10-10
+
+- Found from owner screenshots (cards, chips overlapping): `createMuiThemeOptions` sets MUI
+  `spacing` to the 4px token step, while every web layout was written for MUI's default 8px.
+  Since the S3 switch all web `sx` spacing and `Grid spacing` were half size.
+- Decision: web keeps `spacing: 8` in `getDesignTokens` (one MUI step = two token steps);
+  mobile is unchanged. Rule for new web code: MUI spacing units are 8px.
+- Country pills on state/district cards take their hue from the palette module colors (they
+  used status colors such as info/error).
+- e2e: the fiscal-year and dirty-form specs are timing-sensitive in the full serial run
+  (pass when re-run); tracked as flaky, not a regression.

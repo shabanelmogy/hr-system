@@ -2,10 +2,9 @@ import React from "react";
 import { Tooltip, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { Public } from "@mui/icons-material";
-import { alpha, useTheme } from "@mui/material/styles";
+import { alpha, useTheme, type Theme } from "@mui/material/styles";
 
-const paletteKeys = ["primary", "secondary", "success", "info", "warning", "error"] as const;
-type ColorKey = typeof paletteKeys[number];
+const moduleKeys = ["hr", "accounting", "crm", "referenceData", "reporting"] as const;
 
 const hashString = (str: string): number => {
   let h = 0;
@@ -16,10 +15,15 @@ const hashString = (str: string): number => {
   return Math.abs(h);
 };
 
-const colorKeyFor = (id?: string | number | null, name?: string | null): ColorKey => {
+/**
+ * A stable per-country hue from the active palette's categorical module colors (it used
+ * status colors such as info/error, which read as states and were blue/red on every palette).
+ */
+const colorFor = (theme: Theme, id?: string | number | null, name?: string | null): string => {
   const base = typeof id === "number" ? id : id ? hashString(String(id)) : name ? hashString(name) : 0;
-  const idx = Math.abs(base % paletteKeys.length);
-  return paletteKeys[idx];
+  const modules = theme.palette.app?.modules;
+  const key = moduleKeys[Math.abs(base % moduleKeys.length)];
+  return modules?.[key] ?? theme.palette.primary.main;
 };
 
 export interface CountryPillProps {
@@ -31,8 +35,7 @@ export interface CountryPillProps {
 
 export const CountryPill: React.FC<CountryPillProps> = ({ id, nameEn, nameAr, icon }) => {
   const theme = useTheme();
-  const key = colorKeyFor(id ?? null, nameEn ?? null);
-  const colorMain = theme.palette[key].main;
+  const colorMain = colorFor(theme, id ?? null, nameEn ?? null);
   const contrast = theme.palette.getContrastText(colorMain);
   const isRTL = theme.direction === "rtl";
   const primaryName = isRTL ? (nameAr ?? nameEn) : nameEn;
