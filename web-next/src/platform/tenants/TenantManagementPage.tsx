@@ -949,7 +949,7 @@ function TenantEditor({
               color="inherit"
               onClick={() => void handleClose()}
               disabled={loading}
-              startIcon={<ArrowBackRoundedIcon />}
+              startIcon={<ArrowBackRoundedIcon sx={(theme) => ({ transform: theme.direction === "rtl" ? "scaleX(-1)" : "none" })} />}
               sx={{ flexShrink: 0 }}
             >
               {t("actions.back")}

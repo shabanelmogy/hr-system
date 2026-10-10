@@ -213,3 +213,14 @@ Differences from the prepared change set:
   the inherited instance. Regression spec: `e2e/hydration-preferences.spec.ts` (the race is
   timing-dependent and did not reproduce in the cloud runs, so the spec guards, not proves).
 - e2e fixture backend serves `/api/v1/tenants/getPage`.
+
+## Back/next arrows in RTL 2026-10-10
+
+- The tenant form back button (and the register wizard, media error view, recruitment
+  "move to" menu and audit-log value arrows) used `ArrowBack`/`ArrowForward` without
+  mirroring, so in Arabic the back arrow pointed away from the page edge. Each now mirrors
+  with `scaleX(-1)` when `theme.direction === "rtl"`. Rule: a directional icon is mirrored in
+  RTL (or chosen by direction, as `BackButton` and `FormStepActions` do).
+- Tenant add/edit form colors reviewed in all 4 palettes, light and dark (data, subscription
+  and applications tabs): header icon, active tab, counters, switch, banners and save button
+  all follow the palette; no hard-coded colors found.

@@ -269,7 +269,7 @@ export function EntityChangeLogDialog({
                       <TableCell>{t("auditLog.field")}</TableCell>
                       <TableCell>{t("auditLog.oldValue")}</TableCell>
                       <TableCell align="center" sx={{ width: 40 }}>
-                        <ArrowForwardIcon sx={{ fontSize: 14, color: 'text.secondary' }} />
+                        <ArrowForwardIcon sx={(theme) => ({ fontSize: 14, color: 'text.secondary', transform: theme.direction === 'rtl' ? 'scaleX(-1)' : 'none' })} />
                       </TableCell>
                       <TableCell>{t("auditLog.newValue")}</TableCell>
                     </TableRow>
@@ -296,7 +296,7 @@ export function EntityChangeLogDialog({
                           )}
                         </TableCell>
                         <TableCell align="center">
-                          <ArrowForwardIcon sx={{ fontSize: 12, color: 'text.disabled' }} />
+                          <ArrowForwardIcon sx={(theme) => ({ fontSize: 12, color: 'text.disabled', transform: theme.direction === 'rtl' ? 'scaleX(-1)' : 'none' })} />
                         </TableCell>
                         <TableCell sx={{ fontSize: '0.8rem', color: 'success.main' }}>
                           {item.newValue ? (

@@ -67,7 +67,7 @@ const MediaErrorView: React.FC<MediaErrorViewProps> = ({
           <Grid size={{ xs: 4 }}>
             <Tooltip title={t("common.back")}>
               <IconButton size="small" onClick={handleBack}>
-                <ArrowBack />
+                <ArrowBack sx={(theme) => ({ transform: theme.direction === "rtl" ? "scaleX(-1)" : "none" })} />
               </IconButton>
             </Tooltip>
           </Grid>

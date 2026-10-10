@@ -54,7 +54,7 @@ export default function FormBody({
             variant="outlined"
             color="primary"
             onClick={handleBack}
-            startIcon={<ArrowBackIcon />}
+            startIcon={<ArrowBackIcon sx={(theme) => ({ transform: theme.direction === "rtl" ? "scaleX(-1)" : "none" })} />}
             sx={{
               visibility: activeStep === 0 ? "hidden" : "visible",
               borderRadius: 10,
@@ -70,7 +70,7 @@ export default function FormBody({
             variant="contained"
             color="primary"
             onClick={handleNext}
-            endIcon={<ArrowForwardIcon />}
+            endIcon={<ArrowForwardIcon sx={(theme) => ({ transform: theme.direction === "rtl" ? "scaleX(-1)" : "none" })} />}
             sx={{
               borderRadius: 10,
               py: 0.75,

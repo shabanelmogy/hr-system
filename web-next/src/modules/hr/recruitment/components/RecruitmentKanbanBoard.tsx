@@ -443,19 +443,19 @@ export default function RecruitmentKanbanBoard({
       {/* Accessible Stage Move Menu */}
       <Menu anchorEl={cardMenu?.el} open={Boolean(cardMenu)} onClose={handleCardMenuClose}>
         <MenuItem onClick={() => handleMoveStage(ApplicationStatus.UnderReview)}>
-          <ArrowForwardIcon fontSize="small" sx={{ mr: 1 }} />
+          <ArrowForwardIcon fontSize="small" sx={(theme) => ({ mr: 1, transform: theme.direction === "rtl" ? "scaleX(-1)" : "none" })} />
           {t("recruitment.stages.underReview", "نقل إلى المراجعة / Under Review")}
         </MenuItem>
         <MenuItem onClick={() => handleMoveStage(ApplicationStatus.Shortlisted)}>
-          <ArrowForwardIcon fontSize="small" sx={{ mr: 1 }} />
+          <ArrowForwardIcon fontSize="small" sx={(theme) => ({ mr: 1, transform: theme.direction === "rtl" ? "scaleX(-1)" : "none" })} />
           {t("recruitment.stages.shortlist", "نقل إلى القائمة المختصرة / Shortlist")}
         </MenuItem>
         <MenuItem onClick={() => handleMoveStage(ApplicationStatus.InterviewScheduled)}>
-          <ArrowForwardIcon fontSize="small" sx={{ mr: 1 }} />
+          <ArrowForwardIcon fontSize="small" sx={(theme) => ({ mr: 1, transform: theme.direction === "rtl" ? "scaleX(-1)" : "none" })} />
           {t("recruitment.stages.interview", "نقل إلى المقابلات / Interview Stage")}
         </MenuItem>
         <MenuItem onClick={() => handleMoveStage(ApplicationStatus.OfferIssued)}>
-          <ArrowForwardIcon fontSize="small" sx={{ mr: 1 }} />
+          <ArrowForwardIcon fontSize="small" sx={(theme) => ({ mr: 1, transform: theme.direction === "rtl" ? "scaleX(-1)" : "none" })} />
           {t("recruitment.stages.offer", "نقل إلى عرض العمل / Job Offer")}
         </MenuItem>
         <MenuItem onClick={handleReject} sx={{ color: "error.main" }}>
