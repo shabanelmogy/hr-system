@@ -2,7 +2,7 @@ export const arCommon = {
   common: {
     refresh: 'تحديث',
     clear: 'مسح',
-    appName: 'إدارة الموارد البشرية',
+    appName: 'نظام ERP',
     retry: 'إعادة المحاولة',
     save: 'حفظ',
     cancel: 'إلغاء',

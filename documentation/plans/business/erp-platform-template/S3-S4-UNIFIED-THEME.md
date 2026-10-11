@@ -291,3 +291,14 @@ Differences from the prepared change set:
   chart cards still ended exactly at the scroll end, so their bottom edge and shadow were
   clipped. The padding now sits inside the scrolling grid (`pb: 1.5`, `px: 0.25`); the outer
   container keeps a small `pb`. Verified at 1920x1000 and 1366x700 scrolled to the end.
+
+## General Data is the main module 2026-10-11
+
+- Owner decision: HR is not the main module; it sits under General Data. The palette
+  primary moved from HR to General Data (`referenceData`) in every palette and mode, and HR
+  took General Data's former color (`moduleColors` in `@app/tokens`). `moduleColorOrder`
+  and the web/mobile sidebar sequences start with `referenceData`. Module tones follow
+  (reference-data `primary`, HR `info`). A web test asserts General Data equals the palette
+  primary and HR does not, for all 5 palettes in light and dark.
+- The Arabic app title still read "ادارة الموارد البشرية" (web top bar `mainTitle`, mobile
+  `appName`) while English said "ERP System"; both now read "نظام ERP".

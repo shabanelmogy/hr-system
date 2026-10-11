@@ -116,11 +116,12 @@ export function createNavigationTheme(theme: AppTheme): NavigationTheme {
 
 export type ModuleAccentKey = keyof AppModuleColors | 'platform';
 
+// Same order as `moduleColorOrder` in @app/tokens: General Data (the palette primary) first.
 const moduleSequenceOrder: readonly (keyof AppModuleColors)[] = [
+  'referenceData',
   'hr',
   'accounting',
   'crm',
-  'referenceData',
   'reporting',
 ];
 

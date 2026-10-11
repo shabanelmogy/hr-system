@@ -34,7 +34,8 @@ export function resolveModuleAccent(color: string | undefined, theme: Theme): st
   return theme.palette.app?.modules?.[color] ?? theme.palette.primary.main;
 }
 
-const moduleSequenceOrder = ["hr", "accounting", "crm", "referenceData", "reporting"] as const;
+// Same order as `moduleColorOrder` in @app/tokens: General Data (the palette primary) first.
+const moduleSequenceOrder = ["referenceData", "hr", "accounting", "crm", "reporting"] as const;
 
 /**
  * Color for the `index`-th visible entry inside a section (owner decision 2026-10-07:

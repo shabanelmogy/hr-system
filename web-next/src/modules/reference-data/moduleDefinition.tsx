@@ -31,7 +31,8 @@ export const referenceDataModuleDefinition: FrontendModuleDefinition = {
   code: "reference-data",
   name: "ReferenceData",
   icon: <PublicRoundedIcon />,
-  tone: "info",
+  // General Data is the main module (owner decision 2026-10-11): it carries the palette primary.
+  tone: "primary",
   accentColor: "referenceData",
   requiredDependencies: [],
   optionalDependencies: [],

@@ -16,7 +16,7 @@ const definition: FrontendModuleDefinition = {
   code: "hr",
   name: "HR",
   icon: <GroupsRoundedIcon />,
-  tone: "primary",
+  tone: "info",
   accentColor: "hr",
   requiredDependencies: [],
   optionalDependencies: ["acc"],
