@@ -23,6 +23,8 @@ export interface MyDateTimeFieldProps {
   ampm?: boolean;
   format?: string;
   icon?: ReactNode;
+  /** Input height. "medium" matches MyTextField/MySelect in full-size forms. Default "small". */
+  size?: "small" | "medium";
 }
 
 export default function MyDateTimeField({
@@ -42,12 +44,13 @@ export default function MyDateTimeField({
   ampm = false,
   format = mode === "date" ? "DD/MM/YYYY" : "DD/MM/YYYY HH:mm",
   icon,
+  size = "small",
 }: MyDateTimeFieldProps) {
   const parsedValue = value ? dayjs(value) : null;
   const pickerValue = parsedValue?.isValid() ? parsedValue : null;
   const textFieldProps = {
     fullWidth: true,
-    size: "small" as const,
+    size,
     required,
     error,
     helperText,

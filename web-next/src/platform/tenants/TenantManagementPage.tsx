@@ -403,6 +403,7 @@ function TenantEditor({
                     onChange={field.onChange}
                     onBlur={field.onBlur}
                     mode="date"
+                    size="medium"
                     required
                     error={Boolean(errors.subscriptionStartedOn)}
                     helperText={errors.subscriptionStartedOn?.message}
@@ -420,6 +421,7 @@ function TenantEditor({
                     onChange={field.onChange}
                     onBlur={field.onBlur}
                     mode="date"
+                    size="medium"
                     required
                     minDate={subscriptionStartedOn ? dayjs(subscriptionStartedOn) : undefined}
                     error={Boolean(errors.subscriptionEndsOn)}
@@ -867,12 +869,12 @@ function TenantEditor({
         onChange={setActiveTab}
         sx={fullPage ? {
           "& .MuiTabs-root": {
-            minHeight: 56,
-            px: { xs: 0.5, sm: 1 },
-            bgcolor: alpha(theme.palette.background.paper, 0.72),
+            minHeight: 52,
+            borderBottom: 1,
+            borderColor: "divider",
           },
           "& .MuiTab-root": {
-            minHeight: 56,
+            minHeight: 52,
             mx: 0.25,
             px: { xs: 1.25, sm: 2 },
             borderRadius: "10px 10px 0 0",
@@ -912,6 +914,9 @@ function TenantEditor({
   } satisfies Record<TenantFormTab, { title: string; description: string }>;
 
   if (fullPage) {
+    // Header, tabs/content and footer share one centered column so their edges line up on
+    // wide screens (they used to span different widths).
+    const columnSx = { width: "100%", maxWidth: 1180, mx: "auto" } as const;
     return (
       <Paper
         component="form"
@@ -931,17 +936,22 @@ function TenantEditor({
       >
         <Box
           sx={{
-            display: "flex",
-            alignItems: { xs: "flex-start", sm: "center" },
-            justifyContent: "space-between",
-            gap: 2,
-            px: { xs: 2, sm: 3 },
-            py: 2.25,
+            px: { xs: 2, sm: 3, lg: 4 },
+            py: { xs: 1.75, sm: 2.25 },
             borderBottom: 1,
             borderColor: "divider",
             bgcolor: alpha(theme.palette.background.paper, 0.94),
           }}
         >
+          <Box
+            sx={{
+              ...columnSx,
+              display: "flex",
+              alignItems: { xs: "flex-start", sm: "center" },
+              justifyContent: "space-between",
+              gap: 2,
+            }}
+          >
           <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, minWidth: 0 }}>
             <Button
               type="button"
@@ -991,27 +1001,25 @@ function TenantEditor({
             label={isDirty ? t("tenantManagement.unsavedChanges") : t("tenantManagement.readyToConfigure")}
             sx={{ display: { xs: "none", md: "inline-flex" }, fontWeight: 800 }}
           />
+          </Box>
         </Box>
 
-        <Box sx={{ flex: 1, minHeight: 0, overflowY: "auto", p: { xs: 2, sm: 3, lg: 3.5 } }}>
-          <Box sx={{ width: "100%", maxWidth: 1360, mx: "auto" }}>
+        <Box sx={{ flex: 1, minHeight: 0, overflowY: "auto", px: { xs: 2, sm: 3, lg: 4 }, py: { xs: 2, sm: 3 } }}>
+          <Box sx={columnSx}>
             {editorContent}
           </Box>
         </Box>
 
         <Box
           sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "flex-end",
-            gap: 1.5,
-            px: { xs: 2, sm: 3 },
+            px: { xs: 2, sm: 3, lg: 4 },
             py: 1.75,
             borderTop: 1,
             borderColor: "divider",
             bgcolor: alpha(theme.palette.background.paper, 0.96),
           }}
         >
+          <Box sx={{ ...columnSx, display: "flex", alignItems: "center", justifyContent: "flex-end", gap: 1.5 }}>
           <Button
             type="button"
             variant="outlined"
@@ -1036,6 +1044,7 @@ function TenantEditor({
           >
             {loading ? t("actions.submitting") : t("actions.save")}
           </Button>
+          </Box>
         </Box>
       </Paper>
     );

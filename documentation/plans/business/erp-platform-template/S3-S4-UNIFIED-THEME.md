@@ -224,3 +224,14 @@ Differences from the prepared change set:
 - Tenant add/edit form colors reviewed in all 4 palettes, light and dark (data, subscription
   and applications tabs): header icon, active tab, counters, switch, banners and save button
   all follow the palette; no hard-coded colors found.
+
+## Full-page tenant form layout 2026-10-11
+
+- The full-page add/edit tenant form spanned three different widths: header and footer the
+  full card, content `maxWidth: 1360`, so the back button, tabs and save buttons did not line
+  up. Header, tabs/content and footer now share one centered column (`maxWidth: 1180`) with
+  the same side padding; the tab bar is a full-width divider with a tinted selected tab.
+- Date fields were `small` (40px) next to 56px text fields and selects. `MyDateTimeField`
+  gained an optional `size` prop (default `small`, unchanged for other forms); the tenant
+  form uses `medium` so every input in a row has the same height.
+- Verified at 1700, 1366 and 390px wide (RTL and LTR, light and dark).
