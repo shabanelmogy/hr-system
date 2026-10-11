@@ -175,8 +175,8 @@
     "semantic_hash": ""
   },
   "web-next/src/app/layout.tsx": {
-    "mtime": 1791627700.1263838,
-    "ast_hash": "35ef90c4e339c474931eac7d6c1d16b6",
+    "mtime": 1791635251.309665,
+    "ast_hash": "bfd442a300907de6fe87fdd209610582",
     "semantic_hash": ""
   },
   "web-next/src/app/not-found.tsx": {
@@ -420,8 +420,8 @@
     "semantic_hash": ""
   },
   "web-next/src/shared/components/cards/EntityCard.tsx": {
-    "mtime": 1787383206.5942647,
-    "ast_hash": "bad9bc1d3b8680cb20f07f8496cb7a31",
+    "mtime": 1791634962.0484662,
+    "ast_hash": "0bf9f2cc2a71cb5eca3cdb54392af291",
     "semantic_hash": ""
   },
   "web-next/src/shared/components/cards/MetricCard.tsx": {
@@ -465,9 +465,9 @@
     "semantic_hash": "2c7c32dface04782e0762dfa4102e5db"
   },
   "web-next/src/shared/components/cards/parts/QualityMeter.tsx": {
-    "mtime": 1783927400.1828034,
-    "ast_hash": "89ee3d0558d51b4dffd345c39604a463",
-    "semantic_hash": "89ee3d0558d51b4dffd345c39604a463"
+    "mtime": 1791634962.0539744,
+    "ast_hash": "a253c076142a1e814f5fc391f4d4daac",
+    "semantic_hash": ""
   },
   "web-next/src/shared/components/cards/parts/index.ts": {
     "mtime": 1784200234.5188262,
@@ -520,8 +520,8 @@
     "semantic_hash": ""
   },
   "web-next/src/shared/components/charts/core/chartUtils.ts": {
-    "mtime": 1791363521.7211158,
-    "ast_hash": "69fb63df8414563d90315c6217f640d9",
+    "mtime": 1791707832.285116,
+    "ast_hash": "a87a62afcdb6595a53222ba082f1c687",
     "semantic_hash": ""
   },
   "web-next/src/shared/components/charts/core/layout.ts": {
@@ -1385,9 +1385,9 @@
     "semantic_hash": ""
   },
   "web-next/src/shared/utils/quality.ts": {
-    "mtime": 1783927400.2891471,
-    "ast_hash": "d9aa1652bf4a4ea91372049aba4ed599",
-    "semantic_hash": "d9aa1652bf4a4ea91372049aba4ed599"
+    "mtime": 1791634557.8395486,
+    "ast_hash": "828bf7bac9a7dcae760c1015ea16d11e",
+    "semantic_hash": ""
   },
   "web-next/src/shared/utils/viewLayoutManager.ts": {
     "mtime": 1789544715.740402,
@@ -1410,8 +1410,8 @@
     "semantic_hash": ""
   },
   "web-next/src/theme/ThemeShell.tsx": {
-    "mtime": 1791373932.6458242,
-    "ast_hash": "e2e2820748b95e184b8691423d04e2b3",
+    "mtime": 1791636991.557659,
+    "ast_hash": "7e61c8c8fbe10a063ffb51eb06553c46",
     "semantic_hash": ""
   },
   "web-next/src/theme/calculatedColors.ts": {
@@ -1425,8 +1425,8 @@
     "semantic_hash": ""
   },
   "web-next/src/theme/theme.ts": {
-    "mtime": 1791363532.4975863,
-    "ast_hash": "3644ed199b7b80e2880339c97be22e01",
+    "mtime": 1791634962.0539744,
+    "ast_hash": "c6e754207633540a7539cee0c3514d46",
     "semantic_hash": ""
   },
   "web-next/src/theme/useThemeSettings.ts": {
@@ -2460,8 +2460,8 @@
     "semantic_hash": ""
   },
   "mobile-react/src/core/localization/translations/ar-navigation-settings.ts": {
-    "mtime": 1790406042.466859,
-    "ast_hash": "c68d21d839c9b4875b2b71e9478e2eb5",
+    "mtime": 1791707832.2705636,
+    "ast_hash": "16c9f56f8a3aec3a0bf66f794799f7e8",
     "semantic_hash": ""
   },
   "mobile-react/src/core/localization/translations/ar-platform-tools-notifications.ts": {
@@ -2490,8 +2490,8 @@
     "semantic_hash": ""
   },
   "mobile-react/src/core/localization/translations/en-navigation-settings.ts": {
-    "mtime": 1790406042.469368,
-    "ast_hash": "7077394d3569cd863cf88b1a38361ef1",
+    "mtime": 1791707832.2705636,
+    "ast_hash": "66ba9869e33ba8f8e29073c5709b2454",
     "semantic_hash": ""
   },
   "mobile-react/src/core/localization/translations/en-platform-tools-notifications.ts": {
@@ -3375,8 +3375,8 @@
     "semantic_hash": ""
   },
   "web-next/src/shared/components/forms/date-time/MyDateTimeField.tsx": {
-    "mtime": 1789630898.9996593,
-    "ast_hash": "31d2946d3f88a46346876ba2aa925c3e",
+    "mtime": 1791705198.0083754,
+    "ast_hash": "e7617ac92a1ceedc81e341e65eaaba05",
     "semantic_hash": ""
   },
   "web-next/src/shared/components/forms/date-time/index.ts": {
@@ -3715,8 +3715,8 @@
     "semantic_hash": ""
   },
   "web-next/src/shared/components/audit-log/EntityChangeLogDialog.tsx": {
-    "mtime": 1789544715.6069024,
-    "ast_hash": "94e5fe5a7eef7a89d2af7a541ad63ab6",
+    "mtime": 1791638192.028651,
+    "ast_hash": "fa6fa2ef97bcdb4badd3015e615877ee",
     "semantic_hash": ""
   },
   "web-next/src/shared/components/audit-log/index.ts": {
@@ -13945,8 +13945,8 @@
     "semantic_hash": ""
   },
   "web-next/src/modules/accounting/fiscal-years/components/FiscalYearsCardView.tsx": {
-    "mtime": 1791288441.4243498,
-    "ast_hash": "af791b36d42e1729566f2b0d9b6cd97f",
+    "mtime": 1791636991.557659,
+    "ast_hash": "225148148fba329d6cbd257b97e42585",
     "semantic_hash": ""
   },
   "web-next/src/modules/accounting/fiscal-years/components/FiscalYearsDataGrid.tsx": {
@@ -14255,8 +14255,8 @@
     "semantic_hash": ""
   },
   "web-next/src/modules/hr/basic-data/organizational-structure/management/components/OrganizationalStructureMultiView.tsx": {
-    "mtime": 1790406043.0959976,
-    "ast_hash": "5e2f4c50480e09ea8666e61b9fe16dcd",
+    "mtime": 1791636991.557659,
+    "ast_hash": "770a11f0544ce70b35ea9bb279ad49a9",
     "semantic_hash": ""
   },
   "web-next/src/modules/hr/basic-data/organizational-structure/management/components/card-view/OrganizationalStructureCardViewHeader.tsx": {
@@ -14275,8 +14275,8 @@
     "semantic_hash": ""
   },
   "web-next/src/modules/hr/basic-data/organizational-structure/management/components/grid-view/GridActions.tsx": {
-    "mtime": 1790406043.0989883,
-    "ast_hash": "82d33d7a4aa97a8a8510be9151c862f7",
+    "mtime": 1791634557.8311234,
+    "ast_hash": "58f60d95b980f9e0b33175cd17dfd198",
     "semantic_hash": ""
   },
   "web-next/src/modules/hr/basic-data/organizational-structure/management/components/grid-view/OrganizationalStructureDataGrid.tsx": {
@@ -14525,8 +14525,8 @@
     "semantic_hash": ""
   },
   "web-next/src/modules/hr/recruitment/components/RecruitmentKanbanBoard.tsx": {
-    "mtime": 1791627700.1263838,
-    "ast_hash": "b70a56a9f659c19646296e2853437a75",
+    "mtime": 1791638192.0246122,
+    "ast_hash": "1bfa0c926fddadc508a22bbbb488c29f",
     "semantic_hash": ""
   },
   "web-next/src/modules/hr/recruitment/components/ScheduleInterviewDialog.tsx": {
@@ -14635,8 +14635,8 @@
     "semantic_hash": ""
   },
   "web-next/src/modules/hr/workforce-planning/components/PositionEnvelopesCardView.tsx": {
-    "mtime": 1789544710.3857,
-    "ast_hash": "46a4393c7d8eac138426d9479770aa00",
+    "mtime": 1791636991.557659,
+    "ast_hash": "db31333d1d4f966c52902602e4f4fbfe",
     "semantic_hash": ""
   },
   "web-next/src/modules/hr/workforce-planning/components/PositionEnvelopesDataGrid.tsx": {
@@ -14660,8 +14660,8 @@
     "semantic_hash": ""
   },
   "web-next/src/modules/hr/workforce-planning/components/WorkforceBudgetsCardView.tsx": {
-    "mtime": 1790406043.145465,
-    "ast_hash": "13031e716cfba4de0c188df98aa10a89",
+    "mtime": 1791636991.557659,
+    "ast_hash": "8c3117d3c685808de31b87192cf4e478",
     "semantic_hash": ""
   },
   "web-next/src/modules/hr/workforce-planning/components/WorkforceBudgetsDataGrid.tsx": {
@@ -14680,8 +14680,8 @@
     "semantic_hash": ""
   },
   "web-next/src/modules/hr/workforce-planning/components/WorkforcePlansCardView.tsx": {
-    "mtime": 1790406043.145465,
-    "ast_hash": "52b5cf10d761c56b0c67fe3682cb1c41",
+    "mtime": 1791636991.557659,
+    "ast_hash": "6b4ceaab581a44ab14c0e171c0c4d5e5",
     "semantic_hash": ""
   },
   "web-next/src/modules/hr/workforce-planning/components/WorkforcePlansDataGrid.tsx": {
@@ -14735,8 +14735,8 @@
     "semantic_hash": ""
   },
   "web-next/src/modules/hr/workforce-planning/pages/EnvelopeAmendmentsPage.tsx": {
-    "mtime": 1789635226.3374524,
-    "ast_hash": "fd9e57596e9c23c72abae4b5bf209124",
+    "mtime": 1791636991.557659,
+    "ast_hash": "14003d29b18a5d5f9d97a68d8b84b0c9",
     "semantic_hash": ""
   },
   "web-next/src/modules/hr/workforce-planning/pages/PositionEnvelopesPage.tsx": {
@@ -14745,8 +14745,8 @@
     "semantic_hash": ""
   },
   "web-next/src/modules/hr/workforce-planning/pages/StaffingRequestsPage.tsx": {
-    "mtime": 1789635226.329593,
-    "ast_hash": "f3fbb87a0a060b5f9da0622df901dbb4",
+    "mtime": 1791636991.557659,
+    "ast_hash": "867d22b4b37fd3ccd090397d13b4eaa3",
     "semantic_hash": ""
   },
   "web-next/src/modules/hr/workforce-planning/pages/WorkforceBudgetsPage.tsx": {
@@ -14855,8 +14855,8 @@
     "semantic_hash": ""
   },
   "web-next/src/modules/reference-data/geographical-information/address-types/components/AddressTypesChartView.tsx": {
-    "mtime": 1791363498.2436626,
-    "ast_hash": "d3d13ecebd67ae4d725d5cce02af581f",
+    "mtime": 1791710927.337735,
+    "ast_hash": "2b94898cab58e74a2230382b3a7fc0cb",
     "semantic_hash": ""
   },
   "web-next/src/modules/reference-data/geographical-information/address-types/components/AddressTypesMultiView.tsx": {
@@ -14865,8 +14865,8 @@
     "semantic_hash": ""
   },
   "web-next/src/modules/reference-data/geographical-information/address-types/components/card-view/AddressTypeCard.tsx": {
-    "mtime": 1789544710.5699558,
-    "ast_hash": "7c110cbcfc9e994dfbd65be3084060a5",
+    "mtime": 1791634557.8340046,
+    "ast_hash": "befe3c200cd5726e6a283f4d54f20960",
     "semantic_hash": ""
   },
   "web-next/src/modules/reference-data/geographical-information/address-types/components/card-view/AddressTypeCard.types.ts": {
@@ -14880,8 +14880,8 @@
     "semantic_hash": ""
   },
   "web-next/src/modules/reference-data/geographical-information/address-types/components/card-view/AddressTypeCardFooter.tsx": {
-    "mtime": 1789544710.6043684,
-    "ast_hash": "08ac1637ae56be72a4d39386636f7b59",
+    "mtime": 1791634557.8340046,
+    "ast_hash": "853dcf59fec893ccf44d8b4dc5689bfa",
     "semantic_hash": ""
   },
   "web-next/src/modules/reference-data/geographical-information/address-types/components/card-view/AddressTypeCardUtils.ts": {
@@ -14980,8 +14980,8 @@
     "semantic_hash": ""
   },
   "web-next/src/modules/reference-data/geographical-information/address-types/components/grid-view/GridActions.tsx": {
-    "mtime": 1789544710.6597369,
-    "ast_hash": "0f83a7e7cf912a0e47b7c659c2d1a03d",
+    "mtime": 1791634557.8340046,
+    "ast_hash": "d5ddc606513dc4427fcd8096e383f737",
     "semantic_hash": ""
   },
   "web-next/src/modules/reference-data/geographical-information/address-types/components/import-data/AddressTypeDataTable.tsx": {
@@ -15110,8 +15110,8 @@
     "semantic_hash": ""
   },
   "web-next/src/modules/reference-data/geographical-information/countries/components/CountriesChartView.tsx": {
-    "mtime": 1791363498.7417338,
-    "ast_hash": "3ffbaca0d162d32ae9ebe2a71353354d",
+    "mtime": 1791710927.3397548,
+    "ast_hash": "4aeab1d5b3acd01b0fd21369f1ce7ca9",
     "semantic_hash": ""
   },
   "web-next/src/modules/reference-data/geographical-information/countries/components/CountriesMultiView.tsx": {
@@ -15140,8 +15140,8 @@
     "semantic_hash": ""
   },
   "web-next/src/modules/reference-data/geographical-information/countries/components/card-view/CountryCard.tsx": {
-    "mtime": 1789544710.7700684,
-    "ast_hash": "f996f426ae77a6ec325b8fc2977975ab",
+    "mtime": 1791634557.8340046,
+    "ast_hash": "9833d2784d0447daca932619720860b6",
     "semantic_hash": ""
   },
   "web-next/src/modules/reference-data/geographical-information/countries/components/card-view/CountryCard.types.ts": {
@@ -15155,8 +15155,8 @@
     "semantic_hash": ""
   },
   "web-next/src/modules/reference-data/geographical-information/countries/components/card-view/CountryCardFooter.tsx": {
-    "mtime": 1789544710.8034513,
-    "ast_hash": "720a10771ece9b033afb157d6f88718e",
+    "mtime": 1791634557.8340046,
+    "ast_hash": "32af2282b3995da8d9a9959bf3e184b7",
     "semantic_hash": ""
   },
   "web-next/src/modules/reference-data/geographical-information/countries/components/card-view/CountryCardUtils.ts": {
@@ -15175,8 +15175,8 @@
     "semantic_hash": ""
   },
   "web-next/src/modules/reference-data/geographical-information/countries/components/card-view/CountryDetails.tsx": {
-    "mtime": 1789544710.8034513,
-    "ast_hash": "08d5f7bbac091b1e7139d799cab0c700",
+    "mtime": 1791634557.8340046,
+    "ast_hash": "35570a7b02090491d9b0dbaa1911d657",
     "semantic_hash": ""
   },
   "web-next/src/modules/reference-data/geographical-information/countries/components/card-view/CountryStatesSection.tsx": {
@@ -15275,8 +15275,8 @@
     "semantic_hash": ""
   },
   "web-next/src/modules/reference-data/geographical-information/countries/components/grid-view/GridActions.tsx": {
-    "mtime": 1789544710.8868527,
-    "ast_hash": "86ba7d701de9b98d039cdb1eb0bc2475",
+    "mtime": 1791634557.8340046,
+    "ast_hash": "975a4d0e7cf4d771dea75eb3a3b7ae8e",
     "semantic_hash": ""
   },
   "web-next/src/modules/reference-data/geographical-information/countries/components/import-data/CountryDataTable.tsx": {
@@ -15440,8 +15440,8 @@
     "semantic_hash": ""
   },
   "web-next/src/modules/reference-data/geographical-information/districts/components/DistrictsChartView.tsx": {
-    "mtime": 1791363499.2461495,
-    "ast_hash": "95479e8f302b0daffc29a85ffa2b5284",
+    "mtime": 1791710927.3397548,
+    "ast_hash": "28afefdb402a8ebe8d711099d4354828",
     "semantic_hash": ""
   },
   "web-next/src/modules/reference-data/geographical-information/districts/components/DistrictsMultiView.tsx": {
@@ -15455,8 +15455,8 @@
     "semantic_hash": ""
   },
   "web-next/src/modules/reference-data/geographical-information/districts/components/card-view/DistrictCard.tsx": {
-    "mtime": 1789544711.2895858,
-    "ast_hash": "8cd0d1d2ae5c153dd5170022aef69b9c",
+    "mtime": 1791634557.8340046,
+    "ast_hash": "c8a699072d04491842c09d0d10b70c86",
     "semantic_hash": ""
   },
   "web-next/src/modules/reference-data/geographical-information/districts/components/card-view/DistrictCard.types.ts": {
@@ -15465,8 +15465,8 @@
     "semantic_hash": ""
   },
   "web-next/src/modules/reference-data/geographical-information/districts/components/card-view/DistrictCardFooter.tsx": {
-    "mtime": 1789544711.5420983,
-    "ast_hash": "326ae382cdfb8770f4e90702acf5f824",
+    "mtime": 1791634557.8340046,
+    "ast_hash": "fcfc4f469a17e671b7e35b295de482f7",
     "semantic_hash": ""
   },
   "web-next/src/modules/reference-data/geographical-information/districts/components/card-view/DistrictCardUtils.ts": {
@@ -15570,8 +15570,8 @@
     "semantic_hash": ""
   },
   "web-next/src/modules/reference-data/geographical-information/districts/components/grid-view/GridActions.tsx": {
-    "mtime": 1789544713.6890354,
-    "ast_hash": "f23851dd88b1923daa0b9e0789474411",
+    "mtime": 1791634557.8340046,
+    "ast_hash": "043f8498a8d13fb4b3b92d3cd5100865",
     "semantic_hash": ""
   },
   "web-next/src/modules/reference-data/geographical-information/districts/components/import-data/DistrictDataTable.tsx": {
@@ -15730,8 +15730,8 @@
     "semantic_hash": ""
   },
   "web-next/src/modules/reference-data/geographical-information/states/components/StatesChartView.tsx": {
-    "mtime": 1791363499.7385907,
-    "ast_hash": "22199ea224bbeaba16ce7b7ca25fbe51",
+    "mtime": 1791710927.3412702,
+    "ast_hash": "7ec08294ca9a81a8d2f2b6bde95f9632",
     "semantic_hash": ""
   },
   "web-next/src/modules/reference-data/geographical-information/states/components/StatesMultiView.tsx": {
@@ -15740,8 +15740,8 @@
     "semantic_hash": ""
   },
   "web-next/src/modules/reference-data/geographical-information/states/components/card-view/CountryPill.tsx": {
-    "mtime": 1789544713.8711543,
-    "ast_hash": "48644935c9967cc77e05a855124dc540",
+    "mtime": 1791634962.0484662,
+    "ast_hash": "f0c4769b70bf334828b6e287626e4671",
     "semantic_hash": ""
   },
   "web-next/src/modules/reference-data/geographical-information/states/components/card-view/EmptyState.tsx": {
@@ -15755,8 +15755,8 @@
     "semantic_hash": ""
   },
   "web-next/src/modules/reference-data/geographical-information/states/components/card-view/StateCard.tsx": {
-    "mtime": 1789544713.9102118,
-    "ast_hash": "be6a3c5cdcb7bf1922c4a87d2c558c18",
+    "mtime": 1791634557.8375223,
+    "ast_hash": "a1edbaa877e269fd1874613ea12675ce",
     "semantic_hash": ""
   },
   "web-next/src/modules/reference-data/geographical-information/states/components/card-view/StateCard.types.ts": {
@@ -15765,8 +15765,8 @@
     "semantic_hash": ""
   },
   "web-next/src/modules/reference-data/geographical-information/states/components/card-view/StateCardFooter.tsx": {
-    "mtime": 1789544713.9112127,
-    "ast_hash": "54b59f47a8e1c817ba00ea2207b94a0c",
+    "mtime": 1791634557.8375223,
+    "ast_hash": "b9e85843f3567e63724e847e68040e23",
     "semantic_hash": ""
   },
   "web-next/src/modules/reference-data/geographical-information/states/components/card-view/StateCardUtils.ts": {
@@ -15860,8 +15860,8 @@
     "semantic_hash": ""
   },
   "web-next/src/modules/reference-data/geographical-information/states/components/grid-view/GridActions.tsx": {
-    "mtime": 1789544713.9641347,
-    "ast_hash": "108e402505f09ae0a873032d244aa20d",
+    "mtime": 1791634557.8385353,
+    "ast_hash": "1dd2d8ad59004547d4675899b401f5e7",
     "semantic_hash": ""
   },
   "web-next/src/modules/reference-data/geographical-information/states/components/grid-view/StateCellRenderers.tsx": {
@@ -16480,8 +16480,8 @@
     "semantic_hash": ""
   },
   "web-next/src/platform/auth/register/components/FormBody.tsx": {
-    "mtime": 1789544714.5273001,
-    "ast_hash": "78e5158508acce8063c8a7fb4dcc4110",
+    "mtime": 1791638192.0271175,
+    "ast_hash": "63f091b07df2078827641a270b621306",
     "semantic_hash": ""
   },
   "web-next/src/platform/auth/register/components/FormFooter.tsx": {
@@ -16555,8 +16555,8 @@
     "semantic_hash": ""
   },
   "web-next/src/platform/auth/roles/components/RolesDataGrid.tsx": {
-    "mtime": 1791362237.08743,
-    "ast_hash": "798386d1350343ef15825bd4472a6ac2",
+    "mtime": 1791634557.8385353,
+    "ast_hash": "6ffb0748b5afa7d11112cb32b2a4c4fb",
     "semantic_hash": ""
   },
   "web-next/src/platform/auth/roles/components/role-permissions/RolePermissionsActions.tsx": {
@@ -16635,8 +16635,8 @@
     "semantic_hash": ""
   },
   "web-next/src/platform/auth/users/components/UsersDataGrid.tsx": {
-    "mtime": 1790406043.4346838,
-    "ast_hash": "f105d96ec81e326ceb446fe5ef6f3a46",
+    "mtime": 1791634557.8395486,
+    "ast_hash": "16a06a7bc6f1cd0c80904e941a262746",
     "semantic_hash": ""
   },
   "web-next/src/platform/auth/users/hooks/useUserGridLogic.ts": {
@@ -16820,8 +16820,8 @@
     "semantic_hash": ""
   },
   "web-next/src/platform/file-manager/components/grid-view/components/MakeFileActions.tsx": {
-    "mtime": 1789544714.9273274,
-    "ast_hash": "a1933d4733481abe2ad82b750ea7f038",
+    "mtime": 1791634557.8395486,
+    "ast_hash": "df46ee49acb1feb06bd8f97976a7afc3",
     "semantic_hash": ""
   },
   "web-next/src/platform/file-manager/components/grid-view/components/MakeFileColumns.tsx": {
@@ -17025,8 +17025,8 @@
     "semantic_hash": ""
   },
   "web-next/src/platform/file-manager/media-viewer/components/modals/MediaErrorView.tsx": {
-    "mtime": 1789544715.0897887,
-    "ast_hash": "0aab50b1f4437c4c01eaf4cc2dbb5544",
+    "mtime": 1791638192.0271175,
+    "ast_hash": "11cc6d61b465cd184c9df08189804f42",
     "semantic_hash": ""
   },
   "web-next/src/platform/file-manager/media-viewer/components/text/Content.tsx": {
@@ -17520,13 +17520,13 @@
     "semantic_hash": ""
   },
   "web-next/src/platform/tenants/TenantDashboardPage.tsx": {
-    "mtime": 1791629630.7832315,
-    "ast_hash": "69c61144512158919b4e36f66c453f1d",
+    "mtime": 1791636991.557659,
+    "ast_hash": "ceb8c0c61c339323af3abcfc0aa80752",
     "semantic_hash": ""
   },
   "web-next/src/platform/tenants/TenantManagementPage.tsx": {
-    "mtime": 1791363509.5875516,
-    "ast_hash": "b550272efeb91e71dafeb5505fe5dfee",
+    "mtime": 1791706616.8217058,
+    "ast_hash": "52c8eebd11470905bf0abc5867a753c2",
     "semantic_hash": ""
   },
   "web-next/src/platform/tenants/components/TenantCardViewHeader.tsx": {
@@ -17540,13 +17540,13 @@
     "semantic_hash": ""
   },
   "web-next/src/platform/tenants/components/TenantsCardView.tsx": {
-    "mtime": 1789544715.6069024,
-    "ast_hash": "6d8ab53c154df08386ceef11dc3b8c53",
+    "mtime": 1791636991.557659,
+    "ast_hash": "018b6d8a7c6efc57e672e2cc72499970",
     "semantic_hash": ""
   },
   "web-next/src/platform/tenants/components/TenantsDataGrid.tsx": {
-    "mtime": 1789544715.6069024,
-    "ast_hash": "41bd07745d6e1fec147e0e3e644d5b1d",
+    "mtime": 1791636991.557659,
+    "ast_hash": "7d12c3851f97aa2dda236097928b42a3",
     "semantic_hash": ""
   },
   "web-next/src/platform/tenants/entitlements.test.ts": {
@@ -17900,8 +17900,8 @@
     "semantic_hash": ""
   },
   "web-next/src/shell/main-layout/MainLayout.tsx": {
-    "mtime": 1791288441.7468083,
-    "ast_hash": "7cb3dc61b0807a446db94d0126fbeeac",
+    "mtime": 1791710215.0494637,
+    "ast_hash": "b823b5f0e978e2e703f275ff162df25c",
     "semantic_hash": ""
   },
   "web-next/src/shell/navigation/useAuthorizedNavigation.ts": {
@@ -18420,8 +18420,8 @@
     "semantic_hash": ""
   },
   "web-next/src/locales/StaticTranslationScope.tsx": {
-    "mtime": 1789633127.4582696,
-    "ast_hash": "07abffabf8f086a73d06e0bc4e01c6ca",
+    "mtime": 1791636991.557659,
+    "ast_hash": "a46ca75655f08e2c7b87efec30656b1c",
     "semantic_hash": ""
   },
   "web-next/src/locales/resources/accounting/ar.json": {
@@ -18435,13 +18435,13 @@
     "semantic_hash": ""
   },
   "web-next/src/locales/resources/core/ar.json": {
-    "mtime": 1791288441.4198914,
-    "ast_hash": "d3835cb54162e46a9aec831433acadc7",
+    "mtime": 1791707832.2836027,
+    "ast_hash": "0778e8248f69e95e671eef1a95282357",
     "semantic_hash": ""
   },
   "web-next/src/locales/resources/core/en.json": {
-    "mtime": 1791288441.4208882,
-    "ast_hash": "e7a30bed96ab2f896cbed4325a58f903",
+    "mtime": 1791707832.2836027,
+    "ast_hash": "b2a0a54adc7ae5b7647c5de54b8f4f37",
     "semantic_hash": ""
   },
   "web-next/src/locales/resources/crm/ar.json": {
@@ -18535,13 +18535,13 @@
     "semantic_hash": ""
   },
   "web-next/src/locales/resources/platform-tenants/ar.json": {
-    "mtime": 1789633093.0987437,
-    "ast_hash": "91d2b71dcc5a870897763800f12363cd",
+    "mtime": 1791706616.8217058,
+    "ast_hash": "3b8c64143181a198052c4434c1ef716a",
     "semantic_hash": ""
   },
   "web-next/src/locales/resources/platform-tenants/en.json": {
-    "mtime": 1789633093.0843446,
-    "ast_hash": "19cf53d376a9126327c51534e56cae63",
+    "mtime": 1791706616.8217058,
+    "ast_hash": "48d93f6087f42f9c007778d9d316e130",
     "semantic_hash": ""
   },
   "web-next/src/locales/resources/reference-address-types/ar.json": {
@@ -20990,8 +20990,8 @@
     "semantic_hash": ""
   },
   "packages/tokens/src/palettes.ts": {
-    "mtime": 1791362236.6743827,
-    "ast_hash": "c4925a2fe58aec5de1e65c045994621d",
+    "mtime": 1791707832.2705636,
+    "ast_hash": "8d78b82d7c4f2ecf8f132538fb7853fb",
     "semantic_hash": ""
   },
   "packages/tokens/src/scales.ts": {
@@ -21060,8 +21060,8 @@
     "semantic_hash": ""
   },
   "web-next/e2e/support/test-backend.mjs": {
-    "mtime": 1791629630.7832315,
-    "ast_hash": "a8e972c5983a7794b6b36755f8b5d510",
+    "mtime": 1791706616.8217058,
+    "ast_hash": "1052e2f29c9f2a2375186bb6663ad555",
     "semantic_hash": ""
   },
   "web-next/playwright.config.ts": {
@@ -22890,13 +22890,13 @@
     "semantic_hash": ""
   },
   "web-next/src/shell/components/top-bar/ThemePaletteSelector.test.tsx": {
-    "mtime": 1791288441.7382388,
-    "ast_hash": "f79d99720e26b5bc4e8f16a580c6b80e",
+    "mtime": 1791707832.2871418,
+    "ast_hash": "405d39729db215f7ed1d1e2586d18035",
     "semantic_hash": ""
   },
   "web-next/src/shell/components/top-bar/ThemePaletteSelector.tsx": {
-    "mtime": 1791288441.7382388,
-    "ast_hash": "907ef5a018151fb5fa09994f3f8a93c0",
+    "mtime": 1791707832.2885692,
+    "ast_hash": "6e2650cebff807b98bc23a2be1dd994e",
     "semantic_hash": ""
   },
   "web-next/src/theme/themePalette.ts": {
@@ -22940,8 +22940,8 @@
     "semantic_hash": ""
   },
   "documentation/plans/business/erp-platform-template/S3-S4-UNIFIED-THEME.md": {
-    "mtime": 1791629630.761549,
-    "ast_hash": "846d947ad433a55d7fb4bd6ee8b19fcd",
+    "mtime": 1791710927.337735,
+    "ast_hash": "a926851ef16c51b59fd48dd05d716fa3",
     "semantic_hash": ""
   },
   "documentation/plans/business/erp-platform-template/S5-WORKSPACE-GENERATOR-DESIGN.md": {
@@ -23215,8 +23215,8 @@
     "semantic_hash": ""
   },
   "packages/tokens/src/modules.ts": {
-    "mtime": 1791360119.0044007,
-    "ast_hash": "5606b882e006b030272b29942f523168",
+    "mtime": 1791707832.2705636,
+    "ast_hash": "f821dc630733c714454f5c7073394bcb",
     "semantic_hash": ""
   },
   "web-next/public/sw.js": {
@@ -23280,8 +23280,8 @@
     "semantic_hash": ""
   },
   "web-next/e2e/theme-baselines.spec.ts": {
-    "mtime": 1791629630.7832315,
-    "ast_hash": "c80dd86fe338e4f7f8245cc6e1fa09f2",
+    "mtime": 1791707832.2820704,
+    "ast_hash": "fded8cd2d25f361ff5059e53c35c69d7",
     "semantic_hash": ""
   },
   "mobile-react/assets/fonts/OFL.txt": {
@@ -23292,21 +23292,6 @@
   "web-next/public/fonts/ibm-plex-sans-arabic/OFL.txt": {
     "mtime": 1791627700.1068542,
     "ast_hash": "a1d4ecac8cc4562ef1dad386032b1c98",
-    "semantic_hash": ""
-  },
-  "Claude outputs/P-001-countries-baseline.png": {
-    "mtime": 1791378375.3645499,
-    "ast_hash": "1072b3dbd0c9242f67de0f3ba40e7828",
-    "semantic_hash": ""
-  },
-  "Claude outputs/P-006-role-permissions-baseline.png": {
-    "mtime": 1791378375.9342563,
-    "ast_hash": "425071e5586e7a8f516968a2cb3f3157",
-    "semantic_hash": ""
-  },
-  "Claude outputs/login-themes-baseline.png": {
-    "mtime": 1791376423.371146,
-    "ast_hash": "254e0df878065756095744f080948d16",
     "semantic_hash": ""
   },
   "documentation/plans/business/erp-platform-template/baselines/P-001-countries.png": {
@@ -23324,19 +23309,34 @@
     "ast_hash": "fefff28aa0fff9723da73adfe68ee921",
     "semantic_hash": ""
   },
-  "documentation/plans/business/erp-platform-template/login-themes-baseline.png": {
-    "mtime": 1791376363.7418656,
-    "ast_hash": "fefff28aa0fff9723da73adfe68ee921",
-    "semantic_hash": ""
-  },
-  "Claude outputs/super-admin-dashboard-baseline.png": {
-    "mtime": 1791629154.6395085,
-    "ast_hash": "6e199c4a50fe9da4b0b19f63b8fd93d9",
-    "semantic_hash": ""
-  },
   "documentation/plans/business/erp-platform-template/baselines/super-admin-dashboard.png": {
     "mtime": 1791629630.7832315,
     "ast_hash": "6e199c4a50fe9da4b0b19f63b8fd93d9",
+    "semantic_hash": ""
+  },
+  "Claude outputs/cards-checkbox-after.png": {
+    "mtime": 1791632681.7023191,
+    "ast_hash": "8204879ef5390d2c0f56603293e19606",
+    "semantic_hash": ""
+  },
+  "Claude outputs/cards-spacing-after.png": {
+    "mtime": 1791633653.9898665,
+    "ast_hash": "e9af59889c0aff7efaa5b8a83a5410b3",
+    "semantic_hash": ""
+  },
+  "Claude outputs/countries-card-after.png": {
+    "mtime": 1791630974.3831062,
+    "ast_hash": "5b5edf2755cc1e7b8563214ea5923a1c",
+    "semantic_hash": ""
+  },
+  "web-next/e2e/hydration-preferences.spec.ts": {
+    "mtime": 1791636991.557659,
+    "ast_hash": "640dc47647761becb5e8fbad1a9404cd",
+    "semantic_hash": ""
+  },
+  "web-next/src/platform/tenants/components/TenantStatusChips.tsx": {
+    "mtime": 1791636991.557659,
+    "ast_hash": "94f567a00a1b32221f49ddca5419f21c",
     "semantic_hash": ""
   }
 }
