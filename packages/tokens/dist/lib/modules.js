@@ -18,6 +18,12 @@ export const moduleColors = {
         light: { hr: '#1D4ED8', accounting: '#0F766E', crm: '#BE185D', referenceData: '#4D7C0F', reporting: '#C2410C' },
         dark: { hr: '#93C5FD', accounting: '#5EEAD4', crm: '#F9A8D4', referenceData: '#BEF264', reporting: '#FDBA74' },
     },
+    // Navy & gold: navy HR, gold accounting; reporting is orange so it stays apart from the
+    // lavender navy primary in dark mode.
+    navy: {
+        light: { hr: '#1E3A8A', accounting: '#A16207', crm: '#BE185D', referenceData: '#0F766E', reporting: '#C2410C' },
+        dark: { hr: '#A5B4FC', accounting: '#FDE047', crm: '#F9A8D4', referenceData: '#5EEAD4', reporting: '#FDBA74' },
+    },
     // Black & white: deep (800) tones in light mode so the set stays sober but every module
     // is still clearly distinct (owner feedback 2026-10-07: tinted greys looked identical).
     monochrome: {

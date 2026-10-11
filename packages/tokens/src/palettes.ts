@@ -50,11 +50,11 @@ export interface SemanticColors {
   shadow: string;
 }
 
-export type ThemePalette = 'green' | 'orange' | 'blue' | 'monochrome';
+export type ThemePalette = 'green' | 'orange' | 'blue' | 'navy' | 'monochrome';
 export type ResolvedThemeMode = 'light' | 'dark';
 export type ThemeMode = ResolvedThemeMode | 'system';
 
-export const themePaletteOrder: readonly ThemePalette[] = ['green', 'orange', 'blue', 'monochrome'];
+export const themePaletteOrder: readonly ThemePalette[] = ['green', 'orange', 'blue', 'navy', 'monochrome'];
 export const defaultPalette: ThemePalette = 'green';
 
 interface MobilePaletteSource {
@@ -206,6 +206,46 @@ const blueDark: MobilePaletteSource = {
   border: '#334156',
 };
 
+/**
+ * Navy & gold (owner decision 2026-10-11): a formal, institutional palette. Deep navy primary,
+ * gold second brand. Warning moves to orange so it never reads as the gold brand color.
+ */
+const navyLight: MobilePaletteSource = {
+  ...greenLight,
+  background: '#F4F6FA',
+  surfaceMuted: '#E6EBF4',
+  text: '#0F172A',
+  textMuted: '#55607A',
+  primary: '#1E3A8A',
+  secondary: '#A16207',
+  onSecondary: '#FFFFFF',
+  info: '#0369A1',
+  onInfo: '#FFFFFF',
+  accent: '#0F766E',
+  success: '#047857',
+  warning: '#C2410C',
+  border: '#D3DBE8',
+};
+
+const navyDark: MobilePaletteSource = {
+  ...greenDark,
+  background: '#0B1120',
+  surface: '#131B2E',
+  surfaceMuted: '#1C2740',
+  text: '#F1F5F9',
+  textMuted: '#A3B0C6',
+  primary: '#A5B4FC',
+  onPrimary: '#1E1B4B',
+  secondary: '#FACC15',
+  onSecondary: '#101514',
+  info: '#7DD3FC',
+  onInfo: '#101514',
+  accent: '#5EEAD4',
+  success: '#34D399',
+  warning: '#FB923C',
+  border: '#2B3954',
+};
+
 const monochromeLight: MobilePaletteSource = {
   ...greenLight,
   background: '#F5F5F5',
@@ -276,6 +316,7 @@ export const palettes: Record<ThemePalette, Record<ResolvedThemeMode, SemanticCo
   green: { light: toSemantic(greenBrandLight), dark: toSemantic(greenBrandDark) },
   orange: { light: toSemantic(orangeLight), dark: toSemantic(orangeDark) },
   blue: { light: toSemantic(blueLight), dark: toSemantic(blueDark) },
+  navy: { light: toSemantic(navyLight), dark: toSemantic(navyDark) },
   monochrome: { light: toSemantic(monochromeLight), dark: toSemantic(monochromeDark) },
 };
 

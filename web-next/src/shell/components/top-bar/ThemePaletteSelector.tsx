@@ -30,7 +30,7 @@ const ThemePaletteSelector = ({ value, onChange }: ThemePaletteSelectorProps) =>
       <Box
         role="radiogroup"
         aria-labelledby="theme-palette-label"
-        sx={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 0.75 }}
+        sx={{ display: "grid", gridTemplateColumns: `repeat(${themePaletteOrder.length}, minmax(0, 1fr))`, gap: 0.75 }}
       >
         {themePaletteOrder.map((palette) => {
           const selected = palette === value;
@@ -91,7 +91,10 @@ const ThemePaletteSelector = ({ value, onChange }: ThemePaletteSelectorProps) =>
                   />
                 )}
               </Box>
-              <Typography variant="caption" noWrap sx={{ fontSize: "0.7rem", maxWidth: "100%" }}>
+              <Typography
+                variant="caption"
+                sx={{ fontSize: "0.7rem", lineHeight: 1.2, maxWidth: "100%", textAlign: "center", overflowWrap: "anywhere" }}
+              >
                 {label}
               </Typography>
             </ButtonBase>

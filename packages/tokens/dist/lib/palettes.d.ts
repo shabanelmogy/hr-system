@@ -48,7 +48,7 @@ export interface SemanticColors {
     overlay: string;
     shadow: string;
 }
-export type ThemePalette = 'green' | 'orange' | 'blue' | 'monochrome';
+export type ThemePalette = 'green' | 'orange' | 'blue' | 'navy' | 'monochrome';
 export type ResolvedThemeMode = 'light' | 'dark';
 export type ThemeMode = ResolvedThemeMode | 'system';
 export declare const themePaletteOrder: readonly ThemePalette[];

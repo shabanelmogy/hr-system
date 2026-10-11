@@ -4,7 +4,7 @@ import { getDesignTokens } from "@/theme/theme";
 
 /**
  * Named chart palettes. The names resolve against the active MUI theme, so every chart
- * follows the selected palette (green / orange / blue / monochrome) and light/dark mode.
+ * follows the selected palette (green / orange / blue / navy / monochrome) and light/dark mode.
  *
  * - `primary`, `secondary`, `rainbow`: categorical series (distinct hues) taken from the
  *   palette's chart, brand and module colors, starting at primary / brand 2 / brand 3.

@@ -253,3 +253,17 @@ Differences from the prepared change set:
   (its accessible name keeps the "enabled X of Y" sentence). The unused `hideHeader` option
   and `entitlementSummary` key were removed. e2e fixture serves
   `/api/v1/modules/tenant-entitlements`.
+
+## Navy & gold palette 2026-10-11
+
+- Owner decision: a fifth palette, "Navy & gold" (`navy`, كحلي وذهبي), between blue and
+  monochrome in `themePaletteOrder` (web picker and mobile picker follow that order).
+- Light: primary `#1E3A8A`, second brand gold `#A16207`, info `#0369A1`, success `#047857`,
+  warning `#C2410C` (orange, so it never reads as the gold brand). Dark: primary `#A5B4FC`,
+  gold `#FACC15`, warning `#FB923C`. Module colors: navy HR, gold accounting, pink CRM,
+  teal reference data, orange reporting (light 700 / dark 300 shades).
+- `check-contrast.mjs` passes for all 10 themes. Web picker grid uses one column per palette
+  and lets labels wrap; baselines spec includes navy. Mobile labels/descriptions added
+  (Formal and institutional / رسمي ومؤسسي); the mobile picker wraps on its own.
+- Verified: super admin dashboard, countries cards and tenants grid in navy light/dark,
+  RTL and LTR; web 677 and mobile 500 unit tests pass.

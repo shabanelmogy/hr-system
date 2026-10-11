@@ -9,7 +9,7 @@ import { expect, loginWithDemoRole, resetTestBackend, test } from "./support/erp
  * are reviewed by people and attached to the plan, not compared pixel by pixel (font
  * rendering differs between Windows, macOS and CI). Run with `npm run capture:theme-baselines`.
  */
-const palettes = ["green", "orange", "blue", "monochrome"] as const;
+const palettes = ["green", "orange", "blue", "navy", "monochrome"] as const;
 const modes = ["light", "dark"] as const;
 const languages = ["en", "ar"] as const;
 const outputDir = path.join("test-results", "theme-baselines");
