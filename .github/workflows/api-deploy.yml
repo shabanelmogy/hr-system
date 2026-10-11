@@ -1,0 +1,130 @@
+name: API Deploy (MonsterASP.NET)
+
+# Deploys the API build that "API Foundation CI" already built, tested and published for
+# a push to main, so production always runs an artifact that passed every CI gate. A
+# deploy is never rebuilt here and never cancelled midway (a cancelled Web Deploy sync
+# can leave the site offline).
+on:
+  workflow_run:
+    workflows: ["API Foundation CI"]
+    types: [completed]
+    branches: [main]
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: api-deploy-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy API to MonsterASP.NET
+    if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push'
+    runs-on: windows-latest
+    timeout-minutes: 20
+    # Configure required reviewers / wait timers on this environment in the repository
+    # settings to gate production deploys.
+    environment:
+      name: production
+      url: ${{ vars.MONSTERASP_SITE_URL }}
+
+    env:
+      # Repository variables (Settings > Secrets and variables > Actions > Variables):
+      #   MONSTERASP_SITE      e.g. site84639
+      #   MONSTERASP_SITE_URL  e.g. https://shabanhrms.runasp.net
+      # Repository/environment secret:
+      #   MONSTERASP_WEBDEPLOY_PASSWORD  (Control Panel > Deploy > Visual Studio access)
+      SITE: ${{ vars.MONSTERASP_SITE }}
+      SITE_URL: ${{ vars.MONSTERASP_SITE_URL }}
+      ARTIFACT_DIR: ${{ github.workspace }}\api-publish
+
+    steps:
+      - name: Validate deployment settings
+        shell: pwsh
+        env:
+          WEBDEPLOY_PASSWORD: ${{ secrets.MONSTERASP_WEBDEPLOY_PASSWORD }}
+        run: |
+          $missing = @()
+          if ([string]::IsNullOrWhiteSpace($env:SITE)) { $missing += 'variable MONSTERASP_SITE' }
+          if ([string]::IsNullOrWhiteSpace($env:SITE_URL)) { $missing += 'variable MONSTERASP_SITE_URL' }
+          if ([string]::IsNullOrWhiteSpace($env:WEBDEPLOY_PASSWORD)) { $missing += 'secret MONSTERASP_WEBDEPLOY_PASSWORD' }
+          if ($missing.Count -gt 0) { throw "Missing deployment settings: $($missing -join ', ')." }
+          if ($env:SITE -notmatch '^site\d+$') { throw "MONSTERASP_SITE must look like 'site12345'." }
+
+      - name: Download the tested release artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: erpsystem-api-${{ github.event.workflow_run.head_sha }}
+          path: ${{ env.ARTIFACT_DIR }}
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ github.token }}
+
+      - name: Verify artifact contents
+        shell: pwsh
+        run: |
+          foreach ($required in 'ErpSystem.Api.dll', 'web.config') {
+            if (-not (Test-Path -LiteralPath (Join-Path $env:ARTIFACT_DIR $required) -PathType Leaf)) {
+              throw "The release artifact is missing $required."
+            }
+          }
+          # Server configuration lives on the host (Control Panel environment variables or its
+          # own appsettings.json); a build must never carry local settings files.
+          $local = @(Get-ChildItem -LiteralPath $env:ARTIFACT_DIR -Filter 'appsettings*.json' -File |
+            Where-Object { $_.Name -ne 'appsettings.example.json' })
+          if ($local.Count -gt 0) { throw "Artifact contains local settings files: $($local.Name -join ', ')." }
+
+      - name: Ensure Web Deploy is available
+        shell: pwsh
+        run: |
+          $msdeploy = 'C:\Program Files (x86)\IIS\Microsoft Web Deploy V3\msdeploy.exe'
+          if (-not (Test-Path -LiteralPath $msdeploy)) {
+            choco install webdeploy --no-progress -y
+            if ($LASTEXITCODE -ne 0) { throw "Web Deploy installation failed." }
+          }
+          if (-not (Test-Path -LiteralPath $msdeploy)) { throw "msdeploy.exe was not found after installation." }
+          "MSDEPLOY=$msdeploy" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+
+      - name: Deploy with Web Deploy
+        shell: pwsh
+        env:
+          WEBDEPLOY_PASSWORD: ${{ secrets.MONSTERASP_WEBDEPLOY_PASSWORD }}
+        run: |
+          $endpoint = "https://$($env:SITE).siteasp.net:8172/msdeploy.axd?site=$($env:SITE)"
+          $arguments = @(
+            '-verb:sync',
+            "-source:contentPath=`"$($env:ARTIFACT_DIR)`"",
+            "-dest:contentPath=`"$($env:SITE)`",computerName=`"$endpoint`",userName=`"$($env:SITE)`",password=`"$($env:WEBDEPLOY_PASSWORD)`",authType=`"Basic`",includeAcls=`"False`"",
+            # Take the app offline while files are replaced so locked DLLs never fail the sync.
+            '-enableRule:AppOffline',
+            # Same as the Visual Studio profile (SkipExtraFilesOnServer): keep server-only files.
+            '-enableRule:DoNotDeleteRule',
+            # Server-owned configuration and data are never overwritten by a deploy.
+            '-skip:objectName=filePath,absolutePath=\\appsettings\.json$',
+            '-skip:objectName=filePath,absolutePath=\\appsettings\.[^\\]+\.json$',
+            '-skip:objectName=dirPath,absolutePath=\\App_Data$',
+            '-skip:objectName=dirPath,absolutePath=\\logs$',
+            '-disableLink:AppPoolExtension',
+            '-disableLink:ContentExtension',
+            '-disableLink:CertificateExtension',
+            '-retryAttempts:3',
+            '-retryInterval:5000'
+          )
+          & $env:MSDEPLOY @arguments
+          if ($LASTEXITCODE -ne 0) { throw "Web Deploy failed with exit code $LASTEXITCODE." }
+
+      - name: Verify the deployed API is live
+        shell: pwsh
+        run: |
+          $url = "$($env:SITE_URL.TrimEnd('/'))/health/live"
+          for ($attempt = 1; $attempt -le 12; $attempt++) {
+            try {
+              $response = Invoke-WebRequest -Uri $url -UseBasicParsing -TimeoutSec 20
+              if ($response.StatusCode -eq 200) { Write-Output "API is live ($url)."; exit 0 }
+            } catch {
+              Write-Output "Attempt $($attempt): $($_.Exception.Message)"
+            }
+            Start-Sleep -Seconds 10
+          }
+          throw "The API did not report healthy at $url after deployment."
