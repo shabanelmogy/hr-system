@@ -9,7 +9,7 @@
 | Ownership scope | Global Platform reference data; access requires `super_admin` plus action permission |
 | Lifecycle | Active, archived, restore; no hard delete and no toggle endpoint |
 | Permissions | `Countries:View`, `Countries:Create`, `Countries:Edit`, `Countries:Delete` |
-| Persistence | EF Core/SQL Server through `ReferenceDataDbContext` and `IUnitOfWork` |
+| Persistence | EF Core/SQL Server through `ReferenceDataDbContext` and the module-owned `IReferenceDataUnitOfWork` |
 | Application pattern | One MediatR command/query per controller action |
 | Post-commit integration | Hangfire notification and permission-scoped realtime event |
 | General API workflow | [API Feature Development Workflow](API_FEATURE_DEVELOPMENT_WORKFLOW.md) |
@@ -212,7 +212,7 @@ validate request
 The scheduler must never run before a successful save.
 
 Lifecycle rules that read a dependency and then write must remain true under
-concurrent requests, not only within one handler call. `IUnitOfWork.ExecuteAtomicallyAsync`
+concurrent requests, not only within one handler call. `IReferenceDataUnitOfWork.ExecuteAtomicallyAsync`
 opens one database transaction and acquires deterministic transaction-owned SQL
 Server application locks. Country archive/restore, State create/bulk/update/restore,
 and Company Geographic Scope replacement share

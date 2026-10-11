@@ -1,3 +1,4 @@
+using ErpSystem.Modules.ReferenceData.Application.Abstractions.Persistence;
 using ErpSystem.BuildingBlocks.Context.Authentication;
 using ErpSystem.BuildingBlocks.Application.Abstractions.Persistence;
 using ErpSystem.BuildingBlocks.Application.Common.Paginations;
@@ -282,7 +283,7 @@ public sealed class GeographicParentReassignmentHandlerTests
             throw new NotSupportedException();
     }
 
-    private sealed class RecordingUnitOfWork : IUnitOfWork
+    private sealed class RecordingUnitOfWork : IReferenceDataUnitOfWork
     {
         public List<IReadOnlyCollection<string>> AtomicLockResources { get; } = [];
         public int SaveCount { get; private set; }

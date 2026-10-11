@@ -1,3 +1,4 @@
+using ErpSystem.Modules.Reporting.Application.Abstractions.Persistence;
 using System.Globalization;
 using ErpSystem.BuildingBlocks.Application.Abstractions.Persistence;
 using ErpSystem.Modules.Platform.Contracts.Files.Models;
@@ -500,7 +501,7 @@ public sealed class ManagedCrystalTemplateValidationHandlerTests
         }
     }
 
-    private sealed class InlineUnitOfWork : IUnitOfWork
+    private sealed class InlineUnitOfWork : IReportingUnitOfWork
     {
         public int SaveCalls { get; private set; }
 

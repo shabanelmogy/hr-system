@@ -1,3 +1,4 @@
+using ErpSystem.Modules.Platform.Application.Abstractions.Persistence;
 using ErpSystem.BuildingBlocks.Application.Abstractions.Messaging;
 using ErpSystem.BuildingBlocks.Context.Authentication;
 
@@ -41,7 +42,7 @@ public sealed class GetCompanyGeographicScopeQueryHandler(
 }
 
 public sealed class UpdateCompanyGeographicScopeCommandHandler(
-    ICompanyGeographicScopeStore store, IUnitOfWork unitOfWork, ICurrentActor actor)
+    ICompanyGeographicScopeStore store, IPlatformUnitOfWork unitOfWork, ICurrentActor actor)
     : ICommandHandler<UpdateCompanyGeographicScopeCommand, Result<CompanyGeographicScopeResponse>>
 {
     public async Task<Result<CompanyGeographicScopeResponse>> Handle(UpdateCompanyGeographicScopeCommand request, CancellationToken cancellationToken)

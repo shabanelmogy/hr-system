@@ -1,3 +1,4 @@
+using ErpSystem.Modules.Reporting.Application.Abstractions.Persistence;
 using ErpSystem.BuildingBlocks.Application.Abstractions.Messaging;
 using ErpSystem.Modules.Reporting.Application.Features.Analytics.ReportTemplates.Abstractions;
 using ErpSystem.Modules.Reporting.Application.Features.Analytics.ReportTemplates.Contracts;
@@ -9,7 +10,7 @@ namespace ErpSystem.Modules.Reporting.Application.Features.Analytics.ReportTempl
 
 public sealed class CreateReportTemplateCommandHandler(
     IReportTemplateStore store,
-    IUnitOfWork unitOfWork,
+    IReportingUnitOfWork unitOfWork,
     IReportTemplateContentHashProvider contentHash,
     ReportTemplateErrors errors)
     : ICommandHandler<CreateReportTemplateCommand, Result<ReportTemplateDetailResponse>>

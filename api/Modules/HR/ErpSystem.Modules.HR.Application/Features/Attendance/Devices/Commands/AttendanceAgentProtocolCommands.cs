@@ -1,3 +1,4 @@
+using ErpSystem.Modules.HR.Application.Abstractions.Persistence;
 using System.Text.Json;
 using ErpSystem.BuildingBlocks.Application.Abstractions.Messaging;
 using ErpSystem.Modules.HR.Application.Features.Attendance.Devices.Contracts;
@@ -13,7 +14,7 @@ public sealed record SubmitAttendanceAgentWorkResultCommand(Guid AgentId, long R
     : ICommand<Result<AttendanceAgentWorkResultResponse>>;
 
 public sealed class HeartbeatAttendanceAgentCommandHandler(
-    IAttendanceDeviceWriteStore store, IUnitOfWork unitOfWork, TimeProvider clock, AttendanceDeviceErrors errors)
+    IAttendanceDeviceWriteStore store, IHrUnitOfWork unitOfWork, TimeProvider clock, AttendanceDeviceErrors errors)
     : ICommandHandler<HeartbeatAttendanceAgentCommand, Result<AttendanceAgentHeartbeatResponse>>
 {
     public async Task<Result<AttendanceAgentHeartbeatResponse>> Handle(HeartbeatAttendanceAgentCommand request, CancellationToken ct)
@@ -29,7 +30,7 @@ public sealed class HeartbeatAttendanceAgentCommandHandler(
 
 public sealed class ClaimAttendanceAgentWorkCommandHandler(
     IAttendanceDeviceWriteStore devices, IAttendanceRawStore raw, IAttendanceCredentialProtector protector,
-    IUnitOfWork unitOfWork, TimeProvider clock, AttendanceDeviceEffects effects, AttendanceDeviceErrors errors)
+    IHrUnitOfWork unitOfWork, TimeProvider clock, AttendanceDeviceEffects effects, AttendanceDeviceErrors errors)
     : ICommandHandler<ClaimAttendanceAgentWorkCommand, Result<AttendanceAgentWorkItemResponse?>>
 {
     private static readonly TimeSpan LeaseDuration = TimeSpan.FromMinutes(5);
@@ -68,7 +69,7 @@ public sealed class ClaimAttendanceAgentWorkCommandHandler(
 
 public sealed class SubmitAttendanceAgentWorkResultCommandHandler(
     IAttendanceRawStore raw, IAttendanceEventKeyGenerator eventKeyGenerator,
-    IUnitOfWork unitOfWork, TimeProvider clock, AttendanceDeviceEffects effects, AttendanceDeviceErrors errors)
+    IHrUnitOfWork unitOfWork, TimeProvider clock, AttendanceDeviceEffects effects, AttendanceDeviceErrors errors)
     : ICommandHandler<SubmitAttendanceAgentWorkResultCommand, Result<AttendanceAgentWorkResultResponse>>
 {
     public async Task<Result<AttendanceAgentWorkResultResponse>> Handle(SubmitAttendanceAgentWorkResultCommand request, CancellationToken ct)

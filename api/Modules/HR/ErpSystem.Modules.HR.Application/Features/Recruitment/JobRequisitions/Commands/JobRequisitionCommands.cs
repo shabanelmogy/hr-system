@@ -1,3 +1,4 @@
+using ErpSystem.Modules.HR.Application.Abstractions.Persistence;
 using ErpSystem.BuildingBlocks.Application.Abstractions.Messaging;
 using ErpSystem.BuildingBlocks.Application.Abstractions.Persistence;
 using ErpSystem.BuildingBlocks.Context.Authentication;
@@ -26,7 +27,7 @@ public sealed class CreateJobRequisitionCommandHandler(
     IJobRequisitionReadStore readStore,
     IRecruitmentRequisitionPolicy policy,
     IRecruitmentActorEmployeeSource actorEmployees,
-    IUnitOfWork unitOfWork,
+    IHrUnitOfWork unitOfWork,
     ICurrentActor actor,
     IFiscalYearPlanningSource fiscalYears,
     TimeProvider clock)
@@ -197,7 +198,7 @@ public sealed class CreateJobRequisitionCommandHandler(
 public sealed class SubmitJobRequisitionCommandHandler(
     IJobRequisitionRepository repository,
     IJobRequisitionReadStore readStore,
-    IUnitOfWork unitOfWork,
+    IHrUnitOfWork unitOfWork,
     TimeProvider clock)
     : ICommandHandler<SubmitJobRequisitionCommand, Result<JobRequisitionDto>>
 {
@@ -216,7 +217,7 @@ public sealed class ApproveJobRequisitionCommandHandler(
     IJobRequisitionRepository repository,
     IJobRequisitionReadStore readStore,
     IRecruitmentActorEmployeeSource actorEmployees,
-    IUnitOfWork unitOfWork,
+    IHrUnitOfWork unitOfWork,
     TimeProvider clock)
     : ICommandHandler<ApproveJobRequisitionCommand, Result<JobRequisitionDto>>
 {
@@ -238,7 +239,7 @@ public sealed class RejectJobRequisitionCommandHandler(
     IJobRequisitionRepository repository,
     IJobRequisitionReadStore readStore,
     IRecruitmentActorEmployeeSource actorEmployees,
-    IUnitOfWork unitOfWork,
+    IHrUnitOfWork unitOfWork,
     TimeProvider clock)
     : ICommandHandler<RejectJobRequisitionCommand, Result<JobRequisitionDto>>
 {
@@ -259,7 +260,7 @@ public sealed class RejectJobRequisitionCommandHandler(
 public sealed class CancelJobRequisitionCommandHandler(
     IJobRequisitionRepository repository,
     IJobRequisitionReadStore readStore,
-    IUnitOfWork unitOfWork,
+    IHrUnitOfWork unitOfWork,
     ICurrentActor actor)
     : ICommandHandler<CancelJobRequisitionCommand, Result<JobRequisitionDto>>
 {

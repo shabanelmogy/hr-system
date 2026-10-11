@@ -1,3 +1,4 @@
+using ErpSystem.Modules.ReferenceData.Application.Abstractions.Persistence;
 using ErpSystem.BuildingBlocks.Context.Authentication;
 using ErpSystem.BuildingBlocks.Application.Abstractions.Persistence;
 using ErpSystem.Modules.ReferenceData.Application.Features.GeographicalInformation;
@@ -139,7 +140,7 @@ public sealed class StateBulkCreateHandlerTests
 
     private static CreateStatesCommandHandler CreateHandler(
         IStateWriteStore store,
-        IUnitOfWork unitOfWork,
+        IReferenceDataUnitOfWork unitOfWork,
         IStateChangeScheduler scheduler) =>
         new(store, unitOfWork, scheduler, new TestCurrentActor(), CreateMapper(), CreateErrors());
 
@@ -184,7 +185,7 @@ public sealed class StateBulkCreateHandlerTests
         public Task<bool> HasActiveAddressesAsync(IReadOnlyCollection<int> stateIds, CancellationToken cancellationToken) => Task.FromResult(false);
     }
 
-    private sealed class RecordingUnitOfWork(List<string> lifecycle) : IUnitOfWork
+    private sealed class RecordingUnitOfWork(List<string> lifecycle) : IReferenceDataUnitOfWork
     {
         public List<IReadOnlyCollection<string>> AtomicLockResources { get; } = [];
 

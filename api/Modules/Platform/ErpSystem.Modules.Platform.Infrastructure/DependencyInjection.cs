@@ -1,3 +1,4 @@
+using ErpSystem.Modules.Platform.Application.Abstractions.Persistence;
 using ErpSystem.BuildingBlocks.Authorization;
 using ErpSystem.Modules.Platform.Application.Files;
 using ErpSystem.Modules.Platform.Application.Localization;
@@ -85,6 +86,9 @@ public static class DependencyInjection
                 connectionString,
                 sql => sql.MigrationsAssembly(typeof(DependencyInjection).Assembly.FullName)
                     .MigrationsHistoryTable("__EFMigrationsHistory", PlatformDbContext.Schema)));
+        // Platform handlers save through their own contract; the shared IUnitOfWork is
+        // replaced by whichever module registers last (see IPlatformUnitOfWork).
+        services.AddScoped<IPlatformUnitOfWork>(provider => provider.GetRequiredService<PlatformDbContext>());
         services.AddPlatformMapster();
 
         services.AddOptions<WapilotOptions>()
