@@ -72,7 +72,12 @@ const PathAwareMainLayout = ({ children, contextActions, compactContextActions }
     pathname.startsWith(`${appRoutes.modules.hr.attendanceDevices.index}/`) ||
     (desktopNavigation && pathname.startsWith(`${rolePermissionsRoutePrefix}/`)) ||
     isSuperAdminDashboard ||
-    pathname === appRoutes.platform.superAdmin.tenants;
+    pathname === appRoutes.platform.superAdmin.tenants ||
+    // Geography list pages (grid/cards/chart) scroll inside their panel and pin pagination,
+    // so the page itself must not grow past the viewport.
+    Object.values(appRoutes.modules.referenceData.geography).some(
+      (route) => pathname === route || pathname.startsWith(`${route}/`),
+    );
   const sidebarScope = dedicatedLayoutRoute ? appRoutes.shell.basicData : "main";
   const activeModuleCode = requiredModuleForPath(pathname)?.moduleCode.toLowerCase() ?? null;
   useModuleTranslations(activeModuleCode);
@@ -159,22 +164,21 @@ const PathAwareMainLayout = ({ children, contextActions, compactContextActions }
             flexGrow: 1,
             minWidth: 0,
             m: { xs: 1.5, sm: 2, md: 3 },
+            // Always a column below the toolbar spacer, so a page that sizes itself with
+            // `height: 100%` gets the space under the top bar (it used to get the full main
+            // height and push its pinned pagination below the window by the toolbar height).
+            display: "flex",
+            flexDirection: "column",
             ...(fixedHeightRoute && {
-              display: "flex",
-              flexDirection: "column",
               minHeight: 0,
               overflow: "hidden",
             }),
           }}
         >
           <ToolbarSpacer style={{ height: toolbarHeight, minHeight: toolbarHeight }} sx={{ flexShrink: 0 }} />
-          {fixedHeightRoute ? (
-            <Box sx={{ display: "flex", flex: 1, flexDirection: "column", minHeight: 0 }}>
-              {children}
-            </Box>
-          ) : (
-            children
-          )}
+          <Box sx={{ display: "flex", flex: 1, flexDirection: "column", minHeight: 0, minWidth: 0 }}>
+            {children}
+          </Box>
         </Box>
       </Box>
 

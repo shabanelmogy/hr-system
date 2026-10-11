@@ -267,3 +267,17 @@ Differences from the prepared change set:
   (Formal and institutional / رسمي ومؤسسي); the mobile picker wraps on its own.
 - Verified: super admin dashboard, countries cards and tenants grid in navy light/dark,
   RTL and LTR; web 677 and mobile 500 unit tests pass.
+
+## Card view pagination below the window 2026-10-11
+
+- Owner report: card-view pagination was outside the screen. Two layout causes:
+  1. `/super-admin/geography/*` (countries, states, districts) were not fixed-height routes,
+     so the page grew with the cards (1371px document on a 900px window) and the pinned
+     pagination ended below the fold. They are now fixed-height routes in `MainLayout`.
+  2. On ordinary routes `main` was a block, so a list page sized with `height: 100%` got the
+     whole `main` height while starting below the toolbar spacer, overflowing by the toolbar
+     height (fiscal years: pagination 40px below a 700px window). `main` is now always a
+     column with the page in a `flex: 1; minHeight: 0` box under the spacer; fixed-height
+     routes keep `overflow: hidden`.
+- Verified: countries, tenants and fiscal years pagination inside the window (900/700px);
+  long ordinary pages (home) still scroll the document; full chromium e2e (26) passes.
