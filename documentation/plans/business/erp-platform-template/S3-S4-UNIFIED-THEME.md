@@ -287,3 +287,7 @@ Differences from the prepared change set:
 - The last chart card in the countries/states/districts/address-types chart views sat on the
   panel's bottom edge. Each chart view container now has bottom padding
   (`pb: { xs: 1.5, md: 2 }`), matching the gap above the summary cards.
+- Follow-up (owner screenshot): the outer padding was below the scroll area, but the last
+  chart cards still ended exactly at the scroll end, so their bottom edge and shadow were
+  clipped. The padding now sits inside the scrolling grid (`pb: 1.5`, `px: 0.25`); the outer
+  container keeps a small `pb`. Verified at 1920x1000 and 1366x700 scrolled to the end.

@@ -61,7 +61,7 @@ export default function AddressTypesChartView({
         px: { xs: 0.5, md: 0.75 },
         pt: 0.5,
         // Room under the last chart so its card edge and shadow are not cut by the panel.
-        pb: { xs: 1.5, md: 2 },
+        pb: { xs: 0.5, md: 0.75 },
         width: "100%",
         minWidth: 0,
       }}
@@ -82,6 +82,10 @@ export default function AddressTypesChartView({
           flex: 1,
           minHeight: 0,
           overflowY: "auto",
+          // Padding inside the scroll area: the last chart card ends with a gap above the
+          // scroll end instead of sitting on it (its bottom edge and shadow were clipped).
+          pb: 1.5,
+          px: 0.25,
           alignContent: { xs: "start", md: "stretch" },
         }}
       >
