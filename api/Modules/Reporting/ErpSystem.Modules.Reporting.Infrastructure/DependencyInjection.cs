@@ -1,3 +1,4 @@
+using ErpSystem.Modules.Reporting.Application.Abstractions.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,7 +33,7 @@ public static class DependencyInjection
                 connectionString,
                 sql => sql.MigrationsAssembly(typeof(DependencyInjection).Assembly.FullName)
                     .MigrationsHistoryTable("__EFMigrationsHistory", ReportingDbContext.Schema)));
-        services.AddScoped<IUnitOfWork>(provider => provider.GetRequiredService<ReportingDbContext>());
+        services.AddScoped<IReportingUnitOfWork>(provider => provider.GetRequiredService<ReportingDbContext>());
 
         services.AddScoped<ICrystalReportStore, CrystalReportStore>();
         var managedCrystalContracts = ManagedCrystalReportContractRegistry.LoadEmbedded();

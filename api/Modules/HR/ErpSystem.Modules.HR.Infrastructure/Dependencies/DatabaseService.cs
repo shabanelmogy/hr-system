@@ -1,3 +1,4 @@
+using ErpSystem.Modules.HR.Application.Abstractions.Persistence;
 using ErpSystem.BuildingBlocks.Application.Abstractions.Persistence;
 using ErpSystem.BuildingBlocks.Application.Abstractions.Validation;
 using Scrutor;
@@ -22,7 +23,7 @@ public static class DatabaseService
         services.AddOptions<DatabaseSettings>()
             .BindConfiguration(DatabaseSettings.SectionName)
             .ValidateOnStart();
-        services.AddScoped<IUnitOfWork>(serviceProvider =>
+        services.AddScoped<IHrUnitOfWork>(serviceProvider =>
             serviceProvider.GetRequiredService<ApplicationDbContext>());
         services.Scan(scan => scan
             .FromAssemblyOf<ApplicationDbContext>()

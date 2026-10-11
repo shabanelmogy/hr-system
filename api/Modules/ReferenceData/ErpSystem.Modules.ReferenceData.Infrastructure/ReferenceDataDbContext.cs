@@ -1,3 +1,4 @@
+using ErpSystem.Modules.ReferenceData.Application.Abstractions.Persistence;
 using Microsoft.EntityFrameworkCore;
 using ErpSystem.BuildingBlocks.Application.Abstractions.Persistence;
 using ErpSystem.BuildingBlocks.Context.Authentication;
@@ -15,7 +16,7 @@ namespace ErpSystem.Modules.ReferenceData.Infrastructure;
 /// and the migrations history table lives inside that schema, so module storage
 /// stays separated from every other module sharing the database.
 /// </summary>
-public sealed class ReferenceDataDbContext : DbContext, IUnitOfWork
+public sealed class ReferenceDataDbContext : DbContext, IReferenceDataUnitOfWork
 {
     public const string Schema = "ref";
 

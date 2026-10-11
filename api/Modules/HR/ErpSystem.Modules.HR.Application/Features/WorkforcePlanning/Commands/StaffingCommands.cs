@@ -1,3 +1,4 @@
+using ErpSystem.Modules.HR.Application.Abstractions.Persistence;
 using ErpSystem.BuildingBlocks.Context.Authentication;
 using ErpSystem.BuildingBlocks.Application.Abstractions.Messaging;
 using ErpSystem.Modules.HR.Application.Features.WorkforcePlanning.Abstractions;
@@ -145,7 +146,7 @@ public sealed class CloseStaffingRequestCommandValidator : AbstractValidator<Clo
 public sealed class CreateEnvelopeAmendmentCommandHandler(
     IStaffingWriteStore store,
     IStaffingReadStore reads,
-    IUnitOfWork unitOfWork,
+    IHrUnitOfWork unitOfWork,
     ICurrentActor actor,
     StaffingEffects effects,
     StaffingErrors errors)
@@ -189,7 +190,7 @@ public sealed class CreateEnvelopeAmendmentCommandHandler(
 public sealed class SubmitEnvelopeAmendmentCommandHandler(
     IStaffingWriteStore store,
     IStaffingReadStore reads,
-    IUnitOfWork unitOfWork,
+    IHrUnitOfWork unitOfWork,
     ICurrentActor actor,
     TimeProvider clock,
     StaffingEffects effects,
@@ -224,7 +225,7 @@ public sealed class SubmitEnvelopeAmendmentCommandHandler(
 public sealed class ApproveEnvelopeAmendmentCommandHandler(
     IStaffingWriteStore store,
     IStaffingReadStore reads,
-    IUnitOfWork unitOfWork,
+    IHrUnitOfWork unitOfWork,
     ICurrentActor actor,
     TimeProvider clock,
     StaffingEffects effects,
@@ -269,7 +270,7 @@ public sealed class ApproveEnvelopeAmendmentCommandHandler(
 public sealed class RejectEnvelopeAmendmentCommandHandler(
     IStaffingWriteStore store,
     IStaffingReadStore reads,
-    IUnitOfWork unitOfWork,
+    IHrUnitOfWork unitOfWork,
     ICurrentActor actor,
     TimeProvider clock,
     StaffingEffects effects,
@@ -304,7 +305,7 @@ public sealed class RejectEnvelopeAmendmentCommandHandler(
 public sealed class CreateStaffingRequestCommandHandler(
     IStaffingWriteStore store,
     IStaffingReadStore reads,
-    IUnitOfWork unitOfWork,
+    IHrUnitOfWork unitOfWork,
     ICurrentActor actor,
     StaffingEffects effects,
     StaffingErrors errors)
@@ -364,7 +365,7 @@ public sealed class CreateStaffingRequestCommandHandler(
 public sealed class SubmitStaffingRequestCommandHandler(
     IStaffingWriteStore store,
     IStaffingReadStore reads,
-    IUnitOfWork unitOfWork,
+    IHrUnitOfWork unitOfWork,
     ICurrentActor actor,
     TimeProvider clock,
     StaffingEffects effects,
@@ -399,7 +400,7 @@ public sealed class SubmitStaffingRequestCommandHandler(
 public sealed class ApproveStaffingRequestCommandHandler(
     IStaffingWriteStore store,
     IStaffingReadStore reads,
-    IUnitOfWork unitOfWork,
+    IHrUnitOfWork unitOfWork,
     ICurrentActor actor,
     TimeProvider clock,
     StaffingEffects effects,
@@ -453,7 +454,7 @@ public sealed class ApproveStaffingRequestCommandHandler(
 public sealed class RejectStaffingRequestCommandHandler(
     IStaffingWriteStore store,
     IStaffingReadStore reads,
-    IUnitOfWork unitOfWork,
+    IHrUnitOfWork unitOfWork,
     ICurrentActor actor,
     TimeProvider clock,
     StaffingEffects effects,
@@ -488,7 +489,7 @@ public sealed class RejectStaffingRequestCommandHandler(
 public sealed class CloseStaffingRequestCommandHandler(
     IStaffingWriteStore store,
     IStaffingReadStore reads,
-    IUnitOfWork unitOfWork,
+    IHrUnitOfWork unitOfWork,
     ICurrentActor actor,
     TimeProvider clock,
     StaffingEffects effects,

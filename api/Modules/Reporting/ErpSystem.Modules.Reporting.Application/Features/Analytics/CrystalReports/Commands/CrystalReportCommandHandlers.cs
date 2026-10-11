@@ -1,3 +1,4 @@
+using ErpSystem.Modules.Reporting.Application.Abstractions.Persistence;
 using ErpSystem.BuildingBlocks.Application.Abstractions.Messaging;
 using ErpSystem.Modules.Reporting.Application.Features.Analytics.CrystalReports.Abstractions;
 using ErpSystem.Modules.Reporting.Application.Features.Analytics.CrystalReports.Coordination;
@@ -13,7 +14,7 @@ public sealed class CreateCrystalReportCommandHandler(
     ICrystalReportStore store,
     ICrystalReportFileStorage fileStorage,
     IManagedCrystalReportContractSource contracts,
-    IUnitOfWork unitOfWork,
+    IReportingUnitOfWork unitOfWork,
     CrystalReportErrors errors)
     : ICommandHandler<CreateCrystalReportCommand, Result<CrystalReportDetailResponse>>
 {
@@ -101,7 +102,7 @@ public sealed class AddCrystalReportVersionCommandHandler(
     ICrystalReportStore store,
     ICrystalReportFileStorage fileStorage,
     ICurrentPermissionChecker permissions,
-    IUnitOfWork unitOfWork,
+    IReportingUnitOfWork unitOfWork,
     CrystalReportErrors errors)
     : ICommandHandler<AddCrystalReportVersionCommand, Result<CrystalReportVersionResponse>>
 {
@@ -182,7 +183,7 @@ public sealed class RevalidateCrystalReportVersionCommandHandler(
     ICrystalReportInspector inspector,
     ICurrentPermissionChecker permissions,
     IManagedCrystalReportContractSource contracts,
-    IUnitOfWork unitOfWork,
+    IReportingUnitOfWork unitOfWork,
     CrystalReportErrors errors)
     : ICommandHandler<RevalidateCrystalReportVersionCommand,
         Result<CrystalReportVersionResponse>>
@@ -310,7 +311,7 @@ public sealed class PublishCrystalReportVersionCommandHandler(
     ICrystalReportStore store,
     ICurrentPermissionChecker permissions,
     IManagedCrystalReportContractSource contracts,
-    IUnitOfWork unitOfWork,
+    IReportingUnitOfWork unitOfWork,
     CrystalReportErrors errors)
     : ICommandHandler<PublishCrystalReportVersionCommand, Result<CrystalReportDetailResponse>>
 {
@@ -364,7 +365,7 @@ public sealed class PublishCrystalReportVersionCommandHandler(
 
 public sealed class ReplaceCrystalReportGrantsCommandHandler(
     ICrystalReportStore store,
-    IUnitOfWork unitOfWork,
+    IReportingUnitOfWork unitOfWork,
     CrystalReportErrors errors)
     : ICommandHandler<ReplaceCrystalReportGrantsCommand, Result<IReadOnlyList<CrystalReportRoleGrantResponse>>>
 {
@@ -403,7 +404,7 @@ public sealed class ReplaceCrystalReportGrantsCommandHandler(
 
 public sealed class ArchiveCrystalReportCommandHandler(
     ICrystalReportStore store,
-    IUnitOfWork unitOfWork,
+    IReportingUnitOfWork unitOfWork,
     CrystalReportErrors errors)
     : ICommandHandler<ArchiveCrystalReportCommand, Result>
 {

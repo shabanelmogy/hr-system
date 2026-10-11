@@ -1,3 +1,4 @@
+using ErpSystem.Modules.Reporting.Application.Abstractions.Persistence;
 using ErpSystem.BuildingBlocks.Context.Authentication;
 using ErpSystem.BuildingBlocks.Application.Abstractions.Messaging;
 using ErpSystem.Modules.Reporting.Application.Features.Analytics.ReportTemplates.Abstractions;
@@ -8,7 +9,7 @@ namespace ErpSystem.Modules.Reporting.Application.Features.Analytics.ReportTempl
 
 public sealed class PublishReportTemplateCommandHandler(
     IReportTemplateStore store,
-    IUnitOfWork unitOfWork,
+    IReportingUnitOfWork unitOfWork,
     ReportTemplateErrors errors)
     : ICommandHandler<PublishReportTemplateCommand, Result>
 {
@@ -31,7 +32,7 @@ public sealed class PublishReportTemplateCommandHandler(
 
 public sealed class UnpublishReportTemplateCommandHandler(
     IReportTemplateStore store,
-    IUnitOfWork unitOfWork,
+    IReportingUnitOfWork unitOfWork,
     ReportTemplateErrors errors)
     : ICommandHandler<UnpublishReportTemplateCommand, Result>
 {
@@ -54,7 +55,7 @@ public sealed class UnpublishReportTemplateCommandHandler(
 
 public sealed class ArchiveReportTemplateCommandHandler(
     IReportTemplateStore store,
-    IUnitOfWork unitOfWork,
+    IReportingUnitOfWork unitOfWork,
     ICurrentActor currentActor,
     TimeProvider timeProvider,
     ReportTemplateErrors errors)
@@ -81,7 +82,7 @@ public sealed class ArchiveReportTemplateCommandHandler(
 
 public sealed class RestoreReportTemplateCommandHandler(
     IReportTemplateStore store,
-    IUnitOfWork unitOfWork,
+    IReportingUnitOfWork unitOfWork,
     ReportTemplateErrors errors)
     : ICommandHandler<RestoreReportTemplateCommand, Result>
 {

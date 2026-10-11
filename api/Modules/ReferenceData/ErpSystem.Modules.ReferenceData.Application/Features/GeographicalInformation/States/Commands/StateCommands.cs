@@ -1,3 +1,4 @@
+using ErpSystem.Modules.ReferenceData.Application.Abstractions.Persistence;
 using ErpSystem.BuildingBlocks.Context.Authentication;
 using ErpSystem.BuildingBlocks.Application.Abstractions.Messaging;
 using ErpSystem.Modules.ReferenceData.Application.Features.GeographicalInformation;
@@ -94,7 +95,7 @@ public sealed class CreateStatesCommandValidator : AbstractValidator<CreateState
 public sealed class CreateStateCommandHandler(
     IStateWriteStore stateWriteStore,
     IStateReadStore stateReadStore,
-    IUnitOfWork unitOfWork,
+    IReferenceDataUnitOfWork unitOfWork,
     IStateChangeScheduler stateChangeScheduler,
     ICurrentActor currentActor,
     IMapper mapper,
@@ -133,7 +134,7 @@ public sealed class CreateStateCommandHandler(
 
 public sealed class CreateStatesCommandHandler(
     IStateWriteStore stateWriteStore,
-    IUnitOfWork unitOfWork,
+    IReferenceDataUnitOfWork unitOfWork,
     IStateChangeScheduler stateChangeScheduler,
     ICurrentActor currentActor,
     IMapper mapper,
@@ -214,7 +215,7 @@ public sealed class CreateStatesCommandHandler(
 public sealed class UpdateStateCommandHandler(
     IStateWriteStore stateWriteStore,
     IStateReadStore stateReadStore,
-    IUnitOfWork unitOfWork,
+    IReferenceDataUnitOfWork unitOfWork,
     IStateChangeScheduler stateChangeScheduler,
     IStateAuditTrail stateAuditTrail,
     ICurrentActor currentActor,
@@ -281,7 +282,7 @@ public sealed class UpdateStateCommandHandler(
 
 public sealed class ArchiveStateCommandHandler(
     IStateWriteStore stateWriteStore,
-    IUnitOfWork unitOfWork,
+    IReferenceDataUnitOfWork unitOfWork,
     IStateChangeScheduler stateChangeScheduler,
     ICurrentActor currentActor,
     TimeProvider timeProvider,
@@ -328,7 +329,7 @@ public sealed class ArchiveStateCommandHandler(
 
 public sealed class RestoreStateCommandHandler(
     IStateWriteStore stateWriteStore,
-    IUnitOfWork unitOfWork,
+    IReferenceDataUnitOfWork unitOfWork,
     IStateChangeScheduler stateChangeScheduler,
     ICurrentActor currentActor,
     IMapper mapper,
@@ -388,7 +389,7 @@ public sealed class RestoreStateCommandHandler(
 
 public sealed class BulkArchiveStatesCommandHandler(
     IStateWriteStore stateWriteStore,
-    IUnitOfWork unitOfWork,
+    IReferenceDataUnitOfWork unitOfWork,
     IStateChangeScheduler stateChangeScheduler,
     ICurrentActor currentActor,
     TimeProvider timeProvider,

@@ -1,3 +1,4 @@
+using ErpSystem.Modules.HR.Application.Abstractions.Persistence;
 using ErpSystem.BuildingBlocks.Context.Authentication;
 using ErpSystem.BuildingBlocks.Application.Abstractions.Persistence;
 using ErpSystem.BuildingBlocks.Application.Common.Paginations;
@@ -242,7 +243,7 @@ public sealed class StaffingPlanningHandlerTests
         public Task<PageResponse<StaffingRequestListItemResponse>> GetRequestsAsync(GetStaffingRequestsQuery _, CancellationToken __) => throw new NotSupportedException();
     }
 
-    private sealed class UnitOfWork : IUnitOfWork
+    private sealed class UnitOfWork : IHrUnitOfWork
     {
         public bool FailOnSave { get; init; }
         public int Saves { get; private set; }

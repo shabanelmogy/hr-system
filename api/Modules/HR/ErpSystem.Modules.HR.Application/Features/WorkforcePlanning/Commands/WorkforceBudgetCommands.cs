@@ -1,3 +1,4 @@
+using ErpSystem.Modules.HR.Application.Abstractions.Persistence;
 using FluentValidation;
 using ErpSystem.BuildingBlocks.Context.Authentication;
 using ErpSystem.BuildingBlocks.Application.Abstractions.Messaging;
@@ -125,7 +126,7 @@ public sealed class RejectWorkforceBudgetCommandValidator : AbstractValidator<Re
 public sealed class CreateWorkforceBudgetCommandHandler(
     IWorkforceBudgetWriteStore writeStore,
     IWorkforceBudgetReadStore readStore,
-    IUnitOfWork unitOfWork,
+    IHrUnitOfWork unitOfWork,
     ICurrentActor actor,
     IAccountingCurrencyCatalog currencyCatalog,
     WorkforceBudgetEffects effects,
@@ -179,7 +180,7 @@ public sealed class CreateWorkforceBudgetCommandHandler(
 public sealed class UpdateWorkforceBudgetCommandHandler(
     IWorkforceBudgetWriteStore writeStore,
     IWorkforceBudgetReadStore readStore,
-    IUnitOfWork unitOfWork,
+    IHrUnitOfWork unitOfWork,
     ICurrentActor actor,
     IAccountingCurrencyCatalog currencyCatalog,
     WorkforceBudgetEffects effects,
@@ -224,7 +225,7 @@ public sealed class UpdateWorkforceBudgetCommandHandler(
     }
 }
 
-public sealed class SubmitWorkforceBudgetCommandHandler(IWorkforceBudgetWriteStore store, IWorkforceBudgetReadStore reads, IUnitOfWork uow, ICurrentActor actor, TimeProvider clock, WorkforceBudgetEffects effects, WorkforceBudgetErrors errors)
+public sealed class SubmitWorkforceBudgetCommandHandler(IWorkforceBudgetWriteStore store, IWorkforceBudgetReadStore reads, IHrUnitOfWork uow, ICurrentActor actor, TimeProvider clock, WorkforceBudgetEffects effects, WorkforceBudgetErrors errors)
     : ICommandHandler<SubmitWorkforceBudgetCommand, Result<WorkforceBudgetDetailResponse>>
 {
     public async Task<Result<WorkforceBudgetDetailResponse>> Handle(SubmitWorkforceBudgetCommand command, CancellationToken cancellationToken)
@@ -250,7 +251,7 @@ public sealed class SubmitWorkforceBudgetCommandHandler(IWorkforceBudgetWriteSto
     }
 }
 
-public sealed class ApproveWorkforceBudgetCommandHandler(IWorkforceBudgetWriteStore store, IWorkforceBudgetReadStore reads, IUnitOfWork uow, ICurrentActor actor, TimeProvider clock, WorkforceBudgetEffects effects, WorkforceBudgetErrors errors)
+public sealed class ApproveWorkforceBudgetCommandHandler(IWorkforceBudgetWriteStore store, IWorkforceBudgetReadStore reads, IHrUnitOfWork uow, ICurrentActor actor, TimeProvider clock, WorkforceBudgetEffects effects, WorkforceBudgetErrors errors)
     : ICommandHandler<ApproveWorkforceBudgetCommand, Result<WorkforceBudgetDetailResponse>>
 {
     public async Task<Result<WorkforceBudgetDetailResponse>> Handle(ApproveWorkforceBudgetCommand command, CancellationToken cancellationToken)
@@ -303,7 +304,7 @@ public sealed class ApproveWorkforceBudgetCommandHandler(IWorkforceBudgetWriteSt
     }
 }
 
-public sealed class RejectWorkforceBudgetCommandHandler(IWorkforceBudgetWriteStore store, IWorkforceBudgetReadStore reads, IUnitOfWork uow, ICurrentActor actor, TimeProvider clock, WorkforceBudgetEffects effects, WorkforceBudgetErrors errors)
+public sealed class RejectWorkforceBudgetCommandHandler(IWorkforceBudgetWriteStore store, IWorkforceBudgetReadStore reads, IHrUnitOfWork uow, ICurrentActor actor, TimeProvider clock, WorkforceBudgetEffects effects, WorkforceBudgetErrors errors)
     : ICommandHandler<RejectWorkforceBudgetCommand, Result<WorkforceBudgetDetailResponse>>
 {
     public async Task<Result<WorkforceBudgetDetailResponse>> Handle(RejectWorkforceBudgetCommand command, CancellationToken cancellationToken)

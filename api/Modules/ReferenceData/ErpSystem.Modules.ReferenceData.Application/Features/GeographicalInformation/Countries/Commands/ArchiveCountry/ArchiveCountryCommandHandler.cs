@@ -1,3 +1,4 @@
+using ErpSystem.Modules.ReferenceData.Application.Abstractions.Persistence;
 using ErpSystem.BuildingBlocks.Context.Authentication;
 using ErpSystem.BuildingBlocks.Application.Abstractions.Messaging;
 using ErpSystem.Modules.ReferenceData.Application.Features.GeographicalInformation;
@@ -11,7 +12,7 @@ namespace ErpSystem.Modules.ReferenceData.Application.Features.GeographicalInfor
 
 public sealed class ArchiveCountryCommandHandler(
     ICountryWriteStore countryWriteStore,
-    IUnitOfWork unitOfWork,
+    IReferenceDataUnitOfWork unitOfWork,
     ICountryChangeScheduler countryChangeScheduler,
     ICurrentActor currentActor,
     TimeProvider timeProvider,

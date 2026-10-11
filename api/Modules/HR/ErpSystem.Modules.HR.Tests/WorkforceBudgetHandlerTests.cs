@@ -1,3 +1,4 @@
+using ErpSystem.Modules.HR.Application.Abstractions.Persistence;
 using ErpSystem.BuildingBlocks.Context.Authentication;
 using ErpSystem.BuildingBlocks.Application.Abstractions.Persistence;
 using ErpSystem.BuildingBlocks.Application.Common.Paginations;
@@ -319,7 +320,7 @@ public sealed class WorkforceBudgetHandlerTests
             Task.FromResult<PositionEnvelopeDetailResponse?>(null);
     }
 
-    private sealed class RecordingUnitOfWork : IUnitOfWork
+    private sealed class RecordingUnitOfWork : IHrUnitOfWork
     {
         public bool FailOnSave { get; set; }
         public int Saves { get; private set; }

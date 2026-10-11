@@ -1,3 +1,4 @@
+using ErpSystem.Modules.Platform.Application.Abstractions.Persistence;
 using ErpSystem.Modules.Platform.Infrastructure.Identity;
 using ErpSystem.Modules.Platform.Domain.Companies.Entities;
 using ErpSystem.BuildingBlocks.Application.Abstractions.Persistence;
@@ -21,7 +22,7 @@ namespace ErpSystem.Modules.Platform.Infrastructure;
 /// and the migrations history table lives inside that schema, so module storage
 /// stays separated from every other module sharing the database.
 /// </summary>
-public sealed class PlatformDbContext : IdentityDbContext<PlatformApplicationUser, PlatformApplicationRole, string>, IUnitOfWork
+public sealed class PlatformDbContext : IdentityDbContext<PlatformApplicationUser, PlatformApplicationRole, string>, IPlatformUnitOfWork
 {
     public const string Schema = "platform";
 

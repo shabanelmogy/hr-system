@@ -1,3 +1,4 @@
+using ErpSystem.Modules.HR.Application.Abstractions.Persistence;
 using System.Reflection;
 using ErpSystem.BuildingBlocks.Application.Abstractions.Persistence;
 using ErpSystem.BuildingBlocks.Context.Authentication;
@@ -14,7 +15,7 @@ namespace ErpSystem.Modules.HR.Infrastructure.Persistence;
 public sealed class ApplicationDbContext(
     DbContextOptions<ApplicationDbContext> options,
     ICurrentActor currentActor,
-    TimeProvider timeProvider) : DbContext(options), IUnitOfWork
+    TimeProvider timeProvider) : DbContext(options), IHrUnitOfWork
 {
     public const string Schema = "hr";
 

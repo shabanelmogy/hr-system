@@ -175,6 +175,28 @@ that module's migration assembly. Migration history is never moved between
 module schemas. New modules must create their schema before applying their first
 migration and must make migration execution idempotent.
 
+### Unit of work ownership
+
+All modules register into one service container, so a single-service registration
+of a shared BuildingBlocks contract is replaced by the last module that registers
+it. The shared `IUnitOfWork` must therefore never be registered or injected by a
+module. Each module declares its own contract in
+`ErpSystem.Modules.<Module>.Application/Abstractions/Persistence`
+(`IAccountingUnitOfWork`, `IHrUnitOfWork`, `IPlatformUnitOfWork`,
+`IReferenceDataUnitOfWork`, `IReportingUnitOfWork`), implements it on its own
+`DbContext`, and registers it with
+`AddScoped<I<Module>UnitOfWork>(provider => provider.GetRequiredService<<Module>DbContext>())`.
+
+Incident 2026-10-11: HR, ReferenceData and Reporting each registered the shared
+`IUnitOfWork`; Reporting registers last, so country/state/district/address,
+HR workforce/recruitment/attendance and Platform company-geography commands saved
+through `ReportingDbContext`. Their changes were never written while the commands
+still returned success. `UnitOfWorkOwnershipArchitectureTests` fails the build if a
+module's production code references the shared `IUnitOfWork` again or a module stops
+registering its own contract against its own `DbContext`. Shared contracts that are
+intentionally shared (for example Mapster's `IMapper` over the global config) use
+`TryAdd*` so the first registration wins and every module scans into the same config.
+
 ## Compatibility values
 
 Protocol and persisted-data compatibility values may retain

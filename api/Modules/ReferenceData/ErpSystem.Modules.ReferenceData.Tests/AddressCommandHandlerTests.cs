@@ -1,3 +1,4 @@
+using ErpSystem.Modules.ReferenceData.Application.Abstractions.Persistence;
 using ErpSystem.BuildingBlocks.Application.Abstractions.Persistence;
 using ErpSystem.BuildingBlocks.Context.Authentication;
 using ErpSystem.Modules.Platform.Contracts.CompanyAccess;
@@ -236,7 +237,7 @@ public sealed class AddressCommandHandlerTests
             Task.CompletedTask;
     }
 
-    private sealed class ImmediateUnitOfWork : IUnitOfWork
+    private sealed class ImmediateUnitOfWork : IReferenceDataUnitOfWork
     {
         public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default) => Task.FromResult(1);
 

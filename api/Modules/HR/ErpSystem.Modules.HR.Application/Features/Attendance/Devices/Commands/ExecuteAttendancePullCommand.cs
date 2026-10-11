@@ -1,3 +1,4 @@
+using ErpSystem.Modules.HR.Application.Abstractions.Persistence;
 using System.Text.Json;
 using ErpSystem.BuildingBlocks.Application.Abstractions.Messaging;
 using ErpSystem.Modules.HR.Application.Features.Attendance.Devices.Contracts;
@@ -11,7 +12,7 @@ public sealed record ExecuteAttendancePullCommand(long RunId) : ICommand<bool>;
 public sealed class ExecuteAttendancePullCommandHandler(
     IAttendanceRawStore store, IAttendanceCredentialProtector protector, IAttendanceNetworkPolicy network,
     IAttendanceConnectorClient connector, IAttendanceEventKeyGenerator eventKeyGenerator,
-    IUnitOfWork unitOfWork, TimeProvider clock, AttendanceDeviceEffects effects)
+    IHrUnitOfWork unitOfWork, TimeProvider clock, AttendanceDeviceEffects effects)
     : ICommandHandler<ExecuteAttendancePullCommand, bool>
 {
     public async Task<bool> Handle(ExecuteAttendancePullCommand request, CancellationToken ct)
