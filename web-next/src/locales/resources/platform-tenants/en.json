@@ -74,7 +74,6 @@
     "contactPhone": "Contact phone",
     "notes": "Notes",
     "entitlements": "Purchased applications and areas",
-    "entitlementSummary": "Application access",
     "enabledModulesCount": "{{enabled}} of {{total}} applications enabled",
     "moduleAreasCount_one": "{{count}} functional area",
     "moduleAreasCount_other": "{{count}} functional areas",

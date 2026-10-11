@@ -244,3 +244,12 @@ Differences from the prepared change set:
   dirty-close confirmation and unsaved-changes registration. Supersedes the 2026-10-11
   full-page layout note above. Unused keys `unsavedChanges` / `readyToConfigure` removed from
   the platform-tenants namespace.
+
+## Tenant applications tab header 2026-10-11
+
+- The applications tab showed two headings (section header, then a tinted "Application
+  access" banner with the enabled count). The banner was removed; the enabled/total count
+  badge moved into the section header through a new `action` slot on `TenantFormSection`
+  (its accessible name keeps the "enabled X of Y" sentence). The unused `hideHeader` option
+  and `entitlementSummary` key were removed. e2e fixture serves
+  `/api/v1/modules/tenant-entitlements`.

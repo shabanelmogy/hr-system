@@ -223,6 +223,7 @@ function TenantEditor({
     resolver: zodResolver(schema),
   });
   const subscriptionStartedOn = useWatch({ control, name: "subscriptionStartedOn" });
+  const enabledEntitlementCount = useWatch({ control, name: "entitlements" })?.length ?? 0;
   const [activeTab, setActiveTab] = useState<TenantFormTab>("identity");
   const [focusField, setFocusField] = useState<keyof TenantFormState | null>(null);
   const [selectedEntitlementModuleCode, setSelectedEntitlementModuleCode] = useState(
@@ -488,53 +489,29 @@ function TenantEditor({
           icon={<AppsRoundedIcon fontSize="small" />}
           title={t("tenantManagement.entitlements")}
           description={t("tenantManagement.sections.entitlementsDescription")}
+          action={(
+            <Chip
+              size="medium"
+              label={`${enabledEntitlementCount}/${tenantEntitlementModules.length}`}
+              aria-label={t("tenantManagement.enabledModulesCount", {
+                enabled: enabledEntitlementCount,
+                total: tenantEntitlementModules.length,
+              })}
+              sx={{
+                minWidth: 62,
+                fontWeight: 900,
+                color: enabledEntitlementCount > 0 ? "primary.contrastText" : "text.secondary",
+                bgcolor: enabledEntitlementCount > 0 ? "primary.main" : "action.selected",
+              }}
+            />
+          )}
         >
           <Controller
             control={control}
             name="entitlements"
             render={({ field }) => {
-              const enabledCount = field.value.length;
               return (
                 <Stack spacing={2.5}>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: { xs: "flex-start", sm: "center" },
-                      justifyContent: "space-between",
-                      gap: 1.5,
-                      p: { xs: 1.5, sm: 2 },
-                      border: 1,
-                      borderColor: alpha(theme.palette.primary.main, 0.24),
-                      borderRadius: 2.5,
-                      background: `linear-gradient(135deg, ${alpha(theme.palette.primary.main, 0.14)} 0%, ${alpha(theme.palette.primary.dark, 0.08)} 100%)`,
-                    }}
-                  >
-                    <Box>
-                      <Typography variant="subtitle2" sx={{ fontWeight: 800 }}>
-                        {t("tenantManagement.entitlementSummary")}
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        {t("tenantManagement.enabledModulesCount", {
-                          enabled: enabledCount,
-                          total: tenantEntitlementModules.length,
-                        })}
-                      </Typography>
-                    </Box>
-                    <Chip
-                      size="medium"
-                      label={`${enabledCount}/${tenantEntitlementModules.length}`}
-                      sx={{
-                        minWidth: 62,
-                        fontWeight: 900,
-                        color: enabledCount > 0 ? "primary.contrastText" : "text.secondary",
-                        bgcolor: enabledCount > 0 ? "primary.main" : "action.selected",
-                        boxShadow: enabledCount > 0
-                          ? `0 6px 18px ${alpha(theme.palette.primary.main, 0.24)}`
-                          : "none",
-                      }}
-                    />
-                  </Box>
-
                   {tenantEntitlementModules.length === 0 ? null : (() => {
                     const selectedModule = tenantEntitlementModules.find(
                       (module) => module.code.toLowerCase() === selectedEntitlementModuleCode.toLowerCase(),
@@ -869,19 +846,16 @@ function TenantFormSection({
   icon,
   title,
   description,
-  hideHeader = false,
+  action,
   children,
 }: {
   icon: React.ReactNode;
   title: string;
   description: string;
-  hideHeader?: boolean;
+  /** Shown at the end of the header row (e.g. a count badge). */
+  action?: React.ReactNode;
   children: React.ReactNode;
 }) {
-  if (hideHeader) {
-    return <Box sx={{ minWidth: 0 }}>{children}</Box>;
-  }
-
   return (
     <Paper variant="outlined" sx={{ overflow: "hidden", borderRadius: 2.5 }}>
       <Box
@@ -913,7 +887,7 @@ function TenantFormSection({
         >
           {icon}
         </Box>
-        <Box sx={{ minWidth: 0 }}>
+        <Box sx={{ minWidth: 0, flex: 1 }}>
           <Typography variant="subtitle1" sx={{ fontWeight: 800, lineHeight: 1.35 }}>
             {title}
           </Typography>
@@ -921,6 +895,7 @@ function TenantFormSection({
             {description}
           </Typography>
         </Box>
+        {action ? <Box sx={{ flexShrink: 0, alignSelf: "center" }}>{action}</Box> : null}
       </Box>
       <Box sx={{ p: { xs: 2, sm: 2.5 } }}>
         {children}

@@ -169,6 +169,13 @@ const server = http.createServer(async (request, response) => {
     });
   }
 
+  if (request.method === "GET" && url.pathname === "/api/v1/modules/tenant-entitlements") {
+    const session = sessionFromAuthorization(request);
+    if (!session) return problem(response, 401, "Unauthorized");
+    // Every sellable module (the admin set), for the super admin tenant editor.
+    return json(response, 200, modulesFor({ roles: ["admin"] }));
+  }
+
   if (request.method === "GET" && url.pathname === "/api/v1/modules/accessible") {
     const session = sessionFromAuthorization(request);
     if (!session) return problem(response, 401, "Unauthorized");

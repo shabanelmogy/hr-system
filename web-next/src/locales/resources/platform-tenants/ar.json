@@ -78,7 +78,6 @@
     "contactPhone": "هاتف جهة الاتصال",
     "notes": "ملاحظات",
     "entitlements": "التطبيقات والوحدات المشتراة",
-    "entitlementSummary": "صلاحية الوصول للتطبيقات",
     "enabledModulesCount": "تم تفعيل {{enabled}} من {{total}} تطبيقات",
     "moduleAreasCount_zero": "لا توجد وحدات وظيفية",
     "moduleAreasCount_one": "وحدة وظيفية واحدة",
