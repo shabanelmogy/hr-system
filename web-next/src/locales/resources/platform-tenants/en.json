@@ -84,8 +84,6 @@
     "tenantEnabled": "Tenant login enabled",
     "enabled": "Enabled",
     "disabled": "Disabled",
-    "unsavedChanges": "Unsaved changes",
-    "readyToConfigure": "Ready to configure",
     "tabs": {
       "label": "Tenant setup sections",
       "identity": "Tenant profile",

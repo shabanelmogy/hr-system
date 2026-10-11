@@ -2,21 +2,17 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import ApartmentRoundedIcon from "@mui/icons-material/ApartmentRounded";
-import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import AppsRoundedIcon from "@mui/icons-material/AppsRounded";
 import CalendarMonthRoundedIcon from "@mui/icons-material/CalendarMonthRounded";
 import ContactMailRoundedIcon from "@mui/icons-material/ContactMailRounded";
 import GroupRoundedIcon from "@mui/icons-material/GroupRounded";
 import NotesRoundedIcon from "@mui/icons-material/NotesRounded";
-import SaveRoundedIcon from "@mui/icons-material/SaveRounded";
 import {
   Alert,
   alpha,
   Box,
-  Button,
   Checkbox,
   Chip,
-  CircularProgress,
   FormControlLabel,
   Paper,
   Stack,
@@ -43,10 +39,6 @@ import {
   getLastServerListPage,
   useServerListState,
 } from "@/shared/hooks/useServerListState";
-import {
-  useUnsavedChanges,
-  useUnsavedChangesRegistration,
-} from "@/shared/contexts/UnsavedChangesContext";
 import TenantManagementMultiView from "./components/TenantManagementMultiView";
 import { tenantApi, tenantKeys } from "./tenantApi";
 import { toTenantPageQuery } from "./tenantPageQuery";
@@ -144,23 +136,6 @@ export default function TenantManagementPage() {
     });
   };
 
-  if (form && !editing) {
-    return (
-      <ContentWrapper fillAvailable>
-        <TenantEditor
-          form={form}
-          isEdit={false}
-          fullPage
-          error={saveMutation.isError ? getErrorMessage(saveMutation.error) : null}
-          loading={saveMutation.isPending}
-          onClose={closeDialog}
-          onSave={save}
-          tenantEntitlementModules={tenantEntitlementModulesQuery.data ?? []}
-        />
-      </ContentWrapper>
-    );
-  }
-
   return (
     <ContentWrapper fillAvailable>
       <TenantManagementMultiView
@@ -188,10 +163,10 @@ export default function TenantManagementPage() {
         onReset={list.reset}
       />
 
-      {form && editing ? (
+      {form ? (
         <TenantEditor
           form={form}
-          isEdit
+          isEdit={Boolean(editing)}
           error={saveMutation.isError ? getErrorMessage(saveMutation.error) : null}
           loading={saveMutation.isPending}
           onClose={closeDialog}
@@ -206,7 +181,6 @@ export default function TenantManagementPage() {
 function TenantEditor({
   form,
   isEdit,
-  fullPage = false,
   error,
   loading,
   onClose,
@@ -215,7 +189,6 @@ function TenantEditor({
 }: {
   form: TenantFormState;
   isEdit: boolean;
-  fullPage?: boolean;
   error: string | null;
   loading: boolean;
   onClose: () => void;
@@ -255,8 +228,6 @@ function TenantEditor({
   const [selectedEntitlementModuleCode, setSelectedEntitlementModuleCode] = useState(
     () => tenantEntitlementModules[0]?.code ?? "",
   );
-  const { requestDiscard } = useUnsavedChanges();
-  useUnsavedChangesRegistration(fullPage && isDirty, fullPage && loading);
 
   useEffect(() => {
     if (!focusField || typeof document === "undefined") return;
@@ -275,7 +246,6 @@ function TenantEditor({
 
   const handleClose = async () => {
     if (loading) return;
-    if (fullPage && !(await requestDiscard())) return;
     onClose();
   };
 
@@ -290,7 +260,6 @@ function TenantEditor({
           icon={<ApartmentRoundedIcon fontSize="small" />}
           title={t("tenantManagement.sections.identity")}
           description={t("tenantManagement.sections.identityDescription")}
-          hideHeader={fullPage}
         >
           <Box sx={formGridSx}>
             <MyTextField
@@ -365,8 +334,7 @@ function TenantEditor({
             icon={<CalendarMonthRoundedIcon fontSize="small" />}
             title={t("tenantManagement.sections.subscription")}
             description={t("tenantManagement.sections.subscriptionDescription")}
-            hideHeader={fullPage}
-          >
+            >
             <Box sx={formGridSx}>
               <MyTextField
                 counter
@@ -475,7 +443,6 @@ function TenantEditor({
           icon={<ContactMailRoundedIcon fontSize="small" />}
           title={t("tenantManagement.sections.contact")}
           description={t("tenantManagement.sections.contactDescription")}
-          hideHeader={fullPage}
         >
           <Box sx={formGridSx}>
             <MyTextField
@@ -521,7 +488,6 @@ function TenantEditor({
           icon={<AppsRoundedIcon fontSize="small" />}
           title={t("tenantManagement.entitlements")}
           description={t("tenantManagement.sections.entitlementsDescription")}
-          hideHeader={fullPage}
         >
           <Controller
             control={control}
@@ -842,7 +808,6 @@ function TenantEditor({
           icon={<NotesRoundedIcon fontSize="small" />}
           title={t("tenantManagement.notes")}
           description={t("tenantManagement.sections.notesDescription")}
-          hideHeader={fullPage}
         >
           <MyTextField
             counter
@@ -867,188 +832,11 @@ function TenantEditor({
         tabs={tabs}
         value={activeTab}
         onChange={setActiveTab}
-        sx={fullPage ? {
-          "& .MuiTabs-root": {
-            minHeight: 52,
-            borderBottom: 1,
-            borderColor: "divider",
-          },
-          "& .MuiTab-root": {
-            minHeight: 52,
-            mx: 0.25,
-            px: { xs: 1.25, sm: 2 },
-            borderRadius: "10px 10px 0 0",
-            fontWeight: 700,
-          },
-          "& .MuiTab-root.Mui-selected": {
-            bgcolor: alpha(theme.palette.primary.main, 0.08),
-          },
-        } : undefined}
-        panelSx={{ pt: fullPage ? 3 : 2.5 }}
+        panelSx={{ pt: 2.5 }}
       />
       {error ? <Alert severity="error">{error}</Alert> : null}
     </Stack>
   );
-
-  const activeSection = {
-    identity: {
-      title: t("tenantManagement.sections.identity"),
-      description: t("tenantManagement.sections.identityDescription"),
-    },
-    subscription: {
-      title: t("tenantManagement.sections.subscription"),
-      description: t("tenantManagement.sections.subscriptionDescription"),
-    },
-    contact: {
-      title: t("tenantManagement.sections.contact"),
-      description: t("tenantManagement.sections.contactDescription"),
-    },
-    entitlements: {
-      title: t("tenantManagement.entitlements"),
-      description: t("tenantManagement.sections.entitlementsDescription"),
-    },
-    notes: {
-      title: t("tenantManagement.notes"),
-      description: t("tenantManagement.sections.notesDescription"),
-    },
-  } satisfies Record<TenantFormTab, { title: string; description: string }>;
-
-  if (fullPage) {
-    // Header, tabs/content and footer share one centered column so their edges line up on
-    // wide screens (they used to span different widths).
-    const columnSx = { width: "100%", maxWidth: 1180, mx: "auto" } as const;
-    return (
-      <Paper
-        component="form"
-        noValidate
-        onSubmit={(event) => void handleSubmit(onSave, handleInvalid)(event)}
-        variant="outlined"
-        sx={{
-          display: "flex",
-          flex: 1,
-          minHeight: 0,
-          flexDirection: "column",
-          overflow: "hidden",
-          borderRadius: 3,
-          background: `linear-gradient(145deg, ${alpha(theme.palette.primary.main, 0.035)} 0%, ${alpha(theme.palette.background.paper, 1)} 34%)`,
-          boxShadow: `0 12px 38px ${alpha(theme.palette.common.black, theme.palette.mode === "dark" ? 0.2 : 0.07)}`,
-        }}
-      >
-        <Box
-          sx={{
-            px: { xs: 2, sm: 3, lg: 4 },
-            py: { xs: 1.75, sm: 2.25 },
-            borderBottom: 1,
-            borderColor: "divider",
-            bgcolor: alpha(theme.palette.background.paper, 0.94),
-          }}
-        >
-          <Box
-            sx={{
-              ...columnSx,
-              display: "flex",
-              alignItems: { xs: "flex-start", sm: "center" },
-              justifyContent: "space-between",
-              gap: 2,
-            }}
-          >
-          <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, minWidth: 0 }}>
-            <Button
-              type="button"
-              variant="outlined"
-              color="inherit"
-              onClick={() => void handleClose()}
-              disabled={loading}
-              startIcon={<ArrowBackRoundedIcon sx={(theme) => ({ transform: theme.direction === "rtl" ? "scaleX(-1)" : "none" })} />}
-              sx={{ flexShrink: 0 }}
-            >
-              {t("actions.back")}
-            </Button>
-            <Box
-              aria-hidden
-              sx={{
-                display: { xs: "none", sm: "grid" },
-                width: 46,
-                height: 46,
-                flexShrink: 0,
-                placeItems: "center",
-                borderRadius: 2.5,
-                color: "primary.contrastText",
-                background: `linear-gradient(135deg, ${theme.palette.primary.main}, ${theme.palette.primary.dark})`,
-                boxShadow: `0 8px 22px ${alpha(theme.palette.primary.main, 0.25)}`,
-              }}
-            >
-              <ApartmentRoundedIcon />
-            </Box>
-            <Box sx={{ minWidth: 0 }}>
-              <Typography variant="h5" sx={{ fontWeight: 900 }} noWrap>
-                {isEdit ? t("tenantManagement.editTenant") : t("tenantManagement.addTenant")}
-              </Typography>
-              <Box sx={{ display: "flex", alignItems: "baseline", gap: 0.75, flexWrap: "wrap", mt: 0.25 }}>
-                <Typography variant="body2" sx={{ fontWeight: 800, color: "text.primary" }}>
-                  {activeSection[activeTab].title}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {activeSection[activeTab].description}
-                </Typography>
-              </Box>
-            </Box>
-          </Box>
-          <Chip
-            size="small"
-            color={isDirty ? "warning" : "default"}
-            variant={isDirty ? "filled" : "outlined"}
-            label={isDirty ? t("tenantManagement.unsavedChanges") : t("tenantManagement.readyToConfigure")}
-            sx={{ display: { xs: "none", md: "inline-flex" }, fontWeight: 800 }}
-          />
-          </Box>
-        </Box>
-
-        <Box sx={{ flex: 1, minHeight: 0, overflowY: "auto", px: { xs: 2, sm: 3, lg: 4 }, py: { xs: 2, sm: 3 } }}>
-          <Box sx={columnSx}>
-            {editorContent}
-          </Box>
-        </Box>
-
-        <Box
-          sx={{
-            px: { xs: 2, sm: 3, lg: 4 },
-            py: 1.75,
-            borderTop: 1,
-            borderColor: "divider",
-            bgcolor: alpha(theme.palette.background.paper, 0.96),
-          }}
-        >
-          <Box sx={{ ...columnSx, display: "flex", alignItems: "center", justifyContent: "flex-end", gap: 1.5 }}>
-          <Button
-            type="button"
-            variant="outlined"
-            color="inherit"
-            disabled={loading}
-            onClick={() => void handleClose()}
-            sx={{ minWidth: 110 }}
-          >
-            {t("actions.cancel")}
-          </Button>
-          <Button
-            type="submit"
-            variant="contained"
-            disabled={loading}
-            startIcon={loading ? <CircularProgress size={18} color="inherit" /> : <SaveRoundedIcon />}
-            sx={{
-              minWidth: 140,
-              fontWeight: 800,
-              background: `linear-gradient(135deg, ${theme.palette.primary.main}, ${theme.palette.primary.dark})`,
-              boxShadow: `0 6px 18px ${alpha(theme.palette.primary.main, 0.28)}`,
-            }}
-          >
-            {loading ? t("actions.submitting") : t("actions.save")}
-          </Button>
-          </Box>
-        </Box>
-      </Paper>
-    );
-  }
 
   return (
     <MyForm

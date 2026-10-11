@@ -235,3 +235,12 @@ Differences from the prepared change set:
   gained an optional `size` prop (default `small`, unchanged for other forms); the tenant
   form uses `medium` so every input in a row has the same height.
 - Verified at 1700, 1366 and 390px wide (RTL and LTR, light and dark).
+
+## Tenant create opens in a modal 2026-10-11
+
+- Owner decision: adding a tenant opens the same modal (`MyForm`, `maxWidth="lg"`) as editing
+  one, instead of a full page. The full-page branch of `TenantEditor` (its own header, footer,
+  column layout and unsaved-changes registration) was removed; `MyForm` already provides the
+  dirty-close confirmation and unsaved-changes registration. Supersedes the 2026-10-11
+  full-page layout note above. Unused keys `unsavedChanges` / `readyToConfigure` removed from
+  the platform-tenants namespace.

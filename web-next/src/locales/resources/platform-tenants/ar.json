@@ -92,8 +92,6 @@
     "tenantEnabled": "السماح بتسجيل دخول المستأجر",
     "enabled": "مفعّل",
     "disabled": "معطّل",
-    "unsavedChanges": "تغييرات غير محفوظة",
-    "readyToConfigure": "جاهز للإعداد",
     "tabs": {
       "label": "أقسام إعداد المستأجر",
       "identity": "بيانات المستأجر",
