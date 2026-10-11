@@ -29,7 +29,7 @@ export function BasicDataLayout() {
     <Drawer
       drawerContent={(props) => (
         <ModuleDrawerContent
-          moduleKey="hr"
+          moduleKey="referenceData"
           {...props}
           description={t('basicData.description')}
           icon="server-outline"

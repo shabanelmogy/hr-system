@@ -1,3 +1,4 @@
+using ErpSystem.BuildingBlocks.Presentation.Common.Observability;
 using ErpSystem.Api.Hosting;
 using Microsoft.AspNetCore.Http;
 

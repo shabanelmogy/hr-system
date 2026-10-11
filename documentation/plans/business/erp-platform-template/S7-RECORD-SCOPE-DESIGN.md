@@ -17,8 +17,8 @@ Current layers, verified in source:
 | Layer | Where | What it guarantees |
 | --- | --- | --- |
 | Permission claim + live role check + module entitlement | `PermissionAuthorizationHandler` → `ITenantModuleEntitlementSource.UserHasPermissionAsync` / `HasAccessAsync` | The action is allowed at all |
-| Tenant filter | `ApplicationDbContext` named query filter `TenantFilter` | Rows of other tenants are invisible |
-| Company filter | `ApplicationDbContext` named query filter `CompanyFilter` | Rows of other companies are invisible |
+| Tenant filter | `HrDbContext` named query filter `TenantFilter` | Rows of other tenants are invisible |
+| Company filter | `HrDbContext` named query filter `CompanyFilter` | Rows of other companies are invisible |
 | Module-local scope helpers | `CRM …/AppointmentScope.cs` (user + tenant + company), `Inventory …/CatalogScope.cs` (tenant + company) | Each module re-derives the actor scope by hand |
 
 Missing: a shared, declarative way to narrow rows inside a company by **ownership** or

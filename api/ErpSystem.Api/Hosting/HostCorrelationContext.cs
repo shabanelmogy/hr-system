@@ -1,20 +1,19 @@
 using System.Diagnostics;
 using ErpSystem.BuildingBlocks.Context;
+using ErpSystem.BuildingBlocks.Presentation.Common.Observability;
 
 namespace ErpSystem.Api.Hosting;
 
+/// <summary>
+/// Resolves the request correlation id at the host edge. The value is stored under the
+/// single shared key read by <see cref="CorrelationContextExtensions.GetCorrelationId"/>,
+/// which every module and the host use (there used to be three copies with two keys).
+/// </summary>
 public static class HostCorrelationContext
 {
     public const string HeaderName = ExecutionContextHeaderNames.CorrelationId;
 
-    // Preserve the historical item key while ownership moves out of HR so
-    // existing filters/controllers continue to read the same request value.
-    public const string ItemKey = "HrManagementSystem.CorrelationId";
-
-    public static string GetCorrelationId(this HttpContext context) =>
-        context.Items.TryGetValue(ItemKey, out var value) && value is string correlationId
-            ? correlationId
-            : context.TraceIdentifier;
+    public const string ItemKey = CorrelationContextExtensions.ItemKey;
 
     internal static string Resolve(HttpContext context)
     {

@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import { asHref, ROUTES, type AppRoute } from '@/src/core/constants/routes';
-import { useAppTheme, type AppTheme } from '@/src/core/theme';
+import { getModuleAccent, useAppTheme, type AppTheme, type ModuleAccentKey } from '@/src/core/theme';
 import {
   AppCard,
   AppIcon,
@@ -116,14 +116,23 @@ export function ModuleLauncherScreen({ moduleCode }: { moduleCode?: string }) {
   );
 }
 
+// Module colors come from the palette's module colors (same as web); General Data carries
+// the palette primary, so no module is special-cased here.
+const modulePresentations: Record<string, { icon: AppIconName; accent: ModuleAccentKey }> = {
+  'reference-data': { icon: 'globe-outline', accent: 'referenceData' },
+  acc: { icon: 'calculator-outline', accent: 'accounting' },
+  hr: { icon: 'people-outline', accent: 'hr' },
+  crm: { icon: 'chatbubbles-outline', accent: 'crm' },
+  reporting: { icon: 'analytics-outline', accent: 'reporting' },
+};
+
 function getModulePresentation(code: string, theme: AppTheme) {
-  if (code.toLowerCase() === 'hr') {
-    return { icon: 'people-outline' as AppIconName, color: theme.colors.primary, iconSize: 52 };
-  }
-  if (code.toLowerCase() === 'acc') {
-    return { icon: 'calculator-outline' as AppIconName, color: theme.colors.success, iconSize: 52 };
-  }
-  return { icon: 'apps-outline' as AppIconName, color: theme.colors.secondary, iconSize: 52 };
+  const presentation = modulePresentations[code.toLowerCase()];
+  return {
+    icon: presentation?.icon ?? ('apps-outline' as AppIconName),
+    color: presentation ? getModuleAccent(theme, presentation.accent) : theme.colors.secondary,
+    iconSize: 52,
+  };
 }
 
 function getSubmodulePresentation(code: string, theme: AppTheme) {

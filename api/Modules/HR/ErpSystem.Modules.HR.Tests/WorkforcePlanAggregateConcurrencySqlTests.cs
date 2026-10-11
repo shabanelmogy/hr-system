@@ -97,12 +97,12 @@ public sealed class WorkforcePlanAggregateConcurrencySqlTests
         }
     }
 
-    private static ApplicationDbContext CreateContext(string connectionString)
+    private static HrDbContext CreateContext(string connectionString)
     {
-        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+        var options = new DbContextOptionsBuilder<HrDbContext>()
             .UseSqlServer(connectionString)
             .Options;
-        return new ApplicationDbContext(options, new TestActor(), TimeProvider.System);
+        return new HrDbContext(options, new TestActor(), TimeProvider.System);
     }
 
     private static async Task CreateDatabaseAsync(string databaseName)
@@ -129,7 +129,7 @@ public sealed class WorkforcePlanAggregateConcurrencySqlTests
         await command.ExecuteNonQueryAsync();
     }
 
-    private static async Task CreateWorkforceTablesAsync(ApplicationDbContext context)
+    private static async Task CreateWorkforceTablesAsync(HrDbContext context)
     {
         await context.Database.ExecuteSqlRawAsync("CREATE SCHEMA [hr] AUTHORIZATION [dbo]");
 
@@ -169,7 +169,7 @@ public sealed class WorkforcePlanAggregateConcurrencySqlTests
         await context.Database.ExecuteSqlRawAsync(sql);
     }
 
-    private static Task SeedPlanAsync(ApplicationDbContext context)
+    private static Task SeedPlanAsync(HrDbContext context)
     {
         const string sql =
             "SET IDENTITY_INSERT [hr].[WorkforcePlans] ON; " +
@@ -200,7 +200,7 @@ public sealed class WorkforcePlanAggregateConcurrencySqlTests
         public int? CompanyId => 11;
     }
 
-    private static WorkforcePlanWriteStore CreateWriteStore(ApplicationDbContext context) =>
+    private static WorkforcePlanWriteStore CreateWriteStore(HrDbContext context) =>
         new(context, new OpenFiscalYearPlanningSource(), new TestActor());
 
     private sealed class OpenFiscalYearPlanningSource : IFiscalYearPlanningSource

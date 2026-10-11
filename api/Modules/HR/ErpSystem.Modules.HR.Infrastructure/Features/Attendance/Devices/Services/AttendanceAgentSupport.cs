@@ -6,7 +6,7 @@ using ErpSystem.Modules.HR.Application.Features.Attendance.Devices.Contracts;
 namespace ErpSystem.Modules.HR.Infrastructure.Features.Attendance.Devices.Services;
 
 /// <summary>Authenticates the site agent before an actor scope is established, so it intentionally bypasses tenant filters.</summary>
-public sealed class AttendanceAgentAuthenticator(ApplicationDbContext context) : IAttendanceAgentAuthenticator
+public sealed class AttendanceAgentAuthenticator(HrDbContext context) : IAttendanceAgentAuthenticator
 {
     public async Task<AttendanceAgentSession?> AuthenticateAsync(Guid agentId, string enrollmentToken, CancellationToken cancellationToken)
     {

@@ -16,7 +16,7 @@ consumes Platform through public Contracts and never maps or queries Platform
 tables. ReferenceData and Reporting are separate owners for geography and
 reporting data; HR uses their public contracts where needed.
 
-HR `ApplicationDbContext` contains only HR entities and applies its own tenant
+HR `HrDbContext` contains only HR entities and applies its own tenant
 and company filters. Pre-authentication and cross-module checks are implemented
 inside Platform with explicit query-filter bypasses only where the platform
 administrator workflow requires them. Subscription status conversion and

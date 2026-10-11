@@ -116,7 +116,7 @@
     {
       "id": "db-context",
       "layer": "infrastructure",
-      "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Persistence/ApplicationDbContext.cs",
+      "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Persistence/HrDbContext.cs",
       "purpose": "DbSets, filters, and scope"
     },
     {

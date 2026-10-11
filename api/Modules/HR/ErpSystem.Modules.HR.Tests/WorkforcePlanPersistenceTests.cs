@@ -14,7 +14,7 @@ public sealed class WorkforcePlanPersistenceTests
     [Fact]
     public async Task BaselineHeadcount_UsesPositionBranchAndAsOfDate()
     {
-        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+        var options = new DbContextOptionsBuilder<HrDbContext>()
             .UseInMemoryDatabase(Guid.NewGuid().ToString("N"))
             .Options;
         await using var context = CreateContext(options);
@@ -36,7 +36,7 @@ public sealed class WorkforcePlanPersistenceTests
     [Fact]
     public async Task Revisions_AreReturnedNewestFirstWithinTheSameSeries()
     {
-        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+        var options = new DbContextOptionsBuilder<HrDbContext>()
             .UseInMemoryDatabase(Guid.NewGuid().ToString("N"))
             .Options;
         await using var context = CreateContext(options);
@@ -61,7 +61,7 @@ public sealed class WorkforcePlanPersistenceTests
     [Fact]
     public void Model_EnforcesOneEffectivePlanPerFiscalYearAndCompany()
     {
-        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+        var options = new DbContextOptionsBuilder<HrDbContext>()
             .UseInMemoryDatabase(Guid.NewGuid().ToString("N"))
             .Options;
         using var context = CreateContext(options);
@@ -75,7 +75,7 @@ public sealed class WorkforcePlanPersistenceTests
     [Fact]
     public void Model_PersistsVacancyTypesAndDerivesHeadcountTotals()
     {
-        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+        var options = new DbContextOptionsBuilder<HrDbContext>()
             .UseInMemoryDatabase(Guid.NewGuid().ToString("N"))
             .Options;
         using var context = CreateContext(options);
@@ -91,7 +91,7 @@ public sealed class WorkforcePlanPersistenceTests
     [Fact]
     public void ApplyRowVersion_MarksParentForUpdateSoAggregateConcurrencyIsEnforced()
     {
-        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+        var options = new DbContextOptionsBuilder<HrDbContext>()
             .UseInMemoryDatabase(Guid.NewGuid().ToString("N"))
             .Options;
         using var context = CreateContext(options);
@@ -111,7 +111,7 @@ public sealed class WorkforcePlanPersistenceTests
     [Fact]
     public async Task Page_RecordStatusSeparatesActiveAndArchivedPlans()
     {
-        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+        var options = new DbContextOptionsBuilder<HrDbContext>()
             .UseInMemoryDatabase(Guid.NewGuid().ToString("N"))
             .Options;
         await using var context = CreateContext(options);
@@ -148,10 +148,10 @@ public sealed class WorkforcePlanPersistenceTests
         CreatedById = "admin"
     };
 
-    private static ApplicationDbContext CreateContext(DbContextOptions<ApplicationDbContext> options) =>
+    private static HrDbContext CreateContext(DbContextOptions<HrDbContext> options) =>
         new(options, new TestActor(), TimeProvider.System);
 
-    private static WorkforcePlanWriteStore CreateWriteStore(ApplicationDbContext context) =>
+    private static WorkforcePlanWriteStore CreateWriteStore(HrDbContext context) =>
         new(context, new OpenFiscalYearPlanningSource(), new TestActor());
 
     private sealed class TestActor : ICurrentActor

@@ -18,16 +18,20 @@ public static class ErpModuleRegistry
     /// </summary>
     public static IModule[] Create() =>
     [
+        // Foundation first (technical platform, then General Data and shared contacts),
+        // then business applications, then cross-module reporting. The order is also the
+        // application launcher order (owner decision 2026-10-11: General Data is the main
+        // module; HR is one business application, not the root of the system).
         // <erp-module-registrations>
-        new ErpSystem.Modules.HR.HRModule(),
-        new ErpSystem.Modules.Accounting.AccountingModule(),
         new ErpSystem.Modules.Platform.PlatformModule(),
-        new ErpSystem.Modules.Contacts.ContactsModule(),
         new ErpSystem.Modules.ReferenceData.ReferenceDataModule(),
-        new ErpSystem.Modules.Inventory.InventoryModule(),
+        new ErpSystem.Modules.Contacts.ContactsModule(),
+        new ErpSystem.Modules.Accounting.AccountingModule(),
+        new ErpSystem.Modules.HR.HRModule(),
         new ErpSystem.Modules.CRM.CrmModule(),
-        new ErpSystem.Modules.Reporting.ReportingModule(),
+        new ErpSystem.Modules.Inventory.InventoryModule(),
         new ErpSystem.Modules.PointOfSale.PointOfSaleModule(),
+        new ErpSystem.Modules.Reporting.ReportingModule(),
         // </erp-module-registrations>
     ];
 }

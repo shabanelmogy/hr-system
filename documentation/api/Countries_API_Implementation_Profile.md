@@ -276,7 +276,7 @@ state failures.
 
 ## 8. Audit, Notification and Realtime
 
-- `ApplicationDbContext` owns ordinary created/updated audit metadata.
+- `HrDbContext` owns ordinary created/updated audit metadata.
 - Archive handlers set deleted actor, machine and UTC timestamp explicitly;
   restore clears them.
 - Update calls `CountryAuditTrail.RecordUpdate` before mapping the candidate into
@@ -317,7 +317,7 @@ are tenant-owned. The main API, not the Crystal service, owns the reusable
 
 | Concern | Applied contract |
 |---|---|
-| Ownership | `ReportTemplate` and immutable `ReportTemplateRevision` extend `TenantAuditableEntity`; `ApplicationDbContext` derives and filters `TenantId` |
+| Ownership | `ReportTemplate` and immutable `ReportTemplateRevision` extend `TenantAuditableEntity`; `HrDbContext` derives and filters `TenantId` |
 | Uniqueness | Template name is unique within `(TenantId, FeatureKey)`; another tenant may reuse the same name |
 | Public reads | `GET /api/v1/report-templates?featureKey=countries` and `GET /{id}` return active published templates only |
 | Author reads | `GET /manage`, `GET /manage/{id}`, and revision routes require Edit and can read the current tenant's drafts/lifecycle state |
@@ -360,7 +360,7 @@ endpoint; it must not accept arbitrary client URLs or database connection string
 | `CountryCqrsArchitectureTests.cs` | Thin controller, canonical routes/contracts, narrow ports, no obsolete business-service facade/toggle/count, feature mapping ownership |
 | `CountriesControllerCqrsTests.cs` | Every action dispatches the correct slice and returns the canonical success result |
 | `ValidationQueriesTests.cs` | Infrastructure validation-query registration |
-| `ApplicationDbContextAuditTests.cs` | Auditable entity persistence behavior |
+| `HrDbContextAuditTests.cs` | Auditable entity persistence behavior |
 | `BackgroundNotificationJobTests.cs` | Notification/realtime job infrastructure behavior |
 
 Focused gate from the repository root:

@@ -197,6 +197,24 @@ registering its own contract against its own `DbContext`. Shared contracts that 
 intentionally shared (for example Mapster's `IMapper` over the global config) use
 `TryAdd*` so the first registration wins and every module scans into the same config.
 
+### Host-owned concerns and module order
+
+Settings that change every module's HTTP pipeline belong to the host
+(`ErpSystem.Api/Hosting`): the global `AsyncValidationFilter`, JSON serializer options and
+the request correlation id. `ErpSystem.BuildingBlocks.Presentation`'s
+`CorrelationContextExtensions` is the only correlation helper; the host middleware stores
+the id under its `ItemKey`. Third-party licenses are registered by the module that uses
+the library (Syncfusion: Reporting). Until 2026-10-11 HR registered the filter, JSON
+options and license, and four correlation helpers read two different keys.
+`HostConcernOwnershipArchitectureTests` keeps these concerns out of modules.
+
+`ErpModuleRegistry` lists modules foundation first: Platform, ReferenceData (General Data,
+the main module), Contacts, then business applications (Accounting, HR, CRM, Inventory,
+PointOfSale), then Reporting. The order is also the application launcher order; the
+lifecycle order still honours declared module dependencies. The web
+(`moduleRegistration.ts`) and mobile (`module-registration.ts`) registries use the same
+order. HR's DbContext is `HrDbContext` (it was the pre-modular `ApplicationDbContext`).
+
 ## Compatibility values
 
 Protocol and persisted-data compatibility values may retain

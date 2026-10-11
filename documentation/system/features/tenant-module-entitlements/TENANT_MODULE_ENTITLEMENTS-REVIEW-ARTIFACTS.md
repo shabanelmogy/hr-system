@@ -49,7 +49,7 @@ preselects the first option, and the API issues the session only after
 | --- | --- | --- |
 | API | `dotnet build api/ErpSystem.sln --no-restore` | Passed, 0 warnings and 0 errors |
 | API tests | Current gate: `dotnet test api/ErpSystem.sln -c Release` | Current authoritative result is recorded in `documentation/api/FOUNDATION_CLOSURE_MATRIX.md` |
-| Database | `dotnet ef migrations has-pending-model-changes --context ApplicationDbContext`; `dotnet ef database update --context ApplicationDbContext` | No pending model changes; database is up to date |
+| Database | `dotnet ef migrations has-pending-model-changes --context HrDbContext`; `dotnet ef database update --context HrDbContext` | No pending model changes; database is up to date |
 | Web | `npm run check`; `npm test -- --run`; `npm run build` | Passed architecture, lint, normal and strict type-checks; 366 tests; production build passed |
 | Mobile | `npm run check` | Passed type-check, lint, architecture; 174 tests |
 | Docs | `./documentation/system/Generate-Documentation.ps1`; `./documentation/system/Generate-Documentation.ps1 -Check` | Generated and passed for 77 recipes |

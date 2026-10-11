@@ -8,7 +8,7 @@ using ErpSystem.Modules.HR.Domain.WorkforcePlanning.Entities;
 namespace ErpSystem.Modules.HR.Infrastructure.Features.Recruitment.JobOffers.Persistence;
 
 public sealed class JobOfferReadStore(
-    ApplicationDbContext context,
+    HrDbContext context,
     TypeAdapterConfig mappingConfig) : IJobOfferReadStore
 {
     public async Task<PageResponse<JobOfferDto>> GetPageAsync(
@@ -109,7 +109,7 @@ public sealed class JobOfferReadStore(
     }
 }
 
-public sealed class JobOfferRepository(ApplicationDbContext context) : IJobOfferRepository
+public sealed class JobOfferRepository(HrDbContext context) : IJobOfferRepository
 {
     public async Task<JobOfferLineage?> GetLineageAsync(int offerId, CancellationToken cancellationToken)
     {

@@ -9,7 +9,7 @@ using ErpSystem.Modules.HR.Domain.WorkforcePlanning.Entities;
 namespace ErpSystem.Modules.HR.Infrastructure.Features.Recruitment.EmploymentApplications.Persistence;
 
 public sealed class EmploymentApplicationReadStore(
-    ApplicationDbContext context,
+    HrDbContext context,
     TypeAdapterConfig mappingConfig) : IEmploymentApplicationReadStore
 {
     public async Task<PageResponse<EmploymentApplicationDto>> GetPageAsync(
@@ -70,7 +70,7 @@ public sealed class EmploymentApplicationReadStore(
             : item;
 }
 
-public sealed class EmploymentApplicationRepository(ApplicationDbContext context) : IEmploymentApplicationRepository
+public sealed class EmploymentApplicationRepository(HrDbContext context) : IEmploymentApplicationRepository
 {
     public Task<JobOpeningStatus?> GetOpeningStatusAsync(int id, CancellationToken cancellationToken) =>
         context.JobOpenings.AsNoTracking()
@@ -92,7 +92,7 @@ public sealed class EmploymentApplicationRepository(ApplicationDbContext context
         context.SaveChangesAsync(cancellationToken);
 }
 
-public sealed class RecruitmentHireRepository(ApplicationDbContext context) : IRecruitmentHireRepository
+public sealed class RecruitmentHireRepository(HrDbContext context) : IRecruitmentHireRepository
 {
     public Task<ApplicationStatus?> GetApplicationStatusAsync(int applicationId, CancellationToken cancellationToken) =>
         context.EmploymentApplications.AsNoTracking()

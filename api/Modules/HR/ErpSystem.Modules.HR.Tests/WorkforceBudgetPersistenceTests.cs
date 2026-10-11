@@ -26,10 +26,10 @@ public sealed class WorkforceBudgetPersistenceTests
     [Fact]
     public void Model_EnforcesOneEnvelopePerBudgetLineAndMoneyPrecision()
     {
-        var sqlOptions = new DbContextOptionsBuilder<ApplicationDbContext>()
+        var sqlOptions = new DbContextOptionsBuilder<HrDbContext>()
             .UseSqlServer("Server=(local);Database=WorkforcePlanningPhase2ModelCheck;Trusted_Connection=True;TrustServerCertificate=True")
             .Options;
-        using var context = new ApplicationDbContext(sqlOptions, new TestActor(), TimeProvider.System);
+        using var context = new HrDbContext(sqlOptions, new TestActor(), TimeProvider.System);
         var envelope = context.Model.FindEntityType(typeof(PositionEnvelope))!;
         var line = context.Model.FindEntityType(typeof(WorkforceBudgetLine))!;
         var allocation = context.Model.FindEntityType(typeof(WorkforceBudgetPeriodAllocation))!;
@@ -139,15 +139,15 @@ public sealed class WorkforceBudgetPersistenceTests
         CreatedById = "admin"
     };
 
-    private static ApplicationDbContext CreateContext()
+    private static HrDbContext CreateContext()
     {
-        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+        var options = new DbContextOptionsBuilder<HrDbContext>()
             .UseInMemoryDatabase(Guid.NewGuid().ToString("N"))
             .Options;
-        return new ApplicationDbContext(options, new TestActor(), TimeProvider.System);
+        return new HrDbContext(options, new TestActor(), TimeProvider.System);
     }
 
-    private static WorkforceBudgetReadStore CreateReadStore(ApplicationDbContext context) =>
+    private static WorkforceBudgetReadStore CreateReadStore(HrDbContext context) =>
         new(context, new OpenFiscalYearPlanningSource(), new TestActor());
 
     private sealed class TestActor : ICurrentActor

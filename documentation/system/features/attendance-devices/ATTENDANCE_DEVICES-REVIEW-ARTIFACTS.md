@@ -65,8 +65,8 @@ authorization are separate Organizational Structure work.
 | --- | --- | --- | --- |
 | E-01 | Current HR CQRS baseline is Countries | `api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Presentation/Features/GeographicalInformation/Countries/V1/CountriesController.cs` | Source inspection |
 | E-02 | Trusted tenant/company scope is available | `api/Modules/HR/ErpSystem.Modules.HR.Application/Abstractions/Authentication/ICurrentActor.cs` | Source inspection |
-| E-03 | EF globally filters company-owned entities | `api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Persistence/ApplicationDbContext.cs::ConfigureCompanyEntity` | Source inspection |
-| E-04 | Branch is persisted and device selection is scope-validated | `ApplicationDbContext.cs`, `BranchConfiguration.cs`, `AttendanceDeviceConfiguration.cs` | Migration and source inspection |
+| E-03 | EF globally filters company-owned entities | `api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Persistence/HrDbContext.cs::ConfigureCompanyEntity` | Source inspection |
+| E-04 | Branch is persisted and device selection is scope-validated | `HrDbContext.cs`, `BranchConfiguration.cs`, `AttendanceDeviceConfiguration.cs` | Migration and source inspection |
 | E-05 | Only ZKTeco COM is a functioning source provider | `G:/test/ZK-READER/connector/Services/DeviceDriverRegistry.cs` | Source inspection |
 | E-06 | ZKTeco requires an x86 Windows companion | `G:/test/ZK-READER/connector/ZkConnector.csproj` | Source inspection |
 | E-07 | Existing reusable web server Grid is product-owned | `web-next/src/shared/components/data-grid/core/MyDataGrid.tsx` | Source inspection |

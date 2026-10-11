@@ -36,7 +36,7 @@ public sealed class UnitOfWorkOwnershipArchitectureTests
 
     [Theory]
     [InlineData("Accounting", "IAccountingUnitOfWork", "AccountingDbContext")]
-    [InlineData("HR", "IHrUnitOfWork", "ApplicationDbContext")]
+    [InlineData("HR", "IHrUnitOfWork", "HrDbContext")]
     [InlineData("Platform", "IPlatformUnitOfWork", "PlatformDbContext")]
     [InlineData("ReferenceData", "IReferenceDataUnitOfWork", "ReferenceDataDbContext")]
     [InlineData("Reporting", "IReportingUnitOfWork", "ReportingDbContext")]

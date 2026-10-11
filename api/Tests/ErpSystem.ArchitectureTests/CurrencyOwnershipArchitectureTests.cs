@@ -30,7 +30,7 @@ public sealed class CurrencyOwnershipArchitectureTests
             hrRoot,
             "ErpSystem.Modules.HR.Infrastructure",
             "Persistence",
-            "ApplicationDbContext.cs"));
+            "HrDbContext.cs"));
         var resources = File.ReadAllText(Path.Combine(
             hrRoot,
             "ErpSystem.Modules.HR.Application",

@@ -110,12 +110,12 @@ public sealed class WorkforceTracePersistenceTests
         Assert.DoesNotContain(page.Items, row => row.PositionEnvelopeId == supersededEnvelope.Id);
     }
 
-    private static ApplicationDbContext CreateContext(ICurrentActor actor, string? databaseName = null)
+    private static HrDbContext CreateContext(ICurrentActor actor, string? databaseName = null)
     {
-        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+        var options = new DbContextOptionsBuilder<HrDbContext>()
             .UseInMemoryDatabase(databaseName ?? Guid.NewGuid().ToString())
             .Options;
-        return new ApplicationDbContext(options, actor, TimeProvider.System);
+        return new HrDbContext(options, actor, TimeProvider.System);
     }
 
     private static WorkforcePlan CreatePlan(int id, int fiscalYearId, string code)

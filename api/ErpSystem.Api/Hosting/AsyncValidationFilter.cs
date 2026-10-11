@@ -1,9 +1,15 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using ErpSystem.Modules.HR.Infrastructure.Common.Observability;
+using ErpSystem.BuildingBlocks.Presentation.Common.Observability;
+using FluentValidation;
 using MediatR;
 
-namespace ErpSystem.Modules.HR.Infrastructure.Validation;
+namespace ErpSystem.Api.Hosting;
 
+/// <summary>
+/// Validates non-MediatR action arguments with their FluentValidation validators for every
+/// module's controllers (registered globally by the host; it used to live in HR).
+/// </summary>
 public sealed class AsyncValidationFilter(IServiceProvider serviceProvider) : IAsyncActionFilter
 {
     public async Task OnActionExecutionAsync(

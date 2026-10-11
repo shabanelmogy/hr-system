@@ -18,6 +18,15 @@ const modules: TenantEntitlementModule[] = [
 ];
 
 describe('tenant module entitlements', () => {
+  it('enables only the modules the catalog marks as default', () => {
+    expect(createDefaultEntitlements([
+      { code: 'hr', submodules: [{ code: 'recruitment' }] },
+      { code: 'reference-data', isDefault: true, submodules: [{ code: 'addresses' }] },
+    ])).toEqual([
+      { moduleCode: 'reference-data', submoduleCodes: ['addresses'] },
+    ]);
+  });
+
   it('keeps HR submodules when Accounting is selected', () => {
     const updated = toggleModuleEntitlement(
       createDefaultEntitlements(modules),

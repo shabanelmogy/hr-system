@@ -8,7 +8,7 @@ using ErpSystem.Modules.HR.Domain.WorkforcePlanning.Enums;
 
 namespace ErpSystem.Modules.HR.Infrastructure.Features.WorkforcePlanning.Persistence;
 
-public sealed class WorkforcePlanReadStore(ApplicationDbContext context) : IWorkforcePlanReadStore
+public sealed class WorkforcePlanReadStore(HrDbContext context) : IWorkforcePlanReadStore
 {
     public async Task<PageResponse<WorkforcePlanListItemResponse>> GetPageAsync(GetWorkforcePlansQuery request, CancellationToken cancellationToken)
     {
@@ -139,7 +139,7 @@ public sealed class WorkforcePlanReadStore(ApplicationDbContext context) : IWork
 }
 
 public sealed class WorkforcePlanWriteStore(
-    ApplicationDbContext context,
+    HrDbContext context,
     IFiscalYearPlanningSource fiscalYears,
     ICurrentActor currentActor) : IWorkforcePlanWriteStore
 {
@@ -205,7 +205,7 @@ public sealed class WorkforcePlanWriteStore(
         // update may replace only lines/period targets while leaving every scalar on
         // the parent unchanged. Force the parent into the UPDATE so SQL Server checks
         // the supplied rowversion and generates a fresh one for every aggregate edit.
-        // ApplicationDbContext.PrepareChanges replaces this value with the real audit
+        // HrDbContext.PrepareChanges replaces this value with the real audit
         // timestamp immediately before SaveChanges.
         entry.Property(item => item.UpdatedOn).IsModified = true;
     }

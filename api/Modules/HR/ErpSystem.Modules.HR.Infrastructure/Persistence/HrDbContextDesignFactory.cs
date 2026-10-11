@@ -9,21 +9,21 @@ namespace ErpSystem.Modules.HR.Infrastructure.Persistence;
 /// Creates the model without starting the web host, applying migrations, or seeding data.
 /// Runtime configuration and credentials remain owned by the API host.
 /// </summary>
-public sealed class ApplicationDbContextDesignFactory
-    : IDesignTimeDbContextFactory<ApplicationDbContext>
+public sealed class HrDbContextDesignFactory
+    : IDesignTimeDbContextFactory<HrDbContext>
 {
-    public ApplicationDbContext CreateDbContext(string[] args)
+    public HrDbContext CreateDbContext(string[] args)
     {
         var connectionString = ResolveConnectionString();
 
-        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+        var options = new DbContextOptionsBuilder<HrDbContext>()
             .UseSqlServer(
                 connectionString,
-                sql => sql.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)
-                    .MigrationsHistoryTable("__EFMigrationsHistory", ApplicationDbContext.Schema))
+                sql => sql.MigrationsAssembly(typeof(HrDbContext).Assembly.FullName)
+                    .MigrationsHistoryTable("__EFMigrationsHistory", HrDbContext.Schema))
             .Options;
 
-        return new ApplicationDbContext(options, DesignTimeActor.Instance, TimeProvider.System);
+        return new HrDbContext(options, DesignTimeActor.Instance, TimeProvider.System);
     }
 
     private static string ResolveConnectionString()

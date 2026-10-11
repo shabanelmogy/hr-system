@@ -9,7 +9,7 @@ using ErpSystem.Modules.HR.Domain.Recruitment.Enums;
 namespace ErpSystem.Modules.HR.Infrastructure.Features.Recruitment.Interviews.Persistence;
 
 public sealed class InterviewReadStore(
-    ApplicationDbContext context,
+    HrDbContext context,
     TypeAdapterConfig mappingConfig) : IInterviewReadStore
 {
     public async Task<PageResponse<InterviewDto>> GetPageAsync(
@@ -126,7 +126,7 @@ public sealed class InterviewReadStore(
 
 }
 
-public sealed class InterviewRepository(ApplicationDbContext context) : IInterviewRepository
+public sealed class InterviewRepository(HrDbContext context) : IInterviewRepository
 {
     public Task<EmploymentApplication?> GetApplicationForUpdateAsync(
         int applicationId,

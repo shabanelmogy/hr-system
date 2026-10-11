@@ -62,7 +62,7 @@ once, commits, then schedules one `BulkArchive` change.
 
 ## 9. Persistence and scope
 
-`StateReadStore` uses no-tracking queries and projects with the State mapping config. `StateWriteStore` obtains entities with parent Country where lifecycle mapping requires it and exposes an untracked parent-ID read for restore lock selection. `ApplicationDbContext.ExecuteAtomicallyAsync` owns the SQL Server transaction and deterministic `sp_getapplock` resources; non-SQL relational providers fail closed. Existing DbContext tenant/company filters remain the authoritative scope boundary.
+`StateReadStore` uses no-tracking queries and projects with the State mapping config. `StateWriteStore` obtains entities with parent Country where lifecycle mapping requires it and exposes an untracked parent-ID read for restore lock selection. `HrDbContext.ExecuteAtomicallyAsync` owns the SQL Server transaction and deterministic `sp_getapplock` resources; non-SQL relational providers fail closed. Existing DbContext tenant/company filters remain the authoritative scope boundary.
 
 ## 10. Error and localization contract
 

@@ -143,7 +143,7 @@ Persistence belongs to `AccountingDbContext` in schema `acc`, with the
 `20260927132148_AddFiscalYearWorkingContext` and
 `20260927190043_EnforceOpenFiscalYearCurrentEligibility`; the latter clears only
 legacy Draft Current markers and deliberately preserves a Current year that has
-legitimately progressed beyond Open. HR's `ApplicationDbContext` and
+legitimately progressed beyond Open. HR's `HrDbContext` and
 `ErrorsService` are not feature dependencies. Import/export remain unpublished in
 this release. Workforce Plans and Budgets must reference FiscalYearId through
 server-enforced company scope and lifecycle eligibility.

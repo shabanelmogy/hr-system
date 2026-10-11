@@ -10,7 +10,8 @@ export function createDefaultEntitlements(
   tenantEntitlementModules: readonly TenantEntitlementModule[],
 ): TenantModuleEntitlementRequest[] {
   return tenantEntitlementModules
-    .filter((module) => module.isDefault ?? module.code.toLowerCase() === 'hr')
+    // Defaults come only from the API module catalog (`isDefault`); no module is implied.
+    .filter((module) => module.isDefault === true)
     .map((module) => ({
       moduleCode: module.code,
       submoduleCodes: module.submodules.map((item) => item.code),

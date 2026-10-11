@@ -40,6 +40,7 @@
     <ProjectReference Include="..\BuildingBlocks\ErpSystem.BuildingBlocks.Context\ErpSystem.BuildingBlocks.Context.csproj" />
     <ProjectReference Include="..\BuildingBlocks\ErpSystem.BuildingBlocks.Messaging\ErpSystem.BuildingBlocks.Messaging.csproj" />
     <ProjectReference Include="..\BuildingBlocks\ErpSystem.BuildingBlocks.Modularity\ErpSystem.BuildingBlocks.Modularity.csproj" />
+    <ProjectReference Include="..\BuildingBlocks\ErpSystem.BuildingBlocks.Presentation\ErpSystem.BuildingBlocks.Presentation.csproj" />
     <!-- <erp-module-references> -->
     <ProjectReference Include="..\Modules\HR\ErpSystem.Modules.HR\ErpSystem.Modules.HR.csproj" />
     <ProjectReference Include="..\Modules\Accounting\ErpSystem.Modules.Accounting\ErpSystem.Modules.Accounting.csproj" />

@@ -17,14 +17,15 @@ import {
 import { reportingModuleDefinition } from "@/modules/reporting/registration";
 import { replaceFrontendModuleRegistry } from "@/platform/modules/registration";
 
+// Same order as the API module registry: General Data first, reporting last.
 replaceFrontendModuleRegistry([
-  hrModuleDefinition,
-  accountingModuleDefinition,
-  crmModuleDefinition,
   referenceDataModuleDefinition,
+  accountingModuleDefinition,
+  hrModuleDefinition,
+  crmModuleDefinition,
   reportingModuleDefinition,
 ]);
-registerHrRealtimeResources();
-registerAccountingRealtimeResources();
-registerCrmRealtimeResources();
 registerReferenceDataRealtimeResources();
+registerAccountingRealtimeResources();
+registerHrRealtimeResources();
+registerCrmRealtimeResources();

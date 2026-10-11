@@ -16,7 +16,7 @@ using System.Linq.Expressions;
 namespace ErpSystem.Modules.HR.Infrastructure.Features.OrganizationalStructure.Management;
 
 public sealed class OrganizationalStructureManagement(
-    ApplicationDbContext context,
+    HrDbContext context,
     ICurrentActor currentActor,
     IAccountingCurrencyCatalog currencyCatalog,
     TimeProvider timeProvider,

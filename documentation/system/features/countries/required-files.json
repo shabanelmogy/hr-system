@@ -171,7 +171,7 @@
     {
       "id": "api-db-context",
       "layer": "api",
-      "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Persistence/ApplicationDbContext.cs",
+      "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Persistence/HrDbContext.cs",
       "purpose": "Country DbSet, atomic SQL Server transaction, and resource-lock boundary"
     },
     {

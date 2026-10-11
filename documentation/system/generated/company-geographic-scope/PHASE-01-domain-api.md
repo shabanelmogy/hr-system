@@ -89,5 +89,5 @@ existing-system review, implementation order, and Definition of Done.
 | company-geographic-scope-api | 6 | `4c7325830581e9f774857e293389ab0ef21a42011c58fb9c04dde46d4826e658` |
 | company-geographic-scope-api | 7 | `8b064dc66d590bb7728278089f799c6361489d43850fa7962ebd821d8dee4ab6` |
 | company-geographic-scope-api | 8 | `ba0b1e02daf665b95a48fb4a54a6a8c86b44395bf86072e537c73051af7afbf6` |
-| company-geographic-scope-api | 9 | `4a37002841d902cf3ae667530b071adccedf2d9b0a68a674d1c275bdd5d387e5` |
+| company-geographic-scope-api | 9 | `5873e1938de90457950097911381880db8728feb483cbdc4bf5a4b97865100d5` |
 | company-geographic-scope-api | 10 | `31ff1672a8154ab2c4f57b43f1935a3136a633e592fd72f384299835665e24b2` |

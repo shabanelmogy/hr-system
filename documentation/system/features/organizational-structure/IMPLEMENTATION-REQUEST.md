@@ -37,7 +37,7 @@ Before changing runtime source:
 
 | Concern | Required decision |
 | --- | --- |
-| Ownership and scope | `Tenant and current-company owned. TenantId and CompanyId come only from ICurrentActor/ApplicationDbContext scope; clients never send either value.` |
+| Ownership and scope | `Tenant and current-company owned. TenantId and CompanyId come only from ICurrentActor/HrDbContext scope; clients never send either value.` |
 | Fields and relationships | `Manage Branch, Department, Division, JobTitle, JobLevel, Position, and JobDescription. Trim names/descriptions, uppercase codes/currency/version tokens, preserve EN/AR fields, require active same-company parents, prevent recursive Departments, validate salary ranges and headcount, and bind each JobDescription version to one Position.` |
 | Permissions and read-only | `OrganizationalStructure:View/Create/Edit/Delete plus OrganizationalStructure:ApproveJobDescriptions. Read-only blocks every mutation in direct handlers on both clients.` |
 | List contract | `GET /api/v1/organizational-structure/{resource}; one-based API paging, 1-500 page size, six search operators, resource-specific all/nameAr/nameEn/code/parent fields, active/archived/all status, deterministic Id tie-break, and nameEn/nameAr/code/parent/createdOn sort allow-list.` |

@@ -34,7 +34,7 @@ The versioned controller exposes GET and PUT at `/api/v1/company-geographic-scop
 
 ## 9. Composition and Migration
 
-`ApplicationDbContext` exposes `Companies` and `CompanyCountries`; `EntitiesService` registers
+`HrDbContext` exposes `Companies` and `CompanyCountries`; `EntitiesService` registers
 `ICompanyGeographicScopeStore`, and `ErrorsService` registers
 `CompanyGeographicScopeErrors` for both MediatR handlers. The additive migration
 contains the table/indexes in the current development schema. A dedicated

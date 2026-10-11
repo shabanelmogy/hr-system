@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ErpSystem.Modules.HR.Infrastructure.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
+    [DbContext(typeof(HrDbContext))]
     [Migration("20260914181112_InitialHr")]
     partial class InitialHr
     {

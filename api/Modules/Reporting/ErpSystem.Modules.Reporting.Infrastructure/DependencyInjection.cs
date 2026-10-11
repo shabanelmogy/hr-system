@@ -24,6 +24,11 @@ public static class DependencyInjection
         this IServiceCollection services,
         IConfiguration configuration)
     {
+        // Reporting is the only Syncfusion consumer (PDF export), so it registers the license.
+        var syncfusionLicense = configuration["Syncfusion:LicenseKey"];
+        if (!string.IsNullOrWhiteSpace(syncfusionLicense))
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(syncfusionLicense);
+
         var connectionString = configuration.GetConnectionString("Reporting")
             ?? configuration.GetConnectionString("DefaultConnection")
             ?? throw new InvalidOperationException("Connection string 'Reporting' or 'DefaultConnection' not found.");

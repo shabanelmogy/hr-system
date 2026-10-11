@@ -1,6 +1,6 @@
 using FluentValidation;
 using ErpSystem.Modules.ReferenceData.Application.Features.GeographicalInformation.Countries.Commands.CreateCountry;
-using ErpSystem.Modules.HR.Infrastructure.Validation;
+using ErpSystem.Api.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Abstractions;

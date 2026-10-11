@@ -1,7 +1,6 @@
 using ErpSystem.BuildingBlocks.Modularity;
 using ErpSystem.Modules.HR.Application;
 using ErpSystem.Modules.HR.Infrastructure;
-using ErpSystem.Modules.HR.Infrastructure.Common.Observability;
 using ErpSystem.Modules.HR.Infrastructure.Common.Settings;
 using ErpSystem.Modules.HR.Infrastructure.Persistence;
 using ErpSystem.Modules.HR.Presentation;
@@ -33,7 +32,7 @@ public sealed class HRModule : IModule
     /// statement is unit-testable without a database.
     /// </summary>
     internal static string EnsureSchemaSql =>
-        $"IF SCHEMA_ID(N'{ApplicationDbContext.Schema}') IS NULL EXEC(N'CREATE SCHEMA [{ApplicationDbContext.Schema}]');";
+        $"IF SCHEMA_ID(N'{HrDbContext.Schema}') IS NULL EXEC(N'CREATE SCHEMA [{HrDbContext.Schema}]');";
 
     public async Task MigrateAsync(
         IServiceProvider services,
@@ -44,7 +43,7 @@ public sealed class HRModule : IModule
             return;
 
         await using var scope = services.CreateAsyncScope();
-        var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        var db = scope.ServiceProvider.GetRequiredService<HrDbContext>();
         // Fresh databases need the schema before EF creates hr.__EFMigrationsHistory.
         await db.Database.ExecuteSqlRawAsync(EnsureSchemaSql, cancellationToken).ConfigureAwait(false);
         await db.Database.MigrateAsync(cancellationToken).ConfigureAwait(false);
@@ -55,7 +54,7 @@ public sealed class HRModule : IModule
         CancellationToken cancellationToken = default)
     {
         await using var scope = services.CreateAsyncScope();
-        var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        var db = scope.ServiceProvider.GetRequiredService<HrDbContext>();
         return (await db.Database.GetPendingMigrationsAsync(cancellationToken).ConfigureAwait(false)).ToArray();
     }
 

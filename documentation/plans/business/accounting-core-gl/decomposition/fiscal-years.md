@@ -110,7 +110,7 @@ until it is registered and reviewed in the catalog.
 | Domain errors / ProblemDetails | Stable not-found, duplicate-code, overlap, transition, not-editable/not-archivable/not-restorable, current-year archive, invalid selection, validation, missing-company/user, and concurrency errors localized EN/AR |
 | Permission and tenant/company scope | TenantMember plus the exact FiscalYears View/Create/Edit/Archive/Restore/Open/BeginClosing/Close/Lock/Reopen/SetCurrent permission; ICurrentActor supplies TenantId, current CompanyId, and UserId; request DTOs never accept scope or another user ID |
 | Cross-module contract | Reporting consumes Accounting's public fiscalyears dataset; future Workforce Planning references FiscalYearId under server company/lifecycle eligibility |
-| Persistence/schema/migration | AccountingDbContext, acc schema, `FiscalYears.IsCurrent`, and a `FiscalYearUserSelections` row keyed by tenant/company/user with an optional selected FiscalYear FK; HR ApplicationDbContext and ErrorsService are outside this feature |
+| Persistence/schema/migration | AccountingDbContext, acc schema, `FiscalYears.IsCurrent`, and a `FiscalYearUserSelections` row keyed by tenant/company/user with an optional selected FiscalYear FK; HR HrDbContext and ErrorsService are outside this feature |
 
 Context routes are `GET /api/v1/fiscal-years/context` and
 `PUT /api/v1/fiscal-years/context` with `{ "fiscalYearId": number | null }`.

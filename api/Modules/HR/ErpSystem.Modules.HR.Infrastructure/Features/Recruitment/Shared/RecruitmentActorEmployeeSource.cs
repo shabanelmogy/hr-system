@@ -3,7 +3,7 @@ using ErpSystem.Modules.HR.Application.Features.Recruitment.Abstractions;
 namespace ErpSystem.Modules.HR.Infrastructure.Features.Recruitment.Shared;
 
 public sealed class RecruitmentActorEmployeeSource(
-    ApplicationDbContext context,
+    HrDbContext context,
     ICurrentActor currentActor) : IRecruitmentActorEmployeeSource
 {
     public async Task<int?> GetCurrentEmployeeIdAsync(CancellationToken cancellationToken)

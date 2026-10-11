@@ -4,7 +4,7 @@ using ErpSystem.Modules.HR.Domain.Recruitment.Entities;
 
 namespace ErpSystem.Modules.HR.Infrastructure.Features.Recruitment.Settings.Persistence;
 
-public sealed class RecruitmentSettingsReadStore(ApplicationDbContext context)
+public sealed class RecruitmentSettingsReadStore(HrDbContext context)
     : IRecruitmentSettingsReadStore
 {
     public async Task<RecruitmentSettingsDto> GetAsync(CancellationToken cancellationToken)
@@ -85,7 +85,7 @@ public sealed class RecruitmentSettingsReadStore(ApplicationDbContext context)
     }
 }
 
-public sealed class RecruitmentSettingsRepository(ApplicationDbContext context)
+public sealed class RecruitmentSettingsRepository(HrDbContext context)
     : IRecruitmentSettingsRepository
 {
     public Task<bool> HasStagesAsync(CancellationToken cancellationToken) =>

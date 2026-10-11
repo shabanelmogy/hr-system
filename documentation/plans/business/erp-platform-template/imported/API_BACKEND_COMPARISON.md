@@ -92,7 +92,7 @@
 >
 > | النقطة | موجودة في الـ HR؟ | الدليل |
 > |---|---|---|
-> | عزل الـ tenant على مستوى الـ DB | ✅ وأقوى (tenant + company) | `EmployeeConfiguration`، و`DepartmentConfiguration`، و`PositionConfiguration`: `HasAlternateKey(TenantId, CompanyId, Id)` + composite FKs. و`ApplicationDbContext`: query filters + حماية `SaveChanges` |
+> | عزل الـ tenant على مستوى الـ DB | ✅ وأقوى (tenant + company) | `EmployeeConfiguration`، و`DepartmentConfiguration`، و`PositionConfiguration`: `HasAlternateKey(TenantId, CompanyId, Id)` + composite FKs. و`HrDbContext`: query filters + حماية `SaveChanges` |
 > | Multi-role + permission ceiling | ✅ | `IPlatformAuthorizationSource.GetUserRoleIdsAsync` (أكتر من دور)، و`PermissionAuthorizationHandler`: claim + فحص live للصلاحية + entitlement الـ module/submodule |
 > | Web BFF آمن | ✅ وأشمل | `web-next/src/app/api/[...path]/route.ts`، و`lib/api/proxy-security.ts`، و`lib/auth/cookies.ts` |
 > | نظام التخطيط | ✅ وأنضج | `documentation/plans/*` + `documentation/system/*` |

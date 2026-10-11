@@ -12,8 +12,8 @@ using ErpSystem.Modules.HR.Domain.WorkforcePlanning.Entities;
 
 namespace ErpSystem.Modules.HR.Infrastructure.Persistence;
 
-public sealed class ApplicationDbContext(
-    DbContextOptions<ApplicationDbContext> options,
+public sealed class HrDbContext(
+    DbContextOptions<HrDbContext> options,
     ICurrentActor currentActor,
     TimeProvider timeProvider) : DbContext(options), IHrUnitOfWork
 {
@@ -102,7 +102,7 @@ public sealed class ApplicationDbContext(
             .Distinct()
             .ToArray();
 
-        var tenantMethod = typeof(ApplicationDbContext)
+        var tenantMethod = typeof(HrDbContext)
             .GetMethod(nameof(ConfigureTenantEntity), BindingFlags.Instance | BindingFlags.NonPublic)!;
 
         foreach (var type in tenantTypes)
@@ -123,7 +123,7 @@ public sealed class ApplicationDbContext(
 
         if (typeof(ICompanyScoped).IsAssignableFrom(typeof(TEntity)))
         {
-            var companyMethod = typeof(ApplicationDbContext)
+            var companyMethod = typeof(HrDbContext)
                 .GetMethod(nameof(ConfigureCompanyEntity), BindingFlags.Instance | BindingFlags.NonPublic)!;
             companyMethod.MakeGenericMethod(typeof(TEntity)).Invoke(this, [modelBuilder]);
         }

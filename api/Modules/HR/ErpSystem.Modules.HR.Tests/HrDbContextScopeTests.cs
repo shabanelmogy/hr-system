@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace ErpSystem.Modules.HR.Tests;
 
-public sealed class HrApplicationDbContextScopeTests
+public sealed class HrDbContextScopeTests
 {
     [Fact]
     public async Task SaveChangesAsync_RejectsTenantEntityWhenCurrentTenantIsMissing()
@@ -127,21 +127,21 @@ public sealed class HrApplicationDbContextScopeTests
         Assert.Equal((PlanningSource)0, planningSource.Sentinel);
     }
 
-    private static ApplicationDbContext CreateContext(
+    private static HrDbContext CreateContext(
         ICurrentActor actor,
         TimeProvider? timeProvider = null) =>
         CreateContext(Guid.NewGuid().ToString("N"), actor, timeProvider);
 
-    private static ApplicationDbContext CreateContext(
+    private static HrDbContext CreateContext(
         string databaseName,
         ICurrentActor actor,
         TimeProvider? timeProvider = null)
     {
-        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+        var options = new DbContextOptionsBuilder<HrDbContext>()
             .UseInMemoryDatabase(databaseName)
             .Options;
 
-        return new ApplicationDbContext(options, actor, timeProvider ?? TimeProvider.System);
+        return new HrDbContext(options, actor, timeProvider ?? TimeProvider.System);
     }
 
     private static Candidate CreateCandidate(string tenantId) =>

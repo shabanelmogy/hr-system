@@ -10,7 +10,7 @@ using Microsoft.Extensions.Configuration;
 namespace ErpSystem.Modules.HR.Infrastructure.Features.Recruitment.JobRequisitions.Persistence;
 
 public sealed class JobRequisitionReadStore(
-    ApplicationDbContext context,
+    HrDbContext context,
     TypeAdapterConfig mappingConfig) : IJobRequisitionReadStore
 {
     public async Task<PageResponse<JobRequisitionDto>> GetPageAsync(
@@ -153,7 +153,7 @@ public sealed class JobRequisitionReadStore(
 
 }
 
-public sealed class JobRequisitionRepository(ApplicationDbContext context) : IJobRequisitionRepository
+public sealed class JobRequisitionRepository(HrDbContext context) : IJobRequisitionRepository
 {
     public Task<RequisitionPositionSnapshot?> GetPositionAsync(int positionId, CancellationToken cancellationToken) =>
         context.Positions.AsNoTracking()

@@ -19,7 +19,7 @@ The module manages the complete end-to-end recruitment lifecycle under the activ
 - **JobOffers**: Formal financial offers, terms, probation periods, and approval workflows.
 - **Core HR Persistence**: Automated transition from candidate to official company employee upon hiring.
 
-Candidates are tenant-scoped so one talent profile can apply across companies in the tenant. Requisitions, openings, postings, applications, interviews, and offers are company-scoped. Scope is trusted from `ICurrentActor` and `ApplicationDbContext`; clients never submit tenant/company identifiers. Offer placement is also server-derived from application -> opening, so offer mutations cannot substitute position, branch, department, or division identifiers.
+Candidates are tenant-scoped so one talent profile can apply across companies in the tenant. Requisitions, openings, postings, applications, interviews, and offers are company-scoped. Scope is trusted from `ICurrentActor` and `HrDbContext`; clients never submit tenant/company identifiers. Offer placement is also server-derived from application -> opening, so offer mutations cannot substitute position, branch, department, or division identifiers.
 
 ---
 

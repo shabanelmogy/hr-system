@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using System.Security.Claims;
 using System.Threading.RateLimiting;
 using Asp.Versioning;
@@ -47,7 +48,12 @@ public static class HostInfrastructureServiceCollectionExtensions
         services.AddHttpContextAccessor();
         services.AddLocalization();
         services.AddSingleton<IStringLocalizerFactory, HostJsonStringLocalizerFactory>();
-        services.AddControllers()
+        // Request validation and JSON settings apply to every module's controllers, so the
+        // host owns them (they used to be registered by the HR module).
+        services.AddScoped<AsyncValidationFilter>();
+        services.AddControllers(options => options.Filters.AddService<AsyncValidationFilter>())
+            .AddJsonOptions(options =>
+                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles)
             .AddDataAnnotationsLocalization(options =>
             {
                 options.DataAnnotationLocalizerProvider = (_, factory) =>

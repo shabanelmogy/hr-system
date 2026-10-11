@@ -71,9 +71,9 @@ scenarios or an explicit `N/A` with a reason.
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| organizational-structure-master | 1 | `7ccecd51bfdc9034111d5789ca6ff83b2124059cbca6cc9a69fd8d8f83e8754b` |
+| organizational-structure-master | 1 | `71db2fe3e408023183ea0423f5d4d7ca825351da3ed96091714103299e8ace2b` |
 | organizational-structure-master | 2 | `ff4399291653f7e253cc577eea31c21d204dc6503acaca730ed8f7f421c62d88` |
-| organizational-structure-master | 5 | `04175ffea064be1ae39e229a05d90b75b0de90f11ef7c12ae8dc0c69472c265c` |
+| organizational-structure-master | 5 | `580f392c99251101c4ed8611122c9bea65db28348b8bf40c87f4d5026d211b2f` |
 | organizational-structure-master | 8 | `2d14109ce3bb4835c1ac94307acaf5e892e36ded76f27395197546348229812d` |
 | organizational-structure-master | 9 | `7ceb12bb46037333513809999525207b50465f1d803c98dc76366d8248e070c6` |
 | organizational-structure-api | 1 | `195c929b29105c0d3f89001ca362cffca04f57fe22db2790bcfe914a83bed5e5` |
