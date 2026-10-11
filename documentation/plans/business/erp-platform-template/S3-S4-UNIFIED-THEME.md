@@ -281,3 +281,9 @@ Differences from the prepared change set:
      routes keep `overflow: hidden`.
 - Verified: countries, tenants and fiscal years pagination inside the window (900/700px);
   long ordinary pages (home) still scroll the document; full chromium e2e (26) passes.
+
+## Chart view bottom spacing 2026-10-11
+
+- The last chart card in the countries/states/districts/address-types chart views sat on the
+  panel's bottom edge. Each chart view container now has bottom padding
+  (`pb: { xs: 1.5, md: 2 }`), matching the gap above the summary cards.

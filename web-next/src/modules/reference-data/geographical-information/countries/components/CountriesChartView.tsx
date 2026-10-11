@@ -74,6 +74,8 @@ const CountriesChartView: React.FC<CountriesChartViewProps> = ({
         overflow: "hidden",
         px: { xs: 0.5, md: 0.75 },
         pt: 0.5,
+        // Room under the last chart so its card edge and shadow are not cut by the panel.
+        pb: { xs: 1.5, md: 2 },
         width: "100%",
         minWidth: 0,
       }}
