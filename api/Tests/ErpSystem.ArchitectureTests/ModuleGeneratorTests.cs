@@ -99,21 +99,22 @@ public sealed class ModuleGeneratorTests
             Assert.Equal(
                 "api/Modules/OrderManagement/ErpSystem.Modules.OrderManagement.Tests",
                 root.GetProperty("testPath").GetString());
+            var documentationPaths = root.GetProperty("documentationPaths");
             Assert.Equal(
-                "documentation/modules/order-management/FEATURE-QUALITY-GATE.md",
-                root.GetProperty("documentationPaths").GetProperty("featureQualityGate").GetString());
+                ["root"],
+                documentationPaths.EnumerateObject().Select(property => property.Name).ToArray());
+            Assert.Equal("documentation/modules/order-management", documentationPaths.GetProperty("root").GetString());
         }
 
-        var featureGate = File.ReadAllText(Path.Combine(
-            workspace.Root,
-            "documentation",
-            "modules",
-            "order-management",
-            "FEATURE-QUALITY-GATE.md"));
-        Assert.Contains("Archive or domain alternative", featureGate, StringComparison.Ordinal);
-        Assert.Contains("Archived discovery / RecordStatus", featureGate, StringComparison.Ordinal);
-        Assert.Contains("Shared atomic resource", featureGate, StringComparison.Ordinal);
-        Assert.Contains("Stable localized errors", featureGate, StringComparison.Ordinal);
+        // A new module starts with four documentation files only; platform/feature/phase
+        // READMEs are added later, and only when they carry module-specific content.
+        var documentationRoot = Path.Combine(workspace.Root, "documentation", "modules", "order-management");
+        Assert.Equal(
+            new[] { "ARCHITECTURE.md", "DELIVERY-ROADMAP.md", "README.md", "module.json" },
+            Directory.GetFiles(documentationRoot, "*", SearchOption.AllDirectories)
+                .Select(path => Path.GetRelativePath(documentationRoot, path).Replace('\\', '/'))
+                .Order(StringComparer.Ordinal)
+                .ToArray());
 
         var dotnetCalls = File.ReadAllLines(workspace.DotnetCallsPath)
             .Where(line => !string.IsNullOrWhiteSpace(line))

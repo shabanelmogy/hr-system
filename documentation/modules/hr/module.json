@@ -3,7 +3,9 @@
   "docSlug": "hr",
   "databaseSchema": "hr",
   "version": "1.0.0",
-  "requiredModuleDependencies": ["platform"],
+  "requiredModuleDependencies": [
+    "platform"
+  ],
   "optionalModuleDependencies": [],
   "isUserVisible": true,
   "allowsTenantEntitlement": true,
@@ -28,7 +30,6 @@
     "root": "documentation/modules/hr",
     "api": "documentation/modules/hr/api/README.md",
     "webNext": "documentation/modules/hr/web-next/README.md",
-    "mobileReact": "documentation/modules/hr/mobile-react/README.md",
     "features": "documentation/modules/hr/features/README.md",
     "phases": "documentation/modules/hr/phases/README.md"
   }

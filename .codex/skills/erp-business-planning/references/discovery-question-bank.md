@@ -1,5 +1,16 @@
 # Discovery question bank
 
+Companion to `documentation/plans/BUSINESS_DISCOVERY_INTERVIEW.md`. The interview defines the
+14 sections that must be answered; this bank gives extra questions and follow-up probes for
+when an answer is vague. Pick what fits the topic and the owner. Never read the list aloud.
+Adapt the wording, give a proposed default where you can, and ask for a real example.
+
+Record answers in the plan's `DISCOVERY.md`. Record every business term the owner uses in the
+**Glossary** table there (one meaning per term; stories, rules, code and UI labels use it):
+
+| Term | Definition | Owner's wording | Avoid (synonyms) | Example |
+| --- | --- | --- | --- | --- |
+
 Pick what fits the topic and the owner. Never read the list aloud. Adapt the wording, give a
 proposed default where you can, and ask for a real example.
 

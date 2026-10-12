@@ -15,9 +15,13 @@ linked rather than copied here.
 - No client screen is implied by this backend reference slice.
 
 Start with [ARCHITECTURE.md](ARCHITECTURE.md), then record delivery decisions
-in [DELIVERY-ROADMAP.md](DELIVERY-ROADMAP.md). Platform entry points are kept
-under [api/](api/README.md), [web-next/](web-next/README.md), and
-[mobile-react/](mobile-react/README.md).
+in [DELIVERY-ROADMAP.md](DELIVERY-ROADMAP.md). API notes are in
+[api/](api/README.md) and the feature index in [features/](features/README.md).
+
+Web and mobile surfaces are **Excluded** from the current foundation scope. A
+future screen must send the last observed `revision` as `expectedRevision` on
+updates and recover from 409 conflicts without overwriting newer server data;
+mobile offline conflict behavior needs its own feature decision.
 
 Before adding a component, service, or Contract, inventory shared BuildingBlocks
 and module-local reusable pieces. Reuse or extend compatible abstractions and

@@ -163,8 +163,8 @@ resolution tests, module-definition tests and no-pending-model verification.
 
 Build/test commands and exact counts are recorded in Phase 06, not invented here.
 
-Every new feature/module must complete the generated entity lifecycle matrix in
-`FEATURE-QUALITY-GATE.md`; a successful build alone is not completion evidence.
+Every new feature must complete the entity lifecycle matrix in
+`API_FEATURE_DEVELOPMENT_WORKFLOW.md` §17; a successful build alone is not completion evidence.
 
 API evidence also prepares, but never replaces, each step's manual user gate. The
 feature-specific scenario derived from

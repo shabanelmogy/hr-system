@@ -14,8 +14,7 @@
 
 ## Source material
 
-- `ACCOUNTING_MODULE_PHASES_AR.md`
-- `documentation/modules/accounting/phases/SOURCE-PLAN_AR.md`
+- `documentation/modules/accounting/SOURCE-PLAN_AR.md` (v1.3; the v1.0 source was retired on 2026-10-12)
 - `documentation/modules/accounting/ARCHITECTURE.md`
 - `documentation/modules/accounting/DELIVERY-ROADMAP.md`
 

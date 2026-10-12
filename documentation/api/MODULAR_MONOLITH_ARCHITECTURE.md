@@ -270,8 +270,10 @@ registry covers each one exactly once, so no test update is needed for the new
 module itself. Complete a reuse inventory and record it in the module package
 before creating the first feature slice.
 
-The generator also creates `FEATURE-QUALITY-GATE.md`. Every mutable entity must
-receive one completed lifecycle row before a feature is called implemented.
+The generator creates four documentation files only (`module.json`, `README.md`,
+`ARCHITECTURE.md`, `DELIVERY-ROADMAP.md`). Every mutable entity must receive one
+completed row of the entity lifecycle matrix in
+`API_FEATURE_DEVELOPMENT_WORKFLOW.md` §17 before a feature is called implemented.
 The row separately proves CRUD or its domain alternative, archived discovery,
 dependency guards, shared transaction resources, optimistic concurrency,
 permissions, stable localized errors, and executable tests. This prevents a

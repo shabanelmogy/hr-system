@@ -7,7 +7,7 @@ only its `ACTIVE_FEATURE_STEP` may be worked as the current feature.
 
 | Feature | Evidence status | Canonical plan/profile |
 | --- | --- | --- |
-| Fiscal Years & Periods | Implemented typed API/Web/Mobile; active current live revalidation | `documentation/plans/business/accounting-core-gl/decomposition/fiscal-years.md` |
+| Fiscal Years & Periods | Implemented typed API/Web/Mobile; active current live revalidation | `documentation/plans/business/accounting-core-gl/decomposition/fiscal-years.md` · [review](../../../project/FISCAL_YEARS_FEATURE_FULL_REVIEW.md) |
 | Accounting Currency | Implemented typed API/Web/Mobile with historical Phase 07 evidence; queued for current v2 revalidation | `documentation/plans/business/accounting-core-gl/decomposition/ledger-setup-currency.md` |
 | COA & Hierarchy Levels | Domain/API and typed Web/Mobile source through Phase 03; integrated live/database/closure pending | `documentation/plans/business/accounting-core-gl/decomposition/ledger-setup-coa-hierarchy.md` |
 | Dimensions | Domain/API plus reachable generic compatibility clients; typed P-001/P-006 child is Planned | `documentation/plans/business/accounting-core-gl/decomposition/ledger-setup-dimensions.md` |

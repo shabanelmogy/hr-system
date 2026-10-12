@@ -19,11 +19,6 @@
     "bootstrap": "api/Modules/Inventory/ErpSystem.Modules.Inventory"
   },
   "documentationPaths": {
-    "root": "documentation/modules/inventory",
-    "api": "documentation/modules/inventory/api/README.md",
-    "webNext": "documentation/modules/inventory/web-next/README.md",
-    "mobileReact": "documentation/modules/inventory/mobile-react/README.md",
-    "features": "documentation/modules/inventory/features/README.md",
-    "phases": "documentation/modules/inventory/phases/README.md"
+    "root": "documentation/modules/inventory"
   }
 }

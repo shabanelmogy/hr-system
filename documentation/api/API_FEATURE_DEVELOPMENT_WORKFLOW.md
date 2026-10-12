@@ -20,10 +20,9 @@ new master plan, but they still follow this workflow and must update any affecte
 central `PROD-*`, `DEF-*`, `RISK-*`, `FOLLOW-*`, or `DEC-*` note.
 
 The workflow-hardening phase that established this path is closed. Its historical
-closure record is archived under
-`documentation/old files/api/API_DEVELOPMENT_WORKFLOW_CLOSURE.md`; ordinary
-business delivery must apply this workflow rather than depend on or reopen that
-historical record.
+closure record was removed from the tree on 2026-10-12 and remains in git
+history; ordinary business delivery applies this workflow and does not reopen
+that record.
 
 The architecture law remains `ERP_ARCHITECTURE_CONSTITUTION.md`. This workflow explains how to apply that law to day-to-day feature delivery. Detailed technical patterns live in `Clean_Architecture_CQRS_Guide.md`; new bounded contexts additionally follow `MODULAR_MONOLITH_ARCHITECTURE.md`.
 
@@ -447,13 +446,26 @@ Do not hand-build an alternative module shape.
 
 ## 17. Required review before handoff
 
-Before this review, complete one lifecycle row per mutable entity using the
-owning module's `FEATURE-QUALITY-GATE.md`. Existing modules may use the same
-matrix directly in the feature book. A successful build does not close a row:
+Before this review, complete one row of the **entity lifecycle matrix** below
+per mutable entity, in the feature book. This is the single copy of the matrix;
+modules do not keep their own. A successful build does not close a row:
 Create/Read/Update, archive or its approved domain alternative, restore,
 archived discovery, dependency guards, shared atomic resources, concurrency,
 permissions, localized stable errors, and tests must each have evidence or an
-explicit reasoned `N/A`.
+explicit reasoned `N/A — <reason>`. A blank cell is a failed gate.
+
+| Entity / aggregate | Create | Detail/List | Update | Archive or domain alternative | Restore | Archived discovery / RecordStatus | Dependency guards | Shared atomic resource | RowVersion / concurrency | Permission | Stable localized errors | Domain + handler + API tests |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| _one row per mutable entity_ |  |  |  |  |  |  |  |  |  |  |  |  |
+
+Required evidence behind the rows: ownership and tenant/company scope are
+explicit; every active/archived transition is an explicit use case or a named
+domain alternative (effective dating, reversal, immutable history); a parent
+archive and a child create/update/restore share the same transaction-owned
+resource or an equivalent database guarantee; collection queries are bounded
+and expose archived records when restore is supported; tests cover missing
+scope, stale RowVersion, duplicate, invalid reference, archive-in-use, restore
+conflict, and one competing write where relevant.
 
 Global localization composition belongs to `ErpSystem.Api`. Modules may consume
 `IStringLocalizer` or expose a module-owned localization port and resources, but

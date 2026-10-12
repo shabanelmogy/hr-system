@@ -7,8 +7,8 @@ Excluded. Only source and test evidence can promote a capability to implemented.
 
 - Canonical six-project module boundary and explicit host registration.
 - `hr` schema ownership, schema migration, and module migration history.
-- Existing geographical/reference-data documentation remains linked from its
-  established canonical paths.
+- Geography and address documentation is owned by General Data
+  (`documentation/modules/reference-data/`), not HR.
 
 ## Required / in progress
 

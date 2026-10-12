@@ -15,9 +15,8 @@ linked rather than copied here.
   capabilities require their own verified contracts and tests.
 
 Start with [ARCHITECTURE.md](ARCHITECTURE.md), then record delivery decisions
-in [DELIVERY-ROADMAP.md](DELIVERY-ROADMAP.md). Platform entry points are kept
-under [api/](api/README.md), [web-next/](web-next/README.md), and
-[mobile-react/](mobile-react/README.md).
+in [DELIVERY-ROADMAP.md](DELIVERY-ROADMAP.md). Web notes are in
+[web-next/](web-next/README.md). There is no mobile surface yet.
 
 Before adding a component, service, or Contract, inventory shared BuildingBlocks
 and module-local reusable pieces. Reuse or extend compatible abstractions and

@@ -107,7 +107,7 @@ failure into partial success.
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
 | accounting-ledger-setup-master | 3 | `0fe7b836f7c51edaace81656d19dd76754de5fefdb1761a92e1bb4de7b632c0c` |
-| accounting-ledger-setup-master | 4 | `53f38a770f4b9c229d5f924b56a2be70be0db253054c0b998b0c21ec8c2ca0ca` |
+| accounting-ledger-setup-master | 4 | `06d973a1925b5145faf6d2df5b8b583d963a5253cb1287749dfac17411aa40c8` |
 | accounting-ledger-setup-master | 6 | `4c420eef9bb4f80999de2e4e4bebf23f4d9b3934746b134431e3cd97be170dbe` |
 | accounting-ledger-setup-master | 7 | `b92882805c347017f5b031c78910e2aee911d3c40803f8e830e62fefbcfde520` |
 | accounting-ledger-setup-web | 1 | `ff0807989e460de1494195417eb17b7d4bc481688c8d18a1addf17c945cdd2db` |

@@ -87,10 +87,12 @@ include record scope.
 
 Scope and inventory: `DOCUMENTATION_AND_TEMPLATE_REVIEW.md` (D-013, D-014).
 
+Status 2026-10-12: S2.1–S2.4 done, and S2.5 DOC-7 and DOC-9 done (D-013/D-014 accepted; DEC-017 keep packets, DEC-018 delete the archive). The useful kit material (question bank, discovery example, Definition of Ready/Done) now lives in `.codex/skills/erp-business-planning/references/`. One start path: `plans/README.md` → `system/README.md` → `modules/<slug>/README.md`. Not done, optional: DOC-6 (link the remaining orphan docs) and DOC-10 (merge `NOTES_MIGRATION_GUIDE.md` / `PLANNING_METHOD_PROVENANCE.md`, both required by `Check-Planning.ps1`).
+
 | Step | Work | Exit check |
 | --- | --- | --- |
 | S2.1 | Add `.codex/skills/erp-business-planning` (drives P0–P9 with `BUSINESS_DISCOVERY_INTERVIEW.md`, evidence, spec, plan, gates) and `.codex/skills/erp-legacy-migration` (external application inventory, behavior catalog, defect disposition, data-migration plan into `EVIDENCE`/`RESEARCH`/`PROD-###`). | Skill review; no reference to `templates/planning`. |
-| S2.2 | Delete `templates/planning/` (50 files). | `Check-Planning.ps1` green. |
+| S2.2 | Delete `templates/planning/` (41 files). | `Check-Planning.ps1` green. |
 | S2.3 | DOC-2 and DOC-3: reconcile, then delete the duplicate frontend roadmap and the Accounting v1.0 source + 22 phase stubs. | Links and `module.json` updated; both checks green. |
 | S2.4 | DOC-4: `New-ErpModule.ps1` creates four module files; remove empty sub-READMEs; update `modules/README.md`. | Generator test; docs CI green. |
 | S2.5 | DOC-6, DOC-7, DOC-9, DOC-10 per DEC-017 / DEC-018. | `Generate-Documentation.ps1 -Check` green. |

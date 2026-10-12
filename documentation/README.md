@@ -13,37 +13,30 @@ This directory is the single home for project-owned documentation. Product sourc
 | `modules/` | Module-owned documentation packages and ownership indexes |
 | `system/` | Reusable documentation recipes, manifests, generated phase packets, and feature review artifacts |
 | `plans/` | Canonical business-planning standard, plan registry, production/deferred notes, risks, and cross-platform planning gates |
-| `old files/` | Historical archive only; never an active planning/implementation authority or recipe dependency |
 
 Repository and subproject `README.md`, `AGENTS.md`, and `CLAUDE.md` files remain beside their projects because development tools discover them there. They link back to this directory for the canonical documentation.
 
 ## Start here
 
-- General ERP documentation guide: [`project/ERP_DOCUMENTATION_GUIDE_AR.md`](project/ERP_DOCUMENTATION_GUIDE_AR.md)
-- Shared reuse catalog: [`project/SHARED_REUSE_CATALOG.md`](project/SHARED_REUSE_CATALOG.md)
-- API feature development workflow: [`api/API_FEATURE_DEVELOPMENT_WORKFLOW.md`](api/API_FEATURE_DEVELOPMENT_WORKFLOW.md)
-- API architecture constitution: [`api/ERP_ARCHITECTURE_CONSTITUTION.md`](api/ERP_ARCHITECTURE_CONSTITUTION.md)
-- Cross-platform CQRS/web reference: [`project/CORE_FEATURE_CQRS_WEB_GUIDE.md`](project/CORE_FEATURE_CQRS_WEB_GUIDE.md)
-- Managed Crystal reporting integration: [`project/CRYSTAL_REPORT_MANAGER_INTEGRATION_GUIDE.md`](project/CRYSTAL_REPORT_MANAGER_INTEGRATION_GUIDE.md)
-- Three-project Countries review: [`project/COUNTRIES_FEATURE_FULL_REVIEW.md`](project/COUNTRIES_FEATURE_FULL_REVIEW.md)
-- API Countries profile: [`api/Countries_API_Implementation_Profile.md`](api/Countries_API_Implementation_Profile.md)
-- Web Countries profile: [`web-next/features/countries-frontend-reference.md`](web-next/features/countries-frontend-reference.md)
-- Mobile Countries profile: [`mobile-react/countries-mobile-reference.md`](mobile-react/countries-mobile-reference.md)
-- Three-project States review: [`project/STATES_FEATURE_FULL_REVIEW.md`](project/STATES_FEATURE_FULL_REVIEW.md)
-- API States profile: [`api/States_API_Implementation_Profile.md`](api/States_API_Implementation_Profile.md)
-- Web States profile: [`web-next/features/states-frontend-reference.md`](web-next/features/states-frontend-reference.md)
-- Mobile States profile: [`mobile-react/states-mobile-reference.md`](mobile-react/states-mobile-reference.md)
-- Reusable documentation workflow: [`system/README.md`](system/README.md)
-- Module documentation ownership: [`modules/README.md`](modules/README.md)
-- Geographical information domain guide: [`project/GEOGRAPHICAL_INFORMATION_DOMAIN_GUIDE.md`](project/GEOGRAPHICAL_INFORMATION_DOMAIN_GUIDE.md)
-- Addresses domain review: [`project/ADDRESSES_DOMAIN_FULL_REVIEW.md`](project/ADDRESSES_DOMAIN_FULL_REVIEW.md)
-- Modular monolith architecture: [`api/MODULAR_MONOLITH_ARCHITECTURE.md`](api/MODULAR_MONOLITH_ARCHITECTURE.md)
-- API production deployment runbook: [`api/PRODUCTION_DEPLOYMENT_RUNBOOK.md`](api/PRODUCTION_DEPLOYMENT_RUNBOOK.md)
-- Foundation closure matrix: [`api/FOUNDATION_CLOSURE_MATRIX.md`](api/FOUNDATION_CLOSURE_MATRIX.md)
-- API architecture decisions: [`api/adr/README.md`](api/adr/README.md)
-- ERP planning system: [`plans/README.md`](plans/README.md)
-- Business plan quality gate: [`plans/PLAN_QUALITY_GATE.md`](plans/PLAN_QUALITY_GATE.md)
-- Central production/deferred notes: [`plans/notes/README.md`](plans/notes/README.md)
+There is one way in. Follow these three pages in order:
+
+1. [`plans/README.md`](plans/README.md) — decide **what** to build: discovery,
+   evidence, decisions, and the plan for a business capability.
+2. [`system/README.md`](system/README.md) — build and verify **how**: Phase 00
+   preflight through Phase 07 closure, with the generated phase packets.
+3. `modules/<slug>/README.md` — the owning module's page (see
+   [`modules/README.md`](modules/README.md)); it links that module's feature
+   catalog and platform notes.
+
+Every other document is a reference that one of those three pages links when
+it is needed. The ones used most often:
+
+| Need | Reference |
+| --- | --- |
+| Ownership and reuse rules | [`project/ERP_DOCUMENTATION_GUIDE_AR.md`](project/ERP_DOCUMENTATION_GUIDE_AR.md), [`project/SHARED_REUSE_CATALOG.md`](project/SHARED_REUSE_CATALOG.md) |
+| API work | [`api/API_FEATURE_DEVELOPMENT_WORKFLOW.md`](api/API_FEATURE_DEVELOPMENT_WORKFLOW.md), [`api/ERP_ARCHITECTURE_CONSTITUTION.md`](api/ERP_ARCHITECTURE_CONSTITUTION.md), [`api/MODULAR_MONOLITH_ARCHITECTURE.md`](api/MODULAR_MONOLITH_ARCHITECTURE.md), [`api/adr/README.md`](api/adr/README.md) |
+| Worked reference feature | Countries: [review](project/COUNTRIES_FEATURE_FULL_REVIEW.md) · [API](api/Countries_API_Implementation_Profile.md) · [web](web-next/features/countries-frontend-reference.md) · [mobile](mobile-react/countries-mobile-reference.md) |
+| Production and open items | [`api/PRODUCTION_DEPLOYMENT_RUNBOOK.md`](api/PRODUCTION_DEPLOYMENT_RUNBOOK.md), [`plans/notes/README.md`](plans/notes/README.md) |
 
 ## Organization rules
 
@@ -65,9 +58,8 @@ Repository and subproject `README.md`, `AGENTS.md`, and `CLAUDE.md` files remain
    `plans/notes/` instead of being left only in chat history or scattered TODOs.
 9. Run `./documentation/plans/Check-Planning.ps1` after changing the planning
    system, plan registry, business-plan folders, or central note registries.
-10. Keep superseded/high-confidence stale documentation under `old files/` only
-    when historical retention is useful. Active guides/manifests/recipes must not
-    reference that archive.
+10. Delete superseded documentation instead of archiving it in the tree; git
+    history keeps it. Do not commit empty boilerplate READMEs.
 
 ## Adding a new feature review
 

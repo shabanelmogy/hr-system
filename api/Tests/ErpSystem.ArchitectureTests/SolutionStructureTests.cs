@@ -17,12 +17,6 @@ public sealed class SolutionStructureTests
         var repositoryRoot = Directory.GetParent(ApiRoot)!.FullName;
         var documentationRoot = Path.Combine(repositoryRoot, "documentation", "api");
         var workflow = Path.Combine(documentationRoot, "API_FEATURE_DEVELOPMENT_WORKFLOW.md");
-        var workflowClosure = Path.Combine(
-            repositoryRoot,
-            "documentation",
-            "old files",
-            "api",
-            "API_DEVELOPMENT_WORKFLOW_CLOSURE.md");
         var agents = File.ReadAllText(Path.Combine(ApiRoot, "AGENTS.md"));
         var rootAgents = File.ReadAllText(Path.Combine(repositoryRoot, "AGENTS.md"));
         var documentationIndex = File.ReadAllText(Path.Combine(repositoryRoot, "documentation", "README.md"));
@@ -56,20 +50,17 @@ public sealed class SolutionStructureTests
         var newFeatureGenerator = File.ReadAllText(Path.Combine(
             documentationSystemRoot,
             "New-FeatureDocumentation.ps1"));
-        var documentationGenerator = File.ReadAllText(Path.Combine(
-            documentationSystemRoot,
-            "Generate-Documentation.ps1"));
 
         Assert.True(File.Exists(workflow), "The canonical API feature workflow must exist.");
-        Assert.True(
-            File.Exists(workflowClosure),
-            "The historical API development-workflow closure record must remain archived.");
+        // Superseded documentation is removed, not archived in the tree; git history keeps it (DEC-018).
+        Assert.False(
+            Directory.Exists(Path.Combine(repositoryRoot, "documentation", "old files")),
+            "Superseded documentation lives in git history, not in documentation/old files.");
         Assert.Contains("API_FEATURE_DEVELOPMENT_WORKFLOW.md", agents, StringComparison.Ordinal);
         Assert.Contains("API_FEATURE_DEVELOPMENT_WORKFLOW.md", rootAgents, StringComparison.Ordinal);
         Assert.Contains("API_FEATURE_DEVELOPMENT_WORKFLOW.md", documentationIndex, StringComparison.Ordinal);
 
         var workflowText = File.ReadAllText(workflow);
-        var workflowClosureText = File.ReadAllText(workflowClosure);
         Assert.Contains("Existing-System Relationship Review", workflowText, StringComparison.Ordinal);
         Assert.Contains("Business Readiness Gate", workflowText, StringComparison.Ordinal);
         Assert.Contains("Business Rules Matrix", workflowText, StringComparison.Ordinal);
@@ -77,9 +68,6 @@ public sealed class SolutionStructureTests
         Assert.Contains("Impact Matrix", workflowText, StringComparison.Ordinal);
         Assert.Contains("FluentValidation does not replace Domain invariants", workflowText, StringComparison.Ordinal);
         Assert.Contains("Definition of Done", workflowText, StringComparison.Ordinal);
-        Assert.Contains("API development-workflow / Business Readiness phase is CLOSED", workflowClosureText, StringComparison.Ordinal);
-        Assert.Contains("807 passed", workflowClosureText, StringComparison.Ordinal);
-        Assert.Contains("77/77", workflowClosureText, StringComparison.Ordinal);
 
         foreach (var requiredSection in new[]
                  {
@@ -112,7 +100,6 @@ public sealed class SolutionStructureTests
         Assert.Contains("Verified", verificationTemplate, StringComparison.Ordinal);
         Assert.Contains("must not start", verificationTemplate, StringComparison.OrdinalIgnoreCase);
         Assert.Contains("Phase 06 has recorded `Verified`", educationClosureTemplate, StringComparison.Ordinal);
-        Assert.Contains("documentation/old files", documentationGenerator, StringComparison.Ordinal);
 
         Assert.False(File.Exists(Path.Combine(documentationRoot, "Feature_Module_Implementation_Checklist.md")));
         Assert.False(File.Exists(Path.Combine(documentationRoot, "ERP_ARCHITECTURE_REVIEW_MATRIX.md")));
@@ -349,16 +336,23 @@ public sealed class SolutionStructureTests
             Assert.Equal(schemaMatch.Groups["schema"].Value, root.GetProperty("databaseSchema").GetString());
 
             var documentationDirectory = Path.GetDirectoryName(manifestPath)!;
-            foreach (var relative in new[]
-                     {
-                         "README.md", "ARCHITECTURE.md", "DELIVERY-ROADMAP.md",
-                         "api/README.md", "web-next/README.md", "mobile-react/README.md",
-                         "features/README.md", "phases/README.md"
-                     })
+            foreach (var relative in new[] { "README.md", "ARCHITECTURE.md", "DELIVERY-ROADMAP.md" })
             {
                 Assert.True(
-                    File.Exists(Path.Combine(documentationDirectory, relative.Replace('/', Path.DirectorySeparatorChar))),
+                    File.Exists(Path.Combine(documentationDirectory, relative)),
                     $"Module {module} documentation is missing {relative}.");
+            }
+
+            // Optional platform/feature/phase READMEs exist only when they have content,
+            // and every path the manifest registers must exist.
+            foreach (var registered in root.GetProperty("documentationPaths").EnumerateObject())
+            {
+                var registeredPath = Path.Combine(
+                    Directory.GetParent(ApiRoot)!.FullName,
+                    registered.Value.GetString()!.Replace('/', Path.DirectorySeparatorChar));
+                Assert.True(
+                    File.Exists(registeredPath) || Directory.Exists(registeredPath),
+                    $"Module {module} documentationPaths.{registered.Name} points to a missing path.");
             }
         }
     }
