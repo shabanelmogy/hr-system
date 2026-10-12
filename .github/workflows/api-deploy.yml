@@ -21,7 +21,9 @@ concurrency:
 jobs:
   deploy:
     name: Deploy API to MonsterASP.NET
-    if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push'
+    # Skipped (not failed) until MONSTERASP_SITE is configured; Visual Studio publish stays
+    # the deployment path until then.
+    if: vars.MONSTERASP_SITE != '' && github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push'
     runs-on: windows-latest
     timeout-minutes: 20
     # Configure required reviewers / wait timers on this environment in the repository

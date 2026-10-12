@@ -8,6 +8,12 @@ passwords, or integration secrets. The two-file database layout is deliberate:
 the current deployment, while `appsettings.Development.json` overrides it with
 LocalDB whenever the environment is `Development`.
 
+Both local files are excluded from `dotnet publish` and Visual Studio publish
+(`CopyToPublishDirectory="Never"` in `ErpSystem.Api.csproj`), so publishing from a
+developer machine never overwrites the host's own `appsettings.json`. Keep production
+settings on the host (its own `appsettings.json` or Control Panel environment
+variables); change them there, not through a publish.
+
 Use `appsettings.example.json` as the safe configuration template. For deployed
 environments, prefer the ASP.NET Core environment-variable convention, for
 example:

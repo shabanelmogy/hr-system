@@ -55,6 +55,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <!-- Local settings files are machine-specific (git-ignored) and must never reach a server:
+         a Visual Studio publish would otherwise overwrite the host's production appsettings.json.
+         Production configuration lives on the host (its own appsettings.json or environment variables). -->
+    <Content Update="appsettings.json" CopyToPublishDirectory="Never" />
+    <Content Update="appsettings.Development.json" CopyToPublishDirectory="Never" />
     <!-- Large installer artifacts are copied after publish so they are not fingerprinted during every IDE build. -->
     <Content Remove="wwwroot\downloads\attendance-agent\**\*" />
     <Content Update="Localization\Resources\*.json">

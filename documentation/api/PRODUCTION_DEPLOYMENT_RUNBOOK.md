@@ -97,6 +97,10 @@ the health gates below.
 
 ### MonsterASP.NET (current hosting) via GitHub Actions
 
+Until `MONSTERASP_SITE` is configured the deploy job is skipped and Visual Studio
+publish (`site84639-WebDeploy` profile) remains the deployment path; local settings
+files are never part of either publish.
+
 `.github/workflows/api-deploy.yml` deploys automatically after `API Foundation CI`
 succeeds for a push to `main`. It downloads that run's `erpsystem-api-<sha>` artifact
 (the exact build that passed restore, audit, build, tests, EF drift and SBOM), so
