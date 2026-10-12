@@ -12,10 +12,10 @@ const requireFile = (path) => {
 const read = (path) => readFileSync(requireFile(path), 'utf8');
 
 for (const path of [
-  'documentation/mobile-react/MOBILE_CAPABILITY_MATRIX.md',
-  'documentation/mobile-react/MOBILE_PERFORMANCE_BUDGETS.md',
-  'documentation/mobile-react/MOBILE_RELEASE_RUNBOOK.md',
-  'documentation/mobile-react/MOBILE_UI_EVIDENCE_MATRIX.md',
+  'documentation/guides/mobile/MOBILE_CAPABILITY_MATRIX.md',
+  'documentation/guides/mobile/MOBILE_PERFORMANCE_BUDGETS.md',
+  'documentation/guides/mobile/MOBILE_RELEASE_RUNBOOK.md',
+  'documentation/guides/mobile/MOBILE_UI_EVIDENCE_MATRIX.md',
 ]) requireFile(path);
 
 const scheduler = read('mobile-react/src/shell/offline/OfflineSyncCoordinator.tsx');
@@ -36,7 +36,7 @@ for (const path of [
   if (existsSync(resolve(repositoryRoot, path))) failures.push(`Legacy owner path still exists: ${path}`);
 }
 
-const capabilities = read('documentation/mobile-react/MOBILE_CAPABILITY_MATRIX.md');
+const capabilities = read('documentation/guides/mobile/MOBILE_CAPABILITY_MATRIX.md');
 for (const decision of ['Required', 'Deferred', 'Excluded']) {
   if (!capabilities.includes(`**${decision}**`)) failures.push(`Capability matrix has no ${decision} decision.`);
 }

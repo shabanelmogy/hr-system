@@ -115,7 +115,7 @@ client invalidation. Record any deliberate departure.
 
 When reporting is Required, identify the engine and link its canonical guide.
 Managed Crystal reports must follow
-[`documentation/project/CRYSTAL_REPORT_MANAGER_INTEGRATION_GUIDE.md`](../../project/CRYSTAL_REPORT_MANAGER_INTEGRATION_GUIDE.md).
+[`documentation/modules/reporting/CRYSTAL_REPORT_MANAGER_INTEGRATION_GUIDE.md`](../../modules/reporting/CRYSTAL_REPORT_MANAGER_INTEGRATION_GUIDE.md).
 Do not combine Managed Crystal `.rpt` records with ActiveReports/RDLX
 `ReportTemplates`.
 

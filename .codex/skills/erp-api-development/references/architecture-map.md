@@ -6,12 +6,12 @@ becomes stale.
 
 ## Authority order
 
-1. `documentation/api/ERP_ARCHITECTURE_CONSTITUTION.md`
+1. `documentation/guides/api/ERP_ARCHITECTURE_CONSTITUTION.md`
 2. Approved Plan/Slice under `documentation/plans/` for planned business work
-3. `documentation/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md`
+3. `documentation/guides/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md`
 4. Owning package under `documentation/modules/<module>/`
-5. `documentation/api/Clean_Architecture_CQRS_Guide.md`
-6. `documentation/api/MODULAR_MONOLITH_ARCHITECTURE.md`
+5. `documentation/guides/api/Clean_Architecture_CQRS_Guide.md`
+6. `documentation/guides/api/MODULAR_MONOLITH_ARCHITECTURE.md`
 7. Feature profiles and reviews as applied evidence, never higher authority
 
 The API workflow requires one owner, one canonical business model, one CQRS path,
@@ -164,18 +164,18 @@ new capability's ownership and risks:
 - Global reference CRUD, bounded management lists, lookup/detail separation,
   archive/restore, thin controller, read/write ports: Countries under
   `Modules/ReferenceData/.../GeographicalInformation/Countries/` plus
-  `documentation/api/Countries_API_Implementation_Profile.md`.
+  `documentation/modules/reference-data/features/countries/countries-api.md`.
 - Required parent relationship and dependency validation: States plus
-  `documentation/api/States_API_Implementation_Profile.md`.
+  `documentation/modules/reference-data/features/states/states-api.md`.
 - Company-scoped, behavior-rich aggregate, explicit lifecycle, optimistic
   concurrency, resource locks, deterministic periods, post-commit effects:
-  Fiscal Years plus `documentation/api/FiscalYears_API_Implementation_Profile.md`.
+  Fiscal Years plus `documentation/modules/accounting/features/fiscal-years/fiscal-years-api.md`.
 - Cross-module durable messaging and replicated reference: Contacts outbox and
   Accounting inbox, described by ADR-005 and the modular-monolith guide.
 - External/device integration and specialized persistence: Attendance Devices plus
-  `documentation/api/AttendanceDevices_API_Implementation_Profile.md`.
+  `documentation/modules/hr/features/attendance-devices/attendance-devices-api.md`.
 - Hierarchical domain behavior and cycle prevention: Organizational Structure plus
-  `documentation/api/OrganizationalStructure_API_Implementation_Profile.md`.
+  `documentation/modules/hr/features/organizational-structure/organizational-structure-api.md`.
 
 Countries is useful for global reference data but is not a universal Domain or
 scope template. Never copy its global ownership or simple mutation shape into a

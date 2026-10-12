@@ -4,15 +4,35 @@ This directory is the single home for project-owned documentation. Product sourc
 
 ## Directory map
 
+```text
+documentation/
+├── plans/      what to build: discovery, plans, decisions, notes, product direction
+├── guides/     how we build: rules that apply to every module
+│   ├── shared/   ownership, reuse, screen patterns, permissions
+│   ├── api/      backend architecture, workflow, ADRs, migrations, deployment
+│   ├── web/      Next.js architecture and rules
+│   └── mobile/   Expo architecture and rules
+├── modules/    what exists: one folder per module
+│   └── <module>/
+│       ├── README.md, ARCHITECTURE.md, DELIVERY-ROADMAP.md, module.json
+│       └── features/<feature>/   every file of one feature in one place
+│           ├── <feature>-review.md     cross-platform review (the master book)
+│           ├── <feature>-api.md        API implementation profile
+│           ├── <feature>-web.md        Next.js implementation profile
+│           ├── <feature>-mobile.md     Expo implementation profile
+│           ├── <feature>-request.md    frozen implementation request
+│           ├── <feature>-evidence.md   review evidence and decisions
+│           ├── required-files.json     files the generator fingerprints
+│           └── generated/              phase packets (never edited by hand)
+└── system/     the documentation machine: templates, manifest, generator scripts
+```
+
 | Directory | Purpose |
 | --- | --- |
-| [`project/`](project/README.md) | Cross-project architecture, reviews, roadmaps, and operational notes |
-| [`api/`](api/README.md) | Backend architecture, controller contracts, database assets, and API guides |
-| [`web-next/`](web-next/README.md) | Canonical Next.js architecture and feature guides |
-| [`mobile-react/`](mobile-react/README.md) | Expo architecture, style, and feature guides |
-| [`modules/`](modules/README.md) | Module-owned documentation packages and ownership indexes |
-| [`system/`](system/README.md) | Reusable documentation recipes, manifests, generated phase packets, and feature review artifacts |
-| [`plans/`](plans/README.md) | Canonical business-planning standard, plan registry, production/deferred notes, risks, and cross-platform planning gates |
+| [`plans/`](plans/README.md) | Business planning standard, plan registry, central notes, product direction |
+| [`guides/`](guides/README.md) | Cross-module rules for shared, API, web, and mobile work |
+| [`modules/`](modules/README.md) | One package per module with its feature folders |
+| [`system/`](system/README.md) | Templates, recipe manifest, and the generator scripts |
 
 Repository and subproject `README.md`, `AGENTS.md`, and `CLAUDE.md` files remain beside their projects because development tools discover them there. They link back to this directory for the canonical documentation.
 
@@ -24,26 +44,26 @@ There is one way in. Follow these three pages in order:
    evidence, decisions, and the plan for a business capability.
 2. [`system/README.md`](system/README.md) — build and verify **how**: Phase 00
    preflight through Phase 07 closure, with the generated phase packets.
-3. `modules/<slug>/README.md` — the owning module's page (see
-   [`modules/README.md`](modules/README.md)); it links that module's feature
-   catalog and platform notes.
+3. `modules/<module>/README.md` — the owning module's page (see
+   [`modules/README.md`](modules/README.md)); its feature catalog links every
+   feature folder.
 
-Every other document is a reference that one of those three pages links when
-it is needed. The ones used most often:
+The most used references:
 
 | Need | Reference |
 | --- | --- |
-| Ownership and reuse rules | [`project/ERP_DOCUMENTATION_GUIDE_AR.md`](project/ERP_DOCUMENTATION_GUIDE_AR.md), [`project/SHARED_REUSE_CATALOG.md`](project/SHARED_REUSE_CATALOG.md) |
-| API work | [`api/API_FEATURE_DEVELOPMENT_WORKFLOW.md`](api/API_FEATURE_DEVELOPMENT_WORKFLOW.md), [`api/ERP_ARCHITECTURE_CONSTITUTION.md`](api/ERP_ARCHITECTURE_CONSTITUTION.md), [`api/MODULAR_MONOLITH_ARCHITECTURE.md`](api/MODULAR_MONOLITH_ARCHITECTURE.md), [`api/adr/README.md`](api/adr/README.md) |
-| Worked reference feature | Countries: [review](project/COUNTRIES_FEATURE_FULL_REVIEW.md) · [API](api/Countries_API_Implementation_Profile.md) · [web](web-next/features/countries-frontend-reference.md) · [mobile](mobile-react/countries-mobile-reference.md) |
-| Production and open items | [`api/PRODUCTION_DEPLOYMENT_RUNBOOK.md`](api/PRODUCTION_DEPLOYMENT_RUNBOOK.md), [`plans/notes/README.md`](plans/notes/README.md) |
+| Ownership and reuse rules | [`guides/shared/ERP_DOCUMENTATION_GUIDE_AR.md`](guides/shared/ERP_DOCUMENTATION_GUIDE_AR.md), [`guides/shared/SHARED_REUSE_CATALOG.md`](guides/shared/SHARED_REUSE_CATALOG.md) |
+| API work | [`guides/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md`](guides/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md), [`guides/api/ERP_ARCHITECTURE_CONSTITUTION.md`](guides/api/ERP_ARCHITECTURE_CONSTITUTION.md), [`guides/api/MODULAR_MONOLITH_ARCHITECTURE.md`](guides/api/MODULAR_MONOLITH_ARCHITECTURE.md) |
+| Migrations | [`guides/api/MIGRATIONS_COMMANDS_AR.md`](guides/api/MIGRATIONS_COMMANDS_AR.md) |
+| Worked reference feature | [Countries folder](modules/reference-data/features/countries/countries-review.md) |
+| Production and open items | [`guides/api/PRODUCTION_DEPLOYMENT_RUNBOOK.md`](guides/api/PRODUCTION_DEPLOYMENT_RUNBOOK.md), [`plans/notes/README.md`](plans/notes/README.md) |
 
 ## Organization rules
 
-1. Put new shared documentation in this directory, under the owning project or concern.
+1. Feature documentation goes in its module's `modules/<module>/features/<feature>/` folder; a rule that applies to every module goes in `guides/`.
 2. Do not create new `docs/`, `Docs/`, or `doc/` trees inside application projects.
 3. Keep source-owned configuration files such as `AGENTS.md` at their required scope and link them to this directory.
-4. Do not edit files under `system/generated/` directly. Update canonical guides, the recipe manifest, or templates and regenerate them.
+4. Do not edit files under `modules/*/features/*/generated/` directly. Update canonical guides, the recipe manifest, or templates and regenerate them.
 5. Run `./documentation/system/Generate-Documentation.ps1 -Check` before handing off a documentation-system change.
 6. Every code change must update the canonical documentation for the affected domain in the same change. Record platform differences explicitly instead of leaving an undocumented gap.
 7. Before creating a component, service, or contract, inventory shared
@@ -76,7 +96,7 @@ Create the draft evidence workspace first:
   -Module accounting
 ```
 
-The scaffold creates a copy-ready `IMPLEMENTATION-REQUEST.md`, an evidence
+The scaffold creates a copy-ready `<feature>-request.md`, an evidence
 artifact, `required-files.draft.json`, and a feature-scoped
 `recipe-registration.draft.json`. For planned work it also binds the implementation
 to the canonical Plan ID and exact authorized Slice ID. Complete Phase 00
@@ -90,18 +110,18 @@ only after that verified education closure.
 
 ## Web client readiness
 
-- [Web/API readiness review](web-next/WEB_API_READINESS_REVIEW.md)
-- [Frontend architecture reference](web-next/architecture/frontend-architecture-reference.md)
+- [Web/API readiness review](guides/web/WEB_API_READINESS_REVIEW.md)
+- [Frontend architecture reference](guides/web/architecture/frontend-architecture-reference.md)
 
 ## Mobile client readiness
 
-- [Mobile/API readiness review](mobile-react/MOBILE_API_READINESS_REVIEW.md)
-- [Mobile architecture guide](mobile-react/MOBILE_ARCHITECTURE.md)
-- [Mobile feature guide](mobile-react/MOBILE_FEATURE_GUIDE.md)
+- [Mobile/API readiness review](guides/mobile/MOBILE_API_READINESS_REVIEW.md)
+- [Mobile architecture guide](guides/mobile/MOBILE_ARCHITECTURE.md)
+- [Mobile feature guide](guides/mobile/MOBILE_FEATURE_GUIDE.md)
 
 ## Product expansion
 
-- [Omnichannel ERP product blueprint](project/OMNICHANNEL_ERP_PRODUCT_BLUEPRINT.md)
-- [Van Sales product plan](project/VAN_SALES_PRODUCT_PLAN.md)
-- [Enterprise SaaS core roadmap](project/ENTERPRISE_SAAS_CORE_ROADMAP.md)
-- [API architecture decisions](api/adr/README.md)
+- [Omnichannel ERP product blueprint](plans/product/OMNICHANNEL_ERP_PRODUCT_BLUEPRINT.md)
+- [Van Sales product plan](plans/product/VAN_SALES_PRODUCT_PLAN.md)
+- [Enterprise SaaS core roadmap](plans/product/ENTERPRISE_SAAS_CORE_ROADMAP.md)
+- [API architecture decisions](guides/api/adr/README.md)

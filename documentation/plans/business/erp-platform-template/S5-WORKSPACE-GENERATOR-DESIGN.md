@@ -74,7 +74,7 @@ outside each module folder to list them.
 5. **Reset product planning.** Keep the planning and documentation *system* (standards,
    templates, scripts, catalogs, ADRs, skills). Reset *product state*:
    `PLAN_REGISTRY.md` tables empty; `plans/business/` empty (README kept); `plans/notes/*`
-   tables empty with headers; feature evidence under `documentation/system/features/` and
+   tables empty with headers; feature evidence under `documentation/modules/<module>/features/` and
    `generated/` kept only for features of selected modules, then regenerate.
 6. **Apply product identity.** Web metadata title and manifest name; mobile `app.json`/
    `app.config.ts` name, slug, iOS bundle identifier, Android package; root `README.md`

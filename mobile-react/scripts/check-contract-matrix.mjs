@@ -3,7 +3,7 @@ import path from 'node:path';
 import * as ts from 'typescript';
 
 const mobileRoot = path.resolve(import.meta.dirname, '..');
-const matrixPath = path.resolve(mobileRoot, '..', 'documentation', 'mobile-react', 'MOBILE_API_COMPATIBILITY_MATRIX.json');
+const matrixPath = path.resolve(mobileRoot, '..', 'documentation', 'guides', 'mobile', 'MOBILE_API_COMPATIBILITY_MATRIX.json');
 const matrix = JSON.parse(fs.readFileSync(matrixPath, 'utf8'));
 const errors = [];
 const routeKinds = new Set(['public', 'auth', 'layout', 'dynamic']);

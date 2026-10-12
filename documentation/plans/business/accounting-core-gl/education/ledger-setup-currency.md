@@ -128,6 +128,6 @@ is planned.
 
 Canonical acceptance details, exact commands and classified non-feature findings are
 recorded in
-`documentation/system/features/ledger-setup-currency/LEDGER_SETUP_CURRENCY-REVIEW-ARTIFACTS.md`.
+`documentation/modules/accounting/features/ledger-setup-currency/ledger-setup-currency-evidence.md`.
 The product boundary remains governed by
 `documentation/plans/business/accounting-core-gl/decomposition/ledger-setup-currency.md`.

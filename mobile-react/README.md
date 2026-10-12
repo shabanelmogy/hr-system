@@ -2,7 +2,7 @@
 
 Expo SDK 57 client for the ERP System, using React Native 0.86 and React 19.2.
 Canonical architecture and implementation rules live under
-[`../documentation/mobile-react/`](../documentation/mobile-react/).
+[`../documentation/guides/mobile/`](../documentation/guides/mobile/).
 
 ## Local setup
 
@@ -40,10 +40,10 @@ directly; feature data adapters own endpoint and response parsing.
 
 Read these guides before changing the mobile architecture or adding a feature:
 
-- [`MOBILE_ARCHITECTURE.md`](../documentation/mobile-react/MOBILE_ARCHITECTURE.md)
-- [`MOBILE_FEATURE_GUIDE.md`](../documentation/mobile-react/MOBILE_FEATURE_GUIDE.md)
-- [`MOBILE_STYLE_GUIDE.md`](../documentation/mobile-react/MOBILE_STYLE_GUIDE.md)
-- [`MOBILE_API_READINESS_REVIEW.md`](../documentation/mobile-react/MOBILE_API_READINESS_REVIEW.md)
+- [`MOBILE_ARCHITECTURE.md`](../documentation/guides/mobile/MOBILE_ARCHITECTURE.md)
+- [`MOBILE_FEATURE_GUIDE.md`](../documentation/guides/mobile/MOBILE_FEATURE_GUIDE.md)
+- [`MOBILE_STYLE_GUIDE.md`](../documentation/guides/mobile/MOBILE_STYLE_GUIDE.md)
+- [`MOBILE_API_READINESS_REVIEW.md`](../documentation/guides/mobile/MOBILE_API_READINESS_REVIEW.md)
 
 ## Verification
 

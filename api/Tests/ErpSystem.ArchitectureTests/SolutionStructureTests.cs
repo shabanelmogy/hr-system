@@ -15,7 +15,7 @@ public sealed class SolutionStructureTests
     public void ApiGuidance_HasOneCanonicalFeatureWorkflowAndNoRetiredEntryPoints()
     {
         var repositoryRoot = Directory.GetParent(ApiRoot)!.FullName;
-        var documentationRoot = Path.Combine(repositoryRoot, "documentation", "api");
+        var documentationRoot = Path.Combine(repositoryRoot, "documentation", "guides", "api");
         var workflow = Path.Combine(documentationRoot, "API_FEATURE_DEVELOPMENT_WORKFLOW.md");
         var agents = File.ReadAllText(Path.Combine(ApiRoot, "AGENTS.md"));
         var rootAgents = File.ReadAllText(Path.Combine(repositoryRoot, "AGENTS.md"));
@@ -44,7 +44,12 @@ public sealed class SolutionStructureTests
             "templates",
             "PHASE-07-customer-education-closure.template.md"));
         var generatedPhaseZero = File.ReadAllText(Path.Combine(
-            documentationSystemRoot,
+            repositoryRoot,
+            "documentation",
+            "modules",
+            "reference-data",
+            "features",
+            "countries",
             "generated",
             "PHASE-00-discovery-evidence.md"));
         var newFeatureGenerator = File.ReadAllText(Path.Combine(

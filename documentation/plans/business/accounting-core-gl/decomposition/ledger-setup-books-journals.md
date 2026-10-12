@@ -36,7 +36,7 @@ approval, posting runtime, or company primary-book selection.
 
 | Reference | Exact path/screen | What is reused | What intentionally differs |
 | --- | --- | --- | --- |
-| P-001 Currency/Fiscal Years | registered sources in `documentation/project/SCREEN_PATTERN_CATALOG.md` | typed list, form, lifecycle and concurrency discipline | Book/Journal fields, dependency and numbering rules remain Accounting-owned |
+| P-001 Currency/Fiscal Years | registered sources in `documentation/guides/shared/SCREEN_PATTERN_CATALOG.md` | typed list, form, lifecycle and concurrency discipline | Book/Journal fields, dependency and numbering rules remain Accounting-owned |
 | Existing Ledger Setup | current generic Web/Mobile resource screens named above | route/workflow evidence | catch-all record definitions are replaced by typed child services/schemas/forms |
 
 ## 4. Reuse and composition contract
@@ -108,10 +108,10 @@ layouts with bounded table scrolling.
 | Order | Stage | Status | Entry gate | Required evidence / exit gate | Evidence path |
 | ---: | --- | --- | --- | --- | --- |
 | 1 | API | Queued | Dimensions closed and contract approved | typed bilingual Book/Journal contracts, migrations, permissions and tests | `SLICE-01-LEDGER-SETUP-EXECUTION.md` |
-| 2 | Web | Queued | API Verified | typed P-001 screens/forms/states and tests | `documentation/web-next/features/accounting-ledger-setup-frontend-reference.md` |
-| 3 | Mobile | Queued | Web Verified | typed clean layers, schemas, native screens/forms and tests | `documentation/mobile-react/accounting-ledger-setup-mobile-reference.md` |
+| 2 | Web | Queued | API Verified | typed P-001 screens/forms/states and tests | `documentation/modules/accounting/features/accounting-ledger-setup/accounting-ledger-setup-web.md` |
+| 3 | Mobile | Queued | Web Verified | typed clean layers, schemas, native screens/forms and tests | `documentation/modules/accounting/features/accounting-ledger-setup/accounting-ledger-setup-mobile.md` |
 | 4 | Integrated live verification + user acceptance | Queued | prior stages Verified | agent sends detailed authenticated Book→Journal API/Web/actual-Mobile scenario with live-schema checks; user runs or supervises it and explicitly accepts | `SLICE-01-LEDGER-SETUP-EXECUTION.md` |
-| 5 | Documentation and closure | Queued | integrated verification Verified and explicit user acceptance recorded | canonical docs, manifest/recipes and education reconciled | `documentation/system/features/accounting-ledger-setup/required-files.json` |
+| 5 | Documentation and closure | Queued | integrated verification Verified and explicit user acceptance recorded | canonical docs, manifest/recipes and education reconciled | `documentation/modules/accounting/features/accounting-ledger-setup/required-files.json` |
 
 **Manual acceptance protocol.** The central
 `../MANUAL_ACCEPTANCE_SCENARIO_TEMPLATE.md` format is mandatory:

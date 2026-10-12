@@ -287,7 +287,7 @@ late-post/reopen actions. It does not rebuild the existing Fiscal Years slice.
 ## 9. Permissions and security
 
 Target action separation follows
-[`../../../system/PERMISSION_MODEL.md`](../../../system/PERMISSION_MODEL.md). Technical
+[`../../../guides/shared/PERMISSION_MODEL.md`](../../../guides/shared/PERMISSION_MODEL.md). Technical
 claims remain stable English; the role editor owns matching Arabic and English
 labels/descriptions.
 
@@ -792,7 +792,7 @@ Customer-facing education for Slice 1 starts only after Phase 06 records
 - [`documentation/modules/accounting/ARCHITECTURE.md`](../../../modules/accounting/ARCHITECTURE.md)
 - [`documentation/modules/accounting/DELIVERY-ROADMAP.md`](../../../modules/accounting/DELIVERY-ROADMAP.md)
 - Accounting API implementation profile(s)
-- feature-scoped request/review evidence under `documentation/system/features/`
+- feature-scoped request/review evidence under `documentation/modules/accounting/features/<feature>/`
 - Web/Mobile Accounting feature profiles
 - required-file manifests/recipe registrations/generated packets
 - ADR only for a material new architecture decision

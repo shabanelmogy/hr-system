@@ -1,0 +1,63 @@
+<!-- GENERATED FILE. DO NOT EDIT. Source: recipe-manifest.json + templates/PHASE-06-final-reconciliation.template.md -->
+
+# Phase 06 - Final Reconciliation
+
+## Purpose
+
+Close the evidence loop and decide whether the feature is ready for handoff.
+
+## Reconciliation gates
+
+- [ ] Every requirement maps to implementation evidence and a verification result.
+- [ ] Required-source manifest validation passes.
+- [ ] No draft manifest, placeholder path, reference-only fingerprint, or shared output path is registered as final evidence.
+- [ ] Generated documentation is current.
+- [ ] API contract tests and focused feature tests pass.
+- [ ] Web typecheck, lint, architecture checks, focused tests, and production build pass.
+- [ ] Mobile typecheck, lint, architecture checks, focused tests, and supported platform checks pass.
+- [ ] Desktop, compact browser, phone, tablet, English, Arabic, LTR, RTL, keyboard, and touch behavior are reviewed where applicable.
+- [ ] Search, filter, sorting, pagination, refresh, mode switches, selection, forms, archive, restore, bulk, report, import, notification, and realtime paths are reconciled.
+- [ ] Import is Required, Deferred, or Excluded independently for web and mobile;
+      each Required path proves parsing, exact transport, limits, duplicate scope,
+      dependencies, atomicity, permissions, retry, localization, and invalidation.
+- [ ] Intentional API/web/mobile differences are documented.
+- [ ] Open findings have severity, evidence, owner, and a release decision.
+- [ ] No reference-specific field, ownership rule, view, or known gap was copied without a feature requirement.
+- [ ] The chosen applied reference and every intentional departure from it are recorded.
+
+## Handoff decision
+
+Record one outcome: `Ready`, `Ready with accepted findings`, or `Not ready`. Include the exact commands run, dates, failed or skipped gates, and the responsible owner.
+
+Classify each non-passing gate as one of:
+
+- `Feature regression`: introduced by or inside this feature; cannot be accepted as complete.
+- `Inherited repository failure`: reproduced outside the changed feature; requires an owner and release decision.
+- `Environment blocker`: required tooling/service/device is unavailable; record the missing prerequisite and rerun owner.
+- `Manual release check`: visual, device, accessibility, or operational evidence automation cannot replace.
+
+`Ready with accepted findings` is valid only when no Required feature behavior is
+missing and every inherited/environment/manual finding has an explicit release
+decision. A focused test pass alone is never a `Ready` decision.
+
+## Approved references
+
+- **Countries cross-platform master review:** `../modules/reference-data/features/countries/countries-review.md` sections 8, 9, 10
+- **Countries API implementation profile:** `../modules/reference-data/features/countries/countries-api.md` sections 10, 11
+- **Countries Next.js implementation profile:** `../modules/reference-data/features/countries/countries-web.md` sections 12, 13, 14
+- **Countries Expo implementation profile:** `../modules/reference-data/features/countries/countries-mobile.md` sections 14, 15
+
+## Source fingerprints
+
+| Book | Section | SHA-256 |
+| --- | ---: | --- |
+| master | 8 | `d984d8e0337d1a27f16371f454b72ff6911422bf8832f69f73e2139a49490e96` |
+| master | 9 | `a29964faa102da876f190755e099d8b50d1ee016ceee39ae475ca4e76dbb5a5e` |
+| master | 10 | `64c086421a3234770bf1e971f20900bfa64ba1bc6699af1ea999f74ed397ef15` |
+| api | 10 | `835d5397200e5eeba769f49731c2e2032c6cfe8bbd10a78502e45ac3a1ebdc4f` |
+| api | 11 | `0609bdd31f204c1274a5819e4dc9a7abb03e7988fafe05a85ef4daa589b68613` |
+| web | 12 | `86dfb0a78a771e2bd7e2c6f6ed760e7e143c70d2eed6cc0f4aebd272dcae7814` |
+| web | 13 | `5082c41cade66646c563cab5418dc9750f474641f021b7f1950a530b7582c961` |
+| web | 14 | `80765976d54ff8e1c218832a3dbd4d3643fda41d5caa77f3878160e71213626c` |
+| mobile | 14 | `08cb057f3997117b0ae4d276616cec02b645fa8bfdff10907253644d7360112a` |
+| mobile | 15 | `a1c54f063bec45ea226ef87dd89298e510d7f6d5e5fc5abef6547ce03c3b53a8` |

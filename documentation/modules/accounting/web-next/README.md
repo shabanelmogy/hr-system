@@ -18,7 +18,7 @@ reports. For each screen freeze permissions, server/client boundaries,
 loading/error/empty states, localization, accessibility, and tests.
 
 The generated current ownership/route inventory is maintained in
-`documentation/web-next/architecture/frontend-architecture-manifest.md`.
+`documentation/guides/web/architecture/frontend-architecture-manifest.md`.
 
 ## Ledger Setup authorization contract
 

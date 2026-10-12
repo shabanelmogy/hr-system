@@ -42,7 +42,7 @@ Explicitly outside this child:
 ## 2. UI Pattern Gate (mandatory before implementation)
 
 Complete the product-wide Permission Action Matrix from
-`../system/PERMISSION_MODEL.md` alongside this gate. Every Screen ID below must map
+`../guides/shared/PERMISSION_MODEL.md` alongside this gate. Every Screen ID below must map
 its buttons, menus, gestures, row actions, bulk actions, reports/imports, and direct
 handlers to matrix rows; a broad `Manage` permission is not an acceptable value.
 
@@ -57,7 +57,7 @@ source paths below must be inspected before runtime work starts.
 ### UI Pattern decision rules
 
 1. Choose an `Active` pattern from
-   `documentation/project/SCREEN_PATTERN_CATALOG.md` only after checking the
+   `documentation/guides/shared/SCREEN_PATTERN_CATALOG.md` only after checking the
    current Web and Mobile references and shared primitives.
 2. A `Candidate` pattern **blocks UI implementation**. Register it in the catalog,
    add a real reference and verification evidence, and review it before changing

@@ -228,7 +228,7 @@ exact reviewed source path, platform status, Required/Deferred/Excluded views,
 states, offline policy, mock-data policy, permission/scope, responsive/RTL/
 accessibility behavior, and any deviation.
 
-The canonical catalog is `documentation/project/SCREEN_PATTERN_CATALOG.md`.
+The canonical catalog is `documentation/guides/shared/SCREEN_PATTERN_CATALOG.md`.
 Selecting a `Candidate` pattern blocks runtime UI work until the pattern is
 registered, reviewed, and assigned a stable `P-###` ID with evidence. “Shared
 component reused” alone is never a pattern decision.
@@ -236,7 +236,7 @@ component reused” alone is never a pattern decision.
 ### P7B.1 — Mandatory Permission Action Matrix
 
 Complete the Permission Action Matrix in each feature execution contract according
-to `documentation/system/PERMISSION_MODEL.md`. Map every API endpoint/message and
+to `documentation/guides/shared/PERMISSION_MODEL.md`. Map every API endpoint/message and
 every Web/Mobile visible action plus direct callback to the minimum exact
 `Resource:Action` permission, scope, read-only behavior, denial test, and English/
 Arabic display ownership. Create, Edit, Archive, Restore, irreversible Delete, and

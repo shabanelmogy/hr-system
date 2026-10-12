@@ -1,0 +1,706 @@
+# Core Feature CQRS and Web Implementation Guide
+
+This is a cross-platform implementation reference for joining an API CQRS slice
+with the `web-next` page architecture. API work always starts with
+`documentation/guides/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md`; that workflow is the
+mandatory API delivery path and this document supplies web integration detail.
+
+Use `Countries` as one implemented **global reference-data** slice. It demonstrates
+the CQRS API, REST contract, server-managed collection, lookup endpoint,
+archive/restore lifecycle, Mapster mappings, and web grid/card integration. It is an
+example, not a universal ownership or business-rule template. Always run the API
+Existing-System Relationship Review before copying or extending a pattern.
+
+The employee/functional-data model is frozen separately in
+[../../modules/hr/CORE_HR_DOMAIN_DESIGN_GUIDE.md](../../modules/hr/CORE_HR_DOMAIN_DESIGN_GUIDE.md). The minimal
+`Employee` snippets in this generic CQRS guide describe request/handler shape
+only; do not copy them as the final employee schema. Implement the frozen
+`Person` + company-scoped `Employee` + effective-dated Assignment/Contract model
+and its scope/invariant rules from that guide.
+
+Countries deliberately has no tenant/company ownership marker. Core HR aggregates
+must add tenant/company scope, scoped indexes, cross-scope tests, and concurrency or
+effective-date rules where applicable.
+
+## 1. Decisions
+
+The following rules apply to every new core HR feature:
+
+1. New API workflows use MediatR commands and queries. Do not create a large
+   `{Feature}Service` containing all use cases.
+2. A controller binds HTTP input, sends exactly one request through `ISender`, and
+   translates `Result` to HTTP. It contains no business or persistence logic.
+3. An Application handler owns the use case: normalization, scope checks, business
+   rules, transaction boundary, save, and post-commit scheduling.
+4. Infrastructure is reached through small Application-owned ports. Do not expose
+   `DbContext`, `DbSet`, `IQueryable`, Hangfire, or SignalR to Application.
+5. Core business lists are paged, filtered, and sorted on the server. Loading the
+   full table and using `useMemo` pagination is allowed only for demonstrably small
+   lookup data.
+6. `web-next/src/app` routes stay thin. Feature pages, hooks, forms, tables, cards,
+   and dialogs belong to `web-next/src/modules/<module>` (or
+   `web-next/src/platform` for platform capabilities).
+7. Grid and card views are the normal page baseline. Chart, report, map, timeline,
+   and import views are added only when the use case needs them. Mark Import
+   `Required`, `Deferred`, or `Excluded` independently for web and mobile.
+8. Tenant and company scope is mandatory for tenant-owned HR data and must be
+   enforced in every read and write, not inferred from a client-supplied ID.
+9. Realtime messages invalidate cached data; they are not an authoritative entity
+   transport. Durable, non-critical delivery is queued only after commit.
+10. A feature is not complete until its API contract, permissions, localization,
+    empty/error/loading states, and focused tests are implemented together.
+
+## 2. Current Baseline
+
+The CQRS foundation already exists:
+
+- `api/Modules/HR/ErpSystem.Modules.HR.Application/Abstractions/Messaging`
+- `api/Modules/HR/ErpSystem.Modules.HR.Application/Behaviors/RequestLoggingBehavior.cs`
+- `api/Modules/HR/ErpSystem.Modules.HR.Application/Behaviors/ValidationBehavior.cs`
+- `api/Modules/HR/ErpSystem.Modules.HR.Application/DependencyInjection.cs`
+
+The API CQRS foundation is closed and architecture-tested. `Countries` remains a
+useful complete global-reference example: its controller dispatches through
+`ISender`; create, bulk create, update, archive, atomic bulk archive, restore, page,
+lookup, detail, and detail-with-states are separate use cases.
+
+The Countries web feature provides these reference patterns:
+
+- thin App Router adapters;
+- feature-owned page composition;
+- `use*GridLogic` orchestration;
+- grid/card multi-view with one server query state;
+- React Hook Form plus Zod;
+- TanStack Query keys and invalidation;
+- module permission checks;
+- Arabic/English localization and RTL support;
+- feature-driven realtime query invalidation.
+
+Do not infer current completeness or business requirements for another feature from
+this example. Inspect that feature's live API, module documentation, client code,
+tests, and contracts before deciding what to reuse, extend, replace, defer, or
+exclude.
+
+## 3. Target Vertical Slice
+
+Use this structure for a new aggregate such as Employee:
+
+```text
+api/
+  ErpSystem.Modules.HR.Domain/
+    CoreHr/Employees/Entities/Employee.cs
+
+  ErpSystem.Modules.HR.Application/
+    Features/CoreHr/Employees/
+      Commands/
+        CreateEmployee/
+          CreateEmployeeCommand.cs
+          CreateEmployeeCommandValidator.cs
+          CreateEmployeeCommandHandler.cs
+        UpdateEmployee/
+        ArchiveEmployee/
+      Queries/
+        GetEmployeeById/
+          GetEmployeeByIdQuery.cs
+          GetEmployeeByIdQueryHandler.cs
+          EmployeeDetailsResponse.cs
+        GetEmployees/
+          GetEmployeesQuery.cs
+          GetEmployeesQueryHandler.cs
+          EmployeeListItemResponse.cs
+      Abstractions/
+        IEmployeeReadStore.cs
+        IEmployeeWriteStore.cs
+        IEmployeeChangeScheduler.cs
+      Errors/EmployeeErrors.cs
+
+  ErpSystem.Modules.HR.Infrastructure/
+    Features/CoreHr/Employees/
+      Persistence/
+        EmployeeConfiguration.cs
+        EmployeeReadStore.cs
+        EmployeeWriteStore.cs
+      Jobs/EmployeeChangedJob.cs
+
+  ErpSystem.Api/
+    Features/CoreHr/Employees/V1/EmployeesController.cs
+
+web-next/src/
+  app/(main)/core-hr/employees/page.tsx
+  modules/hr/employees/
+    api/
+    components/
+      grid-view/
+      card-view/
+      EmployeeForm.tsx
+      EmployeeDeleteDialog.tsx
+      EmployeesMultiView.tsx
+    hooks/
+      useEmployeeQueries.ts
+      useEmployeePageLogic.ts
+    pages/EmployeesPage.tsx
+    schemas/employeeSchema.ts
+    types/employee.ts
+    index.ts
+```
+
+Avoid a folder per technical type at the solution root and avoid a project per HR
+feature. The system remains one modular monolith with feature folders inside the
+four existing API projects.
+
+## 4. API Contract
+
+### 4.1 Separate requests by use case
+
+Do not use one nullable-ID request for create and update in new features.
+
+```csharp
+public sealed record CreateEmployeeCommand(
+    string EmployeeNumber,
+    string NameEn,
+    string NameAr,
+    int DepartmentId) : ICommand<Result<EmployeeDetailsResponse>>;
+
+public sealed record UpdateEmployeeCommand(
+    int Id,
+    string NameEn,
+    string NameAr,
+    int DepartmentId,
+    byte[] RowVersion) : ICommand<Result<EmployeeDetailsResponse>>;
+
+public sealed record GetEmployeeByIdQuery(int Id)
+    : IQuery<Result<EmployeeDetailsResponse>>;
+```
+
+This makes create/update validation explicit and leaves room for optimistic
+concurrency on business records.
+
+### 4.2 Paged list query
+
+A core list request should expose a small, typed contract:
+
+```csharp
+public sealed record GetEmployeesQuery(
+    int PageNumber = 1,
+    int PageSize = 10,
+    string? Search = null,
+    EmployeeStatus? Status = null,
+    int? DepartmentId = null,
+    string SortBy = "employeeNumber",
+    SortOrder SortOrder = SortOrder.Ascending)
+    : IQuery<Result<PageResponse<EmployeeListItemResponse>>>;
+```
+
+Rules:
+
+- validate `PageNumber`, `PageSize`, filter values, and sort direction;
+- map public sort keys through a feature-owned allowlist;
+- never build dynamic member access from an unchecked column name;
+- always add a stable secondary order such as `Id`;
+- project only list fields and use `AsNoTracking()`;
+- include pagination metadata in the response;
+- reset the web page to 1 when search, filter, or page size changes.
+
+The existing generic `PaginationRequest` can support legacy endpoints, but a core
+feature owns its filter and sort vocabulary instead of accepting arbitrary database
+column names.
+
+### 4.3 Result and error rules
+
+- Expected failures return `Result`/`Result<T>` with a stable code and `ErrorType`.
+- Use `NotFound`, `Validation`, `Conflict`, `Forbidden`, and `Unexpected` precisely.
+- FluentValidation handles malformed requests before the handler.
+- The handler still enforces business invariants and race-sensitive checks.
+- Never return an EF entity from Application or expose exception text to clients.
+
+### 4.4 Import and bulk-create contract
+
+When Import is Required, freeze the server contract before building a file UI:
+
+- exact endpoint, permission, request envelope, response, and success status;
+- typed JSON bulk input when a client owns parsing, or multipart only when the
+  server explicitly owns file parsing;
+- client and API batch limits, atomicity, idempotency, and retry outcomes;
+- field- and ownership-scoped duplicate rules, case sensitivity, relationship
+  validation, and stable validation/conflict errors;
+- one commit followed by plural audit, notification, and realtime scheduling.
+
+Controller/service tests assert the exact wire envelope. Handler/store tests cover
+empty and oversized batches, same-field request duplicates, case-only persistence
+conflicts, missing parent/dependency records, atomic failure, and commit-before-
+schedule ordering.
+
+If the endpoint has no idempotency key, a timeout or missing response is not a
+normal failed-row retry. The browser must mark the submitted rows uncertain,
+block resubmission of that preview, refresh the canonical list, and require the
+user to reconcile committed records before selecting a corrected file. A stable
+4xx validation/conflict remains failed and correctable; only a documented
+idempotency contract permits automatic retry.
+
+## 5. Handler Ownership
+
+The command handler owns its use case and must not be a one-line wrapper around a
+legacy CRUD service. A query handler may be a thin delegate to one feature-owned
+read-projection port that owns scope, projection, sorting, and paging.
+
+### Command handler order
+
+1. Resolve the current tenant/company/actor from trusted server context.
+2. Normalize input.
+3. Load only the records needed for the rule.
+4. Enforce tenant/company ownership, lifecycle, FK, duplicate, and concurrency rules.
+5. Change domain state.
+6. Save/commit once.
+7. Queue non-critical notification and realtime work after commit.
+8. Return a response DTO.
+
+### Query handler order
+
+1. Resolve trusted scope.
+2. Validate the requested filters and sort key.
+3. Apply scope and active/deleted rules first.
+4. Apply search and filters.
+5. Apply deterministic sorting.
+6. Project directly to the response DTO.
+7. Page in the database.
+
+Application-owned ports should answer business-shaped questions:
+
+```csharp
+public interface IEmployeeReadStore
+{
+    Task<PageResponse<EmployeeListItemResponse>> SearchAsync(
+        EmployeeSearchCriteria criteria,
+        TenantCompanyScope scope,
+        CancellationToken cancellationToken);
+
+    Task<EmployeeDetailsResponse?> GetByIdAsync(
+        int id,
+        TenantCompanyScope scope,
+        CancellationToken cancellationToken);
+}
+```
+
+Do not create a generic repository merely to hide EF. A narrow feature port is
+preferred because it can express projection, scope, and use-case-specific queries.
+
+### Mapping policy
+
+Use Mapster consistently for entity/request/response mapping. Let convention map
+members whose names and types already match. Add explicit feature-owned rules only
+for a real difference, such as normalization, an ignored identity/audit/navigation
+member during update, an active-child filter, or a computed count. Do not create an
+empty mapping configuration, a mapping wrapper, or repeated same-name member rules.
+Mapping transforms data shape; business validation remains in validators/handlers.
+
+## 6. Controller Standard
+
+```csharp
+[ApiVersion("1.0")]
+[Route(ApiRoutes.BaseRoute2)]
+[ApiController]
+[TenantMember]
+public sealed class EmployeesController(ISender sender) : ControllerBase
+{
+    [HttpGet]
+    [HasPermission(Permissions.ViewEmployees)]
+    public async Task<IActionResult> GetAll(
+        [FromQuery] GetEmployeesQuery query,
+        CancellationToken cancellationToken)
+    {
+        var result = await sender.Send(query, cancellationToken);
+        return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
+    }
+}
+```
+
+Controller rules:
+
+- inject `ISender` only in a fully migrated/new controller;
+- send one command/query per action;
+- keep authorization, API versioning, binding, response codes, and
+  `CreatedAtAction` in the API host;
+- do not inject feature services or `HrDbContext`;
+- do not manually call validators;
+- preserve cancellation tokens end to end.
+- Directly bind a command only when it intentionally is the public JSON contract;
+  otherwise bind a transport request and construct one command.
+
+## 7. Persistence and Data Safety
+
+Before the first UI for a core aggregate:
+
+- remove any intentional EF ignore for that aggregate only after its model is ready;
+- configure tenant/company ownership and required relationships explicitly;
+- add unique indexes that include the owning scope where appropriate;
+- choose archive/soft-delete semantics deliberately;
+- filter deleted/inactive rows consistently;
+- add concurrency tokens to records with important concurrent edits;
+- ensure audit fields are populated through the normal `SaveChanges` path;
+- generate and inspect the migration; never accept unrelated model changes;
+- test cross-tenant and cross-company access adversarially.
+
+Bulk operations must not bypass auditing or business invariants. Default to at most
+100 items/IDs. Load and validate the complete requested set, including missing IDs
+and dependencies, before changing tracked entities; save once so the operation is
+all-or-nothing. If a bulk library is required, set all audit values explicitly and
+prove equivalent behavior in tests.
+
+Document lifecycle behavior per endpoint. A management page may expose explicit
+active/archived/all filtering, lookup normally hides archived rows, detail may
+include archived rows for restore hydration, and archive/restore may be idempotent.
+Do not replace that matrix with a blanket soft-delete assumption.
+
+For important concurrent edits, include a row version/ETag in the public update
+contract and return a stable conflict for stale writes. Countries can remain a
+lower-risk reference-data exception; employee and policy records normally cannot.
+
+## 8. Realtime and Notifications
+
+- Application owns a small scheduling interface.
+- Infrastructure implements it with Hangfire.
+- Queue only after a successful commit.
+- Use the entity's view permission and the correct tenant/company audience.
+- Publish stable resource/action/entity-id invalidation events.
+- The client invalidates feature query keys and refetches from the API.
+- Never use `Clients.All` for tenant-owned data.
+- A MediatR notification is in-process and non-durable; it does not replace
+  Hangfire for required post-commit background delivery.
+- A database commit followed by a Hangfire enqueue is a deliberate dual-write
+  boundary. It is acceptable here only for non-critical UI invalidation and inbox
+  delivery. If a business workflow requires guaranteed publication, introduce a
+  transactional outbox and idempotent consumer instead of claiming the two writes
+  are atomic.
+
+## 9. Web Page Standard
+
+### 9.1 Route and page boundaries
+
+The App Router file is a thin adapter:
+
+```tsx
+import { EmployeesPage } from "@/modules/hr/employees";
+
+export default function Page() {
+  return <EmployeesPage />;
+}
+```
+
+`EmployeesPage` owns composition, while hooks own data/mutation/dialog state. Route
+files do not contain business tables, forms, API calls, or permission logic.
+
+### 9.2 Required page states
+
+Every business list handles:
+
+- initial loading;
+- refetching without destroying the current view;
+- empty database;
+- no filter/search results;
+- recoverable API error with retry;
+- permission-denied actions;
+- expired/read-only tenant state;
+- create/edit/delete success and failure;
+- RTL layout and translated validation.
+
+### 9.3 Header and controls
+
+Use the shared page header and keep controls predictable:
+
+- breadcrumb/title and primary create action;
+- search input with debounce;
+- reusable filter button beside search with an active-filter count badge;
+- sort controls where the selected view needs them;
+- view switcher;
+- export/import only when authorized and operationally useful.
+
+Search/filter/sort/page state must produce one typed API query. Do not independently
+reimplement the same filtering in grid and card views.
+
+### 9.4 Multi-view policy
+
+Use the shared global `views.*` labels for standard view IDs and keep the shared
+toggle's internal padding. Do not create feature-specific alternatives such as
+`Grid View`, `Grid`, and `Table View` for the same registered view. Child views
+own their responsive content padding; avoid both flush content and double padding.
+
+Required by default:
+
+- **Grid** for dense administration and sorting, using the existing reusable
+  `MyDataGrid` footer pagination;
+- **Cards** for responsive scanning and mobile-sized web layouts.
+
+The Grid footer is an established reusable product component. Features configure
+its controlled paging inputs; they do not hide its navigation, copy it, or
+replace it locally. Changes to the shared footer must be
+verified against all consumers, including Countries, States, and Districts.
+`GridFooter` preserves the established centered Districts-style
+first/previous/next/last record navigation and current-record/total counter, with
+the page indicator and page-size selector in their existing positions. In server
+mode, crossing a record boundary notifies the owner of the controlled page model
+directly and activates the requested boundary record after that page arrives;
+`apiRef.setPage()` remains the uncontrolled-Grid fallback. Do not replace this
+product-owned footer with library-default page actions or a feature-local pager.
+
+The reusable `MyDataGrid` also marks the first visible row as the active record
+on load and after the current active row leaves the loaded page. The active row
+is separate from checkbox selection used by bulk actions, so bulk-capable grids
+do not preselect a record for deletion. Record arrows use this active marker and
+start at the first item of a newly loaded page, including after a filter or
+server-page transition.
+
+After a successful edit, `MyDataGrid` briefly flashes the edited row with the
+shared success color and then leaves the normal edited marker until the shared
+CRUD cleanup clears it. The animation is disabled for users who request reduced
+motion; features must not recreate this feedback locally.
+
+Server-managed collections use authoritative server paging for every result size.
+Keep the previous page while fetching the next query key, and do not clamp a
+controlled page until a completed response supplies a known total. Client mode is
+reserved for explicitly complete local collections; never infer it from a count
+probe or fetch all matching rows inside a generic list hook.
+
+Optional:
+
+- chart only for a meaningful metric; list-backed charts reset to page zero,
+  show no pagination controls, and label their first-page scope;
+- report only for a defined printable/export workflow. Record
+  Required/Deferred/Excluded and the engine before implementation. Managed
+  Crystal reports must follow
+  [Crystal Report Manager Feature Integration Guide](../../modules/reporting/CRYSTAL_REPORT_MANAGER_INTEGRATION_GUIDE.md);
+- map only for geographic coordinates;
+- timeline/calendar only for time-based records;
+- import only after its platform decision and exact API contract are recorded,
+  with mapping, validation, preview, localized row errors, dependency handling,
+  permission/read-only checks, atomicity, retry, and invalidation. Classify a
+  downloadable rejected-row artifact separately as Required, Deferred, or Excluded.
+
+All views share the same server query, filters, permissions, and selected record.
+Switching view must not silently change the data set.
+
+### 9.5 TanStack Query standard
+
+Use stable feature keys that include every server query parameter:
+
+```ts
+export const employeeKeys = {
+  all: ["employees"] as const,
+  lists: () => [...employeeKeys.all, "list"] as const,
+  list: (query: EmployeeListQuery) => [...employeeKeys.lists(), query] as const,
+  details: () => [...employeeKeys.all, "detail"] as const,
+  detail: (id: number) => [...employeeKeys.details(), id] as const,
+};
+```
+
+- mutation success invalidates the smallest correct root;
+- realtime registry maps the backend resource to the same feature keys;
+- dependent dropdowns call their dedicated API endpoint;
+- do not fetch a parent table only to filter it in the browser;
+- keep API path definitions centralized and use a feature-owned typed service.
+
+### 9.6 Forms, permissions, and localization
+
+- React Hook Form owns form state and Zod owns client validation.
+- Client validation improves UX; the API remains authoritative.
+- Create and update payload types are distinct.
+- Page and direct action handlers both fail closed on missing permission.
+- Every visible label, fallback, validation message, empty state, and toast is in
+  English and Arabic resources.
+- Verify keyboard navigation, focus after dialogs, screen-reader labels, and RTL.
+
+## 10. Countries Reference Map
+
+Use these files as the implemented reference:
+
+- Countries controller: `api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Presentation/Features/GeographicalInformation/Countries/V1/CountriesController.cs`
+- Commands/queries: `api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries`
+- Mapster rules: `api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Mapping/CountryMappingConfig.cs`
+- Persistence ports: `api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Infrastructure/Features/GeographicalInformation/Countries/Persistence`
+- Countries page: `web-next/src/modules/reference-data/geographical-information/countries/pages/CountriesPage.tsx`
+- Countries multi-view: `web-next/src/modules/reference-data/geographical-information/countries/components/CountriesMultiView.tsx`
+- Countries orchestration: `web-next/src/modules/reference-data/geographical-information/countries/hooks/useCountryGridLogic.ts`
+- Countries queries: `web-next/src/modules/reference-data/geographical-information/countries/hooks/useCountryQueries.ts`
+- Country form: `web-next/src/modules/reference-data/geographical-information/countries/components/CountryForm.tsx`
+- Shared server list state: `web-next/src/shared/hooks/useServerListState.ts`
+
+Migrate the other geographic features toward this reference rather than copying
+their current implementation. Remaining follow-ups are:
+
+1. implement the missing Addresses web feature;
+2. use the existing by-country/by-state API endpoints;
+3. standardize their query keys and dialog state;
+4. replace repeated client collection state with `useServerListState` and paged APIs;
+5. remove hard-coded fallback labels and fix namespace mismatches;
+6. add form, query invalidation, permission, and view tests;
+7. fix each legacy API's correctness issues while migrating it to CQRS.
+
+## 11. Recommended Core HR Delivery Order
+
+Do not start with payroll. Build the dependency chain:
+
+1. **Organization foundation**: legal entities/companies, locations, departments,
+   positions/jobs, reporting lines, and effective dates.
+2. **Employee master**: employee identity, employment record, contacts/addresses,
+   assignment, status/lifecycle, documents, and audit trail.
+3. **Employee lifecycle**: invite/activation, onboarding checklist, transfers,
+   promotion, suspension, termination, and offboarding.
+4. **Leave and approvals**: policies, balances, requests, approval routing, calendar,
+   and notifications.
+5. **Attendance/time**: schedules, shifts, punches, corrections, and approvals.
+6. **Payroll/benefits** only after organization, employee, time, policy, audit, and
+   entitlement foundations are stable.
+
+Deliver one aggregate end to end before opening several unfinished screens.
+
+## 12. Feature Implementation Playbook
+
+### Discovery
+
+- start from the feature's generated `<feature>-request.md`, review artifact,
+  and phase 00 packet; complete every decision before runtime changes;
+- write the business invariants and user actions;
+- identify tenant/company ownership and permissions;
+- define list columns, filters, sort keys, and expected scale;
+- define archive/delete, concurrency, audit, and effective-date behavior;
+- decide which views have real business value;
+- record Import as Required, Deferred, or Excluded independently for web and
+  mobile. If Required, define format, template/headers, exact API envelope, limits,
+  duplicate and relationship rules, atomicity, permissions, side effects, retry,
+  localization, and verification;
+- record reporting as Required, Deferred, or Excluded. If Required, choose
+  Managed Crystal or server-managed browser templates and document the dataset,
+  filters, permissions, and deployment owner.
+
+### Backend
+
+1. Domain entity/value objects and invariants.
+2. EF configuration and scoped indexes.
+3. Application response models and narrow ports.
+4. List/detail queries and validators.
+5. Create/update/archive commands and validators.
+6. Infrastructure stores.
+7. Controller and permissions.
+8. Post-commit jobs and realtime registry contract.
+9. Migration inspection.
+10. Handler, persistence, authorization, and HTTP contract tests.
+11. When Managed Crystal is Required, add an allowlisted Reporting data provider
+    backed by the owning module's public Contract/source plus the matching Crystal
+    runtime schema profile; do not add a feature-specific public render controller.
+12. When Import is Required, add the typed bulk command/handler/store/controller
+    contract, bounded validation, field-scoped duplicate and dependency checks,
+    plural post-commit side effects, and exact HTTP contract tests.
+
+### Web
+
+1. Central route and API path.
+2. Types and Zod schemas.
+3. Typed service and TanStack query keys/hooks.
+4. Thin route and feature page.
+5. Shared search/filter/sort/page state.
+6. Grid and card views.
+7. Form and destructive-action confirmation.
+8. Permissions, read-only boundary, localization, RTL, accessibility.
+9. Realtime invalidation.
+10. Focused component/hook tests and required architecture checks.
+11. When Managed Crystal is Required, consume the shared Report Manager published
+    catalog/render service by `entityKey`; never call the Crystal host directly.
+12. When browser Import is Required, add the registered permission-guarded view,
+    shared bounded XLSX parser/file card, feature-owned canonical headers and row
+    mapping, explicit dependency lookup states, exact typed request envelope,
+    localized row/uncertainty feedback, reconciliation/invalidation behavior, and
+    focused tests. Do not copy browser file APIs into Expo.
+
+### Mobile
+
+1. Physical Expo route, typed route constant, route-manifest permission, and navigation.
+2. Runtime Zod schemas and exact endpoint/query serialization.
+3. One controlled server-list state with one-based API conversion at the boundary.
+4. Shared native list/header/filter/form/feedback primitives and feature-owned adapters.
+5. Responsive table/cards and explicit loading/error/empty/retry behavior.
+6. Direct mutation guards for permission, lifecycle, and tenant read-only state.
+7. Realtime query-key registration and notification deep-link mapping.
+8. Paired EN/AR resources, RTL, safe areas, keyboard/orientation, touch, and accessibility.
+9. Focused API/schema/state/route/realtime/component tests followed by `npm run check`.
+10. When mobile Import is Required, use native picker/storage/parsing or an explicit
+    server-owned upload job, while preserving the shared API contract and device-safe
+    memory, interruption, cancellation, and retry behavior.
+
+## 13. Definition of Done
+
+### API
+
+- controller sends one MediatR request;
+- command/query validators are discovered by the pipeline;
+- handlers do not delegate to a legacy feature service;
+- all reads/writes enforce tenant/company ownership where applicable;
+- list filtering/sorting/paging occurs in the database;
+- save completes before background scheduling;
+- error codes and HTTP statuses are stable;
+- migration contains only intended model changes;
+- required Managed Crystal reporting has a documented `entityKey`, filter
+  allowlist, exact dataset schema, matching HR/Crystal runtime profiles, and
+  tenant/company/ACL tests;
+- a required Import endpoint has an exact typed envelope, bounded atomic contract,
+  field-scoped duplicate and relationship checks, plural side effects, and HTTP,
+  handler, and persistence tests;
+- tests cover success, validation, duplicate, not-found, FK/dependency,
+  cross-scope, concurrency, cancellation, and post-commit scheduling.
+
+### Web
+
+- App Router adapter is thin;
+- types match the API contract without `any`;
+- search/filter/sort/page parameters share one source of truth;
+- grid and cards show the same server result;
+- loading/empty/no-results/error/read-only states work;
+- direct mutation handlers enforce permission, not only hidden buttons;
+- EN/AR, RTL, keyboard, and dialog focus are checked;
+- query invalidation and realtime refresh are tested;
+- a required Managed Crystal view lists only manager-owned published reports,
+  localizes Title/Subject correctly, renders by report ID, and owns no list pager;
+- browser Import is explicitly Required, Deferred, or Excluded; a Required path
+  proves parsing, exact request serialization, bounds, duplicate scope,
+  dependencies, permissions, retry, EN/AR/RTL, and cache invalidation;
+- architecture, type, strict type, lint, tests, and production build pass.
+
+### Mobile
+
+- physical and typed routes, route policy, navigation, endpoint, query keys,
+  realtime, notification deep link, and localization are registered;
+- runtime schemas reject invalid transport data and request mapping matches the API;
+- list, forms, lifecycle, read-only, loading/error/empty/retry, and mutation
+  invalidation behave consistently with web where the platform contract is shared;
+- every optional capability is Required, Deferred, or Excluded independently;
+- a Required mobile Import uses native-safe APIs and proves picker/parser, exact
+  envelope, limits, duplicates, dependencies, permission, conflict, retry, and refresh;
+- phone/tablet, orientation, safe areas, keyboard, EN/AR, LTR/RTL, touch targets,
+  screen-reader order, and light/dark are reviewed;
+- `npm run check` passes, or every inherited/environment/manual blocker has an
+  explicit owner and release decision.
+
+Run the checks documented in:
+
+- `documentation/guides/web/architecture/frontend-architecture-reference.md`
+- `documentation/guides/api/Clean_Architecture_CQRS_Guide.md`
+- `documentation/guides/api/Realtime_Updates_Guide.md`
+
+Do not update `graphify-out` as part of ordinary feature implementation.
+
+## 14. Anti-Patterns
+
+- one service class containing every CRUD/query/business workflow;
+- a handler that only calls that service;
+- `DbContext` or Hangfire in a controller;
+- Infrastructure request/response types leaking into Application;
+- one request DTO reused for create and update;
+- arbitrary client-provided database column names used for sorting;
+- loading all employees and paginating in React;
+- duplicated filter logic in grid and card views;
+- feature UI placed inside `src/app`;
+- chart/import/report tabs added only because another feature has them;
+- direct browser/mobile calls to the Crystal host or client-supplied report paths,
+  filenames, SQL, connection strings, tenant IDs, or company IDs;
+- treating ActiveReports/RDLX `ReportTemplates` as Crystal Report Manager records;
+- authorization implemented only by hiding a button;
+- realtime payload treated as the saved record;
+- cross-tenant IDs trusted from the request body.

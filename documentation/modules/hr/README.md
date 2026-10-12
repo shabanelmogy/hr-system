@@ -29,4 +29,8 @@ on every platform. Check each book and its required-file manifest for evidence.
 Start with [ARCHITECTURE.md](ARCHITECTURE.md), [DELIVERY-ROADMAP.md](DELIVERY-ROADMAP.md),
 the notes under [api/](api/README.md) and [web-next/](web-next/README.md), and
 the [phase index](phases/README.md). Mobile HR behavior is recorded in the
-existing `documentation/mobile-react/` feature books.
+existing `documentation/guides/mobile/` feature books.
+
+## Domain guide
+
+[CORE_HR_DOMAIN_DESIGN_GUIDE.md](CORE_HR_DOMAIN_DESIGN_GUIDE.md) — HR functional data model.

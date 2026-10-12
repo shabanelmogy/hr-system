@@ -83,7 +83,7 @@ stage is `Closed`.
     remains `Queued`. A rejection keeps the same step Active; after correction the
     agent sends a detailed retest scenario before requesting acceptance again.
 13. Every child completes the product-wide Permission Action Matrix from
-    `documentation/system/PERMISSION_MODEL.md`. API endpoints, Web actions, Mobile
+    `documentation/guides/shared/PERMISSION_MODEL.md`. API endpoints, Web actions, Mobile
     actions, direct handlers, denial tests, and EN/AR permission labels use exact
     action permissions. `Manage` is allowed only as a role-editor preset label and
     never as an authorization claim.

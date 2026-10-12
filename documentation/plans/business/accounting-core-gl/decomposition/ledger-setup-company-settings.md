@@ -107,10 +107,10 @@ linked validation messages and first-invalid focus.
 | Order | Stage | Status | Entry gate | Required evidence / exit gate | Evidence path |
 | ---: | --- | --- | --- | --- | --- |
 | 1 | API | Queued | Books/Journals closed and contract approved | typed singleton, unique company constraint, lookups, migration, permissions and tests | `SLICE-01-LEDGER-SETUP-EXECUTION.md` |
-| 2 | Web | Queued | API Verified | typed P-005 editor and first-config/update/read-only/conflict tests | `documentation/web-next/features/accounting-ledger-setup-frontend-reference.md` |
-| 3 | Mobile | Queued | Web Verified | typed clean layers, schemas and native P-005 journey/tests | `documentation/mobile-react/accounting-ledger-setup-mobile-reference.md` |
+| 2 | Web | Queued | API Verified | typed P-005 editor and first-config/update/read-only/conflict tests | `documentation/modules/accounting/features/accounting-ledger-setup/accounting-ledger-setup-web.md` |
+| 3 | Mobile | Queued | Web Verified | typed clean layers, schemas and native P-005 journey/tests | `documentation/modules/accounting/features/accounting-ledger-setup/accounting-ledger-setup-mobile.md` |
 | 4 | Integrated live verification + user acceptance | Queued | prior stages Verified | agent sends detailed authenticated first-config/update/reload API/Web/actual-Mobile scenario with live-schema checks; user runs or supervises it and explicitly accepts | `SLICE-01-LEDGER-SETUP-EXECUTION.md` |
-| 5 | Documentation and closure | Queued | integrated verification Verified and explicit user acceptance recorded | canonical docs, manifest/recipes and education reconciled | `documentation/system/features/accounting-ledger-setup/required-files.json` |
+| 5 | Documentation and closure | Queued | integrated verification Verified and explicit user acceptance recorded | canonical docs, manifest/recipes and education reconciled | `documentation/modules/accounting/features/accounting-ledger-setup/required-files.json` |
 
 **Manual acceptance protocol.** The central
 `../MANUAL_ACCEPTANCE_SCENARIO_TEMPLATE.md` format is mandatory:

@@ -1,0 +1,460 @@
+{
+  "schemaVersion": 1,
+  "status": "historical-phase-03-client-implemented-current-v2-revalidation-queued",
+  "feature": "ledger-setup-coa-hierarchy",
+  "featureName": "Accounting Chart of Accounts and Hierarchy",
+  "referenceFeature": "organizational-structure",
+  "planId": "accounting-core-gl",
+  "sliceId": "Slice 1 — Ledger setup spine",
+  "canonicalPlan": "documentation/plans/business/accounting-core-gl/PLAN.md",
+  "featureDecompositionDecision": "Decompose",
+  "screenWorkflowContract": "documentation/plans/business/accounting-core-gl/decomposition/ledger-setup-coa-hierarchy.md",
+  "plannedCustomerEducation": "documentation/plans/business/accounting-core-gl/education/ledger-setup-coa-hierarchy.md",
+  "purpose": "Phase 00 evidence plus implemented API Phase 01 and typed Web/Mobile client Phase 02/03 evidence for the focused COA/Hierarchy child. Phase 06 live acceptance remains pending.",
+  "reviewArtifact": "documentation/modules/accounting/features/ledger-setup-coa-hierarchy/ledger-setup-coa-hierarchy-evidence.md",
+  "implementationRequest": "documentation/modules/accounting/features/ledger-setup-coa-hierarchy/ledger-setup-coa-hierarchy-request.md",
+  "canonicalBooks": {
+    "master": "documentation/modules/accounting/features/ledger-setup-coa-hierarchy/ledger-setup-coa-hierarchy-review.md",
+    "api": "documentation/modules/accounting/features/ledger-setup-coa-hierarchy/ledger-setup-coa-hierarchy-api.md",
+    "web": "documentation/modules/accounting/features/ledger-setup-coa-hierarchy/ledger-setup-coa-hierarchy-web.md",
+    "mobile": "documentation/modules/accounting/features/ledger-setup-coa-hierarchy/ledger-setup-coa-hierarchy-mobile.md"
+  },
+  "sourceCollections": [
+    {
+      "id": "web-coa-hierarchy-typed",
+      "layer": "web-next",
+      "path": "web-next/src/modules/accounting/ledger-setup/coa-hierarchy",
+      "minimumFiles": 16,
+      "purpose": "Typed Accounts/Hierarchy Levels pages, forms, services, hooks, validation, and local mock-draft utilities/tests"
+    },
+    {
+      "id": "mobile-coa-hierarchy-typed",
+      "layer": "mobile-react",
+      "path": "mobile-react/src/modules/accounting/ledger-setup/coa-hierarchy",
+      "minimumFiles": 22,
+      "purpose": "Typed Accounts/Hierarchy Levels domain/data/presentation runtime plus local mock-draft utilities/tests"
+    }
+  ],
+  "requiredFiles": [
+    {
+      "id": "root-agent-guidance",
+      "layer": "configuration",
+      "path": "AGENTS.md",
+      "purpose": "Repository-wide planning, architecture, reuse and verification rules"
+    },
+    {
+      "id": "api-agent-guidance",
+      "layer": "configuration",
+      "path": "api/AGENTS.md",
+      "purpose": "API modular-monolith and CQRS implementation rules"
+    },
+    {
+      "id": "web-agent-guidance",
+      "layer": "configuration",
+      "path": "web-next/AGENTS.md",
+      "purpose": "Next.js architecture and verification rules"
+    },
+    {
+      "id": "system-guidance",
+      "layer": "configuration",
+      "path": "documentation/system/AGENTS.md",
+      "purpose": "Canonical documentation generation rules"
+    },
+    {
+      "id": "canonical-plan",
+      "layer": "planning",
+      "path": "documentation/plans/business/accounting-core-gl/PLAN.md",
+      "purpose": "Master business scope, rules, Feature Decomposition Gate and GL-024"
+    },
+    {
+      "id": "plan-decisions",
+      "layer": "planning",
+      "path": "documentation/plans/business/accounting-core-gl/DECISIONS.md",
+      "purpose": "Approved decisions including D-023 decomposition and D-024 code proposal baseline"
+    },
+    {
+      "id": "slice-execution",
+      "layer": "planning",
+      "path": "documentation/plans/business/accounting-core-gl/SLICE-01-LEDGER-SETUP-EXECUTION.md",
+      "purpose": "Slice 1 child order, API readiness and execution status"
+    },
+    {
+      "id": "manual-acceptance-template",
+      "layer": "planning",
+      "path": "documentation/plans/business/accounting-core-gl/MANUAL_ACCEPTANCE_SCENARIO_TEMPLATE.md",
+      "purpose": "Required future detailed COA revalidation scenario and explicit user decision format"
+    },
+    {
+      "id": "screen-workflow-contract",
+      "layer": "planning",
+      "path": "documentation/plans/business/accounting-core-gl/decomposition/ledger-setup-coa-hierarchy.md",
+      "purpose": "Focused child Screen/Workflow Contract"
+    },
+    {
+      "id": "plan-evidence",
+      "layer": "planning",
+      "path": "documentation/plans/business/accounting-core-gl/EVIDENCE.md",
+      "purpose": "Verified current-system evidence supporting the master plan"
+    },
+    {
+      "id": "implementation-request",
+      "layer": "documentation",
+      "path": "documentation/modules/accounting/features/ledger-setup-coa-hierarchy/ledger-setup-coa-hierarchy-request.md",
+      "purpose": "Phase 00 execution contract and readiness matrices"
+    },
+    {
+      "id": "review-artifact",
+      "layer": "documentation",
+      "path": "documentation/modules/accounting/features/ledger-setup-coa-hierarchy/ledger-setup-coa-hierarchy-evidence.md",
+      "purpose": "Current evidence, target gaps, findings and preflight verification ledger"
+    },
+    {
+      "id": "master-book",
+      "layer": "documentation",
+      "path": "documentation/modules/accounting/features/ledger-setup-coa-hierarchy/ledger-setup-coa-hierarchy-review.md",
+      "purpose": "Cross-platform child implementation contract"
+    },
+    {
+      "id": "api-book",
+      "layer": "documentation",
+      "path": "documentation/modules/accounting/features/ledger-setup-coa-hierarchy/ledger-setup-coa-hierarchy-api.md",
+      "purpose": "Focused API target/current implementation profile"
+    },
+    {
+      "id": "web-book",
+      "layer": "documentation",
+      "path": "documentation/modules/accounting/features/ledger-setup-coa-hierarchy/ledger-setup-coa-hierarchy-web.md",
+      "purpose": "Focused Next.js Screen Contract implementation profile"
+    },
+    {
+      "id": "mobile-book",
+      "layer": "documentation",
+      "path": "documentation/modules/accounting/features/ledger-setup-coa-hierarchy/ledger-setup-coa-hierarchy-mobile.md",
+      "purpose": "Focused Expo Screen Contract implementation profile"
+    },
+    {
+      "id": "accounting-architecture",
+      "layer": "documentation",
+      "path": "documentation/modules/accounting/ARCHITECTURE.md",
+      "purpose": "Accounting ownership/persistence/integration boundaries"
+    },
+    {
+      "id": "api-workflow",
+      "layer": "documentation",
+      "path": "documentation/guides/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md",
+      "purpose": "CQRS, validation, persistence and implementation authority"
+    },
+    {
+      "id": "shared-reuse-catalog",
+      "layer": "documentation",
+      "path": "documentation/guides/shared/SHARED_REUSE_CATALOG.md",
+      "purpose": "Canonical shared component reuse inventory"
+    },
+    {
+      "id": "screen-pattern-catalog",
+      "layer": "documentation",
+      "path": "documentation/guides/shared/SCREEN_PATTERN_CATALOG.md",
+      "purpose": "Canonical P-002 Accounts and P-001 Hierarchy Levels screen-pattern decisions"
+    },
+    {
+      "id": "umbrella-review",
+      "layer": "documentation",
+      "path": "documentation/modules/accounting/features/accounting-ledger-setup/accounting-ledger-setup-review.md",
+      "purpose": "Parent Slice 1 historical/integration evidence"
+    },
+    {
+      "id": "account-domain",
+      "layer": "api-domain",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Domain/Finance/LedgerSetup/Entities/Account.cs",
+      "purpose": "Verified current Account invariant implementation"
+    },
+    {
+      "id": "level-domain",
+      "layer": "api-domain",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Domain/Finance/LedgerSetup/Entities/AccountHierarchyLevel.cs",
+      "purpose": "Verified current hierarchy-level entity"
+    },
+    {
+      "id": "ledger-contracts",
+      "layer": "api-application",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Application/Features/Finance/LedgerSetup/Contracts/LedgerSetupContracts.cs",
+      "purpose": "Current broad Account/Level response/request contracts; target child contract gaps are documented"
+    },
+    {
+      "id": "account-queries",
+      "layer": "api-application",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Application/Features/Finance/LedgerSetup/Queries/LedgerSetupQueries.cs",
+      "purpose": "Account/Level reads including truthful Account PageResponse and D-024 proposal query"
+    },
+    {
+      "id": "account-commands",
+      "layer": "api-application",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Application/Features/Finance/LedgerSetup/Commands/SettingsAndAccountsCommands.cs",
+      "purpose": "Current create/update/account lifecycle and hierarchy validation"
+    },
+    {
+      "id": "lifecycle-commands",
+      "layer": "api-application",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Application/Features/Finance/LedgerSetup/Commands/LedgerSetupLifecycleCommands.cs",
+      "purpose": "Current hierarchy-level and shared lifecycle evidence"
+    },
+    {
+      "id": "account-store-ports",
+      "layer": "api-application",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Application/Features/Finance/LedgerSetup/Abstractions/ILedgerSetupStores.cs",
+      "purpose": "Current Account/Level read/write ports"
+    },
+    {
+      "id": "account-stores",
+      "layer": "api-infrastructure",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Infrastructure/Features/Finance/LedgerSetup/Persistence/LedgerSetupStores.cs",
+      "purpose": "Current Account/Level queries, search, tree and persistence checks"
+    },
+    {
+      "id": "account-configurations",
+      "layer": "api-infrastructure",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Infrastructure/Features/Finance/LedgerSetup/Persistence/LedgerSetupConfigurations.cs",
+      "purpose": "Company-unique Account Code/LevelNumber indexes and same-company FKs"
+    },
+    {
+      "id": "accounts-controller",
+      "layer": "api-presentation",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Presentation/Features/Finance/LedgerSetup/V1/AccountsController.cs",
+      "purpose": "Versioned Account/Level routes and permissions including read-only code-proposal endpoint"
+    },
+    {
+      "id": "accounting-permissions",
+      "layer": "contracts",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Contracts/Authorization/AccountingPermissions.cs",
+      "purpose": "Existing Accounts View/Manage permission authority"
+    },
+    {
+      "id": "accounting-ledger-tests",
+      "layer": "tests",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Tests/LedgerSetupDomainTests.cs",
+      "purpose": "Existing focused Ledger Setup domain test evidence"
+    },
+    {
+      "id": "accounting-lifecycle-tests",
+      "layer": "tests",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Tests/LedgerSetupLifecycleTests.cs",
+      "purpose": "Existing lifecycle/dependency test evidence"
+    },
+    {
+      "id": "accounting-coa-hierarchy-tests",
+      "layer": "tests",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Tests/LedgerSetupCoaHierarchyTests.cs",
+      "purpose": "Focused 1B Account page, D-024 proposal, query vocabulary, validator parity and controller evidence"
+    },
+    {
+      "id": "web-generic-types",
+      "layer": "web-next",
+      "path": "web-next/src/modules/accounting/ledger-setup/types.ts",
+      "purpose": "Verified current generic LedgerSetupRecord model; documented target refactor evidence"
+    },
+    {
+      "id": "web-generic-service",
+      "layer": "web-next",
+      "path": "web-next/src/modules/accounting/ledger-setup/services/ledgerSetupService.ts",
+      "purpose": "Verified current broad Ledger Setup transport behavior and current list limitations"
+    },
+    {
+      "id": "web-generic-page",
+      "layer": "web-next",
+      "path": "web-next/src/modules/accounting/ledger-setup/pages/LedgerSetupResourcePage.tsx",
+      "purpose": "Untouched sibling compatibility UI with D-025 safe local mock action; not target child architecture"
+    },
+    {
+      "id": "web-generic-mock-data",
+      "layer": "web-next",
+      "path": "web-next/src/modules/accounting/ledger-setup/utils/ledgerSetupMockData.ts",
+      "purpose": "Pure compatibility draft generator using only authoritative lookup identities"
+    },
+    {
+      "id": "web-generic-mock-data-tests",
+      "layer": "tests",
+      "path": "web-next/src/modules/accounting/ledger-setup/utils/ledgerSetupMockData.test.ts",
+      "purpose": "Required lookup, scope preservation and distinct currency-pair safety evidence"
+    },
+    {
+      "id": "web-service-tests",
+      "layer": "tests",
+      "path": "web-next/src/modules/accounting/ledger-setup/services/ledgerSetupService.test.ts",
+      "purpose": "Current transport test evidence"
+    },
+    {
+      "id": "web-shared-tree",
+      "layer": "web-next",
+      "path": "web-next/src/shared/components/tree-view/SplitTreeView.tsx",
+      "purpose": "Required shared Web tree/master-detail primitive"
+    },
+    {
+      "id": "web-shared-tree-tests",
+      "layer": "tests",
+      "path": "web-next/src/shared/components/tree-view/SplitTreeView.test.tsx",
+      "purpose": "Shared tree behavior tests"
+    },
+    {
+      "id": "web-cost-center-reference",
+      "layer": "web-next",
+      "path": "web-next/src/modules/hr/basic-data/organizational-structure/management/components/tree-view/CostCenterTreeDiagram.tsx",
+      "purpose": "Closest approved Web master/detail interaction reference only"
+    },
+    {
+      "id": "web-cost-center-reference-tests",
+      "layer": "tests",
+      "path": "web-next/src/modules/hr/basic-data/organizational-structure/management/components/tree-view/CostCenterTreeDiagram.test.tsx",
+      "purpose": "Feature-level SplitTreeView parent mapping, selection, mutation, and drag-permission evidence"
+    },
+    {
+      "id": "mobile-generic-model",
+      "layer": "mobile-react",
+      "path": "mobile-react/src/modules/accounting/ledger-setup/domain/models/ledger-setup.ts",
+      "purpose": "Current generic LedgerSetupRecord model and target typed-refactor evidence"
+    },
+    {
+      "id": "mobile-generic-screen",
+      "layer": "mobile-react",
+      "path": "mobile-react/src/modules/accounting/ledger-setup/presentation/screens/LedgerSetupResourceScreen.tsx",
+      "purpose": "Untouched sibling compatibility screen; not target typed child architecture"
+    },
+    {
+      "id": "mobile-generic-form",
+      "layer": "mobile-react",
+      "path": "mobile-react/src/modules/accounting/ledger-setup/presentation/components/LedgerSetupForm.tsx",
+      "purpose": "Reachable compatibility form wired to the shared D-025 mock action"
+    },
+    {
+      "id": "mobile-generic-mock-data",
+      "layer": "mobile-react",
+      "path": "mobile-react/src/modules/accounting/ledger-setup/presentation/utils/ledger-setup-mock-data.ts",
+      "purpose": "Pure compatibility draft generator using only authoritative lookup identities"
+    },
+    {
+      "id": "mobile-generic-mock-data-tests",
+      "layer": "tests",
+      "path": "mobile-react/src/modules/accounting/ledger-setup/presentation/utils/ledger-setup-mock-data.test.ts",
+      "purpose": "Required lookup, distinct currency-pair and boolean type safety evidence"
+    },
+    {
+      "id": "mobile-remote",
+      "layer": "mobile-react",
+      "path": "mobile-react/src/modules/accounting/ledger-setup/data/remote/ledger-setup-remote-data-source.ts",
+      "purpose": "Current remote validation/serialization evidence"
+    },
+    {
+      "id": "mobile-use-case-tests",
+      "layer": "tests",
+      "path": "mobile-react/src/modules/accounting/ledger-setup/application/ledger-setup-use-cases.test.ts",
+      "purpose": "Current Mobile use-case test evidence"
+    },
+    {
+      "id": "mobile-remote-tests",
+      "layer": "tests",
+      "path": "mobile-react/src/modules/accounting/ledger-setup/data/remote/__tests__/ledger-setup-remote-boundary.test.ts",
+      "purpose": "Current Mobile transport/runtime schema boundary tests"
+    },
+    {
+      "id": "mobile-shared-tree",
+      "layer": "mobile-react",
+      "path": "mobile-react/src/shared/components/tree-view/AppHierarchicalTree.tsx",
+      "purpose": "Required shared Mobile hierarchy primitive"
+    },
+    {
+      "id": "mobile-shared-tree-tests",
+      "layer": "tests",
+      "path": "mobile-react/src/shared/components/tree-view/AppHierarchicalTree.test.tsx",
+      "purpose": "Shared Mobile hierarchy tests"
+    },
+    {
+      "id": "mobile-cost-center-reference-tests",
+      "layer": "tests",
+      "path": "mobile-react/src/modules/hr/basic-data/organizational-structure/presentation/screens/OrganizationalStructureManagementScreen.test.tsx",
+      "purpose": "Cost Centers default tree mode and feature-to-AppHierarchicalTree composition evidence"
+    },
+    {
+      "id": "mobile-cost-center-reference-view-policy",
+      "layer": "mobile-react",
+      "path": "mobile-react/src/modules/hr/basic-data/organizational-structure/presentation/utils/organizationalStructureViews.ts",
+      "purpose": "Directly imported default-view policy used by the Cost Centers reference screen test"
+    },
+    {
+      "id": "reference-manifest",
+      "layer": "documentation",
+      "path": "documentation/modules/hr/features/organizational-structure/required-files.json",
+      "purpose": "Reference feature evidence manifest; only shared interaction/architecture patterns are reused"
+    },
+    {
+      "id": "web-typed-accounts-page",
+      "layer": "web-next",
+      "path": "web-next/src/modules/accounting/ledger-setup/coa-hierarchy/pages/AccountsPage.tsx",
+      "purpose": "Typed Account tree/list workspace and authoritative lookup/proposal composition"
+    },
+    {
+      "id": "web-typed-hierarchy-levels-page",
+      "layer": "web-next",
+      "path": "web-next/src/modules/accounting/ledger-setup/coa-hierarchy/pages/HierarchyLevelsPage.tsx",
+      "purpose": "Typed hierarchy-level list/lifecycle workspace"
+    },
+    {
+      "id": "web-account-form",
+      "layer": "web-next",
+      "path": "web-next/src/modules/accounting/ledger-setup/coa-hierarchy/components/AccountForm.tsx",
+      "purpose": "Typed Account form with server proposal preservation and shared mock-draft action"
+    },
+    {
+      "id": "web-hierarchy-level-form",
+      "layer": "web-next",
+      "path": "web-next/src/modules/accounting/ledger-setup/coa-hierarchy/components/HierarchyLevelForm.tsx",
+      "purpose": "Typed Hierarchy Level form with next-unused-level mock draft"
+    },
+    {
+      "id": "web-coa-mock-data",
+      "layer": "web-next-test",
+      "path": "web-next/src/modules/accounting/ledger-setup/coa-hierarchy/utils/mockData.ts",
+      "purpose": "Pure Account/Hierarchy Level local-draft generator using authoritative lookups"
+    },
+    {
+      "id": "web-coa-mock-data-tests",
+      "layer": "web-next-test",
+      "path": "web-next/src/modules/accounting/ledger-setup/coa-hierarchy/utils/mockData.test.ts",
+      "purpose": "Proposal preservation, lookup validity, posting policy and next-unused-level tests"
+    },
+    {
+      "id": "mobile-typed-accounts-screen",
+      "layer": "mobile-react",
+      "path": "mobile-react/src/modules/accounting/ledger-setup/coa-hierarchy/presentation/screens/AccountsScreen.tsx",
+      "purpose": "Typed mobile Account tree/list/detail/form orchestration"
+    },
+    {
+      "id": "mobile-typed-hierarchy-levels-screen",
+      "layer": "mobile-react",
+      "path": "mobile-react/src/modules/accounting/ledger-setup/coa-hierarchy/presentation/screens/HierarchyLevelsScreen.tsx",
+      "purpose": "Typed mobile hierarchy-level list/lifecycle orchestration"
+    },
+    {
+      "id": "mobile-account-form",
+      "layer": "mobile-react",
+      "path": "mobile-react/src/modules/accounting/ledger-setup/coa-hierarchy/presentation/components/AccountForm.tsx",
+      "purpose": "Typed mobile Account form with server proposal and shared mock-draft action"
+    },
+    {
+      "id": "mobile-hierarchy-level-form",
+      "layer": "mobile-react",
+      "path": "mobile-react/src/modules/accounting/ledger-setup/coa-hierarchy/presentation/components/HierarchyLevelForm.tsx",
+      "purpose": "Typed mobile Hierarchy Level form with next-unused-level mock draft"
+    },
+    {
+      "id": "mobile-coa-mock-data",
+      "layer": "mobile-react-test",
+      "path": "mobile-react/src/modules/accounting/ledger-setup/coa-hierarchy/presentation/utils/mockData.ts",
+      "purpose": "Pure mobile Account/Hierarchy Level local-draft generator"
+    },
+    {
+      "id": "mobile-coa-mock-data-tests",
+      "layer": "mobile-react-test",
+      "path": "mobile-react/src/modules/accounting/ledger-setup/coa-hierarchy/presentation/utils/mockData.test.ts",
+      "purpose": "Mobile mock-draft validity and proposal/lookup/level-number tests"
+    }
+  ]
+}

@@ -52,7 +52,7 @@ to revision 1 without replacing their identifiers or outbox history.
 The outbox health settings live under
 `Modules:Contacts:Messaging:Outbox` as `MaxDeadRows` and
 `MaxDueBacklogAge`. Operations and recovery steps are documented in
-`documentation/api/PRODUCTION_DEPLOYMENT_RUNBOOK.md`.
+`documentation/guides/api/PRODUCTION_DEPLOYMENT_RUNBOOK.md`.
 
 Reuse-first is part of the module workflow: search shared BuildingBlocks and
 local abstractions before creating a new piece, and keep domain logic local.

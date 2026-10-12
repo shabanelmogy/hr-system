@@ -141,7 +141,7 @@ children. Portable type names are invariant technical vocabulary.
 
 | Order | Stage | Status | Entry gate | Required evidence / exit gate | Evidence path |
 | ---: | --- | --- | --- | --- | --- |
-| 1 | API | Verified | Plan/slice/contract approved; Phase 00 completed | Canonical artifact/models/loader/fingerprint; all current provider schemas including Fiscal Years match; 110/110 Reporting tests pass | `documentation/system/features/managed-crystal-contract-registry/IMPLEMENTATION-REQUEST.md` and API profile |
+| 1 | API | Verified | Plan/slice/contract approved; Phase 00 completed | Canonical artifact/models/loader/fingerprint; all current provider schemas including Fiscal Years match; 110/110 Reporting tests pass | `documentation/modules/reporting/features/managed-crystal-contract-registry/managed-crystal-contract-registry-request.md` and API profile |
 | 2 | Web | Verified — Excluded implementation | API stage Verified | No wire/UI change; Excluded decision and current consumers recorded | Web applied profile |
 | 3 | Mobile | Verified — Excluded implementation | Web stage Verified | No wire/UI change; Excluded decision and current consumers recorded | Mobile applied profile |
 | 4 | Integrated live verification | Verified | API, Web and Mobile stages Verified | Identical source/runtime resource fingerprint; runtime resolves `fiscalyears`; provider schema parity passes | Review artifact Phase 06 evidence |

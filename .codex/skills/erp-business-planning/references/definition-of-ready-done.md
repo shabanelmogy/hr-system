@@ -8,7 +8,7 @@ slice may start; these lists are the per-capability checks inside a slice.
 
 - [ ] Actor and business goal are clear and confirmed by the owner.
 - [ ] Every linked business rule (`BR-###` in `PLAN.md` section 7) is confirmed and testable.
-- [ ] Permissions use exact `Resource:Action` claims (`documentation/system/PERMISSION_MODEL.md`); the record scope is explicit for every resource touched.
+- [ ] Permissions use exact `Resource:Action` claims (`documentation/guides/shared/PERMISSION_MODEL.md`); the record scope is explicit for every resource touched.
 - [ ] Tenant and company ownership of every entity is decided.
 - [ ] Every relationship has cardinality, required/optional, and delete behavior.
 - [ ] Concurrency and duplicate handling are decided where shared data changes.

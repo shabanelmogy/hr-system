@@ -58,7 +58,7 @@ State the chosen path to the requester in one sentence before continuing.
 
 1. Plan: follow P0–P9 in `PLAN_CREATION_PROTOCOL.md` inside the owning plan folder.
 2. Screens: for every Screen ID, on web and mobile separately, apply §7.
-3. Permissions: fill the Permission Action Matrix per `documentation/system/PERMISSION_MODEL.md`
+3. Permissions: fill the Permission Action Matrix per `documentation/guides/shared/PERMISSION_MODEL.md`
    (exact `Resource:Action`, no `Manage`).
 4. Decompose the authorized slice with `documentation/plans/FEATURE_DECOMPOSITION_TEMPLATE.md`
    (version 2.0, UI Pattern Gate, one active feature step).
@@ -72,7 +72,7 @@ State the chosen path to the requester in one sentence before continuing.
 
 ## 5. Existing-feature change or refactor
 
-1. Start from `documentation/system/features/<feature>/required-files.json` and the four
+1. Start from `documentation/modules/<module>/features/<feature>/required-files.json` and the four
    applied books (domain review, API, web, mobile profiles).
 2. Separate verified behavior, requested behavior, and intended platform differences.
 3. If the change adds business capability, new lifecycle, new permissions, or new
@@ -90,7 +90,7 @@ open decision gets a central note ID under `documentation/plans/notes/`.
 
 ## 7. Screen pattern selection (every screen, every platform)
 
-Open `documentation/project/SCREEN_PATTERN_CATALOG.md`:
+Open `documentation/guides/shared/SCREEN_PATTERN_CATALOG.md`:
 
 1. Answer "قواعد اختيار النمط" in order; the first yes gives the main pattern.
 2. Choose the form container with C-01 and the list presentation with C-02; apply

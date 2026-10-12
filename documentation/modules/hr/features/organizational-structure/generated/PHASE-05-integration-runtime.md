@@ -1,0 +1,60 @@
+<!-- GENERATED FILE. DO NOT EDIT. Source: recipe-manifest.json + templates/PHASE-05-integration-runtime.template.md -->
+
+# Organizational Structure Phase 05 - Integration and Runtime
+
+## Purpose
+
+Prove the feature is connected to the running system, not merely implemented in isolated files.
+
+## Integration matrix
+
+Verify all applicable registrations:
+
+- API endpoint versioning, authentication, tenant membership, permissions, dependency injection, validation scan, mapping scan, database context, localization, Hangfire, notification, and realtime.
+- Web route, API proxy path, endpoint registry, route access, navigation, permissions, query keys, realtime query registry, translations, report route, and import dependencies.
+- Mobile route file, typed route constant, route manifest, navigation, permissions, endpoint client, query keys, realtime registry, notification deep-link mapping, translations, report file handling, and device-safe layout.
+
+## Runtime evidence
+
+- [ ] API request and response samples match documented field names and paging metadata.
+- [ ] Browser and mobile requests serialize the same shared filters and sort tokens.
+- [ ] Every Required Import client sends the documented exact request body and
+      resolves dependency lookups through an authorized registered endpoint.
+- [ ] Import success uses the documented plural audit/notification/realtime action
+      and refreshes normal feature caches; conflict and network paths remain retryable as specified.
+- [ ] A successful mutation refreshes all open clients through their normal cache/realtime path.
+- [ ] Notification action URLs land on authorized routes in both clients.
+- [ ] Unauthorized, read-only, validation, not-found, conflict, and network failures render safely.
+- [ ] Production build configuration does not rely on local-only URLs or secrets.
+- [ ] Localization and RTL are tested in actual runtime layouts.
+
+Capture configuration and registration evidence separately from behavior tests.
+A file existing in the feature folder does not prove its route, DI, permission,
+realtime, notification, localization, report, or Import integration is reachable.
+
+## Approved references
+
+- **Organizational Structure cross-platform master review:** `../modules/hr/features/organizational-structure/organizational-structure-review.md` sections 4, 5, 6, 7, 9
+- **Organizational Structure API implementation profile:** `../modules/hr/features/organizational-structure/organizational-structure-api.md` sections 8, 9, 10
+- **Organizational Structure Next.js implementation profile:** `../modules/hr/features/organizational-structure/organizational-structure-web.md` sections 8, 10, 13
+- **Organizational Structure Expo implementation profile:** `../modules/hr/features/organizational-structure/organizational-structure-mobile.md` sections 2, 11, 12, 15
+
+## Source fingerprints
+
+| Book | Section | SHA-256 |
+| --- | ---: | --- |
+| organizational-structure-master | 4 | `834005c26053eb5eee6e85e186c98953501eda8584fb9e30055ec9bd16391cb8` |
+| organizational-structure-master | 5 | `580f392c99251101c4ed8611122c9bea65db28348b8bf40c87f4d5026d211b2f` |
+| organizational-structure-master | 6 | `2fdee62992580c5d76fc63348edf52701b1e514b1c18ff8be30c53dda4d1b0bf` |
+| organizational-structure-master | 7 | `d3371766bde33eeaa333e5abee156d13b95e6c35dae25ecc9ca097037434c07c` |
+| organizational-structure-master | 9 | `7ceb12bb46037333513809999525207b50465f1d803c98dc76366d8248e070c6` |
+| organizational-structure-api | 8 | `8427fbc60b6506434f168bbb92cebc0b07e6699dec5f0c7e336d6b0c7906c32a` |
+| organizational-structure-api | 9 | `bb97abd860546e88987447fc83aeaa058d22e9fc11562226223c3952b5391913` |
+| organizational-structure-api | 10 | `691c8be03efd3ce06ac8b599b24b3736ef9b3f74d8da99e0a19cbe28d593839f` |
+| organizational-structure-web | 8 | `81709390ab5691f03acc9dcd2b845f95f2a60c0ee2707ea8d96dcfc4efd4d812` |
+| organizational-structure-web | 10 | `c25e75c25fae7744eb25e95dbc1644c94d4955fae4e6f87f95947b8decd7fb33` |
+| organizational-structure-web | 13 | `f426db9a30f8de5984d35e6fcfbd4c2e466f6f573c87b20ee831432a35f69058` |
+| organizational-structure-mobile | 2 | `1abff838a984989b1613c209a17dc8f5abbb2f2124a52c9ae392da73575c379e` |
+| organizational-structure-mobile | 11 | `ec3e51c2ef99a1494eb03474652b596423e1d5fcc07a4ad7cf8066b0517e1b4e` |
+| organizational-structure-mobile | 12 | `a8731c681436d699f98b56159978ab43b87dec90325e32bd0d384599339f2d4b` |
+| organizational-structure-mobile | 15 | `85d324cd065dd2048f40a320715e506ab78f314b3db5d3481f67954747d86195` |

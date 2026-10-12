@@ -11,10 +11,10 @@ Use these sources together:
 1. Repository and `mobile-react/AGENTS.md` instructions.
 2. An approved Plan/Slice and version 2.0 feature execution contract for planned
    business work.
-3. `documentation/mobile-react/MOBILE_ARCHITECTURE.md`.
-4. `documentation/mobile-react/MOBILE_FEATURE_GUIDE.md`.
-5. `documentation/mobile-react/MOBILE_STYLE_GUIDE.md` for every style/UI change.
-6. `documentation/project/SCREEN_PATTERN_CATALOG.md`,
+3. `documentation/guides/mobile/MOBILE_ARCHITECTURE.md`.
+4. `documentation/guides/mobile/MOBILE_FEATURE_GUIDE.md`.
+5. `documentation/guides/mobile/MOBILE_STYLE_GUIDE.md` for every style/UI change.
+6. `documentation/guides/shared/SCREEN_PATTERN_CATALOG.md`,
    `SHARED_REUSE_CATALOG.md`, and `Shared_Form_Layouts.md` for reusable screen/form
    shape.
 7. The owning module package and applied API/Web/Mobile/cross-platform books.
@@ -121,7 +121,7 @@ compatibility contract.
 - Expo Router 57 owns navigation. Application code uses its matching entry points
   rather than external `@react-navigation/*` packages.
 
-`documentation/mobile-react/MOBILE_API_COMPATIBILITY_MATRIX.json` is the canonical
+`documentation/guides/mobile/MOBILE_API_COMPATIBILITY_MATRIX.json` is the canonical
 route/endpoint client matrix. `npm run check:contracts` validates every physical
 `app/**/*.tsx` route and exported endpoint leaf for aligned owner, scope, permission,
 HTTP behavior, offline policy and non-test caller. `deferred`, `UNREVIEWED`, or

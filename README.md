@@ -8,8 +8,8 @@ solution structured so future activities can be added as independent modules.
 ## Start here
 
 For any new module or feature, begin with the general
-[ERP documentation guide](documentation/project/ERP_DOCUMENTATION_GUIDE_AR.md),
-and the [shared reuse catalog](documentation/project/SHARED_REUSE_CATALOG.md),
+[ERP documentation guide](documentation/guides/shared/ERP_DOCUMENTATION_GUIDE_AR.md),
+and the [shared reuse catalog](documentation/guides/shared/SHARED_REUSE_CATALOG.md),
 then inspect the owning module package under `documentation/modules/`. HR books
 remain valid references for their own capabilities; they are not global ERP
 requirements.
@@ -61,6 +61,6 @@ flowchart LR
 - Centralized project documentation: `documentation/`
 
 The canonical three-project Countries implementation review is
-[`documentation/project/COUNTRIES_FEATURE_FULL_REVIEW.md`](documentation/project/COUNTRIES_FEATURE_FULL_REVIEW.md).
+[`documentation/modules/reference-data/features/countries/countries-review.md`](documentation/modules/reference-data/features/countries/countries-review.md).
 The reusable review workflow and source manifest are indexed from
 [`documentation/system/README.md`](documentation/system/README.md).

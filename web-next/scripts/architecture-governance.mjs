@@ -19,7 +19,8 @@ const mainAppRoot = path.join(appRoot, "(main)");
 const manifestPath = path.join(
   repositoryRoot,
   "documentation",
-  "web-next",
+  "guides",
+  "web",
   "architecture",
   "frontend-architecture-manifest.md",
 );

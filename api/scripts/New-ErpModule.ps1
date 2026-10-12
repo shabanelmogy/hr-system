@@ -157,7 +157,7 @@ or @@phases/@@ README only when it has module-specific content, and register it
 in @@module.json@@ @@documentationPaths@@. Each feature is planned with the
 shared @@documentation/system/@@ templates, and every mutable entity completes
 the entity lifecycle matrix in
-@@documentation/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md@@ §17 (one shared copy,
+@@documentation/guides/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md@@ §17 (one shared copy,
 never a per-module one).
 
 Before adding a component, service, or Contract, inventory shared BuildingBlocks

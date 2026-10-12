@@ -19,7 +19,7 @@
 | Owner | Accounting / Finance |
 | Depends on | Accounting foundation, authenticated tenant and current company |
 | Execution status | Active |
-| Status evidence | documentation/plans/business/accounting-core-gl/SLICE-01-LEDGER-SETUP-EXECUTION.md and documentation/project/FISCAL_YEARS_FEATURE_FULL_REVIEW.md |
+| Status evidence | documentation/plans/business/accounting-core-gl/SLICE-01-LEDGER-SETUP-EXECUTION.md and documentation/modules/accounting/features/fiscal-years/fiscal-years-review.md |
 
 ## 1. Child boundary and outcome
 
@@ -46,7 +46,7 @@ JSON-authored and have no independent CRUD route in this feature.
 
 ## 2. UI Pattern Gate (mandatory before implementation)
 
-The catalog authority is documentation/project/SCREEN_PATTERN_CATALOG.md. The
+The catalog authority is documentation/guides/shared/SCREEN_PATTERN_CATALOG.md. The
 management surface uses P-001 as the server-managed collection/list interaction
 pattern and one compact sectioned form. The global working-year selector uses
 P-008. P-001 does not require Countries' five views or imply that every optional
@@ -197,9 +197,9 @@ and read-only/forbidden states are announced through shared state components.
 
 | Order | Stage | Status | Entry gate | Required evidence / exit gate | Evidence path |
 | ---: | --- | --- | --- | --- | --- |
-| 1 | API | Verified | Accounting owner/scope/contracts frozen | API build and focused Fiscal Year domain/application/controller/isolation tests; migration applied and no pending model changes | documentation/api/FiscalYears_API_Implementation_Profile.md; api/Modules/Accounting/ErpSystem.Modules.Accounting.Tests/ |
-| 2 | Web | Verified | API contract verified | Source evidence: typed service/hooks, P-001 Grid/Cards/Report, form/mock/conflict tests, type-check and focused lint; authenticated live journey is still pending | documentation/web-next/features/fiscal-years-frontend-reference.md; web-next/src/modules/accounting/fiscal-years/ |
-| 3 | Mobile | Verified | Web contract verified | Source evidence: typed remote/use-case boundary, P-001 Table/Cards/Report, form/mock/conflict tests, type-check/lint/export evidence; actual device journey is still pending | documentation/mobile-react/fiscal-years-mobile-reference.md; mobile-react/src/modules/accounting/fiscal-years/ |
+| 1 | API | Verified | Accounting owner/scope/contracts frozen | API build and focused Fiscal Year domain/application/controller/isolation tests; migration applied and no pending model changes | documentation/modules/accounting/features/fiscal-years/fiscal-years-api.md; api/Modules/Accounting/ErpSystem.Modules.Accounting.Tests/ |
+| 2 | Web | Verified | API contract verified | Source evidence: typed service/hooks, P-001 Grid/Cards/Report, form/mock/conflict tests, type-check and focused lint; authenticated live journey is still pending | documentation/modules/accounting/features/fiscal-years/fiscal-years-web.md; web-next/src/modules/accounting/fiscal-years/ |
+| 3 | Mobile | Verified | Web contract verified | Source evidence: typed remote/use-case boundary, P-001 Table/Cards/Report, form/mock/conflict tests, type-check/lint/export evidence; actual device journey is still pending | documentation/modules/accounting/features/fiscal-years/fiscal-years-mobile.md; mobile-react/src/modules/accounting/fiscal-years/ |
 | 4 | Integrated live verification + user acceptance | Active | API/Web/Mobile evidence complete | Agent sends the detailed authenticated API/Web/actual-Mobile scenario; user runs or supervises it and explicitly accepts. Create/edit/view/archive/restore/lifecycle/report/conflict and bilingual checks are mandatory; no pass is inferred from automated evidence. | Scenario, results and user decision recorded in Phase 06 evidence |
 | 5 | Documentation and closure | Queued | Integrated stage Verified **and explicit user acceptance recorded** | Reconcile canonical profiles, required-file manifest/recipe, plan status, and customer education when required; then mark Closed | To be recorded after Step 01 manual acceptance |
 

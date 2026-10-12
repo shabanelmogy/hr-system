@@ -9,11 +9,11 @@ queries; Infrastructure implements module-local stores through
 
 | Controller | Scope | Route shape | Canonical profile |
 | --- | --- | --- | --- |
-| Countries | Global Platform / `super_admin` plus action permission | `/api/v1/countries` and resource subroutes | [Countries](../../../api/Countries_API_Implementation_Profile.md) |
-| States | Global Platform / `super_admin` plus action permission | `/api/v1/states` and resource subroutes | [States](../../../api/States_API_Implementation_Profile.md) |
-| Districts | Global Platform / `super_admin` plus action permission | `/api/v1/districts` and resource subroutes | [Districts](../../../api/Districts_API_Implementation_Profile.md) |
-| Address Types | Tenant/company plus action permission | `/api/v1/addresstypes` and resource subroutes | [Address Types](../../../api/AddressTypes_API_Implementation_Profile.md) |
-| Addresses | Tenant/company plus action permission | Current action-token compatibility routes under `/api/v1/addresses/{action}` | [Addresses](../../../api/Addresses_API_Implementation_Profile.md) |
+| Countries | Global Platform / `super_admin` plus action permission | `/api/v1/countries` and resource subroutes | [Countries](../features/countries/countries-api.md) |
+| States | Global Platform / `super_admin` plus action permission | `/api/v1/states` and resource subroutes | [States](../features/states/states-api.md) |
+| Districts | Global Platform / `super_admin` plus action permission | `/api/v1/districts` and resource subroutes | [Districts](../features/districts/districts-api.md) |
+| Address Types | Tenant/company plus action permission | `/api/v1/addresstypes` and resource subroutes | [Address Types](../features/address-types/address-types-api.md) |
+| Addresses | Tenant/company plus action permission | Current action-token compatibility routes under `/api/v1/addresses/{action}` | [Addresses](../features/addresses/addresses-api.md) |
 
 Countries, States, Districts, and Address Types use the resource-style
 `ApiRoutes.BaseRoute2`. Their applied slices include paged reads, lookups,
@@ -53,5 +53,5 @@ be planned with its consumers. Owner-link commands remain deferred as `DEF-006`.
   API profiles and required-file manifests.
 
 Any API change must follow
-[`API_FEATURE_DEVELOPMENT_WORKFLOW.md`](../../../api/API_FEATURE_DEVELOPMENT_WORKFLOW.md)
+[`API_FEATURE_DEVELOPMENT_WORKFLOW.md`](../../../guides/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md)
 and update the affected cross-platform feature evidence in the same change.

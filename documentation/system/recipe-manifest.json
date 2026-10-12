@@ -5,370 +5,370 @@
   "books": [
     {
       "id": "master",
-      "path": "../project/COUNTRIES_FEATURE_FULL_REVIEW.md",
+      "path": "../modules/reference-data/features/countries/countries-review.md",
       "title": "Countries cross-platform master review"
     },
     {
       "id": "api",
-      "path": "../api/Countries_API_Implementation_Profile.md",
+      "path": "../modules/reference-data/features/countries/countries-api.md",
       "title": "Countries API implementation profile"
     },
     {
       "id": "web",
-      "path": "../web-next/features/countries-frontend-reference.md",
+      "path": "../modules/reference-data/features/countries/countries-web.md",
       "title": "Countries Next.js implementation profile"
     },
     {
       "id": "mobile",
-      "path": "../mobile-react/countries-mobile-reference.md",
+      "path": "../modules/reference-data/features/countries/countries-mobile.md",
       "title": "Countries Expo implementation profile"
     },
     {
       "id": "states-master",
-      "path": "../project/STATES_FEATURE_FULL_REVIEW.md",
+      "path": "../modules/reference-data/features/states/states-review.md",
       "title": "States cross-platform master review"
     },
     {
       "id": "states-api",
-      "path": "../api/States_API_Implementation_Profile.md",
+      "path": "../modules/reference-data/features/states/states-api.md",
       "title": "States API implementation profile"
     },
     {
       "id": "states-web",
-      "path": "../web-next/features/states-frontend-reference.md",
+      "path": "../modules/reference-data/features/states/states-web.md",
       "title": "States Next.js implementation profile"
     },
     {
       "id": "states-mobile",
-      "path": "../mobile-react/states-mobile-reference.md",
+      "path": "../modules/reference-data/features/states/states-mobile.md",
       "title": "States Expo implementation profile"
     },
     {
       "id": "addresses-master",
-      "path": "../project/ADDRESSES_DOMAIN_FULL_REVIEW.md",
+      "path": "../modules/reference-data/features/addresses/addresses-review.md",
       "title": "Addresses domain foundation review"
     },
     {
       "id": "addresses-api",
-      "path": "../api/Addresses_API_Implementation_Profile.md",
+      "path": "../modules/reference-data/features/addresses/addresses-api.md",
       "title": "Addresses API implementation profile"
     },
     {
       "id": "addresses-web",
-      "path": "../web-next/features/addresses-frontend-reference.md",
+      "path": "../modules/reference-data/features/addresses/addresses-web.md",
       "title": "Addresses Next.js integration profile"
     },
     {
       "id": "addresses-mobile",
-      "path": "../mobile-react/addresses-mobile-reference.md",
+      "path": "../modules/reference-data/features/addresses/addresses-mobile.md",
       "title": "Addresses Expo integration profile"
     },
     {
       "id": "districts-master",
-      "path": "../project/DISTRICTS_FEATURE_FULL_REVIEW.md",
+      "path": "../modules/reference-data/features/districts/districts-review.md",
       "title": "Districts cross-platform master review"
     },
     {
       "id": "districts-api",
-      "path": "../api/Districts_API_Implementation_Profile.md",
+      "path": "../modules/reference-data/features/districts/districts-api.md",
       "title": "Districts API implementation profile"
     },
     {
       "id": "districts-web",
-      "path": "../web-next/features/districts-frontend-reference.md",
+      "path": "../modules/reference-data/features/districts/districts-web.md",
       "title": "Districts Next.js implementation profile"
     },
     {
       "id": "districts-mobile",
-      "path": "../mobile-react/districts-mobile-reference.md",
+      "path": "../modules/reference-data/features/districts/districts-mobile.md",
       "title": "Districts Expo implementation profile"
     },
     {
       "id": "address-types-master",
-      "path": "../project/ADDRESS_TYPES_FEATURE_FULL_REVIEW.md",
+      "path": "../modules/reference-data/features/address-types/address-types-review.md",
       "title": "Address Types cross-platform master review"
     },
     {
       "id": "address-types-api",
-      "path": "../api/AddressTypes_API_Implementation_Profile.md",
+      "path": "../modules/reference-data/features/address-types/address-types-api.md",
       "title": "Address Types API implementation profile"
     },
     {
       "id": "address-types-web",
-      "path": "../web-next/features/address-types-frontend-reference.md",
+      "path": "../modules/reference-data/features/address-types/address-types-web.md",
       "title": "Address Types Next.js implementation profile"
     },
     {
       "id": "address-types-mobile",
-      "path": "../mobile-react/address-types-mobile-reference.md",
+      "path": "../modules/reference-data/features/address-types/address-types-mobile.md",
       "title": "Address Types Expo implementation profile"
     },
     {
       "id": "company-geographic-scope-master",
-      "path": "../project/COMPANY_GEOGRAPHIC_SCOPE_FEATURE_FULL_REVIEW.md",
+      "path": "../modules/platform/features/company-geographic-scope/company-geographic-scope-review.md",
       "title": "Company Geographic Scope cross-platform master review"
     },
     {
       "id": "company-geographic-scope-api",
-      "path": "../api/CompanyGeographicScope_API_Implementation_Profile.md",
+      "path": "../modules/platform/features/company-geographic-scope/company-geographic-scope-api.md",
       "title": "Company Geographic Scope API implementation profile"
     },
     {
       "id": "company-geographic-scope-web",
-      "path": "../web-next/features/company-geographic-scope-frontend-reference.md",
+      "path": "../modules/platform/features/company-geographic-scope/company-geographic-scope-web.md",
       "title": "Company Geographic Scope Next.js implementation profile"
     },
     {
       "id": "company-geographic-scope-mobile",
-      "path": "../mobile-react/company-geographic-scope-mobile-reference.md",
+      "path": "../modules/platform/features/company-geographic-scope/company-geographic-scope-mobile.md",
       "title": "Company Geographic Scope Expo implementation profile"
     },
     {
       "id": "attendance-devices-master",
-      "path": "../project/ATTENDANCE_DEVICES_FEATURE_FULL_REVIEW.md",
+      "path": "../modules/hr/features/attendance-devices/attendance-devices-review.md",
       "title": "Attendance Devices cross-platform master review"
     },
     {
       "id": "attendance-devices-api",
-      "path": "../api/AttendanceDevices_API_Implementation_Profile.md",
+      "path": "../modules/hr/features/attendance-devices/attendance-devices-api.md",
       "title": "Attendance Devices API implementation profile"
     },
     {
       "id": "attendance-devices-web",
-      "path": "../web-next/features/attendance-devices-frontend-reference.md",
+      "path": "../modules/hr/features/attendance-devices/attendance-devices-web.md",
       "title": "Attendance Devices Next.js implementation profile"
     },
     {
       "id": "attendance-devices-mobile",
-      "path": "../mobile-react/attendance-devices-mobile-reference.md",
+      "path": "../modules/hr/features/attendance-devices/attendance-devices-mobile.md",
       "title": "Attendance Devices Expo implementation profile (deferred)"
     },
     {
       "id": "organizational-structure-master",
-      "path": "../project/ORGANIZATIONAL_STRUCTURE_FEATURE_FULL_REVIEW.md",
+      "path": "../modules/hr/features/organizational-structure/organizational-structure-review.md",
       "title": "Organizational Structure cross-platform master review"
     },
     {
       "id": "organizational-structure-api",
-      "path": "../api/OrganizationalStructure_API_Implementation_Profile.md",
+      "path": "../modules/hr/features/organizational-structure/organizational-structure-api.md",
       "title": "Organizational Structure API implementation profile"
     },
     {
       "id": "organizational-structure-web",
-      "path": "../web-next/features/organizational-structure-frontend-reference.md",
+      "path": "../modules/hr/features/organizational-structure/organizational-structure-web.md",
       "title": "Organizational Structure Next.js implementation profile"
     },
     {
       "id": "organizational-structure-mobile",
-      "path": "../mobile-react/organizational-structure-mobile-reference.md",
+      "path": "../modules/hr/features/organizational-structure/organizational-structure-mobile.md",
       "title": "Organizational Structure Expo implementation profile"
     },
     {
       "id": "fiscal-years-master",
-      "path": "../project/FISCAL_YEARS_FEATURE_FULL_REVIEW.md",
+      "path": "../modules/accounting/features/fiscal-years/fiscal-years-review.md",
       "title": "Fiscal Years cross-platform master review"
     },
     {
       "id": "fiscal-years-api",
-      "path": "../api/FiscalYears_API_Implementation_Profile.md",
+      "path": "../modules/accounting/features/fiscal-years/fiscal-years-api.md",
       "title": "Fiscal Years API implementation profile"
     },
     {
       "id": "fiscal-years-web",
-      "path": "../web-next/features/fiscal-years-frontend-reference.md",
+      "path": "../modules/accounting/features/fiscal-years/fiscal-years-web.md",
       "title": "Fiscal Years Next.js implementation profile"
     },
     {
       "id": "fiscal-years-mobile",
-      "path": "../mobile-react/fiscal-years-mobile-reference.md",
+      "path": "../modules/accounting/features/fiscal-years/fiscal-years-mobile.md",
       "title": "Fiscal Years Expo implementation profile"
     },
     {
       "id": "workforce-planning-master",
-      "path": "../project/WORKFORCE_PLANNING_FEATURE_FULL_REVIEW.md",
+      "path": "../modules/hr/features/workforce-planning/workforce-planning-review.md",
       "title": "Workforce Planning cross-platform master review"
     },
     {
       "id": "workforce-planning-api",
-      "path": "../api/WorkforcePlanning_API_Implementation_Profile.md",
+      "path": "../modules/hr/features/workforce-planning/workforce-planning-api.md",
       "title": "Workforce Planning API implementation profile"
     },
     {
       "id": "workforce-planning-web",
-      "path": "../web-next/features/workforce-planning-frontend-reference.md",
+      "path": "../modules/hr/features/workforce-planning/workforce-planning-web.md",
       "title": "Workforce Planning Next.js implementation profile"
     },
     {
       "id": "workforce-planning-mobile",
-      "path": "../mobile-react/workforce-planning-mobile-reference.md",
+      "path": "../modules/hr/features/workforce-planning/workforce-planning-mobile.md",
       "title": "Workforce Planning Expo implementation profile"
     },
     {
       "id": "tenant-module-entitlements-master",
-      "path": "../project/TENANT_MODULE_ENTITLEMENTS_FEATURE_FULL_REVIEW.md",
+      "path": "../modules/platform/features/tenant-module-entitlements/tenant-module-entitlements-review.md",
       "title": "Tenant module entitlements cross-platform master review"
     },
     {
       "id": "tenant-module-entitlements-api",
-      "path": "../api/TenantModuleEntitlements_API_Implementation_Profile.md",
+      "path": "../modules/platform/features/tenant-module-entitlements/tenant-module-entitlements-api.md",
       "title": "Tenant module entitlements API implementation profile"
     },
     {
       "id": "tenant-module-entitlements-web",
-      "path": "../web-next/features/tenant-module-entitlements-frontend-reference.md",
+      "path": "../modules/platform/features/tenant-module-entitlements/tenant-module-entitlements-web.md",
       "title": "Tenant module entitlements Next.js implementation profile"
     },
     {
       "id": "tenant-module-entitlements-mobile",
-      "path": "../mobile-react/tenant-module-entitlements-mobile-reference.md",
+      "path": "../modules/platform/features/tenant-module-entitlements/tenant-module-entitlements-mobile.md",
       "title": "Tenant module entitlements Expo implementation profile"
     },
     {
       "id": "accounting-ledger-setup-master",
-      "path": "../project/ACCOUNTING_LEDGER_SETUP_FEATURE_FULL_REVIEW.md",
+      "path": "../modules/accounting/features/accounting-ledger-setup/accounting-ledger-setup-review.md",
       "title": "Accounting Ledger Setup cross-platform implementation contract"
     },
     {
       "id": "accounting-ledger-setup-api",
-      "path": "../api/AccountingLedgerSetup_API_Implementation_Profile.md",
+      "path": "../modules/accounting/features/accounting-ledger-setup/accounting-ledger-setup-api.md",
       "title": "Accounting Ledger Setup API implementation contract"
     },
     {
       "id": "accounting-ledger-setup-web",
-      "path": "../web-next/features/accounting-ledger-setup-frontend-reference.md",
+      "path": "../modules/accounting/features/accounting-ledger-setup/accounting-ledger-setup-web.md",
       "title": "Accounting Ledger Setup Next.js implementation contract"
     },
     {
       "id": "accounting-ledger-setup-mobile",
-      "path": "../mobile-react/accounting-ledger-setup-mobile-reference.md",
+      "path": "../modules/accounting/features/accounting-ledger-setup/accounting-ledger-setup-mobile.md",
       "title": "Accounting Ledger Setup Expo implementation contract"
     },
     {
       "id": "ledger-setup-currency-master",
-      "path": "../project/LEDGER_SETUP_CURRENCY_FEATURE_FULL_REVIEW.md",
+      "path": "../modules/accounting/features/ledger-setup-currency/ledger-setup-currency-review.md",
       "title": "Ledger Setup Currency cross-platform master review"
     },
     {
       "id": "ledger-setup-currency-api",
-      "path": "../api/LedgerSetupCurrency_API_Implementation_Profile.md",
+      "path": "../modules/accounting/features/ledger-setup-currency/ledger-setup-currency-api.md",
       "title": "Ledger Setup Currency API implementation profile"
     },
     {
       "id": "ledger-setup-currency-web",
-      "path": "../web-next/features/ledger-setup-currency-frontend-reference.md",
+      "path": "../modules/accounting/features/ledger-setup-currency/ledger-setup-currency-web.md",
       "title": "Ledger Setup Currency Next.js implementation profile"
     },
     {
       "id": "ledger-setup-currency-mobile",
-      "path": "../mobile-react/ledger-setup-currency-mobile-reference.md",
+      "path": "../modules/accounting/features/ledger-setup-currency/ledger-setup-currency-mobile.md",
       "title": "Ledger Setup Currency Expo implementation profile"
     },
     {
       "id": "ledger-setup-coa-hierarchy-master",
-      "path": "../project/LEDGER_SETUP_COA_HIERARCHY_FEATURE_FULL_REVIEW.md",
+      "path": "../modules/accounting/features/ledger-setup-coa-hierarchy/ledger-setup-coa-hierarchy-review.md",
       "title": "Accounting Chart of Accounts and Hierarchy cross-platform implementation contract"
     },
     {
       "id": "ledger-setup-coa-hierarchy-api",
-      "path": "../api/LedgerSetupCoaHierarchy_API_Implementation_Profile.md",
+      "path": "../modules/accounting/features/ledger-setup-coa-hierarchy/ledger-setup-coa-hierarchy-api.md",
       "title": "Accounting Chart of Accounts and Hierarchy API implementation contract"
     },
     {
       "id": "ledger-setup-coa-hierarchy-web",
-      "path": "../web-next/features/ledger-setup-coa-hierarchy-frontend-reference.md",
+      "path": "../modules/accounting/features/ledger-setup-coa-hierarchy/ledger-setup-coa-hierarchy-web.md",
       "title": "Accounting Chart of Accounts and Hierarchy Next.js implementation contract"
     },
     {
       "id": "ledger-setup-coa-hierarchy-mobile",
-      "path": "../mobile-react/ledger-setup-coa-hierarchy-mobile-reference.md",
+      "path": "../modules/accounting/features/ledger-setup-coa-hierarchy/ledger-setup-coa-hierarchy-mobile.md",
       "title": "Accounting Chart of Accounts and Hierarchy Expo implementation contract"
     },
     {
       "id": "managed-crystal-contract-registry-master",
-      "path": "../project/MANAGED_CRYSTAL_CONTRACT_REGISTRY_FEATURE_FULL_REVIEW.md",
+      "path": "../modules/reporting/features/managed-crystal-contract-registry/managed-crystal-contract-registry-review.md",
       "title": "Managed Crystal Contract Registry cross-platform master review"
     },
     {
       "id": "managed-crystal-contract-registry-api",
-      "path": "../api/ManagedCrystalContractRegistry_API_Implementation_Profile.md",
+      "path": "../modules/reporting/features/managed-crystal-contract-registry/managed-crystal-contract-registry-api.md",
       "title": "Managed Crystal Contract Registry API implementation profile"
     },
     {
       "id": "managed-crystal-contract-registry-web",
-      "path": "../web-next/features/managed-crystal-contract-registry-frontend-reference.md",
+      "path": "../modules/reporting/features/managed-crystal-contract-registry/managed-crystal-contract-registry-web.md",
       "title": "Managed Crystal Contract Registry Next.js implementation profile"
     },
     {
       "id": "managed-crystal-contract-registry-mobile",
-      "path": "../mobile-react/managed-crystal-contract-registry-mobile-reference.md",
+      "path": "../modules/reporting/features/managed-crystal-contract-registry/managed-crystal-contract-registry-mobile.md",
       "title": "Managed Crystal Contract Registry Expo implementation profile"
     },
     {
       "id": "managed-crystal-template-validation-master",
-      "path": "../project/MANAGED_CRYSTAL_TEMPLATE_VALIDATION_FEATURE_FULL_REVIEW.md",
+      "path": "../modules/reporting/features/managed-crystal-template-validation/managed-crystal-template-validation-review.md",
       "title": "Managed Crystal Template Validation cross-platform master review"
     },
     {
       "id": "managed-crystal-template-validation-api",
-      "path": "../api/ManagedCrystalTemplateValidation_API_Implementation_Profile.md",
+      "path": "../modules/reporting/features/managed-crystal-template-validation/managed-crystal-template-validation-api.md",
       "title": "Managed Crystal Template Validation API implementation profile"
     },
     {
       "id": "managed-crystal-template-validation-web",
-      "path": "../web-next/features/managed-crystal-template-validation-frontend-reference.md",
+      "path": "../modules/reporting/features/managed-crystal-template-validation/managed-crystal-template-validation-web.md",
       "title": "Managed Crystal Template Validation Next.js implementation profile"
     },
     {
       "id": "managed-crystal-template-validation-mobile",
-      "path": "../mobile-react/managed-crystal-template-validation-mobile-reference.md",
+      "path": "../modules/reporting/features/managed-crystal-template-validation/managed-crystal-template-validation-mobile.md",
       "title": "Managed Crystal Template Validation Expo implementation profile"
     },
     {
       "id": "managed-crystal-manager-experience-master",
-      "path": "../project/MANAGED_CRYSTAL_MANAGER_EXPERIENCE_FEATURE_FULL_REVIEW.md",
+      "path": "../modules/reporting/features/managed-crystal-manager-experience/managed-crystal-manager-experience-review.md",
       "title": "Managed Crystal Report Manager Experience cross-platform master review"
     },
     {
       "id": "managed-crystal-manager-experience-api",
-      "path": "../api/ManagedCrystalManagerExperience_API_Implementation_Profile.md",
+      "path": "../modules/reporting/features/managed-crystal-manager-experience/managed-crystal-manager-experience-api.md",
       "title": "Managed Crystal Report Manager Experience API implementation profile"
     },
     {
       "id": "managed-crystal-manager-experience-web",
-      "path": "../web-next/features/managed-crystal-manager-experience-frontend-reference.md",
+      "path": "../modules/reporting/features/managed-crystal-manager-experience/managed-crystal-manager-experience-web.md",
       "title": "Managed Crystal Report Manager Experience Next.js implementation profile"
     },
     {
       "id": "managed-crystal-manager-experience-mobile",
-      "path": "../mobile-react/managed-crystal-manager-experience-mobile-reference.md",
+      "path": "../modules/reporting/features/managed-crystal-manager-experience/managed-crystal-manager-experience-mobile.md",
       "title": "Managed Crystal Report Manager Experience Expo implementation profile"
     }
   ],
   "requiredFileManifests": [
-    "features/countries/required-files.json",
-    "features/states/required-files.json",
-    "features/addresses/required-files.json",
-    "features/districts/required-files.json",
-    "features/address-types/required-files.json",
-    "features/company-geographic-scope/required-files.json",
-    "features/attendance-devices/required-files.json",
-    "features/organizational-structure/required-files.json",
-    "features/fiscal-years/required-files.json",
-    "features/workforce-planning/required-files.json",
-    "features/tenant-module-entitlements/required-files.json",
-    "features/accounting-ledger-setup/required-files.json",
-    "features/ledger-setup-currency/required-files.json",
-    "features/ledger-setup-coa-hierarchy/required-files.json",
-    "features/managed-crystal-contract-registry/required-files.json",
-    "features/managed-crystal-template-validation/required-files.json",
-    "features/managed-crystal-manager-experience/required-files.json"
+    "../modules/reference-data/features/countries/required-files.json",
+    "../modules/reference-data/features/states/required-files.json",
+    "../modules/reference-data/features/addresses/required-files.json",
+    "../modules/reference-data/features/districts/required-files.json",
+    "../modules/reference-data/features/address-types/required-files.json",
+    "../modules/platform/features/company-geographic-scope/required-files.json",
+    "../modules/hr/features/attendance-devices/required-files.json",
+    "../modules/hr/features/organizational-structure/required-files.json",
+    "../modules/accounting/features/fiscal-years/required-files.json",
+    "../modules/hr/features/workforce-planning/required-files.json",
+    "../modules/platform/features/tenant-module-entitlements/required-files.json",
+    "../modules/accounting/features/accounting-ledger-setup/required-files.json",
+    "../modules/accounting/features/ledger-setup-currency/required-files.json",
+    "../modules/accounting/features/ledger-setup-coa-hierarchy/required-files.json",
+    "../modules/reporting/features/managed-crystal-contract-registry/required-files.json",
+    "../modules/reporting/features/managed-crystal-template-validation/required-files.json",
+    "../modules/reporting/features/managed-crystal-manager-experience/required-files.json"
   ],
   "recipes": [
     {
       "id": "phase-00-discovery-evidence",
       "title": "Phase 00 - Discovery and Evidence",
       "template": "templates/PHASE-00-discovery-evidence.template.md",
-      "output": "generated/PHASE-00-discovery-evidence.md",
+      "output": "../modules/reference-data/features/countries/generated/PHASE-00-discovery-evidence.md",
       "sources": [
         {
           "book": "master",
@@ -411,7 +411,7 @@
       "id": "phase-01-domain-api",
       "title": "Phase 01 - Domain and API",
       "template": "templates/PHASE-01-domain-api.template.md",
-      "output": "generated/PHASE-01-domain-api.md",
+      "output": "../modules/reference-data/features/countries/generated/PHASE-01-domain-api.md",
       "sources": [
         {
           "book": "master",
@@ -442,7 +442,7 @@
       "id": "phase-02-web-client",
       "title": "Phase 02 - Next.js Client",
       "template": "templates/PHASE-02-web-client.template.md",
-      "output": "generated/PHASE-02-web-client.md",
+      "output": "../modules/reference-data/features/countries/generated/PHASE-02-web-client.md",
       "sources": [
         {
           "book": "master",
@@ -478,7 +478,7 @@
       "id": "phase-03-mobile-client",
       "title": "Phase 03 - Expo Mobile Client",
       "template": "templates/PHASE-03-mobile-client.template.md",
-      "output": "generated/PHASE-03-mobile-client.md",
+      "output": "../modules/reference-data/features/countries/generated/PHASE-03-mobile-client.md",
       "sources": [
         {
           "book": "master",
@@ -515,7 +515,7 @@
       "id": "phase-04-domain-actions",
       "title": "Phase 04 - Domain Actions and Lifecycle",
       "template": "templates/PHASE-04-domain-actions.template.md",
-      "output": "generated/PHASE-04-domain-actions.md",
+      "output": "../modules/reference-data/features/countries/generated/PHASE-04-domain-actions.md",
       "sources": [
         {
           "book": "master",
@@ -558,7 +558,7 @@
       "id": "phase-05-integration-runtime",
       "title": "Phase 05 - Integration and Runtime",
       "template": "templates/PHASE-05-integration-runtime.template.md",
-      "output": "generated/PHASE-05-integration-runtime.md",
+      "output": "../modules/reference-data/features/countries/generated/PHASE-05-integration-runtime.md",
       "sources": [
         {
           "book": "master",
@@ -601,7 +601,7 @@
       "id": "phase-06-final-reconciliation",
       "title": "Phase 06 - Final Reconciliation",
       "template": "templates/PHASE-06-final-reconciliation.template.md",
-      "output": "generated/PHASE-06-final-reconciliation.md",
+      "output": "../modules/reference-data/features/countries/generated/PHASE-06-final-reconciliation.md",
       "sources": [
         {
           "book": "master",
@@ -639,7 +639,7 @@
       "id": "states-phase-00-discovery-evidence",
       "title": "States Phase 00 - Discovery and Evidence",
       "template": "templates/PHASE-00-discovery-evidence.template.md",
-      "output": "generated/states/PHASE-00-discovery-evidence.md",
+      "output": "../modules/reference-data/features/states/generated/PHASE-00-discovery-evidence.md",
       "sources": [
         {
           "book": "states-master",
@@ -682,7 +682,7 @@
       "id": "states-phase-01-domain-api",
       "title": "States Phase 01 - Domain and API",
       "template": "templates/PHASE-01-domain-api.template.md",
-      "output": "generated/states/PHASE-01-domain-api.md",
+      "output": "../modules/reference-data/features/states/generated/PHASE-01-domain-api.md",
       "sources": [
         {
           "book": "states-master",
@@ -713,7 +713,7 @@
       "id": "states-phase-02-web-client",
       "title": "States Phase 02 - Next.js Client",
       "template": "templates/PHASE-02-web-client.template.md",
-      "output": "generated/states/PHASE-02-web-client.md",
+      "output": "../modules/reference-data/features/states/generated/PHASE-02-web-client.md",
       "sources": [
         {
           "book": "states-master",
@@ -749,7 +749,7 @@
       "id": "states-phase-03-mobile-client",
       "title": "States Phase 03 - Expo Mobile Client",
       "template": "templates/PHASE-03-mobile-client.template.md",
-      "output": "generated/states/PHASE-03-mobile-client.md",
+      "output": "../modules/reference-data/features/states/generated/PHASE-03-mobile-client.md",
       "sources": [
         {
           "book": "states-master",
@@ -786,7 +786,7 @@
       "id": "states-phase-04-domain-actions",
       "title": "States Phase 04 - Domain Actions and Lifecycle",
       "template": "templates/PHASE-04-domain-actions.template.md",
-      "output": "generated/states/PHASE-04-domain-actions.md",
+      "output": "../modules/reference-data/features/states/generated/PHASE-04-domain-actions.md",
       "sources": [
         {
           "book": "states-master",
@@ -829,7 +829,7 @@
       "id": "states-phase-05-integration-runtime",
       "title": "States Phase 05 - Integration and Runtime",
       "template": "templates/PHASE-05-integration-runtime.template.md",
-      "output": "generated/states/PHASE-05-integration-runtime.md",
+      "output": "../modules/reference-data/features/states/generated/PHASE-05-integration-runtime.md",
       "sources": [
         {
           "book": "states-master",
@@ -874,7 +874,7 @@
       "id": "states-phase-06-final-reconciliation",
       "title": "States Phase 06 - Final Reconciliation",
       "template": "templates/PHASE-06-final-reconciliation.template.md",
-      "output": "generated/states/PHASE-06-final-reconciliation.md",
+      "output": "../modules/reference-data/features/states/generated/PHASE-06-final-reconciliation.md",
       "sources": [
         {
           "book": "states-master",
@@ -912,7 +912,7 @@
       "id": "addresses-phase-00-discovery-evidence",
       "title": "Addresses Phase 00 - Discovery and Evidence",
       "template": "templates/PHASE-00-discovery-evidence.template.md",
-      "output": "generated/addresses/PHASE-00-discovery-evidence.md",
+      "output": "../modules/reference-data/features/addresses/generated/PHASE-00-discovery-evidence.md",
       "sources": [
         {
           "book": "addresses-master",
@@ -945,7 +945,7 @@
       "id": "addresses-phase-01-domain-api",
       "title": "Addresses Phase 01 - Domain and API",
       "template": "templates/PHASE-01-domain-api.template.md",
-      "output": "generated/addresses/PHASE-01-domain-api.md",
+      "output": "../modules/reference-data/features/addresses/generated/PHASE-01-domain-api.md",
       "sources": [
         {
           "book": "addresses-master",
@@ -972,7 +972,7 @@
       "id": "addresses-phase-02-web-client",
       "title": "Addresses Phase 02 - Next.js Client",
       "template": "templates/PHASE-02-web-client.template.md",
-      "output": "generated/addresses/PHASE-02-web-client.md",
+      "output": "../modules/reference-data/features/addresses/generated/PHASE-02-web-client.md",
       "sources": [
         {
           "book": "addresses-master",
@@ -997,7 +997,7 @@
       "id": "addresses-phase-03-mobile-client",
       "title": "Addresses Phase 03 - Expo Mobile Client",
       "template": "templates/PHASE-03-mobile-client.template.md",
-      "output": "generated/addresses/PHASE-03-mobile-client.md",
+      "output": "../modules/reference-data/features/addresses/generated/PHASE-03-mobile-client.md",
       "sources": [
         {
           "book": "addresses-master",
@@ -1021,7 +1021,7 @@
       "id": "addresses-phase-04-domain-actions",
       "title": "Addresses Phase 04 - Domain Actions and Lifecycle",
       "template": "templates/PHASE-04-domain-actions.template.md",
-      "output": "generated/addresses/PHASE-04-domain-actions.md",
+      "output": "../modules/reference-data/features/addresses/generated/PHASE-04-domain-actions.md",
       "sources": [
         {
           "book": "addresses-master",
@@ -1059,7 +1059,7 @@
       "id": "addresses-phase-05-integration-runtime",
       "title": "Addresses Phase 05 - Integration and Runtime",
       "template": "templates/PHASE-05-integration-runtime.template.md",
-      "output": "generated/addresses/PHASE-05-integration-runtime.md",
+      "output": "../modules/reference-data/features/addresses/generated/PHASE-05-integration-runtime.md",
       "sources": [
         {
           "book": "addresses-master",
@@ -1098,7 +1098,7 @@
       "id": "addresses-phase-06-final-reconciliation",
       "title": "Addresses Phase 06 - Final Reconciliation",
       "template": "templates/PHASE-06-final-reconciliation.template.md",
-      "output": "generated/addresses/PHASE-06-final-reconciliation.md",
+      "output": "../modules/reference-data/features/addresses/generated/PHASE-06-final-reconciliation.md",
       "sources": [
         {
           "book": "addresses-master",
@@ -1137,7 +1137,7 @@
       "id": "districts-phase-00-discovery-evidence",
       "title": "Districts Phase 00 - Discovery and Evidence",
       "template": "templates/PHASE-00-discovery-evidence.template.md",
-      "output": "generated/districts/PHASE-00-discovery-evidence.md",
+      "output": "../modules/reference-data/features/districts/generated/PHASE-00-discovery-evidence.md",
       "sources": [
         {
           "book": "districts-master",
@@ -1180,7 +1180,7 @@
       "id": "districts-phase-01-domain-api",
       "title": "Districts Phase 01 - Domain and API",
       "template": "templates/PHASE-01-domain-api.template.md",
-      "output": "generated/districts/PHASE-01-domain-api.md",
+      "output": "../modules/reference-data/features/districts/generated/PHASE-01-domain-api.md",
       "sources": [
         {
           "book": "districts-master",
@@ -1211,7 +1211,7 @@
       "id": "districts-phase-02-web-client",
       "title": "Districts Phase 02 - Next.js Client",
       "template": "templates/PHASE-02-web-client.template.md",
-      "output": "generated/districts/PHASE-02-web-client.md",
+      "output": "../modules/reference-data/features/districts/generated/PHASE-02-web-client.md",
       "sources": [
         {
           "book": "districts-master",
@@ -1247,7 +1247,7 @@
       "id": "districts-phase-03-mobile-client",
       "title": "Districts Phase 03 - Expo Mobile Client",
       "template": "templates/PHASE-03-mobile-client.template.md",
-      "output": "generated/districts/PHASE-03-mobile-client.md",
+      "output": "../modules/reference-data/features/districts/generated/PHASE-03-mobile-client.md",
       "sources": [
         {
           "book": "districts-master",
@@ -1284,7 +1284,7 @@
       "id": "districts-phase-04-domain-actions",
       "title": "Districts Phase 04 - Domain Actions and Lifecycle",
       "template": "templates/PHASE-04-domain-actions.template.md",
-      "output": "generated/districts/PHASE-04-domain-actions.md",
+      "output": "../modules/reference-data/features/districts/generated/PHASE-04-domain-actions.md",
       "sources": [
         {
           "book": "districts-master",
@@ -1327,7 +1327,7 @@
       "id": "districts-phase-05-integration-runtime",
       "title": "Districts Phase 05 - Integration and Runtime",
       "template": "templates/PHASE-05-integration-runtime.template.md",
-      "output": "generated/districts/PHASE-05-integration-runtime.md",
+      "output": "../modules/reference-data/features/districts/generated/PHASE-05-integration-runtime.md",
       "sources": [
         {
           "book": "districts-master",
@@ -1370,7 +1370,7 @@
       "id": "districts-phase-06-final-reconciliation",
       "title": "Districts Phase 06 - Final Reconciliation",
       "template": "templates/PHASE-06-final-reconciliation.template.md",
-      "output": "generated/districts/PHASE-06-final-reconciliation.md",
+      "output": "../modules/reference-data/features/districts/generated/PHASE-06-final-reconciliation.md",
       "sources": [
         {
           "book": "districts-master",
@@ -1408,7 +1408,7 @@
       "id": "address-types-phase-00-discovery-evidence",
       "title": "Address Types Phase 00 - Discovery and Evidence",
       "template": "templates/PHASE-00-discovery-evidence.template.md",
-      "output": "generated/address-types/PHASE-00-discovery-evidence.md",
+      "output": "../modules/reference-data/features/address-types/generated/PHASE-00-discovery-evidence.md",
       "sources": [
         {
           "book": "address-types-master",
@@ -1451,7 +1451,7 @@
       "id": "address-types-phase-01-domain-api",
       "title": "Address Types Phase 01 - Domain and API",
       "template": "templates/PHASE-01-domain-api.template.md",
-      "output": "generated/address-types/PHASE-01-domain-api.md",
+      "output": "../modules/reference-data/features/address-types/generated/PHASE-01-domain-api.md",
       "sources": [
         {
           "book": "address-types-master",
@@ -1482,7 +1482,7 @@
       "id": "address-types-phase-02-web-client",
       "title": "Address Types Phase 02 - Next.js Client",
       "template": "templates/PHASE-02-web-client.template.md",
-      "output": "generated/address-types/PHASE-02-web-client.md",
+      "output": "../modules/reference-data/features/address-types/generated/PHASE-02-web-client.md",
       "sources": [
         {
           "book": "address-types-master",
@@ -1518,7 +1518,7 @@
       "id": "address-types-phase-03-mobile-client",
       "title": "Address Types Phase 03 - Expo Mobile Client",
       "template": "templates/PHASE-03-mobile-client.template.md",
-      "output": "generated/address-types/PHASE-03-mobile-client.md",
+      "output": "../modules/reference-data/features/address-types/generated/PHASE-03-mobile-client.md",
       "sources": [
         {
           "book": "address-types-master",
@@ -1555,7 +1555,7 @@
       "id": "address-types-phase-04-domain-actions",
       "title": "Address Types Phase 04 - Domain Actions and Lifecycle",
       "template": "templates/PHASE-04-domain-actions.template.md",
-      "output": "generated/address-types/PHASE-04-domain-actions.md",
+      "output": "../modules/reference-data/features/address-types/generated/PHASE-04-domain-actions.md",
       "sources": [
         {
           "book": "address-types-master",
@@ -1598,7 +1598,7 @@
       "id": "address-types-phase-05-integration-runtime",
       "title": "Address Types Phase 05 - Integration and Runtime",
       "template": "templates/PHASE-05-integration-runtime.template.md",
-      "output": "generated/address-types/PHASE-05-integration-runtime.md",
+      "output": "../modules/reference-data/features/address-types/generated/PHASE-05-integration-runtime.md",
       "sources": [
         {
           "book": "address-types-master",
@@ -1641,7 +1641,7 @@
       "id": "address-types-phase-06-final-reconciliation",
       "title": "Address Types Phase 06 - Final Reconciliation",
       "template": "templates/PHASE-06-final-reconciliation.template.md",
-      "output": "generated/address-types/PHASE-06-final-reconciliation.md",
+      "output": "../modules/reference-data/features/address-types/generated/PHASE-06-final-reconciliation.md",
       "sources": [
         {
           "book": "address-types-master",
@@ -1679,7 +1679,7 @@
       "id": "company-geographic-scope-phase-00-discovery-evidence",
       "title": "Company Geographic Scope Phase 00 - Discovery and Evidence",
       "template": "templates/PHASE-00-discovery-evidence.template.md",
-      "output": "generated/company-geographic-scope/PHASE-00-discovery-evidence.md",
+      "output": "../modules/platform/features/company-geographic-scope/generated/PHASE-00-discovery-evidence.md",
       "sources": [
         {
           "book": "company-geographic-scope-master",
@@ -1722,7 +1722,7 @@
       "id": "company-geographic-scope-phase-01-domain-api",
       "title": "Company Geographic Scope Phase 01 - Domain and API",
       "template": "templates/PHASE-01-domain-api.template.md",
-      "output": "generated/company-geographic-scope/PHASE-01-domain-api.md",
+      "output": "../modules/platform/features/company-geographic-scope/generated/PHASE-01-domain-api.md",
       "sources": [
         {
           "book": "company-geographic-scope-master",
@@ -1753,7 +1753,7 @@
       "id": "company-geographic-scope-phase-02-web-client",
       "title": "Company Geographic Scope Phase 02 - Next.js Client",
       "template": "templates/PHASE-02-web-client.template.md",
-      "output": "generated/company-geographic-scope/PHASE-02-web-client.md",
+      "output": "../modules/platform/features/company-geographic-scope/generated/PHASE-02-web-client.md",
       "sources": [
         {
           "book": "company-geographic-scope-master",
@@ -1789,7 +1789,7 @@
       "id": "company-geographic-scope-phase-03-mobile-client",
       "title": "Company Geographic Scope Phase 03 - Expo Mobile Client",
       "template": "templates/PHASE-03-mobile-client.template.md",
-      "output": "generated/company-geographic-scope/PHASE-03-mobile-client.md",
+      "output": "../modules/platform/features/company-geographic-scope/generated/PHASE-03-mobile-client.md",
       "sources": [
         {
           "book": "company-geographic-scope-master",
@@ -1826,7 +1826,7 @@
       "id": "company-geographic-scope-phase-04-domain-actions",
       "title": "Company Geographic Scope Phase 04 - Domain Actions and Lifecycle",
       "template": "templates/PHASE-04-domain-actions.template.md",
-      "output": "generated/company-geographic-scope/PHASE-04-domain-actions.md",
+      "output": "../modules/platform/features/company-geographic-scope/generated/PHASE-04-domain-actions.md",
       "sources": [
         {
           "book": "company-geographic-scope-master",
@@ -1869,7 +1869,7 @@
       "id": "company-geographic-scope-phase-05-integration-runtime",
       "title": "Company Geographic Scope Phase 05 - Integration and Runtime",
       "template": "templates/PHASE-05-integration-runtime.template.md",
-      "output": "generated/company-geographic-scope/PHASE-05-integration-runtime.md",
+      "output": "../modules/platform/features/company-geographic-scope/generated/PHASE-05-integration-runtime.md",
       "sources": [
         {
           "book": "company-geographic-scope-master",
@@ -1912,7 +1912,7 @@
       "id": "company-geographic-scope-phase-06-final-reconciliation",
       "title": "Company Geographic Scope Phase 06 - Final Reconciliation",
       "template": "templates/PHASE-06-final-reconciliation.template.md",
-      "output": "generated/company-geographic-scope/PHASE-06-final-reconciliation.md",
+      "output": "../modules/platform/features/company-geographic-scope/generated/PHASE-06-final-reconciliation.md",
       "sources": [
         {
           "book": "company-geographic-scope-master",
@@ -1950,7 +1950,7 @@
       "id": "attendance-devices-phase-00-discovery-evidence",
       "title": "Attendance Devices Phase 00 - Discovery and Evidence",
       "template": "templates/PHASE-00-discovery-evidence.template.md",
-      "output": "generated/attendance-devices/PHASE-00-discovery-evidence.md",
+      "output": "../modules/hr/features/attendance-devices/generated/PHASE-00-discovery-evidence.md",
       "sources": [
         {
           "book": "attendance-devices-master",
@@ -1993,7 +1993,7 @@
       "id": "attendance-devices-phase-01-domain-api",
       "title": "Attendance Devices Phase 01 - Domain and API",
       "template": "templates/PHASE-01-domain-api.template.md",
-      "output": "generated/attendance-devices/PHASE-01-domain-api.md",
+      "output": "../modules/hr/features/attendance-devices/generated/PHASE-01-domain-api.md",
       "sources": [
         {
           "book": "attendance-devices-master",
@@ -2024,7 +2024,7 @@
       "id": "attendance-devices-phase-02-web-client",
       "title": "Attendance Devices Phase 02 - Next.js Client",
       "template": "templates/PHASE-02-web-client.template.md",
-      "output": "generated/attendance-devices/PHASE-02-web-client.md",
+      "output": "../modules/hr/features/attendance-devices/generated/PHASE-02-web-client.md",
       "sources": [
         {
           "book": "attendance-devices-master",
@@ -2060,7 +2060,7 @@
       "id": "attendance-devices-phase-03-mobile-client",
       "title": "Attendance Devices Phase 03 - Expo Mobile Client (deferred)",
       "template": "templates/PHASE-03-mobile-client.template.md",
-      "output": "generated/attendance-devices/PHASE-03-mobile-client.md",
+      "output": "../modules/hr/features/attendance-devices/generated/PHASE-03-mobile-client.md",
       "sources": [
         {
           "book": "attendance-devices-master",
@@ -2097,7 +2097,7 @@
       "id": "attendance-devices-phase-04-domain-actions",
       "title": "Attendance Devices Phase 04 - Domain Actions and Lifecycle",
       "template": "templates/PHASE-04-domain-actions.template.md",
-      "output": "generated/attendance-devices/PHASE-04-domain-actions.md",
+      "output": "../modules/hr/features/attendance-devices/generated/PHASE-04-domain-actions.md",
       "sources": [
         {
           "book": "attendance-devices-master",
@@ -2140,7 +2140,7 @@
       "id": "attendance-devices-phase-05-integration-runtime",
       "title": "Attendance Devices Phase 05 - Integration and Runtime",
       "template": "templates/PHASE-05-integration-runtime.template.md",
-      "output": "generated/attendance-devices/PHASE-05-integration-runtime.md",
+      "output": "../modules/hr/features/attendance-devices/generated/PHASE-05-integration-runtime.md",
       "sources": [
         {
           "book": "attendance-devices-master",
@@ -2183,7 +2183,7 @@
       "id": "attendance-devices-phase-06-final-reconciliation",
       "title": "Attendance Devices Phase 06 - Final Reconciliation",
       "template": "templates/PHASE-06-final-reconciliation.template.md",
-      "output": "generated/attendance-devices/PHASE-06-final-reconciliation.md",
+      "output": "../modules/hr/features/attendance-devices/generated/PHASE-06-final-reconciliation.md",
       "sources": [
         {
           "book": "attendance-devices-master",
@@ -2221,7 +2221,7 @@
       "id": "organizational-structure-phase-00-discovery-evidence",
       "title": "Organizational Structure Phase 00 - Discovery and Evidence",
       "template": "templates/PHASE-00-discovery-evidence.template.md",
-      "output": "generated/organizational-structure/PHASE-00-discovery-evidence.md",
+      "output": "../modules/hr/features/organizational-structure/generated/PHASE-00-discovery-evidence.md",
       "sources": [
         {
           "book": "organizational-structure-master",
@@ -2264,7 +2264,7 @@
       "id": "organizational-structure-phase-01-domain-api",
       "title": "Organizational Structure Phase 01 - Domain and API",
       "template": "templates/PHASE-01-domain-api.template.md",
-      "output": "generated/organizational-structure/PHASE-01-domain-api.md",
+      "output": "../modules/hr/features/organizational-structure/generated/PHASE-01-domain-api.md",
       "sources": [
         {
           "book": "organizational-structure-master",
@@ -2295,7 +2295,7 @@
       "id": "organizational-structure-phase-02-web-client",
       "title": "Organizational Structure Phase 02 - Next.js Client",
       "template": "templates/PHASE-02-web-client.template.md",
-      "output": "generated/organizational-structure/PHASE-02-web-client.md",
+      "output": "../modules/hr/features/organizational-structure/generated/PHASE-02-web-client.md",
       "sources": [
         {
           "book": "organizational-structure-master",
@@ -2331,7 +2331,7 @@
       "id": "organizational-structure-phase-03-mobile-client",
       "title": "Organizational Structure Phase 03 - Expo Mobile Client",
       "template": "templates/PHASE-03-mobile-client.template.md",
-      "output": "generated/organizational-structure/PHASE-03-mobile-client.md",
+      "output": "../modules/hr/features/organizational-structure/generated/PHASE-03-mobile-client.md",
       "sources": [
         {
           "book": "organizational-structure-master",
@@ -2368,7 +2368,7 @@
       "id": "organizational-structure-phase-04-domain-actions",
       "title": "Organizational Structure Phase 04 - Domain Actions and Lifecycle",
       "template": "templates/PHASE-04-domain-actions.template.md",
-      "output": "generated/organizational-structure/PHASE-04-domain-actions.md",
+      "output": "../modules/hr/features/organizational-structure/generated/PHASE-04-domain-actions.md",
       "sources": [
         {
           "book": "organizational-structure-master",
@@ -2411,7 +2411,7 @@
       "id": "organizational-structure-phase-05-integration-runtime",
       "title": "Organizational Structure Phase 05 - Integration and Runtime",
       "template": "templates/PHASE-05-integration-runtime.template.md",
-      "output": "generated/organizational-structure/PHASE-05-integration-runtime.md",
+      "output": "../modules/hr/features/organizational-structure/generated/PHASE-05-integration-runtime.md",
       "sources": [
         {
           "book": "organizational-structure-master",
@@ -2454,7 +2454,7 @@
       "id": "organizational-structure-phase-06-final-reconciliation",
       "title": "Organizational Structure Phase 06 - Final Reconciliation",
       "template": "templates/PHASE-06-final-reconciliation.template.md",
-      "output": "generated/organizational-structure/PHASE-06-final-reconciliation.md",
+      "output": "../modules/hr/features/organizational-structure/generated/PHASE-06-final-reconciliation.md",
       "sources": [
         {
           "book": "organizational-structure-master",
@@ -2492,7 +2492,7 @@
       "id": "fiscal-years-phase-00-discovery-evidence",
       "title": "Fiscal Years Phase 00 - Discovery and Evidence",
       "template": "templates/PHASE-00-discovery-evidence.template.md",
-      "output": "generated/fiscal-years/PHASE-00-discovery-evidence.md",
+      "output": "../modules/accounting/features/fiscal-years/generated/PHASE-00-discovery-evidence.md",
       "sources": [
         {
           "book": "fiscal-years-master",
@@ -2535,7 +2535,7 @@
       "id": "fiscal-years-phase-01-domain-api",
       "title": "Fiscal Years Phase 01 - Domain and API",
       "template": "templates/PHASE-01-domain-api.template.md",
-      "output": "generated/fiscal-years/PHASE-01-domain-api.md",
+      "output": "../modules/accounting/features/fiscal-years/generated/PHASE-01-domain-api.md",
       "sources": [
         {
           "book": "fiscal-years-master",
@@ -2566,7 +2566,7 @@
       "id": "fiscal-years-phase-02-web-client",
       "title": "Fiscal Years Phase 02 - Next.js Client",
       "template": "templates/PHASE-02-web-client.template.md",
-      "output": "generated/fiscal-years/PHASE-02-web-client.md",
+      "output": "../modules/accounting/features/fiscal-years/generated/PHASE-02-web-client.md",
       "sources": [
         {
           "book": "fiscal-years-master",
@@ -2602,7 +2602,7 @@
       "id": "fiscal-years-phase-03-mobile-client",
       "title": "Fiscal Years Phase 03 - Expo Mobile Client",
       "template": "templates/PHASE-03-mobile-client.template.md",
-      "output": "generated/fiscal-years/PHASE-03-mobile-client.md",
+      "output": "../modules/accounting/features/fiscal-years/generated/PHASE-03-mobile-client.md",
       "sources": [
         {
           "book": "fiscal-years-master",
@@ -2639,7 +2639,7 @@
       "id": "fiscal-years-phase-04-domain-actions",
       "title": "Fiscal Years Phase 04 - Domain Actions and Lifecycle",
       "template": "templates/PHASE-04-domain-actions.template.md",
-      "output": "generated/fiscal-years/PHASE-04-domain-actions.md",
+      "output": "../modules/accounting/features/fiscal-years/generated/PHASE-04-domain-actions.md",
       "sources": [
         {
           "book": "fiscal-years-master",
@@ -2682,7 +2682,7 @@
       "id": "fiscal-years-phase-05-integration-runtime",
       "title": "Fiscal Years Phase 05 - Integration and Runtime",
       "template": "templates/PHASE-05-integration-runtime.template.md",
-      "output": "generated/fiscal-years/PHASE-05-integration-runtime.md",
+      "output": "../modules/accounting/features/fiscal-years/generated/PHASE-05-integration-runtime.md",
       "sources": [
         {
           "book": "fiscal-years-master",
@@ -2725,7 +2725,7 @@
       "id": "fiscal-years-phase-06-final-reconciliation",
       "title": "Fiscal Years Phase 06 - Final Reconciliation",
       "template": "templates/PHASE-06-final-reconciliation.template.md",
-      "output": "generated/fiscal-years/PHASE-06-final-reconciliation.md",
+      "output": "../modules/accounting/features/fiscal-years/generated/PHASE-06-final-reconciliation.md",
       "sources": [
         {
           "book": "fiscal-years-master",
@@ -2763,7 +2763,7 @@
       "id": "workforce-planning-phase-00-discovery-evidence",
       "title": "Workforce Planning Phase 00 - Discovery and Evidence",
       "template": "templates/PHASE-00-discovery-evidence.template.md",
-      "output": "generated/workforce-planning/PHASE-00-discovery-evidence.md",
+      "output": "../modules/hr/features/workforce-planning/generated/PHASE-00-discovery-evidence.md",
       "sources": [
         {
           "book": "workforce-planning-master",
@@ -2806,7 +2806,7 @@
       "id": "workforce-planning-phase-01-domain-api",
       "title": "Workforce Planning Phase 01 - Domain and API",
       "template": "templates/PHASE-01-domain-api.template.md",
-      "output": "generated/workforce-planning/PHASE-01-domain-api.md",
+      "output": "../modules/hr/features/workforce-planning/generated/PHASE-01-domain-api.md",
       "sources": [
         {
           "book": "workforce-planning-master",
@@ -2837,7 +2837,7 @@
       "id": "workforce-planning-phase-02-web-client",
       "title": "Workforce Planning Phase 02 - Next.js Client",
       "template": "templates/PHASE-02-web-client.template.md",
-      "output": "generated/workforce-planning/PHASE-02-web-client.md",
+      "output": "../modules/hr/features/workforce-planning/generated/PHASE-02-web-client.md",
       "sources": [
         {
           "book": "workforce-planning-master",
@@ -2873,7 +2873,7 @@
       "id": "workforce-planning-phase-03-mobile-client",
       "title": "Workforce Planning Phase 03 - Expo Mobile Client",
       "template": "templates/PHASE-03-mobile-client.template.md",
-      "output": "generated/workforce-planning/PHASE-03-mobile-client.md",
+      "output": "../modules/hr/features/workforce-planning/generated/PHASE-03-mobile-client.md",
       "sources": [
         {
           "book": "workforce-planning-master",
@@ -2910,7 +2910,7 @@
       "id": "workforce-planning-phase-04-domain-actions",
       "title": "Workforce Planning Phase 04 - Domain Actions and Lifecycle",
       "template": "templates/PHASE-04-domain-actions.template.md",
-      "output": "generated/workforce-planning/PHASE-04-domain-actions.md",
+      "output": "../modules/hr/features/workforce-planning/generated/PHASE-04-domain-actions.md",
       "sources": [
         {
           "book": "workforce-planning-master",
@@ -2953,7 +2953,7 @@
       "id": "workforce-planning-phase-05-integration-runtime",
       "title": "Workforce Planning Phase 05 - Integration and Runtime",
       "template": "templates/PHASE-05-integration-runtime.template.md",
-      "output": "generated/workforce-planning/PHASE-05-integration-runtime.md",
+      "output": "../modules/hr/features/workforce-planning/generated/PHASE-05-integration-runtime.md",
       "sources": [
         {
           "book": "workforce-planning-master",
@@ -2996,7 +2996,7 @@
       "id": "workforce-planning-phase-06-final-reconciliation",
       "title": "Workforce Planning Phase 06 - Final Reconciliation",
       "template": "templates/PHASE-06-final-reconciliation.template.md",
-      "output": "generated/workforce-planning/PHASE-06-final-reconciliation.md",
+      "output": "../modules/hr/features/workforce-planning/generated/PHASE-06-final-reconciliation.md",
       "sources": [
         {
           "book": "workforce-planning-master",
@@ -3034,7 +3034,7 @@
       "id": "tenant-module-entitlements-phase-00-discovery-evidence",
       "title": "Tenant module entitlements Phase 00 - Discovery and Evidence",
       "template": "templates/PHASE-00-discovery-evidence.template.md",
-      "output": "generated/tenant-module-entitlements/PHASE-00-discovery-evidence.md",
+      "output": "../modules/platform/features/tenant-module-entitlements/generated/PHASE-00-discovery-evidence.md",
       "sources": [
         { "book": "tenant-module-entitlements-master", "sections": [1, 2, 5, 8, 9] },
         { "book": "tenant-module-entitlements-api", "sections": [1, 10, 11] },
@@ -3046,7 +3046,7 @@
       "id": "tenant-module-entitlements-phase-01-domain-api",
       "title": "Tenant module entitlements Phase 01 - Domain and API",
       "template": "templates/PHASE-01-domain-api.template.md",
-      "output": "generated/tenant-module-entitlements/PHASE-01-domain-api.md",
+      "output": "../modules/platform/features/tenant-module-entitlements/generated/PHASE-01-domain-api.md",
       "sources": [
         { "book": "tenant-module-entitlements-master", "sections": [3, 4, 6] },
         { "book": "tenant-module-entitlements-api", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }
@@ -3056,7 +3056,7 @@
       "id": "tenant-module-entitlements-phase-02-web-client",
       "title": "Tenant module entitlements Phase 02 - Next.js Client",
       "template": "templates/PHASE-02-web-client.template.md",
-      "output": "generated/tenant-module-entitlements/PHASE-02-web-client.md",
+      "output": "../modules/platform/features/tenant-module-entitlements/generated/PHASE-02-web-client.md",
       "sources": [
         { "book": "tenant-module-entitlements-master", "sections": [3, 4, 6, 7] },
         { "book": "tenant-module-entitlements-web", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14] }
@@ -3066,7 +3066,7 @@
       "id": "tenant-module-entitlements-phase-03-mobile-client",
       "title": "Tenant module entitlements Phase 03 - Expo Mobile Client",
       "template": "templates/PHASE-03-mobile-client.template.md",
-      "output": "generated/tenant-module-entitlements/PHASE-03-mobile-client.md",
+      "output": "../modules/platform/features/tenant-module-entitlements/generated/PHASE-03-mobile-client.md",
       "sources": [
         { "book": "tenant-module-entitlements-master", "sections": [3, 4, 6, 7] },
         { "book": "tenant-module-entitlements-mobile", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15] }
@@ -3076,7 +3076,7 @@
       "id": "tenant-module-entitlements-phase-04-domain-actions",
       "title": "Tenant module entitlements Phase 04 - Domain Actions and Lifecycle",
       "template": "templates/PHASE-04-domain-actions.template.md",
-      "output": "generated/tenant-module-entitlements/PHASE-04-domain-actions.md",
+      "output": "../modules/platform/features/tenant-module-entitlements/generated/PHASE-04-domain-actions.md",
       "sources": [
         { "book": "tenant-module-entitlements-master", "sections": [3, 4, 6, 7, 8] },
         { "book": "tenant-module-entitlements-api", "sections": [6, 7, 8] },
@@ -3088,7 +3088,7 @@
       "id": "tenant-module-entitlements-phase-05-integration-runtime",
       "title": "Tenant module entitlements Phase 05 - Integration and Runtime",
       "template": "templates/PHASE-05-integration-runtime.template.md",
-      "output": "generated/tenant-module-entitlements/PHASE-05-integration-runtime.md",
+      "output": "../modules/platform/features/tenant-module-entitlements/generated/PHASE-05-integration-runtime.md",
       "sources": [
         { "book": "tenant-module-entitlements-master", "sections": [4, 5, 6, 7, 9] },
         { "book": "tenant-module-entitlements-api", "sections": [8, 9, 10] },
@@ -3100,7 +3100,7 @@
       "id": "tenant-module-entitlements-phase-06-final-reconciliation",
       "title": "Tenant module entitlements Phase 06 - Final Reconciliation",
       "template": "templates/PHASE-06-final-reconciliation.template.md",
-      "output": "generated/tenant-module-entitlements/PHASE-06-final-reconciliation.md",
+      "output": "../modules/platform/features/tenant-module-entitlements/generated/PHASE-06-final-reconciliation.md",
       "sources": [
         { "book": "tenant-module-entitlements-master", "sections": [8, 9, 10] },
         { "book": "tenant-module-entitlements-api", "sections": [10, 11] },
@@ -3112,7 +3112,7 @@
       "id": "accounting-ledger-setup-phase-00-implementation-preflight",
       "title": "Accounting Ledger Setup Phase 00 - Implementation Preflight",
       "template": "templates/PHASE-00-implementation-preflight.template.md",
-      "output": "generated/accounting-ledger-setup/PHASE-00-implementation-preflight.md",
+      "output": "../modules/accounting/features/accounting-ledger-setup/generated/PHASE-00-implementation-preflight.md",
       "sources": [
         { "book": "accounting-ledger-setup-master", "sections": [1, 2, 5, 8, 9] },
         { "book": "accounting-ledger-setup-api", "sections": [1, 10, 11] },
@@ -3124,7 +3124,7 @@
       "id": "accounting-ledger-setup-phase-01-domain-api",
       "title": "Accounting Ledger Setup Phase 01 - Domain and API",
       "template": "templates/PHASE-01-domain-api.template.md",
-      "output": "generated/accounting-ledger-setup/PHASE-01-domain-api.md",
+      "output": "../modules/accounting/features/accounting-ledger-setup/generated/PHASE-01-domain-api.md",
       "sources": [
         { "book": "accounting-ledger-setup-master", "sections": [3, 4, 6] },
         { "book": "accounting-ledger-setup-api", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }
@@ -3134,7 +3134,7 @@
       "id": "accounting-ledger-setup-phase-02-web-client",
       "title": "Accounting Ledger Setup Phase 02 - Next.js Client",
       "template": "templates/PHASE-02-web-client.template.md",
-      "output": "generated/accounting-ledger-setup/PHASE-02-web-client.md",
+      "output": "../modules/accounting/features/accounting-ledger-setup/generated/PHASE-02-web-client.md",
       "sources": [
         { "book": "accounting-ledger-setup-master", "sections": [3, 4, 6, 7] },
         { "book": "accounting-ledger-setup-web", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14] }
@@ -3144,7 +3144,7 @@
       "id": "accounting-ledger-setup-phase-03-mobile-client",
       "title": "Accounting Ledger Setup Phase 03 - Expo Mobile Client",
       "template": "templates/PHASE-03-mobile-client.template.md",
-      "output": "generated/accounting-ledger-setup/PHASE-03-mobile-client.md",
+      "output": "../modules/accounting/features/accounting-ledger-setup/generated/PHASE-03-mobile-client.md",
       "sources": [
         { "book": "accounting-ledger-setup-master", "sections": [3, 4, 6, 7] },
         { "book": "accounting-ledger-setup-mobile", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15] }
@@ -3154,7 +3154,7 @@
       "id": "accounting-ledger-setup-phase-04-domain-actions",
       "title": "Accounting Ledger Setup Phase 04 - Domain Actions and Lifecycle",
       "template": "templates/PHASE-04-domain-actions.template.md",
-      "output": "generated/accounting-ledger-setup/PHASE-04-domain-actions.md",
+      "output": "../modules/accounting/features/accounting-ledger-setup/generated/PHASE-04-domain-actions.md",
       "sources": [
         { "book": "accounting-ledger-setup-master", "sections": [3, 4, 6, 7, 8] },
         { "book": "accounting-ledger-setup-api", "sections": [6, 7, 8] },
@@ -3166,7 +3166,7 @@
       "id": "accounting-ledger-setup-phase-05-integration-runtime",
       "title": "Accounting Ledger Setup Phase 05 - Integration and Runtime",
       "template": "templates/PHASE-05-integration-runtime.template.md",
-      "output": "generated/accounting-ledger-setup/PHASE-05-integration-runtime.md",
+      "output": "../modules/accounting/features/accounting-ledger-setup/generated/PHASE-05-integration-runtime.md",
       "sources": [
         { "book": "accounting-ledger-setup-master", "sections": [4, 5, 6, 7, 9] },
         { "book": "accounting-ledger-setup-api", "sections": [8, 9, 10] },
@@ -3178,7 +3178,7 @@
       "id": "accounting-ledger-setup-phase-06-verification-acceptance",
       "title": "Accounting Ledger Setup Phase 06 - Verification and Acceptance",
       "template": "templates/PHASE-06-verification-acceptance.template.md",
-      "output": "generated/accounting-ledger-setup/PHASE-06-verification-acceptance.md",
+      "output": "../modules/accounting/features/accounting-ledger-setup/generated/PHASE-06-verification-acceptance.md",
       "sources": [
         { "book": "accounting-ledger-setup-master", "sections": [8, 9, 10] },
         { "book": "accounting-ledger-setup-api", "sections": [10, 11] },
@@ -3190,7 +3190,7 @@
       "id": "accounting-ledger-setup-phase-07-customer-education-closure",
       "title": "Accounting Ledger Setup Phase 07 - Customer Education and Closure",
       "template": "templates/PHASE-07-customer-education-closure.template.md",
-      "output": "generated/accounting-ledger-setup/PHASE-07-customer-education-closure.md",
+      "output": "../modules/accounting/features/accounting-ledger-setup/generated/PHASE-07-customer-education-closure.md",
       "sources": [
         { "book": "accounting-ledger-setup-master", "sections": [8, 9, 10] },
         { "book": "accounting-ledger-setup-web", "sections": [12, 13, 14] },
@@ -3201,7 +3201,7 @@
       "id": "ledger-setup-currency-phase-00-implementation-preflight",
       "title": "Ledger Setup Currency Phase 00 - Implementation Preflight",
       "template": "templates/PHASE-00-implementation-preflight.template.md",
-      "output": "generated/ledger-setup-currency/PHASE-00-implementation-preflight.md",
+      "output": "../modules/accounting/features/ledger-setup-currency/generated/PHASE-00-implementation-preflight.md",
       "sources": [
         { "book": "ledger-setup-currency-master", "sections": [1, 2, 5, 8, 9] },
         { "book": "ledger-setup-currency-api", "sections": [1, 10, 11] },
@@ -3213,7 +3213,7 @@
       "id": "ledger-setup-currency-phase-01-domain-api",
       "title": "Ledger Setup Currency Phase 01 - Domain and API",
       "template": "templates/PHASE-01-domain-api.template.md",
-      "output": "generated/ledger-setup-currency/PHASE-01-domain-api.md",
+      "output": "../modules/accounting/features/ledger-setup-currency/generated/PHASE-01-domain-api.md",
       "sources": [
         { "book": "ledger-setup-currency-master", "sections": [3, 4, 6] },
         { "book": "ledger-setup-currency-api", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }
@@ -3223,7 +3223,7 @@
       "id": "ledger-setup-currency-phase-02-web-client",
       "title": "Ledger Setup Currency Phase 02 - Next.js Client",
       "template": "templates/PHASE-02-web-client.template.md",
-      "output": "generated/ledger-setup-currency/PHASE-02-web-client.md",
+      "output": "../modules/accounting/features/ledger-setup-currency/generated/PHASE-02-web-client.md",
       "sources": [
         { "book": "ledger-setup-currency-master", "sections": [3, 4, 6, 7] },
         { "book": "ledger-setup-currency-web", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14] }
@@ -3233,7 +3233,7 @@
       "id": "ledger-setup-currency-phase-03-mobile-client",
       "title": "Ledger Setup Currency Phase 03 - Expo Mobile Client",
       "template": "templates/PHASE-03-mobile-client.template.md",
-      "output": "generated/ledger-setup-currency/PHASE-03-mobile-client.md",
+      "output": "../modules/accounting/features/ledger-setup-currency/generated/PHASE-03-mobile-client.md",
       "sources": [
         { "book": "ledger-setup-currency-master", "sections": [3, 4, 6, 7] },
         { "book": "ledger-setup-currency-mobile", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15] }
@@ -3243,7 +3243,7 @@
       "id": "ledger-setup-currency-phase-04-domain-actions",
       "title": "Ledger Setup Currency Phase 04 - Domain Actions and Lifecycle",
       "template": "templates/PHASE-04-domain-actions.template.md",
-      "output": "generated/ledger-setup-currency/PHASE-04-domain-actions.md",
+      "output": "../modules/accounting/features/ledger-setup-currency/generated/PHASE-04-domain-actions.md",
       "sources": [
         { "book": "ledger-setup-currency-master", "sections": [3, 4, 6, 7, 8] },
         { "book": "ledger-setup-currency-api", "sections": [6, 7, 8] },
@@ -3255,7 +3255,7 @@
       "id": "ledger-setup-currency-phase-05-integration-runtime",
       "title": "Ledger Setup Currency Phase 05 - Integration and Runtime",
       "template": "templates/PHASE-05-integration-runtime.template.md",
-      "output": "generated/ledger-setup-currency/PHASE-05-integration-runtime.md",
+      "output": "../modules/accounting/features/ledger-setup-currency/generated/PHASE-05-integration-runtime.md",
       "sources": [
         { "book": "ledger-setup-currency-master", "sections": [4, 5, 6, 7, 9] },
         { "book": "ledger-setup-currency-api", "sections": [8, 9, 10] },
@@ -3267,7 +3267,7 @@
       "id": "ledger-setup-currency-phase-06-verification-acceptance",
       "title": "Ledger Setup Currency Phase 06 - Verification and Acceptance",
       "template": "templates/PHASE-06-verification-acceptance.template.md",
-      "output": "generated/ledger-setup-currency/PHASE-06-verification-acceptance.md",
+      "output": "../modules/accounting/features/ledger-setup-currency/generated/PHASE-06-verification-acceptance.md",
       "sources": [
         { "book": "ledger-setup-currency-master", "sections": [8, 9, 10] },
         { "book": "ledger-setup-currency-api", "sections": [10, 11] },
@@ -3279,7 +3279,7 @@
       "id": "ledger-setup-currency-phase-07-customer-education-closure",
       "title": "Ledger Setup Currency Phase 07 - Customer Education and Closure",
       "template": "templates/PHASE-07-customer-education-closure.template.md",
-      "output": "generated/ledger-setup-currency/PHASE-07-customer-education-closure.md",
+      "output": "../modules/accounting/features/ledger-setup-currency/generated/PHASE-07-customer-education-closure.md",
       "sources": [
         { "book": "ledger-setup-currency-master", "sections": [8, 9, 10] },
         { "book": "ledger-setup-currency-web", "sections": [12, 13, 14] },
@@ -3290,7 +3290,7 @@
       "id": "ledger-setup-coa-hierarchy-phase-00-implementation-preflight",
       "title": "Accounting Chart of Accounts and Hierarchy Phase 00 - Implementation Preflight",
       "template": "templates/PHASE-00-implementation-preflight.template.md",
-      "output": "generated/ledger-setup-coa-hierarchy/PHASE-00-implementation-preflight.md",
+      "output": "../modules/accounting/features/ledger-setup-coa-hierarchy/generated/PHASE-00-implementation-preflight.md",
       "sources": [
         { "book": "ledger-setup-coa-hierarchy-master", "sections": [1, 2, 5, 8, 9] },
         { "book": "ledger-setup-coa-hierarchy-api", "sections": [1, 10, 11] },
@@ -3302,7 +3302,7 @@
       "id": "ledger-setup-coa-hierarchy-phase-01-domain-api",
       "title": "Accounting Chart of Accounts and Hierarchy Phase 01 - Domain and API",
       "template": "templates/PHASE-01-domain-api.template.md",
-      "output": "generated/ledger-setup-coa-hierarchy/PHASE-01-domain-api.md",
+      "output": "../modules/accounting/features/ledger-setup-coa-hierarchy/generated/PHASE-01-domain-api.md",
       "sources": [
         { "book": "ledger-setup-coa-hierarchy-master", "sections": [3, 4, 6] },
         { "book": "ledger-setup-coa-hierarchy-api", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }
@@ -3312,7 +3312,7 @@
       "id": "ledger-setup-coa-hierarchy-phase-02-web-client",
       "title": "Accounting Chart of Accounts and Hierarchy Phase 02 - Next.js Client",
       "template": "templates/PHASE-02-web-client.template.md",
-      "output": "generated/ledger-setup-coa-hierarchy/PHASE-02-web-client.md",
+      "output": "../modules/accounting/features/ledger-setup-coa-hierarchy/generated/PHASE-02-web-client.md",
       "sources": [
         { "book": "ledger-setup-coa-hierarchy-master", "sections": [3, 4, 6, 7] },
         { "book": "ledger-setup-coa-hierarchy-web", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14] }
@@ -3322,7 +3322,7 @@
       "id": "ledger-setup-coa-hierarchy-phase-03-mobile-client",
       "title": "Accounting Chart of Accounts and Hierarchy Phase 03 - Expo Mobile Client",
       "template": "templates/PHASE-03-mobile-client.template.md",
-      "output": "generated/ledger-setup-coa-hierarchy/PHASE-03-mobile-client.md",
+      "output": "../modules/accounting/features/ledger-setup-coa-hierarchy/generated/PHASE-03-mobile-client.md",
       "sources": [
         { "book": "ledger-setup-coa-hierarchy-master", "sections": [3, 4, 6, 7] },
         { "book": "ledger-setup-coa-hierarchy-mobile", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15] }
@@ -3332,7 +3332,7 @@
       "id": "ledger-setup-coa-hierarchy-phase-04-domain-actions",
       "title": "Accounting Chart of Accounts and Hierarchy Phase 04 - Domain Actions and Lifecycle",
       "template": "templates/PHASE-04-domain-actions.template.md",
-      "output": "generated/ledger-setup-coa-hierarchy/PHASE-04-domain-actions.md",
+      "output": "../modules/accounting/features/ledger-setup-coa-hierarchy/generated/PHASE-04-domain-actions.md",
       "sources": [
         { "book": "ledger-setup-coa-hierarchy-master", "sections": [3, 4, 6, 7, 8] },
         { "book": "ledger-setup-coa-hierarchy-api", "sections": [6, 7, 8] },
@@ -3344,7 +3344,7 @@
       "id": "ledger-setup-coa-hierarchy-phase-05-integration-runtime",
       "title": "Accounting Chart of Accounts and Hierarchy Phase 05 - Integration and Runtime",
       "template": "templates/PHASE-05-integration-runtime.template.md",
-      "output": "generated/ledger-setup-coa-hierarchy/PHASE-05-integration-runtime.md",
+      "output": "../modules/accounting/features/ledger-setup-coa-hierarchy/generated/PHASE-05-integration-runtime.md",
       "sources": [
         { "book": "ledger-setup-coa-hierarchy-master", "sections": [4, 5, 6, 7, 9] },
         { "book": "ledger-setup-coa-hierarchy-api", "sections": [8, 9, 10] },
@@ -3356,7 +3356,7 @@
       "id": "ledger-setup-coa-hierarchy-phase-06-verification-acceptance",
       "title": "Accounting Chart of Accounts and Hierarchy Phase 06 - Verification and Acceptance",
       "template": "templates/PHASE-06-verification-acceptance.template.md",
-      "output": "generated/ledger-setup-coa-hierarchy/PHASE-06-verification-acceptance.md",
+      "output": "../modules/accounting/features/ledger-setup-coa-hierarchy/generated/PHASE-06-verification-acceptance.md",
       "sources": [
         { "book": "ledger-setup-coa-hierarchy-master", "sections": [8, 9, 10] },
         { "book": "ledger-setup-coa-hierarchy-api", "sections": [10, 11] },
@@ -3368,7 +3368,7 @@
       "id": "ledger-setup-coa-hierarchy-phase-07-customer-education-closure",
       "title": "Accounting Chart of Accounts and Hierarchy Phase 07 - Customer Education and Closure",
       "template": "templates/PHASE-07-customer-education-closure.template.md",
-      "output": "generated/ledger-setup-coa-hierarchy/PHASE-07-customer-education-closure.md",
+      "output": "../modules/accounting/features/ledger-setup-coa-hierarchy/generated/PHASE-07-customer-education-closure.md",
       "sources": [
         { "book": "ledger-setup-coa-hierarchy-master", "sections": [8, 9, 10] },
         { "book": "ledger-setup-coa-hierarchy-web", "sections": [12, 13, 14] },
@@ -3379,7 +3379,7 @@
       "id": "managed-crystal-contract-registry-phase-00-implementation-preflight",
       "title": "Managed Crystal Contract Registry Phase 00 - Implementation Preflight",
       "template": "templates/PHASE-00-implementation-preflight.template.md",
-      "output": "generated/managed-crystal-contract-registry/PHASE-00-implementation-preflight.md",
+      "output": "../modules/reporting/features/managed-crystal-contract-registry/generated/PHASE-00-implementation-preflight.md",
       "sources": [
         { "book": "managed-crystal-contract-registry-master", "sections": [1, 2, 5, 8, 9] },
         { "book": "managed-crystal-contract-registry-api", "sections": [1, 10, 11] },
@@ -3391,7 +3391,7 @@
       "id": "managed-crystal-contract-registry-phase-01-domain-api",
       "title": "Managed Crystal Contract Registry Phase 01 - Domain and API",
       "template": "templates/PHASE-01-domain-api.template.md",
-      "output": "generated/managed-crystal-contract-registry/PHASE-01-domain-api.md",
+      "output": "../modules/reporting/features/managed-crystal-contract-registry/generated/PHASE-01-domain-api.md",
       "sources": [
         { "book": "managed-crystal-contract-registry-master", "sections": [3, 4, 6] },
         { "book": "managed-crystal-contract-registry-api", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }
@@ -3401,7 +3401,7 @@
       "id": "managed-crystal-contract-registry-phase-02-web-client",
       "title": "Managed Crystal Contract Registry Phase 02 - Next.js Client",
       "template": "templates/PHASE-02-web-client.template.md",
-      "output": "generated/managed-crystal-contract-registry/PHASE-02-web-client.md",
+      "output": "../modules/reporting/features/managed-crystal-contract-registry/generated/PHASE-02-web-client.md",
       "sources": [
         { "book": "managed-crystal-contract-registry-master", "sections": [3, 4, 6, 7] },
         { "book": "managed-crystal-contract-registry-web", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14] }
@@ -3411,7 +3411,7 @@
       "id": "managed-crystal-contract-registry-phase-03-mobile-client",
       "title": "Managed Crystal Contract Registry Phase 03 - Expo Mobile Client",
       "template": "templates/PHASE-03-mobile-client.template.md",
-      "output": "generated/managed-crystal-contract-registry/PHASE-03-mobile-client.md",
+      "output": "../modules/reporting/features/managed-crystal-contract-registry/generated/PHASE-03-mobile-client.md",
       "sources": [
         { "book": "managed-crystal-contract-registry-master", "sections": [3, 4, 6, 7] },
         { "book": "managed-crystal-contract-registry-mobile", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15] }
@@ -3421,7 +3421,7 @@
       "id": "managed-crystal-contract-registry-phase-04-domain-actions",
       "title": "Managed Crystal Contract Registry Phase 04 - Domain Actions and Lifecycle",
       "template": "templates/PHASE-04-domain-actions.template.md",
-      "output": "generated/managed-crystal-contract-registry/PHASE-04-domain-actions.md",
+      "output": "../modules/reporting/features/managed-crystal-contract-registry/generated/PHASE-04-domain-actions.md",
       "sources": [
         { "book": "managed-crystal-contract-registry-master", "sections": [3, 4, 6, 7, 8] },
         { "book": "managed-crystal-contract-registry-api", "sections": [6, 7, 8] },
@@ -3433,7 +3433,7 @@
       "id": "managed-crystal-contract-registry-phase-05-integration-runtime",
       "title": "Managed Crystal Contract Registry Phase 05 - Integration and Runtime",
       "template": "templates/PHASE-05-integration-runtime.template.md",
-      "output": "generated/managed-crystal-contract-registry/PHASE-05-integration-runtime.md",
+      "output": "../modules/reporting/features/managed-crystal-contract-registry/generated/PHASE-05-integration-runtime.md",
       "sources": [
         { "book": "managed-crystal-contract-registry-master", "sections": [4, 5, 6, 7, 9] },
         { "book": "managed-crystal-contract-registry-api", "sections": [8, 9, 10] },
@@ -3445,7 +3445,7 @@
       "id": "managed-crystal-contract-registry-phase-06-verification-acceptance",
       "title": "Managed Crystal Contract Registry Phase 06 - Verification and Acceptance",
       "template": "templates/PHASE-06-verification-acceptance.template.md",
-      "output": "generated/managed-crystal-contract-registry/PHASE-06-verification-acceptance.md",
+      "output": "../modules/reporting/features/managed-crystal-contract-registry/generated/PHASE-06-verification-acceptance.md",
       "sources": [
         { "book": "managed-crystal-contract-registry-master", "sections": [8, 9, 10] },
         { "book": "managed-crystal-contract-registry-api", "sections": [10, 11] },
@@ -3457,7 +3457,7 @@
       "id": "managed-crystal-contract-registry-phase-07-customer-education-closure",
       "title": "Managed Crystal Contract Registry Phase 07 - Customer Education and Closure",
       "template": "templates/PHASE-07-customer-education-closure.template.md",
-      "output": "generated/managed-crystal-contract-registry/PHASE-07-customer-education-closure.md",
+      "output": "../modules/reporting/features/managed-crystal-contract-registry/generated/PHASE-07-customer-education-closure.md",
       "sources": [
         { "book": "managed-crystal-contract-registry-master", "sections": [8, 9, 10] },
         { "book": "managed-crystal-contract-registry-web", "sections": [12, 13, 14] },
@@ -3468,7 +3468,7 @@
       "id": "managed-crystal-template-validation-phase-00-implementation-preflight",
       "title": "Managed Crystal Template Validation Phase 00 - Implementation Preflight",
       "template": "templates/PHASE-00-implementation-preflight.template.md",
-      "output": "generated/managed-crystal-template-validation/PHASE-00-implementation-preflight.md",
+      "output": "../modules/reporting/features/managed-crystal-template-validation/generated/PHASE-00-implementation-preflight.md",
       "sources": [
         { "book": "managed-crystal-template-validation-master", "sections": [1, 2, 5, 8, 9] },
         { "book": "managed-crystal-template-validation-api", "sections": [1, 10, 11] },
@@ -3480,7 +3480,7 @@
       "id": "managed-crystal-template-validation-phase-01-domain-api",
       "title": "Managed Crystal Template Validation Phase 01 - Domain and API",
       "template": "templates/PHASE-01-domain-api.template.md",
-      "output": "generated/managed-crystal-template-validation/PHASE-01-domain-api.md",
+      "output": "../modules/reporting/features/managed-crystal-template-validation/generated/PHASE-01-domain-api.md",
       "sources": [
         { "book": "managed-crystal-template-validation-master", "sections": [3, 4, 6] },
         { "book": "managed-crystal-template-validation-api", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }
@@ -3490,7 +3490,7 @@
       "id": "managed-crystal-template-validation-phase-02-web-client",
       "title": "Managed Crystal Template Validation Phase 02 - Next.js Client",
       "template": "templates/PHASE-02-web-client.template.md",
-      "output": "generated/managed-crystal-template-validation/PHASE-02-web-client.md",
+      "output": "../modules/reporting/features/managed-crystal-template-validation/generated/PHASE-02-web-client.md",
       "sources": [
         { "book": "managed-crystal-template-validation-master", "sections": [3, 4, 6, 7] },
         { "book": "managed-crystal-template-validation-web", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14] }
@@ -3500,7 +3500,7 @@
       "id": "managed-crystal-template-validation-phase-03-mobile-client",
       "title": "Managed Crystal Template Validation Phase 03 - Expo Mobile Client",
       "template": "templates/PHASE-03-mobile-client.template.md",
-      "output": "generated/managed-crystal-template-validation/PHASE-03-mobile-client.md",
+      "output": "../modules/reporting/features/managed-crystal-template-validation/generated/PHASE-03-mobile-client.md",
       "sources": [
         { "book": "managed-crystal-template-validation-master", "sections": [3, 4, 6, 7] },
         { "book": "managed-crystal-template-validation-mobile", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15] }
@@ -3510,7 +3510,7 @@
       "id": "managed-crystal-template-validation-phase-04-domain-actions",
       "title": "Managed Crystal Template Validation Phase 04 - Domain Actions and Lifecycle",
       "template": "templates/PHASE-04-domain-actions.template.md",
-      "output": "generated/managed-crystal-template-validation/PHASE-04-domain-actions.md",
+      "output": "../modules/reporting/features/managed-crystal-template-validation/generated/PHASE-04-domain-actions.md",
       "sources": [
         { "book": "managed-crystal-template-validation-master", "sections": [3, 4, 6, 7, 8] },
         { "book": "managed-crystal-template-validation-api", "sections": [6, 7, 8] },
@@ -3522,7 +3522,7 @@
       "id": "managed-crystal-template-validation-phase-05-integration-runtime",
       "title": "Managed Crystal Template Validation Phase 05 - Integration and Runtime",
       "template": "templates/PHASE-05-integration-runtime.template.md",
-      "output": "generated/managed-crystal-template-validation/PHASE-05-integration-runtime.md",
+      "output": "../modules/reporting/features/managed-crystal-template-validation/generated/PHASE-05-integration-runtime.md",
       "sources": [
         { "book": "managed-crystal-template-validation-master", "sections": [4, 5, 6, 7, 9] },
         { "book": "managed-crystal-template-validation-api", "sections": [8, 9, 10] },
@@ -3534,7 +3534,7 @@
       "id": "managed-crystal-template-validation-phase-06-verification-acceptance",
       "title": "Managed Crystal Template Validation Phase 06 - Verification and Acceptance",
       "template": "templates/PHASE-06-verification-acceptance.template.md",
-      "output": "generated/managed-crystal-template-validation/PHASE-06-verification-acceptance.md",
+      "output": "../modules/reporting/features/managed-crystal-template-validation/generated/PHASE-06-verification-acceptance.md",
       "sources": [
         { "book": "managed-crystal-template-validation-master", "sections": [8, 9, 10] },
         { "book": "managed-crystal-template-validation-api", "sections": [10, 11] },
@@ -3546,7 +3546,7 @@
       "id": "managed-crystal-template-validation-phase-07-customer-education-closure",
       "title": "Managed Crystal Template Validation Phase 07 - Customer Education and Closure",
       "template": "templates/PHASE-07-customer-education-closure.template.md",
-      "output": "generated/managed-crystal-template-validation/PHASE-07-customer-education-closure.md",
+      "output": "../modules/reporting/features/managed-crystal-template-validation/generated/PHASE-07-customer-education-closure.md",
       "sources": [
         { "book": "managed-crystal-template-validation-master", "sections": [8, 9, 10] },
         { "book": "managed-crystal-template-validation-web", "sections": [12, 13, 14] },
@@ -3557,7 +3557,7 @@
       "id": "managed-crystal-manager-experience-phase-00-implementation-preflight",
       "title": "Managed Crystal Report Manager Experience Phase 00 - Implementation Preflight",
       "template": "templates/PHASE-00-implementation-preflight.template.md",
-      "output": "generated/managed-crystal-manager-experience/PHASE-00-implementation-preflight.md",
+      "output": "../modules/reporting/features/managed-crystal-manager-experience/generated/PHASE-00-implementation-preflight.md",
       "sources": [
         { "book": "managed-crystal-manager-experience-master", "sections": [1, 2, 5, 8, 9] },
         { "book": "managed-crystal-manager-experience-api", "sections": [1, 10, 11] },
@@ -3569,7 +3569,7 @@
       "id": "managed-crystal-manager-experience-phase-01-domain-api",
       "title": "Managed Crystal Report Manager Experience Phase 01 - Domain and API",
       "template": "templates/PHASE-01-domain-api.template.md",
-      "output": "generated/managed-crystal-manager-experience/PHASE-01-domain-api.md",
+      "output": "../modules/reporting/features/managed-crystal-manager-experience/generated/PHASE-01-domain-api.md",
       "sources": [
         { "book": "managed-crystal-manager-experience-master", "sections": [3, 4, 6] },
         { "book": "managed-crystal-manager-experience-api", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }
@@ -3579,7 +3579,7 @@
       "id": "managed-crystal-manager-experience-phase-02-web-client",
       "title": "Managed Crystal Report Manager Experience Phase 02 - Next.js Client",
       "template": "templates/PHASE-02-web-client.template.md",
-      "output": "generated/managed-crystal-manager-experience/PHASE-02-web-client.md",
+      "output": "../modules/reporting/features/managed-crystal-manager-experience/generated/PHASE-02-web-client.md",
       "sources": [
         { "book": "managed-crystal-manager-experience-master", "sections": [3, 4, 6, 7] },
         { "book": "managed-crystal-manager-experience-web", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14] }
@@ -3589,7 +3589,7 @@
       "id": "managed-crystal-manager-experience-phase-03-mobile-client",
       "title": "Managed Crystal Report Manager Experience Phase 03 - Expo Mobile Client",
       "template": "templates/PHASE-03-mobile-client.template.md",
-      "output": "generated/managed-crystal-manager-experience/PHASE-03-mobile-client.md",
+      "output": "../modules/reporting/features/managed-crystal-manager-experience/generated/PHASE-03-mobile-client.md",
       "sources": [
         { "book": "managed-crystal-manager-experience-master", "sections": [3, 4, 6, 7] },
         { "book": "managed-crystal-manager-experience-mobile", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15] }
@@ -3599,7 +3599,7 @@
       "id": "managed-crystal-manager-experience-phase-04-domain-actions",
       "title": "Managed Crystal Report Manager Experience Phase 04 - Domain Actions and Lifecycle",
       "template": "templates/PHASE-04-domain-actions.template.md",
-      "output": "generated/managed-crystal-manager-experience/PHASE-04-domain-actions.md",
+      "output": "../modules/reporting/features/managed-crystal-manager-experience/generated/PHASE-04-domain-actions.md",
       "sources": [
         { "book": "managed-crystal-manager-experience-master", "sections": [3, 4, 6, 7, 8] },
         { "book": "managed-crystal-manager-experience-api", "sections": [6, 7, 8] },
@@ -3611,7 +3611,7 @@
       "id": "managed-crystal-manager-experience-phase-05-integration-runtime",
       "title": "Managed Crystal Report Manager Experience Phase 05 - Integration and Runtime",
       "template": "templates/PHASE-05-integration-runtime.template.md",
-      "output": "generated/managed-crystal-manager-experience/PHASE-05-integration-runtime.md",
+      "output": "../modules/reporting/features/managed-crystal-manager-experience/generated/PHASE-05-integration-runtime.md",
       "sources": [
         { "book": "managed-crystal-manager-experience-master", "sections": [4, 5, 6, 7, 9] },
         { "book": "managed-crystal-manager-experience-api", "sections": [8, 9, 10] },
@@ -3623,7 +3623,7 @@
       "id": "managed-crystal-manager-experience-phase-06-verification-acceptance",
       "title": "Managed Crystal Report Manager Experience Phase 06 - Verification and Acceptance",
       "template": "templates/PHASE-06-verification-acceptance.template.md",
-      "output": "generated/managed-crystal-manager-experience/PHASE-06-verification-acceptance.md",
+      "output": "../modules/reporting/features/managed-crystal-manager-experience/generated/PHASE-06-verification-acceptance.md",
       "sources": [
         { "book": "managed-crystal-manager-experience-master", "sections": [8, 9, 10] },
         { "book": "managed-crystal-manager-experience-api", "sections": [10, 11] },
@@ -3635,7 +3635,7 @@
       "id": "managed-crystal-manager-experience-phase-07-customer-education-closure",
       "title": "Managed Crystal Report Manager Experience Phase 07 - Customer Education and Closure",
       "template": "templates/PHASE-07-customer-education-closure.template.md",
-      "output": "generated/managed-crystal-manager-experience/PHASE-07-customer-education-closure.md",
+      "output": "../modules/reporting/features/managed-crystal-manager-experience/generated/PHASE-07-customer-education-closure.md",
       "sources": [
         { "book": "managed-crystal-manager-experience-master", "sections": [8, 9, 10] },
         { "book": "managed-crystal-manager-experience-web", "sections": [12, 13, 14] },

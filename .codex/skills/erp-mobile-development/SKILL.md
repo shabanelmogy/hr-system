@@ -6,7 +6,7 @@ description: Use when analyzing, reviewing, debugging, implementing, refactoring
 # ERPSYSTEM Mobile Development
 
 Use this skill only in the ERPSYSTEM workspace. Confirm the repository with
-`mobile-react/package.json` and `documentation/mobile-react/`, and inspect current
+`mobile-react/package.json` and `documentation/guides/mobile/`, and inspect current
 source before relying on examples because the mobile client and canonical guides
 evolve together.
 
@@ -24,23 +24,23 @@ documentation and current evidence as a finding to reconcile through the owner.
   configuration, or Mobile documentation change, also read
   [feature-workflow.md](references/feature-workflow.md).
 - Read `mobile-react/AGENTS.md`,
-  `documentation/mobile-react/MOBILE_ARCHITECTURE.md`, and
-  `documentation/mobile-react/MOBILE_FEATURE_GUIDE.md` before adding or
+  `documentation/guides/mobile/MOBILE_ARCHITECTURE.md`, and
+  `documentation/guides/mobile/MOBILE_FEATURE_GUIDE.md` before adding or
   restructuring a feature. Read `MOBILE_STYLE_GUIDE.md` completely before changing
   UI styles.
 - Before changing Expo or React Native behavior, read the official documentation
   for the exact installed Expo SDK 57 / React Native 0.86 API involved. Use
   `mobile-react/package.json` and the lockfile as version truth.
 - Before creating or rebuilding a screen, read
-  `documentation/project/SCREEN_PATTERN_CATALOG.md` and
-  `documentation/project/SHARED_REUSE_CATALOG.md`, select the matching Pattern ID,
+  `documentation/guides/shared/SCREEN_PATTERN_CATALOG.md` and
+  `documentation/guides/shared/SHARED_REUSE_CATALOG.md`, select the matching Pattern ID,
   and inspect both its registered Mobile and Web reference sources.
 - For a new capability or substantial rebuild, read `documentation/plans/README.md`,
   the exact approved Plan/Slice and version 2.0 feature execution contract,
   `documentation/plans/PLAN_QUALITY_GATE.md`, and `documentation/system/README.md`
   before runtime work.
 - For an existing registered feature, start from
-  `documentation/system/features/<feature>/required-files.json`, the applied
+  `documentation/modules/<module>/features/<feature>/required-files.json`, the applied
   cross-platform/API/Web/Mobile books, and only the relevant generated phases.
   Generated packets are navigation aids, not implementation proof.
 - When `graphify-out/graph.json` exists, begin investigation with a focused
@@ -202,7 +202,7 @@ behavior.
 Update the owning canonical Mobile profile and affected API/Web/cross-platform books,
 required-file manifest, recipe registration, and generated phases in the same change
 when evidence or decisions changed. Never create `mobile-react/docs/` and never edit
-`documentation/system/generated/` directly. At handoff distinguish feature
+`documentation/modules/*/features/*/generated/` directly. At handoff distinguish feature
 regressions, inherited failures, environment blockers, release credentials/device
 checks, and production-only evidence. Do not claim Mobile completion while a
 Required native journey or live API/schema verification remains untested.

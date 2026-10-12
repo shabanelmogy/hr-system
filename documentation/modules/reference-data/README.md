@@ -38,3 +38,7 @@ Before changing a component, service, or Contract, inventory shared
 BuildingBlocks and module-local reusable pieces. Reuse or extend compatible
 abstractions, keep business rules in the owning module, and update the affected
 canonical feature books and required-file manifest in the same change.
+
+## Domain guide
+
+[GEOGRAPHICAL_INFORMATION_DOMAIN_GUIDE.md](GEOGRAPHICAL_INFORMATION_DOMAIN_GUIDE.md) — geography and address domain rules.
