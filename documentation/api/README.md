@@ -24,6 +24,7 @@ when a guide and the code disagree.
 | [Authentication_Configuration.md](Authentication_Configuration.md) | JWT, external sign-in, and secret handling |
 | [Operational_Foundation.md](Operational_Foundation.md) | Logging, correlation, health, background jobs |
 | [PRODUCTION_DEPLOYMENT_RUNBOOK.md](PRODUCTION_DEPLOYMENT_RUNBOOK.md) | Publishing and verifying a release |
+| [MIGRATIONS_COMMANDS_AR.md](MIGRATIONS_COMMANDS_AR.md) | أوامر الـ migrations بالعربي مع أمثلة |
 
 ## Feature profiles
 
