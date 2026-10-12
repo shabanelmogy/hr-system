@@ -322,7 +322,13 @@ $env:ConnectionStrings__DefaultConnection = '<secret-store-value>'
 ./scripts/Apply-ErpModuleMigrations.ps1 -Configuration Release
 ```
 
-The script never accepts a connection string on the command line or writes its
+To create migrations, `./scripts/Add-ErpModuleMigrations.ps1 -Name <MigrationName>`
+builds once and adds the migration only to modules whose model changed
+(`dotnet ef migrations has-pending-model-changes`); `-Apply` then runs the apply
+script above. Both read connection strings from `ErpSystem.Api/appsettings*.json`
+through each module's design-time factory.
+
+The apply script never accepts a connection string on the command line or writes its
 value to output. `-WhatIf` enumerates the dependency-ordered operations without
 connecting to SQL Server. A module may move to a separate database by setting
 `ConnectionStrings__<ModuleName>` for its design-time factory; its schema and
