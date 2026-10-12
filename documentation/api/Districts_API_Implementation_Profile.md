@@ -1,5 +1,7 @@
 # Districts API Implementation Profile
 
+HTTP contract for client integration: [Districts Controller Contract](Controllers/Geographic/DistrictsController.md).
+
 ## 1. Scope
 
 Districts is global State-dependent geographical reference data. It does not inherit Country-only fields; its approved bulk-create contract resolves State names in the web client and sends typed District rows.

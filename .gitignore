@@ -10,3 +10,9 @@ graphify-out/cache/
 # Local execution/build diagnostics
 *.log
 .tmp-*
+
+# Build output and dependencies never belong in git
+node_modules/
+.codex-artifacts/
+bin/
+obj/

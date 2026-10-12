@@ -1,6 +1,7 @@
 # States API Implementation Profile
 
 Status: applied API contract for States. Base route: `/api/v1/states`.
+HTTP contract for client integration: [States Controller Contract](Controllers/Geographic/StatesController.md).
 
 ## 1. Boundary
 

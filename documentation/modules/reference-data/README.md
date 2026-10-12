@@ -29,7 +29,8 @@ linked project/API/Web/Mobile profiles rather than treating this overview as a
 replacement for them.
 
 Platform entry points are summarized under [api/](api/README.md),
-[web-next/](web-next/README.md), and [mobile-react/](mobile-react/README.md).
+[web-next/](web-next/README.md), and [mobile-react/](mobile-react/README.md);
+the phase index is [phases/](phases/README.md).
 Delivery status and deferrals are in
 [DELIVERY-ROADMAP.md](DELIVERY-ROADMAP.md).
 

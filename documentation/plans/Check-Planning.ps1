@@ -9,7 +9,6 @@ $notesRoot = Join-Path $planningRoot "notes"
 $requiredFiles = @(
     "README.md",
     "PLAN_CREATION_PROTOCOL.md",
-    "PLANNING_METHOD_PROVENANCE.md",
     "BUSINESS_PLANNING_STANDARD.md",
     "BUSINESS_DISCOVERY_INTERVIEW.md",
     "EVIDENCE_AUDIT_STANDARD.md",
@@ -19,7 +18,6 @@ $requiredFiles = @(
     "FEATURE_DECOMPOSITION_TEMPLATE.md",
     "PLAN_QUALITY_GATE.md",
     "PLAN_REGISTRY.md",
-    "NOTES_MIGRATION_GUIDE.md",
     "New-BusinessPlan.ps1",
     "business/README.md",
     "notes/README.md",

@@ -17,9 +17,9 @@
 
 ### Planning evidence
 
-- Discovery: `DISCOVERY.md`
-- Current-system evidence: `EVIDENCE.md`
-- Approved pre-plan specification: `SPEC_SUMMARY.md` (not yet approved)
+- Discovery: [`DISCOVERY.md`](DISCOVERY.md)
+- Current-system evidence: [`EVIDENCE.md`](EVIDENCE.md)
+- Approved pre-plan specification: [`SPEC_SUMMARY.md`](SPEC_SUMMARY.md) (not yet approved)
 
 The master plan describes the approved target. Claims about current behavior must remain
 traceable to `EVIDENCE.md`.

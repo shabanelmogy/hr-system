@@ -30,6 +30,10 @@ in the feature evidence before implementation.
 
 ## Deferred or excluded
 
+- Employee management (direct manager, web/mobile screens, import/export) —
+  `DEF-024`; employee addresses — `DEF-020`.
+- Attendance geofence radius for mobile check-in — `DEF-023`.
+
 Classify each optional report, import, workflow, and client surface explicitly
 in its feature evidence. Do not use a copied HR reference as a global ERP
 requirement.

@@ -6,13 +6,13 @@ This directory is the single home for project-owned documentation. Product sourc
 
 | Directory | Purpose |
 | --- | --- |
-| `project/` | Cross-project architecture, reviews, roadmaps, and operational notes |
-| `api/` | Backend architecture, controller contracts, user stories, database assets, and API guides |
-| `web-next/` | Canonical Next.js architecture and feature guides |
-| `mobile-react/` | Expo architecture, style, and feature guides |
-| `modules/` | Module-owned documentation packages and ownership indexes |
-| `system/` | Reusable documentation recipes, manifests, generated phase packets, and feature review artifacts |
-| `plans/` | Canonical business-planning standard, plan registry, production/deferred notes, risks, and cross-platform planning gates |
+| [`project/`](project/README.md) | Cross-project architecture, reviews, roadmaps, and operational notes |
+| [`api/`](api/README.md) | Backend architecture, controller contracts, database assets, and API guides |
+| [`web-next/`](web-next/README.md) | Canonical Next.js architecture and feature guides |
+| [`mobile-react/`](mobile-react/README.md) | Expo architecture, style, and feature guides |
+| [`modules/`](modules/README.md) | Module-owned documentation packages and ownership indexes |
+| [`system/`](system/README.md) | Reusable documentation recipes, manifests, generated phase packets, and feature review artifacts |
+| [`plans/`](plans/README.md) | Canonical business-planning standard, plan registry, production/deferred notes, risks, and cross-platform planning gates |
 
 Repository and subproject `README.md`, `AGENTS.md`, and `CLAUDE.md` files remain beside their projects because development tools discover them there. They link back to this directory for the canonical documentation.
 

@@ -17,12 +17,12 @@
 
 ### Planning evidence
 
-- Discovery: `DISCOVERY.md`
-- Current-system evidence: `EVIDENCE.md`
-- Approved pre-plan specification: `SPEC_SUMMARY.md`
-- Decision log: `DECISIONS.md`
-- Research notes: `RESEARCH.md`
-- Slice 1 execution decomposition: `SLICE-01-LEDGER-SETUP-EXECUTION.md`
+- Discovery: [`DISCOVERY.md`](DISCOVERY.md)
+- Current-system evidence: [`EVIDENCE.md`](EVIDENCE.md)
+- Approved pre-plan specification: [`SPEC_SUMMARY.md`](SPEC_SUMMARY.md)
+- Decision log: [`DECISIONS.md`](DECISIONS.md)
+- Research notes: [`RESEARCH.md`](RESEARCH.md)
+- Slice 1 execution decomposition: [`SLICE-01-LEDGER-SETUP-EXECUTION.md`](SLICE-01-LEDGER-SETUP-EXECUTION.md)
 
 Current behavior is proved only by `EVIDENCE.md`. This plan defines target behavior.
 
@@ -644,15 +644,15 @@ umbrella and does not replace these child contracts.
 
 | Slice | Decision | Feature ID | Screen/Workflow Contract | Boundary / independent acceptance |
 | --- | --- | --- | --- | --- |
-| Slice 1 — Ledger setup spine | Decompose | `ledger-setup-currency` | `documentation/plans/business/accounting-core-gl/decomposition/ledger-setup-currency.md` | Accounting-owned Currency master, lifecycle and active catalog/consumer lookup are independently verified |
-| Slice 1 — Ledger setup spine | Decompose | `ledger-setup-coa-hierarchy` | `documentation/plans/business/accounting-core-gl/decomposition/ledger-setup-coa-hierarchy.md` | Hierarchy Levels + Account tree/detail/lifecycle + proposed editable code are independently verified |
-| Slice 1 — Ledger setup spine | Decompose | `ledger-setup-dimensions` | `documentation/plans/business/accounting-core-gl/decomposition/ledger-setup-dimensions.md` | Dimension definitions/values and account-dimension policy workflow are independently verified |
-| Slice 1 — Ledger setup spine | Decompose | `ledger-setup-books-journals` | `documentation/plans/business/accounting-core-gl/decomposition/ledger-setup-books-journals.md` | Book and Journal definition/numbering setup are independently verified without JournalEntry runtime |
-| Slice 1 — Ledger setup spine | Decompose | `ledger-setup-company-settings` | `documentation/plans/business/accounting-core-gl/decomposition/ledger-setup-company-settings.md` | Functional Currency + Primary Book singleton configuration is independently verified |
-| Slice 1 — Ledger setup spine | Decompose | `ledger-setup-exchange-rates` | `documentation/plans/business/accounting-core-gl/decomposition/ledger-setup-exchange-rates.md` | Exchange Rate Types + historical/versioned rate series are independently verified |
-| Slice 1 — Ledger setup spine | Decompose | `ledger-setup-link-accounts` | `documentation/plans/business/accounting-core-gl/decomposition/ledger-setup-link-accounts.md` | Direct typed/effective purpose mappings with truthful source capabilities are independently verified |
-| Slice 1 — Ledger setup spine | Decompose | `ledger-setup-posting-profiles` | `documentation/plans/business/accounting-core-gl/decomposition/ledger-setup-posting-profiles.md` | Posting Profile lifecycle + deterministic resolve-preview diagnostics are independently verified |
-| Slice 1 — Ledger setup spine | Decompose | `ledger-setup-integration-verification` | `documentation/plans/business/accounting-core-gl/decomposition/ledger-setup-integration-verification.md` | Cross-child navigation/permissions/i18n/client integration and umbrella Phase 06 verification are independently reconciled |
+| Slice 1 — Ledger setup spine | Decompose | `ledger-setup-currency` | [`documentation/plans/business/accounting-core-gl/decomposition/ledger-setup-currency.md`](decomposition/ledger-setup-currency.md) | Accounting-owned Currency master, lifecycle and active catalog/consumer lookup are independently verified |
+| Slice 1 — Ledger setup spine | Decompose | `ledger-setup-coa-hierarchy` | [`documentation/plans/business/accounting-core-gl/decomposition/ledger-setup-coa-hierarchy.md`](decomposition/ledger-setup-coa-hierarchy.md) | Hierarchy Levels + Account tree/detail/lifecycle + proposed editable code are independently verified |
+| Slice 1 — Ledger setup spine | Decompose | `ledger-setup-dimensions` | [`documentation/plans/business/accounting-core-gl/decomposition/ledger-setup-dimensions.md`](decomposition/ledger-setup-dimensions.md) | Dimension definitions/values and account-dimension policy workflow are independently verified |
+| Slice 1 — Ledger setup spine | Decompose | `ledger-setup-books-journals` | [`documentation/plans/business/accounting-core-gl/decomposition/ledger-setup-books-journals.md`](decomposition/ledger-setup-books-journals.md) | Book and Journal definition/numbering setup are independently verified without JournalEntry runtime |
+| Slice 1 — Ledger setup spine | Decompose | `ledger-setup-company-settings` | [`documentation/plans/business/accounting-core-gl/decomposition/ledger-setup-company-settings.md`](decomposition/ledger-setup-company-settings.md) | Functional Currency + Primary Book singleton configuration is independently verified |
+| Slice 1 — Ledger setup spine | Decompose | `ledger-setup-exchange-rates` | [`documentation/plans/business/accounting-core-gl/decomposition/ledger-setup-exchange-rates.md`](decomposition/ledger-setup-exchange-rates.md) | Exchange Rate Types + historical/versioned rate series are independently verified |
+| Slice 1 — Ledger setup spine | Decompose | `ledger-setup-link-accounts` | [`documentation/plans/business/accounting-core-gl/decomposition/ledger-setup-link-accounts.md`](decomposition/ledger-setup-link-accounts.md) | Direct typed/effective purpose mappings with truthful source capabilities are independently verified |
+| Slice 1 — Ledger setup spine | Decompose | `ledger-setup-posting-profiles` | [`documentation/plans/business/accounting-core-gl/decomposition/ledger-setup-posting-profiles.md`](decomposition/ledger-setup-posting-profiles.md) | Posting Profile lifecycle + deterministic resolve-preview diagnostics are independently verified |
+| Slice 1 — Ledger setup spine | Decompose | `ledger-setup-integration-verification` | [`documentation/plans/business/accounting-core-gl/decomposition/ledger-setup-integration-verification.md`](decomposition/ledger-setup-integration-verification.md) | Cross-child navigation/permissions/i18n/client integration and umbrella Phase 06 verification are independently reconciled |
 
 **Slice 1 decomposition contract gate: Closed — v2 contracts and UI Pattern Gates
 reviewed 2026-09-25.** The nine current child Screen/Workflow Contracts remain the
@@ -694,13 +694,13 @@ failed or partially completed scenario keeps the same step Active and produces a
 documented retest scenario after correction.
 
 Every scenario and retest must be a completed, feature-specific instance of
-`MANUAL_ACCEPTANCE_SCENARIO_TEMPLATE.md`. The current Step 01 instance is
-`manual-acceptance/FISCAL-YEARS-STEP-01.md`; later steps receive their own versioned
+[`MANUAL_ACCEPTANCE_SCENARIO_TEMPLATE.md`](MANUAL_ACCEPTANCE_SCENARIO_TEMPLATE.md). The current Step 01 instance is
+[`manual-acceptance/FISCAL-YEARS-STEP-01.md`](manual-acceptance/FISCAL-YEARS-STEP-01.md); later steps receive their own versioned
 file when their API/Web/Mobile evidence is ready. A generic checklist or a link to
 automated results is not sufficient evidence of the user's manual journey.
 
 The active first feature and its complete UI Pattern Gate are recorded in
-`decomposition/fiscal-years.md`. That contract is the only detailed authority for
+[`decomposition/fiscal-years.md`](decomposition/fiscal-years.md). That contract is the only detailed authority for
 Fiscal Years; this master plan does not duplicate its screen or API details.
 Currency and all later steps remain queued or blocked until Fiscal Years is
 verified, explicitly accepted by the user, and closed. Historical package completion
@@ -789,8 +789,8 @@ Customer-facing education for Slice 1 starts only after Phase 06 records
 
 ### Canonical documents to update during implementation
 
-- `documentation/modules/accounting/ARCHITECTURE.md`
-- `documentation/modules/accounting/DELIVERY-ROADMAP.md`
+- [`documentation/modules/accounting/ARCHITECTURE.md`](../../../modules/accounting/ARCHITECTURE.md)
+- [`documentation/modules/accounting/DELIVERY-ROADMAP.md`](../../../modules/accounting/DELIVERY-ROADMAP.md)
 - Accounting API implementation profile(s)
 - feature-scoped request/review evidence under `documentation/system/features/`
 - Web/Mobile Accounting feature profiles

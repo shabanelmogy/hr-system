@@ -24,6 +24,22 @@ module-specific ownership and evidence.
   phases/README.md         (optional; an ordered phase plan)
 ```
 
+## Modules
+
+Listed in registry order (API, web, and mobile register modules in this order).
+
+| Module | Schema | Status |
+| --- | --- | --- |
+| [Platform](platform/README.md) | `platform` | foundation |
+| [General Data (ReferenceData) — main module](reference-data/README.md) | `ref` | foundation |
+| [Contacts](contacts/README.md) | `contacts` | reference-workflow |
+| [Accounting](accounting/README.md) | `acc` | foundation |
+| [HR](hr/README.md) | `hr` | foundation |
+| [CRM](customer-relationship-management/README.md) | `crm` | foundation |
+| [Inventory](inventory/README.md) | `inv` | foundation |
+| [PointOfSale](point-of-sale/README.md) | `pos` | foundation |
+| [Reporting](reporting/README.md) | `rpt` | foundation |
+
 ## Ownership boundary
 
 - `documentation/modules/<slug>/` owns module-specific architecture, delivery

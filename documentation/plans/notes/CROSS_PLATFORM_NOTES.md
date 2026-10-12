@@ -30,6 +30,8 @@ Typical examples:
 | DEF-020 | Deferred | Employee/emergency addresses | Privacy-governed employee address surfaces wait for the owning HR feature. | API + Web + Mobile | `DEFERRED_ITEMS.md` |
 | DEF-021 | Deferred | Address formatting | Country-specific formatting/validation waits for country rollout requirements. | API + Web + Mobile | `DEFERRED_ITEMS.md` |
 | DEF-022 | Deferred | PIM/Catalog boundary | Catalog extraction waits for complexity that justifies a new bounded context. | API + Web + Mobile | `DEFERRED_ITEMS.md` |
+| DEF-023 | Deferred | Attendance geofence | Geofence radius waits for mobile attendance capture. | API + Mobile | `DEFERRED_ITEMS.md` |
+| DEF-024 | Deferred | Employee management | Employee screens, direct manager, and import/export wait for the Employee slice. | API + Web + Mobile | `DEFERRED_ITEMS.md` |
 | RISK-005 | Risk | Platform post-commit effects | Future critical external effects require transactional outbox semantics. | API + Web + Mobile | `KNOWN_RISKS.md` |
 | FOLLOW-003 | Follow-up | Contract parity | Exhaustive generated Web/API contract diff remains future governance work. | API + Web | `FOLLOW_UPS.md` |
 | DEC-001 | Decision | HR MVP | Leave-only versus Attendance scope remains open for the affected HR expansion. | API + Web + Mobile | `DECISION_BACKLOG.md` |
