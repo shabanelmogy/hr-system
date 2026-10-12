@@ -64,22 +64,22 @@ include record scope.
 | Step | Work | Exit check |
 | --- | --- | --- |
 | S0.1 | Done: repository folder renamed to `ERPSYSTEM` by the owner; connected folder re-granted. | Done 2026-09-28. |
-| S0.2 | Confirm no untracked source, then delete `api/HrManagementSystem.*` (6 folders). | Listing; solution builds. |
-| S0.3 | Remove `api/CrystalReportGeneratorApi.rar`; decide the generator folder's home with DEC-013. | Archive absent; `.gitignore` blocks `*.rar`. |
-| S0.4 | Remove `api/packages/`, `api/.codex-build/`, root `node_modules/`. | Listing. |
+| S0.2 | Done: no `api/HrManagementSystem.*` folder is tracked. | Verified 2026-10-12. |
+| S0.3 | Done 2026-10-12: archive removed; `.gitignore` blocks `*.rar`, `*.zip`, `*.7z`. The generator folder's home still follows DEC-013. | Archive absent. |
+| S0.4 | Done 2026-10-12: root `node_modules/` and 758 build outputs under `.codex-artifacts/` removed and ignored. | Listing. |
 | S0.5 | Prepared 2026-10-06: `CorrelationItemKey` → `ErpSystem.CorrelationId`, development JWT key literal → `ErpSystem-…`, example `Issuer`/`Audience` → `ErpSystem`/`ErpSystem.Clients` (example file only; live settings follow DEC-012). | `git grep HrManagementSystem` returns nothing in source/config; tests pass. |
-| S0.6 | Update [`README.md`](../../../README.md) (remove `web/` row) and move or delete `HR-CONNECTION-ONLY-PROMPT.md`. | Docs CI green. |
-| S0.7 | Confirm AttendanceConnector status (E-020); add to the solution or remove. | Recorded decision. |
-| S0.8 | Verify D-005: a user with one tenant and one company logs in without a selection step on web and mobile. | Test or recorded manual check. |
+| S0.6 | Done 2026-10-12: root README lists the current applications (no `web/` row); the attendance prompt moved to `system/features/attendance-devices/SOURCE-REQUEST_AR.md`. | Docs CI green. |
+| S0.7 | Done 2026-10-12: the connector is active (HR attendance devices call it; `scripts/Start-AttendanceDevelopment.ps1` runs it). It stays outside `ErpSystem.sln` because it targets `net10.0-windows` x86 for the COM driver; recorded in the root README. | Recorded decision. |
+| S0.8 | Verified 2026-10-12 in source: `PlatformIdentityAuthenticationAdapters` issues the session directly when the user has one tenant and one company; selection is returned only for more than one. | Recorded check. |
 
 ### S1 — Dependency and licence governance
 
 | Step | Work | Exit check |
 | --- | --- | --- |
-| S1.1 | Replace `System.Data.SqlClient` with `Microsoft.Data.SqlClient`. | Build, tests, NuGet audit green. |
-| S1.2 | Audit `Newtonsoft.Json` call sites; keep only where required. | List recorded. |
+| S1.1 | Done 2026-10-12: `System.Data.SqlClient` had no code use; reference and central version removed (all SQL code already uses `Microsoft.Data.SqlClient`). Also removed unused HR references: `QRCoder`, `System.Drawing.Common`, `System.Linq.Dynamic.Core`, `System.Security.Permissions`. | Build, tests green. |
+| S1.2 | Done 2026-10-12. Kept: HR organizational-structure snapshots (deep clone of entities), Platform entity change log, Platform localization files, and the Crystal generator (.NET Framework). Everything else uses System.Text.Json. | List recorded. |
 | S1.3 | Resolve DEC-011 (MediatR) and DEC-013 (commercial packages); move Syncfusion, ActiveReportsJS, Crystal, BulkExtensions behind optional modules or replace. | Core builds without them. |
-| S1.4 | Audit `crypto-js` usage on web; replace with Web Crypto or remove. | Dependency removed or justified. |
+| S1.4 | Done 2026-10-12: `crypto-js` and its types had no use; removed from `web-next`. | Dependency removed. |
 | S1.5 | Review `AuditableEntity` `*ByPc` fields: purpose, privacy, keep or remove (migration if removed). | Decision + migration plan. |
 | S1.6 | Align SignalR client versions when mobile upgrade is safe. | Versions recorded. |
 

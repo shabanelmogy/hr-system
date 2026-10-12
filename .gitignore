@@ -16,3 +16,8 @@ node_modules/
 .codex-artifacts/
 bin/
 obj/
+
+# Archives are never committed
+*.rar
+*.zip
+*.7z
