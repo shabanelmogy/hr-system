@@ -22,37 +22,37 @@ documentation/system/
 ```
 
 For any change that includes API work, implementation starts with
-[`../api/API_FEATURE_DEVELOPMENT_WORKFLOW.md`](../api/API_FEATURE_DEVELOPMENT_WORKFLOW.md)
+[`../guides/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md`](../guides/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md)
 and the API Architecture Constitution. This documentation system records decisions,
 evidence, and client coordination; it does not override bounded-context ownership or
 the mandatory Existing-System Relationship Review.
 
 All features also follow the product-wide
-[`Permission and Authorization Model`](PERMISSION_MODEL.md). Its exact-action
+[`Permission and Authorization Model`](../guides/shared/PERMISSION_MODEL.md). Its exact-action
 Permission Action Matrix and bilingual-label rules are mandatory planning and
 implementation gates.
 
 For the product-wide ownership and reuse workflow, start with the [ERP
-documentation guide](../project/ERP_DOCUMENTATION_GUIDE_AR.md) and its [shared
-reuse catalog](../project/SHARED_REUSE_CATALOG.md). This system owns the shared
+documentation guide](../guides/shared/ERP_DOCUMENTATION_GUIDE_AR.md) and its [shared
+reuse catalog](../guides/shared/SHARED_REUSE_CATALOG.md). This system owns the shared
 recipe mechanics; it does not make HR the owner of every future feature.
 
 ## Authority model
 
 The canonical applied books own factual implementation evidence:
 
-- [`../project/COUNTRIES_FEATURE_FULL_REVIEW.md`](../project/COUNTRIES_FEATURE_FULL_REVIEW.md)
-- [`../api/Countries_API_Implementation_Profile.md`](../api/Countries_API_Implementation_Profile.md)
-- [`../web-next/features/countries-frontend-reference.md`](../web-next/features/countries-frontend-reference.md)
-- [`../mobile-react/countries-mobile-reference.md`](../mobile-react/countries-mobile-reference.md)
-- [`../project/STATES_FEATURE_FULL_REVIEW.md`](../project/STATES_FEATURE_FULL_REVIEW.md)
-- [`../api/States_API_Implementation_Profile.md`](../api/States_API_Implementation_Profile.md)
-- [`../web-next/features/states-frontend-reference.md`](../web-next/features/states-frontend-reference.md)
-- [`../mobile-react/states-mobile-reference.md`](../mobile-react/states-mobile-reference.md)
-- [`../project/ADDRESSES_DOMAIN_FULL_REVIEW.md`](../project/ADDRESSES_DOMAIN_FULL_REVIEW.md)
-- [`../api/Addresses_API_Implementation_Profile.md`](../api/Addresses_API_Implementation_Profile.md)
-- [`../web-next/features/addresses-frontend-reference.md`](../web-next/features/addresses-frontend-reference.md)
-- [`../mobile-react/addresses-mobile-reference.md`](../mobile-react/addresses-mobile-reference.md)
+- [`../modules/reference-data/features/countries/countries-review.md`](../modules/reference-data/features/countries/countries-review.md)
+- [`../modules/reference-data/features/countries/countries-api.md`](../modules/reference-data/features/countries/countries-api.md)
+- [`../modules/reference-data/features/countries/countries-web.md`](../modules/reference-data/features/countries/countries-web.md)
+- [`../modules/reference-data/features/countries/countries-mobile.md`](../modules/reference-data/features/countries/countries-mobile.md)
+- [`../modules/reference-data/features/states/states-review.md`](../modules/reference-data/features/states/states-review.md)
+- [`../modules/reference-data/features/states/states-api.md`](../modules/reference-data/features/states/states-api.md)
+- [`../modules/reference-data/features/states/states-web.md`](../modules/reference-data/features/states/states-web.md)
+- [`../modules/reference-data/features/states/states-mobile.md`](../modules/reference-data/features/states/states-mobile.md)
+- [`../modules/reference-data/features/addresses/addresses-review.md`](../modules/reference-data/features/addresses/addresses-review.md)
+- [`../modules/reference-data/features/addresses/addresses-api.md`](../modules/reference-data/features/addresses/addresses-api.md)
+- [`../modules/reference-data/features/addresses/addresses-web.md`](../modules/reference-data/features/addresses/addresses-web.md)
+- [`../modules/reference-data/features/addresses/addresses-mobile.md`](../modules/reference-data/features/addresses/addresses-mobile.md)
 
 `recipe-manifest.json` declares which numbered sections support each phase. `Generate-Documentation.ps1` hashes those sections and writes derivative packets into `generated/`. The generated packets are navigation and verification aids; they never replace the canonical books or an approved central business plan.
 
@@ -87,15 +87,15 @@ foundation facts only until feature evidence is added.
 | `recipe-manifest.json` | Books, section dependencies, recipe outputs, and required-file manifests |
 | `Generate-Documentation.ps1` | Generation, fingerprinting, required-path validation, and stale-output checks |
 | `New-FeatureDocumentation.ps1` | Safe implementation request, draft artifact, required-file plan, and feature-scoped recipe-registration scaffold |
-| [`PERMISSION_MODEL.md`](PERMISSION_MODEL.md) | Exact `Resource:Action` authorization, bilingual labels, lifecycle separation, and the mandatory Permission Action Matrix |
+| [`../guides/shared/PERMISSION_MODEL.md`](../guides/shared/PERMISSION_MODEL.md) | Exact `Resource:Action` authorization, bilingual labels, lifecycle separation, and the mandatory Permission Action Matrix |
 | `templates/` | Human-maintained phase and review templates |
 | `generated/` | Machine-generated phase packets; never edit directly |
-| `features/countries/required-files.json` | Source/configuration evidence needed to review Countries end to end |
-| [`features/countries/COUNTRIES-REVIEW-ARTIFACTS.md`](features/countries/COUNTRIES-REVIEW-ARTIFACTS.md) | Completed Countries review evidence and handoff record |
-| `features/states/required-files.json` | Source/configuration evidence needed to review States end to end |
-| [`features/states/STATES-REVIEW-ARTIFACTS.md`](features/states/STATES-REVIEW-ARTIFACTS.md) | States review evidence, State-specific decisions, and open findings |
-| `features/addresses/required-files.json` | Source/configuration evidence for the shared Address domain and owner links |
-| [`features/addresses/ADDRESSES-REVIEW-ARTIFACTS.md`](features/addresses/ADDRESSES-REVIEW-ARTIFACTS.md) | Address design evidence, decisions, and deferred client surfaces |
+| `../modules/reference-data/features/countries/required-files.json` | Source/configuration evidence needed to review Countries end to end |
+| [`../modules/reference-data/features/countries/countries-evidence.md`](../modules/reference-data/features/countries/countries-evidence.md) | Completed Countries review evidence and handoff record |
+| `../modules/reference-data/features/states/required-files.json` | Source/configuration evidence needed to review States end to end |
+| [`../modules/reference-data/features/states/states-evidence.md`](../modules/reference-data/features/states/states-evidence.md) | States review evidence, State-specific decisions, and open findings |
+| `../modules/reference-data/features/addresses/required-files.json` | Source/configuration evidence for the shared Address domain and owner links |
+| [`../modules/reference-data/features/addresses/addresses-evidence.md`](../modules/reference-data/features/addresses/addresses-evidence.md) | Address design evidence, decisions, and deferred client surfaces |
 | `generated/addresses/` | Generated phase 00–06 packets for the Address domain foundation |
 
 ## Commands
@@ -116,7 +116,7 @@ From the repository root:
 
 Generation validates every required file and source collection before writing. Check mode also recomputes every selected output and fails when a packet is missing or stale.
 
-The new-feature scaffold writes a copy-ready `IMPLEMENTATION-REQUEST.md`, review
+The new-feature scaffold writes a copy-ready `<feature>-request.md`, review
 artifact, draft evidence manifest, and draft recipe registration. For planned work,
 pass the exact `PlanId` and authorized `SliceId`; the script verifies that the
 canonical plan exists, that the slice is present, and that the plan's Feature
@@ -176,7 +176,7 @@ when requirements change.
    - `states`: parent-dependent reference data and parent-filter/selector behavior.
 3. Run `New-FeatureDocumentation.ps1` with `PlanId` + `SliceId` for planned
    work. Complete Phase 00 Implementation Preflight, the generated
-   `IMPLEMENTATION-REQUEST.md`, and review artifact before runtime work. Confirm its
+   `<feature>-request.md`, and review artifact before runtime work. Confirm its
    Existing-System Relationship Review plus Business Rules, Edge Cases & Validation,
    and Impact matrices against the approved plan; every edge-case category must be
    covered or explicitly reasoned `N/A`.
@@ -215,7 +215,7 @@ deployment-only check/risk/open decision, assign the canonical item a stable ID 
 `documentation/plans/notes/` and reference that ID from the feature artifact.
 
 When a change creates or extends a reusable web behavior, record its general
-contract in [`web-next/features/server-managed-feature-reference.md`](../web-next/features/server-managed-feature-reference.md) and its
+contract in [`guides/web/server-managed-feature-reference.md`](../guides/web/server-managed-feature-reference.md) and its
 applied behavior in every affected feature profile. Regenerating the affected
 phase packets then propagates those canonical rules automatically; never copy
 the rule into `generated/` files or feature-local documentation by hand.
@@ -227,7 +227,7 @@ the rule into `generated/` files or feature-local documentation by hand.
    `PHASE-00-implementation-preflight.template.md`; inspect a selected reference
    only as implementation evidence/navigation when applicable.
 3. Complete the Existing-System Relationship Review and all three execution
-   readiness matrices in `IMPLEMENTATION-REQUEST.md`; Phase 00 is not closed while
+   readiness matrices in `<feature>-request.md`; Phase 00 is not closed while
    ownership, plan drift, any matrix row, or an Edge Cases & Validation category is
    unresolved.
 4. Complete phases 01 through 05 in order. Record evidence using repository-relative paths and exact symbols.
@@ -302,29 +302,9 @@ Countries and States are applied guides, not global product requirements. Copy t
 
 ## Feature workspaces
 
-Each folder holds the frozen implementation request and the review evidence; its
-`required-files.json` lists the files the generator fingerprints.
-
-| Feature | Files |
-| --- | --- |
-| `accounting-ledger-setup` | [ACCOUNTING_LEDGER_SETUP-REVIEW-ARTIFACTS](features/accounting-ledger-setup/ACCOUNTING_LEDGER_SETUP-REVIEW-ARTIFACTS.md) · [IMPLEMENTATION-REQUEST](features/accounting-ledger-setup/IMPLEMENTATION-REQUEST.md) |
-| `address-types` | [ADDRESS_TYPES-REVIEW-ARTIFACTS](features/address-types/ADDRESS_TYPES-REVIEW-ARTIFACTS.md) · [IMPLEMENTATION-REQUEST](features/address-types/IMPLEMENTATION-REQUEST.md) |
-| `addresses` | [ADDRESSES-REVIEW-ARTIFACTS](features/addresses/ADDRESSES-REVIEW-ARTIFACTS.md) |
-| `attendance-devices` | [ATTENDANCE_DEVICES-REVIEW-ARTIFACTS](features/attendance-devices/ATTENDANCE_DEVICES-REVIEW-ARTIFACTS.md) · [IMPLEMENTATION-REQUEST](features/attendance-devices/IMPLEMENTATION-REQUEST.md) |
-| `company-geographic-scope` | [COMPANY_GEOGRAPHIC_SCOPE-REVIEW-ARTIFACTS](features/company-geographic-scope/COMPANY_GEOGRAPHIC_SCOPE-REVIEW-ARTIFACTS.md) · [IMPLEMENTATION-REQUEST](features/company-geographic-scope/IMPLEMENTATION-REQUEST.md) |
-| `countries` | [COUNTRIES-REVIEW-ARTIFACTS](features/countries/COUNTRIES-REVIEW-ARTIFACTS.md) |
-| `crystal-report-manager` | [AI_REPORT_VIEW_DESIGNER_PLAN](features/crystal-report-manager/AI_REPORT_VIEW_DESIGNER_PLAN.md) · [CRYSTAL_REPORT_MANAGER-REVIEW-ARTIFACTS](features/crystal-report-manager/CRYSTAL_REPORT_MANAGER-REVIEW-ARTIFACTS.md) |
-| `districts` | [DISTRICTS-REVIEW-ARTIFACTS](features/districts/DISTRICTS-REVIEW-ARTIFACTS.md) · [IMPLEMENTATION-REQUEST](features/districts/IMPLEMENTATION-REQUEST.md) |
-| `fiscal-years` | [FISCAL_YEARS-REVIEW-ARTIFACTS](features/fiscal-years/FISCAL_YEARS-REVIEW-ARTIFACTS.md) · [IMPLEMENTATION-REQUEST](features/fiscal-years/IMPLEMENTATION-REQUEST.md) |
-| `ledger-setup-coa-hierarchy` | [IMPLEMENTATION-REQUEST](features/ledger-setup-coa-hierarchy/IMPLEMENTATION-REQUEST.md) · [LEDGER_SETUP_COA_HIERARCHY-REVIEW-ARTIFACTS](features/ledger-setup-coa-hierarchy/LEDGER_SETUP_COA_HIERARCHY-REVIEW-ARTIFACTS.md) |
-| `ledger-setup-currency` | [IMPLEMENTATION-REQUEST](features/ledger-setup-currency/IMPLEMENTATION-REQUEST.md) · [LEDGER_SETUP_CURRENCY-REVIEW-ARTIFACTS](features/ledger-setup-currency/LEDGER_SETUP_CURRENCY-REVIEW-ARTIFACTS.md) |
-| `managed-crystal-contract-registry` | [IMPLEMENTATION-REQUEST](features/managed-crystal-contract-registry/IMPLEMENTATION-REQUEST.md) · [MANAGED_CRYSTAL_CONTRACT_REGISTRY-REVIEW-ARTIFACTS](features/managed-crystal-contract-registry/MANAGED_CRYSTAL_CONTRACT_REGISTRY-REVIEW-ARTIFACTS.md) |
-| `managed-crystal-manager-experience` | [IMPLEMENTATION-REQUEST](features/managed-crystal-manager-experience/IMPLEMENTATION-REQUEST.md) · [MANAGED_CRYSTAL_MANAGER_EXPERIENCE-REVIEW-ARTIFACTS](features/managed-crystal-manager-experience/MANAGED_CRYSTAL_MANAGER_EXPERIENCE-REVIEW-ARTIFACTS.md) |
-| `managed-crystal-template-validation` | [IMPLEMENTATION-REQUEST](features/managed-crystal-template-validation/IMPLEMENTATION-REQUEST.md) · [MANAGED_CRYSTAL_TEMPLATE_VALIDATION-REVIEW-ARTIFACTS](features/managed-crystal-template-validation/MANAGED_CRYSTAL_TEMPLATE_VALIDATION-REVIEW-ARTIFACTS.md) |
-| `organizational-structure` | [IMPLEMENTATION-REQUEST](features/organizational-structure/IMPLEMENTATION-REQUEST.md) · [ORGANIZATIONAL_STRUCTURE-REVIEW-ARTIFACTS](features/organizational-structure/ORGANIZATIONAL_STRUCTURE-REVIEW-ARTIFACTS.md) |
-| `states` | [STATES-REVIEW-ARTIFACTS](features/states/STATES-REVIEW-ARTIFACTS.md) |
-| `tenant-module-entitlements` | [IMPLEMENTATION-REQUEST](features/tenant-module-entitlements/IMPLEMENTATION-REQUEST.md) · [TENANT_MODULE_ENTITLEMENTS-REVIEW-ARTIFACTS](features/tenant-module-entitlements/TENANT_MODULE_ENTITLEMENTS-REVIEW-ARTIFACTS.md) |
-| `workforce-planning` | [IMPLEMENTATION-REQUEST](features/workforce-planning/IMPLEMENTATION-REQUEST.md) · [PHASE-02-BUDGETS-ENVELOPES-IMPLEMENTATION](features/workforce-planning/PHASE-02-BUDGETS-ENVELOPES-IMPLEMENTATION.md) · [WORKFORCE_PLANNING-REVIEW-ARTIFACTS](features/workforce-planning/WORKFORCE_PLANNING-REVIEW-ARTIFACTS.md) |
+Each feature's request, evidence, `required-files.json`, and generated packets live in
+its module folder: `../modules/<module>/features/<feature>/`. The module feature
+catalogs list them (see [modules](../modules/README.md)).
 
 ## Templates
 

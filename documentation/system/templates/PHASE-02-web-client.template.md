@@ -5,8 +5,8 @@
 Implement the canonical browser feature with one server-managed list state shared by all views.
 
 Execution references:
-`documentation/web-next/architecture/frontend-architecture-reference.md` and
-`documentation/web-next/features/server-managed-feature-reference.md`.
+`documentation/guides/web/architecture/frontend-architecture-reference.md` and
+`documentation/guides/web/server-managed-feature-reference.md`.
 
 ## Required structure
 

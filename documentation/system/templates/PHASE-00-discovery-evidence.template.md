@@ -10,17 +10,17 @@ as the copy-ready scope contract and the review artifact as the evidence ledger.
 and `Excluded` means no runtime surface.
 
 For any API work, also follow
-`documentation/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md`. Phase 00 cannot close and
+`documentation/guides/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md`. Phase 00 cannot close and
 runtime implementation cannot begin until the Existing-System Relationship Review
-and all three Business Readiness matrices in `IMPLEMENTATION-REQUEST.md` are
+and all three Business Readiness matrices in `<feature>-request.md` are
 complete for the known scope. Every Edge Cases & Validation category must contain
 scenarios or an explicit `N/A` with a reason.
 
 ## Required outputs
 
-1. Copy `FEATURE-REVIEW-ARTIFACTS.template.md` to `features/<feature>/<FEATURE>-REVIEW-ARTIFACTS.md`.
+1. Copy `FEATURE-REVIEW-ARTIFACTS.template.md` to `documentation/modules/<module>/features/<feature>/<feature>-evidence.md`.
 2. Record the operating mode (`new feature`, `existing-feature review`, or `existing-feature change`) and the selected applied reference with a reason.
-3. For a new feature, create `features/<feature>/required-files.draft.json`; do not register it while declared runtime files are missing. For an existing review, start from its final `required-files.json`.
+3. For a new feature, create `documentation/modules/<module>/features/<feature>/required-files.draft.json`; do not register it while declared runtime files are missing. For an existing review, start from its final `required-files.json`.
 4. Before final registration, replace the draft with `required-files.json` containing only existing repository-relative paths and evidence-based source-collection minimums.
 5. Record API, web, and mobile routes, owners, permissions, list fields, actions, reports, imports, and child relationships.
 6. Classify Import independently for web and mobile as `Required`, `Deferred`, or
@@ -29,7 +29,7 @@ scenarios or an explicit `N/A` with a reason.
 7. Separate verified current behavior, requested behavior, intentional platform differences, and unresolved findings.
 8. Record tests that prove each contract rather than only naming test folders.
 9. Complete the Business Rules Matrix, Edge Cases & Validation Matrix, and Impact
-   Matrix in `IMPLEMENTATION-REQUEST.md`; update them when discovery changes scope.
+   Matrix in `<feature>-request.md`; update them when discovery changes scope.
 
 ## Discovery checklist
 

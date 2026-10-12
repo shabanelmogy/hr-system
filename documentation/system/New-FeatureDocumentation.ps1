@@ -34,7 +34,19 @@ if ($FeatureName.Length -eq 0) {
 
 $systemRoot = $PSScriptRoot
 $repositoryRoot = [System.IO.Path]::GetFullPath((Join-Path $systemRoot '../..'))
-$featureRoot = [System.IO.Path]::GetFullPath((Join-Path $systemRoot "features/$FeatureId"))
+# Feature documentation lives with its owning module: documentation/modules/<slug>/features/<feature>/.
+$moduleManifest = Get-ChildItem -LiteralPath (Join-Path $repositoryRoot 'documentation/modules') -Directory |
+    ForEach-Object { Join-Path $_.FullName 'module.json' } |
+    Where-Object { Test-Path -LiteralPath $_ -PathType Leaf } |
+    Where-Object { ((Get-Content -LiteralPath $_ -Raw -Encoding UTF8) | ConvertFrom-Json).moduleName -ieq $Module } |
+    Select-Object -First 1
+if (-not $moduleManifest) {
+    throw "Module '$Module' has no documentation package (documentation/modules/<slug>/module.json with moduleName '$Module')."
+}
+$moduleSlug = Split-Path -Leaf (Split-Path -Parent $moduleManifest)
+$featureRelativeRoot = "documentation/modules/$moduleSlug/features/$FeatureId"
+$featureSystemRelativeRoot = "../modules/$moduleSlug/features/$FeatureId"
+$featureRoot = [System.IO.Path]::GetFullPath((Join-Path $repositoryRoot $featureRelativeRoot))
 $expectedPrefix = $repositoryRoot.TrimEnd([System.IO.Path]::DirectorySeparatorChar) + [System.IO.Path]::DirectorySeparatorChar
 
 if (-not $featureRoot.StartsWith($expectedPrefix, [System.StringComparison]::OrdinalIgnoreCase)) {
@@ -60,6 +72,8 @@ if ([string]::IsNullOrWhiteSpace($registryLine)) {
 $registryColumns = @($registryLine -split '\|' | ForEach-Object { $_.Trim().Trim('`') })
 $registeredModule = $registryColumns[3]
 $registeredPlanPath = $registryColumns[5]
+# The registry may show the plan path as a Markdown link: [`path`](relative-link).
+if ($registeredPlanPath -match '^\[`?(?<path>[^`\]]+)`?\]\(') { $registeredPlanPath = $Matches['path'] }
 if (-not $registeredModule.Equals($Module, [System.StringComparison]::OrdinalIgnoreCase)) {
     throw "PlanId '$PlanId' is registered for module '$registeredModule', not '$Module'."
 }
@@ -218,9 +232,9 @@ $canonicalPlanDirectory = [System.IO.Path]::GetDirectoryName(($canonicalPlanRela
 $educationRelativePath = (($canonicalPlanDirectory -replace '\\', '/').TrimEnd('/')) + "/education/$FeatureId.md"
 $referenceDisplay = if ([string]::IsNullOrWhiteSpace($ReferenceFeature) -or $ReferenceFeature -eq 'none') { 'N/A' } else { $ReferenceFeature }
 if ($referenceDisplay -ne 'N/A') {
-    $referenceManifest = Join-Path $systemRoot "features/$ReferenceFeature/required-files.json"
-    if (-not (Test-Path -LiteralPath $referenceManifest -PathType Leaf)) {
-        throw "ReferenceFeature '$ReferenceFeature' has no final required-files.json under documentation/system/features/$ReferenceFeature/."
+    $referenceManifest = @(Get-ChildItem -Path (Join-Path $repositoryRoot "documentation/modules/*/features/$ReferenceFeature/required-files.json") -File -ErrorAction SilentlyContinue)
+    if ($referenceManifest.Count -ne 1) {
+        throw "ReferenceFeature '$ReferenceFeature' has no final required-files.json under documentation/modules/<module>/features/$ReferenceFeature/."
     }
 }
 
@@ -230,12 +244,12 @@ $pascalFeature = ($featureParts | ForEach-Object {
     else { $_.Substring(0, 1).ToUpperInvariant() + $_.Substring(1) }
 }) -join ''
 $upperFeature = ($FeatureId -replace '-', '_').ToUpperInvariant()
-$artifactFileName = "$upperFeature-REVIEW-ARTIFACTS.md"
-$implementationRequestFileName = 'IMPLEMENTATION-REQUEST.md'
-$artifactRelativePath = "documentation/system/features/$FeatureId/$artifactFileName"
-$implementationRequestRelativePath = "documentation/system/features/$FeatureId/$implementationRequestFileName"
-$draftManifestRelativePath = "documentation/system/features/$FeatureId/required-files.draft.json"
-$registrationDraftRelativePath = "documentation/system/features/$FeatureId/recipe-registration.draft.json"
+$artifactFileName = "$FeatureId-evidence.md"
+$implementationRequestFileName = "$FeatureId-request.md"
+$artifactRelativePath = "$featureRelativeRoot/$artifactFileName"
+$implementationRequestRelativePath = "$featureRelativeRoot/$implementationRequestFileName"
+$draftManifestRelativePath = "$featureRelativeRoot/required-files.draft.json"
+$registrationDraftRelativePath = "$featureRelativeRoot/recipe-registration.draft.json"
 $artifactPath = Join-Path $featureRoot $artifactFileName
 $implementationRequestPath = Join-Path $featureRoot $implementationRequestFileName
 $draftManifestPath = Join-Path $featureRoot 'required-files.draft.json'
@@ -244,10 +258,10 @@ $templatePath = Join-Path $systemRoot 'templates/FEATURE-REVIEW-ARTIFACTS.templa
 $implementationRequestTemplatePath = Join-Path $systemRoot 'templates/FEATURE-IMPLEMENTATION-REQUEST.template.md'
 
 $plannedBooks = [ordered]@{
-    master = "documentation/project/${upperFeature}_FEATURE_FULL_REVIEW.md"
-    api = "documentation/api/${pascalFeature}_API_Implementation_Profile.md"
-    web = "documentation/web-next/features/$FeatureId-frontend-reference.md"
-    mobile = "documentation/mobile-react/$FeatureId-mobile-reference.md"
+    master = "$featureRelativeRoot/$FeatureId-review.md"
+    api = "$featureRelativeRoot/$FeatureId-api.md"
+    web = "$featureRelativeRoot/$FeatureId-web.md"
+    mobile = "$featureRelativeRoot/$FeatureId-mobile.md"
 }
 
 $artifact = Get-Content -LiteralPath $templatePath -Raw -Encoding UTF8
@@ -320,11 +334,11 @@ $draftManifest = [ordered]@{
     )
     finalizationChecklist = @(
         'Replace every placeholder in the review artifact.',
-        'Complete the Existing-System Relationship Review and every decision in IMPLEMENTATION-REQUEST.md before implementation.',
+        "Complete the Existing-System Relationship Review and every decision in $implementationRequestFileName before implementation.",
         'Complete the Business Rules Matrix with one primary owner, stable outcome/error, and required test for every known rule.',
         'Complete every Edge Cases & Validation category with scenarios or an explicit N/A reason, enforcement layer, and required test.',
         'Complete the Impact Matrix with Reuse, Extend, Change, Add, or reasoned N/A across every listed area.',
-        'Remove every remaining placeholder from IMPLEMENTATION-REQUEST.md before runtime implementation.',
+        "Remove every remaining placeholder from $implementationRequestFileName before runtime implementation.",
         'Add Phase 00 current API, web, mobile, configuration, localization, and test evidence sources.',
         'Classify every optional view, including Import, as Required, Deferred, or Excluded independently for web and mobile.',
         'When Import is Required, add its API and applicable client runtime, route/configuration, localization, and focused-test paths.',
@@ -334,7 +348,7 @@ $draftManifest = [ordered]@{
         'Rename this file to required-files.json when the Phase 00 evidence paths exist; extend it with runtime files during implementation.',
         'Update the review artifact to point at required-files.json and mark its documentation state Final.',
         'Merge recipe-registration.draft.json into recipe-manifest.json after the Phase 00 books and preflight manifest are complete.',
-        "Write generated packets under documentation/system/generated/$FeatureId/.",
+        "Write generated packets under $featureRelativeRoot/generated/.",
         'Run generation and then Generate-Documentation.ps1 -Check.',
         'Complete phase 06 with an explicit verification decision.',
         'Do not start customer-facing education until phase 06 records Verified.',
@@ -359,16 +373,16 @@ $registrationDraft = [ordered]@{
     plannedCustomerEducation = $educationRelativePath
     instructions = 'Merge these entries into recipe-manifest.json after Phase 00 has a final preflight required-files.json and all four initial applied implementation books. Extend the manifest/books with runtime evidence during implementation.'
     books = @(
-        [ordered]@{ id = $masterBookId; path = "../project/${upperFeature}_FEATURE_FULL_REVIEW.md"; title = "$FeatureName cross-platform master review" },
-        [ordered]@{ id = $apiBookId; path = "../api/${pascalFeature}_API_Implementation_Profile.md"; title = "$FeatureName API implementation profile" },
-        [ordered]@{ id = $webBookId; path = "../web-next/features/$FeatureId-frontend-reference.md"; title = "$FeatureName Next.js implementation profile" },
-        [ordered]@{ id = $mobileBookId; path = "../mobile-react/$FeatureId-mobile-reference.md"; title = "$FeatureName Expo implementation profile" }
+        [ordered]@{ id = $masterBookId; path = "$featureSystemRelativeRoot/$FeatureId-review.md"; title = "$FeatureName cross-platform master review" },
+        [ordered]@{ id = $apiBookId; path = "$featureSystemRelativeRoot/$FeatureId-api.md"; title = "$FeatureName API implementation profile" },
+        [ordered]@{ id = $webBookId; path = "$featureSystemRelativeRoot/$FeatureId-web.md"; title = "$FeatureName Next.js implementation profile" },
+        [ordered]@{ id = $mobileBookId; path = "$featureSystemRelativeRoot/$FeatureId-mobile.md"; title = "$FeatureName Expo implementation profile" }
     )
-    requiredFileManifest = "features/$FeatureId/required-files.json"
+    requiredFileManifest = "$featureSystemRelativeRoot/required-files.json"
     recipes = @(
         [ordered]@{
             id = "$FeatureId-phase-00-implementation-preflight"; title = "$FeatureName Phase 00 - Implementation Preflight"
-            template = 'templates/PHASE-00-implementation-preflight.template.md'; output = "generated/$FeatureId/PHASE-00-implementation-preflight.md"
+            template = 'templates/PHASE-00-implementation-preflight.template.md'; output = "$featureSystemRelativeRoot/generated/PHASE-00-implementation-preflight.md"
             sources = @(
                 [ordered]@{ book = $masterBookId; sections = @(1, 2, 5, 8, 9) },
                 [ordered]@{ book = $apiBookId; sections = @(1, 10, 11) },
@@ -378,7 +392,7 @@ $registrationDraft = [ordered]@{
         },
         [ordered]@{
             id = "$FeatureId-phase-01-domain-api"; title = "$FeatureName Phase 01 - Domain and API"
-            template = 'templates/PHASE-01-domain-api.template.md'; output = "generated/$FeatureId/PHASE-01-domain-api.md"
+            template = 'templates/PHASE-01-domain-api.template.md'; output = "$featureSystemRelativeRoot/generated/PHASE-01-domain-api.md"
             sources = @(
                 [ordered]@{ book = $masterBookId; sections = @(3, 4, 6) },
                 [ordered]@{ book = $apiBookId; sections = @(1, 2, 3, 4, 5, 6, 7, 8, 9, 10) }
@@ -386,7 +400,7 @@ $registrationDraft = [ordered]@{
         },
         [ordered]@{
             id = "$FeatureId-phase-02-web-client"; title = "$FeatureName Phase 02 - Next.js Client"
-            template = 'templates/PHASE-02-web-client.template.md'; output = "generated/$FeatureId/PHASE-02-web-client.md"
+            template = 'templates/PHASE-02-web-client.template.md'; output = "$featureSystemRelativeRoot/generated/PHASE-02-web-client.md"
             sources = @(
                 [ordered]@{ book = $masterBookId; sections = @(3, 4, 6, 7) },
                 [ordered]@{ book = $webBookId; sections = @(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14) }
@@ -394,7 +408,7 @@ $registrationDraft = [ordered]@{
         },
         [ordered]@{
             id = "$FeatureId-phase-03-mobile-client"; title = "$FeatureName Phase 03 - Expo Mobile Client"
-            template = 'templates/PHASE-03-mobile-client.template.md'; output = "generated/$FeatureId/PHASE-03-mobile-client.md"
+            template = 'templates/PHASE-03-mobile-client.template.md'; output = "$featureSystemRelativeRoot/generated/PHASE-03-mobile-client.md"
             sources = @(
                 [ordered]@{ book = $masterBookId; sections = @(3, 4, 6, 7) },
                 [ordered]@{ book = $mobileBookId; sections = @(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15) }
@@ -402,7 +416,7 @@ $registrationDraft = [ordered]@{
         },
         [ordered]@{
             id = "$FeatureId-phase-04-domain-actions"; title = "$FeatureName Phase 04 - Domain Actions and Lifecycle"
-            template = 'templates/PHASE-04-domain-actions.template.md'; output = "generated/$FeatureId/PHASE-04-domain-actions.md"
+            template = 'templates/PHASE-04-domain-actions.template.md'; output = "$featureSystemRelativeRoot/generated/PHASE-04-domain-actions.md"
             sources = @(
                 [ordered]@{ book = $masterBookId; sections = @(3, 4, 6, 7, 8) },
                 [ordered]@{ book = $apiBookId; sections = @(6, 7, 8) },
@@ -412,7 +426,7 @@ $registrationDraft = [ordered]@{
         },
         [ordered]@{
             id = "$FeatureId-phase-05-integration-runtime"; title = "$FeatureName Phase 05 - Integration and Runtime"
-            template = 'templates/PHASE-05-integration-runtime.template.md'; output = "generated/$FeatureId/PHASE-05-integration-runtime.md"
+            template = 'templates/PHASE-05-integration-runtime.template.md'; output = "$featureSystemRelativeRoot/generated/PHASE-05-integration-runtime.md"
             sources = @(
                 [ordered]@{ book = $masterBookId; sections = @(4, 5, 6, 7, 9) },
                 [ordered]@{ book = $apiBookId; sections = @(8, 9, 10) },
@@ -422,7 +436,7 @@ $registrationDraft = [ordered]@{
         },
         [ordered]@{
             id = "$FeatureId-phase-06-verification-acceptance"; title = "$FeatureName Phase 06 - Verification and Acceptance"
-            template = 'templates/PHASE-06-verification-acceptance.template.md'; output = "generated/$FeatureId/PHASE-06-verification-acceptance.md"
+            template = 'templates/PHASE-06-verification-acceptance.template.md'; output = "$featureSystemRelativeRoot/generated/PHASE-06-verification-acceptance.md"
             sources = @(
                 [ordered]@{ book = $masterBookId; sections = @(8, 9, 10) },
                 [ordered]@{ book = $apiBookId; sections = @(10, 11) },
@@ -432,7 +446,7 @@ $registrationDraft = [ordered]@{
         },
         [ordered]@{
             id = "$FeatureId-phase-07-customer-education-closure"; title = "$FeatureName Phase 07 - Customer Education and Closure"
-            template = 'templates/PHASE-07-customer-education-closure.template.md'; output = "generated/$FeatureId/PHASE-07-customer-education-closure.md"
+            template = 'templates/PHASE-07-customer-education-closure.template.md'; output = "$featureSystemRelativeRoot/generated/PHASE-07-customer-education-closure.md"
             sources = @(
                 [ordered]@{ book = $masterBookId; sections = @(8, 9, 10) },
                 [ordered]@{ book = $webBookId; sections = @(12, 13, 14) },

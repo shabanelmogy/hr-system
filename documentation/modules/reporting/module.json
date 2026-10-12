@@ -26,6 +26,7 @@
   },
   "documentationPaths": {
     "root": "documentation/modules/reporting",
-    "webNext": "documentation/modules/reporting/web-next/README.md"
+    "webNext": "documentation/modules/reporting/web-next/README.md",
+    "features": "documentation/modules/reporting/features/README.md"
   }
 }

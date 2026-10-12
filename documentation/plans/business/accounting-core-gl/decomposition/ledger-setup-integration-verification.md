@@ -113,10 +113,10 @@ no page-level horizontal overflow.
 | Order | Stage | Status | Entry gate | Required evidence / exit gate | Evidence path |
 | ---: | --- | --- | --- | --- | --- |
 | 1 | API | Queued | all child documentation/closure rows Closed | reconcile typed contracts, permissions, migrations and cross-child invalidation | `SLICE-01-LEDGER-SETUP-EXECUTION.md` |
-| 2 | Web | Queued | API integration Verified | launcher/routes and all child API-backed journeys/patterns verified | `documentation/web-next/features/accounting-ledger-setup-frontend-reference.md` |
-| 3 | Mobile | Queued | Web integration Verified | route manifest and all child actual-device journeys/patterns verified | `documentation/mobile-react/accounting-ledger-setup-mobile-reference.md` |
+| 2 | Web | Queued | API integration Verified | launcher/routes and all child API-backed journeys/patterns verified | `documentation/modules/accounting/features/accounting-ledger-setup/accounting-ledger-setup-web.md` |
+| 3 | Mobile | Queued | Web integration Verified | route manifest and all child actual-device journeys/patterns verified | `documentation/modules/accounting/features/accounting-ledger-setup/accounting-ledger-setup-mobile.md` |
 | 4 | Integrated live verification + user acceptance | Queued | API, Web and Mobile Verified | agent sends the full authenticated Slice 1 Web/actual-Mobile matrix against the migrated live database; user runs or supervises it and explicitly accepts | `SLICE-01-LEDGER-SETUP-EXECUTION.md` |
-| 5 | Documentation and closure | Queued | integrated live verification Verified and explicit user acceptance recorded | Phase 06 Verified, Phase 07 education, manifests/recipes and Slice closure | `documentation/system/features/accounting-ledger-setup/required-files.json` |
+| 5 | Documentation and closure | Queued | integrated live verification Verified and explicit user acceptance recorded | Phase 06 Verified, Phase 07 education, manifests/recipes and Slice closure | `documentation/modules/accounting/features/accounting-ledger-setup/required-files.json` |
 
 **Manual acceptance protocol.** The central
 `../MANUAL_ACCEPTANCE_SCENARIO_TEMPLATE.md` format is mandatory

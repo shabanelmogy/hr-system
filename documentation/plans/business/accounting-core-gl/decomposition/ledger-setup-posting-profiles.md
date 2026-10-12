@@ -34,7 +34,7 @@ resolved/no-match/ambiguous diagnostics without posting or mutating configuratio
 
 | Reference | Exact path/screen | What is reused | What intentionally differs |
 | --- | --- | --- | --- |
-| P-001 managed collection | registered Accounting/Countries sources in `documentation/project/SCREEN_PATTERN_CATALOG.md` | list, form, state and lifecycle discipline | effective profile/context/priority rules remain Accounting-owned |
+| P-001 managed collection | registered Accounting/Countries sources in `documentation/guides/shared/SCREEN_PATTERN_CATALOG.md` | list, form, state and lifecycle discipline | effective profile/context/priority rules remain Accounting-owned |
 | Current preview | Web `AccountResolutionPreview` composition in `LedgerSetupResourcePage.tsx` and Mobile component named above | read-only input→diagnostic interaction | structured typed diagnostics replace generic alert/record assumptions |
 | Link Accounts | `documentation/plans/business/accounting-core-gl/decomposition/ledger-setup-link-accounts.md` | capability and dependency vocabulary | profiles add conditional precedence/version rules, not direct mapping semantics |
 
@@ -111,10 +111,10 @@ overflow.
 | Order | Stage | Status | Entry gate | Required evidence / exit gate | Evidence path |
 | ---: | --- | --- | --- | --- | --- |
 | 1 | API | Queued | Link Accounts closed and contract approved | typed bilingual profiles/resolver, migrations, permissions and precedence tests | `SLICE-01-LEDGER-SETUP-EXECUTION.md` |
-| 2 | Web | Queued | API Verified | typed P-001 management plus structured preview and tests | `documentation/web-next/features/accounting-ledger-setup-frontend-reference.md` |
-| 3 | Mobile | Queued | Web Verified | typed clean layers, schemas, native management/preview and tests | `documentation/mobile-react/accounting-ledger-setup-mobile-reference.md` |
+| 2 | Web | Queued | API Verified | typed P-001 management plus structured preview and tests | `documentation/modules/accounting/features/accounting-ledger-setup/accounting-ledger-setup-web.md` |
+| 3 | Mobile | Queued | Web Verified | typed clean layers, schemas, native management/preview and tests | `documentation/modules/accounting/features/accounting-ledger-setup/accounting-ledger-setup-mobile.md` |
 | 4 | Integrated live verification + user acceptance | Queued | prior stages Verified | agent sends detailed authenticated profile→preview resolved/no-match/ambiguous API/Web/actual-Mobile scenario with live-schema checks; user runs or supervises it and explicitly accepts | `SLICE-01-LEDGER-SETUP-EXECUTION.md` |
-| 5 | Documentation and closure | Queued | integrated verification Verified and explicit user acceptance recorded | canonical docs, manifest/recipes and education reconciled | `documentation/system/features/accounting-ledger-setup/required-files.json` |
+| 5 | Documentation and closure | Queued | integrated verification Verified and explicit user acceptance recorded | canonical docs, manifest/recipes and education reconciled | `documentation/modules/accounting/features/accounting-ledger-setup/required-files.json` |
 
 **Manual acceptance protocol.** The central
 `../MANUAL_ACCEPTANCE_SCENARIO_TEMPLATE.md` format is mandatory:

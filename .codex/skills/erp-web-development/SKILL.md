@@ -6,7 +6,7 @@ description: Use when analyzing, reviewing, debugging, implementing, refactoring
 # ERPSYSTEM Web Development
 
 Use this skill only in the ERPSYSTEM workspace. Confirm the repository with
-`web-next/package.json` and `documentation/web-next/`, and inspect current source
+`web-next/package.json` and `documentation/guides/web/`, and inspect current source
 before relying on examples because the frontend and its canonical documentation
 evolve together. `web-next/` is the supported frontend; do not implement new work
 in the legacy `web/` application.
@@ -24,19 +24,19 @@ current evidence as a finding to reconcile through the documented workflow.
 - For any source, route, contract, UI, localization, test, or web documentation
   change, also read [feature-workflow.md](references/feature-workflow.md).
 - Read `web-next/AGENTS.md` and
-  `documentation/web-next/architecture/frontend-architecture-reference.md` before
+  `documentation/guides/web/architecture/frontend-architecture-reference.md` before
   changing frontend code. For a server-managed feature, also read
-  `documentation/web-next/features/server-managed-feature-reference.md`.
+  `documentation/guides/web/server-managed-feature-reference.md`.
 - Before creating or rebuilding a screen, read
-  `documentation/project/SCREEN_PATTERN_CATALOG.md` and
-  `documentation/project/SHARED_REUSE_CATALOG.md`, select the actual matching
+  `documentation/guides/shared/SCREEN_PATTERN_CATALOG.md` and
+  `documentation/guides/shared/SHARED_REUSE_CATALOG.md`, select the actual matching
   Pattern ID, and inspect its registered Web and Mobile references.
 - For a new capability or substantial rebuild, read `documentation/plans/README.md`,
   the exact approved Plan/Slice and version 2.0 feature execution contract,
   `documentation/plans/PLAN_QUALITY_GATE.md`, and `documentation/system/README.md`
   before runtime work.
 - For an existing registered feature, start from
-  `documentation/system/features/<feature>/required-files.json`, the applied
+  `documentation/modules/<module>/features/<feature>/required-files.json`, the applied
   cross-platform/API/Web/Mobile books, and only the generated phases relevant to
   the requested change. Generated packets are navigation aids, not authored truth.
 - Before changing Next.js behavior, read the installed Next.js 16.3.5 documentation
@@ -175,7 +175,7 @@ bundle, route ownership, shared infrastructure, or release contract changes.
 Update the owning canonical Web profile and every affected API/Mobile/cross-platform
 book, required-file manifest, recipe registration, and generated phase packet in
 the same change when evidence or decisions changed. Never create `web-next/docs/`
-and never edit `documentation/system/generated/` directly. At handoff distinguish
+and never edit `documentation/modules/*/features/*/generated/` directly. At handoff distinguish
 feature regressions, inherited failures, environment blockers, and manual/release
 checks. Do not claim a browser, production build, or cross-platform journey was
 verified when it was not run.

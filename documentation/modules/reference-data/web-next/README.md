@@ -25,5 +25,5 @@ contract without inventing feature-local DTOs.
 
 Use the [feature catalog](../features/README.md) for the master/API/Web/Mobile
 books. The generated route inventory is maintained in
-[`frontend-architecture-manifest.md`](../../../web-next/architecture/frontend-architecture-manifest.md)
+[`frontend-architecture-manifest.md`](../../../guides/web/architecture/frontend-architecture-manifest.md)
 and is navigation evidence, not a substitute for feature verification.

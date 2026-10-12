@@ -38,7 +38,7 @@ workflow. Journal-line assignments and posting validation belong to later slices
 
 | Reference | Exact path/screen | What is reused | What intentionally differs |
 | --- | --- | --- | --- |
-| P-001 list management | Currency/Countries sources registered in `documentation/project/SCREEN_PATTERN_CATALOG.md` | authoritative lists, forms and states | definition/value fields and scoping stay Accounting-owned |
+| P-001 list management | Currency/Countries sources registered in `documentation/guides/shared/SCREEN_PATTERN_CATALOG.md` | authoritative lists, forms and states | definition/value fields and scoping stay Accounting-owned |
 | P-006 relationship editor | Role Permissions Web/Mobile sources registered in the pattern catalog | scope, filtering, dirty set, read-only and explicit save | AccountDimensionPolicy uses typed requirement values and server upsert rules |
 | Existing Ledger Setup | current Web/Mobile resource screens named in the gate | route and current interaction evidence | generic records/catch-all schemas are removed from target child ownership |
 
@@ -112,10 +112,10 @@ both preserve RTL, first-error focus and change summaries.
 | Order | Stage | Status | Entry gate | Required evidence / exit gate | Evidence path |
 | ---: | --- | --- | --- | --- | --- |
 | 1 | API | Queued | COA closed and this v2 contract approved | typed bilingual contracts, policies, migrations, permissions and tests | `SLICE-01-LEDGER-SETUP-EXECUTION.md` |
-| 2 | Web | Queued | API Verified | replace generic renderer with P-001/P-006 typed journeys and tests | `documentation/web-next/features/accounting-ledger-setup-frontend-reference.md` |
-| 3 | Mobile | Queued | Web Verified | typed clean layers, runtime schemas, P-001/P-006 native journeys and tests | `documentation/mobile-react/accounting-ledger-setup-mobile-reference.md` |
+| 2 | Web | Queued | API Verified | replace generic renderer with P-001/P-006 typed journeys and tests | `documentation/modules/accounting/features/accounting-ledger-setup/accounting-ledger-setup-web.md` |
+| 3 | Mobile | Queued | Web Verified | typed clean layers, runtime schemas, P-001/P-006 native journeys and tests | `documentation/modules/accounting/features/accounting-ledger-setup/accounting-ledger-setup-mobile.md` |
 | 4 | Integrated live verification + user acceptance | Queued | API, Web and Mobile Verified | agent sends detailed authenticated definition→value→account-policy Web/actual-device scenario; user runs or supervises it and explicitly accepts | `SLICE-01-LEDGER-SETUP-EXECUTION.md` |
-| 5 | Documentation and closure | Queued | integrated verification Verified and explicit user acceptance recorded | canonical books, manifest/recipes and education reconciled | `documentation/system/features/accounting-ledger-setup/required-files.json` |
+| 5 | Documentation and closure | Queued | integrated verification Verified and explicit user acceptance recorded | canonical books, manifest/recipes and education reconciled | `documentation/modules/accounting/features/accounting-ledger-setup/required-files.json` |
 
 **Manual acceptance protocol.** The central
 `../MANUAL_ACCEPTANCE_SCENARIO_TEMPLATE.md` format is mandatory:

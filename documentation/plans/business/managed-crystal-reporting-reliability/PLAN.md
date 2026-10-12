@@ -591,8 +591,8 @@ operations, or security siblings until their roadmap gates permit it.
 
 ### Canonical documents to create/update during implementation
 
-- [`documentation/project/CRYSTAL_REPORT_MANAGER_INTEGRATION_GUIDE.md`](../../../project/CRYSTAL_REPORT_MANAGER_INTEGRATION_GUIDE.md)
-- [`documentation/system/features/crystal-report-manager/CRYSTAL_REPORT_MANAGER-REVIEW-ARTIFACTS.md`](../../../system/features/crystal-report-manager/CRYSTAL_REPORT_MANAGER-REVIEW-ARTIFACTS.md)
+- [`documentation/modules/reporting/CRYSTAL_REPORT_MANAGER_INTEGRATION_GUIDE.md`](../../../modules/reporting/CRYSTAL_REPORT_MANAGER_INTEGRATION_GUIDE.md)
+- [`documentation/modules/reporting/features/crystal-report-manager/crystal-report-manager-evidence.md`](../../../modules/reporting/features/crystal-report-manager/crystal-report-manager-evidence.md)
 - Final `required-files.json`, recipe registration and generated packets through
   the documented generator, never direct edits under `generated/`
 - Reporting module/API implementation profile and runtime deployment/runbook

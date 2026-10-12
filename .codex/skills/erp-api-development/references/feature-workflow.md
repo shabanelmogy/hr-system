@@ -319,11 +319,11 @@ Required, Deferred, or Excluded.
 
 Module packages own module-specific architecture, roadmap, feature indexes, and
 API/Web/Mobile notes. `documentation/system/` owns reusable recipe mechanics and
-generated phase packets. Cross-project books under `documentation/project/` own
+generated phase packets. Cross-project books under `documentation/guides/shared/` own
 shared/cross-platform rules. Link to a shared rule instead of duplicating it into a
 module package.
 
-Use the documentation generator; never edit `documentation/system/generated/`
+Use the documentation generator; never edit `documentation/modules/*/features/*/generated/`
 directly. Do not create `api/Docs/`, `api/docs/`, or another project-local guide
 tree.
 

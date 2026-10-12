@@ -109,9 +109,9 @@ first-invalid focus. Web bounds grid scrolling; Mobile uses phone/tablet-safe vi
 
 | Order | Stage | Status | Entry gate | Required evidence / exit gate | Evidence path |
 | ---: | --- | --- | --- | --- | --- |
-| 1 | API | Verified | Currency boundary approved | typed owner, bilingual fields, catalog, migration, permissions and tests | `documentation/project/LEDGER_SETUP_CURRENCY_FEATURE_FULL_REVIEW.md` |
-| 2 | Web | Verified | API Verified | bilingual typed list/form/lifecycle and tests | `documentation/web-next/features/ledger-setup-currency-frontend-reference.md` |
-| 3 | Mobile | Verified | Web Verified | runtime schemas, bilingual native journey and tests | `documentation/mobile-react/ledger-setup-currency-mobile-reference.md` |
+| 1 | API | Verified | Currency boundary approved | typed owner, bilingual fields, catalog, migration, permissions and tests | `documentation/modules/accounting/features/ledger-setup-currency/ledger-setup-currency-review.md` |
+| 2 | Web | Verified | API Verified | bilingual typed list/form/lifecycle and tests | `documentation/modules/accounting/features/ledger-setup-currency/ledger-setup-currency-web.md` |
+| 3 | Mobile | Verified | Web Verified | runtime schemas, bilingual native journey and tests | `documentation/modules/accounting/features/ledger-setup-currency/ledger-setup-currency-mobile.md` |
 | 4 | Integrated live verification + user acceptance | Queued | Fiscal Years closure and prior stages Verified | agent sends detailed authenticated API/Web/actual-Mobile v2 scenario; user runs or supervises it and explicitly accepts | `SLICE-01-LEDGER-SETUP-EXECUTION.md` |
 | 5 | Documentation and closure | Queued | current integrated verification Verified and explicit user acceptance recorded | reconcile historical Phase 07 material and close roadmap row | `documentation/plans/business/accounting-core-gl/education/ledger-setup-currency.md` |
 

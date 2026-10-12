@@ -17,7 +17,7 @@ graphify query "Which Web owner, routes, services, queries, shared components, A
 Read:
 
 - `web-next/AGENTS.md`;
-- `documentation/web-next/architecture/frontend-architecture-reference.md`;
+- `documentation/guides/web/architecture/frontend-architecture-reference.md`;
 - the local Next.js 16.3.5 documentation for the framework behavior involved;
 - the owning module package and feature Web/API/Mobile/cross-platform profiles;
 - the exact current route, public index, page/controller, service, query keys,

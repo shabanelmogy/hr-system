@@ -42,7 +42,7 @@ Failure => `Draft`.
 - [ ] Rules matrix covers every Required action.
 - [ ] Edge-case matrix fully decided or reasoned N/A.
 - [ ] Actors and permissions are defined through the mandatory Permission Action
-  Matrix in `../system/PERMISSION_MODEL.md`: every endpoint and Web/Mobile action
+  Matrix in `../guides/shared/PERMISSION_MODEL.md`: every endpoint and Web/Mobile action
   uses an exact permission; Create/Edit/Archive/Restore/Delete and lifecycle
   operations are independently decided; no runtime `Manage` claim remains.
 - [ ] Audit/history requirements defined.

@@ -2,19 +2,19 @@
 
 For every new API feature, use case, endpoint, business-rule change, integration,
 or persistence change, start with the mandatory
-[API Feature Development Workflow](../documentation/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md).
+[API Feature Development Workflow](../documentation/guides/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md).
 Its Existing-System Relationship Review must be completed before new code is
 introduced: inspect the current owner, reuse or extend the existing capability,
 and modify the owning business model when the new requirement demands it instead
 of creating a parallel implementation.
 
-The [ERP Architecture Constitution](../documentation/api/ERP_ARCHITECTURE_CONSTITUTION.md)
+The [ERP Architecture Constitution](../documentation/guides/api/ERP_ARCHITECTURE_CONSTITUTION.md)
 is the authoritative architecture policy. The
-[Clean Architecture and CQRS Guide](../documentation/api/Clean_Architecture_CQRS_Guide.md)
+[Clean Architecture and CQRS Guide](../documentation/guides/api/Clean_Architecture_CQRS_Guide.md)
 is the technical pattern reference. New bounded contexts additionally follow the
-[Modular Monolith Architecture](../documentation/api/MODULAR_MONOLITH_ARCHITECTURE.md).
+[Modular Monolith Architecture](../documentation/guides/api/MODULAR_MONOLITH_ARCHITECTURE.md).
 
-When following Countries, read the [cross-platform master](../documentation/project/COUNTRIES_FEATURE_FULL_REVIEW.md), the [API applied profile](../documentation/api/Countries_API_Implementation_Profile.md), and phases 01, 04, 05, and 06 under `../documentation/system/generated/`.
+When following Countries, read the [cross-platform master](../documentation/modules/reference-data/features/countries/countries-review.md), the [API applied profile](../documentation/modules/reference-data/features/countries/countries-api.md), and phases 01, 04, 05, and 06 under `../documentation/modules/*/features/*/generated/`.
 When the feature has a required parent relationship, compare the States profiles as the closer applied reference. Always classify global, tenant, and company ownership independently.
 
 - Keep controllers thin and send typed CQRS messages.

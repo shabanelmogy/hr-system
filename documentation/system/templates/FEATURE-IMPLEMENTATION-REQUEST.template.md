@@ -39,9 +39,9 @@ Before changing runtime source:
 
 1. Run `./documentation/system/Generate-Documentation.ps1 -Check`.
 2. Read `AGENTS.md`, `documentation/system/README.md`,
-   `documentation/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md` when API work is in scope,
-   `documentation/project/ERP_DOCUMENTATION_GUIDE_AR.md`,
-   `documentation/project/SHARED_REUSE_CATALOG.md`, this request, the review
+   `documentation/guides/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md` when API work is in scope,
+   `documentation/guides/shared/ERP_DOCUMENTATION_GUIDE_AR.md`,
+   `documentation/guides/shared/SHARED_REUSE_CATALOG.md`, this request, the review
    artifact, and the feature's generated phase packets. When an implementation
    reference is selected, also read its required-file manifest.
 3. Verify every referenced runtime path and record current, requested,

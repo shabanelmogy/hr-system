@@ -52,13 +52,13 @@ Rules:
   deferred/release item only in chat history, TODO comments, or a secondary plan.
 - Run `./documentation/plans/Check-Planning.ps1` when changing the planning
   system, plan registry, business-plan folders, or central note registries.
-- Any change that includes API work must follow [`documentation/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md`](documentation/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md) first. The documentation recipe system organizes evidence and cross-platform handoff; it does not replace API ownership, business-rule, or existing-system relationship decisions.
+- Any change that includes API work must follow [`documentation/guides/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md`](documentation/guides/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md) first. The documentation recipe system organizes evidence and cross-platform handoff; it does not replace API ownership, business-rule, or existing-system relationship decisions.
 - Before creating or restructuring a feature that spans API, `web-next`, or `mobile-react`, read [`documentation/system/README.md`](documentation/system/README.md) and run `./documentation/system/Generate-Documentation.ps1 -Check`.
 - Choose a reviewed implementation reference only when it genuinely matches the
   implementation shape. Countries/States remain useful reference-data examples but
   are no longer mandatory references for unrelated ERP domains. A reference never
   supplies product scope or business ownership.
-- Use the selected feature's `documentation/system/features/<reference>/required-files.json` to discover its complete evidence surface. Verify current source before applying the pattern.
+- Use the selected feature's `documentation/modules/<module>/features/<reference>/required-files.json` to discover its complete evidence surface. Verify current source before applying the pattern.
 - For planned new work, run
   `./documentation/system/New-FeatureDocumentation.ps1 -FeatureId <id> -FeatureName "<name>" -PlanId <plan-id> -SliceId "<exact authorized slice>" -Module <module>`.
   Before that command, the authorized slice must pass the Feature Decomposition Gate
@@ -66,7 +66,7 @@ Rules:
   time and each child must have a completed Screen/Workflow Contract from
   `documentation/plans/FEATURE_DECOMPOSITION_TEMPLATE.md`.
   Add `-ReferenceFeature <reviewed-feature>` only when useful. Complete Phase 00
-  Implementation Preflight, the generated `IMPLEMENTATION-REQUEST.md`, and review
+  Implementation Preflight, the generated `<feature>-request.md`, and review
   artifact before runtime work. During Phase 00, create the initial applied books
   and finalize/register a required-file manifest containing only evidence that
   already exists; Phases 01–05 extend it with actual runtime sources as they are
@@ -80,7 +80,7 @@ Rules:
   Acceptance; Phase 07 Customer Education & Closure is allowed only after Phase 06
   records `Verified`. Existing registered 00–06 recipes remain stable unless
   separately migrated.
-- Never edit `documentation/system/generated/` directly. Update a canonical numbered section, recipe template, or manifest and regenerate.
+- Never edit `documentation/modules/*/features/*/generated/` directly. Update a canonical numbered section, recipe template, or manifest and regenerate.
 - Keep runtime source in its owning application. Documentation manifests reference source files; they do not duplicate them.
 - Every domain change must update its owning canonical documentation in the same
   change. At minimum, update the domain review and the affected API, web-next,
@@ -88,10 +88,10 @@ Rules:
   record it explicitly as Required, Deferred, or Excluded. Update the relevant
   required-file manifest, recipe registration, and generated phase packets when
   the evidence surface or canonical rule changes.
-- The current geographical domain books are `documentation/project/COUNTRIES_FEATURE_FULL_REVIEW.md`,
-  `STATES_FEATURE_FULL_REVIEW.md`, `DISTRICTS_FEATURE_FULL_REVIEW.md`,
-  `ADDRESS_TYPES_FEATURE_FULL_REVIEW.md`, `COMPANY_GEOGRAPHIC_SCOPE_FEATURE_FULL_REVIEW.md`,
-  and `ADDRESSES_DOMAIN_FULL_REVIEW.md`. Keep these books synchronized with
+- The current geographical domain books are `documentation/modules/reference-data/features/countries/countries-review.md`,
+  `states-review.md`, `districts-review.md`,
+  `address-types-review.md`, `company-geographic-scope-review.md`,
+  and `addresses-review.md`. Keep these books synchronized with
   source; do not treat generated packets as authored documentation.
 - Copy the selected reference's architecture and verification discipline, but do not copy reference-specific fields, ownership, optional views, or documented findings unless the new feature requires them.
 - At handoff, separate feature regressions, inherited repository failures,

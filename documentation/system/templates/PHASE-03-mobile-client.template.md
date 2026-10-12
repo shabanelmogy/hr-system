@@ -4,7 +4,7 @@
 
 Implement the Expo client as a native presentation of the shared contract, using the same server-list and lifecycle semantics as web.
 
-Execution reference: `documentation/mobile-react/MOBILE_FEATURE_GUIDE.md`.
+Execution reference: `documentation/guides/mobile/MOBILE_FEATURE_GUIDE.md`.
 
 ## Required structure
 

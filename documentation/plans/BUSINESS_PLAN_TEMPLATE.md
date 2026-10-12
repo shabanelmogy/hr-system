@@ -118,7 +118,7 @@ Every category requires a decision or `N/A — reason`.
 
 ## 9. Permissions and security
 
-Follow `../system/PERMISSION_MODEL.md`. The table below is a Permission Action
+Follow `../guides/shared/PERMISSION_MODEL.md`. The table below is a Permission Action
 Matrix, not a role bundle: use exact `Resource:Action` values and separate
 Create/Edit/Archive/Restore/Delete and every named lifecycle action. Record both
 Arabic and English display ownership for user-facing permission catalogs.
@@ -304,7 +304,7 @@ accessibility/responsive behavior, tests, and the child exit gate.
 
 Every contract must also complete the mandatory UI Pattern Gate for each Web and
 Mobile screen. A `Candidate` pattern blocks UI implementation until it is
-registered and reviewed in `documentation/project/SCREEN_PATTERN_CATALOG.md`.
+registered and reviewed in `documentation/guides/shared/SCREEN_PATTERN_CATALOG.md`.
 
 | Phase | Goal | Dependencies | Deliverables | Entry gate | Exit gate |
 | --- | --- | --- | --- | --- | --- |

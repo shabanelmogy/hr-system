@@ -17,12 +17,12 @@
   handed off one child Feature ID at a time; each child has a completed
   Screen/Workflow Contract from `documentation/plans/FEATURE_DECOMPOSITION_TEMPLATE.md`.
   Then complete Phase 00 Implementation Preflight before runtime implementation. The scaffolded
-  `IMPLEMENTATION-REQUEST.md` and review artifact translate approved plan decisions
+  `<feature>-request.md` and review artifact translate approved plan decisions
   into execution evidence; they must not silently re-plan the feature. Their
   Existing-System Relationship Review, Business Rules Matrix, Edge Cases &
   Validation Matrix, and Impact Matrix remain mandatory traceability evidence.
   Material product drift reopens the affected plan gate before coding. For API work,
-  `documentation/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md` remains the technical
+  `documentation/guides/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md` remains the technical
   implementation authority.
 - Every non-reference feature uses feature-scoped recipe IDs and outputs under `generated/<feature>/`; the unscoped phase packets belong to Countries.
 - Every new planned feature must finish implementation with Phase 06 Verification &

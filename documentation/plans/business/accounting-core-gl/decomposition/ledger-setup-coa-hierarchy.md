@@ -118,11 +118,11 @@ invalid bilingual field and preserve RTL without directional hacks.
 
 | Order | Stage | Status | Entry gate | Required evidence / exit gate | Evidence path |
 | ---: | --- | --- | --- | --- | --- |
-| 1 | API | Verified | Currency contract available | typed Account/Level/code-proposal contracts, migrations, bilingual validation and tests | `documentation/project/LEDGER_SETUP_COA_HIERARCHY_FEATURE_FULL_REVIEW.md` |
-| 2 | Web | Verified | API Verified | P-002/P-001 typed journeys, forms and focused tests | `documentation/web-next/features/ledger-setup-coa-hierarchy-frontend-reference.md` |
-| 3 | Mobile | Verified | Web Verified | runtime schemas, hierarchy/list/forms and focused tests | `documentation/mobile-react/ledger-setup-coa-hierarchy-mobile-reference.md` |
+| 1 | API | Verified | Currency contract available | typed Account/Level/code-proposal contracts, migrations, bilingual validation and tests | `documentation/modules/accounting/features/ledger-setup-coa-hierarchy/ledger-setup-coa-hierarchy-review.md` |
+| 2 | Web | Verified | API Verified | P-002/P-001 typed journeys, forms and focused tests | `documentation/modules/accounting/features/ledger-setup-coa-hierarchy/ledger-setup-coa-hierarchy-web.md` |
+| 3 | Mobile | Verified | Web Verified | runtime schemas, hierarchy/list/forms and focused tests | `documentation/modules/accounting/features/ledger-setup-coa-hierarchy/ledger-setup-coa-hierarchy-mobile.md` |
 | 4 | Integrated live verification + user acceptance | Queued | prior roadmap children closed | agent sends detailed authenticated API/Web/actual-Mobile journey with live-schema checks; user runs or supervises it and explicitly accepts | `SLICE-01-LEDGER-SETUP-EXECUTION.md` |
-| 5 | Documentation and closure | Queued | integrated verification Verified and explicit user acceptance recorded | reconcile canonical books, manifest/recipes and education | `documentation/system/features/ledger-setup-coa-hierarchy/required-files.json` |
+| 5 | Documentation and closure | Queued | integrated verification Verified and explicit user acceptance recorded | reconcile canonical books, manifest/recipes and education | `documentation/modules/accounting/features/ledger-setup-coa-hierarchy/required-files.json` |
 
 **Manual acceptance protocol.** The central
 `../MANUAL_ACCEPTANCE_SCENARIO_TEMPLATE.md` format is mandatory:

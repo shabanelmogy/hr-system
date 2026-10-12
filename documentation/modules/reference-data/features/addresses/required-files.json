@@ -1,0 +1,147 @@
+{
+  "schemaVersion": 1,
+  "feature": "addresses",
+  "featureName": "Addresses",
+  "referenceFeature": "countries",
+  "purpose": "Evidence surface for the shared company-scoped Address domain, owner links, and deferred client integrations.",
+  "reviewArtifact": "documentation/modules/reference-data/features/addresses/addresses-evidence.md",
+  "sourceCollections": [
+    {
+      "id": "api-domain",
+      "layer": "api",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Domain/GeographicalInformation/Addresses",
+      "minimumFiles": 4,
+      "purpose": "Address entity, purpose enum, and company/branch ownership links"
+    },
+    {
+      "id": "api-contracts",
+      "layer": "api",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Addresses",
+      "minimumFiles": 5,
+      "purpose": "Address request/response, validation, errors, and service port"
+    },
+    {
+      "id": "api-persistence",
+      "layer": "api",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Infrastructure/Features/GeographicalInformation/Addresses",
+      "minimumFiles": 3,
+      "purpose": "Address configuration, service, and post-commit job"
+    }
+  ],
+  "requiredFiles": [
+    {
+      "id": "root-agent",
+      "layer": "configuration",
+      "path": "AGENTS.md",
+      "purpose": "Documentation update policy"
+    },
+    {
+      "id": "domain-guide",
+      "layer": "documentation",
+      "path": "documentation/modules/reference-data/GEOGRAPHICAL_INFORMATION_DOMAIN_GUIDE.md",
+      "purpose": "Cross-domain ownership and integration map"
+    },
+    {
+      "id": "master",
+      "layer": "documentation",
+      "path": "documentation/modules/reference-data/features/addresses/addresses-review.md",
+      "purpose": "Address domain authority"
+    },
+    {
+      "id": "api-profile",
+      "layer": "documentation",
+      "path": "documentation/modules/reference-data/features/addresses/addresses-api.md",
+      "purpose": "Address API contract"
+    },
+    {
+      "id": "web-profile",
+      "layer": "documentation",
+      "path": "documentation/modules/reference-data/features/addresses/addresses-web.md",
+      "purpose": "Deferred browser integration contract"
+    },
+    {
+      "id": "mobile-profile",
+      "layer": "documentation",
+      "path": "documentation/modules/reference-data/features/addresses/addresses-mobile.md",
+      "purpose": "Deferred Expo integration contract"
+    },
+    {
+      "id": "review-artifact",
+      "layer": "documentation",
+      "path": "documentation/modules/reference-data/features/addresses/addresses-evidence.md",
+      "purpose": "Evidence and handoff ledger"
+    },
+    {
+      "id": "entity",
+      "layer": "api",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Domain/GeographicalInformation/Addresses/Entities/Address.cs",
+      "purpose": "Flexible Address model"
+    },
+    {
+      "id": "purpose",
+      "layer": "api",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Domain/GeographicalInformation/Addresses/Entities/AddressPurpose.cs",
+      "purpose": "Owner-link purpose vocabulary"
+    },
+    {
+      "id": "company-link",
+      "layer": "api",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Domain/GeographicalInformation/Addresses/Entities/CompanyAddress.cs",
+      "purpose": "Company ownership link"
+    },
+    {
+      "id": "branch-link",
+      "layer": "api",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Domain/GeographicalInformation/Addresses/Entities/BranchAddress.cs",
+      "purpose": "Branch ownership link"
+    },
+    {
+      "id": "request",
+      "layer": "api",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Addresses/Contracts/AddressRequest.cs",
+      "purpose": "Create/update request"
+    },
+    {
+      "id": "response",
+      "layer": "api",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Addresses/Contracts/AddressResponse.cs",
+      "purpose": "Response contract"
+    },
+    {
+      "id": "validator",
+      "layer": "api",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Addresses/Contracts/AddressRequestValidator.cs",
+      "purpose": "Hierarchy and coordinate validation"
+    },
+    {
+      "id": "address-config",
+      "layer": "api",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Infrastructure/Features/GeographicalInformation/Addresses/Persistence/AddressConfiguration.cs",
+      "purpose": "Address constraints and relations"
+    },
+    {
+      "id": "company-address-scope",
+      "layer": "api",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Infrastructure/ReferenceDataDbContext.cs",
+      "purpose": "CompanyAddress DbSet and fail-closed scope filter"
+    },
+    {
+      "id": "branch-address-scope",
+      "layer": "api",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Infrastructure/ReferenceDataDbContext.cs",
+      "purpose": "BranchAddress DbSet and fail-closed scope filter"
+    },
+    {
+      "id": "migration-baseline",
+      "layer": "api",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Infrastructure/Migrations/20260914181144_InitialReferenceData.cs",
+      "purpose": "Current Address and owner-link table baseline"
+    },
+    {
+      "id": "integrity-tests",
+      "layer": "api-test",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Tests/AddressCommandHandlerTests.cs",
+      "purpose": "Operating-scope, hierarchy, restore, and lifecycle integrity coverage"
+    }
+  ]
+}

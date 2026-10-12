@@ -23,15 +23,15 @@ not as permission to choose whichever version is more convenient.
 - For any source, schema, public-contract, permission, test, or API documentation
   change, also read [feature-workflow.md](references/feature-workflow.md).
 - Read `api/AGENTS.md` and
-  `documentation/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md` before changing API
-  behavior. Treat `documentation/api/ERP_ARCHITECTURE_CONSTITUTION.md` as the
+  `documentation/guides/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md` before changing API
+  behavior. Treat `documentation/guides/api/ERP_ARCHITECTURE_CONSTITUTION.md` as the
   architecture authority.
 - For a new capability or substantial rebuild, read `documentation/plans/README.md`,
   the exact registered Plan/Slice, its current version 2.0 feature execution
   contract under `decomposition/`, `documentation/plans/PLAN_QUALITY_GATE.md`, and
   `documentation/system/README.md` before runtime work.
 - For an existing registered feature, start from its final
-  `documentation/system/features/<feature>/required-files.json`, the four applied
+  `documentation/modules/<module>/features/<feature>/required-files.json`, the four applied
   books, and only the generated phases relevant to the requested change. Generated
   packets are navigation aids; authored books, source, and tests remain evidence.
 - When `graphify-out/graph.json` exists, begin codebase investigation with a
@@ -131,7 +131,7 @@ host, migration, or shared-foundation behavior. Verify the narrowest affected te
 first, then run the required full gates from [feature-workflow.md](references/feature-workflow.md).
 
 Update owning module and canonical API/system documentation in the same change.
-Never create `api/Docs/` and never edit `documentation/system/generated/` directly.
+Never create `api/Docs/` and never edit `documentation/modules/*/features/*/generated/` directly.
 For new planned work, Phase 00 preflight and its initial applied books, final current-
 evidence manifest, recipe registration, generated packet, and check must pass before
 runtime coding. Phase 06 must record `Verified` before customer-visible Phase 07

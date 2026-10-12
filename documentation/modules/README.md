@@ -6,8 +6,8 @@ files; the optional folders are added only when they carry module-specific
 content (an empty boilerplate README is never committed):
 
 Start every module or feature review with the general
-[ERP documentation guide](../project/ERP_DOCUMENTATION_GUIDE_AR.md) and the
-[shared reuse catalog](../project/SHARED_REUSE_CATALOG.md). The workflow and
+[ERP documentation guide](../guides/shared/ERP_DOCUMENTATION_GUIDE_AR.md) and the
+[shared reuse catalog](../guides/shared/SHARED_REUSE_CATALOG.md). The workflow and
 reuse inventory are mandatory for every module; this index only adds
 module-specific ownership and evidence.
 
@@ -17,10 +17,12 @@ module-specific ownership and evidence.
   README.md
   ARCHITECTURE.md
   DELIVERY-ROADMAP.md
-  api/README.md            (optional)
+  guides/api/README.md            (optional)
   web-next/README.md       (optional; required when module.json declares an active webNextSurface)
   mobile-react/README.md   (optional)
   features/README.md       (optional; the module's feature catalog)
+  features/<feature>/      every file of one feature: <feature>-review/-api/-web/-mobile/
+                           -request/-evidence.md, required-files.json, generated/
   phases/README.md         (optional; an ordered phase plan)
 ```
 
@@ -47,12 +49,12 @@ Listed in registry order (API, web, and mobile register modules in this order).
   ordered phase plan.
 - `documentation/system/` owns the shared documentation workflow, recipe
   manifests, templates, generated phase packets, and status vocabulary.
-- `documentation/project/` and the top-level platform books remain shared when
+- `documentation/guides/shared/` and the top-level platform books remain shared when
   a rule applies to more than one module.
 
 Do not copy shared rules into a module package. Link to the canonical source and
 record only the module-specific decision or evidence. Generated packets under
-`documentation/system/generated/` are never edited by hand.
+`documentation/modules/*/features/*/generated/` are never edited by hand.
 
 ## Reuse-first implementation rule
 

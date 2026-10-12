@@ -119,7 +119,7 @@ explicit execution authorization under `PLAN_QUALITY_GATE.md`:
    with materially different domain/UI workflows must be split into coherent feature
    execution units before an implementation scaffold is created; a coherent slice
    records `Single feature` explicitly.
-2. API work follows [`documentation/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md`](../api/API_FEATURE_DEVELOPMENT_WORKFLOW.md).
+2. API work follows [`documentation/guides/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md`](../guides/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md).
 3. Cross-platform feature work follows [`documentation/system/README.md`](../system/README.md) and the closest reviewed reference.
 4. Reusable frontend rules belong in the Web architecture/reference guides.
 5. Module-specific rules belong in the owning `documentation/modules/<module>/` package.

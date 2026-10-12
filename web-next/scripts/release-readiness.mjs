@@ -9,7 +9,8 @@ const repositoryRoot = path.resolve(webRoot, "..");
 const gateManifestPath = path.join(
   repositoryRoot,
   "documentation",
-  "web-next",
+  "guides",
+  "web",
   "architecture",
   "production-release-gates.json",
 );

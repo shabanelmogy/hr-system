@@ -4,7 +4,7 @@
 
 Build the server contract first so both clients consume one stable model.
 
-Execution reference: `documentation/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md`.
+Execution reference: `documentation/guides/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md`.
 The applied feature profile supplies evidence; the workflow supplies the mandatory
 existing-system review, implementation order, and Definition of Done.
 

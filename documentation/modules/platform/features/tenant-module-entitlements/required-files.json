@@ -1,0 +1,230 @@
+{
+  "schemaVersion": 1,
+  "status": "final",
+  "feature": "tenant-module-entitlements",
+  "featureName": "Tenant module entitlements",
+  "referenceFeature": "countries",
+  "purpose": "Final evidence manifest for tenant commercial module grants, RBAC intersection, and Odoo-style launchers.",
+  "reviewArtifact": "documentation/modules/platform/features/tenant-module-entitlements/tenant-module-entitlements-evidence.md",
+  "implementationRequest": "documentation/modules/platform/features/tenant-module-entitlements/tenant-module-entitlements-request.md",
+  "canonicalBooks": {
+    "master": "documentation/modules/platform/features/tenant-module-entitlements/tenant-module-entitlements-review.md",
+    "api": "documentation/modules/platform/features/tenant-module-entitlements/tenant-module-entitlements-api.md",
+    "web": "documentation/modules/platform/features/tenant-module-entitlements/tenant-module-entitlements-web.md",
+    "mobile": "documentation/modules/platform/features/tenant-module-entitlements/tenant-module-entitlements-mobile.md"
+  },
+  "sourceCollections": [
+    {
+      "id": "api-module-catalog",
+      "layer": "api",
+      "minimumFiles": 4,
+      "path": "api/BuildingBlocks/ErpSystem.BuildingBlocks.Modularity"
+    },
+    {
+      "id": "web-modules-feature",
+      "layer": "web",
+      "minimumFiles": 5,
+      "path": "web-next/src/platform/modules"
+    },
+    {
+      "id": "mobile-modules-feature",
+      "layer": "mobile",
+      "minimumFiles": 6,
+      "path": "mobile-react/src/platform/modules"
+    }
+  ],
+  "requiredFiles": [
+    {
+      "id": "root-agent-guidance",
+      "layer": "configuration",
+      "path": "AGENTS.md",
+      "purpose": "Repository-wide implementation and documentation rules"
+    },
+    {
+      "id": "implementation-request",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/tenant-module-entitlements/tenant-module-entitlements-request.md",
+      "purpose": "Frozen scope and quality gates"
+    },
+    {
+      "id": "review-artifact",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/tenant-module-entitlements/tenant-module-entitlements-evidence.md",
+      "purpose": "Requirements, evidence, findings, and verification"
+    },
+    {
+      "id": "master-book",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/tenant-module-entitlements/tenant-module-entitlements-review.md",
+      "purpose": "Cross-platform authority"
+    },
+    {
+      "id": "api-book",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/tenant-module-entitlements/tenant-module-entitlements-api.md",
+      "purpose": "API authority"
+    },
+    {
+      "id": "web-book",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/tenant-module-entitlements/tenant-module-entitlements-web.md",
+      "purpose": "Web authority"
+    },
+    {
+      "id": "mobile-book",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/tenant-module-entitlements/tenant-module-entitlements-mobile.md",
+      "purpose": "Mobile authority"
+    },
+    {
+      "id": "module-definition",
+      "layer": "api",
+      "path": "api/BuildingBlocks/ErpSystem.BuildingBlocks.Modularity/ModuleDefinition.cs",
+      "purpose": "Stable catalog contract"
+    },
+    {
+      "id": "hr-module-definition",
+      "layer": "api",
+      "path": "api/Modules/HR/ErpSystem.Modules.HR/HrModuleDefinition.cs",
+      "purpose": "HR submodule and permission ownership"
+    },
+    {
+      "id": "catalog-service",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Application/Modules/ModuleCatalogPolicy.cs",
+      "purpose": "Installed, tenant-entitlement, and accessible catalog projections"
+    },
+    {
+      "id": "entitlement-source-adapter",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Identity/PlatformContractSource.cs",
+      "purpose": "Platform-owned entitlement persistence adapter and live permission checks"
+    },
+    {
+      "id": "modules-controller",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Presentation/Features/Modules/V1/ModulesController.cs",
+      "purpose": "Catalog endpoints"
+    },
+    {
+      "id": "web-module-api",
+      "layer": "web",
+      "path": "web-next/src/platform/modules/moduleApi.ts",
+      "purpose": "Validated installed, tenant-entitlement, and accessible catalog transport"
+    },
+    {
+      "id": "web-tenant-editor",
+      "layer": "web",
+      "path": "web-next/src/platform/tenants/TenantManagementPage.tsx",
+      "purpose": "Tenant editor consuming only assignable catalog choices"
+    },
+    {
+      "id": "web-tenant-form-tab-policy",
+      "layer": "web",
+      "path": "web-next/src/platform/tenants/tenantFormTabs.ts",
+      "purpose": "Deterministic Add Tenant error-to-tab and first-field focus mapping"
+    },
+    {
+      "id": "web-tenant-form-tab-tests",
+      "layer": "test",
+      "path": "web-next/src/platform/tenants/tenantFormTabs.test.ts",
+      "purpose": "Add Tenant tab and field mapping coverage"
+    },
+    {
+      "id": "web-shared-form-tabs-tests",
+      "layer": "test",
+      "path": "web-next/src/shared/components/forms/layouts/FormTabs.test.tsx",
+      "purpose": "Shared FormTabs ARIA, error indicator, and keepMounted coverage"
+    },
+    {
+      "id": "api-regression-test",
+      "layer": "test",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Tests/TenantUserFoundationTests.cs",
+      "purpose": "HR plus Accounting persistence regression"
+    },
+    {
+      "id": "web-launcher",
+      "layer": "web",
+      "path": "web-next/src/shared/components/layout/module-launcher/ModuleLauncher.tsx",
+      "purpose": "Shared Odoo-style launcher"
+    },
+    {
+      "id": "web-apps-route",
+      "layer": "web",
+      "path": "web-next/src/app/(main)/(platform)/apps/page.tsx",
+      "purpose": "Applications entry route"
+    },
+    {
+      "id": "web-submodule-route",
+      "layer": "web",
+      "path": "web-next/src/app/(main)/(platform)/apps/[moduleCode]/[submoduleCode]/page.tsx",
+      "purpose": "Validated submodule entry"
+    },
+    {
+      "id": "web-entitlement-helper",
+      "layer": "web",
+      "path": "web-next/src/platform/tenants/entitlements.ts",
+      "purpose": "Immutable tenant selection behavior"
+    },
+    {
+      "id": "web-regression-test",
+      "layer": "test",
+      "path": "web-next/src/platform/tenants/entitlements.test.ts",
+      "purpose": "Accounting selection preservation"
+    },
+    {
+      "id": "mobile-launcher",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/modules/presentation/screens/ModuleLauncherScreen.tsx",
+      "purpose": "Native Odoo-style launcher"
+    },
+    {
+      "id": "mobile-module-api",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/modules/data/remote/module-remote-data-source.ts",
+      "purpose": "Validated installed, tenant-entitlement, and accessible catalog transport"
+    },
+    {
+      "id": "mobile-tenant-editor",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tenants/presentation/screens/TenantManagementScreen.tsx",
+      "purpose": "Tenant editor consuming only assignable catalog choices"
+    },
+    {
+      "id": "mobile-tenant-form",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tenants/presentation/components/TenantFormModal.tsx",
+      "purpose": "Adapted full-screen stacked Tenant form with one validation context"
+    },
+    {
+      "id": "mobile-tenant-form-tests",
+      "layer": "test",
+      "path": "mobile-react/src/platform/tenants/presentation/components/TenantFormModal.test.tsx",
+      "purpose": "Adapted stacked form shell and visible validation evidence"
+    },
+    {
+      "id": "mobile-shared-form-tabs-tests",
+      "layer": "test",
+      "path": "mobile-react/src/shared/components/forms/layouts/AppFormTabs.test.tsx",
+      "purpose": "Shared mobile tab accessibility, error, RTL, and mounted-panel coverage"
+    },
+    {
+      "id": "mobile-submodule-route",
+      "layer": "mobile",
+      "path": "mobile-react/app/(main)/apps/[moduleCode]/[submoduleCode].tsx",
+      "purpose": "Thin Expo submodule route"
+    },
+    {
+      "id": "mobile-entitlement-helper",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tenants/domain/policies/tenant-entitlements.ts",
+      "purpose": "Immutable tenant selection behavior"
+    },
+    {
+      "id": "mobile-regression-test",
+      "layer": "test",
+      "path": "mobile-react/src/platform/tenants/domain/policies/tenant-entitlements.test.ts",
+      "purpose": "Accounting selection preservation"
+    }
+  ]
+}

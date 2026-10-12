@@ -197,7 +197,7 @@ all loading/empty/error/forbidden/dirty/conflict states, offline policy, mock-da
 policy, permission and tenant/company scope, responsive/RTL/accessibility rules,
 and intentional deviations.
 
-Use the current catalog in `documentation/project/SCREEN_PATTERN_CATALOG.md` and
+Use the current catalog in `documentation/guides/shared/SCREEN_PATTERN_CATALOG.md` and
 inspect its source references before implementation. A `Candidate` pattern is a
 hard stop: register and review it as a stable `P-###` pattern before writing
 feature UI. A shared-component reuse list cannot replace this decision. The

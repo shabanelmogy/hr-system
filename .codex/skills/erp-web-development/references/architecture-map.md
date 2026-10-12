@@ -11,10 +11,10 @@ Use these sources together, not interchangeably:
 1. Repository and `web-next/AGENTS.md` instructions.
 2. An approved Plan/Slice and version 2.0 feature execution contract for planned
    business work.
-3. `documentation/web-next/architecture/frontend-architecture-reference.md`.
-4. `documentation/web-next/features/server-managed-feature-reference.md` when the
+3. `documentation/guides/web/architecture/frontend-architecture-reference.md`.
+4. `documentation/guides/web/server-managed-feature-reference.md` when the
    requested feature follows a server-managed list/CRUD shape.
-5. `documentation/project/SCREEN_PATTERN_CATALOG.md`,
+5. `documentation/guides/shared/SCREEN_PATTERN_CATALOG.md`,
    `SHARED_REUSE_CATALOG.md`, and `Shared_Form_Layouts.md` for reusable UI shape.
 6. The owning module package and applied API/Web/Mobile/cross-platform books.
 7. Current source, tests, configuration, generated architecture manifest, and
