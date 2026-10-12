@@ -1,3 +1,4 @@
+using ErpSystem.Modules.ReferenceData.Application.Abstractions.Persistence;
 using FluentValidation;
 using ErpSystem.BuildingBlocks.Context.Authentication;
 using ErpSystem.BuildingBlocks.Application.Abstractions.Persistence;
@@ -798,7 +799,7 @@ public sealed class CountryCqrsHandlerTests
 
     private sealed class RecordingDelegatingUnitOfWork(
         ReferenceDataDbContext context,
-        List<string> lifecycle) : IUnitOfWork
+        List<string> lifecycle) : IReferenceDataUnitOfWork
     {
         public Task<TResult> ExecuteAtomicallyAsync<TResult>(
             IReadOnlyCollection<string> lockResources,
@@ -815,7 +816,7 @@ public sealed class CountryCqrsHandlerTests
     private sealed class RecordingUnitOfWork(
         List<string> lifecycle,
         RecordingWriteStore? writer = null,
-        bool throwOnSave = false) : IUnitOfWork
+        bool throwOnSave = false) : IReferenceDataUnitOfWork
     {
         public List<IReadOnlyCollection<string>> AtomicLockResources { get; } = [];
 

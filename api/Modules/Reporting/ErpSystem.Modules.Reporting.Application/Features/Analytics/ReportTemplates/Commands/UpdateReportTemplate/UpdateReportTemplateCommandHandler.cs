@@ -1,3 +1,4 @@
+using ErpSystem.Modules.Reporting.Application.Abstractions.Persistence;
 using ErpSystem.BuildingBlocks.Application.Abstractions.Messaging;
 using ErpSystem.Modules.Reporting.Application.Features.Analytics.ReportTemplates.Abstractions;
 using ErpSystem.Modules.Reporting.Application.Features.Analytics.ReportTemplates.Commands.CreateReportTemplate;
@@ -9,7 +10,7 @@ namespace ErpSystem.Modules.Reporting.Application.Features.Analytics.ReportTempl
 
 public sealed class UpdateReportTemplateCommandHandler(
     IReportTemplateStore store,
-    IUnitOfWork unitOfWork,
+    IReportingUnitOfWork unitOfWork,
     IReportTemplateContentHashProvider contentHash,
     ReportTemplateErrors errors)
     : ICommandHandler<UpdateReportTemplateCommand, Result<ReportTemplateDetailResponse>>

@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 namespace ErpSystem.Modules.HR.Infrastructure.Features.WorkforcePlanning.Persistence;
 
 public sealed class WorkforceTraceReadStore(
-    ApplicationDbContext context,
+    HrDbContext context,
     IFiscalYearPlanningSource fiscalYears,
     ICurrentActor currentActor) : IWorkforceTraceReadStore
 {

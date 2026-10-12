@@ -1,3 +1,4 @@
+using ErpSystem.Modules.ReferenceData.Application.Abstractions.Persistence;
 using ErpSystem.BuildingBlocks.Context.Authentication;
 using ErpSystem.BuildingBlocks.Application.Abstractions.Messaging;
 using ErpSystem.BuildingBlocks.Application.Abstractions.Persistence;
@@ -95,7 +96,7 @@ public sealed class CreateDistrictsCommandValidator : AbstractValidator<CreateDi
 public sealed class CreateDistrictCommandHandler(
     IDistrictWriteStore districtWriteStore,
     IDistrictReadStore districtReadStore,
-    IUnitOfWork unitOfWork,
+    IReferenceDataUnitOfWork unitOfWork,
     IDistrictChangeScheduler districtChangeScheduler,
     ICurrentActor currentActor,
     IMapper mapper,
@@ -134,7 +135,7 @@ public sealed class CreateDistrictCommandHandler(
 
 public sealed class CreateDistrictsCommandHandler(
     IDistrictWriteStore districtWriteStore,
-    IUnitOfWork unitOfWork,
+    IReferenceDataUnitOfWork unitOfWork,
     IDistrictChangeScheduler districtChangeScheduler,
     ICurrentActor currentActor,
     IMapper mapper,
@@ -215,7 +216,7 @@ public sealed class CreateDistrictsCommandHandler(
 public sealed class UpdateDistrictCommandHandler(
     IDistrictWriteStore districtWriteStore,
     IDistrictReadStore districtReadStore,
-    IUnitOfWork unitOfWork,
+    IReferenceDataUnitOfWork unitOfWork,
     IDistrictChangeScheduler districtChangeScheduler,
     IDistrictAuditTrail districtAuditTrail,
     ICurrentActor currentActor,
@@ -280,7 +281,7 @@ public sealed class UpdateDistrictCommandHandler(
 
 public sealed class ArchiveDistrictCommandHandler(
     IDistrictWriteStore districtWriteStore,
-    IUnitOfWork unitOfWork,
+    IReferenceDataUnitOfWork unitOfWork,
     IDistrictChangeScheduler districtChangeScheduler,
     ICurrentActor currentActor,
     TimeProvider timeProvider,
@@ -341,7 +342,7 @@ public sealed class ArchiveDistrictCommandHandler(
 
 public sealed class RestoreDistrictCommandHandler(
     IDistrictWriteStore districtWriteStore,
-    IUnitOfWork unitOfWork,
+    IReferenceDataUnitOfWork unitOfWork,
     IDistrictChangeScheduler districtChangeScheduler,
     ICurrentActor currentActor,
     IMapper mapper,
@@ -401,7 +402,7 @@ public sealed class RestoreDistrictCommandHandler(
 
 public sealed class BulkArchiveDistrictsCommandHandler(
     IDistrictWriteStore districtWriteStore,
-    IUnitOfWork unitOfWork,
+    IReferenceDataUnitOfWork unitOfWork,
     IDistrictChangeScheduler districtChangeScheduler,
     ICurrentActor currentActor,
     TimeProvider timeProvider,

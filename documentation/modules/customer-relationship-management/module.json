@@ -27,10 +27,6 @@
   },
   "documentationPaths": {
     "root": "documentation/modules/customer-relationship-management",
-    "api": "documentation/modules/customer-relationship-management/api/README.md",
-    "webNext": "documentation/modules/customer-relationship-management/web-next/README.md",
-    "mobileReact": "documentation/modules/customer-relationship-management/mobile-react/README.md",
-    "features": "documentation/modules/customer-relationship-management/features/README.md",
-    "phases": "documentation/modules/customer-relationship-management/phases/README.md"
+    "webNext": "documentation/modules/customer-relationship-management/web-next/README.md"
   }
 }

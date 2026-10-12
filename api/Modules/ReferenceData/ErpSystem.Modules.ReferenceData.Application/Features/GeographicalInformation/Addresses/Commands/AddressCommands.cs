@@ -1,3 +1,4 @@
+using ErpSystem.Modules.ReferenceData.Application.Abstractions.Persistence;
 using ErpSystem.Modules.Platform.Contracts.CompanyAccess;
 using ErpSystem.Modules.ReferenceData.Application.Features.GeographicalInformation.Addresses.Abstractions;
 using ErpSystem.Modules.ReferenceData.Application.Features.GeographicalInformation.Addresses.Contracts;
@@ -25,7 +26,7 @@ public sealed class UpdateAddressCommandValidator : AbstractValidator<UpdateAddr
 public sealed class CreateAddressCommandHandler(
     IAddressWriteStore writeStore,
     IAddressReadStore readStore,
-    IUnitOfWork unitOfWork,
+    IReferenceDataUnitOfWork unitOfWork,
     ICompanyGeographySource companyGeography,
     IAddressChangeScheduler changeScheduler,
     ICurrentActor actor,
@@ -75,7 +76,7 @@ public sealed class CreateAddressCommandHandler(
 public sealed class UpdateAddressCommandHandler(
     IAddressWriteStore writeStore,
     IAddressReadStore readStore,
-    IUnitOfWork unitOfWork,
+    IReferenceDataUnitOfWork unitOfWork,
     ICompanyGeographySource companyGeography,
     IAddressAuditTrail auditTrail,
     IAddressChangeScheduler changeScheduler,
@@ -148,7 +149,7 @@ public sealed class UpdateAddressCommandHandler(
 
 public sealed class ToggleAddressCommandHandler(
     IAddressWriteStore writeStore,
-    IUnitOfWork unitOfWork,
+    IReferenceDataUnitOfWork unitOfWork,
     ICompanyGeographySource companyGeography,
     IAddressChangeScheduler changeScheduler,
     ICurrentActor actor,

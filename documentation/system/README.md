@@ -41,18 +41,18 @@ recipe mechanics; it does not make HR the owner of every future feature.
 
 The canonical applied books own factual implementation evidence:
 
-- `../project/COUNTRIES_FEATURE_FULL_REVIEW.md`
-- `../api/Countries_API_Implementation_Profile.md`
-- `../web-next/features/countries-frontend-reference.md`
-- `../mobile-react/countries-mobile-reference.md`
-- `../project/STATES_FEATURE_FULL_REVIEW.md`
-- `../api/States_API_Implementation_Profile.md`
-- `../web-next/features/states-frontend-reference.md`
-- `../mobile-react/states-mobile-reference.md`
-- `../project/ADDRESSES_DOMAIN_FULL_REVIEW.md`
-- `../api/Addresses_API_Implementation_Profile.md`
-- `../web-next/features/addresses-frontend-reference.md`
-- `../mobile-react/addresses-mobile-reference.md`
+- [`../project/COUNTRIES_FEATURE_FULL_REVIEW.md`](../project/COUNTRIES_FEATURE_FULL_REVIEW.md)
+- [`../api/Countries_API_Implementation_Profile.md`](../api/Countries_API_Implementation_Profile.md)
+- [`../web-next/features/countries-frontend-reference.md`](../web-next/features/countries-frontend-reference.md)
+- [`../mobile-react/countries-mobile-reference.md`](../mobile-react/countries-mobile-reference.md)
+- [`../project/STATES_FEATURE_FULL_REVIEW.md`](../project/STATES_FEATURE_FULL_REVIEW.md)
+- [`../api/States_API_Implementation_Profile.md`](../api/States_API_Implementation_Profile.md)
+- [`../web-next/features/states-frontend-reference.md`](../web-next/features/states-frontend-reference.md)
+- [`../mobile-react/states-mobile-reference.md`](../mobile-react/states-mobile-reference.md)
+- [`../project/ADDRESSES_DOMAIN_FULL_REVIEW.md`](../project/ADDRESSES_DOMAIN_FULL_REVIEW.md)
+- [`../api/Addresses_API_Implementation_Profile.md`](../api/Addresses_API_Implementation_Profile.md)
+- [`../web-next/features/addresses-frontend-reference.md`](../web-next/features/addresses-frontend-reference.md)
+- [`../mobile-react/addresses-mobile-reference.md`](../mobile-react/addresses-mobile-reference.md)
 
 `recipe-manifest.json` declares which numbered sections support each phase. `Generate-Documentation.ps1` hashes those sections and writes derivative packets into `generated/`. The generated packets are navigation and verification aids; they never replace the canonical books or an approved central business plan.
 
@@ -87,15 +87,15 @@ foundation facts only until feature evidence is added.
 | `recipe-manifest.json` | Books, section dependencies, recipe outputs, and required-file manifests |
 | `Generate-Documentation.ps1` | Generation, fingerprinting, required-path validation, and stale-output checks |
 | `New-FeatureDocumentation.ps1` | Safe implementation request, draft artifact, required-file plan, and feature-scoped recipe-registration scaffold |
-| `PERMISSION_MODEL.md` | Exact `Resource:Action` authorization, bilingual labels, lifecycle separation, and the mandatory Permission Action Matrix |
+| [`PERMISSION_MODEL.md`](PERMISSION_MODEL.md) | Exact `Resource:Action` authorization, bilingual labels, lifecycle separation, and the mandatory Permission Action Matrix |
 | `templates/` | Human-maintained phase and review templates |
 | `generated/` | Machine-generated phase packets; never edit directly |
 | `features/countries/required-files.json` | Source/configuration evidence needed to review Countries end to end |
-| `features/countries/COUNTRIES-REVIEW-ARTIFACTS.md` | Completed Countries review evidence and handoff record |
+| [`features/countries/COUNTRIES-REVIEW-ARTIFACTS.md`](features/countries/COUNTRIES-REVIEW-ARTIFACTS.md) | Completed Countries review evidence and handoff record |
 | `features/states/required-files.json` | Source/configuration evidence needed to review States end to end |
-| `features/states/STATES-REVIEW-ARTIFACTS.md` | States review evidence, State-specific decisions, and open findings |
+| [`features/states/STATES-REVIEW-ARTIFACTS.md`](features/states/STATES-REVIEW-ARTIFACTS.md) | States review evidence, State-specific decisions, and open findings |
 | `features/addresses/required-files.json` | Source/configuration evidence for the shared Address domain and owner links |
-| `features/addresses/ADDRESSES-REVIEW-ARTIFACTS.md` | Address design evidence, decisions, and deferred client surfaces |
+| [`features/addresses/ADDRESSES-REVIEW-ARTIFACTS.md`](features/addresses/ADDRESSES-REVIEW-ARTIFACTS.md) | Address design evidence, decisions, and deferred client surfaces |
 | `generated/addresses/` | Generated phase 00–06 packets for the Address domain foundation |
 
 ## Commands
@@ -166,7 +166,7 @@ when requirements change.
    it does not replace the planning gate.
    Before scaffolding, complete the slice's Feature Decomposition Gate. A slice with
    materially different domain/UI workflows is decomposed into child Feature IDs.
-   Each child uses `../plans/FEATURE_DECOMPOSITION_TEMPLATE.md` for its
+   Each child uses [`../plans/FEATURE_DECOMPOSITION_TEMPLATE.md`](../plans/FEATURE_DECOMPOSITION_TEMPLATE.md) for its
    Screen/Workflow Contract, scope boundary, independent acceptance outcome, and
    reuse audit. A generic umbrella renderer is not a substitute for those child
    workflow contracts.
@@ -200,7 +200,7 @@ when requirements change.
    Required behavior or a feature regression yields `Not Verified`.
 9. Only after `Verified`, complete Phase 07 Customer Education & Closure for
    customer-visible work using
-   `documentation/plans/CUSTOMER_EDUCATION_TEMPLATE.md`.
+   [`documentation/plans/CUSTOMER_EDUCATION_TEMPLATE.md`](../plans/CUSTOMER_EDUCATION_TEMPLATE.md).
 
 ### Existing-feature review
 
@@ -215,7 +215,7 @@ deployment-only check/risk/open decision, assign the canonical item a stable ID 
 `documentation/plans/notes/` and reference that ID from the feature artifact.
 
 When a change creates or extends a reusable web behavior, record its general
-contract in `web-next/features/server-managed-feature-reference.md` and its
+contract in [`web-next/features/server-managed-feature-reference.md`](../web-next/features/server-managed-feature-reference.md) and its
 applied behavior in every affected feature profile. Regenerating the affected
 phase packets then propagates those canonical rules automatically; never copy
 the rule into `generated/` files or feature-local documentation by hand.
@@ -299,3 +299,46 @@ shared contract changed.
 ## Scope rule
 
 Countries and States are applied guides, not global product requirements. Copy the selected reference's architecture, transaction order, server-list discipline, permission model, localization practices, and verification approach. Re-decide ownership, fields, views, actions, reports, imports, child relationships, and known gaps. Classify Import independently for API, web, and mobile; a browser workbook flow is not evidence that native mobile Import is required or can reuse browser file APIs.
+
+## Feature workspaces
+
+Each folder holds the frozen implementation request and the review evidence; its
+`required-files.json` lists the files the generator fingerprints.
+
+| Feature | Files |
+| --- | --- |
+| `accounting-ledger-setup` | [ACCOUNTING_LEDGER_SETUP-REVIEW-ARTIFACTS](features/accounting-ledger-setup/ACCOUNTING_LEDGER_SETUP-REVIEW-ARTIFACTS.md) · [IMPLEMENTATION-REQUEST](features/accounting-ledger-setup/IMPLEMENTATION-REQUEST.md) |
+| `address-types` | [ADDRESS_TYPES-REVIEW-ARTIFACTS](features/address-types/ADDRESS_TYPES-REVIEW-ARTIFACTS.md) · [IMPLEMENTATION-REQUEST](features/address-types/IMPLEMENTATION-REQUEST.md) |
+| `addresses` | [ADDRESSES-REVIEW-ARTIFACTS](features/addresses/ADDRESSES-REVIEW-ARTIFACTS.md) |
+| `attendance-devices` | [ATTENDANCE_DEVICES-REVIEW-ARTIFACTS](features/attendance-devices/ATTENDANCE_DEVICES-REVIEW-ARTIFACTS.md) · [IMPLEMENTATION-REQUEST](features/attendance-devices/IMPLEMENTATION-REQUEST.md) |
+| `company-geographic-scope` | [COMPANY_GEOGRAPHIC_SCOPE-REVIEW-ARTIFACTS](features/company-geographic-scope/COMPANY_GEOGRAPHIC_SCOPE-REVIEW-ARTIFACTS.md) · [IMPLEMENTATION-REQUEST](features/company-geographic-scope/IMPLEMENTATION-REQUEST.md) |
+| `countries` | [COUNTRIES-REVIEW-ARTIFACTS](features/countries/COUNTRIES-REVIEW-ARTIFACTS.md) |
+| `crystal-report-manager` | [AI_REPORT_VIEW_DESIGNER_PLAN](features/crystal-report-manager/AI_REPORT_VIEW_DESIGNER_PLAN.md) · [CRYSTAL_REPORT_MANAGER-REVIEW-ARTIFACTS](features/crystal-report-manager/CRYSTAL_REPORT_MANAGER-REVIEW-ARTIFACTS.md) |
+| `districts` | [DISTRICTS-REVIEW-ARTIFACTS](features/districts/DISTRICTS-REVIEW-ARTIFACTS.md) · [IMPLEMENTATION-REQUEST](features/districts/IMPLEMENTATION-REQUEST.md) |
+| `fiscal-years` | [FISCAL_YEARS-REVIEW-ARTIFACTS](features/fiscal-years/FISCAL_YEARS-REVIEW-ARTIFACTS.md) · [IMPLEMENTATION-REQUEST](features/fiscal-years/IMPLEMENTATION-REQUEST.md) |
+| `ledger-setup-coa-hierarchy` | [IMPLEMENTATION-REQUEST](features/ledger-setup-coa-hierarchy/IMPLEMENTATION-REQUEST.md) · [LEDGER_SETUP_COA_HIERARCHY-REVIEW-ARTIFACTS](features/ledger-setup-coa-hierarchy/LEDGER_SETUP_COA_HIERARCHY-REVIEW-ARTIFACTS.md) |
+| `ledger-setup-currency` | [IMPLEMENTATION-REQUEST](features/ledger-setup-currency/IMPLEMENTATION-REQUEST.md) · [LEDGER_SETUP_CURRENCY-REVIEW-ARTIFACTS](features/ledger-setup-currency/LEDGER_SETUP_CURRENCY-REVIEW-ARTIFACTS.md) |
+| `managed-crystal-contract-registry` | [IMPLEMENTATION-REQUEST](features/managed-crystal-contract-registry/IMPLEMENTATION-REQUEST.md) · [MANAGED_CRYSTAL_CONTRACT_REGISTRY-REVIEW-ARTIFACTS](features/managed-crystal-contract-registry/MANAGED_CRYSTAL_CONTRACT_REGISTRY-REVIEW-ARTIFACTS.md) |
+| `managed-crystal-manager-experience` | [IMPLEMENTATION-REQUEST](features/managed-crystal-manager-experience/IMPLEMENTATION-REQUEST.md) · [MANAGED_CRYSTAL_MANAGER_EXPERIENCE-REVIEW-ARTIFACTS](features/managed-crystal-manager-experience/MANAGED_CRYSTAL_MANAGER_EXPERIENCE-REVIEW-ARTIFACTS.md) |
+| `managed-crystal-template-validation` | [IMPLEMENTATION-REQUEST](features/managed-crystal-template-validation/IMPLEMENTATION-REQUEST.md) · [MANAGED_CRYSTAL_TEMPLATE_VALIDATION-REVIEW-ARTIFACTS](features/managed-crystal-template-validation/MANAGED_CRYSTAL_TEMPLATE_VALIDATION-REVIEW-ARTIFACTS.md) |
+| `organizational-structure` | [IMPLEMENTATION-REQUEST](features/organizational-structure/IMPLEMENTATION-REQUEST.md) · [ORGANIZATIONAL_STRUCTURE-REVIEW-ARTIFACTS](features/organizational-structure/ORGANIZATIONAL_STRUCTURE-REVIEW-ARTIFACTS.md) |
+| `states` | [STATES-REVIEW-ARTIFACTS](features/states/STATES-REVIEW-ARTIFACTS.md) |
+| `tenant-module-entitlements` | [IMPLEMENTATION-REQUEST](features/tenant-module-entitlements/IMPLEMENTATION-REQUEST.md) · [TENANT_MODULE_ENTITLEMENTS-REVIEW-ARTIFACTS](features/tenant-module-entitlements/TENANT_MODULE_ENTITLEMENTS-REVIEW-ARTIFACTS.md) |
+| `workforce-planning` | [IMPLEMENTATION-REQUEST](features/workforce-planning/IMPLEMENTATION-REQUEST.md) · [PHASE-02-BUDGETS-ENVELOPES-IMPLEMENTATION](features/workforce-planning/PHASE-02-BUDGETS-ENVELOPES-IMPLEMENTATION.md) · [WORKFORCE_PLANNING-REVIEW-ARTIFACTS](features/workforce-planning/WORKFORCE_PLANNING-REVIEW-ARTIFACTS.md) |
+
+## Templates
+
+- [FEATURE-IMPLEMENTATION-REQUEST.template.md](templates/FEATURE-IMPLEMENTATION-REQUEST.template.md)
+- [FEATURE-REVIEW-ARTIFACTS.template.md](templates/FEATURE-REVIEW-ARTIFACTS.template.md)
+- [PHASE-00-discovery-evidence.template.md](templates/PHASE-00-discovery-evidence.template.md)
+- [PHASE-00-implementation-preflight.template.md](templates/PHASE-00-implementation-preflight.template.md)
+- [PHASE-01-domain-api.template.md](templates/PHASE-01-domain-api.template.md)
+- [PHASE-02-web-client.template.md](templates/PHASE-02-web-client.template.md)
+- [PHASE-03-mobile-client.template.md](templates/PHASE-03-mobile-client.template.md)
+- [PHASE-04-domain-actions.template.md](templates/PHASE-04-domain-actions.template.md)
+- [PHASE-05-integration-runtime.template.md](templates/PHASE-05-integration-runtime.template.md)
+- [PHASE-06-final-reconciliation.template.md](templates/PHASE-06-final-reconciliation.template.md)
+- [PHASE-06-verification-acceptance.template.md](templates/PHASE-06-verification-acceptance.template.md)
+- [PHASE-07-customer-education-closure.template.md](templates/PHASE-07-customer-education-closure.template.md)
+
+Agent rules for this folder: [AGENTS.md](AGENTS.md).

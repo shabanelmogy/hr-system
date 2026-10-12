@@ -175,6 +175,46 @@ that module's migration assembly. Migration history is never moved between
 module schemas. New modules must create their schema before applying their first
 migration and must make migration execution idempotent.
 
+### Unit of work ownership
+
+All modules register into one service container, so a single-service registration
+of a shared BuildingBlocks contract is replaced by the last module that registers
+it. The shared `IUnitOfWork` must therefore never be registered or injected by a
+module. Each module declares its own contract in
+`ErpSystem.Modules.<Module>.Application/Abstractions/Persistence`
+(`IAccountingUnitOfWork`, `IHrUnitOfWork`, `IPlatformUnitOfWork`,
+`IReferenceDataUnitOfWork`, `IReportingUnitOfWork`), implements it on its own
+`DbContext`, and registers it with
+`AddScoped<I<Module>UnitOfWork>(provider => provider.GetRequiredService<<Module>DbContext>())`.
+
+Incident 2026-10-11: HR, ReferenceData and Reporting each registered the shared
+`IUnitOfWork`; Reporting registers last, so country/state/district/address,
+HR workforce/recruitment/attendance and Platform company-geography commands saved
+through `ReportingDbContext`. Their changes were never written while the commands
+still returned success. `UnitOfWorkOwnershipArchitectureTests` fails the build if a
+module's production code references the shared `IUnitOfWork` again or a module stops
+registering its own contract against its own `DbContext`. Shared contracts that are
+intentionally shared (for example Mapster's `IMapper` over the global config) use
+`TryAdd*` so the first registration wins and every module scans into the same config.
+
+### Host-owned concerns and module order
+
+Settings that change every module's HTTP pipeline belong to the host
+(`ErpSystem.Api/Hosting`): the global `AsyncValidationFilter`, JSON serializer options and
+the request correlation id. `ErpSystem.BuildingBlocks.Presentation`'s
+`CorrelationContextExtensions` is the only correlation helper; the host middleware stores
+the id under its `ItemKey`. Third-party licenses are registered by the module that uses
+the library (Syncfusion: Reporting). Until 2026-10-11 HR registered the filter, JSON
+options and license, and four correlation helpers read two different keys.
+`HostConcernOwnershipArchitectureTests` keeps these concerns out of modules.
+
+`ErpModuleRegistry` lists modules foundation first: Platform, ReferenceData (General Data,
+the main module), Contacts, then business applications (Accounting, HR, CRM, Inventory,
+PointOfSale), then Reporting. The order is also the application launcher order; the
+lifecycle order still honours declared module dependencies. The web
+(`moduleRegistration.ts`) and mobile (`module-registration.ts`) registries use the same
+order. HR's DbContext is `HrDbContext` (it was the pre-modular `ApplicationDbContext`).
+
 ## Compatibility values
 
 Protocol and persisted-data compatibility values may retain
@@ -230,8 +270,10 @@ registry covers each one exactly once, so no test update is needed for the new
 module itself. Complete a reuse inventory and record it in the module package
 before creating the first feature slice.
 
-The generator also creates `FEATURE-QUALITY-GATE.md`. Every mutable entity must
-receive one completed lifecycle row before a feature is called implemented.
+The generator creates four documentation files only (`module.json`, `README.md`,
+`ARCHITECTURE.md`, `DELIVERY-ROADMAP.md`). Every mutable entity must receive one
+completed row of the entity lifecycle matrix in
+`API_FEATURE_DEVELOPMENT_WORKFLOW.md` §17 before a feature is called implemented.
 The row separately proves CRUD or its domain alternative, archived discovery,
 dependency guards, shared transaction resources, optimistic concurrency,
 permissions, stable localized errors, and executable tests. This prevents a

@@ -40,6 +40,7 @@
     <ProjectReference Include="..\BuildingBlocks\ErpSystem.BuildingBlocks.Context\ErpSystem.BuildingBlocks.Context.csproj" />
     <ProjectReference Include="..\BuildingBlocks\ErpSystem.BuildingBlocks.Messaging\ErpSystem.BuildingBlocks.Messaging.csproj" />
     <ProjectReference Include="..\BuildingBlocks\ErpSystem.BuildingBlocks.Modularity\ErpSystem.BuildingBlocks.Modularity.csproj" />
+    <ProjectReference Include="..\BuildingBlocks\ErpSystem.BuildingBlocks.Presentation\ErpSystem.BuildingBlocks.Presentation.csproj" />
     <!-- <erp-module-references> -->
     <ProjectReference Include="..\Modules\HR\ErpSystem.Modules.HR\ErpSystem.Modules.HR.csproj" />
     <ProjectReference Include="..\Modules\Accounting\ErpSystem.Modules.Accounting\ErpSystem.Modules.Accounting.csproj" />
@@ -54,6 +55,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <!-- Local settings files are machine-specific (git-ignored) and must never reach a server:
+         a Visual Studio publish would otherwise overwrite the host's production appsettings.json.
+         Production configuration lives on the host (its own appsettings.json or environment variables). -->
+    <Content Update="appsettings.json" CopyToPublishDirectory="Never" />
+    <Content Update="appsettings.Development.json" CopyToPublishDirectory="Never" />
     <!-- Large installer artifacts are copied after publish so they are not fingerprinted during every IDE build. -->
     <Content Remove="wwwroot\downloads\attendance-agent\**\*" />
     <Content Update="Localization\Resources\*.json">

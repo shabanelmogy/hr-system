@@ -42,7 +42,9 @@ State the chosen path to the requester in one sentence before continuing.
 
 1. Create and register a business plan: `./documentation/plans/New-BusinessPlan.ps1`.
 2. Run the discovery interview with `documentation/plans/BUSINESS_DISCOVERY_INTERVIEW.md`
-   (all 14 sections; ask, do not assume). Record answers in `DISCOVERY.md`.
+   (all 14 sections; ask, do not assume). Record answers and a Glossary in `DISCOVERY.md`.
+   Use `references/discovery-question-bank.md` for follow-up questions and
+   `references/discovery-session-example.md` for what a session and its output look like.
 3. Record current-system evidence in `EVIDENCE.md` with the five classifications.
    Decide ownership against existing modules (`documentation/modules/*/ARCHITECTURE.md`)
    before proposing a new module; many requests belong in an existing one.
@@ -61,6 +63,8 @@ State the chosen path to the requester in one sentence before continuing.
 4. Decompose the authorized slice with `documentation/plans/FEATURE_DECOMPOSITION_TEMPLATE.md`
    (version 2.0, UI Pattern Gate, one active feature step).
 5. Pass the gates in `documentation/plans/PLAN_QUALITY_GATE.md` required for the exact scope.
+   Check each capability against `references/definition-of-ready-done.md` (Ready before
+   implementation, Done before acceptance).
 6. Scaffold execution evidence:
    `./documentation/system/New-FeatureDocumentation.ps1 -FeatureId … -FeatureName … -PlanId … -SliceId … -Module …`.
 7. Hand over to the platform skills (`erp-api-development`, then `erp-web-development`

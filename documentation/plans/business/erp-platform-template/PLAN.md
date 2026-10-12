@@ -17,13 +17,13 @@
 
 ### Planning evidence
 
-- Review report: `REVIEW.md`
-- Documentation and template integration review: `DOCUMENTATION_AND_TEMPLATE_REVIEW.md`
-- Discovery: `DISCOVERY.md`
-- Current-system evidence: `EVIDENCE.md`
-- Approved pre-plan specification: `SPEC_SUMMARY.md`
-- Decisions: `DECISIONS.md`; open cross-plan decisions DEC-011 … DEC-016
-- Imported School evidence: `imported/`
+- Review report: [`REVIEW.md`](REVIEW.md)
+- Documentation and template integration review: [`DOCUMENTATION_AND_TEMPLATE_REVIEW.md`](DOCUMENTATION_AND_TEMPLATE_REVIEW.md)
+- Discovery: [`DISCOVERY.md`](DISCOVERY.md)
+- Current-system evidence: [`EVIDENCE.md`](EVIDENCE.md)
+- Approved pre-plan specification: [`SPEC_SUMMARY.md`](SPEC_SUMMARY.md)
+- Decisions: [`DECISIONS.md`](DECISIONS.md); open cross-plan decisions DEC-011 … DEC-016
+- Imported School evidence: [`imported/`](imported/README.md)
 
 ## 1. Executive outcome
 
@@ -50,7 +50,7 @@ patterns, and planning already in place, carrying only the modules and licences 
 
 ## 2. Scope
 
-See `SPEC_SUMMARY.md`. Required = S0–S8. Deferred = direct/group chat, theme editor, token
+See [`SPEC_SUMMARY.md`](SPEC_SUMMARY.md). Required = S0–S8. Deferred = direct/group chat, theme editor, token
 breakpoints. Excluded = API re-architecture, UI library change, namespace rename.
 
 ## 3. Slice roadmap
@@ -64,40 +64,42 @@ include record scope.
 | Step | Work | Exit check |
 | --- | --- | --- |
 | S0.1 | Done: repository folder renamed to `ERPSYSTEM` by the owner; connected folder re-granted. | Done 2026-09-28. |
-| S0.2 | Confirm no untracked source, then delete `api/HrManagementSystem.*` (6 folders). | Listing; solution builds. |
-| S0.3 | Remove `api/CrystalReportGeneratorApi.rar`; decide the generator folder's home with DEC-013. | Archive absent; `.gitignore` blocks `*.rar`. |
-| S0.4 | Remove `api/packages/`, `api/.codex-build/`, root `node_modules/`. | Listing. |
+| S0.2 | Done: no `api/HrManagementSystem.*` folder is tracked. | Verified 2026-10-12. |
+| S0.3 | Done 2026-10-12: archive removed; `.gitignore` blocks `*.rar`, `*.zip`, `*.7z`. The generator folder's home still follows DEC-013. | Archive absent. |
+| S0.4 | Done 2026-10-12: root `node_modules/` and 758 build outputs under `.codex-artifacts/` removed and ignored. | Listing. |
 | S0.5 | Prepared 2026-10-06: `CorrelationItemKey` → `ErpSystem.CorrelationId`, development JWT key literal → `ErpSystem-…`, example `Issuer`/`Audience` → `ErpSystem`/`ErpSystem.Clients` (example file only; live settings follow DEC-012). | `git grep HrManagementSystem` returns nothing in source/config; tests pass. |
-| S0.6 | Update `README.md` (remove `web/` row) and move or delete `HR-CONNECTION-ONLY-PROMPT.md`. | Docs CI green. |
-| S0.7 | Confirm AttendanceConnector status (E-020); add to the solution or remove. | Recorded decision. |
-| S0.8 | Verify D-005: a user with one tenant and one company logs in without a selection step on web and mobile. | Test or recorded manual check. |
+| S0.6 | Done 2026-10-12: root README lists the current applications (no `web/` row); the attendance prompt moved to `system/features/attendance-devices/SOURCE-REQUEST_AR.md`. | Docs CI green. |
+| S0.7 | Done 2026-10-12: the connector is active (HR attendance devices call it; `scripts/Start-AttendanceDevelopment.ps1` runs it). It stays outside `ErpSystem.sln` because it targets `net10.0-windows` x86 for the COM driver; recorded in the root README. | Recorded decision. |
+| S0.8 | Verified 2026-10-12 in source: `PlatformIdentityAuthenticationAdapters` issues the session directly when the user has one tenant and one company; selection is returned only for more than one. | Recorded check. |
 
 ### S1 — Dependency and licence governance
 
 | Step | Work | Exit check |
 | --- | --- | --- |
-| S1.1 | Replace `System.Data.SqlClient` with `Microsoft.Data.SqlClient`. | Build, tests, NuGet audit green. |
-| S1.2 | Audit `Newtonsoft.Json` call sites; keep only where required. | List recorded. |
+| S1.1 | Done 2026-10-12: `System.Data.SqlClient` had no code use; reference and central version removed (all SQL code already uses `Microsoft.Data.SqlClient`). Also removed unused HR references: `QRCoder`, `System.Drawing.Common`, `System.Linq.Dynamic.Core`, `System.Security.Permissions`. | Build, tests green. |
+| S1.2 | Done 2026-10-12. Kept: HR organizational-structure snapshots (deep clone of entities), Platform entity change log, Platform localization files, and the Crystal generator (.NET Framework). Everything else uses System.Text.Json. | List recorded. |
 | S1.3 | Resolve DEC-011 (MediatR) and DEC-013 (commercial packages); move Syncfusion, ActiveReportsJS, Crystal, BulkExtensions behind optional modules or replace. | Core builds without them. |
-| S1.4 | Audit `crypto-js` usage on web; replace with Web Crypto or remove. | Dependency removed or justified. |
+| S1.4 | Done 2026-10-12: `crypto-js` and its types had no use; removed from `web-next`. | Dependency removed. |
 | S1.5 | Review `AuditableEntity` `*ByPc` fields: purpose, privacy, keep or remove (migration if removed). | Decision + migration plan. |
 | S1.6 | Align SignalR client versions when mobile upgrade is safe. | Versions recorded. |
 
 ### S2 — Fold the planning kit into the ERP system and slim the documentation
 
-Scope and inventory: `DOCUMENTATION_AND_TEMPLATE_REVIEW.md` (D-013, D-014).
+Scope and inventory: [`DOCUMENTATION_AND_TEMPLATE_REVIEW.md`](DOCUMENTATION_AND_TEMPLATE_REVIEW.md) (D-013, D-014).
+
+Status 2026-10-12: S2 done (D-013/D-014 accepted; DEC-017 keep packets, DEC-018 delete the archive). The useful kit material (question bank, discovery example, Definition of Ready/Done) lives in `.codex/skills/erp-business-planning/references/`. One start path: `plans/README.md` → `system/README.md` → `modules/<slug>/README.md`. DOC-6: every active document now has an inbound link (area indexes `api/`, `project/`, `web-next/`, `mobile-react/`; plan, feature-workspace and template indexes); the HRMS ledger was removed after its open items became DEF-023/DEF-024, and the Kanban stories moved to `research/kanban-board-user-stories/`. DOC-8: the frontend master plan moved to `documentation/web-next/`, the attendance prompt became the feature's `SOURCE-REQUEST_AR.md`, and one-off prompts, a legacy repair script and 758 committed build outputs (`.codex-artifacts/`) were removed. DOC-10: provenance and notes-migration rules merged into `plans/README.md` and `plans/notes/README.md`.
 
 | Step | Work | Exit check |
 | --- | --- | --- |
 | S2.1 | Add `.codex/skills/erp-business-planning` (drives P0–P9 with `BUSINESS_DISCOVERY_INTERVIEW.md`, evidence, spec, plan, gates) and `.codex/skills/erp-legacy-migration` (external application inventory, behavior catalog, defect disposition, data-migration plan into `EVIDENCE`/`RESEARCH`/`PROD-###`). | Skill review; no reference to `templates/planning`. |
-| S2.2 | Delete `templates/planning/` (50 files). | `Check-Planning.ps1` green. |
+| S2.2 | Delete `templates/planning/` (41 files). | `Check-Planning.ps1` green. |
 | S2.3 | DOC-2 and DOC-3: reconcile, then delete the duplicate frontend roadmap and the Accounting v1.0 source + 22 phase stubs. | Links and `module.json` updated; both checks green. |
-| S2.4 | DOC-4: `New-ErpModule.ps1` creates four module files; remove empty sub-READMEs; update `modules/README.md`. | Generator test; docs CI green. |
+| S2.4 | DOC-4: `New-ErpModule.ps1` creates four module files; remove empty sub-READMEs; update [`modules/README.md`](../../../modules/README.md). | Generator test; docs CI green. |
 | S2.5 | DOC-6, DOC-7, DOC-9, DOC-10 per DEC-017 / DEC-018. | `Generate-Documentation.ps1 -Check` green. |
 
 ### S3 — Web theme from tokens
 
-Change set for S3.1, S3.3, S3.5 and S4.1–S4.2 applied and verified 2026-10-06: `S3-S4-UNIFIED-THEME.md`. S3.4 palette preference done; tenant branding open. S3.2 done 2026-10-07 (legacy palette deleted; color review follow-up in the same file). Color review P2, mobile colors and the Arabic font done 2026-10-07; open: tenant branding, P-00x baselines.
+Change set for S3.1, S3.3, S3.5 and S4.1–S4.2 applied and verified 2026-10-06: [`S3-S4-UNIFIED-THEME.md`](S3-S4-UNIFIED-THEME.md). S3.4 palette preference done; tenant branding open. S3.2 done 2026-10-07 (legacy palette deleted; color review follow-up in the same file). Color review P2, mobile colors and the Arabic font done 2026-10-07; open: tenant branding, P-00x baselines.
 
 | Step | Work | Exit check |
 | --- | --- | --- |
@@ -126,14 +128,14 @@ real source reference and an explicit decision for the other platform.
 | P-008 | Transactional document (header + lines + lifecycle) | ERP core need | Journal entries (`accounting-core-gl`) |
 | P-009 | Record view (360: header, tabs, related lists, activity) | Blueprint §5.6 | Employee (HR) or Party (Contacts) |
 | P-010 | Dashboard / KPI overview | Blueprint §5.3 | Module home |
-| P-011 | Kanban board over workflow states | Owner request; `documentation/api/User Stories/KanbanBoard/` | CRM pipeline, Education admissions |
+| P-011 | Kanban board over workflow states | Owner request; `research/kanban-board-user-stories/` | CRM pipeline, Education admissions |
 | P-012 | Calendar / schedule | Blueprint §5.17; CRM Appointments (web, module-local) | CRM Appointments, Education timetable |
 | P-013 | Activity & chatter (embedded) | Owner request | S8 chatter |
 | P-014 | Work queue / approval inbox | ERP core need | Journal approval, leave approval |
 
 ### S7 — Relationship-based record scope
 
-Design draft (2026-10-06): `S7-RECORD-SCOPE-DESIGN.md`.
+Design draft (2026-10-06): [`S7-RECORD-SCOPE-DESIGN.md`](S7-RECORD-SCOPE-DESIGN.md).
 
 | Step | Work | Exit check |
 | --- | --- | --- |
@@ -143,7 +145,7 @@ Design draft (2026-10-06): `S7-RECORD-SCOPE-DESIGN.md`.
 
 ### S5 — New-product workspace generator
 
-Design draft (2026-10-06): `S5-WORKSPACE-GENERATOR-DESIGN.md`.
+Design draft (2026-10-06): [`S5-WORKSPACE-GENERATOR-DESIGN.md`](S5-WORKSPACE-GENERATOR-DESIGN.md).
 
 | Step | Work | Exit check |
 | --- | --- | --- |
@@ -158,7 +160,7 @@ Each item is a separate business plan created with `New-BusinessPlan.ps1` when s
 | Item | Scope | Depends on |
 | --- | --- | --- |
 | Record chatter | Messages, mentions, followers, attachments, activities on any record; realtime via SignalR; notifications via inbox; change log shown inline. | S6 P-013, DEC-015 |
-| Kanban view | Shared web/mobile kanban component over module-owned states; move = transition command with concurrency token; accessible move menu. | S6 P-011 |
+| Kanban view | Shared web/mobile kanban component over module-owned states; move = transition command with concurrency token; accessible move menu. Research input: [Kanban board user stories](research/kanban-board-user-stories/README.md). | S6 P-011 |
 
 ## 4. Dependencies
 
@@ -176,7 +178,7 @@ S0 → S1 → (S2, S3, S4 in parallel) → S6 → S7 → S5 → S8. `education-m
 
 ## 6. Rules carried into every slice
 
-- Shared component first; extend before creating (`AGENTS.md`).
+- Shared component first; extend before creating ([`AGENTS.md`](../../../../AGENTS.md)).
 - No runtime placeholder for Deferred or Excluded capabilities.
 - Every change updates its canonical documentation in the same change.
 - Production-only checks and deferred items get central note IDs.

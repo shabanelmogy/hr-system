@@ -23,7 +23,7 @@ public sealed class OrganizationalStructureManagementTests
     [Fact]
     public async Task CompanyScopedDirectory_FailsClosedAndIsolatesBranches()
     {
-        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+        var options = new DbContextOptionsBuilder<HrDbContext>()
             .UseInMemoryDatabase(Guid.NewGuid().ToString("N"))
             .Options;
 
@@ -49,7 +49,7 @@ public sealed class OrganizationalStructureManagementTests
     [Fact]
     public void Model_EnforcesCompanyScopedOrganizationalRelationships()
     {
-        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+        var options = new DbContextOptionsBuilder<HrDbContext>()
             .UseInMemoryDatabase(Guid.NewGuid().ToString("N"))
             .Options;
         using var context = CreateContext(options, "tenant-1", 11);
@@ -133,7 +133,7 @@ public sealed class OrganizationalStructureManagementTests
     [Fact]
     public void ManagementPageQueries_AreTranslatableBySqlServerForEveryResourceAndSearchOperator()
     {
-        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+        var options = new DbContextOptionsBuilder<HrDbContext>()
             .UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=OrganizationalStructureTranslation;Trusted_Connection=True")
             .Options;
         using var context = CreateContext(options, "tenant-1", 11);
@@ -246,7 +246,7 @@ public sealed class OrganizationalStructureManagementTests
     [Fact]
     public async Task UpdateAsync_Department_WorksCorrectly()
     {
-        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+        var options = new DbContextOptionsBuilder<HrDbContext>()
             .UseInMemoryDatabase(Guid.NewGuid().ToString("N"))
             .Options;
         await using var context = CreateContext(options, "tenant-1", 11);
@@ -271,7 +271,7 @@ public sealed class OrganizationalStructureManagementTests
     [Fact]
     public async Task UpdateAsync_Branch_WorksCorrectly()
     {
-        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+        var options = new DbContextOptionsBuilder<HrDbContext>()
             .UseInMemoryDatabase(Guid.NewGuid().ToString("N"))
             .Options;
         await using var context = CreateContext(options, "tenant-1", 11);
@@ -296,7 +296,7 @@ public sealed class OrganizationalStructureManagementTests
     [Fact]
     public async Task JobLevel_CreateRejectsCurrencyOutsideAccountingCatalog()
     {
-        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+        var options = new DbContextOptionsBuilder<HrDbContext>()
             .UseInMemoryDatabase(Guid.NewGuid().ToString("N"))
             .Options;
         await using var context = CreateContext(options, "tenant-1", 11);
@@ -330,7 +330,7 @@ public sealed class OrganizationalStructureManagementTests
     }
 
     private static void AssertCompositeForeignKey<TDependent, TPrincipal>(
-        ApplicationDbContext context,
+        HrDbContext context,
         params string[] expectedProperties)
     {
         var foreignKey = Assert.Single(
@@ -342,8 +342,8 @@ public sealed class OrganizationalStructureManagementTests
         Assert.Equal(DeleteBehavior.Restrict, foreignKey.DeleteBehavior);
     }
 
-    private static ApplicationDbContext CreateContext(
-        DbContextOptions<ApplicationDbContext> options,
+    private static HrDbContext CreateContext(
+        DbContextOptions<HrDbContext> options,
         string? tenantId,
         int? companyId) =>
         new(options, new TestCurrentActor(tenantId, companyId), TimeProvider.System);

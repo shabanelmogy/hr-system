@@ -4,7 +4,7 @@
 
 This discovery consolidates the requester-approved direction to start Accounting
 with the strongest maintainable pattern and one canonical implementation path,
-`ACCOUNTING_MODULE_PHASES_AR.md` as detailed business/domain source material,
+`documentation/modules/accounting/SOURCE-PLAN_AR.md` as detailed business/domain source material,
 verified current repository evidence, and the canonical planning rules under
 `documentation/plans/`.
 

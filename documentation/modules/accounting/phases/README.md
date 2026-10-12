@@ -97,15 +97,14 @@ belongs inside the module.
 
 ## Historical tracking and final acceptance artifacts
 
-The historical package used [PHASE-TRACKING-TEMPLATE.md](PHASE-TRACKING-TEMPLATE.md)
-for phase tracking and [FINAL-ACCEPTANCE.md](FINAL-ACCEPTANCE.md) for its integrated
+The historical package used [FINAL-ACCEPTANCE.md](FINAL-ACCEPTANCE.md) for its integrated
 acceptance scenario, including retries, failed batches, concurrent requests,
 unauthorized access, reconciliation, restore, audit evidence, and both client
 platforms. These files remain traceability/source material only; current execution
 evidence is defined by the registered capability plan and repository planning system.
 
-The lossless Arabic source is retained as
-[SOURCE-PLAN_AR.md](SOURCE-PLAN_AR.md). Numbered phase files remain historical
-source/traceability material; they are **not** canonical execution units. Runtime
-implementation requires the corresponding registered plan under
-`documentation/plans/business/`.
+The detailed Arabic business source (v1.3) is
+[`../SOURCE-PLAN_AR.md`](../SOURCE-PLAN_AR.md); the older v1.0 source and the 22 numbered
+phase stubs were removed on 2026-10-12 because v1.3 and the dependency matrix above carry
+their content. The phases are **not** canonical execution units: runtime implementation
+requires the corresponding registered plan under `documentation/plans/business/`.

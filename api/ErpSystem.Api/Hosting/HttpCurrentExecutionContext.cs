@@ -1,3 +1,4 @@
+using ErpSystem.BuildingBlocks.Presentation.Common.Observability;
 using System.Security.Claims;
 using ErpSystem.BuildingBlocks.Context;
 

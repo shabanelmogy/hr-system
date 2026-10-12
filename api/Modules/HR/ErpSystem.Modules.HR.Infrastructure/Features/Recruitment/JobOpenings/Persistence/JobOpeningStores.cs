@@ -8,7 +8,7 @@ using ErpSystem.Modules.HR.Domain.Recruitment.Enums;
 namespace ErpSystem.Modules.HR.Infrastructure.Features.Recruitment.JobOpenings.Persistence;
 
 public sealed class JobOpeningReadStore(
-    ApplicationDbContext context,
+    HrDbContext context,
     TypeAdapterConfig mappingConfig) : IJobOpeningReadStore
 {
     public async Task<PageResponse<JobOpeningDto>> GetPageAsync(
@@ -89,7 +89,7 @@ public sealed class JobOpeningReadStore(
 
 }
 
-public sealed class JobOpeningRepository(ApplicationDbContext context) : IJobOpeningRepository
+public sealed class JobOpeningRepository(HrDbContext context) : IJobOpeningRepository
 {
     public Task<JobRequisitionStatus?> GetRequisitionStatusAsync(
         int jobRequisitionId,

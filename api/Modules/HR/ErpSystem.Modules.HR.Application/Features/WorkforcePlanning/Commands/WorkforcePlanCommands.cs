@@ -1,3 +1,4 @@
+using ErpSystem.Modules.HR.Application.Abstractions.Persistence;
 using FluentValidation;
 using ErpSystem.BuildingBlocks.Context.Authentication;
 using ErpSystem.BuildingBlocks.Application.Abstractions.Messaging;
@@ -169,7 +170,7 @@ public sealed class RestoreWorkforcePlanCommandValidator : AbstractValidator<Res
 public sealed class CreateWorkforcePlanCommandHandler(
     IWorkforcePlanWriteStore writeStore,
     IWorkforcePlanReadStore readStore,
-    IUnitOfWork unitOfWork,
+    IHrUnitOfWork unitOfWork,
     ICurrentActor actor,
     TimeProvider timeProvider,
     WorkforcePlanEffects effects,
@@ -220,7 +221,7 @@ public sealed class CreateWorkforcePlanCommandHandler(
 public sealed class UpdateWorkforcePlanCommandHandler(
     IWorkforcePlanWriteStore writeStore,
     IWorkforcePlanReadStore readStore,
-    IUnitOfWork unitOfWork,
+    IHrUnitOfWork unitOfWork,
     ICurrentActor actor,
     TimeProvider timeProvider,
     WorkforcePlanEffects effects,
@@ -258,7 +259,7 @@ public sealed class UpdateWorkforcePlanCommandHandler(
     }
 }
 
-public sealed class SubmitWorkforcePlanCommandHandler(IWorkforcePlanWriteStore store, IWorkforcePlanReadStore reads, IUnitOfWork uow, ICurrentActor actor, TimeProvider clock, WorkforcePlanEffects effects, WorkforcePlanErrors errors)
+public sealed class SubmitWorkforcePlanCommandHandler(IWorkforcePlanWriteStore store, IWorkforcePlanReadStore reads, IHrUnitOfWork uow, ICurrentActor actor, TimeProvider clock, WorkforcePlanEffects effects, WorkforcePlanErrors errors)
     : ICommandHandler<SubmitWorkforcePlanCommand, Result<WorkforcePlanDetailResponse>>
 {
     public async Task<Result<WorkforcePlanDetailResponse>> Handle(SubmitWorkforcePlanCommand command, CancellationToken cancellationToken)
@@ -283,7 +284,7 @@ public sealed class SubmitWorkforcePlanCommandHandler(IWorkforcePlanWriteStore s
     }
 }
 
-public sealed class BeginWorkforcePlanReviewCommandHandler(IWorkforcePlanWriteStore store, IWorkforcePlanReadStore reads, IUnitOfWork uow, ICurrentActor actor, WorkforcePlanEffects effects, WorkforcePlanErrors errors)
+public sealed class BeginWorkforcePlanReviewCommandHandler(IWorkforcePlanWriteStore store, IWorkforcePlanReadStore reads, IHrUnitOfWork uow, ICurrentActor actor, WorkforcePlanEffects effects, WorkforcePlanErrors errors)
     : ICommandHandler<BeginWorkforcePlanReviewCommand, Result<WorkforcePlanDetailResponse>>
 {
     public async Task<Result<WorkforcePlanDetailResponse>> Handle(BeginWorkforcePlanReviewCommand command, CancellationToken cancellationToken)
@@ -309,7 +310,7 @@ public sealed class BeginWorkforcePlanReviewCommandHandler(IWorkforcePlanWriteSt
     }
 }
 
-public sealed class ApproveWorkforcePlanCommandHandler(IWorkforcePlanWriteStore store, IWorkforcePlanReadStore reads, IUnitOfWork uow, ICurrentActor actor, TimeProvider clock, WorkforcePlanEffects effects, WorkforcePlanErrors errors)
+public sealed class ApproveWorkforcePlanCommandHandler(IWorkforcePlanWriteStore store, IWorkforcePlanReadStore reads, IHrUnitOfWork uow, ICurrentActor actor, TimeProvider clock, WorkforcePlanEffects effects, WorkforcePlanErrors errors)
     : ICommandHandler<ApproveWorkforcePlanCommand, Result<WorkforcePlanDetailResponse>>
 {
     public async Task<Result<WorkforcePlanDetailResponse>> Handle(ApproveWorkforcePlanCommand command, CancellationToken cancellationToken)
@@ -338,7 +339,7 @@ public sealed class ApproveWorkforcePlanCommandHandler(IWorkforcePlanWriteStore 
     }
 }
 
-public sealed class RejectWorkforcePlanCommandHandler(IWorkforcePlanWriteStore store, IWorkforcePlanReadStore reads, IUnitOfWork uow, ICurrentActor actor, TimeProvider clock, WorkforcePlanEffects effects, WorkforcePlanErrors errors)
+public sealed class RejectWorkforcePlanCommandHandler(IWorkforcePlanWriteStore store, IWorkforcePlanReadStore reads, IHrUnitOfWork uow, ICurrentActor actor, TimeProvider clock, WorkforcePlanEffects effects, WorkforcePlanErrors errors)
     : ICommandHandler<RejectWorkforcePlanCommand, Result<WorkforcePlanDetailResponse>>
 {
     public async Task<Result<WorkforcePlanDetailResponse>> Handle(RejectWorkforcePlanCommand command, CancellationToken cancellationToken)
@@ -364,7 +365,7 @@ public sealed class RejectWorkforcePlanCommandHandler(IWorkforcePlanWriteStore s
     }
 }
 
-public sealed class CreateWorkforcePlanRevisionCommandHandler(IWorkforcePlanWriteStore store, IWorkforcePlanReadStore reads, IUnitOfWork uow, ICurrentActor actor, WorkforcePlanEffects effects, WorkforcePlanErrors errors)
+public sealed class CreateWorkforcePlanRevisionCommandHandler(IWorkforcePlanWriteStore store, IWorkforcePlanReadStore reads, IHrUnitOfWork uow, ICurrentActor actor, WorkforcePlanEffects effects, WorkforcePlanErrors errors)
     : ICommandHandler<CreateWorkforcePlanRevisionCommand, Result<WorkforcePlanDetailResponse>>
 {
     public async Task<Result<WorkforcePlanDetailResponse>> Handle(CreateWorkforcePlanRevisionCommand command, CancellationToken cancellationToken)
@@ -403,7 +404,7 @@ public sealed class CreateWorkforcePlanRevisionCommandHandler(IWorkforcePlanWrit
 
 public sealed class ArchiveWorkforcePlanCommandHandler(
     IWorkforcePlanWriteStore store,
-    IUnitOfWork uow,
+    IHrUnitOfWork uow,
     ICurrentActor actor,
     TimeProvider clock,
     WorkforcePlanEffects effects,
@@ -443,7 +444,7 @@ public sealed class ArchiveWorkforcePlanCommandHandler(
 public sealed class RestoreWorkforcePlanCommandHandler(
     IWorkforcePlanWriteStore store,
     IWorkforcePlanReadStore reads,
-    IUnitOfWork uow,
+    IHrUnitOfWork uow,
     ICurrentActor actor,
     WorkforcePlanEffects effects,
     WorkforcePlanErrors errors)

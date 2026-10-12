@@ -43,7 +43,7 @@ governance, Hire, Trace, or Plan-versus-Commitment.
 ## 3. Non-negotiable architecture rules
 
 - No `IWorkforcePlanningService`, budget service facade, generic CRUD service, or
-  controller access to `ApplicationDbContext`.
+  controller access to `HrDbContext`.
 - Each write is a typed MediatR `ICommand` with a co-located FluentValidation
   validator and handler. Each read is a typed `IQuery` backed by a dedicated
   `AsNoTracking()` projection store.

@@ -4,7 +4,7 @@ using ErpSystem.Modules.HR.Domain.Recruitment.Enums;
 
 namespace ErpSystem.Modules.HR.Infrastructure.Features.Recruitment.Dashboard;
 
-public sealed class RecruitmentDashboardReadStore(ApplicationDbContext context)
+public sealed class RecruitmentDashboardReadStore(HrDbContext context)
     : IRecruitmentDashboardReadStore
 {
     public async Task<RecruitmentDashboardSummaryDto> GetSummaryAsync(

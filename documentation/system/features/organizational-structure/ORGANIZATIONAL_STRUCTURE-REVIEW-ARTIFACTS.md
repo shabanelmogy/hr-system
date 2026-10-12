@@ -27,7 +27,7 @@ Use this file as the evidence ledger for one feature. Replace every bracketed va
 
 | ID | Requirement | Source | API | Web | Mobile | Status |
 | --- | --- | --- | --- | --- | --- | --- |
-| R-01 | Current-company organizational directories use trusted tenant/company scope. | `CompanyAuditableEntity`, `ICurrentActor`, `ApplicationDbContext` filters | Required | Required | Required | Frozen |
+| R-01 | Current-company organizational directories use trusted tenant/company scope. | `CompanyAuditableEntity`, `ICurrentActor`, `HrDbContext` filters | Required | Required | Required | Frozen |
 | R-02 | Branch, Department, Division, JobTitle, JobLevel, Position, and JobDescription are persisted and manageable. | Existing Domain entities plus Odoo 19 `res.company`, `hr.department`, and `hr.job` review | Required | Required | Required | Frozen |
 | R-03 | Department hierarchy prevents cycles and every relationship stays inside the active current-company chain. | Odoo 19 department constraint and local parent-dependent States pattern | Required | Required | Required | Frozen |
 | R-04 | JobDescription is a versioned Position child with immutable approved content and explicit decisions. | `JobDescription` review and Odoo 19 job description baseline | Required | Required | Required | Frozen |
@@ -55,7 +55,7 @@ unused runtime implementation.
 | --- | --- | --- | --- |
 | E-01 | The existing folder contains seven organizational directory entities plus Company and CompanyCountry. | `api/Modules/HR/ErpSystem.Modules.HR.Domain/OrganizationalStructure` | Source inspection and Graphify query. |
 | E-02 | JobDescription is a Position-scoped version with explicit approval/rejection lifecycle. | `api/Modules/HR/ErpSystem.Modules.HR.Domain/OrganizationalStructure/Entities/JobDescription.cs` | Source inspection and focused domain tests. |
-| E-03 | All seven organizational resources are persisted with composite company-scoped relationships. | `ApplicationDbContext`, OrganizationalStructure configurations, migration | API build and model tests. |
+| E-03 | All seven organizational resources are persisted with composite company-scoped relationships. | `HrDbContext`, OrganizationalStructure configurations, migration | API build and model tests. |
 | E-04 | Odoo 19 uses a recursive Department tree and rejects cycles. | Odoo 19 `addons/hr/models/hr_department.py` | Official source review, 2026-08-30. |
 | E-05 | Odoo 19 keeps description, requirements, headcount, department, and company on `hr.job`. | Odoo 19 `addons/hr/models/hr_job.py` | Official source review, 2026-08-30. |
 
@@ -150,7 +150,7 @@ connection string, tenant ID, or company ID.
 
 | ID | Severity | Finding | Evidence | Owner | Resolution |
 | --- | --- | --- | --- | --- | --- |
-| F-01 | Critical | Six organizational entities were ignored by EF and could not back a feature. | Historical `ApplicationDbContext` ignore list | Backend | Resolved: DbSets, configurations, composite FKs, indexes, migration, and tests added. |
+| F-01 | Critical | Six organizational entities were ignored by EF and could not back a feature. | Historical `HrDbContext` ignore list | Backend | Resolved: DbSets, configurations, composite FKs, indexes, migration, and tests added. |
 | F-02 | High | Department public setters allowed recursive and cross-company hierarchy corruption. | Historical `Department.cs` | Domain | Resolved: private setters, guarded parent changes, active/same-company checks, cycle detection. |
 | F-03 | High | JobDescription was attached only to JobTitle, so a Position had no authoritative version. | Historical JobDescription/Position entities | Domain | Resolved: PositionId relationship, version index, bilingual approval lifecycle. |
 | F-04 | Medium | JobLevel salary bounds and currency were mutable without range invariants. | Historical `JobLevel.cs` | Domain | Resolved: explicit identity/details methods and salary/currency invariants. |

@@ -1,3 +1,4 @@
+using ErpSystem.Modules.HR.Application.Abstractions.Persistence;
 using ErpSystem.BuildingBlocks.Application.Abstractions.Messaging;
 using ErpSystem.BuildingBlocks.Application.Abstractions.Persistence;
 using ErpSystem.BuildingBlocks.Context.Authentication;
@@ -181,7 +182,7 @@ public sealed class HireEmploymentApplicationCommandHandler(
     IRecruitmentHireRepository hireRepository,
     IEmploymentApplicationReadStore readStore,
     IRecruitmentActorEmployeeSource actorEmployees,
-    IUnitOfWork unitOfWork,
+    IHrUnitOfWork unitOfWork,
     ICurrentActor actor,
     TimeProvider clock)
     : ICommandHandler<HireEmploymentApplicationCommand, Result<EmploymentApplicationDto>>

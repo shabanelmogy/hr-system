@@ -95,6 +95,37 @@ the health gates below.
    outbox means dead rows exceed `MaxDeadRows` or the oldest due/recoverable
    message exceeds `MaxDueBacklogAge`; investigate before increasing traffic.
 
+### MonsterASP.NET (current hosting) via GitHub Actions
+
+Until `MONSTERASP_SITE` is configured the deploy job is skipped and Visual Studio
+publish (`site84639-WebDeploy` profile) remains the deployment path; local settings
+files are never part of either publish.
+
+`.github/workflows/api-deploy.yml` deploys automatically after `API Foundation CI`
+succeeds for a push to `main`. It downloads that run's `erpsystem-api-<sha>` artifact
+(the exact build that passed restore, audit, build, tests, EF drift and SBOM), so
+production never runs an untested rebuild. One-time setup in the repository settings:
+
+| Kind | Name | Value |
+| --- | --- | --- |
+| Variable | `MONSTERASP_SITE` | Site id, e.g. `site84639` |
+| Variable | `MONSTERASP_SITE_URL` | Public URL, e.g. `https://shabanhrms.runasp.net` |
+| Secret | `MONSTERASP_WEBDEPLOY_PASSWORD` | Control Panel > Deploy > Visual Studio access |
+| Environment | `production` | Add required reviewers to approve each deploy |
+
+WebDeploy must be enabled in the MonsterASP Control Panel. The deploy uses Web Deploy
+(`msdeploy`, Basic auth over HTTPS to `https://<site>.siteasp.net:8172/msdeploy.axd`)
+with `AppOffline` (no locked-DLL failures) and `DoNotDeleteRule` (server-only files are
+kept, as in the Visual Studio profile). `appsettings*.json`, `App_Data` and `logs` are
+never overwritten: production configuration stays on the host (prefer Control Panel
+environment variables such as `ConnectionStrings__DefaultConnection`). Deploys are
+serialized and never cancelled midway. The job then polls `GET /health/live` and fails
+if the API does not come back.
+
+Database migrations are not part of the deploy. Apply them deliberately beforehand
+with `scripts/Apply-ErpModuleMigrations.ps1 -Environment Production -WhatIf`, then
+without `-WhatIf`, after taking a database backup.
+
 ## Rollback and forward fix
 
 - Stop the rollout when readiness fails or the smoke request regresses.

@@ -1,6 +1,7 @@
 import type { TFunction } from 'i18next';
 
 import type { RoleClaim } from '../../../domain/models/administration';
+import { getModuleLabel } from '@/src/core/localization/module-labels';
 
 export interface IndexedRoleClaim {
   action: string;
@@ -244,21 +245,8 @@ export function getPermissionScreenLabel(screen: string, t: TFunction): string {
   return key ? t(`roleManagement.permissionModules.${key}`) : humanize(screen);
 }
 
-const businessModuleTranslationKeys: Record<string, string> = {
-  acc: 'accounting',
-  contacts: 'contacts',
-  crm: 'crm',
-  hr: 'hr',
-  inventory: 'inventory',
-  platform: 'platform',
-  'point-of-sale': 'pointOfSale',
-  'reference-data': 'referenceData',
-  reporting: 'reporting',
-};
-
 export function getPermissionBusinessModuleLabel(moduleCode: string, t: TFunction): string {
-  const key = businessModuleTranslationKeys[moduleCode.toLocaleLowerCase()];
-  return key ? t(`roleManagement.businessModules.${key}`) : humanize(moduleCode);
+  return getModuleLabel(moduleCode, t);
 }
 
 export function getPermissionActionLabel(action: string, t: TFunction): string {

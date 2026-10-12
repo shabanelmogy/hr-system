@@ -14,9 +14,8 @@ linked rather than copied here.
   scaffold. Add them only with verified contracts and tests.
 
 Start with [ARCHITECTURE.md](ARCHITECTURE.md), then record delivery decisions
-in [DELIVERY-ROADMAP.md](DELIVERY-ROADMAP.md). Platform entry points are kept
-under [api/](api/README.md), [web-next/](web-next/README.md), and
-[mobile-react/](mobile-react/README.md).
+in [DELIVERY-ROADMAP.md](DELIVERY-ROADMAP.md). There is no API, web, or mobile
+surface yet; add a platform README here only when a feature gives it content.
 
 Before adding a component, service, or Contract, inventory shared BuildingBlocks
 and module-local reusable pieces. Reuse or extend compatible abstractions and

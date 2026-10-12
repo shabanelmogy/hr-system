@@ -10,7 +10,7 @@ existing HR domain split instead of copying Odoo's single `hr.job` aggregate.
 
 The feature manages Branch, Department, Division, JobTitle, JobLevel, Position,
 JobDescription, CostCenter, and Currency under the current tenant and company. TenantId and CompanyId
-are trusted from `ICurrentActor`/`ApplicationDbContext`; clients never submit
+are trusted from `ICurrentActor`/`HrDbContext`; clients never submit
 scope values. The API route is `/api/v1/organizational-structure/{resource}`.
 The browser and native clients expose one guarded route/page per resource:
 `branches`, `departments`, `divisions`, `job-titles`, `job-levels`, `positions`,
@@ -56,7 +56,7 @@ it to Draft for resubmission. Expired is derived from dates.
 The DbContext exposes all seven DbSets and configuration classes under
 `api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Persistence/Configurations/OrganizationalStructure`.
 Composite TenantId/CompanyId foreign keys prevent cross-company relationships.
-For newly added company-scoped entities, `ApplicationDbContext` reads the entity's
+For newly added company-scoped entities, `HrDbContext` reads the entity's
 domain `CompanyId` before EF temporary foreign-key fix-up. A default value is
 stamped from the current actor, while an explicit foreign company remains
 rejected. The Branch update regression covers this InMemory/EF edge case.

@@ -53,7 +53,7 @@
 | --- | --- | --- | --- |
 | E-01 | Countries are global | `api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Domain/GeographicalInformation/Countries/Entities/Country.cs` | Entity has no scope marker |
 | E-02 | States and Districts inherit global parent scope | `State.cs`, `District.cs`, their EF configurations | Global parent FKs and unique indexes inspected |
-| E-03 | Company data uses trusted automatic isolation | `ApplicationDbContext.ConfigureCompanyEntity` and `ApplyTenantIsolation` | Query/write filters inspected |
+| E-03 | Company data uses trusted automatic isolation | `HrDbContext.ConfigureCompanyEntity` and `ApplyTenantIsolation` | Query/write filters inspected |
 | E-04 | Addresses are company-owned and have explicit owner links | `Address.cs`, `CompanyAddress.cs`, `BranchAddress.cs` | Scope and purpose/primary link model inspected |
 | E-05 | Master geography authorization is not platform-only today | geography controllers, `TenantMember`, and client route access | Current tenant-admin/super-admin rules inspected |
 

@@ -7,8 +7,8 @@ Excluded. Only source and test evidence can promote a capability to implemented.
 
 - Canonical six-project module boundary and explicit host registration.
 - `hr` schema ownership, schema migration, and module migration history.
-- Existing geographical/reference-data documentation remains linked from its
-  established canonical paths.
+- Geography and address documentation is owned by General Data
+  (`documentation/modules/reference-data/`), not HR.
 
 ## Required / in progress
 
@@ -29,6 +29,10 @@ abstractions. Record reused, extended, rejected, and newly module-local pieces
 in the feature evidence before implementation.
 
 ## Deferred or excluded
+
+- Employee management (direct manager, web/mobile screens, import/export) —
+  `DEF-024`; employee addresses — `DEF-020`.
+- Attendance geofence radius for mobile check-in — `DEF-023`.
 
 Classify each optional report, import, workflow, and client surface explicitly
 in its feature evidence. Do not use a copied HR reference as a global ERP

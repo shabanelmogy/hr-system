@@ -3,7 +3,7 @@ using ErpSystem.Modules.HR.Domain.Attendance.Devices.Entities;
 
 namespace ErpSystem.Modules.HR.Infrastructure.Features.Attendance.Devices.Persistence;
 
-public sealed class AttendanceRawStore(ApplicationDbContext context) : IAttendanceRawStore
+public sealed class AttendanceRawStore(HrDbContext context) : IAttendanceRawStore
 {
     public Task<DevicePullRun?> FindRunAsync(long id, CancellationToken ct) =>
         context.DevicePullRuns.Include(x => x.AttendanceDevice).ThenInclude(x => x.Credential)

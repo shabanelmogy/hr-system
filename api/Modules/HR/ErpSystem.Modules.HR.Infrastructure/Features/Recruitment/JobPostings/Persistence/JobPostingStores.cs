@@ -7,7 +7,7 @@ using ErpSystem.Modules.HR.Domain.Recruitment.Enums;
 namespace ErpSystem.Modules.HR.Infrastructure.Features.Recruitment.JobPostings.Persistence;
 
 public sealed class JobPostingReadStore(
-    ApplicationDbContext context,
+    HrDbContext context,
     TypeAdapterConfig mappingConfig) : IJobPostingReadStore
 {
     public async Task<PageResponse<JobPostingDto>> GetPageAsync(
@@ -58,7 +58,7 @@ public sealed class JobPostingReadStore(
             .FirstOrDefaultAsync(cancellationToken);
 }
 
-public sealed class JobPostingRepository(ApplicationDbContext context) : IJobPostingRepository
+public sealed class JobPostingRepository(HrDbContext context) : IJobPostingRepository
 {
     public Task<bool> SlugExistsAsync(string normalizedSlug, CancellationToken cancellationToken) =>
         context.JobPostings.AnyAsync(posting => posting.Slug == normalizedSlug, cancellationToken);

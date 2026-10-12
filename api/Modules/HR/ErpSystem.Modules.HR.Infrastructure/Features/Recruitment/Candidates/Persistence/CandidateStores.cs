@@ -6,7 +6,7 @@ using ErpSystem.Modules.HR.Domain.Recruitment.Entities;
 
 namespace ErpSystem.Modules.HR.Infrastructure.Features.Recruitment.Candidates.Persistence;
 
-public sealed class CandidateReadStore(ApplicationDbContext context) : ICandidateReadStore
+public sealed class CandidateReadStore(HrDbContext context) : ICandidateReadStore
 {
     public async Task<PageResponse<CandidateDto>> GetPageAsync(
         int pageNumber,
@@ -86,7 +86,7 @@ public sealed class CandidateReadStore(ApplicationDbContext context) : ICandidat
     };
 }
 
-public sealed class CandidateRepository(ApplicationDbContext context) : ICandidateRepository
+public sealed class CandidateRepository(HrDbContext context) : ICandidateRepository
 {
     public void Add(Candidate candidate) => context.Candidates.Add(candidate);
 

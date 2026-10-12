@@ -1,7 +1,9 @@
 # Module documentation
 
 This directory is the ownership entry point for runtime-module documentation
-in the ERP modular monolith. Each module gets one package with the same shape:
+in the ERP modular monolith. Each module gets one package that starts with four
+files; the optional folders are added only when they carry module-specific
+content (an empty boilerplate README is never committed):
 
 Start every module or feature review with the general
 [ERP documentation guide](../project/ERP_DOCUMENTATION_GUIDE_AR.md) and the
@@ -15,12 +17,28 @@ module-specific ownership and evidence.
   README.md
   ARCHITECTURE.md
   DELIVERY-ROADMAP.md
-  api/README.md
-  web-next/README.md
-  mobile-react/README.md
-  features/README.md
-  phases/README.md
+  api/README.md            (optional)
+  web-next/README.md       (optional; required when module.json declares an active webNextSurface)
+  mobile-react/README.md   (optional)
+  features/README.md       (optional; the module's feature catalog)
+  phases/README.md         (optional; an ordered phase plan)
 ```
+
+## Modules
+
+Listed in registry order (API, web, and mobile register modules in this order).
+
+| Module | Schema | Status |
+| --- | --- | --- |
+| [Platform](platform/README.md) | `platform` | foundation |
+| [General Data (ReferenceData) — main module](reference-data/README.md) | `ref` | foundation |
+| [Contacts](contacts/README.md) | `contacts` | reference-workflow |
+| [Accounting](accounting/README.md) | `acc` | foundation |
+| [HR](hr/README.md) | `hr` | foundation |
+| [CRM](customer-relationship-management/README.md) | `crm` | foundation |
+| [Inventory](inventory/README.md) | `inv` | foundation |
+| [PointOfSale](point-of-sale/README.md) | `pos` | foundation |
+| [Reporting](reporting/README.md) | `rpt` | foundation |
 
 ## Ownership boundary
 
@@ -69,16 +87,18 @@ Every package has a machine-readable `module.json` containing at least:
 - `databaseSchema`: the module-owned SQL schema (for example `acc` or `platform`).
 - `lifecycle` and `status`: current module state using the vocabulary above.
 - `runtimePaths` and `documentationPaths`: repository-relative ownership map.
+  `documentationPaths` lists `root` plus only the optional READMEs that exist;
+  the architecture tests fail on a registered path that is missing.
 
-The API module generator validates the documentation root and creates this
-package atomically with every new six-project module. It never overwrites an
+The API module generator validates the documentation root and creates the four
+starting files atomically with every new six-project module. It never overwrites an
 existing runtime module or documentation package and honors `-WhatIf`.
 
 ## Moving existing books
 
-HR has established canonical feature books under the existing `project/`,
-`api/`, `web-next/`, and `mobile-react/` paths. The HR package catalogs those
-locations; it does not duplicate or move them. A future move must update
+Several modules (HR, General Data, Platform) have established canonical feature books under the existing `project/`,
+`api/`, `web-next/`, and `mobile-react/` paths. The module packages catalog those
+locations; they do not duplicate or move them. A future move must update
 `documentation/system/recipe-manifest.json`, required-file manifests, links,
 and generated packets in one manifest-aware change, then pass
 `Generate-Documentation.ps1 -Check`. Until that migration is complete, the

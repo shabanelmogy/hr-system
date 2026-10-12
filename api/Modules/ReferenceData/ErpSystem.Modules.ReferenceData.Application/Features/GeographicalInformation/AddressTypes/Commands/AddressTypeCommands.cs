@@ -1,3 +1,4 @@
+using ErpSystem.Modules.ReferenceData.Application.Abstractions.Persistence;
 using ErpSystem.BuildingBlocks.Context.Authentication;
 using ErpSystem.BuildingBlocks.Application.Abstractions.Messaging;
 using ErpSystem.BuildingBlocks.Application.Abstractions.Persistence;
@@ -61,7 +62,7 @@ public sealed class CreateAddressTypesCommandValidator : AbstractValidator<Creat
     }
 }
 
-public sealed class CreateAddressTypeCommandHandler(IAddressTypeWriteStore writeStore, IAddressTypeReadStore readStore, IUnitOfWork unitOfWork, IAddressTypeChangeScheduler scheduler, ICurrentActor actor, IMapper mapper, AddressTypeErrors errors) : ICommandHandler<CreateAddressTypeCommand, Result<AddressTypeDetailResponse>>
+public sealed class CreateAddressTypeCommandHandler(IAddressTypeWriteStore writeStore, IAddressTypeReadStore readStore, IReferenceDataUnitOfWork unitOfWork, IAddressTypeChangeScheduler scheduler, ICurrentActor actor, IMapper mapper, AddressTypeErrors errors) : ICommandHandler<CreateAddressTypeCommand, Result<AddressTypeDetailResponse>>
 {
     public async Task<Result<AddressTypeDetailResponse>> Handle(CreateAddressTypeCommand request, CancellationToken cancellationToken)
     {
@@ -74,7 +75,7 @@ public sealed class CreateAddressTypeCommandHandler(IAddressTypeWriteStore write
         return Result.Success(response);
     }
 }
-public sealed class CreateAddressTypesCommandHandler(IAddressTypeWriteStore writeStore, IUnitOfWork unitOfWork, IAddressTypeChangeScheduler scheduler, ICurrentActor actor, IMapper mapper, AddressTypeErrors errors) : ICommandHandler<CreateAddressTypesCommand, Result<CreateAddressTypesResponse>>
+public sealed class CreateAddressTypesCommandHandler(IAddressTypeWriteStore writeStore, IReferenceDataUnitOfWork unitOfWork, IAddressTypeChangeScheduler scheduler, ICurrentActor actor, IMapper mapper, AddressTypeErrors errors) : ICommandHandler<CreateAddressTypesCommand, Result<CreateAddressTypesResponse>>
 {
     public async Task<Result<CreateAddressTypesResponse>> Handle(CreateAddressTypesCommand request, CancellationToken cancellationToken)
     {
@@ -89,7 +90,7 @@ public sealed class CreateAddressTypesCommandHandler(IAddressTypeWriteStore writ
     }
     private static bool HasDuplicates(IEnumerable<string> values) => values.GroupBy(value => value.Trim(), StringComparer.OrdinalIgnoreCase).Any(group => group.Count() > 1);
 }
-public sealed class UpdateAddressTypeCommandHandler(IAddressTypeWriteStore writeStore, IUnitOfWork unitOfWork, IAddressTypeChangeScheduler scheduler, IAddressTypeAuditTrail auditTrail, ICurrentActor actor, IMapper mapper, AddressTypeErrors errors) : ICommandHandler<UpdateAddressTypeCommand, Result<AddressTypeDetailResponse>>
+public sealed class UpdateAddressTypeCommandHandler(IAddressTypeWriteStore writeStore, IReferenceDataUnitOfWork unitOfWork, IAddressTypeChangeScheduler scheduler, IAddressTypeAuditTrail auditTrail, ICurrentActor actor, IMapper mapper, AddressTypeErrors errors) : ICommandHandler<UpdateAddressTypeCommand, Result<AddressTypeDetailResponse>>
 {
     public async Task<Result<AddressTypeDetailResponse>> Handle(UpdateAddressTypeCommand request, CancellationToken cancellationToken)
     {
@@ -107,7 +108,7 @@ public sealed class UpdateAddressTypeCommandHandler(IAddressTypeWriteStore write
         if (change is not null) scheduler.Schedule(change); return result;
     }
 }
-public sealed class ArchiveAddressTypeCommandHandler(IAddressTypeWriteStore writeStore, IUnitOfWork unitOfWork, IAddressTypeChangeScheduler scheduler, ICurrentActor actor, TimeProvider timeProvider, IMapper mapper, AddressTypeErrors errors) : ICommandHandler<ArchiveAddressTypeCommand, Result>
+public sealed class ArchiveAddressTypeCommandHandler(IAddressTypeWriteStore writeStore, IReferenceDataUnitOfWork unitOfWork, IAddressTypeChangeScheduler scheduler, ICurrentActor actor, TimeProvider timeProvider, IMapper mapper, AddressTypeErrors errors) : ICommandHandler<ArchiveAddressTypeCommand, Result>
 {
     public async Task<Result> Handle(ArchiveAddressTypeCommand request, CancellationToken cancellationToken)
     {
@@ -123,7 +124,7 @@ public sealed class ArchiveAddressTypeCommandHandler(IAddressTypeWriteStore writ
         if (change is not null) scheduler.Schedule(change); return result;
     }
 }
-public sealed class RestoreAddressTypeCommandHandler(IAddressTypeWriteStore writeStore, IUnitOfWork unitOfWork, IAddressTypeChangeScheduler scheduler, ICurrentActor actor, IMapper mapper, AddressTypeErrors errors) : ICommandHandler<RestoreAddressTypeCommand, Result>
+public sealed class RestoreAddressTypeCommandHandler(IAddressTypeWriteStore writeStore, IReferenceDataUnitOfWork unitOfWork, IAddressTypeChangeScheduler scheduler, ICurrentActor actor, IMapper mapper, AddressTypeErrors errors) : ICommandHandler<RestoreAddressTypeCommand, Result>
 {
     public async Task<Result> Handle(RestoreAddressTypeCommand request, CancellationToken cancellationToken)
     {
@@ -138,7 +139,7 @@ public sealed class RestoreAddressTypeCommandHandler(IAddressTypeWriteStore writ
         if (change is not null) scheduler.Schedule(change); return result;
     }
 }
-public sealed class BulkArchiveAddressTypesCommandHandler(IAddressTypeWriteStore writeStore, IUnitOfWork unitOfWork, IAddressTypeChangeScheduler scheduler, ICurrentActor actor, TimeProvider timeProvider, AddressTypeErrors errors) : ICommandHandler<BulkArchiveAddressTypesCommand, Result<BulkArchiveAddressTypesResponse>>
+public sealed class BulkArchiveAddressTypesCommandHandler(IAddressTypeWriteStore writeStore, IReferenceDataUnitOfWork unitOfWork, IAddressTypeChangeScheduler scheduler, ICurrentActor actor, TimeProvider timeProvider, AddressTypeErrors errors) : ICommandHandler<BulkArchiveAddressTypesCommand, Result<BulkArchiveAddressTypesResponse>>
 {
     public async Task<Result<BulkArchiveAddressTypesResponse>> Handle(BulkArchiveAddressTypesCommand request, CancellationToken cancellationToken)
     {

@@ -627,7 +627,7 @@ dirty، conflict (إعادة تحميل الحقيقة)، وoffline على ال�
 | P-008 Transactional Document | `MyForm`, `MyDataGrid`؛ `AppForm`, `AppDataCard` | محرر سطور قابل للتعديل (Web) ومحرر سطور (Mobile)، لوحة إجماليات، شريط إجراءات الحالة | قيود اليومية في `accounting-core-gl` |
 | P-009 Record View | `EntityCard`, `Timeline`, `EntityChangeLogDialog`؛ `AppCard`, `AppSegmentedControl`, `EntityChangeLogModal` | ترويسة سجل مشتركة وقوائم مرتبطة | ملف الموظف (HR)، الطرف (Contacts) |
 | P-010 Dashboard / KPI | `MetricCard`, `AnimatedStatCard`, charts؛ `AppMetricCard`, `AppChartCard` | عقد مؤشر (مالك، فترة، drill-down) | الصفحة الرئيسية لموديول |
-| P-011 Kanban Board | `framer-motion` وقواعد السحب في `AGENTS.md` | مكوّن لوحة Web وMobile | CRM pipeline؛ user stories في `api/User Stories/KanbanBoard/` |
+| P-011 Kanban Board | `framer-motion` وقواعد السحب في `AGENTS.md` | مكوّن لوحة Web وMobile | CRM pipeline؛ user stories في `plans/business/erp-platform-template/research/kanban-board-user-stories/` |
 | P-012 Calendar / Schedule | Web module-local: `crm/appointments/components/calendar/AppointmentCalendar.tsx` + `appointmentCalendarAdapter.ts` | قرار Mobile (agenda) وترقية shared | CRM Appointments، الجدول الدراسي (Education) |
 | P-013 Activity & Chatter (مضمّن) | `Timeline`, `FileDropZone`, `EntityChangeLog*`؛ SignalR hub وnotification inbox في API | عقد الرسائل والمتابعين | خطة chatter (S8) |
 | P-014 Work Queue / Approval Inbox | `MyDataGrid`, `ConfirmationDialog`؛ `AppDataCard`, `ConfirmationDialog` | عقد مصادر العناصر وسبب الرفض | اعتماد القيود (Accounting)، الإجازات (HR) |

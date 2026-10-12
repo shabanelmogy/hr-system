@@ -38,5 +38,5 @@ an Accounting entitlement and never removes another module's grant or its select
 
 Run API restore/build/test, web type-check/architecture/lint/tests/build, mobile
 `npm run check`, documentation check, `git diff --check`, and apply the HR EF
-migration with `--context ApplicationDbContext`. CrystalReportGeneratorApi is
+migration with `--context HrDbContext`. CrystalReportGeneratorApi is
 independent and is excluded from this change.

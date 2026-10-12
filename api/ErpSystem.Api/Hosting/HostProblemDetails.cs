@@ -1,3 +1,4 @@
+using ErpSystem.BuildingBlocks.Presentation.Common.Observability;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 

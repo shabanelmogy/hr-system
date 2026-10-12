@@ -10,11 +10,9 @@ public static class DependencyInjection
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        services.AddGlobalService(configuration);
         services.AddDatabaseservice(configuration);
         services.AddErrorsService();
         services.AddEntitiesService();
-        services.AddFluentValidationService();
         services.AddMapsterService();
         services.AddHttpClient<IAttendanceConnectorClient, AttendanceConnectorClient>((_, client) =>
         {

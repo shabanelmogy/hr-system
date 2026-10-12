@@ -320,7 +320,7 @@ Controller rules:
 - send one command/query per action;
 - keep authorization, API versioning, binding, response codes, and
   `CreatedAtAction` in the API host;
-- do not inject feature services or `ApplicationDbContext`;
+- do not inject feature services or `HrDbContext`;
 - do not manually call validators;
 - preserve cancellation tokens end to end.
 - Directly bind a command only when it intentionally is the public JSON contract;

@@ -14,18 +14,18 @@ The goal is not to write the longest plan. The goal is to reach an implementatio
 
 | File | Responsibility |
 | --- | --- |
-| `PLAN_CREATION_PROTOCOL.md` | End-to-end method from interview through evidence, spec, plan, review, and handoff. |
-| `PLANNING_METHOD_PROVENANCE.md` | Records which external prompt/method ideas were adopted, adapted, rejected, or remain pending review. |
-| `BUSINESS_PLANNING_STANDARD.md` | Mandatory workflow and decision order for every business plan. |
-| `BUSINESS_DISCOVERY_INTERVIEW.md` | Discovery question framework used before G0 can close. |
-| `EVIDENCE_AUDIT_STANDARD.md` | Evidence-first audit that separates current behavior, target intent, assumptions, and unknowns. |
-| `EVIDENCE_TEMPLATE.md` | Evidence ledger template for a plan. |
-| `SPEC_SUMMARY_TEMPLATE.md` | Pre-plan specification produced before implementation phases are written. |
-| `BUSINESS_PLAN_TEMPLATE.md` | Copyable master template for a new business capability. |
-| `FEATURE_DECOMPOSITION_TEMPLATE.md` | Mandatory child Screen/Workflow Contract template when an authorized slice is decomposed into materially different feature workflows. |
-| `CUSTOMER_EDUCATION_TEMPLATE.md` | Post-implementation customer guide + training/demo + video-script template used to close customer-visible phases. |
-| `PLAN_QUALITY_GATE.md` | Gates that decide whether a plan is ready to implement. |
-| `PLAN_REGISTRY.md` | Index of active, approved, deferred, and closed plans. |
+| [`PLAN_CREATION_PROTOCOL.md`](PLAN_CREATION_PROTOCOL.md) | End-to-end method from interview through evidence, spec, plan, review, and handoff. |
+| [`BUSINESS_PLANNING_STANDARD.md`](BUSINESS_PLANNING_STANDARD.md) | Mandatory workflow and decision order for every business plan. |
+| [`BUSINESS_DISCOVERY_INTERVIEW.md`](BUSINESS_DISCOVERY_INTERVIEW.md) | Discovery question framework used before G0 can close. |
+| [`EVIDENCE_AUDIT_STANDARD.md`](EVIDENCE_AUDIT_STANDARD.md) | Evidence-first audit that separates current behavior, target intent, assumptions, and unknowns. |
+| [`EVIDENCE_TEMPLATE.md`](EVIDENCE_TEMPLATE.md) | Evidence ledger template for a plan. |
+| [`SPEC_SUMMARY_TEMPLATE.md`](SPEC_SUMMARY_TEMPLATE.md) | Pre-plan specification produced before implementation phases are written. |
+| [`BUSINESS_PLAN_TEMPLATE.md`](BUSINESS_PLAN_TEMPLATE.md) | Copyable master template for a new business capability. |
+| [`FEATURE_DECOMPOSITION_TEMPLATE.md`](FEATURE_DECOMPOSITION_TEMPLATE.md) | Mandatory child Screen/Workflow Contract template when an authorized slice is decomposed into materially different feature workflows. |
+| [`CUSTOMER_EDUCATION_TEMPLATE.md`](CUSTOMER_EDUCATION_TEMPLATE.md) | Post-implementation customer guide + training/demo + video-script template used to close customer-visible phases. |
+| [`PLAN_QUALITY_GATE.md`](PLAN_QUALITY_GATE.md) | Gates that decide whether a plan is ready to implement. |
+| [`business/README.md`](business/README.md) | One folder per plan and the list of current plans. |
+| [`PLAN_REGISTRY.md`](PLAN_REGISTRY.md) | Index of active, approved, deferred, and closed plans. |
 | `New-BusinessPlan.ps1` | Scaffolds a new business plan from the master template. |
 | `Check-Planning.ps1` | Validates the planning structure, business-plan folders, and canonical note IDs. |
 
@@ -119,8 +119,8 @@ explicit execution authorization under `PLAN_QUALITY_GATE.md`:
    with materially different domain/UI workflows must be split into coherent feature
    execution units before an implementation scaffold is created; a coherent slice
    records `Single feature` explicitly.
-2. API work follows `documentation/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md`.
-3. Cross-platform feature work follows `documentation/system/README.md` and the closest reviewed reference.
+2. API work follows [`documentation/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md`](../api/API_FEATURE_DEVELOPMENT_WORKFLOW.md).
+3. Cross-platform feature work follows [`documentation/system/README.md`](../system/README.md) and the closest reviewed reference.
 4. Reusable frontend rules belong in the Web architecture/reference guides.
 5. Module-specific rules belong in the owning `documentation/modules/<module>/` package.
 6. Generated documentation is regenerated; it is never edited manually.
@@ -171,8 +171,8 @@ row must name an active catalog Pattern ID (or stop as `Candidate`), exact sourc
 reference, platform R/D/E capabilities, states, offline/mock policy, scope, and
 responsive/accessibility behavior. A shared-component list alone does not pass.
 
-External prompts are inputs to this method, not parallel authorities. Their
-adoption status is tracked in `PLANNING_METHOD_PROVENANCE.md`.
+External prompts are inputs to this method, not parallel authorities (see
+[Where the method came from](#where-the-method-came-from)).
 
 Before handoff run:
 
@@ -192,14 +192,32 @@ assumption, reopen the affected gate, update the plan, and only then continue.
 
 Important non-implemented findings are centralized under `notes/`.
 
-- `notes/PRODUCTION_NOTES.md`
-- `notes/DEFERRED_ITEMS.md`
-- `notes/KNOWN_RISKS.md`
-- `notes/FOLLOW_UPS.md`
-- `notes/DECISION_BACKLOG.md`
+- [`notes/PRODUCTION_NOTES.md`](notes/PRODUCTION_NOTES.md)
+- [`notes/DEFERRED_ITEMS.md`](notes/DEFERRED_ITEMS.md)
+- [`notes/KNOWN_RISKS.md`](notes/KNOWN_RISKS.md)
+- [`notes/FOLLOW_UPS.md`](notes/FOLLOW_UPS.md)
+- [`notes/DECISION_BACKLOG.md`](notes/DECISION_BACKLOG.md)
 
 Any plan or guide may link to these registries, but should not create a second
 competing list for the same item. Keep one canonical note ID and link to it.
 
 When a note is resolved, update its status and closure evidence instead of deleting
 its history.
+
+## Where the method came from
+
+Outside prompts and methods were reviewed and folded into the canonical files
+above; none of them is an authority on its own.
+
+| Source | Adopted into | Not adopted |
+| --- | --- | --- |
+| Plan-mode interview prompt | `PLAN_CREATION_PROTOCOL.md`, `BUSINESS_DISCOVERY_INTERVIEW.md`: interview before plan/code, 3–6 questions per batch with the costliest ambiguity first, a short reflection per batch, concrete options with a recommended default, contradiction checks, explicit `ASSUMPTION`s, verified versions, and a spec summary before phases | ERP ownership, lifecycle, CQRS, tenant/company, and cross-platform rules stay project policy |
+| Terms-of-service investigation prompt | `EVIDENCE_AUDIT_STANDARD.md` and the commercial/terms review: investigate actual behavior → name the gaps code cannot answer → ask or assume explicitly → state only what evidence or a decision supports | Inventing fees, rights, restrictions, refund rules, or controls because templates usually have them |
+| Privacy-policy investigation prompt | `EVIDENCE_AUDIT_STANDARD.md`, the privacy review, and `PLAN_QUALITY_GATE.md`: inventory real personal-data flows, storage, telemetry, third parties, and user controls; separate implemented from desired controls; surface retention/jurisdiction/legal-entity gaps | Claiming a safeguard the implementation lacks; final legal text still needs legal review |
+| "Design Prompts" document | Treat a prepared UI as one cohesive design-system input with complete journeys and states; accept references from Docs, Figma, images, or prototypes; map them to existing shared components first | Example-specific colors, radii, effects, pricing, social features, or providers; any mockup behavior that conflicts with verified rules, permissions, accessibility, RTL, or architecture |
+
+For a new external prompt: extract the useful invariant, compare it with the
+current method, drop what conflicts with project constraints, adapt the rest
+into the canonical file, add an automated check when the rule is mechanical,
+and add a row to this table. The result stays one planning method.
+

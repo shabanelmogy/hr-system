@@ -7,7 +7,7 @@ using MapsterMapper;
 namespace ErpSystem.Modules.HR.Infrastructure.Features.Attendance.Devices.Persistence;
 
 /// <summary>Scoped persistence questions only. CQRS handlers own mutations, audit and scheduling.</summary>
-public sealed class AttendanceDeviceStore(ApplicationDbContext context, IMapper mapper)
+public sealed class AttendanceDeviceStore(HrDbContext context, IMapper mapper)
     : IAttendanceDeviceReadStore, IAttendanceDeviceWriteStore
 {
     public Task<AttendanceDevice?> FindAsync(int id, CancellationToken ct) =>

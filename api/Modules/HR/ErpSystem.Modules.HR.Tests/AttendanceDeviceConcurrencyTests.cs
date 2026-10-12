@@ -14,10 +14,10 @@ public sealed class AttendanceDeviceConcurrencyTests
     [Fact]
     public void ApplyRowVersion_UsesClientTokenAndForcesDeviceUpdate()
     {
-        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+        var options = new DbContextOptionsBuilder<HrDbContext>()
             .UseInMemoryDatabase(Guid.NewGuid().ToString("N"))
             .Options;
-        using var context = new ApplicationDbContext(options, new TestActor(), TimeProvider.System);
+        using var context = new HrDbContext(options, new TestActor(), TimeProvider.System);
         var device = new AttendanceDevice
         {
             Id = 7,

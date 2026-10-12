@@ -9,7 +9,7 @@ using ErpSystem.Modules.HR.Domain.WorkforcePlanning.Enums;
 namespace ErpSystem.Modules.HR.Infrastructure.Features.WorkforcePlanning.Persistence;
 
 public sealed class WorkforceBudgetReadStore(
-    ApplicationDbContext context,
+    HrDbContext context,
     IFiscalYearPlanningSource fiscalYears,
     ICurrentActor currentActor) : IWorkforceBudgetReadStore
 {
@@ -279,7 +279,7 @@ public sealed class WorkforceBudgetReadStore(
 }
 
 public sealed class WorkforceBudgetWriteStore(
-    ApplicationDbContext context,
+    HrDbContext context,
     IFiscalYearPlanningSource fiscalYears,
     ICurrentActor currentActor) : IWorkforceBudgetWriteStore
 {

@@ -79,7 +79,7 @@ existing-system review, implementation order, and Definition of Done.
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
 | fiscal-years-master | 3 | `258121a15c42bd254f087460a281f57839ee2f56a36f373905ca0c952ed6cbe9` |
-| fiscal-years-master | 4 | `ae8155eb0f3e367113ca06829c8dc5a977d40f300ab07eac4bc4c0d34b923075` |
+| fiscal-years-master | 4 | `ebd6bd0e230a0825320377a85a619565c99d08381d2c12f4ab5990478f8df4f3` |
 | fiscal-years-master | 6 | `225416faf8af3c0eb0b46137e7224277e9ffe1f40b17bd0395016d24ec503d41` |
 | fiscal-years-api | 1 | `c5cd5261f849189a2749a31cd78e70e9245714e5d8c28b7f8dacb8285b23b92c` |
 | fiscal-years-api | 2 | `ae653c64f50a4999b622bc97571430b7282dbbbb2cdd5b0f5dc71b259634f73a` |

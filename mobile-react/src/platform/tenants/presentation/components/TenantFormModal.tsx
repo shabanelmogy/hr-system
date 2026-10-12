@@ -25,6 +25,7 @@ import {
   AppTextField,
   AppText,
 } from '@/src/shared/components';
+import { getModuleLabel } from '@/src/core/localization/module-labels';
 
 const statusIcons = {
   free: 'gift-outline',
@@ -114,7 +115,7 @@ export function TenantFormModal({
               return (
                 <View key={module.code} style={styles.entitlementCard}>
                   <AppSwitchField
-                    description={module.code === 'hr' ? t('modules.hr') : module.code === 'acc' ? t('modules.accounting') : module.name}
+                    description={getModuleLabel(module.code, t)}
                     disabled={submitting}
                     icon="apps-outline"
                     label={module.code.toUpperCase()}

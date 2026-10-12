@@ -25,14 +25,14 @@
 
 | ID | Requirement | Source | API | Web | Mobile | Status |
 | --- | --- | --- | --- | --- | --- | --- |
-| R-01 | Manage multiple enabled/disabled devices with an explicit provider | `HR-CONNECTION-ONLY-PROMPT.md` | Required | Required | Deferred | Open |
-| R-02 | Protect write-only credentials in the backend | `HR-CONNECTION-ONLY-PROMPT.md` | Required | Credential update form only | Deferred | Open |
-| R-03 | Provider catalog, Connector health, safe single-host detection, and connection test | `HR-CONNECTION-ONLY-PROMPT.md` | Required | Required | Deferred | Open |
-| R-04 | Pull and store raw users and attendance without attendance judgments | `HR-CONNECTION-ONLY-PROMPT.md` | Required | Required | Deferred | Open |
-| R-05 | Server filtering/paging for users, punches, and pull runs | `HR-CONNECTION-ONLY-PROMPT.md` | Required | Required | Deferred | Open |
-| R-06 | Company isolation, permission separation, audit, timeout, cancellation, and SSRF controls | `HR-CONNECTION-ONLY-PROMPT.md` | Required | Required guards | Deferred | Open |
-| R-07 | One documented development command and Windows companion deployment guidance | `HR-CONNECTION-ONLY-PROMPT.md` | Required | N/A | N/A | Open |
-| R-08 | Fake-driver and contract tests without hardware in CI | `HR-CONNECTION-ONLY-PROMPT.md` | Required | Required stale-selection test | Deferred | Open |
+| R-01 | Manage multiple enabled/disabled devices with an explicit provider | [`SOURCE-REQUEST_AR.md`](SOURCE-REQUEST_AR.md) | Required | Required | Deferred | Open |
+| R-02 | Protect write-only credentials in the backend | [`SOURCE-REQUEST_AR.md`](SOURCE-REQUEST_AR.md) | Required | Credential update form only | Deferred | Open |
+| R-03 | Provider catalog, Connector health, safe single-host detection, and connection test | [`SOURCE-REQUEST_AR.md`](SOURCE-REQUEST_AR.md) | Required | Required | Deferred | Open |
+| R-04 | Pull and store raw users and attendance without attendance judgments | [`SOURCE-REQUEST_AR.md`](SOURCE-REQUEST_AR.md) | Required | Required | Deferred | Open |
+| R-05 | Server filtering/paging for users, punches, and pull runs | [`SOURCE-REQUEST_AR.md`](SOURCE-REQUEST_AR.md) | Required | Required | Deferred | Open |
+| R-06 | Company isolation, permission separation, audit, timeout, cancellation, and SSRF controls | [`SOURCE-REQUEST_AR.md`](SOURCE-REQUEST_AR.md) | Required | Required guards | Deferred | Open |
+| R-07 | One documented development command and Windows companion deployment guidance | [`SOURCE-REQUEST_AR.md`](SOURCE-REQUEST_AR.md) | Required | N/A | N/A | Open |
+| R-08 | Fake-driver and contract tests without hardware in CI | [`SOURCE-REQUEST_AR.md`](SOURCE-REQUEST_AR.md) | Required | Required stale-selection test | Deferred | Open |
 
 ## Frozen ownership decision
 
@@ -65,8 +65,8 @@ authorization are separate Organizational Structure work.
 | --- | --- | --- | --- |
 | E-01 | Current HR CQRS baseline is Countries | `api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Presentation/Features/GeographicalInformation/Countries/V1/CountriesController.cs` | Source inspection |
 | E-02 | Trusted tenant/company scope is available | `api/Modules/HR/ErpSystem.Modules.HR.Application/Abstractions/Authentication/ICurrentActor.cs` | Source inspection |
-| E-03 | EF globally filters company-owned entities | `api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Persistence/ApplicationDbContext.cs::ConfigureCompanyEntity` | Source inspection |
-| E-04 | Branch is persisted and device selection is scope-validated | `ApplicationDbContext.cs`, `BranchConfiguration.cs`, `AttendanceDeviceConfiguration.cs` | Migration and source inspection |
+| E-03 | EF globally filters company-owned entities | `api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Persistence/HrDbContext.cs::ConfigureCompanyEntity` | Source inspection |
+| E-04 | Branch is persisted and device selection is scope-validated | `HrDbContext.cs`, `BranchConfiguration.cs`, `AttendanceDeviceConfiguration.cs` | Migration and source inspection |
 | E-05 | Only ZKTeco COM is a functioning source provider | `G:/test/ZK-READER/connector/Services/DeviceDriverRegistry.cs` | Source inspection |
 | E-06 | ZKTeco requires an x86 Windows companion | `G:/test/ZK-READER/connector/ZkConnector.csproj` | Source inspection |
 | E-07 | Existing reusable web server Grid is product-owned | `web-next/src/shared/components/data-grid/core/MyDataGrid.tsx` | Source inspection |

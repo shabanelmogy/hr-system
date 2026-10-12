@@ -246,12 +246,12 @@ public sealed class RecruitmentCqrsFoundationTests
         Assert.Equal(typeof(ISender), parameter.ParameterType);
     }
 
-    private static ApplicationDbContext CreateContext(string databaseName, ICurrentActor actor)
+    private static HrDbContext CreateContext(string databaseName, ICurrentActor actor)
     {
-        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+        var options = new DbContextOptionsBuilder<HrDbContext>()
             .UseInMemoryDatabase(databaseName)
             .Options;
-        return new ApplicationDbContext(options, actor, TimeProvider.System);
+        return new HrDbContext(options, actor, TimeProvider.System);
     }
 
     private static TypeAdapterConfig CreateRecruitmentMappingConfig()

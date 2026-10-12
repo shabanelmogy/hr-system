@@ -26,7 +26,7 @@
 
 الأساس الموجود جيد ويشمل:
 
-- عزل بيانات `Tenant` و`Company` في `ApplicationDbContext`.
+- عزل بيانات `Tenant` و`Company` في `HrDbContext`.
 - Tenant lifecycle يدعم الإنشاء والأرشفة والاستعادة.
 - Subscription status وseat limits وread-only mode عند انتهاء الاشتراك.
 - RBAC وpermissions وجلسات قابلة للإلغاء وrefresh-token rotation.
@@ -36,7 +36,7 @@
 
 أهم ملفات الأساس الحالي:
 
-- `api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Persistence/ApplicationDbContext.cs`
+- `api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Persistence/HrDbContext.cs`
 - `api/Modules/HR/ErpSystem.Modules.HR.Domain/Tenancy/Entities/Tenant.cs`
 - `api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Dependencies/AuthenticationService.cs`
 - `api/ErpSystem.Api/Program.cs`
@@ -213,7 +213,7 @@ hosts/CORS غير آمن، أو secrets placeholder، أو startup migrations/se
 
 الدليل:
 
-- `api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Persistence/ApplicationDbContext.cs`
+- `api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Persistence/HrDbContext.cs`
 - `api/Modules/HR/ErpSystem.Modules.HR.Domain/Employees/Entities/Employee.cs`
 - `api/Modules/HR/ErpSystem.Modules.HR.Domain/OrganizationalStructure/Entities/Department.cs`
 - `api/Modules/HR/ErpSystem.Modules.HR.Domain/OrganizationalStructure/Entities/Position.cs`

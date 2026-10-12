@@ -1,5 +1,5 @@
 import { createTheme } from "@mui/material/styles";
-import { moduleColors } from "@app/tokens";
+import { moduleColors, themePaletteOrder } from "@app/tokens";
 import { describe, expect, it } from "vitest";
 import { getDesignTokens } from "@/theme/theme";
 import { resolveModuleAccent, resolveSequenceAccent } from "./moduleAccents";
@@ -11,9 +11,19 @@ describe("resolveModuleAccent", () => {
     expect(resolveModuleAccent("hr", green)).toBe(moduleColors.green.light.hr);
     expect(resolveModuleAccent("accounting", orangeDark)).toBe(moduleColors.orange.dark.accounting);
 
-    const modules = ["hr", "accounting", "crm", "referenceData", "reporting"] as const;
+    const modules = ["referenceData", "hr", "accounting", "crm", "reporting"] as const;
     const colors = modules.map((module) => resolveModuleAccent(module, green));
     expect(new Set(colors).size).toBe(modules.length);
+  });
+
+  it("gives General Data (not HR) the palette primary in every palette and mode", () => {
+    for (const palette of themePaletteOrder) {
+      for (const mode of ["light", "dark"] as const) {
+        const theme = createTheme(getDesignTokens(mode, "ltr", palette));
+        expect(resolveModuleAccent("referenceData", theme)).toBe(theme.palette.primary.main);
+        expect(resolveModuleAccent("hr", theme)).not.toBe(theme.palette.primary.main);
+      }
+    }
   });
 
   it("uses the muted color for platform entries and passes other colors through", () => {

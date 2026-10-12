@@ -21,12 +21,11 @@ requirements.
 | `api/ErpSystem.Api/` | Active | ERP backend API host |
 | `web-next/` | Canonical | Supported frontend and deployment target |
 | `mobile-react/` | Active | Supported Expo/React Native mobile client |
-| `web/` | Legacy | Temporary migration/reference copy; scheduled for removal |
+| `api/ErpSystem.AttendanceConnector/` | Active (Windows companion) | Local attendance-device connector (`net10.0-windows`, x86 COM driver). Run with `scripts/Start-AttendanceDevelopment.ps1`; kept outside `ErpSystem.sln` because it builds only on Windows x86 |
+| `packages/tokens/` | Active | Shared design tokens for web and mobile |
 
 New browser features target `web-next/`; new mobile features target
 `mobile-react/`. Shared business and HTTP contracts remain owned by the API.
-
-Do not add product changes to `web/`. It may be changed only when work is required to migrate remaining behavior to `web-next/` or remove the legacy application. Before deleting it, verify that any still-required behavior and assets have been migrated.
 
 ## API And Frontend Relationship
 

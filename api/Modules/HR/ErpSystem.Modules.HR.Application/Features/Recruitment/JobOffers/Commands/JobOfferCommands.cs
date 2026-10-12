@@ -1,3 +1,4 @@
+using ErpSystem.Modules.HR.Application.Abstractions.Persistence;
 using ErpSystem.BuildingBlocks.Application.Abstractions.Messaging;
 using ErpSystem.BuildingBlocks.Application.Abstractions.Persistence;
 using ErpSystem.BuildingBlocks.Context.Authentication;
@@ -29,7 +30,7 @@ public sealed record DeclineJobOfferCommand(int Id, string Reason) : ICommand<Re
 public sealed class CreateJobOfferCommandHandler(
     IJobOfferRepository repository,
     IJobOfferReadStore readStore,
-    IUnitOfWork unitOfWork,
+    IHrUnitOfWork unitOfWork,
     ICurrentActor actor,
     IAccountingCurrencyCatalog currencyCatalog,
     TimeProvider clock)
@@ -96,7 +97,7 @@ public sealed class CreateJobOfferCommandHandler(
 public sealed class SubmitJobOfferCommandHandler(
     IJobOfferRepository repository,
     IJobOfferReadStore readStore,
-    IUnitOfWork unitOfWork,
+    IHrUnitOfWork unitOfWork,
     ICurrentActor actor,
     IFiscalYearPlanningSource fiscalYears,
     TimeProvider clock)
@@ -180,7 +181,7 @@ public sealed class SubmitJobOfferCommandHandler(
 public sealed class ApproveJobOfferCommandHandler(
     IJobOfferRepository repository,
     IJobOfferReadStore readStore,
-    IUnitOfWork unitOfWork,
+    IHrUnitOfWork unitOfWork,
     ICurrentActor actor,
     TimeProvider clock)
     : ICommandHandler<ApproveJobOfferCommand, Result<JobOfferDto>>
@@ -269,7 +270,7 @@ public sealed class ApproveJobOfferCommandHandler(
 public sealed class RejectJobOfferCommandHandler(
     IJobOfferRepository repository,
     IJobOfferReadStore readStore,
-    IUnitOfWork unitOfWork,
+    IHrUnitOfWork unitOfWork,
     ICurrentActor actor,
     TimeProvider clock)
     : ICommandHandler<RejectJobOfferCommand, Result<JobOfferDto>>
@@ -309,7 +310,7 @@ public sealed class IssueJobOfferCommandHandler(
     IJobOfferReadStore readStore,
     IRecruitmentActorEmployeeSource actorEmployees,
     IRecruitmentSettingsRepository settingsRepository,
-    IUnitOfWork unitOfWork,
+    IHrUnitOfWork unitOfWork,
     ICurrentActor actor,
     TimeProvider clock)
     : ICommandHandler<IssueJobOfferCommand, Result<JobOfferDto>>
@@ -368,7 +369,7 @@ public sealed class IssueJobOfferCommandHandler(
 public sealed class AcceptJobOfferCommandHandler(
     IJobOfferRepository repository,
     IJobOfferReadStore readStore,
-    IUnitOfWork unitOfWork,
+    IHrUnitOfWork unitOfWork,
     ICurrentActor actor,
     TimeProvider clock)
     : ICommandHandler<AcceptJobOfferCommand, Result<JobOfferDto>>
@@ -423,7 +424,7 @@ public sealed class AcceptJobOfferCommandHandler(
 public sealed class DeclineJobOfferCommandHandler(
     IJobOfferRepository repository,
     IJobOfferReadStore readStore,
-    IUnitOfWork unitOfWork,
+    IHrUnitOfWork unitOfWork,
     ICurrentActor actor,
     TimeProvider clock)
     : ICommandHandler<DeclineJobOfferCommand, Result<JobOfferDto>>

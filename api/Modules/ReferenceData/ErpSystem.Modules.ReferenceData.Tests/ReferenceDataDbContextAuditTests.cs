@@ -1,3 +1,4 @@
+using ErpSystem.Modules.ReferenceData.Application.Abstractions.Persistence;
 using ErpSystem.BuildingBlocks.Context.Authentication;
 using ErpSystem.BuildingBlocks.Application.Abstractions.Persistence;
 using ErpSystem.Modules.ReferenceData.Domain.GeographicalInformation.Countries.Entities;
@@ -51,7 +52,7 @@ public sealed class ReferenceDataDbContextAuditTests
     {
         using var context = CreateContext("actor-1");
 
-        Assert.IsAssignableFrom<IUnitOfWork>(context);
+        Assert.IsAssignableFrom<IReferenceDataUnitOfWork>(context);
     }
 
     [Fact]

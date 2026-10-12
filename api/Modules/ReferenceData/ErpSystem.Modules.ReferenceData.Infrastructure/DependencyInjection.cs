@@ -1,3 +1,4 @@
+using ErpSystem.Modules.ReferenceData.Application.Abstractions.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -45,7 +46,7 @@ public static class DependencyInjection
         services.TryAddSingleton(TimeProvider.System);
         services.AddScoped<IReferenceDataCompanyGeographySource, ReferenceDataCompanyGeographySource>();
         services.AddScoped<IReferenceDataReportingSource, ReferenceDataReportingSource>();
-        services.AddScoped<IUnitOfWork>(provider => provider.GetRequiredService<ReferenceDataDbContext>());
+        services.AddScoped<IReferenceDataUnitOfWork>(provider => provider.GetRequiredService<ReferenceDataDbContext>());
         services.AddScoped<IAddressReadStore, AddressReadStore>();
         services.AddScoped<IAddressWriteStore, AddressWriteStore>();
         services.AddScoped<IAddressAuditTrail, AddressAuditTrail>();

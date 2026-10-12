@@ -40,12 +40,12 @@ namespace ErpSystem.Modules.HR.Tests;
 
 public sealed class RecruitmentLifecycleTests
 {
-    private static ApplicationDbContext CreateInMemoryDbContext(string dbName, ICurrentActor actor)
+    private static HrDbContext CreateInMemoryDbContext(string dbName, ICurrentActor actor)
     {
-        var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+        var options = new DbContextOptionsBuilder<HrDbContext>()
             .UseInMemoryDatabase(dbName)
             .Options;
-        return new ApplicationDbContext(options, actor, TimeProvider.System);
+        return new HrDbContext(options, actor, TimeProvider.System);
     }
 
     private sealed record TestCurrentActor(
@@ -123,7 +123,7 @@ public sealed class RecruitmentLifecycleTests
     }
 
     private static async Task<Employee> SeedActorEmployeeAsync(
-        ApplicationDbContext context,
+        HrDbContext context,
         TestCurrentActor actor)
     {
         var employee = new Employee(
@@ -774,7 +774,7 @@ public sealed class RecruitmentLifecycleTests
         Assert.True(successResult.Value.IsBudgeted);
     }
 
-    private sealed class RecruitmentHarness(ApplicationDbContext context, ICurrentActor actor)
+    private sealed class RecruitmentHarness(HrDbContext context, ICurrentActor actor)
     {
         private static readonly TimeProvider Clock = TimeProvider.System;
         private static readonly TypeAdapterConfig MappingConfig = CreateMappingConfig();

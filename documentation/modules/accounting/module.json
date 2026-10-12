@@ -4,7 +4,9 @@
   "databaseSchema": "acc",
   "version": "1.0.0",
   "requiredModuleDependencies": [],
-  "optionalModuleDependencies": ["contacts"],
+  "optionalModuleDependencies": [
+    "contacts"
+  ],
   "isUserVisible": true,
   "allowsTenantEntitlement": true,
   "lifecycle": "active",
@@ -31,6 +33,6 @@
     "mobileReact": "documentation/modules/accounting/mobile-react/README.md",
     "features": "documentation/modules/accounting/features/README.md",
     "phases": "documentation/modules/accounting/phases/README.md",
-    "phaseSourceAr": "documentation/modules/accounting/phases/SOURCE-PLAN_AR.md"
+    "phaseSourceAr": "documentation/modules/accounting/SOURCE-PLAN_AR.md"
   }
 }

@@ -1,3 +1,4 @@
+using ErpSystem.Modules.Reporting.Application.Abstractions.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,6 +24,11 @@ public static class DependencyInjection
         this IServiceCollection services,
         IConfiguration configuration)
     {
+        // Reporting is the only Syncfusion consumer (PDF export), so it registers the license.
+        var syncfusionLicense = configuration["Syncfusion:LicenseKey"];
+        if (!string.IsNullOrWhiteSpace(syncfusionLicense))
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(syncfusionLicense);
+
         var connectionString = configuration.GetConnectionString("Reporting")
             ?? configuration.GetConnectionString("DefaultConnection")
             ?? throw new InvalidOperationException("Connection string 'Reporting' or 'DefaultConnection' not found.");
@@ -32,7 +38,7 @@ public static class DependencyInjection
                 connectionString,
                 sql => sql.MigrationsAssembly(typeof(DependencyInjection).Assembly.FullName)
                     .MigrationsHistoryTable("__EFMigrationsHistory", ReportingDbContext.Schema)));
-        services.AddScoped<IUnitOfWork>(provider => provider.GetRequiredService<ReportingDbContext>());
+        services.AddScoped<IReportingUnitOfWork>(provider => provider.GetRequiredService<ReportingDbContext>());
 
         services.AddScoped<ICrystalReportStore, CrystalReportStore>();
         var managedCrystalContracts = ManagedCrystalReportContractRegistry.LoadEmbedded();

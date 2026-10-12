@@ -1,3 +1,4 @@
+using ErpSystem.Modules.HR.Application.Abstractions.Persistence;
 using ErpSystem.BuildingBlocks.Context.Authentication;
 using ErpSystem.BuildingBlocks.Application.Abstractions.Messaging;
 using ErpSystem.Modules.HR.Application.Features.Attendance.Devices.Contracts;
@@ -18,7 +19,7 @@ public sealed record TestAttendanceDeviceCommand(int Id) : ICommand<Result<Devic
 public sealed record StartAttendanceDevicePullCommand(int Id, string OperationType, StartPullRequest Request) : ICommand<Result<PullRunResponse>>;
 
 public sealed class CreateAttendanceDeviceCommandHandler(
-    IAttendanceDeviceWriteStore store, IAttendanceDeviceReadStore reads, IUnitOfWork unitOfWork,
+    IAttendanceDeviceWriteStore store, IAttendanceDeviceReadStore reads, IHrUnitOfWork unitOfWork,
     IAttendanceNetworkPolicy network, AttendanceDeviceEffects effects, AttendanceDeviceErrors errors, IMapper mapper)
     : ICommandHandler<CreateAttendanceDeviceCommand, Result<AttendanceDeviceResponse>>
 {
@@ -47,7 +48,7 @@ public sealed class CreateAttendanceDeviceCommandHandler(
     }
 }
 public sealed class UpdateAttendanceDeviceCommandHandler(
-    IAttendanceDeviceWriteStore store, IAttendanceDeviceReadStore reads, IUnitOfWork unitOfWork,
+    IAttendanceDeviceWriteStore store, IAttendanceDeviceReadStore reads, IHrUnitOfWork unitOfWork,
     IAttendanceNetworkPolicy network, AttendanceDeviceEffects effects, AttendanceDeviceErrors errors, IMapper mapper)
     : ICommandHandler<UpdateAttendanceDeviceCommand, Result<AttendanceDeviceResponse>>
 {
@@ -78,7 +79,7 @@ public sealed class UpdateAttendanceDeviceCommandHandler(
     }
 }
 public sealed class CreateAttendanceAgentCommandHandler(
-    IAttendanceDeviceWriteStore store, IUnitOfWork unitOfWork, AttendanceDeviceEffects effects, AttendanceDeviceErrors errors,
+    IAttendanceDeviceWriteStore store, IHrUnitOfWork unitOfWork, AttendanceDeviceEffects effects, AttendanceDeviceErrors errors,
     IAttendanceAgentInstallationSettings installationSettings,
     IAttendanceAgentCredentialGenerator credentialGenerator)
     : ICommandHandler<CreateAttendanceAgentCommand, Result<CreatedAttendanceAgentResponse>>
@@ -113,7 +114,7 @@ public sealed class CreateAttendanceAgentCommandHandler(
 
 }
 public sealed class SetAttendanceDeviceEnabledCommandHandler(
-    IAttendanceDeviceWriteStore store, IUnitOfWork unitOfWork, AttendanceDeviceEffects effects, AttendanceDeviceErrors errors)
+    IAttendanceDeviceWriteStore store, IHrUnitOfWork unitOfWork, AttendanceDeviceEffects effects, AttendanceDeviceErrors errors)
     : ICommandHandler<SetAttendanceDeviceEnabledCommand, Result>
 {
     public async Task<Result> Handle(SetAttendanceDeviceEnabledCommand request, CancellationToken ct)
@@ -135,7 +136,7 @@ public sealed class SetAttendanceDeviceEnabledCommandHandler(
     }
 }
 public sealed class UpdateAttendanceDeviceCredentialsCommandHandler(
-    IAttendanceDeviceWriteStore store, IUnitOfWork unitOfWork, IAttendanceCredentialProtector protector,
+    IAttendanceDeviceWriteStore store, IHrUnitOfWork unitOfWork, IAttendanceCredentialProtector protector,
     AttendanceDeviceEffects effects, AttendanceDeviceErrors errors)
     : ICommandHandler<UpdateAttendanceDeviceCredentialsCommand, Result>
 {
@@ -159,7 +160,7 @@ public sealed class UpdateAttendanceDeviceCredentialsCommandHandler(
     }
 }
 public sealed class DetectAttendanceDeviceCommandHandler(
-    IAttendanceConnectorClient connector, IAttendanceNetworkPolicy network, IUnitOfWork unitOfWork,
+    IAttendanceConnectorClient connector, IAttendanceNetworkPolicy network, IHrUnitOfWork unitOfWork,
     AttendanceDeviceEffects effects, AttendanceDeviceErrors errors)
     : ICommandHandler<DetectAttendanceDeviceCommand, Result<DetectDeviceResponse>>
 {
@@ -178,7 +179,7 @@ public sealed class DetectAttendanceDeviceCommandHandler(
 }
 public sealed class TestAttendanceDeviceCommandHandler(
     IAttendanceDeviceWriteStore store, IAttendanceConnectorClient connector, IAttendanceNetworkPolicy network,
-    IAttendanceCredentialProtector protector, IUnitOfWork unitOfWork, TimeProvider clock,
+    IAttendanceCredentialProtector protector, IHrUnitOfWork unitOfWork, TimeProvider clock,
     AttendanceDeviceEffects effects, AttendanceDeviceErrors errors)
     : ICommandHandler<TestAttendanceDeviceCommand, Result<DeviceTestResponse>>
 {
@@ -218,7 +219,7 @@ public sealed class TestAttendanceDeviceCommandHandler(
     }
 }
 public sealed class StartAttendanceDevicePullCommandHandler(
-    IAttendanceDeviceWriteStore store, IUnitOfWork unitOfWork, IAttendancePullScheduler scheduler,
+    IAttendanceDeviceWriteStore store, IHrUnitOfWork unitOfWork, IAttendancePullScheduler scheduler,
     IAttendanceNetworkPolicy network, ICurrentActor actor, TimeProvider clock,
     AttendanceDeviceEffects effects, AttendanceDeviceErrors errors, IMapper mapper,
     ILogger<StartAttendanceDevicePullCommandHandler> logger)

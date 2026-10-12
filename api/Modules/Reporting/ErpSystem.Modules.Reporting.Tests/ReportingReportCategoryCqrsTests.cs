@@ -1,3 +1,4 @@
+using ErpSystem.Modules.Reporting.Application.Abstractions.Persistence;
 using System.Reflection;
 using ErpSystem.BuildingBlocks.Application.Abstractions.Persistence;
 using ErpSystem.BuildingBlocks.Application.Common.Realtime;
@@ -40,7 +41,7 @@ public sealed class ReportingReportCategoryCqrsTests
         using var scope = provider.CreateScope();
 
         var context = scope.ServiceProvider.GetRequiredService<ReportingDbContext>();
-        var unitOfWork = scope.ServiceProvider.GetRequiredService<IUnitOfWork>();
+        var unitOfWork = scope.ServiceProvider.GetRequiredService<IReportingUnitOfWork>();
 
         Assert.Same(context, unitOfWork);
     }

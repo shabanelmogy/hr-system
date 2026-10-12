@@ -1,3 +1,4 @@
+using ErpSystem.Modules.HR.Application.Abstractions.Persistence;
 using ErpSystem.BuildingBlocks.Context.Authentication;
 using ErpSystem.BuildingBlocks.Application.Abstractions.Persistence;
 using ErpSystem.BuildingBlocks.Application.Common.Paginations;
@@ -113,7 +114,7 @@ public sealed class WorkforcePlanApproveHandlerTests
             throw new NotSupportedException();
     }
 
-    private sealed class RecordingUnitOfWork : IUnitOfWork
+    private sealed class RecordingUnitOfWork : IHrUnitOfWork
     {
         public async Task<TResult> ExecuteAtomicallyAsync<TResult>(
             IReadOnlyCollection<string> lockResources,

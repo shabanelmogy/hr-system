@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using ErpSystem.Modules.Reporting.Application.Abstractions.Persistence;
+using System.Reflection;
 using ErpSystem.BuildingBlocks.Application.Abstractions.Persistence;
 using ErpSystem.BuildingBlocks.Context.Authentication;
 using ErpSystem.BuildingBlocks.Domain.Abstractions;
@@ -17,7 +18,7 @@ namespace ErpSystem.Modules.Reporting.Infrastructure;
 /// audit metadata and append-only reporting history are enforced here so they do
 /// not depend on another bounded context's persistence pipeline.
 /// </summary>
-public sealed class ReportingDbContext : DbContext, IUnitOfWork
+public sealed class ReportingDbContext : DbContext, IReportingUnitOfWork
 {
     public const string Schema = "rpt";
 

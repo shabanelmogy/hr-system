@@ -78,7 +78,7 @@ on the original plan alone.
 | accounting-ledger-setup-master | 8 | `4b12f431b5a5534b82d13f0645a56b7f91b345e4a9338b9513e0958389746876` |
 | accounting-ledger-setup-master | 9 | `7054a939e6cc2faa4f8f97e8271de948ae6139f7049594b236d8d1c430f81d6e` |
 | accounting-ledger-setup-master | 10 | `b4085e540c58462cf0c23318c9f23ab60d94448d3b0dc572006266170445f30d` |
-| accounting-ledger-setup-api | 10 | `c511792f4de9f865da515ffa7dfd97555512ead0b5f30bdffe33e991971a9f8d` |
+| accounting-ledger-setup-api | 10 | `504f7b131cf44a4af1911fcc8a0e894a4215b5385128fb2702a0b63b66a80943` |
 | accounting-ledger-setup-api | 11 | `bacf9dc76718244f38220ef882f14c48d62caeba700a4ce2b78f979a641037fd` |
 | accounting-ledger-setup-web | 12 | `e413f46c08ba02958ed38359eef8c959607ed7cf151ea359ea3678a143ddc1e2` |
 | accounting-ledger-setup-web | 13 | `2dbb41708fc772c97f51356c9903a258148eff82d8f0eca2499e8fc4c3d081c1` |

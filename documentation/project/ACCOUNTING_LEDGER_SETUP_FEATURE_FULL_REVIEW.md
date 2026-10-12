@@ -93,8 +93,8 @@ trusted actor, never request scope fields.
 | ExchangeRate | create/read/update | N/A — effective/versioned history | paged active effective series | shares currency/FX resources |
 | AccountMapping / PostingProfile | create/read/update | N/A — effective dating/versioning | paged effective list/resolve preview | shares account/book/determination resources |
 
-This matrix is a mandatory review gate. Future module scaffolds receive the same
-matrix through `FEATURE-QUALITY-GATE.md`, and each blank cell blocks completion.
+This matrix is a mandatory review gate. Every future feature uses the same
+matrix from `API_FEATURE_DEVELOPMENT_WORKFLOW.md` §17, and each blank cell blocks completion.
 
 Archived master-data business keys stay reserved so a historical accounting
 identity cannot be reused by a different record.

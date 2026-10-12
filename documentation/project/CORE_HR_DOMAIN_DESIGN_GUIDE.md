@@ -9,7 +9,7 @@ tenant/company/branch model and CQRS architecture.
 This document is the domain decision record for the next Core HR features. It is
 the source of truth before adding employee, department, job, assignment, or
 contract tables. The existing employee and organizational classes are draft
-classes and are currently ignored by `ApplicationDbContext`; they may be
+classes and are currently ignored by `HrDbContext`; they may be
 refactored to this design before the first migration.
 
 ## 1. Decisions that are now closed
@@ -336,7 +336,7 @@ duplicate/relationship rules, permissions, and retry behavior before building UI
 ## 8. Implementation order
 
 1. Refactor the current draft classes to this model and remove their explicit
-   `ApplicationDbContext.Ignore(...)` entries only when each slice is ready.
+   `HrDbContext.Ignore(...)` entries only when each slice is ready.
 2. Implement Organization: Department -> Division -> JobTitle/JobLevel ->
    Position -> JobDescription, including indexes and hierarchy tests.
 3. Implement Person and company-scoped Employee master with list/detail,

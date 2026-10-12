@@ -21,15 +21,15 @@ record of an important deferred item.
 
 | File | Purpose |
 | --- | --- |
-| `PRODUCTION_NOTES.md` | Items that must be verified or performed in staging/Production. |
-| `DEFERRED_ITEMS.md` | Accepted work intentionally postponed. |
-| `KNOWN_RISKS.md` | Known risks, limitations, and operational concerns. |
-| `FOLLOW_UPS.md` | Non-blocking follow-up work that should be revisited. |
-| `DECISION_BACKLOG.md` | Product/architecture/business decisions intentionally left open. |
-| `API_NOTES.md` | API-focused index into canonical notes. |
-| `WEB_NOTES.md` | Web-focused index into canonical notes. |
-| `MOBILE_NOTES.md` | Mobile-focused index into canonical notes. |
-| `CROSS_PLATFORM_NOTES.md` | Coordinated API/Web/Mobile note index. |
+| [`PRODUCTION_NOTES.md`](PRODUCTION_NOTES.md) | Items that must be verified or performed in staging/Production. |
+| [`DEFERRED_ITEMS.md`](DEFERRED_ITEMS.md) | Accepted work intentionally postponed. |
+| [`KNOWN_RISKS.md`](KNOWN_RISKS.md) | Known risks, limitations, and operational concerns. |
+| [`FOLLOW_UPS.md`](FOLLOW_UPS.md) | Non-blocking follow-up work that should be revisited. |
+| [`DECISION_BACKLOG.md`](DECISION_BACKLOG.md) | Product/architecture/business decisions intentionally left open. |
+| [`API_NOTES.md`](API_NOTES.md) | API-focused index into canonical notes. |
+| [`WEB_NOTES.md`](WEB_NOTES.md) | Web-focused index into canonical notes. |
+| [`MOBILE_NOTES.md`](MOBILE_NOTES.md) | Mobile-focused index into canonical notes. |
+| [`CROSS_PLATFORM_NOTES.md`](CROSS_PLATFORM_NOTES.md) | Coordinated API/Web/Mobile note index. |
 
 ## Required fields
 
@@ -82,3 +82,20 @@ in isolation.
 
 The canonical detail lives in the type registry. `API_NOTES.md`, `WEB_NOTES.md`,
 `MOBILE_NOTES.md`, and `CROSS_PLATFORM_NOTES.md` are indexes only.
+
+## Moving scattered notes here
+
+When a guide or plan still holds a deferred, production-only, "revisit later",
+known-limitation, follow-up, or architecture/release TODO item, move it here:
+
+1. Create one stable ID in the right registry, keeping the original meaning.
+2. Record owner, status, and the reopen trigger, and link back to the source.
+3. Replace the long copy in the secondary document with the ID only when that
+   list is not itself part of a canonical contract.
+4. Never move Required current-release work to Deferred to tidy a roadmap, and
+   never mark a release blocker non-blocking without evidence or an explicit
+   product/architecture decision.
+
+A closed note keeps its row and adds the status (`Closed`/`Verified`), the date,
+the verification evidence, and the replacing plan/commit/guide when there is
+one. Completed notes are not deleted.

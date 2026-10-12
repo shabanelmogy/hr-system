@@ -11,7 +11,6 @@ namespace ErpSystem.Modules.Platform.Presentation.Tenancy;
 
 public sealed class TenantReadOnlyMiddleware(RequestDelegate next)
 {
-    private const string CorrelationItemKey = "HrManagementSystem.CorrelationId";
 
     private static readonly HashSet<string> ReadMethods =
         new(StringComparer.OrdinalIgnoreCase)
@@ -59,7 +58,7 @@ public sealed class TenantReadOnlyMiddleware(RequestDelegate next)
                     ["subscriptionStatus"] = tenantAccess.SubscriptionStatus,
                     ["subscriptionEndsOn"] = tenantAccess.SubscriptionEndsOn,
                     ["traceId"] = context.TraceIdentifier,
-                    ["correlationId"] = GetCorrelationId(context)
+                    ["correlationId"] = context.GetCorrelationId()
                 }
             },
             options: null,
@@ -75,9 +74,4 @@ public sealed class TenantReadOnlyMiddleware(RequestDelegate next)
         context.Request.Path.StartsWithSegments("/hubs") ||
         context.GetEndpoint()?.Metadata.GetMetadata<AllowAnonymousAttribute>() is not null ||
         context.GetEndpoint()?.Metadata.GetMetadata<AllowTenantReadOnlyAttribute>() is not null;
-
-    private static string GetCorrelationId(HttpContext context) =>
-        context.Items.TryGetValue(CorrelationItemKey, out var value) && value is string correlationId
-            ? correlationId
-            : context.TraceIdentifier;
 }

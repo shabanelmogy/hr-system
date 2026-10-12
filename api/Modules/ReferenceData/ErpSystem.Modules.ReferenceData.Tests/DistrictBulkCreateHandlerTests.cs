@@ -1,3 +1,4 @@
+using ErpSystem.Modules.ReferenceData.Application.Abstractions.Persistence;
 using ErpSystem.BuildingBlocks.Context.Authentication;
 using ErpSystem.BuildingBlocks.Application.Abstractions.Persistence;
 using ErpSystem.Modules.ReferenceData.Application.Features.GeographicalInformation;
@@ -135,7 +136,7 @@ public sealed class DistrictBulkCreateHandlerTests
 
     private static CreateDistrictsCommandHandler CreateHandler(
         IDistrictWriteStore store,
-        IUnitOfWork unitOfWork,
+        IReferenceDataUnitOfWork unitOfWork,
         IDistrictChangeScheduler scheduler) =>
         new(store, unitOfWork, scheduler, new TestCurrentActor(), CreateMapper(), CreateErrors());
 
@@ -179,7 +180,7 @@ public sealed class DistrictBulkCreateHandlerTests
         public Task<bool> HasActiveAddressesAsync(IReadOnlyCollection<int> districtIds, CancellationToken cancellationToken) => Task.FromResult(false);
     }
 
-    private sealed class RecordingUnitOfWork(List<string> lifecycle) : IUnitOfWork
+    private sealed class RecordingUnitOfWork(List<string> lifecycle) : IReferenceDataUnitOfWork
     {
         public List<IReadOnlyCollection<string>> AtomicLockResources { get; } = [];
 

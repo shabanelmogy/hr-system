@@ -17,11 +17,11 @@
 
 ### Planning evidence
 
-- Discovery: `DISCOVERY.md`
-- Current-system evidence: `EVIDENCE.md`
-- Approved pre-plan specification: `SPEC_SUMMARY.md`
-- Dependency/status roadmap: `IMPLEMENTATION-ROADMAP.md`
-- Decisions: `DECISIONS.md`
+- Discovery: [`DISCOVERY.md`](DISCOVERY.md)
+- Current-system evidence: [`EVIDENCE.md`](EVIDENCE.md)
+- Approved pre-plan specification: [`SPEC_SUMMARY.md`](SPEC_SUMMARY.md)
+- Dependency/status roadmap: [`IMPLEMENTATION-ROADMAP.md`](IMPLEMENTATION-ROADMAP.md)
+- Decisions: [`DECISIONS.md`](DECISIONS.md)
 
 The master plan owns the approved target. Current behavior claims remain traceable
 to `EVIDENCE.md`. The requester authorized continuation on 2026-09-27. The
@@ -497,11 +497,11 @@ See `DECISIONS.md` for the compact decision register.
 
 ### Planning authority and execution rule
 
-`PLAN.md` owns capability scope, ownership, business decisions and release
+[`PLAN.md`](PLAN.md) owns capability scope, ownership, business decisions and release
 boundaries. `IMPLEMENTATION-ROADMAP.md` is the single dependency/status authority.
 The roadmap owns the single `ACTIVE_FEATURE_STEP`. Before each implementation,
 create the selected child contract from
-`documentation/plans/FEATURE_DECOMPOSITION_TEMPLATE.md`, complete its UI Pattern
+[`documentation/plans/FEATURE_DECOMPOSITION_TEMPLATE.md`](../../FEATURE_DECOMPOSITION_TEMPLATE.md), complete its UI Pattern
 Gate and permission matrix, scaffold Phase 00, and activate exactly one feature.
 
 ### Feature Decomposition Gate
@@ -513,9 +513,9 @@ active.
 
 | Slice | Decision | Feature ID | Planned Screen/Workflow Contract | Boundary / independent acceptance |
 | --- | --- | --- | --- | --- |
-| Slice 1 — Managed Crystal Reporting Reliability | Decompose | `managed-crystal-contract-registry` | `documentation/plans/business/managed-crystal-reporting-reliability/decomposition/managed-crystal-contract-registry.md` | Canonical registry + Fiscal Years provider/runtime schema parity, no lifecycle/UI claim. |
-| Slice 1 — Managed Crystal Reporting Reliability | Decompose | `managed-crystal-template-validation` | `documentation/plans/business/managed-crystal-reporting-reliability/decomposition/managed-crystal-template-validation.md` | Entity-aware inspection, identity, validation state/fingerprint, migration and error taxonomy. |
-| Slice 1 — Managed Crystal Reporting Reliability | Decompose | `managed-crystal-manager-experience` | `documentation/plans/business/managed-crystal-reporting-reliability/decomposition/managed-crystal-manager-experience.md` | Web-only administration UI/API workflow; Mobile admin explicitly Excluded. |
+| Slice 1 — Managed Crystal Reporting Reliability | Decompose | `managed-crystal-contract-registry` | [`documentation/plans/business/managed-crystal-reporting-reliability/decomposition/managed-crystal-contract-registry.md`](decomposition/managed-crystal-contract-registry.md) | Canonical registry + Fiscal Years provider/runtime schema parity, no lifecycle/UI claim. |
+| Slice 1 — Managed Crystal Reporting Reliability | Decompose | `managed-crystal-template-validation` | [`documentation/plans/business/managed-crystal-reporting-reliability/decomposition/managed-crystal-template-validation.md`](decomposition/managed-crystal-template-validation.md) | Entity-aware inspection, identity, validation state/fingerprint, migration and error taxonomy. |
+| Slice 1 — Managed Crystal Reporting Reliability | Decompose | `managed-crystal-manager-experience` | [`documentation/plans/business/managed-crystal-reporting-reliability/decomposition/managed-crystal-manager-experience.md`](decomposition/managed-crystal-manager-experience.md) | Web-only administration UI/API workflow; Mobile admin explicitly Excluded. |
 | Slice 1 — Managed Crystal Reporting Reliability | Decompose | `fiscal-years-managed-crystal-report` | `decomposition/fiscal-years-managed-crystal-report.md` after Phase 3 | Fiscal Years AR/EN API/Web/actual-Mobile report journey and business acceptance. |
 | Slice 1 — Managed Crystal Reporting Reliability | Decompose | `managed-crystal-runtime-operations` | `decomposition/managed-crystal-runtime-operations.md` after Phase 4 | Runtime tests, packaging, readiness, capacity, cancellation, memory and diagnostics. |
 | Slice 1 — Managed Crystal Reporting Reliability | Decompose | `managed-crystal-security-hardening` | `decomposition/managed-crystal-security-hardening.md` after Phase 5 | Final security/config/transport/dependency/redaction release gate. |
@@ -591,8 +591,8 @@ operations, or security siblings until their roadmap gates permit it.
 
 ### Canonical documents to create/update during implementation
 
-- `documentation/project/CRYSTAL_REPORT_MANAGER_INTEGRATION_GUIDE.md`
-- `documentation/system/features/crystal-report-manager/CRYSTAL_REPORT_MANAGER-REVIEW-ARTIFACTS.md`
+- [`documentation/project/CRYSTAL_REPORT_MANAGER_INTEGRATION_GUIDE.md`](../../../project/CRYSTAL_REPORT_MANAGER_INTEGRATION_GUIDE.md)
+- [`documentation/system/features/crystal-report-manager/CRYSTAL_REPORT_MANAGER-REVIEW-ARTIFACTS.md`](../../../system/features/crystal-report-manager/CRYSTAL_REPORT_MANAGER-REVIEW-ARTIFACTS.md)
 - Final `required-files.json`, recipe registration and generated packets through
   the documented generator, never direct edits under `generated/`
 - Reporting module/API implementation profile and runtime deployment/runbook

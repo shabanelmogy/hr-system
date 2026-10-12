@@ -73,12 +73,6 @@ $repositoryPrefix = $repositoryRoot.TrimEnd([System.IO.Path]::DirectorySeparator
 if (-not $canonicalPlanPath.StartsWith($repositoryPrefix, [System.StringComparison]::OrdinalIgnoreCase)) {
     throw "Canonical plan path resolves outside the repository: $canonicalPlanRelativePath"
 }
-$archiveRoot = [System.IO.Path]::GetFullPath((Join-Path $repositoryRoot 'documentation/old files'))
-$archivePrefix = $archiveRoot.TrimEnd([System.IO.Path]::DirectorySeparatorChar) + [System.IO.Path]::DirectorySeparatorChar
-if ($canonicalPlanPath.Equals($archiveRoot, [System.StringComparison]::OrdinalIgnoreCase) -or
-    $canonicalPlanPath.StartsWith($archivePrefix, [System.StringComparison]::OrdinalIgnoreCase)) {
-    throw "PlanId '$PlanId' cannot use an archived canonical plan under documentation/old files."
-}
 if (-not (Test-Path -LiteralPath $canonicalPlanPath -PathType Leaf)) {
     throw "Canonical plan does not exist for PlanId '$PlanId': $canonicalPlanRelativePath"
 }

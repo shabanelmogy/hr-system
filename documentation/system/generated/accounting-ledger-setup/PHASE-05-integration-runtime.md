@@ -43,14 +43,14 @@ realtime, notification, localization, report, or Import integration is reachable
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| accounting-ledger-setup-master | 4 | `53f38a770f4b9c229d5f924b56a2be70be0db253054c0b998b0c21ec8c2ca0ca` |
+| accounting-ledger-setup-master | 4 | `06d973a1925b5145faf6d2df5b8b583d963a5253cb1287749dfac17411aa40c8` |
 | accounting-ledger-setup-master | 5 | `87f60e757fef7a4b41105347f7ce21ce3a142761a1508c3cbea45625d4ea7557` |
 | accounting-ledger-setup-master | 6 | `4c420eef9bb4f80999de2e4e4bebf23f4d9b3934746b134431e3cd97be170dbe` |
 | accounting-ledger-setup-master | 7 | `b92882805c347017f5b031c78910e2aee911d3c40803f8e830e62fefbcfde520` |
 | accounting-ledger-setup-master | 9 | `7054a939e6cc2faa4f8f97e8271de948ae6139f7049594b236d8d1c430f81d6e` |
 | accounting-ledger-setup-api | 8 | `41d4b1feca011b953fd8e9854d130b9845ec2a231d006bca531ba8ee5120bcb3` |
 | accounting-ledger-setup-api | 9 | `d29c661ae9da4a7c9386abb9bed6c06c8f0b2c2e7f6f0c5748960ee4a48d710c` |
-| accounting-ledger-setup-api | 10 | `c511792f4de9f865da515ffa7dfd97555512ead0b5f30bdffe33e991971a9f8d` |
+| accounting-ledger-setup-api | 10 | `504f7b131cf44a4af1911fcc8a0e894a4215b5385128fb2702a0b63b66a80943` |
 | accounting-ledger-setup-web | 8 | `685a2b7b584057016a5604aaabd9119f073dfe5af18c9edb020de5630782624a` |
 | accounting-ledger-setup-web | 10 | `0d95f05b0868ba0ea4d5606cfa5d95543bcfb0c4c9ae6a899dc7c2e3fb4a64d0` |
 | accounting-ledger-setup-web | 13 | `2dbb41708fc772c97f51356c9903a258148eff82d8f0eca2499e8fc4c3d081c1` |

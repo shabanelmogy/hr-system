@@ -1,30 +1,23 @@
 # ERP platform templates
 
-Reusable assets for building new modules on this ERP platform and, later, new product
-workspaces derived from it. Imported on 2026-09-28 from the School Management template work and
-governed by the plan `documentation/plans/business/erp-platform-template/`.
+Home of the new-product workspace generator (`New-ErpWorkspace.ps1`, slice S5 of
+`documentation/plans/business/erp-platform-template/`). It does not exist yet; until it does,
+new products are not started from this folder.
 
-| Folder | Status | Purpose |
-| --- | --- | --- |
-| `planning/` | Imported; **scheduled for retirement** (D-013, slice S2) | Tool-agnostic planning kit and AI skills. Inside this repository `documentation/plans/` stays canonical; see `planning/ERP_MAPPING.md`. |
-| `../packages/tokens/` | Imported, not yet adopted (slices S3–S4) | One design-token source for `web-next` (MUI adapter) and `mobile-react`. |
+How work is planned and delivered in this repository:
 
-## Retirement of `planning/`
+| Need | Where |
+| --- | --- |
+| Plan a module or feature | `documentation/plans/README.md` and the `erp-business-planning` skill |
+| Bring an external application or its data into ERP | the `erp-legacy-migration` skill |
+| Deliver a planned feature (phases 00-07) | `documentation/system/README.md` and the `erp-api-development`, `erp-web-development`, `erp-mobile-development` skills |
+| Create a new runtime module | `api/scripts/New-ErpModule.ps1` and the web `generate:module` |
+| Design tokens shared by web and mobile | `packages/tokens/` |
 
-The review `documentation/plans/business/erp-platform-template/DOCUMENTATION_AND_TEMPLATE_REVIEW.md`
-found that `documentation/plans`, `documentation/system`, and `.codex/skills` already cover every
-step of this kit except external-application migration. Slice S2 adds two skills
-(`erp-business-planning`, `erp-legacy-migration`) and then deletes `planning/`. Until then, do not
-start new work from this kit.
-
-## Not imported (remain in the School repository as reference)
-
-- `New-FullStackProject.ps1`, `api/`, `next/` content profiles and `conversion/`: they generate a
-  Next.js + Clean Architecture workspace that does not match this modular monolith, MUI web client,
-  or Expo client. The ERP replacement is the workspace generator (slice S5), built on the existing
-  `api/scripts/New-ErpModule.ps1` and `web-next` `generate:module`.
-- `PROMOTION_POLICY.md` and `assets/AGENTS.md`: replaced by this repository's `AGENTS.md`
-  ("Shared component first"), `SHARED_REUSE_CATALOG.md`, and `SCREEN_PATTERN_CATALOG.md`.
+The planning kit imported on 2026-09-28 (`templates/planning/`) was retired on 2026-10-12
+(D-013): its discovery question bank, worked example, glossary, and Definition of Ready/Done
+moved into `.codex/skills/erp-business-planning/references/`; everything else already existed
+in `documentation/plans/`.
 
 ## Rules
 

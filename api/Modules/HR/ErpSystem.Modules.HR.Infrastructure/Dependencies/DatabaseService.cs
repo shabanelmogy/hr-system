@@ -1,3 +1,4 @@
+using ErpSystem.Modules.HR.Application.Abstractions.Persistence;
 using ErpSystem.BuildingBlocks.Application.Abstractions.Persistence;
 using ErpSystem.BuildingBlocks.Application.Abstractions.Validation;
 using Scrutor;
@@ -14,18 +15,18 @@ public static class DatabaseService
             ?? throw new InvalidOperationException(
                 "Connection string 'HR' or 'DefaultConnection' not found.");
 
-        services.AddDbContext<ApplicationDbContext>(options =>
+        services.AddDbContext<HrDbContext>(options =>
             options.UseSqlServer(
                 connectionString,
-                sql => sql.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)
-                    .MigrationsHistoryTable("__EFMigrationsHistory", ApplicationDbContext.Schema)));
+                sql => sql.MigrationsAssembly(typeof(HrDbContext).Assembly.FullName)
+                    .MigrationsHistoryTable("__EFMigrationsHistory", HrDbContext.Schema)));
         services.AddOptions<DatabaseSettings>()
             .BindConfiguration(DatabaseSettings.SectionName)
             .ValidateOnStart();
-        services.AddScoped<IUnitOfWork>(serviceProvider =>
-            serviceProvider.GetRequiredService<ApplicationDbContext>());
+        services.AddScoped<IHrUnitOfWork>(serviceProvider =>
+            serviceProvider.GetRequiredService<HrDbContext>());
         services.Scan(scan => scan
-            .FromAssemblyOf<ApplicationDbContext>()
+            .FromAssemblyOf<HrDbContext>()
             .AddClasses(classes => classes.AssignableTo<IValidationQuery>())
             .UsingRegistrationStrategy(RegistrationStrategy.Skip)
             .AsImplementedInterfaces()

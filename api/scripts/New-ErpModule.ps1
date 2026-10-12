@@ -129,12 +129,6 @@ function Get-ModuleDocumentationFiles([string]$Name, [string]$Slug, [string]$Sch
         testPath = "$runtimeRoot/ErpSystem.Modules.$Name.Tests"
         documentationPaths = [ordered]@{
             root = $documentationRoot
-            api = "$documentationRoot/api/README.md"
-            webNext = "$documentationRoot/web-next/README.md"
-            mobileReact = "$documentationRoot/mobile-react/README.md"
-            features = "$documentationRoot/features/README.md"
-            phases = "$documentationRoot/phases/README.md"
-            featureQualityGate = "$documentationRoot/FEATURE-QUALITY-GATE.md"
         }
     } | ConvertTo-Json -Depth 5
 
@@ -157,9 +151,14 @@ linked rather than copied here.
   scaffold. Add them only with verified contracts and tests.
 
 Start with [ARCHITECTURE.md](ARCHITECTURE.md), then record delivery decisions
-in [DELIVERY-ROADMAP.md](DELIVERY-ROADMAP.md). Platform entry points are kept
-under [api/](api/README.md), [web-next/](web-next/README.md), and
-[mobile-react/](mobile-react/README.md).
+in [DELIVERY-ROADMAP.md](DELIVERY-ROADMAP.md). The package starts with these
+four files only. Add an @@api/@@, @@web-next/@@, @@mobile-react/@@, @@features/@@
+or @@phases/@@ README only when it has module-specific content, and register it
+in @@module.json@@ @@documentationPaths@@. Each feature is planned with the
+shared @@documentation/system/@@ templates, and every mutable entity completes
+the entity lifecycle matrix in
+@@documentation/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md@@ §17 (one shared copy,
+never a per-module one).
 
 Before adding a component, service, or Contract, inventory shared BuildingBlocks
 and module-local reusable pieces. Reuse or extend compatible abstractions and
@@ -217,94 +216,6 @@ shared capability into a module.
 
 No endpoint, screen, or entity is implied by this roadmap until documented in
 the module's feature book and verified in source.
-"@
-        'api/README.md' = @"
-# $Name API documentation
-
-## Verified foundation
-
-The module owns its API layer and exposes it through the Presentation project.
-The generated scaffold has no controllers, routes, handlers, or public DTOs;
-those surfaces are **not implemented** yet.
-
-When a feature is added, document the exact route, authorization policy,
-request/response envelope, validation, errors, paging/sorting, and tests here
-or in a linked feature book. Cross-module communication uses Contracts/events,
-never another module's Infrastructure or EF model.
-"@
-        'web-next/README.md' = @"
-# $Name web client documentation
-
-The module has no generated Next.js routes, pages, hooks, or API clients yet;
-the web surface is **not implemented**. A future feature must document its
-route, server/client boundary, loading/error/empty states, permissions,
-localization, and verification before release.
-"@
-        'mobile-react/README.md' = @"
-# $Name mobile client documentation
-
-The module has no generated Expo/React Native screens, navigation entries, or
-mobile API client yet; the mobile surface is **not implemented**. Record native
-offline, retry, accessibility, localization, and permission decisions for each
-future feature instead of assuming web behavior can be reused.
-"@
-        'features/README.md' = @"
-# $Name feature catalog
-
-This is the module-owned feature index. Keep one entry per vertical slice and
-link to its reviewed API, web, mobile, and cross-project evidence. Do not copy
-the shared phase rules or generated packets; use `documentation/system/` as the
-single source for the documentation workflow.
-
-The scaffold currently contains no implemented business feature. Add entries
-only when the corresponding runtime and verification evidence exists, and mark
-future ideas as Planned or Deferred.
-
-Every feature must complete [FEATURE-QUALITY-GATE.md](../FEATURE-QUALITY-GATE.md)
-before it can be marked implemented.
-"@
-        'FEATURE-QUALITY-GATE.md' = @"
-# $Name feature quality gate
-
-Copy the matrix below into every feature book and complete it before runtime
-implementation. A blank cell is a failed gate. Use @@N/A — <reason>@@ only when
-the capability truly does not apply; do not infer completion from a successful
-build.
-
-| Entity / aggregate | Create | Detail/List | Update | Archive or domain alternative | Restore | Archived discovery / RecordStatus | Dependency guards | Shared atomic resource | RowVersion / concurrency | Permission | Stable localized errors | Domain + handler + API tests |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| _Add one row per mutable entity_ |  |  |  |  |  |  |  |  |  |  |  |  |
-
-## Mandatory evidence
-
-- Ownership and tenant/company scope are explicit.
-- Every active/archived transition is an explicit use case, or the approved
-  domain alternative (effective dating, reversal, immutable history) is named.
-- Parent archive and child create/update/restore use the same transaction-owned
-  resource or an equivalent database guarantee.
-- Collection queries are bounded and expose archived records when restore is
-  supported.
-- Error codes are stable; user-facing messages come from the owning module or
-  the host localization boundary. A module never replaces
-  @@IStringLocalizerFactory@@.
-- Controller -> ISender -> handler -> Application port -> Infrastructure ->
-  Domain -> commit is preserved.
-- Tests cover missing scope, stale RowVersion, duplicate, invalid reference,
-  archive-in-use, restore conflict, and one competing-write case where relevant.
-
-The feature cannot move to Verified until every row is complete and its evidence
-paths are registered in the feature's required-file manifest.
-"@
-        'phases/README.md' = @"
-# $Name delivery phases
-
-This optional index is the module-owned home for a dependency-ordered delivery
-plan. Keep shared phase rules in @@documentation/system/@@ and record a reuse
-inventory before each phase: inspect shared BuildingBlocks and module-local
-pieces, reuse or extend compatible abstractions, and keep new behavior local
-until a genuinely domain-neutral capability is used by multiple modules.
-
-The generated module currently has no business phases or implemented features.
 "@
     }
 }

@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using System.Text.Json;
 using ErpSystem.BuildingBlocks.Context;
+using ErpSystem.BuildingBlocks.Presentation.Common.Observability;
 using ErpSystem.Modules.Platform.Application.Tenancy;
 using ErpSystem.Modules.Platform.Contracts.Tenancy;
 using ErpSystem.Modules.Platform.Presentation.Tenancy;
@@ -53,7 +54,7 @@ public sealed class PlatformTenantReadOnlyMiddlewareOwnershipTests
         };
         var context = CreateContext(HttpMethods.Post, "tenant-1");
         context.TraceIdentifier = "trace-1";
-        context.Items["HrManagementSystem.CorrelationId"] = "corr-1";
+        context.Items[CorrelationContextExtensions.ItemKey] = "corr-1";
 
         await middleware.InvokeAsync(
             context,

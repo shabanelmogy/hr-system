@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ErpSystem.Modules.HR.Infrastructure.Features.WorkforcePlanning.Persistence;
 
-public sealed class StaffingReadStore(ApplicationDbContext context) : IStaffingReadStore
+public sealed class StaffingReadStore(HrDbContext context) : IStaffingReadStore
 {
     public async Task<PageResponse<EnvelopeAmendmentListItemResponse>> GetAmendmentsAsync(
         GetEnvelopeAmendmentsQuery request,
@@ -172,7 +172,7 @@ public sealed class StaffingReadStore(ApplicationDbContext context) : IStaffingR
 }
 
 public sealed class StaffingWriteStore(
-    ApplicationDbContext context,
+    HrDbContext context,
     IFiscalYearPlanningSource fiscalYears,
     ICurrentActor currentActor) : IStaffingWriteStore
 {

@@ -1,3 +1,4 @@
+using ErpSystem.Modules.ReferenceData.Application.Abstractions.Persistence;
 using ErpSystem.BuildingBlocks.Context.Authentication;
 using ErpSystem.BuildingBlocks.Application.Abstractions.Messaging;
 using ErpSystem.Modules.ReferenceData.Application.Features.GeographicalInformation.Countries.Abstractions;
@@ -10,7 +11,7 @@ namespace ErpSystem.Modules.ReferenceData.Application.Features.GeographicalInfor
 
 public sealed class CreateCountriesCommandHandler(
     ICountryWriteStore countryWriteStore,
-    IUnitOfWork unitOfWork,
+    IReferenceDataUnitOfWork unitOfWork,
     ICountryChangeScheduler countryChangeScheduler,
     ICurrentActor currentActor,
     CountryErrors countryErrors,
