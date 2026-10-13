@@ -21,8 +21,10 @@ api/
     ErpSystem.BuildingBlocks.Application/       # shared MediatR logging + validation pipeline
     ErpSystem.BuildingBlocks.Authorization/
     ErpSystem.BuildingBlocks.Context/
+    ErpSystem.BuildingBlocks.Domain/
     ErpSystem.BuildingBlocks.Messaging/
     ErpSystem.BuildingBlocks.Modularity/
+    ErpSystem.BuildingBlocks.Presentation/      # HTTP and correlation helpers
   Modules/
     <Module>/
       ErpSystem.Modules.<Module>.Contracts/
@@ -34,8 +36,8 @@ api/
       ErpSystem.Modules.<Module>.Tests/
 ```
 
-Current registered modules are HR, Accounting, Platform, Contacts, ReferenceData,
-Reporting, Inventory, CRM, and PointOfSale.
+Current registered modules, in registry order: Platform, ReferenceData (General
+Data), Contacts, Accounting, HR, CRM, Inventory, PointOfSale, Reporting.
 
 `CrystalReportGeneratorApi` is an independent application and intentionally
 stays outside `ErpSystem.sln` and the ERP build gates.
@@ -89,19 +91,17 @@ Cross-module references may target only another module's public Contracts; they
 must never target another module's Domain, Application, Infrastructure,
 Presentation, or bootstrap internals. There are no cross-module EF navigations,
 foreign keys, or direct infrastructure calls.
-`ModuleModularityTests` enforces the six-project shape, allowed directions,
+`SolutionStructureTests` enforces the six-project shape, allowed directions,
 canonical identities, and host boundary for every directory under `Modules`.
 
 Each runtime module has a matching ownership package under
 `documentation/modules/<doc-slug>/` with `module.json`, architecture,
 roadmap, API/web/mobile entry points, and a feature catalog. The package is the
 module-specific documentation authority; shared workflow rules remain in
-`documentation/system/`. HR currently catalogs its established canonical books
-at their existing manifest paths, while Accounting's package records its
-foundation and planned capabilities without claiming absent features.
-The dependency-ordered Accounting work plan is maintained in
-`documentation/modules/accounting/phases/` and is explicitly Planned / Not
-started until runtime evidence is delivered.
+`documentation/system/`. Each module's feature catalog
+(`documentation/modules/<slug>/features/`) records delivered capabilities;
+Accounting's `phases/` folder is a historical source/reference package, not
+execution status.
 
 ## Module responsibilities
 
@@ -134,8 +134,8 @@ after commit as a non-critical, logged best-effort effect. Initial-admin
 invitation, provisioning status, request-replay idempotency, tenant settings,
 and recoverable email delivery remain additive capabilities.
 
-`ErpSystem.BuildingBlocks.Application`, `.Authorization`, `.Context`, `.Messaging`,
-and `.Modularity` contain domain-neutral primitives only. The Application block
+`ErpSystem.BuildingBlocks.Application`, `.Authorization`, `.Context`, `.Domain`,
+`.Messaging`, `.Modularity`, and `.Presentation` contain domain-neutral primitives only. The Application block
 owns the payload-free request logging and asynchronous FluentValidation behaviors;
 its `AddApplicationPipeline()` registration is idempotent, so every module may
 call it without duplicate open-generic MediatR behaviors. Host runtime contributor
@@ -152,10 +152,15 @@ no other module touches it. There is no sub-schema per feature by default.
 
 | Module | CLR / project name | SQL schema |
 | --- | --- | --- |
-| HR | `HR` | `hr` |
-| Accounting | `Accounting` | `acc` |
 | Platform (technical) | `Platform` | `platform` |
+| ReferenceData (General Data) | `ReferenceData` | `ref` |
 | Contacts | `Contacts` | `contacts` |
+| Accounting | `Accounting` | `acc` |
+| HR | `HR` | `hr` |
+| CRM | `CRM` | `crm` |
+| Inventory | `Inventory` | `inv` |
+| PointOfSale | `PointOfSale` | `pos` |
+| Reporting | `Reporting` | `rpt` |
 
 CLR namespaces, assemblies, and project names use the explicit approved module name.
 Only the database schema may use a documented short form; otherwise the generator
@@ -180,12 +185,14 @@ migration and must make migration execution idempotent.
 All modules register into one service container, so a single-service registration
 of a shared BuildingBlocks contract is replaced by the last module that registers
 it. The shared `IUnitOfWork` must therefore never be registered or injected by a
-module. Each module declares its own contract in
+module. Each module that needs a unit of work declares its own contract in
 `ErpSystem.Modules.<Module>.Application/Abstractions/Persistence`
 (`IAccountingUnitOfWork`, `IHrUnitOfWork`, `IPlatformUnitOfWork`,
 `IReferenceDataUnitOfWork`, `IReportingUnitOfWork`), implements it on its own
 `DbContext`, and registers it with
 `AddScoped<I<Module>UnitOfWork>(provider => provider.GetRequiredService<<Module>DbContext>())`.
+Contacts, CRM, Inventory, and PointOfSale save through their own DbContext-backed
+ports and declare none yet.
 
 Incident 2026-10-11: HR, ReferenceData and Reporting each registered the shared
 `IUnitOfWork`; Reporting registers last, so country/state/district/address,
@@ -264,7 +271,7 @@ explicitly:
 What remains for the developer: add domain entities and configurations, create
 the first EF migration for the module DbContext, add controllers and
 application handlers, and extend the module boundary tests only if new
-cross-module contracts appear. The existing `ModuleModularityTests` already
+cross-module contracts appear. The existing `SolutionStructureTests` already
 derive expectations from every `Modules/<ModuleName>` directory and verify the
 registry covers each one exactly once, so no test update is needed for the new
 module itself. Complete a reuse inventory and record it in the module package
@@ -285,9 +292,9 @@ module-owned resources; a module must never replace `IStringLocalizerFactory`
 or register MVC localization globally. `LocalizationOwnershipArchitectureTests`
 enforces the rule for all current and future module directories.
 
-Generic uploads remain a Platform capability even while the HTTP compatibility
-controller is HR-owned. `IFileOperationsService` calls
-`IFileUploadInspectionService` before writing any binary or metadata record;
+Generic uploads are a Platform capability (`FilesController`). The Platform
+upload command handlers call `IFileUploadInspectionService` before writing any
+binary or metadata record;
 bulk uploads inspect every item first. Supported content is checked against both
 the declared type and bounded signatures, and production enables the optional
 ClamAV TCP `INSTREAM` gate with fail-closed behavior. The protected local
@@ -319,7 +326,7 @@ module list:
 
 ```powershell
 $env:ConnectionStrings__DefaultConnection = '<secret-store-value>'
-./scripts/Apply-ErpModuleMigrations.ps1 -Configuration Release
+./scripts/Apply-ErpModuleMigrations.ps1 -Configuration Release -Environment Production
 ```
 
 To create migrations, `./scripts/Add-ErpModuleMigrations.ps1 -Name <MigrationName>`

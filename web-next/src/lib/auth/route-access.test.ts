@@ -216,7 +216,7 @@ describe("route access policies", () => {
     })).toBe(true);
   });
 
-  it("requires AccountingSetup:View for the Ledger Setup currencies route", () => {
+  it("requires Currencies:View for the Ledger Setup currencies route", () => {
     expect(canAccessRoute(appRoutes.modules.accounting.ledgerSetup.currencies, session)).toBe(false);
     expect(canAccessRoute(appRoutes.modules.accounting.ledgerSetup.currencies, {
       ...session,

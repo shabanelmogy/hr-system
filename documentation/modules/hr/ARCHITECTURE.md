@@ -69,11 +69,9 @@ capability must never be copy/pasted into HR.
 
 ## Documentation authority
 
-The current feature books listed in [README.md](README.md) are authoritative
-until a manifest-aware move places them under this package. A move must update
-`documentation/system/recipe-manifest.json`, required-file manifests, links,
-and generated packets together; do not create a second copy with divergent
-rules.
+The feature books under `features/<feature>/` are authoritative. Any later move
+must update `documentation/system/recipe-manifest.json`, the required-file
+manifests, links, and generated packets together; never keep a second copy.
 
 ## Digital-channel boundary
 

@@ -115,7 +115,7 @@ failure into partial success.
 | address-types-web | 3 | `76508cf6e057734420a42ee5c3b082d8ddf4b1a8aa28856a035439be98853eb6` |
 | address-types-web | 4 | `74a70ebc353063732679fe669db2fb2c74d623c9d97c9367250827256f7ecbae` |
 | address-types-web | 5 | `21acae82c7c85f1f84ef36353e185a6766088f88de0f7cecc06f42c7e6cd5461` |
-| address-types-web | 6 | `351cc55be82056a3c867c8a93c7556ab660bfcb3a61759ea273ac1a07cd3a281` |
+| address-types-web | 6 | `bc43820049241e82bd2b641c734b0a98c6baa38df68ff96bd3ab46685ca6174d` |
 | address-types-web | 7 | `fc67d7de0f0a34d6d50f7f0d8871c5114b873ca7abf672816e3273ffc1f8a2a8` |
 | address-types-web | 8 | `9105872832cbff57378bc222233612b39548d236abe7f34bb04952991ac33862` |
 | address-types-web | 9 | `78b529dec2a9aeea35eec3b2e8cd6963b1bcc4b1959f92e7911ae3eb75591bb1` |

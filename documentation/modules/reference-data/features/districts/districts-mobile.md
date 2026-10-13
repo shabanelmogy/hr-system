@@ -42,7 +42,7 @@ The screen registers Table, Cards, Chart, Report, and permission-guarded Import.
 
 ## 10. Lifecycle actions
 
-View is always available with permission. Edit applies to active rows; archive/restore and bulk archive require `Districts:Delete`. API dependency errors are preserved in toast feedback.
+View is always available with permission. Edit applies to active rows; archive/restore and bulk archive require `Districts:Archive`/`Districts:Restore`. API dependency errors are preserved in toast feedback.
 
 ## 11. Native Import
 
@@ -62,7 +62,7 @@ Cards and table actions have translated labels, controls meet shared touch targe
 
 ## 14. Realtime
 
-`districts` is a registered realtime prefix. Notifications with `/basic-data/districts` resolve to the direct Districts route. Confirmed bulk import invalidates the same root; uncertain import reconciles that root before retry.
+`districts` is a registered realtime prefix. Notifications with `/super-admin/geography/districts` (emitted by the API) or `/basic-data/districts` resolve to the direct Districts route. Confirmed bulk import invalidates the same root; uncertain import reconciles that root before retry.
 
 ## 15. Verification
 

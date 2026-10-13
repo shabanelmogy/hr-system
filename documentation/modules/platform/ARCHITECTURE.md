@@ -49,8 +49,8 @@ the current database role permission, and the tenant submodule entitlement.
 Platform permissions remain claim-only after authentication and are never gated
 by tenant entitlements. Unknown permissions fail closed.
 
-RBAC mutations in Platform (`RoleService`) use
-`PlatformDbContext.ExecuteAtomicallyAsync` on SQL Server. The lock resource is
+RBAC mutations are CQRS commands (`RoleManagementCommands`) that use
+`IRoleUnitOfWork.ExecuteAtomicallyAsync` (implemented over `PlatformDbContext`) on SQL Server. The lock resource is
 derived from the tenant plus the normalized role name for creation, or the role
 identifier for an existing role, and is hashed to a bounded value before being
 passed to `sp_getapplock`. Role writes, claim changes, affected-user security
@@ -61,12 +61,13 @@ an event for a mutation that was rolled back. These non-critical post-commit
 notifications are best-effort and logged if delivery fails; any future critical
 external effect must use a transactional outbox instead.
 
-Tenant creation is exposed by the Platform administration endpoints and uses
-`PlatformDbContext.ExecuteAtomicallyAsync` with a bounded SHA-256 lock derived
-from the normalized tenant identifier. One transaction and one `SaveChangesAsync`
-create the tenant, its `DEFAULT` company, module entitlements, and the
-`TenantCreated` security audit. Realtime refresh is dispatched only after commit
-and is logged as a best-effort failure. Initial-admin invitation, provisioning
+Tenant creation is exposed by the Platform administration endpoints
+(`PlatformTenantManagementAdapter.CreateAsync`). One Serializable transaction
+creates the tenant, its `DEFAULT` company, and its module entitlements; the
+duplicate-identifier check runs inside that transaction. After commit,
+`CreateTenantCommandHandler` sends the WhatsApp welcome message. Tenant creation
+writes no `SecurityAuditEvent` yet and publishes no realtime refresh (open
+decision: add a `TenantCreated` audit in the same transaction). Initial-admin invitation, provisioning
 status, request-replay idempotency, tenant settings, and recoverable external
 delivery remain separate capabilities.
 

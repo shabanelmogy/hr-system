@@ -9,12 +9,12 @@ existing HR domain split instead of copying Odoo's single `hr.job` aggregate.
 ## 1. Scope and ownership
 
 The feature manages Branch, Department, Division, JobTitle, JobLevel, Position,
-JobDescription, CostCenter, and Currency under the current tenant and company. TenantId and CompanyId
+JobDescription, and CostCenter under the current tenant and company. TenantId and CompanyId
 are trusted from `ICurrentActor`/`HrDbContext`; clients never submit
 scope values. The API route is `/api/v1/organizational-structure/{resource}`.
 The browser and native clients expose one guarded route/page per resource:
 `branches`, `departments`, `divisions`, `job-titles`, `job-levels`, `positions`,
-`job-descriptions`, `cost-centers`, and `currencies` under `/basic-data/organizational-structure/{resource}`.
+`job-descriptions`, and `cost-centers` under `/basic-data/organizational-structure/{resource}`.
 
 ## 2. Discovery and Odoo comparison
 
@@ -24,9 +24,9 @@ version. Odoo 19 models departments as a recursive company hierarchy and job
 records with department/company, description, requirements, and headcount. We
 adopted those rules while retaining JobTitle, JobLevel, and Position as separate
 local concepts because requisitions and employee workflows already depend on
-them. JobDescription is now a versioned child of Position. Cost centers and
-currencies are modeled as first-class company-scoped entities with hierarchical
-roll-ups and currency conversion.
+them. JobDescription is now a versioned child of Position. Cost centers are a
+first-class company-scoped entity with hierarchical roll-ups. HR owns no
+Currency: Job Level currency codes come from the Accounting currency lookup.
 
 ## 3. Domain model and invariants
 
@@ -37,8 +37,7 @@ Division requires an active Department. Position requires active Division,
 JobTitle, and JobLevel. Branch supports identity/contact/headquarters operations.
 JobLevel enforces non-negative ordered salary bounds and a three-letter currency.
 CostCenter enforces recursive hierarchy, same-company parents, cycle guards, and
-top-level root nodes. Currency enforces 3-letter ISO-4217 uppercase code, unique
-per company, non-negative exchange rates, and single active default currency per company.
+top-level root nodes.
 
 ## 4. JobDescription and lifecycle
 
@@ -53,7 +52,7 @@ it to Draft for resubmission. Expired is derived from dates.
 
 ## 5. Persistence and company isolation
 
-The DbContext exposes all seven DbSets and configuration classes under
+The DbContext exposes all eight DbSets and configuration classes under
 `api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Persistence/Configurations/OrganizationalStructure`.
 Composite TenantId/CompanyId foreign keys prevent cross-company relationships.
 For newly added company-scoped entities, `HrDbContext` reads the entity's
@@ -61,27 +60,26 @@ domain `CompanyId` before EF temporary foreign-key fix-up. A default value is
 stamped from the current actor, while an explicit foreign company remains
 rejected. The Branch update regression covers this InMemory/EF edge case.
 Unique indexes cover company-scoped codes, parent-scoped names, and
-`(PositionId, Version)` for descriptions. Migrations
-`20260830205716_AddOrganizationalStructureManagement` and
-`20260831054245_AddOrganizationalStructureIdentityIndexes` create the tables and
-identity indexes. `20260831071547_GrantOrganizationalStructurePermissionsToAdmin`
-idempotently grants the five new permissions to the existing system `admin`
-role; this is required because production disables startup seeding.
+`(PositionId, Version)` for descriptions. The HR baseline migration
+`20260914181112_InitialHr` creates the tables and indexes. Permissions are
+declared by `HrModuleDefinition` and granted to system roles by Platform's
+system-role reconciliation; no migration grants permissions.
 
 ## 6. API and permissions
 
 The feature-owned CQRS contracts, validators, handlers, service, and thin
 versioned controller implement list, detail, lookup, create, update, archive,
-restore, approve, and reject. Permissions are `View`, `Create`, `Edit`, `Delete`,
-and `ApproveJobDescriptions` under the `OrganizationalStructure` module. Every
+restore, approve, and reject. Permissions are `View`, `Create`, `Edit`, `Archive`,
+`Restore`, and `ApproveJobDescriptions` under the `OrganizationalStructure` resource
+(`DELETE` uses `Archive`; `/restore` uses `Restore`). `GET /{resource}/{id}/change-logs`
+returns the audit history. Every
 mutation rechecks permission and current-company scope in the handler/service.
-Existing administrators receive the new claims through the permission migration,
-then must obtain a fresh session after deployment so navigation and API claims
-reflect the grant.
+Users must obtain a fresh session after a permission change so navigation and
+API claims reflect the grant.
 
 ## 7. List, search, and views
 
-API paging is one-based with page size 1-500. Search fields are `all`, `nameAr`,
+API paging is one-based (`pageNumber`) with page size 1-5000. Search fields are `all`, `nameAr`,
 `nameEn`, `code`, and `parent`; operators are contains, doesNotContain, equals,
 doesNotEqual, startsWith, and endsWith. Status supports active/archived/all and
 sorting supports nameEn/nameAr/code/parent/createdOn with an Id tie-break.
@@ -99,7 +97,7 @@ physics-based spring dragging (`dragSnapToOrigin`), 120 FPS target detection via
 `document.elementsFromPoint`, automatic hierarchy swap detection, and direct
 accessible Move dialog actions. In Department and Division forms, free-text Cost Center
 codes are replaced with active Cost Center select dropdowns; in Job Level forms, free-text
-currency codes are replaced with active Currency select dropdowns. Each native route
+currency codes use the Accounting active-currency lookup (`useCurrencyLookup`). Each native route
 uses shared Table/Cards/current-page Chart/Report/Import components. There is no
 cross-entity resource selector on a management page. Chart and Report labels
 explicitly describe page scope and matching total; Import is resource-specific.
@@ -141,8 +139,8 @@ schema and requires no behavior change for this Web-only defect.
 
 Focused API build and OrganizationalStructure/Pragmatic domain tests pass. The
 2026-09-08 focused regression run also passes the Branch update isolation case.
-management regression suite also verifies SQL Server translation for all seven
-resources across five search fields and six operators (210 combinations), and a
+management regression suite also verifies SQL Server translation for all eight
+resources across five search fields and six operators (240 combinations), and a
 local authenticated request through the Next.js API proxy returns HTTP 200 for
 the initial Branches page.
 Mobile TypeScript, architecture, lint, translation-usage, and route tests pass.

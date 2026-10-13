@@ -80,7 +80,7 @@ existing-system review, implementation order, and Definition of Done.
 | --- | ---: | --- |
 | accounting-ledger-setup-master | 3 | `0fe7b836f7c51edaace81656d19dd76754de5fefdb1761a92e1bb4de7b632c0c` |
 | accounting-ledger-setup-master | 4 | `06d973a1925b5145faf6d2df5b8b583d963a5253cb1287749dfac17411aa40c8` |
-| accounting-ledger-setup-master | 6 | `4c420eef9bb4f80999de2e4e4bebf23f4d9b3934746b134431e3cd97be170dbe` |
+| accounting-ledger-setup-master | 6 | `501a4540cd1999c5835baba4a0c2fd7a7c194d7c1edf65ef83f4fd1e08d0904a` |
 | accounting-ledger-setup-api | 1 | `417381f17e083b917b4a8f0873653bde08595ae4044523b1311618eae9b43f9d` |
 | accounting-ledger-setup-api | 2 | `eaf94e1c570efec496e1ad631cdd1ad9bac1aa0fa29bbdc0c9ec1eab3e87bf3e` |
 | accounting-ledger-setup-api | 3 | `bfa7993abdd991b7d31cab6d49f55fcde6e31e3303d527615bed50fcddfe889a` |

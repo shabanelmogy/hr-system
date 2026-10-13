@@ -96,10 +96,7 @@ Post-commit mutations issue plural notifications/realtime under resource
 `address-types` to the active-company `AddressTypes:View` audience. Web and Expo
 invalidate their stable Address Type feature keys; a successful company switch
 clears the full query cache before refetching. The client never sends `companyId`;
-the authenticated active-company actor is authoritative. Existing global rows are cloned to every existing company
-by migration; new companies start empty unless a future template-copy policy is
-introduced. Drain old Address Type Hangfire jobs before applying the migration,
-then re-login and switch company context. A future public Job Portal resolves
+the authenticated active-company actor is authoritative. The ReferenceData baseline migration `20260914181144_InitialReferenceData` creates company-scoped Address Types; every company starts empty unless a future template-copy policy is introduced. Users re-login and switch company after deployment. A future public Job Portal resolves
 tenant/company from the published job or portal slug, never from a request-body
 `companyId`; it may then expose that company's candidate/person address types.
 Job location remains Branch/Site/WorkLocation rather than Address Type.

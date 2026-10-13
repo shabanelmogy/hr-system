@@ -1,16 +1,23 @@
 # Core HR Functional Data Domain Design Guide
 
-**Status:** Frozen design baseline (before the first Core HR migration)  
+**Status:** Design baseline (target model). Implementation status below.  
 **Date:** 2026-08-30  
 **Scope:** Employee master data and functional/organizational employment data  
 **Reference:** Odoo Employees/Recruitment concepts, adapted to this system's
 tenant/company/branch model and CQRS architecture.
 
-This document is the domain decision record for the next Core HR features. It is
-the source of truth before adding employee, department, job, assignment, or
-contract tables. The existing employee and organizational classes are draft
-classes and are currently ignored by `HrDbContext`; they may be
-refactored to this design before the first migration.
+This document is the domain decision record for Core HR. It describes the target
+model; the table below says what the source already implements.
+
+## Current implementation (2026-10-13)
+
+| Area | State in source |
+| --- | --- |
+| Organization (Branch, Department, Division, JobTitle, JobLevel, Position, JobDescription, CostCenter) | Implemented: API `/api/v1/organizational-structure/{resource}`, web, mobile (see `features/organizational-structure/`) |
+| `Employee`, `EmployeeAssignment`, `EmployeeContract` | Persisted in `HrDbContext` (baseline migration `InitialHr`) and created by the Recruitment hire command; no management API or screens yet (`DEF-024`) |
+| `Person` identity root | Planned — not implemented; names currently live on `Employee` |
+| Assignment fields | Implemented: required `BranchId`, `ReportsToPositionId`, effective dates. Planned: `ReportsToEmployeeId`, `WorkAddressId`, `WorkArrangement` |
+| Contract fields | Implemented: `ContractType` (Permanent, FixedTerm, Temporary, Internship), dates, salary. Planned: `EmploymentType`, `ProbationEndDate`, `NoticePeriodDays`, `EmployeeStatusChange` history |
 
 ## 1. Decisions that are now closed
 
@@ -100,7 +107,7 @@ Person
   IsActive / audit / RowVersion
 ```
 
-The global Country catalog remains platform-owned. Nationality is not filtered by
+The global Country catalog is owned by General Data (ReferenceData). Nationality is not filtered by
 the company's operating countries. Sensitive identity fields must be returned
 only by the detail contract and only to permissions that need them.
 
@@ -263,15 +270,15 @@ third line of defense where the database can express the invariant.
 Use one vertical slice per aggregate and keep controllers thin. Do not revive a
 large `EmployeeService` or expose EF entities.
 
-### Organization endpoints (first)
+### Organization endpoints (implemented)
 
 ```text
-GET/POST/PATCH  /api/v1/departments
-GET/POST/PATCH  /api/v1/divisions
-GET/POST/PATCH  /api/v1/job-titles
-GET/POST/PATCH  /api/v1/job-levels
-GET/POST/PATCH  /api/v1/positions
-GET/POST/PATCH  /api/v1/job-descriptions
+GET/POST          /api/v1/organizational-structure/{resource}
+GET/PUT/DELETE    /api/v1/organizational-structure/{resource}/{id}
+POST              /api/v1/organizational-structure/{resource}/{id}/restore
+POST              /api/v1/organizational-structure/{resource}/bulk
+{resource} = branches | departments | divisions | job-titles | job-levels |
+             positions | job-descriptions | cost-centers
 ```
 
 Each list is server-paged and exposes only approved search/filter/sort keys.
@@ -335,9 +342,8 @@ duplicate/relationship rules, permissions, and retry behavior before building UI
 
 ## 8. Implementation order
 
-1. Refactor the current draft classes to this model and remove their explicit
-   `HrDbContext.Ignore(...)` entries only when each slice is ready.
-2. Implement Organization: Department -> Division -> JobTitle/JobLevel ->
+1. Done: Employee, Assignment, and Contract are mapped in `HrDbContext`.
+2. Done: Organization: Department -> Division -> JobTitle/JobLevel ->
    Position -> JobDescription, including indexes and hierarchy tests.
 3. Implement Person and company-scoped Employee master with list/detail,
    permissions, audit, concurrency, and status-history append behavior.

@@ -43,7 +43,7 @@ semantics, but they do not need identical controls or screen composition.
 | Lifecycle | Active, archived, restore; no hard-delete UI |
 | Web default list | UI page `0`, size `10`, `createdOn DESC`, status `active` |
 | Mobile default list | UI page `0`, Table size `5`, Card size `3`, `createdOn DESC`, status `active` |
-| Permissions | `Countries:View`, `Countries:Create`, `Countries:Edit`, `Countries:Delete` |
+| Permissions | `Countries:View`, `Countries:Create`, `Countries:Edit`, `Countries:Archive` (archive, bulk archive); `Countries:Restore` (restore) |
 | Cross-feature consumers | States consumes the active-country lookup through the Countries public API |
 | Web realtime consumers | Country changes invalidate Countries and States query prefixes |
 | Mobile realtime consumers | Country changes invalidate the stable `['countries']` prefix |
@@ -425,8 +425,7 @@ progress indicator at the view boundary.
 
 Country names use the shared printable-Unicode schema from
 `validation/nameValidation.ts`; `currencyCode` remains an optional ISO
-integration value owned by Geography only until Finance/Payroll introduces the
-reviewed Currency master migration.
+integration value; the Currency master is owned by Accounting.
 
 The server owns uniqueness for Arabic name, English name, Alpha-2 and Alpha-3.
 The database reinforces these with unique indexes, including filtered indexes
@@ -468,9 +467,9 @@ the Countries prefix on success.
 | View | `Countries:View` | Active or archived | Record exists | No | None |
 | Create | `Countries:Create` | n/a | Unique valid fields | Form submit | Invalidate Countries prefix |
 | Edit | `Countries:Edit` | Active | Unique valid fields | Form submit | Invalidate Countries prefix |
-| Archive | `Countries:Delete` | Active | No active states | Warning dialog | Invalidate Countries prefix |
-| Bulk archive | `Countries:Delete` | Selected active rows | 1-100 distinct IDs; every ID exists; no active states | Warning dialog | Clear selection and invalidate |
-| Restore | `Countries:Delete` | Archived | Record exists | Success dialog | Invalidate Countries prefix |
+| Archive | `Countries:Archive` | Active | No active states | Warning dialog | Invalidate Countries prefix |
+| Bulk archive | `Countries:Archive` | Selected active rows | 1-100 distinct IDs; every ID exists; no active states | Warning dialog | Clear selection and invalidate |
+| Restore | `Countries:Restore` | Archived | Record exists | Success dialog | Invalidate Countries prefix |
 | Import | `Countries:Create` | n/a | 1-100 submitted rows; no request/database duplicates | Upload action | Invalidate Countries prefix |
 
 Read-only state and authorization are separate. Visible capability flags combine
@@ -482,8 +481,8 @@ On mobile, `RouteGuard` requires View permission, while `useAuthorization`
 derives Create/Edit/Delete capabilities inside the screen. `canCreate`,
 `canEdit`, and `canDelete` also require `!isReadOnly`; direct write handlers
 recheck read-only first so the user receives the tenant read-only explanation.
-Delete permission deliberately owns archive, bulk archive and restore on both
-clients. Mobile bulk selection is exposed on active Cards only; Table does not
+`Countries:Archive` owns archive and bulk archive and `Countries:Restore` owns
+restore on both clients. Mobile bulk selection is exposed on active Cards only; Table does not
 currently provide a selection column.
 
 ActiveReports templates use a separate tenant-scoped permission family:

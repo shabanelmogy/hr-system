@@ -6,8 +6,8 @@ namespace ErpSystem.Modules.Accounting.Presentation.Features.Finance.Invoicing.V
 
 [ApiVersion("1.0")]
 [ApiController]
-[Route("api/[controller]")]
-[Route("api/v{version:apiVersion}/[controller]")]
+// Explicit kebab-case, versioned route like every other Accounting controller.
+[Route("api/v{version:apiVersion}/invoices")]
 [TenantMember]
 [AllowTenantReadOnly]
 public sealed class InvoiceController(ISender sender) : ControllerBase

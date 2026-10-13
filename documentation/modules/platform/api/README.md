@@ -8,9 +8,8 @@ and its own persistence. Its implementation is not an empty scaffold.
 `PlatformDbContext` maps Platform-owned Identity, tenant, company, membership,
 refresh-session, entitlement, file, notification, audit, API-key, and selection
 challenge tables in the `platform` schema. Module-specific connections therefore
-select the Platform store directly. Entitlement `ApplyAsync` stages changes; its
-owning transaction commits or rolls them back with tenant changes and audit
-records.
+select the Platform store directly. Entitlement `ApplyAsync` saves inside the caller's open transaction; the
+caller commits or rolls back the tenant changes together.
 
 Platform consumes ReferenceData through public geography contracts for company
 operating-country and registration-country workflows. Future extraction replaces

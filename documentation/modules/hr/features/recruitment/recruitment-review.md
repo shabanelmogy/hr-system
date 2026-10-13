@@ -26,7 +26,7 @@ Candidates are tenant-scoped so one talent profile can apply across companies in
 ## 2. Core HR Persistence & Real Actor Resolution (Phase P0)
 
 ### Real Employee & Contract Persistence
-Upon calling `HireApplicationAsync`:
+Upon `HireEmploymentApplicationCommand`:
 1. Validates candidate, application status, and active vacancies.
 2. Resolves the real actor employee by exact `UserId`, `TenantId`, and `CompanyId` match. Operations that persist an employee actor fail with `Recruitment.ActorEmployeeRequired` when no link exists; there is no synthetic ID or administrator fallback.
 3. Persists a new `Employee` record with the candidate's real legal name, contact email, and provided employee number and hire date.
@@ -54,7 +54,7 @@ Evaluations are no longer arbitrary or static:
 3. The interviewer scores each skill from 1 to 5 with detailed qualitative feedback.
 4. Weighted overall score is auto-calculated:
    $$\text{Final Score} = \frac{\sum (\text{Rating}_i \times \text{Weight}_i)}{\sum \text{Weight}_i}$$
-5. Stored as structured JSON in `Interview.EvaluationData` with overall rating, recommendation, and comments.
+5. Stored in `InterviewEvaluation` (Score, Recommendation, Comments, and `SkillEvaluationsJson`).
 6. Updates `EmploymentApplication.AverageEvaluationScore` and moves application status to `Interviewed`.
 
 ---
@@ -84,15 +84,15 @@ $$\text{Available Headcount} = \text{TargetHeadcount} - \text{ActiveAssignments}
 ### Permissions Matrix
 Actions across API, Web, and Mobile are guarded with granular permissions:
 - `Recruitment:View`: Access dashboard, listings, and candidate profiles.
-- `Recruitment:ManageJobRequisitions`: Create and submit staffing requisitions.
-- `Recruitment:ApproveJobRequisitions`: Approve or reject pending requisitions with reason tracking.
-- `Recruitment:ManageJobOpenings`: Create, activate, pause, and close job openings.
+- `JobRequisitions:Create/Submit/Review/Cancel`: requisition lifecycle (Review approves or rejects with a reason).
+- `JobOpenings:Create/Open/Pause/Close`: opening lifecycle.
+- `JobPostings:Create/Edit/Publish/Close`: posting lifecycle.
 - `Candidates:Create` and `Candidates:Edit`: independently create or edit talent-pool candidate records.
 - `EmploymentApplications:Create/Move/Reject/Withdraw/Hire`: each application lifecycle transition is independently authorized.
 - `Interviews:Schedule/Cancel/Complete/Evaluate`: each interview operation is independently authorized.
-- `Recruitment:ManageJobOffers`: Create and issue formal job offers.
-- `Recruitment:ApproveJobOffers`: Accept or decline job offers.
-- `Recruitment:HireCandidate`: Execute the final one-click hiring transition to employee.
+- `JobOffers:Create/Submit/Review/Issue/Respond`: offer lifecycle (Review approves; Respond records acceptance or decline).
+- `EmploymentApplications:Hire`: the final hiring transition to employee.
+- `RecruitmentSettings:Edit`: recruitment stages and settings.
 
 ### 5-Point Cross-Platform UI Audit
 1. **Creation Journey**:
@@ -112,11 +112,7 @@ Actions across API, Web, and Mobile are guarded with granular permissions:
 
 ## 6. Verification & Test Evidence
 
-- **EF Core Database Migrations Applied Live**:
-  1. `20260905155802_AddEmployeesPersistence`
-  2. `20260905160817_AddRecruitmentIntegrityFilteredIndexes`
-  3. `20260905161303_AddInterviewEvaluationScorecard`
-  4. `20260905163022_AddRequisitionBudgetAndHeadcount`
+- **Database baseline**: the HR baseline migration `20260914181112_InitialHr` creates every recruitment and employee table (the earlier per-feature migrations were consolidated into it).
 - **Backend focused regression**: 6 passed, 0 failed, covering the recruitment lifecycle, real interviewer identity, invalid participant rejection, and the organizational branch isolation regression.
 - **Backend full suite**: 496 passed, 0 failed after final contract synchronization, including explicit actor fail-closed and paging-bound regressions.
 - **Web Next.js full gate**: architecture, type-check, and strict type-check pass; scoped feature ESLint has no warnings or errors (repository-wide lint retains inherited warnings).

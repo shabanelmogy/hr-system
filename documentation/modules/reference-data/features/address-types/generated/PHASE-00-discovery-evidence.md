@@ -74,11 +74,11 @@ scenarios or an explicit `N/A` with a reason.
 | address-types-master | 1 | `34423c0d5966193b3fe39f7c51d906efeed561273804061940fffab0d58715f8` |
 | address-types-master | 2 | `48a0e4532c4f21d1a84d293b2089aca0d66a68888d892ae5c357ab58135b2989` |
 | address-types-master | 5 | `ccb14984128ac28dfb8f9a04adaa8b43aa73931d1240318268eca4ab25452ba3` |
-| address-types-master | 8 | `d644b335ee5a2463885136b0a10c31dc4dd5af695866e6a2bbb825356a29fcfa` |
+| address-types-master | 8 | `d85b3bd1bf50fbdcd2880863ee2f1d45d3e1ff4475a87ee2b6117b4093e626b5` |
 | address-types-master | 9 | `7600fe70c892d1e5b846ec248fa105756c3b54bf86e3d51b2ade23f848b9fe89` |
 | address-types-api | 1 | `a89af44849dac3d3d1cfa2eca1a0fda8d2484642a726a9b1bf1f84ca0a58a05d` |
 | address-types-api | 10 | `a6b047ce552f06a101f0d842e1d2a5073f8422c48228f4a1f548e88a7a481079` |
-| address-types-api | 11 | `12fedea5d53799940a3d74558d235c8e70543d220aa2c651dfb8f0da1123a1cb` |
+| address-types-api | 11 | `bdcafe60898c72e6d54723be149afba1047f61d6efd6e8417aba2591e7ad118b` |
 | address-types-web | 1 | `b3020d62bc94049712c0a2f15d7435292ce16aaa254409856a6bf7c7405cc499` |
 | address-types-web | 2 | `566c1bb2e2d57ebcaf5853637d29939bf6c53061d7ddff9fdb92740ec3ae4f66` |
 | address-types-web | 12 | `79c8b65d2b3da2c9f670533292936c9cc7c268333fc03488b6e3f321ea75e4da` |

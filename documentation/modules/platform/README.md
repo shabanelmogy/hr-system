@@ -18,9 +18,8 @@ linked rather than copied here.
   policy, authorization infrastructure, offline-operations policy, generic file
   workflow/orchestration and storage policy, localization policy, notifications,
   and security-audit write policy.
-- Compatibility-sensitive physical Identity/tenant/file/audit data may remain
-  in the legacy `hr` schema behind explicit adapters. Platform does not reference
-  HR, and those adapters do not make HR the owner of the reusable policy.
+- All Platform tables live in the `platform` schema (baseline migration
+  `20260914181129_InitialPlatform`). Platform does not reference HR.
 
 Start with [ARCHITECTURE.md](ARCHITECTURE.md), then record delivery decisions
 in [DELIVERY-ROADMAP.md](DELIVERY-ROADMAP.md). Platform entry points are kept

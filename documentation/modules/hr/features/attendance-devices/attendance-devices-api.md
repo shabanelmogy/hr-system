@@ -12,13 +12,15 @@ are providers and connector/health. Raw lists are attendance-device-users,
 raw-attendance-punches and device-pull-runs. A separate agent-only, token-authenticated
 surface lets an enrolled local Agent claim a leased pull request and submit its
 bounded result. It is outbound from the customer network; no hosted API endpoint
-connects to a customer LAN address.
+connects to a customer LAN address. Device routes also include `POST attendance-devices/detect`
+and `GET/POST attendance-devices/agents`; the agent surface is
+`POST api/v1/attendance-agent/heartbeat`, `/claim`, and `/runs/{runId}/result`.
 
 ## 4. Authorization Contract
-View, Manage, Credentials, Pull and ViewRaw are distinct permissions. Controllers only use ISender. A migration grants existing system Admin roles idempotently.
+Permissions are `AttendanceDevices:View/Create/Edit/SetStatus/EditCredentials/Detect/Test/PullUsers/PullAttendance/ViewRaw` and `AttendanceAgents:Create`. Controllers only use ISender. Permissions are declared by `HrModuleDefinition` and granted to system roles by Platform reconciliation; no migration grants them.
 
 ## 5. Query Contract
-Lists are one-based, database-paged (default 10, max 100), allow-listed sorted and stable by Id. Users search code/name; punches filter device/code/from/to; runs filter device/status/operation.
+Lists are one-based, database-paged (page size one of 5, 10, 25, 50; default 10), allow-listed sorted and stable by Id. Users search code/name; punches filter device/code/from/to; runs filter device/status/operation.
 
 ## 6. Write Contract
 Devices can be created, edited and enabled/disabled but not deleted. Mutations are rejected while a pull runs. Implemented ZKTeco credentials accept numeric CommKey only.
@@ -43,4 +45,4 @@ CIDRs/ports, timeout, and polling interval. The SDK remains installed and regist
 on the x86 Agent host; it is not copied into the web/API deployments.
 
 ## 11. Tests and Manual Matrix
-Focused tests cover thin routes, permissions, redaction, raw scope, idempotency, timezone and permission migration. Hardware/model/firmware tests remain manual.
+Focused tests cover thin routes, permissions, redaction, raw scope, idempotency, and timezone. Hardware/model/firmware tests remain manual.

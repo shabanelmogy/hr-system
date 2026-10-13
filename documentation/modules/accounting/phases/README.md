@@ -63,16 +63,16 @@ status column is historical and must not be used as current runtime evidence.
 | --- | --- | --- | --- |
 | 00 | Analysis and scope freeze | — | Superseded by central Discovery/Evidence/Spec planning flow |
 | 01 | Technical and security foundation | 00 | Foundation verified; future gaps are feature-scoped |
-| 02 | Configuration and chart of accounts | 01 | Partial: Fiscal Years current; remaining setup/COA planned through gated plans |
+| 02 | Configuration and chart of accounts | 01 | Partial: Fiscal Years, Currency, company settings, and COA source exist |
 | 03 | Partners and groups | 02 | Planned / Not started |
-| 04 | Dimensions and allocations | 02, 03 | Planned / Not started |
-| 05 | Ledgers, currencies, numbering | 02 | Planned / Not started |
+| 04 | Dimensions and allocations | 02, 03 | Partial: dimension definitions, values, and account policies source exist; allocations not started |
+| 05 | Ledgers, currencies, numbering | 02 | Partial: books, currencies, journal definitions/numbering, and FX source exist |
 | 06 | Journal and approval engine | 03, 04, 05 | Planned / Not started |
 | 07 | Subledger and opening balances | 06 | Planned / Not started |
 | 08 | Core reports | 07 | Planned / Not started |
 | 09 | Tax engine and country contract | 03, 05, 06 | Planned / Not started |
 | 10 | Treasury and banks | 07 | Planned / Not started |
-| 11 | Financial invoices | 09, 10 | Planned / Not started |
+| 11 | Financial invoices | 09, 10 | Partial: Invoice QR API only |
 | 12 | Expenses and advances | 09, 10 | Planned / Not started |
 | 13 | Checks | 10 | Planned / Not started |
 | 14 | Returns and electronic integration | 09, 11, 12 | Planned / Not started |

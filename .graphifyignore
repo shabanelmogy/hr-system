@@ -3,9 +3,6 @@ graphify-out/
 
 # The canonical application graph is api/ErpSystem.Api + api/BuildingBlocks +
 # api/Modules + api/ErpSystem.AttendanceConnector + web-next + mobile-react.
-# Keep the legacy Vite frontend available as source reference without indexing it.
-web/
-
 api/CrystalReportGeneratorApi/
 api/Crystal Reports Backup Files/
 

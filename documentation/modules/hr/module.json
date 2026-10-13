@@ -4,7 +4,8 @@
   "databaseSchema": "hr",
   "version": "1.0.0",
   "requiredModuleDependencies": [
-    "platform"
+    "platform",
+    "acc"
   ],
   "optionalModuleDependencies": [],
   "isUserVisible": true,

@@ -17,6 +17,7 @@ only its `ACTIVE_FEATURE_STEP` may be worked as the current feature.
 | Link Accounts | Domain/API plus generic compatibility client; typed capability-driven P-006 child is Planned | `documentation/plans/business/accounting-core-gl/decomposition/ledger-setup-link-accounts.md` |
 | Posting Profiles & Resolve Preview | Domain/API plus generic compatibility client/preview; typed P-001 child and structured preview are Planned | `documentation/plans/business/accounting-core-gl/decomposition/ledger-setup-posting-profiles.md` |
 | Ledger Setup Integration | P-007 Web/Mobile overview sources exist; final cross-child verification is Planned | `documentation/plans/business/accounting-core-gl/decomposition/ledger-setup-integration-verification.md` |
+| Invoice QR code (`invoicing` submodule) | API-only `POST api/v1/invoices/generate-qr` and `/generate-qr-image` with `Invoices:GenerateQrCode`; no web/mobile surface or feature folder yet | `api/Modules/Accounting/ErpSystem.Modules.Accounting.Presentation/Features/Finance/Invoicing` |
 
 Every named master in these children carries separate Arabic/English business
 values. The current v2 contracts require `NameAr` and `NameEn` through API,
@@ -32,9 +33,9 @@ feature entry that implies a direct EF relationship to any other module. Use
 [`../../../system/README.md`](../../../system/README.md) for shared phase recipes
 and generated packets; never copy those rules into this catalog.
 
-The ordered implementation scope and phase-level acceptance criteria live in
-[`../phases/README.md`](../phases/README.md). Link feature entries to the phase
-that owns them rather than duplicating its common rules.
+Ordering and acceptance are owned by
+[`accounting-core-gl/SLICE-01-LEDGER-SETUP-EXECUTION.md`](../../../plans/business/accounting-core-gl/SLICE-01-LEDGER-SETUP-EXECUTION.md);
+[`../phases/README.md`](../phases/README.md) is historical traceability only.
 
 ## Feature folders
 

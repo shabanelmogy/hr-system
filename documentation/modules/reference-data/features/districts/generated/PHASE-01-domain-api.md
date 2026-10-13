@@ -89,5 +89,5 @@ existing-system review, implementation order, and Definition of Done.
 | districts-api | 6 | `e85e987e62cb205b6cc5a86b34fc905b3c977386331cdf9d5f931d1369c1c4cd` |
 | districts-api | 7 | `2feb4c7d8f96c8dd6ba0bc7494d972c5451aa12890e991504fa31b6778814a0b` |
 | districts-api | 8 | `808bf1aa73ef33b6517d65ccc0aa7d5595474cb438f80fb39f8338791b3d797e` |
-| districts-api | 9 | `aeac4e735beefd1c983a5f7d3f91dbb1940654f07a65e431741ba6610e13bf65` |
+| districts-api | 9 | `f287511dedaa866c1c55eb7341ced837a27f582436bd245d00f1c85d38cd860f` |
 | districts-api | 10 | `36d563363a7c0b878ef54b12ab23dc6eb7e77e583b14c5199eeed69540539ee0` |

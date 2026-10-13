@@ -46,8 +46,8 @@ Party revisions are monotonic aggregate versions, independent of timestamps.
 The API requires the caller's expected revision and EF protects the eventual
 write with concurrency tokens. Created/updated events carry the committed
 revision so downstream projections can reject delayed or duplicate updates
-even when producer clocks differ. `AddPartyRevision` initializes existing rows
-to revision 1 without replacing their identifiers or outbox history.
+even when producer clocks differ. `Revision` is created by the baseline
+`20260914181056_InitialContacts` (bigint, default 1).
 
 The outbox health settings live under
 `Modules:Contacts:Messaging:Outbox` as `MaxDeadRows` and

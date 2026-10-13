@@ -39,7 +39,7 @@ Before changing runtime source:
 | --- | --- |
 | Ownership and scope | `Global geographical reference data; no tenant/company owner` |
 | Fields and relationships | `NameAr, NameEn, Code, required active StateId; active Addresses block archive` |
-| Permissions and read-only | `Districts:View/Create/Edit/Delete; mobile honors shared read-only mode` |
+| Permissions and read-only | `Districts:View/Create/Edit/Archive/Restore; mobile honors shared read-only mode` |
 | List contract | `Paged server list; District fields/operators, status/State/address filters, allow-listed sorting, bounded page size` |
 | Lifecycle | `Archive/restore/bulk archive; active State and Address guards; State lifecycle resource lock; atomic bulk` |
 | Web views | `Grid, Cards, Chart, Import, and Crystal Report Required` |

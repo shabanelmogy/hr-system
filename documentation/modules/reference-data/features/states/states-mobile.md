@@ -109,7 +109,7 @@ server-list, realtime, localization, and architecture tests cover common behavio
 country-scoped duplicates, Arabic/English Country lookup, and unknown/inactive/
 ambiguous parent failures. `src/shared/importing/native-spreadsheet.test.ts`
 covers exact headers, 5 MiB/100-row policy primitives, formula rejection, and
-uncertain status classification. `api/__tests__/state-bulk-api.test.ts` covers the
+uncertain status classification. `data/remote/__tests__/state-bulk-remote.test.ts` covers the
 exact normalized JSON envelope; screen/API/query tests cover view visibility,
 response parsing, and root invalidation.
 

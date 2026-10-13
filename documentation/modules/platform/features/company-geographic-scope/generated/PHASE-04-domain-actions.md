@@ -61,8 +61,8 @@ invalidation, success test, and failure test. Use `N/A` only with a reason.
 | company-geographic-scope-master | 6 | `9d04a80c2c93889c60d4297aa019d135681c1a82cc7469955d3b0006820ea131` |
 | company-geographic-scope-master | 7 | `4aabfce40f78278ebe9253ba61344d31ffa99b0fc6fb6aca579a2125cdcac9c6` |
 | company-geographic-scope-master | 8 | `65fc3239cb85c7b89cc4ef1cff4b2e7a50841d135b61b801509f28181ab56a39` |
-| company-geographic-scope-api | 6 | `4c7325830581e9f774857e293389ab0ef21a42011c58fb9c04dde46d4826e658` |
-| company-geographic-scope-api | 7 | `8b064dc66d590bb7728278089f799c6361489d43850fa7962ebd821d8dee4ab6` |
+| company-geographic-scope-api | 6 | `5c3773134aa9039de86d921d969914787a5388fe2d3a02ab36210ca7b88fa013` |
+| company-geographic-scope-api | 7 | `d23bc874ee7611bcc29af1a353c87f9a204c10b1dae3642520dcce9a318a5f19` |
 | company-geographic-scope-api | 8 | `ba0b1e02daf665b95a48fb4a54a6a8c86b44395bf86072e537c73051af7afbf6` |
 | company-geographic-scope-web | 6 | `156fd2d38448a65011a95c4ed1b37f631c20c4851be8ed6cd40976bd07856b88` |
 | company-geographic-scope-web | 7 | `a1d2dff67a286d586bbfc2a669c49253e86ee6f048e9ba66fc5a47911b4e7a8b` |
@@ -70,4 +70,4 @@ invalidation, success test, and failure test. Use `N/A` only with a reason.
 | company-geographic-scope-web | 9 | `51536e77c2451697af22e2e1645199cf228217eb192e7954d58827bdebfe0893` |
 | company-geographic-scope-mobile | 9 | `19987636dcb8207d611b556d35c73b73354b7911b848189ed3b4b9ac7459059d` |
 | company-geographic-scope-mobile | 10 | `f375fdb887b65c19f6c2b8338a7758f5b820cda56bfd0f5918f5bd87816f50ba` |
-| company-geographic-scope-mobile | 11 | `e662955d031606b0591f09c9827e45ea328b5c45f28faec7fe1ad21798cc83b9` |
+| company-geographic-scope-mobile | 11 | `aa8b7359d37b364e4b0e565b3490a336403178fdb66d8d7f10c2725c78603737` |

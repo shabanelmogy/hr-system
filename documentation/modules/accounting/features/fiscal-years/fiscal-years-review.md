@@ -84,8 +84,9 @@ Current markers without clearing a legitimate Current year that progressed beyon
 Open. Changing Current clears the previous row before setting the target
 inside the same company lock and SQL transaction so the filtered unique index is
 never transiently violated. Fiscal Year
-permissions are assigned through the runtime system-role seeding path. HR's
-`HrDbContext` and `ErrorsService` do not own this feature.
+permissions are declared by the Accounting `ledger-setup` submodule and granted to
+system roles by Platform `PlatformSystemRoleStartupTask` reconciliation; no
+migration grants them. HR does not own this feature.
 
 ## 5. Authorization and ownership
 

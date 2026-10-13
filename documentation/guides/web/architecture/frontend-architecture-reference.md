@@ -56,9 +56,12 @@ under `src/platform`, and application chrome under `src/shell`.
 
 | Owner | Current directories | Dependency notes |
 | --- | --- | --- |
-| Platform | `advanced-tools`, `auth`, `file-manager`, `global-search`, `modules`, `notifications`, `realtime`, `tenant-access`, `tenant-admins`, `tenants` | Depends only on shared/low-level infrastructure. Business modules register integrations such as realtime invalidation into Platform public APIs. |
-| HR | `attendance-devices`, `basic-data`, `home`, `recruitment`, `workforce-planning` | HR-owned workforce, recruitment, attendance, and organizational capabilities. |
-| Accounting | `fiscal-years` plus module definition and module-local infrastructure | Fiscal Years is owned by Accounting and is exposed to dependent modules only through the Accounting public API. |
+| Platform | `advanced-tools`, `auth`, `company-geographic-scope`, `file-manager`, `global-search`, `modules`, `navigation`, `notifications`, `offline-operations`, `realtime`, `tenant-access`, `tenant-admins`, `tenants` | Depends only on shared/low-level infrastructure. Business modules register integrations such as realtime invalidation into Platform public APIs. |
+| ReferenceData (General Data) | `geographical-information` | Global geography and company address types; the main module. |
+| Accounting | `currencies`, `fiscal-years`, `ledger-setup` plus module definition and module-local infrastructure | Fiscal Years and Currency are owned by Accounting and exposed to dependent modules only through the Accounting public API. |
+| HR | `attendance-devices`, `basic-data`, `recruitment`, `workforce-planning` | HR-owned workforce, recruitment, attendance, and organizational capabilities. |
+| CRM | `appointments` | CRM appointments. |
+| Reporting | `crystal-report-manager` | Managed Crystal report administration. |
 | Shell | sidebar, top bar, layout, route guard | Consumes Platform public APIs and shared UI only; it does not import business-module internals. |
 | Shared | domain-neutral UI/infrastructure plus `reporting` | Must remain business-neutral. Domain report pages stay with their module owner. |
 
@@ -886,8 +889,11 @@ src/
   app/                         # Next.js App Router only; thin route adapters
   platform/                    # identity, tenancy, entitlements, platform services
   modules/
-    hr/                        # HR-owned business capabilities
+    reference-data/            # General Data (main module)
     accounting/                # Accounting-owned business capabilities
+    hr/                        # HR-owned business capabilities
+    crm/                       # CRM-owned business capabilities
+    reporting/                 # Reporting-owned administration
   shell/                       # top bar, sidebar, app/module launch composition
   shared/                      # domain-neutral reusable UI and infrastructure
   lib/                         # low-level integrations
@@ -1025,7 +1031,6 @@ size to remain reachable. Narrow layouts deliberately keep natural page scrollin
 Current examples:
 
 - Geographical reference-data pages live under `src/modules/reference-data/geographical-information`.
-- Home dashboard composition lives under `src/modules/hr/home`.
 - File listing and media preview live under `src/platform/file-manager`.
 - Advanced tools are split by capability into `external-tools`, `localization`, and `track-changes`; reusable code stays inside the owning subfeature unless it is domain-neutral and used elsewhere.
 - Notification API access, query state, realtime handling, and UI live under `src/platform/notifications`.

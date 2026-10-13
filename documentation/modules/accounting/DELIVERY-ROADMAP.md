@@ -20,6 +20,8 @@ it does not create a route or entity by itself.
 - The rest of Ledger Setup has broad Domain/API source and reachable generic client
   compatibility screens. Those screens are not completion evidence; the v2 plan
   requires typed children and approved P-001/P-005/P-006 patterns before closure.
+- API-only Invoice QR generation (`Invoices:GenerateQrCode`) exists outside the
+  accounting-core-gl plan; it has no client surface or feature book yet.
 
 ## Planned delivery order
 
@@ -37,13 +39,13 @@ the user runs or supervises the Web and actual-device journey, and explicitly
 accepts the result. The current scenario is Fiscal Years Step 01; Currency remains
 queued until that acceptance and documentation closure are recorded.
 
-1. **Foundation and configuration beyond the existing Fiscal Years slice:**
-   company/book settings, currencies, dimensions, numbering, and
-   Accounting-specific permissions. Reuse existing Platform identity, tenancy,
-   company, and branch capabilities; do not create duplicate auth or master-data
-   services.
-2. **Chart of accounts:** account hierarchy, account types, dimensions, and
-   effective-dated changes.
+1. **Ledger Setup completion:** company/book settings, currencies, dimensions,
+   journal numbering, FX, account mappings, and posting profiles already have
+   Domain/API source; the remaining work is live revalidation and typed web/mobile
+   clients per `SLICE-01-LEDGER-SETUP-EXECUTION.md`. Reuse Platform identity,
+   tenancy, company, and branch capabilities.
+2. **Chart of accounts:** account hierarchy, account types, and dimension policies
+   have source; effective-dated changes remain planned.
 3. **General ledger:** journal drafts, validation, balanced posting, reversals,
    idempotency, audit trail, and period controls.
 4. **Subledgers:** AP, AR, cash/bank, tax, and fixed assets with explicit

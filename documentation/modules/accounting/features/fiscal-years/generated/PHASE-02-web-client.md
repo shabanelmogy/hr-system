@@ -107,7 +107,7 @@ failure into partial success.
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
 | fiscal-years-master | 3 | `258121a15c42bd254f087460a281f57839ee2f56a36f373905ca0c952ed6cbe9` |
-| fiscal-years-master | 4 | `ebd6bd0e230a0825320377a85a619565c99d08381d2c12f4ab5990478f8df4f3` |
+| fiscal-years-master | 4 | `d0481d6b15707cc79ae93c6d5043d7aedc36e0769400bf7a9382d8fe9c06191c` |
 | fiscal-years-master | 6 | `225416faf8af3c0eb0b46137e7224277e9ffe1f40b17bd0395016d24ec503d41` |
 | fiscal-years-master | 7 | `45f39d7b27546945e3b010c2d2a301d70b2777fa0429c4a30f2be68a9932aca9` |
 | fiscal-years-web | 1 | `76b34317540c2a0a7266170f2cbea4f9f331f07982d2a90aca8145259950068c` |

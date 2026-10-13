@@ -4,7 +4,7 @@
 
 Workforce Planning owns the governed demand chain beginning at `FiscalYear -> WorkforcePlan`. Phase 1 implements Workforce Plans only. Budget, Envelope, Staffing Request, Recruitment linkage, Offer governance, Hire, Trace, and Plan-versus-Commitment are now implemented through Phase 6. Phase 1 source and database model are verified; EF reports no pending model changes in the configured Development database. Authenticated browser/device smoke remains intentionally not run per the user instruction.
 
-Phase 2 implements `Approved WorkforcePlan -> WorkforceBudget -> automatic PositionEnvelope` end to end across Domain, Application, Infrastructure, API, Web, and Mobile. Phase 2 source is complete and migration `20260906204810_create-workflow-budget` is applied to the configured database; authenticated Web/Mobile visual smoke was not run per the user instruction. Phases 3–6 source surfaces and migrations are implemented; live release smoke remains a manual gate.
+Phase 2 implements `Approved WorkforcePlan -> WorkforceBudget -> automatic PositionEnvelope` end to end across Domain, Application, Infrastructure, API, Web, and Mobile. Phase 2 source is complete and its tables are part of the HR baseline migration `20260914181112_InitialHr`; authenticated Web/Mobile visual smoke was not run per the user instruction. Phases 3–6 source surfaces and migrations are implemented; live release smoke remains a manual gate.
 
 ## 2. Ownership boundary
 
@@ -28,11 +28,11 @@ Web and Mobile both provide server paging, search, lifecycle and FiscalYear filt
 
 ## 7. Security and realtime
 
-The feature uses exact `WorkforcePlans:View/Create/Edit/Approve` permissions. System-role permission reconciliation runs on every API startup independently from optional sample-data seeding, preserving the contract that the built-in `admin` role receives every tenant permission in production and development. Newly issued access tokens then carry those role claims. API controllers inject `ISender` only. Successful post-commit changes dispatch company-and-permission-scoped realtime invalidation for resource `workforce-plans`; clients map that resource to their feature query keys.
+The feature uses exact `WorkforcePlans:View/Create/Edit/Approve/Archive/Restore` permissions. System-role permission reconciliation runs on every API startup independently from optional sample-data seeding, preserving the contract that the built-in `admin` role receives every tenant permission in production and development. Newly issued access tokens then carry those role claims. API controllers inject `ISender` only. Successful post-commit changes dispatch company-and-permission-scoped realtime invalidation for resource `workforce-plans`; clients map that resource to their feature query keys.
 
 ## 8. Persistence and rollout
 
-The model requires one effective plan per tenant/company/FiscalYear through a unique filtered index. Existing legacy plan tables require a corrective additive migration owned by the user; no migration was generated or applied during the correction pass. The affected tables were verified empty, but row counts must be rechecked before migration application.
+The model requires one effective plan per tenant/company/FiscalYear through a unique filtered index. The index is part of the HR baseline migration `20260914181112_InitialHr`; no corrective migration is pending.
 
 ## 9. Verification evidence
 
@@ -42,7 +42,7 @@ Focused Workforce Plan tests cover lifecycle, rejection of non-admin self-approv
 
 `WorkforceBudget` references exactly one approved plan revision and the same FiscalYear, owns immutable budget code/plan/year/revision, currency (editable only while Draft/Rejected), `CalculationPolicyVersion=2026-09-V1`, lifecycle timestamps, and derived non-writable headcount/salary/recruitment/grand totals. Each budget holds exactly one line per active plan line with server-copied Position/Branch/Department/Division snapshots, `AuthorizedHeadcount` never greater than the plan line `PlannedHiringSlots`, salary/recruitment budgets in `decimal(18,2)`, and period allocations whose headcount, salary, and recruitment sums reconcile independently and exactly. `PositionEnvelope` is system-generated only (one per approved budget line, deterministic `EnvelopeCode`, zero initial usage, derived available capacity that throws instead of clamping); no manual mutation surface exists. Approval atomically approves and activates the budget, activates the referenced plan, supersedes the previous effective pair, and materializes all envelopes in one transaction and one `SaveChangesAsync`.
 
-Phase 2 budget approval is restricted directly to the built-in `admin` role across API, Web, and Mobile. Budget read and authoring remain governed by `WorkforceBudgets:View/Manage`; a delegable `WorkforceBudgets:Approve` permission is Deferred.
+Budget reads use `WorkforceBudgets:View`. Budget authoring uses `WorkforceBudgets:Create/Edit/Submit`; approve and reject require `WorkforceBudgets:Review` in API, Web, and Mobile.
 
 ## 12. Phase 2 verification evidence
 
@@ -54,7 +54,7 @@ Phase 1 is `Source Complete / Database Applied / Visual Smoke Not Run` in the co
 
 ## 13. Phase 2 gate
 
-Phase 2 is `Source Complete / Database Applied / Smoke Pending`. Migration `20260906204810_create-workflow-budget` creates `WorkforceBudgets`, `WorkforceBudgetLines`, `WorkforceBudgetPeriodAllocations`, and `PositionEnvelopes` with the required unique indexes, foreign keys, cascades, `decimal(18,2)` money, integer enum conversion, and RowVersion concurrency. EF reports no pending model changes for the configured database. Live create/edit/submit/approve/reject/envelope-capacity smoke tests on Web and Mobile remain required before Phase 2 is fully complete.
+Phase 2 is `Source Complete / Database Applied / Smoke Pending`. The HR baseline migration `20260914181112_InitialHr` creates `WorkforceBudgets`, `WorkforceBudgetLines`, `WorkforceBudgetPeriodAllocations`, and `PositionEnvelopes` with the required unique indexes, foreign keys, cascades, `decimal(18,2)` money, integer enum conversion, and RowVersion concurrency. EF reports no pending model changes for the configured database. Live create/edit/submit/approve/reject/envelope-capacity smoke tests on Web and Mobile remain required before Phase 2 is fully complete.
 
 ## 14. Phase 3–4 staffing and recruitment bridge
 

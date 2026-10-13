@@ -64,13 +64,13 @@ authorization are separate Organizational Structure work.
 | Evidence ID | Claim | File and symbol | Verification |
 | --- | --- | --- | --- |
 | E-01 | Current HR CQRS baseline is Countries | `api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Presentation/Features/GeographicalInformation/Countries/V1/CountriesController.cs` | Source inspection |
-| E-02 | Trusted tenant/company scope is available | `api/Modules/HR/ErpSystem.Modules.HR.Application/Abstractions/Authentication/ICurrentActor.cs` | Source inspection |
+| E-02 | Trusted tenant/company scope is available | `api/BuildingBlocks/ErpSystem.BuildingBlocks.Context/Authentication/ICurrentActor.cs` | Source inspection |
 | E-03 | EF globally filters company-owned entities | `api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Persistence/HrDbContext.cs::ConfigureCompanyEntity` | Source inspection |
 | E-04 | Branch is persisted and device selection is scope-validated | `HrDbContext.cs`, `BranchConfiguration.cs`, `AttendanceDeviceConfiguration.cs` | Migration and source inspection |
 | E-05 | Only ZKTeco COM is a functioning source provider | `G:/test/ZK-READER/connector/Services/DeviceDriverRegistry.cs` | Source inspection |
 | E-06 | ZKTeco requires an x86 Windows companion | `G:/test/ZK-READER/connector/ZkConnector.csproj` | Source inspection |
 | E-07 | Existing reusable web server Grid is product-owned | `web-next/src/shared/components/data-grid/core/MyDataGrid.tsx` | Source inspection |
-| E-08 | Security audit metadata rejects secret-like keys | `api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Features/Platform/SecurityAudits/Services/SecurityAuditService.cs` | Source inspection |
+| E-08 | Security audit metadata rejects secret-like keys | `api/Modules/Platform/ErpSystem.Modules.Platform.Application/SecurityAudits/SecurityAuditService.cs` | Source inspection |
 
 ## Read and list contract
 
@@ -101,7 +101,7 @@ authorization are separate Organizational Structure work.
 | View devices/status | `AttendanceDevices:View` | Allowed | Allowed | Allowed |
 | Create/edit/enable/disable | `AttendanceDevices:Create`, `AttendanceDevices:Edit`, or `AttendanceDevices:SetStatus` for the requested action | Allowed | Allowed | Blocked |
 | Update credentials | `AttendanceDevices:EditCredentials` | Allowed | Allowed | Blocked |
-| Test/detect/pull | `AttendanceDevices:Pull` | Allowed | Test/pull blocked | Blocked |
+| Test/detect/pull | `AttendanceDevices:Test/Detect/PullUsers/PullAttendance` | Allowed | Test/pull blocked | Blocked |
 | View raw users/punches/runs | `AttendanceDevices:ViewRaw` | Allowed | Allowed | Allowed |
 
 ## Provider and Connector contract

@@ -26,7 +26,8 @@ Authorization: Bearer <token>
 | `ViewStates` | `States:View` |
 | `CreateStates` | `States:Create` |
 | `EditStates` | `States:Edit` |
-| `DeleteStates` | `States:Delete` |
+| `ArchiveStates` | `States:Archive` |
+| `RestoreStates` | `States:Restore` |
 
 ---
 
@@ -34,14 +35,19 @@ Authorization: Bearer <token>
 
 | Method | Path | Permission | Description |
 |--------|------|------------|-------------|
-| GET | `/api/v1/states` | ViewStates | Get all states |
-| GET | `/api/v1/states/by-country/{countryId}` | ViewStates | Get states for a specific country |
-| GET | `/api/v1/states/{id}` | ViewStates | Get state by ID |
-| GET | `/api/v1/states/{id}/districts` | ViewStates | Get state with its districts |
-| POST | `/api/v1/states` | CreateStates | Create a new state |
-| PUT | `/api/v1/states` | EditStates | Update a state |
-| DELETE | `/api/v1/states/{id}` | DeleteStates | Soft delete / restore |
-| GET | `/api/v1/states/count` | ViewStates | Get active state count |
+| GET | `/api/v1/states` | ViewStates | Server-paged management list |
+| GET | `/api/v1/states/lookup` | ViewStates | Active selector data (optional parent filter) |
+| GET | `/api/v1/states/by-country/{countryId}` | ViewStates | Active states for one country |
+| GET | `/api/v1/states/{id}` | ViewStates | Detail |
+| GET | `/api/v1/states/{id}/districts` | ViewStates | Record with its districts |
+| POST | `/api/v1/states` | CreateStates | Create one record (201) |
+| POST | `/api/v1/states/bulk` | CreateStates | Atomically create several records (201) |
+| PUT | `/api/v1/states/{id}` | EditStates | Update one active record (200) |
+| DELETE | `/api/v1/states/{id}` | ArchiveStates | Archive one active record (204) |
+| POST | `/api/v1/states/bulk-archive` | ArchiveStates | Atomically archive up to 100 records (200) |
+| POST | `/api/v1/states/{id}/restore` | RestoreStates | Restore one archived record (204) |
+
+There is no count endpoint and no hard delete; archive and restore are separate operations.
 
 ---
 
@@ -79,17 +85,6 @@ Authorization: Bearer <token>
 }
 ```
 
-### StatesCountResponse
-
-```json
-{
-  "count": 27,
-  "state": null,
-  "action": null
-}
-```
-
----
 
 ## Endpoint Details
 
@@ -191,12 +186,12 @@ Use this before loading districts for a specific state.
 
 ---
 
-### PUT /api/v1/states
+### PUT /api/v1/states/{id}
 
 **Permission:** `EditStates`  
-**Description:** Updates an existing state. Send the full object including the existing `id`.
+**Description:** Updates an existing state. The route `id` identifies the record; only active records can be updated.
 
-**Request Body:** Same as POST but `id` must be the existing record's ID.
+**Request Body:** Same fields as POST.
 
 **Response 200:** Returns the updated state.
 
@@ -213,8 +208,8 @@ Use this before loading districts for a specific state.
 
 ### DELETE /api/v1/states/{id}
 
-**Permission:** `DeleteStates`  
-**Description:** Toggles soft-delete. Calling on an active record deletes it; calling again restores it.
+**Permission:** `ArchiveStates`  
+**Description:** Archives one active record. Use `POST /api/v1/states/{id}/restore` (`RestoreStates`) to restore it, and `POST /api/v1/states/bulk-archive` for up to 100 records at once.
 
 **Response 204:** No content.
 
@@ -228,19 +223,6 @@ Use this before loading districts for a specific state.
 
 ---
 
-### GET /api/v1/states/count
-
-**Permission:** `ViewStates`  
-**Description:** Returns the count of active (non-deleted) states.
-
-**Response 200:**
-```json
-{
-  "count": 27
-}
-```
-
----
 
 ## Validation Rules
 
@@ -287,7 +269,7 @@ When building an address form that needs Country → State → District:
 2. On country select, load states: `GET /api/v1/states/by-country/{countryId}`
 3. On state select, load districts: `GET /api/v1/districts/by-state/{stateId}`
 
-### Delete Behaviour
+### Archive behaviour
 
-- If the API returns **400** on delete, show: *"This state cannot be deleted because it has associated districts."*
-- If the API returns **204**, toggle the row's visual state (soft delete — do not remove from list)
+- Archive returns **400** (`*InUseBy*` error) when active districts still use this state; show the localized dependency message.
+- Archive and restore return **204**; refresh the list (archived rows stay visible under the archived/all status filter).

@@ -48,7 +48,7 @@ This is the applied evidence ledger for the current Countries feature. The detai
 | --- | --- | --- |
 | E-API-01 | Controller remains thin and sends typed CQRS messages | `api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Presentation/Features/GeographicalInformation/Countries/V1/CountriesController.cs` |
 | E-API-02 | Read behavior is server-driven and deterministic | `api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Infrastructure/Features/GeographicalInformation/Countries/Persistence/CountryReadStore.cs` |
-| E-API-03 | Dependency-sensitive writes own one transaction and shared lifecycle resource, then schedule side effects after commit | `IUnitOfWork`, `HrDbContext`, geographical lifecycle resources, Country/State handlers, and `CountryChangeScheduler` |
+| E-API-03 | Dependency-sensitive writes own one transaction and shared lifecycle resource, then schedule side effects after commit | `IReferenceDataUnitOfWork`, `ReferenceDataDbContext`, geographical lifecycle resources, Country/State handlers, and `CountryChangeScheduler` |
 | E-WEB-01 | One hook owns list query state | `web-next/src/modules/reference-data/geographical-information/countries/hooks/useCountryGridLogic.ts` |
 | E-WEB-02 | Toolbar and grid options are reusable shared components | `web-next/src/shared/components/data-grid/toolbar/` |
 | E-WEB-03 | Page composition supports grid, cards, chart, report, and import | `CountriesMultiView.tsx` |

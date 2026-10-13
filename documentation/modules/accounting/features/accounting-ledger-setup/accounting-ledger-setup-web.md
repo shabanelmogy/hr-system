@@ -90,8 +90,7 @@ P-004 remains Candidate and cannot authorize a screen.
 
 ## 8. Currency ownership migration UX
 
-The existing HR Organizational Structure Currency management route is retired once
-the Accounting currency screen is live. Existing HR forms needing a currency
+No HR Currency management route exists. HR forms needing a currency
 selector consume the Accounting currency lookup while retaining their HR-owned
 business data as CurrencyCode.
 

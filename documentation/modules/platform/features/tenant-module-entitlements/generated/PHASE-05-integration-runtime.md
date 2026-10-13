@@ -49,8 +49,8 @@ realtime, notification, localization, report, or Import integration is reachable
 | tenant-module-entitlements-master | 7 | `fe1349efb104547e5f048e64174e844f17ad248fb17f5e0c7c4e14334bc8213f` |
 | tenant-module-entitlements-master | 9 | `60c69fc638e2b14a82907e3c7d6c6a9b1df99042b776f0ba848ff33754256bfe` |
 | tenant-module-entitlements-api | 8 | `c37c50acf4176e243388ef9a13427e4eae964c0da2d59c75c49a3ca3f8226094` |
-| tenant-module-entitlements-api | 9 | `cda0cba8aa4a43c8673c3596a8521692d458a36947bd3cbbad9c68493de2c2da` |
-| tenant-module-entitlements-api | 10 | `479d38c1e960adbe09bc5ce6f8690f88f99ada41c5d71bdc25a8197d56d9913e` |
+| tenant-module-entitlements-api | 9 | `38849e9298ee41458e8c43bba0dc5f918f82a6a57a9f42be395d85bb51ea1363` |
+| tenant-module-entitlements-api | 10 | `5f5786e9787de042ace942379192494d4721791a92efd6192f61da06b60c24ff` |
 | tenant-module-entitlements-web | 8 | `d4c14b4558540d754cb3e913b31c7e64094dae39e2379900ab39260604f220bf` |
 | tenant-module-entitlements-web | 10 | `c9741f4295a0f3bfcef368eb33169cf605fe7780f4da9e426f973be8201c681b` |
 | tenant-module-entitlements-web | 13 | `8d4e22b075f697513becfe7f146ec4fa5f7448c429f001a46927bb8b448c0529` |

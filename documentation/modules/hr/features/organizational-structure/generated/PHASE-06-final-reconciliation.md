@@ -53,9 +53,9 @@ decision. A focused test pass alone is never a `Ready` decision.
 | --- | ---: | --- |
 | organizational-structure-master | 8 | `2d14109ce3bb4835c1ac94307acaf5e892e36ded76f27395197546348229812d` |
 | organizational-structure-master | 9 | `7ceb12bb46037333513809999525207b50465f1d803c98dc76366d8248e070c6` |
-| organizational-structure-master | 10 | `41ee6758ac0ad41189b8b22a4ce8f8f1c40ee896425aaddf17e126b610a79006` |
-| organizational-structure-api | 10 | `691c8be03efd3ce06ac8b599b24b3736ef9b3f74d8da99e0a19cbe28d593839f` |
-| organizational-structure-api | 11 | `983231e35dc3ecfe7c2be3558d67b36323cd4b8e1dfdc4365b64d9b854d497cf` |
+| organizational-structure-master | 10 | `460d49060669fcc93df86baf738d69ca3d175048e21ab9e81eca9aafbaf6f5d3` |
+| organizational-structure-api | 10 | `46a8a38217724b9f5f77d9a0a1907516d853b42cdf62c072da7b1c29eac2f395` |
+| organizational-structure-api | 11 | `c3015d3ed607b4a16258242a9c6e1e11258b4ef73a59b05c366a836452b6f99a` |
 | organizational-structure-web | 12 | `47bd148ad14a10bc644220bc5aef78ccdea786580624e58b049cf19d3969d1d9` |
 | organizational-structure-web | 13 | `f426db9a30f8de5984d35e6fcfbd4c2e466f6f573c87b20ee831432a35f69058` |
 | organizational-structure-web | 14 | `ccb774cb65e6215e4e7d48268156c08a255ffe261a2598faeb6027c045d835f8` |

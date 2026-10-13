@@ -66,7 +66,7 @@ profile and do not leave an unreachable route, component, or translation surface
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
 | states-master | 3 | `11eb828b5ab01b440915284f32842ff110624d6f4f7a57b77d5dde5f7ce9ca4b` |
-| states-master | 4 | `5a6d15c81abe80fbc5e13715f385f8a978b6482153ba7cec90474f46b6886ebf` |
+| states-master | 4 | `bdd06ecc021be41977ee565c556463820df58f7b4a9de63ff75642bda7486eb3` |
 | states-master | 6 | `b8c91c53fff7908b583e3690463b7effdbab5394ed9d327133e8c755d3234223` |
 | states-master | 7 | `b5da7829b71468e37781ede303a63f4d1427b75982c54dc61b24c700c3a5ba8e` |
 | states-mobile | 1 | `36f536a172405f5822b722894810743121e730f10532981ae313647308ee7ad3` |
@@ -82,5 +82,5 @@ profile and do not leave an unreachable route, component, or translation surface
 | states-mobile | 11 | `a658c758cf1ad2b2ee4e64cfe6ecc5c5c16418220248aa4cd02df51a1ced4063` |
 | states-mobile | 12 | `7536843d769e8361a410f15eec2b76d37720f6bb7ef92aaeb086714bf585dc5f` |
 | states-mobile | 13 | `24f6000520d5146bb64caa497764c9efa2ef091e3fcd14608655ff065cec0c8b` |
-| states-mobile | 14 | `878d6ee91cf9a0c0fbbad61869a28448bd5abe694f3c8ad4fa6943c2ce49221e` |
+| states-mobile | 14 | `a0fde356dc3744931b4f192dfdb22ee8bedace0d3602839351983dbd5508dfa1` |
 | states-mobile | 15 | `b3b8a55cb4cbf29648648d312dc0d12f8fa6c2673bb0c40e6123a12247f18acd` |

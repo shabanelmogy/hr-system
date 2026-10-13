@@ -8,7 +8,7 @@
 | Identifier | Positive integer `Id` |
 | Ownership scope | Global Platform reference data; access requires `super_admin` plus action permission |
 | Lifecycle | Active, archived, restore; no hard delete and no toggle endpoint |
-| Permissions | `Countries:View`, `Countries:Create`, `Countries:Edit`, `Countries:Delete` |
+| Permissions | `Countries:View`, `Countries:Create`, `Countries:Edit`, `Countries:Archive`, `Countries:Restore` |
 | Persistence | EF Core/SQL Server through `ReferenceDataDbContext` and the module-owned `IReferenceDataUnitOfWork` |
 | Application pattern | One MediatR command/query per controller action |
 | Post-commit integration | Hangfire notification and permission-scoped realtime event |
@@ -68,17 +68,16 @@ ErpSystem.Modules.ReferenceData.Infrastructure/Features/GeographicalInformation/
     CountryChangeScheduler.cs
     CountryChangedJob.cs
 
-Modules/HR/ErpSystem.Modules.ReferenceData.Presentation/Features/GeographicalInformation/Countries/V1/
+Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Presentation/Features/GeographicalInformation/Countries/V1/
   CountriesController.cs
 ```
 
 Registration and composition also require:
 
 - `ReferenceDataDbContext.Countries` and assembly-applied EF configurations;
-- `EntitiesService` scoped registrations for read/write stores, audit trail,
-  scheduler and `CountryChangedJob`;
-- `DatabaseService` scanning `IValidationQuery` implementations;
-- `MapsetrService` scanning the Application assembly for `IRegister` mappings;
+- `AddReferenceDataInfrastructure` registering read/write stores, audit trail,
+  scheduler, `CountryChangedJob`, and `ICountryValidationQueries`;
+- `AddReferenceDataMapster` registering the feature mappings;
 - application MediatR/FluentValidation discovery;
 - EN/AR error resources and permission constants.
 
@@ -137,7 +136,7 @@ write bodies.
 ## 4. Controller and Permission Contract
 
 `CountriesController` is `[ApiController]`, API version `1.0`, uses the common
-versioned base route, requires `[Authorize(Roles = AppRoles.super_admin)]`, injects only `ISender`, and sends
+versioned base route, requires `[Authorize(Roles = PlatformRoleNames.SuperAdmin)]`, injects only `ISender`, and sends
 one request per action.
 
 | Method/path | Slice | Permission | Success |
@@ -149,9 +148,10 @@ one request per action.
 | `POST /` | `CreateCountryCommand` | Create | `201` plus `Location` and detail body |
 | `POST /bulk` | `CreateCountriesCommand` | Create | `201 CreateCountriesResponse` |
 | `PUT /{id}` | `UpdateCountryCommand` | Edit | `200 CountryDetailResponse` |
-| `DELETE /{id}` | `ArchiveCountryCommand` | Delete | `204` |
-| `POST /bulk-archive` | `BulkArchiveCountriesCommand` | Delete | `200 BulkArchiveCountriesResponse` |
-| `POST /{id}/restore` | `RestoreCountryCommand` | Delete | `204` |
+| `DELETE /{id}` | `ArchiveCountryCommand` | Archive | `204` |
+| `POST /bulk-archive` | `BulkArchiveCountriesCommand` | Archive | `200 BulkArchiveCountriesResponse` |
+| `POST /{id}/restore` | `RestoreCountryCommand` | Restore | `204` |
+| `GET /report-data` | `GetCountryReportDataQuery` | View | `200` |
 
 There is deliberately no country count endpoint, CRUD service, hard-delete
 endpoint or lifecycle toggle. Page metadata owns `totalCount`; archive and
@@ -216,7 +216,8 @@ concurrent requests, not only within one handler call. `IReferenceDataUnitOfWork
 opens one database transaction and acquires deterministic transaction-owned SQL
 Server application locks. Country archive/restore, State create/bulk/update/restore,
 and Company Geographic Scope replacement share
-`GeographicalInformation:Country:<id>` resources. This serializes active Country
+`GeographicalInformation:Country:<id>` resources (the name is published as
+`ReferenceDataLockResources.Country` in the ReferenceData contracts). This serializes active Country
 invariants for State, Company registration, and Company operating scope without
 relying on stale pre-save checks. Multi-resource locks are de-duplicated and sorted
 before they are acquired to avoid order-dependent deadlocks. In-memory test
@@ -276,7 +277,7 @@ state failures.
 
 ## 8. Audit, Notification and Realtime
 
-- `HrDbContext` owns ordinary created/updated audit metadata.
+- `ReferenceDataDbContext` owns ordinary created/updated audit metadata.
 - Archive handlers set deleted actor, machine and UTC timestamp explicitly;
   restore clears them.
 - Update calls `CountryAuditTrail.RecordUpdate` before mapping the candidate into
@@ -317,7 +318,7 @@ are tenant-owned. The main API, not the Crystal service, owns the reusable
 
 | Concern | Applied contract |
 |---|---|
-| Ownership | `ReportTemplate` and immutable `ReportTemplateRevision` extend `TenantAuditableEntity`; `HrDbContext` derives and filters `TenantId` |
+| Ownership | `ReportTemplate` and immutable `ReportTemplateRevision` extend `TenantAuditableEntity`; `ReportingDbContext` derives and filters `TenantId` |
 | Uniqueness | Template name is unique within `(TenantId, FeatureKey)`; another tenant may reuse the same name |
 | Public reads | `GET /api/v1/report-templates?featureKey=countries` and `GET /{id}` return active published templates only |
 | Author reads | `GET /manage`, `GET /manage/{id}`, and revision routes require Edit and can read the current tenant's drafts/lifecycle state |
@@ -328,7 +329,7 @@ are tenant-owned. The main API, not the Crystal service, owns the reusable
 | Definition safety | Maximum 1 MiB UTF-8, JSON object with non-empty `Name` and object `Body`, SHA-256 content hash, and rejection of credentials, database strings, absolute URLs, or unapproved endpoints |
 | Approved source | `GET /api/v1/report-templates/data-sources?featureKey=countries` declares JSON `endpoint=/api/v1/countries/report-data` |
 | Runtime data | `GET /api/v1/countries/report-data` requires `super_admin` and `Countries:View`, returns active countries ordered by English name then ID, and contains no connection secrets |
-| Persistence | `AddTenantReportTemplates` migration creates templates/revisions, tenant indexes, RowVersion columns, audit FKs and append-only application enforcement |
+| Persistence | The Reporting baseline migration `20260914181153_InitialReporting` creates templates/revisions, tenant indexes, RowVersion columns, audit FKs and append-only application enforcement |
 
 The relative source path intentionally runs through the same-origin web API
 proxy. `BACKEND_URL` selects local or hosted deployment server-side, while the
@@ -359,9 +360,9 @@ endpoint; it must not accept arbitrary client URLs or database connection string
 | `CountryCqrsHandlerTests.cs` | Mapping, page/search/filter/sort, detail/relation, transaction order and lifecycle lock resources, duplicate checks, atomic bulk behavior and validators |
 | `CountryCqrsArchitectureTests.cs` | Thin controller, canonical routes/contracts, narrow ports, no obsolete business-service facade/toggle/count, feature mapping ownership |
 | `CountriesControllerCqrsTests.cs` | Every action dispatches the correct slice and returns the canonical success result |
-| `ValidationQueriesTests.cs` | Infrastructure validation-query registration |
-| `HrDbContextAuditTests.cs` | Auditable entity persistence behavior |
-| `BackgroundNotificationJobTests.cs` | Notification/realtime job infrastructure behavior |
+| `ValidationQueriesTests.cs` (Inventory.Tests) | Infrastructure validation-query registration |
+| `ReferenceDataDbContextAuditTests.cs` | Auditable entity persistence behavior |
+| `BackgroundNotificationJobTests.cs` (Platform.Tests) | Notification/realtime job infrastructure behavior |
 
 Focused gate from the repository root:
 
@@ -382,7 +383,7 @@ in-memory handler suite.
 | Simple property entity | Which invariants belong in domain methods? |
 | Integer identity | What is the authoritative identifier? |
 | Archive blocked by active states | Which dependencies block each lifecycle transition? |
-| Delete permission also restores | Does the new permission model deliberately share lifecycle permissions? |
+| Separate Archive and Restore permissions | Does the new permission model deliberately share lifecycle permissions? |
 | One post-commit change job | Which caches, notifications and downstream resources are affected? |
 | No count endpoint | Does page metadata fully satisfy every client view? |
 

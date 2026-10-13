@@ -226,7 +226,7 @@
       "id": "accounting-permissions",
       "layer": "contracts",
       "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Contracts/Authorization/AccountingPermissions.cs",
-      "purpose": "Existing Accounts View/Manage permission authority"
+      "purpose": "Existing Accounts View/Create/Edit/Archive/Restore permission authority"
     },
     {
       "id": "accounting-ledger-tests",

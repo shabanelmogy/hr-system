@@ -19,8 +19,8 @@ boundaries and focused screen composition.
 
 Extend `ROUTES.finance`, the Accounting module definition and RBAC route manifest
 for Accounts plus Accounting Setup screens. The user-facing Finance entry is one
-Ledger Setup launcher; Fiscal Years and Ledger Setup remain separate technical
-submodules to preserve server entitlement compatibility. Do not introduce another
+Ledger Setup launcher; Fiscal Years is a child of the single `acc:ledger-setup`
+submodule and its permissions are part of `AccountingPermissions.LedgerSetup`. Do not introduce another
 module code or parallel Finance root.
 
 ## 3. Domain and runtime schemas
@@ -91,7 +91,7 @@ produce placeholder picker items.
 
 ## 11. Permissions and online authority
 
-Mirror Accounts, Dimensions and AccountingSetup permissions. App read-only mode and
+Mirror the exact per-resource `AccountingPermissions` claims (Accounts, AccountHierarchyLevels, DimensionDefinitions/Values, AccountDimensionPolicies, Currencies, AccountingSettings, Books, JournalDefinitions, ExchangeRateTypes/Rates, AccountMappings, PostingProfiles). App read-only mode and
 RouteGuard block mutations/navigation appropriately. All financial setup mutations
 require server connectivity and final server confirmation.
 

@@ -11,12 +11,17 @@ linked rather than copied here.
 - Runtime foundation: six projects, a module bootstrap, and an EF Core context
   using the `rpt` schema.
 - Crystal Reports is an implemented Reporting vertical slice with domain/API
-  behavior and an active Next.js management surface. Additional Reporting
-  capabilities require their own verified contracts and tests.
+  behavior and an active Next.js management surface (`/administration/crystal-reports`).
+- Other implemented API surfaces: `report-templates` (RDLX templates with
+  revisions, used by `web-next/src/shared/reporting`), `global-crystal-reports`
+  (global geography reports), and legacy `Dashboard`, `Export`, `ExportPdf`,
+  `ReportsCategories`, and `Views` controllers (`Views` is development-only and
+  guarded by `DatabaseViews:*`). The legacy controllers have no feature book yet.
 
 Start with [ARCHITECTURE.md](ARCHITECTURE.md), then record delivery decisions
 in [DELIVERY-ROADMAP.md](DELIVERY-ROADMAP.md). Web notes are in
-[web-next/](web-next/README.md). There is no mobile surface yet.
+[web-next/](web-next/README.md). Mobile has no Reporting administration surface;
+managed report consumption uses the shared `mobile-react/src/platform/reporting` boundary.
 
 Before adding a component, service, or Contract, inventory shared BuildingBlocks
 and module-local reusable pieces. Reuse or extend compatible abstractions and

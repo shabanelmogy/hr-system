@@ -14,7 +14,7 @@ search and valid local mock drafts.
 ## 2. Routes and navigation
 
 The thin route is `app/(main)/finance/ledger-setup/currencies.tsx`, backed by
-`ROUTES.finance.ledgerSetup.currencies`. Route manifest/access require Accounting setup View and
+`ROUTES.finance.ledgerSetup.currencies`. Route manifest/access require `Currencies:View` and
 the Ledger Setup module/submodule relationship.
 
 ## 3. Runtime response validation

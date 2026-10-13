@@ -6,9 +6,9 @@ Authentication and infrastructure secrets must be supplied through environment v
 
 In `Development`, the API uses the local development key from `appsettings.Development.json` or the built-in development fallback when no key is configured. Production and non-development environments require `JwtOptions__Key` from secure configuration.
 
-`appsettings.Development.json` contains development behavior overrides but no
-database credentials. Configure LocalDB or another SQL Server through user
-secrets or environment variables before starting the API.
+The git-ignored `appsettings.json` holds the hosted SQL Server connection, and the
+git-ignored `appsettings.Development.json` holds the `Development` overrides; see
+`api/ErpSystem.Api/CONFIGURATION.md`.
 
 For Visual Studio local development, keep the Next.js server-side proxy pointed at
 the local API (`http://localhost:5293`):
@@ -18,10 +18,9 @@ BACKEND_URL=http://localhost:5293
 NEXT_PUBLIC_API_URL=http://localhost:5293/api/v1
 ```
 
-The JWT implementation is registered once as a scoped `JwtProvider`. Both
-`IJwtProvider` and `IRealtimeTokenProvider` resolve that same scoped instance;
-the concrete registration must remain present because the realtime contract
-resolves it directly.
+Token issuance is registered once as the scoped `JwtAuthenticationTokenService`
+behind `IAuthenticationTokenService`; access, selection, and realtime tokens are
+all issued through it.
 
 Run these commands from the `api/ErpSystem.Api` directory when local overrides are needed, replacing each placeholder with a development value:
 
@@ -41,7 +40,7 @@ permissions page. Configure `HangfireSettings:AllowedHosts` for every backend
 host that is allowed to serve the dashboard; local development defaults to
 `localhost`.
 
-Bootstrap accounts are optional. To create an initial administrator on an empty database, configure `BootstrapUsers:Admin:UserName`, `Email`, `FirstName`, `LastName`, and `Password` through user secrets or environment variables. No default account or password is created when those values are absent.
+Bootstrap accounts are optional. Preview bootstrap runs only when `BootstrapUsers:Enabled=true` and requires complete `SuperAdmin`, `Admin`, and `Viewer` entries (UserName, Email, FirstName, LastName, Password). No account is created when bootstrap is disabled.
 
 Hosted environment variable names use double underscores, for example `JwtOptions__Key` and `ConnectionStrings__DefaultConnection`.
 
@@ -69,7 +68,7 @@ This design avoids the operational complexity of full token-family tracking whil
 
 ## Tenant and company selection
 
-Tenant- and company-selection JWTs are short-lived, scope-specific, and single-use. Their `jti` values are stored in `AuthenticationSelectionChallenges`; the matching row is deleted atomically on the first selection attempt. Deploy the `AddAuthenticationSelectionChallenges` migration before enabling this flow. Changing the configured selection-token lifetime does not make a consumed token reusable.
+Tenant- and company-selection JWTs are short-lived, scope-specific, and single-use. Their `jti` values are stored in `AuthenticationSelectionChallenges`; the matching row is deleted atomically on the first selection attempt. The `AuthenticationSelectionChallenges` table is part of the Platform `InitialPlatform` baseline migration. Changing the configured selection-token lifetime does not make a consumed token reusable.
 
 The login flow resolves the smallest safe scope automatically. A regular user with exactly one eligible tenant and one eligible company receives a session immediately. With one tenant and multiple companies, the API skips tenant selection and returns only a company-selection challenge. With multiple tenants, it returns a tenant-selection challenge; selecting a tenant with one company issues the session directly, while multiple companies return a company-selection challenge. Selection challenges remain short-lived, scope-specific, single-use, and are required whenever an explicit choice is still necessary. A `super_admin` never receives tenant or company selection: the API resolves the first/default eligible tenant that has company access and then its first/default eligible company for the execution context. The system role still governs cross-tenant administration; resolving an execution context does not weaken tenant/company authorization or filters.
 
@@ -85,10 +84,10 @@ permission, tenant-role, email, or tenant display-name claims from the normal
 access token.
 
 After the realtime JWT signature, audience, scope, expiry, and active session are
-validated, `RealtimePrincipalClaimsLoader` reads the user's current system roles,
-active roles for the selected tenant, and known permission claims from the
-database. `GeneralHub` then builds its role, tenant-role, permission, tenant, and
-company groups from that hydrated principal. This keeps authorization current
+validated (the `RealtimeBearer` scheme checks the session through
+`ISessionValidationService`), the user's current roles and permission claims are
+loaded from the database, and `GeneralHub` builds its role, tenant-role,
+permission, tenant, and company groups through `GeneralHubGroups`. This keeps authorization current
 when role assignments change and prevents permission growth from exceeding IIS
 URL/query-string limits.
 

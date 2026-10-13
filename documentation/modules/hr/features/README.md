@@ -1,9 +1,8 @@
 # HR feature catalog
 
-This index owns HR feature references while the existing canonical books remain
-at their stable manifest paths. The links below mirror the current recipe
-manifest; they are evidence locations, not a claim that every platform surface
-is implemented. Add or change an entry only with a reviewed cross-project
+This index lists HR features. Each feature's books live in its folder below;
+a link is an evidence location, not a claim that every platform surface is
+implemented. Add or change an entry only with a reviewed cross-project
 contract and exact required-file evidence.
 
 Geography and address features (Countries, States, Districts, Address types,
@@ -16,11 +15,12 @@ and Fiscal years to [Accounting](../../accounting/features/README.md).
 | Attendance devices | [review](attendance-devices/attendance-devices-review.md) | [API](attendance-devices/attendance-devices-api.md) | [web](attendance-devices/attendance-devices-web.md) | [mobile](attendance-devices/attendance-devices-mobile.md) |
 | Organizational structure | [review](organizational-structure/organizational-structure-review.md) | [API](organizational-structure/organizational-structure-api.md) | [web](organizational-structure/organizational-structure-web.md) | [mobile](organizational-structure/organizational-structure-mobile.md) |
 | Workforce planning | [review](workforce-planning/workforce-planning-review.md) | [API](workforce-planning/workforce-planning-api.md) | [web](workforce-planning/workforce-planning-web.md) | [mobile](workforce-planning/workforce-planning-mobile.md) · [Phase 02 budgets/envelopes](workforce-planning/PHASE-02-BUDGETS-ENVELOPES-IMPLEMENTATION.md) |
-| Recruitment | [review](recruitment/recruitment-review.md) | [domain design](recruitment/recruitment-domain-design.md) — no final API profile yet | [web](recruitment/recruitment-web.md) | [mobile](recruitment/recruitment-mobile.md) |
+| Recruitment | [review](recruitment/recruitment-review.md) | [domain design](recruitment/recruitment-domain-design.md) — API implemented (9 controllers under `api/v1/recruitment/*`); profile pending | [web](recruitment/recruitment-web.md) | [mobile](recruitment/recruitment-mobile.md) |
 
-Recruitment is included as a design/review catalog entry; its API column is
-explicitly marked as a domain-design source rather than evidence of a completed
-API profile. Every other row still requires checking its required-file manifest
+Recruitment's API is implemented (requisitions, openings, postings, candidates,
+applications, interviews, offers, dashboard, settings); its API profile book is
+still to be written, so the API column points to the domain design. Recruitment
+is not yet registered in the recipe manifest. Every other row still requires checking its required-file manifest
 before claiming a complete platform implementation.
 
 Use `documentation/system/` for phase recipes and generated packets. Keep

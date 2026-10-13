@@ -55,6 +55,10 @@ const notificationRouteMap: Readonly<Record<string, AppRoute>> = {
   '/basic-data/states': ROUTES.basicData.states,
   '/basic-data/districts': ROUTES.basicData.districts,
   '/basic-data/address-types': ROUTES.basicData.addressTypes,
+  // The API emits the web super-admin geography routes for geography changes.
+  '/super-admin/geography/countries': ROUTES.basicData.countries,
+  '/super-admin/geography/states': ROUTES.basicData.states,
+  '/super-admin/geography/districts': ROUTES.basicData.districts,
 };
 
 export function resolveNotificationActionRoute(value: string | null): AppRoute | null {

@@ -149,11 +149,10 @@ Deferred by design:
   require Egypt, governorate, city/region, street, and building number; postal
   code remains optional. ETA branch/tax registration identity is a dedicated tax
   attribute and must not be inferred from the organizational `BranchCode`.
-- A Currency master entity and financial currency relationships are owned by
-  Finance/Payroll, not Geography. Until that bounded context exists,
-  `Country.CurrencyCode` is an optional normalized ISO integration value only;
-  introduce `CurrencyId`/foreign keys as part of the reviewed Finance/Payroll
-  migration rather than creating a duplicate or incomplete geography entity.
+- The Currency master is owned by Accounting (`acc.Currencies`), not Geography.
+  `Country.CurrencyCode` stays an optional normalized ISO integration value;
+  a `CurrencyId` link to Accounting would be a reviewed Contracts-based
+  integration, never a duplicate geography entity or a cross-module foreign key.
 - External address autocomplete/geocoding provider integration.
 
 ## Geographical name validation checklist

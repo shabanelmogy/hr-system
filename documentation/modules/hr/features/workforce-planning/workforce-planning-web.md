@@ -42,7 +42,7 @@ Draft/Rejected exposes Submit, Submitted exposes Begin Review, UnderReview expos
 
 ## 15. Phase 2 budgets journey
 
-`WorkforceBudgetsMultiView` mirrors the plans structure (PageHeader, server MyDataGrid, EntityCards, shared pagination/feedback). Grid and Cards show budget code, plan, FiscalYear, revision, currency, status, authorized headcount, salary, recruitment, grand total, and effective state with vertically centered status badges in both views. Filters cover status, FiscalYear, and plan; the first unfiltered option is localized `common.all`. Draft/Rejected budgets expose Edit and Submit; Submitted budgets expose Approve only to the built-in `admin` role and Reject to budget managers. A delegable approval permission is Deferred. No delete/archive action exists. Create selects an eligible approved plan from `source-plans`, loads `source-plans/{planId}`, and renders exactly one non-removable allocation line per plan line with read-only server snapshots and planned ceilings plus live client-side category sums as guidance. BudgetCode and plan are immutable after creation; currency becomes immutable after submission. Edit/view preserve all nested allocations; API field errors map to exact nested paths with first-invalid focus. Development-only mock data uses a real eligible plan and real period IDs within every ceiling with exactly distributed amounts, disabled until dependencies load.
+`WorkforceBudgetsMultiView` mirrors the plans structure (PageHeader, server MyDataGrid, EntityCards, shared pagination/feedback). Grid and Cards show budget code, plan, FiscalYear, revision, currency, status, authorized headcount, salary, recruitment, grand total, and effective state with vertically centered status badges in both views. Filters cover status, FiscalYear, and plan; the first unfiltered option is localized `common.all`. Draft/Rejected budgets expose Edit and Submit; Submitted budgets expose Approve and Reject to users with `WorkforceBudgets:Review`. No delete/archive action exists. Create selects an eligible approved plan from `source-plans`, loads `source-plans/{planId}`, and renders exactly one non-removable allocation line per plan line with read-only server snapshots and planned ceilings plus live client-side category sums as guidance. BudgetCode and plan are immutable after creation; currency becomes immutable after submission. Edit/view preserve all nested allocations; API field errors map to exact nested paths with first-invalid focus. Development-only mock data uses a real eligible plan and real period IDs within every ceiling with exactly distributed amounts, disabled until dependencies load.
 
 ## 16. Phase 2 envelopes journey
 
@@ -75,7 +75,7 @@ Required automated checks are `npm run type-check` and `npm run check:architectu
 
 ## 14. Status
 
-The Web Phase 1 surface is source-complete. Live create/edit/lifecycle and realtime smoke tests are pending the user-owned corrective migration.
+The Web Phase 1 surface is source-complete. Live create/edit/lifecycle and realtime smoke remain a manual release check.
 
 ## 18. Phase 5–6 trace and governance
 

@@ -238,7 +238,7 @@
     {
       "id": "web-route",
       "layer": "web-next",
-      "path": "web-next/src/app/(main)/(security)/administration/crystal-reports/page.tsx",
+      "path": "web-next/src/app/(main)/administration/(reporting)/crystal-reports/page.tsx",
       "purpose": "App Router entry point"
     },
     {

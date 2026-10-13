@@ -15,7 +15,7 @@ business fields in form, detail, list/search and valid mock draft.
 
 The thin App Router entry is
 `src/app/(main)/(modules)/(accounting)/finance/ledger-setup/currencies/page.tsx` at
-`/finance/ledger-setup/currencies`. Route access requires Accounting setup View; the
+`/finance/ledger-setup/currencies`. Route access requires `Currencies:View`; the
 Ledger Setup umbrella links to the child but does not render generic Currency CRUD.
 
 ## 3. Transport and contracts
@@ -63,7 +63,7 @@ list/detail reload and clears stale selection before another write.
 
 ## 10. Permissions and read-only mode
 
-View route/access remains usable with `AccountingSetup:View`. Mutation controls
+View route/access remains usable with `Currencies:View`. Mutation controls
 require the matching `Currencies:Create`, `Currencies:Edit`,
 `Currencies:Archive`, or `Currencies:Restore` permission and are suppressed when
 global read-only is active. Reads require `Currencies:View`.

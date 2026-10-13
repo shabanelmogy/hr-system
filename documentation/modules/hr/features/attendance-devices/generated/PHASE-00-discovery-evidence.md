@@ -78,9 +78,9 @@ scenarios or an explicit `N/A` with a reason.
 | attendance-devices-master | 9 | `b595373da84cb1d4786a69231c4df208ce383549198d947e238e5ca1876f2ce2` |
 | attendance-devices-api | 1 | `657e0dc0b110e3a673f2a8e7fd10aaa3d9f8270eded0052eeb15105d9796f184` |
 | attendance-devices-api | 10 | `ad145f088dff331f2b150b9d14a3ef8801af90074d3f9691ded837ea7f7c2fd8` |
-| attendance-devices-api | 11 | `9ea0355590bae25b350699fa29a7012af4e66d9ae0124fe8b1a2ffee864af9d7` |
+| attendance-devices-api | 11 | `aef05cb10a739a2e500fca1e5c9e62624af76e6f4efc510d619ef41b9d54e0ed` |
 | attendance-devices-web | 1 | `10fe314899e0ebd8070de1300f8e62417537f550f230877bbac0976b4230fa1f` |
-| attendance-devices-web | 2 | `719be5b16df21502eee669cd9e13a6cc799f5376d03966c17b0987c970836309` |
+| attendance-devices-web | 2 | `8b3180bf411c1e29ec508892fc87544793d9a42fdcbbaab3b4eed03f258f17ee` |
 | attendance-devices-web | 12 | `4904496c797104ca58942aa579a0c3ec3c502d7e3cf11badcaad2da15ead466b` |
 | attendance-devices-web | 13 | `e31751a1461e5db6998869a07fbb7f028974e7d0967fc790fee14e9336613fca` |
 | attendance-devices-mobile | 1 | `e4e99690aefc68e7b12dc0fd1f11d51b194d06c0e6448f9d3f2a37a289d1ffac` |

@@ -64,14 +64,14 @@ the health gates below.
 
    ```powershell
    Set-Location api
-   ./scripts/Apply-ErpModuleMigrations.ps1 -Configuration Release -WhatIf
+   ./scripts/Apply-ErpModuleMigrations.ps1 -Configuration Release -Environment Production -WhatIf
    ```
 
 4. Apply module-owned migrations using secret-store environment variables:
 
    ```powershell
    $env:ConnectionStrings__DefaultConnection = '<secret-store-value>'
-   ./scripts/Apply-ErpModuleMigrations.ps1 -Configuration Release
+   ./scripts/Apply-ErpModuleMigrations.ps1 -Configuration Release -Environment Production
    ```
 
    The script discovers installed modules from the explicit registry and applies

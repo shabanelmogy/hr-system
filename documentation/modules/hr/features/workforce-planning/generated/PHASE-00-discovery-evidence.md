@@ -71,13 +71,13 @@ scenarios or an explicit `N/A` with a reason.
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| workforce-planning-master | 1 | `b7baad6331938258b3267ca02b15d9b874797e5ef02a350f625cbd644ca51055` |
+| workforce-planning-master | 1 | `5c22c76383dfee9afca19ee36a2ab7ab753d8d365349caeabce9e43f5488cc0d` |
 | workforce-planning-master | 2 | `eb785fb621a27384548d676a6aa22a44d13cc7011310a141ff757e38541bc04c` |
 | workforce-planning-master | 5 | `22db93cf07be5c6356d8aec9b270f1e8e15b9f2a0fe0b20495f70c896d21107e` |
-| workforce-planning-master | 8 | `6477631f6815fb5b2b30feebace504df77a54281f6a6952394d35794f7fef815` |
+| workforce-planning-master | 8 | `dce9e7607319353e27b51d9f35eb6a190f73471a44030e8e577fa180d1ce06b9` |
 | workforce-planning-master | 9 | `618443cb9a7c4d12f71415983eb3c79478d3ea3010d923cb74e3c396eca9b440` |
 | workforce-planning-api | 1 | `d0f07c6666739dcc646fc29b2293941449978547bbabb2fcd8dd4f210491afed` |
-| workforce-planning-api | 10 | `2e1212fe37e33e9c36a2ef3e2065386885f2b4de94610164d896694b735a5774` |
+| workforce-planning-api | 10 | `e114682f7d08df8b6f37a7cf3210a087fc1d6ecf81e6e33fc2f086a9b7fca4b6` |
 | workforce-planning-api | 11 | `08821f2c666d728ce2575ab88a44d0d3e4739d9646add193aaadc029ccf02b10` |
 | workforce-planning-web | 1 | `552f78a13660c80ca0bb21d34957e5baa820750df9790bb4d8155fd135933005` |
 | workforce-planning-web | 2 | `f20e51276257b33f8be6f2ed57a0ec1a4a01e8e7a843f217c966e0afc5b96a79` |

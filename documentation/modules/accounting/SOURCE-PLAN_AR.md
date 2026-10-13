@@ -2,7 +2,7 @@
 
 الإصدار: 1.3
 التاريخ: 2026-09-19
-الحالة: مصدر Business/Domain تفصيلي ومرجع roadmap تاريخي؛ ليس سلطة التنفيذ canonical بعد اعتماد نظام `documentation/plans/`. Fiscal Years قدرة منفذة حاليًا ويجب عدم إعادة تخطيطها كـ greenfield.
+الحالة: مصدر Business/Domain تفصيلي ومرجع roadmap تاريخي؛ ليس سلطة التنفيذ canonical بعد اعتماد نظام `documentation/plans/`. Fiscal Years قدرة منفذة حاليًا ويجب عدم إعادة تخطيطها كـ greenfield، وكذلك Ledger Setup (العملات، دليل الحسابات، الأبعاد، الدفاتر، تعريفات اليوميات، أسعار الصرف، الربط وPosting Profiles) وتوليد QR للفواتير موجودة كمصدر حالي.
 الاستخدام: تحفظ الوثيقة النطاق والقواعد والسيناريوهات المحاسبية الواسعة. الترتيب الحالي للموديول يملكه `documentation/modules/accounting/DELIVERY-ROADMAP.md`، والتنفيذ الفعلي يتم بخطط capability-scoped مسجلة تحت `documentation/plans/business/`. أول خطة تنفيذية هي `accounting-core-gl`.
 
 ### خط أساس ERPSYSTEM الحالي

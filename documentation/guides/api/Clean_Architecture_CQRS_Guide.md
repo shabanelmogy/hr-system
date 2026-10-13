@@ -9,21 +9,21 @@ remains the architecture authority.
 ## Architecture
 
 The API uses a Clean Architecture modular monolith. The current runtime modules
-are HR, Accounting, Platform, Contacts, ReferenceData, Reporting, Inventory, CRM, and PointOfSale. Each module follows the same
+are (in registry order) Platform, ReferenceData (General Data), Contacts, Accounting, HR, CRM, Inventory, PointOfSale, and Reporting. Each module follows the same
 six-project shape, while shared technical primitives live in neutral
 BuildingBlocks:
 
 ```text
 ErpSystem.Api (generic host)
-    -> ErpSystem.Modules.HR (bootstrap)
-    -> ErpSystem.Modules.Accounting (bootstrap)
     -> ErpSystem.Modules.Platform (bootstrap; technical/internal)
+    -> ErpSystem.Modules.ReferenceData (bootstrap; General Data, the main module)
     -> ErpSystem.Modules.Contacts (bootstrap)
-    -> ErpSystem.Modules.ReferenceData (bootstrap)
-    -> ErpSystem.Modules.Reporting (bootstrap)
-    -> ErpSystem.Modules.Inventory (bootstrap)
+    -> ErpSystem.Modules.Accounting (bootstrap)
+    -> ErpSystem.Modules.HR (bootstrap)
     -> ErpSystem.Modules.CRM (bootstrap)
+    -> ErpSystem.Modules.Inventory (bootstrap)
     -> ErpSystem.Modules.PointOfSale (bootstrap)
+    -> ErpSystem.Modules.Reporting (bootstrap)
 
 Module bootstrap
     -> own Application + Infrastructure + Presentation
@@ -37,7 +37,8 @@ Contracts, Domain
     -> no project dependencies by default
 
 Shared BuildingBlocks
-    -> Application pipeline, Authorization, Context, Messaging, Modularity
+    -> Application pipeline, Authorization, Context, Domain, Messaging, Modularity,
+       Presentation (HTTP and correlation helpers)
 ```
 
 ## Current Project Ownership
@@ -78,9 +79,9 @@ contracts; business controllers dispatch through `ISender`. Infrastructure imple
 Application-owned ports.
 
 Keep feature code inside its owning module's Application, Infrastructure, and
-Presentation projects. Existing bounded contexts are HR, Accounting, Platform,
-Contacts, ReferenceData, Reporting, Inventory, CRM,
-and PointOfSale. Any later bounded context is created under
+Presentation projects. Existing bounded contexts are Platform, ReferenceData
+(General Data), Contacts, Accounting, HR, CRM, Inventory, PointOfSale, and
+Reporting. Any later bounded context is created under
 `api/Modules/<ModuleName>` only after its ownership is approved, following
 `MODULAR_MONOLITH_ARCHITECTURE.md`; technical preparation does not imply a
 business-module plan.
@@ -224,7 +225,7 @@ remain in the handler or a narrow feature port.
 ### Application Ports and Unit of Work
 
 Every feature should expose the smallest asynchronous read/write ports needed by
-its handlers, for example `ICountryReadStore`, `ICompanyWriteStore`, or an
+its handlers, for example `ICountryReadStore`, `ICurrencyWriteStore`, or an
 outbox interface owned by the module. Ports return Application contracts or
 transport-neutral records and never expose `DbSet`, `IQueryable`, EF entities, or
 generic repository methods. Do not introduce a generic repository over EF Core;

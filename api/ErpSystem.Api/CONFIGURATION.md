@@ -4,15 +4,18 @@
 this workspace and are intentionally ignored by Git because they may contain
 database credentials, JWT signing material, SMTP passwords, bootstrap-user
 passwords, or integration secrets. The two-file database layout is deliberate:
-`appsettings.json` contains the hosted SQL Server connection that is packaged for
-the current deployment, while `appsettings.Development.json` overrides it with
+`appsettings.json` contains the hosted SQL Server connection used locally and by
+the EF design-time factories, while `appsettings.Development.json` overrides it with
 LocalDB whenever the environment is `Development`.
 
 Both local files are excluded from `dotnet publish` and Visual Studio publish
 (`CopyToPublishDirectory="Never"` in `ErpSystem.Api.csproj`), so publishing from a
 developer machine never overwrites the host's own `appsettings.json`. Keep production
 settings on the host (its own `appsettings.json` or Control Panel environment
-variables); change them there, not through a publish.
+variables); change them there, not through a publish. To ship the local
+`appsettings.json` with Visual Studio Publish instead, delete its
+`CopyToPublishDirectory="Never"` line in `ErpSystem.Api.csproj` (keep the
+`appsettings.Development.json` line) and update this section.
 
 Use `appsettings.example.json` as the safe configuration template. For deployed
 environments, prefer the ASP.NET Core environment-variable convention, for

@@ -7,8 +7,8 @@
 
 The product is expected to grow from an ERP operating system into a SaaS platform
 with a public Job Portal and B2B/B2C commerce experiences on web and mobile.
-The current repository already has bounded modules for Platform, HR, Contacts,
-Accounting, Inventory, PointOfSale, CRM, and Reporting. Adding public channels
+The current repository already has bounded modules for Platform, ReferenceData, Contacts,
+Accounting, HR, CRM, Inventory, PointOfSale, and Reporting. Adding public channels
 inside those modules would duplicate ownership, expose private data, and make a
 future service split harder.
 

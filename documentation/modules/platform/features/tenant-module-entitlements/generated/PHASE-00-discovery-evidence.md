@@ -77,7 +77,7 @@ scenarios or an explicit `N/A` with a reason.
 | tenant-module-entitlements-master | 8 | `9e8b5674dbf4c97a1895c5d66c203aa67822631d4a66c0fc6db7f1af3d97aafe` |
 | tenant-module-entitlements-master | 9 | `60c69fc638e2b14a82907e3c7d6c6a9b1df99042b776f0ba848ff33754256bfe` |
 | tenant-module-entitlements-api | 1 | `040a7eab03d342360325a061f06bf27f1b2c9cacc8559af835b40daf87950528` |
-| tenant-module-entitlements-api | 10 | `479d38c1e960adbe09bc5ce6f8690f88f99ada41c5d71bdc25a8197d56d9913e` |
+| tenant-module-entitlements-api | 10 | `5f5786e9787de042ace942379192494d4721791a92efd6192f61da06b60c24ff` |
 | tenant-module-entitlements-api | 11 | `2a6817fbd4f4f819446478653927804e26295f987e42cfd9a22c7b13a30074f0` |
 | tenant-module-entitlements-web | 1 | `92537e75c7e2394ffe61cb474399c65abd0606a68251ac628ab549ef8182397a` |
 | tenant-module-entitlements-web | 2 | `f244e2800352bed39f0e4db75904dbdde70021e3ff14b2ac7f483256503e7687` |

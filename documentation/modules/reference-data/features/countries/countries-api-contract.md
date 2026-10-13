@@ -3,7 +3,7 @@
 Countries is the reference implementation for basic-data modules that need CQRS, server-side lists, archive/restore, lookup endpoints, and permission-aware UI.
 
 - Base URL: `/api/v1/countries`
-- Authentication: JWT bearer token and active tenant membership
+- Authentication: JWT bearer token; `super_admin` role plus the action permission
 - Content type for writes: `application/json`
 - IDs are integers
 - Query validation failures return `400`
@@ -17,7 +17,7 @@ Countries is the reference implementation for basic-data modules that need CQRS,
 | Read page, lookup, detail, states | `Countries:View` |
 | Create and bulk create | `Countries:Create` |
 | Update | `Countries:Edit` |
-| Archive, bulk archive, and restore | `Countries:Delete` |
+| Archive, bulk archive, and restore | `Countries:Archive` (archive, bulk archive); `Countries:Restore` (restore) |
 
 ## Endpoints
 
@@ -33,6 +33,7 @@ Countries is the reference implementation for basic-data modules that need CQRS,
 | `DELETE` | `/api/v1/countries/{id}` | `204` | Archive one active country |
 | `POST` | `/api/v1/countries/bulk-archive` | `200` | Atomically archive up to 100 countries |
 | `POST` | `/api/v1/countries/{id}/restore` | `204` | Restore one archived country |
+| `GET` | `/api/v1/countries/report-data` | `200` | Active countries for the managed report data source |
 
 There is deliberately no count endpoint and no toggle-delete operation. Page metadata contains `totalCount`, and lifecycle transitions are explicit archive/restore commands.
 

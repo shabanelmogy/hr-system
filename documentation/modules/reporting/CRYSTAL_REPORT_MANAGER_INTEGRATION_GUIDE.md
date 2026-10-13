@@ -143,7 +143,7 @@ All routes are below `/api/v1/crystal-reports`:
 | `GET ?entityKey={key}&search={text}` | Feature viewer | Published reports allowed for the current user/company |
 | `GET /supported-entities` | Manager | Bounded registry-owned entity key, scope, filters and contract fingerprint metadata |
 | `POST /{reportId}/render` | Feature viewer | Render the current published version as PDF |
-| `GET /manage` | Manager | Paged tenant management list |
+| `GET /manage` | Manager | Paged tenant management list (`entityKey`, `search` ≤150, `status`, `page` default 1, `pageSize` default 10, max 50; archived rows opt-in) |
 | `GET /manage/{reportId}` | Manager | Details, versions, and grants |
 | `GET /deployment-candidates?entityKey={key}` | Manager | Discover approved deployment-owned `.rpt` sources |
 | `POST /deployment-imports` | Manager | Copy a discovered source into private version storage |
@@ -154,6 +154,7 @@ All routes are below `/api/v1/crystal-reports`:
 | `POST /{reportId}/versions/{versionId}/publish` | Manager | Publish with `RowVersion` |
 | `POST /{reportId}/versions/{versionId}/revalidate` | Manager | Reinspect the same immutable source against the current contract under Upload permission/ACL |
 | `GET`, `PUT /{reportId}/access` | Manager | Read/replace current-company role grants |
+| `GET /grant-role-options` | Manager | Role choices for current-company access grants (`CrystalReportAccess:View`) |
 | `DELETE /{reportId}` | Manager | Soft archive with `RowVersion` |
 
 Global Platform Super Admin geography uses a separate read-only boundary. It
@@ -230,9 +231,10 @@ module source and the Reporting adapter.
 Add one `ICrystalReportDataProvider` implementation for the entity. The generic
 resolver remains at
 `api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/CrystalReports/Persistence/CrystalReportDataSource.cs`;
-it must not grow a feature switch. Current ReferenceData examples live in
-`ReferenceDataCrystalReportProviders.cs` and consume only the public
-`IReferenceDataReportingSource` contract.
+it must not grow a feature switch. Current examples live in
+`ReferenceDataCrystalReportProviders.cs` (public `IReferenceDataReportingSource`)
+and `AccountingCrystalReportProviders.cs` (`fiscalyears`, public
+`IAccountingReportingSource`).
 
 The profile must:
 
@@ -251,13 +253,16 @@ Every new reportable capability follows this provider pattern. Do not replace th
 allowlist with reflection, arbitrary table names, user SQL, direct cross-module
 DbContext access, or a client-supplied connection string.
 
-### 6.3 Add the Crystal runtime schema profile
+### 6.3 Add the entity to the shared contract artifact
 
-Add the matching `entityKey` and required column set to
-`api/CrystalReportGeneratorApi/Runtime/Rendering/CrystalReportProfileRegistry.cs`.
-`CrystalReportRenderService` validates that profile before binding data to the
-report. The Reporting provider columns and Crystal runtime profile must remain
-identical.
+Add the entity (key, scope, `ReportData` table, `maxRows`, ordered columns with
+type/nullability, filters, `Language` parameter) to
+`api/Modules/Reporting/ErpSystem.Modules.Reporting.Contracts/Features/Analytics/CrystalReports/managed-crystal-report-contracts.v1.json`.
+Reporting and `CrystalReportGeneratorApi` both load these exact bytes
+(`CrystalReportProfileRegistry.CreateDefault()` reads the linked artifact); do not
+edit `CrystalReportProfileRegistry.cs`. `CrystalReportRenderService` validates the
+profile before binding data, and parity tests keep provider output equal to the
+artifact.
 
 The Crystal runtime receives a private source stream and explicit-schema data from
 the Reporting API. It does not decide tenant/company scope and does not connect to
@@ -460,8 +465,9 @@ have no ERP SQL credentials and no outbound database access. The runtime needs
 only the internal HTTP path from the ERP host, its controlled report/storage
 folders, temporary storage, and the installed SAP Crystal runtime.
 
-Adding a new entity runtime profile requires deploying both the Reporting data
-provider/owning-module source and the Crystal runtime schema profile. Report content itself is then
+Adding a new entity requires deploying the Reporting data provider/owning-module
+source and the shared contract artifact entry together (deploy Reporting and
+`CrystalReportGeneratorApi` together). Report content itself is then
 imported/versioned/published through Report Manager. An unreachable runtime or
 internal authentication/configuration failure is a service-availability failure;
 an unknown entity/filter/schema is a validation/unsupported-contract failure.
@@ -504,7 +510,7 @@ A feature's managed Crystal reporting is complete only when:
 - [ ] the review records Required/Deferred/Excluded and the chosen engine;
 - [ ] one stable `entityKey` is used by folder, manager, dataset, runtime, and client;
 - [ ] report columns and filter allowlist are documented;
-- [ ] Reporting data provider and Crystal runtime profiles match;
+- [ ] the Reporting data provider matches the shared contract artifact entry;
 - [ ] SummaryInfo Title and Subject provide Arabic and English names;
 - [ ] at least one validated version is imported/uploaded and published;
 - [ ] current-company role grants include `Run` for intended users;
@@ -515,7 +521,7 @@ A feature's managed Crystal reporting is complete only when:
 
 Do not mark a report view complete because an `.rpt` exists on disk. It is
 available to a feature only after the manager owns a published version, access is
-granted, and both allowlisted runtime profiles support its `entityKey`.
+granted, and the shared contract artifact supports its `entityKey`.
 
 ## 12. Implementation anchors
 
@@ -526,8 +532,11 @@ granted, and both allowlisted runtime profiles support its `entityKey`.
 - Dataset provider:
   `api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/CrystalReports/Persistence/CrystalReportDataSource.cs`
 - Entity data providers:
-  `api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/CrystalReports/Persistence/ReferenceDataCrystalReportProviders.cs`
-- Internal runtime profile:
+  `api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/CrystalReports/Persistence/ReferenceDataCrystalReportProviders.cs` and
+  `.../AccountingCrystalReportProviders.cs`
+- Shared contract artifact:
+  `api/Modules/Reporting/ErpSystem.Modules.Reporting.Contracts/Features/Analytics/CrystalReports/managed-crystal-report-contracts.v1.json`
+- Internal runtime profile loader:
   `api/CrystalReportGeneratorApi/Runtime/Rendering/CrystalReportProfileRegistry.cs`
 - Internal runtime renderer:
   `api/CrystalReportGeneratorApi/Runtime/Rendering/CrystalReportRenderService.cs`
@@ -546,12 +555,16 @@ granted, and both allowlisted runtime profiles support its `entityKey`.
   `web-next/src/config/api/crystalReports.ts` and
   `web-next/src/modules/reporting/crystal-report-manager/services.ts`
 - Applied web consumers:
-  `web-next/src/modules/reference-data/geographical-information/countries/reports` and
-  `web-next/src/modules/reference-data/geographical-information/states/reports`
+  `web-next/src/modules/reference-data/geographical-information/{countries,states,districts,address-types}/reports` and
+  `web-next/src/modules/accounting/fiscal-years/reports/pages/FiscalYearReportPage.tsx`
 - Mobile shared service and schemas:
   `mobile-react/src/platform/reporting/data/remote/crystal-report-remote-data-source.ts` and
   `mobile-react/src/platform/reporting/data/remote/crystal-report-schemas.ts`
-- Applied mobile consumer:
-  `mobile-react/src/modules/reference-data/geography/countries/presentation/components/CountryReportView.tsx`
+- Applied mobile consumers (all compose `ManagedCrystalReportView` and
+  `useManagedReportAvailability` from `@/src/platform/reporting`):
+  `CountryReportView`, `StateReportView`, `DistrictReportView`
+  (`mobile-react/src/modules/reference-data/geography/*/presentation/components/`),
+  `AddressTypeReportView` (`.../reference-data/addresses/address-types/...`), and
+  `FiscalYearReportView` (`mobile-react/src/modules/accounting/fiscal-years/presentation/components/`)
 - Manager administration page:
   `web-next/src/modules/reporting/crystal-report-manager/CrystalReportManagerPage.tsx`

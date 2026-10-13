@@ -14,7 +14,7 @@
       "id": "api-infrastructure",
       "layer": "api",
       "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Infrastructure/Features/GeographicalInformation/Districts",
-      "minimumFiles": 5,
+      "minimumFiles": 4,
       "purpose": "District stores, auditing, and post-commit delivery"
     },
     {

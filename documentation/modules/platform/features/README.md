@@ -10,6 +10,14 @@ single source for the documentation workflow.
 | User Administration | Implemented | Platform `UsersController`, CQRS user queries/commands, scoped persistence stores, Web users route, Mobile Administration screen, and cross-client response-contract tests |
 | Role Administration and Permissions | Implemented | Platform role CQRS/controllers and module-catalog ownership metadata, Web module-first P-006 editor, Mobile responsive module selector plus screen cards, and API/Web/Mobile contract/presentation tests |
 | Company Geographic Scope | Implemented | [review](company-geographic-scope/company-geographic-scope-review.md) · [API](company-geographic-scope/company-geographic-scope-api.md) · [web](company-geographic-scope/company-geographic-scope-web.md) · [mobile](company-geographic-scope/company-geographic-scope-mobile.md) |
+| Tenant Module Entitlements | Implemented | [review](tenant-module-entitlements/tenant-module-entitlements-review.md) · [API](tenant-module-entitlements/tenant-module-entitlements-api.md) · [web](tenant-module-entitlements/tenant-module-entitlements-web.md) · [mobile](tenant-module-entitlements/tenant-module-entitlements-mobile.md) |
+| Authentication and sessions | Implemented (no feature book yet) | `AuthController`, `AccountController`, `GoogleAuthController`; tenant/company selection; web login and mobile sign-in |
+| Tenants and tenant administrators | Implemented (no feature book yet) | `TenantsController`, `TenantAdminsController`; web `super-admin/(platform)/tenants`; mobile `tenant-management` |
+| User invitations | Implemented (no feature book yet) | `UserInvitationsController` |
+| Module catalog | Implemented (no feature book yet) | `ModulesController` (`/api/v1/modules`, tenant entitlements) |
+| Files, notifications, localization | Implemented (no feature book yet) | `FilesController`, `NotificationsController`, `LocalizationController` |
+| Security audits and change history | Implemented (no feature book yet) | `SecurityAuditsController`, `EntityChangeLogsController` |
+| API keys, offline operations, background jobs | Implemented (no feature book yet) | `ApiKeysController`, `OfflineOperationsController`, `BackgroundJobsController` (Hangfire dashboard at `/hangfire`) |
 
 Add further entries only when the corresponding runtime and verification evidence
 exists, and mark future ideas as Planned or Deferred.

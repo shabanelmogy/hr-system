@@ -13,4 +13,10 @@ single source for the documentation workflow.
 - Contacts-owned transactional outbox; Accounting consumes the public events
   through its durable inbox into an Accounting-owned party reference projection.
 - Focused tests cover duplicate delivery, scope isolation, retry, and serialized
-  outbox-to-inbox flow.
+  outbox-to-inbox flow (`api/Tests/ErpSystem.IntegrationTests/`
+  `ContactsReferenceWorkflowTests`, `IntegrationEventDispatchTests`,
+  `OutboxCompositionTests`, `ContactsAuthorizationTests`; module tests
+  `ContactsApplicationPipelineTests`, `ContactsOutboxHealthCheckTests`).
+- Outbox runtime: `ContactsOutbox`, `ContactsOutboxDispatcher`, and the hosted
+  `ContactsOutboxDispatcherWorker`; health check `contacts-outbox`
+  (`ContactsOutboxDispatcherOptions`: `MaxDeadRows = 0`, `MaxDueBacklogAge = 30 min`).

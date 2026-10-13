@@ -2,7 +2,7 @@
 
 ## 1. Feature Inventory
 
-The feature owner is `src/modules/hr/basic-data/company-geographic-scope`; the thin route is `app/(main)/basic-data/organizational-structure/geographic-scope.tsx`.
+The feature owner is `src/platform/tenant-administration/company-geographic-scope`; the thin route is `app/(main)/basic-data/organizational-structure/geographic-scope.tsx`.
 
 ## 2. Route and Navigation
 
@@ -42,7 +42,7 @@ Save is disabled while busy, when clean, without Manage permission, or in read-o
 
 ## 11. Reuse Boundary
 
-Do not add local table, pagination, search field, selector, card, state, button, toast, authorization, or API-client primitives. Controlled multi-row selection is an optional domain-neutral `AppDataTable.rowSelection` capability; the feature owns only Country columns, localized labels, default-country action, and event-to-form mapping. Keep private schemas/hooks inside the feature and export only the screen through the Basic Data public API.
+Do not add local table, pagination, search field, selector, card, state, button, toast, authorization, or API-client primitives. Controlled multi-row selection is an optional domain-neutral `AppDataTable.rowSelection` capability; the feature owns only Country columns, localized labels, default-country action, and event-to-form mapping. Keep private schemas/hooks inside the feature and export only the screen through its `index.ts`.
 
 ## 12. Localization
 

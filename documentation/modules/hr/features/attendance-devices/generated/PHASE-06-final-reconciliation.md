@@ -55,7 +55,7 @@ decision. A focused test pass alone is never a `Ready` decision.
 | attendance-devices-master | 9 | `b595373da84cb1d4786a69231c4df208ce383549198d947e238e5ca1876f2ce2` |
 | attendance-devices-master | 10 | `232015a2b2367bb5fbdf1c5a19a8e211fb10f237ebcd5cb1ead3b55da122ae75` |
 | attendance-devices-api | 10 | `ad145f088dff331f2b150b9d14a3ef8801af90074d3f9691ded837ea7f7c2fd8` |
-| attendance-devices-api | 11 | `9ea0355590bae25b350699fa29a7012af4e66d9ae0124fe8b1a2ffee864af9d7` |
+| attendance-devices-api | 11 | `aef05cb10a739a2e500fca1e5c9e62624af76e6f4efc510d619ef41b9d54e0ed` |
 | attendance-devices-web | 12 | `4904496c797104ca58942aa579a0c3ec3c502d7e3cf11badcaad2da15ead466b` |
 | attendance-devices-web | 13 | `e31751a1461e5db6998869a07fbb7f028974e7d0967fc790fee14e9336613fca` |
 | attendance-devices-web | 14 | `6b972b47ef51e99f0b627bf6d1db62532c616dc939530c049d39108ebed016c8` |

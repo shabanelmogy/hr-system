@@ -109,7 +109,7 @@ when this child is complete.
 | Duplicate/race | same company code by competing writers | DB allows one only | 409 duplicate | App + DB | integration/metadata |
 | Relationships | archived/missing parent, level or Currency | reject | validation/404-style stable error | Application | handlers |
 | Scope | foreign-company ID/reference | unavailable; no cross-company mutation | fail closed | filters/Application | isolation |
-| Permission | missing View/Manage | API rejects; client hides/guards | 403 | Presentation/client | controller/client |
+| Permission | missing View/Create/Edit/Archive/Restore | API rejects; client hides/guards | 403 | Presentation/client | controller/client |
 | Lifecycle | archive referenced Account/Level | block and retain history | 409 in-use | Application | lifecycle |
 | Concurrency | stale update/archive/restore | no overwrite | 409 | EF/Application | concurrency |
 | Proposal | no ACC codes, gaps, archived codes, large suffix | next reserved numeric suffix; no reuse | typed proposal | read store/query | proposal tests |
@@ -135,7 +135,7 @@ when this child is complete.
 | Infrastructure | Extend | LedgerSetupStores | server paging/filter/sort/count + proposal projection | query tests |
 | Persistence schema | Reuse | acc.Accounts/AccountHierarchyLevels | no migration expected | no-pending-model |
 | Presentation | Extend | AccountsController | typed page + `code-proposal` GET | controller test |
-| Permissions | Reuse | AccountingPermissions Accounts View/Manage | no new permission | permission tests |
+| Permissions | Reuse | AccountingPermissions Accounts View/Create/Edit/Archive/Restore | no new permission | permission tests |
 | Scope | Reuse | current actor + DbContext filters | no request scope | isolation |
 | Integration | Reuse | Accounting Currency | typed lookup only | client/API tests |
 | Jobs/realtime/cache | N/A/Deferred | existing client query caches | invalidate/refetch only | client tests |

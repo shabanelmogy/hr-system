@@ -65,7 +65,7 @@ customer journey reopens the owning plan decision before coding.
 | --- | --- |
 | Owning capability | Accounting → Finance → Ledger Setup → Currencies; Domain `Currency`, Currency CQRS vertical slice, `AccountingDbContext.Currencies`, `/api/v1/currencies`, Accounting Web/Mobile Currency modules. |
 | Primary relationship | `Same aggregate/capability already owns the rule` — extend/reconcile the existing capability; never create a parallel feature. |
-| Existing behavior affected | Preserve current Accounting ownership, company isolation, normalized ISO code, typed page/detail/lookup, soft lifecycle, concurrency, View/Manage permissions and HR public catalog consumption; correct only verified deviations from this child contract. |
+| Existing behavior affected | Preserve current Accounting ownership, company isolation, normalized ISO code, typed page/detail/lookup, soft lifecycle, concurrency, View/Create/Edit/Archive/Restore permissions and HR public catalog consumption; correct only verified deviations from this child contract. |
 | Existing path disposition | Existing Accounting Currency paths are canonical and retained; the older `accounting-ledger-setup` generic umbrella remains integration/history evidence, not child CRUD authority. |
 | Evidence inspected | Currency Domain/Application/Infrastructure/Presentation, `CurrencyOwnershipTests`, initial Accounting migration/model, architecture/integration ownership tests, Web Currency module/route/service/hooks/form/grid/tests, Mobile Currency module/route/remote/use-cases/schemas/screen/tests, Accounting/HR Currency Contract consumers. |
 
@@ -134,8 +134,8 @@ Accounting children and must not be copied into this aggregate.
 | Domain | Reuse | `Currency.cs` | reconcile invariants only if contract gap is proven | domain tests |
 | Application / CQRS | Reuse | Currency Commands/Queries/Contracts/Errors | preserve typed vertical slice; fill only verified contract gaps | handler/validator tests |
 | Infrastructure / persistence | Reuse | `CurrencyStores.cs`, `AccountingCurrencyCatalog.cs`, `AccountingDbContext`, initial migration | preserve scope, indexes, soft lifecycle and active catalog | model/store/catalog tests |
-| Presentation / API contract | Reuse | `CurrenciesController.cs` | keep thin `/api/v1/currencies` View/Manage surface | controller contract tests |
-| Permissions / security | Reuse | `AccountingPermissions`, endpoint attributes, client route guards | verify View/Manage/read-only parity | authorization tests |
+| Presentation / API contract | Reuse | `CurrenciesController.cs` | keep thin `/api/v1/currencies` View/Create/Edit/Archive/Restore surface | controller contract tests |
+| Permissions / security | Reuse | `AccountingPermissions`, endpoint attributes, client route guards | verify View/Create/Edit/Archive/Restore/read-only parity | authorization tests |
 | Tenant / company / business scope | Reuse | `ICurrentActor`, Accounting global filters | no client-owned scope | isolation tests |
 | Migration / data compatibility | Reuse | `20260922091842_InitialAccounting.cs`, `InitialHr` clean baseline | no legacy migration/backfill; verify one owner | baseline migration tests |
 | Integration contracts / events / projections | Reuse | `IAccountingCurrencyCatalog` | keep active read-only cross-module catalog | HR/Accounting contract tests |

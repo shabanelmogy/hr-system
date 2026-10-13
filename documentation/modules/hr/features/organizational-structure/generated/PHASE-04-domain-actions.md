@@ -56,10 +56,10 @@ invalidation, success test, and failure test. Use `N/A` only with a reason.
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| organizational-structure-master | 3 | `e45c90794d15330609e089c888b6a6af9df12bcf5a265e1f78d93e31f39b8a8c` |
+| organizational-structure-master | 3 | `57ab452f6cc671bd93de8808d8d1766d507cf902b6269bdb0e07c8422f87249a` |
 | organizational-structure-master | 4 | `834005c26053eb5eee6e85e186c98953501eda8584fb9e30055ec9bd16391cb8` |
-| organizational-structure-master | 6 | `2fdee62992580c5d76fc63348edf52701b1e514b1c18ff8be30c53dda4d1b0bf` |
-| organizational-structure-master | 7 | `d3371766bde33eeaa333e5abee156d13b95e6c35dae25ecc9ca097037434c07c` |
+| organizational-structure-master | 6 | `3b960e2721e9df3da8e95561bbf1b7e5360891ebd8acf3c62b710b03b76021aa` |
+| organizational-structure-master | 7 | `0aec4883eaa2766ef0c3d4522286a307cff869fdad881fd36605e4bee72ee197` |
 | organizational-structure-master | 8 | `2d14109ce3bb4835c1ac94307acaf5e892e36ded76f27395197546348229812d` |
 | organizational-structure-api | 6 | `329fee341e7ab5c423c4e623c155555d646e9de947783e8c8a2bb2d412f46a60` |
 | organizational-structure-api | 7 | `e9a1bfce24a2a28512423c5054e85e1bdc1639698cad086cf1cf99e3b5d2d939` |
@@ -70,4 +70,4 @@ invalidation, success test, and failure test. Use `N/A` only with a reason.
 | organizational-structure-web | 9 | `f2277cf5c38e75285cc97507df1e7294c4ef59df2bbe4a209287722cd7db5412` |
 | organizational-structure-mobile | 9 | `a81ab1f68c57c31f0a4a4e83b9a035b17676c9c8098b2ab3ce74e33b1323c466` |
 | organizational-structure-mobile | 10 | `a63acd8c39188f4d933e677680fde79c2170aa45afe71c8cf4b896109c5bc06c` |
-| organizational-structure-mobile | 11 | `ec3e51c2ef99a1494eb03474652b596423e1d5fcc07a4ad7cf8066b0517e1b4e` |
+| organizational-structure-mobile | 11 | `df3c9d0ed6eda9a04b4c65c683e7dd621a9e354ae7d8fdb31a5d79a9a4d0929d` |

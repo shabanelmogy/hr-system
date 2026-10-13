@@ -55,7 +55,7 @@ public sealed class AccountingModule : IModule
         // exist and apply its first migration.
         await db.Database.ExecuteSqlRawAsync(EnsureSchemaSql, cancellationToken).ConfigureAwait(false);
 
-        // The initial empty-model migration (InitializeAccountingSchema) exists
+        // The baseline migration (20260922091842_InitialAccounting) exists
         // so the module history table can be created; skip only when the
         // assembly defines no migrations at all. GetMigrations() reads the
         // assembly only, without touching the database.

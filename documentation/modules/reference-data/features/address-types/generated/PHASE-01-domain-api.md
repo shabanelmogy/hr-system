@@ -86,7 +86,7 @@ existing-system review, implementation order, and Definition of Done.
 | address-types-api | 3 | `bcd99f29132d1bc904561f87c62f84127bb307981918d52179f86e32f813c9bf` |
 | address-types-api | 4 | `fa3b2aaf37e4e7975ad0c3ad214ffb80cc61734289b4bf72302f4a035ff92e73` |
 | address-types-api | 5 | `894575c8bdc5eaaa64a6dc5c7b43d81fccb629ca33fc905ea1b26931f14c4628` |
-| address-types-api | 6 | `547661ad62c069b0422d4ab8cd62d05730aee097aa745593612a67912ca82030` |
+| address-types-api | 6 | `3f9a357b6350f19d730109a61f17ec94738bc5501e5a81c4408f307a257d5688` |
 | address-types-api | 7 | `ff2127841a678a5f0fbb58bd3cfcf06b6e6cea807adc3c2f1f1efc059e9455d7` |
 | address-types-api | 8 | `cdb4949380cc226db6ab4f53b730f5b4fd93333e08d1f8deef641ea2c1e2c358` |
 | address-types-api | 9 | `9eac4ef8037553fd9cd38e3c7775bcb54bc0cc69d5623ebef2f804da7c5427a5` |

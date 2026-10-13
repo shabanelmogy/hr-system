@@ -86,14 +86,15 @@ one submodule, and checks the tenant grant. Unknown permissions fail closed.
 ## 9. Database migration
 
 The Platform-owned migration creates both tables in `platform` with tenant and
-module composite keys. The exact migration name is deployment-owned because
-the development database is being regenerated per module.
+module composite keys; it is part of the Platform baseline
+`20260914181129_InitialPlatform`.
 
 ## 10. Tests and diagnostics
 
 TenantUserFoundationTests and PlatformScopeIsolationTests verify entitlement
-ownership, tenant/company filters, and scope-safe writes. ModuleSchemaTests
-verifies module schema declarations independently.
+ownership, tenant/company filters, and scope-safe writes. `ModuleMigrationIntegrationTests` and
+`ModulePersistenceFoundationTests` (api/Tests/ErpSystem.IntegrationTests) verify
+module schema ownership independently.
 
 ## 11. Extension rule
 

@@ -3,7 +3,7 @@ namespace ErpSystem.Modules.ReferenceData.Application.Features.GeographicalInfor
 public static class GeographicalLifecycleLocks
 {
     public static string Country(int countryId) =>
-        $"GeographicalInformation:Country:{countryId}";
+        ErpSystem.Modules.ReferenceData.Contracts.CompanyGeography.ReferenceDataLockResources.Country(countryId);
 
     public static string State(int stateId) =>
         $"GeographicalInformation:State:{stateId}";

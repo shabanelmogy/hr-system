@@ -15,7 +15,7 @@ is Verified/Closed and provides the exact five-entity artifact/fingerprint.
 This child is limited to entity-aware template inspection, validation lifecycle,
 current-fingerprint publish/render gates, development migration and stable errors.
 
-## 2. Existing-system evidence
+## 2. Existing-system evidence (pre-implementation baseline; superseded by this child)
 
 - `CrystalReportInspectionService` currently rejects saved data, subreports and
   connection metadata but does not receive an entity or compare report fields.

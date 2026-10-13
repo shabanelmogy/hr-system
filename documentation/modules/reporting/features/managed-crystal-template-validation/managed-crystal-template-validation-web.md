@@ -70,3 +70,4 @@ keyboard/focus accessible and responsive using shared components.
 Web is Deferred, not silently complete. This child may close with no Web edit only
 after API/runtime verification and explicit downstream handoff evidence.
 
+> Update: the selector and revalidation UI deferred here were delivered by `managed-crystal-manager-experience` (Web profile Verified 2026-09-29); this child's Web disposition is historical.

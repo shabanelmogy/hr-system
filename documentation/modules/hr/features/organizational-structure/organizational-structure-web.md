@@ -1,22 +1,21 @@
 # Organizational Structure Next.js Implementation Profile
 
 Status: final implementation profile. Routes: one page per resource under
-`/basic-data/organizational-structure/{branches|departments|divisions|job-titles|job-levels|positions|job-descriptions}`.
+`/basic-data/organizational-structure/{branches|departments|divisions|job-titles|job-levels|positions|job-descriptions|cost-centers}`.
 
 ## 1. Boundary and route
 
 Each App Router page is thin and renders the feature-owned management page with
 its fixed resource. Route access requires `OrganizationalStructure:View`;
-mutations additionally require the matching action permission. The index and
-legacy `/basic-data/organizational-structure` and
-`/basic-data/organizational-structure/manage` routes redirect to `branches`.
+mutations additionally require the matching action permission. The index
+`/basic-data/organizational-structure` redirects to `branches`.
 
 ## 2. Feature ownership
 
 Types live under `web-next/src/modules/hr/basic-data/organizational-structure/management/types`,
 the service is the only caller of `apiService`, hooks own React Query keys and
-mutations, and the seven resource page components (`BranchesPage` through
-`JobDescriptionsPage`) compose the fixed resource result. Realtime imports the
+mutations, and the eight resource page components (`BranchesPage` through
+`CostCentersPage`) compose the fixed resource result. Realtime imports the
 feature public API only.
 
 ## 3. Shared composition

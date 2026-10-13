@@ -4,7 +4,7 @@
 Browser implementation of phase-one raw attendance integration.
 
 ## 2. Source Map and Ownership
-Feature boundary is `web-next/src/modules/hr/attendance-devices`; App Router entries are thin under `web-next/src/app/(main)/attendance-devices`.
+Feature boundary is `web-next/src/modules/hr/attendance-devices`; App Router entries are thin under `web-next/src/app/(main)/(modules)/(hr)/attendance-devices`.
 
 ## 3. HTTP Contract
 Use only config/api/attendanceDevices.ts. Types/services follow exact API DTOs;

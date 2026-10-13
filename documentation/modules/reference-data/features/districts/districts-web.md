@@ -9,7 +9,7 @@ global managed Crystal view and requires `super_admin` plus
 
 ## 2. Route and composition
 
-The thin app route at `app/(main)/super-admin/geography/districts/page.tsx` renders `DistrictsPage`; it is `super_admin` only. The page owns dialogs and delegates all list behavior to `useDistrictGridLogic` and `DistrictsMultiView`.
+The thin app route at `app/(main)/super-admin/(reference-data)/geography/districts/page.tsx` renders `DistrictsPage`; it is `super_admin` only. The page owns dialogs and delegates all list behavior to `useDistrictGridLogic` and `DistrictsMultiView`.
 
 ## 3. Transport and types
 
