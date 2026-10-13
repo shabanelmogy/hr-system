@@ -13,9 +13,14 @@ or direct infrastructure calls.
 - Integrations: stable identifiers, transport-neutral Contracts, and explicit
   events/handlers at module boundaries.
 
-This file is a generated foundation record. Replace generic statements with
-verified symbols as the module grows; do not claim a feature is implemented
-until its runtime, API, clients, and tests exist.
+Verified symbols (2026-10-13): `ReportingDbContext` (schema `rpt`) maps
+CrystalReports, CrystalReportVersions, CrystalReportRoleGrants, ReportsCategories,
+ReportMasters, ReportsDetails, ReportTemplates, and ReportTemplateRevisions;
+migrations `20260914181153_InitialReporting` and
+`20260927154405_AddManagedCrystalTemplateValidation`. Submodules: `analytics` and
+`global-geography-reports` (global access mode). Reporting owns the Syncfusion
+license registration and reads other modules only through their reporting
+Contracts (`IReferenceDataReportingSource`, `IAccountingReportingSource`).
 
 Reuse-first is part of the module workflow: search shared BuildingBlocks and
 local abstractions before creating a new piece, and keep domain logic local.

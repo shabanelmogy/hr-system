@@ -67,7 +67,7 @@ are complete.
   successfully to one LocalDB database and a second migration pass is idempotent.
 - **EF model/migration drift:** all `9/9` registered modules pass, including CRM.
 - **NuGet direct/transitive vulnerability audit:** `74` projects audited, `0` known findings.
-- **Documentation system:** `77/77` registered recipes pass check mode.
+- **Documentation system:** `77/77` registered recipes passed check mode on 2026-09-14 (125 recipes are registered as of 2026-10-13; run `Generate-Documentation.ps1 -Check` for the current count).
 - **Whitespace gate:** repository-wide `git diff --check` passes with no
   non-warning findings.
 - **Hidden-test gate:** no `Compile Remove` test hiding and no skipped tests in the

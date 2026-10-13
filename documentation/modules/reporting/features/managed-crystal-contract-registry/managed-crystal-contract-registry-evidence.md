@@ -29,9 +29,9 @@
 
 | ID | Classification | Claim | Exact evidence | Consequence |
 | --- | --- | --- | --- | --- |
-| E-01 | Verified current | Runtime supports four hard-coded entities. | `CrystalReportProfileRegistry.cs::CreateDefault` | Replace source; add Fiscal Years via artifact. |
-| E-02 | Verified current | Runtime profile stores entity plus required names only. | `CrystalReportProfileRegistry.cs::CrystalReportProfile` | Add exact metadata. |
-| E-03 | Verified current | Render schema check only finds missing names. | `CrystalReportRenderService.cs::ValidateSchema` | Exact enforcement remains later; registry enables it. |
+| E-01 | Pre-implementation baseline (superseded 2026-09-27: the runtime now loads the shared contract artifact) | Runtime supports four hard-coded entities. | `CrystalReportProfileRegistry.cs::CreateDefault` | Replace source; add Fiscal Years via artifact. |
+| E-02 | Pre-implementation baseline (superseded 2026-09-27: the runtime now loads the shared contract artifact) | Runtime profile stores entity plus required names only. | `CrystalReportProfileRegistry.cs::CrystalReportProfile` | Add exact metadata. |
+| E-03 | Pre-implementation baseline (superseded 2026-09-27: the runtime now loads the shared contract artifact) | Render schema check only finds missing names. | `CrystalReportRenderService.cs::ValidateSchema` | Exact enforcement remains later; registry enables it. |
 | E-04 | Verified current | Fiscal Years provider emits 16 fields and Code/Name filters. | `AccountingCrystalReportProviders.cs::FiscalYearsCrystalReportDataProvider` | Freeze schema/nullability. |
 | E-05 | Verified current | Reporting DI registers Fiscal Years provider. | Reporting `DependencyInjection.cs` | Provider exists. |
 | E-06 | Verified current | Web/Mobile use `fiscalyears`. | `FiscalYearReportPage.tsx`; `FiscalYearReportView.tsx` | No client key change. |

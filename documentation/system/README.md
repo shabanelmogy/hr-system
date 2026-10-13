@@ -64,11 +64,10 @@ notes, while this directory remains the single authority for shared recipes,
 templates, manifests, generated packets, and decision vocabulary. Do not copy a
 shared rule into a module package.
 
-HR's current canonical books remain at their established `project/`, `api/`,
-`web-next/`, and `mobile-react/` paths so existing recipe fingerprints stay
-stable; `documentation/modules/hr/` catalogs those paths. Moving a book requires
-updating `recipe-manifest.json`, required-file manifests, links, and generated
-packets together, followed by `Generate-Documentation.ps1 -Check`.
+Every module's feature books, including HR's, live under
+`../modules/<module>/features/<feature>/`. Moving a book requires updating
+`recipe-manifest.json`, required-file manifests, links, and generated packets
+together, followed by `Generate-Documentation.ps1 -Check`.
 
 Before adding a reusable component, service, or Contract, inventory shared
 BuildingBlocks and the owning module's local pieces. Reuse or extend a compatible
@@ -76,8 +75,9 @@ abstraction and record the decision in the module book. New pieces start
 module-local and are promoted only when genuinely domain-neutral and used by
 multiple modules.
 
-`api/scripts/New-ErpModule.ps1` creates the same module package shape (including
-`phases/README.md`) atomically with each new runtime module; the package records
+`api/scripts/New-ErpModule.ps1` creates the four-file module package (`module.json`,
+`README.md`, `ARCHITECTURE.md`, `DELIVERY-ROADMAP.md`) atomically with each new
+runtime module; the package records
 foundation facts only until feature evidence is added.
 
 ## Layout
@@ -89,14 +89,14 @@ foundation facts only until feature evidence is added.
 | `New-FeatureDocumentation.ps1` | Safe implementation request, draft artifact, required-file plan, and feature-scoped recipe-registration scaffold |
 | [`../guides/shared/PERMISSION_MODEL.md`](../guides/shared/PERMISSION_MODEL.md) | Exact `Resource:Action` authorization, bilingual labels, lifecycle separation, and the mandatory Permission Action Matrix |
 | `templates/` | Human-maintained phase and review templates |
-| `generated/` | Machine-generated phase packets; never edit directly |
+| `../modules/<module>/features/<feature>/generated/` | Machine-generated phase packets; never edit directly |
 | `../modules/reference-data/features/countries/required-files.json` | Source/configuration evidence needed to review Countries end to end |
 | [`../modules/reference-data/features/countries/countries-evidence.md`](../modules/reference-data/features/countries/countries-evidence.md) | Completed Countries review evidence and handoff record |
 | `../modules/reference-data/features/states/required-files.json` | Source/configuration evidence needed to review States end to end |
 | [`../modules/reference-data/features/states/states-evidence.md`](../modules/reference-data/features/states/states-evidence.md) | States review evidence, State-specific decisions, and open findings |
 | `../modules/reference-data/features/addresses/required-files.json` | Source/configuration evidence for the shared Address domain and owner links |
 | [`../modules/reference-data/features/addresses/addresses-evidence.md`](../modules/reference-data/features/addresses/addresses-evidence.md) | Address design evidence, decisions, and deferred client surfaces |
-| `generated/addresses/` | Generated phase 00–06 packets for the Address domain foundation |
+| `../modules/reference-data/features/addresses/generated/` | Generated phase 00–06 packets for the Address domain foundation |
 
 ## Commands
 
@@ -283,7 +283,7 @@ shared contract changed.
 - New planned features use recipe IDs
   `<feature>-phase-00-implementation-preflight` through
   `<feature>-phase-07-customer-education-closure`.
-- New planned features write outputs under `generated/<feature>/` from
+- New planned features write outputs under `../modules/<module>/features/<feature>/generated/` from
   `PHASE-00-implementation-preflight.md` through
   `PHASE-07-customer-education-closure.md`.
 - Existing registered 00–06 recipe IDs/outputs remain stable unless a separate

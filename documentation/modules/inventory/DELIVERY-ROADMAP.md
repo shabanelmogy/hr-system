@@ -9,7 +9,8 @@ to a later milestone; **Excluded** means outside this module's contract.
 
 - Six-project module structure and explicit host registration.
 - Module-owned `inv` database schema and migration boundary.
-- Empty feature surface awaiting the first domain slice.
+- Catalog slice (Categories, SubCategories, and their links) implemented API-only;
+  web and mobile screens are not implemented.
 
 ## Planned
 

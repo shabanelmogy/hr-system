@@ -4,8 +4,8 @@
 
 - `Tenant` represents the customer account.
 - `Company` represents an operating company owned by a tenant.
-- `UserTenantAccess` grants a user access to one or more active tenants; `ApplicationUser.TenantId` remains the legacy/default tenant value.
-- `UserCompanyAccess` grants that user access to one or more active companies in the tenant.
+- `PlatformUserTenantAccess` grants a user access to one or more active tenants; `PlatformApplicationUser.TenantId` holds the default tenant.
+- `PlatformUserCompanyAccess` grants that user access to one or more active companies in the tenant.
 - Tenant-owned and company-owned records carry explicit scope keys. EF Core query filters and `SaveChanges` checks enforce the current scope.
 - Countries, states, districts, and address types remain shared reference data.
 
@@ -14,17 +14,17 @@ This is intentionally a shared-database monolith. It does not add a tenant frame
 ## Login Flow
 
 1. The user submits credentials (or completes an external login).
-2. If the user has no available active tenant, the API returns `User.NoCompanyAccess`.
-3. For every user with at least one available tenant, including exactly one, the API returns a short-lived tenant-selection token and the available tenant options. No access or refresh token is issued at this step.
+2. If the user has no available active tenant, the API returns `Authentication.NoTenantAccess`.
+3. With exactly one tenant the API goes straight to company resolution. With more than one, it returns a short-lived tenant-selection token and the tenant options; no access or refresh token is issued at this step. A `super_admin` never receives a selection challenge.
 4. The user explicitly selects a tenant. The API validates the one-time token, user security stamp, user status, and tenant membership before resolving companies.
-5. If the selected tenant has no active company access, the API returns `User.NoCompanyAccess`.
-6. For every selected tenant with at least one active company, including exactly one, the API returns a short-lived company-selection token and the available company options. No access or refresh token is issued at this step.
+5. If the selected tenant has no active company access, the API returns `Authentication.NoCompanyAccess`.
+6. With exactly one company the API issues the session directly. With more than one, it returns a short-lived company-selection token and the company options; no access or refresh token is issued at this step.
 7. The user explicitly selects a company. Only then does the API validate the one-time token, tenant, security stamp, user status, company status, and membership before issuing normal access and refresh tokens.
 8. Access, refresh, realtime, and session responses include `tenantId` and `companyId`. Auth and session responses also expose the current company code and localized names.
 
 Tenant- and company-selection tokens are valid for five minutes by default. Each token carries a unique `jti`, which is persisted in `AuthenticationSelectionChallenges` and consumed atomically on the first selection attempt. A consumed, expired, mismatched, or replayed selection token is rejected. Selection tokens are never accepted by normal authenticated endpoints.
 
-The invariant on both clients is `credentials -> explicit tenant -> explicit company -> module launcher -> module -> submodule`. Neither web nor mobile preselects the first option, and the selection step is shown even when the list contains exactly one option. The user must make an intentional selection before Continue is enabled. Session issuance occurs only after `SelectCompany` succeeds.
+The flow on both clients is `credentials -> tenant (only when there is a choice) -> company (only when there is a choice) -> module launcher -> module -> submodule`. When a selection list is shown, neither web nor mobile preselects an option; the user must choose before Continue is enabled.
 
 ## Current Company And Switching
 
@@ -66,19 +66,9 @@ Notification persistence and SignalR delivery stay simple:
 
 The small failure window between the database save and Hangfire enqueue is accepted for these non-critical realtime updates.
 
-## Existing Database Migration
+## Database
 
-Apply the generated `AddTenantCompanyIsolation` and `AddAuthenticationSelectionChallenges` migrations before starting the application against an existing database.
-
-For an existing database with users, the migration:
-
-- Creates the default tenant and one default company.
-- Assigns existing users to the default tenant and company.
-- Backfills company and tenant keys for existing company-owned rows.
-- Creates one default `UserCompanyAccess` row per existing user.
-- Removes the obsolete refresh-token replacement hash.
-
-For a fresh database, the migration creates the schema without a company. The normal seed process creates the default tenant, bootstrap users, default company, and memberships.
+The tenant/company schema and `AuthenticationSelectionChallenges` are part of the Platform baseline migration `20260914181129_InitialPlatform`. Apply it with `api/scripts/Apply-ErpModuleMigrations.ps1`.
 
 To grant a user access to several companies, send `companyIds` in the authenticated user create/update request. When omitted, the current company is used. Company IDs must belong to active companies in the current tenant.
 
@@ -87,7 +77,7 @@ To grant a user access to several companies, send `companyIds` in the authentica
 `web-next` and `mobile-react` implement the same company-selection and company-switching behavior. Both clients:
 
 - parse the same strict company option shape: `id`, `companyCode`, `nameAr`, and `nameEn`;
-- require explicit tenant and company selection during login whenever the list is non-empty, including one-option lists;
+- show tenant and company selection during login only when the API returns a selection challenge (more than one option);
 - show current company identity in the authenticated header;
 - offer only companies returned by `auth/session`;
 - replace credentials, clear scoped state, and reconnect realtime services after a switch;
@@ -97,8 +87,8 @@ The web BFF keeps access and refresh tokens in secure HttpOnly cookies. Mobile s
 
 ## Verification Checklist
 
-- Credentials always lead to an explicit tenant challenge, followed by an explicit company challenge for the selected tenant; both challenges remain mandatory even with one option.
-- No access or refresh session is issued before `SelectCompany` completes.
+- One tenant and one company log in directly; several tenants or companies return the matching selection challenge; `super_admin` never gets a challenge.
+- No access or refresh session is issued while a selection challenge is pending.
 - Replaying the same tenant/company selection token fails.
 - The session response contains the current company in a unique available-company list.
 - Switching to an inaccessible or inactive company fails without changing client scope.

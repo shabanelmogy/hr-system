@@ -1,6 +1,6 @@
 # CustomerRelationshipManagement architecture
 
-The module is a bounded context composed through `ErpSystem.Modules.CustomerRelationshipManagement.CustomerRelationshipManagementModule`.
+The module is a bounded context composed through `ErpSystem.Modules.CRM.CrmModule`.
 The host references only the bootstrap. Contracts are the only supported
 cross-module dependency; do not add cross-module EF navigations, foreign keys,
 or direct infrastructure calls.

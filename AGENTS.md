@@ -73,7 +73,7 @@ Rules:
   created. Never register future/nonexistent runtime paths.
 - Treat `Required` as current-release and gated, `Deferred` as owned/scheduled with a reopening trigger, and `Excluded` as deliberately absent with no runtime placeholder. Decide every optional capability independently for web and mobile.
 - For a review of an existing feature, default to read-only evidence collection unless the user also asks for changes. Record verified behavior, requested behavior, intentional platform differences, and unresolved findings separately.
-- Register final canonical books, the final required-file manifest, and feature-scoped recipes under `generated/<feature>/`; do not reuse the unscoped Countries packets for another feature.
+- Register final canonical books, the final required-file manifest, and feature-scoped recipes under `documentation/modules/<module>/features/<feature>/generated/`; do not reuse the unscoped Countries packets for another feature.
 - During a new-feature draft, use the plan-aware Phase 00 and any selected reference
   packets as navigation, never as proof of the new implementation. New planned
   features use phases 00 through 07: Phase 06 is mandatory Verification &
@@ -88,10 +88,10 @@ Rules:
   record it explicitly as Required, Deferred, or Excluded. Update the relevant
   required-file manifest, recipe registration, and generated phase packets when
   the evidence surface or canonical rule changes.
-- The current geographical domain books are `documentation/modules/reference-data/features/countries/countries-review.md`,
-  `states-review.md`, `districts-review.md`,
-  `address-types-review.md`, `company-geographic-scope-review.md`,
-  and `addresses-review.md`. Keep these books synchronized with
+- The current geographical domain books are, under `documentation/modules/reference-data/features/`,
+  `countries/countries-review.md`, `states/states-review.md`, `districts/districts-review.md`,
+  `address-types/address-types-review.md`, and `addresses/addresses-review.md`, plus
+  `documentation/modules/platform/features/company-geographic-scope/company-geographic-scope-review.md`. Keep these books synchronized with
   source; do not treat generated packets as authored documentation.
 - Copy the selected reference's architecture and verification discipline, but do not copy reference-specific fields, ownership, optional views, or documented findings unless the new feature requires them.
 - At handoff, separate feature regressions, inherited repository failures,
@@ -153,8 +153,9 @@ Rules:
   feature's `validation/` or `utils/validation` module, not inline in a page or
   dialog. Server validation remains authoritative; map returned field errors back
   to the shared fields when the API identifies a field.
-- All new visible web text must be a translation key in both
-  `src/locales/en/translation.json` and `src/locales/ar/translation.json`; use
+- All new visible web text must be a translation key in both the `en.json` and
+  `ar.json` of the owning scope under `web-next/src/locales/resources/<scope>/`
+  (or `web-next/src/modules/<module>/locales/`); use
   `useTranslation` in the owning component. Preserve RTL behavior through the
   existing theme and shared components instead of applying manual directional CSS.
 - Prefer typed contracts, `unknown` plus narrowing for untrusted values, and pure
@@ -190,7 +191,7 @@ Rules:
 - Never equate updating TypeScript types, DTOs, or database columns with UI implementation. Updating contracts without re-engineering the user interface to support the new capability is considered an incomplete and failing implementation.
 - When an entity or property transitions from a primitive string to structured nested lists or child collections (e.g. structured duty sections, weighted skills, repeatable education requirements), the UI form and detail views in BOTH `web-next` and `mobile-react` must be redesigned with dedicated interactive repeaters/builders (add, edit, remove, reorder), sub-forms, and visual chips/accordions. It is strictly forbidden to leave legacy flat text fields or expect the user to manually type JSON.
 - Any architectural mode, parent-child relationship, or business flag (such as centralized vs branch-scoped departments) must have an explicit visual control (e.g., Switch, Checkbox, Segmented control) with clear bilingual helper text and dynamic conditional visibility for dependent inputs. Never rely on implicit side effects (e.g. leaving a dropdown unselected).
-- Every domain modification requires verifying the live database schema (running and applying EF migrations via `dotnet ef database update`) before claiming completion.
+- Every domain modification requires verifying the live database schema (adding and applying EF migrations via `api/scripts/Add-ErpModuleMigrations.ps1 -Name <Name> -Apply` or `Apply-ErpModuleMigrations.ps1`) before claiming completion.
 - Before reporting completion to the user, conduct a 5-point UI audit on BOTH Web and Mobile:
   1. **Creation Journey:** Can the user input all new structured data through dedicated UI controls?
   2. **Editing Journey:** Are structured collections loaded and editable without data loss?

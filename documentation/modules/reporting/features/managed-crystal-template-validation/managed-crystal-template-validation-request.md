@@ -73,7 +73,7 @@ acceptance, runtime operations, or security hardening in this child.
 | BR-006 | Saved data, DB connection metadata, subreports and unreadable SDK metadata reject before storage. | Runtime inspection | invalid report | Existing and extended negative tests. |
 | BR-007 | Successful inspection returns the exact current schema version/fingerprint and only that evidence can create `Valid`. | Runtime + Domain factory | Valid current evidence | Fingerprint parity tests. |
 | BR-008 | Version source identity/history is immutable; only named validation transitions may modify validation evidence. | Domain + DbContext | invalid transition | Domain and change-tracker tests. |
-| BR-009 | Publish requires owned `Valid` version whose fingerprint equals the current registry fingerprint. | Domain/Application | `VersionNotValidated` or `VersionContractStale` | Valid/stale/invalid publish tests. |
+| BR-009 | Publish requires owned `Valid` version whose fingerprint equals the current registry fingerprint. | Domain/Application | `CrystalReport.VersionNotValidated` or `CrystalReport.ContractStale` | Valid/stale/invalid publish tests. |
 | BR-010 | Render requires the published version to still be current-valid before opening/building/calling runtime. | Application | stable incompatible/stale error, no PDF | Renderer/data source not called on stale version. |
 | BR-011 | Import re-lists source ID/hash, downloads exact bytes, then performs the same entity-aware inspection/create flow. | Application | source-changed/unavailable/invalid | Changed hash and schema mismatch tests. |
 | BR-012 | Existing development versions are not trusted by old generic inspection. | Database migration | `NeedsRevalidation` | Migration operation/backfill assertion and live DB verification. |

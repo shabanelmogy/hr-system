@@ -10,13 +10,17 @@ linked rather than copied here.
 - Lifecycle: active modular-monolith module.
 - Runtime foundation: six projects, a module bootstrap, and an EF Core context
   using the `crm` schema.
-- Appointments is an implemented CRM vertical slice with domain/API behavior and
-  the Next.js `/appointments` surface. Other CRM capabilities remain feature-scoped
-  work and require verified contracts and tests.
+- Appointments is an implemented CRM vertical slice: API `api/v1/Appointments`
+  (`GetAll?rangeStart&rangeEnd`, `Add`, `Update`, `Delete?id=`) with
+  `Appointments:View/Create/Edit/Delete` and `[TenantMember]`; web
+  `/appointments` (`web-next/src/app/(main)/(modules)/(crm)/appointments/page.tsx`);
+  mobile `/extras/appointments` (`mobile-react/src/modules/crm`). Changes are pushed
+  through the `AppointmentChangedJob` Hangfire job and the `appointments` realtime
+  resource. Other CRM capabilities remain feature-scoped work.
 
 Start with [ARCHITECTURE.md](ARCHITECTURE.md), then record delivery decisions
 in [DELIVERY-ROADMAP.md](DELIVERY-ROADMAP.md). Web notes are in
-[web-next/](web-next/README.md). There is no mobile surface yet.
+[web-next/](web-next/README.md).
 
 Before adding a component, service, or Contract, inventory shared BuildingBlocks
 and module-local reusable pieces. Reuse or extend compatible abstractions and

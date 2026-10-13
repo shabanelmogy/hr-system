@@ -26,15 +26,12 @@ authoritative entitlement result.
 
 ## Reference business feature
 
-HR Fiscal Years is the first live feature conforming to the stabilized business
+Accounting Fiscal Years is the first live feature conforming to the stabilized business
 feature template: module ownership, public API, shared query-key factory,
 invalidating mutations, server permissions, loading/error handling, and existing
 Arabic/English behavior all pass the architecture/build/test gate without a
 Shell-specific exception.
 
-Chart of Accounts was evaluated as the intended first Accounting experiment, but
-the current Accounting backend exposes no Chart of Accounts CRUD/permission
-contract or business submodule. Creating a frontend route against an invented API
-would violate the server-authoritative rule. Accounting therefore remains a
-registered empty business boundary until that contract is introduced and
-coordinated with mobile.
+Accounting now ships `fiscal-years`, `currencies`, and `ledger-setup` (chart of
+accounts, hierarchy levels, and generic setup screens) against real API contracts;
+a frontend route is still never created against an invented API.

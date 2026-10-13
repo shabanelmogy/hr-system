@@ -54,10 +54,10 @@ The following rules apply to every new core HR feature:
 
 The CQRS foundation already exists:
 
-- `api/Modules/HR/ErpSystem.Modules.HR.Application/Abstractions/Messaging`
-- `api/Modules/HR/ErpSystem.Modules.HR.Application/Behaviors/RequestLoggingBehavior.cs`
-- `api/Modules/HR/ErpSystem.Modules.HR.Application/Behaviors/ValidationBehavior.cs`
-- `api/Modules/HR/ErpSystem.Modules.HR.Application/DependencyInjection.cs`
+- `api/BuildingBlocks/ErpSystem.BuildingBlocks.Application/Abstractions/Messaging`
+- `api/BuildingBlocks/ErpSystem.BuildingBlocks.Application/ApplicationPipeline.cs`
+  (`RequestLoggingBehavior`, `ValidationBehavior`, `AddApplicationPipeline()`)
+- each module's `Application/DependencyInjection.cs` calls `AddApplicationPipeline()`
 
 The API CQRS foundation is closed and architecture-tested. `Countries` remains a
 useful complete global-reference example: its controller dispatches through
@@ -379,14 +379,14 @@ lower-risk reference-data exception; employee and policy records normally cannot
 The App Router file is a thin adapter:
 
 ```tsx
-import { EmployeesPage } from "@/modules/hr/employees";
+import { FiscalYearsPage } from "@/modules/accounting/fiscal-years/route";
 
 export default function Page() {
-  return <EmployeesPage />;
+  return <FiscalYearsPage />;
 }
 ```
 
-`EmployeesPage` owns composition, while hooks own data/mutation/dialog state. Route
+`FiscalYearsPage` owns composition, while hooks own data/mutation/dialog state. Route
 files do not contain business tables, forms, API calls, or permission logic.
 
 ### 9.2 Required page states

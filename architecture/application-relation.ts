@@ -23,13 +23,6 @@ export class WebNextFrontend {
   }
 }
 
-export class LegacyWebReference {
-  readonly path = "web";
-  readonly status = "reference-only";
-
-  constructor(readonly replacement: WebNextFrontend) {}
-}
-
 export class MobileReactFrontend {
   readonly path = "mobile-react";
   readonly apiClient = "mobile-react/src/core/api/api-service.ts";
@@ -46,4 +39,3 @@ export class MobileReactFrontend {
 export const api = new ErpSystemApi();
 export const webNext = new WebNextFrontend(api);
 export const mobileReact = new MobileReactFrontend(api);
-export const legacyWeb = new LegacyWebReference(webNext);

@@ -210,7 +210,7 @@ is recorded.
 
 ## Adding a module
 
-The API remains authoritative for purchased/enabled modules and user permissions. Mobile module definitions describe only which server modules/submodules this build knows how to present; they never grant access by themselves. `src/shell/module-registration.ts` is the composition point that registers user-facing definitions, while technical Platform remains outside the launcher registry.
+The API remains authoritative for purchased/enabled modules and user permissions. Mobile module definitions describe only which server modules/submodules this build knows how to present; they never grant access by themselves. `src/shell/module-registration.ts` is the composition point; it registers Platform first, then ReferenceData, Accounting, HR, and CRM (API registry order).
 
 For a new user-facing ERP module:
 

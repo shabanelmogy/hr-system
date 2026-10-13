@@ -6,7 +6,7 @@
 cd G:\test\ERPSYSTEM\ERPSYSTEM\api
 ```
 
-الـ connection string بيتقري لوحده من `ErpSystem.Api\appsettings.json`، فمش محتاج تكتبه في أي أمر.
+الـ connection string بيتقري لوحده من `ErpSystem.Api\appsettings.json`، وفي بيئة Development بيتقري بعده `appsettings.Development.json` لو فيه connection string بيغيّره. للإنتاج زوّد `-Environment Production` على أمر `Apply-ErpModuleMigrations.ps1`.
 
 ---
 
@@ -98,5 +98,5 @@ dotnet ef migrations remove `
 | --- | --- |
 | `Build failed` | فيه error في الكود. شغّل `dotnet build ErpSystem.sln` وصلّحه الأول. |
 | `dotnet ef` مش معروف | نزّله مرة واحدة: `dotnet tool install --global dotnet-ef` |
-| `No effective connection string` | راجع `ConnectionStrings` في `ErpSystem.Api\appsettings.json`. |
+| `No effective connection string` | راجع `ConnectionStrings` في `ErpSystem.Api\appsettings.json` و`appsettings.Development.json`. |
 | PowerShell رافض يشغّل السكربت | شغّل مرة واحدة: `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` |

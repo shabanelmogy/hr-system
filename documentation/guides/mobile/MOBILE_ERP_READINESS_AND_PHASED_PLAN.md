@@ -33,7 +33,7 @@
 ### M01 — P1: ملكية الموديولات واشتراطات المسارات قديمة
 
 - **الدليل:** `src/platform/auth/presentation/rbac/route-access.ts:21-26` يربط كل `/basic-data` بـ`hr/basic-data`، والإدارة وextras بـ`hr/administration`، وبعض الأدوات بـ`hr/analytics`.
-- `src/modules/hr/moduleDefinition.ts` ما زال يعرّف administration/analytics/collaboration؛ `src/shell/module-registration.ts:8-9` يسجل HR وAccounting فقط.
+- `src/modules/hr/moduleDefinition.ts` ما زال يعرّف administration/analytics/collaboration؛ `src/shell/module-registration.ts` بقى يسجل Platform وReferenceData وAccounting وHR وCRM (اتحلّت 2026-10-13).
 - الـAPI الحالي يعرّف HR basic-data/recruitment/workforce/attendance فقط في `api/Modules/HR/ErpSystem.Modules.HR/HrModuleDefinition.cs`. Countries/States/Districts تتبع `reference-data/geography`، وAddressTypes تتبع `reference-data/addresses`، وCompany Geographic Scope تتبع `platform/tenant-administration`، والمواعيد `crm/appointments`، وFiscal Years تتبع `acc/fiscal-years`.
 - `RouteGuard` يقارن هذه الاشتراطات حرفياً مع كتالوج الخادم؛ المستخدم الذي لديه صلاحية صحيحة يمكن منعه بسبب submodule لم يعد موجوداً. ReferenceData وCRM لا يدخلان تقاطع mobile registry أصلاً.
 - **الإصلاح:** جرد routes → owner → API permission → entitlement، نقل features عبر كل طبقاتها للمالك الصحيح، واستخدام تعريف موحد لاشتراطات التنقل والحماية. لا تُستبدل هذه المعالجة بتجاوز RouteGuard أو منح admin صلاحيات مطلقة.

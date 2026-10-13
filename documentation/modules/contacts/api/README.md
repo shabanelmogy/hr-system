@@ -9,7 +9,7 @@ requires an authenticated tenant member. It supports `GET /{id}`, `POST`, and
 never from request payload fields.
 
 Each action requires its own live permission (`ContactsParties:View`,
-`ContactsParties:Create`, or `ContactsParties:Update`) and the tenant's
+`ContactsParties:Create`, or `ContactsParties:Edit`) and the tenant's
 `contacts/parties` entitlement. JWT permission claims alone do not grant access.
 Anonymous calls return 401 and insufficient permission/entitlement returns 403.
 

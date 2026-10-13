@@ -1,9 +1,10 @@
 # ERP System
 
 This repository contains the ASP.NET Core API, the supported Next.js browser
-client, and the Expo/React Native mobile client for an ERP System. Human
-Resources (HR) and Accounting are currently supported business areas, with the
-solution structured so future activities can be added as independent modules.
+client, and the Expo/React Native mobile client for an ERP System. General
+Data (ReferenceData), Accounting, HR, CRM, and Reporting are the currently
+supported business areas, on a Platform foundation with Contacts, Inventory, and
+PointOfSale module foundations; new activities are added as independent modules.
 
 ## Start here
 
@@ -40,20 +41,20 @@ the centralized Axios/API service and resolve the backend from
 The relationships are recorded in
 [`architecture/application-relation.ts`](architecture/application-relation.ts),
 including canonical project paths and transport owners. Graphify indexes the
-API, browser and mobile clients; `web` is excluded because it is reference-only.
+API, browser and mobile clients.
 
 ```mermaid
 flowchart LR
     Browser["Browser"] -->|"same-origin /api/*"| WebNext["web-next"]
     WebNext -->|"HTTPS/JSON via BACKEND_URL"| Api["api/ErpSystem.Api"]
     Mobile["Expo mobile-react"] -->|"HTTPS/JSON via EXPO_PUBLIC_API_URL"| Api
-    Legacy["web (reference only)"] -.->|"migration reference"| WebNext
 ```
 
 ## Main Projects
 
 - Backend: `api/ErpSystem.Api/` (solution: `api/ErpSystem.sln`)
-- Backend modules: `api/Modules/HR/` and `api/Modules/Accounting/`; each uses
+- Backend modules: `api/Modules/<Module>/` (Platform, ReferenceData, Contacts,
+  Accounting, HR, CRM, Inventory, PointOfSale, Reporting); each uses
   the canonical Contracts, Domain, Application, Infrastructure, Presentation,
   and Bootstrap projects.
 - Browser frontend: `web-next/`
