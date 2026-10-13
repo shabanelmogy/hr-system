@@ -76,7 +76,7 @@ Required automated checks are `npm run typecheck`, `npm run lint`, `npm run chec
 
 ## 15. Status
 
-The Mobile Phase 1 surface is source-complete. Live data and realtime verification are pending the user-owned corrective migration.
+The Mobile Phase 1 surface is source-complete. Live data and realtime verification remain a manual release check.
 
 ## 18. Phase 5–6 trace and governance
 

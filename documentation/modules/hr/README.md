@@ -18,9 +18,8 @@ copied here.
 
 HR owns Organizational structure, Workforce planning, Recruitment, and
 Attendance devices. The [feature catalog](features/README.md) links each one's
-cross-project review and API/web/mobile profiles; the books stay at their
-established paths so the recipe manifest and generated packets keep their
-fingerprints. Geography and addresses belong to General Data
+review and API/web/mobile profiles, each kept in its own folder under
+`features/<feature>/`. Geography and addresses belong to General Data
 ([reference-data](../reference-data/README.md)), not HR.
 
 These links are a catalog, not a claim that every HR capability is implemented
@@ -28,8 +27,8 @@ on every platform. Check each book and its required-file manifest for evidence.
 
 Start with [ARCHITECTURE.md](ARCHITECTURE.md), [DELIVERY-ROADMAP.md](DELIVERY-ROADMAP.md),
 the notes under [api/](api/README.md) and [web-next/](web-next/README.md), and
-the [phase index](phases/README.md). Mobile HR behavior is recorded in the
-existing `documentation/guides/mobile/` feature books.
+the [phase index](phases/README.md). Each feature's `-mobile.md` book records its
+Expo behavior.
 
 ## Domain guide
 

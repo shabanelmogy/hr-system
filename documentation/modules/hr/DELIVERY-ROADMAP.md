@@ -7,6 +7,14 @@ Excluded. Only source and test evidence can promote a capability to implemented.
 
 - Canonical six-project module boundary and explicit host registration.
 - `hr` schema ownership, schema migration, and module migration history.
+- Implemented features (API and web; mobile for all except attendance devices):
+  organizational structure (eight resources), workforce planning (plans,
+  budgets, position envelopes, staffing requests, envelope amendments),
+  recruitment (requisitions through hire), and attendance devices (web + local
+  agent).
+- Employee, EmployeeAssignment, and EmployeeContract persistence exists and is
+  created by the recruitment hire command; employee management API/UI is
+  Deferred (`DEF-024`).
 - Geography and address documentation is owned by General Data
   (`documentation/modules/reference-data/`), not HR.
 

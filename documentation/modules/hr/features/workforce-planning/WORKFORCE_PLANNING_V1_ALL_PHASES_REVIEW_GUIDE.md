@@ -157,12 +157,12 @@ npm --prefix ./mobile-react test -- workforce-plan-api.test.ts
 dotnet test ./api/Modules/HR/ErpSystem.Modules.HR.Tests/ErpSystem.Modules.HR.Tests.csproj --no-restore --filter "FullyQualifiedName~WorkforceBudget"
 dotnet test ./api/Modules/HR/ErpSystem.Modules.HR.Tests/ErpSystem.Modules.HR.Tests.csproj --no-restore --filter "FullyQualifiedName~Workforce"
 npm --prefix ./web-next test -- workforceBudgetService.test.ts
-npm --prefix ./mobile-react test -- workforce-budget-api.test.ts
+npm --prefix ./mobile-react test -- workforce-budget-remote-boundary.test.ts
 ```
 
 ### سيناريو Smoke المطلوب لإغلاق المرحلة
 
-1. سجل الدخول بمستخدم يملك `WorkforceBudgets:View/Manage` وبخطة Approved من Phase 1.
+1. سجل الدخول بمستخدم يملك `WorkforceBudgets:View/Create/Edit/Submit/Review` وبخطة Approved من Phase 1.
 2. افتح `/workforce-planning/budgets`. يجب ألا تظهر رسالة `An unexpected error occurred`.
 3. تحقق أن قائمة source plans لا تعرض إلا الخطط Approved الصالحة للشركة الحالية.
 4. أنشئ Budget واختر العملة، وتحقق من حساب الخطوط والإجماليات من الخادم.
@@ -179,7 +179,7 @@ npm --prefix ./mobile-react test -- workforce-budget-api.test.ts
 - قائمة Budgets وPosition Envelopes تعمل دون 500 أو trace غير معالج.
 - المصدر Approved فقط، والحسابات قابلة للمصالحة مع plan lines.
 - اعتماد Budget ذري ولا ينتج envelopes جزئية.
-- `20260906204810_create-workflow-budget` مطبقة وEF لا يكتشف pending changes.
+- الـ migration الأساسية `20260914181112_InitialHr` مطبقة وEF لا يكتشف pending changes.
 - Browser وMobile visual/simulator smoke لم تُشغّل بناءً على طلب المستخدم؛ الحالة موثقة `Not Run` ولا تُحتسب Pass.
 
 ## 7. Phase 3 — Staffing Requests & Envelope Amendments
@@ -265,7 +265,7 @@ npm --prefix ./mobile-react test -- recruitment offer hire
 1. أنشئ Offer؛ يجب أن يبدأ `Draft` ولا يصدر تلقائيًا.
 2. Submit فيصبح `PendingApproval=7`.
 3. حاول approval بواسطة المنشئ؛ يجب رفض self-approval.
-4. Approve بواسطة مستخدم `JobOffers:Approve` فيصبح `Approved=8` ويضاف history append-only.
+4. Approve بواسطة مستخدم `JobOffers:Review` فيصبح `Approved=8` ويضاف history append-only.
 5. Issue بعد Approved فقط؛ محاولة Issue من Draft أو PendingApproval يجب أن تفشل.
 6. اختبر Reject مع reason ثم تعديل/إعادة إرسال وفق العقد.
 7. تحقق أن uniqueness للحالات النشطة تشمل `1,2,3,7,8`.

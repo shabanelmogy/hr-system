@@ -36,9 +36,9 @@ Clients submit `NewHireSlots` and `ReplacementSlots` for each line. The API deri
 
 ## 8. Security and tenancy
 
-Controllers are `[TenantMember]`, inject only `ISender`, and use `WorkforcePlans:View/Create/Edit/Approve`. TenantId and CompanyId come only from `ICurrentActor`; global query filters fail closed without scope. The application reads the authenticated role through `ICurrentActor.IsInRole`: the built-in `admin` role may temporarily approve a plan it created, while creator self-approval still fails for every non-admin approver. Delegated separation-of-duties policy remains Deferred.
+Controllers are `[TenantMember]`, inject only `ISender`, and use `WorkforcePlans:View/Create/Edit/Approve/Archive/Restore` (`DELETE plans/{id}` archives; `POST plans/{id}/restore` restores). TenantId and CompanyId come only from `ICurrentActor`; global query filters fail closed without scope. The application reads the authenticated role through `ICurrentActor.IsInRole`: the built-in `admin` role may temporarily approve a plan it created, while creator self-approval still fails for every non-admin approver. Delegated separation-of-duties policy remains Deferred.
 
-Budget read and authoring routes use `WorkforceBudgets:View/Manage`, while the Phase 2 budget approval route is restricted directly to the built-in `admin` role. A delegable `WorkforceBudgets:Approve` permission is Deferred. Envelope routes use `PositionEnvelopes:View`. Permission reconciliation continues through the existing `GetTenantPermissions()` path; a new login is required for updated role or permission claims.
+Budget reads use `WorkforceBudgets:View`. Budget authoring uses `WorkforceBudgets:Create/Edit/Submit`; approve and reject require `WorkforceBudgets:Review` in API, Web, and Mobile. Envelope routes use `PositionEnvelopes:View`. Permission reconciliation continues through the existing `GetTenantPermissions()` path; a new login is required for updated role or permission claims.
 
 ## 9. Realtime and errors
 
@@ -48,7 +48,7 @@ Budget mutations dispatch `workforce-budgets`; approval additionally dispatches 
 
 ## 10. Persistence and migration gate
 
-The EF model defines unique plan-code/revision identity and unique effective plan per tenant/company/FiscalYear. A user-created `FixWorkforcePlanningPhase1Integrity` migration is required. Its generated index change must be supplemented with guarded SQL dropping the nine legacy columns listed in the review artifact because they are no longer present in the snapshot.
+The EF model defines unique plan-code/revision identity and unique effective plan per tenant/company/FiscalYear. These tables and indexes are created by the HR baseline migration `20260914181112_InitialHr`.
 
 Phase 2 adds `WorkforceBudgets`, `WorkforceBudgetLines`, `WorkforceBudgetPeriodAllocations`, and `PositionEnvelopes` with unique indexes for budget code/year, one budget per plan revision, one effective budget per company/year (`UX_WorkforceBudgets_OneEffectivePerFiscalYear`), one allocation per line/period, one envelope per line, and envelope code per company; Restrict FKs to Plan/Year/Period/Position/Branch/Department/Division/Budget/Line; Cascade Budget->Lines->Allocations; `decimal(18,2)` money; integer enums; RowVersion concurrency. Migration `20260906204810_create-workflow-budget` is applied to the configured database and EF reports no pending model changes.
 

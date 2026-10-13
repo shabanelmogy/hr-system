@@ -111,7 +111,7 @@ failure into partial success.
 | attendance-devices-master | 6 | `d4d02053ca38139b5ea51928c18352d2ad86e08b3b1308b3d3fa58fab55db761` |
 | attendance-devices-master | 7 | `433b3f83669c1abbc1d39bf7fc3c8bcf8b759e1311566bfeb4e0f5c248b302ec` |
 | attendance-devices-web | 1 | `10fe314899e0ebd8070de1300f8e62417537f550f230877bbac0976b4230fa1f` |
-| attendance-devices-web | 2 | `719be5b16df21502eee669cd9e13a6cc799f5376d03966c17b0987c970836309` |
+| attendance-devices-web | 2 | `8b3180bf411c1e29ec508892fc87544793d9a42fdcbbaab3b4eed03f258f17ee` |
 | attendance-devices-web | 3 | `d5d3a3dde52b1156d6f5f3944a98ddd18a182298fd5d64862ae9d05a4924dcc7` |
 | attendance-devices-web | 4 | `48ab583b8afafab4f25756fd659febfe53793f1111472e2c5c123076515fc3e3` |
 | attendance-devices-web | 5 | `598681c02697193b861f8d1afa88ec8e15ad3e2b922e2f2d4b9115d6d7f74c2b` |

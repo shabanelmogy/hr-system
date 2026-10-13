@@ -71,16 +71,16 @@ scenarios or an explicit `N/A` with a reason.
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| organizational-structure-master | 1 | `71db2fe3e408023183ea0423f5d4d7ca825351da3ed96091714103299e8ace2b` |
-| organizational-structure-master | 2 | `ff4399291653f7e253cc577eea31c21d204dc6503acaca730ed8f7f421c62d88` |
-| organizational-structure-master | 5 | `580f392c99251101c4ed8611122c9bea65db28348b8bf40c87f4d5026d211b2f` |
+| organizational-structure-master | 1 | `84154c9559ecc3fb6e1577fa9bcd5067b716f24dafe7a2167ddd7efcd9019d47` |
+| organizational-structure-master | 2 | `26931a01b24a0247b382048fd3147bf03e6a198eff573f3eedce876b02af1b10` |
+| organizational-structure-master | 5 | `64373031171f20599d152686d589082cb88f6365efbd1a6f9badba308f4fe785` |
 | organizational-structure-master | 8 | `2d14109ce3bb4835c1ac94307acaf5e892e36ded76f27395197546348229812d` |
 | organizational-structure-master | 9 | `7ceb12bb46037333513809999525207b50465f1d803c98dc76366d8248e070c6` |
 | organizational-structure-api | 1 | `195c929b29105c0d3f89001ca362cffca04f57fe22db2790bcfe914a83bed5e5` |
-| organizational-structure-api | 10 | `691c8be03efd3ce06ac8b599b24b3736ef9b3f74d8da99e0a19cbe28d593839f` |
-| organizational-structure-api | 11 | `983231e35dc3ecfe7c2be3558d67b36323cd4b8e1dfdc4365b64d9b854d497cf` |
-| organizational-structure-web | 1 | `dec16b367ad0e7ee598602a3b86d72f5d965e129a3d82c0d65225d7319f07dd4` |
-| organizational-structure-web | 2 | `5c9728b36db21df72217b498ed1aa17bfd6a9dc4458d14a9f711e2174162bb5f` |
+| organizational-structure-api | 10 | `46a8a38217724b9f5f77d9a0a1907516d853b42cdf62c072da7b1c29eac2f395` |
+| organizational-structure-api | 11 | `c3015d3ed607b4a16258242a9c6e1e11258b4ef73a59b05c366a836452b6f99a` |
+| organizational-structure-web | 1 | `686b00477da5652cb16fa349fa823e8796fc79781c11e5021937c1e5cf2bdbd9` |
+| organizational-structure-web | 2 | `70a8723f0f1f9193161656802c2a55e8e42a7a730aa41a577b285ba10fdd513f` |
 | organizational-structure-web | 12 | `47bd148ad14a10bc644220bc5aef78ccdea786580624e58b049cf19d3969d1d9` |
 | organizational-structure-web | 13 | `f426db9a30f8de5984d35e6fcfbd4c2e466f6f573c87b20ee831432a35f69058` |
 | organizational-structure-mobile | 1 | `c215c8134325e88449cdf71f3aef307e39768d74f52de24ad7e3080be347d8e9` |

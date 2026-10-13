@@ -78,16 +78,16 @@ existing-system review, implementation order, and Definition of Done.
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| organizational-structure-master | 3 | `e45c90794d15330609e089c888b6a6af9df12bcf5a265e1f78d93e31f39b8a8c` |
+| organizational-structure-master | 3 | `57ab452f6cc671bd93de8808d8d1766d507cf902b6269bdb0e07c8422f87249a` |
 | organizational-structure-master | 4 | `834005c26053eb5eee6e85e186c98953501eda8584fb9e30055ec9bd16391cb8` |
-| organizational-structure-master | 6 | `2fdee62992580c5d76fc63348edf52701b1e514b1c18ff8be30c53dda4d1b0bf` |
+| organizational-structure-master | 6 | `3b960e2721e9df3da8e95561bbf1b7e5360891ebd8acf3c62b710b03b76021aa` |
 | organizational-structure-api | 1 | `195c929b29105c0d3f89001ca362cffca04f57fe22db2790bcfe914a83bed5e5` |
-| organizational-structure-api | 2 | `27a7d756ca282d4db9b1ab92e5b5df45479c9f85baf87951fcdf7a45b808d95a` |
-| organizational-structure-api | 3 | `974d6b6bf0aacb6deedf8d8fd873688c9b63a23ccd029e65c9ce5a3bf19837ff` |
-| organizational-structure-api | 4 | `20cdb676a33f799a7159dd0022486bbdac6600fd2379d7345facbff042394365` |
+| organizational-structure-api | 2 | `b4fcf221d9c895f97e3863644b7a85cfe2866a727148d5c9ea224037184574fc` |
+| organizational-structure-api | 3 | `44395c8375a89c5a7b4843bd05d74f9123fa3168a5ffffb36e3cf1107cbcaf13` |
+| organizational-structure-api | 4 | `f579fa4a9a8ebdfee38560d34de014604f51e8b1a4f3092c5a286362633bad89` |
 | organizational-structure-api | 5 | `774d8fb4817c8ea45e9144a23fccd5fd51494424f90b31c6dcd8493803f65246` |
 | organizational-structure-api | 6 | `329fee341e7ab5c423c4e623c155555d646e9de947783e8c8a2bb2d412f46a60` |
 | organizational-structure-api | 7 | `e9a1bfce24a2a28512423c5054e85e1bdc1639698cad086cf1cf99e3b5d2d939` |
 | organizational-structure-api | 8 | `8427fbc60b6506434f168bbb92cebc0b07e6699dec5f0c7e336d6b0c7906c32a` |
-| organizational-structure-api | 9 | `bb97abd860546e88987447fc83aeaa058d22e9fc11562226223c3952b5391913` |
-| organizational-structure-api | 10 | `691c8be03efd3ce06ac8b599b24b3736ef9b3f74d8da99e0a19cbe28d593839f` |
+| organizational-structure-api | 9 | `ca3344c325f6847d6ebb90bdf4dad7b53c7f21be08243f517703fa79044a6a5e` |
+| organizational-structure-api | 10 | `46a8a38217724b9f5f77d9a0a1907516d853b42cdf62c072da7b1c29eac2f395` |

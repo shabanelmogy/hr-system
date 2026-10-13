@@ -51,13 +51,13 @@ decision. A focused test pass alone is never a `Ready` decision.
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| workforce-planning-master | 8 | `6477631f6815fb5b2b30feebace504df77a54281f6a6952394d35794f7fef815` |
+| workforce-planning-master | 8 | `dce9e7607319353e27b51d9f35eb6a190f73471a44030e8e577fa180d1ce06b9` |
 | workforce-planning-master | 9 | `618443cb9a7c4d12f71415983eb3c79478d3ea3010d923cb74e3c396eca9b440` |
 | workforce-planning-master | 10 | `f0483e5b18a22f5bece7dfee6ffee0d8cd3b0d1652a39cb26bac31ac9903637a` |
-| workforce-planning-api | 10 | `2e1212fe37e33e9c36a2ef3e2065386885f2b4de94610164d896694b735a5774` |
+| workforce-planning-api | 10 | `e114682f7d08df8b6f37a7cf3210a087fc1d6ecf81e6e33fc2f086a9b7fca4b6` |
 | workforce-planning-api | 11 | `08821f2c666d728ce2575ab88a44d0d3e4739d9646add193aaadc029ccf02b10` |
 | workforce-planning-web | 12 | `8e2d3c6e69e2bbc33a6d93744fb3da90edb02dc7755aaf3a4b985787b91160a8` |
 | workforce-planning-web | 13 | `5a0c7e85627cc62f56aa58ffa053de7a4135c6ceebb80224747edadb159092be` |
-| workforce-planning-web | 14 | `6a2c3d33d287447d2d09b873f2fe38abf415c769eb15d9341c837709615d0ba2` |
+| workforce-planning-web | 14 | `966211ae3b68d23826ad6e4a4c17ec04fbe4f93a2ba4774c9586232ac642d4f3` |
 | workforce-planning-mobile | 14 | `433eadc88c76ad2c72e48c5b4e683a42e208f9f2720e8a7c8017f431a55e8a16` |
 | workforce-planning-mobile | 15 | `e886a90cc9a59d080e123c96c072ea5ed243174544cdc9aa468996bc2ffc8d35` |

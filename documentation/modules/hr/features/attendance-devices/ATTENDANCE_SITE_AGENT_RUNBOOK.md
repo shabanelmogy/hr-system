@@ -12,8 +12,8 @@ device, and submits a sanitized result.
 1. Deploy the HR API with HTTPS and set `AttendanceAgent:PublicBaseUrl` to its
    externally reachable HTTPS origin. Set `AttendanceAgent:PollIntervalSeconds`
    only if the default of 15 seconds is unsuitable.
-2. Apply the application migrations, including
-   `20260826122802_AddAttendanceAgentExecutionLeases`.
+2. Apply the module migrations (`api/scripts/Apply-ErpModuleMigrations.ps1`); the
+   agent tables are part of the HR baseline `20260914181112_InitialHr`.
 3. Publish the API first, then stage the static download package into that
    publish folder:
 

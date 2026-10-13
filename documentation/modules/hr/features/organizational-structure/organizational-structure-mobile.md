@@ -1,7 +1,7 @@
 # Organizational Structure Expo Implementation Profile
 
 Status: final implementation profile. Routes: one guarded page per resource under
-`/basic-data/organizational-structure/{branches|departments|divisions|job-titles|job-levels|positions|job-descriptions}`.
+`/basic-data/organizational-structure/{branches|departments|divisions|job-titles|job-levels|positions|job-descriptions|cost-centers}`.
 
 ## 1. Boundary and guarded route
 
@@ -13,7 +13,7 @@ navigation parameters.
 ## 2. Feature modules
 
 Types, Zod runtime schemas, API serializers, query keys/hooks, validation, cards,
-chart, filter button, forms, decision form, and the seven resource screen
+chart, filter button, forms, decision form, and the eight resource screen
 compositions are feature-owned under
 `src/modules/hr/basic-data/organizational-structure`.
 
@@ -83,7 +83,7 @@ editing; rejected/draft versions remain visible according to status.
 
 ## 11. Lifecycle and permissions
 
-Archive/restore uses shared confirmation and feedback. View/Create/Edit/Delete and
+Archive/restore uses shared confirmation and feedback. View/Create/Edit/Archive/Restore and
 ApproveJobDescriptions are checked independently; read-only users cannot mutate.
 
 ## 12. Localization, RTL, and accessibility

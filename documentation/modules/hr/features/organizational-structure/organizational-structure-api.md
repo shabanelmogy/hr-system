@@ -11,7 +11,7 @@ behind the CQRS/Application boundary.
 ## 2. Resources and contracts
 
 Resources are `branches`, `departments`, `divisions`, `job-titles`, `job-levels`,
-`positions`, and `job-descriptions`. Common item responses expose id, code,
+`positions`, `job-descriptions`, and `cost-centers`. Common item responses expose id, code,
 bilingual names, parent label, status, and dates; detail responses add
 resource-specific fields. Create/update contracts never include TenantId or
 CompanyId. JobDescription contracts use PositionId and bilingual content.
@@ -24,11 +24,12 @@ CompanyId. JobDescription contracts use PositionId and bilingual content.
 `createdCount`,
 `PUT /{resource}/{id}` updates, `DELETE /{resource}/{id}` archives, and
 `POST /{resource}/{id}/restore` restores. Job descriptions additionally expose
-`POST /job-descriptions/{id}/approve` and `/reject`.
+`POST /job-descriptions/{id}/approve` and `/reject`. `GET /{resource}/{id}/change-logs`
+returns the record's audit history.
 
 ## 4. Paging and criteria
 
-`page` is one-based, `pageSize` is 1-500, and status is active/archived/all.
+`pageNumber` is one-based, `pageSize` is 1-5000, and status is active/archived/all.
 Search accepts the five fields and six operators documented in the master book;
 sort is allow-listed and deterministic by Id. Validation rejects unknown
 resource, field, operator, status, or sort values.
@@ -70,7 +71,7 @@ and expired content remains immutable.
 
 ## 9. Persistence and transaction boundary
 
-EF configurations map all seven entities. Composite foreign keys include
+EF configurations map all eight entities. Composite foreign keys include
 TenantId/CompanyId, and unique indexes scope codes, parent names, and
 PositionId/Version.
 Commands save through the current DbContext transaction; only a successful
@@ -81,22 +82,21 @@ rolls back the complete request.
 ## 10. Authorization and error contract
 
 The controller and handlers enforce `OrganizationalStructure:View/Create/Edit/
-Delete/ApproveJobDescriptions`. Read-only callers can query but cannot mutate.
+Archive/Restore/ApproveJobDescriptions` (`DELETE` uses Archive, `/restore` uses Restore). Read-only callers can query but cannot mutate.
 Errors are stable resource/field-oriented values suitable for EN/AR mapping;
 clients map field errors beneath shared inputs.
 
-Production does not run startup permission seeding. Migration
-`20260831071547_GrantOrganizationalStructurePermissionsToAdmin` therefore adds
-all five feature claims idempotently to the existing system `admin` role. Users
-must refresh their authenticated session after that migration is deployed.
+Permissions are declared by `HrModuleDefinition` and granted to system roles by
+Platform's system-role reconciliation; no migration grants them. Users must
+refresh their session after a permission change.
 
 ## 11. Tests and operational verification
 
 `OrganizationalStructureManagementTests` covers company isolation/fail-closed
 scope, composite model relationships, unique description versions, bilingual
 approval completeness/period, controller permission gating, and SQL Server query
-translation. The translation regression covers seven resources, five search
-fields, and six operators (210 combinations), including parent ordering. Run API
+translation. The translation regression covers eight resources, five search
+fields, and six operators (240 combinations), including parent ordering. Run API
 build, focused tests, migration update, then exercise each resource in dependency
 order.
 

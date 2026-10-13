@@ -3,7 +3,7 @@ import { RefreshControl, StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { ApiError } from '@/src/core/api';
 import { useAppTheme } from '@/src/core/theme';
-import { appRoles, permissions, useAuthorization } from '@/src/platform/auth';
+import { permissions, useAuthorization } from '@/src/platform/auth';
 import { useFiscalYearLookup } from '@/src/modules/accounting';
 import { useAppReadOnly } from '@/src/shared/contexts/AppReadOnlyContext';
 import { toApiPageNumber, useServerListState } from '@/src/shared/listing';
@@ -24,7 +24,7 @@ export function WorkforceBudgetsScreen() {
   const { t, i18n } = useTranslation(); const { theme } = useAppTheme(); const { isReadOnly, notifyBlockedAction } = useAppReadOnly();
   const { allowed: viewAllowed } = useAuthorization({ requiredPermissions: [permissions.ViewWorkforceBudgets] });
   const { allowed: manageAllowed } = useAuthorization({ requiredPermissions: [permissions.EditWorkforceBudgets] });
-  const { allowed: approveAllowed } = useAuthorization({ allowedRoles: [appRoles.admin] });
+  const { allowed: approveAllowed } = useAuthorization({ requiredPermissions: [permissions.ReviewWorkforceBudgets] });
   const canManage = manageAllowed && !isReadOnly; const canApprove = approveAllowed && !isReadOnly;
   const list = useServerListState<WorkforceBudgetPageQuery['sortBy'], WorkforceBudgetFilters>({ initialFilters, initialPageSize: 5, initialSort: { columnId: 'createdOn', direction: 'descending' } });
   const queryArgs = useMemo<WorkforceBudgetPageQuery>(() => ({ pageNumber: toApiPageNumber(list.state.page), pageSize: list.state.pageSize, fiscalYearId: list.state.filters.fiscalYearId || undefined, status: list.state.filters.status, search: list.state.search, sortBy: list.state.sort?.columnId ?? 'createdOn', sortDirection: list.state.sort?.direction === 'ascending' ? 'asc' : 'desc' }), [list.state]);

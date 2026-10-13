@@ -20,7 +20,8 @@ governance, Hire, Trace, or Plan-versus-Commitment.
 
 - Phase 1 source exists in Domain, Application, Infrastructure, API, Web, and
   Mobile. Reuse its patterns and public feature APIs.
-- Current EF evidence on 2026-09-06:
+- Current state (2026-10-13): all HR migrations are consolidated into `20260914181112_InitialHr`; the 2026-09-06 notes below are historical.
+- Historical EF evidence on 2026-09-06:
   - `dotnet ef migrations list ... --no-build` returns the applied consolidated
     migration `20260906112413_create-database`.
   - `dotnet ef migrations has-pending-model-changes ... --no-build` reports no
@@ -56,7 +57,7 @@ governance, Hire, Trace, or Plan-versus-Commitment.
 - Use `TimeProvider`; never use `DateTime.UtcNow` inside Domain.
 - Every mutation carries a Base64 RowVersion except create. Apply the original
   RowVersion before saving and map optimistic concurrency to a stable 409 error.
-- Use `IUnitOfWork.ExecuteAtomicallyAsync` and deterministic Workforce Planning
+- Use `IHrUnitOfWork.ExecuteAtomicallyAsync` and deterministic Workforce Planning
   company locks. Budget approval, plan activation/supersession, budget
   supersession, and generation of all envelopes must use one transaction and one
   `SaveChangesAsync` call.
@@ -359,10 +360,9 @@ Permissions:
 - Envelope page/detail: `PositionEnvelopes:View`
 
 Use the already-frozen permission constants in API, Web, and Mobile for all
-permission-gated actions. The approval endpoint and both approval controls must
-check the built-in `admin` role directly. A delegable
-`WorkforceBudgets:Approve` permission is Deferred and must not be exposed or
-seeded in Phase 2. Keep normal permission reconciliation on the existing
+permission-gated actions. The approval endpoint and both approval controls check
+`WorkforceBudgets:Review` (updated 2026-10-13: the earlier admin-role-only gate
+was replaced by the delegable Review permission). Keep normal permission reconciliation on the existing
 `GetTenantPermissions()` path; do not add one-off role seeding.
 
 Successful mutations return the updated detail contract. Create returns 201;

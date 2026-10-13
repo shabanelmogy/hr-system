@@ -83,9 +83,9 @@ existing-system review, implementation order, and Definition of Done.
 | attendance-devices-master | 6 | `d4d02053ca38139b5ea51928c18352d2ad86e08b3b1308b3d3fa58fab55db761` |
 | attendance-devices-api | 1 | `657e0dc0b110e3a673f2a8e7fd10aaa3d9f8270eded0052eeb15105d9796f184` |
 | attendance-devices-api | 2 | `fa11797ee9511a578fd7355c91f6e88d6ab1d1ffb23a961818977504c9336fa8` |
-| attendance-devices-api | 3 | `48bb482fe3bd56969358c5c7bcbc6dcd871f019199dc9e423fd893e4c30507ad` |
-| attendance-devices-api | 4 | `28440ff3b81525bf589377e414438cfe701f85255183e7c37abbd7519acdc848` |
-| attendance-devices-api | 5 | `2a77df06126b0f05c4bb73f1bb43b867e5809f002ace837e8bbc43c225593c15` |
+| attendance-devices-api | 3 | `f2ec914a14119acc2a74e5756dcf5a9b7da85aecb696562f1428397e71edff0b` |
+| attendance-devices-api | 4 | `56141ad5064005ab6204edccdae5f7639460948f6d96b30cdb56b13b5932cb1c` |
+| attendance-devices-api | 5 | `ccb9b360012b121d2dc292305236cfcc40c69daac33d8c389cb23e983bc6167b` |
 | attendance-devices-api | 6 | `04b10c6fab5a3391b343a064d4d6d9d33290090eb6472769ac524cd25f50cb90` |
 | attendance-devices-api | 7 | `389927ae77a95de5e5ba2a07fe29fb54e853f893118e9b1036b567b53599d34e` |
 | attendance-devices-api | 8 | `f095dbda25c8be7e6b7e44d26f191811c9e48383311174b200d9968a5ab7aa51` |
