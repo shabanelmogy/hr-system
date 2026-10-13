@@ -1,18 +1,17 @@
 # Accounting web documentation
 
-Accounting has an active Next.js surface. The currently implemented Accounting
-slice is Fiscal Years at `/finance/ledger-setup/fiscal-years`, owned by
-`web-next/src/modules/accounting` and registered through
-`moduleDefinition.tsx`. This does **not** imply that the remaining Accounting
-roadmap is implemented.
+Accounting has an active Next.js surface owned by `web-next/src/modules/accounting`
+and registered through `moduleDefinition.tsx`. Implemented routes: `/finance/ledger-setup`
+(launcher), typed `fiscal-years`, `currencies`, `accounts`, and `hierarchy-levels`,
+and generic compatibility `company-settings`, `dimensions`, `books`, `journals`,
+`exchange-rates`, and `account-determination`.
 
 The app composition root injects the Accounting-owned fiscal-year context selector
 into generic Topbar slots. Company Current is administered with
 `FiscalYears:SetCurrent`; each user with `FiscalYears:View` can select a different
 working year for the current company without changing other users or auth tokens.
 
-Future screens should still be documented as vertical slices: configuration and
-chart-of-accounts administration, journal entry/posting, AP/AR, cash/bank,
+Future screens are documented as vertical slices: journal entry/posting, AP/AR, cash/bank,
 tax, fixed assets, approved external-fact reconciliation, period close, and
 reports. For each screen freeze permissions, server/client boundaries,
 loading/error/empty states, localization, accessibility, and tests.

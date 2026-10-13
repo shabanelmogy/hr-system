@@ -161,7 +161,7 @@ changes.
 | Source | Accounting public reporting contract |
 | Dataset/schema | Fiscal year and generated period status/date schema |
 | Filters | Approved code and bilingual name filters |
-| Permissions | `FiscalYears:View` plus tenant Reporting `CrystalReports:View`/Run access |
+| Permissions | `FiscalYears:View` plus Reporting `CrystalReports:View` |
 | Localization | EN/AR report language and localized catalog names |
 | Runtime/deployment | Deployment-owned compatible Fiscal Years `.rpt`; empty catalog is a localized unavailable state; Accounting supplies the dataset through its public reporting contract |
 | Verification | Accounting source/provider tests plus Web/Mobile managed-report transport and screen tests |
@@ -182,7 +182,7 @@ changes.
 
 | Layer | Command or check | Result | Date |
 | --- | --- | --- | --- |
-| Documentation baseline | Fiscal Years manifest check; `./documentation/system/Generate-Documentation.ps1 -Check` | All Fiscal Years required files exist; the consolidated baseline `20260906112413_create-database.cs` contains the global geography transition | 2026-09-07 |
+| Documentation baseline | Fiscal Years manifest check; `./documentation/system/Generate-Documentation.ps1 -Check` | All Fiscal Years required files exist | 2026-09-07 |
 | API | API build; focused Fiscal Year tests; full suite | Focused 23/23 passed, including Closed and Locked reopen; full suite 429/430 with the inherited `OrganizationalStructureManagementTests.UpdateAsync_Branch_WorksCorrectly` company-isolation failure | 2026-09-06 |
 | Database | Accounting migration plus pending-model check | Fiscal Years schema is owned by `AccountingDbContext` in `acc` and `20260922091842_InitialAccounting` | 2026-09-23 |
 | Web | Feature lint, architecture, types, tests, production build | Passed; route `/finance/ledger-setup/fiscal-years` emitted | 2026-09-06 |

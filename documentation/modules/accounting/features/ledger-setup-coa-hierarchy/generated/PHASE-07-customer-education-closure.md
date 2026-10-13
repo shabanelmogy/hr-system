@@ -80,7 +80,7 @@ Record one outcome:
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| ledger-setup-coa-hierarchy-master | 8 | `f381f5b8e20edecbb259bae89a027a9c5d53f2f4681a22476941c738d69653b9` |
+| ledger-setup-coa-hierarchy-master | 8 | `cfe4488adb1d885caf5e88bd88918af449cf386dc42193605aaec5a028f2cdc7` |
 | ledger-setup-coa-hierarchy-master | 9 | `18d3ec5849cc352024286af9cdf57d35681fe9873a7d9e6495d5afc11cf10506` |
 | ledger-setup-coa-hierarchy-master | 10 | `418a55eeb6536f14cdace6d1f610665b1d2e3f45b124df7cf49137670a537b72` |
 | ledger-setup-coa-hierarchy-web | 12 | `c1d6dd5013924c2f67afeb404ed8060c65cee180dee0ef8059c7afcc34d1807c` |

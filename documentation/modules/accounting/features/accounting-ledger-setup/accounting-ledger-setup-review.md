@@ -34,10 +34,9 @@ calendar/period authority. `AccountingDbContext`, `IAccountingUnitOfWork`,
 company/tenant scoping, RowVersion conventions and module-owned permissions are
 reused.
 
-The existing HR Organizational Structure Currency master is a transitional owner.
-Earlier Geography/Countries authority reserved financial Currency ownership for
-Finance/Payroll when that bounded context existed. Slice 1 performs one coordinated
-ownership move into Accounting; it does not create a second Currency master.
+HR never owned a writable Currency master in the clean baseline:
+`InitialAccounting` creates `acc.Currencies`, and HR keeps only validated
+`CurrencyCode` snapshots. Accounting is the single Currency owner.
 
 Branch and CostCenter remain HR-owned. Contacts remains owner of Party. External
 references are consumed through stable Contracts/projections only; no cross-module
@@ -129,7 +128,7 @@ race-safe company/business-key indexes. Mutating aggregate roots use RowVersion.
 The existing FiscalYears/FiscalPeriods tables are untouched except for additive
 integration if required.
 
-Target route families are:
+Implemented route families are:
 
 - `/api/v1/currencies`
 - `/api/v1/accounting-settings`
@@ -228,9 +227,10 @@ compatibility screens and must not be described as completed typed children. The
 Web parent layout registers Accounting
 EN/AR resources for all Ledger Setup routes. Both clients page large setup
 collections and fetch the full account detail before editing from the tree,
-because tree nodes omit RowVersion. The API currently returns list arrays
-without total counts and exposes server search only for Accounts and Dimension
-Definitions; other paged views may search only their current page. This contract
+because tree nodes omit RowVersion. Accounts and Currencies return `PageResponse`
+with totals; Dimension Definitions accept `search` but return arrays; Dimension
+Values, Journals, Exchange Rates, Mappings, and Profiles return arrays without
+totals or search, so those views may search only their current page. This contract
 gap must be resolved before describing collection-wide search as complete.
 
 Only after `Verified` may Phase 07 create/finalize

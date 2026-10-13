@@ -118,7 +118,7 @@ Web and Mobile. Phase 06 must verify the focused child against real runtime and 
 Required critical evidence: D-024 proposal including archived reservations and race
 behavior; hierarchy cycle/posting guards; RowVersion conflicts; truthful server list
 metadata; Web SplitTreeView + Cost Center interaction reuse; Mobile tree/detail;
-Accounts View/Manage/read-only; EN/AR RTL; compact Web and phone/tablet Mobile.
+Accounts View/Create/Edit/Archive/Restore/read-only; EN/AR RTL; compact Web and phone/tablet Mobile.
 
 ## 9. Risks, current gaps, and safeguards
 

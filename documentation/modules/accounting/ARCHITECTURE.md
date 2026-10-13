@@ -84,7 +84,7 @@ its own service host.
   receipt store through an unqualified DI lookup.
 - The first verified cross-module slice consumes Contacts party-created/updated
   Contracts through the Accounting inbox and maintains an Accounting-owned
-  `PartyReference`. Duplicate delivery is suppressed by the inbox receipt and
+  `AccountingPartyReference` (`acc.PartyReferences`). Duplicate delivery is suppressed by the inbox receipt and
   failed consumption can be retried without duplicate projection effects.
   Positive source revisions order updates independently of timestamps; legacy
   revision-zero payloads cannot overwrite a versioned projection. See the
@@ -104,9 +104,10 @@ copy/pasted into this module.
 
 ## Target capability areas
 
-These are design targets, not current runtime evidence: foundation and company
-configuration; chart of accounts; fiscal periods; general ledger and journals;
-posting engine; accounts payable; accounts receivable; cash and bank; tax;
+Company configuration, chart of accounts, fiscal years/periods, currencies,
+dimensions, books, and journal definitions already have source evidence (see
+[features/README.md](features/README.md)). These remain design targets, not
+current runtime evidence: general ledger and journal entries; posting engine; accounts payable; accounts receivable; cash and bank; tax;
 fixed assets; approved external-fact integration; period close, reporting, and
 audit. Each area requires its own reviewed feature contract and tests before
 being marked Required or implemented.

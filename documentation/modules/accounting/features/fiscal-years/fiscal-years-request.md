@@ -38,7 +38,7 @@ and `super_admin` restriction are not copied.
 
 - positive integer `Id`;
 - `Code` (required, 2-20, trimmed and upper-cased);
-- `NameAr` and `NameEn` (required, 2-100, trimmed printable Unicode);
+- `NameAr` and `NameEn` (required, 1-100, trimmed non-whitespace printable Unicode);
 - `StartDate` and `EndDate`, where `EndDate` must equal
   `StartDate.AddYears(1).AddDays(-1)`;
 - `PeriodFrequency`: `Monthly` or `Quarterly`;
@@ -125,8 +125,8 @@ Create body:
 Update uses the same fields plus the Base64 `rowVersion`; the route owns the ID.
 List parameters are one-based `pageNumber`, `pageSize` (1-5000), trimmed
 `search` (max 200), `searchField` (`all`, `code`, `nameAr`, `nameEn`),
-`searchOperator` (the six shared text operators), record `status`
-(`active`, `archived`, `all`), lifecycle (`all`, `draft`, `open`, `closing`,
+`searchOperator` (the six shared text operators), `recordStatus`
+(`active`, `archived`, `all`), `lifecycleStatus` (`all`, `draft`, `open`, `closing`,
 `closed`, `locked`), `sortBy` (`code`, `nameAr`, `nameEn`, `startDate`,
 `endDate`, `status`, `createdOn`) and `sortDirection` (`asc`, `desc`). The
 default is `startDate DESC`, followed by `Id DESC`.

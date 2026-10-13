@@ -60,7 +60,7 @@ invalidation, success test, and failure test. Use `N/A` only with a reason.
 | ledger-setup-coa-hierarchy-master | 4 | `d98c472a1497ad2d7f2e5d96839ed1a1c7fec16d3f6f3c1a45fd083f190be6d8` |
 | ledger-setup-coa-hierarchy-master | 6 | `0d7dd56699efbb0a91fb1cd3b332bb99aef11aa207c01f444594a47914561f5b` |
 | ledger-setup-coa-hierarchy-master | 7 | `7a06d80a788ca9f33ed3c3651f664ddddeade75ccfbc008979ae5eaf90d72150` |
-| ledger-setup-coa-hierarchy-master | 8 | `f381f5b8e20edecbb259bae89a027a9c5d53f2f4681a22476941c738d69653b9` |
+| ledger-setup-coa-hierarchy-master | 8 | `cfe4488adb1d885caf5e88bd88918af449cf386dc42193605aaec5a028f2cdc7` |
 | ledger-setup-coa-hierarchy-api | 6 | `73e68ac89eec57a9104aabd20dae6650a50fe3d1eb96ee4e2005194dfcc3c979` |
 | ledger-setup-coa-hierarchy-api | 7 | `cf04147c5bc2adca4aec42ef7c9f6cf1e6e9fa7150804c42a53d18b07ab669bd` |
 | ledger-setup-coa-hierarchy-api | 8 | `8dcb5ea99081e32bbd4095112efce6a07842e0058acdc680cf894f4f04a91f47` |

@@ -48,13 +48,13 @@ realtime, notification, localization, report, or Import integration is reachable
 | ledger-setup-currency-master | 6 | `dbc146242b859fa8b147c7cb15b5c30e6a51b45d89c43fa7c08ee1df7b0d5e4a` |
 | ledger-setup-currency-master | 7 | `e5857e4099341e28701b97b3b30a9b9301a3b61d5c5610c0d1032a500affffcd` |
 | ledger-setup-currency-master | 9 | `5a3e6ce360ee0b7f038040acc9ec07a0a59f1cbe5710006e98f9e13a0c6a0300` |
-| ledger-setup-currency-api | 8 | `1369f1ffe58bd47ec8f398ca6f17e0ea5c6e99f731de75b2d9f857b5f77f772b` |
+| ledger-setup-currency-api | 8 | `e788992f6fe98a2bf33c7cb408ba0cfc77a239391bb6f30e3b63b6ba607201ea` |
 | ledger-setup-currency-api | 9 | `12bf887a00d1c51b4c717b7615d0cc85b2f99796835dc8e357b93d26d60717cf` |
 | ledger-setup-currency-api | 10 | `01bbb185825055c46bcab3251bc15df822bd15ca88bbef31094caa68e25bbbb5` |
 | ledger-setup-currency-web | 8 | `b8685a30c64e3d84eeb814aea52a1c9b5998e0a6951c31134b17555cf552b76d` |
-| ledger-setup-currency-web | 10 | `79d46b61ed757a1e1e84ad9b499cf501d8c5586dee1bacd1791f571deb139a00` |
+| ledger-setup-currency-web | 10 | `0855a81e8d62f5f6e427b7619d310cbf7da4884e6f1330cb4e30000c610503ee` |
 | ledger-setup-currency-web | 13 | `bec5dddf680765d4ec88fe5e57a2abcf83f2bc1621b8ae94a6353af85811b82f` |
-| ledger-setup-currency-mobile | 2 | `f67cb487460edd4a9affd9e00e819af4876785febf8dd4b4b5ce64742425653d` |
+| ledger-setup-currency-mobile | 2 | `f4336cda083b829071f764e76787379c254e14664cca2ab853ca027af91d3402` |
 | ledger-setup-currency-mobile | 11 | `43fe15fa62b9e410af74e249f4dcd3f52c62847c14b1ca7562d57c5e059ad442` |
 | ledger-setup-currency-mobile | 12 | `2bed7ccbb9584f9254fe944009e219439fff9e96535fa7b527dc9da0149e84dd` |
 | ledger-setup-currency-mobile | 15 | `25ded4e7261abd2a00f240ed30a4fed461ad82aa9c65da27ddeae8e2ecda2c79` |

@@ -353,13 +353,13 @@
       "id": "web-accounting-currency-page",
       "layer": "web-next",
       "path": "web-next/src/modules/accounting/currencies/pages/CurrenciesPage.tsx",
-      "purpose": "Canonical Accounting Ledger Setup Currency page with View/Manage permission split"
+      "purpose": "Canonical Accounting Ledger Setup Currency page with View/Create/Edit/Archive/Restore permission split"
     },
     {
       "id": "web-accounting-currency-route-access",
       "layer": "web-next",
       "path": "web-next/src/lib/auth/route-access.ts",
-      "purpose": "Web Currency route read access through AccountingSetup:View"
+      "purpose": "Web Currency route read access through Currencies:View"
     },
     {
       "id": "web-fiscal-years-page",
@@ -443,13 +443,13 @@
       "id": "mobile-accounting-currency-rbac",
       "layer": "mobile-react",
       "path": "mobile-react/src/platform/auth/presentation/rbac/route-manifest.ts",
-      "purpose": "Mobile Currency and Accounting shell access through AccountingSetup:View"
+      "purpose": "Mobile Currency and Accounting shell access through Currencies:View"
     },
     {
       "id": "mobile-api-compatibility-matrix",
       "layer": "documentation",
       "path": "documentation/guides/mobile/MOBILE_API_COMPATIBILITY_MATRIX.json",
-      "purpose": "Canonical Mobile route/endpoint ownership matrix covering Accounting Currency View/Manage contracts"
+      "purpose": "Canonical Mobile route/endpoint ownership matrix covering Accounting Currency View/Create/Edit/Archive/Restore contracts"
     },
     {
       "id": "mobile-fiscal-years-screen",

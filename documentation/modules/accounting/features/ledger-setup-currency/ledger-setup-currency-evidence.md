@@ -36,7 +36,7 @@
 | R-01 | Accounting is the only writable Currency owner; HR consumes active codes via public Contract. | Plan D-020 + child contract | Existing evidence | Existing evidence | Existing consumer UI evidence | Frozen |
 | R-02 | Company-scoped Currency identity is code + bilingual names + symbol; no default-rate/default-currency authority lives on Currency. | Child contract + current Domain/model | Existing evidence | Existing evidence | Existing evidence | Frozen |
 | R-03 | Server-managed list supports bounded paging/search/status/sort with real totals and deterministic ordering. | Child contract | Existing evidence | Existing evidence | Existing evidence | Frozen |
-| R-04 | Create/edit/view/archive/restore use View/Manage permissions, read-only behavior and RowVersion conflict handling. | Child contract | Existing evidence | Existing evidence | Existing evidence | Frozen |
+| R-04 | Create/edit/view/archive/restore use View/Create/Edit/Archive/Restore permissions, read-only behavior and RowVersion conflict handling. | Child contract | Existing evidence | Existing evidence | Existing evidence | Frozen |
 | R-05 | Archive is blocked while Currency is referenced by Accounting settings, accounts or FX; active lookup excludes archived Currency. | Child contract/current store | Existing evidence | Displays API outcome | Displays API outcome | Frozen |
 | R-06 | EN/AR, RTL, accessible shared controls and responsive Web/Mobile composition are required. | Child contract/repository guides | stable errors | Required | Required | Frozen |
 | R-07 | Import/Report/Export are absent for this child; education occurs only after verified runtime. | Plan + child package | Excluded | Excluded | Excluded | Frozen |

@@ -5,7 +5,7 @@ Accounting-specific architecture, delivery decisions, and feature evidence.
 Shared documentation workflow and cross-module rules remain centralized in
 [`../../system/README.md`](../../system/README.md).
 
-## Current status: Foundation with active Fiscal Years slice
+## Current status: Foundation with Fiscal Years, Ledger Setup and Invoice QR source
 
 Verified in the runtime repository today:
 
@@ -16,9 +16,14 @@ Verified in the runtime repository today:
 - Fiscal Years is an implemented Accounting vertical slice, including domain/API
   behavior and the Next.js route `/finance/ledger-setup/fiscal-years` under the
   Ledger Setup navigation boundary.
-- Later Accounting areas such as chart of accounts, posting, AP/AR, cash/bank,
-  tax, fixed assets, close, and broader reporting remain roadmap work unless
-  their own feature evidence says otherwise.
+- Ledger Setup has Domain/API source for Currency, chart of accounts and
+  hierarchy levels, dimensions, books, journal definitions, exchange-rate
+  types/rates, account mappings, posting profiles, and company settings; Currency
+  and COA have typed web/mobile screens, the rest use generic compatibility
+  screens (see [features/README.md](features/README.md)).
+- Invoice QR generation is API-only (`Invoices:GenerateQrCode`).
+- Posting, AP/AR, cash/bank, tax, fixed assets, close, and broader reporting
+  remain roadmap work.
 
 Unimplemented roadmap surfaces remain intentionally absent rather than hidden
 behind placeholders. Start with [ARCHITECTURE.md](ARCHITECTURE.md), then use

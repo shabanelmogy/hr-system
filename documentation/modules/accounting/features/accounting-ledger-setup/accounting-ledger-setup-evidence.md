@@ -93,14 +93,15 @@ own Screen Contract evidence.
 | E-11 | VERIFIED CURRENT | shared Web/Mobile component scan | required tree/list/form primitives already exist |
 | E-12 | AUTHORIZED TARGET | Core GL plan/decisions | Slice 1 G0–G3 pass; G4 remains production/release only |
 | E-13 | VERIFIED CURRENT | Ledger Setup Domain/Application/Infrastructure/Presentation and focused tests | Phase 01 API exists with complete master lifecycle matrix, shared atomic resources and Accounting-owned localized errors |
-| E-14 | VERIFIED CURRENT | `20260922091842_InitialAccounting.cs` + Designer/Snapshot + clean SQL Server migration test | The complete clean `acc` baseline is represented by one EF-generated migration; composite tenant/company keys, RowVersion, unique indexes and Restrict FKs are applied successfully and the second migration run is idempotent |
+| E-14 | VERIFIED CURRENT | `20260922091842_InitialAccounting.cs` + Designer/Snapshot + clean SQL Server migration test | The clean `acc` baseline is one EF-generated migration, followed by the additive `20260927132148_AddFiscalYearWorkingContext` and `20260927190043_EnforceOpenFiscalYearCurrentEligibility`; composite tenant/company keys, RowVersion, unique indexes and Restrict FKs are applied successfully and the second migration run is idempotent |
 
 ## Read and list contract
 
 - COA: tree/detail/search/lookup; hierarchy comes from parent+level, never code prefix.
 - Currency: active/company lookup for all consumers plus management list.
-- Dimensions/Books/Journals/Rates/Mappings/Profiles: deterministic company-scoped
-  list/detail/lookup; server paging/filtering/sorting where cardinality grows.
+- Dimensions/Books/Journals/Rates/Mappings/Profiles: company-scoped list endpoints
+  (array responses); Books also has detail; no lookup endpoints; dimension values
+  and policies are scoped sub-lists.
 - Resolve Preview: no state change; returns winner or explicit zero/ambiguous
   diagnostics and matched-rule evidence.
 
@@ -212,7 +213,7 @@ Accounting Ledger Setup persistence verification on 2026-09-22:
   1/1 PASS.
 - `ModuleMigrationIntegrationTests.InstalledModuleMigrations_ApplyOnCleanDatabase_AndSecondRunIsIdempotent`:
   1/1 PASS against an ephemeral clean SQL Server database.
-- Generated `20260922091842_InitialAccounting` contains all 18 current Accounting
+- Generated `20260922091842_InitialAccounting` contains the 18 tables of the 2026-09-22 model (`FiscalYearUserSelections`, the 19th, is added by `20260927132148_AddFiscalYearWorkingContext`);
   tables and their indexes/FKs in `acc`, including Currency before its dependents.
   It contains no raw SQL or compatibility branch. Development databases carrying
   the superseded Accounting migration history require a clean reset.

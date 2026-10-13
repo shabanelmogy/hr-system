@@ -111,7 +111,7 @@ failure into partial success.
 | ledger-setup-currency-master | 6 | `dbc146242b859fa8b147c7cb15b5c30e6a51b45d89c43fa7c08ee1df7b0d5e4a` |
 | ledger-setup-currency-master | 7 | `e5857e4099341e28701b97b3b30a9b9301a3b61d5c5610c0d1032a500affffcd` |
 | ledger-setup-currency-web | 1 | `01511e01728749728fa55534fcece9d6e603e7a1983c8e739d9715c6e98610c8` |
-| ledger-setup-currency-web | 2 | `4248e971f86312ce2ce72930128d5d6963b4afaafcf5e5a880f61b170498bb13` |
+| ledger-setup-currency-web | 2 | `d03703d6b5f4a40094aef362a32037176fdcf5401c11b6c657f70b8ee81b1a67` |
 | ledger-setup-currency-web | 3 | `9a4abd881306dbddfea10617b9fdfad567a834ebe7ccfcd2148e7f0a10fc69aa` |
 | ledger-setup-currency-web | 4 | `df9ca7ad2ffbac3264f30176206a897d2467a8e65b1690e70847d087cae35fd2` |
 | ledger-setup-currency-web | 5 | `e39dec49ed9454effeafcc3cb7643fb3f7d5305716c76d3c6ebd4378a50b5add` |
@@ -119,7 +119,7 @@ failure into partial success.
 | ledger-setup-currency-web | 7 | `a3275c603ecc7d3fd9914f7ee9dff1adba9ec4542f982287ff2b7a7cfaf2b2f3` |
 | ledger-setup-currency-web | 8 | `b8685a30c64e3d84eeb814aea52a1c9b5998e0a6951c31134b17555cf552b76d` |
 | ledger-setup-currency-web | 9 | `3ee3a65e046d7fe0cbcf33fe67439314c215990e079afd02fc332b1a1c9f9683` |
-| ledger-setup-currency-web | 10 | `79d46b61ed757a1e1e84ad9b499cf501d8c5586dee1bacd1791f571deb139a00` |
+| ledger-setup-currency-web | 10 | `0855a81e8d62f5f6e427b7619d310cbf7da4884e6f1330cb4e30000c610503ee` |
 | ledger-setup-currency-web | 11 | `0a7ea4141d3cb5026ccf4240cd884cd3720b93b150fa1ac0e4cde6b2ba260948` |
 | ledger-setup-currency-web | 12 | `13bb67b7db8e13efe89161abce18607aee0b23d12d9c51b3aadccba4af0800a3` |
 | ledger-setup-currency-web | 13 | `bec5dddf680765d4ec88fe5e57a2abcf83f2bc1621b8ae94a6353af85811b82f` |
