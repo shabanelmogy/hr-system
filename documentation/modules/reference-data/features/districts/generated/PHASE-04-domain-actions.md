@@ -69,5 +69,5 @@ invalidation, success test, and failure test. Use `N/A` only with a reason.
 | districts-web | 8 | `be712da7a3d1189fdfda72359bb163b3f0693dd01c2f22edcf49b6b24526e239` |
 | districts-web | 9 | `c8bdba1eea3298434fb27d599d1b0022157af7a347c461e789142ff6b60f2b88` |
 | districts-mobile | 9 | `c82f2ab7f567f35bc32da44ef6df42890e5b33628ddd5a0e0d48bd1e78b514bc` |
-| districts-mobile | 10 | `34dd3fbd9e9adf72dd8ca8bfeb06bbfb6b6128192838fd704c4ee7a04d2703d7` |
+| districts-mobile | 10 | `29c5530bb9104d8cfaa82a58c2ce9b2c46cece59dfdba33458fbbf499370033f` |
 | districts-mobile | 11 | `2168087827d6275ad0b45dc263ca1d342db0be761e705bdd276c7283ee141b88` |

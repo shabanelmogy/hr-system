@@ -65,7 +65,7 @@ profile and do not leave an unreachable route, component, or translation surface
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| master | 3 | `20ba989c0a7bd8701d9ea7c60bf6c8096f744f019efe212a4163e7b1193a84f3` |
+| master | 3 | `065031192c357475ed1ad19cf4d387a6d4ea6a73c92faeff265dd5429030ca6e` |
 | master | 4 | `5313466cc23f4cd78d346588b46a10c8f3459953defddd6c00a05dc22f4ad6c5` |
 | master | 6 | `b7fb453c6be690cf10f98e85664f30fb55fb590e628b0f8a0435f54cf67058ac` |
 | master | 7 | `e603de6e96ed32d995c8cf0eeb698f377a3da508a9febf3d500377754e915c84` |
@@ -77,7 +77,7 @@ profile and do not leave an unreachable route, component, or translation surface
 | mobile | 6 | `3a9f9fcba57d940348cbac2728c2dffdac7207995d6a4b667b1581ec6ffa54cb` |
 | mobile | 7 | `8fb323178b37310b05a970bbb687982d5a4b91f49922320daa5c4287da4a2e75` |
 | mobile | 8 | `330d2eef488833428f05d851f46116965190c449d6a4f0b00be9a64c11f1590b` |
-| mobile | 9 | `623e8dfe26f3d5b874a1785d7c2a545a519ddbbd1ad41e34765322988d7d4df6` |
+| mobile | 9 | `18d5414dd29a98f496e41ab0a8b2deedf96fa4eaa03506d081fad8059754cd40` |
 | mobile | 10 | `7d90a6bd3148af61cc84222408c9349630432fd3c40780d755e1212ac0e76171` |
 | mobile | 11 | `6d043a9367e3d899f66abafd760eed0dfe3a6ad9e8114b839126cccc9a113f53` |
 | mobile | 12 | `0f0448cb6bfbd6c14def633a07bb9148564323efd7e372d4f678a2a9f8d41153` |

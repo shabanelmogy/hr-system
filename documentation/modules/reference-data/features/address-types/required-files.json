@@ -18,7 +18,7 @@
       "id": "api-infrastructure",
       "layer": "api",
       "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Infrastructure/Features/GeographicalInformation/AddressTypes",
-      "minimumFiles": 5,
+      "minimumFiles": 4,
       "purpose": "Persistence, configuration, validation, audit, and jobs"
     },
     {

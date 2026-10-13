@@ -60,11 +60,11 @@ invalidation, success test, and failure test. Use `N/A` only with a reason.
 | address-types-master | 4 | `7308f8020bdbc0c722447f200a173af87d8fa4f5f3fb6bf250463bd9f057ef5a` |
 | address-types-master | 6 | `38ba2cceb96c08e8c3815c45b40fc5ef311b74eb1e6e3095936183f7ac67aeb4` |
 | address-types-master | 7 | `78e6057906c656526f8fb427486cc0fcf24d5fd8fb865fdb58d0a786b9cce3ba` |
-| address-types-master | 8 | `d644b335ee5a2463885136b0a10c31dc4dd5af695866e6a2bbb825356a29fcfa` |
-| address-types-api | 6 | `547661ad62c069b0422d4ab8cd62d05730aee097aa745593612a67912ca82030` |
+| address-types-master | 8 | `d85b3bd1bf50fbdcd2880863ee2f1d45d3e1ff4475a87ee2b6117b4093e626b5` |
+| address-types-api | 6 | `3f9a357b6350f19d730109a61f17ec94738bc5501e5a81c4408f307a257d5688` |
 | address-types-api | 7 | `ff2127841a678a5f0fbb58bd3cfcf06b6e6cea807adc3c2f1f1efc059e9455d7` |
 | address-types-api | 8 | `cdb4949380cc226db6ab4f53b730f5b4fd93333e08d1f8deef641ea2c1e2c358` |
-| address-types-web | 6 | `351cc55be82056a3c867c8a93c7556ab660bfcb3a61759ea273ac1a07cd3a281` |
+| address-types-web | 6 | `bc43820049241e82bd2b641c734b0a98c6baa38df68ff96bd3ab46685ca6174d` |
 | address-types-web | 7 | `fc67d7de0f0a34d6d50f7f0d8871c5114b873ca7abf672816e3273ffc1f8a2a8` |
 | address-types-web | 8 | `9105872832cbff57378bc222233612b39548d236abe7f34bb04952991ac33862` |
 | address-types-web | 9 | `78b529dec2a9aeea35eec3b2e8cd6963b1bcc4b1959f92e7911ae3eb75591bb1` |

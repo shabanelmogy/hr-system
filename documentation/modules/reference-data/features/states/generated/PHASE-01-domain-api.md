@@ -79,7 +79,7 @@ existing-system review, implementation order, and Definition of Done.
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
 | states-master | 3 | `11eb828b5ab01b440915284f32842ff110624d6f4f7a57b77d5dde5f7ce9ca4b` |
-| states-master | 4 | `5a6d15c81abe80fbc5e13715f385f8a978b6482153ba7cec90474f46b6886ebf` |
+| states-master | 4 | `bdd06ecc021be41977ee565c556463820df58f7b4a9de63ff75642bda7486eb3` |
 | states-master | 6 | `b8c91c53fff7908b583e3690463b7effdbab5394ed9d327133e8c755d3234223` |
 | states-api | 1 | `85523ed52ed56c5ba99bfe170b3ae346c42d8851b1b420b13a784ae4eac9fa17` |
 | states-api | 2 | `11f8fd32cf2e1917fcbc35ea783d4f6f46e6df380bef0165ee054c636da37db1` |
@@ -89,5 +89,5 @@ existing-system review, implementation order, and Definition of Done.
 | states-api | 6 | `100f5727ce3e5e0e0cde9218293a9a96b5d7bd7346bbfc9e760110bc1096afad` |
 | states-api | 7 | `21b4aaa6465e8c038b67613a7d59733d4e06b8fea8172c1ba06d98f55e782ed4` |
 | states-api | 8 | `4778b66ab2e8bc98acc1502c1988db12fa425ebdba2caebe7e6a0fa0ff427221` |
-| states-api | 9 | `eecc31078b9f0d82cbe2e87a34bb612643702148648589a10f51b92fa97ab2bd` |
+| states-api | 9 | `2387519f7f597fa09c4ad666c7454ab885214dfa22bcdcaa7554669ba885b538` |
 | states-api | 10 | `67f990428b9dbca4718c2f98282eab7cbd9bb777971adb9c3614260407765e8c` |
