@@ -72,9 +72,9 @@ export const routePolicies: readonly RoutePolicy[] = [
   // Countries, States, and Districts are platform-managed reference data.
   // Tenant administrators select their operating countries through the separate
   // company geographic-scope workflow; they never manage this catalog directly.
-  { path: ROUTES.basicData.countries, roles: [appRoles.superAdmin] },
-  { path: ROUTES.basicData.states, roles: [appRoles.superAdmin] },
-  { path: ROUTES.basicData.districts, roles: [appRoles.superAdmin] },
+  { path: ROUTES.basicData.countries, roles: [appRoles.superAdmin], permissions: [permissions.ViewCountries] },
+  { path: ROUTES.basicData.states, roles: [appRoles.superAdmin], permissions: [permissions.ViewStates] },
+  { path: ROUTES.basicData.districts, roles: [appRoles.superAdmin], permissions: [permissions.ViewDistricts] },
   { path: ROUTES.basicData.addressTypes, permissions: [permissions.ViewAddressTypes] },
   {
     path: ROUTES.basicData.companyGeographicScope,

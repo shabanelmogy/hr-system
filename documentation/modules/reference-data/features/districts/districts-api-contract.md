@@ -26,7 +26,8 @@ Authorization: Bearer <token>
 | `ViewDistricts` | `Districts:View` |
 | `CreateDistricts` | `Districts:Create` |
 | `EditDistricts` | `Districts:Edit` |
-| `DeleteDistricts` | `Districts:Delete` |
+| `ArchiveDistricts` | `Districts:Archive` |
+| `RestoreDistricts` | `Districts:Restore` |
 
 ---
 
@@ -34,14 +35,19 @@ Authorization: Bearer <token>
 
 | Method | Path | Permission | Description |
 |--------|------|------------|-------------|
-| GET | `/api/v1/districts` | ViewDistricts | Get all districts |
-| GET | `/api/v1/districts/by-state/{stateId}` | ViewDistricts | Get districts for a specific state |
-| GET | `/api/v1/districts/{id}` | ViewDistricts | Get district by ID |
-| GET | `/api/v1/districts/{id}/addresses` | ViewDistricts | Get district with its addresses |
-| POST | `/api/v1/districts` | CreateDistricts | Create a new district |
-| PUT | `/api/v1/districts` | EditDistricts | Update a district |
-| DELETE | `/api/v1/districts/{id}` | DeleteDistricts | Soft delete / restore |
-| GET | `/api/v1/districts/count` | ViewDistricts | Get active district count |
+| GET | `/api/v1/districts` | ViewDistricts | Server-paged management list |
+| GET | `/api/v1/districts/lookup` | ViewDistricts | Active selector data (optional parent filter) |
+| GET | `/api/v1/districts/by-state/{stateId}` | ViewDistricts | Active districts for one state |
+| GET | `/api/v1/districts/{id}` | ViewDistricts | Detail |
+| GET | `/api/v1/districts/{id}/addresses` | ViewDistricts | Record with its addresses |
+| POST | `/api/v1/districts` | CreateDistricts | Create one record (201) |
+| POST | `/api/v1/districts/bulk` | CreateDistricts | Atomically create several records (201) |
+| PUT | `/api/v1/districts/{id}` | EditDistricts | Update one active record (200) |
+| DELETE | `/api/v1/districts/{id}` | ArchiveDistricts | Archive one active record (204) |
+| POST | `/api/v1/districts/bulk-archive` | ArchiveDistricts | Atomically archive up to 100 records (200) |
+| POST | `/api/v1/districts/{id}/restore` | RestoreDistricts | Restore one archived record (204) |
+
+There is no count endpoint and no hard delete; archive and restore are separate operations.
 
 ---
 
@@ -184,12 +190,12 @@ Authorization: Bearer <token>
 
 ---
 
-### PUT /api/v1/districts
+### PUT /api/v1/districts/{id}
 
 **Permission:** `EditDistricts`  
-**Description:** Updates an existing district. Send the full object including the existing `id`.
+**Description:** Updates an existing district. The route `id` identifies the record; only active records can be updated.
 
-**Request Body:** Same as POST but `id` must be the existing record's ID.
+**Request Body:** Same fields as POST.
 
 **Response 201:** Returns the updated district.
 
@@ -206,8 +212,8 @@ Authorization: Bearer <token>
 
 ### DELETE /api/v1/districts/{id}
 
-**Permission:** `DeleteDistricts`  
-**Description:** Toggles soft-delete. Calling on an active record deletes it; calling again restores it.
+**Permission:** `ArchiveDistricts`  
+**Description:** Archives one active record. Use `POST /api/v1/districts/{id}/restore` (`RestoreDistricts`) to restore it, and `POST /api/v1/districts/bulk-archive` for up to 100 records at once.
 
 **Response 204:** No content.
 
@@ -221,19 +227,6 @@ Authorization: Bearer <token>
 
 ---
 
-### GET /api/v1/districts/count
-
-**Permission:** `ViewDistricts`  
-**Description:** Returns the count of active (non-deleted) districts.
-
-**Response 200:**
-```json
-{
-  "count": 142
-}
-```
-
----
 
 ## Validation Rules
 
@@ -286,10 +279,10 @@ User selects Country
     → stateId is ready to submit
 ```
 
-### Delete Behaviour
+### Archive behaviour
 
-- If the API returns **400** on delete, show: *"This district cannot be deleted because it has associated addresses."*
-- If the API returns **204**, toggle the row's visual state (soft delete — do not remove from list)
+- Archive returns **400** (`*InUseBy*` error) when active addresses still use this district; show the localized dependency message.
+- Archive and restore return **204**; refresh the list (archived rows stay visible under the archived/all status filter).
 
 ### Address Form Integration
 

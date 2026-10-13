@@ -2,7 +2,7 @@
 
 ## 1. Exact Source Inventory
 
-The slice lives under `OrganizationalStructure/CompanyGeographicScope` in Application, Infrastructure, and API. Its domain link is `CompanyCountry`, its EF configuration is `CompanyCountryConfiguration`, and the current checked-in schema source is `20260826095902_createdatabase`.
+The slice lives in Platform: `Platform.Application/Features/CompanyGeography`, `Platform.Infrastructure/Features/Tenancy/PlatformCompanyGeographicScopeStore.cs`, and `Platform.Presentation/Features/Tenancy/V1/CompanyGeographicScopeController.cs`. Its schema is part of the Platform baseline migration `20260914181129_InitialPlatform`.
 
 ## 2. Domain Contract
 
@@ -10,7 +10,7 @@ The slice lives under `OrganizationalStructure/CompanyGeographicScope` in Applic
 
 ## 3. Persistence Contract
 
-`CompanyCountries` has a restrictive Country FK, a unique `(TenantId, CompanyId, CountryId)` index, and a filtered unique active-default index on `(TenantId, CompanyId)`. `Companies.RegistrationCountryId` has its own restrictive Country FK and lookup index. Standard company and tenant query filters provide isolation.
+`CompanyCountries` has a Company FK, a unique `(TenantId, CompanyId, CountryId)` index, and a filtered unique active-default index on `(TenantId, CompanyId)`. Country lives in the ReferenceData `ref` schema, so `CountryId` and `Companies.RegistrationCountryId` are scalar IDs without a cross-module FK; activity is checked through `IReferenceDataCompanyGeographySource`. Standard company and tenant query filters provide isolation.
 
 ## 4. Read Contract
 
@@ -22,11 +22,11 @@ The slice lives under `OrganizationalStructure/CompanyGeographicScope` in Applic
 
 ## 6. Atomicity and Concurrency
 
-The handler uses the application lock `company-geographic-scope:{tenantId}:{companyId}`. Under that lock it rejects a proposed selection that excludes a Country used by any active Address in the current company. It then clears the old default and saves before replacement so the filtered unique index remains valid, replaces links, updates `Company.RegistrationCountryId`, and saves within the command transaction. Address create/update/restore acquire the same scope resource, preventing a concurrent address write from escaping this check.
+The handler uses the application locks `company-geographic-scope:{tenantId}:{companyId}` and, for every selected Country, `ReferenceDataLockResources.Country(id)` (the same lock as Country archive/restore). Under that lock it rejects a proposed selection that excludes a Country used by any active Address in the current company. It then replaces the links, updates `Company.RegistrationCountryId`, and saves once within the command transaction. Address create/update/restore acquire the same scope resource, preventing a concurrent address write from escaping this check.
 
 ## 7. Validation and Errors
 
-Missing actor company context fails closed with the stable forbidden error. Missing/inactive Country IDs and removal of a Country used by an active company Address return stable conflicts. FluentValidation rejects empty, excessive, duplicate, non-positive, or inconsistent registration/default selections with localized EN/AR messages.
+Missing actor company context returns `400 CompanyGeographicScope.CompanyContextRequired`; missing/inactive Country IDs return `400 CompanyGeographicScope.CountriesUnavailable`; removing a Country used by an active company Address returns `409 CompanyGeographicScope.CountriesInUseByAddresses`. FluentValidation rejects empty, excessive, duplicate, non-positive, or inconsistent registration/default selections. These error messages are English only today (open follow-up: localize them like the ReferenceData errors).
 
 ## 8. HTTP and Authorization
 
@@ -34,13 +34,10 @@ The versioned controller exposes GET and PUT at `/api/v1/company-geographic-scop
 
 ## 9. Composition and Migration
 
-`HrDbContext` exposes `Companies` and `CompanyCountries`; `EntitiesService` registers
-`ICompanyGeographicScopeStore`, and `ErrorsService` registers
-`CompanyGeographicScopeErrors` for both MediatR handlers. The additive migration
-contains the table/indexes in the current development schema. A dedicated
-additive migration adds nullable `Companies.RegistrationCountryId`, a restrictive
-Country FK/index, and a deterministic backfill from the active default
-CompanyCountry only. Rows without a defensible active default remain null until
+`PlatformDbContext` maps `Companies` and `CompanyCountries`; `AddPlatformInfrastructure`
+registers `ICompanyGeographicScopeStore`. The `InitialPlatform` baseline creates the
+table, its indexes, and the nullable `Companies.RegistrationCountryId`; there is no
+backfill. A company without a saved scope keeps a null registration country until
 the first authorized scope save; runtime writes require the field.
 
 ## 10. Verification
@@ -62,5 +59,6 @@ owned runtime workflow exists. Branch already has independent lifecycle dates an
 Address ownership links, so no unused placeholder aggregate is introduced.
 
 Global Country/State/District CRUD is not a tenant capability. Those controllers
-require the `super_admin` role plus their action permission. Permission ownership
-transfer must be delivered as a reviewed additive migration before production.
+require the `super_admin` role plus their action permission. Permissions are declared
+by module definitions and granted by Platform system-role reconciliation; no migration
+is involved.

@@ -313,9 +313,8 @@ from production builds.
 | `phoneCode` | blank or optional `+` plus up to ten digits | trim; blank -> `null` |
 | `currencyCode` | blank or exactly three ASCII letters | trim; blank -> `null` |
 
-`currencyCode` is an optional ISO integration value. The future Currency master
-and financial relationships belong to Finance/Payroll; this mobile feature does
-not create or own a Currency entity.
+`currencyCode` is an optional ISO integration value. The Currency master belongs
+to Accounting; this mobile feature does not create or own a Currency entity.
 
 `autoCapitalize="characters"` assists code entry; the backend mapping is the
 final uppercase normalization boundary.

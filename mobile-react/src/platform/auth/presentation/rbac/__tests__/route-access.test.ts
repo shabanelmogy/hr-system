@@ -83,10 +83,15 @@ describe('route access manifest', () => {
     expect(canAccessRoute(ROUTES.administration.root, invitationViewer)).toBe(true);
   });
 
-  it('reserves the global Countries catalog for super administrators', () => {
+  it('reserves the global Countries catalog for super administrators with Countries:View', () => {
     expect(canAccessRoute(ROUTES.basicData.countries, userWith({
       roles: [appRoles.superAdmin],
+      permissionClaims: [permissions.ViewCountries],
     }))).toBe(true);
+    // Same contract as the web route policy: the role alone is not enough.
+    expect(canAccessRoute(ROUTES.basicData.countries, userWith({
+      roles: [appRoles.superAdmin],
+    }))).toBe(false);
     expect(canAccessRoute(ROUTES.basicData.countries, userWith())).toBe(false);
     expect(canAccessRoute(ROUTES.basicData.countries, userWith({
       permissionClaims: [permissions.ViewStates],
@@ -107,8 +112,13 @@ describe('route access manifest', () => {
     })).toBe('authorized');
   });
 
-  it('reserves States and Districts catalog routes for super administrators', () => {
-    const superAdmin = userWith({ roles: [appRoles.superAdmin] });
+  it('reserves States and Districts catalog routes for super administrators with View permission', () => {
+    const superAdmin = userWith({
+      roles: [appRoles.superAdmin],
+      permissionClaims: [permissions.ViewStates, permissions.ViewDistricts],
+    });
+
+    expect(canAccessRoute(ROUTES.basicData.states, userWith({ roles: [appRoles.superAdmin] }))).toBe(false);
 
     expect(canAccessRoute(ROUTES.basicData.states, superAdmin)).toBe(true);
     expect(canAccessRoute(ROUTES.basicData.districts, superAdmin)).toBe(true);

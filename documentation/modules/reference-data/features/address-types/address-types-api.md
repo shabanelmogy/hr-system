@@ -40,7 +40,7 @@ create/archive bound size at 100 and write all-or-nothing.
 ## 6. Authorization and scope
 
 `TenantMember` and an active company context are required. Controller permissions
-are AddressTypes View/Create/Edit/Delete; storage never trusts a client
+are AddressTypes View/Create/Edit/Archive/Restore; storage never trusts a client
 tenant/company identifier. The active-company actor supplies scope for every
 query and command.
 
@@ -74,9 +74,7 @@ scheduling, controller routes/permissions, and report schema/filter behavior.
 
 ## 11. Deployment
 
-Deploy the Reporting provider/owning-module source and Crystal runtime profile together. Drain old Address Type
-Hangfire jobs, apply the global-to-company data migration (cloning existing rows
-to every existing company), then import/publish reports and grant role `Run` to
+Deploy the Reporting provider/owning-module source and Crystal runtime profile together. Apply the module migrations (`Apply-ErpModuleMigrations.ps1`), then import/publish reports and grant role `Run` to
 intended current-company users. New companies start empty unless a future
 template-copy policy is enabled. Users should re-login and switch company context.
 

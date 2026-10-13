@@ -99,7 +99,7 @@ true under concurrent requests.
 | Page, lookup, detail, relation | `Countries:View` |
 | Create and bulk create/import | `Countries:Create` |
 | Update | `Countries:Edit` |
-| Archive, bulk archive and restore | `Countries:Delete` |
+| Archive, bulk archive and restore | `Countries:Archive` (archive, bulk archive); `Countries:Restore` (restore) |
 
 Both clients gate visible controls and direct handlers. The API controller and
 `super_admin` role guard plus action permission remain the final authorization boundary.
@@ -149,9 +149,8 @@ the complete dataset.
 | Currency | Optional, exactly three ASCII letters | Trim, uppercase, blank -> null |
 
 `CurrencyCode` is deliberately an ISO integration value, not a Geography-owned
-currency master. Finance/Payroll will own the future Currency entity and the
-reviewed migration to `CurrencyId` when financial workflows need currency
-metadata, conversion, or effective dating.
+currency master. Accounting owns the Currency master; any `CurrencyId` link is a
+reviewed Contracts-based integration.
 
 Arabic name, English name, Alpha-2 and Alpha-3 are unique, including archived
 rows. The handler checks conflicts and the database unique indexes close races.

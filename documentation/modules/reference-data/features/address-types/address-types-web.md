@@ -42,7 +42,7 @@ View, Create and active Edit use the two-name contract. Development Add/Edit for
 may use the shared `MyForm` footer action to fill a feature-owned sample; the
 action never submits and is excluded from production. Archive/bulk confirmations
 stay open on failure; read-only and permission checks run in both visibility and
-handlers. Archived rows restore through Delete permission.
+handlers. Archived rows restore through `AddressTypes:Restore`.
 
 ## 7. Import
 

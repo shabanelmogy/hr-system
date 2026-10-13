@@ -1,3 +1,4 @@
+using ErpSystem.Modules.ReferenceData.Contracts.CompanyGeography;
 using ErpSystem.Modules.Platform.Application.Abstractions.Persistence;
 using ErpSystem.BuildingBlocks.Application.Abstractions.Messaging;
 using ErpSystem.BuildingBlocks.Context.Authentication;
@@ -51,7 +52,7 @@ public sealed class UpdateCompanyGeographicScopeCommandHandler(
             return Result.Failure<CompanyGeographicScopeResponse>(new("CompanyGeographicScope.CompanyContextRequired", "A company context is required.", ErrorType.Validation));
 
         return await unitOfWork.ExecuteAtomicallyAsync(
-            request.CountryIds.Select(id => $"reference-data:country:{id}").Append($"company-geographic-scope:{actor.TenantId}:{actor.CompanyId}").ToArray(),
+            request.CountryIds.Select(ReferenceDataLockResources.Country).Append($"company-geographic-scope:{actor.TenantId}:{actor.CompanyId}").ToArray(),
             async token =>
             {
                 if (!await store.AreActiveCountriesAsync(request.CountryIds, token))

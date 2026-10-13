@@ -15,8 +15,8 @@ to a later milestone; **Excluded** means outside this module's contract.
   tenant/company access, entitlements, module catalog, authorization, generic
   file workflow/storage policy, localization, notifications, security audits,
   and offline operations.
-- Explicit compatibility adapters preserve legacy physical storage and wire
-  behavior without introducing a Platform -> HR dependency.
+- All Platform tables live in the `platform` schema (baseline
+  `20260914181129_InitialPlatform`); there is no Platform -> HR dependency.
 
 ## Remaining policy
 

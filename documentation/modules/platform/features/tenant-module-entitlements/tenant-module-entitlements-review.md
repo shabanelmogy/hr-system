@@ -110,6 +110,6 @@ Exact release-gate results are recorded in the feature review artifact.
 ## 10. Handoff decision
 
 The entitlement foundation is ready for modular-monolith expansion. Accounting
-is intentionally cataloged with no fabricated business submodules. Future POS,
+exposes the `invoicing` and `ledger-setup` submodules. Future POS,
 CRM, and Inventory modules should register their own definitions and schema,
 then reuse this catalog, entitlement contract, launchers, and guards.

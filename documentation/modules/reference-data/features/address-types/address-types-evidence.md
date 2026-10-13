@@ -65,7 +65,7 @@ atomic bulk archive.
 | View/list/detail | `AddressTypes:View` | Allowed | Route/controller must pass |
 | Create/import | `AddressTypes:Create` | Blocked | Direct handler rechecks |
 | Edit active | `AddressTypes:Edit` | Blocked | Archived rows are view/restore only |
-| Archive/bulk/restore | `AddressTypes:Delete` | Blocked | Active Address reference blocks archive |
+| Archive/bulk/restore | `AddressTypes:Archive` (archive, bulk archive); `AddressTypes:Restore` (restore) | Blocked | Active Address reference blocks archive |
 | Report | `CrystalReports:View` + `Run` ACL | Allowed | Published catalog only |
 
 ## Import contract
@@ -98,10 +98,7 @@ deployment prerequisites.
   import/publish, and role `Run` grant.
 
 Address Types are company-scoped (`TenantId` + `CompanyId`). The active-company
-actor is authoritative; clients do not send `companyId`. Existing global rows are
-cloned to every existing company by migration, while new companies start empty.
-Drain old Address Type Hangfire jobs before applying that migration, then require
-re-login and a company-context switch. A future public Job Portal may reuse
+actor is authoritative; clients do not send `companyId`. The ReferenceData baseline migration `20260914181144_InitialReferenceData` creates company-scoped Address Types; every company starts empty unless a future template-copy policy is introduced. Users re-login and switch company after deployment. A future public Job Portal may reuse
 candidate/person address types after server-side scope resolution from the
 published job or portal slug; it never trusts a client company ID. Job location
 remains Branch/Site/WorkLocation.
@@ -114,7 +111,7 @@ remains Branch/Site/WorkLocation.
 | AT-F02 | Manual release | An `.rpt` is insufficient without manager publication and `Run` grant. | Release owner | Keep as manual deployment check. |
 | AT-F03 | Regression prevention | Shared mobile feedback borrowed missing `states.*` keys, causing raw dotted identifiers on non-State screens. | Mobile platform | Resolved with a shared `feedback` namespace and literal-key EN/AR source-usage test. |
 | AT-F04 | High | Address create/update/restore could race Address Type archive because only the parent mutation owned the lifecycle lock. | API | Resolved by sharing the Address Type lock and rechecking the active parent inside each atomic child write. |
-| AT-F05 | Manual release | Existing global Address Types and their Address/log/notification references require a data-safe company expansion. | Release owner | Migration clones every existing type to each existing company and remaps dependents; drain old jobs, back up, review generated SQL, and apply in a maintenance window. |
+| AT-F05 | Manual release | Existing global Address Types and their Address/log/notification references require a data-safe company expansion. | Release owner | Resolved: the `InitialReferenceData` baseline creates company-scoped types; no data expansion migration is needed. |
 
 ## Verification
 

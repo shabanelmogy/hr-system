@@ -16,7 +16,7 @@
 | Ownership | Tenant-owned commercial grants; company remains data scope only |
 | Persistence | `platform.TenantModuleEntitlements` and `platform.TenantSubmoduleEntitlements`; lower-case codes, composite keys, cascading foreign keys |
 | Compatibility | Create omission uses catalog defaults; update omission preserves stored grants; explicit lists replace prior grants, including empty lists |
-| Catalog | Installed `IModule.Definition`; HR code `hr`, Accounting code `acc`; Accounting has no business submodules yet |
+| Catalog | Installed `IModule.Definition`; HR code `hr`, Accounting code `acc` with `invoicing` and `ledger-setup` submodules |
 | Authorization | Existing RBAC claims plus database revalidation plus tenant grant; unknown permissions fail closed; super-admin/global geography stay platform-managed |
 | Authentication flow | Username/password → tenant → company → `/apps` → module → submodule |
 | Web | Odoo-style shared launcher, typed React Query service, three-level app routes, route/sidebar filtering, shared `MyForm` tenant editor, EN/AR |
@@ -37,6 +37,6 @@ an Accounting entitlement and never removes another module's grant or its select
 ## Verification request
 
 Run API restore/build/test, web type-check/architecture/lint/tests/build, mobile
-`npm run check`, documentation check, `git diff --check`, and apply the HR EF
-migration with `--context HrDbContext`. CrystalReportGeneratorApi is
+`npm run check`, documentation check, `git diff --check`, and apply the Platform EF
+migration with `--context PlatformDbContext`. CrystalReportGeneratorApi is
 independent and is excluded from this change.

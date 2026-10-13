@@ -40,7 +40,7 @@ Writes run in the unit-of-work transaction and lock the parent State lifecycle r
 
 ## 9. Dependency injection and persistence
 
-`DistrictManagementStores` implements the read/write/audit/scheduler ports and is registered in `EntitiesService`. List projection, set-based active-State validation, field-scoped conflict checks, and count rules live in Infrastructure, not the controller. Managed report data is resolved by the Reporting `CrystalReportDataSource` provider registry; `DistrictsCrystalReportDataProvider` emits District/State fields plus active Address count through the ReferenceData reporting Contract and must match `CrystalReportProfileRegistry`.
+`DistrictManagementStores` implements the read/write/audit/scheduler ports and is registered by `AddReferenceDataInfrastructure`. List projection, set-based active-State validation, field-scoped conflict checks, and count rules live in Infrastructure, not the controller. Managed report data is resolved by the Reporting `CrystalReportDataSource` provider registry; `DistrictsCrystalReportDataProvider` emits District/State fields plus active Address count through the ReferenceData reporting Contract and must match `CrystalReportProfileRegistry`.
 
 ## 10. Tests
 
