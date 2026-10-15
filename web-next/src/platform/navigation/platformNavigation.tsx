@@ -5,6 +5,7 @@ import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import CloudOffRoundedIcon from "@mui/icons-material/CloudOffRounded";
 import EmailIcon from "@mui/icons-material/Email";
 import HealthAndSafetyIcon from "@mui/icons-material/HealthAndSafety";
+import HistoryIcon from "@mui/icons-material/History";
 import PublicIcon from "@mui/icons-material/Public";
 import TranslateIcon from "@mui/icons-material/Translate";
 import TuneIcon from "@mui/icons-material/Tune";
@@ -90,6 +91,13 @@ export function getPlatformNavigation(): NavigationConfig {
         appRoutes.platform.advancedTools.localizationApi,
         undefined,
         [permissions.ViewLocalizations],
+      ),
+      createNavItem(
+        "advancedTools.auditTrail",
+        createColoredIcon(<HistoryIcon />, "platform"),
+        appRoutes.platform.advancedTools.auditTrail,
+        undefined,
+        [permissions.ViewAuditTrail],
       ),
       createNavItem(
         "advancedTools.healthCheck",

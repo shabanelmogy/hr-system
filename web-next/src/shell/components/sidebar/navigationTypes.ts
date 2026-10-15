@@ -61,6 +61,7 @@ export enum NavigationTitles {
   // Advanced tools
   ADVANCED_TOOLS_TITLE = "advancedTools.title",
   LOCALIZATION_API = "advancedTools.localizationApi",
+  AUDIT_TRAIL = "advancedTools.auditTrail",
   HEALTH_CHECK = "advancedTools.healthCheck",
   API_ENDPOINTS = "advancedTools.apiEndPoints",
   HANGFIRE_DASHBOARD = "advancedTools.hangfireDashboard",

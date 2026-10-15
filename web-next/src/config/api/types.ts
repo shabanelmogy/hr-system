@@ -130,6 +130,7 @@ export interface AdvancedToolsRoutes {
   getLocalizationApi: string;
   updateLocalizationApi: string;
   healthCheck: string;
+  auditTrail: string;
 }
 
 export interface GoogleRoutes {

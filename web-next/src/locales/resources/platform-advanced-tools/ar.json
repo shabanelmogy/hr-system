@@ -1,7 +1,7 @@
 {
   "advancedTools": {
     "title": "أدوات متقدمة",
-    "trackChanges": "تتبع التغييرات",
+    "auditTrail": "سجل العمليات",
     "healthCheck": "حالة النظام",
     "apiEndPoints": "واجهات API",
     "localizationApi": "إدارة الترجمات",
@@ -40,18 +40,6 @@
     "loading": "جارٍ تحميل لوحة مهام Hangfire",
     "loadError": "تعذر تحميل لوحة مهام Hangfire. تحقق من الصلاحية والاتصال بالخادم.",
     "retry": "إعادة المحاولة"
-  },
-  "trackChanges": {
-    "changeLogId": "مرجع البيان",
-    "entityName": "اسم الوحدة",
-    "key": "المفتاح",
-    "oldValue": "قيمة قديمة",
-    "newValue": "قيمة جديدة",
-    "changedBy": "تم التغيير بواسطة",
-    "changedAt": "تاريخ التغيير",
-    "changedByPc": "جهاز التغيير",
-    "title": "تتبع تغييرات البيانات",
-    "subTitle": "عرض تفاصيل التغيير فى البيانات"
   },
   "externalTools": {
     "apiUrlRequired": "يجب إدخال رابط واجهة البرمجة",

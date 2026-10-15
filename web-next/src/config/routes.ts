@@ -47,6 +47,7 @@ export interface PlatformRoutes {
   };
   advancedTools: {
     healthCheck: AppPath;
+    auditTrail: AppPath;
     apiEndpoints: AppPath;
     localizationApi: AppPath;
     hangfireDashboard: AppPath;
@@ -171,6 +172,7 @@ export const appRoutes: AppRoutes = {
     },
     advancedTools: {
       healthCheck: "/advanced-tools/health-check",
+      auditTrail: toAppPath("/advanced-tools/audit-trail"),
       apiEndpoints: "/advanced-tools/api-endpoints",
       localizationApi: "/advanced-tools/localization-api",
       hangfireDashboard: "/advanced-tools/hangfire-dashboard",

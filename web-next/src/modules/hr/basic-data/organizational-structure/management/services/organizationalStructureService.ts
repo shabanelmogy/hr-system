@@ -9,7 +9,6 @@ import type {
   OrganizationalStructurePageResponse,
   OrganizationalStructureBulkCreateResponse,
   UpdateOrganizationalStructureMutation,
-  OrganizationalChangeLogItem,
 } from "../types/OrganizationalStructure";
 
 type OrganizationalStructureApiMutation = Omit<OrganizationalStructureMutation, "isCentralized">;
@@ -61,8 +60,5 @@ export const organizationalStructureService = {
   },
   reject(id: number, reason: string): Promise<OrganizationalStructureItem> {
     return apiService.post(apiRoutes.organizationalStructure.reject(id), { reason });
-  },
-  getChangeLogs(resource: OrganizationalResource, id: number): Promise<OrganizationalChangeLogItem[]> {
-    return apiService.get(apiRoutes.organizationalStructure.changeLogs(resource, id));
   },
 };
