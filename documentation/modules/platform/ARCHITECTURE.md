@@ -33,6 +33,15 @@ or direct infrastructure calls.
   only when the wire contract is deliberately preserved and covered by tests;
   that does not move its persistence ownership back to HR.
 
+## Audit trail
+
+Platform owns the system-wide Audit Trail read side (`AuditTrailController`,
+`GetAuditTrailQuery`, permission `AuditTrail:View`). It does not own the rows:
+every module records its own creates/changes/deletes/restores in its own
+`AuditTrailEntries` table through the shared interceptor, and Platform merges them
+through the registered `IAuditTrailSource`s, resolving user names itself. See
+[AUDIT_TRAIL.md](../../guides/api/AUDIT_TRAIL.md).
+
 ## Authorization and execution scope
 
 `TenantMember` is a fail-closed Platform policy. An authenticated principal must

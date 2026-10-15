@@ -14,7 +14,7 @@ When building a new entity in the HR Management System, follow these 15 steps in
 - Use `AsNoTracking()` for all read-only queries.
 - Use **projections** (`Select(...)`) in queries for performance.
 - Always pass and forward `CancellationToken` in async methods.
-- Log entity changes in every `UpdateAsync` via `IEntityChangeLogService`.
+- Do not write change-log code: every `AuditableEntity` create/update/delete/restore is recorded automatically by the audit trail (see `documentation/guides/api/AUDIT_TRAIL.md`). Use `[AuditIgnore]` for machine-generated rows or fields that must not be copied.
 - Bilingual name properties: use `NameAr` + `NameEn` instead of a single `Name` when the entity has a display name.
 - Use `virtual` on collection navigation properties for entities referenced by child entities.
 - Use `string?` for optional string properties; `string.Empty` or `null!` for required strings.
@@ -379,7 +379,7 @@ public interface ICountryService
 
 **Location:** `Services/{EntityName}sService/{EntityName}Service.cs`
 
-Inject via primary constructor: `ApplicationDbContext`, `IHttpContextAccessor`, `IEntityChangeLogService`, `{EntityName}Errors`, `IMapper`, and any hub contexts if real-time updates are needed.
+Inject via primary constructor: `ApplicationDbContext`, `IHttpContextAccessor`, `{EntityName}Errors`, `IMapper`, and any hub contexts if real-time updates are needed.
 
 **Mapping:** The project uses **Mapster**. Use `.Adapt<T>()` for single-object mapping and `.ProjectToType<T>()` for queryable projections. Use `_mapper.Map(source, dest)` for updating an existing tracked entity.
 
@@ -390,7 +390,7 @@ Key patterns per method:
 - **GetRelatedStates** — `Include(...)` + `FirstOrDefaultAsync` + `.Adapt<T>()`
 - **Add** — `_mapper.Map<Country>(request)` → `AddAsync` → `SaveChangesAsync` → `.Adapt<CountryResponse>()`
 - **AddRange** — validate duplicates in-memory and in DB, then `BulkInsertAsync` (EFCore.BulkExtensions)
-- **Update** — load existing → `.Adapt<Country>()` for change log snapshot → `_mapper.Map(request, current)` → `Update` → `SaveChangesAsync`
+- **Update** — load existing → `_mapper.Map(request, current)` → `Update` → `SaveChangesAsync` (the audit trail records the changed fields)
 - **Toggle** — check business constraints first, then flip `IsDeleted` + set audit fields
 
 **Example (`CountryService.cs`):**
@@ -401,14 +401,12 @@ namespace HrManagementSystem.Services.CountriesService;
 public class CountryService(
     ApplicationDbContext context,
     IHttpContextAccessor httpContextAccessor,
-    IEntityChangeLogService entityChangeLogService,
     CountryErrors countryErrors,
     IMapper mapper) : ICountryService
 {
     private readonly ApplicationDbContext _context = context;
     private readonly IMapper _mapper = mapper;
     private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
-    private readonly IEntityChangeLogService _entityChangeLogService = entityChangeLogService;
     private readonly CountryErrors _countryErrors = countryErrors;
 
     public async Task<IEnumerable<CountryResponse>> GetAllAsync(CancellationToken cancellationToken = default)
@@ -479,9 +477,6 @@ public class CountryService(
 
         if (current is null)
             return Result.Failure<CountryResponse>(_countryErrors.CountryNotFound);
-
-        var updated = request.Adapt<Country>();
-        await _entityChangeLogService.CreateChangeLogAsync(request.Id, current, updated);
 
         _mapper.Map(request, current);
         _context.Update(current);

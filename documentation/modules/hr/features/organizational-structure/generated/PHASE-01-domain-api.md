@@ -80,10 +80,10 @@ existing-system review, implementation order, and Definition of Done.
 | --- | ---: | --- |
 | organizational-structure-master | 3 | `57ab452f6cc671bd93de8808d8d1766d507cf902b6269bdb0e07c8422f87249a` |
 | organizational-structure-master | 4 | `834005c26053eb5eee6e85e186c98953501eda8584fb9e30055ec9bd16391cb8` |
-| organizational-structure-master | 6 | `3b960e2721e9df3da8e95561bbf1b7e5360891ebd8acf3c62b710b03b76021aa` |
+| organizational-structure-master | 6 | `a316d1bb04bf7dca2b1ec941cb7168ae1643a93d386676d4ce4677e08fb9875b` |
 | organizational-structure-api | 1 | `195c929b29105c0d3f89001ca362cffca04f57fe22db2790bcfe914a83bed5e5` |
 | organizational-structure-api | 2 | `b4fcf221d9c895f97e3863644b7a85cfe2866a727148d5c9ea224037184574fc` |
-| organizational-structure-api | 3 | `44395c8375a89c5a7b4843bd05d74f9123fa3168a5ffffb36e3cf1107cbcaf13` |
+| organizational-structure-api | 3 | `b38e73223f890a47158896282ff2e672161efda522322acbd31a8a2c6b39beb8` |
 | organizational-structure-api | 4 | `f579fa4a9a8ebdfee38560d34de014604f51e8b1a4f3092c5a286362633bad89` |
 | organizational-structure-api | 5 | `774d8fb4817c8ea45e9144a23fccd5fd51494424f90b31c6dcd8493803f65246` |
 | organizational-structure-api | 6 | `329fee341e7ab5c423c4e623c155555d646e9de947783e8c8a2bb2d412f46a60` |

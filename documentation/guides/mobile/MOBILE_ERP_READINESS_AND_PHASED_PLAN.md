@@ -211,7 +211,7 @@ readiness سابق دليلاً على الحالة الحالية.
 
 1. نقل Countries/States/Districts إلى `ReferenceData/geography`، ونقل AddressTypes إلى `ReferenceData/addresses`، بكل الطبقات والاختبارات.
 2. نقل Company Geographic Scope إلى `Platform/tenant-administration`، وFiscal Years إلى `Accounting/fiscal-years`، وAppointments إلى `CRM/appointments`.
-3. إبقاء Users/Roles/Invitations/ChangeLogs/Localization تحت `Platform/tenant-administration`، وHangfire/health/diagnostics تحت `Platform/operations`.
+3. إبقاء Users/Roles/Invitations/AuditTrail/Localization تحت `Platform/tenant-administration`، وHangfire/health/diagnostics تحت `Platform/operations`.
 4. تصحيح registry وroute-manifest وmodule requirements، حذف تعريفات HR القديمة، وتحديث realtime keys والتوثيق.
 5. اعتماد مصدر موحد لمتطلبات route؛ اختبار تقاطع mobile registry مع catalog fixture مولّد من الخادم.
 6. مطابقة صلاحيات الأفعال؛ super-admin يدير platform/global data وفق عقد الخادم دون خلطه بمستخدم شركة.

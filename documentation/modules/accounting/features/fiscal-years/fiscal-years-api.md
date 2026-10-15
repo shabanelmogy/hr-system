@@ -83,8 +83,8 @@ personal overrides.
 ## 7. Transactions, locks, and audit
 
 Every mutation executes atomically under `FiscalYearLocks.CompanyCalendar`.
-Domain/persistence changes and `EntityChangeLog` commit once. Update audit records
-changed fields; lifecycle records status. Scheduler invocation occurs only after a
+Domain/persistence changes and their automatic [Audit Trail](../../../../guides/api/AUDIT_TRAIL.md) rows commit once: an update
+records the changed fields, a lifecycle action records the status change. Scheduler invocation occurs only after a
 successful commit and sends resource `fiscal-years`. Fiscal Year handlers depend on
 the Accounting-owned `IAccountingUnitOfWork`, which resolves to the same scoped
 `AccountingDbContext` used by the read/write stores. This prevents another module's

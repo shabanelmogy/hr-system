@@ -14,8 +14,8 @@
       "id": "api-infrastructure-feature",
       "layer": "api",
       "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Infrastructure/Features/GeographicalInformation/Countries",
-      "minimumFiles": 7,
-      "purpose": "Persistence stores, configuration, audit, scheduling, and background delivery"
+      "minimumFiles": 6,
+      "purpose": "Persistence stores, configuration, scheduling, and background delivery"
     },
     {
       "id": "api-report-template-application",

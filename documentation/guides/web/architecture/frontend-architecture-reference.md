@@ -1032,7 +1032,7 @@ Current examples:
 
 - Geographical reference-data pages live under `src/modules/reference-data/geographical-information`.
 - File listing and media preview live under `src/platform/file-manager`.
-- Advanced tools are split by capability into `external-tools`, `localization`, and `track-changes`; reusable code stays inside the owning subfeature unless it is domain-neutral and used elsewhere.
+- Advanced tools are split by capability into `external-tools`, `localization`, and `health-check`; the system-wide Audit Trail lives in `src/platform/audit-trail` (page, record-history dialog, details dialog); reusable code stays inside the owning subfeature unless it is domain-neutral and used elsewhere.
 - Notification API access, query state, realtime handling, and UI live under `src/platform/notifications`.
 - User-profile API access and query hooks live under `src/platform/auth/profile`.
 - Cross-domain report viewers and report API access live under `src/shared/reporting`; domain report pages remain with their owning module feature.

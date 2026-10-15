@@ -45,7 +45,7 @@ realtime, notification, localization, report, or Import integration is reachable
 | --- | ---: | --- |
 | organizational-structure-master | 4 | `834005c26053eb5eee6e85e186c98953501eda8584fb9e30055ec9bd16391cb8` |
 | organizational-structure-master | 5 | `64373031171f20599d152686d589082cb88f6365efbd1a6f9badba308f4fe785` |
-| organizational-structure-master | 6 | `3b960e2721e9df3da8e95561bbf1b7e5360891ebd8acf3c62b710b03b76021aa` |
+| organizational-structure-master | 6 | `a316d1bb04bf7dca2b1ec941cb7168ae1643a93d386676d4ce4677e08fb9875b` |
 | organizational-structure-master | 7 | `0aec4883eaa2766ef0c3d4522286a307cff869fdad881fd36605e4bee72ee197` |
 | organizational-structure-master | 9 | `7ceb12bb46037333513809999525207b50465f1d803c98dc76366d8248e070c6` |
 | organizational-structure-api | 8 | `8427fbc60b6506434f168bbb92cebc0b07e6699dec5f0c7e336d6b0c7906c32a` |

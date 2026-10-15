@@ -92,6 +92,18 @@ dotnet ef migrations remove `
 
 ---
 
+## 6. مثال حقيقي: إضافة جدول سجل العمليات
+
+بعد تحديث سجل العمليات (Audit Trail) كل موديول بقى عنده جدول جديد
+`AuditTrailEntries`، والـ Platform اتشال منه جدول `EntityChangeLogs` القديم.
+أمر واحد بيعمل migration لكل الموديولات اللي اتغيرت ويطبقها:
+
+```powershell
+.\scripts\Add-ErpModuleMigrations.ps1 -Name AddAuditTrail -Apply
+```
+
+الشرح في [AUDIT_TRAIL.md](AUDIT_TRAIL.md).
+
 ## مشاكل شائعة
 
 | المشكلة | الحل |
