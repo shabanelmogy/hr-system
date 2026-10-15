@@ -23,6 +23,66 @@ namespace ErpSystem.Modules.Inventory.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("ErpSystem.BuildingBlocks.Persistence.AuditTrail.AuditTrailEntry", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<byte>("Action")
+                        .HasColumnType("tinyint");
+
+                    b.Property<int>("ChangeCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ChangesJson")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("CompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CorrelationId")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("EntityDisplay")
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)");
+
+                    b.Property<string>("EntityKey")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("EntityName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<DateTime>("OccurredOnUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("TenantId")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<string>("UserId")
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TenantId", "EntityName", "EntityKey");
+
+                    b.HasIndex("TenantId", "OccurredOnUtc", "Id")
+                        .IsDescending(false, true, true);
+
+                    b.ToTable("AuditTrailEntries", "inv");
+                });
+
             modelBuilder.Entity("ErpSystem.Modules.Inventory.Domain.Catalog.Categories.Entities.Category", b =>
                 {
                     b.Property<int>("Id")

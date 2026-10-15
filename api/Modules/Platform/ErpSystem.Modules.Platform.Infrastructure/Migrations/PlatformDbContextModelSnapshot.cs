@@ -23,6 +23,66 @@ namespace ErpSystem.Modules.Platform.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("ErpSystem.BuildingBlocks.Persistence.AuditTrail.AuditTrailEntry", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<byte>("Action")
+                        .HasColumnType("tinyint");
+
+                    b.Property<int>("ChangeCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ChangesJson")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("CompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CorrelationId")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("EntityDisplay")
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)");
+
+                    b.Property<string>("EntityKey")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("EntityName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<DateTime>("OccurredOnUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("TenantId")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<string>("UserId")
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TenantId", "EntityName", "EntityKey");
+
+                    b.HasIndex("TenantId", "OccurredOnUtc", "Id")
+                        .IsDescending(false, true, true);
+
+                    b.ToTable("AuditTrailEntries", "platform");
+                });
+
             modelBuilder.Entity("ErpSystem.Modules.Platform.Domain.Companies.Entities.CompanyCountry", b =>
                 {
                     b.Property<int>("Id")
@@ -93,53 +153,6 @@ namespace ErpSystem.Modules.Platform.Infrastructure.Migrations
                         .HasFilter("[IsDeleted] = 0 AND [IsDefault] = 1");
 
                     b.ToTable("CompanyCountries", "platform");
-                });
-
-            modelBuilder.Entity("ErpSystem.Modules.Platform.Domain.Platform.EntityChangeLogs.Entities.EntityChangeLog", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("ChangedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ChangedById")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ChangedByPc")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("CompanyId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("EntityId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("EntityKey")
-                        .HasMaxLength(450)
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("EntityName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("JsonNewValues")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("JsonOldValues")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TenantId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("EntityChangeLogs", "platform");
                 });
 
             modelBuilder.Entity("ErpSystem.Modules.Platform.Domain.Platform.Files.Entities.UploadedFile", b =>
