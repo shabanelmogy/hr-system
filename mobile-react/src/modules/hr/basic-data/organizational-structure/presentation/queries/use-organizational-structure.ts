@@ -83,12 +83,3 @@ export function useRejectJobDescription() {
   );
 }
 
-export function useOrganizationalChangeLogs(resource: OrganizationalResource, id?: number | null, enabled = true) {
-  const useCases = useOrganizationalStructureUseCases();
-  return useQuery({
-    queryKey: id ? organizationalStructureKeys.changeLogs(resource, id) : ['disabled'],
-    queryFn: () => useCases.getChangeLogs(resource, id!),
-    enabled: Boolean(id && enabled),
-    staleTime: 60_000,
-  });
-}

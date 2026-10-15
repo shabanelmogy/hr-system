@@ -465,7 +465,7 @@ export const enAdministrationTenants = {
       exchangeRateTypes: 'Exchange-rate types',
       fiscalYears: 'Fiscal years',
       globalCrystalReports: 'Global Crystal reports',
-      changeLogs: 'Change logs',
+      auditTrail: 'Audit trail',
       hangfire: 'Background jobs',
       databaseViews: 'Database views',
       localizations: 'Localization',

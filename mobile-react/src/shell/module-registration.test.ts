@@ -79,7 +79,7 @@ describe('mobile module registration', () => {
       ROUTES.recruitment.root,
       ROUTES.workforcePlanning.plans,
       ROUTES.advancedTools.localizationApi,
-      ROUTES.advancedTools.trackChanges,
+      ROUTES.advancedTools.auditTrail,
       ROUTES.administration.offlineOperations,
       ROUTES.finance.ledgerSetup.currencies,
     ]) {
@@ -89,7 +89,7 @@ describe('mobile module registration', () => {
   it('uses API ownership for routes moved out of HR', () => {
     expect(findMobileRouteOwner(ROUTES.basicData.countries)).toEqual({ moduleCode: 'reference-data', submoduleCode: 'geography' });
     expect(findMobileRouteOwner(ROUTES.advancedTools.localizationApi)).toEqual({ moduleCode: 'platform', submoduleCode: 'tenant-administration' });
-    expect(findMobileRouteOwner(ROUTES.advancedTools.trackChanges)).toEqual({ moduleCode: 'platform', submoduleCode: 'tenant-administration' });
+    expect(findMobileRouteOwner(ROUTES.advancedTools.auditTrail)).toEqual({ moduleCode: 'platform', submoduleCode: 'tenant-administration' });
     expect(findMobileRouteOwner(ROUTES.advancedTools.healthCheck)).toEqual({ moduleCode: 'platform', submoduleCode: 'operations' });
     expect(findMobileRouteOwner(ROUTES.extras.appointments)).toEqual({ moduleCode: 'crm', submoduleCode: 'appointments' });
     expect(findMobileRouteOwner(ROUTES.workforcePlanning.plans)).toEqual({ moduleCode: 'hr', submoduleCode: 'workforce' });

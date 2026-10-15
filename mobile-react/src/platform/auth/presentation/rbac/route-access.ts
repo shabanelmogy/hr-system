@@ -40,7 +40,7 @@ export function requiredModuleForPath(pathname: string): { moduleCode: string; s
     return { moduleCode: 'acc', submoduleCode: 'ledger-setup' };
   }
   if (pathname === ROUTES.finance.root) return { moduleCode: 'acc' };
-  if ([ROUTES.advancedTools.trackChanges, ROUTES.advancedTools.localizationApi]
+  if ([ROUTES.advancedTools.auditTrail, ROUTES.advancedTools.localizationApi]
     .some((route) => matchesRoute(pathname, route))) {
     return { moduleCode: 'platform', submoduleCode: 'tenant-administration' };
   }

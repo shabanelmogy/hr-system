@@ -20,7 +20,7 @@ export const enNavigationSettings = {
     advancedTools: 'Advanced tools',
     files: 'File manager',
     appointments: 'Appointments',
-    trackChanges: 'Track changes',
+    auditTrail: 'Audit trail',
     localizationApi: 'Localization API',
     healthCheck: 'Health check',
     apiEndpoints: 'API endpoints',

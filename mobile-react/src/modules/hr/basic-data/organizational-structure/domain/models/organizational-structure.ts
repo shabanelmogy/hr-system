@@ -89,14 +89,14 @@ export interface ApproveJobDescriptionRequest {
   expiryDate?: string;
 }
 
-export interface OrganizationalChangeLogItem {
-  id?: string | number;
-  changeLogId: string | number;
-  entityName?: string;
-  key: string;
-  oldValue?: string;
-  newValue?: string;
-  changedBy: string;
-  changedAt: string;
-  changedByPc?: string;
-}
+/** API entity name recorded in the audit trail for each resource. */
+export const organizationalAuditEntityNames: Record<OrganizationalResource, string> = {
+  branches: 'Branch',
+  departments: 'Department',
+  divisions: 'Division',
+  'job-titles': 'JobTitle',
+  'job-levels': 'JobLevel',
+  positions: 'Position',
+  'job-descriptions': 'JobDescription',
+  'cost-centers': 'CostCenter',
+};

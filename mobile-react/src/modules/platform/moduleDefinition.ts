@@ -12,7 +12,7 @@ export const platformModuleDefinition: MobileModuleDefinition = {
       routePrefixes: [
         ROUTES.administration.root,
         ROUTES.basicData.companyGeographicScope,
-        ROUTES.advancedTools.trackChanges,
+        ROUTES.advancedTools.auditTrail,
         ROUTES.advancedTools.localizationApi,
       ],
     },

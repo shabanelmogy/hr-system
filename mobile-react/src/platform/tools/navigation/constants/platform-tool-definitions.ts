@@ -6,7 +6,7 @@ export type PlatformToolModuleId = 'extras' | 'advancedTools';
 export type PlatformToolId =
   | 'files'
   | 'appointments'
-  | 'trackChanges'
+  | 'auditTrail'
   | 'localizationApi'
   | 'healthCheck'
   | 'apiEndpoints'
@@ -67,12 +67,12 @@ export const PLATFORM_TOOL_MODULES: Record<
     icon: 'construct-outline',
     tools: [
       {
-        id: 'trackChanges',
-        screen: 'track-changes',
-        route: ROUTES.advancedTools.trackChanges,
-        titleKey: 'navigation.trackChanges',
-        descriptionKey: 'platformTools.trackChangesDescription',
-        icon: 'git-commit-outline',
+        id: 'auditTrail',
+        screen: 'audit-trail',
+        route: ROUTES.advancedTools.auditTrail,
+        titleKey: 'navigation.auditTrail',
+        descriptionKey: 'platformTools.auditTrailDescription',
+        icon: 'time-outline',
       },
       {
         id: 'localizationApi',

@@ -297,11 +297,11 @@ function policy(pathname) {
     { permissions: ['ViewUsers'] },
     { permissions: ['ViewAppointments'] },
   ]);
-  if (pathname === '/advanced-tools/track-changes') return permission(['ViewChangeLogs']);
+  if (pathname === '/advanced-tools/audit-trail') return permission(['ViewAuditTrail']);
   if (pathname === '/advanced-tools/localization-api') return permission(['ViewLocalizations']);
   if (pathname === '/advanced-tools/health-check' || pathname === '/advanced-tools/api-endpoints') return role(['admin']);
   if (pathname === '/advanced-tools/hangfire-dashboard') return permission(['ViewHangfireDashboard']);
-  if (pathname === '/advanced-tools') return anyOf([{ permissions: ['ViewChangeLogs'] }, { permissions: ['ViewLocalizations'] }, { roles: ['admin'] }, { permissions: ['ViewHangfireDashboard'] }]);
+  if (pathname === '/advanced-tools') return anyOf([{ permissions: ['ViewAuditTrail'] }, { permissions: ['ViewLocalizations'] }, { roles: ['admin'] }, { permissions: ['ViewHangfireDashboard'] }]);
   if (pathname === '/recruitment') return permission(['ViewRecruitment']);
   if (pathname === '/finance/ledger-setup/fiscal-years') return permission(['ViewFiscalYears']);
   if (pathname === '/finance/ledger-setup') return anyOf([
@@ -366,7 +366,7 @@ function moduleRequirement(pathname) {
   if (pathname.startsWith('/workforce-planning')) return { moduleCode: 'hr', submoduleCode: 'workforce' };
   if (pathname.startsWith('/finance/ledger-setup')) return { moduleCode: 'acc', submoduleCode: 'ledger-setup' };
   if (pathname === '/finance') return null;
-  if (pathname.startsWith('/advanced-tools/track-changes') || pathname.startsWith('/advanced-tools/localization-api')) return { moduleCode: 'platform', submoduleCode: 'tenant-administration' };
+  if (pathname.startsWith('/advanced-tools/audit-trail') || pathname.startsWith('/advanced-tools/localization-api')) return { moduleCode: 'platform', submoduleCode: 'tenant-administration' };
   if (pathname === '/advanced-tools' || pathname === '/extras') return null;
   if (pathname.startsWith('/administration')) return { moduleCode: 'platform', submoduleCode: 'tenant-administration' };
   if (pathname.startsWith('/advanced-tools')) return { moduleCode: 'platform', submoduleCode: 'operations' };
@@ -459,14 +459,14 @@ function routeProfile(route, pathname) {
       note: 'Tenant administration is owned by the Platform module.',
     };
   }
-  if (effectivePath === '/advanced-tools/track-changes' || effectivePath === '/advanced-tools/localization-api') {
+  if (effectivePath === '/advanced-tools/audit-trail' || effectivePath === '/advanced-tools/localization-api') {
     return {
       ...profile,
       currentOwner: 'Platform/tenant-administration',
       targetOwner: 'Platform/tenant-administration',
       scope: 'tenant/company',
       status: 'aligned',
-      note: 'Tenant administration owns track changes and localization settings.',
+      note: 'Tenant administration owns the audit trail and localization settings.',
     };
   }
   if (effectivePath === '/advanced-tools/hangfire-dashboard' || effectivePath === '/advanced-tools/health-check' || effectivePath === '/advanced-tools/api-endpoints') {
@@ -561,7 +561,7 @@ function endpointProfile(source) {
   if (source.includes('/hr/workforce-planning/')) return { currentOwner: 'HR/workforce', targetOwner: 'HR/workforce', scope: 'tenant/company', status: 'aligned', permissionSource: 'HR workforce endpoint policy backed by HrPermissions.Workforce' };
   if (source.includes('/modules/crm/appointments/')) return { currentOwner: 'CRM/appointments', targetOwner: 'CRM/appointments', scope: 'tenant/company', status: 'aligned', permissionSource: 'CRM AppointmentsController and CrmPermissions.Appointments' };
   if (source.includes('/platform/reporting/')) return { currentOwner: 'Platform/reporting', targetOwner: 'Platform/reporting', scope: 'tenant/company', status: 'aligned', permissionSource: 'Reporting API endpoint policy and ReportingPermissions.Reports' };
-  if (source.includes('/platform/tools/track-changes/')) return { currentOwner: 'Platform/tenant-administration', targetOwner: 'Platform/tenant-administration', scope: 'tenant/company', status: 'aligned', permissionSource: 'Platform EntityChangeLogsController and PlatformPermissions.ViewChangeLogs' };
+  if (source.includes('/platform/tools/audit-trail/')) return { currentOwner: 'Platform/tenant-administration', targetOwner: 'Platform/tenant-administration', scope: 'tenant/company', status: 'aligned', permissionSource: 'Platform AuditTrailController and PlatformPermissions.ViewAuditTrail' };
   if (source.includes('/platform/tools/localization/')) return { currentOwner: 'Platform/tenant-administration', targetOwner: 'Platform/tenant-administration', scope: 'tenant/company', status: 'aligned', permissionSource: 'Platform LocalizationController and PlatformPermissions localizations' };
   if (source.includes('/platform/tools/operations/')) return { currentOwner: 'Platform/operations', targetOwner: 'Platform/operations', scope: 'platform-global', status: 'aligned', permissionSource: 'Platform BackgroundJobsController and PlatformPermissions.GlobalOperations' };
   if (source.includes('/platform/administration/') || source.includes('/platform/offline-operations/') || source.includes('/platform/tenant-admins/') || source.includes('/platform/tenants/')) return { currentOwner: 'Platform/tenant-administration', targetOwner: 'Platform/tenant-administration', scope: 'tenant/company', status: 'aligned', permissionSource: 'Platform endpoint policy and PlatformPermissions.TenantAdministration' };

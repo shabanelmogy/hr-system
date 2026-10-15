@@ -20,7 +20,7 @@ export const arNavigationSettings = {
     advancedTools: 'الأدوات المتقدمة',
     files: 'مدير الملفات',
     appointments: 'المواعيد',
-    trackChanges: 'تتبع التغييرات',
+    auditTrail: 'سجل العمليات',
     localizationApi: 'إدارة الترجمات',
     healthCheck: 'حالة النظام',
     apiEndpoints: 'واجهات API',

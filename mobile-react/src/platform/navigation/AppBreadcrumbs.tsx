@@ -212,10 +212,10 @@ const breadcrumbsByPath: Record<string, readonly BreadcrumbItem[]> = {
     { key: 'appointments', labelKey: 'navigation.appointments' },
   ],
   [ROUTES.advancedTools.root]: [homeItem, advancedToolsItem],
-  [ROUTES.advancedTools.trackChanges]: [
+  [ROUTES.advancedTools.auditTrail]: [
     homeItem,
     advancedToolsItem,
-    { key: 'track-changes', labelKey: 'navigation.trackChanges' },
+    { key: 'audit-trail', labelKey: 'navigation.auditTrail' },
   ],
   [ROUTES.advancedTools.localizationApi]: [
     homeItem,

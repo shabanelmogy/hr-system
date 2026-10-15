@@ -1,7 +1,6 @@
 import type {
   ApproveJobDescriptionRequest,
   BulkCreateOrganizationalItemsResponse,
-  OrganizationalChangeLogItem,
   OrganizationalResource,
   OrganizationalStructureItem,
   OrganizationalStructureLookup,
@@ -20,5 +19,4 @@ export interface OrganizationalStructureRepository {
   restore(resource: OrganizationalResource, id: number): Promise<void>;
   approveJobDescription(id: number, request: ApproveJobDescriptionRequest): Promise<OrganizationalStructureItem>;
   rejectJobDescription(id: number, reason: string): Promise<OrganizationalStructureItem>;
-  getChangeLogs(resource: OrganizationalResource, id: number): Promise<OrganizationalChangeLogItem[]>;
 }

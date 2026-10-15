@@ -1,7 +1,6 @@
 import type {
   ApproveJobDescriptionRequest,
   BulkCreateOrganizationalItemsResponse,
-  OrganizationalChangeLogItem,
   OrganizationalResource,
   OrganizationalStructureItem,
   OrganizationalStructureLookup,
@@ -30,7 +29,6 @@ export interface OrganizationalStructureUseCases {
   restore(resource: OrganizationalResource, id: number): Promise<void>;
   approveJobDescription(id: number, request: ApproveJobDescriptionRequest): Promise<OrganizationalStructureItem>;
   rejectJobDescription(id: number, reason: string): Promise<OrganizationalStructureItem>;
-  getChangeLogs(resource: OrganizationalResource, id: number): Promise<OrganizationalChangeLogItem[]>;
 }
 
 export function createOrganizationalStructureUseCases(
@@ -53,6 +51,5 @@ export function createOrganizationalStructureUseCases(
     restore: (resource, id) => repository.restore(resource, id),
     approveJobDescription: (id, request) => repository.approveJobDescription(id, request),
     rejectJobDescription: (id, reason) => repository.rejectJobDescription(id, reason),
-    getChangeLogs: (resource, id) => repository.getChangeLogs(resource, id),
   };
 }
