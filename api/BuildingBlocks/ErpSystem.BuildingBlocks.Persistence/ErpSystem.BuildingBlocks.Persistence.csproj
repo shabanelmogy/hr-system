@@ -10,6 +10,8 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" />
+    <!-- Lifts the vulnerable transitive System.Security.Cryptography.Pkcs (from SqlClient) for every module that persists data. -->
+    <PackageReference Include="System.Security.Cryptography.Pkcs" />
   </ItemGroup>
 
   <ItemGroup>
