@@ -63,11 +63,11 @@ external effect must use a transactional outbox instead.
 
 Tenant creation is exposed by the Platform administration endpoints
 (`PlatformTenantManagementAdapter.CreateAsync`). One Serializable transaction
-creates the tenant, its `DEFAULT` company, and its module entitlements; the
-duplicate-identifier check runs inside that transaction. After commit,
-`CreateTenantCommandHandler` sends the WhatsApp welcome message. Tenant creation
-writes no `SecurityAuditEvent` yet and publishes no realtime refresh (open
-decision: add a `TenantCreated` audit in the same transaction). Initial-admin invitation, provisioning
+creates the tenant, its `DEFAULT` company, its module entitlements, and a
+`TenantCreated` `SecurityAuditEvent` (identifier and granted modules); the
+duplicate-identifier check runs inside that transaction, so a rolled-back tenant
+leaves no audit row. After commit, `CreateTenantCommandHandler` sends the WhatsApp
+welcome message. No realtime refresh is published. Initial-admin invitation, provisioning
 status, request-replay idempotency, tenant settings, and recoverable external
 delivery remain separate capabilities.
 
