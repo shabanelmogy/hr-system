@@ -33,6 +33,15 @@ or direct infrastructure calls.
   only when the wire contract is deliberately preserved and covered by tests;
   that does not move its persistence ownership back to HR.
 
+## Audit trail
+
+Platform owns the system-wide Audit Trail read side (`AuditTrailController`,
+`GetAuditTrailQuery`, permission `AuditTrail:View`). It does not own the rows:
+every module records its own creates/changes/deletes/restores in its own
+`AuditTrailEntries` table through the shared interceptor, and Platform merges them
+through the registered `IAuditTrailSource`s, resolving user names itself. See
+[AUDIT_TRAIL.md](../../guides/api/AUDIT_TRAIL.md).
+
 ## Authorization and execution scope
 
 `TenantMember` is a fail-closed Platform policy. An authenticated principal must
@@ -63,11 +72,11 @@ external effect must use a transactional outbox instead.
 
 Tenant creation is exposed by the Platform administration endpoints
 (`PlatformTenantManagementAdapter.CreateAsync`). One Serializable transaction
-creates the tenant, its `DEFAULT` company, and its module entitlements; the
-duplicate-identifier check runs inside that transaction. After commit,
-`CreateTenantCommandHandler` sends the WhatsApp welcome message. Tenant creation
-writes no `SecurityAuditEvent` yet and publishes no realtime refresh (open
-decision: add a `TenantCreated` audit in the same transaction). Initial-admin invitation, provisioning
+creates the tenant, its `DEFAULT` company, its module entitlements, and a
+`TenantCreated` `SecurityAuditEvent` (identifier and granted modules); the
+duplicate-identifier check runs inside that transaction, so a rolled-back tenant
+leaves no audit row. After commit, `CreateTenantCommandHandler` sends the WhatsApp
+welcome message. No realtime refresh is published. Initial-admin invitation, provisioning
 status, request-replay idempotency, tenant settings, and recoverable external
 delivery remain separate capabilities.
 

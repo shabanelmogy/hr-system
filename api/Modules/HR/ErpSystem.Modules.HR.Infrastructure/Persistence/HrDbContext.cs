@@ -9,6 +9,7 @@ using ErpSystem.Modules.HR.Domain.Employees.Entities;
 using ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities;
 using ErpSystem.Modules.HR.Domain.Recruitment.Entities;
 using ErpSystem.Modules.HR.Domain.WorkforcePlanning.Entities;
+using ErpSystem.BuildingBlocks.Persistence.AuditTrail;
 
 namespace ErpSystem.Modules.HR.Infrastructure.Persistence;
 
@@ -75,6 +76,7 @@ public sealed class HrDbContext(
     {
         base.OnModelCreating(modelBuilder);
         modelBuilder.HasDefaultSchema(Schema);
+        modelBuilder.ApplyAuditTrail();
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         ConfigureRowVersion(modelBuilder);
         ConfigureTenantIsolation(modelBuilder);

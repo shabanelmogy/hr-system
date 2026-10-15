@@ -58,7 +58,7 @@ invalidation, success test, and failure test. Use `N/A` only with a reason.
 | --- | ---: | --- |
 | organizational-structure-master | 3 | `57ab452f6cc671bd93de8808d8d1766d507cf902b6269bdb0e07c8422f87249a` |
 | organizational-structure-master | 4 | `834005c26053eb5eee6e85e186c98953501eda8584fb9e30055ec9bd16391cb8` |
-| organizational-structure-master | 6 | `3b960e2721e9df3da8e95561bbf1b7e5360891ebd8acf3c62b710b03b76021aa` |
+| organizational-structure-master | 6 | `a316d1bb04bf7dca2b1ec941cb7168ae1643a93d386676d4ce4677e08fb9875b` |
 | organizational-structure-master | 7 | `0aec4883eaa2766ef0c3d4522286a307cff869fdad881fd36605e4bee72ee197` |
 | organizational-structure-master | 8 | `2d14109ce3bb4835c1ac94307acaf5e892e36ded76f27395197546348229812d` |
 | organizational-structure-api | 6 | `329fee341e7ab5c423c4e623c155555d646e9de947783e8c8a2bb2d412f46a60` |

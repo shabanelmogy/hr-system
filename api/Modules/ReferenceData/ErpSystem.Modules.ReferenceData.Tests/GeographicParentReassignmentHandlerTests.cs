@@ -39,7 +39,6 @@ public sealed class GeographicParentReassignmentHandlerTests
             new RecordingStateReadStore(state),
             unitOfWork,
             scheduler,
-            new RecordingStateAuditTrail(),
             new TestCurrentActor(),
             CreateStateMapper(),
             CreateStateErrors());
@@ -77,7 +76,6 @@ public sealed class GeographicParentReassignmentHandlerTests
             new RecordingStateReadStore(state),
             unitOfWork,
             scheduler,
-            new RecordingStateAuditTrail(),
             new TestCurrentActor(),
             CreateStateMapper(),
             CreateStateErrors());
@@ -108,7 +106,6 @@ public sealed class GeographicParentReassignmentHandlerTests
             new RecordingDistrictReadStore(district),
             unitOfWork,
             scheduler,
-            new RecordingDistrictAuditTrail(),
             new TestCurrentActor(),
             CreateDistrictMapper(),
             CreateDistrictErrors());
@@ -137,7 +134,6 @@ public sealed class GeographicParentReassignmentHandlerTests
             new RecordingDistrictReadStore(district),
             unitOfWork,
             scheduler,
-            new RecordingDistrictAuditTrail(),
             new TestCurrentActor(),
             CreateDistrictMapper(),
             CreateDistrictErrors());
@@ -314,16 +310,6 @@ public sealed class GeographicParentReassignmentHandlerTests
     {
         public List<DistrictChange> Changes { get; } = [];
         public void Schedule(DistrictChange change) => Changes.Add(change);
-    }
-
-    private sealed class RecordingStateAuditTrail : IStateAuditTrail
-    {
-        public Task RecordUpdateAsync(State existingState, State updatedState, CancellationToken cancellationToken) => Task.CompletedTask;
-    }
-
-    private sealed class RecordingDistrictAuditTrail : IDistrictAuditTrail
-    {
-        public Task RecordUpdateAsync(District existingDistrict, District updatedDistrict, CancellationToken cancellationToken) => Task.CompletedTask;
     }
 
     private sealed class TestCurrentActor : ICurrentActor

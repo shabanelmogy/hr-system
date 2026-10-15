@@ -120,6 +120,10 @@ export const routePolicies: readonly RoutePolicy[] = [
     path: appRoutes.platform.advancedTools.localizationApi,
     permissions: [permissions.ViewLocalizations],
   },
+  {
+    path: appRoutes.platform.advancedTools.auditTrail,
+    permissions: [permissions.ViewAuditTrail],
+  },
   { path: appRoutes.platform.advancedTools.healthCheck, roles: [adminRole] },
   { path: appRoutes.platform.advancedTools.apiEndpoints, roles: [adminRole] },
   {

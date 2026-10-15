@@ -7,6 +7,7 @@ using ErpSystem.Modules.Inventory.Application.Features.Catalog.SubCategories.Abs
 using ErpSystem.Modules.Inventory.Application.Features.Catalog.SubCategories.Errors;
 using ErpSystem.Modules.Inventory.Infrastructure.Features.Catalog.Categories.Persistence;
 using ErpSystem.Modules.Inventory.Infrastructure.Features.Catalog.SubCategories.Persistence;
+using ErpSystem.BuildingBlocks.Persistence.AuditTrail;
 
 namespace ErpSystem.Modules.Inventory.Infrastructure;
 
@@ -20,11 +21,12 @@ public static class DependencyInjection
             ?? configuration.GetConnectionString("DefaultConnection")
             ?? throw new InvalidOperationException("Connection string 'Inventory' or 'DefaultConnection' not found.");
 
-        services.AddDbContext<InventoryDbContext>(options =>
-            options.UseSqlServer(
+        services.AddDbContext<InventoryDbContext>((provider, options) =>
+            options.UseErpAuditTrail(provider, "inventory").UseSqlServer(
                 connectionString,
                 sql => sql.MigrationsAssembly(typeof(DependencyInjection).Assembly.FullName)
                     .MigrationsHistoryTable("__EFMigrationsHistory", InventoryDbContext.Schema)));
+        services.AddErpAuditTrailSource<InventoryDbContext>("inventory");
         services.AddScoped<CategoryErrors>();
         services.AddScoped<SubCategoryErrors>();
         services.AddScoped<ICategoryReadStore, CategoryReadStore>();

@@ -19,23 +19,23 @@ import {
   useRestoreOrganizationalItem,
   useRejectJobDescription,
   useUpdateOrganizationalItem,
-  useOrganizationalChangeLogs,
 } from "../hooks/useOrganizationalStructure";
-import type {
-  OrganizationalResource,
-  OrganizationalSearchField,
-  OrganizationalSearchOperator,
-  OrganizationalStatus,
-  OrganizationalStructureItem,
-  OrganizationalStructureMutation,
+import {
+  organizationalAuditEntityNames,
+  type OrganizationalResource,
+  type OrganizationalSearchField,
+  type OrganizationalSearchOperator,
+  type OrganizationalStatus,
+  type OrganizationalStructureItem,
+  type OrganizationalStructureMutation,
 } from "../types/OrganizationalStructure";
 import type { JobDescriptionDecisionValues } from "../validation/organizationalStructureSchema";
 
 const OrganizationalStructureForm = dynamic(() => import("../components/OrganizationalStructureForm"), { ssr: false });
 const JobDescriptionDecisionDialog = dynamic(() => import("../components/JobDescriptionDecisionDialog"), { ssr: false });
 const JobDescriptionDetailsDialog = dynamic(() => import("../components/JobDescriptionDetailsDialog"), { ssr: false });
-const EntityChangeLogDialog = dynamic(
-  () => import("@/shared/components/audit-log").then((module) => module.EntityChangeLogDialog),
+const RecordHistoryDialog = dynamic(
+  () => import("@/platform/audit-trail").then((module) => module.RecordHistoryDialog),
   { ssr: false },
 );
 
@@ -56,6 +56,7 @@ export default function OrganizationalStructurePage({ resource }: { resource: Or
   const [selected, setSelected] = useState<OrganizationalStructureItem | null>(null);
   const [addSeed, setAddSeed] = useState<Partial<OrganizationalStructureMutation> | null>(null);
   const canView = hasPermission(permissions.ViewOrganizationalStructure);
+  const canViewHistory = hasPermission(permissions.ViewAuditTrail);
   const permissionSet = useMemo(() => ({
     canCreate: !isReadOnly && hasPermission(permissions.CreateOrganizationalStructure),
     canEdit: !isReadOnly && hasPermission(permissions.EditOrganizationalStructure),
@@ -75,7 +76,6 @@ export default function OrganizationalStructurePage({ resource }: { resource: Or
     sortDirection,
   }), [resource, page, pageSize, search, searchField, searchOperator, status, sortBy, sortDirection]);
   const query = useOrganizationalStructurePage(queryArgs, canView);
-  const changeLogsQuery = useOrganizationalChangeLogs(resource, selected?.id, dialog === "logs");
   const createMutation = useCreateOrganizationalItem();
   const updateMutation = useUpdateOrganizationalItem();
   const archiveMutation = useArchiveOrganizationalItem();
@@ -225,7 +225,7 @@ export default function OrganizationalStructurePage({ resource }: { resource: Or
       onLifecycle={(item) => { setSelected(item); setDialog("lifecycle"); }}
       onApprove={(item) => { setSelected(item); setDialog("approve"); }}
       onReject={(item) => { setSelected(item); setDialog("reject"); }}
-      onViewLogs={(item) => { setSelected(item); setDialog("logs"); }}
+      onViewLogs={canViewHistory ? (item) => { setSelected(item); setDialog("logs"); } : undefined}
       onRefresh={() => void query.refetch()}
       onReset={resetList}
       onReparent={handleReparent}
@@ -254,22 +254,20 @@ export default function OrganizationalStructurePage({ resource }: { resource: Or
           setSelected(item);
           setDialog("reject");
         }}
-        onViewLogs={(item) => {
+        onViewLogs={canViewHistory ? (item) => {
           setSelected(item);
           setDialog("logs");
-        }}
+        } : undefined}
       />
     ) : null}
     {dialog === "logs" && selected ? (
-      <EntityChangeLogDialog
+      <RecordHistoryDialog
         open
         onClose={close}
-        entityCode={selected.code}
-        entityName={i18n.language?.startsWith("ar") ? selected.nameAr : selected.nameEn}
-        logs={changeLogsQuery.data}
-        loading={changeLogsQuery.isLoading}
-        error={changeLogsQuery.error}
-        onRetry={() => void changeLogsQuery.refetch()}
+        moduleCode="hr"
+        entityName={organizationalAuditEntityNames[resource]}
+        entityKey={selected.id}
+        title={`${selected.code ? `${selected.code} — ` : ""}${i18n.language?.startsWith("ar") ? selected.nameAr : selected.nameEn}`}
       />
     ) : null}
     {dialog === "lifecycle" ? <ConfirmationDialog open onClose={close} onConfirm={() => void lifecycle()}

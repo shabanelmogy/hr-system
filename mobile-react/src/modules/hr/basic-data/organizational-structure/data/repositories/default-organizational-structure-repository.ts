@@ -13,5 +13,4 @@ export class DefaultOrganizationalStructureRepository implements OrganizationalS
   restore: OrganizationalStructureRepository['restore'] = (resource, id) => this.remote.restore(resource, id);
   approveJobDescription: OrganizationalStructureRepository['approveJobDescription'] = (id, request) => this.remote.approveJobDescription(id, request);
   rejectJobDescription: OrganizationalStructureRepository['rejectJobDescription'] = (id, reason) => this.remote.rejectJobDescription(id, reason);
-  getChangeLogs: OrganizationalStructureRepository['getChangeLogs'] = (resource, id) => this.remote.getChangeLogs(resource, id);
 }

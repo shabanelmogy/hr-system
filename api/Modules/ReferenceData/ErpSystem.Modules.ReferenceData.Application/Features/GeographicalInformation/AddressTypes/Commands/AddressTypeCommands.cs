@@ -90,7 +90,7 @@ public sealed class CreateAddressTypesCommandHandler(IAddressTypeWriteStore writ
     }
     private static bool HasDuplicates(IEnumerable<string> values) => values.GroupBy(value => value.Trim(), StringComparer.OrdinalIgnoreCase).Any(group => group.Count() > 1);
 }
-public sealed class UpdateAddressTypeCommandHandler(IAddressTypeWriteStore writeStore, IReferenceDataUnitOfWork unitOfWork, IAddressTypeChangeScheduler scheduler, IAddressTypeAuditTrail auditTrail, ICurrentActor actor, IMapper mapper, AddressTypeErrors errors) : ICommandHandler<UpdateAddressTypeCommand, Result<AddressTypeDetailResponse>>
+public sealed class UpdateAddressTypeCommandHandler(IAddressTypeWriteStore writeStore, IReferenceDataUnitOfWork unitOfWork, IAddressTypeChangeScheduler scheduler, ICurrentActor actor, IMapper mapper, AddressTypeErrors errors) : ICommandHandler<UpdateAddressTypeCommand, Result<AddressTypeDetailResponse>>
 {
     public async Task<Result<AddressTypeDetailResponse>> Handle(UpdateAddressTypeCommand request, CancellationToken cancellationToken)
     {
@@ -101,7 +101,7 @@ public sealed class UpdateAddressTypeCommandHandler(IAddressTypeWriteStore write
             if (existing is null || existing.IsDeleted) return Result.Failure<AddressTypeDetailResponse>(errors.AddressTypeNotFound);
             var updated = mapper.Map<AddressType>((AddressTypeMutation)request);
             if (await writeStore.HasConflictAsync(updated, existing.Id, token)) return Result.Failure<AddressTypeDetailResponse>(errors.AddressTypeExists);
-            await auditTrail.RecordUpdateAsync(existing, updated, token); mapper.Map((AddressTypeMutation)request, existing); await unitOfWork.SaveChangesAsync(token);
+            mapper.Map((AddressTypeMutation)request, existing); await unitOfWork.SaveChangesAsync(token);
             var response = mapper.Map<AddressTypeDetailResponse>(existing); change = new AddressTypeChange(response, "Update", null, actor.UserId, existing.TenantId, existing.CompanyId, Guid.NewGuid());
             return Result.Success(response);
         }, cancellationToken);

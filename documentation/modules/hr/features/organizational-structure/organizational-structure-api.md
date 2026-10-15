@@ -24,8 +24,9 @@ CompanyId. JobDescription contracts use PositionId and bilingual content.
 `createdCount`,
 `PUT /{resource}/{id}` updates, `DELETE /{resource}/{id}` archives, and
 `POST /{resource}/{id}/restore` restores. Job descriptions additionally expose
-`POST /job-descriptions/{id}/approve` and `/reject`. `GET /{resource}/{id}/change-logs`
-returns the record's audit history.
+`POST /job-descriptions/{id}/approve` and `/reject`. A record's history comes from the
+automatic [Audit Trail](../../../../guides/api/AUDIT_TRAIL.md): `GET /api/v1/audit-trail?moduleCode=hr&entityName=Department&entityKey={id}`
+(entity names are listed in `organizationalAuditEntityNames` on web and mobile).
 
 ## 4. Paging and criteria
 

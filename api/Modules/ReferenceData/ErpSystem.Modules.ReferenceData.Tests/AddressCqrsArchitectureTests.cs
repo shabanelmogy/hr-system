@@ -27,7 +27,6 @@ public sealed class AddressCqrsArchitectureTests
     {
         Assert.Contains(typeof(IAddressReadStore), typeof(AddressReadStore).GetInterfaces());
         Assert.Contains(typeof(IAddressWriteStore), typeof(AddressWriteStore).GetInterfaces());
-        Assert.Contains(typeof(IAddressAuditTrail), typeof(AddressAuditTrail).GetInterfaces());
     }
 
     [Fact]

@@ -35,4 +35,3 @@ export * from './surfaces/AppMetricCard';
 export * from './surfaces/AppModal';
 export * from './tree-view';
 export * from './typography/AppText';
-export * from './audit-log';

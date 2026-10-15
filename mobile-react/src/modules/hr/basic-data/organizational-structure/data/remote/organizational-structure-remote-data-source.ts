@@ -5,12 +5,10 @@ import {
   organizationalStructureItemSchema,
   organizationalStructureLookupSchema,
   organizationalStructurePageSchema,
-  organizationalChangeLogItemSchema,
 } from './organizational-structure-schemas';
 import type {
   ApproveJobDescriptionRequest,
   BulkCreateOrganizationalItemsResponse,
-  OrganizationalChangeLogItem,
   OrganizationalResource,
   OrganizationalStructureItem,
   OrganizationalStructureLookup,
@@ -29,7 +27,6 @@ export interface OrganizationalStructureRemoteDataSource {
   restore(resource: OrganizationalResource, id: number): Promise<void>;
   approveJobDescription(id: number, request: ApproveJobDescriptionRequest): Promise<OrganizationalStructureItem>;
   rejectJobDescription(id: number, reason: string): Promise<OrganizationalStructureItem>;
-  getChangeLogs(resource: OrganizationalResource, id: number): Promise<OrganizationalChangeLogItem[]>;
 }
 
 export function toOrganizationalStructureQuery(query: OrganizationalStructureQuery): string {
@@ -65,10 +62,5 @@ export const organizationalStructureRemoteDataSource: OrganizationalStructureRem
   },
   async rejectJobDescription(id, reason) {
     return organizationalStructureItemSchema.parse(await apiService.post<unknown, { reason: string }>(organizationalStructureEndpoints.reject(id), { reason }));
-  },
-  async getChangeLogs(resource, id) {
-    const raw = await apiService.get<unknown>(organizationalStructureEndpoints.changeLogs(resource, id));
-    if (!Array.isArray(raw)) return [];
-    return raw.map((item) => organizationalChangeLogItemSchema.parse(item));
   },
 };

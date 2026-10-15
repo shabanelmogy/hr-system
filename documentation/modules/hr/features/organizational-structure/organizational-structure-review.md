@@ -71,8 +71,8 @@ The feature-owned CQRS contracts, validators, handlers, service, and thin
 versioned controller implement list, detail, lookup, create, update, archive,
 restore, approve, and reject. Permissions are `View`, `Create`, `Edit`, `Archive`,
 `Restore`, and `ApproveJobDescriptions` under the `OrganizationalStructure` resource
-(`DELETE` uses `Archive`; `/restore` uses `Restore`). `GET /{resource}/{id}/change-logs`
-returns the audit history. Every
+(`DELETE` uses `Archive`; `/restore` uses `Restore`). Record history comes from the
+automatic [Audit Trail](../../../../guides/api/AUDIT_TRAIL.md) (`AuditTrail:View`). Every
 mutation rechecks permission and current-company scope in the handler/service.
 Users must obtain a fresh session after a permission change so navigation and
 API claims reflect the grant.

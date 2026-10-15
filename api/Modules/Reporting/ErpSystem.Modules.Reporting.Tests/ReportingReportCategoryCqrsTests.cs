@@ -3,7 +3,6 @@ using System.Reflection;
 using ErpSystem.BuildingBlocks.Application.Abstractions.Persistence;
 using ErpSystem.BuildingBlocks.Application.Common.Realtime;
 using ErpSystem.BuildingBlocks.Context.Authentication;
-using ErpSystem.Modules.Platform.Contracts.EntityChangeLogs;
 using ErpSystem.Modules.Reporting.Application.Features.Analytics.Reports.Abstractions;
 using ErpSystem.Modules.Reporting.Application.Features.Analytics.Reports.Commands;
 using ErpSystem.Modules.Reporting.Application.Features.Analytics.Reports.Contracts;
@@ -114,7 +113,7 @@ public sealed class ReportingReportCategoryCqrsTests
 
         Assert.True(result.IsSuccess);
         Assert.Equal("Finance", entity.Name);
-        Assert.Equal(["audit", "save", "invalidate", "Update"], events);
+        Assert.Equal(["save", "invalidate", "Update"], events);
     }
 
     [Fact]
@@ -131,7 +130,6 @@ public sealed class ReportingReportCategoryCqrsTests
         var cache = cacheProvider.GetRequiredService<HybridCache>();
         var readStore = new ReportCategoryReadStore(context, cache);
         var effects = new ReportCategoryEffects(
-            new NullChangeLogService(),
             cache,
             new RecordingRealtimeDispatcher());
 
@@ -188,18 +186,6 @@ public sealed class ReportingReportCategoryCqrsTests
 
     private sealed class RecordingEffects(List<string> events) : IReportCategoryEffects
     {
-        public Task RecordUpdateAsync(
-            int id,
-            ReportCategory existing,
-            ReportCategory updated,
-            CancellationToken cancellationToken)
-        {
-            Assert.Equal("Sales", existing.Name);
-            Assert.Equal("Finance", updated.Name);
-            events.Add("audit");
-            return Task.CompletedTask;
-        }
-
         public Task InvalidateCacheAsync(CancellationToken cancellationToken)
         {
             events.Add("invalidate");
@@ -212,40 +198,6 @@ public sealed class ReportingReportCategoryCqrsTests
     private sealed class RecordingRealtimeDispatcher : IRealtimeChangeDispatcher
     {
         public void Dispatch(RealtimeChangeRequest request) { }
-    }
-
-    private sealed class NullChangeLogService : IEntityChangeLogService
-    {
-        public Task<EntityChangeLogsRequest?> CreateChangeLogAsync<TEntity>(
-            int entityId,
-            TEntity existingEntity,
-            TEntity updatedEntity,
-            CancellationToken cancellationToken = default)
-            where TEntity : class => Task.FromResult<EntityChangeLogsRequest?>(null);
-
-        public Task<EntityChangeLogsRequest?> CreateChangeLogAsync<TEntity>(
-            string entityKey,
-            string entityName,
-            TEntity existingEntity,
-            TEntity updatedEntity,
-            CancellationToken cancellationToken = default)
-            where TEntity : class => Task.FromResult<EntityChangeLogsRequest?>(null);
-
-        public Task<EntityChangeLogsRequest?> CreateChangeLogAsync(
-            int entityId,
-            string entityName,
-            object existingEntity,
-            object updatedEntity,
-            CancellationToken cancellationToken = default) =>
-            Task.FromResult<EntityChangeLogsRequest?>(null);
-
-        public Task<List<EntityChangeLogsResponse>> GetChangeLogKeyValuesAsync() => Task.FromResult<List<EntityChangeLogsResponse>>([]);
-
-        public Task<List<EntityChangeLogsResponse>> GetChangeLogsByEntityAsync(
-            string entityName,
-            int entityId,
-            CancellationToken cancellationToken = default) =>
-            Task.FromResult<List<EntityChangeLogsResponse>>([]);
     }
 
     private sealed class EchoLocalizer<T> : IStringLocalizer<T>

@@ -25,6 +25,7 @@ when a guide and the code disagree.
 | [Operational_Foundation.md](Operational_Foundation.md) | Logging, correlation, health, background jobs |
 | [PRODUCTION_DEPLOYMENT_RUNBOOK.md](PRODUCTION_DEPLOYMENT_RUNBOOK.md) | Publishing and verifying a release |
 | [MIGRATIONS_COMMANDS_AR.md](MIGRATIONS_COMMANDS_AR.md) | أوامر الـ migrations بالعربي مع أمثلة |
+| [AUDIT_TRAIL.md](AUDIT_TRAIL.md) | سجل العمليات التلقائي: إيه اللي بيتسجل، الـ API، وإزاي تضيفه لموديول جديد |
 
 ## Feature books
 

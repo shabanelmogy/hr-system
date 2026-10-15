@@ -1,7 +1,7 @@
 {
   "advancedTools": {
     "title": "Advanced Tools",
-    "trackChanges": "Track Changes",
+    "auditTrail": "Audit Trail",
     "healthCheck": "Health Check",
     "apiEndPoints": "API Endpoints",
     "localizationApi": "Localization API",
@@ -40,18 +40,6 @@
     "loading": "Loading the Hangfire dashboard",
     "loadError": "The Hangfire dashboard could not be loaded. Verify your permission and the backend connection.",
     "retry": "Retry"
-  },
-  "trackChanges": {
-    "changeLogId": "ID",
-    "entityName": "Entity Name",
-    "key": "Key",
-    "oldValue": "Old Value",
-    "newValue": "New Value",
-    "changedBy": "Changed By",
-    "changedAt": "Changed At",
-    "changedByPc": "Changed By PC",
-    "title": "Track Changes",
-    "subTitle": "Show Track Change Of Data"
   },
   "externalTools": {
     "apiUrlRequired": "API URL is required",

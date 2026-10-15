@@ -7,11 +7,8 @@ using ErpSystem.Modules.Platform.Infrastructure.Features.Security.Authentication
 using ErpSystem.Modules.Platform.Application.Features.Security.Users.Contracts;
 using ErpSystem.Modules.Platform.Application.Features.Security.Users.Errors;
 using ErpSystem.BuildingBlocks.Context.Authentication;
-using ErpSystem.BuildingBlocks.Application.Common.Realtime;
 using ErpSystem.Modules.Platform.Infrastructure.Features.Security.Authorization.Services;
 using ErpSystem.Modules.Platform.Contracts.SecurityAudits;
-using ErpSystem.Modules.Platform.Contracts.EntityChangeLogs;
-using ErpSystem.Modules.Platform.Domain.Platform.EntityChangeLogs.Entities;
 using ErpSystem.Modules.Platform.Domain.Security.Users.Enums;
 using System.Data;
 
@@ -25,8 +22,6 @@ public sealed class UserManagementWriteStore(
     TimeProvider timeProvider,
     ILogger<UserManagementWriteStore> logger,
     ISecurityAuditService securityAudit,
-    IEntityChangeLogService entityChangeLogs,
-    IRealtimeChangeDispatcher realtimeChanges,
     IUserSeatLimitService seatLimits,
     TenantRoleAssignmentService roleAssignments) : IUserManagementWriteStore
 {
@@ -178,16 +173,6 @@ public sealed class UserManagementWriteStore(
         if (companyIds is null)
             return Result.Failure(_userErrors.InvalidCompanySelection);
 
-        var existingAccesses = await GetUserCompanyAccessesAsync(
-            user.Id,
-            _currentActor.TenantId!,
-            cancellationToken);
-        var previousSnapshot = CreateUserChangeSnapshot(
-            user,
-            existingRoles,
-            existingAccesses.Select(access => access.CompanyId),
-            existingAccesses.FirstOrDefault(access => access.IsDefault)?.CompanyId);
-
         var addedRoles = request.Roles
             .Except(existingRoles, StringComparer.OrdinalIgnoreCase)
             .ToArray();
@@ -218,11 +203,6 @@ public sealed class UserManagementWriteStore(
                 user.Id,
                 _currentActor.TenantId!,
                 cancellationToken);
-            var updatedSnapshot = CreateUserChangeSnapshot(
-                user,
-                effectiveRoles,
-                companyIds,
-                request.DefaultCompanyId);
 
             var stampResult = await _userManager.UpdateSecurityStampAsync(user);
             if (!stampResult.Succeeded)
@@ -241,13 +221,6 @@ public sealed class UserManagementWriteStore(
                     new Error(revokeError.Code, revokeError.Description, ErrorType.Validation));
             }
 
-            var entityChangeLog = await entityChangeLogs.CreateChangeLogAsync(
-                user.Id,
-                "PlatformApplicationUser",
-                previousSnapshot,
-                updatedSnapshot,
-                cancellationToken);
-
             await securityAudit.RecordAsync(new SecurityAuditRequest(
                 "UserUpdated",
                 "PlatformApplicationUser",
@@ -262,8 +235,6 @@ public sealed class UserManagementWriteStore(
                     ["CompanyIds"] = string.Join(',', companyIds.OrderBy(companyId => companyId))
                 }), cancellationToken);
             await transaction.CommitAsync(cancellationToken);
-            if (entityChangeLog is not null)
-                DispatchEntityChangeLogChange(user.Id);
             QueueSessionRevoked(
                 user.Id,
                 "Your account permissions changed. Please sign in again.");
@@ -671,30 +642,6 @@ public sealed class UserManagementWriteStore(
             user.ArchiveReason);
     }
 
-    private static UserChangeSnapshot CreateUserChangeSnapshot(
-        PlatformApplicationUser user,
-        IEnumerable<string> roles,
-        IEnumerable<int> companyIds,
-        int? defaultCompanyId) =>
-        new(
-            user.FirstName,
-            user.LastName,
-            user.UserName ?? string.Empty,
-            user.Email ?? string.Empty,
-            string.Join(',', roles.Distinct(StringComparer.OrdinalIgnoreCase)
-                .OrderBy(role => role, StringComparer.OrdinalIgnoreCase)),
-            string.Join(',', companyIds.Distinct().OrderBy(companyId => companyId)),
-            defaultCompanyId);
-
-    private sealed record UserChangeSnapshot(
-        string FirstName,
-        string LastName,
-        string UserName,
-        string Email,
-        string Roles,
-        string CompanyIds,
-        int? DefaultCompanyId);
-
     private void QueueSessionRevoked(string userId, string message)
     {
         try
@@ -709,22 +656,6 @@ public sealed class UserManagementWriteStore(
                 "Unable to enqueue session revocation for user {UserId}.",
                 userId);
         }
-    }
-
-    private void DispatchEntityChangeLogChange(string entityId)
-    {
-        var tenantId = _currentActor.TenantId
-            ?? throw new InvalidOperationException("A tenant is required to publish change-log updates.");
-        var companyId = _currentActor.CompanyId
-            ?? throw new InvalidOperationException("A company is required to publish change-log updates.");
-
-        realtimeChanges.Dispatch(RealtimeChangeRequest.For<EntityChangeLog>(
-            RealtimeAudience.ForCompanyPermission(
-                tenantId,
-                companyId,
-                PlatformPermissions.ViewChangeLogs),
-            "Add",
-            entityId));
     }
 
     private void QueueUserChanged(UserResponse user, string action)

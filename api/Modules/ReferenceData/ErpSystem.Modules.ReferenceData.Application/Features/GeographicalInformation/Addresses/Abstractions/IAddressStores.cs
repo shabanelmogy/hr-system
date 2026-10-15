@@ -34,11 +34,6 @@ public interface IAddressWriteStore
     Task<bool> IsLinkedToOwnerAsync(int addressId, CancellationToken cancellationToken);
 }
 
-public interface IAddressAuditTrail
-{
-    Task RecordUpdateAsync(Address existingAddress, Address updatedAddress, CancellationToken cancellationToken);
-}
-
 public interface IAddressChangeScheduler
 {
     void Schedule(AddressChange change);

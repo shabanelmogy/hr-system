@@ -47,7 +47,7 @@ export const ROUTES = {
   },
   advancedTools: {
     root: '/advanced-tools',
-    trackChanges: '/advanced-tools/track-changes',
+    auditTrail: '/advanced-tools/audit-trail',
     localizationApi: '/advanced-tools/localization-api',
     healthCheck: '/advanced-tools/health-check',
     apiEndpoints: '/advanced-tools/api-endpoints',

@@ -10,7 +10,6 @@ global using ErpSystem.BuildingBlocks.Application.Common.Errors;
 global using ErpSystem.BuildingBlocks.Application.Common.Paginations;
 global using ErpSystem.BuildingBlocks.Context.Authentication;
 global using ErpSystem.BuildingBlocks.Domain.Entities;
-global using ErpSystem.Modules.Platform.Contracts.EntityChangeLogs;
 global using ErpSystem.Modules.ReferenceData.Infrastructure;
 global using ErpSystem.Modules.ReferenceData.Contracts.CompanyGeography;
 global using Microsoft.EntityFrameworkCore;

@@ -25,7 +25,7 @@ describe('route access manifest', () => {
       moduleCode: 'platform',
       submoduleCode: 'tenant-administration',
     });
-    expect(requiredModuleForPath(ROUTES.advancedTools.trackChanges)).toEqual({
+    expect(requiredModuleForPath(ROUTES.advancedTools.auditTrail)).toEqual({
       moduleCode: 'platform',
       submoduleCode: 'tenant-administration',
     });

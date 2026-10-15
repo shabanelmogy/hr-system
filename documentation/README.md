@@ -55,6 +55,7 @@ The most used references:
 | Ownership and reuse rules | [`guides/shared/ERP_DOCUMENTATION_GUIDE_AR.md`](guides/shared/ERP_DOCUMENTATION_GUIDE_AR.md), [`guides/shared/SHARED_REUSE_CATALOG.md`](guides/shared/SHARED_REUSE_CATALOG.md) |
 | API work | [`guides/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md`](guides/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md), [`guides/api/ERP_ARCHITECTURE_CONSTITUTION.md`](guides/api/ERP_ARCHITECTURE_CONSTITUTION.md), [`guides/api/MODULAR_MONOLITH_ARCHITECTURE.md`](guides/api/MODULAR_MONOLITH_ARCHITECTURE.md) |
 | Migrations | [`guides/api/MIGRATIONS_COMMANDS_AR.md`](guides/api/MIGRATIONS_COMMANDS_AR.md) |
+| Audit trail (record history) | [`guides/api/AUDIT_TRAIL.md`](guides/api/AUDIT_TRAIL.md) |
 | Worked reference feature | [Countries folder](modules/reference-data/features/countries/countries-review.md) |
 | Production and open items | [`guides/api/PRODUCTION_DEPLOYMENT_RUNBOOK.md`](guides/api/PRODUCTION_DEPLOYMENT_RUNBOOK.md), [`plans/notes/README.md`](plans/notes/README.md) |
 

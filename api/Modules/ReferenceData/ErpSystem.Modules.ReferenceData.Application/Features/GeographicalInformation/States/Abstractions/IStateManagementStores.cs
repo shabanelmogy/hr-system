@@ -46,8 +46,3 @@ public interface IStateChangeScheduler
 {
     void Schedule(StateChange change);
 }
-
-public interface IStateAuditTrail
-{
-    Task RecordUpdateAsync(State existingState, State updatedState, CancellationToken cancellationToken);
-}

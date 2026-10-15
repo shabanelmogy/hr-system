@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ErpSystem.BuildingBlocks.Persistence.AuditTrail;
 
 namespace ErpSystem.Modules.PointOfSale.Infrastructure;
 
@@ -14,11 +15,12 @@ public static class DependencyInjection
             ?? configuration.GetConnectionString("DefaultConnection")
             ?? throw new InvalidOperationException("Connection string 'PointOfSale' or 'DefaultConnection' not found.");
 
-        services.AddDbContext<PointOfSaleDbContext>(options =>
-            options.UseSqlServer(
+        services.AddDbContext<PointOfSaleDbContext>((provider, options) =>
+            options.UseErpAuditTrail(provider, "point-of-sale").UseSqlServer(
                 connectionString,
                 sql => sql.MigrationsAssembly(typeof(DependencyInjection).Assembly.FullName)
                     .MigrationsHistoryTable("__EFMigrationsHistory", PointOfSaleDbContext.Schema)));
+        services.AddErpAuditTrailSource<PointOfSaleDbContext>("point-of-sale");
 
         return services;
     }

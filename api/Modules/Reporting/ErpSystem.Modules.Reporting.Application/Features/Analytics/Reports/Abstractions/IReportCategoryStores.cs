@@ -18,12 +18,6 @@ public interface IReportCategoryRepository
 
 public interface IReportCategoryEffects
 {
-    Task RecordUpdateAsync(
-        int id,
-        ReportCategory existing,
-        ReportCategory updated,
-        CancellationToken cancellationToken);
-
     Task InvalidateCacheAsync(CancellationToken cancellationToken);
     void DispatchChange(string action, ReportCategory reportCategory);
 }

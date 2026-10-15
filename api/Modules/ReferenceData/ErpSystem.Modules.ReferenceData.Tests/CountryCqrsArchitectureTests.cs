@@ -119,7 +119,7 @@ public sealed class CountryCqrsArchitectureTests
     [InlineData(typeof(CreateCountryCommandHandler), typeof(ICountryChangeScheduler))]
     [InlineData(typeof(CreateCountryCommandHandler), typeof(IMapper))]
     [InlineData(typeof(CreateCountriesCommandHandler), typeof(ICountryWriteStore))]
-    [InlineData(typeof(UpdateCountryCommandHandler), typeof(ICountryAuditTrail))]
+    [InlineData(typeof(UpdateCountryCommandHandler), typeof(ICountryWriteStore))]
     [InlineData(typeof(ArchiveCountryCommandHandler), typeof(ICountryWriteStore))]
     [InlineData(typeof(BulkArchiveCountriesCommandHandler), typeof(ICountryWriteStore))]
     [InlineData(typeof(RestoreCountryCommandHandler), typeof(ICountryWriteStore))]

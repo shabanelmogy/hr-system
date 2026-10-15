@@ -12,7 +12,6 @@ function createRemoteMock(): jest.Mocked<OrganizationalStructureRemoteDataSource
     restore: jest.fn(),
     approveJobDescription: jest.fn(),
     rejectJobDescription: jest.fn(),
-    getChangeLogs: jest.fn(),
   };
 }
 

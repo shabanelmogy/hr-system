@@ -3,7 +3,7 @@ export * from './navigation';
 
 // Legacy feature-root screen exports remain stable for existing consumers.
 export { FileManagerScreen } from './file-manager';
-export { TrackChangesScreen } from './track-changes';
+export { AuditTrailScreen } from './audit-trail';
 export { LocalizationManagementScreen } from './localization';
 export {
   ApiEndpointsScreen,

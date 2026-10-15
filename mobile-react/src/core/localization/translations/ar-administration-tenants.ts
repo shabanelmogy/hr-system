@@ -481,7 +481,7 @@ export const arAdministrationTenants = {
       exchangeRateTypes: 'أنواع أسعار الصرف',
       fiscalYears: 'السنوات المالية',
       globalCrystalReports: 'تقارير Crystal العامة',
-      changeLogs: 'سجل التغييرات',
+      auditTrail: 'سجل العمليات',
       hangfire: 'المهام الخلفية',
       databaseViews: 'عروض قاعدة البيانات',
       localizations: 'الترجمة',

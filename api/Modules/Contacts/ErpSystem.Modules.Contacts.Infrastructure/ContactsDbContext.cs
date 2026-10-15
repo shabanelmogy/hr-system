@@ -2,6 +2,7 @@ using ErpSystem.BuildingBlocks.Context;
 using ErpSystem.Modules.Contacts.Domain;
 using ErpSystem.Modules.Contacts.Infrastructure.Messaging;
 using Microsoft.EntityFrameworkCore;
+using ErpSystem.BuildingBlocks.Persistence.AuditTrail;
 
 namespace ErpSystem.Modules.Contacts.Infrastructure;
 
@@ -42,6 +43,7 @@ public sealed class ContactsDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
         modelBuilder.HasDefaultSchema(Schema);
+        modelBuilder.ApplyAuditTrail();
         if (HasEntityConfigurations)
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ContactsDbContext).Assembly);
 

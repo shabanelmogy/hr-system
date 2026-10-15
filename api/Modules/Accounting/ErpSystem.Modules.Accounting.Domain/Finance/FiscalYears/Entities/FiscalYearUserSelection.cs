@@ -1,5 +1,7 @@
+using ErpSystem.BuildingBlocks.Domain.Auditing;
 namespace ErpSystem.Modules.Accounting.Domain.Finance.FiscalYears.Entities;
 
+[AuditIgnore]
 public sealed class FiscalYearUserSelection : CompanyAuditableEntity
 {
     private FiscalYearUserSelection()

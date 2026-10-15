@@ -643,7 +643,7 @@
         "anyOf": [
           {
             "permissions": [
-              "ViewChangeLogs"
+              "ViewAuditTrail"
             ]
           },
           {
@@ -668,7 +668,7 @@
         "anyOf": [
           {
             "permissions": [
-              "ViewChangeLogs"
+              "ViewAuditTrail"
             ]
           },
           {
@@ -701,7 +701,7 @@
       "offlineMode": "online-only",
       "apiSurface": "route adapter",
       "status": "aligned",
-      "note": "Tenant administration owns track changes and localization settings.",
+      "note": "Tenant administration owns the audit trail and localization settings.",
       "currentRoutePolicy": {
         "kind": "permissions",
         "permissions": [
@@ -724,8 +724,8 @@
       }
     },
     {
-      "source": "app/(main)/advanced-tools/track-changes.tsx",
-      "path": "/advanced-tools/track-changes",
+      "source": "app/(main)/advanced-tools/audit-trail.tsx",
+      "path": "/advanced-tools/audit-trail",
       "kind": "auth",
       "currentOwner": "Platform/tenant-administration",
       "targetOwner": "Platform/tenant-administration",
@@ -733,17 +733,17 @@
       "offlineMode": "online-only",
       "apiSurface": "route adapter",
       "status": "aligned",
-      "note": "Tenant administration owns track changes and localization settings.",
+      "note": "Tenant administration owns the audit trail and localization settings.",
       "currentRoutePolicy": {
         "kind": "permissions",
         "permissions": [
-          "ViewChangeLogs"
+          "ViewAuditTrail"
         ]
       },
       "targetRoutePolicy": {
         "kind": "permissions",
         "permissions": [
-          "ViewChangeLogs"
+          "ViewAuditTrail"
         ]
       },
       "currentModuleRequirement": {
@@ -2891,41 +2891,41 @@
           "status": "aligned",
           "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Accounting FiscalYearsController and AccountingPermissions.FiscalYears."
         },
-    {
-      "key": "context",
-      "pattern": "'fiscal-years/context'",
-      "verb": [
-        "GET",
-        "PUT"
-      ],
-      "operations": [
         {
+          "key": "context",
+          "pattern": "'fiscal-years/context'",
           "verb": [
-            "GET"
-          ],
-          "caller": "src/modules/accounting/fiscal-years/data/remote/fiscal-year-remote-data-source.ts#getContext",
-          "requestBoundary": "none",
-          "responseBoundary": "fiscalYearContextSchema",
-          "permissionAuthority": "Accounting FiscalYearsController and AccountingPermissions.FiscalYears.View"
-        },
-        {
-          "verb": [
+            "GET",
             "PUT"
           ],
-          "caller": "src/modules/accounting/fiscal-years/data/remote/fiscal-year-remote-data-source.ts#updateContext",
-          "requestBoundary": "{ fiscalYearId }",
-          "responseBoundary": "fiscalYearContextSchema",
-          "permissionAuthority": "Accounting FiscalYearsController and AccountingPermissions.FiscalYears.View"
-        }
-      ],
-      "currentOwner": "Accounting/fiscal-years",
-      "targetOwner": "Accounting/fiscal-years",
-      "permissionAuthority": "Accounting FiscalYearsController and AccountingPermissions.FiscalYears.View",
-      "scope": "tenant/company/authenticated-user",
-      "offlineMode": "online-only",
-      "status": "aligned",
-      "note": "The API derives tenant, company, and user from the authenticated actor; the client sends only the optional working fiscalYearId and validates the complete returned context."
-    },
+          "operations": [
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/modules/accounting/fiscal-years/data/remote/fiscal-year-remote-data-source.ts#getContext",
+              "requestBoundary": "none",
+              "responseBoundary": "fiscalYearContextSchema",
+              "permissionAuthority": "Accounting FiscalYearsController and AccountingPermissions.FiscalYears"
+            },
+            {
+              "verb": [
+                "PUT"
+              ],
+              "caller": "src/modules/accounting/fiscal-years/data/remote/fiscal-year-remote-data-source.ts#updateContext",
+              "requestBoundary": "{ fiscalYearId }",
+              "responseBoundary": "fiscalYearContextSchema",
+              "permissionAuthority": "Accounting FiscalYearsController and AccountingPermissions.FiscalYears"
+            }
+          ],
+          "currentOwner": "Accounting/fiscal-years",
+          "targetOwner": "Accounting/fiscal-years",
+          "permissionAuthority": "Accounting FiscalYearsController and AccountingPermissions.FiscalYears",
+          "scope": "tenant/company",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Accounting FiscalYearsController and AccountingPermissions.FiscalYears."
+        },
         {
           "key": "byId",
           "pattern": "(id: number) => `fiscal-years/${id}`",
@@ -3120,31 +3120,31 @@
           "offlineMode": "online-only",
           "status": "aligned",
           "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Accounting FiscalYearsController and AccountingPermissions.FiscalYears."
-    },
-    {
-      "key": "setCurrent",
-      "pattern": "(id: number) => `fiscal-years/${id}/set-current`",
-      "verb": [
-        "POST"
-      ],
-      "operations": [
+        },
         {
+          "key": "setCurrent",
+          "pattern": "(id: number) => `fiscal-years/${id}/set-current`",
           "verb": [
             "POST"
           ],
-          "caller": "src/modules/accounting/fiscal-years/data/remote/fiscal-year-remote-data-source.ts#setCurrent",
-          "requestBoundary": "{ rowVersion }",
-          "responseBoundary": "fiscalYearDetailSchema",
-          "permissionAuthority": "Accounting FiscalYearsController and AccountingPermissions.FiscalYears.SetCurrent"
-        }
-      ],
-      "currentOwner": "Accounting/fiscal-years",
-      "targetOwner": "Accounting/fiscal-years",
-      "permissionAuthority": "Accounting FiscalYearsController and AccountingPermissions.FiscalYears.SetCurrent",
-      "scope": "tenant/company",
-      "offlineMode": "online-only",
-      "status": "aligned",
-      "note": "Changing the shared company Current year is distinct from the caller's personal working context and requires the exact SetCurrent permission plus RowVersion."
+          "operations": [
+            {
+              "verb": [
+                "POST"
+              ],
+              "caller": "src/modules/accounting/fiscal-years/data/remote/fiscal-year-remote-data-source.ts#setCurrent",
+              "requestBoundary": "{ rowVersion }",
+              "responseBoundary": "fiscalYearDetailSchema",
+              "permissionAuthority": "Accounting FiscalYearsController and AccountingPermissions.FiscalYears"
+            }
+          ],
+          "currentOwner": "Accounting/fiscal-years",
+          "targetOwner": "Accounting/fiscal-years",
+          "permissionAuthority": "Accounting FiscalYearsController and AccountingPermissions.FiscalYears",
+          "scope": "tenant/company",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Accounting FiscalYearsController and AccountingPermissions.FiscalYears."
         }
       ]
     },
@@ -4435,31 +4435,6 @@
               "caller": "src/modules/hr/basic-data/organizational-structure/data/remote/organizational-structure-remote-data-source.ts#rejectJobDescription",
               "requestBoundary": "{ reason }",
               "responseBoundary": "organizationalStructureItemSchema",
-              "permissionAuthority": "HR OrganizationalStructureController and HrPermissions.OrganizationalStructure"
-            }
-          ],
-          "currentOwner": "HR/basic-data",
-          "targetOwner": "HR/basic-data",
-          "permissionAuthority": "HR OrganizationalStructureController and HrPermissions.OrganizationalStructure",
-          "scope": "tenant/company",
-          "offlineMode": "online-only",
-          "status": "aligned",
-          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: HR OrganizationalStructureController and HrPermissions.OrganizationalStructure."
-        },
-        {
-          "key": "changeLogs",
-          "pattern": "(resource: OrganizationalResource, id: number) => `${base(resource)}/${id}/change-logs`",
-          "verb": [
-            "GET"
-          ],
-          "operations": [
-            {
-              "verb": [
-                "GET"
-              ],
-              "caller": "src/modules/hr/basic-data/organizational-structure/data/remote/organizational-structure-remote-data-source.ts#getChangeLogs",
-              "requestBoundary": "none",
-              "responseBoundary": "unknown",
               "permissionAuthority": "HR OrganizationalStructureController and HrPermissions.OrganizationalStructure"
             }
           ],
@@ -8874,6 +8849,87 @@
       ]
     },
     {
+      "source": "src/platform/tools/audit-trail/data/remote/audit-trail-endpoints.ts",
+      "family": "audit-trail",
+      "members": [
+        {
+          "key": "list",
+          "pattern": "'audit-trail'",
+          "verb": [
+            "GET"
+          ],
+          "operations": [
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/platform/tools/audit-trail/data/remote/audit-trail-remote-data-source.ts#getPage",
+              "requestBoundary": "request config: { params: { ...query, cursor: cursor ?? undefined }, }",
+              "responseBoundary": "unknown",
+              "permissionAuthority": "Platform AuditTrailController and PlatformPermissions.ViewAuditTrail"
+            }
+          ],
+          "currentOwner": "Platform/tenant-administration",
+          "targetOwner": "Platform/tenant-administration",
+          "permissionAuthority": "Platform AuditTrailController and PlatformPermissions.ViewAuditTrail",
+          "scope": "tenant/company",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Platform AuditTrailController and PlatformPermissions.ViewAuditTrail."
+        },
+        {
+          "key": "filters",
+          "pattern": "'audit-trail/filters'",
+          "verb": [
+            "GET"
+          ],
+          "operations": [
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/platform/tools/audit-trail/data/remote/audit-trail-remote-data-source.ts#getFilters",
+              "requestBoundary": "none",
+              "responseBoundary": "auditTrailFiltersSchema",
+              "permissionAuthority": "Platform AuditTrailController and PlatformPermissions.ViewAuditTrail"
+            }
+          ],
+          "currentOwner": "Platform/tenant-administration",
+          "targetOwner": "Platform/tenant-administration",
+          "permissionAuthority": "Platform AuditTrailController and PlatformPermissions.ViewAuditTrail",
+          "scope": "tenant/company",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Platform AuditTrailController and PlatformPermissions.ViewAuditTrail."
+        },
+        {
+          "key": "entry",
+          "pattern": "(moduleCode: string, id: number) => `audit-trail/${encodeURIComponent(moduleCode)}/${id}`",
+          "verb": [
+            "GET"
+          ],
+          "operations": [
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/platform/tools/audit-trail/data/remote/audit-trail-remote-data-source.ts#getEntry",
+              "requestBoundary": "none",
+              "responseBoundary": "auditTrailDetailsSchema",
+              "permissionAuthority": "Platform AuditTrailController and PlatformPermissions.ViewAuditTrail"
+            }
+          ],
+          "currentOwner": "Platform/tenant-administration",
+          "targetOwner": "Platform/tenant-administration",
+          "permissionAuthority": "Platform AuditTrailController and PlatformPermissions.ViewAuditTrail",
+          "scope": "tenant/company",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Platform AuditTrailController and PlatformPermissions.ViewAuditTrail."
+        }
+      ]
+    },
+    {
       "source": "src/platform/tools/file-manager/data/remote/file-manager-endpoints.ts",
       "family": "file-manager",
       "members": [
@@ -9163,37 +9219,6 @@
           "offlineMode": "online-only",
           "status": "aligned",
           "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Platform Hangfire dashboard and PlatformPermissions.ViewHangfireDashboard."
-        }
-      ]
-    },
-    {
-      "source": "src/platform/tools/track-changes/data/remote/track-change-endpoints.ts",
-      "family": "track-change",
-      "members": [
-        {
-          "key": "all",
-          "pattern": "'entityChangeLogs/getAllChangesLogs'",
-          "verb": [
-            "GET"
-          ],
-          "operations": [
-            {
-              "verb": [
-                "GET"
-              ],
-              "caller": "src/platform/tools/track-changes/data/remote/track-change-remote-data-source.ts#getTrackChanges",
-              "requestBoundary": "none",
-              "responseBoundary": "unknown",
-              "permissionAuthority": "Platform EntityChangeLogsController and PlatformPermissions.ViewChangeLogs"
-            }
-          ],
-          "currentOwner": "Platform/tenant-administration",
-          "targetOwner": "Platform/tenant-administration",
-          "permissionAuthority": "Platform EntityChangeLogsController and PlatformPermissions.ViewChangeLogs",
-          "scope": "tenant/company",
-          "offlineMode": "online-only",
-          "status": "aligned",
-          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Platform EntityChangeLogsController and PlatformPermissions.ViewChangeLogs."
         }
       ]
     }

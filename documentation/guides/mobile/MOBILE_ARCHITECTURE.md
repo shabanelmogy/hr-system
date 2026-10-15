@@ -87,7 +87,7 @@ Each routed business feature exposes a curated public API below its owning modul
 
 - `file-manager`
 - `appointments`
-- `track-changes`
+- `audit-trail` (Audit Trail screen and `RecordHistoryModal`)
 - `localization`
 - `operations` for health, background jobs and external operational viewers
 - `navigation` for Extras/Advanced Tools composition

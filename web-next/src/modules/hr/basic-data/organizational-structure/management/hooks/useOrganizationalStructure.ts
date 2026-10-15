@@ -59,10 +59,3 @@ export const useApproveJobDescription = () => useInvalidateMutation(
 export const useRejectJobDescription = () => useInvalidateMutation(
   (variables: { id: number; reason: string }) => organizationalStructureService.reject(variables.id, variables.reason),
 );
-
-export const useOrganizationalChangeLogs = (resource: OrganizationalResource, id?: number | null, enabled = true) => useQuery({
-  queryKey: id ? organizationalStructureKeys.changeLogs(resource, id) : ["disabled"],
-  queryFn: () => organizationalStructureService.getChangeLogs(resource, id!),
-  enabled: Boolean(id && enabled),
-  staleTime: 60_000,
-});

@@ -147,7 +147,7 @@
       "Addresses": "العناوين", "AddressTypes": "أنواع العناوين", "Analytics": "التحليلات", "ApiKeys": "مفاتيح API",
       "Appointments": "المواعيد", "AttendanceAgents": "وكلاء الحضور", "AttendanceDevices": "أجهزة الحضور",
       "Backups": "النسخ الاحتياطية", "Books": "الدفاتر المحاسبية", "Candidates": "المرشحون", "Categories": "التصنيفات",
-      "ChangeLogs": "سجل التغييرات", "CompanyGeographicScope": "النطاق الجغرافي للشركة",
+      "AuditTrail": "سجل العمليات", "CompanyGeographicScope": "النطاق الجغرافي للشركة",
       "ContactsParties": "أطراف الاتصال", "Countries": "الدول", "CrystalReportAccess": "الوصول إلى تقارير Crystal",
       "CrystalReports": "تقارير Crystal", "Currencies": "العملات", "DatabaseViews": "عروض قاعدة البيانات",
       "DimensionDefinitions": "تعريفات الأبعاد", "DimensionValues": "قيم الأبعاد", "Districts": "المناطق",

@@ -5,6 +5,7 @@ using ErpSystem.Modules.CRM.Application.Features.Appointments.Abstractions;
 using ErpSystem.Modules.CRM.Application.Features.Appointments.Errors;
 using ErpSystem.Modules.CRM.Infrastructure.Features.Appointments.Jobs;
 using ErpSystem.Modules.CRM.Infrastructure.Features.Appointments.Persistence;
+using ErpSystem.BuildingBlocks.Persistence.AuditTrail;
 
 namespace ErpSystem.Modules.CRM.Infrastructure;
 
@@ -18,11 +19,12 @@ public static class DependencyInjection
             ?? configuration.GetConnectionString("DefaultConnection")
             ?? throw new InvalidOperationException("Connection string 'CRM' or 'DefaultConnection' not found.");
 
-        services.AddDbContext<CrmDbContext>(options =>
-            options.UseSqlServer(
+        services.AddDbContext<CrmDbContext>((provider, options) =>
+            options.UseErpAuditTrail(provider, "crm").UseSqlServer(
                 connectionString,
                 sql => sql.MigrationsAssembly(typeof(DependencyInjection).Assembly.FullName)
                     .MigrationsHistoryTable("__EFMigrationsHistory", CrmDbContext.Schema)));
+        services.AddErpAuditTrailSource<CrmDbContext>("crm");
         services.AddScoped<AppointmentErrors>();
         services.AddScoped<IAppointmentReadStore, AppointmentReadStore>();
         services.AddScoped<IAppointmentRepository, AppointmentRepository>();

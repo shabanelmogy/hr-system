@@ -1,7 +1,6 @@
 using ErpSystem.BuildingBlocks.Application.Common.Paginations;
 using ErpSystem.Modules.HR.Application.Features.OrganizationalStructure.Management.Contracts;
 using ErpSystem.Modules.HR.Application.Features.OrganizationalStructure.Management.Queries;
-using ErpSystem.Modules.Platform.Contracts.EntityChangeLogs;
 
 namespace ErpSystem.Modules.HR.Application.Features.OrganizationalStructure.Management.Abstractions;
 
@@ -17,7 +16,6 @@ public interface IOrganizationalStructureManagement
     Task<Result> RestoreAsync(string resource, int id, CancellationToken cancellationToken);
     Task<Result<OrganizationalStructureItem>> ApproveJobDescriptionAsync(int id, DateOnly effectiveDate, DateOnly? expiryDate, CancellationToken cancellationToken);
     Task<Result<OrganizationalStructureItem>> RejectJobDescriptionAsync(int id, string reason, CancellationToken cancellationToken);
-    Task<IReadOnlyList<EntityChangeLogsResponse>> GetChangeLogsAsync(string resource, int id, CancellationToken cancellationToken);
 }
 
 public interface IOrganizationalStructureChangeScheduler

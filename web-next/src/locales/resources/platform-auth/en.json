@@ -147,7 +147,7 @@
       "Addresses": "Addresses", "AddressTypes": "Address types", "Analytics": "Analytics", "ApiKeys": "API keys",
       "Appointments": "Appointments", "AttendanceAgents": "Attendance agents", "AttendanceDevices": "Attendance devices",
       "Backups": "Backups", "Books": "Accounting books", "Candidates": "Candidates", "Categories": "Categories",
-      "ChangeLogs": "Change logs", "CompanyGeographicScope": "Company geographic scope",
+      "AuditTrail": "Audit trail", "CompanyGeographicScope": "Company geographic scope",
       "ContactsParties": "Contact parties", "Countries": "Countries", "CrystalReportAccess": "Crystal report access",
       "CrystalReports": "Crystal reports", "Currencies": "Currencies", "DatabaseViews": "Database views",
       "DimensionDefinitions": "Dimension definitions", "DimensionValues": "Dimension values", "Districts": "Districts",

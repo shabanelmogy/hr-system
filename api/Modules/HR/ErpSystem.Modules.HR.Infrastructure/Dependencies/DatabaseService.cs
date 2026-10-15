@@ -2,6 +2,7 @@ using ErpSystem.Modules.HR.Application.Abstractions.Persistence;
 using ErpSystem.BuildingBlocks.Application.Abstractions.Persistence;
 using ErpSystem.BuildingBlocks.Application.Abstractions.Validation;
 using Scrutor;
+using ErpSystem.BuildingBlocks.Persistence.AuditTrail;
 
 namespace ErpSystem.Modules.HR.Infrastructure.Dependencies;
 
@@ -15,11 +16,12 @@ public static class DatabaseService
             ?? throw new InvalidOperationException(
                 "Connection string 'HR' or 'DefaultConnection' not found.");
 
-        services.AddDbContext<HrDbContext>(options =>
-            options.UseSqlServer(
+        services.AddDbContext<HrDbContext>((provider, options) =>
+            options.UseErpAuditTrail(provider, "hr").UseSqlServer(
                 connectionString,
                 sql => sql.MigrationsAssembly(typeof(HrDbContext).Assembly.FullName)
                     .MigrationsHistoryTable("__EFMigrationsHistory", HrDbContext.Schema)));
+        services.AddErpAuditTrailSource<HrDbContext>("hr");
         services.AddOptions<DatabaseSettings>()
             .BindConfiguration(DatabaseSettings.SectionName)
             .ValidateOnStart();

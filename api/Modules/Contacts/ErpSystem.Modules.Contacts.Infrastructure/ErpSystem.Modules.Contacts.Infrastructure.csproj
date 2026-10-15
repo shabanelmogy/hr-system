@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\BuildingBlocks\ErpSystem.BuildingBlocks.Persistence\ErpSystem.BuildingBlocks.Persistence.csproj" />
     <ProjectReference Include="..\..\..\BuildingBlocks\ErpSystem.BuildingBlocks.Context\ErpSystem.BuildingBlocks.Context.csproj" />
     <ProjectReference Include="..\..\..\BuildingBlocks\ErpSystem.BuildingBlocks.Messaging\ErpSystem.BuildingBlocks.Messaging.csproj" />
     <ProjectReference Include="..\ErpSystem.Modules.Contacts.Application\ErpSystem.Modules.Contacts.Application.csproj" />

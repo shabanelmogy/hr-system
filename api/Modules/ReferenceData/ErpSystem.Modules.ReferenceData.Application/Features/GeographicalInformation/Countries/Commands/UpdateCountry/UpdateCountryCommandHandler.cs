@@ -13,7 +13,6 @@ public sealed class UpdateCountryCommandHandler(
     ICountryWriteStore countryWriteStore,
     IReferenceDataUnitOfWork unitOfWork,
     ICountryChangeScheduler countryChangeScheduler,
-    ICountryAuditTrail countryAuditTrail,
     ICurrentActor currentActor,
     CountryErrors countryErrors,
     IMapper mapper)
@@ -37,8 +36,6 @@ public sealed class UpdateCountryCommandHandler(
         {
             return Result.Failure<CountryDetailResponse>(countryErrors.CountryExists);
         }
-
-        await countryAuditTrail.RecordUpdateAsync(country, updatedCountry, cancellationToken);
 
         mapper.Map((CountryMutation)request, country);
         await unitOfWork.SaveChangesAsync(cancellationToken);

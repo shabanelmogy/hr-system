@@ -1,3 +1,4 @@
+using ErpSystem.BuildingBlocks.Domain.Auditing;
 namespace ErpSystem.Modules.HR.Domain.Attendance.Devices.Entities;
 
 /// <summary>Company-owned connection metadata for a read-only attendance device.</summary>
@@ -42,6 +43,7 @@ public sealed class AttendanceAgent : CompanyAuditableEntity
     public ICollection<AttendanceDevice> Devices { get; set; } = [];
 }
 
+[AuditIgnore]
 public sealed class DeviceCredential : CompanyAuditableEntity
 {
     public int Id { get; set; }
@@ -51,6 +53,7 @@ public sealed class DeviceCredential : CompanyAuditableEntity
     public AttendanceDevice AttendanceDevice { get; set; } = null!;
 }
 
+[AuditIgnore]
 public sealed class RawDeviceUser : CompanyAuditableEntity
 {
     public long Id { get; set; }
@@ -62,6 +65,7 @@ public sealed class RawDeviceUser : CompanyAuditableEntity
     public AttendanceDevice AttendanceDevice { get; set; } = null!;
 }
 
+[AuditIgnore]
 public sealed class RawAttendancePunch : CompanyAuditableEntity
 {
     public long Id { get; set; }
@@ -80,6 +84,7 @@ public sealed class RawAttendancePunch : CompanyAuditableEntity
     public AttendanceDevice AttendanceDevice { get; set; } = null!;
 }
 
+[AuditIgnore]
 public sealed class DevicePullRun : CompanyAuditableEntity
 {
     public long Id { get; set; }

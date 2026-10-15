@@ -2,7 +2,6 @@ using System.Linq.Expressions;
 using System.Text.Json;
 using ErpSystem.BuildingBlocks.Context.Authentication;
 using ErpSystem.BuildingBlocks.Application.Common.Paginations;
-using ErpSystem.Modules.Platform.Contracts.EntityChangeLogs;
 using ErpSystem.Modules.Accounting.Application.Features.Finance.FiscalYears.Abstractions;
 using ErpSystem.Modules.Accounting.Application.Features.Finance.FiscalYears.Contracts;
 using ErpSystem.Modules.Accounting.Application.Features.Finance.FiscalYears.Mapping;
@@ -154,49 +153,6 @@ public sealed class FiscalYearWriteStore(AccountingDbContext context) : IFiscalY
 
     public void ApplyOriginalRowVersion(FiscalYear fiscalYear, byte[] rowVersion) =>
         context.Entry(fiscalYear).Property(item => item.RowVersion).OriginalValue = rowVersion;
-}
-
-public sealed class FiscalYearAuditTrail(IEntityChangeLogStore changeLogStore, ICurrentActor actor, TimeProvider timeProvider) : IFiscalYearAuditTrail
-{
-    public async Task RecordUpdateAsync(FiscalYear existingFiscalYear, FiscalYear updatedFiscalYear, CancellationToken cancellationToken)
-    {
-        var oldValues = Values(existingFiscalYear);
-        var newValues = Values(updatedFiscalYear);
-        var keys = oldValues.Keys.Where(key => !Equals(oldValues[key], newValues[key])).ToArray();
-        if (keys.Length == 0) return;
-        await AddAsync(existingFiscalYear.Id, keys.ToDictionary(key => key, key => oldValues[key]), keys.ToDictionary(key => key, key => newValues[key]), cancellationToken);
-    }
-
-    public Task RecordLifecycleAsync(FiscalYear fiscalYear, string oldStatus, string newStatus, CancellationToken cancellationToken) =>
-        AddAsync(fiscalYear.Id, new Dictionary<string, string?> { [nameof(FiscalYear.Status)] = oldStatus }, new Dictionary<string, string?> { [nameof(FiscalYear.Status)] = newStatus }, cancellationToken);
-
-    public Task RecordCurrentChangedAsync(FiscalYear fiscalYear, int? previousFiscalYearId, CancellationToken cancellationToken) =>
-        AddAsync(
-            fiscalYear.Id,
-            new Dictionary<string, string?> { [nameof(FiscalYear.IsCurrent)] = "false", ["PreviousFiscalYearId"] = previousFiscalYearId?.ToString(CultureInfo.InvariantCulture) },
-            new Dictionary<string, string?> { [nameof(FiscalYear.IsCurrent)] = "true", ["PreviousFiscalYearId"] = previousFiscalYearId?.ToString(CultureInfo.InvariantCulture) },
-            cancellationToken);
-
-    private Task AddAsync(int id, IReadOnlyDictionary<string, string?> oldValues, IReadOnlyDictionary<string, string?> newValues, CancellationToken cancellationToken) =>
-        changeLogStore.AddAsync(new EntityChangeLogRecord(
-            id,
-            null,
-            nameof(FiscalYear),
-            JsonSerializer.Serialize(oldValues),
-            JsonSerializer.Serialize(newValues),
-            actor.UserId ?? throw new InvalidOperationException("An authenticated actor is required to change a fiscal year."),
-            Environment.MachineName,
-            timeProvider.GetUtcNow().UtcDateTime), cancellationToken);
-
-    private static Dictionary<string, string?> Values(FiscalYear item) => new(StringComparer.Ordinal)
-    {
-        [nameof(FiscalYear.Code)] = item.Code,
-        [nameof(FiscalYear.NameAr)] = item.NameAr,
-        [nameof(FiscalYear.NameEn)] = item.NameEn,
-        [nameof(FiscalYear.StartDate)] = item.StartDate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture),
-        [nameof(FiscalYear.EndDate)] = item.EndDate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture),
-        [nameof(FiscalYear.PeriodFrequency)] = item.PeriodFrequency.ToString()
-    };
 }
 
 public sealed class FiscalYearContextStore(AccountingDbContext context) : IFiscalYearContextStore

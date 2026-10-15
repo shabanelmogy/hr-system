@@ -16,7 +16,8 @@ single source for the documentation workflow.
 | User invitations | Implemented (no feature book yet) | `UserInvitationsController` |
 | Module catalog | Implemented (no feature book yet) | `ModulesController` (`/api/v1/modules`, tenant entitlements) |
 | Files, notifications, localization | Implemented (no feature book yet) | `FilesController`, `NotificationsController`, `LocalizationController` |
-| Security audits and change history | Implemented (no feature book yet) | `SecurityAuditsController`, `EntityChangeLogsController` |
+| Security audits | Implemented (no feature book yet) | `SecurityAuditsController` |
+| Audit trail (every create/change/delete/restore) | Implemented | `AuditTrailController`; guide: [AUDIT_TRAIL.md](../../../guides/api/AUDIT_TRAIL.md) |
 | API keys, offline operations, background jobs | Implemented (no feature book yet) | `ApiKeysController`, `OfflineOperationsController`, `BackgroundJobsController` (Hangfire dashboard at `/hangfire`) |
 
 Add further entries only when the corresponding runtime and verification evidence

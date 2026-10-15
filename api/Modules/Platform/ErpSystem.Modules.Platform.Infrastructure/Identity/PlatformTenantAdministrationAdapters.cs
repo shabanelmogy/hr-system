@@ -4,6 +4,7 @@ using ErpSystem.Modules.Platform.Application.Entitlements;
 using ErpSystem.Modules.Platform.Application.Modules;
 using ErpSystem.Modules.Platform.Application.Tenancy;
 using ErpSystem.Modules.Platform.Application.Tenancy.Administration;
+using ErpSystem.Modules.Platform.Contracts.SecurityAudits;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,6 +15,7 @@ public sealed class PlatformTenantManagementAdapter(
     PlatformContractSource entitlements,
     IModuleCatalogPolicy moduleCatalog,
     ITenantAdministrationPolicy policy,
+    ISecurityAuditService securityAudit,
     TimeProvider timeProvider) : ITenantManagementAdapter
 {
     public async Task<TenantAdministrationPage<TenantManagementResponse>> GetPageAsync(
@@ -86,6 +88,21 @@ public sealed class PlatformTenantManagementAdapter(
         db.Tenants.Add(tenant);
         db.Companies.Add(new PlatformCompany(tenant.Id, "DEFAULT", tenant.Name, tenant.Name,
             "EGP", "Africa/Cairo", now));
+
+        // Staged on the same PlatformDbContext: ApplyAsync saves it inside this transaction,
+        // so a rolled-back tenant never leaves a "TenantCreated" audit row behind.
+        securityAudit.Add(new SecurityAuditRequest(
+            "TenantCreated",
+            "PlatformTenant",
+            tenant.Id,
+            TenantId: tenant.Id,
+            Metadata: new Dictionary<string, string?>
+            {
+                ["Identifier"] = tenant.Identifier,
+                ["Modules"] = string.Join(',', requestedEntitlements
+                    .Select(item => item.ModuleCode)
+                    .OrderBy(code => code, StringComparer.Ordinal))
+            }));
 
         try
         {

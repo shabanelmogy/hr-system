@@ -15,6 +15,7 @@ using ErpSystem.Modules.Reporting.Infrastructure.Features.Analytics.Exporting.Se
 using ErpSystem.Modules.Reporting.Infrastructure.Features.Analytics.Reports.Persistence;
 using ErpSystem.Modules.Reporting.Infrastructure.Features.Analytics.ReportTemplates.Persistence;
 using ErpSystem.Modules.Reporting.Infrastructure.Features.Analytics.Views.Services;
+using ErpSystem.BuildingBlocks.Persistence.AuditTrail;
 
 namespace ErpSystem.Modules.Reporting.Infrastructure;
 
@@ -33,11 +34,12 @@ public static class DependencyInjection
             ?? configuration.GetConnectionString("DefaultConnection")
             ?? throw new InvalidOperationException("Connection string 'Reporting' or 'DefaultConnection' not found.");
 
-        services.AddDbContext<ReportingDbContext>(options =>
-            options.UseSqlServer(
+        services.AddDbContext<ReportingDbContext>((provider, options) =>
+            options.UseErpAuditTrail(provider, "reporting").UseSqlServer(
                 connectionString,
                 sql => sql.MigrationsAssembly(typeof(DependencyInjection).Assembly.FullName)
                     .MigrationsHistoryTable("__EFMigrationsHistory", ReportingDbContext.Schema)));
+        services.AddErpAuditTrailSource<ReportingDbContext>("reporting");
         services.AddScoped<IReportingUnitOfWork>(provider => provider.GetRequiredService<ReportingDbContext>());
 
         services.AddScoped<ICrystalReportStore, CrystalReportStore>();

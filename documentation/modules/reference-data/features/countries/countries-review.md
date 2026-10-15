@@ -198,7 +198,7 @@ rows. The handler checks conflicts and the database unique indexes close races.
 | `GetCountriesQuery.cs`, `CountryReadStore.cs` | Query allow-lists and exact server semantics |
 | Commands/handlers | Lifecycle, uniqueness, atomicity and commit-before-job order |
 | Country stores/ports | Read/write ownership and persistence boundaries |
-| `CountryAuditTrail.cs` | Changed-field update history |
+| Automatic audit trail | Created/changed/deleted/restored history ([Audit Trail](../../../../guides/api/AUDIT_TRAIL.md)) |
 | Country scheduler/job | Notification/realtime integration |
 | Country CQRS tests | Handler, architecture and controller evidence |
 | `Domain/Application/Infrastructure/Api` ReportTemplates slices | Tenant-owned definitions, published/management split, permissions, optimistic concurrency, revisions, approved source catalog and migration |

@@ -125,7 +125,7 @@ export const routePolicies: readonly RoutePolicy[] = [
       { permissions: [permissions.ViewAppointments] },
     ],
   },
-  { path: ROUTES.advancedTools.trackChanges, permissions: [permissions.ViewChangeLogs] },
+  { path: ROUTES.advancedTools.auditTrail, permissions: [permissions.ViewAuditTrail] },
   { path: ROUTES.advancedTools.localizationApi, permissions: [permissions.ViewLocalizations] },
   { path: ROUTES.advancedTools.healthCheck, roles: [appRoles.admin] },
   { path: ROUTES.advancedTools.apiEndpoints, roles: [appRoles.admin] },
@@ -136,7 +136,7 @@ export const routePolicies: readonly RoutePolicy[] = [
   {
     path: ROUTES.advancedTools.root,
     anyOf: [
-      { permissions: [permissions.ViewChangeLogs] },
+      { permissions: [permissions.ViewAuditTrail] },
       { permissions: [permissions.ViewLocalizations] },
       { roles: [appRoles.admin] },
       { permissions: [permissions.ViewHangfireDashboard] },

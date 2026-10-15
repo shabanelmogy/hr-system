@@ -1,3 +1,4 @@
+using ErpSystem.BuildingBlocks.Domain.Auditing;
 using Microsoft.AspNetCore.Identity;
 using ErpSystem.Modules.Platform.Application.Tenancy;
 using ErpSystem.Modules.Platform.Domain.Security.Users.Enums;
@@ -11,7 +12,7 @@ namespace ErpSystem.Modules.Platform.Infrastructure.Identity;
 /// contain only platform concerns; HR stores user/tenant/company ids as scalar
 /// values and never owns a navigation to these types.
 /// </summary>
-public sealed class PlatformApplicationUser : IdentityUser
+public sealed class PlatformApplicationUser : IdentityUser, IAuditedEntity
 {
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;

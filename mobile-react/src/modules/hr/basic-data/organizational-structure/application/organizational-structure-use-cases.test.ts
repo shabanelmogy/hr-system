@@ -12,7 +12,6 @@ function createRepositoryMock(): jest.Mocked<OrganizationalStructureRepository> 
     restore: jest.fn(),
     approveJobDescription: jest.fn(),
     rejectJobDescription: jest.fn(),
-    getChangeLogs: jest.fn(),
   };
 }
 

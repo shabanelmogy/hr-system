@@ -68,13 +68,6 @@ public sealed class UpdateReportCategoryCommandHandler(
         if (reportCategory is null)
             return Result.Failure<ReportCategoryResponse>(errors.ReportCategoryNotFound);
 
-        var updated = new ReportCategory
-        {
-            Id = request.Id,
-            Name = request.Name
-        };
-
-        await effects.RecordUpdateAsync(request.Id, reportCategory, updated, cancellationToken);
         reportCategory.Name = request.Name;
         await repository.SaveChangesAsync(cancellationToken);
 

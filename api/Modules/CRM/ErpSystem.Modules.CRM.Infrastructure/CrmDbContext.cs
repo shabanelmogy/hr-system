@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using ErpSystem.BuildingBlocks.Context.Authentication;
 using ErpSystem.BuildingBlocks.Domain.Entities;
+using ErpSystem.BuildingBlocks.Persistence.AuditTrail;
 
 namespace ErpSystem.Modules.CRM.Infrastructure;
 
@@ -45,6 +46,7 @@ public sealed class CrmDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
         modelBuilder.HasDefaultSchema(Schema);
+        modelBuilder.ApplyAuditTrail();
         modelBuilder.Entity<Appointment>().HasQueryFilter(appointment =>
             !appointment.IsDeleted &&
             appointment.TenantId == CurrentTenantId &&

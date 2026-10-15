@@ -9,6 +9,7 @@ using ErpSystem.Modules.Accounting.Infrastructure.Messaging;
 using ErpSystem.Modules.Accounting.Infrastructure.Parties;
 using ErpSystem.Modules.Accounting.Domain.Finance.FiscalYears.Entities;
 using ErpSystem.Modules.Accounting.Domain.Finance.LedgerSetup.Entities;
+using ErpSystem.BuildingBlocks.Persistence.AuditTrail;
 
 namespace ErpSystem.Modules.Accounting.Infrastructure;
 
@@ -84,6 +85,7 @@ public sealed class AccountingDbContext : DbContext, IAccountingUnitOfWork
     {
         base.OnModelCreating(modelBuilder);
         modelBuilder.HasDefaultSchema(Schema);
+        modelBuilder.ApplyAuditTrail();
         if (HasEntityConfigurations)
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(AccountingDbContext).Assembly);
         ConfigureRowVersion(modelBuilder);

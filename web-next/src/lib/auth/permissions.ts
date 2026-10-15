@@ -162,7 +162,7 @@ export const permissions = {
   EditDistricts: "Districts:Edit",
   ArchiveDistricts: "Districts:Archive",
   RestoreDistricts: "Districts:Restore",
-  ViewChangeLogs: "ChangeLogs:View",
+  ViewAuditTrail: "AuditTrail:View",
   ViewHangfireDashboard: "Hangfire:View",
   ViewDashboard: "Analytics:ViewDashboard",
   ExportData: "Analytics:Export",

@@ -6,7 +6,8 @@ import { useAppTheme } from '@/src/core/theme';
 import { permissions, useAuthorization } from '@/src/platform/auth';
 import { useAppReadOnly } from '@/src/shared/contexts/AppReadOnlyContext';
 import { toApiPageNumber, useServerListState } from '@/src/shared/listing';
-import { AppButton, AppDataTable, type AppDataTableColumn, AppIconButton, AppListScreen, AppScreen, AppStateView, AppStatusBadge, AppText, ConfirmationDialog, EntityChangeLogModal, showToast } from '@/src/shared/components';
+import { AppButton, AppDataTable, type AppDataTableColumn, AppIconButton, AppListScreen, AppScreen, AppStateView, AppStatusBadge, AppText, ConfirmationDialog, showToast } from '@/src/shared/components';
+import { RecordHistoryModal } from '@/src/platform/tools/audit-trail';
 import { OrganizationalStructureCard } from '../components/OrganizationalStructureCard';
 import { OrganizationalStructureChart } from '../components/OrganizationalStructureChart';
 import { OrganizationalStructureReportView } from '../components/OrganizationalStructureReportView';
@@ -23,9 +24,8 @@ import {
   useRejectJobDescription,
   useRestoreOrganizationalItem,
   useSaveOrganizationalItem,
-  useOrganizationalChangeLogs,
 } from '../queries/use-organizational-structure';
-import { type OrganizationalResource, type OrganizationalSearchField, type OrganizationalSearchOperator, type OrganizationalSortColumn, type OrganizationalStatus, type OrganizationalStructureItem, type OrganizationalStructureRequest } from '../../domain/models/organizational-structure';
+import { organizationalAuditEntityNames, type OrganizationalResource, type OrganizationalSearchField, type OrganizationalSearchOperator, type OrganizationalSortColumn, type OrganizationalStatus, type OrganizationalStructureItem, type OrganizationalStructureRequest } from '../../domain/models/organizational-structure';
 import { canDecideJobDescription, getJobDescriptionStatusKey } from '../utils/job-description-status';
 import { getOrganizationalDefaultView } from '../utils/organizationalStructureViews';
 
@@ -38,6 +38,7 @@ export function OrganizationalStructureManagementScreen({ resource }: { resource
   const { allowed: editAllowed } = useAuthorization({ requiredPermissions: [permissions.EditOrganizationalStructure] });
   const { allowed: deleteAllowed } = useAuthorization({ requiredPermissions: [permissions.ArchiveOrganizationalStructure] });
   const { allowed: approveAllowed } = useAuthorization({ requiredPermissions: [permissions.ApproveJobDescriptions] });
+  const { allowed: historyAllowed } = useAuthorization({ requiredPermissions: [permissions.ViewAuditTrail] });
   const canCreate = createAllowed && !isReadOnly; const canEdit = editAllowed && !isReadOnly; const canDelete = deleteAllowed && !isReadOnly;
   const [status, setStatus] = useState<OrganizationalStatus>('active'); const [searchField, setSearchField] = useState<OrganizationalSearchField>('all'); const [searchOperator, setSearchOperator] = useState<OrganizationalSearchOperator>('contains');
   const list = useServerListState<OrganizationalSortColumn, { status: OrganizationalStatus }>({ initialFilters: { status: 'active' }, initialPageSize: 5, initialSort: { columnId: 'nameEn', direction: 'ascending' } });
@@ -48,7 +49,6 @@ export function OrganizationalStructureManagementScreen({ resource }: { resource
   const [mode, setMode] = useState<FormMode>('view'); const [selected, setSelected] = useState<OrganizationalStructureItem | null>(null); const [pendingArchive, setPendingArchive] = useState<OrganizationalStructureItem | null>(null);
   const [decisionMode, setDecisionMode] = useState<'approve' | 'reject' | null>(null); const [decisionItem, setDecisionItem] = useState<OrganizationalStructureItem | null>(null);
   const [logItem, setLogItem] = useState<OrganizationalStructureItem | null>(null);
-  const changeLogsQuery = useOrganizationalChangeLogs(resource, logItem?.id, Boolean(logItem));
   const rows = query.data?.items ?? [];
   const open = useCallback((nextMode: FormMode, item: OrganizationalStructureItem | null) => { if (nextMode !== 'view' && isReadOnly) return notifyBlockedAction(); setMode(nextMode); setSelected(item); }, [isReadOnly, notifyBlockedAction]);
   const close = useCallback(() => { setSelected(null); setMode('view'); }, []);
@@ -149,18 +149,18 @@ export function OrganizationalStructureManagementScreen({ resource }: { resource
 
     cols.push(
       { id: 'status', header: t('organizationalStructure.fields.status'), width: 170, align: 'center', render: (item) => { const decisionStatus = getJobDescriptionStatusKey(item); return <View style={styles.statuses}><AppStatusBadge color={item.isDeleted ? theme.colors.warning : theme.colors.success} label={t(item.isDeleted ? 'organizationalStructure.status.archived' : 'organizationalStructure.status.active')} />{decisionStatus ? <AppStatusBadge color={theme.colors.primary} label={t(`organizationalStructure.jobDescriptionStatus.${decisionStatus}`)} /> : null}</View>; } },
-      { id: 'actions', header: t('organizationalStructure.actions'), width: resource === 'job-descriptions' ? 330 : 280, align: 'center', render: (item) => <View style={styles.actions}>{resource === 'job-descriptions' ? <AppButton icon="eye-outline" onPress={() => open('view', item)} size="sm" style={styles.viewProfileButton} variant="primary">{t('organizationalStructure.view')}</AppButton> : <AppIconButton icon="eye-outline" label={t('organizationalStructure.view')} onPress={() => open('view', item)} />}<AppIconButton icon="time-outline" label={t('actions.changeLog')} onPress={() => setLogItem(item)} />{canEdit && !item.isDeleted ? <AppIconButton icon="create-outline" label={t('organizationalStructure.edit')} onPress={() => open('edit', item)} /> : null}{canDelete ? <AppIconButton icon={item.isDeleted ? 'refresh-outline' : 'archive-outline'} label={t(item.isDeleted ? 'organizationalStructure.restore' : 'organizationalStructure.archive')} onPress={() => item.isDeleted ? void restore(item) : setPendingArchive(item)} /> : null}{approveAllowed && resource === 'job-descriptions' && canDecideJobDescription(item) ? <><AppIconButton icon="checkmark-circle-outline" label={t('organizationalStructure.decision.approve')} onPress={() => openDecision('approve', item)} /><AppIconButton icon="close-circle-outline" label={t('organizationalStructure.decision.reject')} onPress={() => openDecision('reject', item)} /></> : null}</View> },
+      { id: 'actions', header: t('organizationalStructure.actions'), width: resource === 'job-descriptions' ? 330 : 280, align: 'center', render: (item) => <View style={styles.actions}>{resource === 'job-descriptions' ? <AppButton icon="eye-outline" onPress={() => open('view', item)} size="sm" style={styles.viewProfileButton} variant="primary">{t('organizationalStructure.view')}</AppButton> : <AppIconButton icon="eye-outline" label={t('organizationalStructure.view')} onPress={() => open('view', item)} />}{historyAllowed ? <AppIconButton icon="time-outline" label={t('actions.changeLog')} onPress={() => setLogItem(item)} /> : null}{canEdit && !item.isDeleted ? <AppIconButton icon="create-outline" label={t('organizationalStructure.edit')} onPress={() => open('edit', item)} /> : null}{canDelete ? <AppIconButton icon={item.isDeleted ? 'refresh-outline' : 'archive-outline'} label={t(item.isDeleted ? 'organizationalStructure.restore' : 'organizationalStructure.archive')} onPress={() => item.isDeleted ? void restore(item) : setPendingArchive(item)} /> : null}{approveAllowed && resource === 'job-descriptions' && canDecideJobDescription(item) ? <><AppIconButton icon="checkmark-circle-outline" label={t('organizationalStructure.decision.approve')} onPress={() => openDecision('approve', item)} /><AppIconButton icon="close-circle-outline" label={t('organizationalStructure.decision.reject')} onPress={() => openDecision('reject', item)} /></> : null}</View> },
     );
 
     return cols;
-  }, [approveAllowed, canDelete, canEdit, isAr, open, openDecision, resource, restore, t, theme.colors.textMuted, theme.colors.primary, theme.colors.secondary, theme.colors.success, theme.colors.warning]);
+  }, [approveAllowed, canDelete, historyAllowed, canEdit, isAr, open, openDecision, resource, restore, t, theme.colors.textMuted, theme.colors.primary, theme.colors.secondary, theme.colors.success, theme.colors.warning]);
   if (!viewAllowed) return <AppScreen><AppStateView message={t('organizationalStructure.permissionDenied')} state="error" /></AppScreen>;
   if (query.isLoading) return <AppScreen><AppStateView state="loading" /></AppScreen>;
   if (query.error) return <AppScreen><AppStateView message={errorMessage(query.error, t('organizationalStructure.loadFailed'))} onRetry={() => void query.refetch()} state="error" /></AppScreen>;
   return <AppScreen contentContainerStyle={styles.screen} edges={['left', 'right', 'bottom']} refreshControl={<RefreshControl colors={[theme.colors.primary]} onRefresh={() => void query.refetch()} refreshing={query.isRefetching} tintColor={theme.colors.primary} />}>
     <AppListScreen<OrganizationalStructureItem, 'table' | 'cards' | 'tree' | 'chart' | 'report' | 'import'> defaultView={getOrganizationalDefaultView(resource)} emptyContent={<AppStateView message={t('organizationalStructure.empty')} state="empty" />} fillViewSelector filterControl={<OrganizationalStructureFilterButton field={searchField} onApply={(values) => { setSearchField(values.field); setSearchOperator(values.operator); setStatus(values.status); list.setPage(0); }} operator={searchOperator} resource={resource} status={status} />} isFetching={query.isFetching} items={rows} onSearchChange={(value) => list.setSearchInput(value)} searchActions={canCreate ? <AppIconButton color={theme.colors.onPrimary} icon="add-outline" label={t('organizationalStructure.add')} onPress={() => open('create', null)} size={22} style={({ pressed }) => ({ backgroundColor: theme.colors.primary, opacity: pressed ? 0.75 : 1 })} /> : null} searchPlaceholder={t(`organizationalStructure.resources.${resource}`)} searchValue={list.searchInput} serverPagination={{ onPageChange: list.setPage, onPageSizeChange: list.setPageSize, page: list.state.page, pageSize: list.state.pageSize, pageSizeOptions: [3, 5, 10], totalItems: query.data?.metaData.totalCount ?? 0 }} showResultCount={false} showViewLabels views={[
         { value: 'table', icon: 'grid-outline', label: t('multiView.table'), defaultPageSize: 5, render: (items) => <AppDataTable columns={columns} getRowKey={(item) => item.id} onRowDoublePress={(item) => open('view', item)} rows={items} showPagination={false} serverState={{ onPageChange: list.setPage, onPageSizeChange: list.setPageSize, onSortChange: (sort) => list.setSort(sort ? { columnId: sort.columnId as OrganizationalSortColumn, direction: sort.direction } : null), page: list.state.page, pageSize: list.state.pageSize, sort: list.state.sort, totalRows: query.data?.metaData.totalCount ?? 0 }} /> },
-        { value: 'cards', icon: 'albums-outline', label: t('multiView.cards'), defaultPageSize: 3, scrollable: true, render: (items) => <View style={styles.cards}>{items.map((item, index) => <OrganizationalStructureCard active={index === 0} canApprove={approveAllowed && resource === 'job-descriptions'} canDelete={canDelete} canEdit={canEdit} item={item} key={item.id} onApprove={(value) => openDecision('approve', value)} onArchive={setPendingArchive} onEdit={(value) => open('edit', value)} onReject={(value) => openDecision('reject', value)} onRestore={(value) => void restore(value)} onView={(value) => open('view', value)} onViewLogs={setLogItem} />)}</View> },
+        { value: 'cards', icon: 'albums-outline', label: t('multiView.cards'), defaultPageSize: 3, scrollable: true, render: (items) => <View style={styles.cards}>{items.map((item, index) => <OrganizationalStructureCard active={index === 0} canApprove={approveAllowed && resource === 'job-descriptions'} canDelete={canDelete} canEdit={canEdit} item={item} key={item.id} onApprove={(value) => openDecision('approve', value)} onArchive={setPendingArchive} onEdit={(value) => open('edit', value)} onReject={(value) => openDecision('reject', value)} onRestore={(value) => void restore(value)} onView={(value) => open('view', value)} onViewLogs={historyAllowed ? setLogItem : undefined} />)}</View> },
         ...((resource === 'departments' || resource === 'cost-centers')
           ? [
               {
@@ -189,7 +189,7 @@ export function OrganizationalStructureManagementScreen({ resource }: { resource
                     }
                     onEdit={(item: OrganizationalStructureItem) => open('edit', item)}
                     onView={(item: OrganizationalStructureItem) => open('view', item)}
-                    onViewLogs={setLogItem}
+                    onViewLogs={historyAllowed ? setLogItem : undefined}
                     onReparent={reparent}
                     resource={resource}
                   />
@@ -213,22 +213,22 @@ export function OrganizationalStructureManagementScreen({ resource }: { resource
         onClose={close}
         onEdit={(val) => open('edit', val)}
         onReject={(val) => openDecision('reject', val)}
-        onViewLogs={setLogItem}
+        onViewLogs={historyAllowed ? setLogItem : undefined}
         visible
       />
     ) : null}
     {decisionMode && decisionItem ? <JobDescriptionDecisionForm loading={approveMutation.isPending || rejectMutation.isPending} mode={decisionMode} onClose={() => { setDecisionMode(null); setDecisionItem(null); }} onSubmit={decide} /> : null}
     <ConfirmationDialog confirmLabel={t('organizationalStructure.archive')} description={t('organizationalStructure.archiveDescription', { name: pendingArchive?.nameEn ?? '' })} loading={archiveMutation.isPending} onCancel={() => setPendingArchive(null)} onConfirm={() => void archive()} title={t('organizationalStructure.archiveTitle')} tone="warning" visible={pendingArchive !== null} />
-    <EntityChangeLogModal
-      entityCode={logItem?.code}
-      entityName={isAr ? logItem?.nameAr : logItem?.nameEn}
-      error={changeLogsQuery.error}
-      loading={changeLogsQuery.isLoading}
-      logs={changeLogsQuery.data}
-      onClose={() => setLogItem(null)}
-      onRetry={() => void changeLogsQuery.refetch()}
-      visible={logItem !== null}
-    />
+    {logItem ? (
+      <RecordHistoryModal
+        entityKey={logItem.id}
+        entityName={organizationalAuditEntityNames[resource]}
+        moduleCode="hr"
+        onClose={() => setLogItem(null)}
+        subtitle={[logItem.code ? `[${logItem.code}]` : null, isAr ? logItem.nameAr : logItem.nameEn].filter(Boolean).join(' ')}
+        visible
+      />
+    ) : null}
   </AppScreen>;
 }
 function errorMessage(error: unknown, fallback: string) { return error instanceof ApiError || error instanceof Error ? error.message || fallback : fallback; }

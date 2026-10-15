@@ -33,7 +33,6 @@ ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Cou
     ICountryReadStore.cs
     ICountryWriteStore.cs
     ICountryValidationQueries.cs
-    ICountryAuditTrail.cs
     ICountryChangeScheduler.cs
   Contracts/
     CountryListItemResponse.cs
@@ -63,7 +62,6 @@ ErpSystem.Modules.ReferenceData.Infrastructure/Features/GeographicalInformation/
     CountryReadStore.cs
     CountryWriteStore.cs
     CountryValidationQueries.cs
-    CountryAuditTrail.cs
   Jobs/
     CountryChangeScheduler.cs
     CountryChangedJob.cs
@@ -280,10 +278,10 @@ state failures.
 - `ReferenceDataDbContext` owns ordinary created/updated audit metadata.
 - Archive handlers set deleted actor, machine and UTC timestamp explicitly;
   restore clears them.
-- Update calls `CountryAuditTrail.RecordUpdate` before mapping the candidate into
-  the tracked row. The trail writes only changed editable keys to
-  `EntityChangeLog`, with actor, machine and UTC timestamp, in the same unit of
-  work.
+- Create, update, archive and restore are recorded automatically in the
+  ReferenceData `AuditTrailEntries` table (changed fields only for updates), with
+  actor, UTC time and correlation id, in the same save. See
+  [Audit Trail](../../../../guides/api/AUDIT_TRAIL.md).
 - A failed save produces no scheduled job.
 - `CountryChangeScheduler` enqueues `CountryChangedJob` through Hangfire only
   after save.

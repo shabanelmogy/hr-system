@@ -2,7 +2,6 @@ using ErpSystem.BuildingBlocks.Application.Common.Paginations;
 using ErpSystem.Modules.HR.Application.Features.OrganizationalStructure.Management.Commands;
 using ErpSystem.Modules.HR.Application.Features.OrganizationalStructure.Management.Contracts;
 using ErpSystem.Modules.HR.Application.Features.OrganizationalStructure.Management.Queries;
-using ErpSystem.Modules.Platform.Contracts.EntityChangeLogs;
 using MediatR;
 
 namespace ErpSystem.Modules.HR.Presentation.Features.OrganizationalStructure.Management.V1;
@@ -38,18 +37,6 @@ public sealed class OrganizationalStructureController(ISender sender) : Controll
     public async Task<IActionResult> GetById(string resource, int id, CancellationToken cancellationToken)
     {
         var result = await sender.Send(new GetOrganizationalStructureItemQuery(resource, id), cancellationToken);
-        return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
-    }
-
-    [HttpGet("{id:int}/change-logs")]
-    [HasPermission(HrPermissions.ViewOrganizationalStructure)]
-    [ProducesResponseType(typeof(IReadOnlyList<EntityChangeLogsResponse>), StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetChangeLogs(
-        [FromRoute] string resource,
-        [FromRoute] int id,
-        CancellationToken cancellationToken)
-    {
-        var result = await sender.Send(new GetOrganizationalStructureChangeLogsQuery(resource, id), cancellationToken);
         return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
     }
 

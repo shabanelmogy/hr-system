@@ -2,7 +2,6 @@ using ErpSystem.Modules.Inventory.Application.Features.Catalog.Categories.Abstra
 using ErpSystem.Modules.Inventory.Application.Features.Catalog.Categories.Contracts;
 using ErpSystem.Modules.Inventory.Application.Features.Catalog.Categories.Errors;
 using ErpSystem.Modules.Inventory.Domain.Catalog.Categories.Entities;
-using ErpSystem.Modules.Platform.Contracts.EntityChangeLogs;
 
 namespace ErpSystem.Modules.Inventory.Application.Features.Catalog.Categories.Commands;
 
@@ -55,7 +54,6 @@ public sealed class UpdateCategoryCommandHandler(
     ICategoryWriteStore writeStore,
     ICategoryReadStore readStore,
     ICategoryEffects effects,
-    IEntityChangeLogService changeLogs,
     CategoryErrors errors)
     : ICommandHandler<UpdateCategoryCommand, Result<CategoryResponse>>
 {
@@ -65,14 +63,6 @@ public sealed class UpdateCategoryCommandHandler(
         var category = await writeStore.GetForUpdateAsync(request.Id, cancellationToken);
         if (category is null)
             return Result.Failure<CategoryResponse>(errors.CategoryNotFound);
-
-        var updated = new Category
-        {
-            Id = request.Id,
-            NameAr = request.NameAr,
-            NameEn = request.NameEn
-        };
-        await changeLogs.CreateChangeLogAsync(request.Id, category, updated, cancellationToken);
 
         category.NameAr = request.NameAr;
         category.NameEn = request.NameEn;

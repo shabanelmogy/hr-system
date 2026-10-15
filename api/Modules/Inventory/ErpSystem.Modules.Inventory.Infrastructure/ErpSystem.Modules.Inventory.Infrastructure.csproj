@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\BuildingBlocks\ErpSystem.BuildingBlocks.Persistence\ErpSystem.BuildingBlocks.Persistence.csproj" />
     <ProjectReference Include="..\ErpSystem.Modules.Inventory.Application\ErpSystem.Modules.Inventory.Application.csproj" />
     <ProjectReference Include="..\ErpSystem.Modules.Inventory.Contracts\ErpSystem.Modules.Inventory.Contracts.csproj" />
     <ProjectReference Include="..\ErpSystem.Modules.Inventory.Domain\ErpSystem.Modules.Inventory.Domain.csproj" />

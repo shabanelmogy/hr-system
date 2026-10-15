@@ -56,6 +56,7 @@ These routes are explicit Phase 13 regression contracts, not just examples in pr
 | `/administration/roles` | platform | `web-next/src/app/(main)/administration/(platform)/roles/page.tsx` |
 | `/administration/users` | platform | `web-next/src/app/(main)/administration/(platform)/users/page.tsx` |
 | `/advanced-tools/api-endpoints` | platform | `web-next/src/app/(main)/(platform)/advanced-tools/api-endpoints/page.tsx` |
+| `/advanced-tools/audit-trail` | platform | `web-next/src/app/(main)/(platform)/advanced-tools/audit-trail/page.tsx` |
 | `/advanced-tools/hangfire-dashboard` | platform | `web-next/src/app/(main)/(platform)/advanced-tools/hangfire-dashboard/page.tsx` |
 | `/advanced-tools/health-check` | platform | `web-next/src/app/(main)/(platform)/advanced-tools/health-check/page.tsx` |
 | `/advanced-tools/localization-api` | platform | `web-next/src/app/(main)/(platform)/advanced-tools/localization-api/page.tsx` |

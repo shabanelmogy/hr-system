@@ -5,7 +5,6 @@ using ErpSystem.Modules.ReferenceData.Application.Features.GeographicalInformati
 using ErpSystem.Modules.ReferenceData.Application.Features.GeographicalInformation.States.Contracts;
 using ErpSystem.Modules.ReferenceData.Application.Features.GeographicalInformation.States.Queries;
 using ErpSystem.Modules.ReferenceData.Domain.GeographicalInformation.States.Entities;
-using ErpSystem.Modules.Platform.Contracts.EntityChangeLogs;
 
 namespace ErpSystem.Modules.ReferenceData.Infrastructure.Features.GeographicalInformation.States.Persistence;
 
@@ -207,29 +206,4 @@ public sealed class StateWriteStore(ReferenceDataDbContext context) : IStateWrit
              string.Equals(candidate.NameEn, row.NameEn, StringComparison.OrdinalIgnoreCase) ||
              string.Equals(candidate.Code, row.Code, StringComparison.OrdinalIgnoreCase))));
     }
-}
-
-public sealed class StateAuditTrail(IEntityChangeLogStore changeLogStore, ICurrentActor currentActor, TimeProvider timeProvider) : IStateAuditTrail
-{
-    public async Task RecordUpdateAsync(State existingState, State updatedState, CancellationToken cancellationToken)
-    {
-        var oldValues = Values(existingState);
-        var newValues = Values(updatedState);
-        var changedKeys = oldValues.Keys.Where(key => !Equals(oldValues[key], newValues[key])).ToArray();
-        if (changedKeys.Length == 0) return;
-
-        await changeLogStore.AddAsync(new EntityChangeLogRecord(existingState.Id, null, nameof(State),
-            JsonSerializer.Serialize(changedKeys.ToDictionary(key => key, key => oldValues[key])),
-            JsonSerializer.Serialize(changedKeys.ToDictionary(key => key, key => newValues[key])),
-            currentActor.UserId ?? throw new InvalidOperationException("An authenticated actor is required to update a state."),
-            Environment.MachineName, timeProvider.GetUtcNow().UtcDateTime), cancellationToken);
-    }
-
-    private static Dictionary<string, string?> Values(State state) => new(StringComparer.Ordinal)
-    {
-        [nameof(State.NameAr)] = state.NameAr,
-        [nameof(State.NameEn)] = state.NameEn,
-        [nameof(State.Code)] = state.Code,
-        [nameof(State.CountryId)] = state.CountryId.ToString(CultureInfo.InvariantCulture)
-    };
 }

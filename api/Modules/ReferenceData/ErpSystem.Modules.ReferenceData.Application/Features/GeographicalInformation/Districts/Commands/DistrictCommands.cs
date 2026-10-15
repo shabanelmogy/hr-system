@@ -218,7 +218,6 @@ public sealed class UpdateDistrictCommandHandler(
     IDistrictReadStore districtReadStore,
     IReferenceDataUnitOfWork unitOfWork,
     IDistrictChangeScheduler districtChangeScheduler,
-    IDistrictAuditTrail districtAuditTrail,
     ICurrentActor currentActor,
     IMapper mapper,
     DistrictErrors districtErrors)
@@ -258,7 +257,6 @@ public sealed class UpdateDistrictCommandHandler(
                     if (await districtWriteStore.HasConflictAsync(updatedDistrict, district.Id, token))
                         return Result.Failure<DistrictDetailResponse>(districtErrors.DistrictExists);
 
-                    await districtAuditTrail.RecordUpdateAsync(district, updatedDistrict, token);
                     mapper.Map((DistrictMutation)request, district);
                     await unitOfWork.SaveChangesAsync(token);
                     var response = await districtReadStore.GetByIdAsync(district.Id, token)
