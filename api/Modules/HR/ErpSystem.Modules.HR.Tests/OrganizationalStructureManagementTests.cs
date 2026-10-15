@@ -12,7 +12,6 @@ using ErpSystem.Modules.HR.Domain.OrganizationalStructure.Enums;
 using ErpSystem.Modules.HR.Infrastructure.Features.OrganizationalStructure.Management;
 using ErpSystem.Modules.HR.Infrastructure.Persistence;
 using ErpSystem.BuildingBlocks.Authorization;
-using ErpSystem.Modules.Platform.Contracts.EntityChangeLogs;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 
@@ -143,8 +142,7 @@ public sealed class OrganizationalStructureManagementTests
             actor,
             new TestAccountingCurrencyCatalog("EGP", "USD"),
             TimeProvider.System,
-            new NoOpScheduler(),
-            NoOpEntityChangeLogService.Instance);
+            new NoOpScheduler());
         var buildPageQuery = typeof(OrganizationalStructureManagement).GetMethod(
             "BuildPageQuery",
             BindingFlags.Instance | BindingFlags.NonPublic);
@@ -256,8 +254,7 @@ public sealed class OrganizationalStructureManagementTests
             actor,
             new TestAccountingCurrencyCatalog("EGP", "USD"),
             TimeProvider.System,
-            new NoOpScheduler(),
-            NoOpEntityChangeLogService.Instance);
+            new NoOpScheduler());
 
         var createResult = await management.CreateAsync("departments", new OrganizationalStructureMutation(
             "DEP1", "Engineering", "الهندسة"), CancellationToken.None);
@@ -281,8 +278,7 @@ public sealed class OrganizationalStructureManagementTests
             actor,
             new TestAccountingCurrencyCatalog("EGP", "USD"),
             TimeProvider.System,
-            new NoOpScheduler(),
-            NoOpEntityChangeLogService.Instance);
+            new NoOpScheduler());
 
         var createResult = await management.CreateAsync("branches", new OrganizationalStructureMutation(
             "BR1", "Main Branch", "الفرع الرئيسي"), CancellationToken.None);
@@ -307,8 +303,7 @@ public sealed class OrganizationalStructureManagementTests
             actor,
             catalog,
             TimeProvider.System,
-            new NoOpScheduler(),
-            NoOpEntityChangeLogService.Instance);
+            new NoOpScheduler());
 
         var result = await management.CreateAsync(
             OrganizationalResources.JobLevels,
@@ -360,40 +355,6 @@ public sealed class OrganizationalStructureManagementTests
         public void Schedule(OrganizationalStructureChange change)
         {
         }
-    }
-
-    private sealed class NoOpEntityChangeLogService : IEntityChangeLogService
-    {
-        internal static readonly NoOpEntityChangeLogService Instance = new();
-
-        public Task<EntityChangeLogsRequest?> CreateChangeLogAsync<TEntity>(
-            int entityId,
-            TEntity existingEntity,
-            TEntity updatedEntity,
-            CancellationToken cancellationToken = default)
-            where TEntity : class => Task.FromResult<EntityChangeLogsRequest?>(null);
-
-        public Task<EntityChangeLogsRequest?> CreateChangeLogAsync<TEntity>(
-            string entityKey,
-            string entityName,
-            TEntity existingEntity,
-            TEntity updatedEntity,
-            CancellationToken cancellationToken = default)
-            where TEntity : class => Task.FromResult<EntityChangeLogsRequest?>(null);
-
-        public Task<EntityChangeLogsRequest?> CreateChangeLogAsync(
-            int entityId,
-            string entityName,
-            object existingEntity,
-            object updatedEntity,
-            CancellationToken cancellationToken = default) => Task.FromResult<EntityChangeLogsRequest?>(null);
-
-        public Task<List<EntityChangeLogsResponse>> GetChangeLogKeyValuesAsync() => Task.FromResult<List<EntityChangeLogsResponse>>([]);
-
-        public Task<List<EntityChangeLogsResponse>> GetChangeLogsByEntityAsync(
-            string entityName,
-            int entityId,
-            CancellationToken cancellationToken = default) => Task.FromResult<List<EntityChangeLogsResponse>>([]);
     }
 }
 

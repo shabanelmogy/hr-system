@@ -99,7 +99,7 @@ public sealed class StateCqrsArchitectureTests
         AssertHandlerDependency<CreateStateCommandHandler, IStateChangeScheduler>();
         AssertHandlerDependency<CreateStatesCommandHandler, IStateWriteStore>();
         AssertHandlerDependency<CreateStatesCommandHandler, IStateChangeScheduler>();
-        AssertHandlerDependency<UpdateStateCommandHandler, IStateAuditTrail>();
+        AssertHandlerDependency<UpdateStateCommandHandler, IStateWriteStore>();
         AssertHandlerDependency<ArchiveStateCommandHandler, IStateWriteStore>();
         AssertHandlerDependency<BulkArchiveStatesCommandHandler, IStateWriteStore>();
         AssertHandlerDependency<RestoreStateCommandHandler, IStateWriteStore>();

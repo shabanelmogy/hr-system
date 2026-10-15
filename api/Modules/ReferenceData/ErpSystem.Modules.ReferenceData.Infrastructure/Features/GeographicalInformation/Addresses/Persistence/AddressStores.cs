@@ -3,7 +3,6 @@ using System.Text.Json;
 using ErpSystem.Modules.ReferenceData.Application.Features.GeographicalInformation.Addresses.Abstractions;
 using ErpSystem.Modules.ReferenceData.Application.Features.GeographicalInformation.Addresses.Contracts;
 using ErpSystem.Modules.ReferenceData.Domain.GeographicalInformation.Addresses.Entities;
-using ErpSystem.Modules.Platform.Contracts.EntityChangeLogs;
 
 namespace ErpSystem.Modules.ReferenceData.Infrastructure.Features.GeographicalInformation.Addresses.Persistence;
 
@@ -111,47 +110,4 @@ public sealed class AddressWriteStore(ReferenceDataDbContext context, ICurrentAc
         return context.Addresses.IgnoreQueryFilters()
             .Where(address => address.TenantId == tenantId && address.CompanyId == companyId);
     }
-}
-
-public sealed class AddressAuditTrail(
-    IEntityChangeLogStore changeLogStore,
-    ICurrentActor actor,
-    TimeProvider timeProvider) : IAddressAuditTrail
-{
-    public async Task RecordUpdateAsync(Address existingAddress, Address updatedAddress, CancellationToken cancellationToken)
-    {
-        var oldValues = Values(existingAddress);
-        var newValues = Values(updatedAddress);
-        var changedKeys = oldValues.Keys.Where(key => !Equals(oldValues[key], newValues[key])).ToArray();
-        if (changedKeys.Length == 0)
-            return;
-
-        await changeLogStore.AddAsync(new EntityChangeLogRecord(
-            existingAddress.Id,
-            null,
-            nameof(Address),
-            JsonSerializer.Serialize(changedKeys.ToDictionary(key => key, key => oldValues[key])),
-            JsonSerializer.Serialize(changedKeys.ToDictionary(key => key, key => newValues[key])),
-            actor.UserId ?? throw new InvalidOperationException("An authenticated actor is required to update an Address."),
-            Environment.MachineName,
-            timeProvider.GetUtcNow().UtcDateTime), cancellationToken);
-    }
-
-    private static Dictionary<string, string?> Values(Address address) => new(StringComparer.Ordinal)
-    {
-        [nameof(Address.CountryId)] = address.CountryId.ToString(CultureInfo.InvariantCulture),
-        [nameof(Address.StateId)] = address.StateId?.ToString(CultureInfo.InvariantCulture),
-        [nameof(Address.DistrictId)] = address.DistrictId?.ToString(CultureInfo.InvariantCulture),
-        [nameof(Address.City)] = address.City,
-        [nameof(Address.StreetLine1)] = address.StreetLine1,
-        [nameof(Address.StreetLine2)] = address.StreetLine2,
-        [nameof(Address.BuildingNumber)] = address.BuildingNumber,
-        [nameof(Address.Floor)] = address.Floor,
-        [nameof(Address.ApartmentNumber)] = address.ApartmentNumber,
-        [nameof(Address.PostalCode)] = address.PostalCode,
-        [nameof(Address.AdditionalInfo)] = address.AdditionalInfo,
-        [nameof(Address.Latitude)] = address.Latitude?.ToString(CultureInfo.InvariantCulture),
-        [nameof(Address.Longitude)] = address.Longitude?.ToString(CultureInfo.InvariantCulture),
-        [nameof(Address.AddressTypeId)] = address.AddressTypeId.ToString(CultureInfo.InvariantCulture)
-    };
 }

@@ -6,7 +6,6 @@ using ErpSystem.Modules.ReferenceData.Application.Features.GeographicalInformati
 using ErpSystem.Modules.ReferenceData.Application.Features.GeographicalInformation.AddressTypes.Contracts;
 using ErpSystem.Modules.ReferenceData.Application.Features.GeographicalInformation.AddressTypes.Queries;
 using ErpSystem.Modules.ReferenceData.Domain.GeographicalInformation.AddressTypes.Entities;
-using ErpSystem.Modules.Platform.Contracts.EntityChangeLogs;
 
 namespace ErpSystem.Modules.ReferenceData.Infrastructure.Features.GeographicalInformation.AddressTypes.Persistence;
 
@@ -62,15 +61,4 @@ public sealed class AddressTypeWriteStore(ReferenceDataDbContext context) : IAdd
     }
     public Task<bool> HasActiveAddressesAsync(int addressTypeId, CancellationToken cancellationToken) => context.Addresses.AnyAsync(address => address.AddressTypeId == addressTypeId && !address.IsDeleted, cancellationToken);
     public Task<bool> HasActiveAddressesAsync(IReadOnlyCollection<int> addressTypeIds, CancellationToken cancellationToken) => context.Addresses.AnyAsync(address => addressTypeIds.Contains(address.AddressTypeId) && !address.IsDeleted, cancellationToken);
-}
-
-public sealed class AddressTypeAuditTrail(IEntityChangeLogStore changeLogStore, ICurrentActor actor, TimeProvider timeProvider) : IAddressTypeAuditTrail
-{
-    public async Task RecordUpdateAsync(AddressType existingAddressType, AddressType updatedAddressType, CancellationToken cancellationToken)
-    {
-        var oldValues = Values(existingAddressType); var newValues = Values(updatedAddressType); var keys = oldValues.Keys.Where(key => !Equals(oldValues[key], newValues[key])).ToArray();
-        if (keys.Length == 0) return;
-        await changeLogStore.AddAsync(new EntityChangeLogRecord(existingAddressType.Id, null, nameof(AddressType), JsonSerializer.Serialize(keys.ToDictionary(key => key, key => oldValues[key])), JsonSerializer.Serialize(keys.ToDictionary(key => key, key => newValues[key])), actor.UserId ?? throw new InvalidOperationException("An authenticated actor is required to update an Address Type."), Environment.MachineName, timeProvider.GetUtcNow().UtcDateTime), cancellationToken);
-    }
-    private static Dictionary<string, string?> Values(AddressType item) => new(StringComparer.Ordinal) { [nameof(AddressType.NameAr)] = item.NameAr, [nameof(AddressType.NameEn)] = item.NameEn };
 }

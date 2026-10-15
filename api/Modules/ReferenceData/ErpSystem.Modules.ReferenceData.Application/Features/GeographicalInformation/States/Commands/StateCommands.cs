@@ -217,7 +217,6 @@ public sealed class UpdateStateCommandHandler(
     IStateReadStore stateReadStore,
     IReferenceDataUnitOfWork unitOfWork,
     IStateChangeScheduler stateChangeScheduler,
-    IStateAuditTrail stateAuditTrail,
     ICurrentActor currentActor,
     IMapper mapper,
     StateErrors stateErrors)
@@ -259,7 +258,6 @@ public sealed class UpdateStateCommandHandler(
                     if (await stateWriteStore.HasConflictAsync(updatedState, state.Id, token))
                         return Result.Failure<StateDetailResponse>(stateErrors.StateExists);
 
-                    await stateAuditTrail.RecordUpdateAsync(state, updatedState, token);
                     mapper.Map((StateMutation)request, state);
                     await unitOfWork.SaveChangesAsync(token);
                     var response = await stateReadStore.GetByIdAsync(state.Id, token)

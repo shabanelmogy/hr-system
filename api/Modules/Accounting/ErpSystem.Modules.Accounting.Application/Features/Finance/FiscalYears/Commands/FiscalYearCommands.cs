@@ -167,7 +167,6 @@ public sealed class CreateFiscalYearCommandHandler(
 public sealed class UpdateFiscalYearCommandHandler(
     IFiscalYearWriteStore writeStore,
     IFiscalYearReadStore readStore,
-    IFiscalYearAuditTrail auditTrail,
     IAccountingUnitOfWork unitOfWork,
     IFiscalYearChangeScheduler scheduler,
     ICurrentActor actor,
@@ -196,8 +195,6 @@ public sealed class UpdateFiscalYearCommandHandler(
                 if (await writeStore.OverlapExistsAsync(request.StartDate, request.EndDate, fiscalYear.Id, token))
                     return Result.Failure<FiscalYearDetailResponse>(errors.FiscalYearOverlappingDates);
 
-                var candidate = new FiscalYear(code, request.NameAr, request.NameEn, request.StartDate, request.EndDate, request.PeriodFrequency);
-                await auditTrail.RecordUpdateAsync(fiscalYear, candidate, token);
                 writeStore.ApplyOriginalRowVersion(fiscalYear, Convert.FromBase64String(request.RowVersion));
                 var oldPeriods = fiscalYear.Periods.ToHashSet();
                 fiscalYear.UpdateDraft(code, request.NameAr, request.NameEn, request.StartDate, request.EndDate, request.PeriodFrequency);
@@ -307,7 +304,6 @@ public sealed class RestoreFiscalYearCommandHandler(
 public sealed class ChangeFiscalYearLifecycleCommandHandler(
     IFiscalYearWriteStore writeStore,
     IFiscalYearReadStore readStore,
-    IFiscalYearAuditTrail auditTrail,
     IAccountingUnitOfWork unitOfWork,
     IFiscalYearChangeScheduler scheduler,
     ICurrentActor actor,
@@ -328,7 +324,6 @@ public sealed class ChangeFiscalYearLifecycleCommandHandler(
                 if (fiscalYear is null || fiscalYear.IsDeleted)
                     return Result.Failure<FiscalYearDetailResponse>(errors.FiscalYearNotFound);
 
-                var oldStatus = fiscalYear.Status.ToString();
                 writeStore.ApplyOriginalRowVersion(fiscalYear, Convert.FromBase64String(request.RowVersion));
                 try
                 {
@@ -353,7 +348,6 @@ public sealed class ChangeFiscalYearLifecycleCommandHandler(
                     return Result.Failure<FiscalYearDetailResponse>(errors.FiscalYearInvalidTransition);
                 }
 
-                await auditTrail.RecordLifecycleAsync(fiscalYear, oldStatus, fiscalYear.Status.ToString(), token);
                 await unitOfWork.SaveChangesAsync(token);
                 var response = await readStore.GetByIdAsync(fiscalYear.Id, token)
                     ?? throw new InvalidOperationException("The fiscal year lifecycle result could not be read.");
@@ -370,7 +364,6 @@ public sealed class ChangeFiscalYearLifecycleCommandHandler(
 public sealed class SetCurrentFiscalYearCommandHandler(
     IFiscalYearWriteStore writeStore,
     IFiscalYearReadStore readStore,
-    IFiscalYearAuditTrail auditTrail,
     IAccountingUnitOfWork unitOfWork,
     IFiscalYearChangeScheduler scheduler,
     ICurrentActor actor,
@@ -411,7 +404,6 @@ public sealed class SetCurrentFiscalYearCommandHandler(
                 }
 
                 target.MarkCurrent();
-                await auditTrail.RecordCurrentChangedAsync(target, previous?.Id, token);
                 await unitOfWork.SaveChangesAsync(token);
                 var response = await readStore.GetByIdAsync(target.Id, token)
                     ?? throw new InvalidOperationException("The current fiscal year could not be read.");

@@ -9,6 +9,7 @@ using ErpSystem.Modules.Reporting.Domain.Analytics.Reports.Entities;
 using ErpSystem.Modules.Reporting.Domain.Analytics.ReportTemplates.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using ErpSystem.BuildingBlocks.Persistence.AuditTrail;
 
 namespace ErpSystem.Modules.Reporting.Infrastructure;
 
@@ -56,6 +57,7 @@ public sealed class ReportingDbContext : DbContext, IReportingUnitOfWork
     {
         base.OnModelCreating(modelBuilder);
         modelBuilder.HasDefaultSchema(Schema);
+        modelBuilder.ApplyAuditTrail();
         if (HasEntityConfigurations)
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ReportingDbContext).Assembly);
 

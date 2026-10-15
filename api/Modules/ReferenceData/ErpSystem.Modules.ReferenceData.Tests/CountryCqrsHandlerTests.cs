@@ -327,19 +327,17 @@ public sealed class CountryCqrsHandlerTests
     }
 
     [Fact]
-    public async Task Update_FailedCommitRecordsAuditButNeverSchedules()
+    public async Task Update_FailedCommitNeverSchedules()
     {
         var lifecycle = new List<string>();
         var writer = new RecordingWriteStore(
             lifecycle,
             new Country { Id = 9, NameAr = "مصر", NameEn = "Egypt" });
         var scheduler = new RecordingScheduler(lifecycle);
-        var audit = new RecordingAuditTrail();
         var handler = new UpdateCountryCommandHandler(
             writer,
             new RecordingUnitOfWork(lifecycle, throwOnSave: true),
             scheduler,
-            audit,
             new TestCurrentActor(),
             CreateErrors(),
             CreateMapper());
@@ -348,7 +346,6 @@ public sealed class CountryCqrsHandlerTests
             new UpdateCountryCommand(9, "مصر", "Egypt Updated", "EG", "EGY", "+20", "EGP"),
             CancellationToken.None));
 
-        Assert.True(audit.Called);
         Assert.Empty(scheduler.Changes);
     }
 
@@ -842,12 +839,6 @@ public sealed class CountryCqrsHandlerTests
     {
         public List<CountryChange> Changes { get; } = [];
         public void Schedule(CountryChange change) { lifecycle.Add("schedule"); Changes.Add(change); }
-    }
-
-    private sealed class RecordingAuditTrail : ICountryAuditTrail
-    {
-        public bool Called { get; private set; }
-        public Task RecordUpdateAsync(Country existingCountry, Country updatedCountry, CancellationToken cancellationToken) { Called = true; return Task.CompletedTask; }
     }
 
     private sealed class TestCurrentActor : ICurrentActor

@@ -1,3 +1,5 @@
+using ErpSystem.Modules.Platform.Application.Features.Platform.AuditTrail;
+using ErpSystem.Modules.Platform.Infrastructure.Features.Platform.AuditTrail;
 using ErpSystem.Modules.Platform.Application.Abstractions.Persistence;
 using ErpSystem.BuildingBlocks.Authorization;
 using ErpSystem.Modules.Platform.Application.Files;
@@ -8,13 +10,11 @@ using ErpSystem.Modules.Platform.Contracts.Authentication.Tokens;
 using ErpSystem.Modules.Platform.Application.Authentication.SelectionChallenges;
 using ErpSystem.Modules.Platform.Application.Authentication.Orchestration;
 using ErpSystem.Modules.Platform.Application.CompanyAccess;
-using ErpSystem.Modules.Platform.Application.EntityChangeLogs;
 using ErpSystem.Modules.Platform.Application.Tenancy;
 using ErpSystem.Modules.Platform.Application.Tenancy.Administration;
 using ErpSystem.Modules.Platform.Contracts.Authorization;
 using ErpSystem.Modules.Platform.Contracts.Communications;
 using ErpSystem.Modules.Platform.Contracts.CompanyAccess;
-using ErpSystem.Modules.Platform.Contracts.EntityChangeLogs;
 using ErpSystem.Modules.Platform.Application.Entitlements;
 using ErpSystem.Modules.Platform.Contracts.Files;
 using ErpSystem.Modules.Platform.Contracts.Notifications;
@@ -29,7 +29,6 @@ using ErpSystem.Modules.Platform.Infrastructure.OfflineOperations;
 using ErpSystem.Modules.Platform.Infrastructure.Identity;
 using ErpSystem.Modules.Platform.Infrastructure.Hangfire;
 using ErpSystem.Modules.Platform.Infrastructure.Features.Tenancy;
-using ErpSystem.Modules.Platform.Infrastructure.Features.Platform.EntityChangeLogs.Persistence;
 using ErpSystem.Modules.Platform.Infrastructure.Features.Security.Authentication.Tokens;
 using ErpSystem.Modules.Platform.Infrastructure.Features.Security.Authorization;
 using ErpSystem.Modules.Platform.Infrastructure.Mapping;
@@ -65,6 +64,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using System.Security.Cryptography;
+using ErpSystem.BuildingBlocks.Persistence.AuditTrail;
 
 namespace ErpSystem.Modules.Platform.Infrastructure;
 
@@ -81,11 +81,12 @@ public static class DependencyInjection
             ?? configuration.GetConnectionString("DefaultConnection")
             ?? throw new InvalidOperationException("Connection string 'Platform' or 'DefaultConnection' not found.");
 
-        services.AddDbContext<PlatformDbContext>(options =>
-            options.UseSqlServer(
+        services.AddDbContext<PlatformDbContext>((provider, options) =>
+            options.UseErpAuditTrail(provider, "platform").UseSqlServer(
                 connectionString,
                 sql => sql.MigrationsAssembly(typeof(DependencyInjection).Assembly.FullName)
                     .MigrationsHistoryTable("__EFMigrationsHistory", PlatformDbContext.Schema)));
+        services.AddErpAuditTrailSource<PlatformDbContext>("platform");
         // Platform handlers save through their own contract; the shared IUnitOfWork is
         // replaced by whichever module registers last (see IPlatformUnitOfWork).
         services.AddScoped<IPlatformUnitOfWork>(provider => provider.GetRequiredService<PlatformDbContext>());
@@ -127,6 +128,7 @@ public static class DependencyInjection
         services.AddScoped<ISecurityAuditRequestContextSource, HttpSecurityAuditRequestContextSource>();
         services.AddScoped<ISecurityAuditStore, SecurityAuditStore>();
         services.AddScoped<ISecurityAuditReadStore, SecurityAuditReadStore>();
+        services.AddScoped<IAuditTrailUserDirectory, AuditTrailUserDirectory>();
 
         services.AddScoped<IApiKeyReadStore, ApiKeyReadStore>();
         services.AddScoped<IApiKeyWriteStore, ApiKeyWriteStore>();
@@ -164,8 +166,6 @@ public static class DependencyInjection
         services.AddScoped<ICompanyGeographySource, PlatformCompanyGeographySource>();
         services.AddScoped<IPlatformAuthorizationSource, PlatformAuthorizationSource>();
         services.AddScoped<ICompanyGeographicScopeStore, PlatformCompanyGeographicScopeStore>();
-        services.AddScoped<IEntityChangeLogStore, EntityChangeLogPersistenceAdapter>();
-        services.AddScoped<IEntityChangeLogQueryStore, EntityChangeLogPersistenceAdapter>();
         services.AddScoped<CurrentActor>();
         services.AddScoped<ICurrentActor>(provider =>
             provider.GetRequiredService<CurrentActor>());

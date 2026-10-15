@@ -1,7 +1,9 @@
+using ErpSystem.BuildingBlocks.Domain.Auditing;
 using ErpSystem.Modules.HR.Domain.Recruitment.Enums;
 
 namespace ErpSystem.Modules.HR.Domain.Recruitment.Entities;
 
+[AuditIgnore]
 public sealed class ApplicationStatusHistory : CompanyAuditableEntity
 {
     private ApplicationStatusHistory()

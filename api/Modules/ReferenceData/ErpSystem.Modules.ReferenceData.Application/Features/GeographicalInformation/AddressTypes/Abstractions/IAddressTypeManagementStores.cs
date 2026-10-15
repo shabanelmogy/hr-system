@@ -24,4 +24,3 @@ public interface IAddressTypeWriteStore
     Task<bool> HasActiveAddressesAsync(IReadOnlyCollection<int> addressTypeIds, CancellationToken cancellationToken);
 }
 public interface IAddressTypeChangeScheduler { void Schedule(AddressTypeChange change); }
-public interface IAddressTypeAuditTrail { Task RecordUpdateAsync(AddressType existingAddressType, AddressType updatedAddressType, CancellationToken cancellationToken); }

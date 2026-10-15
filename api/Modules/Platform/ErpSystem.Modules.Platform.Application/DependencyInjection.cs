@@ -4,7 +4,6 @@ using ErpSystem.Modules.Platform.Application.Authentication.SelectionChallenges;
 using ErpSystem.Modules.Platform.Application.Authentication.Tokens;
 using ErpSystem.Modules.Platform.Application.Authentication.Orchestration;
 using ErpSystem.Modules.Platform.Application.CompanyAccess;
-using ErpSystem.Modules.Platform.Application.EntityChangeLogs;
 using ErpSystem.Modules.Platform.Application.Entitlements;
 using ErpSystem.Modules.Platform.Application.Files;
 using ErpSystem.Modules.Platform.Application.Localization;
@@ -23,7 +22,6 @@ using ErpSystem.Modules.Platform.Application.Features.Security.Authorization.Err
 using ErpSystem.Modules.Platform.Application.Features.Security.Users.Errors;
 using ErpSystem.Modules.Platform.Application.Features.Security.Invitations.Policies;
 using ErpSystem.Modules.Platform.Contracts.Authentication.Tokens;
-using ErpSystem.Modules.Platform.Contracts.EntityChangeLogs;
 using ErpSystem.Modules.Platform.Contracts.Files;
 using ErpSystem.Modules.Platform.Contracts.Notifications;
 using ErpSystem.Modules.Platform.Contracts.SecurityAudits;
@@ -54,7 +52,6 @@ public static class DependencyInjection
         services.TryAddSingleton<ITenantAdministrationPolicy, TenantAdministrationPolicy>();
         services.AddScoped<ITenantMembershipService, TenantMembershipService>();
         services.AddScoped<ICompanyAccessService, CompanyAccessService>();
-        services.AddScoped<IEntityChangeLogService, EntityChangeLogService>();
         services.AddScoped<ISessionValidationService, SessionValidationService>();
         services.AddScoped<LocalizationError>();
         services.AddScoped<NotificationErrors>();

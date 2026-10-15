@@ -1,6 +1,8 @@
+using ErpSystem.BuildingBlocks.Domain.Auditing;
+
 namespace ErpSystem.BuildingBlocks.Domain.Entities;
 
-public class AuditableEntity
+public class AuditableEntity : IAuditedEntity
 {
     public byte[] RowVersion { get; set; } = [];
 

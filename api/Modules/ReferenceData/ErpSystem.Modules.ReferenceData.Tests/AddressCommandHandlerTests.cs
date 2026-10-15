@@ -77,7 +77,6 @@ public sealed class AddressCommandHandlerTests
             store,
             new ImmediateUnitOfWork(),
             new StubCompanyGeography(false),
-            new NoopAuditTrail(),
             scheduler,
             new TestActor(),
             CreateErrors());
@@ -229,12 +228,6 @@ public sealed class AddressCommandHandlerTests
     {
         public List<AddressChange> Changes { get; } = [];
         public void Schedule(AddressChange change) => Changes.Add(change);
-    }
-
-    private sealed class NoopAuditTrail : IAddressAuditTrail
-    {
-        public Task RecordUpdateAsync(Address existingAddress, Address updatedAddress, CancellationToken cancellationToken) =>
-            Task.CompletedTask;
     }
 
     private sealed class ImmediateUnitOfWork : IReferenceDataUnitOfWork

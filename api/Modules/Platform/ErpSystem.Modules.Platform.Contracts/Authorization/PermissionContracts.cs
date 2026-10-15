@@ -30,7 +30,7 @@ public static class PlatformPermissions
     public const string ViewCompanyGeographicScope = "CompanyGeographicScope:View";
     public const string EditCompanyGeographicScope = "CompanyGeographicScope:Edit";
 
-    public const string ViewChangeLogs = "ChangeLogs:View";
+    public const string ViewAuditTrail = "AuditTrail:View";
     public const string ViewHangfireDashboard = "Hangfire:View";
 
     public const string ViewLocalizations = "Localizations:View";
@@ -66,7 +66,7 @@ public static class PlatformPermissions
     [
         ViewApiKeys, CreateApiKeys, EditApiKeys, RevokeApiKeys,
         ViewCompanyGeographicScope, EditCompanyGeographicScope,
-        ViewChangeLogs,
+        ViewAuditTrail,
         ViewLocalizations, CreateLocalizations, EditLocalizations, DeleteLocalizations,
         ViewRoles, CreateRoles, EditRoles, SetRoleStatus,
         ViewRolePermissions, EditRolePermissions,

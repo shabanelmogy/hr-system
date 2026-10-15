@@ -95,7 +95,7 @@ public sealed class DistrictCqrsArchitectureTests
         AssertHandlerDependency<CreateDistrictCommandHandler, IDistrictChangeScheduler>();
         AssertHandlerDependency<CreateDistrictsCommandHandler, IDistrictWriteStore>();
         AssertHandlerDependency<CreateDistrictsCommandHandler, IDistrictChangeScheduler>();
-        AssertHandlerDependency<UpdateDistrictCommandHandler, IDistrictAuditTrail>();
+        AssertHandlerDependency<UpdateDistrictCommandHandler, IDistrictWriteStore>();
         AssertHandlerDependency<ArchiveDistrictCommandHandler, IDistrictWriteStore>();
         AssertHandlerDependency<BulkArchiveDistrictsCommandHandler, IDistrictWriteStore>();
         AssertHandlerDependency<RestoreDistrictCommandHandler, IDistrictWriteStore>();

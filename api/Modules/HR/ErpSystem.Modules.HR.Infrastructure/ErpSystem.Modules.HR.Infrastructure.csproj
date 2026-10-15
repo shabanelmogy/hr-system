@@ -38,6 +38,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\BuildingBlocks\ErpSystem.BuildingBlocks.Persistence\ErpSystem.BuildingBlocks.Persistence.csproj" />
     <ProjectReference Include="..\ErpSystem.Modules.HR.Application\ErpSystem.Modules.HR.Application.csproj" />
     <ProjectReference Include="..\ErpSystem.Modules.HR.Domain\ErpSystem.Modules.HR.Domain.csproj" />
     <ProjectReference Include="..\..\Accounting\ErpSystem.Modules.Accounting.Contracts\ErpSystem.Modules.Accounting.Contracts.csproj" />

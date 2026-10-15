@@ -2,7 +2,6 @@ using ErpSystem.BuildingBlocks.Application.Abstractions.Messaging;
 using ErpSystem.BuildingBlocks.Application.Common.Paginations;
 using ErpSystem.Modules.HR.Application.Features.OrganizationalStructure.Management.Abstractions;
 using ErpSystem.Modules.HR.Application.Features.OrganizationalStructure.Management.Contracts;
-using ErpSystem.Modules.Platform.Contracts.EntityChangeLogs;
 
 namespace ErpSystem.Modules.HR.Application.Features.OrganizationalStructure.Management.Queries;
 
@@ -83,26 +82,3 @@ public sealed class GetOrganizationalStructureLookupQueryHandler(IOrganizational
         management.GetLookupAsync(request.Resource, request.ParentId, cancellationToken);
 }
 
-public sealed record GetOrganizationalStructureChangeLogsQuery(string Resource, int Id)
-    : IQuery<Result<IReadOnlyList<EntityChangeLogsResponse>>>;
-
-public sealed class GetOrganizationalStructureChangeLogsQueryValidator : AbstractValidator<GetOrganizationalStructureChangeLogsQuery>
-{
-    public GetOrganizationalStructureChangeLogsQueryValidator()
-    {
-        RuleFor(x => x.Resource).Must(OrganizationalResources.IsSupported);
-        RuleFor(x => x.Id).GreaterThan(0);
-    }
-}
-
-public sealed class GetOrganizationalStructureChangeLogsQueryHandler(IOrganizationalStructureManagement management)
-    : IQueryHandler<GetOrganizationalStructureChangeLogsQuery, Result<IReadOnlyList<EntityChangeLogsResponse>>>
-{
-    public async Task<Result<IReadOnlyList<EntityChangeLogsResponse>>> Handle(
-        GetOrganizationalStructureChangeLogsQuery request,
-        CancellationToken cancellationToken)
-    {
-        var logs = await management.GetChangeLogsAsync(request.Resource, request.Id, cancellationToken);
-        return Result.Success(logs);
-    }
-}

@@ -18,6 +18,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using ErpSystem.BuildingBlocks.Persistence.AuditTrail;
 
 namespace ErpSystem.Modules.Accounting.Infrastructure;
 
@@ -32,11 +33,12 @@ public static class DependencyInjection
             ?? throw new InvalidOperationException(
                 "Connection string 'Accounting' or 'DefaultConnection' not found.");
 
-        services.AddDbContext<AccountingDbContext>(options =>
-            options.UseSqlServer(
+        services.AddDbContext<AccountingDbContext>((provider, options) =>
+            options.UseErpAuditTrail(provider, "acc").UseSqlServer(
                 connectionString,
                 sql => sql.MigrationsAssembly(typeof(DependencyInjection).Assembly.FullName)
                     .MigrationsHistoryTable("__EFMigrationsHistory", AccountingDbContext.Schema)));
+        services.AddErpAuditTrailSource<AccountingDbContext>("acc");
 
         services.TryAddSingleton(TimeProvider.System);
         services.AddScoped<AccountingOutbox>();
@@ -50,7 +52,6 @@ public static class DependencyInjection
         services.AddScoped<IFiscalYearReadStore, FiscalYearReadStore>();
         services.AddScoped<IFiscalYearWriteStore, FiscalYearWriteStore>();
         services.AddScoped<IFiscalYearContextStore, FiscalYearContextStore>();
-        services.AddScoped<IFiscalYearAuditTrail, FiscalYearAuditTrail>();
         services.AddScoped<IFiscalYearChangeScheduler, FiscalYearChangeScheduler>();
         services.AddScoped<FiscalYearChangedJob>();
         services.AddScoped<IFiscalYearPlanningSource, FiscalYearPlanningSource>();

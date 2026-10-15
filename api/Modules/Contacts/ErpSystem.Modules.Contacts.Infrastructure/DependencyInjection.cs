@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
+using ErpSystem.BuildingBlocks.Persistence.AuditTrail;
 
 namespace ErpSystem.Modules.Contacts.Infrastructure;
 
@@ -21,11 +22,12 @@ public static class DependencyInjection
             ?? configuration.GetConnectionString("DefaultConnection")
             ?? throw new InvalidOperationException("Connection string 'Contacts' or 'DefaultConnection' not found.");
 
-        services.AddDbContext<ContactsDbContext>(options =>
-            options.UseSqlServer(
+        services.AddDbContext<ContactsDbContext>((provider, options) =>
+            options.UseErpAuditTrail(provider, "contacts").UseSqlServer(
                 connectionString,
                 sql => sql.MigrationsAssembly(typeof(DependencyInjection).Assembly.FullName)
                     .MigrationsHistoryTable("__EFMigrationsHistory", ContactsDbContext.Schema)));
+        services.AddErpAuditTrailSource<ContactsDbContext>("contacts");
 
         services.TryAddSingleton(TimeProvider.System);
         services.AddSingleton<IOptions<ContactsOutboxDispatcherOptions>>(

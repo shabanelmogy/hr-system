@@ -9,8 +9,6 @@ using ErpSystem.BuildingBlocks.Domain.Entities;
 using ErpSystem.BuildingBlocks.Domain.Exceptions;
 using ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities;
 using ErpSystem.Modules.HR.Domain.OrganizationalStructure.Enums;
-using ErpSystem.Modules.Platform.Contracts.EntityChangeLogs;
-using Newtonsoft.Json;
 using System.Linq.Expressions;
 
 namespace ErpSystem.Modules.HR.Infrastructure.Features.OrganizationalStructure.Management;
@@ -20,8 +18,7 @@ public sealed class OrganizationalStructureManagement(
     ICurrentActor currentActor,
     IAccountingCurrencyCatalog currencyCatalog,
     TimeProvider timeProvider,
-    IOrganizationalStructureChangeScheduler changeScheduler,
-    IEntityChangeLogService entityChangeLogService)
+    IOrganizationalStructureChangeScheduler changeScheduler)
     : IOrganizationalStructureManagement
 {
     private static readonly Error NotFound = new(
@@ -261,13 +258,8 @@ public sealed class OrganizationalStructureManagement(
 
         try
         {
-            var entityName = GetEntityTypeName(normalized);
-            var snapshotJson = JsonConvert.SerializeObject(entity);
-            var snapshot = JsonConvert.DeserializeObject(snapshotJson, entity.GetType())!;
-
             UpdateEntity(normalized, entity, request);
 
-            await entityChangeLogService.CreateChangeLogAsync(id, entityName, snapshot, entity, cancellationToken);
             await context.SaveChangesAsync(cancellationToken);
             var item = await GetAsync(normalized, id, cancellationToken)
                 ?? throw new InvalidOperationException("The updated organizational item could not be read.");
@@ -292,16 +284,11 @@ public sealed class OrganizationalStructureManagement(
         if (await HasActiveDependentsAsync(normalized, id, cancellationToken))
             return Result.Failure(InUse);
 
-        var entityName = GetEntityTypeName(normalized);
-        var snapshotJson = JsonConvert.SerializeObject(entity);
-        var snapshot = JsonConvert.DeserializeObject(snapshotJson, entity.GetType())!;
-
         auditable.IsDeleted = true;
         auditable.DeletedById = currentActor.UserId;
         auditable.DeletedByPc = Environment.MachineName;
         auditable.DeletedOn = timeProvider.GetUtcNow().UtcDateTime;
 
-        await entityChangeLogService.CreateChangeLogAsync(id, entityName, snapshot, entity, cancellationToken);
         await context.SaveChangesAsync(cancellationToken);
         Schedule(await GetAsync(normalized, id, cancellationToken), "Archive");
         return Result.Success();
@@ -321,16 +308,11 @@ public sealed class OrganizationalStructureManagement(
         if (!await ParentsAreValidAsync(normalized, mutation, id, cancellationToken))
             return Result.Failure(ParentNotFound);
 
-        var entityName = GetEntityTypeName(normalized);
-        var snapshotJson = JsonConvert.SerializeObject(entity);
-        var snapshot = JsonConvert.DeserializeObject(snapshotJson, entity.GetType())!;
-
         auditable.IsDeleted = false;
         auditable.DeletedById = null;
         auditable.DeletedByPc = null;
         auditable.DeletedOn = null;
 
-        await entityChangeLogService.CreateChangeLogAsync(id, entityName, snapshot, entity, cancellationToken);
         await context.SaveChangesAsync(cancellationToken);
         Schedule(await GetAsync(normalized, id, cancellationToken), "Restore");
         return Result.Success();
@@ -361,16 +343,12 @@ public sealed class OrganizationalStructureManagement(
 
         try
         {
-            var snapshotJson = JsonConvert.SerializeObject(description);
-            var snapshot = JsonConvert.DeserializeObject<JobDescription>(snapshotJson)!;
-
             description.Approve(
                 currentActor.UserId ?? throw new InvalidOperationException("An authenticated actor is required."),
                 effectiveDate,
                 expiryDate,
                 timeProvider.GetUtcNow());
 
-            await entityChangeLogService.CreateChangeLogAsync(id, nameof(JobDescription), snapshot, description, cancellationToken);
             await context.SaveChangesAsync(cancellationToken);
             var item = await GetAsync(OrganizationalResources.JobDescriptions, id, cancellationToken)
                 ?? throw new InvalidOperationException("The approved job description could not be read.");
@@ -394,12 +372,8 @@ public sealed class OrganizationalStructureManagement(
 
         try
         {
-            var snapshotJson = JsonConvert.SerializeObject(description);
-            var snapshot = JsonConvert.DeserializeObject<JobDescription>(snapshotJson)!;
-
             description.Reject(reason, timeProvider.GetUtcNow());
 
-            await entityChangeLogService.CreateChangeLogAsync(id, nameof(JobDescription), snapshot, description, cancellationToken);
             await context.SaveChangesAsync(cancellationToken);
             var item = await GetAsync(OrganizationalResources.JobDescriptions, id, cancellationToken)
                 ?? throw new InvalidOperationException("The rejected job description could not be read.");
@@ -411,29 +385,6 @@ public sealed class OrganizationalStructureManagement(
             return Result.Failure<OrganizationalStructureItem>(Validation(exception));
         }
     }
-
-    public async Task<IReadOnlyList<EntityChangeLogsResponse>> GetChangeLogsAsync(
-        string resource,
-        int id,
-        CancellationToken cancellationToken)
-    {
-        var normalized = OrganizationalResources.Normalize(resource);
-        var entityName = GetEntityTypeName(normalized);
-        return await entityChangeLogService.GetChangeLogsByEntityAsync(entityName, id, cancellationToken);
-    }
-
-    private static string GetEntityTypeName(string resource) => resource switch
-    {
-        OrganizationalResources.Branches => nameof(Branch),
-        OrganizationalResources.Departments => nameof(Department),
-        OrganizationalResources.Divisions => nameof(Division),
-        OrganizationalResources.JobTitles => nameof(JobTitle),
-        OrganizationalResources.JobLevels => nameof(JobLevel),
-        OrganizationalResources.Positions => nameof(Position),
-        OrganizationalResources.JobDescriptions => nameof(JobDescription),
-        OrganizationalResources.CostCenters => nameof(CostCenter),
-        _ => throw new ArgumentOutOfRangeException(nameof(resource))
-    };
 
     private IQueryable<OrganizationalStructureItem> BuildQuery(string resource) => resource switch
     {

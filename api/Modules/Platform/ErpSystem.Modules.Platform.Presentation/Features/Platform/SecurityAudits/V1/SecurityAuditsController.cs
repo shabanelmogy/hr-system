@@ -7,7 +7,7 @@ namespace ErpSystem.Modules.Platform.Presentation.Features.Platform.SecurityAudi
 [Route(ApiRoutes.BaseRoute2)]
 [ApiController]
 [Authorize]
-[HasPermission(PlatformPermissions.ViewChangeLogs)]
+[HasPermission(PlatformPermissions.ViewAuditTrail)]
 public sealed class SecurityAuditsController(ISender sender)
     : ControllerBase
 {

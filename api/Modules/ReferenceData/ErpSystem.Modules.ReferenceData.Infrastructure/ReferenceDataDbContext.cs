@@ -8,6 +8,7 @@ using ErpSystem.Modules.ReferenceData.Domain.GeographicalInformation.AddressType
 using ErpSystem.Modules.ReferenceData.Domain.GeographicalInformation.Countries.Entities;
 using ErpSystem.Modules.ReferenceData.Domain.GeographicalInformation.Districts.Entities;
 using ErpSystem.Modules.ReferenceData.Domain.GeographicalInformation.States.Entities;
+using ErpSystem.BuildingBlocks.Persistence.AuditTrail;
 
 namespace ErpSystem.Modules.ReferenceData.Infrastructure;
 
@@ -58,6 +59,7 @@ public sealed class ReferenceDataDbContext : DbContext, IReferenceDataUnitOfWork
     {
         base.OnModelCreating(modelBuilder);
         modelBuilder.HasDefaultSchema(Schema);
+        modelBuilder.ApplyAuditTrail();
         ConfigureScopeFilters(modelBuilder);
         if (HasEntityConfigurations)
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ReferenceDataDbContext).Assembly);

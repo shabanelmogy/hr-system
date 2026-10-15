@@ -5,7 +5,6 @@ using ErpSystem.BuildingBlocks.Application.Abstractions.Persistence;
 using ErpSystem.BuildingBlocks.Context.Authentication;
 using ErpSystem.BuildingBlocks.Domain.Abstractions;
 using ErpSystem.BuildingBlocks.Domain.Entities;
-using ErpSystem.Modules.Platform.Domain.Platform.EntityChangeLogs.Entities;
 using ErpSystem.Modules.Platform.Domain.Platform.Files.Entities;
 using ErpSystem.Modules.Platform.Domain.Platform.SecurityAudits.Entities;
 using ErpSystem.Modules.Platform.Domain.Security.ApiKeys.Entities;
@@ -14,6 +13,7 @@ using ErpSystem.Modules.Platform.Infrastructure.Features.Security.Authentication
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using ErpSystem.BuildingBlocks.Persistence.AuditTrail;
 
 namespace ErpSystem.Modules.Platform.Infrastructure;
 
@@ -60,7 +60,6 @@ public sealed class PlatformDbContext : IdentityDbContext<PlatformApplicationUse
     public DbSet<PlatformTenantModuleEntitlement> TenantModuleEntitlements => Set<PlatformTenantModuleEntitlement>();
     public DbSet<PlatformTenantSubmoduleEntitlement> TenantSubmoduleEntitlements => Set<PlatformTenantSubmoduleEntitlement>();
     public DbSet<UserLogin> LoginAudits => Set<UserLogin>();
-    public DbSet<EntityChangeLog> EntityChangeLogs => Set<EntityChangeLog>();
     public DbSet<UploadedFile> Files => Set<UploadedFile>();
     public DbSet<ApiKey> ApiKeys => Set<ApiKey>();
     public DbSet<Notification> Notifications => Set<Notification>();
@@ -70,6 +69,7 @@ public sealed class PlatformDbContext : IdentityDbContext<PlatformApplicationUse
     {
         base.OnModelCreating(modelBuilder);
         modelBuilder.HasDefaultSchema(Schema);
+        modelBuilder.ApplyAuditTrail();
         ConfigureIdentity(modelBuilder);
         ConfigureScopeFilters(modelBuilder);
         if (HasEntityConfigurations)
@@ -101,9 +101,6 @@ public sealed class PlatformDbContext : IdentityDbContext<PlatformApplicationUse
         modelBuilder.Entity<UserLogin>()
             .HasQueryFilter(login => login.TenantId == CurrentTenantId &&
                                      login.CompanyId == CurrentCompanyId);
-        modelBuilder.Entity<EntityChangeLog>()
-            .HasQueryFilter(log => log.TenantId == CurrentTenantId &&
-                                   log.CompanyId == CurrentCompanyId);
         modelBuilder.Entity<UploadedFile>()
             .HasQueryFilter(file => file.TenantId == CurrentTenantId &&
                                     file.CompanyId == CurrentCompanyId &&

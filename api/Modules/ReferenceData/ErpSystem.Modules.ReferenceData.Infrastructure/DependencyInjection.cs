@@ -24,6 +24,7 @@ using ErpSystem.Modules.ReferenceData.Infrastructure.Features.GeographicalInform
 using ErpSystem.Modules.ReferenceData.Infrastructure.Features.GeographicalInformation.States.Jobs;
 using ErpSystem.Modules.ReferenceData.Infrastructure.Features.GeographicalInformation.States.Persistence;
 using ErpSystem.Modules.ReferenceData.Infrastructure.Mapping;
+using ErpSystem.BuildingBlocks.Persistence.AuditTrail;
 
 namespace ErpSystem.Modules.ReferenceData.Infrastructure;
 
@@ -37,11 +38,12 @@ public static class DependencyInjection
             ?? configuration.GetConnectionString("DefaultConnection")
             ?? throw new InvalidOperationException("Connection string 'ReferenceData' or 'DefaultConnection' not found.");
 
-        services.AddDbContext<ReferenceDataDbContext>(options =>
-            options.UseSqlServer(
+        services.AddDbContext<ReferenceDataDbContext>((provider, options) =>
+            options.UseErpAuditTrail(provider, "reference-data").UseSqlServer(
                 connectionString,
                 sql => sql.MigrationsAssembly(typeof(DependencyInjection).Assembly.FullName)
                     .MigrationsHistoryTable("__EFMigrationsHistory", ReferenceDataDbContext.Schema)));
+        services.AddErpAuditTrailSource<ReferenceDataDbContext>("reference-data");
         services.AddReferenceDataMapster();
         services.TryAddSingleton(TimeProvider.System);
         services.AddScoped<IReferenceDataCompanyGeographySource, ReferenceDataCompanyGeographySource>();
@@ -49,31 +51,26 @@ public static class DependencyInjection
         services.AddScoped<IReferenceDataUnitOfWork>(provider => provider.GetRequiredService<ReferenceDataDbContext>());
         services.AddScoped<IAddressReadStore, AddressReadStore>();
         services.AddScoped<IAddressWriteStore, AddressWriteStore>();
-        services.AddScoped<IAddressAuditTrail, AddressAuditTrail>();
         services.AddScoped<IAddressChangeScheduler, AddressChangeScheduler>();
         services.AddScoped<AddressChangedJob>();
 
         services.AddScoped<ICountryReadStore, CountryReadStore>();
         services.AddScoped<ICountryWriteStore, CountryWriteStore>();
-        services.AddScoped<ICountryAuditTrail, CountryAuditTrail>();
         services.AddScoped<ICountryChangeScheduler, CountryChangeScheduler>();
         services.AddScoped<CountryChangedJob>();
 
         services.AddScoped<IStateReadStore, StateReadStore>();
         services.AddScoped<IStateWriteStore, StateWriteStore>();
-        services.AddScoped<IStateAuditTrail, StateAuditTrail>();
         services.AddScoped<IStateChangeScheduler, StateChangeScheduler>();
         services.AddScoped<StateManagementChangedJob>();
 
         services.AddScoped<IDistrictReadStore, DistrictReadStore>();
         services.AddScoped<IDistrictWriteStore, DistrictWriteStore>();
-        services.AddScoped<IDistrictAuditTrail, DistrictAuditTrail>();
         services.AddScoped<IDistrictChangeScheduler, DistrictChangeScheduler>();
         services.AddScoped<DistrictManagementChangedJob>();
 
         services.AddScoped<IAddressTypeReadStore, AddressTypeReadStore>();
         services.AddScoped<IAddressTypeWriteStore, AddressTypeWriteStore>();
-        services.AddScoped<IAddressTypeAuditTrail, AddressTypeAuditTrail>();
         services.AddScoped<IAddressTypeChangeScheduler, AddressTypeChangeScheduler>();
         services.AddScoped<AddressTypeManagementChangedJob>();
         services.AddScoped<IAddressTypeValidationQueries, AddressTypeValidationQueries>();

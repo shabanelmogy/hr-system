@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\BuildingBlocks\ErpSystem.BuildingBlocks.Persistence\ErpSystem.BuildingBlocks.Persistence.csproj" />
     <ProjectReference Include="..\ErpSystem.Modules.PointOfSale.Application\ErpSystem.Modules.PointOfSale.Application.csproj" />
     <ProjectReference Include="..\ErpSystem.Modules.PointOfSale.Contracts\ErpSystem.Modules.PointOfSale.Contracts.csproj" />
     <ProjectReference Include="..\ErpSystem.Modules.PointOfSale.Domain\ErpSystem.Modules.PointOfSale.Domain.csproj" />

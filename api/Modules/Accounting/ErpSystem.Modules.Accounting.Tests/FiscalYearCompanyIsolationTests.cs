@@ -7,7 +7,8 @@ using ErpSystem.Modules.Accounting.Application.Features.Finance.FiscalYears.Erro
 using ErpSystem.Modules.Accounting.Domain.Finance.FiscalYears.Entities;
 using ErpSystem.Modules.Accounting.Domain.Finance.FiscalYears.Enums;
 using ErpSystem.Modules.Accounting.Infrastructure;
-using ErpSystem.Modules.Platform.Contracts.EntityChangeLogs;
+using ErpSystem.BuildingBlocks.Application.Abstractions.AuditTrail;
+using ErpSystem.BuildingBlocks.Persistence.AuditTrail;
 using ErpSystem.Modules.Accounting.Infrastructure.Features.Finance.FiscalYears.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
@@ -113,21 +114,17 @@ public sealed class FiscalYearCompanyIsolationTests
     [Fact]
     public async Task RepeatedLifecycleTarget_IsIdempotentWithoutAuditOrRealtimeNoise()
     {
-        var options = new DbContextOptionsBuilder<AccountingDbContext>()
-            .UseInMemoryDatabase(Guid.NewGuid().ToString("N"))
-            .Options;
         var actor = new TestActor("tenant-1", 11);
+        var options = AuditedOptions(actor);
         await using var context = new AccountingDbContext(options, actor, TimeProvider.System);
         var fiscalYear = Create("FY-2027", "tenant-1", 11);
         fiscalYear.Open();
         context.FiscalYears.Add(fiscalYear);
         await context.SaveChangesAsync();
         var scheduler = new RecordingScheduler();
-        var auditStore = new RecordingChangeLogStore();
         var handler = new ChangeFiscalYearLifecycleCommandHandler(
             new FiscalYearWriteStore(context),
             new FiscalYearReadStore(context),
-            new FiscalYearAuditTrail(auditStore, actor, TimeProvider.System),
             context,
             scheduler,
             actor,
@@ -139,17 +136,15 @@ public sealed class FiscalYearCompanyIsolationTests
             FiscalYearLifecycleAction.Open), CancellationToken.None);
 
         Assert.True(result.IsSuccess);
-        Assert.Empty(auditStore.Records);
+        Assert.Empty(await FiscalYearChangesAsync(context));
         Assert.Null(scheduler.Change);
     }
 
     [Fact]
     public async Task ReopenHandler_CommitsAuditAndSchedulesCompanyScopedRefresh()
     {
-        var options = new DbContextOptionsBuilder<AccountingDbContext>()
-            .UseInMemoryDatabase(Guid.NewGuid().ToString("N"))
-            .Options;
         var actor = new TestActor("tenant-1", 11);
+        var options = AuditedOptions(actor);
         await using var context = new AccountingDbContext(options, actor, TimeProvider.System);
         var fiscalYear = Create("FY-2027", "tenant-1", 11);
         fiscalYear.Open();
@@ -159,11 +154,9 @@ public sealed class FiscalYearCompanyIsolationTests
         context.FiscalYears.Add(fiscalYear);
         await context.SaveChangesAsync();
         var scheduler = new RecordingScheduler();
-        var auditStore = new RecordingChangeLogStore();
         var handler = new ChangeFiscalYearLifecycleCommandHandler(
             new FiscalYearWriteStore(context),
             new FiscalYearReadStore(context),
-            new FiscalYearAuditTrail(auditStore, actor, TimeProvider.System),
             context,
             scheduler,
             actor,
@@ -177,9 +170,12 @@ public sealed class FiscalYearCompanyIsolationTests
         Assert.True(result.IsSuccess);
         Assert.Equal(FiscalYearStatus.Open, fiscalYear.Status);
         Assert.All(fiscalYear.Periods, period => Assert.Equal(FiscalPeriodStatus.Open, period.Status));
-        var audit = Assert.Single(auditStore.Records);
-        Assert.Contains("Locked", audit.JsonOldValues, StringComparison.Ordinal);
-        Assert.Contains("Open", audit.JsonNewValues, StringComparison.Ordinal);
+        var audit = Assert.Single(await FiscalYearChangesAsync(context));
+        Assert.Equal(AuditAction.Modified, audit.Action);
+        Assert.Equal(("tenant-1", 11, "admin"), (audit.TenantId, audit.CompanyId, audit.UserId));
+        Assert.Equal(fiscalYear.Id.ToString(System.Globalization.CultureInfo.InvariantCulture), audit.EntityKey);
+        Assert.Contains("\"oldValue\":\"Locked\"", audit.ChangesJson, StringComparison.Ordinal);
+        Assert.Contains("\"newValue\":\"Open\"", audit.ChangesJson, StringComparison.Ordinal);
         Assert.Equal(("tenant-1", 11, "Update"),
             (scheduler.Change!.TenantId, scheduler.Change.CompanyId, scheduler.Change.Action));
     }
@@ -197,11 +193,9 @@ public sealed class FiscalYearCompanyIsolationTests
         await context.SaveChangesAsync();
         var originalPeriodIds = fiscalYear.Periods.Select(period => period.Id).ToArray();
         var scheduler = new RecordingScheduler();
-        var auditStore = new RecordingChangeLogStore();
         var handler = new UpdateFiscalYearCommandHandler(
             new FiscalYearWriteStore(context),
             new FiscalYearReadStore(context),
-            new FiscalYearAuditTrail(auditStore, actor, TimeProvider.System),
             context,
             scheduler,
             actor,
@@ -276,10 +270,8 @@ public sealed class FiscalYearCompanyIsolationTests
     [Fact]
     public async Task SetCurrentHandler_RejectsDraftAndPreservesTheExistingCurrentYear()
     {
-        var options = new DbContextOptionsBuilder<AccountingDbContext>()
-            .UseInMemoryDatabase(Guid.NewGuid().ToString("N"))
-            .Options;
         var actor = new TestActor("tenant-1", 11);
+        var options = AuditedOptions(actor);
         await using var context = new AccountingDbContext(options, actor, TimeProvider.System);
         var existingCurrent = Create("FY-2027", "tenant-1", 11);
         existingCurrent.Open();
@@ -288,11 +280,9 @@ public sealed class FiscalYearCompanyIsolationTests
         context.FiscalYears.AddRange(existingCurrent, draft);
         await context.SaveChangesAsync();
         var scheduler = new RecordingScheduler();
-        var auditStore = new RecordingChangeLogStore();
         var handler = new SetCurrentFiscalYearCommandHandler(
             new FiscalYearWriteStore(context),
             new FiscalYearReadStore(context),
-            new FiscalYearAuditTrail(auditStore, actor, TimeProvider.System),
             context,
             scheduler,
             actor,
@@ -306,7 +296,7 @@ public sealed class FiscalYearCompanyIsolationTests
         Assert.Equal("FiscalYear.MustBeOpenForCurrent", result.Error.Code);
         Assert.True(existingCurrent.IsCurrent);
         Assert.False(draft.IsCurrent);
-        Assert.Empty(auditStore.Records);
+        Assert.Empty(await FiscalYearChangesAsync(context));
         Assert.Null(scheduler.Change);
     }
 
@@ -370,7 +360,6 @@ public sealed class FiscalYearCompanyIsolationTests
             var setCurrentHandler = new SetCurrentFiscalYearCommandHandler(
                 new FiscalYearWriteStore(seed),
                 new FiscalYearReadStore(seed),
-                new FiscalYearAuditTrail(new RecordingChangeLogStore(), admin, TimeProvider.System),
                 seed,
                 new RecordingScheduler(),
                 admin,
@@ -498,18 +487,19 @@ public sealed class FiscalYearCompanyIsolationTests
         public void Schedule(FiscalYearChange change) => Change = change;
     }
 
-    private sealed class RecordingChangeLogStore : IEntityChangeLogStore
-    {
-        public List<EntityChangeLogRecord> Records { get; } = [];
+    private static DbContextOptions<AccountingDbContext> AuditedOptions(ICurrentActor actor) =>
+        new DbContextOptionsBuilder<AccountingDbContext>()
+            .UseInMemoryDatabase(Guid.NewGuid().ToString("N"))
+            .AddInterceptors(new AuditTrailSaveChangesInterceptor("acc", actor, TimeProvider.System))
+            .Options;
 
-        public Task AddAsync(
-            EntityChangeLogRecord record,
-            CancellationToken cancellationToken = default)
-        {
-            Records.Add(record);
-            return Task.CompletedTask;
-        }
-    }
+    // Seeding writes "Created" rows; the assertions only concern later fiscal-year changes.
+    private static Task<List<AuditTrailEntry>> FiscalYearChangesAsync(AccountingDbContext context) =>
+        context.Set<AuditTrailEntry>()
+            .AsNoTracking()
+            .Where(entry => entry.EntityName == nameof(FiscalYear) && entry.Action != AuditAction.Created)
+            .OrderBy(entry => entry.Id)
+            .ToListAsync();
 
     private sealed class EchoLocalizer<T> : IStringLocalizer<T>
     {

@@ -21,7 +21,6 @@ public sealed class PlatformContractsArchitectureTests
         "ErpSystem.Modules.Platform.Contracts.Authorization",
         "ErpSystem.Modules.Platform.Contracts.CompanyAccess",
         "ErpSystem.Modules.Platform.Contracts.Communications",
-        "ErpSystem.Modules.Platform.Contracts.EntityChangeLogs",
         "ErpSystem.Modules.Platform.Contracts.Files",
         "ErpSystem.Modules.Platform.Contracts.Files.Models",
         "ErpSystem.Modules.Platform.Contracts.Notifications",
@@ -42,11 +41,6 @@ public sealed class PlatformContractsArchitectureTests
         "ErpSystem.Modules.Platform.Contracts.Communications.WhatsAppTextMessage",
         "ErpSystem.Modules.Platform.Contracts.Communications.WhatsAppSendResult",
         "ErpSystem.Modules.Platform.Contracts.Communications.IWhatsAppSender",
-        "ErpSystem.Modules.Platform.Contracts.EntityChangeLogs.EntityChangeLogsRequest",
-        "ErpSystem.Modules.Platform.Contracts.EntityChangeLogs.EntityChangeLogsResponse",
-        "ErpSystem.Modules.Platform.Contracts.EntityChangeLogs.EntityChangeLogRecord",
-        "ErpSystem.Modules.Platform.Contracts.EntityChangeLogs.IEntityChangeLogStore",
-        "ErpSystem.Modules.Platform.Contracts.EntityChangeLogs.IEntityChangeLogService",
         "ErpSystem.Modules.Platform.Contracts.Files.PlatformFileUpload",
         "ErpSystem.Modules.Platform.Contracts.Files.FileUploadSecurityFailureKind",
         "ErpSystem.Modules.Platform.Contracts.Files.FileUploadSecurityException",
@@ -146,8 +140,6 @@ public sealed class PlatformContractsArchitectureTests
             "IFileMetadataStore",
             "IFileBinaryStore",
             "IFileChangePublisher",
-            "IEntityChangeLogQueryStore",
-            "EntityChangeLogQueryRecord",
             "IOfflineOperationsPolicyStore",
             "IOfflineOperationsPolicyService"
         ];

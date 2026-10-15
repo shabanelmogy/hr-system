@@ -5,7 +5,6 @@ using ErpSystem.Modules.ReferenceData.Application.Features.GeographicalInformati
 using ErpSystem.Modules.ReferenceData.Application.Features.GeographicalInformation.Districts.Contracts;
 using ErpSystem.Modules.ReferenceData.Application.Features.GeographicalInformation.Districts.Queries;
 using ErpSystem.Modules.ReferenceData.Domain.GeographicalInformation.Districts.Entities;
-using ErpSystem.Modules.Platform.Contracts.EntityChangeLogs;
 
 namespace ErpSystem.Modules.ReferenceData.Infrastructure.Features.GeographicalInformation.Districts.Persistence;
 
@@ -211,29 +210,4 @@ public sealed class DistrictWriteStore(ReferenceDataDbContext context) : IDistri
                        districtIds.Contains(address.DistrictId.Value) &&
                        !address.IsDeleted,
             cancellationToken);
-}
-
-public sealed class DistrictAuditTrail(IEntityChangeLogStore changeLogStore, ICurrentActor currentActor, TimeProvider timeProvider) : IDistrictAuditTrail
-{
-    public async Task RecordUpdateAsync(District existingDistrict, District updatedDistrict, CancellationToken cancellationToken)
-    {
-        var oldValues = Values(existingDistrict);
-        var newValues = Values(updatedDistrict);
-        var changedKeys = oldValues.Keys.Where(key => !Equals(oldValues[key], newValues[key])).ToArray();
-        if (changedKeys.Length == 0) return;
-
-        await changeLogStore.AddAsync(new EntityChangeLogRecord(existingDistrict.Id, null, nameof(District),
-            JsonSerializer.Serialize(changedKeys.ToDictionary(key => key, key => oldValues[key])),
-            JsonSerializer.Serialize(changedKeys.ToDictionary(key => key, key => newValues[key])),
-            currentActor.UserId ?? throw new InvalidOperationException("An authenticated actor is required to update a District."),
-            Environment.MachineName, timeProvider.GetUtcNow().UtcDateTime), cancellationToken);
-    }
-
-    private static Dictionary<string, string?> Values(District district) => new(StringComparer.Ordinal)
-    {
-        [nameof(District.NameAr)] = district.NameAr,
-        [nameof(District.NameEn)] = district.NameEn,
-        [nameof(District.Code)] = district.Code,
-        [nameof(District.StateId)] = district.StateId.ToString(CultureInfo.InvariantCulture)
-    };
 }

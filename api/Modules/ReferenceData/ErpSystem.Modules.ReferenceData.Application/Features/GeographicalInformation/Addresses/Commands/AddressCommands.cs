@@ -78,7 +78,6 @@ public sealed class UpdateAddressCommandHandler(
     IAddressReadStore readStore,
     IReferenceDataUnitOfWork unitOfWork,
     ICompanyGeographySource companyGeography,
-    IAddressAuditTrail auditTrail,
     IAddressChangeScheduler changeScheduler,
     ICurrentActor actor,
     AddressErrors errors)
@@ -126,8 +125,6 @@ public sealed class UpdateAddressCommandHandler(
                     if (validationError is not null)
                         return Result.Failure<AddressResponse>(validationError);
 
-                    var updated = AddressUseCase.CreateEntity(request);
-                    await auditTrail.RecordUpdateAsync(address, updated, token);
                     AddressUseCase.Apply(request, address);
                     await unitOfWork.SaveChangesAsync(token);
 

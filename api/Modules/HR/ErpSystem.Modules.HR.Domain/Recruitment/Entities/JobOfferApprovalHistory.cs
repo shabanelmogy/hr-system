@@ -1,8 +1,10 @@
+using ErpSystem.BuildingBlocks.Domain.Auditing;
 using ErpSystem.Modules.HR.Domain.Recruitment.Enums;
 using static ErpSystem.BuildingBlocks.Domain.Guards.DomainGuard;
 
 namespace ErpSystem.Modules.HR.Domain.Recruitment.Entities;
 
+[AuditIgnore]
 public sealed class JobOfferApprovalHistory : CompanyAuditableEntity
 {
     private JobOfferApprovalHistory() { }

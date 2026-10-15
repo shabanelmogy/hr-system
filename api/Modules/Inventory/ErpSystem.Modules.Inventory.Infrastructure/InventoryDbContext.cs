@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using ErpSystem.BuildingBlocks.Persistence.AuditTrail;
 
 namespace ErpSystem.Modules.Inventory.Infrastructure;
 
@@ -35,6 +36,7 @@ public sealed class InventoryDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
         modelBuilder.HasDefaultSchema(Schema);
+        modelBuilder.ApplyAuditTrail();
         if (HasEntityConfigurations)
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(InventoryDbContext).Assembly);
     }

@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using ErpSystem.BuildingBlocks.Persistence.AuditTrail;
 
 namespace ErpSystem.Modules.PointOfSale.Infrastructure;
 
@@ -31,6 +32,7 @@ public sealed class PointOfSaleDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
         modelBuilder.HasDefaultSchema(Schema);
+        modelBuilder.ApplyAuditTrail();
         if (HasEntityConfigurations)
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(PointOfSaleDbContext).Assembly);
     }

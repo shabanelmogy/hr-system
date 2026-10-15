@@ -42,18 +42,10 @@ public sealed class ReportCategoryRepository(ReportingDbContext context) : IRepo
 }
 
 public sealed class ReportCategoryEffects(
-    IEntityChangeLogService entityChangeLogService,
     HybridCache hybridCache,
     IRealtimeChangeDispatcher realtimeChanges) : IReportCategoryEffects
 {
     private const string CacheKey = ReportCategoryCacheKeys.AvailableReportsCategories;
-
-    public Task RecordUpdateAsync(
-        int id,
-        ReportCategory existing,
-        ReportCategory updated,
-        CancellationToken cancellationToken) =>
-        entityChangeLogService.CreateChangeLogAsync(id, existing, updated, cancellationToken);
 
     public Task InvalidateCacheAsync(CancellationToken cancellationToken) =>
         hybridCache.RemoveAsync(CacheKey, cancellationToken).AsTask();

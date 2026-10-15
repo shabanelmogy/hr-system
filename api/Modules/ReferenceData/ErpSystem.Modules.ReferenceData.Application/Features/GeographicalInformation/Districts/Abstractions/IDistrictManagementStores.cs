@@ -33,8 +33,3 @@ public interface IDistrictChangeScheduler
 {
     void Schedule(DistrictChange change);
 }
-
-public interface IDistrictAuditTrail
-{
-    Task RecordUpdateAsync(District existingDistrict, District updatedDistrict, CancellationToken cancellationToken);
-}
