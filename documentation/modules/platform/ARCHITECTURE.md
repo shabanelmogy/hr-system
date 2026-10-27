@@ -101,3 +101,12 @@ the checked-in example contains placeholders and no JWT signing material.
 Migrations are executed by the operator script as a release action. The API CI
 workflow scans the current checkout with pinned Gitleaks rules and does not
 allow source configuration files to bypass detection.
+
+Company user grants extend the existing effective permission source, rather than role storage. The Platform-owned scoped aggregate, token material, live authorization, module visibility and notification readers share additive company semantics. See [company user permission grants](features/user-company-permissions/user-company-permissions-review.md).
+
+Company UI localization is a separate Platform current-company aggregate. It keeps the global file-backed API localization editor unchanged, validates a generated shipped-resource catalog, and exposes a strict per-client fingerprinted runtime overlay. The requester-authorized automatic scope is closed with verified implementation and education in [company UI localization](features/company-ui-localization/company-ui-localization-review.md); PROD-026, FOLLOW-006 and FOLLOW-007 remain separate.
+
+
+### Administration application composition - 2026-10-19
+
+Clients expose one Administration application for the existing Platform users, roles/permissions, invitations, Settings and diagnostic/audit destinations. Languages/UI texts remain Settings tabs. This is a permission-filtered presentation group synthesized per session/locale from current navigation and exact child route policies; it is not a sellable backend module, installation or tenant entitlement. Business module catalogs and all child API/security/scope contracts remain unchanged. Web /apps/administration and the native equivalent reuse existing module launchers. See platform-settings applied books/manifest for current source and verification.

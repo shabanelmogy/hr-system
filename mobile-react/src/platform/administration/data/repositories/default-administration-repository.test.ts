@@ -12,6 +12,8 @@ function remoteMock(): jest.Mocked<AdministrationRemoteDataSource> {
     updateRole: jest.fn(),
     toggleRole: jest.fn(),
     getRoleClaims: jest.fn(),
+    getUserPermissions: jest.fn(),
+    replaceUserPermissions: jest.fn(),
     updateRoleClaims: jest.fn(),
     getInvitations: jest.fn(),
     createInvitation: jest.fn(),

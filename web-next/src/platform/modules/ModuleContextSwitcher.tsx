@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 
 import { appRoutes } from "@/config/routes";
 import { useSession } from "@/lib/auth/SessionContext";
+import { isAdministrationPath } from "./tenantAdministrationLauncher";
 import { requiredModuleForPath } from "./routeRequirements";
 import { ContextSwitcher, type ContextSwitcherItem } from "@/shared/components/layout";
 import { toLauncherModule } from "./modulePresentation";
@@ -30,7 +31,7 @@ export function ModuleContextSwitcher({ iconOnly = false }: { iconOnly?: boolean
   const modulesQuery = useAccessibleModulesQuery(Boolean(user) && hasTenantContext && !isSuperAdmin);
   const modules = useMemo(() => modulesQuery.data ?? [], [modulesQuery.data]);
   const activeRequirement = requiredModuleForPath(pathname);
-  const activeModuleCode = activeRequirement?.moduleCode.toLowerCase();
+  const activeModuleCode = isAdministrationPath(pathname) ? "administration" : activeRequirement?.moduleCode.toLowerCase();
   const activeModule = modules.find(
     (module) => module.code.toLowerCase() === activeModuleCode,
   );

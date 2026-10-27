@@ -1,0 +1,338 @@
+{
+  "status": "draft",
+  "referenceFeature": "N/A",
+  "planId": "platform-error-logs",
+  "sliceId": "Error Logs V1",
+  "canonicalPlan": "documentation/plans/business/platform-error-logs/PLAN.md",
+  "featureDecompositionDecision": "Single feature",
+  "screenWorkflowContract": "N/A",
+  "plannedCustomerEducation": "documentation/plans/business/platform-error-logs/education/error-logs.md",
+  "instructions": "Merge these entries into recipe-manifest.json after Phase 00 has a final preflight required-files.json and all four initial applied implementation books. Extend the manifest/books with runtime evidence during implementation.",
+  "books": [
+    {
+      "id": "error-logs-master",
+      "path": "../modules/platform/features/error-logs/error-logs-review.md",
+      "title": "Error Logs cross-platform master review"
+    },
+    {
+      "id": "error-logs-api",
+      "path": "../modules/platform/features/error-logs/error-logs-api.md",
+      "title": "Error Logs API implementation profile"
+    },
+    {
+      "id": "error-logs-web",
+      "path": "../modules/platform/features/error-logs/error-logs-web.md",
+      "title": "Error Logs Next.js implementation profile"
+    },
+    {
+      "id": "error-logs-mobile",
+      "path": "../modules/platform/features/error-logs/error-logs-mobile.md",
+      "title": "Error Logs Expo implementation profile"
+    }
+  ],
+  "requiredFileManifest": "../modules/platform/features/error-logs/required-files.json",
+  "recipes": [
+    {
+      "id": "error-logs-phase-00-implementation-preflight",
+      "title": "Error Logs Phase 00 - Implementation Preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "../modules/platform/features/error-logs/generated/PHASE-00-implementation-preflight.md",
+      "sources": [
+        {
+          "book": "error-logs-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "error-logs-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "error-logs-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "error-logs-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "error-logs-phase-01-domain-api",
+      "title": "Error Logs Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "../modules/platform/features/error-logs/generated/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "error-logs-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "error-logs-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "error-logs-phase-02-web-client",
+      "title": "Error Logs Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "../modules/platform/features/error-logs/generated/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "error-logs-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "error-logs-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "error-logs-phase-03-mobile-client",
+      "title": "Error Logs Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "../modules/platform/features/error-logs/generated/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "error-logs-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "error-logs-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "error-logs-phase-04-domain-actions",
+      "title": "Error Logs Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "../modules/platform/features/error-logs/generated/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "error-logs-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "error-logs-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "error-logs-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "error-logs-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "error-logs-phase-05-integration-runtime",
+      "title": "Error Logs Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "../modules/platform/features/error-logs/generated/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "error-logs-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "error-logs-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "error-logs-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "error-logs-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "error-logs-phase-06-verification-acceptance",
+      "title": "Error Logs Phase 06 - Verification and Acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "../modules/platform/features/error-logs/generated/PHASE-06-verification-acceptance.md",
+      "sources": [
+        {
+          "book": "error-logs-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "error-logs-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "error-logs-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "error-logs-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "error-logs-phase-07-customer-education-closure",
+      "title": "Error Logs Phase 07 - Customer Education and Closure",
+      "template": "templates/PHASE-07-customer-education-closure.template.md",
+      "output": "../modules/platform/features/error-logs/generated/PHASE-07-customer-education-closure.md",
+      "sources": [
+        {
+          "book": "error-logs-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "error-logs-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "error-logs-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    }
+  ]
+}

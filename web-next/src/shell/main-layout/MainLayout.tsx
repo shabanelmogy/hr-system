@@ -73,6 +73,9 @@ const PathAwareMainLayout = ({ children, contextActions, compactContextActions }
     (desktopNavigation && pathname.startsWith(`${rolePermissionsRoutePrefix}/`)) ||
     isSuperAdminDashboard ||
     pathname === appRoutes.platform.superAdmin.tenants ||
+    pathname === appRoutes.platform.settings ||
+    pathname === appRoutes.platform.advancedTools.errorLogs ||
+    pathname === appRoutes.platform.superAdmin.errorLogs ||
     // Geography list pages (grid/cards/chart) scroll inside their panel and pin pagination,
     // so the page itself must not grow past the viewport.
     Object.values(appRoutes.modules.referenceData.geography).some(

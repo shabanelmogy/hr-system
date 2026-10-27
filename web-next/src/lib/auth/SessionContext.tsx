@@ -7,6 +7,7 @@ import { parseSessionClaimsEnvelope, type SessionClaims } from "./session";
 import type { PermissionString } from "./permissions";
 import { isAuthorized } from "./authorization";
 import apiClient from "@/lib/api/client";
+import { clearCompanyUiResources } from "@/lib/localization/companyUiResources";
 import { isPublicRoute, SESSION_CHANGED_EVENT } from "./constants";
 import { UNAVAILABLE_ROUTE } from "./route-access";
 import { SessionRequestState } from "./session-request-state";
@@ -95,6 +96,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
           if (refreshStateRef.current!.isCurrent(requestGeneration)) {
             revalidationResultRef.current = "unauthenticated";
             const currentPathname = pathnameRef.current;
+            clearCompanyUiResources();
             userRef.current = null;
             setUser(null);
             setError(null);
@@ -126,6 +128,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
           revalidationResultRef.current = "ok";
           const previous = userRef.current;
           if (previous && (previous.userId !== sessionUser.userId || previous.tenantId !== sessionUser.tenantId || previous.companyId !== sessionUser.companyId)) {
+            clearCompanyUiResources();
             apiClient.rotateRequestContext();
           }
           userRef.current = sessionUser;
@@ -137,7 +140,8 @@ export function SessionProvider({ children }: { children: ReactNode }) {
           reportSessionRevalidationFailure("invalid");
           const currentPathname = pathnameRef.current;
           setError("Invalid session data");
-          userRef.current = null;
+          clearCompanyUiResources();
+            userRef.current = null;
           setUser(null);
           if (!suppressFailureRedirect && currentPathname !== UNAVAILABLE_ROUTE) {
             router.replace(unavailableUrlWithReturnTo() as Route);
@@ -215,6 +219,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     if (logoutPromiseRef.current) return logoutPromiseRef.current;
 
     const performLogout = async () => {
+      clearCompanyUiResources();
       logoutEpochRef.current += 1;
       loggingOutRef.current = true;
       refreshStateRef.current!.invalidate();
@@ -248,7 +253,8 @@ export function SessionProvider({ children }: { children: ReactNode }) {
 
         // Keep the history stack clean so Back cannot reopen a protected page.
         router.replace(appRoutes.auth.login);
-        userRef.current = null;
+        clearCompanyUiResources();
+            userRef.current = null;
         setUser(null);
         setError(null);
         apiClient.resetLogoutGuard();
@@ -276,6 +282,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     }
     if (companyId === currentUser.companyId) return;
 
+    clearCompanyUiResources();
     companySwitchTransitionRef.current = true;
     refreshStateRef.current!.invalidate();
     refreshControllerRef.current?.abort();
@@ -328,13 +335,15 @@ export function SessionProvider({ children }: { children: ReactNode }) {
         },
         readCompanyId: () => userRef.current?.companyId,
         clearStaleSession: () => {
-          userRef.current = null;
+          clearCompanyUiResources();
+            userRef.current = null;
           setUser(null);
         },
       });
       sessionVerificationComplete = true;
       if (!verifiedCompany) {
-        userRef.current = null;
+        clearCompanyUiResources();
+            userRef.current = null;
         setUser(null);
         setError("Unable to verify the switched company session");
         router.replace(unavailableUrlWithReturnTo() as Route);
@@ -344,7 +353,8 @@ export function SessionProvider({ children }: { children: ReactNode }) {
       // A failed transport may have applied Set-Cookie; require a fresh session
       // before presenting data again instead of assuming the old company.
       if (!loggingOutRef.current && !logoutTriggered && !sessionVerificationComplete) {
-        userRef.current = null;
+        clearCompanyUiResources();
+            userRef.current = null;
         setUser(null);
         await revalidate(true);
       }

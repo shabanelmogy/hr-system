@@ -100,7 +100,7 @@ jobs:
             "-dest:contentPath=`"$($env:SITE)`",computerName=`"$endpoint`",userName=`"$($env:SITE)`",password=`"$($env:WEBDEPLOY_PASSWORD)`",authType=`"Basic`",includeAcls=`"False`"",
             # Take the app offline while files are replaced so locked DLLs never fail the sync.
             '-enableRule:AppOffline',
-            # Same as the Visual Studio profile (SkipExtraFilesOnServer): keep server-only files.
+            # Keep server-owned production settings and data; local development publishing includes its own settings.
             '-enableRule:DoNotDeleteRule',
             # Server-owned configuration and data are never overwritten by a deploy.
             '-skip:objectName=filePath,absolutePath=\\appsettings\.json$',

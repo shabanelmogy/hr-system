@@ -21,4 +21,5 @@ export const administrationEndpoints = {
   toggleRole: (id: string) => `roles/toggle/${encodeURIComponent(id)}`,
   roleClaims: (id: string) => `roles/getRoleClaims?roleId=${encodeURIComponent(id)}`,
   updateRoleClaims: 'roles/updateRoleClaims',
+  userPermissions: (userId: string) => `user-permissions/${encodeURIComponent(userId)}`,
 } as const;

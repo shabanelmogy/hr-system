@@ -29,6 +29,8 @@ export interface AppFormTabsProps<Value extends string> {
   value: Value;
   onChange: (value: Value) => void;
   keepMounted?: boolean;
+  /** Let the active child own its scrolling inside a bounded screen. */
+  fillAvailable?: boolean;
   style?: StyleProp<ViewStyle>;
   panelStyle?: StyleProp<ViewStyle>;
 }
@@ -39,6 +41,7 @@ export function AppFormTabs<Value extends string>({
   value,
   onChange,
   keepMounted = true,
+  fillAvailable = false,
   style,
   panelStyle,
 }: AppFormTabsProps<Value>) {
@@ -47,7 +50,7 @@ export function AppFormTabs<Value extends string>({
   const activeTab = tabs.find((tab) => tab.value === value) ?? tabs[0];
 
   return (
-    <View style={[styles.root, style]}>
+    <View style={[styles.root, fillAvailable && styles.fill, style]}>
       <ScrollView
         accessibilityLabel={label}
         accessibilityRole="tablist"
@@ -56,6 +59,7 @@ export function AppFormTabs<Value extends string>({
           { direction, borderBottomColor: theme.colors.border },
         ]}
         horizontal
+        style={fillAvailable && styles.tabBar}
         showsHorizontalScrollIndicator={false}>
         {tabs.map((tab) => {
           const selected = tab.value === activeTab?.value;
@@ -107,7 +111,7 @@ export function AppFormTabs<Value extends string>({
         })}
       </ScrollView>
 
-      <View style={[styles.panels, panelStyle]}>
+      <View style={[styles.panels, fillAvailable && styles.fill, panelStyle]}>
         {tabs.map((tab) => {
           const selected = tab.value === activeTab?.value;
           if (!selected && !keepMounted) return null;
@@ -116,7 +120,7 @@ export function AppFormTabs<Value extends string>({
               accessibilityElementsHidden={!selected}
               importantForAccessibility={selected ? 'auto' : 'no-hide-descendants'}
               key={tab.value}
-              style={!selected && styles.hiddenPanel}>
+              style={[fillAvailable && styles.fill, !selected && styles.hiddenPanel]}>
               {tab.content}
             </View>
           );
@@ -127,6 +131,8 @@ export function AppFormTabs<Value extends string>({
 }
 
 const styles = StyleSheet.create({
+  fill: { flex: 1, minHeight: 0 },
+  tabBar: { flexGrow: 0, flexShrink: 0 },
   root: {
     width: '100%',
     gap: 16,

@@ -151,7 +151,8 @@ function NavigationSection({
       >
         <ListItemButton
           onClick={handleSectionClick}
-          aria-label={open ? undefined : t(section.title)}
+          aria-label={t(section.title)}
+          aria-expanded={section.path ? undefined : isExpanded && open}
           sx={[
             {
               flex: "0 0 auto",

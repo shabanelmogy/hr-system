@@ -1,0 +1,11 @@
+# Message logs — Approved scope specification
+
+2026-10-21 user authorizes implementation. Company-only log of current confirmation/reset/invitation Email. Independent View/Export; Administration > Message Logs. Shared Web Grid/Cards and native Table/Cards/detail, dates/status/search/recipient criteria and filtered Excel. No SMS now, no resend, no Super Admin viewer. Snapshot of content at attempt after sensitive-link removal, not a live current-template preview. Current account messages have one To and no CC/BCC; UI does not invent copies.
+
+A second dependent workflow adds a Settings tab per company with independent View/Edit, explicit automatic-cleanup toggle,30/90/custom days (1..3650), revision/audit and bounded scheduled purge. ASSUMPTION announced to user: initially disabled with90 days prefilled; no automatic deletion before company enables it. No report/import/chart/tree/arbitrary message composition/manual log deletion. New actual SMS/business consumers require separate authorization.
+
+Platform sender/rendered-company context is the truth; unknown/anonymous company is not guessed and no global log is exposed. SMTP accepted != inbox delivered. Transport failures during upload may be uncertain. No automatic replay. Bounded best-effort capture must never turn accepted delivery into caller-visible retry because a log write failed; capture outage/process-crash limits RISK-011. Persist exact numeric SMTP status/fixed cause and phase, never raw provider/exception text, SMTP credentials or account-action URLs/tokens. Exports are scoped/bounded safe text, snapshot excluded from collection/export and loaded only in detail.
+
+Existing-system evidence: one actual MailKit4.17 sender; current templates/trusted invitation context; existing error-log shared viewer/export/settings shapes. Extend actual owner and extract existing company resolution into one reused narrow port. Additive Platform migration, no historical backfill; fake transport/local isolated capture for tests, no external SMTP send. Same capability on both clients online-only; physical acceptance remains PROD-026, provider acceptance PROD-027. Existing full gates RISK-009/FOLLOW-006/007/008 separate.
+
+Authorization covers plan drafting and implementation. No unresolved Required-capability business question. Plan/decomposition and Phase00 must pass before runtime.

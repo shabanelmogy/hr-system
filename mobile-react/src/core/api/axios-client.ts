@@ -9,6 +9,7 @@ import { ApiError, toApiError } from '@/src/core/api/api-error';
 import { ENV } from '@/src/core/config/env';
 import { APP_CONFIG } from '@/src/core/constants/app-constants';
 import { secureSession } from '@/src/core/storage/secure-storage';
+import { reportErrorLog } from '@/src/core/observability/error-log-reporter';
 
 declare module 'axios' {
   interface AxiosRequestConfig {
@@ -153,6 +154,10 @@ axiosClient.interceptors.response.use(
     }
 
     const config = error.config as RetriableRequestConfig | undefined;
+    if (!error.response && error.code !== 'ERR_CANCELED' && !config?.signal?.aborted &&
+        authenticationTransitionDepth === 0 && !config?.url?.includes('error-logs')) {
+      reportErrorLog('network', error);
+    }
     if (error.response?.status === 423) {
       readOnlyGuard?.onBlocked();
     }

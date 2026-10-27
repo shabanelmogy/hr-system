@@ -46,8 +46,13 @@ using ErpSystem.Modules.Platform.Infrastructure.Features.Security.Invitations.Pe
 using ErpSystem.Modules.Platform.Infrastructure.Features.Security.Invitations.Services;
 using ErpSystem.Modules.Platform.Infrastructure.Features.Security.Users.Persistence;
 using ErpSystem.Modules.Platform.Infrastructure.Features.Security.Users.Services;
+using ErpSystem.Modules.Platform.Infrastructure.Features.Security.UserPermissions;
+using ErpSystem.Modules.Platform.Application.Features.Security.UserPermissions;
 using ErpSystem.Modules.Platform.Application.Notifications;
 using ErpSystem.Modules.Platform.Application.Features.Platform.SecurityAudits;
+using ErpSystem.Modules.Platform.Application.Features.Platform.ErrorLogs;
+using ErpSystem.Modules.Platform.Contracts.ErrorLogs;
+using ErpSystem.Modules.Platform.Infrastructure.Features.Platform.ErrorLogs;
 using ErpSystem.Modules.Platform.Application.Features.Security.ApiKeys.Abstractions;
 using ErpSystem.Modules.Platform.Application.Features.Security.Authorization.Abstractions;
 using ErpSystem.Modules.Platform.Application.Features.Security.Invitations.Abstractions;
@@ -128,6 +133,10 @@ public static class DependencyInjection
         services.AddScoped<ISecurityAuditRequestContextSource, HttpSecurityAuditRequestContextSource>();
         services.AddScoped<ISecurityAuditStore, SecurityAuditStore>();
         services.AddScoped<ISecurityAuditReadStore, SecurityAuditReadStore>();
+        services.AddScoped<IErrorLogStore, ErrorLogStore>();
+        services.AddSingleton<ErrorLogCaptureQueue>();
+        services.AddSingleton<IErrorLogCaptureSink>(provider => provider.GetRequiredService<ErrorLogCaptureQueue>());
+        services.AddHostedService<ErrorLogCaptureWorker>();
         services.AddScoped<IAuditTrailUserDirectory, AuditTrailUserDirectory>();
 
         services.AddScoped<IApiKeyReadStore, ApiKeyReadStore>();
@@ -157,7 +166,23 @@ public static class DependencyInjection
         services.AddScoped<IUserInvitationEmailSender, UserInvitationEmailSender>();
         services.AddScoped<IUserInvitationUnitOfWork, UserInvitationUnitOfWork>();
         services.AddScoped<IUserManagementWriteStore, UserManagementWriteStore>();
+        services.AddScoped<IUserCompanyPermissionsStore, UserCompanyPermissionsStore>();
+        services.AddScoped<Features.Security.Authentication.Services.AuthCompanyAccessService>();
+        services.AddSingleton<ErpSystem.Modules.Platform.Application.Features.CompanyLocalization.ICompanyUiCatalog,
+            Features.CompanyLocalization.EmbeddedCompanyUiCatalog>();
+        services.AddScoped<ErpSystem.Modules.Platform.Application.Features.CompanyLocalization.ICompanyLocalizationStore,
+            Features.CompanyLocalization.CompanyLocalizationStore>();
 
+        services.AddSingleton<ErpSystem.Modules.Platform.Application.Features.CompanyEmailTemplates.IAccountEmailContentPolicy, Features.CompanyEmailTemplates.AccountEmailContentPolicy>();
+        services.AddScoped<Features.CompanyEmailTemplates.CompanyEmailTemplateStore>();
+        services.AddScoped<ErpSystem.Modules.Platform.Application.Features.CompanyEmailTemplates.ICompanyEmailTemplateReader>(provider => provider.GetRequiredService<Features.CompanyEmailTemplates.CompanyEmailTemplateStore>());
+        services.AddScoped<ErpSystem.Modules.Platform.Application.Features.CompanyEmailTemplates.ICompanyEmailTemplateWriter>(provider => provider.GetRequiredService<Features.CompanyEmailTemplates.CompanyEmailTemplateStore>());
+        services.AddScoped<ErpSystem.Modules.Platform.Application.Features.CompanyEmailTemplates.IAccountEmailScopeResolver, Features.CompanyEmailTemplates.AccountEmailScopeResolver>();
+        services.AddScoped<ErpSystem.Modules.Platform.Application.Features.MessageLogs.IMessageLogReader, Features.MessageLogs.MessageLogReader>();
+        services.AddScoped<ErpSystem.Modules.Platform.Application.Features.MessageLogs.IMessageAttemptRecorder, Features.MessageLogs.MessageAttemptRecorder>();
+        services.AddScoped<IPlatformSmtpTransport, PlatformSmtpTransport>();
+        services.AddScoped<ErpSystem.Modules.Platform.Application.Features.CompanyEmailTemplates.IAccountEmailRenderer, Features.CompanyEmailTemplates.AccountEmailRenderer>();
+        services.AddScoped<ErpSystem.Modules.Platform.Application.Features.SystemLocalization.ISystemLocalizationStore, Features.SystemLocalization.SystemLocalizationStore>();
         services.AddScoped<IOfflineOperationsPolicyStore, OfflineOperationsPolicyStore>();
         services.AddScoped<PlatformContractSource>();
         services.AddScoped<ITenantAccessSource>(provider => provider.GetRequiredService<PlatformContractSource>());

@@ -46,6 +46,7 @@ interface UsersDataGridProps {
   apiRef: RefObject<GridApi | null>;
   onEdit: (user: User) => void;
   onView: (user: User) => void;
+  onPermissions?: (user: User) => void;
   onAdd?: () => void;
   onToggle: (user: User) => void;
   onUnlock: (user: User) => void;
@@ -83,6 +84,7 @@ const UsersDataGrid = ({
   apiRef,
   onEdit,
   onView,
+  onPermissions,
   onAdd,
   onToggle, // Single function for enable/disable
   onUnlock,
@@ -227,6 +229,11 @@ const UsersDataGrid = ({
         return actions;
       }
 
+      if (onPermissions) actions.push(
+        <GridActionsCellItem key="permissions" icon={<LockOpen />} label={t("userPermissions.title")}
+          onClick={() => onPermissions(params.row)} showInMenu />,
+      );
+
       if (canArchive && !isOwnUser) {
         actions.push(
           <Tooltip title={t("actions.archive")} key={`archive-${params.row.id}`} arrow>
@@ -340,6 +347,7 @@ const UsersDataGrid = ({
       onToggle,
       onUnlock,
       onView,
+      onPermissions,
       t,
     ]
   );

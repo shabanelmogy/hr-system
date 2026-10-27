@@ -767,6 +767,9 @@ instead of recreating the original gap.
 
 ## 13. Verification Matrix
 
+Supplemental shared-Grid compatibility review on 2026-10-18: Grid/Cards and shared sort/reset controls render, while development SSR emitted a style-prefixer fallback. Canonical unresolved rendering follow-up: `FOLLOW-009` in `documentation/plans/notes/FOLLOW_UPS.md`; successful client rendering does not close it.
+
+
 ### Existing focused coverage
 
 | Area | Evidence |

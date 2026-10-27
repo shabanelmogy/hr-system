@@ -22,6 +22,11 @@ export interface MainDrawerRouteDefinition {
     | 'extras'
     | 'advanced-tools'
     | 'super-admin-dashboard'
+    | 'email-templates'
+    | 'system-ui-texts'
+    | 'system-audit-trail'
+    | 'system-error-logs'
+    | 'error-log-settings'
     | 'tenant-management'
     | 'tenant-admin-management'
     | 'recruitment'
@@ -31,6 +36,7 @@ export interface MainDrawerRouteDefinition {
   titleKey: string;
   icon: AppIconName;
   headerShown?: boolean;
+  hidden?: boolean;
 }
 
 export const BASIC_DATA_VIEW_PERMISSIONS = [
@@ -45,6 +51,10 @@ export const BASIC_DATA_VIEW_PERMISSIONS = [
  */
 export const routePolicies: readonly RoutePolicy[] = [
   { path: ROUTES.superAdminDashboard, roles: [appRoles.superAdmin] },
+  {path:ROUTES.systemUiTexts,roles:[appRoles.superAdmin],permissions:[permissions.ViewSystemUiTexts]},
+  { path: ROUTES.systemAuditTrail, roles: [appRoles.superAdmin], permissions: [permissions.ViewSystemAuditTrail] },
+  { path: ROUTES.systemErrorLogs, roles: [appRoles.superAdmin], permissions: [permissions.ViewSystemErrorLogs] },
+  { path: ROUTES.errorLogSettings, roles: [appRoles.superAdmin], permissions: [permissions.ViewErrorLogSettings] },
   { path: ROUTES.tenantManagement, roles: [appRoles.superAdmin] },
   { path: ROUTES.tenantAdminManagement, roles: [appRoles.superAdmin] },
   {
@@ -56,6 +66,8 @@ export const routePolicies: readonly RoutePolicy[] = [
     permissions: [permissions.ViewOfflineOperations],
   },
   { path: ROUTES.administration.roles, permissions: [permissions.ViewRoles] },
+  { path: ROUTES.emailTemplates, permissions: [permissions.ViewCompanyEmailTemplates] },
+  { path: ROUTES.administration.companyLocalizations, permissions: [permissions.ViewCompanyLocalizations] },
   {
     path: ROUTES.administration.invitations,
     permissions: [permissions.ViewUserInvitations],
@@ -67,6 +79,7 @@ export const routePolicies: readonly RoutePolicy[] = [
       { permissions: [permissions.ViewRoles] },
       { permissions: [permissions.ViewUserInvitations] },
       { permissions: [permissions.ViewOfflineOperations] },
+      { permissions: [permissions.ViewCompanyLocalizations] },
     ],
   },
   // Countries, States, and Districts are platform-managed reference data.
@@ -126,9 +139,10 @@ export const routePolicies: readonly RoutePolicy[] = [
     ],
   },
   { path: ROUTES.advancedTools.auditTrail, permissions: [permissions.ViewAuditTrail] },
+  { path: ROUTES.advancedTools.errorLogs, permissions: [permissions.ViewErrorLogs] },
   { path: ROUTES.advancedTools.localizationApi, permissions: [permissions.ViewLocalizations] },
-  { path: ROUTES.advancedTools.healthCheck, roles: [appRoles.admin] },
-  { path: ROUTES.advancedTools.apiEndpoints, roles: [appRoles.admin] },
+  { path: ROUTES.advancedTools.healthCheck, anyOf: [{ roles: [appRoles.admin] }, { roles: [appRoles.superAdmin], permissions: [permissions.ViewSystemHealth] }] },
+  { path: ROUTES.advancedTools.apiEndpoints, anyOf: [{ roles: [appRoles.admin] }, { roles: [appRoles.superAdmin], permissions: [permissions.ViewSystemApiDocs] }] },
   {
     path: ROUTES.advancedTools.hangfireDashboard,
     permissions: [permissions.ViewHangfireDashboard],
@@ -137,6 +151,7 @@ export const routePolicies: readonly RoutePolicy[] = [
     path: ROUTES.advancedTools.root,
     anyOf: [
       { permissions: [permissions.ViewAuditTrail] },
+      { permissions: [permissions.ViewErrorLogs] },
       { permissions: [permissions.ViewLocalizations] },
       { roles: [appRoles.admin] },
       { permissions: [permissions.ViewHangfireDashboard] },
@@ -225,7 +240,13 @@ export const routePolicies: readonly RoutePolicy[] = [
   { path: ROUTES.apps },
   { path: ROUTES.notifications, roles: [appRoles.admin, appRoles.user] },
   { path: ROUTES.home },
-  { path: ROUTES.settings, roles: [appRoles.admin, appRoles.superAdmin] },
+  { path: ROUTES.settings, anyOf: [
+    { roles: [appRoles.admin, appRoles.superAdmin] },
+    { permissions: [permissions.ViewCompanyLocalizations] },
+    { permissions: [permissions.ViewOfflineOperations] },
+    { permissions: [permissions.ViewCompanyGeographicScope] },
+    { permissions: [permissions.ViewLocalizations] },
+  ] },
   { path: ROUTES.modal },
 ];
 
@@ -234,6 +255,13 @@ export const superAdminAllowedRoutes: readonly AppRoute[] = [
   ROUTES.profile,
   ROUTES.settings,
   ROUTES.superAdminDashboard,
+  ROUTES.systemUiTexts,
+  ROUTES.systemAuditTrail,
+  ROUTES.advancedTools.healthCheck,
+  ROUTES.advancedTools.apiEndpoints,
+  ROUTES.advancedTools.hangfireDashboard,
+  ROUTES.systemErrorLogs,
+  ROUTES.errorLogSettings,
   ROUTES.tenantManagement,
   ROUTES.tenantAdminManagement,
   ROUTES.basicData.root,
@@ -281,6 +309,7 @@ export const MAIN_DRAWER_ROUTES: readonly MainDrawerRouteDefinition[] = [
     path: ROUTES.administration.root,
     titleKey: 'navigation.administration',
     icon: 'people-outline',
+    hidden: true,
     headerShown: false,
   },
   {
@@ -295,6 +324,7 @@ export const MAIN_DRAWER_ROUTES: readonly MainDrawerRouteDefinition[] = [
     path: ROUTES.advancedTools.root,
     titleKey: 'navigation.advancedTools',
     icon: 'construct-outline',
+    hidden: true,
     headerShown: false,
   },
   {
@@ -324,6 +354,23 @@ export const MAIN_DRAWER_ROUTES: readonly MainDrawerRouteDefinition[] = [
     path: ROUTES.superAdminDashboard,
     titleKey: 'navigation.superAdminDashboard',
     icon: 'speedometer-outline',
+  },
+  {name:'email-templates',path:ROUTES.emailTemplates,titleKey:'navigation.emailTemplates',icon:'mail-outline',hidden:true},
+  {name:'system-ui-texts',path:ROUTES.systemUiTexts,titleKey:'navigation.systemUiTexts',icon:'language-outline',hidden:true},
+  { name: 'system-audit-trail', path: ROUTES.systemAuditTrail, titleKey: 'navigation.auditTrail', icon: 'time-outline', hidden: true },
+  {
+    name: 'system-error-logs',
+    path: ROUTES.systemErrorLogs,
+    titleKey: 'navigation.systemErrorLogs',
+    icon: 'alert-circle-outline',
+    hidden: true,
+  },
+  {
+    name: 'error-log-settings',
+    path: ROUTES.errorLogSettings,
+    titleKey: 'navigation.errorLogSettings',
+    icon: 'settings-outline',
+    hidden: true,
   },
   {
     name: 'tenant-management',

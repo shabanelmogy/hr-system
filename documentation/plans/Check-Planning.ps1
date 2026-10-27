@@ -5,6 +5,7 @@ $ErrorActionPreference = "Stop"
 $planningRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
 $businessRoot = Join-Path $planningRoot "business"
 $notesRoot = Join-Path $planningRoot "notes"
+. (Join-Path $planningRoot "Check-Planning.ExecutionState.ps1")
 
 $requiredFiles = @(
     "README.md",
@@ -18,6 +19,7 @@ $requiredFiles = @(
     "FEATURE_DECOMPOSITION_TEMPLATE.md",
     "PLAN_QUALITY_GATE.md",
     "PLAN_REGISTRY.md",
+    "Check-Planning.ExecutionState.ps1",
     "New-BusinessPlan.ps1",
     "business/README.md",
     "notes/README.md",
@@ -45,7 +47,7 @@ foreach ($relativePath in $requiredFiles) {
 $businessPlanTemplatePath = Join-Path $planningRoot "BUSINESS_PLAN_TEMPLATE.md"
 if (Test-Path -LiteralPath $businessPlanTemplatePath -PathType Leaf) {
     $businessPlanTemplateContent = Get-Content -LiteralPath $businessPlanTemplatePath -Raw
-    if ($businessPlanTemplateContent -notmatch '(?m)^### Feature Decomposition Gate$') {
+    if ($businessPlanTemplateContent -notmatch '(?m)^### Feature Decomposition Gate\r?$') {
         $errors.Add("BUSINESS_PLAN_TEMPLATE.md must contain the mandatory Feature Decomposition Gate")
     }
 }
@@ -110,7 +112,7 @@ if (Test-Path -LiteralPath $businessRoot -PathType Container) {
             $content = Get-Content -LiteralPath $planFile -Raw
             $planContent = $content
             $escapedId = [regex]::Escape($directory.Name)
-            if ($content -notmatch "\|\s*Plan ID\s*\|\s*`?$escapedId`?\s*\|") {
+            if ($content -notmatch ('\|\s*Plan ID\s*\|\s*(?:\x60)?' + $escapedId + '(?:\x60)?\s*\|')) {
                 $errors.Add("Business plan '$($directory.Name)' PLAN.md must declare the same Plan ID as its folder name")
             }
         }
@@ -155,10 +157,12 @@ if (Test-Path -LiteralPath $businessRoot -PathType Container) {
                     $featureId = $featureIdMatch.Groups[1].Value.Trim().Trim([char]0x60)
                 }
                 $isActiveContract = $contractContent -match '(?m)^\|\s*Execution status\s*\|\s*(?:\u0060)?Active\b'
+                $isClosedContract = $contractContent -match '(?m)^\|\s*Execution status\s*\|\s*(?:\u0060)?Closed(?:\u0060)?\s*\|'
                 $currentContracts.Add([pscustomobject]@{
                     Path = $contractFile.FullName
                     FeatureId = $featureId
                     IsActive = $isActiveContract
+                    IsClosed = $isClosedContract
                 })
 
                 foreach ($requiredContractHeading in @(
@@ -321,19 +325,12 @@ if (Test-Path -LiteralPath $businessRoot -PathType Container) {
         $planIsV2OrExecutionReady = $planContent -match '(?im)Planning method version\s*\|\s*(?:\u0060)?2\.0' -or
             $planContent -match '(?im)^\|\s*Status\s*\|.*(?:execution-ready|Implementation Ready)'
         if ($currentContracts.Count -gt 0) {
-            if ($roadmapMarkers.Count -ne 1) {
-                $errors.Add("Business plan '$($directory.Name)' with version 2.0 feature contracts must declare exactly one ACTIVE_FEATURE_STEP marker")
-            }
-
-            $activeContracts = @($currentContracts | Where-Object { $_.IsActive })
-            if ($activeContracts.Count -ne 1) {
-                $errors.Add("Business plan '$($directory.Name)' must have exactly one version 2.0 feature contract with Execution status Active")
-            } elseif ($roadmapMarkers.Count -eq 1) {
-                $activeFeatureId = $activeContracts[0].FeatureId
-                $roadmapFeatureId = $roadmapMarkers[0].Trim([char]0x60)
-                if ([string]::IsNullOrWhiteSpace($activeFeatureId) -or $activeFeatureId -ne $roadmapFeatureId) {
-                    $errors.Add("Business plan '$($directory.Name)' ACTIVE_FEATURE_STEP '$roadmapFeatureId' must match the Active version 2.0 contract Child Feature ID '$activeFeatureId'")
-                }
+            $planIsClosed = $planContent -match '(?mi)^\|\s*Status\s*\|\s*(?:\u0060)?Closed(?:\u0060)?\s*\|'
+            $contractItems = [object[]]$currentContracts.ToArray()
+            $markerItems = [string[]]$roadmapMarkers
+            $executionStateErrors = @(Get-PlanningExecutionStateErrors -PlanName $directory.Name -PlanIsClosed $planIsClosed -Contracts $contractItems -RoadmapMarkers $markerItems)
+            foreach ($executionStateError in $executionStateErrors) {
+                $errors.Add($executionStateError)
             }
         } elseif ($planIsV2OrExecutionReady) {
             $warnings.Add("Business plan '$($directory.Name)' is version 2.0 or execution-ready but has no version 2.0 feature contract; create one before runtime implementation")

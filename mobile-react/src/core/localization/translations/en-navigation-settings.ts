@@ -1,5 +1,7 @@
 export const enNavigationSettings = {
   navigation: {
+    emailTemplates: "Email templates",
+    systemUiTexts: "System UI texts",
     administration: 'Administration',
     users: 'Users',
     invitations: 'Invitations',
@@ -21,6 +23,9 @@ export const enNavigationSettings = {
     files: 'File manager',
     appointments: 'Appointments',
     auditTrail: 'Audit trail',
+    errorLogs: 'Error logs',
+    systemErrorLogs: 'System error logs',
+    errorLogSettings: 'Error log settings',
     localizationApi: 'Localization API',
     healthCheck: 'Health check',
     apiEndpoints: 'API endpoints',
@@ -38,6 +43,8 @@ export const enNavigationSettings = {
     developmentRole: 'Development role: {{role}}',
   },
   settings: {
+    devicePreferences: 'Device preferences',
+    workspaceDescription: 'Manage the settings available to your account.',
     title: 'Settings',
     subtitle: 'Choose how the application looks and reads.',
     language: 'Language',

@@ -1,0 +1,338 @@
+{
+  "status": "draft",
+  "referenceFeature": "N/A",
+  "planId": "super-admin-administration",
+  "sliceId": "S1 Global administration access",
+  "canonicalPlan": "documentation/plans/business/super-admin-administration/PLAN.md",
+  "featureDecompositionDecision": "Single feature",
+  "screenWorkflowContract": "N/A",
+  "plannedCustomerEducation": "documentation/plans/business/super-admin-administration/education/system-administration-access.md",
+  "instructions": "Merge these entries into recipe-manifest.json after Phase 00 has a final preflight required-files.json and all four initial applied implementation books. Extend the manifest/books with runtime evidence during implementation.",
+  "books": [
+    {
+      "id": "system-administration-access-master",
+      "path": "../modules/platform/features/system-administration-access/system-administration-access-review.md",
+      "title": "Global administration access cross-platform master review"
+    },
+    {
+      "id": "system-administration-access-api",
+      "path": "../modules/platform/features/system-administration-access/system-administration-access-api.md",
+      "title": "Global administration access API implementation profile"
+    },
+    {
+      "id": "system-administration-access-web",
+      "path": "../modules/platform/features/system-administration-access/system-administration-access-web.md",
+      "title": "Global administration access Next.js implementation profile"
+    },
+    {
+      "id": "system-administration-access-mobile",
+      "path": "../modules/platform/features/system-administration-access/system-administration-access-mobile.md",
+      "title": "Global administration access Expo implementation profile"
+    }
+  ],
+  "requiredFileManifest": "../modules/platform/features/system-administration-access/required-files.json",
+  "recipes": [
+    {
+      "id": "system-administration-access-phase-00-implementation-preflight",
+      "title": "Global administration access Phase 00 - Implementation Preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "../modules/platform/features/system-administration-access/generated/PHASE-00-implementation-preflight.md",
+      "sources": [
+        {
+          "book": "system-administration-access-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "system-administration-access-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "system-administration-access-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "system-administration-access-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "system-administration-access-phase-01-domain-api",
+      "title": "Global administration access Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "../modules/platform/features/system-administration-access/generated/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "system-administration-access-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "system-administration-access-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "system-administration-access-phase-02-web-client",
+      "title": "Global administration access Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "../modules/platform/features/system-administration-access/generated/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "system-administration-access-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "system-administration-access-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "system-administration-access-phase-03-mobile-client",
+      "title": "Global administration access Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "../modules/platform/features/system-administration-access/generated/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "system-administration-access-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "system-administration-access-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "system-administration-access-phase-04-domain-actions",
+      "title": "Global administration access Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "../modules/platform/features/system-administration-access/generated/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "system-administration-access-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "system-administration-access-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "system-administration-access-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "system-administration-access-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "system-administration-access-phase-05-integration-runtime",
+      "title": "Global administration access Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "../modules/platform/features/system-administration-access/generated/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "system-administration-access-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "system-administration-access-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "system-administration-access-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "system-administration-access-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "system-administration-access-phase-06-verification-acceptance",
+      "title": "Global administration access Phase 06 - Verification and Acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "../modules/platform/features/system-administration-access/generated/PHASE-06-verification-acceptance.md",
+      "sources": [
+        {
+          "book": "system-administration-access-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "system-administration-access-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "system-administration-access-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "system-administration-access-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "system-administration-access-phase-07-customer-education-closure",
+      "title": "Global administration access Phase 07 - Customer Education and Closure",
+      "template": "templates/PHASE-07-customer-education-closure.template.md",
+      "output": "../modules/platform/features/system-administration-access/generated/PHASE-07-customer-education-closure.md",
+      "sources": [
+        {
+          "book": "system-administration-access-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "system-administration-access-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "system-administration-access-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    }
+  ]
+}

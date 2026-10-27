@@ -1,4 +1,6 @@
 import http from "node:http";
+import fs from "node:fs";
+import * as XLSX from "xlsx";
 
 const portFlag = process.argv.indexOf("--port");
 const port = portFlag >= 0 ? Number(process.argv[portFlag + 1]) : 3199;
@@ -24,8 +26,22 @@ const permissions = {
     "RolePermissions:View",
     "RolePermissions:Edit",
     "Users:View",
+    "UserPermissions:View",
+    "UserPermissions:Edit",
+    "MessageLogs:View",
+    "MessageLogs:Export",
+    "CompanyEmailTemplates:View",
+    "CompanyEmailTemplates:Edit",
+    "CompanyEmailTemplates:Reset",
+    "CompanyLocalizations:View",
+    "CompanyLocalizations:Edit",
+    "CompanyLocalizations:Reset",
+    "CompanyLocalizations:SetDefault",
+    "OfflineOperations:View",
+    "ErrorLogs:View", "ErrorLogs:ViewDetails", "ErrorLogs:Export",
   ],
-  superadmin: ["Countries:View", "Countries:Create", "Countries:Edit", "Countries:Delete", "Countries:Archive", "Countries:Restore"],
+  superadmin: ["SystemUiTexts:View", "SystemUiTexts:Edit", "SystemUiTexts:Reset", "SystemAuditTrail:View", "SystemHealth:View", "SystemApiDocs:View", "Hangfire:View", "Countries:View", "Countries:Create", "Countries:Edit", "Countries:Delete", "Countries:Archive", "Countries:Restore",
+    "SystemErrorLogs:View", "SystemErrorLogs:ViewDetails", "SystemErrorLogs:Export", "ErrorLogSettings:View", "ErrorLogSettings:Edit"],
 };
 
 const state = {
@@ -36,6 +52,11 @@ const state = {
   sessionMode: "ok",
   countriesMode: "ok",
   role: null,
+  userPermissions: [],
+  permissionRevision: 0,
+  companyLocalizations: new Map(),
+  errorLogs: [],
+  errorLogSettings: { retentionDays: 90, revision: 0, queueDepth: 0, droppedCount: 0, failedWrites: 0 },
 };
 
 resetState();
@@ -180,6 +201,135 @@ const server = http.createServer(async (request, response) => {
     const session = sessionFromAuthorization(request);
     if (!session) return problem(response, 401, "Unauthorized");
     return json(response, 200, modulesFor(session));
+  }
+
+  if (/^\/api\/v1\/(system-error-logs|error-logs)(\/|$)/.test(url.pathname)) {
+    const session=sessionFromAuthorization(request);
+    if(!session)return problem(response,401,"Unauthorized");
+    const isSystem=url.pathname.startsWith("/api/v1/system-error-logs");
+    const admin=session.roles.includes("super_admin");
+    const suffix=url.pathname.replace(/^\/api\/v1\/(system-error-logs|error-logs)/,"");
+    if(suffix==="/client"&&request.method==="POST"){
+      const body=await readJson(request);
+      if(Object.keys(body).some(key=>!["source","kind","errorType","eventId"].includes(key)))return problem(response,400,"Metadata only");
+      return json(response,202);
+    }
+    if(isSystem!==admin)return problem(response,403,"Forbidden");
+    if(suffix==="/settings"){
+      if(!isSystem)return problem(response,404,"Not found");
+      if(!session.permissions.includes(request.method==="GET"?"ErrorLogSettings:View":"ErrorLogSettings:Edit"))return problem(response,403,"Forbidden");
+      if(request.method==="GET")return json(response,200,state.errorLogSettings);
+      const body=await readJson(request);
+      if(!Number.isInteger(body.retentionDays)||body.retentionDays<1||body.retentionDays>3650)return problem(response,400,"Invalid retention days");
+      if(body.expectedRevision!==state.errorLogSettings.revision)return problem(response,409,"Settings changed");
+      if(body.retentionDays!==state.errorLogSettings.retentionDays){state.errorLogSettings.retentionDays=body.retentionDays;state.errorLogSettings.revision++;}
+      return json(response,200,state.errorLogSettings);
+    }
+    const permission=(isSystem?"SystemErrorLogs":"ErrorLogs")+":"+(suffix==="/export"?"Export":suffix?"ViewDetails":"View");
+    if(!session.permissions.includes(permission))return problem(response,403,"Forbidden");
+    const scoped=state.errorLogs.filter(row=>isSystem||(row.tenantId===session.tenantId&&row.companyId===session.companyId));
+    const project=(row)=>Object.fromEntries(Object.entries({...row,ipAddress:isSystem?row.ipAddress:null})
+      .filter(([key])=>!["tenantId","companyId","diagnostics"].includes(key)));
+    if(suffix&&suffix!=="/export"){
+      const row=scoped.find(row=>row.id===suffix.slice(1));
+      return row?json(response,200,{entry:project(row),diagnostics:isSystem?row.diagnostics:[]}):problem(response,404,"Not found");
+    }
+    const search=(url.searchParams.get("search")??"").toLowerCase();
+    const rows=scoped.filter(row=>(!search||[row.summary,row.service,row.action,row.correlationId].join(" ").toLowerCase().includes(search))&&
+      (!url.searchParams.get("source")||row.source===url.searchParams.get("source"))&&
+      (!url.searchParams.get("statusCode")||row.statusCode===Number(url.searchParams.get("statusCode")))&&
+      (!url.searchParams.get("userName")||row.userName.includes(url.searchParams.get("userName")))&&
+      (!url.searchParams.get("fromUtc")||row.occurredOnUtc>=url.searchParams.get("fromUtc"))&&
+      (!url.searchParams.get("toUtc")||row.occurredOnUtc<=url.searchParams.get("toUtc"))).map(project);
+    if(suffix==="/export"){
+      if(rows.length>5000)return problem(response,400,"Export limit");
+      const workbook=XLSX.utils.book_new();XLSX.utils.book_append_sheet(workbook,XLSX.utils.json_to_sheet(rows),"Error Logs");
+      const bytes=XLSX.write(workbook,{type:"buffer",bookType:"xlsx"});
+      response.writeHead(200,{"content-type":"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet","content-disposition":'attachment; filename="error-logs.xlsx"'});return response.end(bytes);
+    }
+    const pageNumber=Math.max(1,Number(url.searchParams.get("page"))||1),pageSize=Math.min(100,Math.max(1,Number(url.searchParams.get("pageSize"))||25));
+    return json(response,200,{items:rows.slice((pageNumber-1)*pageSize,pageNumber*pageSize),totalCount:rows.length,page:pageNumber,pageSize});
+  }
+  if (request.method === "GET" && url.pathname === "/api/v1/offline-operations/policy") {
+    const session = sessionFromAuthorization(request);
+    if (!session) return problem(response, 401, "Unauthorized");
+    return json(response, 200, { version: 1, tenantId: session.tenantId, companyId: session.companyId,
+      rowVersion: null, updatedOn: null, updatedByUserId: null,
+      modes: { "countries.read": "online-only", "workforce-plan.update-draft": "online-only" },
+      capabilities: [
+        { id: "countries.read", supportedModes: ["online-only", "offline-read"] },
+        { id: "workforce-plan.update-draft", supportedModes: ["online-only", "offline-draft", "offline-command"] },
+      ] });
+  }
+  if (url.pathname.startsWith("/api/v1/company-localizations/")) {
+    const session = sessionFromAuthorization(request);
+    if (!session) return problem(response, 401, "Unauthorized");
+    const catalog = JSON.parse(fs.readFileSync(new URL("../../../api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Features/CompanyLocalization/company-ui-catalog.json",import.meta.url),"utf8"));
+    const companyText = (entry) => entry.scope === "company" || entry.scope === "shared";
+    const current = state.companyLocalizations.get(session.companyId) ?? { revision: 0, defaultLanguage: "en", overrides: [] };
+    state.companyLocalizations.set(session.companyId,current);
+    if (request.method === "GET" && url.pathname.endsWith("/settings")) return json(response,200,{
+      tenantId:session.tenantId,companyId:session.companyId,defaultLanguage:current.defaultLanguage,revision:current.revision,
+      languages:["en","ar"],sources:catalog.sources.filter(source=>source.entries.some(companyText)).map(({id,client,namespace})=>({id,client,namespace})),catalogVersions:catalog.versions,
+    });
+    if (request.method === "GET" && url.pathname.endsWith("/runtime")) {
+      const client=url.searchParams.get("client");
+      if(!["web","mobile"].includes(client)||url.searchParams.get("catalogVersion")!==catalog.versions[client])return problem(response,409,"Company catalog changed");
+      return json(response,200,{
+        tenantId:session.tenantId,companyId:session.companyId,defaultLanguage:current.defaultLanguage,revision:current.revision,
+        catalogVersion:catalog.versions[client],overrides:current.overrides.filter(item=>catalog.sources.some(source=>source.id===item.source&&source.client===client&&source.entries.some(entry=>entry.key===item.key&&companyText(entry)))).map(item=>({...item,namespace:catalog.sources.find(source=>source.id===item.source)?.namespace})),
+      });
+    }
+    if (request.method === "GET" && url.pathname.endsWith("/texts")) {
+      const source=catalog.sources.find(item=>item.id===url.searchParams.get("source"));
+      if(source&&!source.entries.some(companyText))return problem(response,403,"Forbidden company source");
+      const language=url.searchParams.get("targetLanguage")??"ar",base=url.searchParams.get("baseLanguage")??"en";
+      const search=(url.searchParams.get("search")??"").toLowerCase(),status=url.searchParams.get("status")??"all";
+      const rows=(source?.entries??[]).filter(companyText).map(item=>{
+        const custom=current.overrides.find(value=>value.source===source.id&&value.language===language&&value.key===item.key);
+        return {key:item.key,baseValue:item[base]??item.en??"",targetValue:custom?.value??item[language]??item.en??"",shippedValue:item[language]??item.en??"",isCustomized:Boolean(custom)};
+      }).filter(row=>(status!=="customized"||row.isCustomized)&&(status!=="missing"||!row.isCustomized)&&(!search||[row.key,row.baseValue,row.targetValue].join(" ").toLowerCase().includes(search)));
+      const page=Number(url.searchParams.get("page")??1),pageSize=Number(url.searchParams.get("pageSize")??25);
+      return json(response,200,{revision:current.revision,items:rows.slice((page-1)*pageSize,page*pageSize),totalCount:rows.length,page,pageSize,catalogVersion:catalog.versions[source?.client??"web"]});
+    }
+    const body=await readJson(request);
+    if(!url.pathname.endsWith("/default")&&!catalog.sources.some(source=>source.id===body.source&&source.entries.some(entry=>entry.key===body.key&&companyText(entry))))return problem(response,403,"Forbidden company text");
+    if(body.expectedRevision!==current.revision)return problem(response,409,"Company texts changed");
+    if(url.pathname.endsWith("/default"))current.defaultLanguage=body.language;
+    else {
+      current.overrides=current.overrides.filter(item=>!(item.source===body.source&&item.language===body.language&&item.key===body.key));
+      if(url.pathname.endsWith("/text"))current.overrides.push({source:body.source,language:body.language,key:body.key,value:body.value});
+    }
+    current.revision++;
+    return json(response,204);
+  }
+  if (request.method === "GET" && url.pathname === "/api/v1/users/getCompanyOptions") {
+    return json(response, 200, companies.map((company) => ({ ...company, isActive: true })));
+  }
+  if (request.method === "GET" && url.pathname === "/api/v1/users/getPage") {
+    return json(response, 200, { items: [{ id: "test-accountant", firstName: "Test", lastName: "Accountant",
+      userName: "accountant", email: "accountant@example.test", isDisabled: false, isLocked: false,
+      profilePicture: null, roles: ["Accountant"], companyIds: [1], defaultCompanyId: 1,
+      lifecycleStatus: "active", archivedOn: null, archiveReason: null }],
+      metaData: { currentPage: 1, totalPages: 1, pageSize: 10, pageNumber: 1, totalCount: 1, hasPrev: false, hasNext: false } });
+  }
+  if (url.pathname === "/api/v1/user-permissions/test-accountant") {
+    const session = sessionFromAuthorization(request);
+    if (!session) return problem(response, 401, "Unauthorized");
+    if (request.method === "GET") return json(response, 200, {
+      userId: "test-accountant", userName: "accountant", companyId: session.companyId,
+      companyName: "Company One", revision: state.permissionRevision,
+      permissions: ["View", "Create"].map((action) => ({ permission: `Users:${action}`, moduleCode: "platform",
+        submoduleCode: "", isDirect: state.userPermissions.includes(`Users:${action}`),
+        inheritedFrom: action === "View" ? ["Accountant"] : [], isEffective: action === "View" || state.userPermissions.includes(`Users:${action}`), canGrant: true })),
+    });
+    if (request.method === "PUT") {
+      const body = await readJson(request);
+      if (body.expectedRevision !== state.permissionRevision) return problem(response, 409, "Reload permissions");
+      state.userPermissions = body.permissions;
+      state.permissionRevision++;
+      return json(response, 204);
+    }
   }
 
   if (request.method === "GET" && url.pathname === "/api/v1/roles/getRoleClaims") {
@@ -385,6 +535,19 @@ function resetState() {
   state.sessionMode = "ok";
   state.countriesMode = "ok";
   state.role = makeRoleFixture();
+  state.userPermissions = [];
+  state.permissionRevision = 0;
+  state.companyLocalizations.clear();
+  state.errorLogSettings={retentionDays:90,revision:0,queueDepth:0,droppedCount:0,failedWrites:0};
+  state.errorLogs=Array.from({length:32},(_,index)=>({
+    // Client capture uses stable .NET GUIDs without RFC UUID version/variant bits.
+    id:index%2===0?`00000000-0000-4000-8000-${String(index+1).padStart(12,"0")}`:`2b92450e-c383-feee-339f-${String(index+1).padStart(12,"0")}`,
+    occurredOnUtc:new Date(Date.UTC(2026,9,17,12,0,-index)).toISOString(),
+    source:index%2===0?"api":"mobile",severity:index%3===0?"warning":"error",userName:"admin",
+    service:"OrdersController",action:"GetOrder",statusCode:index%2===0?404:null,durationMs:23,
+    correlationId:`error-correlation-${index+1}`,summary:index%2===0?"HttpClientError":"ClientError",client:index%2===0?"http":"mobile",browser:"Chrome",ipAddress:"127.0.0.1",
+    tenantId:index===31?null:"tenant-a",companyId:index===31?null:1,diagnostics:["Erp.OrdersController.GetOrder"]
+  }));
   state.fiscalYears = {
     1: [makeFiscalYear({
       id: 1,

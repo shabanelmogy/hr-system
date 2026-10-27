@@ -33,7 +33,9 @@ export const FormHeader: React.FC = () => {
         sx={{
           display: "flex",
           alignItems: "center",
-          gap: 1.5
+          gap: 1.5,
+          minWidth: 0,
+          flex: 1,
         }}>
         <Box
           sx={{
@@ -42,6 +44,7 @@ export const FormHeader: React.FC = () => {
             justifyContent: "center",
             width: 40,
             height: 40,
+            flexShrink: 0,
             borderRadius: "12px",
             background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.primary.dark} 100%)`,
             color: theme.palette.primary.contrastText,
@@ -53,12 +56,13 @@ export const FormHeader: React.FC = () => {
         >
           {getFormModeIcon(icon, Boolean(isViewMode))}
         </Box>
-        <Box>
+        <Box sx={{ minWidth: 0 }}>
           <Typography
             variant="h6"
             component="h2"
             sx={{
               fontWeight: 600,
+              overflowWrap: "anywhere",
               background: `linear-gradient(135deg, ${theme.palette.text.primary} 0%, ${theme.palette.primary.main} 100%)`,
               backgroundClip: "text",
               WebkitBackgroundClip: "text",
@@ -73,6 +77,7 @@ export const FormHeader: React.FC = () => {
               sx={{
                 color: "text.secondary",
                 mt: 0.5,
+                overflowWrap: "anywhere",
               }}>
               {subtitle}
             </Typography>
@@ -84,7 +89,8 @@ export const FormHeader: React.FC = () => {
         sx={{
           display: "flex",
           alignItems: "center",
-          gap: 1.5
+          gap: 1.5,
+          flexShrink: 0,
         }}>
         {recordId != null && (
           <Box

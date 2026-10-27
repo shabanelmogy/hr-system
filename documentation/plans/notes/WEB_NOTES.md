@@ -33,8 +33,12 @@ Then reference its stable ID here.
 | FOLLOW-003 | Follow-up | API contract parity | Exhaustive generated API/Web contract diff remains future governance work. | `FOLLOW_UPS.md` |
 | RISK-009 | Risk | Protected-shell bundle budget | Shared protected-shell routes exceed the 2.25 MiB class budget; the Crystal manager route remains within its own budget. | `KNOWN_RISKS.md` |
 
+| FOLLOW-009 | Follow-up | Countries development SSR | Reference client rendering succeeds after a style-prefixer SSR fallback; isolate before the next Web release gate. | `FOLLOW_UPS.md` |
+
 ## Web note checklist
 
 Use `Surface = Web` or `Surface = Cross-platform` for browser/App Router/BFF,
 shared UI, forms, accessibility, CSP, browser integrations, performance, and Web
 release evidence.
+
+`DEC-024` — Company message logs scope; canonical decision in DECISION_BACKLOG.md. `RISK-011` — Observational capture availability/uncertain SMTP outcome; canonical risk in KNOWN_RISKS.md.

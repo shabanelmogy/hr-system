@@ -1,0 +1,223 @@
+{
+  "schemaVersion": 1,
+  "status": "active",
+  "feature": "system-administration-access",
+  "featureName": "Global administration access",
+  "referenceFeature": "N/A",
+  "planId": "super-admin-administration",
+  "sliceId": "S1 Global administration access",
+  "canonicalPlan": "documentation/plans/business/super-admin-administration/PLAN.md",
+  "featureDecompositionDecision": "Single feature",
+  "screenWorkflowContract": "documentation/plans/business/super-admin-administration/decomposition/system-administration-access.md",
+  "plannedCustomerEducation": "documentation/plans/business/super-admin-administration/education/system-administration-access.md",
+  "purpose": "Current Phase 00 evidence for authorized S1; runtime files added only once they exist.",
+  "reviewArtifact": "documentation/modules/platform/features/system-administration-access/system-administration-access-evidence.md",
+  "implementationRequest": "documentation/modules/platform/features/system-administration-access/system-administration-access-request.md",
+  "plannedCanonicalBooks": {
+    "master": "documentation/modules/platform/features/system-administration-access/system-administration-access-review.md",
+    "api": "documentation/modules/platform/features/system-administration-access/system-administration-access-api.md",
+    "web": "documentation/modules/platform/features/system-administration-access/system-administration-access-web.md",
+    "mobile": "documentation/modules/platform/features/system-administration-access/system-administration-access-mobile.md"
+  },
+  "sourceCollections": [],
+  "requiredFiles": [
+    {
+      "id": "root-agent-guidance",
+      "layer": "configuration",
+      "path": "AGENTS.md",
+      "purpose": "Repository-wide feature and documentation rules"
+    },
+    {
+      "id": "review-artifact",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/system-administration-access/system-administration-access-evidence.md",
+      "purpose": "Feature requirement, evidence, finding, and verification ledger"
+    },
+    {
+      "id": "implementation-request",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/system-administration-access/system-administration-access-request.md",
+      "purpose": "Copy-ready feature scope, platform decisions, contracts, and quality gates"
+    },
+    {
+      "id": "preflight-0",
+      "layer": "documentation",
+      "path": "documentation/plans/business/super-admin-administration/PLAN.md",
+      "purpose": "Reviewed current ownership, implementation or shared reference"
+    },
+    {
+      "id": "preflight-1",
+      "layer": "documentation",
+      "path": "documentation/plans/business/super-admin-administration/decomposition/system-administration-access.md",
+      "purpose": "Reviewed current ownership, implementation or shared reference"
+    },
+    {
+      "id": "preflight-2",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/system-administration-access/system-administration-access-review.md",
+      "purpose": "Reviewed current ownership, implementation or shared reference"
+    },
+    {
+      "id": "preflight-3",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/system-administration-access/system-administration-access-api.md",
+      "purpose": "Reviewed current ownership, implementation or shared reference"
+    },
+    {
+      "id": "preflight-4",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/system-administration-access/system-administration-access-web.md",
+      "purpose": "Reviewed current ownership, implementation or shared reference"
+    },
+    {
+      "id": "preflight-5",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/system-administration-access/system-administration-access-mobile.md",
+      "purpose": "Reviewed current ownership, implementation or shared reference"
+    },
+    {
+      "id": "preflight-6",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Contracts/Authorization/PermissionContracts.cs",
+      "purpose": "Reviewed current ownership, implementation or shared reference"
+    },
+    {
+      "id": "preflight-7",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Application/Features/Platform/AuditTrail/AuditTrailQueries.cs",
+      "purpose": "Reviewed current ownership, implementation or shared reference"
+    },
+    {
+      "id": "preflight-8",
+      "layer": "web",
+      "path": "web-next/src/lib/auth/route-access.ts",
+      "purpose": "Reviewed current ownership, implementation or shared reference"
+    },
+    {
+      "id": "preflight-9",
+      "layer": "web",
+      "path": "web-next/src/shell/components/sidebar/configs/superAdminConfig.tsx",
+      "purpose": "Reviewed current ownership, implementation or shared reference"
+    },
+    {
+      "id": "preflight-10",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/auth/presentation/rbac/route-manifest.ts",
+      "purpose": "Reviewed current ownership, implementation or shared reference"
+    },
+    {
+      "id": "preflight-11",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/modules/registry/administration-launcher.ts",
+      "purpose": "Reviewed current ownership, implementation or shared reference"
+    },
+    {
+      "id": "runtime-s1-0",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Presentation/Features/Platform/AuditTrail/V1/SystemAuditTrailController.cs",
+      "purpose": "Actual implemented global audit source or denial regression"
+    },
+    {
+      "id": "runtime-s1-1",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Tests/SystemAdministrationAccessTests.cs",
+      "purpose": "Actual implemented global audit source or denial regression"
+    },
+    {
+      "id": "runtime-s1-2",
+      "layer": "web",
+      "path": "web-next/src/app/(main)/super-admin/(platform)/audit-trail/page.tsx",
+      "purpose": "Actual implemented global audit source or denial regression"
+    },
+    {
+      "id": "s1-runtime-0",
+      "layer": "web",
+      "path": "web-next/src/platform/audit-trail/components/AuditTrailTable.tsx",
+      "purpose": "Verified S1 implementation and regression evidence"
+    },
+    {
+      "id": "s1-runtime-1",
+      "layer": "web",
+      "path": "web-next/src/platform/audit-trail/components/AuditTrailDetailsDialog.tsx",
+      "purpose": "Verified S1 implementation and regression evidence"
+    },
+    {
+      "id": "s1-runtime-2",
+      "layer": "web",
+      "path": "web-next/src/shared/components/data-grid/navigation/recordNavigation.ts",
+      "purpose": "Verified S1 implementation and regression evidence"
+    },
+    {
+      "id": "s1-runtime-3",
+      "layer": "web",
+      "path": "web-next/src/shared/components/data-grid/navigation/recordNavigation.test.ts",
+      "purpose": "Verified S1 implementation and regression evidence"
+    },
+    {
+      "id": "s1-runtime-4",
+      "layer": "web",
+      "path": "web-next/src/shared/components/data-grid/navigation/GridFooter.tsx",
+      "purpose": "Verified S1 implementation and regression evidence"
+    },
+    {
+      "id": "s1-runtime-5",
+      "layer": "web",
+      "path": "web-next/e2e/super-admin-tools.spec.ts",
+      "purpose": "Verified S1 implementation and regression evidence"
+    },
+    {
+      "id": "s1-runtime-6",
+      "layer": "mobile",
+      "path": "mobile-react/app/(main)/system-audit-trail.tsx",
+      "purpose": "Verified S1 implementation and regression evidence"
+    },
+    {
+      "id": "s1-runtime-7",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/audit-trail/data/remote/system-audit-trail-endpoints.ts",
+      "purpose": "Verified S1 implementation and regression evidence"
+    },
+    {
+      "id": "s1-runtime-8",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/audit-trail/data/remote/audit-trail-endpoints.ts",
+      "purpose": "Verified S1 implementation and regression evidence"
+    },
+    {
+      "id": "s1-runtime-9",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/audit-trail/data/remote/audit-trail-remote-data-source.ts",
+      "purpose": "Verified S1 implementation and regression evidence"
+    },
+    {
+      "id": "s1-runtime-10",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/audit-trail/presentation/queries/use-audit-trail.ts",
+      "purpose": "Verified S1 implementation and regression evidence"
+    },
+    {
+      "id": "s1-runtime-11",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/audit-trail/composition/use-audit-trail-use-cases.ts",
+      "purpose": "Verified S1 implementation and regression evidence"
+    },
+    {
+      "id": "s1-runtime-14",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/navigation/AppBreadcrumbs.tsx",
+      "purpose": "Verified S1 implementation and regression evidence"
+    },
+    {
+      "id": "s1-runtime-15",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/operations/data/remote/operations-remote-data-source.ts",
+      "purpose": "Verified S1 implementation and regression evidence"
+    },
+    {
+      "id": "system-administration-access-customer-education",
+      "layer": "documentation",
+      "path": "documentation/plans/business/super-admin-administration/education/system-administration-access.md",
+      "purpose": "Verified Phase 07 customer operation and scope guidance"
+    }
+  ]
+}

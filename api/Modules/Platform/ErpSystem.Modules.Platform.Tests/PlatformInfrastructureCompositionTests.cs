@@ -40,6 +40,8 @@ public sealed class PlatformInfrastructureCompositionTests
         var expected = new[]
         {
             typeof(IUserManagementWriteStore),
+            typeof(ErpSystem.Modules.Platform.Application.Features.Security.UserPermissions.IUserCompanyPermissionsStore),
+            typeof(ErpSystem.Modules.Platform.Infrastructure.Features.Security.Authentication.Services.AuthCompanyAccessService),
             typeof(IUserInvitationRepository),
             typeof(IUserInvitationIdentityGateway),
             typeof(IUserInvitationRoleGateway),

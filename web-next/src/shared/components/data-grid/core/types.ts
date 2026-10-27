@@ -39,6 +39,10 @@ export type MyDataGridProps<
   onToolbarAdd?: () => void;
   toolbarSearch?: DataGridToolbarSearchConfig;
   toolbarContent?: ReactNode;
+  /** Extra server criteria; the shared toolbar owns responsive spacing. */
+  toolbarFilters?: ReactNode;
+  /** Domain-owned empty/error feedback inside the standard grid, keeping its toolbar usable. */
+  emptyContent?: ReactNode;
   /** Automatically marks the first visible row as the active record. */
   autoActivateFirstRow?: boolean;
   /** Mirrors the active record into DataGrid selection when bulk selection is not enabled. */

@@ -1,3 +1,6 @@
+import { arEmailTemplates } from "./ar-email-templates";
+import { arCompanyLocalizations } from './ar-company-localizations';
+import { arErrorLogs } from './ar-error-logs';
 import { arRecruitment } from './ar-recruitment';
 import { arCommon } from './ar-common';
 import { arNavigationSettings } from './ar-navigation-settings';
@@ -13,6 +16,9 @@ import { arCurrencies } from './ar-currencies';
 import { arLedgerSetup } from './ar-ledger-setup';
 
 export const ar = {
+  ...arEmailTemplates,
+  ...arCompanyLocalizations,
+  ...arErrorLogs,
   ...arCommon,
   ...arNavigationSettings,
   ...arAdministrationTenants,

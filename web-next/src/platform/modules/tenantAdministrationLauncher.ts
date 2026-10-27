@@ -1,29 +1,32 @@
 import { appRoutes } from "@/config/routes";
-import { permissions, type PermissionString } from "@/lib/auth/permissions";
+import { getPlatformNavigation } from "@/platform/navigation";
+import type { ErpModule } from "./types";
 
-export type TenantAdministrationLauncherEntry = {
-  code: "tenant-roles-permissions" | "tenant-users";
-  href: string;
-  requiredPermission: PermissionString;
-};
+export const ADMINISTRATION_MODULE_CODE = "administration";
 
-export const tenantAdministrationLauncherEntries: readonly TenantAdministrationLauncherEntry[] = [
-  {
-    code: "tenant-roles-permissions",
-    href: appRoutes.platform.administration.roles,
-    requiredPermission: permissions.ViewRoles,
-  },
-  {
-    code: "tenant-users",
-    href: appRoutes.platform.administration.users,
-    requiredPermission: permissions.ViewUsers,
-  },
-];
+/** Client navigation composition only; never changes installed/purchased modules. */
+export function getAdministrationModule(
+  canAccessPath: (path: string) => boolean,
+  translate: (key: string) => string,
+): ErpModule | null {
+  const entries = getPlatformNavigation().find(section => section.id === "platform-administration")?.items ?? [];
+  const submodules = entries.flatMap(item => item.path && canAccessPath(item.path) ? [{
+    code: item.path.replace(/^\//, "").replaceAll("/", "-"),
+    name: translate(item.title),
+    requiredPermissions: [],
+    entryPath: item.path,
+  }] : []);
+  return submodules.length ? {
+    code: ADMINISTRATION_MODULE_CODE,
+    name: translate("menu.administration"),
+    submodules,
+    isDefault: true,
+  } : null;
+}
 
-export function getTenantAdministrationLauncherEntries(
-  hasPermission: (permission: PermissionString) => boolean,
-) {
-  return tenantAdministrationLauncherEntries.filter((entry) =>
-    hasPermission(entry.requiredPermission),
-  );
+/** Presentation identity only: child permission/entitlement policies are unchanged. */
+export function isAdministrationPath(path: string): boolean {
+  const roots = ["/administration", appRoutes.platform.companyGeographicScope,
+    ...Object.values(appRoutes.platform.advancedTools)];
+  return roots.some(root => path === root || path.startsWith(`${root}/`));
 }

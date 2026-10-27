@@ -8,10 +8,13 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <NoWarn>$(NoWarn);1591</NoWarn>
-    <UserSecretsId>HrManagementSystem-LocalDevelopment</UserSecretsId>
+    <!-- Current development deployments carry the local, git-ignored settings file.
+         Production artifact/image builds explicitly opt out. -->
+    <PublishAppSettings Condition="'$(PublishAppSettings)' == ''">true</PublishAppSettings>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MessagePack" />
     <PackageReference Include="Asp.Versioning.Mvc" />
     <PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" />
     <PackageReference Include="AspNetCore.HealthChecks.Hangfire" />
@@ -55,10 +58,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <!-- Local settings files are machine-specific (git-ignored) and must never reach a server:
-         a Visual Studio publish would otherwise overwrite the host's production appsettings.json.
-         Production configuration lives on the host (its own appsettings.json or environment variables). -->
-    <Content Update="appsettings.json" CopyToPublishDirectory="Never" />
+    <!-- appsettings.json is the current single settings file for local/hosted development.
+         Do not ship it in production artifacts: use /p:PublishAppSettings=false. -->
+    <Content Update="appsettings.json" CopyToPublishDirectory="PreserveNewest" Condition="'$(PublishAppSettings)' == 'true'" />
+    <Content Update="appsettings.json" CopyToPublishDirectory="Never" Condition="'$(PublishAppSettings)' != 'true'" />
     <Content Update="appsettings.Development.json" CopyToPublishDirectory="Never" />
     <!-- Large installer artifacts are copied after publish so they are not fingerprinted during every IDE build. -->
     <Content Remove="wwwroot\downloads\attendance-agent\**\*" />

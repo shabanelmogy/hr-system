@@ -286,6 +286,9 @@
   "UserEnabledNotificationMessage": "تم تفعيل المستخدم {{UserName}}.",
   "UserUnlockedNotificationMessage": "تم إلغاء قفل المستخدم {{UserName}}.",
   "menu": {
+    "systemSettings": "الإعدادات",
+    "systemErrorLogs": "سجلات أخطاء النظام",
+    "errorLogSettings": "إعدادات سجلات الأخطاء",
     "basicDataGroup": "مجموعة بيانات",
     "basicDataDescription": "إدارة البيانات المرجعية المشتركة في نظام ERP.",
     "basicDataNavigation": "تنقل البيانات الأساسية",
@@ -389,7 +392,18 @@
       "blue": "أزرق",
       "navy": "كحلي وذهبي",
       "monochrome": "أبيض وأسود"
-    }
+    },
+    "companyLocalizations": "لغات الشركة وترجمة الواجهة",
+    "administration": "الإدارة",
+    "auditTrail": "سجل التدقيق",
+    "errorLogs": "سجلات الأخطاء",
+    "healthCheck": "حالة النظام",
+    "apiEndpoints": "نقاط API",
+    "hangfireDashboard": "المهام الخلفية",
+    "localizationMessages": "رسائل الترجمة",
+    "systemUiTexts": "نصوص واجهة النظام",
+    "emailTemplates": "قوالب البريد الإلكتروني",
+    "messageLogs": "سجل الرسائل"
   },
   "actions": {
     "buttons": "العمليات",
@@ -566,7 +580,8 @@
     "goToPreviousRecord": "الذهاب للسجل السابق",
     "goToNextRecord": "الذهاب للسجل التالى",
     "goToLastRecord": "الذهاب للسجل الاخير",
-    "pages": "الصفحات"
+    "pages": "الصفحات",
+    "unknownTotal": "غير معلوم"
   },
   "chartCommon": {
     "label": "مخطط بيانات",
@@ -1006,5 +1021,56 @@
   "attendanceDevices": {
     "title": "أجهزة الحضور",
     "devices": "الأجهزة"
+  },
+  "settingsWorkspace": {
+    "description": "إدارة الإعدادات المتاحة لحسابك.",
+    "forbidden": "لا توجد إعدادات متاحة بصلاحياتك الحالية."
+  },
+  "emailTemplates": {
+    "title": "قوالب البريد الإلكتروني",
+    "description": "خصص رسائل الحساب لهذه الشركة.",
+    "template": "القالب",
+    "subject": "عنوان الرسالة",
+    "body": "محتوى البريد",
+    "language": "اللغة",
+    "english": "الإنجليزية",
+    "arabic": "العربية",
+    "status": "الحالة",
+    "actions": "الإجراءات",
+    "all": "كل القوالب",
+    "customized": "مخصص",
+    "default": "القالب القياسي",
+    "edit": "تعديل ومعاينة",
+    "view": "عرض ومعاينة",
+    "preview": "معاينة شكل الإيميل النهائي",
+    "previewing": "جاري تجهيز المعاينة…",
+    "previewHint": "معاينة المسودة ببيانات تجريبية دون إرسال. قد تختلف الخطوط والمسافات حسب تطبيق البريد.",
+    "previewOutdated": "تغيرت المسودة. حدّث المعاينة.",
+    "variables": "متغيرات تستبدل تلقائيًا عند الإرسال",
+    "insertSubject": "إدراج في العنوان: {{token}}",
+    "actionButton": "متابعة",
+    "reset": "استعادة القالب القياسي",
+    "resetConfirm": "هل تريد استعادة النسخة القياسية لهذا القالب وهذه اللغة؟",
+    "reload": "إعادة تحميل",
+    "loadFailed": "تعذر تحميل قوالب البريد الإلكتروني.",
+    "operationFailed": "راجع المحتوى، أو أعد التحميل إذا عدله مستخدم آخر.",
+    "forbidden": "ليس لديك صلاحية عرض قوالب بريد الشركة.",
+    "empty": "لا توجد قوالب تطابق معايير البحث.",
+    "search": "بحث باسم القالب أو عنوان الرسالة…",
+    "securityHint": "مستلم واحد فقط. احتفظ برابط إجراء الحساب مرة واحدة. لا تتاح CC/BCC.",
+    "subjectValidation": "استخدم 1–200 حرف دون فواصل أسطر.",
+    "bodyValidation": "أدخل محتوى البريد بحد أقصى 50,000 حرف.",
+    "actionValidation": "أدرج رابط إجراء الحساب {ACTION_URL} مرة واحدة فقط."
+  },
+  "richText": {
+    "formatting": "تنسيق النص",
+    "bold": "عريض",
+    "italic": "مائل",
+    "underline": "تسطير",
+    "bulletList": "قائمة نقطية",
+    "orderedList": "قائمة مرقمة",
+    "undo": "تراجع",
+    "redo": "إعادة",
+    "hint": "حدد النص لتنسيقه أو أدرج حقل بيانات عند المؤشر."
   }
 }

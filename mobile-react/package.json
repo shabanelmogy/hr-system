@@ -14,7 +14,7 @@
     "check:contracts": "node scripts/check-contract-matrix.mjs",
     "sync:contracts": "node scripts/sync-phase00-matrix.mjs",
     "check:dependencies": "node scripts/check-dependency-compatibility.mjs",
-    "check:i18n": "node scripts/check-i18n.mjs",
+    "check:i18n": "node scripts/check-i18n.mjs && npm run check:company-catalog",
     "check:native-config": "node scripts/check-native-config.mjs",
     "check:release": "node scripts/check-release-readiness.mjs",
     "check:expo": "npx expo-doctor",
@@ -23,7 +23,8 @@
     "test": "jest --runInBand",
     "test:coverage": "jest --runInBand --coverage --coverageReporters=text-summary --coverageReporters=json-summary",
     "test:watch": "jest --watch",
-    "check": "npm run typecheck && npm run lint && npm run check:architecture && npm run check:contracts && npm run check:i18n && npm run check:foundation && npm run check:release && npm run test:coverage"
+    "check": "npm run typecheck && npm run lint && npm run check:architecture && npm run check:contracts && npm run check:i18n && npm run check:foundation && npm run check:release && npm run test:coverage",
+    "check:company-catalog": "node --test ../scripts/company-ui-scope-policy.test.mjs ../scripts/system-ui-access-policy.test.mjs && node ../scripts/export-company-ui-catalog.mjs --check"
   },
   "dependencies": {
     "@app/tokens": "file:../packages/tokens",

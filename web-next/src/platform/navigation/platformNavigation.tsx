@@ -26,9 +26,19 @@ export function getPlatformNavigation(): NavigationConfig {
 
   const administration = createNavSection(
     "platform-administration",
-    "menu.rolesAndUsersManagement",
+    "menu.administration",
     administrationIcon,
     [
+      createNavItem("menu.messageLogs", createColoredIcon(<EmailIcon />, "platform"), appRoutes.platform.administration.messageLogs, undefined, [permissions.ViewMessageLogs]),
+      createNavItem("menu.emailTemplates", createColoredIcon(<EmailIcon />, "platform"),
+        appRoutes.platform.administration.emailTemplates, undefined, [permissions.ViewCompanyEmailTemplates]),
+      createNavItem(
+        "menu.companyLocalizations",
+        createColoredIcon(<TranslateIcon />, "platform"),
+        appRoutes.platform.administration.companyLocalizations,
+        undefined,
+        [permissions.ViewCompanyLocalizations],
+      ),
       createNavItem(
         "menu.rolesManagement",
         administrationItemIcon,
@@ -86,33 +96,40 @@ export function getPlatformNavigation(): NavigationConfig {
     createColoredIcon(<HealthAndSafetyIcon />, "platform"),
     [
       createNavItem(
-        "advancedTools.localizationApi",
+        "menu.localizationMessages",
         createColoredIcon(<TranslateIcon />, "platform"),
         appRoutes.platform.advancedTools.localizationApi,
         undefined,
         [permissions.ViewLocalizations],
       ),
       createNavItem(
-        "advancedTools.auditTrail",
+        "menu.auditTrail",
         createColoredIcon(<HistoryIcon />, "platform"),
         appRoutes.platform.advancedTools.auditTrail,
         undefined,
         [permissions.ViewAuditTrail],
       ),
       createNavItem(
-        "advancedTools.healthCheck",
+        "menu.errorLogs",
+        createColoredIcon(<HistoryIcon />, "platform"),
+        appRoutes.platform.advancedTools.errorLogs,
+        undefined,
+        [permissions.ViewErrorLogs],
+      ),
+      createNavItem(
+        "menu.healthCheck",
         createColoredIcon(<HealthAndSafetyIcon />, "platform"),
         appRoutes.platform.advancedTools.healthCheck,
         ["admin"],
       ),
       createNavItem(
-        "advancedTools.apiEndPoints",
+        "menu.apiEndpoints",
         createColoredIcon(<ApiIcon />, "platform"),
         appRoutes.platform.advancedTools.apiEndpoints,
         ["admin"],
       ),
       createNavItem(
-        "advancedTools.hangfireDashboard",
+        "menu.hangfireDashboard",
         createColoredIcon(<WorkHistoryIcon />, "platform"),
         appRoutes.platform.advancedTools.hangfireDashboard,
         undefined,
@@ -121,5 +138,16 @@ export function getPlatformNavigation(): NavigationConfig {
     ],
   );
 
-  return [administration, files, advancedTools];
+  const configurationPaths = new Set<string>([
+    appRoutes.platform.administration.companyLocalizations,
+    appRoutes.platform.administration.offlineOperations,
+    appRoutes.platform.companyGeographicScope,
+    appRoutes.platform.advancedTools.localizationApi,
+  ]);
+  const allItems = [...(administration.items ?? []), ...(advancedTools.items ?? [])];
+  administration.items = allItems.filter((item) => item.path && !configurationPaths.has(item.path));
+  administration.items.push(createNavItem("menu.settings", createColoredIcon(<TuneIcon />, "platform"),
+    appRoutes.platform.settings, undefined, [permissions.ViewCompanyLocalizations, permissions.ViewOfflineOperations,
+      permissions.ViewCompanyGeographicScope, permissions.ViewLocalizations]));
+  return [administration, files];
 }

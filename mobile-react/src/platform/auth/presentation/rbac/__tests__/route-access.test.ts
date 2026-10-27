@@ -16,6 +16,48 @@ const userWith = ({
 } = {}): AuthorizationClaims => ({ roles, permissions: permissionClaims });
 
 describe('route access manifest', () => {
+  it('permits company email preview only with its exact View grant and excludes global sessions', () => {
+    expect(canAccessRoute(ROUTES.emailTemplates, userWith())).toBe(false);
+    expect(canAccessRoute(ROUTES.emailTemplates, userWith({ permissionClaims: [permissions.ViewCompanyEmailTemplates] }))).toBe(true);
+    expect(canAccessRoute(ROUTES.emailTemplates, userWith({ permissionClaims: [permissions.EditCompanyEmailTemplates] }))).toBe(false);
+    expect(canAccessRoute(ROUTES.emailTemplates, userWith({ roles: [appRoles.superAdmin], permissionClaims: [permissions.ViewCompanyEmailTemplates] }))).toBe(false);
+    expect(requiredModuleForPath(ROUTES.emailTemplates)).toEqual({ moduleCode: 'platform', submoduleCode: 'tenant-administration' });
+  });
+  it('requires the specific global grant for each SuperAdmin tool', () => {
+    for (const [path, permission] of [
+      [ROUTES.systemAuditTrail, permissions.ViewSystemAuditTrail],
+      [ROUTES.advancedTools.healthCheck, permissions.ViewSystemHealth],
+      [ROUTES.advancedTools.apiEndpoints, permissions.ViewSystemApiDocs],
+      [ROUTES.advancedTools.hangfireDashboard, permissions.ViewHangfireDashboard],
+    ]) {
+      expect(canAccessRoute(path, userWith({ roles: [appRoles.superAdmin] }))).toBe(false);
+      expect(canAccessRoute(path, userWith({ roles: [appRoles.superAdmin], permissionClaims: [permission] }))).toBe(true);
+    }
+    expect(canAccessRoute(ROUTES.systemAuditTrail, userWith({ permissionClaims: [permissions.ViewSystemAuditTrail] }))).toBe(false);
+    expect(canAccessRoute(ROUTES.advancedTools.auditTrail, userWith({ roles: [appRoles.superAdmin], permissionClaims: [permissions.ViewAuditTrail] }))).toBe(false);
+  });
+  it('keeps the Settings parent reachable for permitted company configuration without granting children', () => {
+    const user = userWith({ permissionClaims: [permissions.ViewCompanyLocalizations] });
+    expect(canAccessRoute(ROUTES.settings, user)).toBe(true);
+    expect(canAccessRoute(ROUTES.administration.companyLocalizations, user)).toBe(true);
+    expect(canAccessRoute(ROUTES.errorLogSettings, user)).toBe(false);
+    expect(canAccessRoute(ROUTES.settings, userWith())).toBe(false);
+    expect(MAIN_DRAWER_ROUTES.find((entry) => entry.name === 'system-error-logs')?.hidden).toBe(true);
+    expect(MAIN_DRAWER_ROUTES.find((entry) => entry.name === 'administration')?.hidden).toBe(true);
+  });
+  it('keeps Error Logs company and global permissions independent', () => {
+    expect(MAIN_DRAWER_ROUTES.find((entry) => entry.name === 'error-log-settings')?.hidden).toBe(true);
+    const company = userWith({ permissionClaims: [permissions.ViewErrorLogs] });
+    expect(canAccessRoute(ROUTES.advancedTools.errorLogs, company)).toBe(true);
+    expect(canAccessRoute(ROUTES.systemErrorLogs, company)).toBe(false);
+    expect(canAccessRoute(ROUTES.errorLogSettings, company)).toBe(false);
+    const system = userWith({ roles: [appRoles.superAdmin], permissionClaims: [permissions.ViewSystemErrorLogs] });
+    expect(canAccessRoute(ROUTES.systemErrorLogs, system)).toBe(true);
+    expect(canAccessRoute(ROUTES.errorLogSettings, system)).toBe(false);
+    expect(canAccessRoute(ROUTES.advancedTools.errorLogs, system)).toBe(false);
+    expect(canAccessRoute(ROUTES.systemErrorLogs, userWith({ roles: [appRoles.superAdmin] }))).toBe(false);
+    expect(canAccessRoute(ROUTES.errorLogSettings, userWith({ roles: [appRoles.superAdmin], permissionClaims: [permissions.ViewErrorLogSettings] }))).toBe(true);
+  });
   it('maps business routes to the matching commercial submodule', () => {
     expect(requiredModuleForPath('/apps/hr/recruitment')).toEqual({
       moduleCode: 'hr',
@@ -47,6 +89,14 @@ describe('route access manifest', () => {
 
   it('defaults unknown routes to denied', () => {
     expect(canAccessRoute('/not-registered', userWith())).toBe(false);
+  });
+  it('requires the exact company-localization view grant and exposes its administration entry', () => {
+    const viewer = userWith({ permissionClaims: [permissions.ViewCompanyLocalizations] });
+    expect(getRoutePolicy(ROUTES.administration.companyLocalizations)?.path).toBe(ROUTES.administration.companyLocalizations);
+    expect(canAccessRoute(ROUTES.administration.companyLocalizations, viewer)).toBe(true);
+    expect(canAccessRoute(ROUTES.administration.root, viewer)).toBe(true);
+    expect(canAccessRoute(ROUTES.administration.companyLocalizations, userWith({ permissionClaims: [permissions.ViewUsers] }))).toBe(false);
+    expect(requiredModuleForPath(ROUTES.administration.companyLocalizations)).toEqual({ moduleCode: 'platform', submoduleCode: 'tenant-administration' });
   });
 
   it('uses the specific role-permissions policy before administration root', () => {
@@ -260,4 +310,11 @@ describe('route access manifest', () => {
     expect(workforceRoute?.path).toBe(ROUTES.workforcePlanning.index);
     expect(workforceRoute?.headerShown).toBe(false);
   });
+});
+
+it('isolates the global text editor from company actors and requires its exact grant',()=>{
+ const global=userWith({roles:[appRoles.superAdmin],permissionClaims:[permissions.ViewSystemUiTexts]});
+ expect(canAccessRoute(ROUTES.systemUiTexts,global)).toBe(true);
+ expect(canAccessRoute(ROUTES.systemUiTexts,userWith({roles:[appRoles.superAdmin],permissionClaims:[]}))).toBe(false);
+ expect(canAccessRoute(ROUTES.systemUiTexts,userWith({roles:[appRoles.admin],permissionClaims:[permissions.ViewSystemUiTexts]}))).toBe(false);
 });

@@ -24,6 +24,8 @@
     <CentralPackageTransitivePinningEnabled>false</CentralPackageTransitivePinningEnabled>
   </PropertyGroup>
   <ItemGroup Condition="'$(ManagePackageVersionsCentrally)' == 'true'">
+    <!-- Patch the SignalR Redis transitive dependency (GHSA-qhrr-8q5h-9q3h). -->
+    <PackageVersion Include="MessagePack" Version="2.5.303" />
     <PackageVersion Include="Asp.Versioning.Mvc" Version="8.1.0" />
     <PackageVersion Include="Asp.Versioning.Mvc.ApiExplorer" Version="8.1.0" />
     <PackageVersion Include="AspNet.Security.OAuth.LinkedIn" Version="10.0.0" />
@@ -36,6 +38,7 @@
     <PackageVersion Include="FluentValidation.DependencyInjectionExtensions" Version="12.1.1" />
     <PackageVersion Include="Hangfire.AspNetCore" Version="1.8.23" />
     <PackageVersion Include="Hangfire.SqlServer" Version="1.8.23" />
+    <PackageVersion Include="HtmlSanitizer" Version="9.2.1039" />
     <PackageVersion Include="MailKit" Version="4.17.0" />
     <PackageVersion Include="Mapster" Version="10.0.12" />
     <PackageVersion Include="MediatR" Version="12.5.0" />

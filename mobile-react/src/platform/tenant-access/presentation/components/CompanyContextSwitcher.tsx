@@ -79,7 +79,7 @@ export function CompanyContextSwitcher({
   const confirmDiscardAndSwitch = async () => {
     if (!pendingDiscardCompanyId) return;
     const companyId = pendingDiscardCompanyId;
-    discardUnsavedChanges();
+    if (!discardUnsavedChanges()) return;
     setPendingDiscardCompanyId(null);
     await performSwitch(companyId);
   };

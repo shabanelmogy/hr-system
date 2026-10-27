@@ -12,7 +12,8 @@ RUN dotnet publish ./ErpSystem.Api/ErpSystem.Api.csproj \
     --configuration Release \
     --no-restore \
     --output /app/publish \
-    /p:UseAppHost=false
+    /p:UseAppHost=false \
+    /p:PublishAppSettings=false
 
 FROM ${RUNTIME_IMAGE} AS final
 WORKDIR /app

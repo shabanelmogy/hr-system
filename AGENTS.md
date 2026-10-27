@@ -100,6 +100,19 @@ Rules:
 
 ## Shared component first (mandatory)
 
+- This is a mandatory implementation rule, not visual guidance: use the existing
+  shared component; extend it generically when close; create a reusable shared
+  component only when none exists or fits. Never replace an existing shared
+  component with a feature-local look-alike.
+- Web collection Grids must consume `MyDataGrid` from the shared public API.
+  `ClientDataGrid` and MUI `DataGrid`/Pro/Premium are internal implementation
+  details, not feature components. Preserve the shared toolbar/search, Grid
+  options, footer and record navigation. Additional criteria belong in the
+  generic `toolbarFilters` slot; domain feedback belongs in `emptyContent`.
+  Feature pages own data, permissions and callbacks, not another Grid shell.
+  `npm run check:architecture` rejects raw-grid bypasses; changed Grid features
+  must verify their shared controls and paging in the browser.
+
 - Before creating or changing a screen, form, dialog, grid, card, filter, toolbar,
   pagination control, empty/loading/error state, or layout, search the target
   application's shared component library and the selected reference feature.

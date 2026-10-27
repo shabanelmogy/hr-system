@@ -46,7 +46,12 @@ export async function loginWithDemoRole(
   returnTo = "/",
 ) {
   await page.goto(`/login?returnTo=${encodeURIComponent(returnTo)}`);
-  await page.getByRole("button", { name: role, exact: true }).click();
+  const labels = {
+    User: /^(User|مستخدم)$/,
+    Admin: /^(Admin|مدير)$/,
+    "Super Admin": /^(Super Admin|مدير النظام)$/,
+  };
+  await page.getByRole("button", { name: labels[role] }).click();
 }
 
 export async function completeUserTenantAndCompanySelection(page: Page) {

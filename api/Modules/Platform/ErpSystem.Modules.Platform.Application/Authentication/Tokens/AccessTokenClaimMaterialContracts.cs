@@ -51,6 +51,15 @@ public interface IAccessTokenClaimMaterialSource
         CancellationToken cancellationToken = default);
 }
 
+public interface ICompanyPermissionClaimMaterialSource
+{
+    Task<IReadOnlySet<string>> GetDirectPermissionsAsync(
+        string userId,
+        string tenantId,
+        int companyId,
+        CancellationToken cancellationToken = default);
+}
+
 /// <summary>Neutral claim pair consumed by the existing JWT signing facade.</summary>
 public sealed record AccessTokenClaimValue(string Type, string Value);
 

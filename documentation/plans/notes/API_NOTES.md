@@ -15,6 +15,8 @@ Then reference its stable ID here.
 
 | Note ID | Type | Area | Summary | Canonical registry |
 | --- | --- | --- | --- | --- |
+| DEC-023 | Decision | Error-log capture | Select first-release capture boundaries. | `DECISION_BACKLOG.md` |
+| DEC-022 | Decision | Error-log lifecycle | Confirm retention and append-only/export policy. | `DECISION_BACKLOG.md` |
 | PROD-010 | Production | Hosted device/API E2E | Mobile authenticated release journeys require the deployed API. | `PRODUCTION_NOTES.md` |
 | PROD-011 | Production | Swagger/API drift | Hosted API description and smoke must be reconciled after contract/version changes. | `PRODUCTION_NOTES.md` |
 | PROD-016 | Production | Database migrations | Production module migrations are a deployment step, not multi-instance startup work. | `PRODUCTION_NOTES.md` |
@@ -51,3 +53,8 @@ Use `Surface = API` or `Surface = Cross-platform` for items involving:
 
 A business plan cannot become `Implementation Ready` while a blocking Required API
 decision is recorded only as an unresolved note.
+| RISK-010 | Risk | Error Logs capture availability | Best-effort sink and authenticated runtime capture limits; see canonical note. | `KNOWN_RISKS.md` |
+
+`PROD-027` — Company account email provider/client acceptance; canonical ownership, trigger and production gate are in PRODUCTION_NOTES.md.
+
+`DEC-024` — Company message logs scope; canonical decision in DECISION_BACKLOG.md. `RISK-011` — Observational capture availability/uncertain SMTP outcome; canonical risk in KNOWN_RISKS.md.

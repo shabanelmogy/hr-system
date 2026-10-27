@@ -16,6 +16,8 @@ import { TenantAccessBoundary } from "@/platform/tenant-access/runtime";
 import { UnsavedChangesProvider } from "@/shared/contexts/UnsavedChangesContext";
 import { MainClientBootstrap } from "@/shell/bootstrap";
 import { FiscalYearContextSwitcher } from "@/modules/accounting/fiscal-years";
+import { CompanyLocalizationBridge } from "@/platform/company-localizations/runtime";
+import { ErrorLogCaptureBridge } from "@/platform/error-logs/runtime";
 
 const ReactQueryDevtools = dynamic(
   () => import("@tanstack/react-query-devtools").then((module) => module.ReactQueryDevtools),
@@ -77,6 +79,8 @@ function ContextShell({
     <QueryClientProvider client={queryClient}>
       <UnsavedChangesProvider>
         <MainClientBootstrap />
+        <CompanyLocalizationBridge />
+        <ErrorLogCaptureBridge />
         <SignalRProvider>
           <TenantAccessBoundary>
             {realtimeEnabled ? (

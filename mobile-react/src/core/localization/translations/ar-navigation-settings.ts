@@ -1,5 +1,7 @@
 export const arNavigationSettings = {
   navigation: {
+    emailTemplates: "قوالب البريد الإلكتروني",
+    systemUiTexts: "نصوص واجهة النظام",
     administration: 'الإدارة',
     users: 'المستخدمون',
     invitations: 'الدعوات',
@@ -21,6 +23,9 @@ export const arNavigationSettings = {
     files: 'مدير الملفات',
     appointments: 'المواعيد',
     auditTrail: 'سجل العمليات',
+    errorLogs: 'سجلات الأخطاء',
+    systemErrorLogs: 'سجلات أخطاء النظام',
+    errorLogSettings: 'إعدادات سجلات الأخطاء',
     localizationApi: 'إدارة الترجمات',
     healthCheck: 'حالة النظام',
     apiEndpoints: 'واجهات API',
@@ -38,6 +43,8 @@ export const arNavigationSettings = {
     developmentRole: 'دور التطوير: {{role}}',
   },
   settings: {
+    devicePreferences: 'تفضيلات الجهاز',
+    workspaceDescription: 'إدارة الإعدادات المتاحة لحسابك.',
     title: 'الإعدادات',
     subtitle: 'اختر مظهر التطبيق ولغة العرض.',
     language: 'اللغة',

@@ -24,6 +24,8 @@ This is the central index for ERP business/build plans.
 
 | Plan ID | Capability | Module | Status | Canonical plan | Target | Notes |
 | --- | --- | --- | --- | --- | --- | --- |
+| `platform-error-logs` | Error logs and scoped diagnostics | Platform | Closed | [`documentation/plans/business/platform-error-logs/PLAN.md`](business/platform-error-logs/PLAN.md) | Error log viewer V1 | Closed for authorized development/automated scope 2026-10-17; live migration and API/Web/Mobile checks verified, written education delivered. Native PROD-026, capture RISK-010 and inherited full/release gates remain explicit. |
+| `platform-user-permissions-and-company-localization` | Direct user grants and company UI localization | Platform | Closed | [`documentation/plans/business/platform-user-permissions-and-company-localization/PLAN.md`](business/platform-user-permissions-and-company-localization/PLAN.md) | ERP platform administration V1 | S1 and S2 closed for authorized automatic scope 2026-10-17; native PROD-026 and full-gate FOLLOW-006/FOLLOW-007 remain open. |
 | `omnichannel-erp-product` | Omnichannel ERP / digital channels product blueprint | Cross-platform | Draft | [`documentation/plans/product/OMNICHANNEL_ERP_PRODUCT_BLUEPRINT.md`](product/OMNICHANNEL_ERP_PRODUCT_BLUEPRINT.md) | Long-term | Product/ownership/sequencing blueprint; does not create runtime modules or routes. |
 | `van-sales` | Van Sales / field sales | Sales + Inventory + Accounting + Mobile | Draft | [`documentation/plans/product/VAN_SALES_PRODUCT_PLAN.md`](product/VAN_SALES_PRODUCT_PLAN.md) | Future MVP | Future product/implementation plan; prerequisite business modules must be stabilized first. |
 | `accounting-delivery` | Accounting module delivery | Accounting | Draft | [`documentation/modules/accounting/DELIVERY-ROADMAP.md`](../modules/accounting/DELIVERY-ROADMAP.md) | Module roadmap | Canonical module roadmap; individual capabilities use separate gated business plans. |
@@ -40,6 +42,10 @@ This is the central index for ERP business/build plans.
 | `crystal-report-ai-view-designer` | AI report view/designer | Reporting | Draft | [`documentation/modules/reporting/features/crystal-report-manager/AI_REPORT_VIEW_DESIGNER_PLAN.md`](../modules/reporting/features/crystal-report-manager/AI_REPORT_VIEW_DESIGNER_PLAN.md) | Future reporting slice | Must pass G0–G4 before runtime implementation begins. |
 | `erp-platform-template` | Reusable business/SaaS platform template and School merge | Cross-platform Platform | Draft | [`documentation/plans/business/erp-platform-template/PLAN.md`](business/erp-platform-template/PLAN.md) | Platform Template V1 | Review report `REVIEW.md`; slices S0–S8 (hygiene, licences, planning kit, shared tokens, patterns, record scope, workspace generator, collaboration). Open DEC-011 … DEC-015. |
 | `education-module` | School operations as the Education module | Education (new) | Draft | [`documentation/plans/business/education-module/PLAN.md`](business/education-module/PLAN.md) | Education V1 | Seeded from the School Management analysis; blocked at G2 by `erp-platform-template` S7 record scope; DEC-016 open. |
+
+| `super-admin-administration` | Super Admin administration and authorized UI texts | Platform | Closed | [`documentation/plans/business/super-admin-administration/PLAN.md`](business/super-admin-administration/PLAN.md) | S1 Global administration access; S2 Authorized global UI texts | User-authorized global entries and permission-filtered en/ar overrides; company scope unchanged. |
+
+| `company-email-templates` | Company account email templates | Platform | Closed | [`documentation/plans/business/company-email-templates/PLAN.md`](business/company-email-templates/PLAN.md) | S1 Company account email templates | Company-only; Web edit/native preview; safe anonymous fallback. |
 
 ## Deferred
 
@@ -65,3 +71,5 @@ have been reconciled.
 Production-only checks, deferred improvements, known risks, follow-ups, and open
 decisions are not duplicated across plans. They live under
 `documentation/plans/notes/` and are referenced by stable IDs.
+
+| `platform-message-logs` | Company message logs | Platform | Implementation Ready | [`documentation/plans/business/platform-message-logs/PLAN.md`](business/platform-message-logs/PLAN.md) | Message Logs V1 | Company-only Email/detail/Excel; independent retention child follows. |

@@ -2,12 +2,23 @@ import {
   clearUnsavedChangesForTests,
   discardUnsavedChanges,
   hasUnsavedChanges,
+  hasBusyUnsavedChanges,
   registerUnsavedChange,
 } from './unsaved-changes-registry';
 
 afterEach(clearUnsavedChangesForTests);
 
 describe('unsaved changes registry', () => {
+  it('prevents tab/context exit while a registered form is submitting', () => {
+    const discard = jest.fn();
+    const unregister = registerUnsavedChange(discard, true);
+    expect(hasBusyUnsavedChanges()).toBe(true);
+    expect(discardUnsavedChanges()).toBe(false);
+    expect(discard).not.toHaveBeenCalled();
+    expect(hasUnsavedChanges()).toBe(true);
+    unregister();
+    expect(hasBusyUnsavedChanges()).toBe(false);
+  });
   it('tracks active registrations and unregisters them independently', () => {
     const unregisterFirst = registerUnsavedChange(jest.fn());
     const unregisterSecond = registerUnsavedChange(jest.fn());

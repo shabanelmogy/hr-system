@@ -1,4 +1,8 @@
 {
+  "MessageLogs.Forbidden": "لا يمكنك الوصول إلى سجل رسائل هذه الشركة.",
+  "MessageLogs.NotFound": "سجل الرسالة غير موجود.",
+  "MessageLogs.ExportLimit": "ضيق الفلاتر لتصدير 5,000 سجل رسائل كحد أقصى.",
+
     //General Keys
     "Welcome": "مرحباً",
     "Home": "الصفحة الرئيسية",
@@ -398,5 +402,32 @@
     "StaffingRequestConcurrencyConflict": "تم تعديل طلب التوظيف بواسطة طلب آخر",
     "StaffingRequestTargetStartOutsideFiscalYear": "يجب أن يقع تاريخ البدء المستهدف داخل السنة المالية للمظروف",
     "StaffingRequestActiveAllocations": "أغلق أو حرر طلبات الاستقطاب النشطة قبل إغلاق طلب التوظيف",
-    "StaffingRequestInvalidCloseReason": "سبب الإغلاق المحدد لا يتطابق مع مستوى تنفيذ الطلب"
+    "StaffingRequestInvalidCloseReason": "سبب الإغلاق المحدد لا يتطابق مع مستوى تنفيذ الطلب",
+    "CompanyEmailTemplates.Invalid": "محتوى البريد غير صالح. احتفظ برابط إجراء الحساب مرة واحدة واستخدم المتغيرات والتنسيقات المتاحة فقط.",
+    "CompanyEmailTemplates.Forbidden": "قوالب البريد تتطلب شركة نشطة تملك صلاحية الوصول إليها.",
+    "CompanyEmailTemplates.Conflict": "تم تغيير قوالب البريد. أعد تحميل أحدث محتوى قبل الحفظ.",
+    "CompanyLocalizations.CatalogOutdated": "قاموس ترجمة التطبيق قديم. حدّث الصفحة أو التطبيق.",
+    "CompanyLocalizations.Conflict": "تغيرت ترجمات الشركة. أعد تحميل أحدث الإعدادات قبل الحفظ.",
+    "SystemUiTexts.Forbidden": "تخصيص نصوص النظام يتطلب حساب مدير النظام وصلاحية الجزء المحدد.",
+    "SystemUiTexts.Invalid": "نص الواجهة غير صالح. اختر مفتاحًا مسجلًا وحافظ على المتغيرات وأعد تحميل الإعدادات.",
+    "SystemUiTexts.Conflict": "تم تعديل نصوص الواجهة. أعد تحميل القيم الحالية قبل الحفظ.",
+    "SystemUiTexts.CatalogOutdated": "تم تحديث دليل نصوص الواجهة. حدّث التطبيق وأعد التحميل.",
+    "CompanyLocalizations.Forbidden": "تخصيص الترجمة يتطلب شركة نشطة ومصرحًا بالوصول إليها.",
+    "CompanyLocalizations.Invalid": "اللغة أو النص غير صالح. اختر مفتاحًا مسجلًا وحافظ على المتغيرات وأعد تحميل الإعدادات الحالية.",
+    "UserPermissions.Conflict": "تغيرت الصلاحيات أثناء التعديل. أعد التحميل وحاول مرة أخرى.",
+    "UserPermissions.Forbidden": "يمكنك منح الصلاحيات التي تملكها في تطبيق متاح فقط.",
+    "UserPermissions.Invalid": "اختر صلاحيات أعمال صحيحة وغير مكررة.",
+    "UserPermissions.NotFound": "المستخدم غير متاح في الشركة الحالية.",
+    "ErrorLogs.Invalid": "معايير السجل أو الإعدادات غير صالحة. مدة الاحتفاظ من يوم إلى 3650 يومًا، والتصدير بحد أقصى 5000 سجل.",
+    "ErrorLogs.Forbidden": "ليست لديك صلاحية الوصول إلى سجلات الأخطاء المطلوبة.",
+    "ErrorLogs.NotFound": "سجل الخطأ غير موجود في النطاق الحالي.",
+    "ErrorLogs.Conflict": "تغيرت مدة الاحتفاظ. أعد تحميل أحدث الإعدادات قبل الحفظ.",
+    "ErrorLogs:View": "عرض أخطاء الشركة",
+    "ErrorLogs:ViewDetails": "عرض تفاصيل أخطاء الشركة",
+    "ErrorLogs:Export": "تصدير أخطاء الشركة",
+    "SystemErrorLogs:View": "عرض أخطاء النظام",
+    "SystemErrorLogs:ViewDetails": "عرض التشخيص الفني لأخطاء النظام",
+    "SystemErrorLogs:Export": "تصدير أخطاء النظام",
+    "ErrorLogSettings:View": "عرض إعدادات الاحتفاظ بسجل الأخطاء",
+    "ErrorLogSettings:Edit": "تعديل إعدادات الاحتفاظ بسجل الأخطاء"
 }

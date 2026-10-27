@@ -12,3 +12,4 @@ yarn-error.log*
 pnpm-debug.log*
 
 certificates
+/.next-e2e/

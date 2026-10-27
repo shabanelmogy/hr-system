@@ -105,3 +105,7 @@ A feature is not implementation-ready while its Permission Action Matrix contain
 `Manage`, shares one claim between independently grantable actions, omits Web or
 Mobile direct-handler behavior, lacks Arabic/English display ownership, or leaves
 the irreversible Delete versus Archive/Restore decision unresolved.
+
+## Company direct user grants
+
+Platform supports additive direct business grants per Tenant/company/user. Effective grants union eligible role claims with the active company's direct grant set. Removing a direct grant never removes role inheritance. UserPermissions:View and UserPermissions:Edit are independent TenantAdministration operations; they cannot themselves be delegated as direct business grants. New direct additions must be registered, tenant-entitled business claims held by the acting administrator. Current membership/company access, scope, entitlement and session validity remain independent guards. Changes atomically audit and revoke the target user's existing sessions; no-op does neither. See documentation/modules/platform/features/user-company-permissions/user-company-permissions-review.md.

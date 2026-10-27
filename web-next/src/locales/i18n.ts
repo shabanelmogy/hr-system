@@ -2,6 +2,7 @@ import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import enCore from "./resources/core/en.json";
 import arCore from "./resources/core/ar.json";
+import { registerCompanyUiBaseline } from "@/lib/localization/companyUiResources";
 
 i18n
   .use(initReactI18next)
@@ -24,5 +25,7 @@ i18n
       escapeValue: false,
     },
   });
+
+registerCompanyUiBaseline(i18n, "core", { en: enCore, ar: arCore });
 
 export default i18n;

@@ -3,6 +3,7 @@ import { initReactI18next } from 'react-i18next';
 
 import { ar } from '@/src/core/localization/translations/ar';
 import { en } from '@/src/core/localization/translations/en';
+import { registerCompanyUiInstance } from './company-ui-resources';
 
 const appI18n = createInstance();
 
@@ -21,5 +22,7 @@ void appI18n.use(initReactI18next).init({
     useSuspense: false,
   },
 });
+
+registerCompanyUiInstance(appI18n);
 
 export default appI18n;

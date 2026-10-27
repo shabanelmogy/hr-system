@@ -35,6 +35,8 @@ export function createAdministrationUseCases(repository: AdministrationRepositor
     },
     toggleRole: repository.toggleRole.bind(repository),
     getRoleClaims: repository.getRoleClaims.bind(repository),
+    getUserPermissions: repository.getUserPermissions.bind(repository),
+    replaceUserPermissions: repository.replaceUserPermissions.bind(repository),
     updateRoleClaims: repository.updateRoleClaims.bind(repository),
     getInvitations: repository.getInvitations.bind(repository),
     saveManagedUser: async (input: SaveManagedUserInput) => {

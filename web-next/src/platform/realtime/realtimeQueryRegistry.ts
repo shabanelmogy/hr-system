@@ -10,6 +10,7 @@ export const realtimeResources = {
   roleClaims: "role-claims",
   companies: "companies",
   notifications: "notifications",
+  companyLocalizations: "company-localizations",
 } as const;
 
 const queryKeysByResource = new Map<string, readonly RealtimeQueryKey[]>([
@@ -19,6 +20,7 @@ const queryKeysByResource = new Map<string, readonly RealtimeQueryKey[]>([
   [realtimeResources.roleClaims, []],
   [realtimeResources.companies, []],
   [realtimeResources.notifications, [["notifications"]]],
+  [realtimeResources.companyLocalizations, [["company-localizations"]]],
 ]);
 
 export function registerRealtimeQueryKeys(

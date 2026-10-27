@@ -47,6 +47,8 @@ documentation/plans/business/<plan-id>/
 
 ## Current plans
 
+- [`platform-error-logs/PLAN.md`](platform-error-logs/PLAN.md): Draft error-log viewer; separate Super Admin/company audience confirmed, source and retention decisions pending.
+
 Status lives in [`../PLAN_REGISTRY.md`](../PLAN_REGISTRY.md).
 
 | Plan | Files |
@@ -55,3 +57,5 @@ Status lives in [`../PLAN_REGISTRY.md`](../PLAN_REGISTRY.md).
 | `education-module` | [DISCOVERY](education-module/DISCOVERY.md) · [EVIDENCE](education-module/EVIDENCE.md) · [RESEARCH](education-module/RESEARCH.md) · [SPEC_SUMMARY](education-module/SPEC_SUMMARY.md) · [DECISIONS](education-module/DECISIONS.md) · [PLAN](education-module/PLAN.md) |
 | `erp-platform-template` | [DISCOVERY](erp-platform-template/DISCOVERY.md) · [EVIDENCE](erp-platform-template/EVIDENCE.md) · [RESEARCH](erp-platform-template/RESEARCH.md) · [SPEC_SUMMARY](erp-platform-template/SPEC_SUMMARY.md) · [DECISIONS](erp-platform-template/DECISIONS.md) · [PLAN](erp-platform-template/PLAN.md) |
 | `managed-crystal-reporting-reliability` | [DISCOVERY](managed-crystal-reporting-reliability/DISCOVERY.md) · [EVIDENCE](managed-crystal-reporting-reliability/EVIDENCE.md) · [RESEARCH](managed-crystal-reporting-reliability/RESEARCH.md) · [SPEC_SUMMARY](managed-crystal-reporting-reliability/SPEC_SUMMARY.md) · [DECISIONS](managed-crystal-reporting-reliability/DECISIONS.md) · [PLAN](managed-crystal-reporting-reliability/PLAN.md) |
+
+| `company-email-templates` | [DISCOVERY](company-email-templates/DISCOVERY.md) · [EVIDENCE](company-email-templates/EVIDENCE.md) · [RESEARCH](company-email-templates/RESEARCH.md) · [SPEC_SUMMARY](company-email-templates/SPEC_SUMMARY.md) · [DECISIONS](company-email-templates/DECISIONS.md) · [PLAN](company-email-templates/PLAN.md) |

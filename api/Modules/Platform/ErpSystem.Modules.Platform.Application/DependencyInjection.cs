@@ -53,10 +53,14 @@ public static class DependencyInjection
         services.AddScoped<ITenantMembershipService, TenantMembershipService>();
         services.AddScoped<ICompanyAccessService, CompanyAccessService>();
         services.AddScoped<ISessionValidationService, SessionValidationService>();
+        services.AddScoped<Features.CompanyEmailTemplates.CompanyEmailTemplateErrors>();
         services.AddScoped<LocalizationError>();
         services.AddScoped<NotificationErrors>();
         services.AddScoped<ApiKeyErrors>();
         services.AddScoped<RoleErrors>();
+        services.AddScoped<Features.Security.UserPermissions.UserPermissionErrors>();
+        services.AddScoped<Features.CompanyLocalization.CompanyLocalizationErrors>();
+        services.AddScoped<Features.SystemLocalization.SystemLocalizationErrors>();
         services.AddScoped<UserErrors>();
 
         return services;

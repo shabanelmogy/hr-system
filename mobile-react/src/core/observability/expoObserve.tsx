@@ -1,5 +1,6 @@
 import Constants, { AppOwnership, ExecutionEnvironment } from 'expo-constants';
-import React, { type ReactNode } from 'react';
+import React, { useEffect, type ReactNode } from 'react';
+import { reportErrorLog } from './error-log-reporter';
 
 import type { ObserveConfig } from 'expo-observe';
 
@@ -53,10 +54,18 @@ export function ObserveRoot({ children }: { children: ReactNode }) {
 export function ObserveErrorBoundary({ children, fallback }: ObserveErrorBoundaryProps) {
   const Boundary = observeModule?.ObserveErrorBoundary;
   return Boundary ? (
-    <Boundary fallback={fallback}>{children}</Boundary>
+    <Boundary fallback={(failure) => <ReportedFallback failure={failure} fallback={fallback} />}>{children}</Boundary>
   ) : (
     <FallbackErrorBoundary fallback={fallback}>{children}</FallbackErrorBoundary>
   );
+}
+
+function ReportedFallback({ failure, fallback }: {
+  failure: ObserveFallbackProps;
+  fallback: ObserveErrorBoundaryProps['fallback'];
+}) {
+  useEffect(() => { reportErrorLog('boundary', failure.error); }, [failure.error]);
+  return <>{fallback(failure)}</>;
 }
 
 type FallbackErrorBoundaryState = {
@@ -73,6 +82,10 @@ class FallbackErrorBoundary extends React.Component<
 
   static getDerivedStateFromError(error: unknown): FallbackErrorBoundaryState {
     return { error, hasError: true };
+  }
+
+  componentDidCatch(error: unknown): void {
+    reportErrorLog('boundary', error);
   }
 
   private resetError = () => {

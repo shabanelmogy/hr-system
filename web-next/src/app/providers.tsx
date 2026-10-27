@@ -2,6 +2,7 @@
 
 import { useEffect, type ReactNode } from "react";
 import i18n from "@/locales/i18n";
+import { explicitUiLanguage, getCompanyUiFallbackLanguage } from "@/lib/localization/companyUiResources";
 import {
   ThemePreferencesProvider,
   type ThemeDirection,
@@ -52,10 +53,12 @@ export function RuntimePreferencesClientSync({
   useEffect(() => {
     let cancelled = false;
     let readyFrame = 0;
-    const effectivePreferences = reconcileRuntimePreferences(
+    const resolvedPreferences = reconcileRuntimePreferences(
       preferences,
       document.cookie,
     );
+    const language = explicitUiLanguage(document.cookie) ?? getCompanyUiFallbackLanguage();
+    const effectivePreferences: RuntimePreferences = { ...resolvedPreferences, language, direction: language === "ar" ? "rtl" : "ltr" };
 
     document.documentElement.lang = effectivePreferences.language;
     document.documentElement.dir = effectivePreferences.direction;

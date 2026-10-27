@@ -1,0 +1,77 @@
+{
+  "messageLogs": {
+    "title": "Message logs",
+    "type": "Type",
+    "email": "Email",
+    "template": "Template",
+    "subject": "Subject",
+    "recipient": "To",
+    "status": "Status",
+    "cause": "Failure reason",
+    "duration": "Attempt duration (ms)",
+    "details": "View details",
+    "detailTitle": "Message details",
+    "language": "Language",
+    "started": "Attempt time",
+    "startedUtc": "Attempt time (UTC)",
+    "completed": "Completion time",
+    "phase": "Last recorded stage",
+    "smtpCode": "SMTP status code",
+    "correlation": "Correlation ID",
+    "snapshot": "Recorded message content",
+    "snapshotHint": "Snapshot at the attempt, with sensitive action links removed and all links deactivated.",
+    "truncated": "Content was shortened to its storage limit.",
+    "noSnapshot": "No content snapshot was recorded for this attempt.",
+    "acceptanceHint": "Accepted means the SMTP server accepted the message; inbox delivery is unverified. A pending or uncertain result must not trigger a resend.",
+    "copyDetails": "Copy details",
+    "notAvailable": "Not available",
+    "retry": "Retry",
+    "loadFailed": "Message logs could not be loaded.",
+    "forbidden": "You cannot view message logs for this company.",
+    "empty": "No recorded attempts match these filters. History starts when logging is enabled for verified company messages.",
+    "fromUtc": "From date (UTC)",
+    "toUtc": "To date (UTC)",
+    "invalidRange": "End date must be on or after start date.",
+    "all": "All",
+    "search": "Search subject, recipient or correlation",
+    "export": "Export to Excel",
+    "exported": "Excel file downloaded.",
+    "exportFailed": "Export failed. Check permission and narrow filters to at most 5,000 records.",
+    "statuses": {
+      "pending": "No final outcome recorded",
+      "accepted": "Accepted by mail server",
+      "failed": "Failed",
+      "cancelled": "Cancelled before transfer",
+      "uncertain": "Outcome uncertain"
+    },
+    "phases": {
+      "configuration": "Configuration",
+      "render": "Prepare content",
+      "connect": "Connect to mail server",
+      "authenticate": "Authenticate",
+      "send": "Transfer message",
+      "accepted": "Server acceptance",
+      "disconnect": "Close connection"
+    },
+    "causes": {
+      "disabled": "Mail sending is disabled",
+      "configuration": "Mail configuration is invalid",
+      "content": "Message preparation failed",
+      "connection": "Connection to mail server failed",
+      "authentication": "Mail server authentication failed",
+      "rejected": "Mail server rejected the request",
+      "cancelled": "Attempt was cancelled",
+      "communication": "Connection lost during transfer",
+      "unknown": "Unclassified failure"
+    },
+    "languages": {
+      "en": "English",
+      "ar": "Arabic"
+    },
+    "templates": {
+      "email-confirmation": "Email confirmation",
+      "password-reset": "Password reset",
+      "user-invitation": "User invitation"
+    }
+  }
+}

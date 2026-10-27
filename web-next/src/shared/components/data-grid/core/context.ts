@@ -10,6 +10,8 @@ export interface DataGridShellContextValue {
   onToolbarAdd?: () => void;
   toolbarSearch?: DataGridToolbarSearchConfig;
   toolbarContent?: ReactNode;
+  toolbarFilters?: ReactNode;
+  emptyContent?: ReactNode;
   activeRowId: GridRowId | null;
   setActiveRowId: (id: GridRowId | null) => void;
   syncActiveRowSelection: boolean;

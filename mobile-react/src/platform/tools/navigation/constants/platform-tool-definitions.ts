@@ -7,6 +7,7 @@ export type PlatformToolId =
   | 'files'
   | 'appointments'
   | 'auditTrail'
+  | 'errorLogs'
   | 'localizationApi'
   | 'healthCheck'
   | 'apiEndpoints'
@@ -19,6 +20,7 @@ export interface PlatformToolDefinition {
   titleKey: string;
   descriptionKey: string;
   icon: AppIconName;
+  hidden?: boolean;
 }
 
 export interface PlatformToolModuleDefinition {
@@ -62,7 +64,7 @@ export const PLATFORM_TOOL_MODULES: Record<
   advancedTools: {
     id: 'advancedTools',
     rootRoute: ROUTES.advancedTools.root,
-    titleKey: 'navigation.advancedTools',
+    titleKey: 'navigation.administration',
     descriptionKey: 'platformTools.advancedToolsDescription',
     icon: 'construct-outline',
     tools: [
@@ -75,7 +77,16 @@ export const PLATFORM_TOOL_MODULES: Record<
         icon: 'time-outline',
       },
       {
+        id: 'errorLogs',
+        screen: 'error-logs',
+        route: ROUTES.advancedTools.errorLogs,
+        titleKey: 'navigation.errorLogs',
+        descriptionKey: 'errorLogs.description',
+        icon: 'alert-circle-outline',
+      },
+      {
         id: 'localizationApi',
+        hidden: true,
         screen: 'localization-api',
         route: ROUTES.advancedTools.localizationApi,
         titleKey: 'navigation.localizationApi',

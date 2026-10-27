@@ -23,7 +23,7 @@ import {
   TenantReadOnlyBadge,
   TenantSubscriptionStatusBadge,
 } from '@/src/platform/tenant-access';
-import { useSequencedDrawerDescriptors } from '@/src/platform/navigation';
+import { AdministrationLinks, useSequencedDrawerDescriptors } from '@/src/platform/navigation';
 import { AppText } from '@/src/shared/components';
 
 export function AppDrawerContent(props: DrawerContentComponentProps) {
@@ -81,6 +81,7 @@ export function AppDrawerContent(props: DrawerContentComponentProps) {
 
       <View style={styles.navigationItems}>
         <DrawerItemList {...props} descriptors={descriptors} />
+        <AdministrationLinks onNavigate={() => props.navigation.closeDrawer()} />
       </View>
     </DrawerContentScrollView>
   );

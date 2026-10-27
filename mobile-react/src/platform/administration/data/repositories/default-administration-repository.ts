@@ -20,6 +20,8 @@ export class DefaultAdministrationRepository implements AdministrationRepository
   updateRole(request: Parameters<AdministrationRepository['updateRole']>[0]) { this.requireOnline(); return this.remote.updateRole(request); }
   toggleRole(id: string) { this.requireOnline(); return this.remote.toggleRole(id); }
   getRoleClaims(id: string) { this.requireOnline(); return this.remote.getRoleClaims(id); }
+  getUserPermissions(userId: string, companyId: number) { this.requireOnline(); return this.remote.getUserPermissions(userId, companyId); }
+  replaceUserPermissions(userId: string, request: Parameters<AdministrationRepository['replaceUserPermissions']>[1]) { this.requireOnline(); return this.remote.replaceUserPermissions(userId, request); }
   updateRoleClaims(request: Parameters<AdministrationRepository['updateRoleClaims']>[0]) { this.requireOnline(); return this.remote.updateRoleClaims(request); }
   getInvitations() { this.requireOnline(); return this.remote.getInvitations(); }
   createInvitation(request: Parameters<AdministrationRepository['createInvitation']>[0]) { this.requireOnline(); return this.remote.createInvitation(request); }

@@ -44,11 +44,8 @@ const advancedToolsItem: BreadcrumbItem = {
   route: ROUTES.advancedTools.root,
 };
 
-const administrationItem: BreadcrumbItem = {
-  key: 'administration',
-  labelKey: 'navigation.administration',
-  route: ROUTES.administration.root,
-};
+const administrationItem: BreadcrumbItem = { key: 'administration', labelKey: 'navigation.administration' };
+const settingsItem: BreadcrumbItem = { key: 'settings', labelKey: 'navigation.settings', route: ROUTES.settings };
 
 const financeItem: BreadcrumbItem = {
   key: 'finance',
@@ -66,6 +63,7 @@ const breadcrumbsByPath: Record<string, readonly BreadcrumbItem[]> = {
   [ROUTES.home]: [homeItem],
   [ROUTES.settings]: [
     homeItem,
+    administrationItem,
     { key: 'settings', labelKey: 'navigation.settings' },
   ],
   [ROUTES.profile]: [
@@ -80,6 +78,11 @@ const breadcrumbsByPath: Record<string, readonly BreadcrumbItem[]> = {
     homeItem,
     { key: 'super-admin-dashboard', labelKey: 'navigation.superAdminDashboard' },
   ],
+  [ROUTES.emailTemplates]: [homeItem, administrationItem, {key:'email-templates',labelKey:'navigation.emailTemplates'}],
+  [ROUTES.systemUiTexts]: [homeItem, administrationItem, {key:'system-ui-texts',labelKey:'navigation.systemUiTexts'}],
+  [ROUTES.systemAuditTrail]: [homeItem, administrationItem, { key: 'system-audit-trail', labelKey: 'navigation.auditTrail' }],
+  [ROUTES.systemErrorLogs]: [homeItem, administrationItem, { key: 'system-error-logs', labelKey: 'navigation.systemErrorLogs' }],
+  [ROUTES.errorLogSettings]: [homeItem, administrationItem, settingsItem, { key: 'error-log-settings', labelKey: 'navigation.errorLogSettings' }],
   [ROUTES.tenantManagement]: [
     homeItem,
     { key: 'tenant-management', labelKey: 'navigation.tenantManagement' },
@@ -192,12 +195,8 @@ const breadcrumbsByPath: Record<string, readonly BreadcrumbItem[]> = {
   ],
   [ROUTES.basicData.companyGeographicScope]: [
     homeItem,
-    basicDataItem,
-    {
-      key: 'organizational-structure',
-      labelKey: 'navigation.organizationalStructure',
-      route: ROUTES.basicData.organizationalStructure,
-    },
+    administrationItem,
+    settingsItem,
     { key: 'company-geographic-scope', labelKey: 'navigation.companyGeographicScope' },
   ],
   [ROUTES.extras.root]: [homeItem, extrasItem],
@@ -214,30 +213,34 @@ const breadcrumbsByPath: Record<string, readonly BreadcrumbItem[]> = {
   [ROUTES.advancedTools.root]: [homeItem, advancedToolsItem],
   [ROUTES.advancedTools.auditTrail]: [
     homeItem,
-    advancedToolsItem,
+    administrationItem,
     { key: 'audit-trail', labelKey: 'navigation.auditTrail' },
   ],
+  [ROUTES.advancedTools.errorLogs]: [homeItem, administrationItem, { key: 'error-logs', labelKey: 'navigation.errorLogs' }],
   [ROUTES.advancedTools.localizationApi]: [
     homeItem,
-    advancedToolsItem,
+    administrationItem,
+    settingsItem,
     { key: 'localization-api', labelKey: 'navigation.localizationApi' },
   ],
   [ROUTES.advancedTools.healthCheck]: [
     homeItem,
-    advancedToolsItem,
+    administrationItem,
     { key: 'health-check', labelKey: 'navigation.healthCheck' },
   ],
   [ROUTES.advancedTools.apiEndpoints]: [
     homeItem,
-    advancedToolsItem,
+    administrationItem,
     { key: 'api-endpoints', labelKey: 'navigation.apiEndpoints' },
   ],
   [ROUTES.advancedTools.hangfireDashboard]: [
     homeItem,
-    advancedToolsItem,
+    administrationItem,
     { key: 'hangfire-dashboard', labelKey: 'navigation.hangfireDashboard' },
   ],
   [ROUTES.administration.root]: [homeItem, administrationItem],
+  [ROUTES.administration.companyLocalizations]: [homeItem, administrationItem, settingsItem,
+    { key: 'company-localizations', labelKey: 'companyLocalizations.title' }],
   [ROUTES.administration.invitations]: [
     homeItem,
     administrationItem,
@@ -251,6 +254,7 @@ const breadcrumbsByPath: Record<string, readonly BreadcrumbItem[]> = {
   [ROUTES.administration.offlineOperations]: [
     homeItem,
     administrationItem,
+    settingsItem,
     { key: 'offline-operations', labelKey: 'navigation.offlineOperations' },
   ],
 };

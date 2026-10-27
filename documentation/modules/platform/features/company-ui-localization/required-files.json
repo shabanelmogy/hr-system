@@ -1,0 +1,798 @@
+{
+  "schemaVersion": 1,
+  "status": "active",
+  "feature": "company-ui-localization",
+  "featureName": "Company UI localization",
+  "referenceFeature": "N/A",
+  "planId": "platform-user-permissions-and-company-localization",
+  "sliceId": "S2 Company UI localization",
+  "canonicalPlan": "documentation/plans/business/platform-user-permissions-and-company-localization/PLAN.md",
+  "featureDecompositionDecision": "Single feature",
+  "screenWorkflowContract": "documentation/plans/business/platform-user-permissions-and-company-localization/decomposition/company-ui-localization.md",
+  "plannedCustomerEducation": "documentation/plans/business/platform-user-permissions-and-company-localization/education/company-ui-localization.md",
+  "purpose": "Applied API, Web, Mobile, catalog deployment, migration and verification evidence for the approved company localization feature.",
+  "reviewArtifact": "documentation/modules/platform/features/company-ui-localization/company-ui-localization-evidence.md",
+  "implementationRequest": "documentation/modules/platform/features/company-ui-localization/company-ui-localization-request.md",
+  "plannedCanonicalBooks": {
+    "master": "documentation/modules/platform/features/company-ui-localization/company-ui-localization-review.md",
+    "api": "documentation/modules/platform/features/company-ui-localization/company-ui-localization-api.md",
+    "web": "documentation/modules/platform/features/company-ui-localization/company-ui-localization-web.md",
+    "mobile": "documentation/modules/platform/features/company-ui-localization/company-ui-localization-mobile.md"
+  },
+  "sourceCollections": [
+    {
+      "id": "CompanyLocalization-0",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Application/Features/CompanyLocalization",
+      "minimumFiles": 4,
+      "purpose": "Current registered runtime and verification sources"
+    },
+    {
+      "id": "CompanyLocalization-1",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Features/CompanyLocalization",
+      "minimumFiles": 3,
+      "purpose": "Current registered runtime and verification sources"
+    },
+    {
+      "id": "CompanyLocalization-2",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Presentation/Features/Platform/CompanyLocalization",
+      "minimumFiles": 1,
+      "purpose": "Current registered runtime and verification sources"
+    },
+    {
+      "id": "company-localizations-3",
+      "layer": "web",
+      "path": "web-next/src/platform/company-localizations",
+      "minimumFiles": 12,
+      "purpose": "Current registered runtime and verification sources"
+    },
+    {
+      "id": "company-localizations-4",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tenant-administration/company-localizations",
+      "minimumFiles": 22,
+      "purpose": "Current registered runtime and verification sources"
+    }
+  ],
+  "requiredFiles": [
+    {
+      "id": "root-agent-guidance",
+      "layer": "configuration",
+      "path": "AGENTS.md",
+      "purpose": "Repository-wide feature and documentation rules"
+    },
+    {
+      "id": "review-artifact",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/company-ui-localization/company-ui-localization-evidence.md",
+      "purpose": "Feature requirement, evidence, finding, and verification ledger"
+    },
+    {
+      "id": "implementation-request",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/company-ui-localization/company-ui-localization-request.md",
+      "purpose": "Copy-ready feature scope, platform decisions, contracts, and quality gates"
+    },
+    {
+      "id": "company-localization-review",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/company-ui-localization/company-ui-localization-review.md",
+      "purpose": "Canonical applied implementation profile"
+    },
+    {
+      "id": "company-localization-api",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/company-ui-localization/company-ui-localization-api.md",
+      "purpose": "Canonical applied implementation profile"
+    },
+    {
+      "id": "company-localization-web",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/company-ui-localization/company-ui-localization-web.md",
+      "purpose": "Canonical applied implementation profile"
+    },
+    {
+      "id": "company-localization-mobile",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/company-ui-localization/company-ui-localization-mobile.md",
+      "purpose": "Canonical applied implementation profile"
+    },
+    {
+      "id": "company-localization-contract",
+      "layer": "documentation",
+      "path": "documentation/plans/business/platform-user-permissions-and-company-localization/decomposition/company-ui-localization.md",
+      "purpose": "Approved v2 screen/workflow contract"
+    },
+    {
+      "id": "company-localization-api-contracts",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Application/Features/CompanyLocalization/CompanyLocalizationContracts.cs",
+      "purpose": "Actor-scoped request, response and store contracts"
+    },
+    {
+      "id": "company-localization-store",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Features/CompanyLocalization/CompanyLocalizationStore.cs",
+      "purpose": "Scoped aggregate, lock, audit and runtime projection"
+    },
+    {
+      "id": "company-localization-catalog",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Features/CompanyLocalization/company-ui-catalog.json",
+      "purpose": "Embedded registered source/key baseline and client fingerprints"
+    },
+    {
+      "id": "company-localization-controller",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Presentation/Features/Platform/CompanyLocalization/V1/CompanyLocalizationsController.cs",
+      "purpose": "Exact permission and TenantMember endpoint surface"
+    },
+    {
+      "id": "company-localization-migration",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Migrations/20261017035730_AddCompanyUiLocalization.cs",
+      "purpose": "Platform settings/override schema migration"
+    },
+    {
+      "id": "company-localization-api-tests",
+      "layer": "test",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Tests/CompanyLocalizationStoreTests.cs",
+      "purpose": "Scope, audit, revision and client isolation tests"
+    },
+    {
+      "id": "company-localization-web-service",
+      "layer": "web",
+      "path": "web-next/src/platform/company-localizations/services/companyLocalizationService.ts",
+      "purpose": "Validated scoped API adapter and catalog-version runtime request"
+    },
+    {
+      "id": "company-localization-web-bridge",
+      "layer": "web",
+      "path": "web-next/src/platform/company-localizations/runtime/CompanyLocalizationBridge.tsx",
+      "purpose": "Current-session runtime reconciliation"
+    },
+    {
+      "id": "company-localization-web-resources",
+      "layer": "web",
+      "path": "web-next/src/lib/localization/companyUiResources.ts",
+      "purpose": "Baseline, generation, safe overlay and language precedence runtime"
+    },
+    {
+      "id": "company-localization-web-bridge-tests",
+      "layer": "test",
+      "path": "web-next/src/platform/company-localizations/runtime/CompanyLocalizationBridge.test.ts",
+      "purpose": "Late-response, Arabic-default event and error-reset evidence"
+    },
+    {
+      "id": "company-localization-catalog-generator",
+      "layer": "configuration",
+      "path": "scripts/export-company-ui-catalog.mjs",
+      "purpose": "Catalog/fingerprint generator"
+    },
+    {
+      "id": "s2-applied-source-001",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Application/DependencyInjection.cs",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-002",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Application/Features/CompanyLocalization/CompanyLocalizationErrors.cs",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-003",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Application/Features/CompanyLocalization/CompanyLocalizationRequests.cs",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-004",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Application/Features/CompanyLocalization/CompanyUiCatalog.cs",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-005",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Contracts/Authorization/PermissionContracts.cs",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-006",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Domain/Companies/Entities/CompanyLocalizationSettings.cs",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-007",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/DependencyInjection.cs",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-008",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/ErpSystem.Modules.Platform.Infrastructure.csproj",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-009",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Features/CompanyLocalization/EmbeddedCompanyUiCatalog.cs",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-010",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Migrations/20261017035730_AddCompanyUiLocalization.Designer.cs",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-011",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/PlatformDbContext.cs",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-012",
+      "layer": "test",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Tests/CompanyLocalizationHandlerTests.cs",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-013",
+      "layer": "test",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Tests/CompanyLocalizationsControllerTests.cs",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-014",
+      "layer": "test",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Tests/CompanyLocalizationSettingsTests.cs",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-015",
+      "layer": "configuration",
+      "path": "documentation/guides/mobile/MOBILE_API_COMPATIBILITY_MATRIX.json",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-016",
+      "layer": "mobile",
+      "path": "mobile-react/app/(main)/_layout.tsx",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-017",
+      "layer": "mobile",
+      "path": "mobile-react/app/(main)/administration/_layout.tsx",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-018",
+      "layer": "mobile",
+      "path": "mobile-react/app/(main)/administration/company-localizations.tsx",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-019",
+      "layer": "mobile",
+      "path": "mobile-react/app/(main)/administration/index.tsx",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-020",
+      "layer": "mobile",
+      "path": "mobile-react/scripts/sync-phase00-matrix.mjs",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-021",
+      "layer": "mobile",
+      "path": "mobile-react/src/core/constants/routes.ts",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-022",
+      "layer": "mobile",
+      "path": "mobile-react/src/core/localization/company-ui-catalog-version.ts",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-023",
+      "layer": "test",
+      "path": "mobile-react/src/core/localization/company-ui-resources.test.ts",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-024",
+      "layer": "mobile",
+      "path": "mobile-react/src/core/localization/company-ui-resources.ts",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-025",
+      "layer": "mobile",
+      "path": "mobile-react/src/core/localization/index.ts",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-026",
+      "layer": "mobile",
+      "path": "mobile-react/src/core/localization/LocalizationProvider.tsx",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-027",
+      "layer": "mobile",
+      "path": "mobile-react/src/core/localization/translations/ar-company-localizations.ts",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-028",
+      "layer": "mobile",
+      "path": "mobile-react/src/core/localization/translations/ar.ts",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-029",
+      "layer": "mobile",
+      "path": "mobile-react/src/core/localization/translations/en-company-localizations.ts",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-030",
+      "layer": "mobile",
+      "path": "mobile-react/src/core/localization/translations/en.ts",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-031",
+      "layer": "mobile",
+      "path": "mobile-react/src/modules/platform/moduleDefinition.ts",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-032",
+      "layer": "test",
+      "path": "mobile-react/src/platform/auth/presentation/context/AuthProvider.test.tsx",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-033",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/auth/presentation/context/AuthProvider.tsx",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-034",
+      "layer": "test",
+      "path": "mobile-react/src/platform/auth/presentation/rbac/__tests__/route-access.test.ts",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-035",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/auth/presentation/rbac/permissions.ts",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-036",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/auth/presentation/rbac/route-manifest.ts",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-037",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/navigation/AppBreadcrumbs.tsx",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-038",
+      "layer": "test",
+      "path": "mobile-react/src/platform/realtime/application/realtime-query-registry.test.ts",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-039",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/realtime/application/realtime-query-registry.ts",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-040",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tenant-administration/company-localizations/application/company-localization-use-cases.ts",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-041",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tenant-administration/company-localizations/composition/use-company-localization-use-cases.ts",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-042",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tenant-administration/company-localizations/data/remote/company-localization-endpoints.ts",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-043",
+      "layer": "test",
+      "path": "mobile-react/src/platform/tenant-administration/company-localizations/data/remote/company-localization-remote-data-source.test.ts",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-044",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tenant-administration/company-localizations/data/remote/company-localization-remote-data-source.ts",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-045",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tenant-administration/company-localizations/data/remote/company-localization-schemas.ts",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-046",
+      "layer": "test",
+      "path": "mobile-react/src/platform/tenant-administration/company-localizations/data/repositories/default-company-localization-repository.test.ts",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-047",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tenant-administration/company-localizations/data/repositories/default-company-localization-repository.ts",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-048",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tenant-administration/company-localizations/domain/models/company-localization.ts",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-049",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tenant-administration/company-localizations/domain/repositories/company-localization-repository.ts",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-050",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tenant-administration/company-localizations/index.tsx",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-051",
+      "layer": "test",
+      "path": "mobile-react/src/platform/tenant-administration/company-localizations/presentation/components/CompanyLocalizationDefaultForm.test.tsx",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-052",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tenant-administration/company-localizations/presentation/components/CompanyLocalizationDefaultForm.tsx",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-053",
+      "layer": "test",
+      "path": "mobile-react/src/platform/tenant-administration/company-localizations/presentation/components/CompanyLocalizationTextForm.test.tsx",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-054",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tenant-administration/company-localizations/presentation/components/CompanyLocalizationTextForm.tsx",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-055",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tenant-administration/company-localizations/presentation/queries/use-company-localization.ts",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-056",
+      "layer": "test",
+      "path": "mobile-react/src/platform/tenant-administration/company-localizations/presentation/runtime/CompanyLocalizationBridge.test.tsx",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-057",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tenant-administration/company-localizations/presentation/runtime/CompanyLocalizationBridge.tsx",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-058",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tenant-administration/company-localizations/presentation/screens/CompanyLocalizationsScreen.tsx",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-059",
+      "layer": "test",
+      "path": "mobile-react/src/platform/tenant-administration/company-localizations/presentation/validation/company-localization-validation.test.ts",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-060",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tenant-administration/company-localizations/presentation/validation/company-localization-validation.ts",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-061",
+      "layer": "test",
+      "path": "web-next/e2e/company-localizations.spec.ts",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-062",
+      "layer": "test",
+      "path": "web-next/e2e/support/test-backend.mjs",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-063",
+      "layer": "web",
+      "path": "web-next/src/app/(main)/administration/(platform)/company-localizations/page.tsx",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-064",
+      "layer": "web",
+      "path": "web-next/src/app/(main)/MainShell.tsx",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-065",
+      "layer": "web",
+      "path": "web-next/src/app/providers.tsx",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-066",
+      "layer": "web",
+      "path": "web-next/src/config/company-ui-catalog-version.ts",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-067",
+      "layer": "web",
+      "path": "web-next/src/config/routes.ts",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-068",
+      "layer": "web",
+      "path": "web-next/src/lib/auth/permissions.ts",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-069",
+      "layer": "web",
+      "path": "web-next/src/lib/auth/route-access.ts",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-070",
+      "layer": "web",
+      "path": "web-next/src/lib/auth/SessionContext.tsx",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-071",
+      "layer": "test",
+      "path": "web-next/src/lib/localization/companyUiResources.test.ts",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-072",
+      "layer": "web",
+      "path": "web-next/src/locales/i18n.ts",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-073",
+      "layer": "web",
+      "path": "web-next/src/locales/resources/platform-auth/ar.json",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-074",
+      "layer": "web",
+      "path": "web-next/src/locales/resources/platform-auth/en.json",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-075",
+      "layer": "web",
+      "path": "web-next/src/locales/StaticTranslationScope.tsx",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-076",
+      "layer": "web",
+      "path": "web-next/src/platform/company-localizations/components/CompanyLocalizationDialogs.tsx",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-077",
+      "layer": "web",
+      "path": "web-next/src/platform/company-localizations/hooks/useCompanyLocalization.ts",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-078",
+      "layer": "web",
+      "path": "web-next/src/platform/company-localizations/index.ts",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-079",
+      "layer": "web",
+      "path": "web-next/src/platform/company-localizations/pages/CompanyLocalizationsPage.tsx",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-080",
+      "layer": "web",
+      "path": "web-next/src/platform/company-localizations/runtime/index.ts",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-081",
+      "layer": "test",
+      "path": "web-next/src/platform/company-localizations/services/companyLocalizationService.test.ts",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-082",
+      "layer": "web",
+      "path": "web-next/src/platform/company-localizations/types/companyLocalization.ts",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-083",
+      "layer": "test",
+      "path": "web-next/src/platform/company-localizations/validation/companyLocalizationValidation.test.ts",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-084",
+      "layer": "web",
+      "path": "web-next/src/platform/company-localizations/validation/companyLocalizationValidation.ts",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-085",
+      "layer": "web",
+      "path": "web-next/src/platform/modules/tenantAdministrationLauncher.ts",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-086",
+      "layer": "web",
+      "path": "web-next/src/platform/modules/useModuleTranslations.ts",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-087",
+      "layer": "web",
+      "path": "web-next/src/platform/navigation/platformNavigation.tsx",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-088",
+      "layer": "test",
+      "path": "web-next/src/platform/realtime/realtimeQueryRegistry.test.ts",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-089",
+      "layer": "web",
+      "path": "web-next/src/platform/realtime/realtimeQueryRegistry.ts",
+      "purpose": "Applied company localization implementation or verification evidence"
+    },
+    {
+      "id": "s2-applied-source-090",
+      "layer": "mobile",
+      "path": "mobile-react/src/core/localization/i18n.ts",
+      "purpose": "Injected core i18n instance used by company runtime without Auth-load React Native plugin coupling"
+    },
+    {
+      "id": "s2-applied-source-091",
+      "layer": "test",
+      "path": "mobile-react/src/platform/tenant-administration/company-localizations/presentation/queries/use-company-localization.test.tsx",
+      "purpose": "Scoped server paging and post-save runtime-prefix invalidation evidence"
+    },
+    {
+      "id": "customer-education",
+      "layer": "documentation",
+      "path": "documentation/plans/business/platform-user-permissions-and-company-localization/education/company-ui-localization.md",
+      "purpose": "Verified Arabic customer education after Phase 06"
+    },
+    {
+      "path": "scripts/company-ui-scope-policy.json",
+      "id": "catalog-scope-policy",
+      "layer": "configuration",
+      "purpose": "Canonical explicit system/company/shared ownership decisions"
+    },
+    {
+      "path": "scripts/company-ui-scope-policy.mjs",
+      "id": "catalog-scope-generator",
+      "layer": "configuration",
+      "purpose": "One ownership classifier and generated client-policy source"
+    },
+    {
+      "path": "scripts/company-ui-scope-policy.test.mjs",
+      "id": "catalog-scope-tests",
+      "layer": "test",
+      "purpose": "Ownership exclusions, legitimate company controls, unknown ownership and fingerprint regressions"
+    },
+    {
+      "path": "web-next/src/config/company-ui-text-scope.ts",
+      "id": "web-catalog-scope-policy",
+      "layer": "web",
+      "purpose": "Generated client defense for company overlay eligibility"
+    },
+    {
+      "path": "mobile-react/src/core/localization/company-ui-text-scope.ts",
+      "id": "mobile-catalog-scope-policy",
+      "layer": "mobile",
+      "purpose": "Generated key-level defense for the mixed Mobile namespace"
+    },
+    {
+      "purpose": "Removed source selection safely resolves to current returned settings",
+      "layer": "test",
+      "path": "web-next/src/platform/company-localizations/hooks/useCompanyLocalization.test.ts",
+      "id": "web-source-scope-regression"
+    },
+    {
+      "purpose": "Catalog scope regressions run in the standard i18n gate",
+      "layer": "configuration",
+      "path": "web-next/package.json",
+      "id": "web-catalog-scope-package-check"
+    },
+    {
+      "purpose": "Catalog scope regressions run in the standard i18n gate",
+      "layer": "configuration",
+      "path": "mobile-react/package.json",
+      "id": "mobile-catalog-scope-package-check"
+    }
+  ],
+  "finalizationChecklist": [
+    "Replace every placeholder in the review artifact.",
+    "Complete the Existing-System Relationship Review and every decision in company-ui-localization-request.md before implementation.",
+    "Complete the Business Rules Matrix with one primary owner, stable outcome/error, and required test for every known rule.",
+    "Complete every Edge Cases & Validation category with scenarios or an explicit N/A reason, enforcement layer, and required test.",
+    "Complete the Impact Matrix with Reuse, Extend, Change, Add, or reasoned N/A across every listed area.",
+    "Remove every remaining placeholder from company-ui-localization-request.md before runtime implementation.",
+    "Add Phase 00 current API, web, mobile, configuration, localization, and test evidence sources.",
+    "Classify every optional view, including Import, as Required, Deferred, or Excluded independently for web and mobile.",
+    "When Import is Required, add its API and applicable client runtime, route/configuration, localization, and focused-test paths.",
+    "Record and test the exact Import request envelope, limits, duplicate and relationship rules, atomicity, permissions, side effects, and retry behavior.",
+    "Add source collections with evidence-based minimum file counts.",
+    "Create the four initial applied implementation books from the approved plan plus verified current source; label target-only behavior explicitly.",
+    "Rename this file to required-files.json when the Phase 00 evidence paths exist; extend it with runtime files during implementation.",
+    "Update the review artifact to point at required-files.json and mark its documentation state Final.",
+    "Merge recipe-registration.draft.json into recipe-manifest.json after the Phase 00 books and preflight manifest are complete.",
+    "Write generated packets under documentation/modules/platform/features/company-ui-localization/generated/.",
+    "Run generation and then Generate-Documentation.ps1 -Check.",
+    "Complete phase 06 with an explicit verification decision.",
+    "Do not start customer-facing education until phase 06 records Verified.",
+    "For customer-visible work, complete phase 07 and its Customer Education Pack before Closed.",
+    "When Customer Education is Required, add the verified education document to required-files.json and rerun Generate-Documentation.ps1 -Check before Closed."
+  ]
+}

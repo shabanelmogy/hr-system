@@ -1,0 +1,2 @@
+import type { SystemLocalizationRepository } from '../domain/repositories/system-localization-repository';
+export const createSystemLocalizationUseCases=(repository:SystemLocalizationRepository)=>({getSettings:repository.getSettings.bind(repository),getTexts:repository.getTexts.bind(repository),getRuntime:repository.getRuntime.bind(repository),setText:repository.setText.bind(repository),resetText:repository.resetText.bind(repository)});

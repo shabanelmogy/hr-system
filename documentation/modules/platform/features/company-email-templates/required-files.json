@@ -1,0 +1,857 @@
+{
+  "schemaVersion": 1,
+  "status": "final",
+  "feature": "company-email-templates",
+  "featureName": "Company email templates",
+  "referenceFeature": "N/A",
+  "planId": "company-email-templates",
+  "sliceId": "S1 Company account email templates",
+  "canonicalPlan": "documentation/plans/business/company-email-templates/PLAN.md",
+  "featureDecompositionDecision": "Single feature",
+  "screenWorkflowContract": "documentation/plans/business/company-email-templates/decomposition/company-email-templates.md",
+  "plannedCustomerEducation": "documentation/plans/business/company-email-templates/education/company-email-templates.md",
+  "purpose": "Final actual-source evidence for S1 company account email templates; development acceptance with separately identified inherited/release gates.",
+  "reviewArtifact": "documentation/modules/platform/features/company-email-templates/company-email-templates-evidence.md",
+  "implementationRequest": "documentation/modules/platform/features/company-email-templates/company-email-templates-request.md",
+  "plannedCanonicalBooks": {
+    "master": "documentation/modules/platform/features/company-email-templates/company-email-templates-review.md",
+    "api": "documentation/modules/platform/features/company-email-templates/company-email-templates-api.md",
+    "web": "documentation/modules/platform/features/company-email-templates/company-email-templates-web.md",
+    "mobile": "documentation/modules/platform/features/company-email-templates/company-email-templates-mobile.md"
+  },
+  "sourceCollections": [
+    {
+      "id": "api-application",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Application/Features/CompanyEmailTemplates",
+      "minimumFiles": 2,
+      "purpose": "CQRS contracts, requests, handlers and validators"
+    },
+    {
+      "id": "api-infrastructure",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Features/CompanyEmailTemplates",
+      "minimumFiles": 3,
+      "purpose": "Scoped store, persistence config, content policy and renderer"
+    },
+    {
+      "id": "api-presentation",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Presentation/Features/Platform/CompanyEmailTemplates",
+      "minimumFiles": 1,
+      "purpose": "V1 endpoints and exact grants"
+    },
+    {
+      "id": "web-feature",
+      "layer": "web-next",
+      "path": "web-next/src/platform/company-email-templates",
+      "minimumFiles": 9,
+      "purpose": "Typed services, hooks, validation, shared composition and tests"
+    },
+    {
+      "id": "web-rich-field",
+      "layer": "web-next",
+      "path": "web-next/src/shared/components/forms/rich-text",
+      "minimumFiles": 2,
+      "purpose": "Generic lazy rich field public API"
+    },
+    {
+      "id": "web-preview",
+      "layer": "web-next",
+      "path": "web-next/src/shared/components/preview",
+      "minimumFiles": 2,
+      "purpose": "Reusable inert HTML preview public API"
+    },
+    {
+      "id": "mobile-feature",
+      "layer": "mobile-react",
+      "path": "mobile-react/src/platform/company-email-templates",
+      "minimumFiles": 12,
+      "purpose": "Domain, use cases, adapters, repository, composition, queries, screens and tests"
+    },
+    {
+      "id": "mobile-preview",
+      "layer": "mobile-react",
+      "path": "mobile-react/src/shared/components/preview",
+      "minimumFiles": 6,
+      "purpose": "Native/Web HTML host and policy tests"
+    },
+    {
+      "id": "plan",
+      "layer": "documentation",
+      "path": "documentation/plans/business/company-email-templates",
+      "minimumFiles": 8,
+      "purpose": "Canonical plan, decisions, research, contract and post-acceptance education"
+    }
+  ],
+  "requiredFiles": [
+    {
+      "id": "source-37dd68363fc1",
+      "layer": "configuration",
+      "path": "AGENTS.md",
+      "purpose": "Repository-wide feature and documentation rules"
+    },
+    {
+      "id": "source-de653bc63646",
+      "path": "api/Directory.Packages.props",
+      "layer": "api",
+      "purpose": "Verified feature registration, integration, locale, delivery or acceptance evidence"
+    },
+    {
+      "id": "source-afbf69eea2d7",
+      "path": "api/ErpSystem.Api/Localization/Resources/ar-EG.json",
+      "layer": "api",
+      "purpose": "Localized validation or permission/feature resource composition"
+    },
+    {
+      "id": "source-d2b334336b85",
+      "path": "api/ErpSystem.Api/Localization/Resources/en-US.json",
+      "layer": "api",
+      "purpose": "Localized validation or permission/feature resource composition"
+    },
+    {
+      "id": "source-2fe96cd40781",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Application/DependencyInjection.cs",
+      "layer": "api",
+      "purpose": "Verified feature registration, integration, locale, delivery or acceptance evidence"
+    },
+    {
+      "id": "source-440cdaef93b6",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Application/Features/CompanyEmailTemplates/CompanyEmailTemplateContracts.cs",
+      "layer": "api",
+      "purpose": "CQRS contracts, requests, handlers and validators"
+    },
+    {
+      "id": "source-ec6482948f6b",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Application/Features/CompanyEmailTemplates/CompanyEmailTemplateRequests.cs",
+      "layer": "api",
+      "purpose": "CQRS contracts, requests, handlers and validators"
+    },
+    {
+      "id": "source-4653a5b34679",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Contracts/Authorization/PermissionContracts.cs",
+      "layer": "api",
+      "purpose": "Verified feature registration, integration, locale, delivery or acceptance evidence"
+    },
+    {
+      "id": "source-6fbb3bf27af0",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Domain/Companies/Entities/CompanyEmailTemplates.cs",
+      "layer": "api",
+      "purpose": "Verified feature registration, integration, locale, delivery or acceptance evidence"
+    },
+    {
+      "id": "source-21a64e62e98f",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/DependencyInjection.cs",
+      "layer": "api",
+      "purpose": "Verified feature registration, integration, locale, delivery or acceptance evidence"
+    },
+    {
+      "id": "source-9720963b3c8c",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/ErpSystem.Modules.Platform.Infrastructure.csproj",
+      "layer": "api",
+      "purpose": "Verified feature registration, integration, locale, delivery or acceptance evidence"
+    },
+    {
+      "id": "source-646c468e1b3e",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Features/CompanyEmailTemplates/AccountEmailContentPolicy.cs",
+      "layer": "api",
+      "purpose": "Scoped store, persistence config, content policy and renderer"
+    },
+    {
+      "id": "source-6d6b03ecce59",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Features/CompanyEmailTemplates/CompanyEmailTemplateConfiguration.cs",
+      "layer": "api",
+      "purpose": "Scoped store, persistence config, content policy and renderer"
+    },
+    {
+      "id": "source-3ff34bd422c0",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Features/CompanyEmailTemplates/CompanyEmailTemplateStore.cs",
+      "layer": "api",
+      "purpose": "Scoped store, persistence config, content policy and renderer"
+    },
+    {
+      "id": "source-896efc1bf86d",
+      "layer": "runtime",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Features/CompanyLocalization/CompanyLocalizationStore.cs",
+      "purpose": "Verified preflight ownership, reuse or canonical scope evidence"
+    },
+    {
+      "id": "source-f63d61dd90ea",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Features/CompanyLocalization/company-ui-catalog.json",
+      "layer": "api",
+      "purpose": "Verified feature registration, integration, locale, delivery or acceptance evidence"
+    },
+    {
+      "id": "source-b3783bb63c8e",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Features/Security/Invitations/Services/UserInvitationInfrastructureAdapters.cs",
+      "layer": "api",
+      "purpose": "Verified feature registration, integration, locale, delivery or acceptance evidence"
+    },
+    {
+      "id": "source-9b879515a096",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Identity/PlatformIdentityEmailSender.cs",
+      "layer": "api",
+      "purpose": "Verified feature registration, integration, locale, delivery or acceptance evidence"
+    },
+    {
+      "id": "source-85b4364f6de1",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Migrations/20261020201511_AddCompanyEmailTemplates.Designer.cs",
+      "layer": "api",
+      "purpose": "Verified feature registration, integration, locale, delivery or acceptance evidence"
+    },
+    {
+      "id": "source-dbcdb21cc768",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Migrations/20261020201511_AddCompanyEmailTemplates.cs",
+      "layer": "api",
+      "purpose": "Verified feature registration, integration, locale, delivery or acceptance evidence"
+    },
+    {
+      "id": "source-15d79ed2d896",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Migrations/PlatformDbContextModelSnapshot.cs",
+      "layer": "api",
+      "purpose": "Verified feature registration, integration, locale, delivery or acceptance evidence"
+    },
+    {
+      "id": "source-2f87d7dc9b51",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/PlatformDbContext.cs",
+      "layer": "api",
+      "purpose": "Verified feature registration, integration, locale, delivery or acceptance evidence"
+    },
+    {
+      "id": "source-44792ffa7f0f",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Presentation/Features/Platform/CompanyEmailTemplates/V1/CompanyEmailTemplatesController.cs",
+      "layer": "api",
+      "purpose": "V1 endpoints and exact grants"
+    },
+    {
+      "id": "source-b39bd289b499",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Tests/CompanyEmailTemplateStoreTests.cs",
+      "layer": "api",
+      "purpose": "Verified feature registration, integration, locale, delivery or acceptance evidence"
+    },
+    {
+      "id": "source-52e709ec3a45",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Tests/CompanyEmailTemplateTests.cs",
+      "layer": "api",
+      "purpose": "Verified feature registration, integration, locale, delivery or acceptance evidence"
+    },
+    {
+      "id": "source-ae7e366b2353",
+      "path": "api/Tests/ErpSystem.IntegrationTests/CompanyEmailTemplatePersistenceTests.cs",
+      "layer": "api",
+      "purpose": "Verified feature registration, integration, locale, delivery or acceptance evidence"
+    },
+    {
+      "id": "source-ff21ff25591c",
+      "path": "api/Tests/ErpSystem.IntegrationTests/OperationalFoundationTests.cs",
+      "layer": "api",
+      "purpose": "Verified feature registration, integration, locale, delivery or acceptance evidence"
+    },
+    {
+      "id": "source-a8a4cb7a538d",
+      "path": "documentation/guides/mobile/MOBILE_API_COMPATIBILITY_MATRIX.json",
+      "layer": "documentation",
+      "purpose": "Verified feature registration, integration, locale, delivery or acceptance evidence"
+    },
+    {
+      "id": "source-4dea08f9f459",
+      "path": "documentation/guides/shared/SHARED_REUSE_CATALOG.md",
+      "layer": "documentation",
+      "purpose": "Verified feature registration, integration, locale, delivery or acceptance evidence"
+    },
+    {
+      "id": "source-7047712ff72d",
+      "path": "documentation/guides/web/architecture/frontend-architecture-manifest.md",
+      "layer": "documentation",
+      "purpose": "Verified feature registration, integration, locale, delivery or acceptance evidence"
+    },
+    {
+      "id": "source-2d3eb0afbb57",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/company-email-templates/company-email-templates-api.md",
+      "purpose": "Verified preflight ownership, reuse or canonical scope evidence"
+    },
+    {
+      "id": "source-3b7da1aaeab0",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/company-email-templates/company-email-templates-evidence.md",
+      "purpose": "Verified preflight ownership, reuse or canonical scope evidence"
+    },
+    {
+      "id": "source-89fc3606df21",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/company-email-templates/company-email-templates-mobile.md",
+      "purpose": "Verified preflight ownership, reuse or canonical scope evidence"
+    },
+    {
+      "id": "source-7dbd82efb1c5",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/company-email-templates/company-email-templates-request.md",
+      "purpose": "Verified preflight ownership, reuse or canonical scope evidence"
+    },
+    {
+      "id": "source-f38a8f5a9d37",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/company-email-templates/company-email-templates-review.md",
+      "purpose": "Verified preflight ownership, reuse or canonical scope evidence"
+    },
+    {
+      "id": "source-fdcd165a1afb",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/company-email-templates/company-email-templates-web.md",
+      "purpose": "Verified preflight ownership, reuse or canonical scope evidence"
+    },
+    {
+      "id": "source-ddc0ff2966cf",
+      "path": "documentation/modules/platform/features/company-email-templates/recipe-registration.draft.json",
+      "layer": "documentation",
+      "purpose": "Verified feature registration, integration, locale, delivery or acceptance evidence"
+    },
+    {
+      "id": "source-bc2fb96f93af",
+      "path": "documentation/plans/business/company-email-templates/DECISIONS.md",
+      "layer": "documentation",
+      "purpose": "Canonical plan, decisions, research, contract and post-acceptance education"
+    },
+    {
+      "id": "source-4d4b249a0cc2",
+      "path": "documentation/plans/business/company-email-templates/DISCOVERY.md",
+      "layer": "documentation",
+      "purpose": "Canonical plan, decisions, research, contract and post-acceptance education"
+    },
+    {
+      "id": "source-f50dbdceb8c0",
+      "path": "documentation/plans/business/company-email-templates/EVIDENCE.md",
+      "layer": "documentation",
+      "purpose": "Canonical plan, decisions, research, contract and post-acceptance education"
+    },
+    {
+      "id": "source-09ac5368f4ba",
+      "path": "documentation/plans/business/company-email-templates/PLAN.md",
+      "layer": "documentation",
+      "purpose": "Canonical plan, decisions, research, contract and post-acceptance education"
+    },
+    {
+      "id": "source-bb61c17c7bf1",
+      "path": "documentation/plans/business/company-email-templates/RESEARCH.md",
+      "layer": "documentation",
+      "purpose": "Canonical plan, decisions, research, contract and post-acceptance education"
+    },
+    {
+      "id": "source-c6903630a6d8",
+      "path": "documentation/plans/business/company-email-templates/SPEC_SUMMARY.md",
+      "layer": "documentation",
+      "purpose": "Canonical plan, decisions, research, contract and post-acceptance education"
+    },
+    {
+      "id": "source-ea85c5cdb089",
+      "path": "documentation/plans/business/company-email-templates/decomposition/company-email-templates.md",
+      "layer": "documentation",
+      "purpose": "Canonical plan, decisions, research, contract and post-acceptance education"
+    },
+    {
+      "id": "source-223478401ffe",
+      "path": "documentation/plans/business/company-email-templates/education/company-email-templates.md",
+      "layer": "documentation",
+      "purpose": "Canonical plan, decisions, research, contract and post-acceptance education"
+    },
+    {
+      "id": "source-0fb946a3985e",
+      "path": "documentation/plans/notes/API_NOTES.md",
+      "layer": "documentation",
+      "purpose": "Verified feature registration, integration, locale, delivery or acceptance evidence"
+    },
+    {
+      "id": "source-d2d2de0520e0",
+      "path": "documentation/plans/notes/CROSS_PLATFORM_NOTES.md",
+      "layer": "documentation",
+      "purpose": "Verified feature registration, integration, locale, delivery or acceptance evidence"
+    },
+    {
+      "id": "source-d0b12b181b25",
+      "path": "documentation/plans/notes/FOLLOW_UPS.md",
+      "layer": "documentation",
+      "purpose": "Verified feature registration, integration, locale, delivery or acceptance evidence"
+    },
+    {
+      "id": "source-7ee732b3ed78",
+      "path": "documentation/plans/notes/KNOWN_RISKS.md",
+      "layer": "documentation",
+      "purpose": "Verified feature registration, integration, locale, delivery or acceptance evidence"
+    },
+    {
+      "id": "source-a7c170bd7f54",
+      "path": "documentation/plans/notes/MOBILE_NOTES.md",
+      "layer": "documentation",
+      "purpose": "Verified feature registration, integration, locale, delivery or acceptance evidence"
+    },
+    {
+      "id": "source-e92732e34e96",
+      "path": "documentation/plans/notes/PRODUCTION_NOTES.md",
+      "layer": "documentation",
+      "purpose": "Verified feature registration, integration, locale, delivery or acceptance evidence"
+    },
+    {
+      "id": "source-de62c328dbb1",
+      "path": "mobile-react/app/(main)/email-templates.tsx",
+      "layer": "mobile-react",
+      "purpose": "Verified feature registration, integration, locale, delivery or acceptance evidence"
+    },
+    {
+      "id": "source-5d5ffc57a034",
+      "path": "mobile-react/scripts/sync-phase00-matrix.mjs",
+      "layer": "mobile-react",
+      "purpose": "Verified feature registration, integration, locale, delivery or acceptance evidence"
+    },
+    {
+      "id": "source-fb4dc5b1bd57",
+      "path": "mobile-react/src/core/constants/routes.ts",
+      "layer": "mobile-react",
+      "purpose": "Verified feature registration, integration, locale, delivery or acceptance evidence"
+    },
+    {
+      "id": "source-6d15f0518dae",
+      "path": "mobile-react/src/core/localization/company-ui-catalog-version.ts",
+      "layer": "mobile-react",
+      "purpose": "Verified feature registration, integration, locale, delivery or acceptance evidence"
+    },
+    {
+      "id": "source-e009069e4020",
+      "path": "mobile-react/src/core/localization/company-ui-text-scope.ts",
+      "layer": "mobile-react",
+      "purpose": "Native localization/route composition evidence"
+    },
+    {
+      "id": "source-910002e591f8",
+      "path": "mobile-react/src/core/localization/translations/ar-administration-tenants.ts",
+      "layer": "mobile-react",
+      "purpose": "Localized validation or permission/feature resource composition"
+    },
+    {
+      "id": "source-03a51d28d6e6",
+      "path": "mobile-react/src/core/localization/translations/ar-email-templates.ts",
+      "layer": "mobile-react",
+      "purpose": "Native localization/route composition evidence"
+    },
+    {
+      "id": "source-f6658fd2ae34",
+      "path": "mobile-react/src/core/localization/translations/ar-navigation-settings.ts",
+      "layer": "mobile-react",
+      "purpose": "Native localization/route composition evidence"
+    },
+    {
+      "id": "source-51d2144b9454",
+      "path": "mobile-react/src/core/localization/translations/ar.ts",
+      "layer": "mobile-react",
+      "purpose": "Native localization/route composition evidence"
+    },
+    {
+      "id": "source-e951a947e72a",
+      "path": "mobile-react/src/core/localization/translations/en-administration-tenants.ts",
+      "layer": "mobile-react",
+      "purpose": "Localized validation or permission/feature resource composition"
+    },
+    {
+      "id": "source-e0b459607fe8",
+      "path": "mobile-react/src/core/localization/translations/en-email-templates.ts",
+      "layer": "mobile-react",
+      "purpose": "Native localization/route composition evidence"
+    },
+    {
+      "id": "source-38de838e7c60",
+      "path": "mobile-react/src/core/localization/translations/en-navigation-settings.ts",
+      "layer": "mobile-react",
+      "purpose": "Native localization/route composition evidence"
+    },
+    {
+      "id": "source-bb0feb119538",
+      "path": "mobile-react/src/core/localization/translations/en.ts",
+      "layer": "mobile-react",
+      "purpose": "Native localization/route composition evidence"
+    },
+    {
+      "id": "source-ad6c0d636347",
+      "path": "mobile-react/src/platform/administration/presentation/roles/permissions/permission-groups.ts",
+      "layer": "mobile-react",
+      "purpose": "Verified feature registration, integration, locale, delivery or acceptance evidence"
+    },
+    {
+      "id": "source-2578918a26e1",
+      "path": "mobile-react/src/platform/auth/presentation/rbac/__tests__/route-access.test.ts",
+      "layer": "mobile-react",
+      "purpose": "Verified feature registration, integration, locale, delivery or acceptance evidence"
+    },
+    {
+      "id": "source-b41b51eea36e",
+      "path": "mobile-react/src/platform/auth/presentation/rbac/permissions.ts",
+      "layer": "mobile-react",
+      "purpose": "Verified feature registration, integration, locale, delivery or acceptance evidence"
+    },
+    {
+      "id": "source-f81ab2f1fb5c",
+      "path": "mobile-react/src/platform/auth/presentation/rbac/route-access.ts",
+      "layer": "mobile-react",
+      "purpose": "Verified feature registration, integration, locale, delivery or acceptance evidence"
+    },
+    {
+      "id": "source-076d402d33ca",
+      "path": "mobile-react/src/platform/auth/presentation/rbac/route-manifest.ts",
+      "layer": "mobile-react",
+      "purpose": "Verified feature registration, integration, locale, delivery or acceptance evidence"
+    },
+    {
+      "id": "source-c3b5870c29c9",
+      "path": "mobile-react/src/platform/company-email-templates/application/email-template-use-cases.ts",
+      "layer": "mobile-react",
+      "purpose": "Domain, use cases, adapters, repository, composition, queries, screens and tests"
+    },
+    {
+      "id": "source-ab4f091072bd",
+      "path": "mobile-react/src/platform/company-email-templates/composition/use-email-template-use-cases.ts",
+      "layer": "mobile-react",
+      "purpose": "Domain, use cases, adapters, repository, composition, queries, screens and tests"
+    },
+    {
+      "id": "source-d4f24af2954d",
+      "path": "mobile-react/src/platform/company-email-templates/data/remote/email-template-endpoints.ts",
+      "layer": "mobile-react",
+      "purpose": "Domain, use cases, adapters, repository, composition, queries, screens and tests"
+    },
+    {
+      "id": "source-db0db13672a8",
+      "path": "mobile-react/src/platform/company-email-templates/data/remote/email-template-remote.test.ts",
+      "layer": "mobile-react",
+      "purpose": "Domain, use cases, adapters, repository, composition, queries, screens and tests"
+    },
+    {
+      "id": "source-9b2e7b647e9b",
+      "path": "mobile-react/src/platform/company-email-templates/data/remote/email-template-remote.ts",
+      "layer": "mobile-react",
+      "purpose": "Domain, use cases, adapters, repository, composition, queries, screens and tests"
+    },
+    {
+      "id": "source-ab5d04b0abef",
+      "path": "mobile-react/src/platform/company-email-templates/data/repositories/online-email-template-reader.test.ts",
+      "layer": "mobile-react",
+      "purpose": "Domain, use cases, adapters, repository, composition, queries, screens and tests"
+    },
+    {
+      "id": "source-b46182c81183",
+      "path": "mobile-react/src/platform/company-email-templates/data/repositories/online-email-template-reader.ts",
+      "layer": "mobile-react",
+      "purpose": "Domain, use cases, adapters, repository, composition, queries, screens and tests"
+    },
+    {
+      "id": "source-9f8b6325e73d",
+      "path": "mobile-react/src/platform/company-email-templates/domain/email-template.ts",
+      "layer": "mobile-react",
+      "purpose": "Domain, use cases, adapters, repository, composition, queries, screens and tests"
+    },
+    {
+      "id": "source-aaff9f0cb5a3",
+      "path": "mobile-react/src/platform/company-email-templates/index.ts",
+      "layer": "mobile-react",
+      "purpose": "Domain, use cases, adapters, repository, composition, queries, screens and tests"
+    },
+    {
+      "id": "source-baecb84487f2",
+      "path": "mobile-react/src/platform/company-email-templates/presentation/queries/use-email-templates.ts",
+      "layer": "mobile-react",
+      "purpose": "Domain, use cases, adapters, repository, composition, queries, screens and tests"
+    },
+    {
+      "id": "source-19adb46fccb1",
+      "path": "mobile-react/src/platform/company-email-templates/presentation/screens/EmailTemplatesScreen.test.tsx",
+      "layer": "mobile-react",
+      "purpose": "Domain, use cases, adapters, repository, composition, queries, screens and tests"
+    },
+    {
+      "id": "source-d260bb75945f",
+      "path": "mobile-react/src/platform/company-email-templates/presentation/screens/EmailTemplatesScreen.tsx",
+      "layer": "mobile-react",
+      "purpose": "Domain, use cases, adapters, repository, composition, queries, screens and tests"
+    },
+    {
+      "id": "source-e04275326d1b",
+      "path": "mobile-react/src/platform/modules/registry/administration-launcher.ts",
+      "layer": "mobile-react",
+      "purpose": "Verified feature registration, integration, locale, delivery or acceptance evidence"
+    },
+    {
+      "id": "source-bb731019ebab",
+      "path": "mobile-react/src/platform/navigation/AppBreadcrumbs.tsx",
+      "layer": "mobile-react",
+      "purpose": "Native localization/route composition evidence"
+    },
+    {
+      "id": "source-d4a676de50ec",
+      "layer": "runtime",
+      "path": "mobile-react/src/platform/tenant-administration/company-localizations/presentation/screens/CompanyLocalizationsScreen.tsx",
+      "purpose": "Verified preflight ownership, reuse or canonical scope evidence"
+    },
+    {
+      "id": "source-b38dcad66445",
+      "path": "mobile-react/src/shared/components/preview/AppHtmlPreview.test.tsx",
+      "layer": "mobile-react",
+      "purpose": "Native/Web HTML host and policy tests"
+    },
+    {
+      "id": "source-7201c31c45fc",
+      "path": "mobile-react/src/shared/components/preview/AppHtmlPreview.tsx",
+      "layer": "mobile-react",
+      "purpose": "Native/Web HTML host and policy tests"
+    },
+    {
+      "id": "source-4f440c24069f",
+      "path": "mobile-react/src/shared/components/preview/AppHtmlPreview.web.tsx",
+      "layer": "mobile-react",
+      "purpose": "Native/Web HTML host and policy tests"
+    },
+    {
+      "id": "source-f8c85864b975",
+      "path": "mobile-react/src/shared/components/preview/index.ts",
+      "layer": "mobile-react",
+      "purpose": "Native/Web HTML host and policy tests"
+    },
+    {
+      "id": "source-c76deb7aab57",
+      "path": "mobile-react/src/shared/components/preview/safe-html-preview.test.ts",
+      "layer": "mobile-react",
+      "purpose": "Native/Web HTML host and policy tests"
+    },
+    {
+      "id": "source-1216a48f1d1e",
+      "path": "mobile-react/src/shared/components/preview/safe-html-preview.ts",
+      "layer": "mobile-react",
+      "purpose": "Native/Web HTML host and policy tests"
+    },
+    {
+      "id": "source-263c4a297d27",
+      "path": "scripts/company-ui-scope-policy.json",
+      "layer": "configuration",
+      "purpose": "Verified feature registration, integration, locale, delivery or acceptance evidence"
+    },
+    {
+      "id": "source-befd8f72fa1c",
+      "path": "scripts/company-ui-scope-policy.test.mjs",
+      "layer": "configuration",
+      "purpose": "Verified feature registration, integration, locale, delivery or acceptance evidence"
+    },
+    {
+      "id": "source-f837afeeab47",
+      "path": "scripts/export-company-ui-catalog.mjs",
+      "layer": "configuration",
+      "purpose": "Verified feature registration, integration, locale, delivery or acceptance evidence"
+    },
+    {
+      "id": "source-2a523f2e43c9",
+      "path": "scripts/system-ui-access-policy.test.mjs",
+      "layer": "configuration",
+      "purpose": "Verified feature registration, integration, locale, delivery or acceptance evidence"
+    },
+    {
+      "id": "source-3ade1921305c",
+      "path": "web-next/e2e/email-templates.spec.ts",
+      "layer": "web-next",
+      "purpose": "Verified feature registration, integration, locale, delivery or acceptance evidence"
+    },
+    {
+      "id": "source-2cd3ed511c49",
+      "path": "web-next/e2e/support/test-backend.mjs",
+      "layer": "web-next",
+      "purpose": "Verified feature registration, integration, locale, delivery or acceptance evidence"
+    },
+    {
+      "id": "source-7f8193521894",
+      "path": "web-next/package-lock.json",
+      "layer": "web-next",
+      "purpose": "Verified feature registration, integration, locale, delivery or acceptance evidence"
+    },
+    {
+      "id": "source-b1d2da7db871",
+      "path": "web-next/package.json",
+      "layer": "web-next",
+      "purpose": "Verified feature registration, integration, locale, delivery or acceptance evidence"
+    },
+    {
+      "id": "source-b3ea7a8d6243",
+      "path": "web-next/src/app/(main)/administration/(platform)/email-templates/page.tsx",
+      "layer": "web-next",
+      "purpose": "Verified feature registration, integration, locale, delivery or acceptance evidence"
+    },
+    {
+      "id": "source-4ec4965efad0",
+      "path": "web-next/src/config/company-ui-catalog-version.ts",
+      "layer": "web-next",
+      "purpose": "Verified feature registration, integration, locale, delivery or acceptance evidence"
+    },
+    {
+      "id": "source-1f7a3c02fb8c",
+      "path": "web-next/src/config/company-ui-text-scope.ts",
+      "layer": "web-next",
+      "purpose": "Verified feature registration, integration, locale, delivery or acceptance evidence"
+    },
+    {
+      "id": "source-f89c054c6177",
+      "path": "web-next/src/config/routes.ts",
+      "layer": "web-next",
+      "purpose": "Verified feature registration, integration, locale, delivery or acceptance evidence"
+    },
+    {
+      "id": "source-c3dd1503c5c7",
+      "path": "web-next/src/lib/auth/permissions.ts",
+      "layer": "web-next",
+      "purpose": "Verified feature registration, integration, locale, delivery or acceptance evidence"
+    },
+    {
+      "id": "source-da6509166927",
+      "path": "web-next/src/lib/auth/route-access.ts",
+      "layer": "web-next",
+      "purpose": "Verified feature registration, integration, locale, delivery or acceptance evidence"
+    },
+    {
+      "id": "source-8476daa30d72",
+      "path": "web-next/src/locales/resources/core/ar.json",
+      "layer": "web-next",
+      "purpose": "Verified feature registration, integration, locale, delivery or acceptance evidence"
+    },
+    {
+      "id": "source-b4ecfd01a4c3",
+      "path": "web-next/src/locales/resources/core/en.json",
+      "layer": "web-next",
+      "purpose": "Verified feature registration, integration, locale, delivery or acceptance evidence"
+    },
+    {
+      "id": "source-07c309e5fd72",
+      "path": "web-next/src/locales/resources/platform-auth/ar.json",
+      "layer": "web-next",
+      "purpose": "Verified feature registration, integration, locale, delivery or acceptance evidence"
+    },
+    {
+      "id": "source-97d6d1bd0b78",
+      "path": "web-next/src/locales/resources/platform-auth/en.json",
+      "layer": "web-next",
+      "purpose": "Verified feature registration, integration, locale, delivery or acceptance evidence"
+    },
+    {
+      "id": "source-282fc896cc36",
+      "path": "web-next/src/platform/auth/roles/utils/permissionPresentation.test.ts",
+      "layer": "web-next",
+      "purpose": "Verified feature registration, integration, locale, delivery or acceptance evidence"
+    },
+    {
+      "id": "source-7f713b328331",
+      "path": "web-next/src/platform/auth/roles/utils/permissionPresentation.ts",
+      "layer": "web-next",
+      "purpose": "Verified feature registration, integration, locale, delivery or acceptance evidence"
+    },
+    {
+      "id": "source-3499cb162740",
+      "path": "web-next/src/platform/company-email-templates/components/EmailTemplateDialog.tsx",
+      "layer": "web-next",
+      "purpose": "Typed services, hooks, validation, shared composition and tests"
+    },
+    {
+      "id": "source-5b8e8407bb96",
+      "path": "web-next/src/platform/company-email-templates/hooks/useEmailTemplates.ts",
+      "layer": "web-next",
+      "purpose": "Typed services, hooks, validation, shared composition and tests"
+    },
+    {
+      "id": "source-8a0f9504d32b",
+      "path": "web-next/src/platform/company-email-templates/index.ts",
+      "layer": "web-next",
+      "purpose": "Typed services, hooks, validation, shared composition and tests"
+    },
+    {
+      "id": "source-e7c61b72df44",
+      "path": "web-next/src/platform/company-email-templates/pages/EmailTemplatesPage.tsx",
+      "layer": "web-next",
+      "purpose": "Typed services, hooks, validation, shared composition and tests"
+    },
+    {
+      "id": "source-dbfa8f7fa327",
+      "path": "web-next/src/platform/company-email-templates/services/emailTemplateService.test.ts",
+      "layer": "web-next",
+      "purpose": "Typed services, hooks, validation, shared composition and tests"
+    },
+    {
+      "id": "source-dba67b0ab4b5",
+      "path": "web-next/src/platform/company-email-templates/services/emailTemplateService.ts",
+      "layer": "web-next",
+      "purpose": "Typed services, hooks, validation, shared composition and tests"
+    },
+    {
+      "id": "source-4805c5fec03e",
+      "path": "web-next/src/platform/company-email-templates/types/emailTemplate.ts",
+      "layer": "web-next",
+      "purpose": "Typed services, hooks, validation, shared composition and tests"
+    },
+    {
+      "id": "source-9f79f1db1e8e",
+      "path": "web-next/src/platform/company-email-templates/validation/emailTemplateValidation.test.ts",
+      "layer": "web-next",
+      "purpose": "Typed services, hooks, validation, shared composition and tests"
+    },
+    {
+      "id": "source-44add49aa361",
+      "path": "web-next/src/platform/company-email-templates/validation/emailTemplateValidation.ts",
+      "layer": "web-next",
+      "purpose": "Typed services, hooks, validation, shared composition and tests"
+    },
+    {
+      "id": "source-f291e39c0e6e",
+      "layer": "runtime",
+      "path": "web-next/src/platform/company-localizations/components/CompanyLocalizationDialogs.tsx",
+      "purpose": "Verified preflight ownership, reuse or canonical scope evidence"
+    },
+    {
+      "id": "source-d0e51b1fe9cc",
+      "layer": "runtime",
+      "path": "web-next/src/platform/company-localizations/pages/CompanyLocalizationsPage.tsx",
+      "purpose": "Verified preflight ownership, reuse or canonical scope evidence"
+    },
+    {
+      "id": "source-7284f356e02d",
+      "path": "web-next/src/platform/navigation/platformNavigation.test.tsx",
+      "layer": "web-next",
+      "purpose": "Verified feature registration, integration, locale, delivery or acceptance evidence"
+    },
+    {
+      "id": "source-fc6dfbd01903",
+      "path": "web-next/src/platform/navigation/platformNavigation.tsx",
+      "layer": "web-next",
+      "purpose": "Verified feature registration, integration, locale, delivery or acceptance evidence"
+    },
+    {
+      "id": "source-20ab0403eeb8",
+      "path": "web-next/src/shared/components/forms/rich-text/MyRichTextField.tsx",
+      "layer": "web-next",
+      "purpose": "Generic lazy rich field public API"
+    },
+    {
+      "id": "source-0af053b71ad0",
+      "path": "web-next/src/shared/components/forms/rich-text/index.ts",
+      "layer": "web-next",
+      "purpose": "Generic lazy rich field public API"
+    },
+    {
+      "id": "source-49b6509c6a72",
+      "path": "web-next/src/shared/components/preview/SafeHtmlPreview.tsx",
+      "layer": "web-next",
+      "purpose": "Reusable inert HTML preview public API"
+    },
+    {
+      "id": "source-d9ce05aebd1e",
+      "path": "web-next/src/shared/components/preview/index.ts",
+      "layer": "web-next",
+      "purpose": "Reusable inert HTML preview public API"
+    },
+    {
+      "id": "source-499510f8f2dd",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Identity/PlatformSmtpTransport.cs",
+      "layer": "api",
+      "purpose": "Existing account sender SMTP transport seam preserving TLS/link and acceptance semantics"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+import type { z } from "zod";
+import type { systemSettingsSchema, companySettingsSchema, companyTextsSchema, companyRuntimeSchema, textFormSchema, defaultFormSchema } from "../validation/companyLocalizationValidation";
+export type CompanySettings = z.infer<typeof companySettingsSchema>;
+export type CompanyTexts = z.infer<typeof companyTextsSchema>;
+export type CompanyTextRow = CompanyTexts["items"][number];
+export type CompanyRuntime = z.infer<typeof companyRuntimeSchema>;
+export type TextFormValues = z.infer<ReturnType<typeof textFormSchema>>;
+export type DefaultFormValues = z.infer<typeof defaultFormSchema>;
+export type Language = "en" | "ar";
+export type TextStatus = "all" | "missing" | "customized";
+export type TextQuery = { source: string; baseLanguage: Language; targetLanguage: Language; search: string; status: TextStatus; page: number; pageSize: number };
+export type TextWrite = { source: string; language: Language; key: string; value: string; expectedRevision: number };
+export type TextReset = Omit<TextWrite, "value">;
+export type SystemSettings = z.infer<typeof systemSettingsSchema>;

@@ -36,6 +36,8 @@ export interface AppDateTimeFieldProps {
   placeholder?: string;
   required?: boolean;
   disabled?: boolean;
+  /** Filters can remain usable while business mutations are read-only. */
+  allowWhenReadOnly?: boolean;
   error?: string;
   helperText?: string;
   minimumDate?: Date;
@@ -54,6 +56,7 @@ export function AppDateTimeField({
   placeholder,
   required = false,
   disabled = false,
+  allowWhenReadOnly = false,
   error: suppliedError,
   helperText,
   minimumDate,
@@ -65,7 +68,7 @@ export function AppDateTimeField({
   const { direction, isRTL } = useLocalization();
   const { theme } = useAppTheme();
   const { isReadOnly } = useAppReadOnly();
-  const effectiveDisabled = disabled || isReadOnly;
+  const effectiveDisabled = disabled || (isReadOnly && !allowWhenReadOnly);
   const selectedDate = useMemo(() => parseDateTime(value, mode), [mode, value]);
   const [draftDate, setDraftDate] = useState(selectedDate ?? new Date());
   const [open, setOpen] = useState(false);

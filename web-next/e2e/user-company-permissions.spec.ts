@@ -1,0 +1,20 @@
+import { expect, loginWithDemoRole, resetTestBackend, test } from "./support/erp-fixture";
+test.beforeEach(async ({ request }) => { await resetTestBackend(request); });
+test("company grants preserve inherited roles and save only direct selections", async ({ page }) => {
+  test.setTimeout(90_000);
+  await loginWithDemoRole(page, "Admin", "/administration/users");
+  await expect(page.getByText("accountant", { exact: true }).first()).toBeVisible({ timeout: 30_000 });
+  await page.getByRole("button", { name: /more/i }).first().click();
+  await page.getByRole("menuitem", { name: "User permissions" }).click();
+  const dialog = page.getByRole("dialog");
+  await dialog.getByRole("button", { name: /^Users Click to review/ }).click({ timeout: 30_000 });
+  await expect(dialog.getByText(/Accountant/).first()).toBeVisible();
+  const view = dialog.getByRole("checkbox", { name: "View permission for Users" });
+  await expect(view).not.toBeChecked();
+  const create = dialog.getByRole("checkbox", { name: "Create permission for Users" });
+  await create.check();
+  const saved = page.waitForRequest((request) => request.method() === "PUT" && request.url().includes("/user-permissions/test-accountant"));
+  await dialog.getByRole("button", { name: "Save Changes", exact: true }).click();
+  expect((await saved).postDataJSON()).toEqual({ permissions: ["Users:Create"], expectedRevision: 0 });
+  await expect(dialog).toHaveCount(0);
+});

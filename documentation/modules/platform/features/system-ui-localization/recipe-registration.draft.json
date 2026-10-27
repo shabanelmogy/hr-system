@@ -1,0 +1,338 @@
+{
+  "status": "draft",
+  "referenceFeature": "N/A",
+  "planId": "super-admin-administration",
+  "sliceId": "S2 Authorized global UI texts",
+  "canonicalPlan": "documentation/plans/business/super-admin-administration/PLAN.md",
+  "featureDecompositionDecision": "Single feature",
+  "screenWorkflowContract": "N/A",
+  "plannedCustomerEducation": "documentation/plans/business/super-admin-administration/education/system-ui-localization.md",
+  "instructions": "Merge these entries into recipe-manifest.json after Phase 00 has a final preflight required-files.json and all four initial applied implementation books. Extend the manifest/books with runtime evidence during implementation.",
+  "books": [
+    {
+      "id": "system-ui-localization-master",
+      "path": "../modules/platform/features/system-ui-localization/system-ui-localization-review.md",
+      "title": "Authorized global UI texts cross-platform master review"
+    },
+    {
+      "id": "system-ui-localization-api",
+      "path": "../modules/platform/features/system-ui-localization/system-ui-localization-api.md",
+      "title": "Authorized global UI texts API implementation profile"
+    },
+    {
+      "id": "system-ui-localization-web",
+      "path": "../modules/platform/features/system-ui-localization/system-ui-localization-web.md",
+      "title": "Authorized global UI texts Next.js implementation profile"
+    },
+    {
+      "id": "system-ui-localization-mobile",
+      "path": "../modules/platform/features/system-ui-localization/system-ui-localization-mobile.md",
+      "title": "Authorized global UI texts Expo implementation profile"
+    }
+  ],
+  "requiredFileManifest": "../modules/platform/features/system-ui-localization/required-files.json",
+  "recipes": [
+    {
+      "id": "system-ui-localization-phase-00-implementation-preflight",
+      "title": "Authorized global UI texts Phase 00 - Implementation Preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "../modules/platform/features/system-ui-localization/generated/PHASE-00-implementation-preflight.md",
+      "sources": [
+        {
+          "book": "system-ui-localization-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "system-ui-localization-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "system-ui-localization-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "system-ui-localization-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "system-ui-localization-phase-01-domain-api",
+      "title": "Authorized global UI texts Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "../modules/platform/features/system-ui-localization/generated/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "system-ui-localization-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "system-ui-localization-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "system-ui-localization-phase-02-web-client",
+      "title": "Authorized global UI texts Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "../modules/platform/features/system-ui-localization/generated/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "system-ui-localization-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "system-ui-localization-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "system-ui-localization-phase-03-mobile-client",
+      "title": "Authorized global UI texts Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "../modules/platform/features/system-ui-localization/generated/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "system-ui-localization-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "system-ui-localization-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "system-ui-localization-phase-04-domain-actions",
+      "title": "Authorized global UI texts Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "../modules/platform/features/system-ui-localization/generated/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "system-ui-localization-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "system-ui-localization-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "system-ui-localization-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "system-ui-localization-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "system-ui-localization-phase-05-integration-runtime",
+      "title": "Authorized global UI texts Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "../modules/platform/features/system-ui-localization/generated/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "system-ui-localization-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "system-ui-localization-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "system-ui-localization-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "system-ui-localization-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "system-ui-localization-phase-06-verification-acceptance",
+      "title": "Authorized global UI texts Phase 06 - Verification and Acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "../modules/platform/features/system-ui-localization/generated/PHASE-06-verification-acceptance.md",
+      "sources": [
+        {
+          "book": "system-ui-localization-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "system-ui-localization-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "system-ui-localization-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "system-ui-localization-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "system-ui-localization-phase-07-customer-education-closure",
+      "title": "Authorized global UI texts Phase 07 - Customer Education and Closure",
+      "template": "templates/PHASE-07-customer-education-closure.template.md",
+      "output": "../modules/platform/features/system-ui-localization/generated/PHASE-07-customer-education-closure.md",
+      "sources": [
+        {
+          "book": "system-ui-localization-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "system-ui-localization-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "system-ui-localization-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    }
+  ]
+}

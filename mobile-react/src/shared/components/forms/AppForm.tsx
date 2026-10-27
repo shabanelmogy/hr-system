@@ -118,9 +118,9 @@ export function AppForm({
     activeRef.current = active;
   }, [active, errors]);
   useEffect(() => {
-    if (!active || !isDirty || !onCancel) return;
-    return registerUnsavedChange(onCancel);
-  }, [active, isDirty, onCancel]);
+    if (!active || (!isDirty && !submitting) || !onCancel) return;
+    return registerUnsavedChange(onCancel, submitting);
+  }, [active, isDirty, onCancel, submitting]);
   const {
     dialogVisible: discardDialogVisible,
     discard,

@@ -187,6 +187,8 @@ public sealed class UserInvitationEmailSender(
             invitation.FirstName,
             invitation.Id,
             rawToken,
+            invitation.TenantId,
+            invitation.DefaultCompanyId,
             cancellationToken);
 }
 

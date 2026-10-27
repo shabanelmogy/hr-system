@@ -47,6 +47,7 @@ describe('AppFormTabs', () => {
     const { getByText, queryByText } = await render(
       <AppFormTabs
         keepMounted={false}
+        fillAvailable
         label="Tenant sections"
         tabs={[
           { value: 'identity', label: 'Identity', content: <Text>Identity content</Text> },

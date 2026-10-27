@@ -1,0 +1,2 @@
+import { DefaultCompanyLocalizationRepository } from './default-company-localization-repository';
+describe('DefaultCompanyLocalizationRepository',()=>{it('fails closed offline without calling remote writes',()=>{const remote={getSettings:jest.fn(),getTexts:jest.fn(),getRuntime:jest.fn(),setDefault:jest.fn(),setText:jest.fn(),resetText:jest.fn()};const repo=new DefaultCompanyLocalizationRepository(remote,()=>false);expect(()=>repo.setDefault({language:'ar',expectedRevision:0})).toThrow('internet connection');expect(remote.setDefault).not.toHaveBeenCalled();});});

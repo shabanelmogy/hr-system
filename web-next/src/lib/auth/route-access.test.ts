@@ -81,6 +81,21 @@ describe("route access policies", () => {
     })).toBe(false);
   });
 
+  it("admits global administration tools only with their independent system grant", () => {
+    const global = { ...session, roles: ["super_admin"], permissions: [] as string[] };
+    for (const [route, grant] of [
+      [appRoutes.platform.superAdmin.auditTrail, permissions.ViewSystemAuditTrail],
+      [appRoutes.platform.advancedTools.healthCheck, permissions.ViewSystemHealth],
+      [appRoutes.platform.advancedTools.apiEndpoints, permissions.ViewSystemApiDocs],
+      [appRoutes.platform.advancedTools.hangfireDashboard, permissions.ViewHangfireDashboard],
+    ]) {
+      expect(canAccessRoute(route, global)).toBe(false);
+      expect(canAccessRoute(route, { ...global, permissions: [grant] })).toBe(true);
+    }
+    expect(canAccessRoute(appRoutes.platform.advancedTools.auditTrail, { ...global, permissions: [permissions.ViewAuditTrail] })).toBe(false);
+    expect(canAccessRoute(appRoutes.platform.superAdmin.auditTrail, { ...session, permissions: [permissions.ViewSystemAuditTrail] })).toBe(false);
+  });
+
   it("requires the dedicated invitation view permission", () => {
     expect(canAccessRoute(appRoutes.platform.administration.invitations, session)).toBe(false);
     expect(canAccessRoute(appRoutes.platform.administration.invitations, {

@@ -1,3 +1,9 @@
+import { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useAuth } from '@/src/platform/auth';
+import { canAccessRoute } from '@/src/platform/auth/rbac';
+import { getAdministrationModule } from '../../registry/administration-launcher';
+import type { ErpModule } from '../../domain/models/module';
 import { useQuery } from '@tanstack/react-query';
 import { intersectModulesWithMobileRegistry } from '../../registry';
 import { useModuleUseCases } from '../../composition/use-module-use-cases';
@@ -11,9 +17,18 @@ export const moduleKeys = {
 
 export const useAccessibleModules = (enabled = true) => {
   const useCases = useModuleUseCases();
+  const { session } = useAuth();
+  const { t } = useTranslation();
+  const select = useCallback((modules: ErpModule[]) => {
+    const administration = session ? getAdministrationModule(
+      path => canAccessRoute(path, session), permission => session.permissions.includes(permission), key => t(key),
+    ) : null;
+    return administration ? [...modules, administration] : modules;
+  }, [session, t]);
   return useQuery({
     queryKey: moduleKeys.accessible(),
     queryFn: async () => intersectModulesWithMobileRegistry(await useCases.getAccessible()),
+    select,
     enabled,
     staleTime: 30_000,
     networkMode: 'always',

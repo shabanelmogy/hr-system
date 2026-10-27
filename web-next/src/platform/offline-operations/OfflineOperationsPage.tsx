@@ -8,10 +8,7 @@ import BadgeRoundedIcon from "@mui/icons-material/BadgeRounded";
 import RestartAltRoundedIcon from "@mui/icons-material/RestartAltRounded";
 import {
   Alert,
-  Box,
   Button,
-  Card,
-  CardContent,
   Chip,
   CircularProgress,
   Snackbar,
@@ -23,6 +20,7 @@ import {
 import { useTranslation } from "react-i18next";
 import { ContentWrapper } from "@/shared/components/layout";
 import { PageHeader } from "@/shared/components/navigation/header";
+import { FormSection } from "@/shared/components/forms/layouts";
 import { ConfirmationDialog } from "@/shared/components/dialogs";
 import { useSession } from "@/lib/auth/SessionContext";
 import { ApiClientError } from "@/lib/api/client";
@@ -132,51 +130,22 @@ export function OfflineOperationsPage() {
       />
 
       <Stack spacing={2.5}>
-        <Card variant="outlined">
-          <CardContent>
-            <Stack spacing={1.5}>
-              <Stack
-                direction={{ xs: "column", sm: "row" }}
-                spacing={1}
-                sx={{ alignItems: { sm: "center" }, justifyContent: "space-between" }}
-              >
-                <Box>
-                  <Typography variant="subtitle1" sx={{ fontWeight: 800 }}>{t("offlineOperations.scopeTitle")}</Typography>
-                  {policy && scopeDetails ? (
-                    <Stack spacing={0.25} sx={{ mt: 0.5 }}>
-                      <Typography variant="body2" color="text.secondary">
-                        {t("offlineOperations.tenantScopeValue", {
-                          name: scopeDetails.tenantName,
-                          id: policy.tenantId,
-                        })}
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        {t("offlineOperations.companyScopeValue", {
-                          name: scopeDetails.companyName,
-                          id: policy.companyId,
-                        })}
-                      </Typography>
-                    </Stack>
-                  ) : (
-                    <Typography variant="body2" color="text.secondary">{t("offlineOperations.loading")}</Typography>
-                  )}
-                </Box>
-                <Chip
-                  icon={<CloudOffRoundedIcon />}
-                  label={t("offlineOperations.source.serverPolicy")}
-                  color={scopeMatchesSession ? "primary" : "warning"}
-                  variant="outlined"
-                />
-              </Stack>
+        <FormSection variant="outlined" title={t("offlineOperations.scopeTitle")} icon={<CloudOffRoundedIcon />}
+          action={<Chip size="small" icon={<CloudOffRoundedIcon />} label={t("offlineOperations.source.serverPolicy")}
+            color={scopeMatchesSession ? "primary" : "warning"} variant="outlined" />}>
+          <Stack spacing={1.5}>
+            {policy && scopeDetails ? <Stack spacing={0.5}>
+              <Typography variant="body2" color="text.secondary">{t("offlineOperations.tenantScopeValue", { name: scopeDetails.tenantName, id: policy.tenantId })}</Typography>
+              <Typography variant="body2" color="text.secondary">{t("offlineOperations.companyScopeValue", { name: scopeDetails.companyName, id: policy.companyId })}</Typography>
+            </Stack> : <Typography variant="body2" color="text.secondary">{t("offlineOperations.loading")}</Typography>}
               <Alert severity="info">{t("offlineOperations.serverAuthorityNotice")}</Alert>
               {policy && !scopeMatchesSession ? <Alert severity="error">{t("offlineOperations.scopeMismatch")}</Alert> : null}
               {isReadOnly ? <Alert severity="warning">{t("offlineOperations.readOnlyNotice")}</Alert> : null}
               {policy && !policySafeForEditing ? (
                 <Alert severity="warning">{t("offlineOperations.incompatiblePolicy")}</Alert>
               ) : null}
-            </Stack>
-          </CardContent>
-        </Card>
+          </Stack>
+        </FormSection>
 
         {policyQuery.isLoading ? (
           <Stack sx={{ alignItems: "center", py: 6 }}><CircularProgress /></Stack>
@@ -196,33 +165,14 @@ export function OfflineOperationsPage() {
               const known = isKnownOfflineCapabilityId(capability.id) && Boolean(presentation);
               const compatible = isCapabilityStateCompatible(capability, currentMode);
               return (
-                <Card key={capability.id} variant="outlined">
-                  <CardContent>
-                    <Stack spacing={2}>
-                      <Stack direction="row" spacing={1.5} sx={{ alignItems: "flex-start" }}>
-                        <Box sx={{ mt: 0.25, color: "primary.main" }}>{presentation?.icon ?? <CloudOffRoundedIcon />}</Box>
-                        <Box sx={{ flex: 1, minWidth: 0 }}>
-                          <Typography variant="subtitle1" sx={{ fontWeight: 800 }}>
-                            {presentation ? t(`offlineOperations.capabilities.${presentation.key}`) : capability.id}
-                          </Typography>
-                          <Typography variant="body2" color="text.secondary">
-                            {presentation ? t(`offlineOperations.capabilities.${presentation.key}Description`) : t("offlineOperations.unknownCapability")}
-                          </Typography>
-                        </Box>
-                        {currentMode ? (
-                          <Chip
-                            size="small"
-                            label={compatible
-                              ? t(`offlineOperations.modes.${modeKey(currentMode)}`)
-                              : t("offlineOperations.incompatibleCurrentMode", {
-                                  mode: t(`offlineOperations.modes.${modeKey(currentMode)}`),
-                                })}
-                            color={compatible ? "primary" : "warning"}
-                            variant={compatible ? "filled" : "outlined"}
-                          />
-                        ) : null}
-                      </Stack>
-
+                <FormSection key={capability.id} variant="outlined"
+                  title={presentation ? t(`offlineOperations.capabilities.${presentation.key}`) : capability.id}
+                  description={presentation ? t(`offlineOperations.capabilities.${presentation.key}Description`) : t("offlineOperations.unknownCapability")}
+                  icon={presentation?.icon ?? <CloudOffRoundedIcon />}
+                  action={currentMode ? <Chip size="small"
+                    label={compatible ? t(`offlineOperations.modes.${modeKey(currentMode)}`) : t("offlineOperations.incompatibleCurrentMode", { mode: t(`offlineOperations.modes.${modeKey(currentMode)}`) })}
+                    color={compatible ? "primary" : "warning"} variant="outlined" /> : undefined}>
+                  <Stack spacing={2}>
                       {known ? (
                         <ToggleButtonGroup
                           exclusive
@@ -245,9 +195,8 @@ export function OfflineOperationsPage() {
 
                       {!known ? <Alert severity="warning">{t("offlineOperations.unsupportedCapability")}</Alert> : null}
                       {known && !compatible ? <Alert severity="warning">{t("offlineOperations.incompatibleCapability")}</Alert> : null}
-                    </Stack>
-                  </CardContent>
-                </Card>
+                  </Stack>
+                </FormSection>
               );
             })}
 

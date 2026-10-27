@@ -22,6 +22,7 @@ import {
   getPageForRecord,
   getNextRecordIndex,
   getServerRecordIndex,
+  getRecordNavigationBound,
 } from "./recordNavigation";
 
 export function GridFooter() {
@@ -43,10 +44,10 @@ export function GridFooter() {
   const isRtl = theme.direction === "rtl";
   const isServerPagination = rootProps.paginationMode === "server";
   const selectedId = activeRowId ?? selectedRows.keys().next().value;
-  const totalRowCount =
-    isServerPagination
-      ? (rootProps.rowCount ?? orderedIds.length)
-      : orderedIds.length;
+  const unknownTotal = isServerPagination && rootProps.rowCount === -1;
+  const totalRowCount = getRecordNavigationBound(
+    isServerPagination ? (rootProps.rowCount ?? orderedIds.length) : orderedIds.length,
+    paginationModel.page, paginationModel.pageSize, orderedIds.length, Boolean(rootProps.paginationMeta?.hasNextPage));
   const activeIndex = isServerPagination
     ? getServerRecordIndex(
         orderedIds,
@@ -68,7 +69,7 @@ export function GridFooter() {
     1,
     Math.ceil(totalRowCount / Math.max(1, paginationModel.pageSize)),
   );
-  const currentPage = Math.min(paginationModel.page + 1, totalPages);
+  const currentPage = unknownTotal ? paginationModel.page + 1 : Math.min(paginationModel.page + 1, totalPages);
 
   const selectVisibleRow = useCallback((localIndex: number) => {
     if (localIndex < 0 || localIndex >= orderedIds.length) return undefined;
@@ -221,7 +222,7 @@ export function GridFooter() {
                 fontVariantNumeric: "tabular-nums",
               }}
             >
-              {recordNumber} / {totalRowCount}
+              {recordNumber} / {unknownTotal ? t("pagination.unknownTotal") : totalRowCount}
             </Typography>
           </Box>
           <NavigationButton
@@ -242,7 +243,7 @@ export function GridFooter() {
           />
           <NavigationButton
             label={labels.last}
-            disabled={activeIndex < 0 || activeIndex >= totalRowCount - 1}
+            disabled={unknownTotal || activeIndex < 0 || activeIndex >= totalRowCount - 1}
             onClick={() => navigateToIndex(totalRowCount - 1)}
             icon={<LastIcon />}
           />
@@ -269,7 +270,7 @@ export function GridFooter() {
             fontVariantNumeric: "tabular-nums",
           }}
         >
-          {t("pagination.page")} {currentPage} {t("pagination.of")} {totalPages}
+          {t("pagination.page")} {currentPage} {t("pagination.of")} {unknownTotal ? t("pagination.unknownTotal") : totalPages}
         </Typography>
 
         <Box
@@ -286,7 +287,7 @@ export function GridFooter() {
             },
             "& .MuiTablePagination-displayedRows": { display: "none" },
             "& .MuiTablePagination-actions": {
-              display: showRecordNavigation ? "none" : "flex",
+              display: showRecordNavigation && !unknownTotal ? "none" : "flex",
             },
             "& .MuiTablePagination-select": { minWidth: 60 },
             "& .MuiSelect-select": { paddingRight: "32px !important" },

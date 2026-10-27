@@ -18,6 +18,11 @@ export const ROUTES = {
   notifications: '/notifications',
   settings: '/settings',
   superAdminDashboard: '/super-admin-dashboard',
+  emailTemplates: '/email-templates',
+  systemUiTexts: '/system-ui-texts',
+  systemAuditTrail: '/system-audit-trail',
+  systemErrorLogs: '/system-error-logs',
+  errorLogSettings: '/error-log-settings',
   tenantManagement: '/tenant-management',
   tenantAdminManagement: '/tenant-admin-management',
   modal: '/modal',
@@ -48,6 +53,7 @@ export const ROUTES = {
   advancedTools: {
     root: '/advanced-tools',
     auditTrail: '/advanced-tools/audit-trail',
+    errorLogs: '/advanced-tools/error-logs',
     localizationApi: '/advanced-tools/localization-api',
     healthCheck: '/advanced-tools/health-check',
     apiEndpoints: '/advanced-tools/api-endpoints',
@@ -58,6 +64,7 @@ export const ROUTES = {
     invitations: '/administration/invitations',
     roles: '/administration/roles',
     offlineOperations: '/administration/offline-operations',
+    companyLocalizations: '/administration/company-localizations',
     rolePermissionsRoot: '/administration/role-permissions',
     rolePermissions: (roleId: string) =>
       `/administration/role-permissions/${encodeURIComponent(roleId)}` as
@@ -110,6 +117,11 @@ export type AppRoute =
   | typeof ROUTES.notifications
   | typeof ROUTES.settings
   | typeof ROUTES.superAdminDashboard
+  | typeof ROUTES.emailTemplates
+  | typeof ROUTES.systemUiTexts
+  | typeof ROUTES.systemAuditTrail
+  | typeof ROUTES.systemErrorLogs
+  | typeof ROUTES.errorLogSettings
   | typeof ROUTES.tenantManagement
   | typeof ROUTES.tenantAdminManagement
   | typeof ROUTES.modal
@@ -120,6 +132,7 @@ export type AppRoute =
   | typeof ROUTES.administration.invitations
   | typeof ROUTES.administration.roles
   | typeof ROUTES.administration.offlineOperations
+  | typeof ROUTES.administration.companyLocalizations
   | typeof ROUTES.administration.rolePermissionsRoot
   | ReturnType<typeof ROUTES.administration.rolePermissions>
   | typeof ROUTES.recruitment.root

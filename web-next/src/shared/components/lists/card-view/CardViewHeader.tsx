@@ -3,14 +3,14 @@ import CardViewToolbar from "./CardViewToolbar";
 import type { CardViewToolbarProps } from "./CardViewToolbar";
 import { TitleSection } from "./header-controls/TitleSection";
 
-export interface CardViewHeaderProps extends CardViewToolbarProps {
+export type CardViewHeaderProps = CardViewToolbarProps & {
   title: string;
   subtitle?: string;
   mainChipLabel: string;
   page: number;
   showTitleSection?: boolean;
   compact?: boolean;
-}
+};
 
 const CardViewHeader = ({
   title,
@@ -19,24 +19,7 @@ const CardViewHeader = ({
   page,
   showTitleSection = true,
   compact = false,
-  searchTerm,
-  searchPlaceholder,
-  onSearchChange,
-  onClearSearch,
-  sortBy,
-  sortByOptions,
-  onSortByChange,
-  sortOrder,
-  onSortOrderChange,
-  filterBy,
-  filterOptions,
-  onFilterByChange,
-  onReset,
-  beforeSearchControls,
-  additionalControls,
-  optionsContent,
-  optionsLabel,
-  showFilter,
+  ...toolbarProps
 }: CardViewHeaderProps) => {
   const theme = useTheme();
 
@@ -55,24 +38,7 @@ const CardViewHeader = ({
         <TitleSection title={title} subtitle={subtitle} mainChipLabel={mainChipLabel} page={page} />
       )}
       <CardViewToolbar
-        searchTerm={searchTerm}
-        searchPlaceholder={searchPlaceholder}
-        onSearchChange={onSearchChange}
-        onClearSearch={onClearSearch}
-        sortBy={sortBy}
-        sortByOptions={sortByOptions}
-        onSortByChange={onSortByChange}
-        sortOrder={sortOrder}
-        onSortOrderChange={onSortOrderChange}
-        filterBy={filterBy}
-        filterOptions={filterOptions}
-        onFilterByChange={onFilterByChange}
-        onReset={onReset}
-        beforeSearchControls={beforeSearchControls}
-        additionalControls={additionalControls}
-        optionsContent={optionsContent}
-        optionsLabel={optionsLabel}
-        showFilter={showFilter}
+        {...toolbarProps}
         singleRow={compact}
       />
     </Paper>

@@ -13,3 +13,4 @@ export type {
   MobileSubmoduleDefinition,
 } from './mobile-module-registry';
 export type { ErpModule, ModuleSubmodule } from '../domain/models/module';
+export { administrationLauncherEntries } from './administration-launcher';

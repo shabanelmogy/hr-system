@@ -133,7 +133,7 @@ jobs:
       - name: Publish release artifact
         shell: pwsh
         working-directory: ./api
-        run: dotnet publish ./ErpSystem.Api/ErpSystem.Api.csproj --configuration Release --no-build --no-restore --output ./artifacts/api-publish /p:UseAppHost=false
+        run: dotnet publish ./ErpSystem.Api/ErpSystem.Api.csproj --configuration Release --no-build --no-restore --output ./artifacts/api-publish /p:UseAppHost=false /p:PublishAppSettings=false
 
       - name: Verify release artifact
         shell: pwsh

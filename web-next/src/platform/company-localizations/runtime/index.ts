@@ -1,0 +1,1 @@
+export { CompanyLocalizationBridge } from "./CompanyLocalizationBridge";

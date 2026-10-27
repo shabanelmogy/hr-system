@@ -11,7 +11,7 @@ import {
 } from "@mui/x-data-grid";
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { ClientDataGrid } from "@/shared/components/data-grid";
+import { MyDataGrid } from "@/shared/components/data-grid";
 import { DEFAULT_ROWS_PER_PAGE } from "@/shared/constants/pagination";
 import { permissions } from "@/lib/auth/permissions";
 import { usePermissions } from "@/shared/hooks/usePermissions";
@@ -119,9 +119,13 @@ export default function LocalizationDataGrid({
 
   return (
     <>
-      <ClientDataGrid
+      <MyDataGrid
         rows={rows}
         columns={columns}
+        initialSortModel={[]}
+        checkboxSelection={false}
+        autoSelectFirstRow={false}
+        showGridOptions
         paginationModel={paginationModel}
         onPaginationModelChange={setPaginationModel}
         pageSizeOptions={[5, 10, 20, 30]}

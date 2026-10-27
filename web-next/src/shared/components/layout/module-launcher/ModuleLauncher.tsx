@@ -355,6 +355,7 @@ function LauncherTile({
         <ArrowForwardRoundedIcon />
       </Box>
       <Box
+        data-slot="launcher-icon"
         sx={{
           width: isPrimary ? { xs: 98, sm: 108 } : { xs: 72, sm: 76 },
           height: isPrimary ? { xs: 98, sm: 108 } : { xs: 72, sm: 76 },
@@ -365,7 +366,12 @@ function LauncherTile({
           background: `linear-gradient(145deg, ${accent}, ${darken(accent, 0.24)})`,
           boxShadow: `0 12px 30px ${alpha(accent, isPrimary ? 0.4 : 0.3)}`,
           flexShrink: 0,
-          "& > svg": { fontSize: isPrimary ? { xs: iconSize - 4, sm: iconSize + 2 } : iconSize, flexShrink: 0 },
+          // The tile owns contrast and size, including icons inside navigation wrappers.
+          "&& svg": {
+            color: accentContrast,
+            fontSize: isPrimary ? { xs: iconSize - 4, sm: iconSize + 2 } : iconSize,
+            flexShrink: 0,
+          },
         }}
       >
         {icon ?? <AppsRoundedIcon />}

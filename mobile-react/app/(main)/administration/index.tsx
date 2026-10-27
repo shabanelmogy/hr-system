@@ -6,6 +6,8 @@ import { permissions, RouteGuard, useAuthorization } from '@/src/platform/auth';
 
 const viewUsersPermission = [permissions.ViewUsers] as const;
 const viewOfflineOperationsPermission = [permissions.ViewOfflineOperations] as const;
+const viewCompanyLocalizationsPermission = [permissions.ViewCompanyLocalizations] as const;
+const viewRolesPermission = [permissions.ViewRoles] as const;
 
 export default function UserManagementRoute() {
   const { allowed: canViewUsers } = useAuthorization({
@@ -14,6 +16,8 @@ export default function UserManagementRoute() {
   const { allowed: canViewOfflineOperations } = useAuthorization({
     requiredPermissions: viewOfflineOperationsPermission,
   });
+  const { allowed: canViewCompanyLocalizations } = useAuthorization({ requiredPermissions: viewCompanyLocalizationsPermission });
+  const { allowed: canViewRoles } = useAuthorization({ requiredPermissions: viewRolesPermission });
 
   return (
     <RouteGuard path={ROUTES.administration.root}>
@@ -22,7 +26,9 @@ export default function UserManagementRoute() {
         : <Redirect href={asHref(
             canViewOfflineOperations
               ? ROUTES.administration.offlineOperations
-              : ROUTES.administration.roles,
+              : canViewCompanyLocalizations
+                ? ROUTES.administration.companyLocalizations
+                : canViewRoles ? ROUTES.administration.roles : ROUTES.administration.invitations,
           )} />}
     </RouteGuard>
   );

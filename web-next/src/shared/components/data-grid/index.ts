@@ -1,4 +1,3 @@
-export { default as ClientDataGrid } from "./core/ClientDataGrid";
 export { default as MyDataGrid } from "./core/MyDataGrid";
 export type {
   DataGridToolbarSearchConfig,

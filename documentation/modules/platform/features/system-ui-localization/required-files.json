@@ -1,0 +1,769 @@
+{
+  "schemaVersion": 1,
+  "status": "active",
+  "feature": "system-ui-localization",
+  "featureName": "Authorized global UI texts",
+  "referenceFeature": "N/A",
+  "planId": "super-admin-administration",
+  "sliceId": "S2 Authorized global UI texts",
+  "canonicalPlan": "documentation/plans/business/super-admin-administration/PLAN.md",
+  "featureDecompositionDecision": "Single feature",
+  "screenWorkflowContract": "documentation/plans/business/super-admin-administration/decomposition/system-ui-localization.md",
+  "plannedCustomerEducation": "documentation/plans/business/super-admin-administration/education/system-ui-localization.md",
+  "purpose": "Final current implementation and verification evidence for authorized global UI text editing and runtime.",
+  "reviewArtifact": "documentation/modules/platform/features/system-ui-localization/system-ui-localization-evidence.md",
+  "implementationRequest": "documentation/modules/platform/features/system-ui-localization/system-ui-localization-request.md",
+  "plannedCanonicalBooks": {
+    "master": "documentation/modules/platform/features/system-ui-localization/system-ui-localization-review.md",
+    "api": "documentation/modules/platform/features/system-ui-localization/system-ui-localization-api.md",
+    "web": "documentation/modules/platform/features/system-ui-localization/system-ui-localization-web.md",
+    "mobile": "documentation/modules/platform/features/system-ui-localization/system-ui-localization-mobile.md"
+  },
+  "sourceCollections": [],
+  "requiredFiles": [
+    {
+      "id": "root-agent-guidance",
+      "layer": "configuration",
+      "path": "AGENTS.md",
+      "purpose": "Repository-wide feature and documentation rules"
+    },
+    {
+      "id": "review-artifact",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/system-ui-localization/system-ui-localization-evidence.md",
+      "purpose": "Feature requirement, evidence, finding, and verification ledger"
+    },
+    {
+      "id": "implementation-request",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/system-ui-localization/system-ui-localization-request.md",
+      "purpose": "Copy-ready feature scope, platform decisions, contracts, and quality gates"
+    },
+    {
+      "id": "preflight-0",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/system-ui-localization/system-ui-localization-api.md",
+      "purpose": "Reviewed existing source and authorized Phase 00 contract"
+    },
+    {
+      "id": "preflight-2",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/system-ui-localization/system-ui-localization-mobile.md",
+      "purpose": "Reviewed existing source and authorized Phase 00 contract"
+    },
+    {
+      "id": "preflight-4",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/system-ui-localization/system-ui-localization-review.md",
+      "purpose": "Reviewed existing source and authorized Phase 00 contract"
+    },
+    {
+      "id": "preflight-5",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/system-ui-localization/system-ui-localization-web.md",
+      "purpose": "Reviewed existing source and authorized Phase 00 contract"
+    },
+    {
+      "id": "preflight-6",
+      "layer": "documentation",
+      "path": "documentation/plans/business/super-admin-administration/PLAN.md",
+      "purpose": "Reviewed existing source and authorized Phase 00 contract"
+    },
+    {
+      "id": "preflight-7",
+      "layer": "documentation",
+      "path": "documentation/plans/business/super-admin-administration/decomposition/system-ui-localization.md",
+      "purpose": "Reviewed existing source and authorized Phase 00 contract"
+    },
+    {
+      "id": "preflight-8",
+      "layer": "reference",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Application/Features/CompanyLocalization/CompanyUiCatalog.cs",
+      "purpose": "Reviewed existing source and authorized Phase 00 contract"
+    },
+    {
+      "id": "preflight-9",
+      "layer": "reference",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Features/CompanyLocalization/CompanyLocalizationStore.cs",
+      "purpose": "Reviewed existing source and authorized Phase 00 contract"
+    },
+    {
+      "id": "preflight-10",
+      "layer": "reference",
+      "path": "web-next/src/platform/company-localizations/pages/CompanyLocalizationsPage.tsx",
+      "purpose": "Reviewed existing source and authorized Phase 00 contract"
+    },
+    {
+      "id": "preflight-11",
+      "layer": "reference",
+      "path": "mobile-react/src/platform/tenant-administration/company-localizations/presentation/screens/CompanyLocalizationsScreen.tsx",
+      "purpose": "Reviewed existing source and authorized Phase 00 contract"
+    },
+    {
+      "id": "preflight-12",
+      "layer": "reference",
+      "path": "scripts/export-company-ui-catalog.mjs",
+      "purpose": "Reviewed existing source and authorized Phase 00 contract"
+    },
+    {
+      "id": "implementation-0",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Application/Features/SystemLocalization/SystemLocalizationContracts.cs",
+      "purpose": "Global UI localization implementation and regression evidence"
+    },
+    {
+      "id": "implementation-1",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Application/Features/SystemLocalization/SystemLocalizationErrors.cs",
+      "purpose": "Global UI localization implementation and regression evidence"
+    },
+    {
+      "id": "implementation-2",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Application/Features/SystemLocalization/SystemLocalizationRequests.cs",
+      "purpose": "Global UI localization implementation and regression evidence"
+    },
+    {
+      "id": "implementation-3",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Domain/Platform/Localization/SystemLocalizationSettings.cs",
+      "purpose": "Global UI localization implementation and regression evidence"
+    },
+    {
+      "id": "implementation-4",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Features/SystemLocalization/SystemLocalizationConfiguration.cs",
+      "purpose": "Global UI localization implementation and regression evidence"
+    },
+    {
+      "id": "implementation-5",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Features/SystemLocalization/SystemLocalizationStore.cs",
+      "purpose": "Global UI localization implementation and regression evidence"
+    },
+    {
+      "id": "implementation-6",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Presentation/Features/Platform/SystemLocalization/V1/SystemLocalizationsController.cs",
+      "purpose": "Global UI localization implementation and regression evidence"
+    },
+    {
+      "id": "implementation-7",
+      "layer": "api",
+      "path": "api/Tests/ErpSystem.IntegrationTests/SystemLocalizationPersistenceTests.cs",
+      "purpose": "Global UI localization implementation and regression evidence"
+    },
+    {
+      "id": "implementation-8",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Tests/SystemLocalizationTests.cs",
+      "purpose": "Global UI localization implementation and regression evidence"
+    },
+    {
+      "id": "implementation-9",
+      "layer": "configuration",
+      "path": "scripts/system-ui-access-policy.json",
+      "purpose": "Global UI localization implementation and regression evidence"
+    },
+    {
+      "id": "implementation-10",
+      "layer": "configuration",
+      "path": "scripts/system-ui-access-policy.mjs",
+      "purpose": "Global UI localization implementation and regression evidence"
+    },
+    {
+      "id": "implementation-11",
+      "layer": "configuration",
+      "path": "scripts/system-ui-access-policy.test.mjs",
+      "purpose": "Global UI localization implementation and regression evidence"
+    },
+    {
+      "id": "implementation-12",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Migrations/20261019150523_AddSystemUiLocalization.cs",
+      "purpose": "Global UI localization implementation and regression evidence"
+    },
+    {
+      "id": "implementation-13",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Migrations/20261019150523_AddSystemUiLocalization.Designer.cs",
+      "purpose": "Global UI localization implementation and regression evidence"
+    },
+    {
+      "id": "implementation-14",
+      "layer": "web",
+      "path": "web-next/src/platform/company-localizations/services/systemLocalizationService.ts",
+      "purpose": "Global UI localization implementation and regression evidence"
+    },
+    {
+      "id": "implementation-15",
+      "layer": "web",
+      "path": "web-next/src/platform/company-localizations/pages/SystemLocalizationsPage.tsx",
+      "purpose": "Global UI localization implementation and regression evidence"
+    },
+    {
+      "id": "implementation-16",
+      "layer": "web",
+      "path": "web-next/src/config/system-ui-text-access.ts",
+      "purpose": "Global UI localization implementation and regression evidence"
+    },
+    {
+      "id": "implementation-17",
+      "layer": "web",
+      "path": "web-next/e2e/system-ui-localizations.spec.ts",
+      "purpose": "Global UI localization implementation and regression evidence"
+    },
+    {
+      "id": "implementation-18",
+      "layer": "web",
+      "path": "web-next/src/shared/components/layout/ContentWrapper.tsx",
+      "purpose": "Global UI localization implementation and regression evidence"
+    },
+    {
+      "id": "final-evidence-0",
+      "layer": "web",
+      "path": "web-next/src/platform/company-localizations/index.ts",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-1",
+      "layer": "web",
+      "path": "web-next/src/platform/company-localizations/components/CompanyLocalizationDialogs.tsx",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-2",
+      "layer": "web",
+      "path": "web-next/src/platform/company-localizations/hooks/useCompanyLocalization.test.ts",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-3",
+      "layer": "web",
+      "path": "web-next/src/platform/company-localizations/hooks/useCompanyLocalization.ts",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-6",
+      "layer": "web",
+      "path": "web-next/src/platform/company-localizations/runtime/CompanyLocalizationBridge.test.ts",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-7",
+      "layer": "web",
+      "path": "web-next/src/platform/company-localizations/runtime/CompanyLocalizationBridge.tsx",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-8",
+      "layer": "web",
+      "path": "web-next/src/platform/company-localizations/runtime/index.ts",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-9",
+      "layer": "web",
+      "path": "web-next/src/platform/company-localizations/services/companyLocalizationService.test.ts",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-10",
+      "layer": "web",
+      "path": "web-next/src/platform/company-localizations/services/companyLocalizationService.ts",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-12",
+      "layer": "web",
+      "path": "web-next/src/platform/company-localizations/types/companyLocalization.ts",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-13",
+      "layer": "web",
+      "path": "web-next/src/platform/company-localizations/validation/companyLocalizationValidation.test.ts",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-14",
+      "layer": "web",
+      "path": "web-next/src/platform/company-localizations/validation/companyLocalizationValidation.ts",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-15",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tenant-administration/company-localizations/index.tsx",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-16",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tenant-administration/company-localizations/application/company-localization-use-cases.ts",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-17",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tenant-administration/company-localizations/application/system-localization-use-cases.ts",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-18",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tenant-administration/company-localizations/composition/use-company-localization-use-cases.ts",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-19",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tenant-administration/company-localizations/composition/use-system-localization-use-cases.ts",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-20",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tenant-administration/company-localizations/presentation/components/CompanyLocalizationDefaultForm.test.tsx",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-21",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tenant-administration/company-localizations/presentation/components/CompanyLocalizationDefaultForm.tsx",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-22",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tenant-administration/company-localizations/presentation/components/CompanyLocalizationTextForm.test.tsx",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-23",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tenant-administration/company-localizations/presentation/components/CompanyLocalizationTextForm.tsx",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-24",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tenant-administration/company-localizations/presentation/queries/use-company-localization.test.tsx",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-25",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tenant-administration/company-localizations/presentation/queries/use-company-localization.ts",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-26",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tenant-administration/company-localizations/presentation/queries/use-system-localization.test.tsx",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-27",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tenant-administration/company-localizations/presentation/runtime/CompanyLocalizationBridge.test.tsx",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-28",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tenant-administration/company-localizations/presentation/runtime/CompanyLocalizationBridge.tsx",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-30",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tenant-administration/company-localizations/presentation/validation/company-localization-validation.test.ts",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-31",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tenant-administration/company-localizations/presentation/validation/company-localization-validation.ts",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-32",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tenant-administration/company-localizations/domain/models/company-localization.ts",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-33",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tenant-administration/company-localizations/domain/models/system-localization.ts",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-34",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tenant-administration/company-localizations/domain/repositories/company-localization-repository.ts",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-35",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tenant-administration/company-localizations/domain/repositories/system-localization-repository.ts",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-36",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tenant-administration/company-localizations/data/remote/company-localization-endpoints.ts",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-37",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tenant-administration/company-localizations/data/remote/company-localization-remote-data-source.test.ts",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-38",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tenant-administration/company-localizations/data/remote/company-localization-remote-data-source.ts",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-39",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tenant-administration/company-localizations/data/remote/company-localization-schemas.ts",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-40",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tenant-administration/company-localizations/data/remote/system-localization-boundary.test.ts",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-41",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tenant-administration/company-localizations/data/remote/system-localization-endpoints.ts",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-42",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tenant-administration/company-localizations/data/remote/system-localization-remote-data-source.ts",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-43",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tenant-administration/company-localizations/data/repositories/default-company-localization-repository.test.ts",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-44",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tenant-administration/company-localizations/data/repositories/default-company-localization-repository.ts",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-45",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tenant-administration/company-localizations/data/repositories/default-system-localization-repository.ts",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-46",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/PlatformDbContext.cs",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-47",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Migrations/PlatformDbContextModelSnapshot.cs",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-48",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Application/DependencyInjection.cs",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-49",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/DependencyInjection.cs",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-50",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Contracts/Authorization/PermissionContracts.cs",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-51",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Features/CompanyLocalization/EmbeddedCompanyUiCatalog.cs",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-53",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Features/CompanyLocalization/company-ui-catalog.json",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-54",
+      "layer": "web",
+      "path": "web-next/src/platform/settings/PlatformSettingsPage.tsx",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-55",
+      "layer": "web",
+      "path": "web-next/src/platform/settings/settingsTabs.ts",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-56",
+      "layer": "web",
+      "path": "web-next/src/platform/settings/settingsTabs.test.ts",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-57",
+      "layer": "web",
+      "path": "web-next/src/lib/localization/companyUiResources.ts",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-58",
+      "layer": "web",
+      "path": "web-next/src/lib/localization/companyUiResources.test.ts",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-59",
+      "layer": "web",
+      "path": "web-next/src/lib/auth/route-access.ts",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-60",
+      "layer": "web",
+      "path": "web-next/src/lib/auth/permissions.ts",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-61",
+      "layer": "web",
+      "path": "web-next/src/config/routes.ts",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-62",
+      "layer": "web",
+      "path": "web-next/src/locales/resources/platform-auth/en.json",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-63",
+      "layer": "web",
+      "path": "web-next/src/locales/resources/platform-auth/ar.json",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-64",
+      "layer": "web",
+      "path": "web-next/src/locales/resources/core/en.json",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-65",
+      "layer": "web",
+      "path": "web-next/src/locales/resources/core/ar.json",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-66",
+      "layer": "mobile",
+      "path": "mobile-react/src/core/localization/company-ui-resources.ts",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-67",
+      "layer": "mobile",
+      "path": "mobile-react/src/core/localization/company-ui-resources.test.ts",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-68",
+      "layer": "mobile",
+      "path": "mobile-react/src/core/localization/system-ui-text-access.ts",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-69",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/navigation/SettingsTabs.tsx",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-70",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/navigation/SystemSettingsLinks.tsx",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-71",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/auth/presentation/rbac/route-manifest.ts",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-72",
+      "layer": "mobile",
+      "path": "mobile-react/app/(main)/system-ui-texts.tsx",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "final-evidence-73",
+      "layer": "configuration",
+      "path": "scripts/company-ui-scope-policy.json",
+      "purpose": "Current implementation, client parity and regression evidence"
+    },
+    {
+      "id": "publication-evidence-0",
+      "layer": "configuration",
+      "path": "web-next/e2e/support/test-backend.mjs",
+      "purpose": "Final contract, localization, route and verification publication evidence"
+    },
+    {
+      "id": "publication-evidence-1",
+      "layer": "configuration",
+      "path": "web-next/e2e/company-localizations.spec.ts",
+      "purpose": "Final contract, localization, route and verification publication evidence"
+    },
+    {
+      "id": "publication-evidence-2",
+      "layer": "configuration",
+      "path": "web-next/package.json",
+      "purpose": "Final contract, localization, route and verification publication evidence"
+    },
+    {
+      "id": "publication-evidence-3",
+      "layer": "configuration",
+      "path": "mobile-react/package.json",
+      "purpose": "Final contract, localization, route and verification publication evidence"
+    },
+    {
+      "id": "publication-evidence-4",
+      "layer": "configuration",
+      "path": "api/ErpSystem.Api/Localization/Resources/en-US.json",
+      "purpose": "Final contract, localization, route and verification publication evidence"
+    },
+    {
+      "id": "publication-evidence-5",
+      "layer": "configuration",
+      "path": "api/ErpSystem.Api/Localization/Resources/ar-EG.json",
+      "purpose": "Final contract, localization, route and verification publication evidence"
+    },
+    {
+      "id": "publication-evidence-6",
+      "layer": "configuration",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Domain/Companies/Entities/CompanyLocalizationSettings.cs",
+      "purpose": "Final contract, localization, route and verification publication evidence"
+    },
+    {
+      "id": "publication-evidence-7",
+      "layer": "configuration",
+      "path": "web-next/src/config/company-ui-catalog-version.ts",
+      "purpose": "Final contract, localization, route and verification publication evidence"
+    },
+    {
+      "id": "publication-evidence-8",
+      "layer": "configuration",
+      "path": "mobile-react/src/core/localization/company-ui-catalog-version.ts",
+      "purpose": "Final contract, localization, route and verification publication evidence"
+    },
+    {
+      "id": "publication-evidence-9",
+      "layer": "configuration",
+      "path": "mobile-react/src/core/localization/index.ts",
+      "purpose": "Final contract, localization, route and verification publication evidence"
+    },
+    {
+      "id": "publication-evidence-10",
+      "layer": "configuration",
+      "path": "mobile-react/src/core/localization/translations/en-company-localizations.ts",
+      "purpose": "Final contract, localization, route and verification publication evidence"
+    },
+    {
+      "id": "publication-evidence-11",
+      "layer": "configuration",
+      "path": "mobile-react/src/core/localization/translations/ar-company-localizations.ts",
+      "purpose": "Final contract, localization, route and verification publication evidence"
+    },
+    {
+      "id": "publication-evidence-12",
+      "layer": "configuration",
+      "path": "mobile-react/src/core/localization/translations/en-navigation-settings.ts",
+      "purpose": "Final contract, localization, route and verification publication evidence"
+    },
+    {
+      "id": "publication-evidence-13",
+      "layer": "configuration",
+      "path": "mobile-react/src/core/localization/translations/ar-navigation-settings.ts",
+      "purpose": "Final contract, localization, route and verification publication evidence"
+    },
+    {
+      "id": "publication-evidence-14",
+      "layer": "configuration",
+      "path": "mobile-react/src/platform/auth/presentation/rbac/permissions.ts",
+      "purpose": "Final contract, localization, route and verification publication evidence"
+    },
+    {
+      "id": "publication-evidence-15",
+      "layer": "configuration",
+      "path": "mobile-react/src/platform/auth/presentation/rbac/route-access.ts",
+      "purpose": "Final contract, localization, route and verification publication evidence"
+    },
+    {
+      "id": "publication-evidence-16",
+      "layer": "configuration",
+      "path": "mobile-react/src/platform/auth/presentation/rbac/__tests__/route-access.test.ts",
+      "purpose": "Final contract, localization, route and verification publication evidence"
+    },
+    {
+      "id": "publication-evidence-17",
+      "layer": "configuration",
+      "path": "mobile-react/src/platform/navigation/AppBreadcrumbs.tsx",
+      "purpose": "Final contract, localization, route and verification publication evidence"
+    },
+    {
+      "id": "publication-evidence-18",
+      "layer": "configuration",
+      "path": "mobile-react/src/platform/navigation/SettingsTabs.test.tsx",
+      "purpose": "Final contract, localization, route and verification publication evidence"
+    },
+    {
+      "id": "publication-evidence-19",
+      "layer": "configuration",
+      "path": "mobile-react/scripts/sync-phase00-matrix.mjs",
+      "purpose": "Final contract, localization, route and verification publication evidence"
+    },
+    {
+      "id": "system-ui-localization-customer-education",
+      "layer": "documentation",
+      "path": "documentation/plans/business/super-admin-administration/education/system-ui-localization.md",
+      "purpose": "Verified Phase 07 customer operation and scope guidance"
+    }
+  ],
+  "finalizationChecklist": [
+    "Current source and canonical books registered.",
+    "Integrated Phase 06 Verified for authorized development scope.",
+    "Release constraints retained under existing stable note IDs.",
+    "Customer education is completed only after Phase 06 generation/check."
+  ]
+}

@@ -1,0 +1,457 @@
+{
+  "schemaVersion": 1,
+  "status": "active",
+  "feature": "platform-settings",
+  "featureName": "Platform Settings",
+  "referenceFeature": "N/A",
+  "planId": "platform-error-logs",
+  "sliceId": "Settings tabbed workspace",
+  "canonicalPlan": "documentation/plans/business/platform-error-logs/PLAN.md",
+  "featureDecompositionDecision": "Single feature",
+  "screenWorkflowContract": "documentation/plans/business/platform-error-logs/decomposition/platform-settings.md",
+  "plannedCustomerEducation": "documentation/plans/business/platform-error-logs/education/platform-settings.md",
+  "purpose": "Current applied evidence for the authorized Settings tabbed workspace.",
+  "reviewArtifact": "documentation/modules/platform/features/platform-settings/platform-settings-evidence.md",
+  "implementationRequest": "documentation/modules/platform/features/platform-settings/platform-settings-request.md",
+  "plannedCanonicalBooks": {
+    "master": "documentation/modules/platform/features/platform-settings/platform-settings-review.md",
+    "api": "documentation/modules/platform/features/platform-settings/platform-settings-api.md",
+    "web": "documentation/modules/platform/features/platform-settings/platform-settings-web.md",
+    "mobile": "documentation/modules/platform/features/platform-settings/platform-settings-mobile.md"
+  },
+  "sourceCollections": [],
+  "requiredFiles": [
+    {
+      "id": "root-agent-guidance",
+      "layer": "configuration",
+      "path": "AGENTS.md",
+      "purpose": "Repository-wide feature and documentation rules"
+    },
+    {
+      "id": "review-artifact",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/platform-settings/platform-settings-evidence.md",
+      "purpose": "Feature requirement, evidence, finding, and verification ledger"
+    },
+    {
+      "id": "implementation-request",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/platform-settings/platform-settings-request.md",
+      "purpose": "Copy-ready feature scope, platform decisions, contracts, and quality gates"
+    },
+    {
+      "id": "preflight-0",
+      "layer": "documentation",
+      "path": "documentation/plans/business/platform-error-logs/decomposition/platform-settings.md",
+      "purpose": "Reviewed current source and canonical authority"
+    },
+    {
+      "id": "preflight-1",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/platform-settings/platform-settings-review.md",
+      "purpose": "Reviewed current source and canonical authority"
+    },
+    {
+      "id": "preflight-2",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/platform-settings/platform-settings-api.md",
+      "purpose": "Reviewed current source and canonical authority"
+    },
+    {
+      "id": "preflight-3",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/platform-settings/platform-settings-web.md",
+      "purpose": "Reviewed current source and canonical authority"
+    },
+    {
+      "id": "preflight-4",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/platform-settings/platform-settings-mobile.md",
+      "purpose": "Reviewed current source and canonical authority"
+    },
+    {
+      "id": "preflight-5",
+      "layer": "web",
+      "path": "web-next/src/shared/components/forms/layouts/FormTabs.tsx",
+      "purpose": "Reviewed current source and canonical authority"
+    },
+    {
+      "id": "preflight-6",
+      "layer": "mobile",
+      "path": "mobile-react/src/shared/components/forms/layouts/AppFormTabs.tsx",
+      "purpose": "Reviewed current source and canonical authority"
+    },
+    {
+      "id": "preflight-7",
+      "layer": "web",
+      "path": "web-next/src/platform/navigation/platformNavigation.tsx",
+      "purpose": "Reviewed current source and canonical authority"
+    },
+    {
+      "id": "preflight-8",
+      "layer": "mobile",
+      "path": "mobile-react/src/shell/settings/presentation/screens/SettingsScreen.tsx",
+      "purpose": "Reviewed current source and canonical authority"
+    },
+    {
+      "id": "workspace-runtime-0",
+      "layer": "web",
+      "path": "web-next/src/platform/settings/PlatformSettingsPage.tsx",
+      "purpose": "Applied shared-tab workspace, navigation, authority, compatibility and regression evidence"
+    },
+    {
+      "id": "workspace-runtime-1",
+      "layer": "web",
+      "path": "web-next/src/platform/settings/settingsTabs.ts",
+      "purpose": "Applied shared-tab workspace, navigation, authority, compatibility and regression evidence"
+    },
+    {
+      "id": "workspace-runtime-2",
+      "layer": "web",
+      "path": "web-next/src/platform/settings/settingsTabs.test.ts",
+      "purpose": "Applied shared-tab workspace, navigation, authority, compatibility and regression evidence"
+    },
+    {
+      "id": "workspace-runtime-3",
+      "layer": "web",
+      "path": "web-next/src/platform/settings/index.ts",
+      "purpose": "Applied shared-tab workspace, navigation, authority, compatibility and regression evidence"
+    },
+    {
+      "id": "workspace-runtime-4",
+      "layer": "web",
+      "path": "web-next/src/app/(main)/administration/(platform)/settings/page.tsx",
+      "purpose": "Applied shared-tab workspace, navigation, authority, compatibility and regression evidence"
+    },
+    {
+      "id": "workspace-runtime-5",
+      "layer": "web",
+      "path": "web-next/src/config/routes.ts",
+      "purpose": "Applied shared-tab workspace, navigation, authority, compatibility and regression evidence"
+    },
+    {
+      "id": "workspace-runtime-6",
+      "layer": "web",
+      "path": "web-next/src/lib/auth/route-access.ts",
+      "purpose": "Applied shared-tab workspace, navigation, authority, compatibility and regression evidence"
+    },
+    {
+      "id": "workspace-runtime-8",
+      "layer": "web",
+      "path": "web-next/src/platform/navigation/platformNavigation.test.tsx",
+      "purpose": "Applied shared-tab workspace, navigation, authority, compatibility and regression evidence"
+    },
+    {
+      "id": "workspace-runtime-9",
+      "layer": "web",
+      "path": "web-next/src/shell/components/sidebar/configs/superAdminConfig.tsx",
+      "purpose": "Applied shared-tab workspace, navigation, authority, compatibility and regression evidence"
+    },
+    {
+      "id": "workspace-runtime-10",
+      "layer": "web",
+      "path": "web-next/src/shell/components/sidebar/configs/superAdminConfig.test.tsx",
+      "purpose": "Applied shared-tab workspace, navigation, authority, compatibility and regression evidence"
+    },
+    {
+      "id": "workspace-runtime-11",
+      "layer": "web",
+      "path": "web-next/src/shell/components/sidebar/navigationConfig.tsx",
+      "purpose": "Applied shared-tab workspace, navigation, authority, compatibility and regression evidence"
+    },
+    {
+      "id": "workspace-runtime-12",
+      "layer": "web",
+      "path": "web-next/e2e/error-logs.spec.ts",
+      "purpose": "Applied shared-tab workspace, navigation, authority, compatibility and regression evidence"
+    },
+    {
+      "id": "workspace-runtime-13",
+      "layer": "web",
+      "path": "web-next/e2e/support/test-backend.mjs",
+      "purpose": "Applied shared-tab workspace, navigation, authority, compatibility and regression evidence"
+    },
+    {
+      "id": "workspace-runtime-14",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/navigation/SettingsTabs.tsx",
+      "purpose": "Applied shared-tab workspace, navigation, authority, compatibility and regression evidence"
+    },
+    {
+      "id": "workspace-runtime-15",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/navigation/SettingsTabs.test.tsx",
+      "purpose": "Applied shared-tab workspace, navigation, authority, compatibility and regression evidence"
+    },
+    {
+      "id": "workspace-runtime-16",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/navigation/SystemSettingsLinks.tsx",
+      "purpose": "Applied shared-tab workspace, navigation, authority, compatibility and regression evidence"
+    },
+    {
+      "id": "workspace-runtime-17",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/navigation/AdministrationLinks.tsx",
+      "purpose": "Applied shared-tab workspace, navigation, authority, compatibility and regression evidence"
+    },
+    {
+      "id": "workspace-runtime-18",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/navigation/AdministrationLinks.test.tsx",
+      "purpose": "Applied shared-tab workspace, navigation, authority, compatibility and regression evidence"
+    },
+    {
+      "id": "workspace-runtime-19",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/navigation/AppBreadcrumbs.tsx",
+      "purpose": "Applied shared-tab workspace, navigation, authority, compatibility and regression evidence"
+    },
+    {
+      "id": "workspace-runtime-21",
+      "layer": "mobile",
+      "path": "mobile-react/src/shell/layouts/drawer/AppDrawerContent.tsx",
+      "purpose": "Applied shared-tab workspace, navigation, authority, compatibility and regression evidence"
+    },
+    {
+      "id": "workspace-runtime-22",
+      "layer": "mobile",
+      "path": "mobile-react/app/(main)/(tabs)/_layout.tsx",
+      "purpose": "Applied shared-tab workspace, navigation, authority, compatibility and regression evidence"
+    },
+    {
+      "id": "workspace-runtime-24",
+      "layer": "mobile",
+      "path": "mobile-react/src/shared/components/forms/layouts/AppFormTabs.test.tsx",
+      "purpose": "Applied shared-tab workspace, navigation, authority, compatibility and regression evidence"
+    },
+    {
+      "id": "workspace-runtime-25",
+      "layer": "mobile",
+      "path": "mobile-react/src/shared/components/forms/AppForm.tsx",
+      "purpose": "Applied shared-tab workspace, navigation, authority, compatibility and regression evidence"
+    },
+    {
+      "id": "workspace-runtime-26",
+      "layer": "mobile",
+      "path": "mobile-react/src/shared/contexts/unsaved-changes-registry.ts",
+      "purpose": "Applied shared-tab workspace, navigation, authority, compatibility and regression evidence"
+    },
+    {
+      "id": "workspace-runtime-27",
+      "layer": "mobile",
+      "path": "mobile-react/src/shared/contexts/unsaved-changes-registry.test.ts",
+      "purpose": "Applied shared-tab workspace, navigation, authority, compatibility and regression evidence"
+    },
+    {
+      "id": "workspace-runtime-28",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tenant-access/presentation/components/CompanyContextSwitcher.tsx",
+      "purpose": "Applied shared-tab workspace, navigation, authority, compatibility and regression evidence"
+    },
+    {
+      "id": "workspace-runtime-29",
+      "layer": "mobile",
+      "path": "mobile-react/src/modules/accounting/fiscal-years/presentation/components/FiscalYearContextSwitcher.tsx",
+      "purpose": "Applied shared-tab workspace, navigation, authority, compatibility and regression evidence"
+    },
+    {
+      "id": "workspace-runtime-30",
+      "layer": "web",
+      "path": "web-next/src/locales/resources/core/en.json",
+      "purpose": "Applied shared-tab workspace, navigation, authority, compatibility and regression evidence"
+    },
+    {
+      "id": "workspace-runtime-31",
+      "layer": "web",
+      "path": "web-next/src/locales/resources/core/ar.json",
+      "purpose": "Applied shared-tab workspace, navigation, authority, compatibility and regression evidence"
+    },
+    {
+      "id": "workspace-runtime-32",
+      "layer": "mobile",
+      "path": "mobile-react/src/core/localization/translations/en-navigation-settings.ts",
+      "purpose": "Applied shared-tab workspace, navigation, authority, compatibility and regression evidence"
+    },
+    {
+      "id": "workspace-runtime-33",
+      "layer": "mobile",
+      "path": "mobile-react/src/core/localization/translations/ar-navigation-settings.ts",
+      "purpose": "Applied shared-tab workspace, navigation, authority, compatibility and regression evidence"
+    },
+    {
+      "id": "bounded-layout-0",
+      "layer": "web",
+      "path": "web-next/src/shell/main-layout/MainLayout.tsx",
+      "purpose": "Shared shell bounds workspace and child Grid footer within viewport"
+    },
+    {
+      "id": "bounded-layout-1",
+      "layer": "web",
+      "path": "web-next/src/platform/company-localizations/pages/CompanyLocalizationsPage.tsx",
+      "purpose": "Shared shell bounds workspace and child Grid footer within viewport"
+    },
+    {
+      "id": "customer-education",
+      "layer": "documentation",
+      "path": "documentation/plans/business/platform-error-logs/education/platform-settings.md",
+      "purpose": "Verified customer entry, independent saves and native preference behavior"
+    },
+    {
+      "id": "card-fidelity-0",
+      "layer": "web",
+      "path": "web-next/src/shared/components/forms/layouts/FormSection.tsx",
+      "purpose": "Settings card fidelity: reuse shared surface, metric/header options and compatibility tests"
+    },
+    {
+      "id": "card-fidelity-1",
+      "layer": "web",
+      "path": "web-next/src/shared/components/forms/layouts/FormSection.test.tsx",
+      "purpose": "Settings card fidelity: reuse shared surface, metric/header options and compatibility tests"
+    },
+    {
+      "id": "card-fidelity-2",
+      "layer": "web",
+      "path": "web-next/src/shared/components/cards/MetricCard.tsx",
+      "purpose": "Settings card fidelity: reuse shared surface, metric/header options and compatibility tests"
+    },
+    {
+      "id": "card-fidelity-3",
+      "layer": "web",
+      "path": "web-next/src/platform/error-logs/pages/ErrorLogSettingsPage.tsx",
+      "purpose": "Settings card fidelity: reuse shared surface, metric/header options and compatibility tests"
+    },
+    {
+      "id": "card-fidelity-4",
+      "layer": "web",
+      "path": "web-next/src/platform/offline-operations/OfflineOperationsPage.tsx",
+      "purpose": "Settings card fidelity: reuse shared surface, metric/header options and compatibility tests"
+    },
+    {
+      "id": "card-fidelity-5",
+      "layer": "mobile",
+      "path": "mobile-react/src/shared/components/forms/layouts/AppFormSection.tsx",
+      "purpose": "Settings card fidelity: reuse shared surface, metric/header options and compatibility tests"
+    },
+    {
+      "id": "card-fidelity-6",
+      "layer": "mobile",
+      "path": "mobile-react/src/shared/components/surfaces/AppCard.tsx",
+      "purpose": "Settings card fidelity: reuse shared surface, metric/header options and compatibility tests"
+    },
+    {
+      "id": "administration-grouping-0",
+      "layer": "web",
+      "path": "web-next/src/platform/modules/tenantAdministrationLauncher.ts",
+      "purpose": "Administration navigation composition and permission regression evidence"
+    },
+    {
+      "id": "administration-grouping-1",
+      "layer": "web",
+      "path": "web-next/src/platform/modules/tenantAdministrationLauncher.test.ts",
+      "purpose": "Administration navigation composition and permission regression evidence"
+    },
+    {
+      "id": "administration-grouping-2",
+      "layer": "web",
+      "path": "web-next/src/platform/modules/useModulesQuery.ts",
+      "purpose": "Administration navigation composition and permission regression evidence"
+    },
+    {
+      "id": "administration-grouping-3",
+      "layer": "web",
+      "path": "web-next/src/platform/modules/ModuleLauncherPage.tsx",
+      "purpose": "Administration navigation composition and permission regression evidence"
+    },
+    {
+      "id": "administration-grouping-4",
+      "layer": "web",
+      "path": "web-next/src/platform/modules/ModuleOverviewPage.tsx",
+      "purpose": "Administration navigation composition and permission regression evidence"
+    },
+    {
+      "id": "administration-grouping-5",
+      "layer": "web",
+      "path": "web-next/src/platform/modules/ModuleContextSwitcher.tsx",
+      "purpose": "Administration navigation composition and permission regression evidence"
+    },
+    {
+      "id": "administration-grouping-6",
+      "layer": "web",
+      "path": "web-next/src/platform/modules/modulePresentation.tsx",
+      "purpose": "Administration navigation composition and permission regression evidence"
+    },
+    {
+      "id": "administration-grouping-7",
+      "layer": "web",
+      "path": "web-next/src/platform/modules/SubmoduleEntryPage.tsx",
+      "purpose": "Administration navigation composition and permission regression evidence"
+    },
+    {
+      "id": "administration-grouping-8",
+      "layer": "web",
+      "path": "web-next/src/shell/components/sidebar/SideBar.tsx",
+      "purpose": "Administration navigation composition and permission regression evidence"
+    },
+    {
+      "id": "administration-grouping-9",
+      "layer": "web",
+      "path": "web-next/e2e/administration-module.spec.ts",
+      "purpose": "Administration navigation composition and permission regression evidence"
+    },
+    {
+      "id": "administration-grouping-10",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/modules/registry/administration-launcher.ts",
+      "purpose": "Administration navigation composition and permission regression evidence"
+    },
+    {
+      "id": "administration-grouping-11",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/modules/registry/administration-launcher.test.ts",
+      "purpose": "Administration navigation composition and permission regression evidence"
+    },
+    {
+      "id": "administration-grouping-12",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/modules/registry/index.ts",
+      "purpose": "Administration navigation composition and permission regression evidence"
+    },
+    {
+      "id": "administration-grouping-13",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/modules/presentation/queries/use-modules.ts",
+      "purpose": "Administration navigation composition and permission regression evidence"
+    },
+    {
+      "id": "administration-grouping-14",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/modules/presentation/screens/ModuleLauncherScreen.tsx",
+      "purpose": "Administration navigation composition and permission regression evidence"
+    },
+    {
+      "id": "administration-grouping-15",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/modules/presentation/screens/SubmoduleEntryScreen.tsx",
+      "purpose": "Administration navigation composition and permission regression evidence"
+    },
+    {
+      "id": "administration-icon-color-0",
+      "layer": "web",
+      "path": "web-next/src/shared/components/layout/module-launcher/ModuleLauncher.tsx",
+      "purpose": "Shared launcher foreground/size ownership for plain and wrapped icons, browser color regression evidence"
+    },
+    {
+      "id": "administration-icon-color-1",
+      "layer": "web",
+      "path": "web-next/src/shared/components/layout/navigation/ColoredIcon.tsx",
+      "purpose": "Shared launcher foreground/size ownership for plain and wrapped icons, browser color regression evidence"
+    },
+    {
+      "id": "administration-icon-color-2",
+      "layer": "web",
+      "path": "web-next/e2e/administration-icons.spec.ts",
+      "purpose": "Shared launcher foreground/size ownership for plain and wrapped icons, browser color regression evidence"
+    }
+  ]
+}

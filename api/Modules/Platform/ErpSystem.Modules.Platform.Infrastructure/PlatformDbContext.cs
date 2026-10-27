@@ -1,12 +1,14 @@
 using ErpSystem.Modules.Platform.Application.Abstractions.Persistence;
 using ErpSystem.Modules.Platform.Infrastructure.Identity;
 using ErpSystem.Modules.Platform.Domain.Companies.Entities;
+using ErpSystem.Modules.Platform.Domain.Security.Users.Entities;
 using ErpSystem.BuildingBlocks.Application.Abstractions.Persistence;
 using ErpSystem.BuildingBlocks.Context.Authentication;
 using ErpSystem.BuildingBlocks.Domain.Abstractions;
 using ErpSystem.BuildingBlocks.Domain.Entities;
 using ErpSystem.Modules.Platform.Domain.Platform.Files.Entities;
 using ErpSystem.Modules.Platform.Domain.Platform.SecurityAudits.Entities;
+using ErpSystem.Modules.Platform.Domain.Platform.ErrorLogs;
 using ErpSystem.Modules.Platform.Domain.Security.ApiKeys.Entities;
 using ErpSystem.Modules.Platform.Infrastructure.Features.Platform.Notifications.Entities;
 using ErpSystem.Modules.Platform.Infrastructure.Features.Security.Authentication.Entities;
@@ -40,7 +42,7 @@ public sealed class PlatformDbContext : IdentityDbContext<PlatformApplicationUse
     private readonly ICurrentActor? _currentActor;
 
     private string? CurrentTenantId => _currentActor?.TenantId;
-    private int? CurrentCompanyId => _currentActor?.CompanyId;
+    internal int? CurrentCompanyId => _currentActor?.CompanyId;
 
     public PlatformDbContext(
         DbContextOptions<PlatformDbContext> options,
@@ -50,11 +52,16 @@ public sealed class PlatformDbContext : IdentityDbContext<PlatformApplicationUse
         _currentActor = currentActor;
     }
 
+    public DbSet<ErpSystem.Modules.Platform.Domain.Platform.MessageLogs.MessageLogEntry> MessageLogEntries => Set<ErpSystem.Modules.Platform.Domain.Platform.MessageLogs.MessageLogEntry>();
     public DbSet<PlatformTenant> Tenants => Set<PlatformTenant>();
     public DbSet<PlatformCompany> Companies => Set<PlatformCompany>();
     public DbSet<CompanyCountry> CompanyCountries => Set<CompanyCountry>();
     public DbSet<PlatformUserTenantAccess> UserTenantAccesses => Set<PlatformUserTenantAccess>();
     public DbSet<PlatformUserCompanyAccess> UserCompanyAccesses => Set<PlatformUserCompanyAccess>();
+    public DbSet<UserCompanyPermissionGrantSet> UserCompanyPermissionGrantSets => Set<UserCompanyPermissionGrantSet>();
+    public DbSet<ErpSystem.Modules.Platform.Domain.Platform.Localization.SystemLocalizationSettings> SystemLocalizationSettings => Set<ErpSystem.Modules.Platform.Domain.Platform.Localization.SystemLocalizationSettings>();
+    public DbSet<CompanyEmailTemplateSettings> CompanyEmailTemplateSettings => Set<CompanyEmailTemplateSettings>();
+    public DbSet<CompanyLocalizationSettings> CompanyLocalizationSettings => Set<CompanyLocalizationSettings>();
     public DbSet<PlatformAuthenticationSelectionChallenge> AuthenticationSelectionChallenges => Set<PlatformAuthenticationSelectionChallenge>();
     public DbSet<PlatformUserInvitation> UserInvitations => Set<PlatformUserInvitation>();
     public DbSet<PlatformTenantModuleEntitlement> TenantModuleEntitlements => Set<PlatformTenantModuleEntitlement>();
@@ -64,6 +71,8 @@ public sealed class PlatformDbContext : IdentityDbContext<PlatformApplicationUse
     public DbSet<ApiKey> ApiKeys => Set<ApiKey>();
     public DbSet<Notification> Notifications => Set<Notification>();
     public DbSet<SecurityAuditEvent> SecurityAuditEvents => Set<SecurityAuditEvent>();
+    public DbSet<ErrorLogEntry> ErrorLogEntries => Set<ErrorLogEntry>();
+    public DbSet<ErrorLogRetentionSettings> ErrorLogRetentionSettings => Set<ErrorLogRetentionSettings>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -89,6 +98,16 @@ public sealed class PlatformDbContext : IdentityDbContext<PlatformApplicationUse
         modelBuilder.Entity<PlatformUserCompanyAccess>()
             .HasQueryFilter(access => access.TenantId == CurrentTenantId &&
                                       access.CompanyId == CurrentCompanyId);
+        modelBuilder.Entity<UserCompanyPermissionGrantSet>()
+            .HasQueryFilter(set => set.TenantId == CurrentTenantId &&
+                                   set.CompanyId == CurrentCompanyId);
+        modelBuilder.Entity<ErpSystem.Modules.Platform.Domain.Platform.MessageLogs.MessageLogEntry>()
+            .HasQueryFilter(entry => entry.TenantId == CurrentTenantId && entry.CompanyId == CurrentCompanyId);
+        modelBuilder.Entity<CompanyEmailTemplateSettings>()
+            .HasQueryFilter(settings => settings.TenantId == CurrentTenantId && settings.CompanyId == CurrentCompanyId);
+        modelBuilder.Entity<CompanyLocalizationSettings>()
+            .HasQueryFilter(settings => settings.TenantId == CurrentTenantId &&
+                                           settings.CompanyId == CurrentCompanyId);
         modelBuilder.Entity<PlatformAuthenticationSelectionChallenge>()
             .HasQueryFilter(challenge => challenge.TenantId == null ||
                                          challenge.TenantId == CurrentTenantId);
@@ -231,6 +250,60 @@ public sealed class PlatformDbContext : IdentityDbContext<PlatformApplicationUse
                 .HasForeignKey(access => new { access.TenantId, access.CompanyId })
                 .HasPrincipalKey(company => new { company.TenantId, company.Id })
                 .OnDelete(DeleteBehavior.Restrict);
+        });
+
+        modelBuilder.Entity<UserCompanyPermissionGrantSet>(builder =>
+        {
+            builder.ToTable("UserCompanyPermissionGrantSets", Schema);
+            builder.HasKey(set => set.Id);
+            builder.HasIndex(set => new { set.TenantId, set.CompanyId, set.UserId }).IsUnique();
+            builder.Property(set => set.TenantId).HasMaxLength(32).IsRequired();
+            builder.Property(set => set.UserId).HasMaxLength(450).IsRequired();
+            builder.Property(set => set.Revision).IsConcurrencyToken();
+            builder.Property(set => set.RowVersion).IsRowVersion();
+            builder.HasOne<PlatformApplicationUser>().WithMany()
+                .HasForeignKey(set => set.UserId).OnDelete(DeleteBehavior.Restrict);
+            builder.HasOne<PlatformCompany>().WithMany()
+                .HasForeignKey(set => new { set.TenantId, set.CompanyId })
+                .HasPrincipalKey(company => new { company.TenantId, company.Id })
+                .OnDelete(DeleteBehavior.Restrict);
+            builder.OwnsMany(set => set.Grants, grant =>
+            {
+                grant.ToTable("UserCompanyPermissionGrants", Schema);
+                grant.WithOwner().HasForeignKey("GrantSetId");
+                grant.Property<int>("Id").ValueGeneratedOnAdd();
+                grant.HasKey("Id");
+                grant.Property(item => item.Permission).HasMaxLength(200).IsRequired();
+                grant.HasIndex("GrantSetId", nameof(UserCompanyPermissionGrant.Permission)).IsUnique();
+            });
+        });
+
+        modelBuilder.Entity<CompanyLocalizationSettings>(builder =>
+        {
+            builder.ToTable("CompanyLocalizationSettings", Schema);
+            builder.HasKey(settings => settings.Id);
+            builder.HasIndex(settings => new { settings.TenantId, settings.CompanyId }).IsUnique();
+            builder.Property(settings => settings.TenantId).HasMaxLength(32).IsRequired();
+            builder.Property(settings => settings.DefaultLanguage).HasMaxLength(2).IsRequired();
+            builder.Property(settings => settings.Revision).IsConcurrencyToken();
+            builder.Property(settings => settings.RowVersion).IsRowVersion();
+            builder.HasOne<PlatformCompany>().WithMany()
+                .HasForeignKey(settings => new { settings.TenantId, settings.CompanyId })
+                .HasPrincipalKey(company => new { company.TenantId, company.Id })
+                .OnDelete(DeleteBehavior.Restrict);
+            builder.OwnsMany(settings => settings.Overrides, overrideBuilder =>
+            {
+                overrideBuilder.ToTable("CompanyLocalizationOverrides", Schema);
+                overrideBuilder.WithOwner().HasForeignKey("SettingsId");
+                overrideBuilder.Property<int>("Id").ValueGeneratedOnAdd();
+                overrideBuilder.HasKey("Id");
+                overrideBuilder.Property(item => item.Source).HasMaxLength(100).IsRequired();
+                overrideBuilder.Property(item => item.Language).HasMaxLength(2).IsRequired();
+                overrideBuilder.Property(item => item.Key).HasMaxLength(400).IsRequired();
+                overrideBuilder.Property(item => item.Value).HasMaxLength(4000).IsRequired();
+                overrideBuilder.HasIndex("SettingsId", nameof(CompanyLocalizationOverride.Source),
+                    nameof(CompanyLocalizationOverride.Language), nameof(CompanyLocalizationOverride.Key)).IsUnique();
+            });
         });
 
         modelBuilder.Entity<PlatformAuthenticationSelectionChallenge>(builder =>

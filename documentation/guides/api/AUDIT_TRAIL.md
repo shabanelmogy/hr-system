@@ -115,3 +115,5 @@ services.AddErpAuditTrailSource<MyDbContext>("my-module");
 | الويب | `web-next/src/platform/audit-trail/` |
 | الموبايل | `mobile-react/src/platform/tools/audit-trail/` |
 | الاختبارات | `api/Tests/ErpSystem.BuildingBlocks.Tests/AuditTrailTests.cs`, `Platform.Tests/AuditTrailQueryTests.cs`, `Accounting.Tests/FiscalYearCompanyIsolationTests.cs` |
+
+2026-10-17 verification repair: Web AuditTrailDetailsDialog is dynamically imported and mounted only for a selected entry, restoring the existing interaction-only architecture gate.

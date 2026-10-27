@@ -2,6 +2,7 @@
 
 import axios, { type AxiosError, type AxiosInstance, type AxiosRequestConfig, type GenericAbortSignal, type Method } from "axios";
 import i18n from "i18next";
+import { reportErrorLog } from "@/lib/observability/errorLogReporter";
 import {
   BACKEND_OVERRIDE_HEADER,
   getStoredBackendOverride,
@@ -145,6 +146,9 @@ class ApiClient {
           error.response?.headers[SESSION_REFRESHED_HEADER],
         );
         const url = error.config?.url ?? "";
+        if (!error.response && !axios.isCancel(error) && !url.includes("error-logs")) {
+          reportErrorLog("network", error);
+        }
         if (error.response?.status === 423) {
           this.readOnlyGuard?.onBlocked();
         }
@@ -276,8 +280,8 @@ class ApiClient {
     }
   }
 
-  post<T = unknown>(endpoint: string, data?: unknown, headers: Record<string, string> = {}) {
-    return this.request<T>("POST", endpoint, { data, headers: getDataHeaders(data, headers) });
+  post<T = unknown>(endpoint: string, data?: unknown, headers: Record<string, string> = {}, options: Pick<AppRequestConfig, "allowWhenReadOnly"> = {}) {
+    return this.request<T>("POST", endpoint, { ...options, data, headers: getDataHeaders(data, headers) });
   }
 
   postBlob(endpoint: string, data: unknown, contentType: string, timeout = 30_000) {

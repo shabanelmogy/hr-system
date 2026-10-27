@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { useId, type ReactNode } from "react";
 import { Box, Divider, Typography } from "@mui/material";
 import type { SxProps, Theme } from "@mui/material/styles";
 
@@ -8,6 +8,7 @@ export interface FormSectionProps {
   description?: ReactNode;
   icon?: ReactNode;
   action?: ReactNode;
+  variant?: "plain" | "outlined";
   divider?: boolean;
   sx?: SxProps<Theme>;
   contentSx?: SxProps<Theme>;
@@ -19,16 +20,21 @@ export function FormSection({
   description,
   icon,
   action,
-  divider = true,
+  variant = "plain",
+  divider = variant === "plain",
   sx,
   contentSx,
 }: FormSectionProps) {
+  const titleId = useId();
   return (
     <Box
       component="section"
-      sx={[{ display: "grid", gap: 2 }, ...(Array.isArray(sx) ? sx : sx ? [sx] : [])]}
+      aria-labelledby={titleId}
+      sx={[{ display: "grid", gap: 2, minWidth: 0 },
+        ...(variant === "outlined" ? [{ p: { xs: 2, sm: 3 }, border: 1, borderColor: "divider", borderRadius: 2, bgcolor: "background.paper" }] : []),
+        ...(Array.isArray(sx) ? sx : sx ? [sx] : [])]}
     >
-      <Box sx={{ display: "flex", alignItems: "center", gap: 1.25, minWidth: 0 }}>
+      <Box sx={{ display: "flex", alignItems: "center", gap: 1.25, minWidth: 0, flexWrap: variant === "outlined" ? "wrap" : undefined }}>
         {icon ? (
           <Box
             sx={{
@@ -46,7 +52,7 @@ export function FormSection({
           </Box>
         ) : null}
         <Box sx={{ flex: 1, minWidth: 0 }}>
-          <Typography component="h3" variant="subtitle1" sx={{ fontWeight: 700 }}>
+          <Typography id={titleId} component="h3" variant="subtitle1" sx={{ fontWeight: 700 }}>
             {title}
           </Typography>
           {description ? (

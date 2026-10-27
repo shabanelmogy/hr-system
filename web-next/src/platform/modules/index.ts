@@ -39,3 +39,5 @@ export type {
   ModuleRequirement,
   AccessibleModuleDefinition,
 } from "./routeRequirements";
+
+export { isAdministrationPath } from "./tenantAdministrationLauncher";

@@ -4,6 +4,39 @@ This runbook defines the supported release sequence for the modular ERP API.
 The hosting platform may wrap these commands, but it must preserve the order and
 the health gates below.
 
+## Current development deployment (2026-10-17)
+
+The current hosted site is still a development deployment. Its runtime settings
+are consolidated in the git-ignored `api/ErpSystem.Api/appsettings.json`; the local
+`appsettings.Development.json` is empty so it does not override that file.
+The former local user-secret entries have been copied into this ignored file;
+the host no longer declares a `UserSecretsId`, so they cannot silently override
+later edits to `appsettings.json` in Development.
+The settings include the existing SQL connections, a development JWT signing key,
+explicit local/hosted API hosts, local frontend origins, and the optional-service
+switches. `DeploymentValidation:EnforceProductionReadiness=false` defers the
+production-only prerequisites; SQL connection validation and normal options
+validation still run. SMTP, malware scanning, and certificate-backed key storage
+are configured only when those services are actually available.
+
+Normal Visual Studio/folder/CLI publishing now includes `appsettings.json`
+(`PublishAppSettings=true` by default). Republish the API to deliver the file next
+to `ErpSystem.Api.dll`. The current WebDeploy profile replaces that settings file
+with the local copy. Migrations and seeding remain manual: both startup switches
+are false. The frontend URL currently points to `http://localhost:3000`; change
+`AppSettings:FrontendUrl` and `CorsSettings:AllowedOrigins` together in this file
+when the frontend receives a hosted address.
+
+The IIS environment label may remain `Production`: the explicit readiness switch
+supports this development deployment without changing the environment or the
+validator. Existing host environment variables still take precedence over JSON.
+There is no requirement to provision production-only services for this stage.
+
+Production CI and Docker publishing explicitly use `/p:PublishAppSettings=false`
+and continue to receive deployment-owned configuration separately. For a manual
+production publish, use a clean output directory and pass the same property. Restore strict readiness and satisfy
+the centrally tracked `PROD-017` gate before an actual production launch.
+
 ## Release inputs
 
 - Use a commit that passed `.github/workflows/api-ci.yml` and the relevant
@@ -98,8 +131,9 @@ the health gates below.
 ### MonsterASP.NET (current hosting) via GitHub Actions
 
 Until `MONSTERASP_SITE` is configured the deploy job is skipped and Visual Studio
-publish (`site84639-WebDeploy` profile) remains the deployment path; local settings
-files are never part of either publish.
+publish (`site84639-WebDeploy` profile) remains the current development deployment
+path, including the local `appsettings.json` as described above. The CI artifact
+excludes local runtime settings via `PublishAppSettings=false`.
 
 `.github/workflows/api-deploy.yml` deploys automatically after `API Foundation CI`
 succeeds for a push to `main`. It downloads that run's `erpsystem-api-<sha>` artifact
@@ -116,7 +150,7 @@ production never runs an untested rebuild. One-time setup in the repository sett
 WebDeploy must be enabled in the MonsterASP Control Panel. The deploy uses Web Deploy
 (`msdeploy`, Basic auth over HTTPS to `https://<site>.siteasp.net:8172/msdeploy.axd`)
 with `AppOffline` (no locked-DLL failures) and `DoNotDeleteRule` (server-only files are
-kept, as in the Visual Studio profile). `appsettings*.json`, `App_Data` and `logs` are
+kept). Unlike the current Visual Studio development publish, `appsettings*.json`, `App_Data` and `logs` are
 never overwritten: production configuration stays on the host (prefer Control Panel
 environment variables such as `ConnectionStrings__DefaultConnection`). Deploys are
 serialized and never cancelled midway. The job then polls `GET /health/live` and fails

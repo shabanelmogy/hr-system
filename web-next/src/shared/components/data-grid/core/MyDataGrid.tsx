@@ -19,6 +19,7 @@ import { DataGridShellContext } from "./context";
 import type { MyDataGridProps } from "./types";
 import { GridFooter } from "../navigation/GridFooter";
 import { DataGridToolbar } from "../toolbar/DataGridToolbar";
+import { useDataGridShell } from "./context";
 import {
   DEFAULT_ROWS_PER_PAGE,
   DEFAULT_ROWS_PER_PAGE_OPTIONS,
@@ -120,6 +121,8 @@ export default function MyDataGrid<TRow extends GridValidRowModel>({
   onToolbarAdd,
   toolbarSearch,
   toolbarContent,
+  toolbarFilters,
+  emptyContent,
   autoActivateFirstRow = true,
   autoSelectFirstRow = true,
   lastAddedId = null,
@@ -210,9 +213,10 @@ export default function MyDataGrid<TRow extends GridValidRowModel>({
     () => ({
       toolbar: DataGridToolbar,
       footer: GridFooter,
+      ...(emptyContent != null ? { noRowsOverlay: DataGridEmptyContent } : {}),
       ...slots,
     }),
-    [slots],
+    [emptyContent, slots],
   );
 
   const resolvedColumns = useMemo(
@@ -229,6 +233,8 @@ export default function MyDataGrid<TRow extends GridValidRowModel>({
       onToolbarAdd,
       toolbarSearch,
       toolbarContent,
+      toolbarFilters,
+      emptyContent,
       activeRowId,
       setActiveRowId,
       syncActiveRowSelection: !checkboxSelection,
@@ -240,6 +246,8 @@ export default function MyDataGrid<TRow extends GridValidRowModel>({
       showGridOptions,
       showNavigationButtons,
       toolbarContent,
+      toolbarFilters,
+      emptyContent,
       toolbarSearch,
       activeRowId,
       checkboxSelection,
@@ -433,13 +441,17 @@ export default function MyDataGrid<TRow extends GridValidRowModel>({
         rowCount={resolvedRowCount}
         sortModel={resolvedSortModel}
         checkboxSelection={checkboxSelection}
-        showToolbar={showToolbar ?? Boolean(onToolbarAdd || showGridOptions || toolbarSearch || toolbarContent || gridOptionsContent)}
+        showToolbar={showToolbar ?? Boolean(onToolbarAdd || showGridOptions || toolbarSearch || toolbarContent || toolbarFilters || gridOptionsContent)}
         className={showNavigationButtons ? "" : "no-navigation"}
         slots={resolvedSlots}
         sx={resolvedSx}
       />
     </DataGridShellContext.Provider>
   );
+}
+
+function DataGridEmptyContent() {
+  return useDataGridShell().emptyContent;
 }
 
 function idsEqual(left: GridRowId, right: GridRowId | null) {

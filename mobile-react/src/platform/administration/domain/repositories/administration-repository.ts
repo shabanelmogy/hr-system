@@ -12,6 +12,8 @@ import type {
   UpdateRoleRequest,
   UserCompanyOption,
   UserInvitation,
+  UserCompanyPermissions,
+  ReplaceUserPermissions,
 } from '../models/administration';
 
 export interface AdministrationRepository {
@@ -24,6 +26,8 @@ export interface AdministrationRepository {
   updateRole(request: UpdateRoleRequest): Promise<void>;
   toggleRole(id: string): Promise<void>;
   getRoleClaims(id: string): Promise<RoleWithClaims>;
+  getUserPermissions(userId: string, companyId: number): Promise<UserCompanyPermissions>;
+  replaceUserPermissions(userId: string, request: ReplaceUserPermissions): Promise<void>;
   updateRoleClaims(request: UpdateRoleRequest): Promise<void>;
   getInvitations(): Promise<UserInvitation[]>;
   createInvitation(request: CreateUserInvitationRequest): Promise<UserInvitation>;

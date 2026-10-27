@@ -1,5 +1,6 @@
 using ErpSystem.Modules.Platform.Application.BackgroundJobs;
 using ErpSystem.Modules.Platform.Infrastructure.Features.Platform.BackgroundJobs.Services;
+using ErpSystem.Modules.Platform.Infrastructure.Features.Platform.ErrorLogs;
 
 namespace ErpSystem.Modules.Platform.Infrastructure.Hangfire;
 
@@ -15,11 +16,13 @@ public static class PlatformHangfireDependencyInjection
             throw new InvalidOperationException(
                 "ConnectionStrings:HangfireConnection or ConnectionStrings:DefaultConnection is required.");
 
-        services.AddHangfire(config => config
+        services.AddSingleton<ErrorLogJobFilter>();
+        services.AddHangfire((provider, config) => config
             .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
             .UseSimpleAssemblyNameTypeSerializer()
             .UseRecommendedSerializerSettings()
-            .UseSqlServerStorage(connectionString));
+            .UseSqlServerStorage(connectionString)
+            .UseFilter(provider.GetRequiredService<ErrorLogJobFilter>()));
 
         services.AddOptions<PlatformHangfireSettings>()
             .BindConfiguration(PlatformHangfireSettings.SectionName)

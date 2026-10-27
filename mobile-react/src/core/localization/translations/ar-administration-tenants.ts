@@ -300,6 +300,9 @@ export const arAdministrationTenants = {
       passwordMismatch: 'كلمتا المرور غير متطابقتين.',
     },
   },
+  userPermissions: {
+    title: 'صلاحيات مستخدم الشركة', subtitle: 'الصلاحيات المباشرة لـ {{company}}.', description: 'تظل صلاحيات الدور موروثة. الصلاحيات المباشرة إضافية ومتاحة لهذه الشركة فقط.', action: 'إدارة الصلاحيات', direct: 'مباشرة', effective: 'فعالة', inherited: 'موروثة من {{role}}', company: 'الشركة: {{company}}', revision: 'الإصدار {{revision}}', selectionCount: '{{count}} صلاحية مباشرة محددة', reload: 'إعادة تحميل أحدث الصلاحيات', saved: 'تم حفظ صلاحيات المستخدم.', saveFailed: 'تعذر حفظ صلاحيات المستخدم.', loadFailed: 'تعذر تحميل صلاحيات المستخدم.',
+  },
   invitationManagement: {
     title: 'إدارة الدعوات',
     subtitle: 'ادعُ مستخدمين جدد وأدر دعوات الحسابات المعلقة.',
@@ -397,6 +400,7 @@ export const arAdministrationTenants = {
       reporting: 'التقارير',
     },
     permissionActions: {
+      reset: "إعادة تعيين",
       approve: 'اعتماد',
       approveJobDescriptions: 'اعتماد الأوصاف الوظيفية',
       archive: 'أرشفة',
@@ -482,6 +486,9 @@ export const arAdministrationTenants = {
       fiscalYears: 'السنوات المالية',
       globalCrystalReports: 'تقارير Crystal العامة',
       auditTrail: 'سجل العمليات',
+      errorLogs: 'سجلات الأخطاء',
+      systemErrorLogs: 'سجلات أخطاء النظام',
+      errorLogSettings: 'إعدادات سجلات الأخطاء',
       hangfire: 'المهام الخلفية',
       databaseViews: 'عروض قاعدة البيانات',
       localizations: 'الترجمة',

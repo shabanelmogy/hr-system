@@ -1,0 +1,86 @@
+import { expect, loginWithDemoRole, resetTestBackend, test } from "./support/erp-fixture";
+import arabic from "../src/locales/resources/platform-auth/ar.json" with {type:"json"};
+test.beforeEach(async ({request})=>{await resetTestBackend(request);});
+test("company editor excludes system sources and mixed Web and Mobile system keys",async({page,context})=>{
+  test.setTimeout(120000);
+  await context.addCookies([{name:"i18next",value:"en",domain:"localhost",path:"/"}]);
+  await loginWithDemoRole(page,"Admin","/administration/company-localizations");
+  await page.waitForURL(/\/administration\/company-localizations$/, {timeout:90000});
+  await expect(page.getByRole("heading",{name:"Company languages and texts",exact:true})).toBeVisible({timeout:30000});
+  const source=page.getByRole("combobox",{name:"Interface source"});
+  await source.click();
+  await expect(page.getByRole("option",{name:/ · (reference-countries|reference-states|reference-districts|platform-tenants)$/})).toHaveCount(0);
+  await expect(page.getByRole("option",{name:"Web interface · reference-address-types",exact:true})).toBeVisible();
+  await page.getByRole("option",{name:"Web interface · core",exact:true}).click();
+  const search=page.getByPlaceholder("Search keys or translated text");
+  async function searchFor(key:string,totalCount:number){
+    const response=page.waitForResponse(response=>{
+      const url=new URL(response.url());
+      return url.pathname.endsWith("/company-localizations/texts")&&url.searchParams.get("search")===key&&response.ok();
+    });
+    await search.fill(key);
+    expect((await (await response).json()).totalCount).toBe(totalCount);
+  }
+  await searchFor("menu.countries",0);
+  await expect(page.getByRole("row").filter({hasText:"menu.countries"})).toHaveCount(0);
+  await source.click();
+  await page.getByRole("option",{name:"Mobile app · translation",exact:true}).click();
+  await searchFor("superAdminDashboard.title",0);
+  await expect(page.getByRole("row").filter({hasText:"superAdminDashboard.title"})).toHaveCount(0);
+  await searchFor("common.save",1);
+  await expect(page.getByRole("row").filter({hasText:"common.save"})).toHaveCount(1);
+});
+test("company text edit reaches the runtime and reset restores its shipped value",async({page,context})=>{
+  test.setTimeout(120000);
+  await context.addCookies([{name:"i18next",value:"en",domain:"localhost",path:"/"}]);
+  await loginWithDemoRole(page,"Admin","/administration/company-localizations");
+  await page.waitForURL(/\/administration\/company-localizations$/, {timeout:90000});
+  await expect(page.getByRole("heading",{name:"Company languages and texts",exact:true})).toBeVisible({timeout:30000});
+  const sources=page.getByRole("combobox",{name:"Interface source"});
+  await sources.click();
+  await page.getByRole("option",{name:"Web interface · platform-auth",exact:true}).click();
+  await page.getByRole("combobox",{name:"Target language"}).click();
+  await page.getByRole("option",{name:"English",exact:true}).click();
+  await page.getByPlaceholder("Search keys or translated text").fill("companyLocalizations.title");
+  const row=page.getByRole("row").filter({hasText:"companyLocalizations.title"});
+  await expect(row).toHaveCount(1,{timeout:15000});
+  await row.getByRole("button",{name:"Edit text",exact:true}).click();
+  const dialog=page.getByRole("dialog");
+  await dialog.getByRole("textbox",{name:"Translated text"}).fill("My company interface");
+  await dialog.getByRole("button",{name:"Save Changes",exact:true}).click();
+  await expect(dialog).toHaveCount(0);
+  await expect(page.getByRole("heading",{name:"My company interface",exact:true})).toBeVisible({timeout:15000});
+  await row.getByRole("button",{name:"Reset text",exact:true}).click();
+  await page.getByRole("dialog").getByRole("button",{name:"Reset text",exact:true}).click();
+  await expect(page.getByRole("heading",{name:"Company languages and texts",exact:true})).toBeVisible({timeout:15000});
+  await page.screenshot({path:"../.codex-tmp/company-localizations-web-en.png",fullPage:true});
+  await page.getByRole("button",{name:"Set default language",exact:true}).click();
+  await page.getByRole("dialog").getByRole("combobox",{name:"Default language",exact:true}).click();
+  await page.getByRole("option",{name:"Arabic",exact:true}).click();
+  await page.getByRole("dialog").getByRole("button",{name:"Save Changes",exact:true}).click();
+  await expect(page.getByRole("dialog")).toHaveCount(0);
+  await expect(page.getByRole("heading",{name:"Company languages and texts",exact:true})).toBeVisible();
+  await expect(page.locator("html")).toHaveAttribute("dir","ltr");
+});
+
+test("company default drives Arabic direction without persisting a user preference",async({page,context})=>{
+  test.setTimeout(120000);
+  await loginWithDemoRole(page,"Admin","/administration/company-localizations");
+  await page.waitForURL(/\/administration\/company-localizations$/, {timeout:90000});
+  await expect(page.getByRole("heading",{name:"Company languages and texts",exact:true})).toBeVisible({timeout:30000});
+  await page.getByRole("button",{name:"Set default language",exact:true}).click();
+  await page.getByRole("dialog").getByRole("combobox",{name:"Default language",exact:true}).click();
+  await page.getByRole("option",{name:"Arabic",exact:true}).click();
+  await page.getByRole("dialog").getByRole("button",{name:"Save Changes",exact:true}).click();
+  await expect(page.getByRole("dialog")).toHaveCount(0);
+  await expect(page.getByRole("heading",{name:arabic.companyLocalizations.title,exact:true})).toBeVisible({timeout:15000});
+  await expect(page.locator("html")).toHaveAttribute("lang","ar");
+  await expect(page.locator("html")).toHaveAttribute("dir","rtl");
+  expect((await context.cookies()).some(cookie=>cookie.name==="i18next")).toBe(false);
+  await page.screenshot({path:"../.codex-tmp/company-localizations-web-ar.png",fullPage:true});
+  await page.setViewportSize({width:390,height:844});
+  await expect(page.getByRole("heading",{name:arabic.companyLocalizations.title,exact:true})).toBeVisible();
+  const bodyHasOverflow=await page.evaluate(()=>document.documentElement.scrollWidth>window.innerWidth);
+  expect(bodyHasOverflow).toBe(false);
+  await page.screenshot({path:"../.codex-tmp/company-localizations-web-phone-ar.png",fullPage:true});
+});

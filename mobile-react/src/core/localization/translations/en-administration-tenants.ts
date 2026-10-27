@@ -284,6 +284,9 @@ export const enAdministrationTenants = {
       passwordMismatch: 'Passwords do not match.',
     },
   },
+  userPermissions: {
+    title: 'Company user permissions', subtitle: 'Direct permissions for {{company}}.', description: 'Role permissions remain inherited. Direct permissions are additive and only available in this company.', action: 'Manage permissions', direct: 'Direct', effective: 'Effective', inherited: 'Inherited from {{role}}', company: 'Company: {{company}}', revision: 'Revision {{revision}}', selectionCount: '{{count}} direct permissions selected', reload: 'Reload latest permissions', saved: 'User permissions saved.', saveFailed: 'Unable to save user permissions.', loadFailed: 'Unable to load user permissions.',
+  },
   invitationManagement: {
     title: 'Invitation management',
     subtitle: 'Invite new users and manage pending account invitations.',
@@ -381,6 +384,7 @@ export const enAdministrationTenants = {
       reporting: 'Reporting',
     },
     permissionActions: {
+      reset: "Reset",
       approve: 'Approve',
       approveJobDescriptions: 'Approve job descriptions',
       archive: 'Archive',
@@ -466,6 +470,9 @@ export const enAdministrationTenants = {
       fiscalYears: 'Fiscal years',
       globalCrystalReports: 'Global Crystal reports',
       auditTrail: 'Audit trail',
+      errorLogs: 'Error logs',
+      systemErrorLogs: 'System error logs',
+      errorLogSettings: 'Error log settings',
       hangfire: 'Background jobs',
       databaseViews: 'Database views',
       localizations: 'Localization',

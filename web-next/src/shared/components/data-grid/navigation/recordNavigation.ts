@@ -59,3 +59,7 @@ export function getServerRecordIndex(
     totalRowCount - 1,
   );
 }
+
+export function getRecordNavigationBound(total: number, page: number, pageSize: number, visibleCount: number, hasNextPage: boolean): number {
+  return total >= 0 ? total : Math.max(0, page) * Math.max(1, pageSize) + visibleCount + (hasNextPage ? 1 : 0);
+}

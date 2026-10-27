@@ -7,6 +7,10 @@ import {
 } from "./realtimeQueryRegistry";
 
 describe("realtime query registry", () => {
+  it("invalidates both management and runtime company localization queries", () => {
+    expect(getRealtimeQueryKeys("company-localizations")).toEqual([["company-localizations"]]);
+    expect(getAllRealtimeQueryKeys()).toContainEqual(["company-localizations"]);
+  });
   it("accepts module-owned resource registrations without importing business modules", () => {
     registerRealtimeQueryKeys({ "test-resource": [["test", "all"]] });
     expect(isKnownRealtimeResource("test-resource")).toBe(true);

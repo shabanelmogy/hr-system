@@ -1,0 +1,1 @@
+export const companyLocalizationEndpoints = { settings: 'company-localizations/settings', texts: 'company-localizations/texts', runtime: 'company-localizations/runtime', default: 'company-localizations/default', text: 'company-localizations/text', reset: 'company-localizations/reset' } as const;

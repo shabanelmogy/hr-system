@@ -8,7 +8,7 @@ export const platformModuleDefinition: MobileModuleDefinition = {
   submodules: [
     {
       code: 'tenant-administration',
-      entryCandidates: [ROUTES.administration.root, ROUTES.basicData.companyGeographicScope],
+      entryCandidates: [ROUTES.administration.root, ROUTES.administration.companyLocalizations, ROUTES.basicData.companyGeographicScope],
       routePrefixes: [
         ROUTES.administration.root,
         ROUTES.basicData.companyGeographicScope,

@@ -49,14 +49,19 @@ These routes are explicit Phase 13 regression contracts, not just examples in pr
 | Public route | Owner | App Router source |
 | --- | --- | --- |
 | `/` | shell | `web-next/src/app/(main)/(shell)/page.tsx` |
+| `/administration/company-localizations` | platform | `web-next/src/app/(main)/administration/(platform)/company-localizations/page.tsx` |
 | `/administration/crystal-reports` | reporting | `web-next/src/app/(main)/administration/(reporting)/crystal-reports/page.tsx` |
+| `/administration/email-templates` | platform | `web-next/src/app/(main)/administration/(platform)/email-templates/page.tsx` |
 | `/administration/invitations` | platform | `web-next/src/app/(main)/administration/(platform)/invitations/page.tsx` |
 | `/administration/manage-role-permissions/[id]` | platform | `web-next/src/app/(main)/administration/(platform)/manage-role-permissions/[id]/page.tsx` |
+| `/administration/message-logs` | platform | `web-next/src/app/(main)/administration/(platform)/message-logs/page.tsx` |
 | `/administration/offline-operations` | platform | `web-next/src/app/(main)/administration/(platform)/offline-operations/page.tsx` |
 | `/administration/roles` | platform | `web-next/src/app/(main)/administration/(platform)/roles/page.tsx` |
+| `/administration/settings` | platform | `web-next/src/app/(main)/administration/(platform)/settings/page.tsx` |
 | `/administration/users` | platform | `web-next/src/app/(main)/administration/(platform)/users/page.tsx` |
 | `/advanced-tools/api-endpoints` | platform | `web-next/src/app/(main)/(platform)/advanced-tools/api-endpoints/page.tsx` |
 | `/advanced-tools/audit-trail` | platform | `web-next/src/app/(main)/(platform)/advanced-tools/audit-trail/page.tsx` |
+| `/advanced-tools/error-logs` | platform | `web-next/src/app/(main)/(platform)/advanced-tools/error-logs/page.tsx` |
 | `/advanced-tools/hangfire-dashboard` | platform | `web-next/src/app/(main)/(platform)/advanced-tools/hangfire-dashboard/page.tsx` |
 | `/advanced-tools/health-check` | platform | `web-next/src/app/(main)/(platform)/advanced-tools/health-check/page.tsx` |
 | `/advanced-tools/localization-api` | platform | `web-next/src/app/(main)/(platform)/advanced-tools/localization-api/page.tsx` |
@@ -96,11 +101,15 @@ These routes are explicit Phase 13 regression contracts, not just examples in pr
 | `/recruitment` | hr | `web-next/src/app/(main)/(modules)/(hr)/recruitment/page.tsx` |
 | `/route-unavailable` | shell | `web-next/src/app/(main)/(shell)/route-unavailable/page.tsx` |
 | `/super-admin` | platform | `web-next/src/app/(main)/super-admin/(platform)/page.tsx` |
+| `/super-admin/audit-trail` | platform | `web-next/src/app/(main)/super-admin/(platform)/audit-trail/page.tsx` |
+| `/super-admin/error-log-settings` | platform | `web-next/src/app/(main)/super-admin/(platform)/error-log-settings/page.tsx` |
+| `/super-admin/error-logs` | platform | `web-next/src/app/(main)/super-admin/(platform)/error-logs/page.tsx` |
 | `/super-admin/geography/countries` | reference-data | `web-next/src/app/(main)/super-admin/(reference-data)/geography/countries/page.tsx` |
 | `/super-admin/geography/districts` | reference-data | `web-next/src/app/(main)/super-admin/(reference-data)/geography/districts/page.tsx` |
 | `/super-admin/geography/states` | reference-data | `web-next/src/app/(main)/super-admin/(reference-data)/geography/states/page.tsx` |
 | `/super-admin/tenant-admins` | platform | `web-next/src/app/(main)/super-admin/(platform)/tenant-admins/page.tsx` |
 | `/super-admin/tenants` | platform | `web-next/src/app/(main)/super-admin/(platform)/tenants/page.tsx` |
+| `/super-admin/ui-texts` | platform | `web-next/src/app/(main)/super-admin/(platform)/ui-texts/page.tsx` |
 | `/workforce-planning` | hr | `web-next/src/app/(main)/(modules)/(hr)/workforce-planning/page.tsx` |
 | `/workforce-planning/budgets` | hr | `web-next/src/app/(main)/(modules)/(hr)/workforce-planning/budgets/page.tsx` |
 | `/workforce-planning/envelope-amendments` | hr | `web-next/src/app/(main)/(modules)/(hr)/workforce-planning/envelope-amendments/page.tsx` |

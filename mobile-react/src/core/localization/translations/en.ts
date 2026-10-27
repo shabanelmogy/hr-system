@@ -1,3 +1,6 @@
+import { enEmailTemplates } from "./en-email-templates";
+import { enCompanyLocalizations } from './en-company-localizations';
+import { enErrorLogs } from './en-error-logs';
 import { enRecruitment } from './en-recruitment';
 import { enCommon } from './en-common';
 import { enNavigationSettings } from './en-navigation-settings';
@@ -13,6 +16,9 @@ import { enCurrencies } from './en-currencies';
 import { enLedgerSetup } from './en-ledger-setup';
 
 export const en = {
+  ...enEmailTemplates,
+  ...enCompanyLocalizations,
+  ...enErrorLogs,
   ...enCommon,
   ...enNavigationSettings,
   ...enAdministrationTenants,

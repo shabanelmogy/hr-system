@@ -7,6 +7,10 @@ import {
 } from './realtime-query-registry';
 
 describe('realtime query registry', () => {
+  it('refreshes company localization settings, text pages, and runtime through one prefix', () => {
+    expect(getRealtimeQueryKeys('company-localizations')).toEqual([['company-localizations']]);
+    expect(getAllRealtimeQueryKeys()).toContainEqual(['company-localizations']);
+  });
   it('targets every appointment range through the stable feature prefix', () => {
     expect(getRealtimeQueryKeys('appointments')).toContainEqual([
       'platform-tools',

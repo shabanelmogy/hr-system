@@ -1,0 +1,3 @@
+import type { CompanyLocalizationRepository } from '../domain/repositories/company-localization-repository';
+export const createCompanyLocalizationUseCases = (repository: CompanyLocalizationRepository) => ({ getSettings: repository.getSettings.bind(repository), getTexts: repository.getTexts.bind(repository), getRuntime: repository.getRuntime.bind(repository), setDefault: repository.setDefault.bind(repository), setText: repository.setText.bind(repository), resetText: repository.resetText.bind(repository) });
+export type CompanyLocalizationUseCases = ReturnType<typeof createCompanyLocalizationUseCases>;

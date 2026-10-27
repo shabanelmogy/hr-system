@@ -13,6 +13,8 @@ import type {
   UpdateRoleRequest,
   UserCompanyOption,
   UserInvitation,
+  UserCompanyPermissions,
+  ReplaceUserPermissions,
 } from '../../domain/models/administration';
 import { administrationEndpoints as endpoints } from './administration-endpoints';
 import {
@@ -22,6 +24,7 @@ import {
   roleOptionSchema,
   roleWithClaimsSchema,
   userInvitationSchema,
+  userCompanyPermissionsSchema,
 } from './administration-schemas';
 import { z } from 'zod';
 
@@ -35,6 +38,8 @@ export interface AdministrationRemoteDataSource {
   updateRole(request: UpdateRoleRequest): Promise<void>;
   toggleRole(id: string): Promise<void>;
   getRoleClaims(id: string): Promise<RoleWithClaims>;
+  getUserPermissions(userId: string, companyId: number): Promise<UserCompanyPermissions>;
+  replaceUserPermissions(userId: string, request: ReplaceUserPermissions): Promise<void>;
   updateRoleClaims(request: UpdateRoleRequest): Promise<void>;
   getInvitations(): Promise<UserInvitation[]>;
   createInvitation(request: CreateUserInvitationRequest): Promise<UserInvitation>;
@@ -83,6 +88,18 @@ export const administrationRemoteDataSource: AdministrationRemoteDataSource = {
   },
   async getRoleClaims(id) {
     return roleWithClaimsSchema.parse(await apiService.get<unknown>(endpoints.roleClaims(id)));
+  },
+  async getUserPermissions(userId, companyId) {
+    const response = userCompanyPermissionsSchema.parse(
+      await apiService.get<unknown>(endpoints.userPermissions(userId)),
+    );
+    if (response.userId !== userId || response.companyId !== companyId) {
+      throw new Error('User permissions response does not match the active company scope.');
+    }
+    return response;
+  },
+  async replaceUserPermissions(userId, request) {
+    await apiService.put<void, ReplaceUserPermissions>(endpoints.userPermissions(userId), request);
   },
   async updateRoleClaims(request) {
     await apiService.put<void, UpdateRoleRequest>(endpoints.updateRoleClaims, request);

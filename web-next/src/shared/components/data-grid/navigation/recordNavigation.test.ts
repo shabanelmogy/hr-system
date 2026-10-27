@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   getActiveRecordIndex,
+  getRecordNavigationBound,
   getPageForRecord,
   getNextRecordIndex,
   getServerRecordIndex,
@@ -40,5 +41,13 @@ describe("record navigation", () => {
     expect(getServerRecordIndex([21, 22, 23, 24, 25], 23, 2, 10, 42)).toBe(22);
     expect(getServerRecordIndex([41, 42], undefined, 4, 10, 42)).toBe(40);
     expect(getServerRecordIndex([], undefined, 0, 10, 42)).toBe(-1);
+  });
+});
+
+describe("cursor navigation with unknown totals", () => {
+  it("allows next-page activation only while a cursor is available", () => {
+    expect(getRecordNavigationBound(-1, 1, 50, 50, true)).toBe(101);
+    expect(getRecordNavigationBound(-1, 1, 50, 7, false)).toBe(57);
+    expect(getRecordNavigationBound(125, 1, 50, 50, true)).toBe(125);
   });
 });

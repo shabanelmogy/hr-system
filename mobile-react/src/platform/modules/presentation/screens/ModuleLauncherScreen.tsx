@@ -12,6 +12,7 @@ import {
   AppStateView,
   AppText,
 } from '@/src/shared/components';
+import { administrationLauncherEntries } from '../../registry/administration-launcher';
 import { useAccessibleModules } from '../queries/use-modules';
 import type { ErpModule } from '../../domain/models/module';
 
@@ -119,6 +120,7 @@ export function ModuleLauncherScreen({ moduleCode }: { moduleCode?: string }) {
 // Module colors come from the palette's module colors (same as web); General Data carries
 // the palette primary, so no module is special-cased here.
 const modulePresentations: Record<string, { icon: AppIconName; accent: ModuleAccentKey }> = {
+  administration: { icon: 'shield-checkmark-outline', accent: 'platform' },
   'reference-data': { icon: 'globe-outline', accent: 'referenceData' },
   acc: { icon: 'calculator-outline', accent: 'accounting' },
   hr: { icon: 'people-outline', accent: 'hr' },
@@ -136,6 +138,8 @@ function getModulePresentation(code: string, theme: AppTheme) {
 }
 
 function getSubmodulePresentation(code: string, theme: AppTheme) {
+  const administration = administrationLauncherEntries.find(item => item.route.replace(/^\//, '').replaceAll('/', '-') === code);
+  if (administration) return { icon: administration.icon, color: getModuleAccent(theme, 'platform'), iconSize: 34 };
   const presentations: Record<string, { icon: AppIconName; color: string; iconSize: number }> = {
     'basic-data': { icon: 'server-outline', color: theme.colors.secondary, iconSize: 34 },
     recruitment: { icon: 'person-add-outline', color: theme.colors.accent, iconSize: 34 },

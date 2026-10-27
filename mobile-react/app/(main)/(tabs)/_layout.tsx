@@ -2,16 +2,13 @@ import { Tabs } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { ROUTES } from '@/src/core/constants/routes';
 import { useAppTheme } from '@/src/core/theme';
-import { useCanAccessRoute } from '@/src/platform/auth';
 import { AppIcon } from '@/src/shared/components';
 
 export default function TabLayout() {
   const { t } = useTranslation();
   const { theme } = useAppTheme();
   const insets = useSafeAreaInsets();
-  const canViewSettings = useCanAccessRoute(ROUTES.settings);
   const bottomSpacing = Math.max(insets.bottom, 10);
 
   return (
@@ -45,7 +42,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="settings"
         options={{
-          href: canViewSettings ? undefined : null,
+          href: null,
           title: t('navigation.settings'),
           tabBarIcon: ({ color, size }) => (
             <AppIcon color={color} name="settings-outline" size={size} />

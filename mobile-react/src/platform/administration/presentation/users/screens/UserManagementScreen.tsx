@@ -12,6 +12,8 @@ import {
   useSaveManagedUser,
   useToggleManagedUser,
   useUnlockManagedUser,
+  useReplaceUserPermissions,
+  useUserPermissions,
 } from '../../queries/use-administration';
 import type {
   CreateManagedUserRequest,
@@ -24,6 +26,7 @@ import { ManagedUserAvatar } from '../components/ManagedUserAvatar';
 import { ManagedUserActions } from '../components/ManagedUserActions';
 import { ManagedUserCard } from '../components/ManagedUserCard';
 import { UserManagementStats } from '../components/UserManagementStats';
+import { UserPermissionsForm } from '../components/UserPermissionsForm';
 import { permissions, useAuth, useAuthorization } from '@/src/platform/auth';
 import {
   AppDataTable,
@@ -63,6 +66,8 @@ export function UserManagementScreen() {
     requiredPermissions: createPermissions,
     permissionMode: 'all',
   });
+  const { allowed: canViewPermissions } = useAuthorization({ requiredPermissions: [permissions.ViewUserPermissions] });
+  const { allowed: canEditPermissions } = useAuthorization({ requiredPermissions: [permissions.EditUserPermissions] });
   const canLoadRoles = canCreate || canEdit;
   const usersQuery = useManagedUsers();
   const companiesQuery = useAssignableCompanies();
@@ -77,6 +82,10 @@ export function UserManagementScreen() {
   const [formOpen, setFormOpen] = useState(false);
   const [pendingAction, setPendingAction] = useState<PendingAccountAction | null>(null);
   const [cardsModalOpen, setCardsModalOpen] = useState(false);
+  const [permissionsUser, setPermissionsUser] = useState<ManagedUser | null>(null);
+  const permissionScope = session ? { tenantId: session.tenantId, companyId: session.companyId, userId: session.userId } : null;
+  const userPermissionsQuery = useUserPermissions(permissionScope, permissionsUser?.id ?? null);
+  const replacePermissionsMutation = useReplaceUserPermissions(permissionScope, permissionsUser?.id ?? null);
 
   const [selectedUserFilters, setSelectedUserFilters] = useState<string[]>([]);
 
@@ -107,7 +116,9 @@ export function UserManagementScreen() {
     return (
       <ManagedUserActions
         canManage={canManageUser}
+        canManagePermissions={canViewPermissions}
         onEdit={(selected) => openUserForm('edit', selected)}
+        onManagePermissions={setPermissionsUser}
         onRevokeSessions={(selected) => setPendingAction({ type: 'revoke', user: selected })}
         onToggle={(selected) => setPendingAction({ type: 'toggle', user: selected })}
         onUnlock={(selected) => void unlockUser(selected)}
@@ -115,7 +126,7 @@ export function UserManagementScreen() {
         user={user}
       />
     );
-  }, [canEdit, openUserForm, session?.userId, unlockUser]);
+  }, [canEdit, canViewPermissions, openUserForm, session?.userId, unlockUser]);
 
   const companyNames = useMemo(
     () => new Map((companiesQuery.data ?? []).map((company) => [
@@ -479,6 +490,21 @@ export function UserManagementScreen() {
         visible={cardsModalOpen}>
         <UserManagementStats layout="vertical" users={filteredUsers} />
       </AppModal>
+      {permissionsUser && canViewPermissions ? <UserPermissionsForm
+        key={`${permissionScope?.tenantId}:${permissionScope?.companyId}:${permissionsUser.id}`}
+        canEdit={canEditPermissions}
+        error={userPermissionsQuery.error}
+        loading={userPermissionsQuery.isLoading || replacePermissionsMutation.isPending}
+        onClose={() => setPermissionsUser(null)}
+        onReload={async () => (await userPermissionsQuery.refetch()).data}
+        onSave={async (permissions, expectedRevision) => {
+          if (!canViewPermissions || !canEditPermissions) return;
+          await replacePermissionsMutation.mutateAsync({ permissions, expectedRevision });
+          await userPermissionsQuery.refetch();
+        }}
+        value={userPermissionsQuery.data}
+        visible={permissionsUser !== null}
+      /> : null}
 
       <ConfirmationDialog
         confirmIcon={

@@ -15,7 +15,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import type { RoleClaimsFormData } from "../../utils/validation";
 import {
@@ -30,6 +30,8 @@ type RolePermissionsCardsProps = {
   onSelectScreen: (screen: string, selected: boolean) => void;
   onToggle: (claimIndex: number) => void;
   readOnly: boolean;
+  isClaimDisabled?: (index: number) => boolean;
+  renderClaimDetails?: (index: number) => ReactNode;
 };
 
 export default function RolePermissionsCards({
@@ -39,6 +41,8 @@ export default function RolePermissionsCards({
   onSelectScreen,
   onToggle,
   readOnly,
+  isClaimDisabled,
+  renderClaimDetails,
 }: RolePermissionsCardsProps) {
   const { t } = useTranslation();
   const [expandedScreen, setExpandedScreen] = useState<string | false>(false);
@@ -190,12 +194,12 @@ export default function RolePermissionsCards({
                       control={
                         <Checkbox
                           checked={claim.isSelected}
-                          disabled={readOnly}
+                          disabled={readOnly || isClaimDisabled?.(claimIndex)}
                           onChange={() => onToggle(claimIndex)}
                           slotProps={{ input: { "aria-label": permissionLabel } }}
                         />
                       }
-                      label={actionLabel}
+                      label={<>{actionLabel}{renderClaimDetails?.(claimIndex)}</>}
                     />
                   );
                 })}

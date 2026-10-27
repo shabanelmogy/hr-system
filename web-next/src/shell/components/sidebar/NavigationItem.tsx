@@ -97,7 +97,8 @@ function NavigationItem({
         <ListItemButton
           dir={theme.direction}
           onClick={handleClick}
-          aria-label={open ? undefined : title}
+          aria-label={title}
+          aria-expanded={hasChildren ? expanded && open : undefined}
           sx={[
             {
               flex: "0 0 auto",

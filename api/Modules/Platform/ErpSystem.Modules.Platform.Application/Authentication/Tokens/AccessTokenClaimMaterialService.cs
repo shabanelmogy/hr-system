@@ -61,6 +61,17 @@ internal sealed class AccessTokenClaimMaterialService(IAccessTokenClaimMaterialS
                 claim.ClaimValue is not null)
             .Select(claim => new AccessTokenClaimValue(claim.ClaimType!, claim.ClaimValue!)));
 
+        if (source is ICompanyPermissionClaimMaterialSource companyPermissions)
+        {
+            var direct = await companyPermissions.GetDirectPermissionsAsync(
+                request.User.UserId,
+                request.TenantId,
+                request.CompanyId,
+                cancellationToken).ConfigureAwait(false);
+            claims.AddRange(direct.Select(permission =>
+                new AccessTokenClaimValue(PermissionClaimNames.Permission, permission)));
+        }
+
         return new AccessTokenClaimMaterialResult(
             tenantName,
             tenantPlanName,

@@ -20,6 +20,7 @@ public sealed class PlatformContractSource(PlatformDbContext db) :
     ISessionValidationSource,
     IAccessTokenClaimMaterialSource,
     ITenantModuleEntitlementSource,
+    ICompanyPermissionClaimMaterialSource,
     ISelectionChallengeSource
 {
     async Task<TenantAccessSnapshot?> ITenantAccessSource.GetAsync(string tenantId, CancellationToken token)
@@ -175,17 +176,48 @@ public sealed class PlatformContractSource(PlatformDbContext db) :
         return modules.Select(module => new TenantModuleEntitlementResponse(module.ModuleCode, subs.Where(item => item.ModuleCode == module.ModuleCode).Select(item => item.SubmoduleCode).OrderBy(item => item).ToArray())).ToArray();
     }
 
-    public Task<bool> UserHasPermissionAsync(string userId, string tenantId, string permission, CancellationToken token = default) =>
-        (from assignment in db.UserRoles join role in db.Roles on assignment.RoleId equals role.Id join claim in db.RoleClaims on role.Id equals claim.RoleId
-         where assignment.UserId == userId && claim.ClaimType == PermissionClaimNames.Permission && claim.ClaimValue == permission && (role.IsSystem || (!role.IsDeleted && role.TenantId == tenantId)) select role.Id).AnyAsync(token);
+    public async Task<bool> UserHasPermissionAsync(string userId, string tenantId, string permission, CancellationToken token = default)
+    {
+        if (await (from assignment in db.UserRoles join role in db.Roles on assignment.RoleId equals role.Id join claim in db.RoleClaims on role.Id equals claim.RoleId
+            where assignment.UserId == userId && claim.ClaimType == PermissionClaimNames.Permission && claim.ClaimValue == permission && (role.IsSystem || (!role.IsDeleted && role.TenantId == tenantId)) select role.Id).AnyAsync(token))
+            return true;
+        return db.CurrentCompanyId is > 0 && await db.UserCompanyPermissionGrantSets.AsNoTracking()
+            .AnyAsync(set => set.TenantId == tenantId && set.CompanyId == db.CurrentCompanyId && set.UserId == userId &&
+                set.Grants.Any(grant => grant.Permission == permission), token);
+    }
 
-    public async Task<IReadOnlySet<string>> GetUserPermissionsAsync(string userId, string tenantId, CancellationToken token = default) =>
-        (await (from assignment in db.UserRoles join role in db.Roles on assignment.RoleId equals role.Id join claim in db.RoleClaims on role.Id equals claim.RoleId
+    public async Task<IReadOnlySet<string>> GetUserPermissionsAsync(string userId, string tenantId, CancellationToken token = default)
+    {
+        var inherited = (await (from assignment in db.UserRoles join role in db.Roles on assignment.RoleId equals role.Id join claim in db.RoleClaims on role.Id equals claim.RoleId
                 where assignment.UserId == userId && claim.ClaimType == PermissionClaimNames.Permission && (role.IsSystem || (!role.IsDeleted && role.TenantId == tenantId)) select claim.ClaimValue)
             .Where(value => value != null)
             .Select(value => value!)
             .Distinct()
             .ToArrayAsync(token)).ToHashSet(StringComparer.Ordinal);
+
+        // Direct grants are deliberately scoped to the trusted DbContext company;
+        // callers without a company context continue to receive role-only claims.
+        if (db.CurrentCompanyId is not > 0)
+            return inherited;
+
+        var direct = await db.UserCompanyPermissionGrantSets
+            .AsNoTracking()
+            .Where(set => set.TenantId == tenantId && set.CompanyId == db.CurrentCompanyId && set.UserId == userId)
+            .SelectMany(set => set.Grants.Select(grant => grant.Permission))
+            .ToArrayAsync(token);
+        inherited.UnionWith(direct);
+        return inherited;
+    }
+
+    public async Task<IReadOnlySet<string>> GetDirectPermissionsAsync(
+        string userId,
+        string tenantId,
+        int companyId,
+        CancellationToken cancellationToken = default) =>
+        (await db.UserCompanyPermissionGrantSets.IgnoreQueryFilters().AsNoTracking()
+            .Where(set => set.TenantId == tenantId && set.CompanyId == companyId && set.UserId == userId)
+            .SelectMany(set => set.Grants.Select(grant => grant.Permission))
+            .ToArrayAsync(cancellationToken)).ToHashSet(StringComparer.Ordinal);
 
     public Task<bool> IsSuperAdminAsync(string userId, CancellationToken token = default) =>
         (from assignment in db.UserRoles join role in db.Roles on assignment.RoleId equals role.Id where assignment.UserId == userId && role.IsSystem && role.NormalizedName == "SUPER_ADMIN" select role.Id).AnyAsync(token);

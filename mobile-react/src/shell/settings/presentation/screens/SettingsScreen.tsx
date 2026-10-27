@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
 import { type AppLanguage, useLocalization } from '@/src/core/localization';
@@ -7,21 +7,30 @@ import { useOnboarding } from '@/src/core/onboarding';
 import { useMockDataPreferences } from '@/src/core/preferences';
 import { clearApplicationCache } from '@/src/core/storage/app-cache';
 import { type ThemeMode, useAppTheme } from '@/src/core/theme';
+import { SettingsTabs } from '@/src/platform/navigation';
 import {
   AppButton,
   AppCard,
   ConfirmationDialog,
-  AppIcon,
+  AppFormSection,
   AppScreen,
+  AppPageHeader,
   AppSegmentedControl,
   AppSwitchField,
-  AppText,
   AppThemePalettePicker,
 } from '@/src/shared/components';
 
 export function SettingsScreen() {
   const { t } = useTranslation();
-  const { language, setLanguage, direction } = useLocalization();
+  return <AppScreen edges={['left', 'right']} scroll={false} padded={false} keyboardAware={false} contentContainerStyle={styles.workspace}
+    header={<AppPageHeader title={t('settings.title')} subtitle={t('settings.workspaceDescription')} />}>
+    <SettingsTabs preferences={<DevicePreferences />} />
+  </AppScreen>;
+}
+
+function DevicePreferences() {
+  const { t } = useTranslation();
+  const { language, setLanguage } = useLocalization();
   const { mode, palette, setMode, setPalette, theme } = useAppTheme();
   const { isMockDataEnabled, setMockDataEnabled } = useMockDataPreferences();
   const { reset: resetOnboarding } = useOnboarding();
@@ -48,104 +57,30 @@ export function SettingsScreen() {
   };
 
   return (
-    <AppScreen edges={['left', 'right']}>
-      <View style={styles.heading}>
-        <AppText variant="title">{t('settings.title')}</AppText>
-        <AppText color="muted" variant="bodySmall">
-          {t('settings.subtitle')}
-        </AppText>
-      </View>
+    <AppScreen edges={['left', 'right']} contentContainerStyle={{ gap: theme.spacing.md }}>
+      <AppPageHeader title={t('settings.devicePreferences')} subtitle={t('settings.subtitle')} />
 
-      <AppCard style={styles.settingCard}>
-        <View style={[styles.settingHeader, { direction }]}>
-          <View
-            style={[
-              styles.settingIcon,
-              { backgroundColor: theme.colors.surfaceMuted, borderRadius: theme.radius.sm },
-            ]}>
-            <AppIcon color={theme.colors.primary} name="language-outline" size={23} />
-          </View>
-          <View style={styles.settingText}>
-            <AppText variant="label">{t('settings.language')}</AppText>
-            <AppText color="muted" variant="bodySmall">
-              {t('settings.languageHint')}
-            </AppText>
-          </View>
-        </View>
-        <AppSegmentedControl<AppLanguage>
-          label={t('settings.language')}
-          onChange={setLanguage}
-          options={languageOptions}
-          value={language}
-        />
+      <AppCard padding="md">
+        <AppFormSection divider={false} title={t('settings.language')} description={t('settings.languageHint')} icon="language-outline">
+          <AppSegmentedControl<AppLanguage> label={t('settings.language')} onChange={setLanguage} options={languageOptions} value={language} />
+        </AppFormSection>
       </AppCard>
-
-      <AppCard style={styles.settingCard}>
-        <View style={[styles.settingHeader, { direction }]}>
-          <View
-            style={[
-              styles.settingIcon,
-              { backgroundColor: theme.colors.surfaceMuted, borderRadius: theme.radius.sm },
-            ]}>
-            <AppIcon color={theme.colors.secondary} name="color-palette-outline" size={23} />
-          </View>
-          <View style={styles.settingText}>
-            <AppText variant="label">{t('settings.appearance')}</AppText>
-            <AppText color="muted" variant="bodySmall">
-              {t('settings.appearanceHint')}
-            </AppText>
-          </View>
-        </View>
-        <AppSegmentedControl<ThemeMode>
-          label={t('settings.appearance')}
-          onChange={setMode}
-          options={themeOptions}
-          value={mode}
-        />
-        <View style={[styles.paletteHeading, { direction }]}>
-          <AppIcon color={theme.colors.primary} name="brush-outline" size={20} />
-          <View style={styles.settingText}>
-            <AppText variant="label">{t('settings.colorPalette')}</AppText>
-            <AppText color="muted" variant="bodySmall">
-              {t('settings.colorPaletteHint')}
-            </AppText>
-          </View>
-        </View>
-        <AppThemePalettePicker onChange={setPalette} value={palette} />
+      <AppCard padding="md" style={{ gap: theme.spacing.md }}>
+        <AppFormSection title={t('settings.appearance')} description={t('settings.appearanceHint')} icon="color-palette-outline">
+          <AppSegmentedControl<ThemeMode> label={t('settings.appearance')} onChange={setMode} options={themeOptions} value={mode} />
+        </AppFormSection>
+        <AppFormSection divider={false} title={t('settings.colorPalette')} description={t('settings.colorPaletteHint')} icon="brush-outline">
+          <AppThemePalettePicker onChange={setPalette} value={palette} />
+        </AppFormSection>
       </AppCard>
-
-      <AppCard style={styles.settingCard}>
-        <View style={[styles.settingHeader, { direction }]}>
-          <View
-            style={[
-              styles.settingIcon,
-              { backgroundColor: theme.colors.surfaceMuted, borderRadius: theme.radius.sm },
-            ]}>
-            <AppIcon color={theme.colors.warning} name="refresh-circle-outline" size={23} />
-          </View>
-          <View style={styles.settingText}>
-            <AppText variant="label">{t('settings.debugTools')}</AppText>
-            <AppText color="muted" variant="bodySmall">
-              {t('settings.debugToolsHint')}
-            </AppText>
-          </View>
-        </View>
-        {__DEV__ ? (
-          <AppSwitchField
-            description={t('settings.mockDataHint')}
-            icon="dice-outline"
-            label={t('settings.mockData')}
-            onValueChange={setMockDataEnabled}
-            value={isMockDataEnabled}
-          />
-        ) : null}
-        <AppButton
-          fullWidth
-          icon="refresh-circle-outline"
-          onPress={() => setResetDialogVisible(true)}
-          variant="warning">
-          {t('settings.resetCache')}
-        </AppButton>
+      <AppCard padding="md">
+        <AppFormSection divider={false} title={t('settings.debugTools')} description={t('settings.debugToolsHint')} icon="refresh-circle-outline">
+          {__DEV__ ? <AppSwitchField description={t('settings.mockDataHint')} icon="dice-outline" label={t('settings.mockData')}
+            onValueChange={setMockDataEnabled} value={isMockDataEnabled} /> : null}
+          <AppButton fullWidth icon="refresh-circle-outline" onPress={() => setResetDialogVisible(true)} variant="warning">
+            {t('settings.resetCache')}
+          </AppButton>
+        </AppFormSection>
       </AppCard>
 
       <ConfirmationDialog
@@ -163,32 +98,5 @@ export function SettingsScreen() {
 }
 
 const styles = StyleSheet.create({
-  heading: {
-    gap: 4,
-    marginBottom: 24,
-  },
-  settingCard: {
-    gap: 18,
-    marginBottom: 14,
-  },
-  settingHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-  },
-  settingIcon: {
-    width: 42,
-    height: 42,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  settingText: {
-    flex: 1,
-    gap: 2,
-  },
-  paletteHeading: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
-  },
+  workspace: { flex: 1, minHeight: 0 },
 });

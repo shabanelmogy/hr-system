@@ -14,6 +14,8 @@ export { BASIC_DATA_VIEW_PERMISSIONS, routePolicies } from './route-manifest';
 
 export function requiredModuleForPath(pathname: string): { moduleCode: string; submoduleCode?: string } | null {
   if (pathname === ROUTES.apps) return null;
+  if (matchesRoute(pathname, ROUTES.emailTemplates)) return { moduleCode: 'platform', submoduleCode: 'tenant-administration' };
+  if (matchesRoute(pathname, ROUTES.systemUiTexts) || matchesRoute(pathname, ROUTES.systemAuditTrail)) return { moduleCode: 'platform', submoduleCode: 'operations' };
   if (pathname.startsWith('/apps/')) {
     const [, , moduleCode, submoduleCode] = pathname.split('/');
     return moduleCode ? { moduleCode, submoduleCode } : null;
@@ -40,7 +42,7 @@ export function requiredModuleForPath(pathname: string): { moduleCode: string; s
     return { moduleCode: 'acc', submoduleCode: 'ledger-setup' };
   }
   if (pathname === ROUTES.finance.root) return { moduleCode: 'acc' };
-  if ([ROUTES.advancedTools.auditTrail, ROUTES.advancedTools.localizationApi]
+  if ([ROUTES.advancedTools.auditTrail, ROUTES.advancedTools.errorLogs, ROUTES.advancedTools.localizationApi]
     .some((route) => matchesRoute(pathname, route))) {
     return { moduleCode: 'platform', submoduleCode: 'tenant-administration' };
   }

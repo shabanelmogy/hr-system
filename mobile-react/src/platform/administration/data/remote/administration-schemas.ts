@@ -7,6 +7,7 @@ import type {
   RoleWithClaims,
   UserCompanyOption,
   UserInvitation,
+  UserCompanyPermissions,
 } from '../../domain/models/administration';
 
 export const managedUserSchema: z.ZodType<ManagedUser> = z.object({
@@ -72,4 +73,9 @@ export const userInvitationSchema: z.ZodType<UserInvitation> = z.object({
 export const managedUserPageSchema = z.object({
   items: z.array(managedUserSchema),
   metaData: pageMetadataSchema,
+});
+
+export const userCompanyPermissionsSchema: z.ZodType<UserCompanyPermissions> = z.object({
+  userId: z.string().min(1), userName: z.string(), companyId: z.number().int().positive(), companyName: z.string(), revision: z.number().int().nonnegative(),
+  permissions: z.array(z.object({ permission: z.string().min(1), moduleCode: z.string(), submoduleCode: z.string(), isDirect: z.boolean(), inheritedFrom: z.array(z.string()), isEffective: z.boolean(), canGrant: z.boolean() })),
 });

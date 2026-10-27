@@ -71,7 +71,7 @@ export function PlatformToolModuleLayout({ moduleId }: { moduleId: PlatformToolM
           key={tool.id}
           name={tool.screen}
           options={{
-            drawerItemStyle: canAccessRoute(tool.route, session)
+            drawerItemStyle: !tool.hidden && canAccessRoute(tool.route, session)
               ? undefined
               : { display: 'none' },
             title: t(tool.titleKey),

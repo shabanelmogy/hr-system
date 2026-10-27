@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { getFrontendModuleDefinition } from "./registry";
+import { registerCompanyUiBaseline } from "@/lib/localization/companyUiResources";
 
 const normalizeLanguage = (language: string): "en" | "ar" =>
   language.toLowerCase().startsWith("ar") ? "ar" : "en";
@@ -19,14 +20,8 @@ export async function ensureModuleTranslations(
   const i18n = (await import("@/locales/i18n")).default;
   if (i18n.hasResourceBundle(normalizedLanguage, definition.translationNamespace)) return;
 
-  const resources = await definition.loadTranslations(normalizedLanguage);
-  i18n.addResourceBundle(
-    normalizedLanguage,
-    definition.translationNamespace,
-    resources,
-    true,
-    true,
-  );
+  const [en, ar] = await Promise.all([definition.loadTranslations("en"), definition.loadTranslations("ar")]);
+  registerCompanyUiBaseline(i18n, definition.translationNamespace, { en, ar });
 }
 
 /** Load only the translation namespace owned by the active business module. */

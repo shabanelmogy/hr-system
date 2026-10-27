@@ -1,4 +1,8 @@
 {
+  "MessageLogs.Forbidden": "You cannot access message logs for this company.",
+  "MessageLogs.NotFound": "Message log not found.",
+  "MessageLogs.ExportLimit": "Narrow the filters to export at most 5,000 message logs.",
+
     //General Keys
     "Welcome": "Welcome {0}, How are you  sir ??",
     "Home": "Homee",
@@ -395,5 +399,32 @@
     "StaffingRequestConcurrencyConflict": "The staffing request was changed by another request",
     "StaffingRequestTargetStartOutsideFiscalYear": "The target start date must be inside the envelope fiscal year",
     "StaffingRequestActiveAllocations": "Close or release active requisitions before closing the staffing request",
-    "StaffingRequestInvalidCloseReason": "The selected close reason does not match the request fulfilment"
+    "StaffingRequestInvalidCloseReason": "The selected close reason does not match the request fulfilment",
+    "CompanyEmailTemplates.Invalid": "Invalid email content. Preserve one account-action link and use only the available variables and formatting.",
+    "CompanyEmailTemplates.Forbidden": "Email templates require an active accessible company.",
+    "CompanyEmailTemplates.Conflict": "Email templates changed. Reload the latest content before saving.",
+    "CompanyLocalizations.CatalogOutdated": "The application translation catalog is outdated. Refresh or update the application.",
+    "CompanyLocalizations.Conflict": "Company texts changed. Reload the latest settings before saving.",
+    "SystemUiTexts.Forbidden": "System text customization requires a Super Admin session and permission for the selected area.",
+    "SystemUiTexts.Invalid": "Invalid UI text. Use a registered key, preserve placeholders and reload current settings.",
+    "SystemUiTexts.Conflict": "The UI texts changed. Reload the current values before saving.",
+    "SystemUiTexts.CatalogOutdated": "The UI catalog changed. Update the client and reload.",
+    "CompanyLocalizations.Forbidden": "Company localization requires an active accessible company.",
+    "CompanyLocalizations.Invalid": "Invalid company language or text. Use a registered key, preserve every placeholder, and reload current settings.",
+    "UserPermissions.Conflict": "Permissions changed while you were editing. Reload and try again.",
+    "UserPermissions.Forbidden": "You can only grant permissions you hold in an enabled application.",
+    "UserPermissions.Invalid": "Select distinct, valid business permissions.",
+    "UserPermissions.NotFound": "The user is not available in your current company.",
+    "ErrorLogs.Invalid": "Invalid error log criteria or settings. Retention must be 1 to 3650 days and exports may contain at most 5000 rows.",
+    "ErrorLogs.Forbidden": "You do not have access to these error logs.",
+    "ErrorLogs.NotFound": "The error log was not found in your current scope.",
+    "ErrorLogs.Conflict": "Retention settings changed. Reload the latest settings before saving.",
+    "ErrorLogs:View": "View company error logs",
+    "ErrorLogs:ViewDetails": "View company error log details",
+    "ErrorLogs:Export": "Export company error logs",
+    "SystemErrorLogs:View": "View system error logs",
+    "SystemErrorLogs:ViewDetails": "View system error log diagnostics",
+    "SystemErrorLogs:Export": "Export system error logs",
+    "ErrorLogSettings:View": "View error log retention settings",
+    "ErrorLogSettings:Edit": "Edit error log retention settings"
 }

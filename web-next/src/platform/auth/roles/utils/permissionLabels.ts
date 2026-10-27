@@ -20,10 +20,14 @@ export function getPermissionBusinessModuleLabel(moduleCode: string, t: TFunctio
 }
 
 export function getPermissionResourceLabel(resource: string, t: TFunction): string {
+  if (resource === "UserPermissions") return t("userPermissions.title");
+  if (resource === "CompanyLocalizations") return t("companyLocalizations.title");
   return t(`roles.permissionResources.${resource}`, { defaultValue: humanize(resource) });
 }
 
 export function getPermissionActionLabel(action: string, t: TFunction): string {
+  if (action === "SetDefault") return t("companyLocalizations.setDefault");
+  if (action === "Reset") return t("roles.permissionActions.Reset");
   return t(`roles.permissionActions.${action}`, { defaultValue: humanize(action) });
 }
 

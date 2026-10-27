@@ -3,6 +3,7 @@
 import { useContext, type ReactNode } from "react";
 import { I18nContext, I18nextProvider } from "react-i18next";
 import i18n from "./i18n";
+import { registerCompanyUiBaseline } from "@/lib/localization/companyUiResources";
 
 type StaticTranslationScopeProps = {
   children: ReactNode;
@@ -16,11 +17,7 @@ export function registerStaticNamespace(
     ar: Record<string, unknown>;
   },
 ) {
-  for (const language of ["en", "ar"] as const) {
-    if (!i18n.hasResourceBundle(language, namespace)) {
-      i18n.addResourceBundle(language, namespace, resources[language], true, true);
-    }
-  }
+  registerCompanyUiBaseline(i18n, namespace, resources);
 }
 
 export function StaticTranslationScope({

@@ -1,5 +1,8 @@
 using System.ComponentModel.DataAnnotations;
-using System.Net;
+using ErpSystem.Modules.Platform.Application.Features.CompanyEmailTemplates;
+using System.Diagnostics;
+using ErpSystem.Modules.Platform.Application.Features.MessageLogs;
+using ErpSystem.Modules.Platform.Infrastructure.Features.MessageLogs;
 using MailKit.Net.Smtp;
 using MailKit.Security;
 using Microsoft.AspNetCore.WebUtilities;
@@ -25,6 +28,8 @@ public interface IPlatformIdentityEmailSender
         string firstName,
         Guid invitationId,
         string token,
+        string tenantId,
+        int companyId,
         CancellationToken cancellationToken);
 }
 
@@ -106,7 +111,13 @@ public sealed class PlatformPublicApplicationSettings : IValidatableObject
 
 public sealed class PlatformIdentityEmailSender(
     IOptions<PlatformMailSettings> mailOptions,
-    IOptions<PlatformPublicApplicationSettings> applicationOptions) : IPlatformIdentityEmailSender
+    IOptions<PlatformPublicApplicationSettings> applicationOptions,
+    IAccountEmailRenderer renderer,
+    IAccountEmailScopeResolver scopeResolver,
+    IMessageAttemptRecorder recorder,
+    IPlatformSmtpTransport transport,
+    TimeProvider clock,
+    ICurrentActor actor) : IPlatformIdentityEmailSender
 {
     private readonly PlatformMailSettings _mail = mailOptions.Value;
     private readonly PlatformPublicApplicationSettings _application = applicationOptions.Value;
@@ -117,15 +128,14 @@ public sealed class PlatformIdentityEmailSender(
         CancellationToken cancellationToken) =>
         SendAsync(
             user.Email!,
-            "ERP System: Email confirmation",
-            "Confirm your email",
+            "email-confirmation",
             user.FirstName,
-            BuildLink("confirm-email", new Dictionary<string, string?>
+            () => BuildLink("confirm-email", new Dictionary<string, string?>
             {
                 ["userId"] = user.Id,
                 ["code"] = code
             }),
-            cancellationToken);
+            null, null, cancellationToken, user.Id);
 
     public Task SendPasswordResetAsync(
         PlatformApplicationUser user,
@@ -133,63 +143,108 @@ public sealed class PlatformIdentityEmailSender(
         CancellationToken cancellationToken) =>
         SendAsync(
             user.Email!,
-            "ERP System: Reset password",
-            "Reset your password",
+            "password-reset",
             user.FirstName,
-            BuildLink("reset-password", new Dictionary<string, string?>
+            () => BuildLink("reset-password", new Dictionary<string, string?>
             {
                 ["email"] = user.Email,
                 ["code"] = code
             }),
-            cancellationToken);
+            null, null, cancellationToken, user.Id);
 
     public Task SendInvitationAsync(
         string email,
         string firstName,
         Guid invitationId,
         string token,
+        string tenantId,
+        int companyId,
         CancellationToken cancellationToken) =>
         SendAsync(
             email,
-            "ERP System: User invitation",
-            "Accept your invitation",
+            "user-invitation",
             firstName,
-            BuildLink("accept-invitation", new Dictionary<string, string?>
+            () => BuildLink("accept-invitation", new Dictionary<string, string?>
             {
                 ["invitationId"] = invitationId.ToString(),
                 ["token"] = token
             }),
-            cancellationToken);
+            tenantId, companyId, cancellationToken);
 
     private async Task SendAsync(
         string address,
-        string subject,
-        string heading,
+        string templateId,
         string name,
-        string actionUrl,
-        CancellationToken cancellationToken)
+        Func<string> buildActionUrl,
+        string? trustedTenantId,
+        int? trustedCompanyId,
+        CancellationToken cancellationToken,
+        string? recipientUserId = null)
     {
-        EnsureMailEnabled();
-
-        var encodedName = WebUtility.HtmlEncode(name);
-        var encodedHeading = WebUtility.HtmlEncode(heading);
-        var encodedUrl = WebUtility.HtmlEncode(actionUrl);
-        var message = new MimeMessage { Subject = subject };
-        message.From.Add(new MailboxAddress(_mail.DisplayName, _mail.Mail));
-        message.To.Add(MailboxAddress.Parse(address));
-        message.Body = new BodyBuilder
+        var language = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "ar" ? "ar" : "en";
+        var started = clock.GetUtcNow().UtcDateTime;
+        var timer = Stopwatch.StartNew();
+        var phase = "configuration"; var accepted = false;
+        MessageAttemptStart? attempt = null; Guid? attemptId = null;
+        var status = "failed"; string? cause = null; int? smtpCode = null;
+        try
         {
-            HtmlBody = $"<h1>{encodedHeading}</h1><p>Hello {encodedName},</p><p><a href=\"{encodedUrl}\">Continue</a></p>"
-        }.ToMessageBody();
+            var scope = await scopeResolver.ResolveAsync(trustedTenantId, trustedCompanyId, recipientUserId, cancellationToken);
+            if (scope is not null)
+            {
+                attempt = new(scope.TenantId, scope.CompanyId, actor.UserId, actor.CorrelationId,
+                    started, templateId, language, address);
+                attemptId = await recorder.StartAsync(attempt);
+            }
+            EnsureMailEnabled();
+            var actionUrl = buildActionUrl();
+            phase = "render";
+            var rendered = await renderer.RenderAsync(templateId, language, name, actionUrl,
+                scope?.TenantId, scope?.CompanyId, cancellationToken, recipientUserId);
+            if (attemptId is { } snapshotId && attempt is not null)
+                await recorder.SnapshotAsync(snapshotId, attempt, MessageSnapshotPolicy.Redact(rendered.Subject, rendered.Html, actionUrl));
+            using var message = CreateMessage(address, rendered, _mail);
+            await transport.SendAsync(message, _mail, step => { phase = step; accepted |= step == "accepted"; }, cancellationToken);
+            status = "accepted";
+        }
+        catch (Exception error)
+        {
+            if (accepted) { status = "accepted"; cause = null; }
+            else
+            {
+                var transferring = phase == "send";
+                status = error is OperationCanceledException ? (transferring ? "uncertain" : "cancelled")
+                    : transferring && error is not SmtpCommandException ? "uncertain" : "failed";
+                cause = error switch
+                {
+                    OperationCanceledException => "cancelled",
+                    SmtpCommandException smtp => "rejected",
+                    _ when phase == "configuration" => _mail.Enabled ? "configuration" : "disabled",
+                    _ when phase == "render" => "content",
+                    _ when phase == "authenticate" => "authentication",
+                    _ when phase == "connect" => "connection",
+                    _ when transferring => "communication",
+                    _ => "unknown"
+                };
+                if (error is SmtpCommandException command) smtpCode = (int)command.StatusCode;
+            }
+            throw;
+        }
+        finally
+        {
+            if (attemptId is { } id && attempt is not null)
+                await recorder.CompleteAsync(id, attempt, new(clock.GetUtcNow().UtcDateTime,
+                    timer.ElapsedMilliseconds, status, phase, cause, smtpCode));
+        }
+    }
 
-        using var smtp = new SmtpClient();
-        var socketOptions = _mail.Port == 465
-            ? SecureSocketOptions.SslOnConnect
-            : SecureSocketOptions.StartTls;
-        await smtp.ConnectAsync(_mail.Host, _mail.Port, socketOptions, cancellationToken);
-        await smtp.AuthenticateAsync(_mail.Mail, _mail.Password, cancellationToken);
-        await smtp.SendAsync(message, cancellationToken);
-        await smtp.DisconnectAsync(true, cancellationToken);
+    public static MimeMessage CreateMessage(string address, RenderedAccountEmail rendered, PlatformMailSettings mail)
+    {
+        var message = new MimeMessage { Subject = rendered.Subject };
+        message.From.Add(new MailboxAddress(mail.DisplayName, mail.Mail));
+        message.To.Add(MailboxAddress.Parse(address));
+        message.Body = new BodyBuilder { HtmlBody = rendered.Html, TextBody = rendered.Text }.ToMessageBody();
+        return message;
     }
 
     private string BuildLink(string path, IReadOnlyDictionary<string, string?> query) =>

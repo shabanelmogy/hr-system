@@ -55,3 +55,6 @@ When a feature is added, document the exact route, authorization policy,
 request/response envelope, validation, errors, paging/sorting, and tests here
 or in a linked feature book. Cross-module communication uses Contracts/events,
 never another module's Infrastructure or EF model.
+
+
+Company account email templates: [canonical api profile](../features/company-email-templates/company-email-templates-api.md), independently company-scoped, Administration > Email Templates. Web edits/previews; Mobile previews only.

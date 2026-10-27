@@ -223,3 +223,8 @@ For a new user-facing ERP module:
 7. run `npm run check` and verify phone/tablet, LTR/RTL and light/dark modes.
 
 For a new feature inside an existing module, follow [MOBILE_FEATURE_GUIDE.md](MOBILE_FEATURE_GUIDE.md) and place it beneath that module owner, for example `src/modules/hr/employees` rather than a new top-level feature root.
+
+
+### Administration launcher grouping - 2026-10-19
+
+The existing access-management three-tab workspace remains the Users/Invitations/Roles child workflow. The application launcher additionally presents one Administration application grouping that workspace, Settings/device preferences and permitted diagnostic/audit destinations, using its established AppCard tile renderer. This is client-only session/locale projection; installed/purchased module catalogs and per-child route/Platform entitlement guards remain authoritative. AdministrationLinks and the launcher consume the same registry metadata. Languages/UI translation stay inside the existing Settings tabs. Physical verification remains PROD-026, separately from strict source checks and Android export. Applied source/acceptance are registered in platform-settings books/manifest.

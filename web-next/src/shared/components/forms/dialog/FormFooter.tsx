@@ -76,7 +76,7 @@ export const FormFooter: React.FC = () => {
               },
             }}
           >
-            {t("actions.cancel")}
+            {t(isViewMode ? "actions.close" : "actions.cancel")}
           </Button>
           {!isViewMode && <Button
             type="submit"

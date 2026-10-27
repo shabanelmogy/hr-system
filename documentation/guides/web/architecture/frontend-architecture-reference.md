@@ -1542,3 +1542,11 @@ becomes critical rather than writing metric-only tests.
 - [ ] Use the established lowercase directory and PascalCase component naming.
 - [ ] Add or update a feature/module `index.ts` only when a public boundary is needed.
 - [ ] Run the architecture, type, lint, test, production build, and `measure:build` checks.
+
+
+### Platform Administration and Settings grouping
+
+Current approved composition (2026-10-19): Administration owns one Settings leaf at /administration/settings beside operational viewers. Settings displays permission-filtered actual child panels through shared FormTabs, ContentWrapper and PageHeader; no local tab/Grid shell or generic settings DTO. Children retain independent saves, scope and exact route policies. SuperAdmin and company tabs remain separate. The selected child mounts on demand; shared requestDiscard protects tab changes, and Cache Components searchParams access is inside Suspense. Shell labels live in core EN/AR resources. Existing direct child URLs remain compatible. This supersedes the 2026-10-18 independent Settings section.
+
+
+Administration grouping amendment (2026-10-19): the application launcher now exposes one Administration tile beside server-accessible business applications, replacing separate Users/Roles/Languages shortcuts. It reuses ModuleLauncher/SubmoduleLauncher. The accessible-query select layer composes the internal group from permitted Platform navigation destinations without mutating cached server/installed/entitlement catalogs. Session/company/locale changes recompute the projection. The context switcher/sidebar identify administrative child URLs while leaving route entitlement rules unchanged. Settings retains its existing actual tabs and shared child workflows. The dynamic module adapter also supports guarded internal child entries. All implementation hooks using session/i18n must declare the client boundary when re-exported to server route adapters. Canonical evidence: platform-settings books/required-files.json.

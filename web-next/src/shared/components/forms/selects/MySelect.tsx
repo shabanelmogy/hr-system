@@ -41,6 +41,8 @@ interface BaseSelectProps<TOption extends object> {
   placeholder?: string;
   helperText?: ReactNode;
   showClearButton?: boolean;
+  /** Compact criteria bars can opt into small fields; existing forms stay medium. */
+  size?: "small" | "medium";
   limitTags?: number;
   all?: boolean;
   sx?: SxProps<Theme>;
@@ -136,6 +138,7 @@ const MySelect = <
     placeholder = "",
     helperText,
     showClearButton = false,
+    size = "medium",
     limitTags = 3,
     sx = {},
     isViewMode = false,
@@ -262,6 +265,7 @@ const MySelect = <
           renderInput={(params) => (
             <TextField
               {...params}
+              size={size}
               label={label}
               placeholder={formMode
                 ? loading

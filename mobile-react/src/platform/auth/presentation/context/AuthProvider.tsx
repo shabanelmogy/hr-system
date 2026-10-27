@@ -8,6 +8,7 @@ import {
   useState,
 } from 'react';
 import { AppState } from 'react-native';
+import { clearCompanyUiResources } from '@/src/core/localization/company-ui-resources';
 
 import {
   ApiError,
@@ -59,7 +60,8 @@ export function AuthProvider({ children }: PropsWithChildren) {
   const connectivity = useConnectivity();
   const transitionGeneration = useRef(0);
 
-  const beginLocalTransition = useCallback(() => {
+  const beginLocalTransition = useCallback((clearLocale = true) => {
+    if (clearLocale) clearCompanyUiResources();
     transitionGeneration.current += 1;
     return transitionGeneration.current;
   }, []);
@@ -203,16 +205,21 @@ export function AuthProvider({ children }: PropsWithChildren) {
   };
 
   const refreshSession = useCallback(async () => {
-    const generation = beginLocalTransition();
+    const generation = beginLocalTransition(false);
     const refreshedSession = await authApi.session();
     if (!isCurrentTransition(generation)) return;
     const validUntil = await offlineSessionLeaseUseCases.save(database, refreshedSession);
     if (!isCurrentTransition(generation)) return;
+    if (session?.tenantId !== refreshedSession.tenantId || session?.companyId !== refreshedSession.companyId || session?.userId !== refreshedSession.userId) {
+      clearCompanyUiResources();
+      rotateAxiosRequestContext();
+      queryClient.clear();
+    }
     setSession(refreshedSession);
     setAuthority('server');
     setOfflineLeaseValidUntil(validUntil);
     setStatus('authenticated');
-  }, [beginLocalTransition, database, isCurrentTransition]);
+  }, [beginLocalTransition, database, isCurrentTransition, session]);
 
   useEffect(() => {
     if (!connectivity.isOnline || status !== 'authenticated' || authority === 'server') return undefined;

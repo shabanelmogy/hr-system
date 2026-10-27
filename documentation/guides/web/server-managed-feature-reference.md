@@ -262,6 +262,28 @@ styling, or its accessibility attributes in each feature.
 
 ### Reference implementation fidelity
 
+Shared reuse must be recorded per surface, not inferred from a few imports. The
+feature profile identifies the actual header, criteria/search/reset shell, date
+field, selectors, Grid/Card, pager and feedback components. Existing reference
+pages can contain older local controls; those controls do not override the current
+shared catalog. Use `MyDateTimeField` for calendar dates rather than a native date
+text field. For compact criteria, use supported `size`/`margin` props instead of
+feature CSS that changes input internals.
+
+`CardViewHeader`/`CardViewToolbar` support fixed-order server collections through
+`showSort={false}` (default remains true) and a generic `filterControls` row of
+feature-owned Grid items. No sort callbacks are required when sorting is hidden.
+The simple selector can be omitted with `showFilter={false}`; existing supplied
+selector props stay compatible. `MySelect` accepts `size="small"` with medium as
+the unchanged default. Error Logs composes the standard MyDataGrid toolbarSearch, ResetButton, Grid
+options and footer in Grid, passing extra fields through toolbarFilters; Cards
+uses CardViewHeader with the same criteria state. The header Filter state controls
+the criteria surface for the active view. Keep criteria outside
+the result-state branch so an empty/error result cannot remove Search or Reset.
+On narrow screens bound criteria-panel scrolling and preserve space for results.
+Verify expanded filters, field alignment, empty-result recovery and view switching
+in EN/AR at compact/wide widths; collapsed screenshots alone do not verify filters.
+
 When a feature is required to follow Countries, States, or another reviewed
 reference, treat that feature's current source as the implementation baseline,
 not visual inspiration. Before editing, identify and reuse its controller hook,
@@ -852,3 +874,16 @@ A feature follows this reference only when:
 See the [Countries Full-Stack Web and Mobile Implementation Profile](../../modules/reference-data/features/countries/countries-web.md) for
 one implemented configuration. Copy the pattern and decision process, not its
 country-specific routes, fields, filters, permissions, or optional views.
+
+
+### Enforced Grid consumption boundary
+
+Feature Grids must import MyDataGrid, never raw MUI DataGrid/Pro/Premium or the
+internal ClientDataGrid adapter. check:architecture enforces value imports and
+dynamic imports while permitting column/API types. Preserve GridOptionsButton,
+GridFooter and active-record navigation. MyDataGrid toolbarFilters extends its
+shared toolbar with domain-neutral Grid items; emptyContent places feature-owned
+shared FeedbackState inside the empty overlay without removing search/reset when
+a read fails or has zero rows. Defaults and caller-provided slots remain compatible.
+The former LocalizationDataGrid ClientDataGrid consumer now uses MyDataGrid and
+retains its row-edit callbacks/permission checks and initially unsorted order.

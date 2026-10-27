@@ -1,0 +1,3 @@
+# Specification
+
+User-approved Platform extension. S1 restores global operations entries with exact independently assignable permissions and server access; S2 durable en/ar SuperAdmin UI overrides filtered by target view authority. Shared existing screens/editors, server paging/search, source/base/target/status filters, optimistic revisions, reset to shipped and runtime layer cleanup. No company permissions or customization leakage. Existing catalog remains authoritative; new global settings aggregate and migration. Required denied-key/denied-scope/placeholder/conflict/no-op/runtime tests plus browser/native checks and live SQL acceptance. No unresolved scope; requester explicitly authorized implementation and recommendations.

@@ -11,11 +11,14 @@ import {
   type AuditTrailQuery,
 } from "../types/auditTrail";
 
+const auditEndpoint = (system: boolean) => system ? apiRoutes.advancedTools.auditTrail.replace(/audit-trail$/, "system-audit-trail") : apiRoutes.advancedTools.auditTrail;
+
 export async function getAuditTrailPage(
   query: AuditTrailQuery,
   cursor?: string | null,
+  system = false,
 ): Promise<AuditTrailPage> {
-  const payload = await apiService.get<unknown>(apiRoutes.advancedTools.auditTrail, {
+  const payload = await apiService.get<unknown>(auditEndpoint(system), {
     ...query,
     cursor: cursor ?? undefined,
   });
@@ -25,15 +28,16 @@ export async function getAuditTrailPage(
 export async function getAuditTrailEntry(
   moduleCode: string,
   id: number,
+  system = false,
 ): Promise<AuditTrailDetails> {
   const payload = await apiService.get<unknown>(
-    `${apiRoutes.advancedTools.auditTrail}/${encodeURIComponent(moduleCode)}/${id}`,
+    `${auditEndpoint(system)}/${encodeURIComponent(moduleCode)}/${id}`,
   );
   return normalizeAuditTrailDetails(payload);
 }
 
-export async function getAuditTrailFilters(): Promise<AuditTrailModuleFilter[]> {
-  const payload = await apiService.get<unknown>(`${apiRoutes.advancedTools.auditTrail}/filters`);
+export async function getAuditTrailFilters(system = false): Promise<AuditTrailModuleFilter[]> {
+  const payload = await apiService.get<unknown>(`${auditEndpoint(system)}/filters`);
   const modules = isRecord(payload) && Array.isArray(payload.modules) ? payload.modules : [];
   return modules.filter(isRecord).map((module) => ({
     moduleCode: asString(module.moduleCode),

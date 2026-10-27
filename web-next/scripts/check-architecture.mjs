@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import process from "node:process";
 import { collectImportSpecifiers } from "./import-specifiers.mjs";
+import { collectSharedGridViolations } from "./shared-grid-policy.mjs";
 import {
   allowedOwnerDependencies,
   appBusinessRouteGroup,
@@ -303,6 +304,7 @@ for (const filePath of sourceFiles) {
   const normalizedRelativePath = relativePath.split(path.sep).join("/");
   const isProductionSource = !/\.(?:test|spec)\.[^.]+$/.test(normalizedRelativePath);
   if (isProductionSource) {
+    codeQualityViolations.push(...collectSharedGridViolations(source, normalizedRelativePath));
     for (const { pattern, message } of forbiddenCompatibilityPatterns) {
       if (pattern.test(source)) {
         compatibilityViolations.push(`${relativePath}: ${message}`);

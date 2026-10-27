@@ -24,7 +24,7 @@
     "check:architecture": "node scripts/check-architecture.mjs",
     "check:governance": "node scripts/architecture-governance.mjs --check",
     "check:release-contract": "node scripts/release-readiness.mjs --check-contract",
-    "check:i18n": "node scripts/check-i18n.mjs",
+    "check:i18n": "node scripts/check-i18n.mjs && npm run check:company-catalog",
     "measure:build": "node scripts/measure-build.mjs",
     "generate:module": "node scripts/generate-module.mjs",
     "generate:architecture-manifest": "node scripts/architecture-governance.mjs --write",
@@ -32,7 +32,8 @@
     "release:preflight": "node scripts/release-readiness.mjs --production-preflight",
     "type-check": "tsc --noEmit",
     "sync:tokens": "npm --prefix ../packages/tokens run sync",
-    "check": "npm run check:architecture && npm run check:governance && npm run check:release-contract && npm run check:i18n && npm run lint && npm run type-check"
+    "check": "npm run check:architecture && npm run check:governance && npm run check:release-contract && npm run check:i18n && npm run lint && npm run type-check",
+    "check:company-catalog": "node --test ../scripts/company-ui-scope-policy.test.mjs ../scripts/system-ui-access-policy.test.mjs && node ../scripts/export-company-ui-catalog.mjs --check"
   },
   "dependencies": {
     "@app/tokens": "file:../packages/tokens",
@@ -66,6 +67,9 @@
     "@syncfusion/ej2-splitbuttons": "^31.2.12",
     "@tanstack/react-query": "^5.103.1",
     "@tanstack/react-query-devtools": "^5.103.1",
+    "@tiptap/pm": "3.32.0",
+    "@tiptap/react": "3.32.0",
+    "@tiptap/starter-kit": "3.32.0",
     "@vercel/otel": "2.1.3",
     "axios": "^1.18.1",
     "country-code-lookup": "^0.1.5",

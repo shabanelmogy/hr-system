@@ -16,6 +16,10 @@ Typical examples:
 
 | Note ID | Type | Area | Summary | Surfaces | Canonical registry |
 | --- | --- | --- | --- | --- | --- |
+| DEC-023 | Decision | Error-log sources | Confirm first-release capture sources. | API + Web + Mobile | `DECISION_BACKLOG.md` |
+| DEC-022 | Decision | Error-log retention | Confirm lifecycle, retention and export scope. | API + Web + Mobile | `DECISION_BACKLOG.md` |
+| DEC-021 | Decision | Direct user grants | Resolved: company-specific additive business grants; role permissions preserved. | API + Web + Mobile | `DECISION_BACKLOG.md` |
+| DEF-025 | Deferred | Additional UI languages | English/Arabic first; reopen language creation only on explicit additional-language scope. | API + Web + Mobile | `DEFERRED_ITEMS.md` |
 | PROD-008 | Production | Demo Login | Product currently permits Production Demo Login; preview bootstrap remains a separate API deployment concern. | API + Web | `PRODUCTION_NOTES.md` |
 | PROD-010 | Production | Hosted authenticated E2E | Release-like Mobile journeys depend on deployed API/session/data behavior. | API + Mobile | `PRODUCTION_NOTES.md` |
 | PROD-011 | Production | API contract drift | Hosted Swagger and mobile contract evidence must move together after endpoint/version changes. | API + Mobile | `PRODUCTION_NOTES.md` |
@@ -45,3 +49,10 @@ Typical examples:
 | DEC-010 | Decision | Accounting SoD | Resolved baseline: configurable approval, self-approval default Blocked, separate Approve/Post permissions, versioned policy, audited reopen/late-posting. | API + Web + Mobile | `DECISION_BACKLOG.md` |
 | RISK-006 | Risk | Accounting migration | Future opening/legacy migration needs trial reconciliation and exception evidence. | API + Web + Mobile | `KNOWN_RISKS.md` |
 | RISK-007 | Risk | Accounting scale | Representative posting and GL/Trial Balance scale remains unmeasured before production approval. | API + Web + Mobile | `KNOWN_RISKS.md` |
+| PROD-026 | Production | Company administration | Native acceptance deferred by explicit requester instruction; implement both features and automated checks now. | Product owner + QA | `PRODUCTION_NOTES.md` |
+| FOLLOW-007 | Follow-up | Full Web test runner | Supplemental full Vitest completion requires a dedicated collection/runtime investigation; scoped feature checks remain separately recorded. | Web + QA | `FOLLOW_UPS.md` |
+| RISK-010 | Risk | Error Logs capture availability | Bounded sink and native/runtime availability limits. | API + Web + Mobile | `KNOWN_RISKS.md` |
+
+`PROD-027` — Company account email provider/client acceptance; canonical ownership, trigger and production gate are in PRODUCTION_NOTES.md.
+
+`DEC-024` — Company message logs scope; canonical decision in DECISION_BACKLOG.md. `RISK-011` — Observational capture availability/uncertain SMTP outcome; canonical risk in KNOWN_RISKS.md.

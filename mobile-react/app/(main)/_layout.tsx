@@ -15,6 +15,8 @@ import { AppNavigationHeader, NavigationContextActionsProvider } from '@/src/pla
 import { FiscalYearContextSwitcher } from '@/src/modules/accounting/fiscal-years';
 import { AppIcon } from '@/src/shared/components';
 import { OfflineSyncCoordinator } from '@/src/shell';
+import { CompanyLocalizationBridge } from '@/src/platform/tenant-administration/company-localizations';
+import { ErrorLogCaptureBridge } from '@/src/platform/tools/error-logs/runtime';
 
 export default function ProtectedRouteLayout() {
   const { t } = useTranslation();
@@ -32,6 +34,8 @@ export default function ProtectedRouteLayout() {
       <OfflineOperationsPolicyProvider>
         <TenantAccessProvider>
         <OfflineSyncCoordinator />
+        <CompanyLocalizationBridge />
+        <ErrorLogCaptureBridge />
         <MainLayout>
         <Drawer
           drawerContent={(props) => <AppDrawerContent {...props} />}
@@ -75,7 +79,7 @@ export default function ProtectedRouteLayout() {
                 key={definition.name}
                 name={definition.name}
                 options={{
-                  drawerItemStyle: accessible ? undefined : { display: 'none' },
+                  drawerItemStyle: accessible && !definition.hidden ? undefined : { display: 'none' },
                   headerShown: definition.headerShown,
                   title,
                   drawerIcon: ({ color, size }) => (

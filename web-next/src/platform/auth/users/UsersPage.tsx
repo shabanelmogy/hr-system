@@ -13,14 +13,19 @@ import { Avatar, Box, Chip, Typography, Alert, TextField } from "@mui/material";
 import { ArchiveOutlined, ExitToApp, Restore } from "@mui/icons-material";
 import { useState } from "react";
 import type { User } from "../types";
+import { useSession } from "@/lib/auth/SessionContext";
 
 const UserForm = dynamic(() => import("./components/UserForm"), { ssr: false });
+const UserCompanyPermissionsDialog = dynamic(() => import("./components/UserCompanyPermissionsDialog"), { ssr: false });
 
 // ─── Content ─────────────────────────────────────────────────────────────────
 // Rendered only after the guard confirms access — hooks and API calls are safe here.
 const UsersPage = () => {
   const { t } = useTranslation();
   const { hasAllPermissions, hasPermission, isReadOnly } = usePermissions();
+  const { user: session } = useSession();
+  const [permissionUser, setPermissionUser] = useState<User | null>(null);
+  const canViewUserPermissions = hasPermission(permissions.ViewUserPermissions);
   const canCreate = !isReadOnly && hasAllPermissions([
     permissions.CreateUsers,
     permissions.ViewRoles,
@@ -133,6 +138,7 @@ const UsersPage = () => {
           onAdd={onAdd}
           onEdit={onEdit}
           onView={onView}
+          onPermissions={canViewUserPermissions ? (user) => setPermissionUser(user) : undefined}
           onToggle={onToggle}
           onUnlock={onUnlock}
           onRevoke={onRevoke}
@@ -279,6 +285,9 @@ const UsersPage = () => {
 
       </ContentWrapper>
       {SnackbarComponent}
+      {permissionUser && canViewUserPermissions ? <UserCompanyPermissionsDialog
+        key={`${session?.tenantId}:${session?.companyId}:${permissionUser.id}`}
+        userId={permissionUser.id} onClose={() => setPermissionUser(null)} /> : null}
     </>
   );
 };

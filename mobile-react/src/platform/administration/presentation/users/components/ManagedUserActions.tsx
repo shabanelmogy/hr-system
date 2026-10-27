@@ -8,7 +8,9 @@ import type { ManagedUser } from '../../../domain/models/administration';
 
 interface ManagedUserActionsProps {
   canManage: boolean;
+  canManagePermissions: boolean;
   onEdit: (user: ManagedUser) => void;
+  onManagePermissions: (user: ManagedUser) => void;
   onRevokeSessions: (user: ManagedUser) => void;
   onToggle: (user: ManagedUser) => void;
   onUnlock: (user: ManagedUser) => void;
@@ -18,7 +20,9 @@ interface ManagedUserActionsProps {
 
 export function ManagedUserActions({
   canManage,
+  canManagePermissions,
   onEdit,
+  onManagePermissions,
   onRevokeSessions,
   onToggle,
   onUnlock,
@@ -44,6 +48,9 @@ export function ManagedUserActions({
           label={t('userManagement.editUser')}
           onPress={() => onEdit(user)}
         />
+      ) : null}
+      {canManagePermissions ? (
+        <AppIconButton color={theme.colors.primary} icon="key-outline" label={t('userPermissions.action')} onPress={() => onManagePermissions(user)} />
       ) : null}
       {canManage && user.isLocked ? (
         <AppIconButton

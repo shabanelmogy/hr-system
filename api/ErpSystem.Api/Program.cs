@@ -4,6 +4,8 @@ using ErpSystem.Api.Hosting;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Serilog;
+using ErpSystem.Modules.Platform.Contracts.Authorization;
+using ErpSystem.BuildingBlocks.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,6 +34,7 @@ var catalog = app.Services.GetRequiredService<ModuleCatalog>();
 if (HostForwardedHeadersServiceCollectionExtensions.IsForwardingEnabled(builder.Configuration))
     app.UseForwardedHeaders();
 
+app.UseMiddleware<HostErrorLogMiddleware>();
 app.UseExceptionHandler();
 app.UseMiddleware<HostCorrelationIdMiddleware>();
 app.ConfigureModulesEarly(catalog);
@@ -100,7 +103,11 @@ app.MapHealthChecks("/health", new HealthCheckOptions
 {
     Predicate = HostHealthCheckPredicates.IsReadiness,
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-}).RequireAuthorization();
+}).RequireAuthorization(policy => policy.RequireAssertion(context =>
+    context.User.Identity?.IsAuthenticated == true &&
+    (context.User.IsInRole("admin") ||
+     (context.User.IsInRole("super_admin") &&
+      context.User.HasClaim(PermissionClaimNames.Permission, PlatformPermissions.ViewSystemHealth)))));
 
 app.MapHealthChecks("/health/live", new HealthCheckOptions
 {

@@ -62,3 +62,7 @@ Global Country/State/District CRUD is not a tenant capability. Those controllers
 require the `super_admin` role plus their action permission. Permissions are declared
 by module definitions and granted by Platform system-role reconciliation; no migration
 is involved.
+
+## Settings workspace reconciliation — 2026-10-19
+
+The requester supersedes the earlier independent Settings section: Administration now contains one Settings destination and its existing configuration workflows are actual shared tabs. Web /administration/settings uses FormTabs; Mobile /settings uses AppFormTabs and retains local device preferences. Child authority, services, edit forms, scopes, read-only and revision/conflict behavior remain owned by this feature. Error Logs viewers stay Administration siblings; retention remains a system-only tab. Existing direct child URLs remain compatible. No API/domain/schema change or migration. Current composition and acceptance are canonical in ../platform-settings/platform-settings-review.md and platform-settings-evidence.md; older dated navigation descriptions are historical.

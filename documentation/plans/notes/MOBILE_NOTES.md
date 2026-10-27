@@ -50,3 +50,11 @@ Use `Surface = Mobile` or `Surface = Cross-platform` for items involving:
 
 A business plan cannot become `Implementation Ready` while a blocking Required
 Mobile decision is recorded only as an unresolved note.
+`PROD-026` — Company permissions/localization native acceptance is explicitly scheduled for the product owner after automated implementation; see PRODUCTION_NOTES.md.
+`FOLLOW-006` — Confirmed again during company administration verification on 2026-10-17: six pre-existing LedgerSetupResourceScreen memoization lint errors block the full chained Mobile check; scoped S1 lint passed. Canonical owner/trigger remain FOLLOW_UPS.md.
+| RISK-010 | Risk | Error Logs capture availability | Best-effort sink and authenticated runtime capture limits; see canonical note. | `KNOWN_RISKS.md` |
+| FOLLOW-008 | Follow-up | SDK patch alignment | Expo Doctor package patch mismatch; canonical upgrade follow-up. | `FOLLOW_UPS.md` |
+
+`PROD-027` — Company account email provider/client acceptance; canonical ownership, trigger and production gate are in PRODUCTION_NOTES.md.
+
+`DEC-024` — Company message logs scope; canonical decision in DECISION_BACKLOG.md. `RISK-011` — Observational capture availability/uncertain SMTP outcome; canonical risk in KNOWN_RISKS.md.

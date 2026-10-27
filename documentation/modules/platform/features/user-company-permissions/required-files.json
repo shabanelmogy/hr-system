@@ -1,0 +1,372 @@
+{
+  "schemaVersion": 1,
+  "status": "active",
+  "feature": "user-company-permissions",
+  "featureName": "Company user permission grants",
+  "referenceFeature": "N/A",
+  "planId": "platform-user-permissions-and-company-localization",
+  "sliceId": "S1 Company user permission grants",
+  "canonicalPlan": "documentation/plans/business/platform-user-permissions-and-company-localization/PLAN.md",
+  "featureDecompositionDecision": "Single feature",
+  "screenWorkflowContract": "documentation/plans/business/platform-user-permissions-and-company-localization/decomposition/user-company-permissions.md",
+  "plannedCustomerEducation": "documentation/plans/business/platform-user-permissions-and-company-localization/education/user-company-permissions.md",
+  "purpose": "Phase 00 existing evidence; extend with actual sources as implementation proceeds.",
+  "reviewArtifact": "documentation/modules/platform/features/user-company-permissions/user-company-permissions-evidence.md",
+  "implementationRequest": "documentation/modules/platform/features/user-company-permissions/user-company-permissions-request.md",
+  "plannedCanonicalBooks": {
+    "master": "documentation/modules/platform/features/user-company-permissions/user-company-permissions-review.md",
+    "api": "documentation/modules/platform/features/user-company-permissions/user-company-permissions-api.md",
+    "web": "documentation/modules/platform/features/user-company-permissions/user-company-permissions-web.md",
+    "mobile": "documentation/modules/platform/features/user-company-permissions/user-company-permissions-mobile.md"
+  },
+  "sourceCollections": [],
+  "requiredFiles": [
+    {
+      "id": "root-agent-guidance",
+      "layer": "configuration",
+      "path": "AGENTS.md",
+      "purpose": "Repository-wide feature and documentation rules"
+    },
+    {
+      "id": "review-artifact",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/user-company-permissions/user-company-permissions-evidence.md",
+      "purpose": "Feature requirement, evidence, finding, and verification ledger"
+    },
+    {
+      "id": "implementation-request",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/user-company-permissions/user-company-permissions-request.md",
+      "purpose": "Copy-ready feature scope, platform decisions, contracts, and quality gates"
+    },
+    {
+      "layer": "documentation",
+      "id": "user-company-permissions-master",
+      "path": "documentation\\modules\\platform\\features\\user-company-permissions\\user-company-permissions-review.md",
+      "purpose": "Initial applied canonical profile"
+    },
+    {
+      "layer": "documentation",
+      "id": "user-company-permissions-api",
+      "path": "documentation\\modules\\platform\\features\\user-company-permissions\\user-company-permissions-api.md",
+      "purpose": "Initial applied canonical profile"
+    },
+    {
+      "layer": "documentation",
+      "id": "user-company-permissions-web",
+      "path": "documentation\\modules\\platform\\features\\user-company-permissions\\user-company-permissions-web.md",
+      "purpose": "Initial applied canonical profile"
+    },
+    {
+      "layer": "documentation",
+      "id": "user-company-permissions-mobile",
+      "path": "documentation\\modules\\platform\\features\\user-company-permissions\\user-company-permissions-mobile.md",
+      "purpose": "Initial applied canonical profile"
+    },
+    {
+      "layer": "documentation",
+      "id": "screen-workflow-contract",
+      "path": "documentation/plans/business/platform-user-permissions-and-company-localization/decomposition/user-company-permissions.md",
+      "purpose": "Approved P-006 journey and verification contract"
+    },
+    {
+      "id": "user-grants-api-source-1",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Migrations/20261017030411_AddUserCompanyPermissions.Designer.cs",
+      "purpose": "Verified S1 API implementation or security verification source"
+    },
+    {
+      "id": "user-grants-api-source-2",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Migrations/20261017030411_AddUserCompanyPermissions.cs",
+      "purpose": "Verified S1 API implementation or security verification source"
+    },
+    {
+      "id": "user-grants-api-source-3",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Domain/Security/Users/Entities/UserCompanyPermissionGrantSet.cs",
+      "purpose": "Verified S1 API implementation or security verification source"
+    },
+    {
+      "id": "user-grants-api-source-4",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Presentation/Features/Security/UserPermissions/V1/UserPermissionsController.cs",
+      "purpose": "Verified S1 API implementation or security verification source"
+    },
+    {
+      "id": "user-grants-api-source-5",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Tests/UserCompanyPermissionStoreTests.cs",
+      "purpose": "Verified S1 API implementation or security verification source"
+    },
+    {
+      "id": "user-grants-api-source-6",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Tests/UserCompanyPermissionMaterialTests.cs",
+      "purpose": "Verified S1 API implementation or security verification source"
+    },
+    {
+      "id": "user-grants-api-source-7",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Features/Security/UserPermissions/UserCompanyPermissionsStore.cs",
+      "purpose": "Verified S1 API implementation or security verification source"
+    },
+    {
+      "id": "user-grants-api-source-8",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Application/Features/Security/UserPermissions/UserPermissionRequests.cs",
+      "purpose": "Verified S1 API implementation or security verification source"
+    },
+    {
+      "id": "user-grants-api-source-9",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Application/Features/Security/UserPermissions/UserPermissionErrors.cs",
+      "purpose": "Verified S1 API implementation or security verification source"
+    },
+    {
+      "id": "user-grants-api-source-10",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Application/Features/Security/UserPermissions/UserPermissionContracts.cs",
+      "purpose": "Verified S1 API implementation or security verification source"
+    },
+    {
+      "id": "user-grants-api-source-11",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/PlatformDbContext.cs",
+      "purpose": "Verified S1 API implementation or security verification source"
+    },
+    {
+      "id": "user-grants-api-source-12",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Identity/PlatformContractSource.cs",
+      "purpose": "Verified S1 API implementation or security verification source"
+    },
+    {
+      "id": "user-grants-api-source-13",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Application/Authentication/Tokens/AccessTokenClaimMaterialService.cs",
+      "purpose": "Verified S1 API implementation or security verification source"
+    },
+    {
+      "id": "user-grants-api-source-14",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Features/Platform/Notifications/Persistence/PlatformNotificationStore.cs",
+      "purpose": "Verified S1 API implementation or security verification source"
+    },
+    {
+      "id": "user-grants-web-source-1",
+      "layer": "web",
+      "path": "web-next/src/platform/auth/users/validation/userPermissionsValidation.ts",
+      "purpose": "S1 Web composition, validated transport or verification"
+    },
+    {
+      "id": "user-grants-web-source-2",
+      "layer": "web",
+      "path": "web-next/src/platform/auth/users/types/userPermissions.ts",
+      "purpose": "S1 Web composition, validated transport or verification"
+    },
+    {
+      "id": "user-grants-web-source-3",
+      "layer": "web",
+      "path": "web-next/src/platform/auth/users/services/userPermissionsService.ts",
+      "purpose": "S1 Web composition, validated transport or verification"
+    },
+    {
+      "id": "user-grants-web-source-4",
+      "layer": "web",
+      "path": "web-next/src/platform/auth/users/services/userPermissionsService.test.ts",
+      "purpose": "S1 Web composition, validated transport or verification"
+    },
+    {
+      "id": "user-grants-web-source-5",
+      "layer": "web",
+      "path": "web-next/src/platform/auth/users/hooks/useUserCompanyPermissions.ts",
+      "purpose": "S1 Web composition, validated transport or verification"
+    },
+    {
+      "id": "user-grants-web-source-6",
+      "layer": "web",
+      "path": "web-next/src/platform/auth/users/components/UserCompanyPermissionsDialog.tsx",
+      "purpose": "S1 Web composition, validated transport or verification"
+    },
+    {
+      "id": "user-grants-web-source-7",
+      "layer": "web",
+      "path": "web-next/src/platform/auth/users/UsersPage.tsx",
+      "purpose": "S1 Web composition, validated transport or verification"
+    },
+    {
+      "id": "user-grants-web-source-8",
+      "layer": "web",
+      "path": "web-next/src/platform/auth/users/components/UsersDataGrid.tsx",
+      "purpose": "S1 Web composition, validated transport or verification"
+    },
+    {
+      "id": "user-grants-web-source-9",
+      "layer": "web",
+      "path": "web-next/src/platform/auth/roles/components/role-permissions/RolePermissionsCards.tsx",
+      "purpose": "S1 Web composition, validated transport or verification"
+    },
+    {
+      "id": "user-grants-web-source-10",
+      "layer": "web",
+      "path": "web-next/e2e/user-company-permissions.spec.ts",
+      "purpose": "S1 Web composition, validated transport or verification"
+    },
+    {
+      "id": "user-grants-mobile-source-1",
+      "layer": "mobile",
+      "path": "mobile-react/src/core/localization/translations/ar-administration-tenants.ts",
+      "purpose": "S1 Mobile implementation or automatic verification"
+    },
+    {
+      "id": "user-grants-mobile-source-2",
+      "layer": "mobile",
+      "path": "mobile-react/src/core/localization/translations/en-administration-tenants.ts",
+      "purpose": "S1 Mobile implementation or automatic verification"
+    },
+    {
+      "id": "user-grants-mobile-source-3",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/administration/application/administration-use-cases.test.ts",
+      "purpose": "S1 Mobile implementation or automatic verification"
+    },
+    {
+      "id": "user-grants-mobile-source-4",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/administration/application/administration-use-cases.ts",
+      "purpose": "S1 Mobile implementation or automatic verification"
+    },
+    {
+      "id": "user-grants-mobile-source-5",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/administration/data/remote/administration-endpoints.ts",
+      "purpose": "S1 Mobile implementation or automatic verification"
+    },
+    {
+      "id": "user-grants-mobile-source-6",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/administration/data/remote/administration-remote-data-source.test.ts",
+      "purpose": "S1 Mobile implementation or automatic verification"
+    },
+    {
+      "id": "user-grants-mobile-source-7",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/administration/data/remote/administration-remote-data-source.ts",
+      "purpose": "S1 Mobile implementation or automatic verification"
+    },
+    {
+      "id": "user-grants-mobile-source-8",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/administration/data/remote/administration-schemas.ts",
+      "purpose": "S1 Mobile implementation or automatic verification"
+    },
+    {
+      "id": "user-grants-mobile-source-9",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/administration/data/repositories/default-administration-repository.test.ts",
+      "purpose": "S1 Mobile implementation or automatic verification"
+    },
+    {
+      "id": "user-grants-mobile-source-10",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/administration/data/repositories/default-administration-repository.ts",
+      "purpose": "S1 Mobile implementation or automatic verification"
+    },
+    {
+      "id": "user-grants-mobile-source-11",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/administration/domain/models/administration.ts",
+      "purpose": "S1 Mobile implementation or automatic verification"
+    },
+    {
+      "id": "user-grants-mobile-source-12",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/administration/domain/repositories/administration-repository.ts",
+      "purpose": "S1 Mobile implementation or automatic verification"
+    },
+    {
+      "id": "user-grants-mobile-source-13",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/administration/presentation/queries/use-administration.ts",
+      "purpose": "S1 Mobile implementation or automatic verification"
+    },
+    {
+      "id": "user-grants-mobile-source-14",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/administration/presentation/roles/permissions/components/PermissionModuleCard.tsx",
+      "purpose": "S1 Mobile implementation or automatic verification"
+    },
+    {
+      "id": "user-grants-mobile-source-15",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/administration/presentation/roles/permissions/permission-groups.ts",
+      "purpose": "S1 Mobile implementation or automatic verification"
+    },
+    {
+      "id": "user-grants-mobile-source-16",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/administration/presentation/users/components/ManagedUserActions.tsx",
+      "purpose": "S1 Mobile implementation or automatic verification"
+    },
+    {
+      "id": "user-grants-mobile-source-17",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/administration/presentation/users/screens/UserManagementScreen.tsx",
+      "purpose": "S1 Mobile implementation or automatic verification"
+    },
+    {
+      "id": "user-grants-mobile-source-18",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/auth/presentation/rbac/permissions.ts",
+      "purpose": "S1 Mobile implementation or automatic verification"
+    },
+    {
+      "id": "user-grants-mobile-source-19",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/administration/presentation/validation/user-permissions-validation.ts",
+      "purpose": "S1 Mobile implementation or automatic verification"
+    },
+    {
+      "id": "user-grants-mobile-source-20",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/administration/presentation/users/components/UserPermissionsForm.tsx",
+      "purpose": "S1 Mobile implementation or automatic verification"
+    },
+    {
+      "id": "user-grants-mobile-source-21",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/administration/presentation/users/components/UserPermissionsForm.test.tsx",
+      "purpose": "S1 Mobile implementation or automatic verification"
+    },
+    {
+      "id": "user-grants-education",
+      "layer": "documentation",
+      "path": "documentation/plans/business/platform-user-permissions-and-company-localization/education/user-company-permissions.md",
+      "purpose": "Verified-scope customer education"
+    }
+  ],
+  "finalizationChecklist": [
+    "Replace every placeholder in the review artifact.",
+    "Complete the Existing-System Relationship Review and every decision in user-company-permissions-request.md before implementation.",
+    "Complete the Business Rules Matrix with one primary owner, stable outcome/error, and required test for every known rule.",
+    "Complete every Edge Cases & Validation category with scenarios or an explicit N/A reason, enforcement layer, and required test.",
+    "Complete the Impact Matrix with Reuse, Extend, Change, Add, or reasoned N/A across every listed area.",
+    "Remove every remaining placeholder from user-company-permissions-request.md before runtime implementation.",
+    "Add Phase 00 current API, web, mobile, configuration, localization, and test evidence sources.",
+    "Classify every optional view, including Import, as Required, Deferred, or Excluded independently for web and mobile.",
+    "When Import is Required, add its API and applicable client runtime, route/configuration, localization, and focused-test paths.",
+    "Record and test the exact Import request envelope, limits, duplicate and relationship rules, atomicity, permissions, side effects, and retry behavior.",
+    "Add source collections with evidence-based minimum file counts.",
+    "Create the four initial applied implementation books from the approved plan plus verified current source; label target-only behavior explicitly.",
+    "Rename this file to required-files.json when the Phase 00 evidence paths exist; extend it with runtime files during implementation.",
+    "Update the review artifact to point at required-files.json and mark its documentation state Final.",
+    "Merge recipe-registration.draft.json into recipe-manifest.json after the Phase 00 books and preflight manifest are complete.",
+    "Write generated packets under documentation/modules/platform/features/user-company-permissions/generated/.",
+    "Run generation and then Generate-Documentation.ps1 -Check.",
+    "Complete phase 06 with an explicit verification decision.",
+    "Do not start customer-facing education until phase 06 records Verified.",
+    "For customer-visible work, complete phase 07 and its Customer Education Pack before Closed.",
+    "When Customer Education is Required, add the verified education document to required-files.json and rerun Generate-Documentation.ps1 -Check before Closed."
+  ]
+}

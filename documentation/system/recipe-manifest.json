@@ -342,6 +342,166 @@
       "id": "managed-crystal-manager-experience-mobile",
       "path": "../modules/reporting/features/managed-crystal-manager-experience/managed-crystal-manager-experience-mobile.md",
       "title": "Managed Crystal Report Manager Experience Expo implementation profile"
+    },
+    {
+      "id": "user-company-permissions-master",
+      "path": "../modules/platform/features/user-company-permissions/user-company-permissions-review.md",
+      "title": "Company user permission grants cross-platform master review"
+    },
+    {
+      "id": "user-company-permissions-api",
+      "path": "../modules/platform/features/user-company-permissions/user-company-permissions-api.md",
+      "title": "Company user permission grants API implementation profile"
+    },
+    {
+      "id": "user-company-permissions-web",
+      "path": "../modules/platform/features/user-company-permissions/user-company-permissions-web.md",
+      "title": "Company user permission grants Next.js implementation profile"
+    },
+    {
+      "id": "user-company-permissions-mobile",
+      "path": "../modules/platform/features/user-company-permissions/user-company-permissions-mobile.md",
+      "title": "Company user permission grants Expo implementation profile"
+    },
+    {
+      "id": "company-ui-localization-master",
+      "path": "../modules/platform/features/company-ui-localization/company-ui-localization-review.md",
+      "title": "Company UI localization cross-platform master review"
+    },
+    {
+      "id": "company-ui-localization-api",
+      "path": "../modules/platform/features/company-ui-localization/company-ui-localization-api.md",
+      "title": "Company UI localization API implementation profile"
+    },
+    {
+      "id": "company-ui-localization-web",
+      "path": "../modules/platform/features/company-ui-localization/company-ui-localization-web.md",
+      "title": "Company UI localization Next.js implementation profile"
+    },
+    {
+      "id": "company-ui-localization-mobile",
+      "path": "../modules/platform/features/company-ui-localization/company-ui-localization-mobile.md",
+      "title": "Company UI localization Expo implementation profile"
+    },
+    {
+      "id": "error-logs-master",
+      "path": "../modules/platform/features/error-logs/error-logs-review.md",
+      "title": "Error Logs cross-platform master review"
+    },
+    {
+      "id": "error-logs-api",
+      "path": "../modules/platform/features/error-logs/error-logs-api.md",
+      "title": "Error Logs API implementation profile"
+    },
+    {
+      "id": "error-logs-web",
+      "path": "../modules/platform/features/error-logs/error-logs-web.md",
+      "title": "Error Logs Next.js implementation profile"
+    },
+    {
+      "id": "error-logs-mobile",
+      "path": "../modules/platform/features/error-logs/error-logs-mobile.md",
+      "title": "Error Logs Expo implementation profile"
+    },
+    {
+      "id": "platform-settings-master",
+      "path": "../modules/platform/features/platform-settings/platform-settings-review.md",
+      "title": "Platform Settings cross-platform master review"
+    },
+    {
+      "id": "platform-settings-api",
+      "path": "../modules/platform/features/platform-settings/platform-settings-api.md",
+      "title": "Platform Settings API implementation profile"
+    },
+    {
+      "id": "platform-settings-web",
+      "path": "../modules/platform/features/platform-settings/platform-settings-web.md",
+      "title": "Platform Settings Next.js implementation profile"
+    },
+    {
+      "id": "platform-settings-mobile",
+      "path": "../modules/platform/features/platform-settings/platform-settings-mobile.md",
+      "title": "Platform Settings Expo implementation profile"
+    },
+    {
+      "id": "system-administration-access-master",
+      "path": "../modules/platform/features/system-administration-access/system-administration-access-review.md",
+      "title": "Global administration access cross-platform master review"
+    },
+    {
+      "id": "system-administration-access-api",
+      "path": "../modules/platform/features/system-administration-access/system-administration-access-api.md",
+      "title": "Global administration access API implementation profile"
+    },
+    {
+      "id": "system-administration-access-web",
+      "path": "../modules/platform/features/system-administration-access/system-administration-access-web.md",
+      "title": "Global administration access Next.js implementation profile"
+    },
+    {
+      "id": "system-administration-access-mobile",
+      "path": "../modules/platform/features/system-administration-access/system-administration-access-mobile.md",
+      "title": "Global administration access Expo implementation profile"
+    },
+    {
+      "id": "system-ui-localization-master",
+      "path": "../modules/platform/features/system-ui-localization/system-ui-localization-review.md",
+      "title": "Authorized global UI texts cross-platform master review"
+    },
+    {
+      "id": "system-ui-localization-api",
+      "path": "../modules/platform/features/system-ui-localization/system-ui-localization-api.md",
+      "title": "Authorized global UI texts API implementation profile"
+    },
+    {
+      "id": "system-ui-localization-web",
+      "path": "../modules/platform/features/system-ui-localization/system-ui-localization-web.md",
+      "title": "Authorized global UI texts Next.js implementation profile"
+    },
+    {
+      "id": "system-ui-localization-mobile",
+      "path": "../modules/platform/features/system-ui-localization/system-ui-localization-mobile.md",
+      "title": "Authorized global UI texts Expo implementation profile"
+    },
+    {
+      "id": "company-email-templates-master",
+      "path": "../modules/platform/features/company-email-templates/company-email-templates-review.md",
+      "title": "Company email templates cross-platform master review"
+    },
+    {
+      "id": "company-email-templates-api",
+      "path": "../modules/platform/features/company-email-templates/company-email-templates-api.md",
+      "title": "Company email templates API implementation profile"
+    },
+    {
+      "id": "company-email-templates-web",
+      "path": "../modules/platform/features/company-email-templates/company-email-templates-web.md",
+      "title": "Company email templates Next.js implementation profile"
+    },
+    {
+      "id": "company-email-templates-mobile",
+      "path": "../modules/platform/features/company-email-templates/company-email-templates-mobile.md",
+      "title": "Company email templates Expo implementation profile"
+    },
+    {
+      "id": "message-logs-master",
+      "path": "../modules/platform/features/message-logs/message-logs-review.md",
+      "title": "Company Message Logs cross-platform master review"
+    },
+    {
+      "id": "message-logs-api",
+      "path": "../modules/platform/features/message-logs/message-logs-api.md",
+      "title": "Company Message Logs API implementation profile"
+    },
+    {
+      "id": "message-logs-web",
+      "path": "../modules/platform/features/message-logs/message-logs-web.md",
+      "title": "Company Message Logs Next.js implementation profile"
+    },
+    {
+      "id": "message-logs-mobile",
+      "path": "../modules/platform/features/message-logs/message-logs-mobile.md",
+      "title": "Company Message Logs Expo implementation profile"
     }
   ],
   "requiredFileManifests": [
@@ -361,7 +521,14 @@
     "../modules/accounting/features/ledger-setup-coa-hierarchy/required-files.json",
     "../modules/reporting/features/managed-crystal-contract-registry/required-files.json",
     "../modules/reporting/features/managed-crystal-template-validation/required-files.json",
-    "../modules/reporting/features/managed-crystal-manager-experience/required-files.json"
+    "../modules/reporting/features/managed-crystal-manager-experience/required-files.json",
+    "../modules/platform/features/user-company-permissions/required-files.json",
+    "../modules/platform/features/company-ui-localization/required-files.json",
+    "../modules/platform/features/error-logs/required-files.json",
+    "../modules/platform/features/system-administration-access/required-files.json",
+    "../modules/platform/features/system-ui-localization/required-files.json",
+    "../modules/platform/features/company-email-templates/required-files.json",
+    "../modules/platform/features/message-logs/required-files.json"
   ],
   "recipes": [
     {
@@ -3036,10 +3203,41 @@
       "template": "templates/PHASE-00-discovery-evidence.template.md",
       "output": "../modules/platform/features/tenant-module-entitlements/generated/PHASE-00-discovery-evidence.md",
       "sources": [
-        { "book": "tenant-module-entitlements-master", "sections": [1, 2, 5, 8, 9] },
-        { "book": "tenant-module-entitlements-api", "sections": [1, 10, 11] },
-        { "book": "tenant-module-entitlements-web", "sections": [1, 2, 12, 13] },
-        { "book": "tenant-module-entitlements-mobile", "sections": [1, 14, 15] }
+        {
+          "book": "tenant-module-entitlements-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "tenant-module-entitlements-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "tenant-module-entitlements-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "tenant-module-entitlements-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
       ]
     },
     {
@@ -3048,8 +3246,29 @@
       "template": "templates/PHASE-01-domain-api.template.md",
       "output": "../modules/platform/features/tenant-module-entitlements/generated/PHASE-01-domain-api.md",
       "sources": [
-        { "book": "tenant-module-entitlements-master", "sections": [3, 4, 6] },
-        { "book": "tenant-module-entitlements-api", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }
+        {
+          "book": "tenant-module-entitlements-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "tenant-module-entitlements-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
       ]
     },
     {
@@ -3058,8 +3277,34 @@
       "template": "templates/PHASE-02-web-client.template.md",
       "output": "../modules/platform/features/tenant-module-entitlements/generated/PHASE-02-web-client.md",
       "sources": [
-        { "book": "tenant-module-entitlements-master", "sections": [3, 4, 6, 7] },
-        { "book": "tenant-module-entitlements-web", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14] }
+        {
+          "book": "tenant-module-entitlements-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "tenant-module-entitlements-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
       ]
     },
     {
@@ -3068,8 +3313,35 @@
       "template": "templates/PHASE-03-mobile-client.template.md",
       "output": "../modules/platform/features/tenant-module-entitlements/generated/PHASE-03-mobile-client.md",
       "sources": [
-        { "book": "tenant-module-entitlements-master", "sections": [3, 4, 6, 7] },
-        { "book": "tenant-module-entitlements-mobile", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15] }
+        {
+          "book": "tenant-module-entitlements-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "tenant-module-entitlements-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
       ]
     },
     {
@@ -3078,10 +3350,41 @@
       "template": "templates/PHASE-04-domain-actions.template.md",
       "output": "../modules/platform/features/tenant-module-entitlements/generated/PHASE-04-domain-actions.md",
       "sources": [
-        { "book": "tenant-module-entitlements-master", "sections": [3, 4, 6, 7, 8] },
-        { "book": "tenant-module-entitlements-api", "sections": [6, 7, 8] },
-        { "book": "tenant-module-entitlements-web", "sections": [6, 7, 8, 9] },
-        { "book": "tenant-module-entitlements-mobile", "sections": [9, 10, 11] }
+        {
+          "book": "tenant-module-entitlements-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "tenant-module-entitlements-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "tenant-module-entitlements-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "tenant-module-entitlements-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
       ]
     },
     {
@@ -3090,10 +3393,41 @@
       "template": "templates/PHASE-05-integration-runtime.template.md",
       "output": "../modules/platform/features/tenant-module-entitlements/generated/PHASE-05-integration-runtime.md",
       "sources": [
-        { "book": "tenant-module-entitlements-master", "sections": [4, 5, 6, 7, 9] },
-        { "book": "tenant-module-entitlements-api", "sections": [8, 9, 10] },
-        { "book": "tenant-module-entitlements-web", "sections": [8, 10, 13] },
-        { "book": "tenant-module-entitlements-mobile", "sections": [2, 11, 12, 15] }
+        {
+          "book": "tenant-module-entitlements-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "tenant-module-entitlements-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "tenant-module-entitlements-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "tenant-module-entitlements-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
       ]
     },
     {
@@ -3102,10 +3436,36 @@
       "template": "templates/PHASE-06-final-reconciliation.template.md",
       "output": "../modules/platform/features/tenant-module-entitlements/generated/PHASE-06-final-reconciliation.md",
       "sources": [
-        { "book": "tenant-module-entitlements-master", "sections": [8, 9, 10] },
-        { "book": "tenant-module-entitlements-api", "sections": [10, 11] },
-        { "book": "tenant-module-entitlements-web", "sections": [12, 13, 14] },
-        { "book": "tenant-module-entitlements-mobile", "sections": [14, 15] }
+        {
+          "book": "tenant-module-entitlements-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "tenant-module-entitlements-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "tenant-module-entitlements-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "tenant-module-entitlements-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
       ]
     },
     {
@@ -3114,10 +3474,41 @@
       "template": "templates/PHASE-00-implementation-preflight.template.md",
       "output": "../modules/accounting/features/accounting-ledger-setup/generated/PHASE-00-implementation-preflight.md",
       "sources": [
-        { "book": "accounting-ledger-setup-master", "sections": [1, 2, 5, 8, 9] },
-        { "book": "accounting-ledger-setup-api", "sections": [1, 10, 11] },
-        { "book": "accounting-ledger-setup-web", "sections": [1, 2, 12, 13] },
-        { "book": "accounting-ledger-setup-mobile", "sections": [1, 14, 15] }
+        {
+          "book": "accounting-ledger-setup-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "accounting-ledger-setup-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "accounting-ledger-setup-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "accounting-ledger-setup-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
       ]
     },
     {
@@ -3126,8 +3517,29 @@
       "template": "templates/PHASE-01-domain-api.template.md",
       "output": "../modules/accounting/features/accounting-ledger-setup/generated/PHASE-01-domain-api.md",
       "sources": [
-        { "book": "accounting-ledger-setup-master", "sections": [3, 4, 6] },
-        { "book": "accounting-ledger-setup-api", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }
+        {
+          "book": "accounting-ledger-setup-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "accounting-ledger-setup-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
       ]
     },
     {
@@ -3136,8 +3548,34 @@
       "template": "templates/PHASE-02-web-client.template.md",
       "output": "../modules/accounting/features/accounting-ledger-setup/generated/PHASE-02-web-client.md",
       "sources": [
-        { "book": "accounting-ledger-setup-master", "sections": [3, 4, 6, 7] },
-        { "book": "accounting-ledger-setup-web", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14] }
+        {
+          "book": "accounting-ledger-setup-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "accounting-ledger-setup-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
       ]
     },
     {
@@ -3146,8 +3584,35 @@
       "template": "templates/PHASE-03-mobile-client.template.md",
       "output": "../modules/accounting/features/accounting-ledger-setup/generated/PHASE-03-mobile-client.md",
       "sources": [
-        { "book": "accounting-ledger-setup-master", "sections": [3, 4, 6, 7] },
-        { "book": "accounting-ledger-setup-mobile", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15] }
+        {
+          "book": "accounting-ledger-setup-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "accounting-ledger-setup-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
       ]
     },
     {
@@ -3156,10 +3621,41 @@
       "template": "templates/PHASE-04-domain-actions.template.md",
       "output": "../modules/accounting/features/accounting-ledger-setup/generated/PHASE-04-domain-actions.md",
       "sources": [
-        { "book": "accounting-ledger-setup-master", "sections": [3, 4, 6, 7, 8] },
-        { "book": "accounting-ledger-setup-api", "sections": [6, 7, 8] },
-        { "book": "accounting-ledger-setup-web", "sections": [6, 7, 8, 9] },
-        { "book": "accounting-ledger-setup-mobile", "sections": [9, 10, 11] }
+        {
+          "book": "accounting-ledger-setup-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "accounting-ledger-setup-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "accounting-ledger-setup-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "accounting-ledger-setup-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
       ]
     },
     {
@@ -3168,10 +3664,41 @@
       "template": "templates/PHASE-05-integration-runtime.template.md",
       "output": "../modules/accounting/features/accounting-ledger-setup/generated/PHASE-05-integration-runtime.md",
       "sources": [
-        { "book": "accounting-ledger-setup-master", "sections": [4, 5, 6, 7, 9] },
-        { "book": "accounting-ledger-setup-api", "sections": [8, 9, 10] },
-        { "book": "accounting-ledger-setup-web", "sections": [8, 10, 13] },
-        { "book": "accounting-ledger-setup-mobile", "sections": [2, 11, 12, 15] }
+        {
+          "book": "accounting-ledger-setup-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "accounting-ledger-setup-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "accounting-ledger-setup-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "accounting-ledger-setup-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
       ]
     },
     {
@@ -3180,10 +3707,36 @@
       "template": "templates/PHASE-06-verification-acceptance.template.md",
       "output": "../modules/accounting/features/accounting-ledger-setup/generated/PHASE-06-verification-acceptance.md",
       "sources": [
-        { "book": "accounting-ledger-setup-master", "sections": [8, 9, 10] },
-        { "book": "accounting-ledger-setup-api", "sections": [10, 11] },
-        { "book": "accounting-ledger-setup-web", "sections": [12, 13, 14] },
-        { "book": "accounting-ledger-setup-mobile", "sections": [14, 15] }
+        {
+          "book": "accounting-ledger-setup-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "accounting-ledger-setup-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "accounting-ledger-setup-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "accounting-ledger-setup-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
       ]
     },
     {
@@ -3192,9 +3745,29 @@
       "template": "templates/PHASE-07-customer-education-closure.template.md",
       "output": "../modules/accounting/features/accounting-ledger-setup/generated/PHASE-07-customer-education-closure.md",
       "sources": [
-        { "book": "accounting-ledger-setup-master", "sections": [8, 9, 10] },
-        { "book": "accounting-ledger-setup-web", "sections": [12, 13, 14] },
-        { "book": "accounting-ledger-setup-mobile", "sections": [14, 15] }
+        {
+          "book": "accounting-ledger-setup-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "accounting-ledger-setup-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "accounting-ledger-setup-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
       ]
     },
     {
@@ -3203,10 +3776,41 @@
       "template": "templates/PHASE-00-implementation-preflight.template.md",
       "output": "../modules/accounting/features/ledger-setup-currency/generated/PHASE-00-implementation-preflight.md",
       "sources": [
-        { "book": "ledger-setup-currency-master", "sections": [1, 2, 5, 8, 9] },
-        { "book": "ledger-setup-currency-api", "sections": [1, 10, 11] },
-        { "book": "ledger-setup-currency-web", "sections": [1, 2, 12, 13] },
-        { "book": "ledger-setup-currency-mobile", "sections": [1, 14, 15] }
+        {
+          "book": "ledger-setup-currency-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "ledger-setup-currency-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "ledger-setup-currency-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "ledger-setup-currency-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
       ]
     },
     {
@@ -3215,8 +3819,29 @@
       "template": "templates/PHASE-01-domain-api.template.md",
       "output": "../modules/accounting/features/ledger-setup-currency/generated/PHASE-01-domain-api.md",
       "sources": [
-        { "book": "ledger-setup-currency-master", "sections": [3, 4, 6] },
-        { "book": "ledger-setup-currency-api", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }
+        {
+          "book": "ledger-setup-currency-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "ledger-setup-currency-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
       ]
     },
     {
@@ -3225,8 +3850,34 @@
       "template": "templates/PHASE-02-web-client.template.md",
       "output": "../modules/accounting/features/ledger-setup-currency/generated/PHASE-02-web-client.md",
       "sources": [
-        { "book": "ledger-setup-currency-master", "sections": [3, 4, 6, 7] },
-        { "book": "ledger-setup-currency-web", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14] }
+        {
+          "book": "ledger-setup-currency-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "ledger-setup-currency-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
       ]
     },
     {
@@ -3235,8 +3886,35 @@
       "template": "templates/PHASE-03-mobile-client.template.md",
       "output": "../modules/accounting/features/ledger-setup-currency/generated/PHASE-03-mobile-client.md",
       "sources": [
-        { "book": "ledger-setup-currency-master", "sections": [3, 4, 6, 7] },
-        { "book": "ledger-setup-currency-mobile", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15] }
+        {
+          "book": "ledger-setup-currency-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "ledger-setup-currency-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
       ]
     },
     {
@@ -3245,10 +3923,41 @@
       "template": "templates/PHASE-04-domain-actions.template.md",
       "output": "../modules/accounting/features/ledger-setup-currency/generated/PHASE-04-domain-actions.md",
       "sources": [
-        { "book": "ledger-setup-currency-master", "sections": [3, 4, 6, 7, 8] },
-        { "book": "ledger-setup-currency-api", "sections": [6, 7, 8] },
-        { "book": "ledger-setup-currency-web", "sections": [6, 7, 8, 9] },
-        { "book": "ledger-setup-currency-mobile", "sections": [9, 10, 11] }
+        {
+          "book": "ledger-setup-currency-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "ledger-setup-currency-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "ledger-setup-currency-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "ledger-setup-currency-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
       ]
     },
     {
@@ -3257,10 +3966,41 @@
       "template": "templates/PHASE-05-integration-runtime.template.md",
       "output": "../modules/accounting/features/ledger-setup-currency/generated/PHASE-05-integration-runtime.md",
       "sources": [
-        { "book": "ledger-setup-currency-master", "sections": [4, 5, 6, 7, 9] },
-        { "book": "ledger-setup-currency-api", "sections": [8, 9, 10] },
-        { "book": "ledger-setup-currency-web", "sections": [8, 10, 13] },
-        { "book": "ledger-setup-currency-mobile", "sections": [2, 11, 12, 15] }
+        {
+          "book": "ledger-setup-currency-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "ledger-setup-currency-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "ledger-setup-currency-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "ledger-setup-currency-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
       ]
     },
     {
@@ -3269,10 +4009,36 @@
       "template": "templates/PHASE-06-verification-acceptance.template.md",
       "output": "../modules/accounting/features/ledger-setup-currency/generated/PHASE-06-verification-acceptance.md",
       "sources": [
-        { "book": "ledger-setup-currency-master", "sections": [8, 9, 10] },
-        { "book": "ledger-setup-currency-api", "sections": [10, 11] },
-        { "book": "ledger-setup-currency-web", "sections": [12, 13, 14] },
-        { "book": "ledger-setup-currency-mobile", "sections": [14, 15] }
+        {
+          "book": "ledger-setup-currency-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "ledger-setup-currency-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "ledger-setup-currency-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "ledger-setup-currency-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
       ]
     },
     {
@@ -3281,9 +4047,29 @@
       "template": "templates/PHASE-07-customer-education-closure.template.md",
       "output": "../modules/accounting/features/ledger-setup-currency/generated/PHASE-07-customer-education-closure.md",
       "sources": [
-        { "book": "ledger-setup-currency-master", "sections": [8, 9, 10] },
-        { "book": "ledger-setup-currency-web", "sections": [12, 13, 14] },
-        { "book": "ledger-setup-currency-mobile", "sections": [14, 15] }
+        {
+          "book": "ledger-setup-currency-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "ledger-setup-currency-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "ledger-setup-currency-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
       ]
     },
     {
@@ -3292,10 +4078,41 @@
       "template": "templates/PHASE-00-implementation-preflight.template.md",
       "output": "../modules/accounting/features/ledger-setup-coa-hierarchy/generated/PHASE-00-implementation-preflight.md",
       "sources": [
-        { "book": "ledger-setup-coa-hierarchy-master", "sections": [1, 2, 5, 8, 9] },
-        { "book": "ledger-setup-coa-hierarchy-api", "sections": [1, 10, 11] },
-        { "book": "ledger-setup-coa-hierarchy-web", "sections": [1, 2, 12, 13] },
-        { "book": "ledger-setup-coa-hierarchy-mobile", "sections": [1, 14, 15] }
+        {
+          "book": "ledger-setup-coa-hierarchy-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "ledger-setup-coa-hierarchy-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "ledger-setup-coa-hierarchy-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "ledger-setup-coa-hierarchy-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
       ]
     },
     {
@@ -3304,8 +4121,29 @@
       "template": "templates/PHASE-01-domain-api.template.md",
       "output": "../modules/accounting/features/ledger-setup-coa-hierarchy/generated/PHASE-01-domain-api.md",
       "sources": [
-        { "book": "ledger-setup-coa-hierarchy-master", "sections": [3, 4, 6] },
-        { "book": "ledger-setup-coa-hierarchy-api", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }
+        {
+          "book": "ledger-setup-coa-hierarchy-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "ledger-setup-coa-hierarchy-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
       ]
     },
     {
@@ -3314,8 +4152,34 @@
       "template": "templates/PHASE-02-web-client.template.md",
       "output": "../modules/accounting/features/ledger-setup-coa-hierarchy/generated/PHASE-02-web-client.md",
       "sources": [
-        { "book": "ledger-setup-coa-hierarchy-master", "sections": [3, 4, 6, 7] },
-        { "book": "ledger-setup-coa-hierarchy-web", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14] }
+        {
+          "book": "ledger-setup-coa-hierarchy-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "ledger-setup-coa-hierarchy-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
       ]
     },
     {
@@ -3324,8 +4188,35 @@
       "template": "templates/PHASE-03-mobile-client.template.md",
       "output": "../modules/accounting/features/ledger-setup-coa-hierarchy/generated/PHASE-03-mobile-client.md",
       "sources": [
-        { "book": "ledger-setup-coa-hierarchy-master", "sections": [3, 4, 6, 7] },
-        { "book": "ledger-setup-coa-hierarchy-mobile", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15] }
+        {
+          "book": "ledger-setup-coa-hierarchy-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "ledger-setup-coa-hierarchy-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
       ]
     },
     {
@@ -3334,10 +4225,41 @@
       "template": "templates/PHASE-04-domain-actions.template.md",
       "output": "../modules/accounting/features/ledger-setup-coa-hierarchy/generated/PHASE-04-domain-actions.md",
       "sources": [
-        { "book": "ledger-setup-coa-hierarchy-master", "sections": [3, 4, 6, 7, 8] },
-        { "book": "ledger-setup-coa-hierarchy-api", "sections": [6, 7, 8] },
-        { "book": "ledger-setup-coa-hierarchy-web", "sections": [6, 7, 8, 9] },
-        { "book": "ledger-setup-coa-hierarchy-mobile", "sections": [9, 10, 11] }
+        {
+          "book": "ledger-setup-coa-hierarchy-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "ledger-setup-coa-hierarchy-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "ledger-setup-coa-hierarchy-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "ledger-setup-coa-hierarchy-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
       ]
     },
     {
@@ -3346,10 +4268,41 @@
       "template": "templates/PHASE-05-integration-runtime.template.md",
       "output": "../modules/accounting/features/ledger-setup-coa-hierarchy/generated/PHASE-05-integration-runtime.md",
       "sources": [
-        { "book": "ledger-setup-coa-hierarchy-master", "sections": [4, 5, 6, 7, 9] },
-        { "book": "ledger-setup-coa-hierarchy-api", "sections": [8, 9, 10] },
-        { "book": "ledger-setup-coa-hierarchy-web", "sections": [8, 10, 13] },
-        { "book": "ledger-setup-coa-hierarchy-mobile", "sections": [2, 11, 12, 15] }
+        {
+          "book": "ledger-setup-coa-hierarchy-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "ledger-setup-coa-hierarchy-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "ledger-setup-coa-hierarchy-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "ledger-setup-coa-hierarchy-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
       ]
     },
     {
@@ -3358,10 +4311,36 @@
       "template": "templates/PHASE-06-verification-acceptance.template.md",
       "output": "../modules/accounting/features/ledger-setup-coa-hierarchy/generated/PHASE-06-verification-acceptance.md",
       "sources": [
-        { "book": "ledger-setup-coa-hierarchy-master", "sections": [8, 9, 10] },
-        { "book": "ledger-setup-coa-hierarchy-api", "sections": [10, 11] },
-        { "book": "ledger-setup-coa-hierarchy-web", "sections": [12, 13, 14] },
-        { "book": "ledger-setup-coa-hierarchy-mobile", "sections": [14, 15] }
+        {
+          "book": "ledger-setup-coa-hierarchy-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "ledger-setup-coa-hierarchy-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "ledger-setup-coa-hierarchy-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "ledger-setup-coa-hierarchy-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
       ]
     },
     {
@@ -3370,9 +4349,29 @@
       "template": "templates/PHASE-07-customer-education-closure.template.md",
       "output": "../modules/accounting/features/ledger-setup-coa-hierarchy/generated/PHASE-07-customer-education-closure.md",
       "sources": [
-        { "book": "ledger-setup-coa-hierarchy-master", "sections": [8, 9, 10] },
-        { "book": "ledger-setup-coa-hierarchy-web", "sections": [12, 13, 14] },
-        { "book": "ledger-setup-coa-hierarchy-mobile", "sections": [14, 15] }
+        {
+          "book": "ledger-setup-coa-hierarchy-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "ledger-setup-coa-hierarchy-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "ledger-setup-coa-hierarchy-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
       ]
     },
     {
@@ -3381,10 +4380,41 @@
       "template": "templates/PHASE-00-implementation-preflight.template.md",
       "output": "../modules/reporting/features/managed-crystal-contract-registry/generated/PHASE-00-implementation-preflight.md",
       "sources": [
-        { "book": "managed-crystal-contract-registry-master", "sections": [1, 2, 5, 8, 9] },
-        { "book": "managed-crystal-contract-registry-api", "sections": [1, 10, 11] },
-        { "book": "managed-crystal-contract-registry-web", "sections": [1, 2, 12, 13] },
-        { "book": "managed-crystal-contract-registry-mobile", "sections": [1, 14, 15] }
+        {
+          "book": "managed-crystal-contract-registry-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "managed-crystal-contract-registry-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "managed-crystal-contract-registry-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "managed-crystal-contract-registry-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
       ]
     },
     {
@@ -3393,8 +4423,29 @@
       "template": "templates/PHASE-01-domain-api.template.md",
       "output": "../modules/reporting/features/managed-crystal-contract-registry/generated/PHASE-01-domain-api.md",
       "sources": [
-        { "book": "managed-crystal-contract-registry-master", "sections": [3, 4, 6] },
-        { "book": "managed-crystal-contract-registry-api", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }
+        {
+          "book": "managed-crystal-contract-registry-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "managed-crystal-contract-registry-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
       ]
     },
     {
@@ -3403,8 +4454,34 @@
       "template": "templates/PHASE-02-web-client.template.md",
       "output": "../modules/reporting/features/managed-crystal-contract-registry/generated/PHASE-02-web-client.md",
       "sources": [
-        { "book": "managed-crystal-contract-registry-master", "sections": [3, 4, 6, 7] },
-        { "book": "managed-crystal-contract-registry-web", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14] }
+        {
+          "book": "managed-crystal-contract-registry-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "managed-crystal-contract-registry-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
       ]
     },
     {
@@ -3413,8 +4490,35 @@
       "template": "templates/PHASE-03-mobile-client.template.md",
       "output": "../modules/reporting/features/managed-crystal-contract-registry/generated/PHASE-03-mobile-client.md",
       "sources": [
-        { "book": "managed-crystal-contract-registry-master", "sections": [3, 4, 6, 7] },
-        { "book": "managed-crystal-contract-registry-mobile", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15] }
+        {
+          "book": "managed-crystal-contract-registry-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "managed-crystal-contract-registry-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
       ]
     },
     {
@@ -3423,10 +4527,41 @@
       "template": "templates/PHASE-04-domain-actions.template.md",
       "output": "../modules/reporting/features/managed-crystal-contract-registry/generated/PHASE-04-domain-actions.md",
       "sources": [
-        { "book": "managed-crystal-contract-registry-master", "sections": [3, 4, 6, 7, 8] },
-        { "book": "managed-crystal-contract-registry-api", "sections": [6, 7, 8] },
-        { "book": "managed-crystal-contract-registry-web", "sections": [6, 7, 8, 9] },
-        { "book": "managed-crystal-contract-registry-mobile", "sections": [9, 10, 11] }
+        {
+          "book": "managed-crystal-contract-registry-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "managed-crystal-contract-registry-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "managed-crystal-contract-registry-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "managed-crystal-contract-registry-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
       ]
     },
     {
@@ -3435,10 +4570,41 @@
       "template": "templates/PHASE-05-integration-runtime.template.md",
       "output": "../modules/reporting/features/managed-crystal-contract-registry/generated/PHASE-05-integration-runtime.md",
       "sources": [
-        { "book": "managed-crystal-contract-registry-master", "sections": [4, 5, 6, 7, 9] },
-        { "book": "managed-crystal-contract-registry-api", "sections": [8, 9, 10] },
-        { "book": "managed-crystal-contract-registry-web", "sections": [8, 10, 13] },
-        { "book": "managed-crystal-contract-registry-mobile", "sections": [2, 11, 12, 15] }
+        {
+          "book": "managed-crystal-contract-registry-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "managed-crystal-contract-registry-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "managed-crystal-contract-registry-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "managed-crystal-contract-registry-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
       ]
     },
     {
@@ -3447,10 +4613,36 @@
       "template": "templates/PHASE-06-verification-acceptance.template.md",
       "output": "../modules/reporting/features/managed-crystal-contract-registry/generated/PHASE-06-verification-acceptance.md",
       "sources": [
-        { "book": "managed-crystal-contract-registry-master", "sections": [8, 9, 10] },
-        { "book": "managed-crystal-contract-registry-api", "sections": [10, 11] },
-        { "book": "managed-crystal-contract-registry-web", "sections": [12, 13, 14] },
-        { "book": "managed-crystal-contract-registry-mobile", "sections": [14, 15] }
+        {
+          "book": "managed-crystal-contract-registry-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "managed-crystal-contract-registry-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "managed-crystal-contract-registry-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "managed-crystal-contract-registry-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
       ]
     },
     {
@@ -3459,9 +4651,29 @@
       "template": "templates/PHASE-07-customer-education-closure.template.md",
       "output": "../modules/reporting/features/managed-crystal-contract-registry/generated/PHASE-07-customer-education-closure.md",
       "sources": [
-        { "book": "managed-crystal-contract-registry-master", "sections": [8, 9, 10] },
-        { "book": "managed-crystal-contract-registry-web", "sections": [12, 13, 14] },
-        { "book": "managed-crystal-contract-registry-mobile", "sections": [14, 15] }
+        {
+          "book": "managed-crystal-contract-registry-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "managed-crystal-contract-registry-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "managed-crystal-contract-registry-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
       ]
     },
     {
@@ -3470,10 +4682,41 @@
       "template": "templates/PHASE-00-implementation-preflight.template.md",
       "output": "../modules/reporting/features/managed-crystal-template-validation/generated/PHASE-00-implementation-preflight.md",
       "sources": [
-        { "book": "managed-crystal-template-validation-master", "sections": [1, 2, 5, 8, 9] },
-        { "book": "managed-crystal-template-validation-api", "sections": [1, 10, 11] },
-        { "book": "managed-crystal-template-validation-web", "sections": [1, 2, 12, 13] },
-        { "book": "managed-crystal-template-validation-mobile", "sections": [1, 14, 15] }
+        {
+          "book": "managed-crystal-template-validation-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "managed-crystal-template-validation-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "managed-crystal-template-validation-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "managed-crystal-template-validation-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
       ]
     },
     {
@@ -3482,8 +4725,29 @@
       "template": "templates/PHASE-01-domain-api.template.md",
       "output": "../modules/reporting/features/managed-crystal-template-validation/generated/PHASE-01-domain-api.md",
       "sources": [
-        { "book": "managed-crystal-template-validation-master", "sections": [3, 4, 6] },
-        { "book": "managed-crystal-template-validation-api", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }
+        {
+          "book": "managed-crystal-template-validation-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "managed-crystal-template-validation-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
       ]
     },
     {
@@ -3492,8 +4756,34 @@
       "template": "templates/PHASE-02-web-client.template.md",
       "output": "../modules/reporting/features/managed-crystal-template-validation/generated/PHASE-02-web-client.md",
       "sources": [
-        { "book": "managed-crystal-template-validation-master", "sections": [3, 4, 6, 7] },
-        { "book": "managed-crystal-template-validation-web", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14] }
+        {
+          "book": "managed-crystal-template-validation-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "managed-crystal-template-validation-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
       ]
     },
     {
@@ -3502,8 +4792,35 @@
       "template": "templates/PHASE-03-mobile-client.template.md",
       "output": "../modules/reporting/features/managed-crystal-template-validation/generated/PHASE-03-mobile-client.md",
       "sources": [
-        { "book": "managed-crystal-template-validation-master", "sections": [3, 4, 6, 7] },
-        { "book": "managed-crystal-template-validation-mobile", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15] }
+        {
+          "book": "managed-crystal-template-validation-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "managed-crystal-template-validation-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
       ]
     },
     {
@@ -3512,10 +4829,41 @@
       "template": "templates/PHASE-04-domain-actions.template.md",
       "output": "../modules/reporting/features/managed-crystal-template-validation/generated/PHASE-04-domain-actions.md",
       "sources": [
-        { "book": "managed-crystal-template-validation-master", "sections": [3, 4, 6, 7, 8] },
-        { "book": "managed-crystal-template-validation-api", "sections": [6, 7, 8] },
-        { "book": "managed-crystal-template-validation-web", "sections": [6, 7, 8, 9] },
-        { "book": "managed-crystal-template-validation-mobile", "sections": [9, 10, 11] }
+        {
+          "book": "managed-crystal-template-validation-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "managed-crystal-template-validation-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "managed-crystal-template-validation-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "managed-crystal-template-validation-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
       ]
     },
     {
@@ -3524,10 +4872,41 @@
       "template": "templates/PHASE-05-integration-runtime.template.md",
       "output": "../modules/reporting/features/managed-crystal-template-validation/generated/PHASE-05-integration-runtime.md",
       "sources": [
-        { "book": "managed-crystal-template-validation-master", "sections": [4, 5, 6, 7, 9] },
-        { "book": "managed-crystal-template-validation-api", "sections": [8, 9, 10] },
-        { "book": "managed-crystal-template-validation-web", "sections": [8, 10, 13] },
-        { "book": "managed-crystal-template-validation-mobile", "sections": [2, 11, 12, 15] }
+        {
+          "book": "managed-crystal-template-validation-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "managed-crystal-template-validation-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "managed-crystal-template-validation-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "managed-crystal-template-validation-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
       ]
     },
     {
@@ -3536,10 +4915,36 @@
       "template": "templates/PHASE-06-verification-acceptance.template.md",
       "output": "../modules/reporting/features/managed-crystal-template-validation/generated/PHASE-06-verification-acceptance.md",
       "sources": [
-        { "book": "managed-crystal-template-validation-master", "sections": [8, 9, 10] },
-        { "book": "managed-crystal-template-validation-api", "sections": [10, 11] },
-        { "book": "managed-crystal-template-validation-web", "sections": [12, 13, 14] },
-        { "book": "managed-crystal-template-validation-mobile", "sections": [14, 15] }
+        {
+          "book": "managed-crystal-template-validation-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "managed-crystal-template-validation-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "managed-crystal-template-validation-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "managed-crystal-template-validation-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
       ]
     },
     {
@@ -3548,9 +4953,29 @@
       "template": "templates/PHASE-07-customer-education-closure.template.md",
       "output": "../modules/reporting/features/managed-crystal-template-validation/generated/PHASE-07-customer-education-closure.md",
       "sources": [
-        { "book": "managed-crystal-template-validation-master", "sections": [8, 9, 10] },
-        { "book": "managed-crystal-template-validation-web", "sections": [12, 13, 14] },
-        { "book": "managed-crystal-template-validation-mobile", "sections": [14, 15] }
+        {
+          "book": "managed-crystal-template-validation-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "managed-crystal-template-validation-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "managed-crystal-template-validation-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
       ]
     },
     {
@@ -3559,10 +4984,41 @@
       "template": "templates/PHASE-00-implementation-preflight.template.md",
       "output": "../modules/reporting/features/managed-crystal-manager-experience/generated/PHASE-00-implementation-preflight.md",
       "sources": [
-        { "book": "managed-crystal-manager-experience-master", "sections": [1, 2, 5, 8, 9] },
-        { "book": "managed-crystal-manager-experience-api", "sections": [1, 10, 11] },
-        { "book": "managed-crystal-manager-experience-web", "sections": [1, 2, 12, 13] },
-        { "book": "managed-crystal-manager-experience-mobile", "sections": [1, 14, 15] }
+        {
+          "book": "managed-crystal-manager-experience-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "managed-crystal-manager-experience-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "managed-crystal-manager-experience-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "managed-crystal-manager-experience-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
       ]
     },
     {
@@ -3571,8 +5027,29 @@
       "template": "templates/PHASE-01-domain-api.template.md",
       "output": "../modules/reporting/features/managed-crystal-manager-experience/generated/PHASE-01-domain-api.md",
       "sources": [
-        { "book": "managed-crystal-manager-experience-master", "sections": [3, 4, 6] },
-        { "book": "managed-crystal-manager-experience-api", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }
+        {
+          "book": "managed-crystal-manager-experience-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "managed-crystal-manager-experience-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
       ]
     },
     {
@@ -3581,8 +5058,34 @@
       "template": "templates/PHASE-02-web-client.template.md",
       "output": "../modules/reporting/features/managed-crystal-manager-experience/generated/PHASE-02-web-client.md",
       "sources": [
-        { "book": "managed-crystal-manager-experience-master", "sections": [3, 4, 6, 7] },
-        { "book": "managed-crystal-manager-experience-web", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14] }
+        {
+          "book": "managed-crystal-manager-experience-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "managed-crystal-manager-experience-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
       ]
     },
     {
@@ -3591,8 +5094,35 @@
       "template": "templates/PHASE-03-mobile-client.template.md",
       "output": "../modules/reporting/features/managed-crystal-manager-experience/generated/PHASE-03-mobile-client.md",
       "sources": [
-        { "book": "managed-crystal-manager-experience-master", "sections": [3, 4, 6, 7] },
-        { "book": "managed-crystal-manager-experience-mobile", "sections": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15] }
+        {
+          "book": "managed-crystal-manager-experience-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "managed-crystal-manager-experience-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
       ]
     },
     {
@@ -3601,10 +5131,41 @@
       "template": "templates/PHASE-04-domain-actions.template.md",
       "output": "../modules/reporting/features/managed-crystal-manager-experience/generated/PHASE-04-domain-actions.md",
       "sources": [
-        { "book": "managed-crystal-manager-experience-master", "sections": [3, 4, 6, 7, 8] },
-        { "book": "managed-crystal-manager-experience-api", "sections": [6, 7, 8] },
-        { "book": "managed-crystal-manager-experience-web", "sections": [6, 7, 8, 9] },
-        { "book": "managed-crystal-manager-experience-mobile", "sections": [9, 10, 11] }
+        {
+          "book": "managed-crystal-manager-experience-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "managed-crystal-manager-experience-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "managed-crystal-manager-experience-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "managed-crystal-manager-experience-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
       ]
     },
     {
@@ -3613,10 +5174,41 @@
       "template": "templates/PHASE-05-integration-runtime.template.md",
       "output": "../modules/reporting/features/managed-crystal-manager-experience/generated/PHASE-05-integration-runtime.md",
       "sources": [
-        { "book": "managed-crystal-manager-experience-master", "sections": [4, 5, 6, 7, 9] },
-        { "book": "managed-crystal-manager-experience-api", "sections": [8, 9, 10] },
-        { "book": "managed-crystal-manager-experience-web", "sections": [8, 10, 13] },
-        { "book": "managed-crystal-manager-experience-mobile", "sections": [2, 11, 12, 15] }
+        {
+          "book": "managed-crystal-manager-experience-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "managed-crystal-manager-experience-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "managed-crystal-manager-experience-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "managed-crystal-manager-experience-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
       ]
     },
     {
@@ -3625,10 +5217,36 @@
       "template": "templates/PHASE-06-verification-acceptance.template.md",
       "output": "../modules/reporting/features/managed-crystal-manager-experience/generated/PHASE-06-verification-acceptance.md",
       "sources": [
-        { "book": "managed-crystal-manager-experience-master", "sections": [8, 9, 10] },
-        { "book": "managed-crystal-manager-experience-api", "sections": [10, 11] },
-        { "book": "managed-crystal-manager-experience-web", "sections": [12, 13, 14] },
-        { "book": "managed-crystal-manager-experience-mobile", "sections": [14, 15] }
+        {
+          "book": "managed-crystal-manager-experience-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "managed-crystal-manager-experience-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "managed-crystal-manager-experience-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "managed-crystal-manager-experience-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
       ]
     },
     {
@@ -3637,9 +5255,2456 @@
       "template": "templates/PHASE-07-customer-education-closure.template.md",
       "output": "../modules/reporting/features/managed-crystal-manager-experience/generated/PHASE-07-customer-education-closure.md",
       "sources": [
-        { "book": "managed-crystal-manager-experience-master", "sections": [8, 9, 10] },
-        { "book": "managed-crystal-manager-experience-web", "sections": [12, 13, 14] },
-        { "book": "managed-crystal-manager-experience-mobile", "sections": [14, 15] }
+        {
+          "book": "managed-crystal-manager-experience-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "managed-crystal-manager-experience-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "managed-crystal-manager-experience-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "user-company-permissions-phase-00-implementation-preflight",
+      "title": "Company user permission grants Phase 00 - Implementation Preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "../modules/platform/features/user-company-permissions/generated/PHASE-00-implementation-preflight.md",
+      "sources": [
+        {
+          "book": "user-company-permissions-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "user-company-permissions-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "user-company-permissions-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "user-company-permissions-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "company-ui-localization-phase-00-implementation-preflight",
+      "title": "Company UI localization Phase 00 - Implementation Preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "../modules/platform/features/company-ui-localization/generated/PHASE-00-implementation-preflight.md",
+      "sources": [
+        {
+          "book": "company-ui-localization-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "company-ui-localization-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "company-ui-localization-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "company-ui-localization-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "company-ui-localization-phase-01-domain-api",
+      "title": "Company UI localization Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "../modules/platform/features/company-ui-localization/generated/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "company-ui-localization-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "company-ui-localization-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "user-company-permissions-phase-01-domain-api",
+      "title": "Company user permission grants Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "../modules/platform/features/user-company-permissions/generated/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "user-company-permissions-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "user-company-permissions-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "company-ui-localization-phase-02-web-client",
+      "title": "Company UI localization Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "../modules/platform/features/company-ui-localization/generated/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "company-ui-localization-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "company-ui-localization-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "user-company-permissions-phase-02-web-client",
+      "title": "Company user permission grants Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "../modules/platform/features/user-company-permissions/generated/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "user-company-permissions-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "user-company-permissions-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "company-ui-localization-phase-03-mobile-client",
+      "title": "Company UI localization Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "../modules/platform/features/company-ui-localization/generated/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "company-ui-localization-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "company-ui-localization-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "user-company-permissions-phase-03-mobile-client",
+      "title": "Company user permission grants Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "../modules/platform/features/user-company-permissions/generated/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "user-company-permissions-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "user-company-permissions-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "company-ui-localization-phase-04-domain-actions",
+      "title": "Company UI localization Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "../modules/platform/features/company-ui-localization/generated/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "company-ui-localization-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "company-ui-localization-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "company-ui-localization-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "company-ui-localization-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "user-company-permissions-phase-04-domain-actions",
+      "title": "Company user permission grants Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "../modules/platform/features/user-company-permissions/generated/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "user-company-permissions-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "user-company-permissions-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "user-company-permissions-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "user-company-permissions-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "company-ui-localization-phase-05-integration-runtime",
+      "title": "Company UI localization Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "../modules/platform/features/company-ui-localization/generated/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "company-ui-localization-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "company-ui-localization-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "company-ui-localization-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "company-ui-localization-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "user-company-permissions-phase-05-integration-runtime",
+      "title": "Company user permission grants Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "../modules/platform/features/user-company-permissions/generated/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "user-company-permissions-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "user-company-permissions-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "user-company-permissions-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "user-company-permissions-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "company-ui-localization-phase-06-verification-acceptance",
+      "title": "Company UI localization Phase 06 - Verification and Acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "../modules/platform/features/company-ui-localization/generated/PHASE-06-verification-acceptance.md",
+      "sources": [
+        {
+          "book": "company-ui-localization-master",
+          "sections": [
+            8,
+            9,
+            10,
+            11,
+            14,
+            15
+          ]
+        },
+        {
+          "book": "company-ui-localization-api",
+          "sections": [
+            10,
+            11,
+            15
+          ]
+        },
+        {
+          "book": "company-ui-localization-web",
+          "sections": [
+            8,
+            10,
+            12,
+            13,
+            14,
+            15
+          ]
+        },
+        {
+          "book": "company-ui-localization-mobile",
+          "sections": [
+            8,
+            10,
+            11,
+            12,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "user-company-permissions-phase-06-verification-acceptance",
+      "title": "Company user permission grants Phase 06 - Verification and Acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "../modules/platform/features/user-company-permissions/generated/PHASE-06-verification-acceptance.md",
+      "sources": [
+        {
+          "book": "user-company-permissions-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "user-company-permissions-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "user-company-permissions-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "user-company-permissions-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "user-company-permissions-phase-07-customer-education-closure",
+      "title": "Company user permission grants Phase 07 - Customer Education and Closure",
+      "template": "templates/PHASE-07-customer-education-closure.template.md",
+      "output": "../modules/platform/features/user-company-permissions/generated/PHASE-07-customer-education-closure.md",
+      "sources": [
+        {
+          "book": "user-company-permissions-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "user-company-permissions-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "user-company-permissions-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "company-ui-localization-phase-07-customer-education-closure",
+      "title": "Company UI localization Phase 07 - Customer Education and Closure",
+      "template": "templates/PHASE-07-customer-education-closure.template.md",
+      "output": "../modules/platform/features/company-ui-localization/generated/PHASE-07-customer-education-closure.md",
+      "sources": [
+        {
+          "book": "company-ui-localization-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "company-ui-localization-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "company-ui-localization-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "error-logs-phase-00-implementation-preflight",
+      "title": "Error Logs Phase 00 - Implementation Preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "../modules/platform/features/error-logs/generated/PHASE-00-implementation-preflight.md",
+      "sources": [
+        {
+          "book": "error-logs-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "error-logs-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "error-logs-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "error-logs-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "error-logs-phase-01-domain-api",
+      "title": "Error Logs Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "../modules/platform/features/error-logs/generated/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "error-logs-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "error-logs-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "error-logs-phase-02-web-client",
+      "title": "Error Logs Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "../modules/platform/features/error-logs/generated/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "error-logs-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "error-logs-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "error-logs-phase-03-mobile-client",
+      "title": "Error Logs Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "../modules/platform/features/error-logs/generated/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "error-logs-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "error-logs-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "error-logs-phase-04-domain-actions",
+      "title": "Error Logs Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "../modules/platform/features/error-logs/generated/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "error-logs-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "error-logs-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "error-logs-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "error-logs-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "error-logs-phase-05-integration-runtime",
+      "title": "Error Logs Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "../modules/platform/features/error-logs/generated/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "error-logs-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "error-logs-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "error-logs-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "error-logs-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "error-logs-phase-06-verification-acceptance",
+      "title": "Error Logs Phase 06 - Verification and Acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "../modules/platform/features/error-logs/generated/PHASE-06-verification-acceptance.md",
+      "sources": [
+        {
+          "book": "error-logs-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "error-logs-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "error-logs-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "error-logs-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "error-logs-phase-07-customer-education-closure",
+      "title": "Error Logs Phase 07 - Customer Education and Closure",
+      "template": "templates/PHASE-07-customer-education-closure.template.md",
+      "output": "../modules/platform/features/error-logs/generated/PHASE-07-customer-education-closure.md",
+      "sources": [
+        {
+          "book": "error-logs-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "error-logs-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "error-logs-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "platform-settings-phase-00-implementation-preflight",
+      "title": "Platform Settings Phase 00 - Implementation Preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "../modules/platform/features/platform-settings/generated/PHASE-00-implementation-preflight.md",
+      "sources": [
+        {
+          "book": "platform-settings-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "platform-settings-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "platform-settings-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "platform-settings-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "platform-settings-phase-01-domain-api",
+      "title": "Platform Settings Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "../modules/platform/features/platform-settings/generated/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "platform-settings-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "platform-settings-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "platform-settings-phase-02-web-client",
+      "title": "Platform Settings Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "../modules/platform/features/platform-settings/generated/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "platform-settings-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "platform-settings-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "platform-settings-phase-03-mobile-client",
+      "title": "Platform Settings Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "../modules/platform/features/platform-settings/generated/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "platform-settings-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "platform-settings-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "platform-settings-phase-04-domain-actions",
+      "title": "Platform Settings Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "../modules/platform/features/platform-settings/generated/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "platform-settings-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "platform-settings-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "platform-settings-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "platform-settings-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "platform-settings-phase-05-integration-runtime",
+      "title": "Platform Settings Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "../modules/platform/features/platform-settings/generated/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "platform-settings-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "platform-settings-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "platform-settings-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "platform-settings-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "platform-settings-phase-06-verification-acceptance",
+      "title": "Platform Settings Phase 06 - Verification and Acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "../modules/platform/features/platform-settings/generated/PHASE-06-verification-acceptance.md",
+      "sources": [
+        {
+          "book": "platform-settings-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "platform-settings-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "platform-settings-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "platform-settings-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "platform-settings-phase-07-customer-education-closure",
+      "title": "Platform Settings Phase 07 - Customer Education and Closure",
+      "template": "templates/PHASE-07-customer-education-closure.template.md",
+      "output": "../modules/platform/features/platform-settings/generated/PHASE-07-customer-education-closure.md",
+      "sources": [
+        {
+          "book": "platform-settings-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "platform-settings-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "platform-settings-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "system-administration-access-phase-00-implementation-preflight",
+      "title": "Global administration access Phase 00 - Implementation Preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "../modules/platform/features/system-administration-access/generated/PHASE-00-implementation-preflight.md",
+      "sources": [
+        {
+          "book": "system-administration-access-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "system-administration-access-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "system-administration-access-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "system-administration-access-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "system-administration-access-phase-01-domain-api",
+      "title": "Global administration access Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "../modules/platform/features/system-administration-access/generated/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "system-administration-access-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "system-administration-access-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "system-administration-access-phase-02-web-client",
+      "title": "Global administration access Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "../modules/platform/features/system-administration-access/generated/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "system-administration-access-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "system-administration-access-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "system-administration-access-phase-03-mobile-client",
+      "title": "Global administration access Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "../modules/platform/features/system-administration-access/generated/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "system-administration-access-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "system-administration-access-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "system-administration-access-phase-04-domain-actions",
+      "title": "Global administration access Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "../modules/platform/features/system-administration-access/generated/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "system-administration-access-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "system-administration-access-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "system-administration-access-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "system-administration-access-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "system-administration-access-phase-05-integration-runtime",
+      "title": "Global administration access Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "../modules/platform/features/system-administration-access/generated/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "system-administration-access-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "system-administration-access-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "system-administration-access-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "system-administration-access-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "system-administration-access-phase-06-verification-acceptance",
+      "title": "Global administration access Phase 06 - Verification and Acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "../modules/platform/features/system-administration-access/generated/PHASE-06-verification-acceptance.md",
+      "sources": [
+        {
+          "book": "system-administration-access-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "system-administration-access-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "system-administration-access-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "system-administration-access-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "system-administration-access-phase-07-customer-education-closure",
+      "title": "Global administration access Phase 07 - Customer Education and Closure",
+      "template": "templates/PHASE-07-customer-education-closure.template.md",
+      "output": "../modules/platform/features/system-administration-access/generated/PHASE-07-customer-education-closure.md",
+      "sources": [
+        {
+          "book": "system-administration-access-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "system-administration-access-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "system-administration-access-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "system-ui-localization-phase-00-implementation-preflight",
+      "title": "Authorized global UI texts Phase 00 - Implementation Preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "../modules/platform/features/system-ui-localization/generated/PHASE-00-implementation-preflight.md",
+      "sources": [
+        {
+          "book": "system-ui-localization-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "system-ui-localization-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "system-ui-localization-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "system-ui-localization-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "system-ui-localization-phase-01-domain-api",
+      "title": "Authorized global UI texts Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "../modules/platform/features/system-ui-localization/generated/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "system-ui-localization-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "system-ui-localization-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "system-ui-localization-phase-02-web-client",
+      "title": "Authorized global UI texts Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "../modules/platform/features/system-ui-localization/generated/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "system-ui-localization-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "system-ui-localization-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "system-ui-localization-phase-03-mobile-client",
+      "title": "Authorized global UI texts Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "../modules/platform/features/system-ui-localization/generated/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "system-ui-localization-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "system-ui-localization-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "system-ui-localization-phase-04-domain-actions",
+      "title": "Authorized global UI texts Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "../modules/platform/features/system-ui-localization/generated/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "system-ui-localization-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "system-ui-localization-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "system-ui-localization-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "system-ui-localization-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "system-ui-localization-phase-05-integration-runtime",
+      "title": "Authorized global UI texts Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "../modules/platform/features/system-ui-localization/generated/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "system-ui-localization-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "system-ui-localization-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "system-ui-localization-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "system-ui-localization-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "system-ui-localization-phase-06-verification-acceptance",
+      "title": "Authorized global UI texts Phase 06 - Verification and Acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "../modules/platform/features/system-ui-localization/generated/PHASE-06-verification-acceptance.md",
+      "sources": [
+        {
+          "book": "system-ui-localization-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "system-ui-localization-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "system-ui-localization-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "system-ui-localization-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "system-ui-localization-phase-07-customer-education-closure",
+      "title": "Authorized global UI texts Phase 07 - Customer Education and Closure",
+      "template": "templates/PHASE-07-customer-education-closure.template.md",
+      "output": "../modules/platform/features/system-ui-localization/generated/PHASE-07-customer-education-closure.md",
+      "sources": [
+        {
+          "book": "system-ui-localization-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "system-ui-localization-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "system-ui-localization-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "company-email-templates-phase-00-implementation-preflight",
+      "title": "Company email templates Phase 00 - Implementation Preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "../modules/platform/features/company-email-templates/generated/PHASE-00-implementation-preflight.md",
+      "sources": [
+        {
+          "book": "company-email-templates-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "company-email-templates-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "company-email-templates-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "company-email-templates-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "company-email-templates-phase-01-domain-api",
+      "title": "Company email templates Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "../modules/platform/features/company-email-templates/generated/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "company-email-templates-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "company-email-templates-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "company-email-templates-phase-02-web-client",
+      "title": "Company email templates Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "../modules/platform/features/company-email-templates/generated/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "company-email-templates-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "company-email-templates-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "company-email-templates-phase-03-mobile-client",
+      "title": "Company email templates Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "../modules/platform/features/company-email-templates/generated/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "company-email-templates-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "company-email-templates-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "company-email-templates-phase-04-domain-actions",
+      "title": "Company email templates Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "../modules/platform/features/company-email-templates/generated/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "company-email-templates-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "company-email-templates-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "company-email-templates-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "company-email-templates-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "company-email-templates-phase-05-integration-runtime",
+      "title": "Company email templates Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "../modules/platform/features/company-email-templates/generated/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "company-email-templates-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "company-email-templates-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "company-email-templates-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "company-email-templates-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "company-email-templates-phase-06-verification-acceptance",
+      "title": "Company email templates Phase 06 - Verification and Acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "../modules/platform/features/company-email-templates/generated/PHASE-06-verification-acceptance.md",
+      "sources": [
+        {
+          "book": "company-email-templates-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "company-email-templates-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "company-email-templates-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "company-email-templates-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "company-email-templates-phase-07-customer-education-closure",
+      "title": "Company email templates Phase 07 - Customer Education and Closure",
+      "template": "templates/PHASE-07-customer-education-closure.template.md",
+      "output": "../modules/platform/features/company-email-templates/generated/PHASE-07-customer-education-closure.md",
+      "sources": [
+        {
+          "book": "company-email-templates-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "company-email-templates-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "company-email-templates-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "message-logs-phase-00-implementation-preflight",
+      "title": "Company Message Logs Phase 00 - Implementation Preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "../modules/platform/features/message-logs/generated/PHASE-00-implementation-preflight.md",
+      "sources": [
+        {
+          "book": "message-logs-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "message-logs-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "message-logs-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "message-logs-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "message-logs-phase-01-domain-api",
+      "title": "Company Message Logs Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "../modules/platform/features/message-logs/generated/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "message-logs-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "message-logs-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "message-logs-phase-02-web-client",
+      "title": "Company Message Logs Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "../modules/platform/features/message-logs/generated/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "message-logs-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "message-logs-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "message-logs-phase-03-mobile-client",
+      "title": "Company Message Logs Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "../modules/platform/features/message-logs/generated/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "message-logs-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "message-logs-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "message-logs-phase-04-domain-actions",
+      "title": "Company Message Logs Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "../modules/platform/features/message-logs/generated/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "message-logs-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "message-logs-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "message-logs-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "message-logs-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "message-logs-phase-05-integration-runtime",
+      "title": "Company Message Logs Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "../modules/platform/features/message-logs/generated/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "message-logs-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "message-logs-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "message-logs-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "message-logs-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "message-logs-phase-06-verification-acceptance",
+      "title": "Company Message Logs Phase 06 - Verification and Acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "../modules/platform/features/message-logs/generated/PHASE-06-verification-acceptance.md",
+      "sources": [
+        {
+          "book": "message-logs-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "message-logs-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "message-logs-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "message-logs-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "message-logs-phase-07-customer-education-closure",
+      "title": "Company Message Logs Phase 07 - Customer Education and Closure",
+      "template": "templates/PHASE-07-customer-education-closure.template.md",
+      "output": "../modules/platform/features/message-logs/generated/PHASE-07-customer-education-closure.md",
+      "sources": [
+        {
+          "book": "message-logs-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "message-logs-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "message-logs-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
       ]
     }
   ]

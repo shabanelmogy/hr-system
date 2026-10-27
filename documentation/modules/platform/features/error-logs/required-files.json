@@ -1,0 +1,1155 @@
+{
+  "schemaVersion": 1,
+  "status": "active",
+  "feature": "error-logs",
+  "featureName": "Error Logs",
+  "referenceFeature": "N/A",
+  "planId": "platform-error-logs",
+  "sliceId": "Error Logs V1",
+  "canonicalPlan": "documentation/plans/business/platform-error-logs/PLAN.md",
+  "featureDecompositionDecision": "Single feature",
+  "screenWorkflowContract": "documentation/plans/business/platform-error-logs/decomposition/error-logs.md",
+  "plannedCustomerEducation": "documentation/plans/business/platform-error-logs/education/error-logs.md",
+  "purpose": "Applied API, Web, Mobile, migration, security, localization and verification evidence for Error Logs V1.",
+  "reviewArtifact": "documentation/modules/platform/features/error-logs/error-logs-evidence.md",
+  "implementationRequest": "documentation/modules/platform/features/error-logs/error-logs-request.md",
+  "plannedCanonicalBooks": {
+    "master": "documentation/modules/platform/features/error-logs/error-logs-review.md",
+    "api": "documentation/modules/platform/features/error-logs/error-logs-api.md",
+    "web": "documentation/modules/platform/features/error-logs/error-logs-web.md",
+    "mobile": "documentation/modules/platform/features/error-logs/error-logs-mobile.md"
+  },
+  "sourceCollections": [
+    {
+      "id": "error-logs-web-runtime",
+      "layer": "web",
+      "path": "web-next/src/platform/error-logs",
+      "minimumFiles": 10,
+      "purpose": "Typed feature services, hooks, pages, dialogs and capture composition"
+    },
+    {
+      "id": "error-logs-mobile-runtime",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/error-logs",
+      "minimumFiles": 20,
+      "purpose": "Domain/application/data/composition/presentation and focused verification"
+    }
+  ],
+  "requiredFiles": [
+    {
+      "id": "root-agent-guidance",
+      "layer": "configuration",
+      "path": "AGENTS.md",
+      "purpose": "Repository-wide feature and documentation rules"
+    },
+    {
+      "id": "review-artifact",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/error-logs/error-logs-evidence.md",
+      "purpose": "Feature requirement, evidence, finding, and verification ledger"
+    },
+    {
+      "id": "implementation-request",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/error-logs/error-logs-request.md",
+      "purpose": "Copy-ready feature scope, platform decisions, contracts, and quality gates"
+    },
+    {
+      "id": "plan",
+      "purpose": "Approved business plan",
+      "path": "documentation/plans/business/platform-error-logs/PLAN.md",
+      "layer": "documentation"
+    },
+    {
+      "id": "screen-contract",
+      "purpose": "Approved v2.0 screen/workflow contract",
+      "path": "documentation/plans/business/platform-error-logs/decomposition/error-logs.md",
+      "layer": "documentation"
+    },
+    {
+      "id": "master-book",
+      "purpose": "Initial applied master book",
+      "path": "documentation/modules/platform/features/error-logs/error-logs-review.md",
+      "layer": "documentation"
+    },
+    {
+      "id": "api-book",
+      "purpose": "Initial applied API book",
+      "path": "documentation/modules/platform/features/error-logs/error-logs-api.md",
+      "layer": "documentation"
+    },
+    {
+      "id": "web-book",
+      "purpose": "Initial applied Web book",
+      "path": "documentation/modules/platform/features/error-logs/error-logs-web.md",
+      "layer": "documentation"
+    },
+    {
+      "id": "mobile-book",
+      "purpose": "Initial applied Mobile book",
+      "path": "documentation/modules/platform/features/error-logs/error-logs-mobile.md",
+      "layer": "documentation"
+    },
+    {
+      "id": "host-current",
+      "purpose": "Verified current exception handling reference",
+      "path": "api/ErpSystem.Api/Hosting/HostGlobalExceptionHandler.cs",
+      "layer": "api"
+    },
+    {
+      "id": "web-reference",
+      "purpose": "Reviewed P-001 Web list reference",
+      "path": "web-next/src/platform/audit-trail/pages/AuditTrailPage.tsx",
+      "layer": "web"
+    },
+    {
+      "id": "mobile-reference",
+      "purpose": "Reviewed P-001 Mobile list reference",
+      "path": "mobile-react/src/platform/tools/audit-trail/presentation/screens/AuditTrailScreen.tsx",
+      "layer": "mobile"
+    },
+    {
+      "purpose": "Nonblocking safe metadata capture port",
+      "id": "capture-contract",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Contracts/ErrorLogs/ErrorLogCaptureContracts.cs",
+      "layer": "api"
+    },
+    {
+      "purpose": "Current Error Logs API runtime or verification source",
+      "layer": "api",
+      "id": "error-log-source-1",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Domain/Platform/ErrorLogs/ErrorLogEntry.cs"
+    },
+    {
+      "purpose": "Current Error Logs API runtime or verification source",
+      "layer": "api",
+      "id": "error-log-source-2",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Application/Features/Platform/ErrorLogs/ErrorLogRequests.cs"
+    },
+    {
+      "purpose": "Current Error Logs API runtime or verification source",
+      "layer": "api",
+      "id": "error-log-source-3",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Features/Platform/ErrorLogs/ErrorLogEntityConfiguration.cs"
+    },
+    {
+      "purpose": "Current Error Logs API runtime or verification source",
+      "layer": "api",
+      "id": "error-log-source-4",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Features/Platform/ErrorLogs/ErrorLogCaptureQueue.cs"
+    },
+    {
+      "purpose": "Current Error Logs API runtime or verification source",
+      "layer": "api",
+      "id": "error-log-source-5",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Features/Platform/ErrorLogs/ErrorLogStore.cs"
+    },
+    {
+      "purpose": "Current Error Logs API runtime or verification source",
+      "layer": "api",
+      "id": "error-log-source-6",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Features/Platform/ErrorLogs/ErrorLogJobFilter.cs"
+    },
+    {
+      "purpose": "Current Error Logs API runtime or verification source",
+      "layer": "api",
+      "id": "error-log-source-7",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Migrations/20261017114853_AddErrorLogs.cs"
+    },
+    {
+      "purpose": "Current Error Logs API runtime or verification source",
+      "layer": "api",
+      "id": "error-log-source-8",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Presentation/Features/Platform/ErrorLogs/V1/ErrorLogsController.cs"
+    },
+    {
+      "purpose": "Current Error Logs API runtime or verification source",
+      "layer": "api",
+      "id": "error-log-source-9",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Presentation/Features/Platform/ErrorLogs/V1/SystemErrorLogsController.cs"
+    },
+    {
+      "purpose": "Current Error Logs API runtime or verification source",
+      "layer": "api",
+      "id": "error-log-source-10",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Presentation/Features/Platform/ErrorLogs/V1/ClientErrorLogsController.cs"
+    },
+    {
+      "purpose": "Current Error Logs API runtime or verification source",
+      "layer": "api",
+      "id": "error-log-source-11",
+      "path": "api/ErpSystem.Api/Hosting/HostErrorLogMiddleware.cs"
+    },
+    {
+      "purpose": "Current Error Logs API runtime or verification source",
+      "layer": "test",
+      "id": "error-log-source-12",
+      "path": "api/Tests/ErpSystem.IntegrationTests/HostErrorLogMiddlewareTests.cs"
+    },
+    {
+      "purpose": "Current Error Logs API runtime or verification source",
+      "layer": "test",
+      "id": "error-log-source-13",
+      "path": "api/Tests/ErpSystem.IntegrationTests/ErrorLogPersistenceTests.cs"
+    },
+    {
+      "purpose": "Current Error Logs API runtime or verification source",
+      "layer": "test",
+      "id": "error-log-source-14",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Tests/ErrorLogsControllerTests.cs"
+    },
+    {
+      "purpose": "Current Error Logs API runtime or verification source",
+      "layer": "test",
+      "id": "error-log-source-15",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Tests/ErrorLogDomainAndCaptureTests.cs"
+    },
+    {
+      "purpose": "Current Error Logs API runtime or verification source",
+      "layer": "test",
+      "id": "error-log-source-16",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Tests/ErrorLogStoreTests.cs"
+    },
+    {
+      "purpose": "Handler authorization, validation, conflict, and trusted client capture tests",
+      "layer": "test",
+      "id": "error-log-handler-tests",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Tests/ErrorLogHandlerTests.cs"
+    },
+    {
+      "purpose": "HTTP oversized client report maps to a stable 413 response",
+      "layer": "test",
+      "id": "error-log-host-exception-tests",
+      "path": "api/Tests/ErpSystem.IntegrationTests/GlobalExceptionHandlerTests.cs"
+    },
+    {
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Contracts/Authorization/PermissionContracts.cs",
+      "id": "error-log-integration-1",
+      "purpose": "Current Error Logs API integration surface"
+    },
+    {
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/PlatformDbContext.cs",
+      "id": "error-log-integration-2",
+      "purpose": "Current Error Logs API integration surface"
+    },
+    {
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/DependencyInjection.cs",
+      "id": "error-log-integration-3",
+      "purpose": "Current Error Logs API integration surface"
+    },
+    {
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Hangfire/PlatformHangfireDependencyInjection.cs",
+      "id": "error-log-integration-4",
+      "purpose": "Current Error Logs API integration surface"
+    },
+    {
+      "layer": "api",
+      "path": "api/ErpSystem.Api/Program.cs",
+      "id": "error-log-integration-5",
+      "purpose": "Current Error Logs API integration surface"
+    },
+    {
+      "layer": "api",
+      "path": "api/ErpSystem.Api/Hosting/HostInfrastructureServiceCollectionExtensions.cs",
+      "id": "error-log-integration-6",
+      "purpose": "Current Error Logs API integration surface"
+    },
+    {
+      "purpose": "Implemented Error Logs source or verification evidence",
+      "path": "web-next/src/platform/error-logs/validation/errorLogs.ts",
+      "layer": "web",
+      "id": "evidence-web-next-src-platform-error-logs-validation-errorLogs-ts"
+    },
+    {
+      "purpose": "Implemented Error Logs source or verification evidence",
+      "path": "web-next/src/platform/error-logs/types/errorLogs.ts",
+      "layer": "web",
+      "id": "evidence-web-next-src-platform-error-logs-types-errorLogs-ts"
+    },
+    {
+      "purpose": "Implemented Error Logs source or verification evidence",
+      "path": "web-next/src/platform/error-logs/services/errorLogService.ts",
+      "layer": "web",
+      "id": "evidence-web-next-src-platform-error-logs-services-errorLogService-ts"
+    },
+    {
+      "purpose": "Implemented Error Logs source or verification evidence",
+      "path": "web-next/src/platform/error-logs/services/errorLogService.test.ts",
+      "layer": "web",
+      "id": "evidence-web-next-src-platform-error-logs-services-errorLogService-test-ts"
+    },
+    {
+      "purpose": "Implemented Error Logs source or verification evidence",
+      "path": "web-next/src/platform/error-logs/services/clientErrorLogService.ts",
+      "layer": "web",
+      "id": "evidence-web-next-src-platform-error-logs-services-clientErrorLogService-ts"
+    },
+    {
+      "purpose": "Implemented Error Logs source or verification evidence",
+      "path": "web-next/src/platform/error-logs/pages/ErrorLogsPage.tsx",
+      "layer": "web",
+      "id": "evidence-web-next-src-platform-error-logs-pages-ErrorLogsPage-tsx"
+    },
+    {
+      "purpose": "Implemented Error Logs source or verification evidence",
+      "path": "web-next/src/platform/error-logs/components/ErrorLogSettingsDialog.tsx",
+      "layer": "web",
+      "id": "evidence-web-next-src-platform-error-logs-components-ErrorLogSettingsDialog-tsx"
+    },
+    {
+      "purpose": "Implemented Error Logs source or verification evidence",
+      "path": "web-next/src/platform/error-logs/pages/ErrorLogSettingsPage.tsx",
+      "layer": "web",
+      "id": "evidence-web-next-src-platform-error-logs-pages-ErrorLogSettingsPage-tsx"
+    },
+    {
+      "purpose": "Implemented Error Logs source or verification evidence",
+      "path": "web-next/src/platform/error-logs/components/ErrorLogDetailDialog.tsx",
+      "layer": "web",
+      "id": "evidence-web-next-src-platform-error-logs-components-ErrorLogDetailDialog-tsx"
+    },
+    {
+      "purpose": "Implemented Error Logs source or verification evidence",
+      "path": "web-next/src/platform/error-logs/index.ts",
+      "layer": "web",
+      "id": "evidence-web-next-src-platform-error-logs-index-ts"
+    },
+    {
+      "purpose": "Implemented Error Logs source or verification evidence",
+      "path": "web-next/src/platform/error-logs/runtime/index.ts",
+      "layer": "web",
+      "id": "evidence-web-next-src-platform-error-logs-runtime-index-ts"
+    },
+    {
+      "purpose": "Implemented Error Logs source or verification evidence",
+      "path": "web-next/src/platform/error-logs/runtime/ErrorLogCaptureBridge.tsx",
+      "layer": "web",
+      "id": "evidence-web-next-src-platform-error-logs-runtime-ErrorLogCaptureBridge-tsx"
+    },
+    {
+      "purpose": "Implemented Error Logs source or verification evidence",
+      "path": "web-next/src/platform/error-logs/hooks/useErrorLogs.ts",
+      "layer": "web",
+      "id": "evidence-web-next-src-platform-error-logs-hooks-useErrorLogs-ts"
+    },
+    {
+      "purpose": "Implemented Error Logs source or verification evidence",
+      "path": "web-next/src/lib/observability/errorLogReporter.ts",
+      "layer": "web",
+      "id": "evidence-web-next-src-lib-observability-errorLogReporter-ts"
+    },
+    {
+      "purpose": "Implemented Error Logs source or verification evidence",
+      "path": "web-next/src/lib/observability/errorLogReporter.test.ts",
+      "layer": "web",
+      "id": "evidence-web-next-src-lib-observability-errorLogReporter-test-ts"
+    },
+    {
+      "purpose": "Implemented Error Logs source or verification evidence",
+      "path": "web-next/src/lib/observability/clientTelemetry.ts",
+      "layer": "web",
+      "id": "evidence-web-next-src-lib-observability-clientTelemetry-ts"
+    },
+    {
+      "purpose": "Implemented Error Logs source or verification evidence",
+      "path": "web-next/src/lib/api/client.ts",
+      "layer": "web",
+      "id": "evidence-web-next-src-lib-api-client-ts"
+    },
+    {
+      "purpose": "Implemented Error Logs source or verification evidence",
+      "path": "web-next/src/app/(main)/MainShell.tsx",
+      "layer": "web",
+      "id": "evidence-web-next-src-app--main--MainShell-tsx"
+    },
+    {
+      "purpose": "Implemented Error Logs source or verification evidence",
+      "path": "web-next/src/app/(main)/(platform)/advanced-tools/error-logs/page.tsx",
+      "layer": "web",
+      "id": "evidence-web-next-src-app--main---platform--advanced-tools-error-logs-page-tsx"
+    },
+    {
+      "purpose": "Implemented Error Logs source or verification evidence",
+      "path": "web-next/src/app/(main)/super-admin/(platform)/error-logs/page.tsx",
+      "layer": "web",
+      "id": "evidence-web-next-src-app--main--super-admin--platform--error-logs-page-tsx"
+    },
+    {
+      "purpose": "Implemented Error Logs source or verification evidence",
+      "path": "web-next/src/app/(main)/super-admin/(platform)/error-log-settings/page.tsx",
+      "layer": "web",
+      "id": "evidence-web-next-src-app--main--super-admin--platform--error-log-settings-page-tsx"
+    },
+    {
+      "purpose": "Implemented Error Logs source or verification evidence",
+      "path": "web-next/src/locales/resources/platform-advanced-tools/en.json",
+      "layer": "web",
+      "id": "evidence-web-next-src-locales-resources-platform-advanced-tools-en-json"
+    },
+    {
+      "purpose": "Implemented Error Logs source or verification evidence",
+      "path": "web-next/src/locales/resources/platform-advanced-tools/ar.json",
+      "layer": "web",
+      "id": "evidence-web-next-src-locales-resources-platform-advanced-tools-ar-json"
+    },
+    {
+      "purpose": "Implemented Error Logs source or verification evidence",
+      "path": "web-next/e2e/error-logs.spec.ts",
+      "layer": "web",
+      "id": "evidence-web-next-e2e-error-logs-spec-ts"
+    },
+    {
+      "purpose": "Implemented Error Logs source or verification evidence",
+      "path": "web-next/e2e/support/test-backend.mjs",
+      "layer": "web",
+      "id": "evidence-web-next-e2e-support-test-backend-mjs"
+    },
+    {
+      "purpose": "Implemented Error Logs source or verification evidence",
+      "path": "scripts/company-ui-scope-policy.json",
+      "layer": "configuration",
+      "id": "evidence-scripts-company-ui-scope-policy-json"
+    },
+    {
+      "purpose": "Implemented Error Logs source or verification evidence",
+      "path": "scripts/company-ui-scope-policy.test.mjs",
+      "layer": "configuration",
+      "id": "evidence-scripts-company-ui-scope-policy-test-mjs"
+    },
+    {
+      "purpose": "Implemented Error Logs source or verification evidence",
+      "path": "api/Tests/ErpSystem.ArchitectureTests/PlatformContractsArchitectureTests.cs",
+      "layer": "api",
+      "id": "evidence-api-Tests-ErpSystem-ArchitectureTests-PlatformContractsArchitectureTests-cs"
+    },
+    {
+      "id": "evidence-mobile-react-src-platform-tools-error-logs-index-ts",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/error-logs/index.ts",
+      "purpose": "Implemented Error Logs source or verification evidence"
+    },
+    {
+      "id": "evidence-mobile-react-src-platform-tools-error-logs-application-error-log-use-cases-ts",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/error-logs/application/error-log-use-cases.ts",
+      "purpose": "Implemented Error Logs source or verification evidence"
+    },
+    {
+      "id": "evidence-mobile-react-src-platform-tools-error-logs-composition-client-error-log-capture-ts",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/error-logs/composition/client-error-log-capture.ts",
+      "purpose": "Implemented Error Logs source or verification evidence"
+    },
+    {
+      "id": "evidence-mobile-react-src-platform-tools-error-logs-composition-use-error-log-use-cases-ts",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/error-logs/composition/use-error-log-use-cases.ts",
+      "purpose": "Implemented Error Logs source or verification evidence"
+    },
+    {
+      "id": "evidence-mobile-react-src-platform-tools-error-logs-data-remote-client-error-log-remote-test-ts",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/error-logs/data/remote/client-error-log-remote.test.ts",
+      "purpose": "Implemented Error Logs source or verification evidence"
+    },
+    {
+      "id": "evidence-mobile-react-src-platform-tools-error-logs-data-remote-client-error-log-remote-ts",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/error-logs/data/remote/client-error-log-remote.ts",
+      "purpose": "Implemented Error Logs source or verification evidence"
+    },
+    {
+      "id": "evidence-mobile-react-src-platform-tools-error-logs-data-remote-error-log-boundary-test-ts",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/error-logs/data/remote/error-log-boundary.test.ts",
+      "purpose": "Implemented Error Logs source or verification evidence"
+    },
+    {
+      "id": "evidence-mobile-react-src-platform-tools-error-logs-data-remote-error-log-endpoints-ts",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/error-logs/data/remote/error-log-endpoints.ts",
+      "purpose": "Implemented Error Logs source or verification evidence"
+    },
+    {
+      "id": "evidence-mobile-react-src-platform-tools-error-logs-data-remote-error-log-export-test-ts",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/error-logs/data/remote/error-log-export.test.ts",
+      "purpose": "Implemented Error Logs source or verification evidence"
+    },
+    {
+      "id": "evidence-mobile-react-src-platform-tools-error-logs-data-remote-error-log-remote-data-source-ts",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/error-logs/data/remote/error-log-remote-data-source.ts",
+      "purpose": "Implemented Error Logs source or verification evidence"
+    },
+    {
+      "id": "evidence-mobile-react-src-platform-tools-error-logs-data-remote-error-log-schemas-ts",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/error-logs/data/remote/error-log-schemas.ts",
+      "purpose": "Implemented Error Logs source or verification evidence"
+    },
+    {
+      "id": "evidence-mobile-react-src-platform-tools-error-logs-data-repositories-default-error-log-repository-ts",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/error-logs/data/repositories/default-error-log-repository.ts",
+      "purpose": "Implemented Error Logs source or verification evidence"
+    },
+    {
+      "id": "evidence-mobile-react-src-platform-tools-error-logs-domain-models-error-log-ts",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/error-logs/domain/models/error-log.ts",
+      "purpose": "Implemented Error Logs source or verification evidence"
+    },
+    {
+      "id": "evidence-mobile-react-src-platform-tools-error-logs-domain-repositories-error-log-repository-ts",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/error-logs/domain/repositories/error-log-repository.ts",
+      "purpose": "Implemented Error Logs source or verification evidence"
+    },
+    {
+      "id": "evidence-mobile-react-src-platform-tools-error-logs-presentation-components-ErrorLogDetailModal-test-tsx",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/error-logs/presentation/components/ErrorLogDetailModal.test.tsx",
+      "purpose": "Implemented Error Logs source or verification evidence"
+    },
+    {
+      "id": "evidence-mobile-react-src-platform-tools-error-logs-presentation-components-ErrorLogDetailModal-tsx",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/error-logs/presentation/components/ErrorLogDetailModal.tsx",
+      "purpose": "Implemented Error Logs source or verification evidence"
+    },
+    {
+      "id": "evidence-mobile-react-src-platform-tools-error-logs-presentation-queries-use-error-logs-ts",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/error-logs/presentation/queries/use-error-logs.ts",
+      "purpose": "Implemented Error Logs source or verification evidence"
+    },
+    {
+      "id": "evidence-mobile-react-src-platform-tools-error-logs-presentation-runtime-ErrorLogCaptureBridge-test-tsx",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/error-logs/presentation/runtime/ErrorLogCaptureBridge.test.tsx",
+      "purpose": "Implemented Error Logs source or verification evidence"
+    },
+    {
+      "id": "evidence-mobile-react-src-platform-tools-error-logs-presentation-runtime-ErrorLogCaptureBridge-tsx",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/error-logs/presentation/runtime/ErrorLogCaptureBridge.tsx",
+      "purpose": "Implemented Error Logs source or verification evidence"
+    },
+    {
+      "id": "evidence-mobile-react-src-platform-tools-error-logs-presentation-screens-ErrorLogSettingsScreen-test-tsx",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/error-logs/presentation/screens/ErrorLogSettingsScreen.test.tsx",
+      "purpose": "Implemented Error Logs source or verification evidence"
+    },
+    {
+      "id": "evidence-mobile-react-src-platform-tools-error-logs-presentation-screens-ErrorLogSettingsScreen-tsx",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/error-logs/presentation/screens/ErrorLogSettingsScreen.tsx",
+      "purpose": "Implemented Error Logs source or verification evidence"
+    },
+    {
+      "id": "evidence-mobile-react-src-platform-tools-error-logs-presentation-screens-ErrorLogsScreen-test-tsx",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/error-logs/presentation/screens/ErrorLogsScreen.test.tsx",
+      "purpose": "Implemented Error Logs source or verification evidence"
+    },
+    {
+      "id": "evidence-mobile-react-src-platform-tools-error-logs-presentation-screens-ErrorLogsScreen-tsx",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/error-logs/presentation/screens/ErrorLogsScreen.tsx",
+      "purpose": "Implemented Error Logs source or verification evidence"
+    },
+    {
+      "id": "evidence-mobile-react-src-platform-tools-error-logs-presentation-validation-retention-schema-ts",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/error-logs/presentation/validation/retention-schema.ts",
+      "purpose": "Implemented Error Logs source or verification evidence"
+    },
+    {
+      "id": "evidence-mobile-react-src-platform-tools-error-logs-runtime-index-ts",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/error-logs/runtime/index.ts",
+      "purpose": "Implemented Error Logs source or verification evidence"
+    },
+    {
+      "id": "evidence-mobile-react-app-main-advanced-tools-error-logs-tsx",
+      "layer": "mobile",
+      "path": "mobile-react/app/(main)/advanced-tools/error-logs.tsx",
+      "purpose": "Implemented Error Logs source or verification evidence"
+    },
+    {
+      "id": "evidence-mobile-react-app-main-system-error-logs-tsx",
+      "layer": "mobile",
+      "path": "mobile-react/app/(main)/system-error-logs.tsx",
+      "purpose": "Implemented Error Logs source or verification evidence"
+    },
+    {
+      "id": "evidence-mobile-react-app-main-error-log-settings-tsx",
+      "layer": "mobile",
+      "path": "mobile-react/app/(main)/error-log-settings.tsx",
+      "purpose": "Implemented Error Logs source or verification evidence"
+    },
+    {
+      "id": "evidence-mobile-react-app-main-layout-tsx",
+      "layer": "mobile",
+      "path": "mobile-react/app/(main)/_layout.tsx",
+      "purpose": "Implemented Error Logs source or verification evidence"
+    },
+    {
+      "id": "evidence-mobile-react-src-core-observability-error-log-reporter-ts",
+      "layer": "mobile",
+      "path": "mobile-react/src/core/observability/error-log-reporter.ts",
+      "purpose": "Implemented Error Logs source or verification evidence"
+    },
+    {
+      "id": "evidence-mobile-react-src-core-observability-error-log-reporter-test-ts",
+      "layer": "mobile",
+      "path": "mobile-react/src/core/observability/error-log-reporter.test.ts",
+      "purpose": "Implemented Error Logs source or verification evidence"
+    },
+    {
+      "id": "evidence-mobile-react-src-core-observability-expoObserve-tsx",
+      "layer": "mobile",
+      "path": "mobile-react/src/core/observability/expoObserve.tsx",
+      "purpose": "Implemented Error Logs source or verification evidence"
+    },
+    {
+      "id": "evidence-mobile-react-src-core-providers-BootstrapErrorBoundary-tsx",
+      "layer": "mobile",
+      "path": "mobile-react/src/core/providers/BootstrapErrorBoundary.tsx",
+      "purpose": "Implemented Error Logs source or verification evidence"
+    },
+    {
+      "id": "evidence-mobile-react-src-core-api-axios-client-ts",
+      "layer": "mobile",
+      "path": "mobile-react/src/core/api/axios-client.ts",
+      "purpose": "Implemented Error Logs source or verification evidence"
+    },
+    {
+      "id": "evidence-mobile-react-src-core-constants-routes-ts",
+      "layer": "mobile",
+      "path": "mobile-react/src/core/constants/routes.ts",
+      "purpose": "Implemented Error Logs source or verification evidence"
+    },
+    {
+      "id": "evidence-mobile-react-src-core-localization-translations-en-error-logs-ts",
+      "layer": "mobile",
+      "path": "mobile-react/src/core/localization/translations/en-error-logs.ts",
+      "purpose": "Implemented Error Logs source or verification evidence"
+    },
+    {
+      "id": "evidence-mobile-react-src-core-localization-translations-ar-error-logs-ts",
+      "layer": "mobile",
+      "path": "mobile-react/src/core/localization/translations/ar-error-logs.ts",
+      "purpose": "Implemented Error Logs source or verification evidence"
+    },
+    {
+      "id": "evidence-mobile-react-src-core-localization-translations-en-ts",
+      "layer": "mobile",
+      "path": "mobile-react/src/core/localization/translations/en.ts",
+      "purpose": "Implemented Error Logs source or verification evidence"
+    },
+    {
+      "id": "evidence-mobile-react-src-core-localization-translations-ar-ts",
+      "layer": "mobile",
+      "path": "mobile-react/src/core/localization/translations/ar.ts",
+      "purpose": "Implemented Error Logs source or verification evidence"
+    },
+    {
+      "id": "evidence-mobile-react-src-platform-auth-presentation-rbac-permissions-ts",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/auth/presentation/rbac/permissions.ts",
+      "purpose": "Implemented Error Logs source or verification evidence"
+    },
+    {
+      "id": "evidence-mobile-react-src-platform-auth-presentation-rbac-route-manifest-ts",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/auth/presentation/rbac/route-manifest.ts",
+      "purpose": "Implemented Error Logs source or verification evidence"
+    },
+    {
+      "id": "evidence-mobile-react-src-platform-auth-presentation-rbac-route-access-ts",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/auth/presentation/rbac/route-access.ts",
+      "purpose": "Implemented Error Logs source or verification evidence"
+    },
+    {
+      "id": "evidence-mobile-react-src-platform-auth-presentation-rbac-tests-route-access-test-ts",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/auth/presentation/rbac/__tests__/route-access.test.ts",
+      "purpose": "Implemented Error Logs source or verification evidence"
+    },
+    {
+      "id": "evidence-mobile-react-src-platform-navigation-AppBreadcrumbs-tsx",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/navigation/AppBreadcrumbs.tsx",
+      "purpose": "Implemented Error Logs source or verification evidence"
+    },
+    {
+      "id": "evidence-mobile-react-src-platform-tools-navigation-constants-platform-tool-definitions-ts",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/navigation/constants/platform-tool-definitions.ts",
+      "purpose": "Implemented Error Logs source or verification evidence"
+    },
+    {
+      "id": "evidence-mobile-react-src-shared-components-controls-AppDateTimeField-tsx",
+      "layer": "mobile",
+      "path": "mobile-react/src/shared/components/controls/AppDateTimeField.tsx",
+      "purpose": "Implemented Error Logs source or verification evidence"
+    },
+    {
+      "id": "evidence-mobile-react-src-shared-components-controls-AppDateTimeField-test-tsx",
+      "layer": "mobile",
+      "path": "mobile-react/src/shared/components/controls/AppDateTimeField.test.tsx",
+      "purpose": "Implemented Error Logs source or verification evidence"
+    },
+    {
+      "id": "evidence-mobile-react-scripts-sync-phase00-matrix-mjs",
+      "layer": "mobile",
+      "path": "mobile-react/scripts/sync-phase00-matrix.mjs",
+      "purpose": "Implemented Error Logs source or verification evidence"
+    },
+    {
+      "id": "evidence-documentation-guides-mobile-MOBILE-API-COMPATIBILITY-MATRIX-json",
+      "layer": "documentation",
+      "path": "documentation/guides/mobile/MOBILE_API_COMPATIBILITY_MATRIX.json",
+      "purpose": "Implemented Error Logs source or verification evidence"
+    },
+    {
+      "id": "evidence-documentation-plans-business-platform-error-logs-education-error-logs-md",
+      "layer": "documentation",
+      "path": "documentation/plans/business/platform-error-logs/education/error-logs.md",
+      "purpose": "Verified feature implementation or customer education"
+    },
+    {
+      "id": "evidence-mobile-react-src-platform-administration-presentation-roles-permissions-permission-groups-ts",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/administration/presentation/roles/permissions/permission-groups.ts",
+      "purpose": "Verified feature implementation or customer education"
+    },
+    {
+      "id": "evidence-mobile-react-src-core-localization-translations-en-administration-tenants-ts",
+      "layer": "mobile",
+      "path": "mobile-react/src/core/localization/translations/en-administration-tenants.ts",
+      "purpose": "Verified feature implementation or customer education"
+    },
+    {
+      "id": "evidence-mobile-react-src-core-localization-translations-ar-administration-tenants-ts",
+      "layer": "mobile",
+      "path": "mobile-react/src/core/localization/translations/ar-administration-tenants.ts",
+      "purpose": "Verified feature implementation or customer education"
+    },
+    {
+      "id": "evidence-api-Modules-Platform-ErpSystem-Modules-Platform-Infrastructure-Features-CompanyLocalization-company-ui-catalog-json",
+      "layer": "configuration",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Features/CompanyLocalization/company-ui-catalog.json",
+      "purpose": "Scoped catalog integration and central release findings"
+    },
+    {
+      "id": "evidence-mobile-react-src-core-localization-company-ui-catalog-version-ts",
+      "layer": "configuration",
+      "path": "mobile-react/src/core/localization/company-ui-catalog-version.ts",
+      "purpose": "Scoped catalog integration and central release findings"
+    },
+    {
+      "id": "evidence-mobile-react-src-core-localization-company-ui-text-scope-ts",
+      "layer": "configuration",
+      "path": "mobile-react/src/core/localization/company-ui-text-scope.ts",
+      "purpose": "Scoped catalog integration and central release findings"
+    },
+    {
+      "id": "evidence-web-next-src-config-company-ui-catalog-version-ts",
+      "layer": "configuration",
+      "path": "web-next/src/config/company-ui-catalog-version.ts",
+      "purpose": "Scoped catalog integration and central release findings"
+    },
+    {
+      "id": "evidence-web-next-src-config-company-ui-text-scope-ts",
+      "layer": "configuration",
+      "path": "web-next/src/config/company-ui-text-scope.ts",
+      "purpose": "Scoped catalog integration and central release findings"
+    },
+    {
+      "id": "evidence-scripts-export-company-ui-catalog-mjs",
+      "layer": "configuration",
+      "path": "scripts/export-company-ui-catalog.mjs",
+      "purpose": "Scoped catalog integration and central release findings"
+    },
+    {
+      "id": "evidence-scripts-company-ui-scope-policy-mjs",
+      "layer": "configuration",
+      "path": "scripts/company-ui-scope-policy.mjs",
+      "purpose": "Scoped catalog integration and central release findings"
+    },
+    {
+      "id": "evidence-documentation-plans-notes-KNOWN-RISKS-md",
+      "layer": "configuration",
+      "path": "documentation/plans/notes/KNOWN_RISKS.md",
+      "purpose": "Scoped catalog integration and central release findings"
+    },
+    {
+      "id": "evidence-documentation-plans-notes-FOLLOW-UPS-md",
+      "layer": "configuration",
+      "path": "documentation/plans/notes/FOLLOW_UPS.md",
+      "purpose": "Scoped catalog integration and central release findings"
+    },
+    {
+      "id": "evidence-web-next-src-shell-components-sidebar-configs-superAdminConfig-tsx",
+      "layer": "web",
+      "path": "web-next/src/shell/components/sidebar/configs/superAdminConfig.tsx",
+      "purpose": "GUID correction and permission-filtered Settings navigation"
+    },
+    {
+      "id": "evidence-web-next-src-shell-components-sidebar-configs-superAdminConfig-test-tsx",
+      "layer": "web",
+      "path": "web-next/src/shell/components/sidebar/configs/superAdminConfig.test.tsx",
+      "purpose": "GUID correction and permission-filtered Settings navigation"
+    },
+    {
+      "id": "evidence-mobile-react-src-platform-navigation-SystemSettingsLinks-tsx",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/navigation/SystemSettingsLinks.tsx",
+      "purpose": "GUID correction and permission-filtered Settings navigation"
+    },
+    {
+      "id": "evidence-mobile-react-src-platform-navigation-SystemSettingsLinks-test-tsx",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/navigation/SettingsTabs.test.tsx",
+      "purpose": "GUID correction and permission-filtered Settings navigation"
+    },
+    {
+      "id": "evidence-mobile-react-src-platform-navigation-index-ts",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/navigation/index.ts",
+      "purpose": "GUID correction and permission-filtered Settings navigation"
+    },
+    {
+      "id": "evidence-mobile-react-src-shell-settings-presentation-screens-SettingsScreen-tsx",
+      "layer": "mobile",
+      "path": "mobile-react/src/shell/settings/presentation/screens/SettingsScreen.tsx",
+      "purpose": "GUID correction and permission-filtered Settings navigation"
+    },
+    {
+      "id": "evidence-mobile-react-src-shell-layouts-drawer-AppDrawerContent-tsx",
+      "layer": "mobile",
+      "path": "mobile-react/src/shell/layouts/drawer/AppDrawerContent.tsx",
+      "purpose": "GUID correction and permission-filtered Settings navigation"
+    },
+    {
+      "id": "evidence-web-next-src-shell-components-sidebar-NavigationItem-tsx",
+      "layer": "web",
+      "path": "web-next/src/shell/components/sidebar/NavigationItem.tsx",
+      "purpose": "Translated and accessible shared Settings navigation"
+    },
+    {
+      "id": "evidence-web-next-src-shell-components-sidebar-NavigationSection-tsx",
+      "layer": "web",
+      "path": "web-next/src/shell/components/sidebar/NavigationSection.tsx",
+      "purpose": "Translated and accessible shared Settings navigation"
+    },
+    {
+      "id": "evidence-web-next-src-locales-resources-core-en-json",
+      "layer": "web",
+      "path": "web-next/src/locales/resources/core/en.json",
+      "purpose": "Translated and accessible shared Settings navigation"
+    },
+    {
+      "id": "evidence-web-next-src-locales-resources-core-ar-json",
+      "layer": "web",
+      "path": "web-next/src/locales/resources/core/ar.json",
+      "purpose": "Translated and accessible shared Settings navigation"
+    },
+    {
+      "id": "shared-criteria-1",
+      "layer": "web",
+      "path": "web-next/src/shared/components/lists/card-view/CardViewHeader.tsx",
+      "purpose": "Shared criteria composition contract, source or compatibility verification"
+    },
+    {
+      "id": "shared-criteria-2",
+      "layer": "web",
+      "path": "web-next/src/shared/components/lists/card-view/CardViewToolbar.tsx",
+      "purpose": "Shared criteria composition contract, source or compatibility verification"
+    },
+    {
+      "id": "shared-criteria-3",
+      "layer": "web",
+      "path": "web-next/src/shared/components/lists/card-view/CardViewHeader.test.tsx",
+      "purpose": "Shared criteria composition contract, source or compatibility verification"
+    },
+    {
+      "id": "shared-criteria-4",
+      "layer": "web",
+      "path": "web-next/src/shared/components/forms/date-time/MyDateTimeField.tsx",
+      "purpose": "Shared criteria composition contract, source or compatibility verification"
+    },
+    {
+      "id": "shared-criteria-5",
+      "layer": "web",
+      "path": "web-next/src/shared/components/forms/selects/MySelect.tsx",
+      "purpose": "Shared criteria composition contract, source or compatibility verification"
+    },
+    {
+      "id": "shared-criteria-6",
+      "layer": "documentation",
+      "path": "documentation/guides/shared/SHARED_REUSE_CATALOG.md",
+      "purpose": "Shared criteria composition contract, source or compatibility verification"
+    },
+    {
+      "id": "shared-criteria-7",
+      "layer": "documentation",
+      "path": "documentation/guides/web/server-managed-feature-reference.md",
+      "purpose": "Shared criteria composition contract, source or compatibility verification"
+    },
+    {
+      "id": "shared-criteria-localized-browser-login",
+      "layer": "web",
+      "path": "web-next/e2e/support/erp-fixture.ts",
+      "purpose": "Localized EN/AR demo login for real browser criteria acceptance"
+    },
+    {
+      "id": "mandatory-grid-1",
+      "layer": "web",
+      "path": "web-next/src/shared/components/data-grid/index.ts",
+      "purpose": "Mandatory shared Grid boundary, reusable criteria/feedback or compatibility verification"
+    },
+    {
+      "id": "mandatory-grid-2",
+      "layer": "web",
+      "path": "web-next/src/shared/components/data-grid/core/types.ts",
+      "purpose": "Mandatory shared Grid boundary, reusable criteria/feedback or compatibility verification"
+    },
+    {
+      "id": "mandatory-grid-3",
+      "layer": "web",
+      "path": "web-next/src/shared/components/data-grid/core/context.ts",
+      "purpose": "Mandatory shared Grid boundary, reusable criteria/feedback or compatibility verification"
+    },
+    {
+      "id": "mandatory-grid-4",
+      "layer": "web",
+      "path": "web-next/src/shared/components/data-grid/core/MyDataGrid.tsx",
+      "purpose": "Mandatory shared Grid boundary, reusable criteria/feedback or compatibility verification"
+    },
+    {
+      "id": "mandatory-grid-5",
+      "layer": "web",
+      "path": "web-next/src/shared/components/data-grid/core/MyDataGrid.test.tsx",
+      "purpose": "Mandatory shared Grid boundary, reusable criteria/feedback or compatibility verification"
+    },
+    {
+      "id": "mandatory-grid-6",
+      "layer": "web",
+      "path": "web-next/src/shared/components/data-grid/toolbar/DataGridToolbar.tsx",
+      "purpose": "Mandatory shared Grid boundary, reusable criteria/feedback or compatibility verification"
+    },
+    {
+      "id": "mandatory-grid-7",
+      "layer": "web",
+      "path": "web-next/src/platform/error-logs/pages/ErrorLogsPage.test.tsx",
+      "purpose": "Mandatory shared Grid boundary, reusable criteria/feedback or compatibility verification"
+    },
+    {
+      "id": "mandatory-grid-8",
+      "layer": "web",
+      "path": "web-next/scripts/shared-grid-policy.mjs",
+      "purpose": "Mandatory shared Grid boundary, reusable criteria/feedback or compatibility verification"
+    },
+    {
+      "id": "mandatory-grid-9",
+      "layer": "web",
+      "path": "web-next/scripts/shared-grid-policy.test.mjs",
+      "purpose": "Mandatory shared Grid boundary, reusable criteria/feedback or compatibility verification"
+    },
+    {
+      "id": "mandatory-grid-10",
+      "layer": "web",
+      "path": "web-next/scripts/check-architecture.mjs",
+      "purpose": "Mandatory shared Grid boundary, reusable criteria/feedback or compatibility verification"
+    },
+    {
+      "id": "mandatory-grid-11",
+      "layer": "web",
+      "path": "web-next/src/platform/advanced-tools/localization/components/LocalizationDataGrid.tsx",
+      "purpose": "Mandatory shared Grid boundary, reusable criteria/feedback or compatibility verification"
+    },
+    {
+      "id": "mandatory-grid-12",
+      "layer": "web",
+      "path": "web-next/src/platform/advanced-tools/localization/components/LocalizationDataGrid.test.tsx",
+      "purpose": "Mandatory shared Grid boundary, reusable criteria/feedback or compatibility verification"
+    },
+    {
+      "id": "administration-settings-navigation-1",
+      "layer": "web",
+      "path": "web-next/src/platform/navigation/platformNavigation.tsx",
+      "purpose": "Authorized independent Administration / Settings navigation with original child scope"
+    },
+    {
+      "id": "administration-settings-navigation-2",
+      "layer": "web",
+      "path": "web-next/src/platform/navigation/platformNavigation.test.tsx",
+      "purpose": "Authorized independent Administration / Settings navigation with original child scope"
+    },
+    {
+      "id": "administration-settings-navigation-3",
+      "layer": "web",
+      "path": "web-next/src/shell/components/sidebar/navigationConfig.tsx",
+      "purpose": "Authorized independent Administration / Settings navigation with original child scope"
+    },
+    {
+      "id": "administration-settings-navigation-4",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/navigation/PlatformNavigationLinks.tsx",
+      "purpose": "Authorized independent Administration / Settings navigation with original child scope"
+    },
+    {
+      "id": "administration-settings-navigation-5",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/navigation/AdministrationLinks.tsx",
+      "purpose": "Authorized independent Administration / Settings navigation with original child scope"
+    },
+    {
+      "id": "administration-settings-navigation-6",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/navigation/AdministrationLinks.test.tsx",
+      "purpose": "Authorized independent Administration / Settings navigation with original child scope"
+    },
+    {
+      "id": "administration-settings-navigation-8",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/navigation/layout/PlatformToolModuleLayout.tsx",
+      "purpose": "Authorized independent Administration / Settings navigation with original child scope"
+    },
+    {
+      "id": "administration-settings-navigation-9",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/tools/navigation/screens/PlatformToolsOverviewScreen.tsx",
+      "purpose": "Authorized independent Administration / Settings navigation with original child scope"
+    },
+    {
+      "id": "administration-settings-navigation-10",
+      "layer": "mobile",
+      "path": "mobile-react/app/(main)/administration/_layout.tsx",
+      "purpose": "Authorized independent Administration / Settings navigation with original child scope"
+    },
+    {
+      "id": "detail-copy-0",
+      "layer": "web",
+      "path": "web-next/src/shared/utils/clipboard.ts",
+      "purpose": "Shared readable detail, persistent copy action, reusable clipboard transport and authorized report/layout regression evidence"
+    },
+    {
+      "id": "detail-copy-1",
+      "layer": "web",
+      "path": "web-next/src/shared/utils/clipboard.test.ts",
+      "purpose": "Shared readable detail, persistent copy action, reusable clipboard transport and authorized report/layout regression evidence"
+    },
+    {
+      "id": "detail-copy-2",
+      "layer": "web",
+      "path": "web-next/src/shared/components/forms/buttons/CopyButton.tsx",
+      "purpose": "Shared readable detail, persistent copy action, reusable clipboard transport and authorized report/layout regression evidence"
+    },
+    {
+      "id": "detail-copy-3",
+      "layer": "web",
+      "path": "web-next/src/shared/components/forms/buttons/index.ts",
+      "purpose": "Shared readable detail, persistent copy action, reusable clipboard transport and authorized report/layout regression evidence"
+    },
+    {
+      "id": "detail-copy-4",
+      "layer": "web",
+      "path": "web-next/src/shared/components/data-display/DetailFields.tsx",
+      "purpose": "Shared readable detail, persistent copy action, reusable clipboard transport and authorized report/layout regression evidence"
+    },
+    {
+      "id": "detail-copy-5",
+      "layer": "web",
+      "path": "web-next/src/shared/components/data-display/index.ts",
+      "purpose": "Shared readable detail, persistent copy action, reusable clipboard transport and authorized report/layout regression evidence"
+    },
+    {
+      "id": "detail-copy-6",
+      "layer": "web",
+      "path": "web-next/src/shared/components/forms/dialog/FormHeader.tsx",
+      "purpose": "Shared readable detail, persistent copy action, reusable clipboard transport and authorized report/layout regression evidence"
+    },
+    {
+      "id": "detail-copy-7",
+      "layer": "web",
+      "path": "web-next/src/shared/components/feedback/transient/error-dialog/ErrorDialogHost.tsx",
+      "purpose": "Shared readable detail, persistent copy action, reusable clipboard transport and authorized report/layout regression evidence"
+    },
+    {
+      "id": "detail-copy-8",
+      "layer": "web",
+      "path": "web-next/src/platform/error-logs/utils/errorLogDetails.ts",
+      "purpose": "Shared readable detail, persistent copy action, reusable clipboard transport and authorized report/layout regression evidence"
+    },
+    {
+      "id": "detail-copy-9",
+      "layer": "web",
+      "path": "web-next/src/platform/error-logs/utils/errorLogDetails.test.ts",
+      "purpose": "Shared readable detail, persistent copy action, reusable clipboard transport and authorized report/layout regression evidence"
+    },
+    {
+      "id": "detail-copy-10",
+      "layer": "web",
+      "path": "web-next/e2e/error-log-details.spec.ts",
+      "purpose": "Shared readable detail, persistent copy action, reusable clipboard transport and authorized report/layout regression evidence"
+    },
+    {
+      "id": "safe-exception-diagnostics",
+      "layer": "api",
+      "path": "api/BuildingBlocks/ErpSystem.BuildingBlocks.Application/Diagnostics/SafeExceptionDiagnostics.cs",
+      "purpose": "Reusable bounded exception structure without private messages"
+    },
+    {
+      "id": "safe-exception-diagnostics-tests",
+      "layer": "test",
+      "path": "api/Tests/ErpSystem.BuildingBlocks.Tests/SafeExceptionDiagnosticsTests.cs",
+      "purpose": "Nested exceptions, provider codes and sensitive-content omission"
+    },
+    {
+      "id": "shared-empty-state",
+      "layer": "web",
+      "path": "web-next/src/shared/components/feedback/states/EmptyState.tsx",
+      "purpose": "Shared truthful empty diagnostics presentation"
+    },
+    {
+      "id": "shared-feedback-state",
+      "layer": "web",
+      "path": "web-next/src/shared/components/feedback/states/FeedbackState.tsx",
+      "purpose": "Shared empty-state semantics and layout"
+    }
+  ],
+  "finalizationChecklist": [
+    "Replace every placeholder in the review artifact.",
+    "Complete the Existing-System Relationship Review and every decision in error-logs-request.md before implementation.",
+    "Complete the Business Rules Matrix with one primary owner, stable outcome/error, and required test for every known rule.",
+    "Complete every Edge Cases & Validation category with scenarios or an explicit N/A reason, enforcement layer, and required test.",
+    "Complete the Impact Matrix with Reuse, Extend, Change, Add, or reasoned N/A across every listed area.",
+    "Remove every remaining placeholder from error-logs-request.md before runtime implementation.",
+    "Add Phase 00 current API, web, mobile, configuration, localization, and test evidence sources.",
+    "Classify every optional view, including Import, as Required, Deferred, or Excluded independently for web and mobile.",
+    "When Import is Required, add its API and applicable client runtime, route/configuration, localization, and focused-test paths.",
+    "Record and test the exact Import request envelope, limits, duplicate and relationship rules, atomicity, permissions, side effects, and retry behavior.",
+    "Add source collections with evidence-based minimum file counts.",
+    "Create the four initial applied implementation books from the approved plan plus verified current source; label target-only behavior explicitly.",
+    "Rename this file to required-files.json when the Phase 00 evidence paths exist; extend it with runtime files during implementation.",
+    "Update the review artifact to point at required-files.json and mark its documentation state Final.",
+    "Merge recipe-registration.draft.json into recipe-manifest.json after the Phase 00 books and preflight manifest are complete.",
+    "Write generated packets under documentation/modules/platform/features/error-logs/generated/.",
+    "Run generation and then Generate-Documentation.ps1 -Check.",
+    "Complete phase 06 with an explicit verification decision.",
+    "Do not start customer-facing education until phase 06 records Verified.",
+    "For customer-visible work, complete phase 07 and its Customer Education Pack before Closed.",
+    "When Customer Education is Required, add the verified education document to required-files.json and rerun Generate-Documentation.ps1 -Check before Closed."
+  ]
+}

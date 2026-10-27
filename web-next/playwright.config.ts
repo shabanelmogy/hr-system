@@ -51,12 +51,12 @@ export default defineConfig({
     {
       command: isCi
         ? `cross-env BACKEND_URL=http://127.0.0.1:${backendPort} npm run start -- --hostname 127.0.0.1 --port ${appPort}`
-        : `cross-env BACKEND_URL=http://127.0.0.1:${backendPort} npm run dev:http -- --hostname 127.0.0.1 --port ${appPort}`,
+        : `cross-env ERP_E2E=1 BACKEND_URL=http://127.0.0.1:${backendPort} npm run dev:http -- --hostname 127.0.0.1 --port ${appPort}`,
       url: `http://localhost:${appPort}/login`,
       reuseExistingServer: !isCi,
       // A clean Turbopack cache can spend most of the first request compiling
       // the login graph. Readiness should test the app, not race a cold compile.
-      timeout: isCi ? 90_000 : 60_000,
+      timeout: isCi ? 90_000 : 120_000,
     },
   ],
 });

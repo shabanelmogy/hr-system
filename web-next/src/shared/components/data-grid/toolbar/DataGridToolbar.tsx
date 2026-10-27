@@ -1,5 +1,5 @@
 import AddIcon from "@mui/icons-material/Add";
-import { Box, Button, Divider, MenuItem, Stack, TextField } from "@mui/material";
+import { Box, Button, Divider, Grid, MenuItem, Stack, TextField } from "@mui/material";
 import {
   GridToolbarColumnsButton,
   GridToolbarDensitySelector,
@@ -20,12 +20,14 @@ export function DataGridToolbar() {
     showGridOptions,
     toolbarContent,
     toolbarSearch,
+    toolbarFilters,
   } = useDataGridShell();
   const { t } = useTranslation();
   const { isReadOnly } = useAppReadOnly();
   const hasSearchSelectors = Boolean(toolbarSearch?.column || toolbarSearch?.operator);
 
   return (
+    <Box sx={toolbarFilters ? { maxHeight: { xs: "45dvh", md: "none" }, overflowY: "auto", flexShrink: 0 } : undefined}>
     <Stack
       direction="row"
       useFlexGap
@@ -167,5 +169,7 @@ export function DataGridToolbar() {
         {showGridOptions ? <GridOptionsButton label={t("actions.gridOptions")} /> : null}
       </Box>
     </Stack>
+    {toolbarFilters ? <Grid container spacing={1.5} sx={{ p: 1, pt: 0.5 }}>{toolbarFilters}</Grid> : null}
+    </Box>
   );
 }

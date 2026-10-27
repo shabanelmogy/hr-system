@@ -19,7 +19,7 @@ export function PlatformToolsOverviewScreen({ moduleId }: { moduleId: PlatformTo
   const { session } = useAuth();
   const moduleDefinition = PLATFORM_TOOL_MODULES[moduleId];
   const visibleTools = moduleDefinition.tools.filter((tool) =>
-    canAccessRoute(tool.route, session),
+    !tool.hidden && canAccessRoute(tool.route, session),
   );
 
   return (

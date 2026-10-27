@@ -1,4 +1,5 @@
 import { Pressable, StyleSheet, View } from 'react-native';
+import { Fragment, type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { useLocalization } from '@/src/core/localization';
@@ -23,6 +24,9 @@ interface PermissionModuleCardProps {
   onSetModule: (group: PermissionGroup, selected: boolean) => void;
   onToggle: (claimIndex: number) => void;
   onToggleExpanded: () => void;
+  /** Optional per-claim gate for company-local editors. */
+  isClaimDisabled?: (claimIndex: number) => boolean;
+  renderClaimDetails?: (claimIndex: number) => ReactNode;
 }
 
 export function PermissionModuleCard({
@@ -32,6 +36,8 @@ export function PermissionModuleCard({
   onSetModule,
   onToggle,
   onToggleExpanded,
+  isClaimDisabled,
+  renderClaimDetails,
 }: PermissionModuleCardProps) {
   const { t } = useTranslation();
   const { direction } = useLocalization();
@@ -109,14 +115,16 @@ export function PermissionModuleCard({
       {expanded ? (
         <View style={[styles.permissions, { borderTopColor: theme.colors.border }]}>
           {group.claims.map(({ action, claim, index }) => (
-            <AppSwitchField
-              disabled={disabled}
+            <Fragment key={claim.displayValue}>
+              <AppSwitchField
+              disabled={disabled || isClaimDisabled?.(index)}
               icon={getActionIcon(action)}
-              key={claim.displayValue}
               label={getPermissionActionLabel(action, t)}
               onValueChange={() => onToggle(index)}
               value={claim.isSelected}
-            />
+              />
+              {renderClaimDetails?.(index)}
+            </Fragment>
           ))}
         </View>
       ) : null}

@@ -1,0 +1,5 @@
+import { z } from 'zod';
+const language = z.enum(['en','ar']);
+export const settingsSchema = z.object({ tenantId:z.string().min(1),companyId:z.number().int().positive(),defaultLanguage:language,revision:z.number().int().nonnegative(),languages:z.array(language),sources:z.array(z.object({id:z.string(),client:z.enum(['web','mobile']),namespace:z.string()})),catalogVersions:z.record(z.string(),z.string()) });
+export const textsSchema = z.object({ revision:z.number().int().nonnegative(),items:z.array(z.object({key:z.string(),baseValue:z.string(),targetValue:z.string(),shippedValue:z.string(),isCustomized:z.boolean()})),totalCount:z.number().int().nonnegative(),page:z.number().int().positive(),pageSize:z.number().int().positive(),catalogVersion:z.string().min(1) });
+export const runtimeSchema = z.object({ tenantId:z.string().min(1),companyId:z.number().int().positive(),defaultLanguage:language,revision:z.number().int().nonnegative(),catalogVersion:z.string().min(1),overrides:z.array(z.object({namespace:z.string(),language,key:z.string(),value:z.string()})) });

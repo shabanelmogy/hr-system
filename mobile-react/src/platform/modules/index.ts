@@ -17,3 +17,5 @@ export {
   validateMobileModuleRegistry,
 } from './registry';
 export type { MobileModuleDefinition, MobileSubmoduleDefinition } from './registry';
+
+export { administrationLauncherEntries } from './registry/administration-launcher';

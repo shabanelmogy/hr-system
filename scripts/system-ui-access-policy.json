@@ -1,0 +1,1648 @@
+[
+  {
+    "client": "web",
+    "namespace": "reference-countries",
+    "prefix": "",
+    "permissions": [
+      "Countries:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "reference-states",
+    "prefix": "",
+    "permissions": [
+      "States:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "reference-districts",
+    "prefix": "",
+    "permissions": [
+      "Districts:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "platform-tenants",
+    "prefix": "superAdminDashboard",
+    "permissions": []
+  },
+  {
+    "client": "web",
+    "namespace": "platform-tenants",
+    "prefix": "tenantAdmins",
+    "permissions": []
+  },
+  {
+    "client": "web",
+    "namespace": "platform-tenants",
+    "prefix": "tenantManagement",
+    "permissions": []
+  },
+  {
+    "client": "web",
+    "namespace": "platform-advanced-tools",
+    "prefix": "systemErrorLogs",
+    "permissions": [
+      "SystemErrorLogs:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "platform-advanced-tools",
+    "prefix": "errorLogs",
+    "permissions": [
+      "SystemErrorLogs:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "platform-advanced-tools",
+    "prefix": "errorLogSettings",
+    "permissions": [
+      "ErrorLogSettings:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "platform-advanced-tools",
+    "prefix": "healthCheck",
+    "permissions": [
+      "SystemHealth:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "platform-advanced-tools",
+    "prefix": "externalTools",
+    "permissions": [
+      "SystemApiDocs:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "platform-advanced-tools",
+    "prefix": "hangfireDashboard",
+    "permissions": [
+      "Hangfire:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "actions",
+    "permissions": []
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "general",
+    "permissions": []
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "common",
+    "permissions": []
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "confirmation",
+    "permissions": []
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "errorDialog",
+    "permissions": []
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "feedback",
+    "permissions": []
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "globalError",
+    "permissions": []
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "pagination",
+    "permissions": []
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "validation",
+    "permissions": []
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "views",
+    "permissions": []
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "search",
+    "permissions": []
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "settingsWorkspace",
+    "permissions": []
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "auditLog",
+    "permissions": [
+      "SystemAuditTrail:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "menu.systemErrorLogs",
+    "permissions": [
+      "SystemErrorLogs:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "menu.errorLogSettings",
+    "permissions": [
+      "ErrorLogSettings:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "menu.auditTrail",
+    "permissions": [
+      "SystemAuditTrail:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "menu.healthCheck",
+    "permissions": [
+      "SystemHealth:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "menu.apiEndpoints",
+    "permissions": [
+      "SystemApiDocs:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "menu.hangfireDashboard",
+    "permissions": [
+      "Hangfire:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "menu.countries",
+    "permissions": [
+      "Countries:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "menu.states",
+    "permissions": [
+      "States:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "menu.districts",
+    "permissions": [
+      "Districts:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "menu.systemUiTexts",
+    "permissions": [
+      "SystemUiTexts:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "menu.systemSettings",
+    "permissions": []
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "menu.settings",
+    "permissions": []
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "menu.administration",
+    "permissions": []
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "menu.superAdmin",
+    "permissions": []
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "menu.superAdminDashboard",
+    "permissions": []
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "menu.globalGeography",
+    "permissions": []
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "menu.tenantManagement",
+    "permissions": []
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "menu.tenantAdminManagement",
+    "permissions": []
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "menu.openSidebar",
+    "permissions": []
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "menu.closeSidebar",
+    "permissions": []
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "menu.profileDescription",
+    "permissions": []
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "menu.logoutDescription",
+    "permissions": []
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "menu.basicData",
+    "permissions": []
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "menu.basicDataGroup",
+    "permissions": []
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "menu.basicDataDescription",
+    "permissions": []
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "menu.basicDataNavigation",
+    "permissions": []
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "menu.openBasicDataNavigation",
+    "permissions": []
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "menu.closeBasicDataNavigation",
+    "permissions": []
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "menu.chooseBasicDataArea",
+    "permissions": []
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "menu.openBasicDataArea",
+    "permissions": []
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "menu.basicDataAreaCount",
+    "permissions": []
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "menu.geographicData",
+    "permissions": []
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "menu.geographicDataDescription",
+    "permissions": []
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "menu.collapseAllSections",
+    "permissions": []
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "menu.expandAllSections",
+    "permissions": []
+  },
+  {
+    "client": "web",
+    "namespace": "platform-auth",
+    "prefix": "profile",
+    "permissions": []
+  },
+  {
+    "client": "web",
+    "namespace": "platform-auth",
+    "prefix": "personalDetails",
+    "permissions": []
+  },
+  {
+    "client": "web",
+    "namespace": "platform-auth",
+    "prefix": "accountSecurity",
+    "permissions": []
+  },
+  {
+    "client": "web",
+    "namespace": "platform-auth",
+    "prefix": "profilePicture",
+    "permissions": []
+  },
+  {
+    "client": "web",
+    "namespace": "platform-auth",
+    "prefix": "systemUiTexts",
+    "permissions": [
+      "SystemUiTexts:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "superAdminDashboard",
+    "permissions": []
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "tenantAdmins",
+    "permissions": []
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "tenantManagement",
+    "permissions": []
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "profile",
+    "permissions": []
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "actions",
+    "permissions": []
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "common",
+    "permissions": []
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "confirmation",
+    "permissions": []
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "dataTable",
+    "permissions": []
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "discardChanges",
+    "permissions": []
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "feedback",
+    "permissions": []
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "fields",
+    "permissions": []
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "listScreen",
+    "permissions": []
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "modal",
+    "permissions": []
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "multiView",
+    "permissions": []
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "settings",
+    "permissions": []
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "validation",
+    "permissions": []
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "systemErrorLogs",
+    "permissions": [
+      "SystemErrorLogs:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "errorLogs",
+    "permissions": [
+      "SystemErrorLogs:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "errorLogSettings",
+    "permissions": [
+      "ErrorLogSettings:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "healthCheck",
+    "permissions": [
+      "SystemHealth:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "externalTools",
+    "permissions": [
+      "SystemApiDocs:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "hangfireDashboard",
+    "permissions": [
+      "Hangfire:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "auditLog",
+    "permissions": [
+      "SystemAuditTrail:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "countries",
+    "permissions": [
+      "Countries:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "states",
+    "permissions": [
+      "States:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "districts",
+    "permissions": [
+      "Districts:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "systemUiTexts",
+    "permissions": [
+      "SystemUiTexts:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "navigation.systemErrorLogs",
+    "permissions": [
+      "SystemErrorLogs:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "navigation.errorLogSettings",
+    "permissions": [
+      "ErrorLogSettings:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "navigation.auditTrail",
+    "permissions": [
+      "SystemAuditTrail:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "navigation.healthCheck",
+    "permissions": [
+      "SystemHealth:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "navigation.apiEndpoints",
+    "permissions": [
+      "SystemApiDocs:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "navigation.hangfireDashboard",
+    "permissions": [
+      "Hangfire:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "navigation.countries",
+    "permissions": [
+      "Countries:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "navigation.states",
+    "permissions": [
+      "States:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "navigation.districts",
+    "permissions": [
+      "Districts:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "navigation.systemUiTexts",
+    "permissions": [
+      "SystemUiTexts:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "navigation.administration",
+    "permissions": []
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "navigation.advancedTools",
+    "permissions": []
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "navigation.basicData",
+    "permissions": []
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "navigation.breadcrumbs",
+    "permissions": []
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "navigation.geographicalInformation",
+    "permissions": []
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "navigation.globalGeography",
+    "permissions": []
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "navigation.openMenu",
+    "permissions": []
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "navigation.overview",
+    "permissions": []
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "navigation.profile",
+    "permissions": []
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "navigation.settings",
+    "permissions": []
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "navigation.superAdminDashboard",
+    "permissions": []
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "navigation.tenantAdminManagement",
+    "permissions": []
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "navigation.tenantManagement",
+    "permissions": []
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "platformTools.healthCheck",
+    "permissions": [
+      "SystemHealth:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "platformTools.healthCheckDescription",
+    "permissions": [
+      "SystemHealth:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "platformTools.apiEndpoints",
+    "permissions": [
+      "SystemApiDocs:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "platformTools.apiEndpointsDescription",
+    "permissions": [
+      "SystemApiDocs:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "platformTools.hangfire",
+    "permissions": [
+      "Hangfire:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "platformTools.hangfireDashboard",
+    "permissions": [
+      "Hangfire:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "platformTools.hangfireDashboardDescription",
+    "permissions": [
+      "Hangfire:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "platformTools.auditTrailDescription",
+    "permissions": [
+      "SystemAuditTrail:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "platform-auth",
+    "prefix": "companyLocalizations.english",
+    "permissions": [
+      "SystemUiTexts:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "companyLocalizations.english",
+    "permissions": [
+      "SystemUiTexts:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "platform-auth",
+    "prefix": "companyLocalizations.arabic",
+    "permissions": [
+      "SystemUiTexts:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "companyLocalizations.arabic",
+    "permissions": [
+      "SystemUiTexts:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "platform-auth",
+    "prefix": "companyLocalizations.web",
+    "permissions": [
+      "SystemUiTexts:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "companyLocalizations.web",
+    "permissions": [
+      "SystemUiTexts:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "platform-auth",
+    "prefix": "companyLocalizations.mobile",
+    "permissions": [
+      "SystemUiTexts:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "companyLocalizations.mobile",
+    "permissions": [
+      "SystemUiTexts:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "platform-auth",
+    "prefix": "companyLocalizations.all",
+    "permissions": [
+      "SystemUiTexts:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "companyLocalizations.all",
+    "permissions": [
+      "SystemUiTexts:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "platform-auth",
+    "prefix": "companyLocalizations.missing",
+    "permissions": [
+      "SystemUiTexts:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "companyLocalizations.missing",
+    "permissions": [
+      "SystemUiTexts:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "platform-auth",
+    "prefix": "companyLocalizations.customized",
+    "permissions": [
+      "SystemUiTexts:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "companyLocalizations.customized",
+    "permissions": [
+      "SystemUiTexts:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "platform-auth",
+    "prefix": "companyLocalizations.key",
+    "permissions": [
+      "SystemUiTexts:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "companyLocalizations.key",
+    "permissions": [
+      "SystemUiTexts:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "platform-auth",
+    "prefix": "companyLocalizations.baseValue",
+    "permissions": [
+      "SystemUiTexts:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "companyLocalizations.baseValue",
+    "permissions": [
+      "SystemUiTexts:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "platform-auth",
+    "prefix": "companyLocalizations.targetValue",
+    "permissions": [
+      "SystemUiTexts:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "companyLocalizations.targetValue",
+    "permissions": [
+      "SystemUiTexts:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "platform-auth",
+    "prefix": "companyLocalizations.status",
+    "permissions": [
+      "SystemUiTexts:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "companyLocalizations.status",
+    "permissions": [
+      "SystemUiTexts:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "platform-auth",
+    "prefix": "companyLocalizations.edit",
+    "permissions": [
+      "SystemUiTexts:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "companyLocalizations.edit",
+    "permissions": [
+      "SystemUiTexts:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "platform-auth",
+    "prefix": "companyLocalizations.reset",
+    "permissions": [
+      "SystemUiTexts:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "companyLocalizations.reset",
+    "permissions": [
+      "SystemUiTexts:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "platform-auth",
+    "prefix": "companyLocalizations.source",
+    "permissions": [
+      "SystemUiTexts:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "companyLocalizations.source",
+    "permissions": [
+      "SystemUiTexts:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "platform-auth",
+    "prefix": "companyLocalizations.baseLanguage",
+    "permissions": [
+      "SystemUiTexts:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "companyLocalizations.baseLanguage",
+    "permissions": [
+      "SystemUiTexts:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "platform-auth",
+    "prefix": "companyLocalizations.targetLanguage",
+    "permissions": [
+      "SystemUiTexts:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "companyLocalizations.targetLanguage",
+    "permissions": [
+      "SystemUiTexts:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "platform-auth",
+    "prefix": "companyLocalizations.search",
+    "permissions": [
+      "SystemUiTexts:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "companyLocalizations.search",
+    "permissions": [
+      "SystemUiTexts:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "platform-auth",
+    "prefix": "companyLocalizations.loadFailed",
+    "permissions": [
+      "SystemUiTexts:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "companyLocalizations.loadFailed",
+    "permissions": [
+      "SystemUiTexts:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "platform-auth",
+    "prefix": "companyLocalizations.reload",
+    "permissions": [
+      "SystemUiTexts:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "companyLocalizations.reload",
+    "permissions": [
+      "SystemUiTexts:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "platform-auth",
+    "prefix": "companyLocalizations.resetTitle",
+    "permissions": [
+      "SystemUiTexts:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "companyLocalizations.resetTitle",
+    "permissions": [
+      "SystemUiTexts:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "platform-auth",
+    "prefix": "companyLocalizations.resetDescription",
+    "permissions": [
+      "SystemUiTexts:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "companyLocalizations.resetDescription",
+    "permissions": [
+      "SystemUiTexts:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "platform-auth",
+    "prefix": "companyLocalizations.saveFailed",
+    "permissions": [
+      "SystemUiTexts:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "companyLocalizations.saveFailed",
+    "permissions": [
+      "SystemUiTexts:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "platform-auth",
+    "prefix": "companyLocalizations.saved",
+    "permissions": [
+      "SystemUiTexts:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "companyLocalizations.saved",
+    "permissions": [
+      "SystemUiTexts:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "platform-auth",
+    "prefix": "companyLocalizations.textTitle",
+    "permissions": [
+      "SystemUiTexts:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "companyLocalizations.textTitle",
+    "permissions": [
+      "SystemUiTexts:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "platform-auth",
+    "prefix": "companyLocalizations.textDescription",
+    "permissions": [
+      "SystemUiTexts:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "companyLocalizations.textDescription",
+    "permissions": [
+      "SystemUiTexts:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "platform-auth",
+    "prefix": "companyLocalizations.invalidValue",
+    "permissions": [
+      "SystemUiTexts:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "companyLocalizations.invalidValue",
+    "permissions": [
+      "SystemUiTexts:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "CountriesArchivedNotificationMessage",
+    "permissions": [
+      "Countries:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "CountriesCreatedNotificationMessage",
+    "permissions": [
+      "Countries:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "CountryArchivedNotificationMessage",
+    "permissions": [
+      "Countries:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "CountryCreatedNotificationMessage",
+    "permissions": [
+      "Countries:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "CountryDeletedNotificationMessage",
+    "permissions": [
+      "Countries:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "CountryNotificationTitle",
+    "permissions": [
+      "Countries:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "CountryRestoredNotificationMessage",
+    "permissions": [
+      "Countries:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "CountryUpdatedNotificationMessage",
+    "permissions": [
+      "Countries:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "DistrictArchivedNotificationMessage",
+    "permissions": [
+      "Districts:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "DistrictCreatedNotificationMessage",
+    "permissions": [
+      "Districts:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "DistrictDeletedNotificationMessage",
+    "permissions": [
+      "Districts:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "DistrictNotificationTitle",
+    "permissions": [
+      "Districts:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "DistrictRestoredNotificationMessage",
+    "permissions": [
+      "Districts:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "DistrictUpdatedNotificationMessage",
+    "permissions": [
+      "Districts:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "StateArchivedNotificationMessage",
+    "permissions": [
+      "States:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "StateCreatedNotificationMessage",
+    "permissions": [
+      "States:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "StateDeletedNotificationMessage",
+    "permissions": [
+      "States:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "StateNotificationTitle",
+    "permissions": [
+      "States:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "StateRestoredNotificationMessage",
+    "permissions": [
+      "States:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "StateUpdatedNotificationMessage",
+    "permissions": [
+      "States:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "StatesArchivedNotificationMessage",
+    "permissions": [
+      "States:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "StatesCreatedNotificationMessage",
+    "permissions": [
+      "States:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "basicData.countries",
+    "permissions": [
+      "Countries:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "basicData.districts",
+    "permissions": [
+      "Districts:View"
+    ]
+  },
+  {
+    "client": "mobile",
+    "namespace": "translation",
+    "prefix": "basicData.states",
+    "permissions": [
+      "States:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "CountriesCreatedNotificationMessage",
+    "permissions": [
+      "Countries:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "CountryCreatedNotificationMessage",
+    "permissions": [
+      "Countries:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "CountryDeletedNotificationMessage",
+    "permissions": [
+      "Countries:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "CountryNotificationTitle",
+    "permissions": [
+      "Countries:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "CountryRestoredNotificationMessage",
+    "permissions": [
+      "Countries:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "CountryUpdatedNotificationMessage",
+    "permissions": [
+      "Countries:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "DistrictCreatedNotificationMessage",
+    "permissions": [
+      "Districts:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "DistrictDeletedNotificationMessage",
+    "permissions": [
+      "Districts:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "DistrictNotificationTitle",
+    "permissions": [
+      "Districts:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "DistrictRestoredNotificationMessage",
+    "permissions": [
+      "Districts:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "DistrictUpdatedNotificationMessage",
+    "permissions": [
+      "Districts:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "StateArchivedNotificationMessage",
+    "permissions": [
+      "States:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "StateCreatedNotificationMessage",
+    "permissions": [
+      "States:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "StateDeletedNotificationMessage",
+    "permissions": [
+      "States:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "StateNotificationTitle",
+    "permissions": [
+      "States:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "StateRestoredNotificationMessage",
+    "permissions": [
+      "States:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "StateUpdatedNotificationMessage",
+    "permissions": [
+      "States:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "StatesArchivedNotificationMessage",
+    "permissions": [
+      "States:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "StatesCreatedNotificationMessage",
+    "permissions": [
+      "States:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "menu.countriesDescription",
+    "permissions": [
+      "Countries:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "menu.countryReport",
+    "permissions": [
+      "Countries:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "menu.countryReportDescription",
+    "permissions": [
+      "Countries:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "menu.districtsDescription",
+    "permissions": [
+      "Districts:View"
+    ]
+  },
+  {
+    "client": "web",
+    "namespace": "core",
+    "prefix": "menu.statesDescription",
+    "permissions": [
+      "States:View"
+    ]
+  }
+]

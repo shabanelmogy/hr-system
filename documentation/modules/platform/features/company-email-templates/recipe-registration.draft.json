@@ -1,0 +1,338 @@
+{
+  "status": "registered",
+  "referenceFeature": "N/A",
+  "planId": "company-email-templates",
+  "sliceId": "S1 Company account email templates",
+  "canonicalPlan": "documentation/plans/business/company-email-templates/PLAN.md",
+  "featureDecompositionDecision": "Single feature",
+  "screenWorkflowContract": "documentation/plans/business/company-email-templates/decomposition/company-email-templates.md",
+  "plannedCustomerEducation": "documentation/plans/business/company-email-templates/education/company-email-templates.md",
+  "instructions": "Merge these entries into recipe-manifest.json after Phase 00 has a final preflight required-files.json and all four initial applied implementation books. Extend the manifest/books with runtime evidence during implementation.",
+  "books": [
+    {
+      "id": "company-email-templates-master",
+      "path": "../modules/platform/features/company-email-templates/company-email-templates-review.md",
+      "title": "Company email templates cross-platform master review"
+    },
+    {
+      "id": "company-email-templates-api",
+      "path": "../modules/platform/features/company-email-templates/company-email-templates-api.md",
+      "title": "Company email templates API implementation profile"
+    },
+    {
+      "id": "company-email-templates-web",
+      "path": "../modules/platform/features/company-email-templates/company-email-templates-web.md",
+      "title": "Company email templates Next.js implementation profile"
+    },
+    {
+      "id": "company-email-templates-mobile",
+      "path": "../modules/platform/features/company-email-templates/company-email-templates-mobile.md",
+      "title": "Company email templates Expo implementation profile"
+    }
+  ],
+  "requiredFileManifest": "../modules/platform/features/company-email-templates/required-files.json",
+  "recipes": [
+    {
+      "id": "company-email-templates-phase-00-implementation-preflight",
+      "title": "Company email templates Phase 00 - Implementation Preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "../modules/platform/features/company-email-templates/generated/PHASE-00-implementation-preflight.md",
+      "sources": [
+        {
+          "book": "company-email-templates-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "company-email-templates-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "company-email-templates-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "company-email-templates-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "company-email-templates-phase-01-domain-api",
+      "title": "Company email templates Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "../modules/platform/features/company-email-templates/generated/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "company-email-templates-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "company-email-templates-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "company-email-templates-phase-02-web-client",
+      "title": "Company email templates Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "../modules/platform/features/company-email-templates/generated/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "company-email-templates-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "company-email-templates-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "company-email-templates-phase-03-mobile-client",
+      "title": "Company email templates Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "../modules/platform/features/company-email-templates/generated/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "company-email-templates-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "company-email-templates-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "company-email-templates-phase-04-domain-actions",
+      "title": "Company email templates Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "../modules/platform/features/company-email-templates/generated/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "company-email-templates-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "company-email-templates-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "company-email-templates-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "company-email-templates-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "company-email-templates-phase-05-integration-runtime",
+      "title": "Company email templates Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "../modules/platform/features/company-email-templates/generated/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "company-email-templates-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "company-email-templates-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "company-email-templates-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "company-email-templates-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "company-email-templates-phase-06-verification-acceptance",
+      "title": "Company email templates Phase 06 - Verification and Acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "../modules/platform/features/company-email-templates/generated/PHASE-06-verification-acceptance.md",
+      "sources": [
+        {
+          "book": "company-email-templates-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "company-email-templates-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "company-email-templates-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "company-email-templates-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "company-email-templates-phase-07-customer-education-closure",
+      "title": "Company email templates Phase 07 - Customer Education and Closure",
+      "template": "templates/PHASE-07-customer-education-closure.template.md",
+      "output": "../modules/platform/features/company-email-templates/generated/PHASE-07-customer-education-closure.md",
+      "sources": [
+        {
+          "book": "company-email-templates-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "company-email-templates-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "company-email-templates-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    }
+  ]
+}

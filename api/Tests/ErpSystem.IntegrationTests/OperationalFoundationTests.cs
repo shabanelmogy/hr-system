@@ -1,3 +1,4 @@
+using ErpSystem.Modules.Platform.Application.Features.CompanyEmailTemplates;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
@@ -113,7 +114,7 @@ public sealed class OperationalFoundationTests
             Options.Create(new PlatformPublicApplicationSettings
             {
                 FrontendUrl = string.Empty
-            }));
+            }), new UnusedEmailRenderer(), new UnusedEmailScopeResolver(), new UnusedMessageRecorder(), new UnusedSmtpTransport(), TimeProvider.System, new NoEmailActor());
 
         var exception = await Assert.ThrowsAsync<InvalidOperationException>(() =>
             sender.SendInvitationAsync(
@@ -121,6 +122,8 @@ public sealed class OperationalFoundationTests
                 "Recipient",
                 Guid.NewGuid(),
                 "token",
+                "tenant",
+                1,
                 CancellationToken.None));
 
         Assert.Contains("MailSettings:Enabled", exception.Message, StringComparison.Ordinal);
@@ -142,7 +145,7 @@ public sealed class OperationalFoundationTests
             Options.Create(new PlatformPublicApplicationSettings
             {
                 FrontendUrl = "https://app.example.com"
-            }));
+            }), new UnusedEmailRenderer(), new UnusedEmailScopeResolver(), new UnusedMessageRecorder(), new UnusedSmtpTransport(), TimeProvider.System, new NoEmailActor());
         var buildLink = typeof(PlatformIdentityEmailSender).GetMethod(
             "BuildLinkCore",
             BindingFlags.Instance | BindingFlags.NonPublic);
@@ -1395,5 +1398,28 @@ public sealed class OperationalFoundationTests
             CancellationToken cancellationToken = default) =>
             Task.FromResult(pendingMigrations);
     }
+    private sealed class UnusedEmailRenderer : IAccountEmailRenderer
+    {
+        public Task<RenderedAccountEmail> RenderAsync(string templateId, string language, string name, string actionUrl, string? trustedTenantId, int? trustedCompanyId, CancellationToken token, string? recipientUserId = null) =>
+            throw new InvalidOperationException("Renderer must not run before mail configuration validation.");
+    }
+
+    private sealed class NoEmailActor : ErpSystem.BuildingBlocks.Context.Authentication.ICurrentActor
+    { public string? UserId => null; public string? TenantId => null; public int? CompanyId => null; public bool IsInRole(string role) => false; }
+    private sealed class UnusedEmailScopeResolver : IAccountEmailScopeResolver
+    {
+        public Task<AccountEmailScope?> ResolveAsync(string? tenantId, int? companyId, string? recipientUserId, CancellationToken token) => Task.FromResult<AccountEmailScope?>(null);
+    }
+    private sealed class UnusedMessageRecorder : ErpSystem.Modules.Platform.Application.Features.MessageLogs.IMessageAttemptRecorder
+    {
+        public Task<Guid?> StartAsync(ErpSystem.Modules.Platform.Application.Features.MessageLogs.MessageAttemptStart attempt) => throw new InvalidOperationException();
+        public Task SnapshotAsync(Guid id, ErpSystem.Modules.Platform.Application.Features.MessageLogs.MessageAttemptStart attempt, ErpSystem.Modules.Platform.Application.Features.MessageLogs.MessageAttemptSnapshot snapshot) => throw new InvalidOperationException();
+        public Task CompleteAsync(Guid id, ErpSystem.Modules.Platform.Application.Features.MessageLogs.MessageAttemptStart attempt, ErpSystem.Modules.Platform.Application.Features.MessageLogs.MessageAttemptCompletion completion) => throw new InvalidOperationException();
+    }
+    private sealed class UnusedSmtpTransport : IPlatformSmtpTransport
+    {
+        public Task SendAsync(MimeKit.MimeMessage message, PlatformMailSettings settings, Action<string> stage, CancellationToken token) => throw new InvalidOperationException();
+    }
+
 }
 

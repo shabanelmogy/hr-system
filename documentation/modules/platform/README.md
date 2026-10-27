@@ -30,3 +30,6 @@ Before adding a component, service, or Contract, inventory shared BuildingBlocks
 and module-local reusable pieces. Reuse or extend compatible abstractions and
 record the decision in the feature book. Start new behavior module-local and
 promote it only when it is domain-neutral and used by multiple modules.
+
+
+Company account email templates: [domain review](features/company-email-templates/company-email-templates-review.md), with EN/AR company overrides, safe sample final preview and existing Identity sender binding.

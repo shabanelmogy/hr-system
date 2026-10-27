@@ -1,7 +1,11 @@
-import { auditTrailEndpoints } from './audit-trail-endpoints';
+import { auditTrailEndpoints, createAuditTrailEndpoints } from './audit-trail-endpoints';
 import { auditTrailDetailsSchema, auditTrailPageSchema } from './audit-trail-schemas';
 
 describe('audit trail remote boundary', () => {
+  it('separates the global endpoint without changing company transport', () => {
+    expect(createAuditTrailEndpoints(true).list).toBe('system-audit-trail');
+    expect(createAuditTrailEndpoints(true).entry('platform', 4)).toBe('system-audit-trail/platform/4');
+  });
   it('targets the Platform audit-trail endpoints', () => {
     expect(auditTrailEndpoints.list).toBe('audit-trail');
     expect(auditTrailEndpoints.filters).toBe('audit-trail/filters');

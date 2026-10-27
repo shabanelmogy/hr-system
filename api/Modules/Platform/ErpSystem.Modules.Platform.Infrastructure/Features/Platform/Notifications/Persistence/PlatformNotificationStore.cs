@@ -146,13 +146,17 @@ public sealed class PlatformNotificationStore(
                join company in context.Companies.IgnoreQueryFilters().AsNoTracking()
                    on new { access.TenantId, access.CompanyId } equals new { company.TenantId, CompanyId = company.Id }
                join user in context.Users.AsNoTracking() on access.UserId equals user.Id
-               join userRole in context.UserRoles.AsNoTracking() on user.Id equals userRole.UserId
-               join role in context.Roles.AsNoTracking() on userRole.RoleId equals role.Id
-               join claim in context.RoleClaims.AsNoTracking() on role.Id equals claim.RoleId
                where !user.IsDisabled && (!user.LockoutEnd.HasValue || user.LockoutEnd <= utcNow) && company.IsActive &&
-                      !role.IsDeleted &&
-                     (role.IsSystem || role.TenantId == access.TenantId) &&
-                     claim.ClaimType == PermissionClaimNames.Permission && claim.ClaimValue == permission &&
+                     ((from userRole in context.UserRoles.AsNoTracking()
+                       join role in context.Roles.AsNoTracking() on userRole.RoleId equals role.Id
+                       join claim in context.RoleClaims.AsNoTracking() on role.Id equals claim.RoleId
+                       where userRole.UserId == user.Id && !role.IsDeleted &&
+                           (role.IsSystem || role.TenantId == access.TenantId) &&
+                           claim.ClaimType == PermissionClaimNames.Permission && claim.ClaimValue == permission
+                       select claim).Any() ||
+                      context.UserCompanyPermissionGrantSets.IgnoreQueryFilters().Any(set =>
+                          set.TenantId == access.TenantId && set.CompanyId == access.CompanyId && set.UserId == user.Id &&
+                          set.Grants.Any(grant => grant.Permission == permission))) &&
                      (tenantId == null || access.TenantId == tenantId) &&
                      (companyId == null || access.CompanyId == companyId)
                select new NotificationRecipient(access.TenantId, access.CompanyId, user.Id))
@@ -215,13 +219,15 @@ public sealed class PlatformNotificationStore(
             return context.Notifications.Where(_ => false);
         return context.Notifications.Where(item =>
             item.TenantId == scope.TenantId && item.CompanyId == scope.CompanyId && item.RecipientUserId == userId &&
-            (from userRole in context.UserRoles.AsNoTracking()
+            ((from userRole in context.UserRoles.AsNoTracking()
              join role in context.Roles.AsNoTracking() on userRole.RoleId equals role.Id
              join claim in context.RoleClaims.AsNoTracking() on role.Id equals claim.RoleId
              where userRole.UserId == userId && !role.IsDeleted &&
                    (role.IsSystem || role.TenantId == item.TenantId) &&
                    claim.ClaimType == PermissionClaimNames.Permission && claim.ClaimValue == item.RequiredPermission
-             select claim).Any());
+             select claim).Any() || context.UserCompanyPermissionGrantSets.IgnoreQueryFilters().Any(set =>
+                 set.TenantId == item.TenantId && set.CompanyId == item.CompanyId && set.UserId == userId &&
+                 set.Grants.Any(grant => grant.Permission == item.RequiredPermission))));
     }
 
     private static IQueryable<Notification> ApplyOrdering(IQueryable<Notification> query, string? column, string? direction)

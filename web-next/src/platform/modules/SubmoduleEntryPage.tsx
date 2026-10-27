@@ -35,7 +35,10 @@ export function SubmoduleEntryPage({
   );
   const destination = useMemo(() => {
     if (!user || query.isLoading || query.isError || !submodule) return undefined;
-    return getFrontendSubmoduleDefinition(moduleCode, submoduleCode)?.entryCandidates.find(
+    const candidates = moduleCode.toLowerCase() === "administration"
+      ? submodule.entryPath ? [submodule.entryPath] : []
+      : getFrontendSubmoduleDefinition(moduleCode, submoduleCode)?.entryCandidates ?? [];
+    return candidates.find(
       (path) => canAccessRoute(path, user) && canAccessPathByModules(path, query.data ?? []),
     );
   }, [moduleCode, query.data, query.isError, query.isLoading, submodule, submoduleCode, user]);

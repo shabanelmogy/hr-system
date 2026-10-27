@@ -17,6 +17,8 @@ function validateBufferedBodyLimit() {
 validateBufferedBodyLimit();
 
 const nextConfig: NextConfig = {
+  // Keep browser fixture verification independent of an already running local app.
+  distDir: process.env.ERP_E2E === "1" ? ".next-e2e" : ".next",
   reactStrictMode: true,
   typedRoutes: true,
   cacheComponents: true,

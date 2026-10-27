@@ -10,6 +10,17 @@ namespace ErpSystem.IntegrationTests;
 
 public sealed class GlobalExceptionHandlerTests
 {
+    [Fact]
+    public async Task Oversized_body_returns_413_without_internal_details()
+    {
+        var handler = new HostGlobalExceptionHandler(NullLogger<HostGlobalExceptionHandler>.Instance);
+        var context = new DefaultHttpContext { Response = { Body = new MemoryStream() } };
+        Assert.True(await handler.TryHandleAsync(context, new BadHttpRequestException("private detail", 413), default));
+        Assert.Equal(413, context.Response.StatusCode);
+        context.Response.Body.Position = 0;
+        using var body = await JsonDocument.ParseAsync(context.Response.Body);
+        Assert.DoesNotContain("private detail", body.RootElement.GetRawText(), StringComparison.Ordinal);
+    }
     [Theory]
     [InlineData(FileUploadSecurityFailureKind.InvalidContent, "InvalidFileContent", StatusCodes.Status400BadRequest)]
     [InlineData(FileUploadSecurityFailureKind.MalwareDetected, "FileMalwareDetected", StatusCodes.Status422UnprocessableEntity)]

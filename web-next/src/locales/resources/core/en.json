@@ -282,6 +282,9 @@
   "UserEnabledNotificationMessage": "{{UserName}} was enabled.",
   "UserUnlockedNotificationMessage": "{{UserName}} was unlocked.",
   "menu": {
+    "systemSettings": "Settings",
+    "systemErrorLogs": "System Error Logs",
+    "errorLogSettings": "Error Log Settings",
     "openSidebar": "Open navigation",
     "closeSidebar": "Close navigation",
     "profileDescription": "View and edit your personal information",
@@ -385,7 +388,18 @@
       "blue": "Blue",
       "navy": "Navy & gold",
       "monochrome": "Black & white"
-    }
+    },
+    "companyLocalizations": "Company languages and texts",
+    "administration": "Administration",
+    "auditTrail": "Audit Trail",
+    "errorLogs": "Error Logs",
+    "healthCheck": "System Health",
+    "apiEndpoints": "API Endpoints",
+    "hangfireDashboard": "Background Jobs",
+    "localizationMessages": "Localization Messages",
+    "systemUiTexts": "System UI texts",
+    "emailTemplates": "Email templates",
+    "messageLogs": "Message logs"
   },
   "actions": {
     "buttons": "Actions",
@@ -562,7 +576,8 @@
     "goToPreviousRecord": "Go to previous record",
     "goToNextRecord": "Go to next record",
     "goToLastRecord": "Go to last record",
-    "pages": "Pages"
+    "pages": "Pages",
+    "unknownTotal": "Unknown"
   },
   "chartCommon": {
     "label": "Data chart",
@@ -998,5 +1013,56 @@
   "attendanceDevices": {
     "title": "Attendance devices",
     "devices": "Devices"
+  },
+  "settingsWorkspace": {
+    "description": "Manage the settings available to your account.",
+    "forbidden": "No settings are available with your current permissions."
+  },
+  "emailTemplates": {
+    "title": "Email templates",
+    "description": "Customize account emails for this company.",
+    "template": "Template",
+    "subject": "Subject",
+    "body": "Email content",
+    "language": "Language",
+    "english": "English",
+    "arabic": "Arabic",
+    "status": "Status",
+    "actions": "Actions",
+    "all": "All templates",
+    "customized": "Customized",
+    "default": "Standard template",
+    "edit": "Edit and preview",
+    "view": "View and preview",
+    "preview": "Preview final email",
+    "previewing": "Preparing preview…",
+    "previewHint": "Sample preview of the current draft; no email is sent. Fonts and spacing vary by email app.",
+    "previewOutdated": "Draft changed. Refresh the preview.",
+    "variables": "Data fields replaced when sending",
+    "insertSubject": "Insert into subject: {{token}}",
+    "actionButton": "Continue",
+    "reset": "Restore standard template",
+    "resetConfirm": "Restore the standard version for this template and language?",
+    "reload": "Reload",
+    "loadFailed": "Email templates could not be loaded.",
+    "operationFailed": "Check the content, or reload if another user changed it.",
+    "forbidden": "You do not have permission to view company email templates.",
+    "empty": "No templates match these criteria.",
+    "search": "Search template name or subject…",
+    "securityHint": "One recipient only. Keep one account-action link. CC/BCC are unavailable.",
+    "subjectValidation": "Use 1–200 characters without line breaks.",
+    "bodyValidation": "Enter email content up to 50,000 characters.",
+    "actionValidation": "Include exactly one {ACTION_URL} account-action link."
+  },
+  "richText": {
+    "formatting": "Text formatting",
+    "bold": "Bold",
+    "italic": "Italic",
+    "underline": "Underline",
+    "bulletList": "Bullet list",
+    "orderedList": "Numbered list",
+    "undo": "Undo",
+    "redo": "Redo",
+    "hint": "Select text to format it, or insert an available data field at the cursor."
   }
 }

@@ -1,109 +1,34 @@
 "use client";
-
-import {
-  Alert,
-  Box,
-  Button,
-  CircularProgress,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography,
-} from "@mui/material";
+import { useMemo } from "react";
+import { Box, Button } from "@mui/material";
+import HistoryIcon from "@mui/icons-material/History";
+import type { GridColDef } from "@mui/x-data-grid";
 import { useTranslation } from "react-i18next";
+import { MyForm, FormSection } from "@/shared/components/forms";
+import { MyDataGrid } from "@/shared/components/data-grid";
+import { DetailFields } from "@/shared/components/data-display";
+import { FeedbackState } from "@/shared/components/feedback";
 import { useAuditTrailEntry } from "../hooks/useAuditTrail";
-import type { AuditTrailItem } from "../types/auditTrail";
-import { AuditActionChip } from "./AuditActionChip";
+import type { AuditTrailItem, AuditFieldChange } from "../types/auditTrail";
 import { entityLabel, fieldLabel, formatAuditDate, moduleLabel } from "./auditTrailFormat";
-
-interface AuditTrailDetailsDialogProps {
-  item: AuditTrailItem | null;
-  onClose: () => void;
-}
-
-/** Field-by-field before/after view of one audit-trail action. */
-export function AuditTrailDetailsDialog({ item, onClose }: AuditTrailDetailsDialogProps) {
+export function AuditTrailDetailsDialog({ item, onClose }: { item: AuditTrailItem | null; onClose: () => void }) {
   const { t, i18n } = useTranslation();
-  const language = i18n.resolvedLanguage ?? i18n.language ?? "en";
   const query = useAuditTrailEntry(item?.moduleCode ?? null, item?.id ?? null);
-  const changes = query.data?.changes ?? [];
-  const empty = t("auditLog.empty");
-
-  return (
-    <Dialog open={Boolean(item)} onClose={onClose} maxWidth="md" fullWidth>
-      <DialogTitle sx={{ display: "flex", alignItems: "center", gap: 1.5, flexWrap: "wrap" }}>
-        {item ? <AuditActionChip action={item.action} /> : null}
-        <span>
-          {item ? entityLabel(t, item.entityName) : ""}
-          {item?.entityDisplay ? ` — ${item.entityDisplay}` : ""}
-        </span>
-      </DialogTitle>
-      <DialogContent dividers>
-        {item ? (
-          <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr" }, gap: 1, mb: 2 }}>
-            <Info label={t("auditLog.module")} value={moduleLabel(t, item.moduleCode)} />
-            <Info label={t("auditLog.recordKey")} value={`#${item.entityKey}`} />
-            <Info label={t("auditLog.user")} value={item.userName ?? item.userId ?? t("auditLog.system")} />
-            <Info label={t("auditLog.when")} value={formatAuditDate(item.occurredOn, language)} />
-          </Box>
-        ) : null}
-
-        {query.isLoading ? (
-          <Box sx={{ display: "flex", justifyContent: "center", py: 4 }}>
-            <CircularProgress aria-label={t("auditLog.loading")} />
-          </Box>
-        ) : query.error ? (
-          <Alert
-            severity="error"
-            action={<Button color="inherit" size="small" onClick={() => void query.refetch()}>{t("auditLog.retry")}</Button>}
-          >
-            {t("auditLog.loadError")}
-          </Alert>
-        ) : changes.length === 0 ? (
-          <Typography color="text.secondary">{t("auditLog.noFieldChanges")}</Typography>
-        ) : (
-          <TableContainer component={Paper} variant="outlined">
-            <Table size="small">
-              <TableHead>
-                <TableRow>
-                  <TableCell>{t("auditLog.field")}</TableCell>
-                  <TableCell>{t("auditLog.oldValue")}</TableCell>
-                  <TableCell>{t("auditLog.newValue")}</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {changes.map((change) => (
-                  <TableRow key={change.field}>
-                    <TableCell sx={{ fontWeight: 600 }}>{fieldLabel(t, change.field)}</TableCell>
-                    <TableCell sx={{ color: "error.main", wordBreak: "break-word" }}>{change.oldValue ?? empty}</TableCell>
-                    <TableCell sx={{ color: "success.main", wordBreak: "break-word" }}>{change.newValue ?? empty}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        )}
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={onClose}>{t("auditLog.close")}</Button>
-      </DialogActions>
-    </Dialog>
-  );
-}
-
-function Info({ label, value }: { label: string; value: string }) {
-  return (
-    <Box>
-      <Typography variant="caption" color="text.secondary">{label}</Typography>
-      <Typography variant="body2" sx={{ wordBreak: "break-word" }}>{value}</Typography>
-    </Box>
-  );
+  const changes = useMemo(() => (query.data?.changes ?? []).map((change, index) => ({ ...change, id: index })), [query.data]);
+  const columns = useMemo<GridColDef<AuditFieldChange & { id: number }>[]>(() => [
+    { field: "field", headerName: t("auditLog.field"), minWidth: 180, flex: 1, valueFormatter: value => fieldLabel(t, String(value)) },
+    { field: "oldValue", headerName: t("auditLog.oldValue"), minWidth: 180, flex: 1, valueFormatter: value => value ?? t("auditLog.empty") },
+    { field: "newValue", headerName: t("auditLog.newValue"), minWidth: 180, flex: 1, valueFormatter: value => value ?? t("auditLog.empty") },
+  ], [t]);
+  return <MyForm open={Boolean(item)} onClose={onClose} title={item ? entityLabel(t, item.entityName) : t("auditLog.title")} subtitle={item?.entityDisplay ?? item?.entityKey} icon={<HistoryIcon />} isViewMode maxWidth="lg">
+    {item ? <FormSection title={t("auditLog.record")} variant="outlined"><DetailFields items={[
+      { id: "module", label: t("auditLog.module"), value: moduleLabel(t, item.moduleCode) },
+      { id: "key", label: t("auditLog.recordKey"), value: item.entityKey },
+      { id: "user", label: t("auditLog.user"), value: item.userName ?? item.userId ?? t("auditLog.system") },
+      { id: "when", label: t("auditLog.when"), value: formatAuditDate(item.occurredOn, i18n.language) },
+    ]} /></FormSection> : null}
+    <Box sx={{ height: 340, mt: 2, minWidth: 0 }}><MyDataGrid rows={query.isError ? [] : changes} columns={columns} loading={query.isPending}
+      showToolbar pagination pageSizeOptions={[10, 25, 50]} initialState={{ pagination: { paginationModel: { page: 0, pageSize: 10 } } }}
+      emptyContent={<FeedbackState icon={<HistoryIcon />} role={query.isError ? "alert" : "status"} title={t(query.isError ? "auditLog.loadError" : "auditLog.noFieldChanges")} actions={query.isError ? <Button onClick={() => void query.refetch()}>{t("auditLog.retry")}</Button> : undefined} />} /></Box>
+  </MyForm>;
 }

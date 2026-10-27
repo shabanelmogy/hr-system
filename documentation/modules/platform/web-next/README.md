@@ -39,3 +39,6 @@ policies, page actions, and controller attributes must remain aligned.
 Future Platform features must document their route, server/client boundary,
 loading/error/empty states, permissions, localization, and verification before
 release.
+
+
+Company account email templates: [canonical web profile](../features/company-email-templates/company-email-templates-web.md), independently company-scoped, Administration > Email Templates. Web edits/previews; Mobile previews only.

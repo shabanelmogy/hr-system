@@ -3,6 +3,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import type {
   AdministrationPageQuery,
   CreateManagedUserRequest,
+  ReplaceUserPermissions,
 } from '../../domain/models/administration';
 import type {
   SaveManagedUserInput,
@@ -17,6 +18,8 @@ export const administrationKeys = {
   companyOptions: ['administration', 'company-options'] as const,
   roles: ['administration', 'roles'] as const,
   roleClaims: (roleId: string) => ['administration', 'roles', roleId, 'claims'] as const,
+  userPermissions: (scope: { tenantId: string; companyId: number; userId: string }, targetUserId: string) =>
+    ['administration', 'user-permissions', scope.tenantId, scope.companyId, scope.userId, targetUserId] as const,
 };
 
 export function useManagedUsers() {
@@ -109,6 +112,37 @@ export function useRoleClaims(roleId: string) {
     queryKey: administrationKeys.roleClaims(roleId),
     queryFn: () => useCases.getRoleClaims(roleId),
     enabled: roleId.length > 0,
+  });
+}
+
+export function useUserPermissions(
+  scope: { tenantId: string; companyId: number; userId: string } | null,
+  targetUserId: string | null,
+) {
+  const useCases = useAdministrationUseCases();
+  return useQuery({
+    queryKey: administrationKeys.userPermissions(
+      scope ?? { tenantId: '', companyId: 0, userId: '' }, targetUserId ?? '',
+    ),
+    queryFn: () => useCases.getUserPermissions(targetUserId!, scope!.companyId),
+    enabled: Boolean(scope && scope.companyId > 0 && targetUserId),
+  });
+}
+
+export function useReplaceUserPermissions(
+  scope: { tenantId: string; companyId: number; userId: string } | null,
+  targetUserId: string | null,
+) {
+  const queryClient = useQueryClient();
+  const useCases = useAdministrationUseCases();
+  return useMutation({
+    mutationFn: (request: ReplaceUserPermissions) => useCases.replaceUserPermissions(targetUserId!, request),
+    networkMode: 'always',
+    onSuccess: async () => {
+      if (scope && targetUserId) {
+        await queryClient.invalidateQueries({ queryKey: administrationKeys.userPermissions(scope, targetUserId) });
+      }
+    },
   });
 }
 

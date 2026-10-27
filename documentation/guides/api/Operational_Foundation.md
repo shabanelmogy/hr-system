@@ -170,10 +170,10 @@ External websites are not health dependencies. A Google or public-internet failu
 
 ## Startup database work
 
-SQL Server LocalDB is a development-only option. In the current two-file layout,
-the ignored `ErpSystem.Api/appsettings.json` carries the host SQL Server
-connection and the ignored `appsettings.Development.json` overrides it with
-LocalDB during local development. A deployment secret store or the
+SQL Server LocalDB is a development-only option. In the current development
+layout, the ignored `ErpSystem.Api/appsettings.json` carries the effective SQL
+Server connection and all other runtime settings; the ignored
+`appsettings.Development.json` is empty. A deployment secret store or the
 `ConnectionStrings__DefaultConnection` process environment variable may override
 the base value when the host supports it. Do not place connection values or
 credentials in tracked files. Module-specific
@@ -194,12 +194,14 @@ validation is explicitly deferred.
 }
 ```
 
-Both settings are enabled in local Development. Hosted environments default to disabled so multiple API instances do not race while applying migrations or seeds. Apply production migrations as a deployment step, or explicitly opt in for a controlled single-instance deployment.
+Both settings are currently disabled for local and hosted development. Use the
+module migration script deliberately. Hosted environments should keep them
+disabled so multiple API instances do not race while applying migrations or seeds.
 
 The supported deployment command is the module-owned migration script from the
 `api` directory. The module design-time factories read the ignored
-`ErpSystem.Api/appsettings.json` host connection, then the ignored
-`appsettings.Development.json` LocalDB override when the environment is
+`ErpSystem.Api/appsettings.json` connection, then any ignored
+`appsettings.Development.json` override when the environment is
 `Development`, and finally process environment variables. Preview the module
 discovery and dependency order without changing a database:
 
@@ -213,7 +215,7 @@ After reviewing the preview, the exact production migration command is:
 .\scripts\Apply-ErpModuleMigrations.ps1 -Environment Production
 ```
 
-No process connection variable is required when the two appsettings files or
+No process connection variable is required when `appsettings.json` or
 module-specific configuration provide the effective values. Set
 `ConnectionStrings__<ModuleName>` when extracting a module to its own database;
 the module's design-time factory and runtime registration use that override
@@ -302,13 +304,23 @@ that channel to the trusted scanner service. Signature checks inspect a bounded
 prefix and are not a complete format parser or a substitute for malware scanning.
 
 The tracked `ErpSystem.Api/appsettings.example.json` contains placeholders only;
-live `appsettings*.json` files are local and ignored. Supply JWT, SMTP, database,
-Hangfire, bootstrap-user, Google, and connector secrets through user secrets,
-environment variables, or the deployment secret store; never restore
-credentials directly into the tracked example file.
+live `appsettings*.json` files remain ignored by Git. Current development uses
+one `appsettings.json`, including the development JWT key and existing local
+secrets, and normal local publishing includes it. Automatic user-secrets loading
+is disabled by removing the host's `UserSecretsId`; the previous secret store is
+retained separately. Strict production readiness is
+explicitly deferred in this file. Production CI/images exclude it with
+`PublishAppSettings=false` and receive deployment-owned configuration. See
+`PRODUCTION_DEPLOYMENT_RUNBOOK.md` for both paths and the `PROD-017` promotion
+gate; never put credentials into the tracked example file.
 
 The collector/backend, alert routes, dashboards, and SLO thresholds remain
 deployment decisions. A message broker, distributed cache, persistent Data
 Protection storage, and gateway-specific configuration can be introduced when
 the deployment topology requires them. They are not prerequisites for building
 the domain.
+
+
+### Error Logs structural diagnostics - 2026-10-19
+
+The existing system-only diagnostics array now carries bounded exception types/HResult, known SQL numeric codes/cause classifications, nested/aggregate nodes and method/IL/optional source-line information, plus trusted HTTP trace/route-template/runtime or job/retry context. Platform persists at most 32768 serialized JSON characters; private exception text, SQL, parameters, bodies, headers, queries and source filenames remain excluded. Client reports cannot supply this array. Company read/copy/export still receives no technical diagnostics or IP. The SQL column was already nvarchar(max); the development live schema/rollback probe and standard module migration check require no new migration. Canonical behavior and acceptance: documentation/modules/platform/features/error-logs/error-logs-api.md and error-logs-evidence.md. Capture remains best effort under RISK-010.

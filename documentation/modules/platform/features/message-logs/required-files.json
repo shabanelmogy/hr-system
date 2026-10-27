@@ -1,0 +1,453 @@
+{
+  "schemaVersion": 1,
+  "status": "final",
+  "feature": "message-logs",
+  "featureName": "Company Message Logs",
+  "referenceFeature": "N/A",
+  "planId": "platform-message-logs",
+  "sliceId": "S1 Message Logs V1",
+  "canonicalPlan": "documentation/plans/business/platform-message-logs/PLAN.md",
+  "featureDecompositionDecision": "Decompose",
+  "screenWorkflowContract": "documentation/plans/business/platform-message-logs/decomposition/message-logs.md",
+  "plannedCustomerEducation": "documentation/plans/business/platform-message-logs/education/message-logs.md",
+  "purpose": "Phase00 actual current preflight sources; extend with runtime only when created.",
+  "reviewArtifact": "documentation/modules/platform/features/message-logs/message-logs-evidence.md",
+  "implementationRequest": "documentation/modules/platform/features/message-logs/message-logs-request.md",
+  "plannedCanonicalBooks": {
+    "master": "documentation/modules/platform/features/message-logs/message-logs-review.md",
+    "api": "documentation/modules/platform/features/message-logs/message-logs-api.md",
+    "web": "documentation/modules/platform/features/message-logs/message-logs-web.md",
+    "mobile": "documentation/modules/platform/features/message-logs/message-logs-mobile.md"
+  },
+  "sourceCollections": [
+    {
+      "id": "web-feature",
+      "layer": "web-next",
+      "path": "web-next/src/platform/message-logs",
+      "minimumFiles": 10,
+      "purpose": "Typed service/query/controller/shared list/detail/export and tests"
+    }
+  ],
+  "requiredFiles": [
+    {
+      "id": "root-agent-guidance",
+      "layer": "configuration",
+      "path": "AGENTS.md",
+      "purpose": "Repository-wide feature and documentation rules"
+    },
+    {
+      "id": "preflight-f15dce1395eb",
+      "path": "documentation/modules/platform/features/message-logs/message-logs-evidence.md",
+      "layer": "documentation",
+      "purpose": "Verified current source or authored preflight evidence"
+    },
+    {
+      "id": "preflight-5b8eb9fc95eb",
+      "path": "documentation/modules/platform/features/message-logs/message-logs-request.md",
+      "layer": "documentation",
+      "purpose": "Verified current source or authored preflight evidence"
+    },
+    {
+      "id": "preflight-228833352a10",
+      "path": "documentation/plans/business/platform-message-logs/DECISIONS.md",
+      "layer": "documentation",
+      "purpose": "Verified current source or authored preflight evidence"
+    },
+    {
+      "id": "preflight-0613b652bc5d",
+      "path": "documentation/plans/business/platform-message-logs/DISCOVERY.md",
+      "layer": "documentation",
+      "purpose": "Verified current source or authored preflight evidence"
+    },
+    {
+      "id": "preflight-006b1f763b9b",
+      "path": "documentation/plans/business/platform-message-logs/EVIDENCE.md",
+      "layer": "documentation",
+      "purpose": "Verified current source or authored preflight evidence"
+    },
+    {
+      "id": "preflight-4bb0dcd71e1a",
+      "path": "documentation/plans/business/platform-message-logs/PLAN.md",
+      "layer": "documentation",
+      "purpose": "Verified current source or authored preflight evidence"
+    },
+    {
+      "id": "preflight-666fd14cde84",
+      "path": "documentation/plans/business/platform-message-logs/RESEARCH.md",
+      "layer": "documentation",
+      "purpose": "Verified current source or authored preflight evidence"
+    },
+    {
+      "id": "preflight-2757f9a4b626",
+      "path": "documentation/plans/business/platform-message-logs/SPEC_SUMMARY.md",
+      "layer": "documentation",
+      "purpose": "Verified current source or authored preflight evidence"
+    },
+    {
+      "id": "preflight-db6f52f87653",
+      "path": "documentation/plans/business/platform-message-logs/decomposition/message-log-settings.md",
+      "layer": "documentation",
+      "purpose": "Verified current source or authored preflight evidence"
+    },
+    {
+      "id": "preflight-85a1ff18b3e6",
+      "path": "documentation/plans/business/platform-message-logs/decomposition/message-logs.md",
+      "layer": "documentation",
+      "purpose": "Verified current source or authored preflight evidence"
+    },
+    {
+      "id": "preflight-31102c716050",
+      "path": "documentation/modules/platform/features/message-logs/message-logs-api.md",
+      "layer": "documentation",
+      "purpose": "Verified current source or authored preflight evidence"
+    },
+    {
+      "id": "preflight-a91f86a7cfde",
+      "path": "documentation/modules/platform/features/message-logs/message-logs-mobile.md",
+      "layer": "documentation",
+      "purpose": "Verified current source or authored preflight evidence"
+    },
+    {
+      "id": "preflight-e5d556ca6c60",
+      "path": "documentation/modules/platform/features/message-logs/message-logs-review.md",
+      "layer": "documentation",
+      "purpose": "Verified current source or authored preflight evidence"
+    },
+    {
+      "id": "preflight-5b9f60668d84",
+      "path": "documentation/modules/platform/features/message-logs/message-logs-web.md",
+      "layer": "documentation",
+      "purpose": "Verified current source or authored preflight evidence"
+    },
+    {
+      "id": "preflight-9b879515a096",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Identity/PlatformIdentityEmailSender.cs",
+      "layer": "runtime",
+      "purpose": "Verified current source or authored preflight evidence"
+    },
+    {
+      "id": "preflight-3ff34bd422c0",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Features/CompanyEmailTemplates/CompanyEmailTemplateStore.cs",
+      "layer": "runtime",
+      "purpose": "Verified current source or authored preflight evidence"
+    },
+    {
+      "id": "preflight-b6871cc46c2a",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Features/Platform/ErrorLogs/ErrorLogStore.cs",
+      "layer": "runtime",
+      "purpose": "Verified current source or authored preflight evidence"
+    },
+    {
+      "id": "preflight-ae3c833fff6e",
+      "path": "web-next/src/platform/error-logs/pages/ErrorLogsPage.tsx",
+      "layer": "runtime",
+      "purpose": "Verified current source or authored preflight evidence"
+    },
+    {
+      "id": "preflight-610ff869536e",
+      "path": "mobile-react/src/platform/tools/error-logs/presentation/screens/ErrorLogsScreen.tsx",
+      "layer": "runtime",
+      "purpose": "Verified current source or authored preflight evidence"
+    },
+    {
+      "id": "preflight-b0ec0ff66088",
+      "path": "documentation/modules/platform/features/error-logs/required-files.json",
+      "layer": "documentation",
+      "purpose": "Verified current source or authored preflight evidence"
+    },
+    {
+      "id": "runtime-1f2c3ae1b17f",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Application/Features/MessageLogs/MessageLogRequests.cs",
+      "layer": "api",
+      "purpose": "Actual capture/read/transport/schema/ACL and test evidence"
+    },
+    {
+      "id": "runtime-f9a0e17193a0",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Features/MessageLogs/MessageLogPersistence.cs",
+      "layer": "api",
+      "purpose": "Actual capture/read/transport/schema/ACL and test evidence"
+    },
+    {
+      "id": "runtime-c416b51a34e9",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Presentation/Features/Platform/MessageLogs/V1/MessageLogsController.cs",
+      "layer": "api",
+      "purpose": "Actual capture/read/transport/schema/ACL and test evidence"
+    },
+    {
+      "id": "runtime-2d070da20fb3",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Migrations/20261021042902_AddCompanyMessageLogs.cs",
+      "layer": "api",
+      "purpose": "Actual capture/read/transport/schema/ACL and test evidence"
+    },
+    {
+      "id": "runtime-831a024e44f2",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Migrations/20261021042902_AddCompanyMessageLogs.Designer.cs",
+      "layer": "api",
+      "purpose": "Actual capture/read/transport/schema/ACL and test evidence"
+    },
+    {
+      "id": "runtime-c922a8cf0010",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Domain/Platform/MessageLogs/MessageLogEntry.cs",
+      "layer": "api",
+      "purpose": "Actual capture/read/transport/schema/ACL and test evidence"
+    },
+    {
+      "id": "runtime-f6adf032e6e9",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Tests/MessageLogTests.cs",
+      "layer": "api",
+      "purpose": "Actual capture/read/transport/schema/ACL and test evidence"
+    },
+    {
+      "id": "runtime-e64198ff1d90",
+      "path": "api/Tests/ErpSystem.IntegrationTests/MessageLogPersistenceTests.cs",
+      "layer": "api",
+      "purpose": "Actual capture/read/transport/schema/ACL and test evidence"
+    },
+    {
+      "id": "runtime-ff21ff25591c",
+      "path": "api/Tests/ErpSystem.IntegrationTests/OperationalFoundationTests.cs",
+      "layer": "api",
+      "purpose": "Actual capture/read/transport/schema/ACL and test evidence"
+    },
+    {
+      "id": "runtime-499510f8f2dd",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Identity/PlatformSmtpTransport.cs",
+      "layer": "api",
+      "purpose": "Actual capture/read/transport/schema/ACL and test evidence"
+    },
+    {
+      "id": "runtime-2f87d7dc9b51",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/PlatformDbContext.cs",
+      "layer": "api",
+      "purpose": "Actual capture/read/transport/schema/ACL and test evidence"
+    },
+    {
+      "id": "runtime-15d79ed2d896",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Migrations/PlatformDbContextModelSnapshot.cs",
+      "layer": "api",
+      "purpose": "Actual capture/read/transport/schema/ACL and test evidence"
+    },
+    {
+      "id": "runtime-21a64e62e98f",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/DependencyInjection.cs",
+      "layer": "api",
+      "purpose": "Actual capture/read/transport/schema/ACL and test evidence"
+    },
+    {
+      "id": "runtime-2aef1a6dd3f3",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Application/CompanyAccess/CompanyAccessContracts.cs",
+      "layer": "api",
+      "purpose": "Actual capture/read/transport/schema/ACL and test evidence"
+    },
+    {
+      "id": "runtime-440cdaef93b6",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Application/Features/CompanyEmailTemplates/CompanyEmailTemplateContracts.cs",
+      "layer": "api",
+      "purpose": "Actual capture/read/transport/schema/ACL and test evidence"
+    },
+    {
+      "id": "runtime-4653a5b34679",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Contracts/Authorization/PermissionContracts.cs",
+      "layer": "api",
+      "purpose": "Actual capture/read/transport/schema/ACL and test evidence"
+    },
+    {
+      "id": "runtime-d2b334336b85",
+      "path": "api/ErpSystem.Api/Localization/Resources/en-US.json",
+      "layer": "api",
+      "purpose": "Actual capture/read/transport/schema/ACL and test evidence"
+    },
+    {
+      "id": "runtime-afbf69eea2d7",
+      "path": "api/ErpSystem.Api/Localization/Resources/ar-EG.json",
+      "layer": "api",
+      "purpose": "Actual capture/read/transport/schema/ACL and test evidence"
+    },
+    {
+      "id": "actual-a394ddce2a62",
+      "path": "web-next/src/platform/message-logs/index.ts",
+      "layer": "web-next",
+      "purpose": "Actual Web/shared/locale/scope/catalog/browser evidence"
+    },
+    {
+      "id": "actual-98e233f294d9",
+      "path": "web-next/src/platform/message-logs/components/MessageLogDetailDialog.tsx",
+      "layer": "web-next",
+      "purpose": "Actual Web/shared/locale/scope/catalog/browser evidence"
+    },
+    {
+      "id": "actual-c8fa3d507d62",
+      "path": "web-next/src/platform/message-logs/hooks/useMessageLogs.ts",
+      "layer": "web-next",
+      "purpose": "Actual Web/shared/locale/scope/catalog/browser evidence"
+    },
+    {
+      "id": "actual-bdbd1d032d2d",
+      "path": "web-next/src/platform/message-logs/hooks/useMessageLogsController.ts",
+      "layer": "web-next",
+      "purpose": "Actual Web/shared/locale/scope/catalog/browser evidence"
+    },
+    {
+      "id": "actual-e8a9ce2c60dd",
+      "path": "web-next/src/platform/message-logs/pages/MessageLogsPage.tsx",
+      "layer": "web-next",
+      "purpose": "Actual Web/shared/locale/scope/catalog/browser evidence"
+    },
+    {
+      "id": "actual-aa42c60c8158",
+      "path": "web-next/src/platform/message-logs/services/messageLogService.test.ts",
+      "layer": "web-next",
+      "purpose": "Actual Web/shared/locale/scope/catalog/browser evidence"
+    },
+    {
+      "id": "actual-ebb4daa606cd",
+      "path": "web-next/src/platform/message-logs/services/messageLogService.ts",
+      "layer": "web-next",
+      "purpose": "Actual Web/shared/locale/scope/catalog/browser evidence"
+    },
+    {
+      "id": "actual-c94c2ddd55dc",
+      "path": "web-next/src/platform/message-logs/types/messageLogs.ts",
+      "layer": "web-next",
+      "purpose": "Actual Web/shared/locale/scope/catalog/browser evidence"
+    },
+    {
+      "id": "actual-d603ff8c368d",
+      "path": "web-next/src/platform/message-logs/utils/messageLogPresentation.ts",
+      "layer": "web-next",
+      "purpose": "Actual Web/shared/locale/scope/catalog/browser evidence"
+    },
+    {
+      "id": "actual-bdb4d752c550",
+      "path": "web-next/src/platform/message-logs/utils/messageLogReport.ts",
+      "layer": "web-next",
+      "purpose": "Actual Web/shared/locale/scope/catalog/browser evidence"
+    },
+    {
+      "id": "actual-eec13af91d8d",
+      "path": "web-next/src/app/(main)/administration/(platform)/message-logs/page.tsx",
+      "layer": "web-next",
+      "purpose": "Actual Web/shared/locale/scope/catalog/browser evidence"
+    },
+    {
+      "id": "actual-c0cb90d7f6d1",
+      "path": "web-next/src/locales/scopes/PlatformMessagesTranslationScope.tsx",
+      "layer": "web-next",
+      "purpose": "Actual Web/shared/locale/scope/catalog/browser evidence"
+    },
+    {
+      "id": "actual-ec24e4cb3bed",
+      "path": "web-next/src/locales/resources/platform-messages/en.json",
+      "layer": "web-next",
+      "purpose": "Actual Web/shared/locale/scope/catalog/browser evidence"
+    },
+    {
+      "id": "actual-51a9ac39204b",
+      "path": "web-next/src/locales/resources/platform-messages/ar.json",
+      "layer": "web-next",
+      "purpose": "Actual Web/shared/locale/scope/catalog/browser evidence"
+    },
+    {
+      "id": "actual-b4ecfd01a4c3",
+      "path": "web-next/src/locales/resources/core/en.json",
+      "layer": "web-next",
+      "purpose": "Actual Web/shared/locale/scope/catalog/browser evidence"
+    },
+    {
+      "id": "actual-8476daa30d72",
+      "path": "web-next/src/locales/resources/core/ar.json",
+      "layer": "web-next",
+      "purpose": "Actual Web/shared/locale/scope/catalog/browser evidence"
+    },
+    {
+      "id": "actual-97d6d1bd0b78",
+      "path": "web-next/src/locales/resources/platform-auth/en.json",
+      "layer": "web-next",
+      "purpose": "Actual Web/shared/locale/scope/catalog/browser evidence"
+    },
+    {
+      "id": "actual-07c309e5fd72",
+      "path": "web-next/src/locales/resources/platform-auth/ar.json",
+      "layer": "web-next",
+      "purpose": "Actual Web/shared/locale/scope/catalog/browser evidence"
+    },
+    {
+      "id": "actual-49b6509c6a72",
+      "path": "web-next/src/shared/components/preview/SafeHtmlPreview.tsx",
+      "layer": "web-next",
+      "purpose": "Actual Web/shared/locale/scope/catalog/browser evidence"
+    },
+    {
+      "id": "actual-a78d9fc4e4cd",
+      "path": "web-next/src/shared/components/preview/SafeHtmlPreview.test.tsx",
+      "layer": "web-next",
+      "purpose": "Actual Web/shared/locale/scope/catalog/browser evidence"
+    },
+    {
+      "id": "actual-3859820a8828",
+      "path": "web-next/src/shared/components/lists/card-view/index.ts",
+      "layer": "web-next",
+      "purpose": "Actual Web/shared/locale/scope/catalog/browser evidence"
+    },
+    {
+      "id": "actual-f89c054c6177",
+      "path": "web-next/src/config/routes.ts",
+      "layer": "web-next",
+      "purpose": "Actual Web/shared/locale/scope/catalog/browser evidence"
+    },
+    {
+      "id": "actual-da6509166927",
+      "path": "web-next/src/lib/auth/route-access.ts",
+      "layer": "web-next",
+      "purpose": "Actual Web/shared/locale/scope/catalog/browser evidence"
+    },
+    {
+      "id": "actual-c3dd1503c5c7",
+      "path": "web-next/src/lib/auth/permissions.ts",
+      "layer": "web-next",
+      "purpose": "Actual Web/shared/locale/scope/catalog/browser evidence"
+    },
+    {
+      "id": "actual-fc6dfbd01903",
+      "path": "web-next/src/platform/navigation/platformNavigation.tsx",
+      "layer": "web-next",
+      "purpose": "Actual Web/shared/locale/scope/catalog/browser evidence"
+    },
+    {
+      "id": "actual-0d9b9f06b10f",
+      "path": "web-next/e2e/message-logs.spec.ts",
+      "layer": "web-next",
+      "purpose": "Actual Web/shared/locale/scope/catalog/browser evidence"
+    },
+    {
+      "id": "actual-2cd3ed511c49",
+      "path": "web-next/e2e/support/test-backend.mjs",
+      "layer": "web-next",
+      "purpose": "Actual Web/shared/locale/scope/catalog/browser evidence"
+    },
+    {
+      "id": "actual-263c4a297d27",
+      "path": "scripts/company-ui-scope-policy.json",
+      "layer": "configuration",
+      "purpose": "Actual Web/shared/locale/scope/catalog/browser evidence"
+    },
+    {
+      "id": "actual-befd8f72fa1c",
+      "path": "scripts/company-ui-scope-policy.test.mjs",
+      "layer": "configuration",
+      "purpose": "Actual Web/shared/locale/scope/catalog/browser evidence"
+    },
+    {
+      "id": "actual-4ec4965efad0",
+      "path": "web-next/src/config/company-ui-catalog-version.ts",
+      "layer": "web-next",
+      "purpose": "Actual Web/shared/locale/scope/catalog/browser evidence"
+    },
+    {
+      "id": "actual-f63d61dd90ea",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Features/CompanyLocalization/company-ui-catalog.json",
+      "layer": "configuration",
+      "purpose": "Actual Web/shared/locale/scope/catalog/browser evidence"
+    }
+  ]
+}

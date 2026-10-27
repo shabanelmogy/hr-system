@@ -155,6 +155,189 @@ namespace ErpSystem.Modules.Platform.Infrastructure.Migrations
                     b.ToTable("CompanyCountries", "platform");
                 });
 
+            modelBuilder.Entity("ErpSystem.Modules.Platform.Domain.Companies.Entities.CompanyEmailTemplateSettings", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Revision")
+                        .IsConcurrencyToken()
+                        .HasColumnType("int");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TenantId", "CompanyId")
+                        .IsUnique();
+
+                    b.ToTable("CompanyEmailTemplateSettings", "platform");
+                });
+
+            modelBuilder.Entity("ErpSystem.Modules.Platform.Domain.Companies.Entities.CompanyLocalizationSettings", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("DefaultLanguage")
+                        .IsRequired()
+                        .HasMaxLength(2)
+                        .HasColumnType("nvarchar(2)");
+
+                    b.Property<int>("Revision")
+                        .IsConcurrencyToken()
+                        .HasColumnType("int");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TenantId", "CompanyId")
+                        .IsUnique();
+
+                    b.ToTable("CompanyLocalizationSettings", "platform");
+                });
+
+            modelBuilder.Entity("ErpSystem.Modules.Platform.Domain.Platform.ErrorLogs.ErrorLogEntry", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Action")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("Browser")
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<string>("Client")
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<int?>("CompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CorrelationId")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<long?>("DurationMs")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("IpAddress")
+                        .HasMaxLength(45)
+                        .HasColumnType("nvarchar(45)");
+
+                    b.Property<string>("MethodFramesJson")
+                        .HasMaxLength(32768)
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("OccurredOnUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Service")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("Severity")
+                        .IsRequired()
+                        .HasMaxLength(16)
+                        .HasColumnType("nvarchar(16)");
+
+                    b.Property<string>("Source")
+                        .IsRequired()
+                        .HasMaxLength(16)
+                        .HasColumnType("nvarchar(16)");
+
+                    b.Property<int?>("StatusCode")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Summary")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("TenantId")
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<string>("UserId")
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OccurredOnUtc", "Id");
+
+                    b.HasIndex("Source", "OccurredOnUtc");
+
+                    b.HasIndex("TenantId", "CompanyId", "OccurredOnUtc", "Id");
+
+                    b.ToTable("ErrorLogEntries", "platform");
+                });
+
+            modelBuilder.Entity("ErpSystem.Modules.Platform.Domain.Platform.ErrorLogs.ErrorLogRetentionSettings", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RetentionDays")
+                        .HasColumnType("int");
+
+                    b.Property<long>("Revision")
+                        .IsConcurrencyToken()
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ErrorLogRetentionSettings", "platform", t =>
+                        {
+                            t.HasCheckConstraint("CK_ErrorLogRetentionSettings_Days", "[RetentionDays] BETWEEN 1 AND 3650");
+
+                            t.HasCheckConstraint("CK_ErrorLogRetentionSettings_Id", "[Id] = 1");
+                        });
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            RetentionDays = 90,
+                            Revision = 0L
+                        });
+                });
+
             modelBuilder.Entity("ErpSystem.Modules.Platform.Domain.Platform.Files.Entities.UploadedFile", b =>
                 {
                     b.Property<Guid>("Id")
@@ -227,6 +410,121 @@ namespace ErpSystem.Modules.Platform.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Files", "platform");
+                });
+
+            modelBuilder.Entity("ErpSystem.Modules.Platform.Domain.Platform.Localization.SystemLocalizationSettings", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Revision")
+                        .IsConcurrencyToken()
+                        .HasColumnType("int");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SystemLocalizationSettings", "platform", t =>
+                        {
+                            t.HasCheckConstraint("CK_SystemLocalizationSettings_Singleton", "[Id] = 1");
+                        });
+                });
+
+            modelBuilder.Entity("ErpSystem.Modules.Platform.Domain.Platform.MessageLogs.MessageLogEntry", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Cause")
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("CompletedOnUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CorrelationId")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<long?>("DurationMs")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Language")
+                        .IsRequired()
+                        .HasMaxLength(2)
+                        .HasColumnType("nvarchar(2)");
+
+                    b.Property<string>("Phase")
+                        .IsRequired()
+                        .HasMaxLength(16)
+                        .HasColumnType("nvarchar(16)");
+
+                    b.Property<string>("Recipient")
+                        .IsRequired()
+                        .HasMaxLength(320)
+                        .HasColumnType("nvarchar(320)");
+
+                    b.Property<int?>("SmtpStatusCode")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SnapshotHtml")
+                        .HasMaxLength(65536)
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("SnapshotTruncated")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("StartedOnUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Status")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .HasMaxLength(16)
+                        .HasColumnType("nvarchar(16)");
+
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
+
+                    b.Property<string>("TemplateId")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasMaxLength(16)
+                        .HasColumnType("nvarchar(16)");
+
+                    b.Property<string>("UserId")
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("TenantId", "CompanyId", "StartedOnUtc", "Id");
+
+                    b.HasIndex("TenantId", "CompanyId", "Status", "StartedOnUtc");
+
+                    b.ToTable("MessageLogEntries", "platform");
                 });
 
             modelBuilder.Entity("ErpSystem.Modules.Platform.Domain.Platform.SecurityAudits.Entities.SecurityAuditEvent", b =>
@@ -361,6 +659,47 @@ namespace ErpSystem.Modules.Platform.Infrastructure.Migrations
                         .IsUnique();
 
                     b.ToTable("ApiKeys", "platform");
+                });
+
+            modelBuilder.Entity("ErpSystem.Modules.Platform.Domain.Security.Users.Entities.UserCompanyPermissionGrantSet", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Revision")
+                        .IsConcurrencyToken()
+                        .HasColumnType("int");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<string>("TenantId")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("TenantId", "CompanyId", "UserId")
+                        .IsUnique();
+
+                    b.ToTable("UserCompanyPermissionGrantSets", "platform");
                 });
 
             modelBuilder.Entity("ErpSystem.Modules.Platform.Infrastructure.Features.Platform.Notifications.Entities.Notification", b =>
@@ -1234,6 +1573,208 @@ namespace ErpSystem.Modules.Platform.Infrastructure.Migrations
                         .HasPrincipalKey("TenantId", "Id")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("ErpSystem.Modules.Platform.Domain.Companies.Entities.CompanyEmailTemplateSettings", b =>
+                {
+                    b.OwnsMany("ErpSystem.Modules.Platform.Domain.Companies.Entities.CompanyEmailTemplateOverride", "Templates", b1 =>
+                        {
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int");
+
+                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<int>("Id"));
+
+                            b1.Property<string>("Body")
+                                .IsRequired()
+                                .HasMaxLength(50000)
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("Language")
+                                .IsRequired()
+                                .HasMaxLength(2)
+                                .HasColumnType("nvarchar(2)");
+
+                            b1.Property<int>("SettingsId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("Subject")
+                                .IsRequired()
+                                .HasMaxLength(200)
+                                .HasColumnType("nvarchar(200)");
+
+                            b1.Property<string>("TemplateId")
+                                .IsRequired()
+                                .HasMaxLength(80)
+                                .HasColumnType("nvarchar(80)");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("SettingsId", "TemplateId", "Language")
+                                .IsUnique();
+
+                            b1.ToTable("CompanyEmailTemplateOverrides", "platform");
+
+                            b1.WithOwner()
+                                .HasForeignKey("SettingsId");
+                        });
+
+                    b.Navigation("Templates");
+                });
+
+            modelBuilder.Entity("ErpSystem.Modules.Platform.Domain.Companies.Entities.CompanyLocalizationSettings", b =>
+                {
+                    b.HasOne("ErpSystem.Modules.Platform.Infrastructure.Identity.PlatformCompany", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId", "CompanyId")
+                        .HasPrincipalKey("TenantId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.OwnsMany("ErpSystem.Modules.Platform.Domain.Companies.Entities.CompanyLocalizationOverride", "Overrides", b1 =>
+                        {
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int");
+
+                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<int>("Id"));
+
+                            b1.Property<string>("Key")
+                                .IsRequired()
+                                .HasMaxLength(400)
+                                .HasColumnType("nvarchar(400)");
+
+                            b1.Property<string>("Language")
+                                .IsRequired()
+                                .HasMaxLength(2)
+                                .HasColumnType("nvarchar(2)");
+
+                            b1.Property<int>("SettingsId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("Source")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .HasColumnType("nvarchar(100)");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasMaxLength(4000)
+                                .HasColumnType("nvarchar(4000)");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("SettingsId", "Source", "Language", "Key")
+                                .IsUnique();
+
+                            b1.ToTable("CompanyLocalizationOverrides", "platform");
+
+                            b1.WithOwner()
+                                .HasForeignKey("SettingsId");
+                        });
+
+                    b.Navigation("Overrides");
+                });
+
+            modelBuilder.Entity("ErpSystem.Modules.Platform.Domain.Platform.Localization.SystemLocalizationSettings", b =>
+                {
+                    b.OwnsMany("ErpSystem.Modules.Platform.Domain.Platform.Localization.SystemLocalizationOverride", "Overrides", b1 =>
+                        {
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int");
+
+                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<int>("Id"));
+
+                            b1.Property<string>("Key")
+                                .IsRequired()
+                                .HasMaxLength(400)
+                                .HasColumnType("nvarchar(400)");
+
+                            b1.Property<string>("Language")
+                                .IsRequired()
+                                .HasMaxLength(2)
+                                .HasColumnType("nvarchar(2)");
+
+                            b1.Property<int>("SettingsId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("Source")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .HasColumnType("nvarchar(100)");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasMaxLength(4000)
+                                .HasColumnType("nvarchar(4000)");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("SettingsId", "Source", "Language", "Key")
+                                .IsUnique();
+
+                            b1.ToTable("SystemLocalizationOverrides", "platform");
+
+                            b1.WithOwner()
+                                .HasForeignKey("SettingsId");
+                        });
+
+                    b.Navigation("Overrides");
+                });
+
+            modelBuilder.Entity("ErpSystem.Modules.Platform.Domain.Platform.MessageLogs.MessageLogEntry", b =>
+                {
+                    b.HasOne("ErpSystem.Modules.Platform.Infrastructure.Identity.PlatformCompany", null)
+                        .WithMany()
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ErpSystem.Modules.Platform.Domain.Security.Users.Entities.UserCompanyPermissionGrantSet", b =>
+                {
+                    b.HasOne("ErpSystem.Modules.Platform.Infrastructure.Identity.PlatformApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ErpSystem.Modules.Platform.Infrastructure.Identity.PlatformCompany", null)
+                        .WithMany()
+                        .HasForeignKey("TenantId", "CompanyId")
+                        .HasPrincipalKey("TenantId", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.OwnsMany("ErpSystem.Modules.Platform.Domain.Security.Users.Entities.UserCompanyPermissionGrant", "Grants", b1 =>
+                        {
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int");
+
+                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<int>("Id"));
+
+                            b1.Property<int>("GrantSetId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("Permission")
+                                .IsRequired()
+                                .HasMaxLength(200)
+                                .HasColumnType("nvarchar(200)");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("GrantSetId", "Permission")
+                                .IsUnique();
+
+                            b1.ToTable("UserCompanyPermissionGrants", "platform");
+
+                            b1.WithOwner()
+                                .HasForeignKey("GrantSetId");
+                        });
+
+                    b.Navigation("Grants");
                 });
 
             modelBuilder.Entity("ErpSystem.Modules.Platform.Infrastructure.Features.Platform.Notifications.Entities.Notification", b =>

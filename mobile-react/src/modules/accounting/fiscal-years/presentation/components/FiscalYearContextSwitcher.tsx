@@ -86,7 +86,7 @@ export function FiscalYearContextSwitcher({
   const confirmDiscardAndSwitch = async () => {
     if (!pendingDiscardId) return;
     const fiscalYearId = pendingDiscardId;
-    discardUnsavedChanges();
+    if (!discardUnsavedChanges()) return;
     setPendingDiscardId(null);
     await performSwitch(fiscalYearId);
   };

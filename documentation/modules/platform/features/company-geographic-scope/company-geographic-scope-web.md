@@ -61,3 +61,10 @@ Branch/Address forms may consume this query to constrain operating-location Coun
 ## 14. Verification and Handoff
 
 Verification covers local search by both localized names and ISO codes, removing a current registration/default through the multi-select, restricted special-country options, view-only behavior, and the exact aggregate PUT payload. Type checking and targeted linting must cover the feature adapter plus the shared components it composes.
+
+
+Navigation reconciliation (2026-10-18): the existing company configuration destination is grouped under Settings, independent from Administration operational viewers. Physical route, exact permissions, company scope and save/dirty contracts are unchanged. Mobile Settings parent is reachable for a user holding a configuration-child view grant; the child remains separately guarded. Navigation evidence: documentation/modules/platform/features/error-logs/error-logs-evidence.md.
+
+## Settings workspace reconciliation — 2026-10-19
+
+The requester supersedes the earlier independent Settings section: Administration now contains one Settings destination and its existing configuration workflows are actual shared tabs. Web /administration/settings uses FormTabs; Mobile /settings uses AppFormTabs and retains local device preferences. Child authority, services, edit forms, scopes, read-only and revision/conflict behavior remain owned by this feature. Error Logs viewers stay Administration siblings; retention remains a system-only tab. Existing direct child URLs remain compatible. No API/domain/schema change or migration. Current composition and acceptance are canonical in ../platform-settings/platform-settings-review.md and platform-settings-evidence.md; older dated navigation descriptions are historical.

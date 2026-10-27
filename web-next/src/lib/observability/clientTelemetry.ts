@@ -8,6 +8,7 @@ import {
   type SignalRTelemetryFailureKind,
   type SignalRTelemetryPhase,
 } from "./clientTelemetryContract";
+import { reportErrorLog } from "./errorLogReporter";
 
 type WebVitalMetric = {
   name: string;
@@ -27,6 +28,7 @@ export function isClientTelemetryEnabled(): boolean {
 }
 
 export function reportClientError(source: ClientErrorSource, error: unknown): void {
+  reportErrorLog(source === "unhandled-rejection" ? "rejection" : source.endsWith("boundary") ? "boundary" : "runtime", error);
   const candidate = normalizeClientTelemetryEvent({
     kind: "error",
     source,

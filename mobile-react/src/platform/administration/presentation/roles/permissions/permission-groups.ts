@@ -36,6 +36,9 @@ const screenTranslationKeys: Record<string, string> = {
   AttendanceAgents: 'attendanceAgents',
   AttendanceDevices: 'attendanceDevices',
   AuditTrail: 'auditTrail',
+  ErrorLogs: 'errorLogs',
+  SystemErrorLogs: 'systemErrorLogs',
+  ErrorLogSettings: 'errorLogSettings',
   Backups: 'backups',
   Books: 'books',
   Candidates: 'candidates',
@@ -241,6 +244,9 @@ export function countChangedRoleClaims(
 }
 
 export function getPermissionScreenLabel(screen: string, t: TFunction): string {
+  if (screen === 'UserPermissions') return t('userPermissions.title');
+  if (screen === 'CompanyEmailTemplates') return t('emailTemplates.title');
+  if (screen === 'CompanyLocalizations') return t('companyLocalizations.title');
   const key = screenTranslationKeys[screen];
   return key ? t(`roleManagement.permissionModules.${key}`) : humanize(screen);
 }
@@ -250,6 +256,8 @@ export function getPermissionBusinessModuleLabel(moduleCode: string, t: TFunctio
 }
 
 export function getPermissionActionLabel(action: string, t: TFunction): string {
+  if (action === 'SetDefault') return t('companyLocalizations.setDefault');
+  if (action === 'Reset') return t('roleManagement.permissionActions.reset');
   const key = actionTranslationKeys[action];
   return key ? t(`roleManagement.permissionActions.${key}`) : humanize(action);
 }

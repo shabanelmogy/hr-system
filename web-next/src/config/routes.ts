@@ -30,6 +30,7 @@ export interface ShellRoutes {
 }
 
 export interface PlatformRoutes {
+  settings: AppPath;
   apps: {
     index: AppPath;
     module: (moduleCode: string) => AppPath;
@@ -48,11 +49,15 @@ export interface PlatformRoutes {
   advancedTools: {
     healthCheck: AppPath;
     auditTrail: AppPath;
+    errorLogs: AppPath;
     apiEndpoints: AppPath;
     localizationApi: AppPath;
     hangfireDashboard: AppPath;
   };
   administration: {
+    messageLogs: AppPath;
+    emailTemplates: AppPath;
+    companyLocalizations: AppPath;
     roles: AppPath;
     users: AppPath;
     invitations: AppPath;
@@ -63,6 +68,10 @@ export interface PlatformRoutes {
     dashboard: AppPath;
     tenants: AppPath;
     tenantAdmins: AppPath;
+    systemUiTexts: AppPath;
+    auditTrail: AppPath;
+    errorLogs: AppPath;
+    errorLogSettings: AppPath;
   };
   companyGeographicScope: AppPath;
 }
@@ -158,6 +167,7 @@ export const appRoutes: AppRoutes = {
   },
 
   platform: {
+    settings: toAppPath("/administration/settings"),
     apps: {
       index: toAppPath("/apps"),
       module: (moduleCode) => toAppPath(`/apps/${moduleCode}`),
@@ -173,11 +183,15 @@ export const appRoutes: AppRoutes = {
     advancedTools: {
       healthCheck: "/advanced-tools/health-check",
       auditTrail: toAppPath("/advanced-tools/audit-trail"),
+      errorLogs: toAppPath("/advanced-tools/error-logs"),
       apiEndpoints: "/advanced-tools/api-endpoints",
       localizationApi: "/advanced-tools/localization-api",
       hangfireDashboard: "/advanced-tools/hangfire-dashboard",
     },
     administration: {
+      messageLogs: toAppPath("/administration/message-logs"),
+      emailTemplates: toAppPath("/administration/email-templates"),
+      companyLocalizations: toAppPath("/administration/company-localizations"),
       roles: "/administration/roles",
       users: "/administration/users",
       invitations: toAppPath("/administration/invitations"),
@@ -188,6 +202,10 @@ export const appRoutes: AppRoutes = {
       dashboard: "/super-admin",
       tenants: "/super-admin/tenants",
       tenantAdmins: "/super-admin/tenant-admins",
+      systemUiTexts: toAppPath("/super-admin/ui-texts"),
+      auditTrail: toAppPath("/super-admin/audit-trail"),
+      errorLogs: toAppPath("/super-admin/error-logs"),
+      errorLogSettings: toAppPath("/super-admin/error-log-settings"),
     },
     companyGeographicScope: toAppPath(
       "/basic-data/organizational-structure/geographic-scope",

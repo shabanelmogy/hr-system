@@ -82,4 +82,12 @@ describe('administration remote data source', () => {
     });
     await expect(administrationRemoteDataSource.getRoleClaims('role-1')).rejects.toThrow();
   });
+
+  it('accepts only permission material for the requested user and active company', async () => {
+    const material = { userId: 'user-1', userName: 'Test User', companyId: 1, companyName: 'Company A', revision: 0, permissions: [{ permission: 'Users:View', moduleCode: 'platform', submoduleCode: 'Users', isDirect: false, inheritedFrom: ['Auditor'], isEffective: true, canGrant: true }] };
+    (apiService.get as jest.Mock).mockResolvedValueOnce(material);
+    await expect(administrationRemoteDataSource.getUserPermissions('user-1', 1)).resolves.toEqual(material);
+    (apiService.get as jest.Mock).mockResolvedValueOnce({ ...material, companyId: 2 });
+    await expect(administrationRemoteDataSource.getUserPermissions('user-1', 1)).rejects.toThrow('active company scope');
+  });
 });

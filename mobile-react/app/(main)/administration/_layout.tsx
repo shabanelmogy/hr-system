@@ -10,7 +10,7 @@ import { useAppTheme } from '@/src/core/theme';
 
 const viewUsersPermission = [permissions.ViewUsers] as const;
 const viewRolesPermission = [permissions.ViewRoles] as const;
-const viewOfflineOperationsPermission = [permissions.ViewOfflineOperations] as const;
+const viewInvitationsPermission = [permissions.ViewUserInvitations] as const;
 
 export default function AdministrationLayout() {
   const { t } = useTranslation();
@@ -19,11 +19,9 @@ export default function AdministrationLayout() {
   const { allowed: canViewUsers } = useAuthorization({
     requiredPermissions: viewUsersPermission,
   });
+  const { allowed: canViewInvitations } = useAuthorization({ requiredPermissions: viewInvitationsPermission });
   const { allowed: canViewRoles } = useAuthorization({
     requiredPermissions: viewRolesPermission,
-  });
-  const { allowed: canViewOfflineOperations } = useAuthorization({
-    requiredPermissions: viewOfflineOperationsPermission,
   });
   const bottomSpacing = Math.max(insets.bottom, 10);
 
@@ -66,7 +64,7 @@ export default function AdministrationLayout() {
       <Tabs.Screen
         name="invitations"
         options={{
-          href: canViewUsers ? undefined : null,
+          href: canViewInvitations ? undefined : null,
           title: t('navigation.invitations'),
           tabBarIcon: ({ color, size }) => (
             <AppIcon color={color} name="mail-unread-outline" size={size} />
@@ -86,11 +84,19 @@ export default function AdministrationLayout() {
       <Tabs.Screen
         name="offline-operations"
         options={{
-          href: canViewOfflineOperations ? undefined : null,
+          href: null,
           title: t('navigation.offlineOperations'),
           tabBarIcon: ({ color, size }) => (
             <AppIcon color={color} name="cloud-offline-outline" size={size} />
           ),
+        }}
+      />
+      <Tabs.Screen
+        name="company-localizations"
+        options={{
+          href: null,
+          title: t('companyLocalizations.title'),
+          tabBarIcon: ({ color, size }) => <AppIcon color={color} name="language-outline" size={size} />,
         }}
       />
       <Tabs.Screen

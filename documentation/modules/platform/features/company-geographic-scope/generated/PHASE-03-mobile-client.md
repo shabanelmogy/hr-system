@@ -83,4 +83,4 @@ profile and do not leave an unreachable route, component, or translation surface
 | company-geographic-scope-mobile | 12 | `f7a65285cebf5482db8f642d637989138809b28c716cb015abee09b9779643ce` |
 | company-geographic-scope-mobile | 13 | `727de5705147b03fa31f1a52b785b264a4cb61cd547124f0be51b2ea3458833e` |
 | company-geographic-scope-mobile | 14 | `86c21a217f70553f80bf776d8079f1a71e47bd8b3e897ae0622393c7c217b679` |
-| company-geographic-scope-mobile | 15 | `b7d0bebf0f119e3dc9159dd64888b92488a1807d11a3039191452ff5b083699b` |
+| company-geographic-scope-mobile | 15 | `58b1ca9440984da0c4ec8b673ad282e6a3a92ca15260d5ef895ff5bc9e0f6028` |

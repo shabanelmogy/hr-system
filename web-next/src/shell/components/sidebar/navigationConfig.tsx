@@ -3,7 +3,7 @@ import {
   getFrontendModuleDefinitions,
 } from "@/platform/modules";
 import { getPlatformNavigation } from "@/platform/navigation";
-import { getSuperAdminConfig } from "./configs/superAdminConfig";
+import { getSuperAdminConfig, getSuperAdminAdministrationConfig } from "./configs/superAdminConfig";
 import { filterNavigationConfig } from "./navigationUtils";
 import type { NavigationConfig } from "./navigationTypes";
 
@@ -14,10 +14,12 @@ export const getNavigationConfig = (
 ): NavigationConfig => {
   const isSuperAdmin = userRoles.some(role => role.trim().toLowerCase() === "super_admin");
   const activeModuleNavigation = activeModuleCode
-    ? getFrontendModuleDefinition(activeModuleCode)?.navigation ?? []
+    ? activeModuleCode === "administration"
+      ? getPlatformNavigation().filter(section => section.id === "platform-administration")
+      : getFrontendModuleDefinition(activeModuleCode)?.navigation ?? []
     : null;
   const fullConfig = isSuperAdmin
-    ? [getSuperAdminConfig()]
+    ? [getSuperAdminConfig(), getSuperAdminAdministrationConfig()]
     : activeModuleNavigation ?? [
         ...getPlatformNavigation(),
         ...getFrontendModuleDefinitions().flatMap(definition => definition.navigation ?? []),

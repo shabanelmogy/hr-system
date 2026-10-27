@@ -29,3 +29,6 @@ requires `OfflineOperations:Edit` and tenant write availability.
 Future Platform features must record native offline, retry, accessibility,
 localization, permission, and device decisions instead of assuming Web behavior
 can be reused.
+
+
+Company account email templates: [canonical mobile profile](../features/company-email-templates/company-email-templates-mobile.md), independently company-scoped, Administration > Email Templates. Web edits/previews; Mobile previews only.

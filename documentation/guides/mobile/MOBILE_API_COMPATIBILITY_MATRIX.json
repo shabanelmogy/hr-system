@@ -543,15 +543,39 @@
       "status": "aligned",
       "note": "Global operational diagnostics are owned by Platform/operations.",
       "currentRoutePolicy": {
-        "kind": "roles",
-        "roles": [
-          "admin"
+        "kind": "anyOf",
+        "anyOf": [
+          {
+            "roles": [
+              "admin"
+            ]
+          },
+          {
+            "roles": [
+              "superAdmin"
+            ],
+            "permissions": [
+              "ViewSystemApiDocs"
+            ]
+          }
         ]
       },
       "targetRoutePolicy": {
-        "kind": "roles",
-        "roles": [
-          "admin"
+        "kind": "anyOf",
+        "anyOf": [
+          {
+            "roles": [
+              "admin"
+            ]
+          },
+          {
+            "roles": [
+              "superAdmin"
+            ],
+            "permissions": [
+              "ViewSystemApiDocs"
+            ]
+          }
         ]
       },
       "currentModuleRequirement": {
@@ -607,15 +631,39 @@
       "status": "aligned",
       "note": "Global operational diagnostics are owned by Platform/operations.",
       "currentRoutePolicy": {
-        "kind": "roles",
-        "roles": [
-          "admin"
+        "kind": "anyOf",
+        "anyOf": [
+          {
+            "roles": [
+              "admin"
+            ]
+          },
+          {
+            "roles": [
+              "superAdmin"
+            ],
+            "permissions": [
+              "ViewSystemHealth"
+            ]
+          }
         ]
       },
       "targetRoutePolicy": {
-        "kind": "roles",
-        "roles": [
-          "admin"
+        "kind": "anyOf",
+        "anyOf": [
+          {
+            "roles": [
+              "admin"
+            ]
+          },
+          {
+            "roles": [
+              "superAdmin"
+            ],
+            "permissions": [
+              "ViewSystemHealth"
+            ]
+          }
         ]
       },
       "currentModuleRequirement": {
@@ -2632,6 +2680,236 @@
         "submoduleCode": "ledger-setup"
       },
       "apiSurface": "route adapter"
+    },
+    {
+      "source": "app/(main)/administration/company-localizations.tsx",
+      "path": "/administration/company-localizations",
+      "kind": "auth",
+      "apiSurface": "route adapter",
+      "currentOwner": "Platform/tenant-administration",
+      "targetOwner": "Platform/tenant-administration",
+      "scope": "tenant/company",
+      "offlineMode": "online-only",
+      "status": "aligned",
+      "note": "Tenant administration is owned by the Platform module.",
+      "currentRoutePolicy": {
+        "kind": "authenticated"
+      },
+      "targetRoutePolicy": {
+        "kind": "authenticated"
+      },
+      "currentModuleRequirement": {
+        "moduleCode": "platform",
+        "submoduleCode": "tenant-administration"
+      },
+      "targetModuleRequirement": {
+        "moduleCode": "platform",
+        "submoduleCode": "tenant-administration"
+      }
+    },
+    {
+      "source": "app/(main)/advanced-tools/error-logs.tsx",
+      "path": "/advanced-tools/error-logs",
+      "kind": "auth",
+      "apiSurface": "route adapter",
+      "currentOwner": "Platform/operations",
+      "targetOwner": "Platform/operations",
+      "scope": "tenant/company",
+      "offlineMode": "online-only",
+      "status": "aligned",
+      "note": "Error Logs V1: separate company/system viewer and global retention; exact route and action permissions, fresh server authority.",
+      "currentRoutePolicy": {
+        "kind": "permissions",
+        "permissions": [
+          "ViewErrorLogs"
+        ]
+      },
+      "targetRoutePolicy": {
+        "kind": "permissions",
+        "permissions": [
+          "ViewErrorLogs"
+        ]
+      },
+      "currentModuleRequirement": {
+        "moduleCode": "platform",
+        "submoduleCode": "tenant-administration"
+      },
+      "targetModuleRequirement": {
+        "moduleCode": "platform",
+        "submoduleCode": "tenant-administration"
+      }
+    },
+    {
+      "source": "app/(main)/error-log-settings.tsx",
+      "path": "/error-log-settings",
+      "kind": "auth",
+      "apiSurface": "route adapter",
+      "currentOwner": "Platform/operations",
+      "targetOwner": "Platform/operations",
+      "scope": "platform-global",
+      "offlineMode": "online-only",
+      "status": "aligned",
+      "note": "Error Logs V1: separate company/system viewer and global retention; exact route and action permissions, fresh server authority.",
+      "currentRoutePolicy": {
+        "kind": "rolesAndPermissions",
+        "roles": [
+          "superAdmin"
+        ],
+        "permissions": [
+          "ViewErrorLogSettings"
+        ]
+      },
+      "targetRoutePolicy": {
+        "kind": "rolesAndPermissions",
+        "roles": [
+          "superAdmin"
+        ],
+        "permissions": [
+          "ViewErrorLogSettings"
+        ]
+      },
+      "currentModuleRequirement": null,
+      "targetModuleRequirement": null
+    },
+    {
+      "source": "app/(main)/system-error-logs.tsx",
+      "path": "/system-error-logs",
+      "kind": "auth",
+      "apiSurface": "route adapter",
+      "currentOwner": "Platform/operations",
+      "targetOwner": "Platform/operations",
+      "scope": "platform-global",
+      "offlineMode": "online-only",
+      "status": "aligned",
+      "note": "Error Logs V1: separate company/system viewer and global retention; exact route and action permissions, fresh server authority.",
+      "currentRoutePolicy": {
+        "kind": "rolesAndPermissions",
+        "roles": [
+          "superAdmin"
+        ],
+        "permissions": [
+          "ViewSystemErrorLogs"
+        ]
+      },
+      "targetRoutePolicy": {
+        "kind": "rolesAndPermissions",
+        "roles": [
+          "superAdmin"
+        ],
+        "permissions": [
+          "ViewSystemErrorLogs"
+        ]
+      },
+      "currentModuleRequirement": null,
+      "targetModuleRequirement": null
+    },
+    {
+      "source": "app/(main)/system-audit-trail.tsx",
+      "path": "/system-audit-trail",
+      "kind": "auth",
+      "apiSurface": "route adapter",
+      "currentOwner": "Platform/operations",
+      "targetOwner": "Platform/operations",
+      "scope": "platform-global",
+      "offlineMode": "online-only",
+      "status": "aligned",
+      "note": "Global audit viewer reuses existing shared screen with separate SuperAdmin role and SystemAuditTrail:View authority.",
+      "currentRoutePolicy": {
+        "kind": "rolesAndPermissions",
+        "roles": [
+          "superAdmin"
+        ],
+        "permissions": [
+          "ViewSystemAuditTrail"
+        ]
+      },
+      "targetRoutePolicy": {
+        "kind": "rolesAndPermissions",
+        "roles": [
+          "superAdmin"
+        ],
+        "permissions": [
+          "ViewSystemAuditTrail"
+        ]
+      },
+      "currentModuleRequirement": {
+        "moduleCode": "platform",
+        "submoduleCode": "operations"
+      },
+      "targetModuleRequirement": {
+        "moduleCode": "platform",
+        "submoduleCode": "operations"
+      }
+    },
+    {
+      "source": "app/(main)/system-ui-texts.tsx",
+      "path": "/system-ui-texts",
+      "kind": "auth",
+      "apiSurface": "route adapter",
+      "currentOwner": "Platform/operations",
+      "targetOwner": "Platform/operations",
+      "scope": "platform-global",
+      "offlineMode": "online-only",
+      "status": "aligned",
+      "note": "Global text editor is a Settings tab with exact SuperAdmin/editor/target-screen authority; existing shared text workspace.",
+      "currentRoutePolicy": {
+        "kind": "rolesAndPermissions",
+        "roles": [
+          "superAdmin"
+        ],
+        "permissions": [
+          "ViewSystemUiTexts"
+        ]
+      },
+      "targetRoutePolicy": {
+        "kind": "rolesAndPermissions",
+        "roles": [
+          "superAdmin"
+        ],
+        "permissions": [
+          "ViewSystemUiTexts"
+        ]
+      },
+      "currentModuleRequirement": {
+        "moduleCode": "platform",
+        "submoduleCode": "operations"
+      },
+      "targetModuleRequirement": {
+        "moduleCode": "platform",
+        "submoduleCode": "operations"
+      }
+    },
+    {
+      "source": "app/(main)/email-templates.tsx",
+      "path": "/email-templates",
+      "kind": "auth",
+      "apiSurface": "route adapter",
+      "currentOwner": "Platform/company-email-templates",
+      "targetOwner": "Platform/company-email-templates",
+      "scope": "tenant/company",
+      "offlineMode": "online-only",
+      "status": "aligned",
+      "note": "Company-only registered account email catalog and sample final preview. Web editing; native read-only by product decision.",
+      "currentRoutePolicy": {
+        "kind": "permissions",
+        "permissions": [
+          "ViewCompanyEmailTemplates"
+        ]
+      },
+      "targetRoutePolicy": {
+        "kind": "permissions",
+        "permissions": [
+          "ViewCompanyEmailTemplates"
+        ]
+      },
+      "currentModuleRequirement": {
+        "moduleCode": "platform",
+        "submoduleCode": "tenant-administration"
+      },
+      "targetModuleRequirement": {
+        "moduleCode": "platform",
+        "submoduleCode": "tenant-administration"
+      }
     }
   ],
   "endpointFiles": [
@@ -7553,6 +7831,41 @@
           "offlineMode": "online-only",
           "status": "aligned",
           "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Platform endpoint policy and PlatformPermissions.TenantAdministration."
+        },
+        {
+          "key": "userPermissions",
+          "pattern": "(userId: string) => `user-permissions/${encodeURIComponent(userId)}`",
+          "verb": [
+            "GET",
+            "PUT"
+          ],
+          "operations": [
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/platform/administration/data/remote/administration-remote-data-source.ts#getUserPermissions",
+              "requestBoundary": "none",
+              "responseBoundary": "userCompanyPermissionsSchema",
+              "permissionAuthority": "Platform UserPermissionsController: TenantMember; GET UserPermissions:View; PUT UserPermissions:Edit; trusted current Tenant/company; additive direct grants only"
+            },
+            {
+              "verb": [
+                "PUT"
+              ],
+              "caller": "src/platform/administration/data/remote/administration-remote-data-source.ts#replaceUserPermissions",
+              "requestBoundary": "request",
+              "responseBoundary": "void",
+              "permissionAuthority": "Platform UserPermissionsController: TenantMember; GET UserPermissions:View; PUT UserPermissions:Edit; trusted current Tenant/company; additive direct grants only"
+            }
+          ],
+          "currentOwner": "Platform/tenant-administration",
+          "targetOwner": "Platform/tenant-administration",
+          "permissionAuthority": "Platform UserPermissionsController: TenantMember; GET UserPermissions:View; PUT UserPermissions:Edit; trusted current Tenant/company; additive direct grants only",
+          "scope": "tenant/company",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Platform UserPermissionsController: TenantMember; GET UserPermissions:View; PUT UserPermissions:Edit; trusted current Tenant/company; additive direct grants only."
         }
       ]
     },
@@ -8040,6 +8353,62 @@
           "offlineMode": "online-only",
           "status": "aligned",
           "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Platform authentication/session endpoint policy."
+        }
+      ]
+    },
+    {
+      "source": "src/platform/company-email-templates/data/remote/email-template-endpoints.ts",
+      "family": "email-template",
+      "members": [
+        {
+          "key": "list",
+          "pattern": "'company-email-templates'",
+          "verb": [
+            "GET"
+          ],
+          "operations": [
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/platform/company-email-templates/data/remote/email-template-remote.ts#list",
+              "requestBoundary": "request config: { ...criteria }",
+              "responseBoundary": "emailTemplatePageSchema",
+              "permissionAuthority": "Platform CompanyEmailTemplatesController: TenantMember + CompanyEmailTemplates:View; online-only catalog/sample preview, no writes"
+            }
+          ],
+          "currentOwner": "Platform/company-email-templates",
+          "targetOwner": "Platform/company-email-templates",
+          "permissionAuthority": "Platform CompanyEmailTemplatesController: TenantMember + CompanyEmailTemplates:View; online-only catalog/sample preview, no writes",
+          "scope": "tenant/company",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Platform CompanyEmailTemplatesController: TenantMember + CompanyEmailTemplates:View; online-only catalog/sample preview, no writes."
+        },
+        {
+          "key": "preview",
+          "pattern": "(id: string) => `company-email-templates/${encodeURIComponent(id)}/preview`",
+          "verb": [
+            "POST"
+          ],
+          "operations": [
+            {
+              "verb": [
+                "POST"
+              ],
+              "caller": "src/platform/company-email-templates/data/remote/email-template-remote.ts#preview",
+              "requestBoundary": "{ language }",
+              "responseBoundary": "emailPreviewSchema",
+              "permissionAuthority": "Platform CompanyEmailTemplatesController: TenantMember + CompanyEmailTemplates:View; online-only catalog/sample preview, no writes"
+            }
+          ],
+          "currentOwner": "Platform/company-email-templates",
+          "targetOwner": "Platform/company-email-templates",
+          "permissionAuthority": "Platform CompanyEmailTemplatesController: TenantMember + CompanyEmailTemplates:View; online-only catalog/sample preview, no writes",
+          "scope": "tenant/company",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Platform CompanyEmailTemplatesController: TenantMember + CompanyEmailTemplates:View; online-only catalog/sample preview, no writes."
         }
       ]
     },
@@ -8537,6 +8906,313 @@
       ]
     },
     {
+      "source": "src/platform/tenant-administration/company-localizations/data/remote/company-localization-endpoints.ts",
+      "family": "company-localization",
+      "members": [
+        {
+          "key": "settings",
+          "pattern": "'company-localizations/settings'",
+          "verb": [
+            "GET"
+          ],
+          "operations": [
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/platform/tenant-administration/company-localizations/data/remote/company-localization-remote-data-source.ts#getSettings",
+              "requestBoundary": "none",
+              "responseBoundary": "settingsSchema",
+              "permissionAuthority": "Platform CompanyLocalizationsController: TenantMember; CompanyLocalizations:View; trusted current Tenant/company; online-only"
+            }
+          ],
+          "currentOwner": "Platform/tenant-administration",
+          "targetOwner": "Platform/tenant-administration",
+          "permissionAuthority": "Platform CompanyLocalizationsController: TenantMember; CompanyLocalizations:View; trusted current Tenant/company; online-only",
+          "scope": "tenant/company",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Platform CompanyLocalizationsController: TenantMember; CompanyLocalizations:View; trusted current Tenant/company; online-only."
+        },
+        {
+          "key": "texts",
+          "pattern": "'company-localizations/texts'",
+          "verb": [
+            "GET"
+          ],
+          "operations": [
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/platform/tenant-administration/company-localizations/data/remote/company-localization-remote-data-source.ts#getTexts",
+              "requestBoundary": "request config: {params:query}",
+              "responseBoundary": "textsSchema",
+              "permissionAuthority": "Platform CompanyLocalizationsController: TenantMember; CompanyLocalizations:View; trusted current Tenant/company; online-only"
+            }
+          ],
+          "currentOwner": "Platform/tenant-administration",
+          "targetOwner": "Platform/tenant-administration",
+          "permissionAuthority": "Platform CompanyLocalizationsController: TenantMember; CompanyLocalizations:View; trusted current Tenant/company; online-only",
+          "scope": "tenant/company",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Platform CompanyLocalizationsController: TenantMember; CompanyLocalizations:View; trusted current Tenant/company; online-only."
+        },
+        {
+          "key": "runtime",
+          "pattern": "'company-localizations/runtime'",
+          "verb": [
+            "GET"
+          ],
+          "operations": [
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/platform/tenant-administration/company-localizations/data/remote/company-localization-remote-data-source.ts#getRuntime",
+              "requestBoundary": "request config: {params:{client:'mobile',catalogVersion:companyUiCatalogVersion}}",
+              "responseBoundary": "runtimeSchema",
+              "permissionAuthority": "Platform CompanyLocalizationsController: TenantMember; authenticated runtime, no management permission; trusted current Tenant/company; online-only"
+            }
+          ],
+          "currentOwner": "Platform/tenant-administration",
+          "targetOwner": "Platform/tenant-administration",
+          "permissionAuthority": "Platform CompanyLocalizationsController: TenantMember; authenticated runtime, no management permission; trusted current Tenant/company; online-only",
+          "scope": "tenant/company",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Platform CompanyLocalizationsController: TenantMember; authenticated runtime, no management permission; trusted current Tenant/company; online-only."
+        },
+        {
+          "key": "default",
+          "pattern": "'company-localizations/default'",
+          "verb": [
+            "PUT"
+          ],
+          "operations": [
+            {
+              "verb": [
+                "PUT"
+              ],
+              "caller": "src/platform/tenant-administration/company-localizations/data/remote/company-localization-remote-data-source.ts#setDefault",
+              "requestBoundary": "request",
+              "responseBoundary": "void",
+              "permissionAuthority": "Platform CompanyLocalizationsController: TenantMember; CompanyLocalizations:SetDefault; trusted current Tenant/company; online-only"
+            }
+          ],
+          "currentOwner": "Platform/tenant-administration",
+          "targetOwner": "Platform/tenant-administration",
+          "permissionAuthority": "Platform CompanyLocalizationsController: TenantMember; CompanyLocalizations:SetDefault; trusted current Tenant/company; online-only",
+          "scope": "tenant/company",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Platform CompanyLocalizationsController: TenantMember; CompanyLocalizations:SetDefault; trusted current Tenant/company; online-only."
+        },
+        {
+          "key": "text",
+          "pattern": "'company-localizations/text'",
+          "verb": [
+            "GET",
+            "PUT"
+          ],
+          "operations": [
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/platform/tenant-administration/company-localizations/data/remote/company-localization-remote-data-source.ts#getTexts",
+              "requestBoundary": "request config: {params:query}",
+              "responseBoundary": "textsSchema",
+              "permissionAuthority": "Platform CompanyLocalizationsController: TenantMember; CompanyLocalizations:Edit; trusted current Tenant/company; online-only"
+            },
+            {
+              "verb": [
+                "PUT"
+              ],
+              "caller": "src/platform/tenant-administration/company-localizations/data/remote/company-localization-remote-data-source.ts#setText",
+              "requestBoundary": "request",
+              "responseBoundary": "void",
+              "permissionAuthority": "Platform CompanyLocalizationsController: TenantMember; CompanyLocalizations:Edit; trusted current Tenant/company; online-only"
+            }
+          ],
+          "currentOwner": "Platform/tenant-administration",
+          "targetOwner": "Platform/tenant-administration",
+          "permissionAuthority": "Platform CompanyLocalizationsController: TenantMember; CompanyLocalizations:Edit; trusted current Tenant/company; online-only",
+          "scope": "tenant/company",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Platform CompanyLocalizationsController: TenantMember; CompanyLocalizations:Edit; trusted current Tenant/company; online-only."
+        },
+        {
+          "key": "reset",
+          "pattern": "'company-localizations/reset'",
+          "verb": [
+            "POST"
+          ],
+          "operations": [
+            {
+              "verb": [
+                "POST"
+              ],
+              "caller": "src/platform/tenant-administration/company-localizations/data/remote/company-localization-remote-data-source.ts#resetText",
+              "requestBoundary": "request",
+              "responseBoundary": "void",
+              "permissionAuthority": "Platform CompanyLocalizationsController: TenantMember; CompanyLocalizations:Reset; trusted current Tenant/company; online-only"
+            }
+          ],
+          "currentOwner": "Platform/tenant-administration",
+          "targetOwner": "Platform/tenant-administration",
+          "permissionAuthority": "Platform CompanyLocalizationsController: TenantMember; CompanyLocalizations:Reset; trusted current Tenant/company; online-only",
+          "scope": "tenant/company",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Platform CompanyLocalizationsController: TenantMember; CompanyLocalizations:Reset; trusted current Tenant/company; online-only."
+        }
+      ]
+    },
+    {
+      "source": "src/platform/tenant-administration/company-localizations/data/remote/system-localization-endpoints.ts",
+      "family": "system-localization",
+      "members": [
+        {
+          "key": "settings",
+          "pattern": "'system-ui-localizations/settings'",
+          "verb": [
+            "GET"
+          ],
+          "operations": [
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/platform/tenant-administration/company-localizations/data/remote/system-localization-remote-data-source.ts#getSettings",
+              "requestBoundary": "none",
+              "responseBoundary": "systemSettingsSchema",
+              "permissionAuthority": "Platform CompanyLocalizationsController exact View/Edit/Reset/SetDefault; TenantMember runtime"
+            }
+          ],
+          "currentOwner": "Platform/tenant-administration",
+          "targetOwner": "Platform/tenant-administration",
+          "permissionAuthority": "Platform CompanyLocalizationsController exact View/Edit/Reset/SetDefault; TenantMember runtime",
+          "scope": "tenant/company",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Platform CompanyLocalizationsController exact View/Edit/Reset/SetDefault; TenantMember runtime."
+        },
+        {
+          "key": "texts",
+          "pattern": "'system-ui-localizations/texts'",
+          "verb": [
+            "GET"
+          ],
+          "operations": [
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/platform/tenant-administration/company-localizations/data/remote/system-localization-remote-data-source.ts#getTexts",
+              "requestBoundary": "request config: {params:query}",
+              "responseBoundary": "textsSchema",
+              "permissionAuthority": "Platform CompanyLocalizationsController exact View/Edit/Reset/SetDefault; TenantMember runtime"
+            }
+          ],
+          "currentOwner": "Platform/tenant-administration",
+          "targetOwner": "Platform/tenant-administration",
+          "permissionAuthority": "Platform CompanyLocalizationsController exact View/Edit/Reset/SetDefault; TenantMember runtime",
+          "scope": "tenant/company",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Platform CompanyLocalizationsController exact View/Edit/Reset/SetDefault; TenantMember runtime."
+        },
+        {
+          "key": "runtime",
+          "pattern": "'system-ui-localizations/runtime'",
+          "verb": [
+            "GET"
+          ],
+          "operations": [
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/platform/tenant-administration/company-localizations/data/remote/system-localization-remote-data-source.ts#getRuntime",
+              "requestBoundary": "request config: {params:{client:'mobile',catalogVersion:companyUiCatalogVersion}}",
+              "responseBoundary": "systemRuntimeSchema",
+              "permissionAuthority": "Platform CompanyLocalizationsController exact View/Edit/Reset/SetDefault; TenantMember runtime"
+            }
+          ],
+          "currentOwner": "Platform/tenant-administration",
+          "targetOwner": "Platform/tenant-administration",
+          "permissionAuthority": "Platform CompanyLocalizationsController exact View/Edit/Reset/SetDefault; TenantMember runtime",
+          "scope": "tenant/company",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Platform CompanyLocalizationsController exact View/Edit/Reset/SetDefault; TenantMember runtime."
+        },
+        {
+          "key": "text",
+          "pattern": "'system-ui-localizations/text'",
+          "verb": [
+            "GET",
+            "PUT"
+          ],
+          "operations": [
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/platform/tenant-administration/company-localizations/data/remote/system-localization-remote-data-source.ts#getTexts",
+              "requestBoundary": "request config: {params:query}",
+              "responseBoundary": "textsSchema",
+              "permissionAuthority": "Platform CompanyLocalizationsController exact View/Edit/Reset/SetDefault; TenantMember runtime"
+            },
+            {
+              "verb": [
+                "PUT"
+              ],
+              "caller": "src/platform/tenant-administration/company-localizations/data/remote/system-localization-remote-data-source.ts#setText",
+              "requestBoundary": "request",
+              "responseBoundary": "void",
+              "permissionAuthority": "Platform CompanyLocalizationsController exact View/Edit/Reset/SetDefault; TenantMember runtime"
+            }
+          ],
+          "currentOwner": "Platform/tenant-administration",
+          "targetOwner": "Platform/tenant-administration",
+          "permissionAuthority": "Platform CompanyLocalizationsController exact View/Edit/Reset/SetDefault; TenantMember runtime",
+          "scope": "tenant/company",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Platform CompanyLocalizationsController exact View/Edit/Reset/SetDefault; TenantMember runtime."
+        },
+        {
+          "key": "reset",
+          "pattern": "'system-ui-localizations/reset'",
+          "verb": [
+            "POST"
+          ],
+          "operations": [
+            {
+              "verb": [
+                "POST"
+              ],
+              "caller": "src/platform/tenant-administration/company-localizations/data/remote/system-localization-remote-data-source.ts#resetText",
+              "requestBoundary": "request",
+              "responseBoundary": "void",
+              "permissionAuthority": "Platform CompanyLocalizationsController exact View/Edit/Reset/SetDefault; TenantMember runtime"
+            }
+          ],
+          "currentOwner": "Platform/tenant-administration",
+          "targetOwner": "Platform/tenant-administration",
+          "permissionAuthority": "Platform CompanyLocalizationsController exact View/Edit/Reset/SetDefault; TenantMember runtime",
+          "scope": "tenant/company",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Platform CompanyLocalizationsController exact View/Edit/Reset/SetDefault; TenantMember runtime."
+        }
+      ]
+    },
+    {
       "source": "src/platform/tenant-admins/data/remote/tenant-admin-endpoints.ts",
       "family": "tenant-admin",
       "members": [
@@ -8930,6 +9606,228 @@
       ]
     },
     {
+      "source": "src/platform/tools/audit-trail/data/remote/system-audit-trail-endpoints.ts",
+      "family": "system-audit-trail",
+      "members": [
+        {
+          "key": "list",
+          "pattern": "'system-audit-trail'",
+          "verb": [
+            "GET"
+          ],
+          "operations": [
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/platform/tools/audit-trail/data/remote/audit-trail-remote-data-source.ts#getPage",
+              "requestBoundary": "request config: { params: { ...query, cursor: cursor ?? undefined }, }",
+              "responseBoundary": "unknown",
+              "permissionAuthority": "Platform SystemAuditTrailController and PlatformPermissions.ViewSystemAuditTrail (SuperAdmin)"
+            }
+          ],
+          "currentOwner": "Platform/operations",
+          "targetOwner": "Platform/operations",
+          "permissionAuthority": "Platform SystemAuditTrailController and PlatformPermissions.ViewSystemAuditTrail (SuperAdmin)",
+          "scope": "global",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Platform SystemAuditTrailController and PlatformPermissions.ViewSystemAuditTrail (SuperAdmin)."
+        },
+        {
+          "key": "filters",
+          "pattern": "'system-audit-trail/filters'",
+          "verb": [
+            "GET"
+          ],
+          "operations": [
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/platform/tools/audit-trail/data/remote/audit-trail-remote-data-source.ts#getFilters",
+              "requestBoundary": "none",
+              "responseBoundary": "auditTrailFiltersSchema",
+              "permissionAuthority": "Platform SystemAuditTrailController and PlatformPermissions.ViewSystemAuditTrail (SuperAdmin)"
+            }
+          ],
+          "currentOwner": "Platform/operations",
+          "targetOwner": "Platform/operations",
+          "permissionAuthority": "Platform SystemAuditTrailController and PlatformPermissions.ViewSystemAuditTrail (SuperAdmin)",
+          "scope": "global",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Platform SystemAuditTrailController and PlatformPermissions.ViewSystemAuditTrail (SuperAdmin)."
+        },
+        {
+          "key": "entry",
+          "pattern": "(moduleCode: string, id: number) => `system-audit-trail/${encodeURIComponent(moduleCode)}/${id}`",
+          "verb": [
+            "GET"
+          ],
+          "operations": [
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/platform/tools/audit-trail/data/remote/audit-trail-remote-data-source.ts#getEntry",
+              "requestBoundary": "none",
+              "responseBoundary": "auditTrailDetailsSchema",
+              "permissionAuthority": "Platform SystemAuditTrailController and PlatformPermissions.ViewSystemAuditTrail (SuperAdmin)"
+            }
+          ],
+          "currentOwner": "Platform/operations",
+          "targetOwner": "Platform/operations",
+          "permissionAuthority": "Platform SystemAuditTrailController and PlatformPermissions.ViewSystemAuditTrail (SuperAdmin)",
+          "scope": "global",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: Platform SystemAuditTrailController and PlatformPermissions.ViewSystemAuditTrail (SuperAdmin)."
+        }
+      ]
+    },
+    {
+      "source": "src/platform/tools/error-logs/data/remote/error-log-endpoints.ts",
+      "family": "error-log",
+      "members": [
+        {
+          "key": "clientReport",
+          "pattern": "'/api/v1/error-logs/client'",
+          "verb": [
+            "POST"
+          ],
+          "operations": [
+            {
+              "verb": [
+                "POST"
+              ],
+              "caller": "src/platform/tools/error-logs/data/remote/client-error-log-remote.ts#sendClientErrorLog",
+              "requestBoundary": "report",
+              "responseBoundary": "unknown",
+              "permissionAuthority": "ClientErrorLogsController: authenticated server actor; validated active company or SuperAdmin; metadata enums/GUID only"
+            }
+          ],
+          "currentOwner": "Platform/operations",
+          "targetOwner": "Platform/operations",
+          "permissionAuthority": "ClientErrorLogsController: authenticated server actor; validated active company or SuperAdmin; metadata enums/GUID only",
+          "scope": "trusted-current-company-or-SuperAdmin-global",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: ClientErrorLogsController: authenticated server actor; validated active company or SuperAdmin; metadata enums/GUID only."
+        },
+        {
+          "key": "list",
+          "pattern": "(scope: ErrorLogScope) => scope === 'system' ? 'system-error-logs' : 'error-logs'",
+          "verb": [
+            "GET"
+          ],
+          "operations": [
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/platform/tools/error-logs/data/remote/error-log-remote-data-source.ts#list",
+              "requestBoundary": "request config: { params: errorLogParams(criteria) }",
+              "responseBoundary": "errorLogPageSchema",
+              "permissionAuthority": "ErrorLogsController ErrorLogs:View with TenantMember/current company; SystemErrorLogsController SystemErrorLogs:View plus SuperAdmin"
+            }
+          ],
+          "currentOwner": "Platform/operations",
+          "targetOwner": "Platform/operations",
+          "permissionAuthority": "ErrorLogsController ErrorLogs:View with TenantMember/current company; SystemErrorLogsController SystemErrorLogs:View plus SuperAdmin",
+          "scope": "trusted-current-company-or-SuperAdmin-global",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: ErrorLogsController ErrorLogs:View with TenantMember/current company; SystemErrorLogsController SystemErrorLogs:View plus SuperAdmin."
+        },
+        {
+          "key": "detail",
+          "pattern": "(scope: ErrorLogScope, id: string) => `${errorLogEndpoints.list(scope)}/${encodeURIComponent(id)}`",
+          "verb": [
+            "GET"
+          ],
+          "operations": [
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/platform/tools/error-logs/data/remote/error-log-remote-data-source.ts#detail",
+              "requestBoundary": "none",
+              "responseBoundary": "errorLogDetailSchema",
+              "permissionAuthority": "ErrorLogsController ErrorLogs:ViewDetails with TenantMember/current company; SystemErrorLogsController SystemErrorLogs:ViewDetails plus SuperAdmin"
+            }
+          ],
+          "currentOwner": "Platform/operations",
+          "targetOwner": "Platform/operations",
+          "permissionAuthority": "ErrorLogsController ErrorLogs:ViewDetails with TenantMember/current company; SystemErrorLogsController SystemErrorLogs:ViewDetails plus SuperAdmin",
+          "scope": "trusted-current-company-or-SuperAdmin-global",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: ErrorLogsController ErrorLogs:ViewDetails with TenantMember/current company; SystemErrorLogsController SystemErrorLogs:ViewDetails plus SuperAdmin."
+        },
+        {
+          "key": "export",
+          "pattern": "(scope: ErrorLogScope) => `${errorLogEndpoints.list(scope)}/export`",
+          "verb": [
+            "GET"
+          ],
+          "operations": [
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/platform/tools/error-logs/data/remote/error-log-remote-data-source.ts#export",
+              "requestBoundary": "request config: { params: errorLogParams(criteria), responseType: 'arraybuffer', }",
+              "responseBoundary": "unknown",
+              "permissionAuthority": "ErrorLogsController ErrorLogs:Export with TenantMember/current company; SystemErrorLogsController SystemErrorLogs:Export plus SuperAdmin; bounded XLSX"
+            }
+          ],
+          "currentOwner": "Platform/operations",
+          "targetOwner": "Platform/operations",
+          "permissionAuthority": "ErrorLogsController ErrorLogs:Export with TenantMember/current company; SystemErrorLogsController SystemErrorLogs:Export plus SuperAdmin; bounded XLSX",
+          "scope": "trusted-current-company-or-SuperAdmin-global",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: ErrorLogsController ErrorLogs:Export with TenantMember/current company; SystemErrorLogsController SystemErrorLogs:Export plus SuperAdmin; bounded XLSX."
+        },
+        {
+          "key": "settings",
+          "pattern": "'system-error-logs/settings'",
+          "verb": [
+            "GET",
+            "PUT"
+          ],
+          "operations": [
+            {
+              "verb": [
+                "GET"
+              ],
+              "caller": "src/platform/tools/error-logs/data/remote/error-log-remote-data-source.ts#settings",
+              "requestBoundary": "none",
+              "responseBoundary": "errorLogSettingsSchema",
+              "permissionAuthority": "SystemErrorLogsController: SuperAdmin; GET ErrorLogSettings:View; PUT ErrorLogSettings:Edit with expected revision"
+            },
+            {
+              "verb": [
+                "PUT"
+              ],
+              "caller": "src/platform/tools/error-logs/data/remote/error-log-remote-data-source.ts#saveSettings",
+              "requestBoundary": "{ retentionDays, expectedRevision }",
+              "responseBoundary": "errorLogSettingsSchema",
+              "permissionAuthority": "SystemErrorLogsController: SuperAdmin; GET ErrorLogSettings:View; PUT ErrorLogSettings:Edit with expected revision"
+            }
+          ],
+          "currentOwner": "Platform/operations",
+          "targetOwner": "Platform/operations",
+          "permissionAuthority": "SystemErrorLogsController: SuperAdmin; GET ErrorLogSettings:View; PUT ErrorLogSettings:Edit with expected revision",
+          "scope": "trusted-current-company-or-SuperAdmin-global",
+          "offlineMode": "online-only",
+          "status": "aligned",
+          "note": "Verb and request/response boundaries are traced from non-test callers; permission authority: SystemErrorLogsController: SuperAdmin; GET ErrorLogSettings:View; PUT ErrorLogSettings:Edit with expected revision."
+        }
+      ]
+    },
+    {
       "source": "src/platform/tools/file-manager/data/remote/file-manager-endpoints.ts",
       "family": "file-manager",
       "members": [
@@ -9132,7 +10030,7 @@
                 "GET"
               ],
               "caller": "src/platform/tools/operations/data/remote/operations-remote-data-source.ts#getHealthCheck",
-              "requestBoundary": "none",
+              "requestBoundary": "request config: { validateStatus: status => status === 200 || status === 503 }",
               "responseBoundary": "unknown",
               "permissionAuthority": "Authenticated host readiness health endpoint"
             }

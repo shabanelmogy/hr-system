@@ -59,6 +59,18 @@ const referencedEndpointOperations = new Map([
 ]);
 
 const endpointPermissionOverrides = new Map([
+  ...Object.entries({
+    clientReport: 'ClientErrorLogsController: authenticated server actor; validated active company or SuperAdmin; metadata enums/GUID only',
+    list: 'ErrorLogsController ErrorLogs:View with TenantMember/current company; SystemErrorLogsController SystemErrorLogs:View plus SuperAdmin',
+    detail: 'ErrorLogsController ErrorLogs:ViewDetails with TenantMember/current company; SystemErrorLogsController SystemErrorLogs:ViewDetails plus SuperAdmin',
+    export: 'ErrorLogsController ErrorLogs:Export with TenantMember/current company; SystemErrorLogsController SystemErrorLogs:Export plus SuperAdmin; bounded XLSX',
+    settings: 'SystemErrorLogsController: SuperAdmin; GET ErrorLogSettings:View; PUT ErrorLogSettings:Edit with expected revision',
+  }).map(([key, authority]) => [`src/platform/tools/error-logs/data/remote/error-log-endpoints.ts#${key}`, authority]),
+  ...['settings', 'texts', 'runtime', 'default', 'text', 'reset'].map(operation => [
+    `src/platform/tenant-administration/company-localizations/data/remote/company-localization-endpoints.ts#${operation}`,
+    `Platform CompanyLocalizationsController: TenantMember; ${operation === 'runtime' ? 'authenticated runtime, no management permission' : `CompanyLocalizations:${({ settings: 'View', texts: 'View', default: 'SetDefault', text: 'Edit', reset: 'Reset' })[operation]}`}; trusted current Tenant/company; online-only`,
+  ]),
+  ['src/platform/administration/data/remote/administration-endpoints.ts#userPermissions', 'Platform UserPermissionsController: TenantMember; GET UserPermissions:View; PUT UserPermissions:Edit; trusted current Tenant/company; additive direct grants only'],
   ['src/core/realtime/realtime-endpoints.ts#token', 'Platform AuthController.RealtimeToken with an authenticated session'],
   ['src/core/realtime/realtime-endpoints.ts#companyHub', 'Platform authenticated SignalR hub connection and tenant/company claims'],
   ['src/platform/tools/operations/data/remote/operations-endpoints.ts#health', 'Authenticated host readiness health endpoint'],
@@ -277,6 +289,9 @@ function policy(pathname) {
   const role = (roles) => ({ kind: 'roles', roles });
   const permission = (permissions) => ({ kind: 'permissions', permissions });
   const anyOf = (requirements) => ({ kind: 'anyOf', anyOf: requirements });
+  if (pathname === '/advanced-tools/error-logs') return permission(['ViewErrorLogs']);
+  if (pathname === '/system-error-logs') return { kind: 'rolesAndPermissions', roles: ['superAdmin'], permissions: ['ViewSystemErrorLogs'] };
+  if (pathname === '/error-log-settings') return { kind: 'rolesAndPermissions', roles: ['superAdmin'], permissions: ['ViewErrorLogSettings'] };
   if (pathname === '/super-admin-dashboard' || pathname === '/tenant-management' || pathname === '/tenant-admin-management') return role(['superAdmin']);
   if (pathname.startsWith('/administration/role-permissions')) return permission(['ViewRoles']);
   if (pathname === '/administration/offline-operations') return permission(['ViewOfflineOperations']);
@@ -297,9 +312,13 @@ function policy(pathname) {
     { permissions: ['ViewUsers'] },
     { permissions: ['ViewAppointments'] },
   ]);
+  if (pathname === '/email-templates') return permission(['ViewCompanyEmailTemplates']);
+  if (pathname === '/system-ui-texts') return { kind: 'rolesAndPermissions', roles: ['superAdmin'], permissions: ['ViewSystemUiTexts'] };
+  if (pathname === '/system-audit-trail') return { kind: 'rolesAndPermissions', roles: ['superAdmin'], permissions: ['ViewSystemAuditTrail'] };
   if (pathname === '/advanced-tools/audit-trail') return permission(['ViewAuditTrail']);
   if (pathname === '/advanced-tools/localization-api') return permission(['ViewLocalizations']);
-  if (pathname === '/advanced-tools/health-check' || pathname === '/advanced-tools/api-endpoints') return role(['admin']);
+  if (pathname === '/advanced-tools/health-check') return anyOf([{ roles: ['admin'] }, { roles: ['superAdmin'], permissions: ['ViewSystemHealth'] }]);
+  if (pathname === '/advanced-tools/api-endpoints') return anyOf([{ roles: ['admin'] }, { roles: ['superAdmin'], permissions: ['ViewSystemApiDocs'] }]);
   if (pathname === '/advanced-tools/hangfire-dashboard') return permission(['ViewHangfireDashboard']);
   if (pathname === '/advanced-tools') return anyOf([{ permissions: ['ViewAuditTrail'] }, { permissions: ['ViewLocalizations'] }, { roles: ['admin'] }, { permissions: ['ViewHangfireDashboard'] }]);
   if (pathname === '/recruitment') return permission(['ViewRecruitment']);
@@ -366,7 +385,10 @@ function moduleRequirement(pathname) {
   if (pathname.startsWith('/workforce-planning')) return { moduleCode: 'hr', submoduleCode: 'workforce' };
   if (pathname.startsWith('/finance/ledger-setup')) return { moduleCode: 'acc', submoduleCode: 'ledger-setup' };
   if (pathname === '/finance') return null;
-  if (pathname.startsWith('/advanced-tools/audit-trail') || pathname.startsWith('/advanced-tools/localization-api')) return { moduleCode: 'platform', submoduleCode: 'tenant-administration' };
+  if (pathname === '/email-templates') return { moduleCode: 'platform', submoduleCode: 'tenant-administration' };
+  if (pathname === '/system-ui-texts') return { moduleCode: 'platform', submoduleCode: 'operations' };
+  if (pathname === '/system-audit-trail') return { moduleCode: 'platform', submoduleCode: 'operations' };
+  if (pathname.startsWith('/advanced-tools/audit-trail') || pathname.startsWith('/advanced-tools/error-logs') || pathname.startsWith('/advanced-tools/localization-api')) return { moduleCode: 'platform', submoduleCode: 'tenant-administration' };
   if (pathname === '/advanced-tools' || pathname === '/extras') return null;
   if (pathname.startsWith('/administration')) return { moduleCode: 'platform', submoduleCode: 'tenant-administration' };
   if (pathname.startsWith('/advanced-tools')) return { moduleCode: 'platform', submoduleCode: 'operations' };
@@ -385,6 +407,16 @@ function routeProfile(route, pathname) {
     status: route.status,
     note: route.note,
   };
+
+  if (effectivePath === '/email-templates') return { ...profile, currentOwner: 'Platform/company-email-templates', targetOwner: 'Platform/company-email-templates', scope: 'tenant/company', offlineMode: 'online-only', status: 'aligned', note: 'Company-only registered account email catalog and sample final preview. Web editing; native read-only by product decision.' };
+  if (effectivePath === '/system-ui-texts') return { ...profile, currentOwner: 'Platform/operations', targetOwner: 'Platform/operations', scope: 'platform-global', offlineMode: 'online-only', status: 'aligned', note: 'Global text editor is a Settings tab with exact SuperAdmin/editor/target-screen authority; existing shared text workspace.' };
+  if (effectivePath === '/system-audit-trail') return { ...profile, currentOwner: 'Platform/operations', targetOwner: 'Platform/operations', scope: 'platform-global', offlineMode: 'online-only', status: 'aligned', note: 'Global audit viewer reuses existing shared screen with separate SuperAdmin role and SystemAuditTrail:View authority.' };
+  if (['/advanced-tools/error-logs', '/system-error-logs', '/error-log-settings'].includes(effectivePath)) {
+    return { ...profile, currentOwner: 'Platform/operations', targetOwner: 'Platform/operations',
+      scope: effectivePath === '/advanced-tools/error-logs' ? 'tenant/company' : 'platform-global',
+      offlineMode: 'online-only', status: 'aligned',
+      note: 'Error Logs V1: separate company/system viewer and global retention; exact route and action permissions, fresh server authority.' };
+  }
 
   if (effectivePath === '/basic-data'
     || effectivePath === '/basic-data/geographical-information'
@@ -548,6 +580,9 @@ function targetModuleRequirement(_pathname, currentModule, _profile) {
 }
 
 function endpointProfile(source) {
+  if (source.includes('/platform/company-email-templates/')) return { currentOwner: 'Platform/company-email-templates', targetOwner: 'Platform/company-email-templates', scope: 'tenant/company', status: 'aligned', permissionSource: 'Platform CompanyEmailTemplatesController: TenantMember + CompanyEmailTemplates:View; online-only catalog/sample preview, no writes' };
+  if (source.includes('/platform/tools/error-logs/')) return { currentOwner: 'Platform/operations', targetOwner: 'Platform/operations', scope: 'trusted-current-company-or-SuperAdmin-global', status: 'aligned', permissionSource: 'Platform ErrorLogsController, SystemErrorLogsController and authenticated ClientErrorLogsController; exact independent action permission' };
+  if (source.includes('/platform/tenant-administration/company-localizations/')) return { currentOwner: 'Platform/tenant-administration', targetOwner: 'Platform/tenant-administration', scope: 'tenant/company', status: 'aligned', permissionSource: 'Platform CompanyLocalizationsController exact View/Edit/Reset/SetDefault; TenantMember runtime' };
   if (source.includes('/core/realtime/')) return { currentOwner: 'Platform/realtime', targetOwner: 'Platform/realtime', scope: 'session/tenant/company', status: 'aligned', permissionSource: 'Platform authenticated realtime policy' };
   if (source.includes('/hr/recruitment/')) return { currentOwner: 'HR/recruitment', targetOwner: 'HR/recruitment', scope: 'tenant/company', status: 'aligned', permissionSource: 'HR API endpoint policy backed by HrPermissions.Recruitment' };
   if (source.includes('/accounting/ledger-setup/coa-hierarchy/')) return { currentOwner: 'Accounting/ledger-setup', targetOwner: 'Accounting/ledger-setup', scope: 'tenant/company', status: 'aligned', permissionSource: 'Accounting COA hierarchy controllers use exact View/Create/Edit/Archive/Restore permissions per resource' };
@@ -561,6 +596,8 @@ function endpointProfile(source) {
   if (source.includes('/hr/workforce-planning/')) return { currentOwner: 'HR/workforce', targetOwner: 'HR/workforce', scope: 'tenant/company', status: 'aligned', permissionSource: 'HR workforce endpoint policy backed by HrPermissions.Workforce' };
   if (source.includes('/modules/crm/appointments/')) return { currentOwner: 'CRM/appointments', targetOwner: 'CRM/appointments', scope: 'tenant/company', status: 'aligned', permissionSource: 'CRM AppointmentsController and CrmPermissions.Appointments' };
   if (source.includes('/platform/reporting/')) return { currentOwner: 'Platform/reporting', targetOwner: 'Platform/reporting', scope: 'tenant/company', status: 'aligned', permissionSource: 'Reporting API endpoint policy and ReportingPermissions.Reports' };
+  if (source.endsWith('/system-localization-endpoints.ts')) return { currentOwner: 'Platform/operations', targetOwner: 'Platform/operations', scope: 'global', status: 'aligned', permissionSource: 'SystemLocalizationsController: SuperAdmin + SystemUiTexts:View/Edit/Reset and target screen authority; runtime role and target authority' };
+  if (source.endsWith('/system-audit-trail-endpoints.ts')) return { currentOwner: 'Platform/operations', targetOwner: 'Platform/operations', scope: 'global', status: 'aligned', permissionSource: 'Platform SystemAuditTrailController and PlatformPermissions.ViewSystemAuditTrail (SuperAdmin)' };
   if (source.includes('/platform/tools/audit-trail/')) return { currentOwner: 'Platform/tenant-administration', targetOwner: 'Platform/tenant-administration', scope: 'tenant/company', status: 'aligned', permissionSource: 'Platform AuditTrailController and PlatformPermissions.ViewAuditTrail' };
   if (source.includes('/platform/tools/localization/')) return { currentOwner: 'Platform/tenant-administration', targetOwner: 'Platform/tenant-administration', scope: 'tenant/company', status: 'aligned', permissionSource: 'Platform LocalizationController and PlatformPermissions localizations' };
   if (source.includes('/platform/tools/operations/')) return { currentOwner: 'Platform/operations', targetOwner: 'Platform/operations', scope: 'platform-global', status: 'aligned', permissionSource: 'Platform BackgroundJobsController and PlatformPermissions.GlobalOperations' };

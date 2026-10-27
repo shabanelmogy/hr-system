@@ -14,6 +14,18 @@ public sealed class HostGlobalExceptionHandler(ILogger<HostGlobalExceptionHandle
         Exception exception,
         CancellationToken cancellationToken)
     {
+        httpContext.Items[HostErrorLogMiddleware.ExceptionKey] = exception;
+        if (exception is BadHttpRequestException { StatusCode: StatusCodes.Status413PayloadTooLarge })
+        {
+            await HostProblemDetails.WriteAsync(httpContext, new ProblemDetails
+            {
+                Status = StatusCodes.Status413PayloadTooLarge,
+                Title = "Request body too large",
+                Detail = "The request exceeds the permitted size.",
+                Type = "https://httpstatuses.io/413"
+            }, cancellationToken);
+            return true;
+        }
         if (exception is FileUploadSecurityException fileSecurityException)
         {
             logger.LogWarning(

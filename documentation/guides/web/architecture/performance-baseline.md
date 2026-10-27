@@ -114,3 +114,8 @@ when evidence shows a regression; they are not converted into machine-specific C
 timing thresholds that would be dominated by runner variance. PPR/Instant
 Navigation behavior remains covered by the browser E2E suite, while bundle and
 shared-runtime regressions are enforced deterministically by `measure:build`.
+
+
+### Error detail/copy and launcher contrast recheck — 2026-10-19
+
+Sequential Web production build passed. Current integrated measurement retains the same seven protected-shell budget violations: 2,427,434–2,471,137 bytes against 2,359,296; each +1,294 bytes compared with the preceding Administration grouping/icon measurement. Protected shared JavaScript is 902,320 bytes (0.86 MiB) against 1.85 MiB. This does not close RISK-009 or authorize a budget increase. The Error Logs route is not a named violation; shared CopyButton/DetailFields/FormHeader changes are included in this integrated measurement. Raw local evidence: .codex-tmp/error-detail-web-budget.log.

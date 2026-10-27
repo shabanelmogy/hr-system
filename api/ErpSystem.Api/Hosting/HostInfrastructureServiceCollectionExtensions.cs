@@ -127,6 +127,8 @@ public static class HostInfrastructureServiceCollectionExtensions
                 CreateFixedWindowPartition(context, "authentication", 10, TimeSpan.FromMinutes(1)));
             options.AddPolicy("fileOperations", context =>
                 CreateFixedWindowPartition(context, "files", 30, TimeSpan.FromMinutes(1)));
+            options.AddPolicy("errorLogClient", context =>
+                CreateFixedWindowPartition(context, "error-log-client", 30, TimeSpan.FromMinutes(1)));
 
             options.OnRejected = async (context, cancellationToken) =>
             {

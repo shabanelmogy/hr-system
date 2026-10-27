@@ -6,3 +6,4 @@ export { default as CardViewPagination } from "./CardViewPagination";
 export type { CardViewPaginationProps } from "./CardViewPagination";
 export { default as CardViewSkeleton } from "./CardViewSkeleton";
 export type { CardViewSkeletonProps } from "./CardViewSkeleton";
+export { ResetButton } from "./header-controls/ResetButton";

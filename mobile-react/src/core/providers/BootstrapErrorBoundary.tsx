@@ -1,5 +1,6 @@
 import { Component, type ErrorInfo, type PropsWithChildren, type ReactNode } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { reportErrorLog } from '@/src/core/observability/error-log-reporter';
 
 interface State {
   failed: boolean;
@@ -22,6 +23,7 @@ export class BootstrapErrorBoundary extends Component<PropsWithChildren, State> 
   }
 
   componentDidCatch(error: Error, info: ErrorInfo): void {
+    reportErrorLog('boundary', error);
     console.error('Application bootstrap failed.', error, info.componentStack);
   }
 

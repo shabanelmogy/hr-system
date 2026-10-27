@@ -1,5 +1,4 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { getLocales } from 'expo-localization';
 import {
   createContext,
   type PropsWithChildren,
@@ -12,6 +11,7 @@ import { I18nextProvider } from 'react-i18next';
 
 import { STORAGE_KEYS } from '@/src/core/constants/storage-keys';
 import i18n from '@/src/core/localization/i18n';
+import { getResolvedCompanyUiLanguage, setExplicitCompanyUiLanguage } from './company-ui-resources';
 
 export type AppLanguage = 'en' | 'ar';
 export type AppDirection = 'ltr' | 'rtl';
@@ -28,36 +28,31 @@ const LocalizationContext = createContext<LocalizationContextValue | null>(null)
 const isSupportedLanguage = (value: string | null): value is AppLanguage =>
   value === 'en' || value === 'ar';
 
-const getDeviceLanguage = (): AppLanguage =>
-  getLocales()[0]?.languageCode === 'ar' ? 'ar' : 'en';
-
 export function LocalizationProvider({ children }: PropsWithChildren) {
   const [language, setLanguageState] = useState<AppLanguage>('en');
 
   useEffect(() => {
     let active = true;
+    const synchronize = () => { if (active) setLanguageState(getResolvedCompanyUiLanguage()); };
+    i18n.on('languageChanged', synchronize);
 
     void AsyncStorage.getItem(STORAGE_KEYS.language).then((storedLanguage) => {
       if (!active) {
         return;
       }
 
-      const nextLanguage = isSupportedLanguage(storedLanguage)
-        ? storedLanguage
-        : getDeviceLanguage();
-
-      setLanguageState(nextLanguage);
-      void i18n.changeLanguage(nextLanguage);
+      setExplicitCompanyUiLanguage(isSupportedLanguage(storedLanguage) ? storedLanguage : null);
+      synchronize();
     });
 
     return () => {
       active = false;
+      i18n.off('languageChanged', synchronize);
     };
   }, []);
 
   const setLanguage = (nextLanguage: AppLanguage) => {
-    setLanguageState(nextLanguage);
-    void i18n.changeLanguage(nextLanguage);
+    setExplicitCompanyUiLanguage(nextLanguage);
     void AsyncStorage.setItem(STORAGE_KEYS.language, nextLanguage);
   };
 

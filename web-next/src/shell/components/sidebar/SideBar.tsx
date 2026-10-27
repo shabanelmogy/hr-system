@@ -27,7 +27,7 @@ import type { NavigationItem, NavigationSection as NavigationSectionModel } from
 import { compactSidebarWidth, expandedSidebarWidth } from "./sidebarConstants";
 import { toLauncherModule } from "@/platform/modules";
 import { useAuthorizedNavigation } from "@/shell/navigation/useAuthorizedNavigation";
-import { requiredModuleForPath } from "@/platform/modules";
+import { isAdministrationPath, requiredModuleForPath } from "@/platform/modules";
 import { appRoutes } from "@/config/routes";
 // Drawer Sizes
 
@@ -135,7 +135,7 @@ function SideBar({
   const { t } = useTranslation();
   const pathname = usePathname();
   const [searchTerm, setSearchTerm] = useState("");
-  const activeModuleCode = requiredModuleForPath(pathname)?.moduleCode.toLowerCase() ?? null;
+  const activeModuleCode = isAdministrationPath(pathname) ? "administration" : requiredModuleForPath(pathname)?.moduleCode.toLowerCase() ?? null;
   const { navigation: navigationSections, modulesQuery } = useAuthorizedNavigation(activeModuleCode);
   const { setOpen } = useSidebar();
   const activeModule = activeModuleCode

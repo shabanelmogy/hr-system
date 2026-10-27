@@ -3,6 +3,7 @@ import { Pressable, Text, View } from 'react-native';
 
 import type { AuthResponse, LoginOutcome, SessionResponse } from '@/src/platform/auth/domain/models/auth';
 import { AuthProvider, useAuth } from './AuthProvider';
+import { applyCompanyUiResources, companyUiGeneration, getResolvedCompanyUiLanguage, setExplicitCompanyUiLanguage } from '@/src/core/localization/company-ui-resources';
 
 const mockCancelQueries = jest.fn();
 const mockClearQueries = jest.fn();
@@ -85,6 +86,7 @@ function AuthProbe() {
         testID="sign-in-user-c"
       />
       <Pressable onPress={() => void auth.signOut().catch(() => undefined)} testID="sign-out" />
+      <Pressable onPress={() => void auth.refreshSession().catch(() => undefined)} testID="refresh-session" />
     </View>
   );
 }
@@ -165,6 +167,27 @@ describe('AuthProvider context isolation', () => {
     expect(mockClearQueries).toHaveBeenCalledTimes(1);
     expect(mockRotateContext).toHaveBeenCalledTimes(1);
     expect(mockSetTokens).toHaveBeenCalledWith('user-b-company-1-access', 'user-b-company-1-refresh');
+  });
+  it('retains the current company language during same-scope refresh and clears it before a changed scope is exposed', async () => {
+    mockSession.mockResolvedValue(createSession('user-a', 1));
+    await render(<AuthProvider><AuthProbe /></AuthProvider>);
+    await waitFor(() => expect(screen.getByTestId('auth-user').props.children).toBe('user-a'));
+    setExplicitCompanyUiLanguage(null);
+    const generation = companyUiGeneration();
+    applyCompanyUiResources([], 'ar', generation);
+    await fireEvent.press(screen.getByTestId('refresh-session'));
+    await waitFor(() => expect(mockSession).toHaveBeenCalledTimes(2));
+    expect(getResolvedCompanyUiLanguage()).toBe('ar');
+    expect(companyUiGeneration()).toBe(generation);
+    mockSession.mockRejectedValueOnce(new Error('Temporary network failure'));
+    await fireEvent.press(screen.getByTestId('refresh-session'));
+    await waitFor(() => expect(mockSession).toHaveBeenCalledTimes(3));
+    expect(getResolvedCompanyUiLanguage()).toBe('ar');
+    mockSession.mockResolvedValueOnce(createSession('user-a', 2));
+    await fireEvent.press(screen.getByTestId('refresh-session'));
+    await waitFor(() => expect(screen.getByTestId('auth-company').props.children).toBe('2'));
+    expect(getResolvedCompanyUiLanguage()).toBe('en');
+    expect(companyUiGeneration()).toBeGreaterThan(generation);
   });
 
   it('clears local query/session state on sign-out even when the server logout fails', async () => {

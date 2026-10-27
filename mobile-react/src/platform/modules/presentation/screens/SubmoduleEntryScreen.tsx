@@ -27,9 +27,11 @@ export function SubmoduleEntryScreen({
   const mobileDefinition = getMobileSubmoduleDefinition(moduleCode, submoduleCode);
   const destination = useMemo(
     () => submodule
-      ? mobileDefinition?.entryCandidates.find(canAccess)
+      ? (moduleCode.toLowerCase() === 'administration' && submodule.entryPath
+          ? [submodule.entryPath as AppRoute]
+          : mobileDefinition?.entryCandidates ?? []).find(canAccess)
       : undefined,
-    [canAccess, mobileDefinition, submodule],
+    [canAccess, mobileDefinition, moduleCode, submodule],
   );
 
   useEffect(() => {

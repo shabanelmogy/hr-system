@@ -9,6 +9,7 @@ export const operationsRemoteDataSource: OperationsRepository = {
   async getHealthCheck() {
     const response = await apiService.get<unknown>(
       `${requireApiRootUrl()}/${operationsEndpoints.health}`,
+      { validateStatus: status => status === 200 || status === 503 },
     );
     const healthCheck = healthCheckSchema.parse(response);
     return {

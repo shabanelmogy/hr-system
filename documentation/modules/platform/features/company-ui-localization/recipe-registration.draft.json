@@ -1,0 +1,338 @@
+{
+  "status": "draft",
+  "referenceFeature": "N/A",
+  "planId": "platform-user-permissions-and-company-localization",
+  "sliceId": "S2 Company UI localization",
+  "canonicalPlan": "documentation/plans/business/platform-user-permissions-and-company-localization/PLAN.md",
+  "featureDecompositionDecision": "Single feature",
+  "screenWorkflowContract": "documentation/plans/business/platform-user-permissions-and-company-localization/decomposition/company-ui-localization.md",
+  "plannedCustomerEducation": "documentation/plans/business/platform-user-permissions-and-company-localization/education/company-ui-localization.md",
+  "instructions": "Merge these entries into recipe-manifest.json after Phase 00 has a final preflight required-files.json and all four initial applied implementation books. Extend the manifest/books with runtime evidence during implementation.",
+  "books": [
+    {
+      "id": "company-ui-localization-master",
+      "path": "../modules/platform/features/company-ui-localization/company-ui-localization-review.md",
+      "title": "Company UI localization cross-platform master review"
+    },
+    {
+      "id": "company-ui-localization-api",
+      "path": "../modules/platform/features/company-ui-localization/company-ui-localization-api.md",
+      "title": "Company UI localization API implementation profile"
+    },
+    {
+      "id": "company-ui-localization-web",
+      "path": "../modules/platform/features/company-ui-localization/company-ui-localization-web.md",
+      "title": "Company UI localization Next.js implementation profile"
+    },
+    {
+      "id": "company-ui-localization-mobile",
+      "path": "../modules/platform/features/company-ui-localization/company-ui-localization-mobile.md",
+      "title": "Company UI localization Expo implementation profile"
+    }
+  ],
+  "requiredFileManifest": "../modules/platform/features/company-ui-localization/required-files.json",
+  "recipes": [
+    {
+      "id": "company-ui-localization-phase-00-implementation-preflight",
+      "title": "Company UI localization Phase 00 - Implementation Preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "../modules/platform/features/company-ui-localization/generated/PHASE-00-implementation-preflight.md",
+      "sources": [
+        {
+          "book": "company-ui-localization-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "company-ui-localization-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "company-ui-localization-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "company-ui-localization-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "company-ui-localization-phase-01-domain-api",
+      "title": "Company UI localization Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "../modules/platform/features/company-ui-localization/generated/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "company-ui-localization-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "company-ui-localization-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "company-ui-localization-phase-02-web-client",
+      "title": "Company UI localization Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "../modules/platform/features/company-ui-localization/generated/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "company-ui-localization-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "company-ui-localization-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "company-ui-localization-phase-03-mobile-client",
+      "title": "Company UI localization Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "../modules/platform/features/company-ui-localization/generated/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "company-ui-localization-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "company-ui-localization-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "company-ui-localization-phase-04-domain-actions",
+      "title": "Company UI localization Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "../modules/platform/features/company-ui-localization/generated/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "company-ui-localization-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "company-ui-localization-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "company-ui-localization-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "company-ui-localization-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "company-ui-localization-phase-05-integration-runtime",
+      "title": "Company UI localization Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "../modules/platform/features/company-ui-localization/generated/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "company-ui-localization-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "company-ui-localization-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "company-ui-localization-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "company-ui-localization-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "company-ui-localization-phase-06-verification-acceptance",
+      "title": "Company UI localization Phase 06 - Verification and Acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "../modules/platform/features/company-ui-localization/generated/PHASE-06-verification-acceptance.md",
+      "sources": [
+        {
+          "book": "company-ui-localization-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "company-ui-localization-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "company-ui-localization-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "company-ui-localization-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "company-ui-localization-phase-07-customer-education-closure",
+      "title": "Company UI localization Phase 07 - Customer Education and Closure",
+      "template": "templates/PHASE-07-customer-education-closure.template.md",
+      "output": "../modules/platform/features/company-ui-localization/generated/PHASE-07-customer-education-closure.md",
+      "sources": [
+        {
+          "book": "company-ui-localization-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "company-ui-localization-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "company-ui-localization-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+# Research
+
+Current installed sources are authoritative: .NET10/EF Core SQL Server, Next16.3.5/React19/MUI9, Expo57. Existing singleton locks, audit and UI runtime layering are reviewed repository patterns. Official references: https://learn.microsoft.com/en-us/ef/core/modeling/entity-properties ; https://www.i18next.com/overview/api#addresourcebundle ; https://react.dev/reference/react/useEffect . No dependency upgrade is required.
+
+S2 verification corrections: the interface test actor must implement IsInRole because ICurrentExecutionContext defaults to false (https://learn.microsoft.com/en-us/dotnet/csharp/advanced-topics/interface-implementation/default-interface-methods-versions). Migration checks must use newly built assemblies (https://learn.microsoft.com/ef/core/miscellaneous/cli/dotnet). Nested Grid dimensions use a bounded flex parent and scrollable Settings panel (https://mui.com/x/react-data-grid/layout/); shared ContentWrapper gained standard backward-compatible sx composition instead of a feature-local shell. Sidebar Settings retains explicit any-of grants through existing authorization matching (https://react.dev/learn/conditional-rendering).

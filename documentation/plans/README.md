@@ -77,6 +77,11 @@ Only one feature may be `Active`. Every later feature is `Queued` or `Blocked`
 until the active feature is `Verified` and its documentation/closure stage is
 `Closed`.
 
+When the plan metadata and every version 2.0 feature contract are `Closed`, the
+roadmap uses the exact marker `**ACTIVE_FEATURE_STEP:** None`. This is the only
+zero-active exception; an open plan still requires exactly one matching active
+feature. Closing a plan cannot hide an unfinished or active contract.
+
 ## Plan status vocabulary
 
 Use exactly these states:
@@ -178,6 +183,7 @@ Before handoff run:
 
 ```powershell
 ./documentation/plans/Check-Planning.ps1
+./documentation/plans/tests/Check-Planning.ExecutionState.Tests.ps1
 ```
 
 ## Non-negotiable rule
