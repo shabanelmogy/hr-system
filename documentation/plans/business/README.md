@@ -53,6 +53,7 @@ Status lives in [`../PLAN_REGISTRY.md`](../PLAN_REGISTRY.md).
 
 | Plan | Files |
 | --- | --- |
+| `web-angular-migration` | [ابدأ هنا](web-angular-migration/README.md) · [DISCOVERY](web-angular-migration/DISCOVERY.md) · [EVIDENCE](web-angular-migration/EVIDENCE.md) · [SPEC](web-angular-migration/SPEC_SUMMARY.md) · [PLAN](web-angular-migration/PLAN.md) · [ROADMAP](web-angular-migration/ROADMAP.md) · [ARCHITECTURE](web-angular-migration/ANGULAR_ARCHITECTURE.md) · [ERP ACCEPTANCE](web-angular-migration/ERP_ACCEPTANCE.md) · [INVENTORY](web-angular-migration/INVENTORY.md) |
 | `accounting-core-gl` | [DISCOVERY](accounting-core-gl/DISCOVERY.md) · [EVIDENCE](accounting-core-gl/EVIDENCE.md) · [RESEARCH](accounting-core-gl/RESEARCH.md) · [SPEC_SUMMARY](accounting-core-gl/SPEC_SUMMARY.md) · [DECISIONS](accounting-core-gl/DECISIONS.md) · [PLAN](accounting-core-gl/PLAN.md) |
 | `education-module` | [DISCOVERY](education-module/DISCOVERY.md) · [EVIDENCE](education-module/EVIDENCE.md) · [RESEARCH](education-module/RESEARCH.md) · [SPEC_SUMMARY](education-module/SPEC_SUMMARY.md) · [DECISIONS](education-module/DECISIONS.md) · [PLAN](education-module/PLAN.md) |
 | `erp-platform-template` | [DISCOVERY](erp-platform-template/DISCOVERY.md) · [EVIDENCE](erp-platform-template/EVIDENCE.md) · [RESEARCH](erp-platform-template/RESEARCH.md) · [SPEC_SUMMARY](erp-platform-template/SPEC_SUMMARY.md) · [DECISIONS](erp-platform-template/DECISIONS.md) · [PLAN](erp-platform-template/PLAN.md) |

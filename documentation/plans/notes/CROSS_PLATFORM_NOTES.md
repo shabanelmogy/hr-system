@@ -16,6 +16,8 @@ Typical examples:
 
 | Note ID | Type | Area | Summary | Surfaces | Canonical registry |
 | --- | --- | --- | --- | --- | --- |
+| DEC-025 | Decision | Angular direct API | Closed: requester excluded BFF and additional infrastructure. | API + Web | `DECISION_BACKLOG.md` |
+| DEC-027 | Decision | Direct authentication | Preserve retained-client compatibility while binding Angular auth. | API + Web | `DECISION_BACKLOG.md` |
 | DEC-023 | Decision | Error-log sources | Confirm first-release capture sources. | API + Web + Mobile | `DECISION_BACKLOG.md` |
 | DEC-022 | Decision | Error-log retention | Confirm lifecycle, retention and export scope. | API + Web + Mobile | `DECISION_BACKLOG.md` |
 | DEC-021 | Decision | Direct user grants | Resolved: company-specific additive business grants; role permissions preserved. | API + Web + Mobile | `DECISION_BACKLOG.md` |
@@ -37,7 +39,8 @@ Typical examples:
 | DEF-023 | Deferred | Attendance geofence | Geofence radius waits for mobile attendance capture. | API + Mobile | `DEFERRED_ITEMS.md` |
 | DEF-024 | Deferred | Employee management | Employee screens, direct manager, and import/export wait for the Employee slice. | API + Web + Mobile | `DEFERRED_ITEMS.md` |
 | RISK-005 | Risk | Platform post-commit effects | Future critical external effects require transactional outbox semantics. | API + Web + Mobile | `KNOWN_RISKS.md` |
-| FOLLOW-003 | Follow-up | Contract parity | Exhaustive generated Web/API contract diff remains future governance work. | API + Web | `FOLLOW_UPS.md` |
+| FOLLOW-003 | Follow-up | Contract parity | Required Angular generation proof is bounded; whole-API contract automation remains open. | API + Web | `FOLLOW_UPS.md` |
+| PROD-023 | Production | Recovery | Link migration release to canonical backup/restore and data-integrity proof. | API + Web + Data + Infrastructure | `PRODUCTION_NOTES.md` |
 | DEC-001 | Decision | HR MVP | Leave-only versus Attendance scope remains open for the affected HR expansion. | API + Web + Mobile | `DECISION_BACKLOG.md` |
 | DEC-002 | Decision | Payroll ownership | First-party Payroll versus provider integration remains open. | API + Web + Mobile | `DECISION_BACKLOG.md` |
 | DEC-003 | Decision | Billing model | Manual enterprise contracts versus self-service billing remains open. | API + Web + Mobile | `DECISION_BACKLOG.md` |

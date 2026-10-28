@@ -56,6 +56,13 @@ No editor generator. Deterministic redacted attempt fixtures and allowed synthet
 
 Contract/adapter/layer/ACL/offline/filter/detail/export cleanup/HTML tests, types/architecture/contracts/i18n/export. Five-point create/edit N/A, view/list/mock Required.
 
+Catalog-only readiness correction (2026-10-27): the shared native permission
+catalog now mirrors the already approved API/Web `MessageLogs:View` and
+`MessageLogs:Export` constants. The exact backend/native permission parity test
+passes. Declaring permission identifiers does not grant authority or implement
+the queued native route/screen/export feature; the ordered execution gate below
+is unchanged.
+
 ## 15. Acceptance
 
 Mobile queued until Web Verified. FOLLOW-006/008 inherited gates and PROD-026/027/RISK-011 distinct. No native/device claim yet.

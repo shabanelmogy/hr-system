@@ -23,6 +23,17 @@ Scoped EF filters, unique settings and override indexes, company lock and expect
 Changed writes add an audit event in the same transaction; no stamp invalidation, provider call or filesystem write occurs.
 ## 10. Verification
 Settings, handler/store/controller tests and catalog generation/check cover aggregate, scope, fingerprint, client isolation and endpoint metadata. Migration `20261017035730_AddCompanyUiLocalization` exists and was applied to development as recorded in evidence.
+
+Maintenance verification (2026-10-27): the embedded catalog now has 21 sources,
+including the approved `web:platform-messages` namespace. The stale 20-source
+assertion was corrected, and the regression test also requires a non-empty message
+source whose entries all retain company scope. The focused localization suites
+pass 19 tests; the complete Platform suite passes 337 tests with no failures or
+skips. The subsequent full Release solution run passes all 1,125 tests in 12
+assemblies, including real SQL integration tests. This is a test-contract
+reconciliation only: API behavior, catalog contents,
+wire contracts, client UI and database schema are unchanged. The generator check
+remains the authority for shipped resource/fingerprint parity.
 ## 11. Evidence and closure
 The scope-correction run completed all 12 API suites serially (1,034 passed, 0 failed), including 274 Platform tests. Applied migrations and 19 authenticated HTTP checks are recorded in evidence. Phase 06 is Verified for the authorized automatic scope; PROD-026 remains separate.
 ## 12. Reuse

@@ -93,11 +93,25 @@
       ]
     ],
     "extra": {
-      "supportsRTL": true
+      "supportsRTL": true,
+      "release": {
+        "channel": "development",
+        "apiContractVersion": "v1",
+        "demoLoginEnabled": true,
+        "commit": "development"
+      },
+      "router": {},
+      "expo-status-bar": {
+        "hidden": false
+      },
+      "eas": {
+        "projectId": "27312add-bc4e-4cfe-b196-63ad6fb50495"
+      }
     },
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
-    }
+    },
+    "owner": "shabanelmogy"
   }
 }

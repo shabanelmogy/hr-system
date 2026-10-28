@@ -35,6 +35,15 @@ API, Web and Mobile automatic stages and customer education are complete. The Ar
 ## 15. Evidence and closure
 `required-files.json` lists actual runtime, tests, catalogs, configuration and education evidence. Recipes 00–07 are registered. Closed for the exact requester-authorized automatic scope; native and broad repository gate exceptions remain separately owned.
 
+Corrective verification (2026-10-27): the API test expectation now includes the
+existing company-owned Message Logs namespace in the 21-source embedded catalog
+and verifies its entry scope. The 19 focused localization tests and all 337
+Platform tests pass; the subsequent Release solution gate passes 1,125/1,125 tests
+with no skips, using a configured local SQL test instance. This maintenance
+changes test evidence only; no domain,
+schema, API or Web/Mobile behavior changes. The current automatic/mobile/release
+gate status is owned by the central notes, including `FOLLOW-006` and `PROD-026`.
+
 
 
 Navigation reconciliation (2026-10-18): the existing company configuration destination is grouped under Settings, independent from Administration operational viewers. Physical route, exact permissions, company scope and save/dirty contracts are unchanged. Mobile Settings parent is reachable for a user holding a configuration-child view grant; the child remains separately guarded. Navigation evidence: documentation/modules/platform/features/error-logs/error-logs-evidence.md.

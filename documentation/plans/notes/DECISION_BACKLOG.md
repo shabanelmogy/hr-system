@@ -8,6 +8,9 @@ Required capability prevents an `Implementation Ready` status for that scope.
 
 | ID | Surface | Topic | Question | Owner | Blocking? | Status | Decision trigger / due | Related plan |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| DEC-025 | Cross-platform | Angular direct API architecture | Requester explicitly rejected BFF and unnecessary complexity on 2026-10-28. Angular calls existing .NET API directly; no new gateway/YARP/Redis/session-store requirement. Existing Next handlers remain Next-only. | ERP owner + API/Security + Web Architecture | No — direction resolved; DEC-027 binds actual auth | Closed | Reopen only on an explicitly approved architecture change | `web-angular-migration` |
+| DEC-027 | Cross-platform | Angular direct authentication binding | Review actual API cookie/token contracts and select the simplest secure compatible browser binding, including origins, credential handling, refresh/logout, context isolation and CSRF where applicable; no BFF or identity rewrite implied. | API/Security + Web Architecture | Yes — direct auth implementation / G2 | Open | Before implementing Angular authentication; resolve from source and focused tests | `web-angular-migration` |
+| DEC-026 | Web | Screen pattern identifier collision | Resolve Active P-008 Global Scoped Context Selector versus Candidate P-008 Transactional Document and register unambiguous Angular adaptations. | Documentation owner + Web Architecture | Yes — affected UI contracts | Open | Before binding affected Angular screen contracts; unrelated source behavior is unchanged | `web-angular-migration`; `documentation/guides/shared/SCREEN_PATTERN_CATALOG.md` |
 | DEC-021 | Cross-platform | Direct user permission grant scope | Resolved 2026-10-17: direct business permission grants are company-specific within the Tenant and add to inherited roles; requester explicitly authorized implementation of this recommendation. | Product + Platform | No — resolved | Resolved | Reopen only if Tenant-wide direct grants or direct deny becomes a new requirement; see `documentation/plans/business/platform-user-permissions-and-company-localization/SPEC_SUMMARY.md` | `platform-user-permissions-and-company-localization` |
 | DEC-001 | Cross-platform | HR MVP scope | Does the first HR MVP include Leave only or Attendance as well? | Product + HR | Yes — affected HR expansion | Open | Before expanding the HR MVP scope | `enterprise-saas-core` |
 | DEC-002 | Cross-platform | Payroll ownership | Is Payroll a first-party product capability or an integration with an external provider? | Product + Accounting/HR Architecture | Yes — payroll stream | Open | Before Payroll planning starts | `enterprise-saas-core` |
@@ -31,5 +34,39 @@ Required capability prevents an `Implementation Ready` status for that scope.
 | DEC-020 | API | Team scope source | Is `Team` record scope derived from HR reporting lines only, or also from configurable groups? Recommended: HR reporting lines first. | Product + HR | No — Team level only | Open | Before the HR Team reference implementation | `erp-platform-template` |
 | DEC-023 | Cross-platform | Error-log ingestion sources | Resolved 2026-10-17: V1 captures API, background-job, Web and Mobile error outcomes. Client ingress is metadata-only and sanitized; no raw stack storage. | Product + Platform | No — resolved | Resolved | Reopen only for a new capture source or third-party collector | `platform-error-logs`; `business/platform-error-logs/PLAN.md` |
 | DEC-022 | Cross-platform | Error-log lifecycle/retention | Resolved 2026-10-17: append-only list/detail/Excel export, no manual edit/delete, allowlisted/redacted metadata, global SuperAdmin retention default 90 days and valid range 1..3650; cleanup is bounded/periodic. | Product + Platform | No — resolved | Resolved | Reopen only for a legal/operational retention policy change | `platform-error-logs`; `business/platform-error-logs/PLAN.md` |
-
 | DEC-024 | Cross-platform | Company message logs initial scope | Resolved2026-10-21: existing Email only, company-only visibility, details/redacted-attempt content/Excel, no resend. Settings expose disabled/30/90/custom retention; initial disabled/90 is the announced reversible assumption. | Product + Platform | No — resolved | Resolved | Reopen for SMS/provider callbacks/resend or a different deletion default | `platform-message-logs` |
+
+### DEC-025 — Angular browser backend boundary
+
+Source/context: 2026-10-28 planning of a separate Angular client with Next retained.
+The initial independent BFF proposal was explicitly rejected by the requester,
+who also asked to avoid complexity. Closure evidence: direct user instructions
+"بلاش منه" and "مش عايز تعقيد"; D08/D13 record direct Angular-to-API architecture.
+No BFF host, Next BFF dependency or new gateway/session infrastructure is planned
+for Angular. This decision is resolved, not deferred. No runtime was changed.
+Impact: required browser outcomes still need actual direct API bindings; DEC-027
+owns that remaining review. Reopen only on a separately approved architecture
+change. Canonical plan: `documentation/plans/business/web-angular-migration/PLAN.md`.
+
+### DEC-027 — Direct API authentication
+
+Source/context: explicit no-BFF direction under DEC-025, 2026-10-28. Owner/status
+and exact trigger are in the canonical row. Impact: Next's cookie/session helpers
+cannot simply be imported into Angular; choosing browser token persistence or
+assuming API cookie support without evidence could change the security model.
+Not implemented now because this task updates planning only. Target: S0 auth
+contract, before S2 runtime. Close with source-backed endpoint/credential/origin
+mapping and focused auth, refresh, logout, scope and applicable CSRF tests.
+Use the existing API/identity capability where suitable; no speculative server or
+identity rewrite. Canonical plan: `documentation/plans/business/web-angular-migration/PLAN.md`.
+
+### DEC-026 — Screen pattern identity
+
+Source/context: the current catalog assigns P-008 to an Active context selector
+and a Candidate transactional document. Owner/status/trigger are in the row.
+Impact: future contracts can bind the wrong reference. Resolution is not bundled
+with this migration draft because it changes shared catalog identity and links.
+Target: affected G3/feature contract entry. Close by updating the canonical catalog,
+reuse references and affected contracts, then running planning/documentation checks.
+Canonical sources: `documentation/guides/shared/SCREEN_PATTERN_CATALOG.md` and
+`documentation/plans/business/web-angular-migration/ANGULAR_ARCHITECTURE.md`.

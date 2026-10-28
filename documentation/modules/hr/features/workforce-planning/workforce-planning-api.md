@@ -54,6 +54,20 @@ Phase 2 adds `WorkforceBudgets`, `WorkforceBudgetLines`, `WorkforceBudgetPeriodA
 
 ## 11. API verification
 
+Test-environment maintenance (2026-10-27): the aggregate child-update concurrency
+test now honors `ERPSYSTEM_TEST_SQLSERVER_CONNECTION`, matching the existing
+solution integration-test convention. An absent setting retains the Windows
+LocalDB fallback. Administrative connections always select `master`, and the
+business test connection always selects its generated temporary database; no
+configured application database is used. The test keeps its original stale-writer
+assertions and cleanup in `finally`. It passed against the installed local SQL
+Server instance using Windows authentication. Production source/schema and API
+contracts are unchanged; this is test harness configuration only.
+The final Release solution run passed all 1,125 tests across 12 assemblies with
+zero failures/skips, including the real SQL migration/concurrency suites. The
+Workforce temporary-database cleanup check returned zero remaining databases.
+These results do not replace authenticated deployed Web/device acceptance.
+
 The targeted API build and Workforce tests pass, and the configured database has been updated and passes pending-model validation. Authenticated smoke tests remain for create, edit, every lifecycle transition, revisions, filters, tenancy, permission denial, and concurrency conflict.
 
 Built-in system-role permission reconciliation is independent from `DatabaseSettings:SeedOnStartup`. Every API startup first ensures that the built-in system roles exist, then idempotently restores missing tenant permissions, including `WorkforcePlans:View/Create/Edit/Approve`, to the built-in `admin` role. Optional bootstrap users, geography, and sample-data seeds remain controlled by `SeedOnStartup`. A new sign-in is required after reconciliation because access-token claims represent the permissions present when the token is issued.

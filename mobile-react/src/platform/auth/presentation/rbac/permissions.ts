@@ -1,5 +1,7 @@
 // Keep this catalog aligned with web-next/src/lib/auth/permissions.ts and the API constants.
 export const permissions = {
+  ViewMessageLogs: 'MessageLogs:View',
+  ExportMessageLogs: 'MessageLogs:Export',
   ViewCompanyEmailTemplates: 'CompanyEmailTemplates:View',
   EditCompanyEmailTemplates: 'CompanyEmailTemplates:Edit',
   ResetCompanyEmailTemplates: 'CompanyEmailTemplates:Reset',

@@ -136,7 +136,7 @@ export function LedgerSetupResourceScreen({ resource }: { resource: LedgerSetupR
     catch (error) { showToast.error(error, t('ledgerSetup.messages.loadFailed')); }
   }, [openForm, t]);
   const closeForm = useCallback(() => { setFormOpen(false); setSelected(null); }, []);
-  const save = useCallback(async (request: LedgerSetupFormValues) => {
+  const save = async (request: LedgerSetupFormValues) => {
     const scopeRequest = definition.scope === 'account'
       ? { ...request, accountId: scopeId }
       : definition.scope === 'dimension'
@@ -145,8 +145,8 @@ export function LedgerSetupResourceScreen({ resource }: { resource: LedgerSetupR
     await saveMutation.mutateAsync({ entity: activeEntity, id: formMode === 'edit' ? selected?.id ?? null : null, request: scopeRequest });
     showToast.success(t('ledgerSetup.messages.saved'));
     closeForm();
-  }, [activeEntity, closeForm, definition.scope, formMode, saveMutation, scopeId, selected?.id, t]);
-  const confirmLifecycle = useCallback(async () => {
+  };
+  const confirmLifecycle = async () => {
     if (!pending) return;
     if (isReadOnly) return notifyBlockedAction();
     try {
@@ -157,14 +157,14 @@ export function LedgerSetupResourceScreen({ resource }: { resource: LedgerSetupR
     } catch (error) {
       showToast.error(error, t('ledgerSetup.messages.actionFailed'));
     }
-  }, [activeEntity, archiveMutation, isReadOnly, notifyBlockedAction, pending, restoreMutation, t]);
+  };
 
   const visibleFields = definition.fields.filter((field) => field.name !== 'rowVersion').slice(0, 3);
-  const columns = useMemo<AppDataTableColumn<LedgerSetupRecord>[]>(() => [
+  const columns: AppDataTableColumn<LedgerSetupRecord>[] = [
     ...visibleFields.map((field) => ({ id: field.name, header: t(field.labelKey), width: 150, render: (item: LedgerSetupRecord) => <AppText variant="bodySmall">{displayValue(item[field.name])}</AppText> })),
     ...(definition.supportsArchive ? [{ id: 'status', header: t('ledgerSetup.fields.status'), width: 110, render: (item: LedgerSetupRecord) => <AppStatusBadge color={item.isDeleted ? theme.colors.warning : theme.colors.success} label={t(item.isDeleted ? 'ledgerSetup.status.archived' : 'ledgerSetup.status.active')} /> } satisfies AppDataTableColumn<LedgerSetupRecord>] : []),
     { id: 'actions', header: t('common.actions'), width: 150, align: 'center', render: (item) => <View style={styles.actions}><AppIconButton icon="eye-outline" label={t('common.view')} onPress={() => openForm('view', item)} />{canEdit && !item.isDeleted ? <AppIconButton icon="create-outline" label={t('common.edit')} onPress={() => openForm('edit', item)} /> : null}{definition.supportsArchive && (item.isDeleted ? canRestore : canArchive) ? <AppIconButton icon={item.isDeleted ? 'refresh-outline' : 'archive-outline'} label={t(item.isDeleted ? 'common.restore' : 'common.archive')} onPress={() => setPending({ kind: item.isDeleted ? 'restore' : 'archive', item })} /> : null}</View> },
-  ], [canArchive, canEdit, canRestore, definition.supportsArchive, openForm, t, theme.colors.success, theme.colors.warning, visibleFields]);
+  ];
 
   if (!canView || accessibleEntities.length === 0) return <AppScreen edges={['left', 'right', 'bottom']}><AppStateView state="error" message={t('common.accessDenied')} /></AppScreen>;
   if ((query.isLoading && (!definition.scope || scopeId)) || lookups.isLoading) return <AppScreen edges={['left', 'right', 'bottom']}><AppStateView state="loading" /></AppScreen>;

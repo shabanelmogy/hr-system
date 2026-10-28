@@ -125,7 +125,10 @@ public sealed class CompanyLocalizationStoreTests
     public void Embedded_catalog_loads_expected_sources_and_versions()
     {
         var catalog = new EmbeddedCompanyUiCatalog();
-        Assert.Equal(20,catalog.Sources.Count); Assert.All([catalog.GetVersion("web"),catalog.GetVersion("mobile")], value => Assert.Matches("^[0-9A-Fa-f]{64}$",value));
+        Assert.Equal(21,catalog.Sources.Count); Assert.All([catalog.GetVersion("web"),catalog.GetVersion("mobile")], value => Assert.Matches("^[0-9A-Fa-f]{64}$",value));
+        var messages = Assert.Single(catalog.Sources, source => source.Id == "web:platform-messages");
+        Assert.NotEmpty(messages.Entries);
+        Assert.All(messages.Entries, text => Assert.Equal("company", text.Scope));
         Assert.Contains(catalog.Sources,item => item.Id=="mobile:translation"); Assert.Contains(catalog.Sources,item => item.Namespace=="module-hr"); Assert.Contains(catalog.Sources,item => item.Namespace=="module-accounting");
         Assert.All(catalog.Sources.Single(source => source.Namespace == "reference-countries").Entries, text => Assert.Equal("system", text.Scope));
         Assert.Equal("system", catalog.Sources.Single(source => source.Namespace == "core").Entries.Single(text => text.Key == "menu.countries").Scope);

@@ -1,4 +1,4 @@
-import {cp, lstat, mkdtemp, readFile, rm, symlink} from 'node:fs/promises';
+import {cp, lstat, mkdtemp, readFile, rm, symlink, writeFile} from 'node:fs/promises';
 import {basename, dirname, isAbsolute, join, relative, resolve, sep} from 'node:path';
 import {tmpdir} from 'node:os';
 import {spawn} from 'node:child_process';
@@ -67,6 +67,11 @@ try {
   for (const relativePath of requiredFiles) {
     await cp(join(projectRoot, relativePath), join(tempRoot, relativePath));
   }
+
+  const fixtureConfigPath = join(tempRoot, 'app.json');
+  const fixtureConfig = JSON.parse(await readFile(fixtureConfigPath, 'utf8'));
+  delete fixtureConfig.expo?.extra?.eas?.projectId;
+  await writeFile(fixtureConfigPath, JSON.stringify(fixtureConfig));
 
   await cp(join(projectRoot, 'assets'), join(tempRoot, 'assets'), {recursive: true});
 

@@ -1,25 +1,52 @@
-import { existsSync, readFileSync } from 'node:fs';
-import { resolve } from 'node:path';
+import { existsSync, readFileSync, mkdtempSync, cpSync, writeFileSync, symlinkSync, lstatSync } from 'node:fs';
+import { rm } from 'node:fs/promises';
+import { resolve, join, relative, isAbsolute, basename } from 'node:path';
+import { tmpdir } from 'node:os';
 import { spawnSync } from 'node:child_process';
 
 const root = resolve(import.meta.dirname, '..');
 const failures = [];
 
-function runExpoConfig(environment) {
-  const result = spawnSync(
-    process.execPath,
-    [resolve(root, 'node_modules/expo/bin/cli'), 'config', '--type', 'public', '--json'],
-    { cwd: root, env: { ...process.env, CI: '1', ...environment }, encoding: 'utf8' },
-  );
-  if (result.status === 0) return JSON.parse(result.stdout);
-  return { error: `${result.stderr}\n${result.stdout}` };
+async function runExpoConfig(environment) {
+  const tempRoot = resolve(tmpdir());
+  const prefix = 'erp-mobile-release-check-';
+  const fixtureRoot = mkdtempSync(join(tempRoot, prefix));
+  const modulesLink = join(fixtureRoot, 'node_modules');
+  try {
+    for (const file of ['app.config.ts', 'app.json', 'package.json', 'tsconfig.json']) {
+      cpSync(join(root, file), join(fixtureRoot, file));
+    }
+    cpSync(join(root, 'assets'), join(fixtureRoot, 'assets'), {recursive: true});
+    const appJson = JSON.parse(readFileSync(join(fixtureRoot, 'app.json'), 'utf8'));
+    // Synthetic identities belong only to the disposable verification fixture.
+    delete appJson.expo?.extra?.eas?.projectId;
+    writeFileSync(join(fixtureRoot, 'app.json'), JSON.stringify(appJson));
+    symlinkSync(join(root, 'node_modules'), modulesLink, process.platform === 'win32' ? 'junction' : 'dir');
+    const result = spawnSync(
+      process.execPath,
+      [resolve(root, 'node_modules/expo/bin/cli'), 'config', '--type', 'public', '--json'],
+      { cwd: fixtureRoot, env: { ...process.env, CI: '1', ...environment }, encoding: 'utf8' },
+    );
+    if (result.status === 0) return JSON.parse(result.stdout);
+    return { error: `${result.stderr}\n${result.stdout}` };
+  } finally {
+    const relativeFixture = relative(tempRoot, fixtureRoot);
+    if (!relativeFixture || isAbsolute(relativeFixture) || relativeFixture.startsWith('..') || !basename(fixtureRoot).startsWith(prefix)) {
+      throw new Error('Refusing to remove an unexpected release-check fixture.');
+    }
+    if (existsSync(modulesLink) && !lstatSync(modulesLink).isSymbolicLink()) {
+      throw new Error('Refusing to remove a release-check node_modules that is not a link.');
+    }
+    await rm(modulesLink, {force: true, maxRetries: 10, retryDelay: 200});
+    await rm(fixtureRoot, {recursive: true, force: true, maxRetries: 10, retryDelay: 200});
+  }
 }
 
 function assert(condition, message) {
   if (!condition) failures.push(message);
 }
 
-const local = runExpoConfig({
+const local = await runExpoConfig({
   ERP_LOCAL_NATIVE_BUILD: 'true', EAS_BUILD: '', EAS_BUILD_PROJECT_ID: '', EXPO_EAS_PROJECT_ID: '',
   EXPO_PUBLIC_RELEASE_CHANNEL: 'development', EXPO_PUBLIC_API_CONTRACT_VERSION: 'v1', EXPO_PUBLIC_APP_LINK_HOST: '',
 });
@@ -29,7 +56,7 @@ assert(local.extra?.eas?.observe?.dispatchingEnabled === false, 'Local config mu
 assert(local.extra?.release?.demoLoginEnabled === true, 'Local development config must enable demo login by default.');
 
 const easProjectId = '11111111-1111-4111-8111-111111111111';
-const preview = runExpoConfig({
+const preview = await runExpoConfig({
   ERP_LOCAL_NATIVE_BUILD: 'false', EAS_BUILD: 'true', EAS_BUILD_PROJECT_ID: easProjectId, EXPO_EAS_PROJECT_ID: '',
   EXPO_PUBLIC_RELEASE_CHANNEL: 'preview', EXPO_PUBLIC_API_CONTRACT_VERSION: 'v1', EXPO_PUBLIC_APP_LINK_HOST: 'app.example.com',
   EXPO_PUBLIC_DEMO_LOGIN_ENABLED: 'true',
@@ -37,7 +64,7 @@ const preview = runExpoConfig({
 assert(!preview.error, `Preview EAS Expo config failed: ${preview.error ?? ''}`);
 assert(preview.extra?.release?.demoLoginEnabled === true, 'Preview EAS config must enable demo login.');
 
-const eas = runExpoConfig({
+const eas = await runExpoConfig({
   ERP_LOCAL_NATIVE_BUILD: 'false', EAS_BUILD: 'true', EAS_BUILD_PROJECT_ID: easProjectId, EXPO_EAS_PROJECT_ID: '',
   EXPO_PUBLIC_RELEASE_CHANNEL: 'production', EXPO_PUBLIC_API_CONTRACT_VERSION: 'v1', EXPO_PUBLIC_APP_LINK_HOST: 'app.example.com',
   EXPO_PUBLIC_DEMO_LOGIN_ENABLED: 'false',
@@ -58,6 +85,13 @@ for (const relativePath of ['app/(auth)/confirm-email.tsx', 'app/(auth)/accept-i
 }
 
 const easJson = JSON.parse(readFileSync(resolve(root, 'eas.json'), 'utf8'));
+for (const profile of ['development', 'preview', 'production']) {
+  assert(easJson.build?.[profile]?.node === '22.23.4', `${profile} EAS profile must use the approved patched Node 22.23.4 baseline.`);
+}
+assert(easJson.build?.development?.developmentClient === true, 'Development EAS profile must include the native development client.');
+assert(easJson.build?.development?.distribution === 'internal', 'Development EAS profile must be installable internally.');
+assert(easJson.build?.development?.environment === 'preview', 'Development EAS profile must use the configured preview endpoints.');
+assert(easJson.build?.development?.env?.EXPO_PUBLIC_RELEASE_CHANNEL === 'development', 'Development EAS profile must identify the development channel.');
 assert(easJson.build?.preview?.distribution === 'internal', 'Preview EAS profile must use internal distribution.');
 assert(easJson.build?.preview?.uploadSourceMaps === true, 'Preview EAS profile must upload source maps.');
 assert(easJson.build?.production?.autoIncrement === true, 'Production EAS profile must auto-increment versions.');
@@ -65,7 +99,7 @@ assert(easJson.build?.production?.uploadSourceMaps === true, 'Production EAS pro
 assert(easJson.build?.preview?.env?.EXPO_PUBLIC_DEMO_LOGIN_ENABLED === 'true', 'Preview EAS profile must enable demo login.');
 assert(easJson.build?.production?.env?.EXPO_PUBLIC_DEMO_LOGIN_ENABLED === 'false', 'Production EAS profile must disable demo login.');
 
-const missingHost = runExpoConfig({ ERP_LOCAL_NATIVE_BUILD: 'false', EAS_BUILD: 'true', EAS_BUILD_PROJECT_ID: easProjectId, EXPO_PUBLIC_APP_LINK_HOST: '' });
+const missingHost = await runExpoConfig({ ERP_LOCAL_NATIVE_BUILD: 'false', EAS_BUILD: 'true', EAS_BUILD_PROJECT_ID: easProjectId, EXPO_PUBLIC_APP_LINK_HOST: '' });
 assert(Boolean(missingHost.error) && missingHost.error.includes('EXPO_PUBLIC_APP_LINK_HOST'), 'EAS config must fail when the app-link host is absent.');
 
 if (failures.length > 0) {

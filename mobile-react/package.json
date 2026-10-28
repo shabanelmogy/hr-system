@@ -3,7 +3,7 @@
   "main": "expo-router/entry",
   "version": "1.0.0",
   "scripts": {
-    "start": "expo start",
+    "start": "expo start --dev-client",
     "android": "node scripts/run-local-native.mjs android",
     "ios": "node scripts/run-local-native.mjs ios",
     "web": "expo start --web",
@@ -18,13 +18,16 @@
     "check:native-config": "node scripts/check-native-config.mjs",
     "check:release": "node scripts/check-release-readiness.mjs",
     "check:expo": "npx expo-doctor",
-    "check:export": "node scripts/check-android-export.mjs",
+    "check:export": "node --test scripts/android-bundle-policy.test.mjs && node scripts/check-android-export.mjs",
+    "check:upload": "node --test scripts/eas-upload-policy.test.mjs",
     "check:foundation": "node scripts/check-foundation-readiness.mjs",
     "test": "jest --runInBand",
     "test:coverage": "jest --runInBand --coverage --coverageReporters=text-summary --coverageReporters=json-summary",
     "test:watch": "jest --watch",
     "check": "npm run typecheck && npm run lint && npm run check:architecture && npm run check:contracts && npm run check:i18n && npm run check:foundation && npm run check:release && npm run test:coverage",
-    "check:company-catalog": "node --test ../scripts/company-ui-scope-policy.test.mjs ../scripts/system-ui-access-policy.test.mjs && node ../scripts/export-company-ui-catalog.mjs --check"
+    "check:company-catalog": "node --test ../scripts/company-ui-scope-policy.test.mjs ../scripts/system-ui-access-policy.test.mjs && node ../scripts/export-company-ui-catalog.mjs --check",
+    "start:lan": "expo start --dev-client --lan",
+    "start:tunnel": "expo start --dev-client --tunnel"
   },
   "dependencies": {
     "@app/tokens": "file:../packages/tokens",
@@ -35,36 +38,37 @@
     "@react-native-community/datetimepicker": "9.1.0",
     "@react-native-community/netinfo": "12.0.1",
     "@tanstack/react-query": "^5.101.4",
-    "axios": "^1.19.0",
+    "axios": "^1.21.0",
     "dayjs": "^1.11.13",
     "decode-uri-component": "file:./vendor/decode-uri-component-0.5.0.tgz",
-    "expo": "~57.0.25",
+    "expo": "~57.0.31",
     "expo-asset": "~57.0.18",
     "expo-audio": "~57.0.5",
-    "expo-background-task": "~57.0.20",
+    "expo-background-task": "~57.0.21",
     "expo-constants": "~57.0.19",
-    "expo-crypto": "~57.0.3",
-    "expo-document-picker": "~57.0.2",
+    "expo-crypto": "~57.0.4",
+    "expo-dev-client": "~57.0.20",
+    "expo-document-picker": "~57.0.3",
     "expo-file-system": "~57.0.6",
     "expo-font": "~57.0.3",
     "expo-haptics": "~57.0.3",
     "expo-image": "~57.0.5",
-    "expo-image-manipulator": "~57.0.20",
+    "expo-image-manipulator": "~57.0.21",
     "expo-image-picker": "~57.0.20",
     "expo-linear-gradient": "~57.0.2",
-    "expo-linking": "~57.0.11",
+    "expo-linking": "~57.0.13",
     "expo-localization": "~57.0.2",
-    "expo-observe": "~57.0.24",
+    "expo-observe": "~57.0.26",
     "expo-print": "~57.0.2",
-    "expo-router": "~57.0.23",
+    "expo-router": "~57.0.29",
     "expo-secure-store": "~57.0.4",
-    "expo-sharing": "~57.0.22",
-    "expo-splash-screen": "~57.0.9",
-    "expo-sqlite": "~57.0.3",
+    "expo-sharing": "~57.0.24",
+    "expo-splash-screen": "~57.0.10",
+    "expo-sqlite": "~57.0.4",
     "expo-status-bar": "~57.0.1",
     "expo-symbols": "~57.0.3",
     "expo-system-ui": "~57.0.4",
-    "expo-task-manager": "~57.0.20",
+    "expo-task-manager": "~57.0.21",
     "expo-video": "~57.0.5",
     "expo-web-browser": "~57.0.3",
     "i18next": "^26.3.6",
@@ -84,7 +88,7 @@
     "react-native-webview": "13.16.1",
     "react-native-worklets": "0.10.1",
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz",
-    "zod": "^4.4.3"
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@react-native/jest-preset": "0.86.3",
@@ -94,7 +98,7 @@
     "eslint": "^9.25.0",
     "eslint-config-expo": "~57.0.2",
     "jest": "~29.7.0",
-    "jest-expo": "~57.0.5",
+    "jest-expo": "~57.0.6",
     "test-renderer": "1.1.0",
     "typescript": "~6.0.3"
   },
@@ -131,9 +135,6 @@
   },
   "private": true,
   "overrides": {
-    "decode-uri-component": "file:./vendor/decode-uri-component-0.5.0.tgz",
-    "xcode": {
-      "uuid": "11.1.1"
-    }
+    "decode-uri-component": "file:./vendor/decode-uri-component-0.5.0.tgz"
   }
 }

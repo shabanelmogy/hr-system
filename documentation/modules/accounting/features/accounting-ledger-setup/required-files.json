@@ -14,6 +14,60 @@
   "sourceCollections": [],
   "requiredFiles": [
     {
+      "id": "mobile-eas-upload-boundary",
+      "layer": "configuration",
+      "path": ".easignore",
+      "purpose": "Limit EAS source archives to Mobile and shared tokens while excluding local secrets"
+    },
+    {
+      "id": "mobile-eas-upload-boundary-tests",
+      "layer": "test",
+      "path": "mobile-react/scripts/eas-upload-policy.test.mjs",
+      "purpose": "Verify real build inputs, shared compiled output and forbidden upload paths"
+    },
+    {
+      "id": "mobile-eas-build-profiles",
+      "layer": "configuration",
+      "path": "mobile-react/eas.json",
+      "purpose": "Approved patched Node baseline, internal development client and preview/production build settings"
+    },
+    {
+      "id": "mobile-release-readiness-gate",
+      "layer": "tooling",
+      "path": "mobile-react/scripts/check-release-readiness.mjs",
+      "purpose": "Guard EAS runtime pins, release metadata, project identities and app links"
+    },
+    {
+      "id": "mobile-native-export-gate",
+      "layer": "tooling",
+      "path": "mobile-react/scripts/check-android-export.mjs",
+      "purpose": "Production Hermes export and actual native source-map dependency boundary"
+    },
+    {
+      "id": "mobile-native-bundle-policy",
+      "layer": "tooling",
+      "path": "mobile-react/scripts/android-bundle-policy.mjs",
+      "purpose": "Reject legacy validation and tooling dependencies except the documented Metro loader"
+    },
+    {
+      "id": "mobile-native-bundle-policy-tests",
+      "layer": "test",
+      "path": "mobile-react/scripts/android-bundle-policy.test.mjs",
+      "purpose": "Positive, negative, malformed, indexed and platform-path source-map evidence"
+    },
+    {
+      "id": "mobile-native-export-registration",
+      "layer": "configuration",
+      "path": "mobile-react/package.json",
+      "purpose": "Mobile dependencies, live-development commands and native export policy registration"
+    },
+    {
+      "id": "mobile-ci-release-gates",
+      "layer": "configuration",
+      "path": ".github/workflows/mobile-ci.yml",
+      "purpose": "Source/export checks and the unchanged failing production-audit gate"
+    },
+    {
       "id": "root-agent-guidance",
       "layer": "configuration",
       "path": "AGENTS.md",
@@ -702,6 +756,36 @@
       "layer": "tooling",
       "path": "api/scripts/New-ErpModule.ps1",
       "purpose": "Generates the lifecycle/concurrency/localization feature gate for every new module"
+    },
+    {
+      "id": "mobile-linked-expo-project",
+      "layer": "configuration",
+      "path": "mobile-react/app.json",
+      "purpose": "Real ERP EAS project identity and Expo application metadata"
+    },
+    {
+      "id": "mobile-dynamic-expo-config",
+      "layer": "configuration",
+      "path": "mobile-react/app.config.ts",
+      "purpose": "Consistent EAS project identity, public endpoint and app-link configuration"
+    },
+    {
+      "id": "mobile-native-config-gate",
+      "layer": "tooling",
+      "path": "mobile-react/scripts/check-native-config.mjs",
+      "purpose": "Isolated Android Prebuild verification without changing the linked project identity"
+    },
+    {
+      "id": "mobile-offline-database-connections",
+      "layer": "core",
+      "path": "mobile-react/src/core/offline/database.ts",
+      "purpose": "SQLCipher initialization and isolated keyed write transactions without data reset"
+    },
+    {
+      "id": "mobile-offline-database-regressions",
+      "layer": "test",
+      "path": "mobile-react/src/core/offline/database.test.ts",
+      "purpose": "Per-connection key ordering, migration preservation, rollback, isolation and web sequencing"
     }
   ]
 }

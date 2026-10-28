@@ -5,6 +5,59 @@ provider/client-runtime loading policy was consolidated 2026-09-17.
 
 This document is the architecture baseline for future frontend work. It covers ownership, dependency direction, routing, naming, scalability, and client-runtime loading policy. It does not define authentication behavior, API implementation, or UI design. The current transport and API parity gate is recorded in [Web/API Readiness Review](../WEB_API_READINESS_REVIEW.md).
 
+## Current dependency security baseline
+
+The 2026-10-27 maintenance baseline uses Next.js and `eslint-config-next` 16.4.3,
+the matched Vitest / coverage-v8 4.1.12 pair, and Zod 4.6.7. React / ReactDOM remain
+19.3.0. Earlier version-specific observations below describe their original runs;
+current package declarations and the committed lockfile own the installed target.
+Security remediation and its acceptance evidence are tracked by
+[`RISK-012`](../../../plans/notes/KNOWN_RISKS.md#risk-012--web-dependency-audit-after-locked-environment-restoration).
+
+The initial audit identified affected direct and transitive versions even though
+TypeScript passed. Keep the Next.js runtime and its ESLint config aligned, update
+the matched test/coverage pair within its supported major, and resolve affected
+transitive packages inside their parents' compatible ranges. The
+[Next.js 16.4.3 release](https://github.com/vercel/next.js/releases/tag/v16.4.3) and
+[Vitest 4.1.12 security backport](https://github.com/vitest-dev/vitest/security/advisories/GHSA-qxg6-89mg-rqv8)
+support these choices. Do not use a forced major-version audit fix or raise
+coverage/performance thresholds to make a dependency update pass.
+
+During local reconciliation, `npm ls` and the hidden install lock reported the
+target versions while actual installed `package.json` files still reported older
+versions. Removing the disposable `node_modules/.package-lock.json` and rerunning
+installation reconciled 31 packages. npm documents this hidden-lock optimization
+in its [lockfile reference](https://docs.npmjs.com/cli/v11/configuring-npm/package-lock-json/#hidden-lockfiles).
+For dependency security acceptance, verify actual installed package versions
+against the committed lockfile before running tests/builds; a clean lockfile audit
+or an `up to date` message alone does not prove the runtime files were updated.
+CI retains clean `npm ci` installation and its production dependency audit gate.
+
+The complete suite also exposed two test-registration/expectation drifts: the
+shared-Grid policy file uses `node:test`, so `check:architecture` runs it with
+`node --test` and Vitest excludes that exact file; its assertions remain enforced.
+The Platform navigation test now expects the approved Administration > Settings
+destination and rejects duplicate standalone configuration links. Keep test
+expectations aligned with the reviewed navigation contract, and register each
+test with its owning runner. Preserve Vitest's normal empty-suite failure and all
+coverage floors. The verified two-worker budget is the default for both local and
+CI runs; the complete 215-file / 751-test run passed with that effective setting.
+See [Vitest's exclude configuration](https://vitest.dev/config/exclude.html)
+and the [Node test runner](https://nodejs.org/api/test.html#running-tests-from-the-command-line).
+
+Next.js 16.4.3 requests an explicit Partial Prefetching choice when Cache Components
+is enabled. This security change sets `partialPrefetching: false`, the documented
+compatibility mode that preserves the previous link behavior. Enabling the new
+prefetch model requires reviewing full-prefetch links and capturing production
+navigation baselines per the [official adoption guide](https://nextjs.org/docs/app/guides/adopting-partial-prefetching).
+That separately owned migration is `DEF-026`; it is not implied by a security
+dependency update.
+
+Full Web checks, coverage, production build and relevant browser smokes remain
+required evidence for the dependency change. Record inherited bundle-budget,
+documentation or environment failures separately in the central notes; this
+baseline statement does not close those gates.
+
 ## Feature Implementation Guides
 
 - [Feature Documentation System](../../../system/README.md): operating modes,

@@ -1,9 +1,10 @@
 import { spawnSync } from 'node:child_process';
-import { mkdtemp, readdir, rm } from 'node:fs/promises';
+import { mkdtemp, readdir, readFile, rm } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import process from 'node:process';
 import { fileURLToPath } from 'node:url';
+import { assertAndroidBundlePolicy } from './android-bundle-policy.mjs';
 
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const outputDirectory = await mkdtemp(path.join(os.tmpdir(), 'erp-mobile-android-export-'));
@@ -14,7 +15,7 @@ try {
     process.execPath,
     [
       expoCli, 'export', '--platform', 'android', '--output-dir', outputDirectory,
-      '--clear', '--max-workers', '2',
+      '--clear', '--max-workers', '2', '--source-maps',
     ],
     {
       cwd: projectRoot,
@@ -33,6 +34,19 @@ try {
   if (result.status !== 0) process.exitCode = result.status ?? 1;
   else if ((await readdir(outputDirectory)).length === 0) {
     throw new Error('Expo Android export completed without producing bundle output.');
+  } else {
+    const maps = (await readdir(outputDirectory, {recursive: true})).filter((file) =>
+      file.replaceAll('\\', '/').startsWith('_expo/static/js/android/') && file.endsWith('.map'));
+    if (maps.length === 0) throw new Error('Expo Android export did not produce native source-map evidence.');
+    let sourceCount = 0;
+    let metroLoaderCount = 0;
+    for (const file of maps) {
+      const map = JSON.parse(await readFile(path.join(outputDirectory, file), 'utf8'));
+      const evidence = assertAndroidBundlePolicy(map);
+      sourceCount += evidence.sourceCount;
+      metroLoaderCount += evidence.metroLoaderCount;
+    }
+    console.log(`Android bundle policy passed (${maps.length} map(s), ${sourceCount} sources, ${metroLoaderCount} Metro loader(s); no CLI tooling, legacy Zod or deepmerge).`);
   }
 } finally {
   await rm(outputDirectory, { recursive: true, force: true });

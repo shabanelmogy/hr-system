@@ -80,8 +80,8 @@ on the original plan alone.
 | company-ui-localization-master | 10 | `07654d5f6221eb14bfe8d22b86b5c53ef329e5a78d9e9d889878a52d0375ff82` |
 | company-ui-localization-master | 11 | `7f698de8266b2aecf7ecac40311d191f7592e72c5b6755110ce7f5bb89ece9cb` |
 | company-ui-localization-master | 14 | `641fc43b5813adb022c972fd3a106872605d940bf293410b09b41dab94b10b9f` |
-| company-ui-localization-master | 15 | `463d8b97248813439a5f245cc5c09a8172b5d29a469530d52f4ed1c288aab0a9` |
-| company-ui-localization-api | 10 | `427fd5b52e204c93ddb7fc429d5beb872b4e95424c36ea3b0918cbb767b349f1` |
+| company-ui-localization-master | 15 | `aa364ea286e8e7800844e5b31b29d6adc852b88b2ca35e88dfbf7cf051cc3fb0` |
+| company-ui-localization-api | 10 | `b5f6e14b9b81bf8ac113a69cab0f7b7f88e7eb976b9e25abb54acb9638961531` |
 | company-ui-localization-api | 11 | `fcd94fd891ee1b70ec15e7d307e138643b8b8fb068ec3c4560ed6869532fa372` |
 | company-ui-localization-api | 15 | `1fac03ff927bb2e37f778fcea565b000f888764ed0b5738bd0a86a9eae14a410` |
 | company-ui-localization-web | 8 | `78ba4e90fdd9faf3454d489beb2d3cc6a92791f1532eeaf426e432e25dc6fd83` |

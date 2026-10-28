@@ -14,7 +14,30 @@ First Load JavaScript reported by Next.js diagnostics. The aggregate chunk size
 is not a page-download number: it includes lazy chunks that are only requested
 when a feature needs them.
 
-## Current Phase 11 baseline
+## Current security-maintenance baseline — 2026-10-27
+
+The production build with Next.js 16.4.3 passes `npm run measure:build` with the
+existing measurement script and budget policy unchanged. This verifies the current
+bundle condition tracked by `RISK-009`; earlier measurements below remain history.
+
+| Metric | Current result | Existing budget |
+| --- | ---: | ---: |
+| App-path manifest entries | 91 | Inventory |
+| Routes with First Load diagnostics | 79 | All measurable page routes |
+| Aggregate generated JavaScript | 25,244,567 bytes / 24.08 MiB | 26 MiB |
+| Largest emitted JavaScript chunk | 11,601,690 bytes / 11.06 MiB | 12 MiB |
+| Public auth maximum | 1.72 MiB | 2.15 MiB |
+| Protected shell/launcher maximum | 2,150,748 bytes / 2.05 MiB | 2.25 MiB |
+| Business application maximum | 2.21 MiB | 2.55 MiB |
+| Heavy feature maximum | 2.32 MiB (`/appointments`) | 2.75 MiB |
+| Protected shared First Load intersection | 907,063 bytes / 0.87 MiB, 19 chunks across 71 routes | 1.85 MiB |
+
+Every measured route class is within its budget. This is a measured outcome for
+the integrated dependency-maintenance build, not a claim that a specific package
+alone caused the reduction. Keep these budgets enforced on subsequent changes.
+Production authentication/device/hosting checks retain their separate central IDs.
+
+## Historical Phase 11 baseline
 
 Recorded from the production build on 2026-09-18 after the Phase 10 dependency
 work and the completed cross-route runtime hardening:

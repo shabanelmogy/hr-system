@@ -7,6 +7,7 @@ import { OfflineOperationsPolicyScreen } from './OfflineOperationsPolicyScreen';
 const mockSegmentedControl = jest.fn();
 const mockButton = jest.fn();
 let mockReadOnly = false;
+let mockCanEdit = true;
 let mockPolicyStatus: 'ready' | 'missing' = 'missing';
 let mockAuthority: 'server' | 'cache' | 'fail-closed' = 'fail-closed';
 
@@ -16,6 +17,13 @@ jest.mock('react-i18next', () => ({
 
 jest.mock('@/src/core/localization', () => ({
   useLocalization: () => ({ direction: 'ltr' }),
+}));
+
+jest.mock('@/src/platform/auth', () => ({
+  permissions: { EditOfflineOperations: 'OfflineOperations:Edit' },
+  useAuthorization: ({ requiredPermissions }: { requiredPermissions: readonly string[] }) => ({
+    allowed: requiredPermissions.includes('OfflineOperations:Edit') && mockCanEdit,
+  }),
 }));
 
 jest.mock('@/src/core/theme', () => ({
@@ -122,6 +130,7 @@ describe('OfflineOperationsPolicyScreen', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     mockReadOnly = false;
+    mockCanEdit = true;
     mockPolicyStatus = 'missing';
     mockAuthority = 'fail-closed';
   });
@@ -184,6 +193,18 @@ describe('OfflineOperationsPolicyScreen', () => {
 
     expect(screen.getByText('offlineOperations.cachedPolicyNotice')).toBeTruthy();
     expect(screen.getAllByText('offlineOperations.source.cachedPolicy').length).toBeGreaterThan(0);
+    expect(mockSegmentedControl.mock.calls.every(([props]) => props.disabled === true)).toBe(true);
+    expect(mockButton).toHaveBeenCalledWith(expect.objectContaining({ disabled: true }));
+  });
+
+  it('keeps policy editing disabled without the edit permission even with live server authority', async () => {
+    mockPolicyStatus = 'ready';
+    mockAuthority = 'server';
+    mockCanEdit = false;
+
+    await render(<OfflineOperationsPolicyScreen />);
+
+    expect(mockSegmentedControl).toHaveBeenCalled();
     expect(mockSegmentedControl.mock.calls.every(([props]) => props.disabled === true)).toBe(true);
     expect(mockButton).toHaveBeenCalledWith(expect.objectContaining({ disabled: true }));
   });

@@ -10,8 +10,9 @@ export default defineConfig({
   test: {
     environment: "node",
     clearMocks: true,
-    maxWorkers: 4,
-    exclude: [...configDefaults.exclude, "e2e/**"],
+    maxWorkers: 2,
+    // This node:test suite runs through check:architecture with its native runner.
+    exclude: [...configDefaults.exclude, "e2e/**", "scripts/shared-grid-policy.test.mjs"],
     coverage: {
       provider: "v8",
       reportsDirectory: "coverage",

@@ -538,6 +538,18 @@ dotnet build ErpSystem.sln -c Release --no-restore
 dotnet test ErpSystem.sln -c Release --no-build --no-restore
 ```
 
+Real SQL tests use `ERPSYSTEM_TEST_SQLSERVER_CONNECTION` when configured; Windows
+otherwise defaults to LocalDB. On a development machine without LocalDB, provide
+an authorized local SQL Server test instance through that process environment
+variable before the test command. The integration harness and Workforce aggregate
+concurrency test select `master` for database administration, generate independent
+temporary databases, and clean them up after use. The test identity needs database
+creation/removal permissions. Do not substitute an application connection string,
+commit credentials, or skip the SQL tests to make the gate green. A diagnostic
+retry after a connection failure should use at least minimal console verbosity so
+the actual exception is visible. See Microsoft's [local/named-instance connection
+guidance](https://learn.microsoft.com/en-us/sql/sql-server/connect-to-database-engine?view=sql-server-ver17).
+
 When persistence/model configuration changes, also run the registered-module drift gate with the required test SQL Server connection configured:
 
 ```powershell

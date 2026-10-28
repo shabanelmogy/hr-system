@@ -22,6 +22,8 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   typedRoutes: true,
   cacheComponents: true,
+  // Preserve the reviewed prefetch behavior during security maintenance (DEF-026).
+  partialPrefetching: false,
   poweredByHeader: false,
   async redirects() {
     return [

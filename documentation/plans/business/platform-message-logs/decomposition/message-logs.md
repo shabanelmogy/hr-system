@@ -73,4 +73,4 @@ Phase06 Verified before education. All authorized platform journeys/source/schem
 
 **Next-step rule:** one Active stage only, all later stages Queued; no sibling feature until integrated Verified and documentation Closed.
 
-Persistence relationship reconciliation: current PlatformCompany is Infrastructure-owned Identity state. Keep Domain free of Infrastructure references; configure the real Company foreign key with a unidirectional HasOne<PlatformCompany> mapping in Infrastructure. Do not move the existing company model or add a forbidden Domain navigation merely for symmetry. Read authorization reuses ICompanyAccessService rather than depending on Error Logs store.
+Persistence relationship reconciliation: current PlatformCompany is Infrastructure-owned Identity state. Keep Domain free of Infrastructure references; configure the real Company foreign key in Infrastructure using a unidirectional `HasOne` mapping for `PlatformCompany`. Do not move the existing company model or add a forbidden Domain navigation merely for symmetry. Read authorization reuses ICompanyAccessService rather than depending on Error Logs store.

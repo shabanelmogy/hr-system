@@ -1,5 +1,5 @@
 import { Platform } from 'react-native';
-import type { SQLiteDatabase } from 'expo-sqlite';
+import { openDatabaseAsync, type SQLiteDatabase } from 'expo-sqlite';
 
 import { secureSession } from '@/src/core/storage/secure-storage';
 
@@ -12,8 +12,7 @@ let webTransactionTail: Promise<void> = Promise.resolve();
 
 export async function initializeOfflineDatabase(db: SQLiteDatabase): Promise<void> {
   if (Platform.OS !== 'web') {
-    const key = await secureSession.getOrCreateOfflineDatabaseKey();
-    await db.execAsync(`PRAGMA key = "x'${key}'";`);
+    await keyNativeConnection(db);
   }
   await db.execAsync('PRAGMA journal_mode = WAL;');
   await db.execAsync('PRAGMA foreign_keys = ON;');
@@ -32,6 +31,14 @@ export async function initializeOfflineDatabase(db: SQLiteDatabase): Promise<voi
 
   await cleanupTerminalOutbox(db);
   await pruneExpiredOfflineScopes(db);
+}
+
+async function keyNativeConnection(db: SQLiteDatabase): Promise<void> {
+  const key = await secureSession.getOrCreateOfflineDatabaseKey();
+  if (!/^[0-9a-f]{64}$/i.test(key)) {
+    throw new Error('Offline database key must contain 256 bits of hexadecimal key material.');
+  }
+  await db.execAsync(`PRAGMA key = "x'${key}'";`);
 }
 
 export async function pruneExpiredOfflineScopes(
@@ -205,11 +212,23 @@ export async function runInOfflineWriteTransaction<T>(
   task: (tx: SQLiteDatabase) => Promise<T>,
 ): Promise<T> {
   if (Platform.OS !== 'web') {
-    let value: T | undefined;
-    await db.withExclusiveTransactionAsync(async (tx) => {
-      value = await task(tx);
-    });
-    return value as T;
+    // Expo's exclusive helper opens an unkeyed connection internally. Own the
+    // separate connection so SQLCipher is keyed before BEGIN or schema access.
+    const separator = db.databasePath.lastIndexOf('/');
+    const name = db.databasePath.slice(separator + 1);
+    const directory = separator >= 0 ? db.databasePath.slice(0, separator) : undefined;
+    const transaction = await openDatabaseAsync(name, { ...db.options, useNewConnection: true }, directory);
+    try {
+      await keyNativeConnection(transaction);
+      await transaction.execAsync('PRAGMA foreign_keys = ON;');
+      let value: T | undefined;
+      await transaction.withTransactionAsync(async () => {
+        value = await task(transaction);
+      });
+      return value as T;
+    } finally {
+      await transaction.closeAsync();
+    }
   }
 
   // Expo SQLite's exclusive async transaction is unsupported on web. Serialize

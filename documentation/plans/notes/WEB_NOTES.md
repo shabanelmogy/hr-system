@@ -15,6 +15,11 @@ Then reference its stable ID here.
 
 | Note ID | Type | Area | Summary | Canonical registry |
 | --- | --- | --- | --- | --- |
+| DEC-025 | Decision | Angular direct API | Closed: requester excluded BFF; Angular calls the existing API. | `DECISION_BACKLOG.md` |
+| DEC-027 | Decision | Direct authentication | Bind actual API credentials/session/origins before Angular auth work. | `DECISION_BACKLOG.md` |
+| DEC-026 | Decision | Pattern identity | Resolve duplicate P-008 meaning before affected contracts. | `DECISION_BACKLOG.md` |
+| RISK-016 | Risk | Client parity | Track drift while Next is retained. | `KNOWN_RISKS.md` |
+| RISK-017 | Risk | Specialist adapters | Prove required Angular integration compatibility/licensing. | `KNOWN_RISKS.md` |
 | PROD-001 | Production | Observability | Real Collector/dashboard/alert delivery must be verified in deployment. | `PRODUCTION_NOTES.md` |
 | PROD-002 | Production | Authentication | Exercise real Google popup auth against the deployed origin. | `PRODUCTION_NOTES.md` |
 | PROD-003 | Production | Realtime | Verify production SignalR connection/reconnect through the deployed origin. | `PRODUCTION_NOTES.md` |
@@ -28,10 +33,15 @@ Then reference its stable ID here.
 | DEF-003 | Deferred | Realtime | Realtime-token hop reduction remains evidence-driven. | `DEFERRED_ITEMS.md` |
 | DEF-004 | Deferred | Calendar/Kanban | Additional FullCalendar/Kanban tuning requires measured need. | `DEFERRED_ITEMS.md` |
 | DEF-005 | Deferred | Entitlements | Fetch-on-intent optimization remains evidence-driven. | `DEFERRED_ITEMS.md` |
+| DEF-026 | Deferred | Partial Prefetching adoption | Preserve existing prefetch behavior during the security update; reopen the documented migration before the compatibility option is removed. | `DEFERRED_ITEMS.md` |
 | PROD-019 | Production | Core authenticated release | Run the complete deployed baseline journey, not only special integration smokes. | `PRODUCTION_NOTES.md` |
 | PROD-020 | Production | Managed Crystal publication | Managed report views require published compatible report versions and `Run` ACL evidence. | `PRODUCTION_NOTES.md` |
-| FOLLOW-003 | Follow-up | API contract parity | Exhaustive generated API/Web contract diff remains future governance work. | `FOLLOW_UPS.md` |
-| RISK-009 | Risk | Protected-shell bundle budget | Shared protected-shell routes exceed the 2.25 MiB class budget; the Crystal manager route remains within its own budget. | `KNOWN_RISKS.md` |
+| FOLLOW-003 | Follow-up | API contract parity | Angular representative generation proof is Required; broader exhaustive diff remains open. | `FOLLOW_UPS.md` |
+| PROD-023 | Production | Recovery | Angular release acceptance references canonical backup/isolated-restore proof before external production data. | `PRODUCTION_NOTES.md` |
+| PROD-024 | Production | Diagnostics | Apply canonical hosted monitoring/redaction requirements to the claimed Angular release. | `PRODUCTION_NOTES.md` |
+| RISK-009 | Risk | Protected-shell bundle budget | Verified 2026-10-27: the current production build passes unchanged bundle budgets, including the protected-shell class. Reopen on regression. | `KNOWN_RISKS.md` |
+| RISK-012 | Risk | Dependency security baseline | Verified 2026-10-27: full/production audits are clean; Web checks, full coverage, production build and browser smokes pass. | `KNOWN_RISKS.md` |
+| FOLLOW-007 | Follow-up | Full-suite runner | Verified with the bounded two-worker profile and correctly owned Node/Vitest suites; see canonical closure evidence. | `FOLLOW_UPS.md` |
 
 | FOLLOW-009 | Follow-up | Countries development SSR | Reference client rendering succeeds after a style-prefixer SSR fallback; isolate before the next Web release gate. | `FOLLOW_UPS.md` |
 

@@ -13,8 +13,7 @@ public sealed class WorkforcePlanAggregateConcurrencySqlTests
     public async Task ChildOnlyAggregateUpdate_AdvancesParentRowVersion_AndRejectsStaleOverwrite()
     {
         var databaseName = $"WorkforcePlanConcurrency_{Guid.NewGuid():N}";
-        var connectionString =
-            $"Server=(localdb)\\mssqllocaldb;Database={databaseName};Trusted_Connection=True;TrustServerCertificate=True";
+        var connectionString = GetTestConnectionString(databaseName);
 
         await CreateDatabaseAsync(databaseName);
 
@@ -107,8 +106,7 @@ public sealed class WorkforcePlanAggregateConcurrencySqlTests
 
     private static async Task CreateDatabaseAsync(string databaseName)
     {
-        await using var connection = new SqlConnection(
-            "Server=(localdb)\\mssqllocaldb;Database=master;Trusted_Connection=True;TrustServerCertificate=True");
+        await using var connection = new SqlConnection(GetTestConnectionString("master"));
         await connection.OpenAsync();
         await using var command = connection.CreateCommand();
         command.CommandText = $"CREATE DATABASE [{databaseName}]";
@@ -118,8 +116,7 @@ public sealed class WorkforcePlanAggregateConcurrencySqlTests
     private static async Task DropDatabaseAsync(string databaseName)
     {
         SqlConnection.ClearAllPools();
-        await using var connection = new SqlConnection(
-            "Server=(localdb)\\mssqllocaldb;Database=master;Trusted_Connection=True;TrustServerCertificate=True");
+        await using var connection = new SqlConnection(GetTestConnectionString("master"));
         await connection.OpenAsync();
         await using var command = connection.CreateCommand();
         command.CommandText =
@@ -127,6 +124,18 @@ public sealed class WorkforcePlanAggregateConcurrencySqlTests
             "ALTER DATABASE [" + databaseName + "] SET SINGLE_USER WITH ROLLBACK IMMEDIATE; " +
             "DROP DATABASE [" + databaseName + "]; END";
         await command.ExecuteNonQueryAsync();
+    }
+
+    private static string GetTestConnectionString(string databaseName)
+    {
+        var configured = Environment.GetEnvironmentVariable("ERPSYSTEM_TEST_SQLSERVER_CONNECTION");
+        var builder = new SqlConnectionStringBuilder(string.IsNullOrWhiteSpace(configured)
+            ? "Server=(localdb)\\mssqllocaldb;Database=master;Trusted_Connection=True;TrustServerCertificate=True"
+            : configured)
+        {
+            InitialCatalog = databaseName
+        };
+        return builder.ConnectionString;
     }
 
     private static async Task CreateWorkforceTablesAsync(HrDbContext context)

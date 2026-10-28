@@ -90,4 +90,4 @@ existing-system review, implementation order, and Definition of Done.
 | company-ui-localization-api | 7 | `7ca5a25d8744d014f3d1658bb9203c881b8304fe465919112dc969fe4b2fe247` |
 | company-ui-localization-api | 8 | `a555533fd36049b26f9ec99541ffff190ce95edf577fe6e99f5864a3893ea3e1` |
 | company-ui-localization-api | 9 | `ee95a26639431f522358b844f6b31749e1572743b616d7472661caee8fbe0738` |
-| company-ui-localization-api | 10 | `427fd5b52e204c93ddb7fc429d5beb872b4e95424c36ea3b0918cbb767b349f1` |
+| company-ui-localization-api | 10 | `b5f6e14b9b81bf8ac113a69cab0f7b7f88e7eb976b9e25abb54acb9638961531` |

@@ -50,7 +50,7 @@ realtime, notification, localization, report, or Import integration is reachable
 | company-ui-localization-master | 9 | `63b51c88d8a5d88a50e30ccc350a867f17af354c861fdd25adf44fbb52a11be2` |
 | company-ui-localization-api | 8 | `a555533fd36049b26f9ec99541ffff190ce95edf577fe6e99f5864a3893ea3e1` |
 | company-ui-localization-api | 9 | `ee95a26639431f522358b844f6b31749e1572743b616d7472661caee8fbe0738` |
-| company-ui-localization-api | 10 | `427fd5b52e204c93ddb7fc429d5beb872b4e95424c36ea3b0918cbb767b349f1` |
+| company-ui-localization-api | 10 | `b5f6e14b9b81bf8ac113a69cab0f7b7f88e7eb976b9e25abb54acb9638961531` |
 | company-ui-localization-web | 8 | `78ba4e90fdd9faf3454d489beb2d3cc6a92791f1532eeaf426e432e25dc6fd83` |
 | company-ui-localization-web | 10 | `171febad967d8bd7827cbabe7f5e7a6d1f6f2b57a553a618231c346caaf78765` |
 | company-ui-localization-web | 13 | `aa6304c75e09579546d9af39a377e27ab6cc2e8e10604f1533a6a92ed64f97d4` |

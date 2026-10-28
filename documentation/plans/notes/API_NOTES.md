@@ -15,6 +15,8 @@ Then reference its stable ID here.
 
 | Note ID | Type | Area | Summary | Canonical registry |
 | --- | --- | --- | --- | --- |
+| DEC-025 | Decision | Angular direct API | Closed: no BFF; retain Next and reuse current API. | `DECISION_BACKLOG.md` |
+| DEC-027 | Decision | Direct authentication | Review actual cookie/token support and safe browser binding. | `DECISION_BACKLOG.md` |
 | DEC-023 | Decision | Error-log capture | Select first-release capture boundaries. | `DECISION_BACKLOG.md` |
 | DEC-022 | Decision | Error-log lifecycle | Confirm retention and append-only/export policy. | `DECISION_BACKLOG.md` |
 | PROD-010 | Production | Hosted device/API E2E | Mobile authenticated release journeys require the deployed API. | `PRODUCTION_NOTES.md` |
@@ -28,7 +30,7 @@ Then reference its stable ID here.
 | DEF-009 | Deferred | Workforce authorization | Delegable budget-approval permission remains deferred. | `DEFERRED_ITEMS.md` |
 | RISK-004 | Risk | Authentication | Current refresh rotation lacks full multi-generation token-family ancestry. | `KNOWN_RISKS.md` |
 | RISK-005 | Risk | Platform effects | Future critical post-commit effects must use an outbox rather than best-effort dispatch. | `KNOWN_RISKS.md` |
-| FOLLOW-003 | Follow-up | Contract parity | Exhaustive generated Web/API contract diff remains a future governance feature. | `FOLLOW_UPS.md` |
+| FOLLOW-003 | Follow-up | Contract parity | Angular migration requires scoped generation proof; exhaustive Web/API automation remains open. | `FOLLOW_UPS.md` |
 | PROD-022 | Production | Delivery security | Deployment approval gates and artifact signing/provenance remain Production Scale work. | `PRODUCTION_NOTES.md` |
 | PROD-023 | Production | Disaster recovery | Backup/restore/RPO/RTO evidence remains Production Scale work. | `PRODUCTION_NOTES.md` |
 | PROD-024 | Production | Observability | Central error tracking, dashboards, alerts, SLOs, and redaction remain Production Scale work. | `PRODUCTION_NOTES.md` |

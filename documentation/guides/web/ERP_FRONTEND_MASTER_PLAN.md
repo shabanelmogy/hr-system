@@ -96,7 +96,7 @@ Strengthen `scripts/check-architecture.mjs` to verify:
 
 Target/current baseline:
 
-- Next.js `16.3.5`
+- Next.js `16.4.3` (security maintenance, 2026-10-27; `RISK-012`)
 - React `19.3.0`
 - ReactDOM `19.3.0`
 - TypeScript `5.9.3`
@@ -1296,7 +1296,7 @@ to satisfy an outdated report:
 | Syncfusion 34 | Keep the coordinated 31.2.x PDF-viewer family until the viewer's versioned runtime resource URL is coupled to the package version and a real PDF browser smoke exists. |
 | docx-preview 0.4 | Keep 0.3.7 until the document-viewer tranche has a real DOCX fixture/smoke; pre-1.0 changes are not promoted without runtime evidence. |
 | ESLint 10 | Keep 9.39.5 while the current `eslint-plugin-import`/Next dependency chain still advertises ESLint <=9 compatibility. |
-| Vitest / coverage-v8 5 | Keep the matched 4.1.11 pair until a dedicated test-toolchain migration proves identical coverage semantics, reports and thresholds. |
+| Vitest / coverage-v8 5 | Keep the matched 4.1.x pair (currently 4.1.12 after the 2026-10-27 security maintenance) until a dedicated major-version test-toolchain migration proves identical coverage semantics, reports and thresholds. |
 | TypeScript 7 | Keep 5.9.3 while the installed `typescript-eslint` line declares TypeScript `<6.1.0`; do not bypass the peer contract. |
 | `@types/node` 26 | Keep Node 20 types while CI runs Node 22 and the application supports Node >=20.9; move the runtime/CI/type policy deliberately rather than model newer Node APIs accidentally. |
 

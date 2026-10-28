@@ -37,6 +37,66 @@ Platform owns the typed remote/repository/application/composition boundary, rout
 Paired EN/AR, RTL, safe-area, keyboard and accessible 44pt actions are Required.
 ## 14. Verification
 
+Shared offline-bootstrap correction on 2026-10-28 (`FOLLOW-010`) keys each
+isolated native write connection before BEGIN and preserves the current database,
+key and schema. Eight focused regression tests pass; the requester confirms the
+app opens after Reload, verifying FOLLOW-010 for bootstrap. This does not change Error Logs' online-only authority or create a durable
+diagnostic cache/outbox. The canonical Mobile readiness review owns the evidence.
+The complete Mobile check now passes 194 suites / 598 tests with unchanged
+coverage floors; Android export passes. The corrected code is verified in the
+development bundle served through the HTTPS tunnel. Bootstrap is confirmed on the
+phone; feature-specific physical journeys remain PROD-026.
+
+Live-development maintenance on 2026-10-28 adds SDK57's development client and
+an internal EAS development profile; Metro's tunnel serves a valid Android
+development manifest. Build `b71a24b6-897b-41df-ba95-1c36287ed9bf` and startup
+instructions are recorded in the Mobile release runbook. Fast Refresh needs
+the development APK and running Metro; physical confirmation remains `PROD-026`.
+No diagnostic workflow, capture authority or domain contract changes.
+After adding the client, the full Mobile gate passes again (194 suites / 593
+tests), Expo Doctor is 21/21, native config/dependency checks pass, production
+export retains its 3,030-source boundary and all four upload-policy tests pass.
+The tunnel delivers the development bundle and registers its HMR WebSocket;
+these server checks do not prove a rendered phone-side refresh.
+The development build completes on 2026-10-28; its APK passes ZIP integrity and
+manifest checks, includes the development launcher and matches the preview signer
+certificate. The canonical Mobile runbook owns download/hashes; phone installation
+and visible Fast Refresh remain `PROD-026`.
+
+Shared dependency-boundary maintenance on 2026-10-28 passes 13 policy tests and
+the actual 3,030-source Android map check. Legacy Zod, deepmerge and CLI tooling
+schemas are absent; only the intentional Expo Metro loader is permitted from
+the CLI package. Upstream findings remain `RISK-013`/`RISK-014`, physical journeys
+remain `PROD-026`, and this export does not prove signed crash-symbolication
+acceptance under `PROD-013`.
+The complete Mobile check is repeated successfully (194 suites / 593 tests),
+with the same coverage results and unchanged floors.
+It also passes on Mobile CI/EAS Node 22.23.4, with the export and focused
+release-config checks. A dedicated ERP EAS project is linked; verification
+isolates synthetic config identities from the real binding. Artifact/install
+acceptance remains `PROD-009`; default-runtime follow-up is `RISK-015`. Four
+upload-policy tests and actual 1,221-file archive inspection pass; local shared
+tokens remain available and other apps/secrets are excluded. The canonical
+release runbook owns the build request and preview configuration. The first
+signed Android preview completes successfully on 2026-10-28 (build
+`32f6f9a6-7779-4077-a42d-8d1309f32015`, version 1.0.0/code 1). Physical
+installation and real symbolication remain open; the chosen preview host's
+association endpoints return HTTP 401, retained under `PROD-012`.
+
+Shared-platform maintenance on 2026-10-27 supersedes the inherited gate failures
+in the older dated measurements below: `FOLLOW-006` and SDK57 patch alignment
+`FOLLOW-008` are Verified. The complete Mobile check passes strict types, full
+lint, architecture, contracts (90 routes / 253 endpoint members), i18n/catalog,
+foundation/release source gates and 194 suites / 593 tests. Coverage remains
+25.56/17.85/21.30/28.14 percent above unchanged floors. A clean 1,135-package
+install matches the lockfile; dependency compatibility, disposable Android native
+config, React Compiler Android export and Expo Doctor 21/21 pass. The production
+dependency audit remains red for the Expo CLI/Zod path (`RISK-013`); physical
+journeys remain `PROD-026` and capture availability remains `RISK-010`. No feature
+UI, API contract, capture authority or schema changes in this dependency slice.
+
+Historical feature-specific measurements:
+
 2026-10-19 richer diagnostic compatibility: 7 detail/remote-boundary tests and strict typecheck pass. No native runtime UI or schema changed. The five-point audit is documented in error-logs-evidence.md; immutable entries have no create/edit/mock workflow. Physical device checks remain requester-deferred PROD-026, and inherited full-check failures are not closed.
 Focused feature/capture/route tests pass 46/46 (25 feature/capture tests plus 21 route tests), covering safe projections, Table/Cards, current-query XLSX, malformed binary, sharing cleanup, independent permissions, invalid retention, server field errors, dirty revision preservation and conflict reload. Strict TypeScript, architecture, contract matrix (87 routes / 243 endpoint members), i18n/catalog, foundation and release-source gates passed. Android export passed; the final repeat after review fixes is recorded in the evidence ledger. The full Jest coverage run passed 551 executable tests in 181 suites; one inherited OfflineOperationsPolicyScreen suite could not load its native keyboard-controller mock (`FOLLOW-006`). Full lint retains six inherited LedgerSetupResourceScreen errors (`FOLLOW-006`); feature lint is tracked separately. Expo Doctor passes 20/21, with 15 existing SDK patch mismatches tracked in `FOLLOW-008`. Native journeys remain `PROD-026`, capture availability `RISK-010`.
 Corrective verification on 2026-10-18: Mobile accepts the canonical .NET GUID shape including hash-derived persisted IDs and continues rejecting malformed IDs. The existing Settings screen composes a permission-filtered Platform child registry; no extra destination or blanket permission is introduced. Its old direct drawer leaf stays hidden and the Settings destination remains available. Focused feature/navigation/route checks pass 43/43, both client schemas accept the same live 17-row response, TypeScript/feature lint/architecture/contracts/i18n pass and Android export passes. Native physical acceptance remains PROD-026; full lint retains only the six inherited FOLLOW-006 errors.

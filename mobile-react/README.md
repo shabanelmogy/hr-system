@@ -6,7 +6,7 @@ Canonical architecture and implementation rules live under
 
 ## Local setup
 
-Use Node.js 22.13 or newer and npm. Copy `.env.example` to `.env`, then set
+Use the approved Mobile Node.js 22.23.4 baseline and npm. Copy `.env.example` to `.env`, then set
 `EXPO_PUBLIC_API_URL` to an absolute versioned API URL such as
 `https://erp.example.com/api/v1`. HTTP is accepted only for local or private
 development hosts. Never put credentials, tokens, or other secrets in
@@ -15,10 +15,17 @@ development hosts. Never put credentials, tokens, or other secrets in
 ```bash
 npm ci
 npm run start
+npm run start:tunnel
 npm run android
 npm run ios
 npm run web
 ```
+
+`npm start` targets the custom development client. Install the EAS `development`
+APK once, then scan the running Metro QR code for Fast Refresh. Use `start:tunnel`
+when the phone cannot reach the computer over LAN. SQLCipher requires the custom
+native client. Setup, connection and rebuild instructions live in the canonical
+[Mobile release runbook](../documentation/guides/mobile/MOBILE_RELEASE_RUNBOOK.md#live-development-with-fast-refresh).
 
 ## Project structure
 
@@ -56,8 +63,8 @@ npm run check:dependencies  # advisory override and malformed URI compatibility 
 npm audit --omit=dev --audit-level=moderate
 ```
 
-Internal Android builds use the `preview` EAS profile; store builds use
-`production`. The preview profile emits an installable APK and uploads source
+Live development uses the `development` EAS profile. Standalone internal Android
+builds use `preview`; store builds use `production`. The preview profile emits an installable APK and uploads source
 maps when a real EAS project is configured. `npm run android` and `npm run ios`
 set a private local-native flag, inject a reserved deterministic project ID,
 and disable Observe delivery for local development. EAS builds require one
@@ -71,6 +78,6 @@ JS-only error-boundary fallback there and skips metrics initialization. The
 full Observe integration is enabled automatically in a custom development
 build (`npx expo run:android`/`npx expo run:ios` or an EAS development build)
 and in release builds.
-EAS account/team configuration, signing credentials, deployed API/link domains,
-and device delivery evidence remain release-environment inputs and are not
-stored in this repository.
+The public ERP EAS project identity is recorded in `app.json`; public preview
+endpoints live in the project's EAS environment. Signing credentials remain in
+managed storage. Physical delivery and hosted acceptance remain release checks.

@@ -15,6 +15,7 @@ Then reference its stable ID here.
 
 | Note ID | Type | Area | Summary | Canonical registry |
 | --- | --- | --- | --- | --- |
+| FOLLOW-010 | Follow-up | SQLCipher bootstrap | Verified: requester confirms the app opens after Reload with the per-connection key correction. Broader offline business-write acceptance remains PROD-026. | `FOLLOW_UPS.md` |
 | PROD-009 | Production | EAS release | Real signed and installed release artifacts remain required. | `PRODUCTION_NOTES.md` |
 | PROD-010 | Production | Hosted E2E | Authenticated device journeys require a deployed API and release-like build. | `PRODUCTION_NOTES.md` |
 | PROD-011 | Production | API drift | Hosted Swagger/API drift evidence is required after API contract changes. | `PRODUCTION_NOTES.md` |
@@ -51,9 +52,15 @@ Use `Surface = Mobile` or `Surface = Cross-platform` for items involving:
 A business plan cannot become `Implementation Ready` while a blocking Required
 Mobile decision is recorded only as an unresolved note.
 `PROD-026` — Company permissions/localization native acceptance is explicitly scheduled for the product owner after automated implementation; see PRODUCTION_NOTES.md.
-`FOLLOW-006` — Confirmed again during company administration verification on 2026-10-17: six pre-existing LedgerSetupResourceScreen memoization lint errors block the full chained Mobile check; scoped S1 lint passed. Canonical owner/trigger remain FOLLOW_UPS.md.
+`FOLLOW-006` — Verified 2026-10-27: compiler memoization, offline screen test isolation and permission-catalog parity corrections restore the complete Mobile check (194 suites / 593 tests); Android export passes. Canonical closure evidence remains FOLLOW_UPS.md. Subsequent SDK compatibility is FOLLOW-008; dependency security and physical acceptance remain RISK-013 and PROD-026.
+
+| Note ID | Type | Area | Summary | Canonical registry |
+| --- | --- | --- | --- | --- |
 | RISK-010 | Risk | Error Logs capture availability | Best-effort sink and authenticated runtime capture limits; see canonical note. | `KNOWN_RISKS.md` |
-| FOLLOW-008 | Follow-up | SDK patch alignment | Expo Doctor package patch mismatch; canonical upgrade follow-up. | `FOLLOW_UPS.md` |
+| FOLLOW-008 | Follow-up | SDK patch alignment | Verified SDK57 compatibility; canonical closure evidence. | `FOLLOW_UPS.md` |
+| RISK-013 | Risk | Expo CLI dependency security | Remaining SDK57 transitive Zod advisory; dependency audit remains gated. | `KNOWN_RISKS.md` |
+| RISK-014 | Risk | deepmerge dependency security | Upstream Low advisory and native bundle-boundary evidence. | `KNOWN_RISKS.md` |
+| RISK-015 | Risk | Build/tooling Node trust baseline | Patched Mobile runtime verified; default workstation runtime still needs review. | `KNOWN_RISKS.md` |
 
 `PROD-027` — Company account email provider/client acceptance; canonical ownership, trigger and production gate are in PRODUCTION_NOTES.md.
 

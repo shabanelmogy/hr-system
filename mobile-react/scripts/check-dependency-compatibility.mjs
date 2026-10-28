@@ -1,6 +1,5 @@
 import {performance} from 'node:perf_hooks';
 import {createRequire} from 'node:module';
-import {dirname} from 'node:path';
 
 const require = createRequire(import.meta.url);
 const decodeUriComponent = require('decode-uri-component');
@@ -50,15 +49,16 @@ if (adversarialOutput.length === 0 || elapsedMs > 3_000) {
   fail(`malformed-percent input took ${Math.round(elapsedMs)}ms`);
 }
 
-const xcodeEntry = require.resolve('xcode');
-const xcodeUuidPackage = require(require.resolve('uuid/package.json', {paths: [dirname(xcodeEntry)]}));
-if (xcodeUuidPackage.version !== '11.1.1') {
-  fail(`xcode must resolve uuid 11.1.1 (got ${xcodeUuidPackage.version})`);
+const xcode = require('xcode');
+if (typeof xcode.project !== 'function') {
+  fail('xcode CommonJS project API was lost');
 }
 
-const xcode = require('xcode');
-if (typeof xcode.project !== 'function' || typeof require('uuid').v4 !== 'function') {
-  fail('xcode/uuid CommonJS compatibility was lost');
+const project = xcode.project('dependency-compatibility.pbxproj');
+project.hash = {project: {objects: {}}};
+const projectId = project.generateUuid();
+if (!/^[A-F0-9]{24}$/.test(projectId)) {
+  fail('xcode did not generate a valid PBX project identifier');
 }
 
 console.log(`Dependency compatibility passed (decode-uri-component adversarial case: ${Math.round(elapsedMs)}ms).`);

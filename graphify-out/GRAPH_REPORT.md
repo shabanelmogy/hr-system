@@ -1,668 +1,736 @@
-# Graph Report - ERPSYSTEM  (2026-10-13)
+# Graph Report - ERPSYSTEM  (2026-10-28)
 
 ## Corpus Check
-- 4534 files · ~1,856,844 words
+- 5062 files · ~2,022,461 words
 - Verdict: corpus is large enough that graph structure adds value.
+- Unclassified: 50 file(s) not represented in the graph (top: (none) 13, .woff2 12, .ttf 6)
 
 ## Summary
-- 29145 nodes · 69956 edges · 1117 communities (951 shown, 166 thin omitted)
-- Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 714 edges (avg confidence: 0.77)
+- 36447 nodes · 106784 edges · 886 communities (820 shown, 66 thin omitted)
+- Extraction: 92% EXTRACTED · 8% INFERRED · 0% AMBIGUOUS · INFERRED: 8735 edges (avg confidence: 0.86)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `81f696d1`
+- Built from commit: `48372545`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
-- Task
+- FileUploadSecurityTests
 - mobile-react/src/platform/auth/index.ts
-- excelService.ts
-- OrganizationalStructureManagementScreen.tsx
-- ErpSystem.Modules.ReferenceData.Application.Abstractions.Persistence
-- CandidateDto
-- OrganizationalStructurePage.tsx
-- .Success
-- navigation/BackButton.tsx
-- workforce-budget-remote-data-source.ts
-- RecruitmentHarness
-- reporting/public/index.ts
-- AddressType.ts
-- RecruitmentContracts.cs
-- PersonalInfo.tsx
-- ErpSystem.BuildingBlocks.Context.Authentication
-- IQuery
+- ref_i18next
+- DistrictImportView.tsx
+- ErpSystem.BuildingBlocks.Application.Abstractions.Messaging
+- PlatformDbContext
+- useAuth
+- vitest
+- companyUiResources.ts
+- TenantManagementScreen.tsx
+- Result
+- cspReport.ts
+- addressTypeUtils.ts
+- DateTimeOffset
+- WorkforceBudgetErrors
+- mediatr
+- .SaveChangesAsync
 - HrDbContext
-- UserManagementScreen.tsx
-- useCountryGridLogic.ts
+- WorkforcePlansPage.tsx
+- .Handle
 - Kanban Card Assignee Management - User Story
-- AppTextField
-- workforcePlanningNavigation.tsx
-- src/index.ts
-- CompanyGeographicScopePage.tsx
-- cards/index.ts
-- mobile-react/src/platform/modules/index.ts
-- ICommandHandler
-- useImportDistricts.ts
+- MyForm
+- FiscalYear
+- NotificationPopover.tsx
+- useRecruitment.ts
+- 4. مراحل التنفيذ
+- ErpSystem.Modules.Reporting.Application.Features.Analytics.ReportTemplates.Contracts
+- AddressTypeErrors
+- IReadOnlySet
 - data-grid/index.ts
-- JobRequisitionDto
-- RealtimeEntityBridge.tsx
+- StateErrors
+- SecurityAuditQueryRequest
 - offline/index.ts
-- CancellationToken
+- next
 - PageResponse
-- JobPostingDto
+- Result
 - ProfileScreen.tsx
-- MyDataTable.tsx
-- TenantAdministrationRequests.cs
-- CancellationToken
-- EmploymentApplication
-- dependencies
-- forms/index.ts
+- Ledger Setup Currency — Cross-Platform Implementation Review
+- ICollection
+- 22. Phased implementation
+- JobOfferDto
+- mobile-react/package.json
+- PlatformDbContext
 - Kanban Card Attachment Management - User Story
 - TenantManagementPage.tsx
-- OrganizationalStructure.ts
+- OrganizationalStructurePage.tsx
 - address-type.ts
 - offline-operations-policy-use-cases.ts
 - web-next/src/shared/components/charts/index.ts
-- useAppReadOnly
+- .Handle
 - CancellationToken
 - LedgerSetupRecord
-- State
-- recruitment-schemas.ts
-- FileUploadPage.tsx
+- cookies.ts
+- ref_react_i18next
+- IAsyncEnumerable
 - config/api/index.ts
-- CurrencyResponse
-- Result
-- StaffingCommands.cs
-- CrystalReportContracts.cs
-- dependencies
-- RolePermissionsScreen.tsx
-- CurrencyOwnershipTests
-- StoredFile
-- Task
-- AttendanceDevicePorts.cs
 - BarChart.tsx
-- Task
-- PlatformRoleManagementCqrsTests
-- app/_layout.tsx
+- IReportTemplateStore
+- IHrUnitOfWork
+- UserInvitation
+- web-next/package.json
+- OrganizationalResource
+- company-ui-resources.ts
+- InventoryCatalogCqrsTests
+- NavigationTitles
+- AttendanceDevicePorts.cs
+- WorkforceBudget
+- CountryCqrsHandlerTests
+- BranchAddress
+- AppStatusBadge
 - Kanban Board Management - User Story
-- useCountryImport.ts
+- AppointmentManagementScreen.tsx
 - TenantAdmin
-- IModuleCatalogPolicy
-- AuthenticationOperationResult
-- usePermissions
+- adr/README.md
+- PlatformApplicationUser
+- ref_react_i18next
 - ar.ts
-- auth/register/Register.tsx
-- GlobalCrystalReportQueryTests
-- transient/ErrorDialogHost.tsx
-- CrystalReportCommands.cs
-- CancellationToken
-- AuthenticationOrchestrationContracts.cs
+- خطة Van Sales والبيع الميداني
+- .Handle
+- IHrUnitOfWork
+- JobRequisitionDto
+- دليل مراجعة جميع مراحل Workforce Planning to Hire V1.0
+- InventoryDbContext
 - JobRequisition
 - HiringTraceResponse
-- PageHeader.tsx
+- ReportCategory
 - District.ts
-- OrganizationalStructureManagement
-- DistrictBulkCreateHandlerTests
-- Task
-- WorkforceTracePage.tsx
+- OrganizationalStructureItem
+- steps
+- ReferenceDataDbContext
+- file-manager-remote-data-source.ts
 - ManagedCrystalReportContractRegistry
-- WorkforceTracePersistenceTests
+- staffing.ts
 - Kanban Card Label Management - User Story
-- AccountsPage.tsx
-- state.ts
-- JobOfferDto
-- workforce-trace-remote-data-source.ts
-- 5. كتالوج أنماط الشاشات (Screen Patterns)
+- Managed Crystal Reporting Reliability — Master Build Plan
+- state-remote-data-source.ts
+- Ledger Setup Currency — Next.js Implementation Profile
+- CurrenciesPage.tsx
+- Error Logs — Screen / Workflow Contract
 - export/types.ts
-- CancellationToken
+- companyUiResources.ts
 - Kanban Card Management - User Story
-- CancellationToken
+- ErrorLogCaptureQueue
 - TenantManagementResponse
 - WorkforcePlanDetail
 - notification-remote-data-source.ts
-- IntegrationEvent
-- StateBulkCreateHandlerTests
+- AccountingDbContext
+- SubCategoryResponse
 - offline-policy/index.ts
-- Accounting Core GL — Master Build Plan
-- useAddressTypeImport.ts
-- states/components/chart-view/chartDataUtils.ts
-- WorkforceBudget
+- AuthenticationOperationResult
+- Type
+- AuditTrailTests
+- types/index.ts
 - ErpModule
 - clientTelemetryContract.ts
 - خطة تطوير موديول الحسابات داخل ERPSYSTEM — Business Phases
-- OperationalFoundationTests
-- profile-remote-data-source.ts
+- Fact
+- system_text_json
 - healthCheckService.ts
 - Account
-- Task
-- CompanyAuditableEntity
+- MyTextField.tsx
+- AttendanceDevice
 - Kanban Board Member Management - User Story
-- PlatformContractSource
-- WorkforcePlanCommands.cs
+- deploy
+- Interview
 - signalRService.ts
-- AccountingDbContext
-- CurrenciesPage.tsx
-- .GetPlanCommitment
-- file-upload/index.ts
-- EntityChangeLogsResponse
+- ReportTemplate
+- useSession
+- Screen Pattern Catalog
+- ErpSystem.Modules.Platform.Infrastructure/DependencyInjection.cs
+- PlatformFileMetadata
 - ErpSystem.Modules.Platform.Infrastructure.csproj
-- Book
-- WorkforcePlansScreen.tsx
-- OfflineOperationsPage.tsx
-- Currency
-- LocalizationContracts.cs
-- CountryCqrsHandlerTests
-- OrganizationalStructureItem
+- JobOpeningDto
+- CategoryResponse
+- CompanyLocalizationRepository
+- Organizational Structure Phase 04 - Domain Actions and Lifecycle
+- RecruitmentKanbanBoard.tsx
+- WapilotWhatsAppSender
+- Enterprise SaaS Core Roadmap
 - ERPSYSTEM Mobile Architecture Map
 - crystal-report-remote-data-source.ts
 - devDependencies
 - ErpSystem.Modules.PointOfSale.Application.csproj
-- RealtimeProvider.tsx
-- InventoryCatalogCqrsTests
-- Address
-- CancellationToken
-- [[...path]]/route.ts
+- countries/components/CountriesChartView.tsx
+- .CategoryQueries_ExcludeCurrentRecordDuringUpdateCheck
+- AbstractValidator
+- ApiKey
+- address-types/components/AddressTypesChartView.tsx
 - useAppointmentCalendar.ts
-- JobOfferRepository
-- InventoryCatalogCqrsTests.cs
-- IPlatformAuthorizationSource
-- EntityChangeLogServiceTests
-- Result
-- Interview
-- useAppTheme
-- grouped-view/GroupedFilesView.tsx
-- tenant.ts
-- BulletChart.tsx
-- CancellationToken
-- use-countries.ts
-- PlatformDbContext
-- PositionEnvelope
-- PlatformFileOwnershipTests
-- Task
-- staffing-remote-data-source.ts
+- DateTimeOffset
+- header/index.ts
+- API Feature Development Workflow
+- Mobile preview and production runbook
+- 3. سجل الملاحظات المرتبط بالمصدر
+- MyDataGrid
+- .AddPlatformInfrastructure
+- ledger-setup.ts
+- Countries Feature Full Review
+- الأنماط المرشحة
+- Company user permission grants — web
+- ModuleGeneratorTests
+- .Create
+- مخطط ERP SaaS متعدد القنوات
+- [[...path]]/route.ts
+- GetFiscalYearsQuery
+- use-workforce-planning-use-cases.ts
 - GlobalSearchPanel.tsx
 - api/[...path]/route.ts
 - ErpSystem.Modules.ReferenceData.Infrastructure.csproj
-- MyTextField
-- .SeedAsync
-- .Create
-- CrystalReport
-- ErpSystem.Modules.HR.Infrastructure.Dependencies
+- AccountsPage.tsx
+- steps
+- PlatformTenant
+- .Scope
+- SystemLocalizationRepository
 - ERPSYSTEM Web Architecture Map
-- StaffingContracts.cs
+- PlatformUserInvitation
 - district.ts
-- WorkforcePlanWriteStore
-- secure-storage.ts
-- ICommand
-- StateQueries.cs
-- CrystalReportDataBuildResult
-- Task
+- Districts Next.js Implementation Reference
+- IAuthenticationTokenService
+- FiscalYearCommands.cs
+- JobRequisitionsGrid.tsx
+- Phase 2 Execution Contract — Workforce Budgets and Position Envelopes
+- IReadOnlyList
 - OfflineScope
 - expo
-- ZkComDeviceDriver
-- .SaveChangesAsync
-- AttendanceDeviceContracts.cs
-- auth/permissions.ts
+- states/components/StatesChartView.tsx
+- FiscalPeriod
+- Error Logs — cross-platform review
+- Module documentation
 - AppointmentRepository
-- NotificationsScreen.tsx
-- LedgerSetupContracts.cs
-- WorkforcePlanQueries.cs
+- steps
+- Core Feature CQRS and Web Implementation Guide
+- Error Logs — Expo implementation profile
 - ErpSystem.Modules.Inventory.Application.csproj
-- StaffingWriteStore
-- CancellationToken
+- CountriesScreen.tsx
+- RecruitmentPage.tsx
 - 3. Slice roadmap
-- .EveryAction_DispatchesItsSliceAndUsesCanonicalSuccessStatus
-- client.ts
+- Error Logs — Next.js implementation profile
+- platform/features/README.md
 - http
-- .Update
-- TenantAdministrationResult
-- CancellationToken
-- WorkforceBudgetContracts.cs
+- Company Geographic Scope API Implementation Profile
+- IQuery
+- Company Message Logs — Screen / Workflow Contract
+- Districts API — Frontend Integration Guide
 - ErpSystem.Modules.HR.Infrastructure.csproj
-- DimensionsController
+- error-log-remote-data-source.ts
 - ERPSYSTEM API Architecture Map
-- Result
-- web-next/src/shared/components/dialogs/index.ts
-- CrystalReportDeploymentSourceClientTests
+- UnitOfWorkOwnershipArchitectureTests
+- MessageLogEntry
+- devDependencies
 - en.ts
-- CrmAppointmentCqrsTests.cs
-- FutureBusinessModule
+- PLAN_REGISTRY.md
+- Platform Settings â€” Mobile applied book
 - سيناريو القبول اليدوي — الخطوة 01: السنوات والفترات المالية / Fiscal Years & Periods
-- AudioPlayer.tsx
-- FiscalYearsController
-- JobOpeningDto
-- RecruitmentSettingsRepository
+- company-localization-remote-data-source.ts
+- AuditableEntity
+- CrmAppointmentCqrsTests.cs
+- Platform Settings â€” Web applied book
 - ErpSystem.Modules.Reporting.Application.csproj
-- cookies.ts
+- States API — Frontend Integration Guide
 - dateFormats.ts
 - error-dialog/errorDialogStore.ts
-- AddressTypeCommands.cs
-- CurrencyBaselineMigrationTests.cs
-- SubmitAttendanceAgentWorkResultCommandHandler
+- useFileGridLogic.ts
+- Accounting Core GL — Master Build Plan
+- documentation-ci.yml
 - company-geographic-scope-remote-data-source.ts
-- StubModule
-- ModuleCatalogItem
-- CancellationToken
-- useImportStates.ts
-- PlatformTenantReadOnlyMiddlewareOwnershipTests
-- moduleAccents.ts
+- WorkforceBudgetsScreen.tsx
+- Platform Settings â€” Master applied book
+- SystemLocalizationSettings
+- email-template-remote.ts
+- Countries Full-Stack Web and Mobile Implementation Profile
+- Message logs — Discovery
 - JobDescription
-- country.ts
-- DistrictsController
-- fiscal-year-use-cases.ts
+- country-remote-data-source.ts
+- User permission grants and company UI localization — Pre-plan specification
+- CompanyEmailTemplateSettings
 - ErpSystem.sln
-- AttendanceDevicesController
+- Angular 22 and PrimeNG Web Migration — Master Build Plan
 - ErpSystem.Modules.CRM.Application.csproj
-- api/types.ts
-- ErpSystem.Modules.Platform.Infrastructure.Features.Security.Authentication.Tokens
-- IRegister
-- CancellationToken
-- FileRequests.cs
-- OrganizationalStructureController
-- Task
-- FiscalYear
-- RecruitmentCqrsFoundationTests
-- IEntityTypeConfiguration
+- Company email templates — domain review
+- HttpCurrentExecutionContext
+- .Target_permissions_filter_settings_search_and_runtime
+- Division
+- Error Logs — Phase 00 review and evidence ledger
+- Platform Settings â€” Api applied book
+- Platform Settings — Screen / Workflow Contract
+- Clean Architecture and CQRS Guide
+- RecordingStore
+- EntityTypeBuilder
 - WorldMap.tsx
-- CrystalReportsController
-- RealtimeChangeRequest
-- ReferenceDataDbContext
-- WhatsAppIntegrationTests
-- file-manager-remote-data-source.ts
-- OrganizationalStructureQueries.cs
-- components/layout/index.ts
-- Store
-- feedback/states/index.ts
-- devDependencies
-- Kanban Card Comment Management - User Story
-- DistrictQueries.cs
-- AccountController
-- FiscalPeriod
-- ContactsOutboxDispatcherOptions
-- AuthRepository
-- CancellationToken
-- CategoryResponse
-- Documentation README
-- PlatformFileMetadata
-- AdministrationRepository
-- CancellationToken
-- IWorkforcePlanWriteStore
-- CancellationToken
-- ViewLayoutContext.tsx
-- .ShouldApplyMigrations
-- OfflineOutboxRepository
-- AbstractValidator
-- .PublishToPermissionAsync
-- CancellationToken
-- FiscalYearDetail
-- DefaultAdministrationRepository
-- coa-hierarchy.ts
-- UserInvitation
 - Task
-- CrystalReportDataSourceTests
-- ErpSystem.BuildingBlocks.Application.csproj
-- AppointmentCommands.cs
-- AddressTypesController
-- InterviewRepository
-- StaffingPlanningHandlerTests
-- localization-remote-data-source.ts
-- ErpSystem.Modules.CRM.Application.Features.Appointments.Contracts
-- RecordingBudgetWriteStore
-- CacheService
-- HostRuntimeCompositionOwnershipTests
-- InvoiceRequest
-- coa-hierarchy-use-cases.ts
-- UsersController
-- Education Module — Master Build Plan
-- .Controller_IsThinAccountingOwnedSurface
-- WorkforcePlan
-- GeographicalNameRulesTests
-- AccountHierarchyLevel
-- sync-phase00-matrix.mjs
-- VideoPlayer.tsx
+- RealtimeChangeRequest
+- chartUtils.ts
+- Workforce Planning Mobile Reference
+- CrmDbContext
+- BackgroundJobDashboardResponse
+- OfflineOperationsPolicyRow
+- Company UI localization — api
+- HeatmapChart.tsx
+- audit-trail-remote-data-source.ts
+- Kanban Card Comment Management - User Story
+- UnsavedChangesRegistry
+- OfflineOperationsPolicyStoreRecord
+- erp-platform-template/PLAN.md
 - ICurrentExecutionContext
-- use-workforce-budgets.ts
-- RoleManagementCommands.cs
+- auth-remote-data-source.ts
+- Department
+- AuthProvider.test.tsx
+- Feature Documentation System README
+- .PlatformStore_PreservesStoredMetadataAndProtectedFileBehavior
+- IReadOnlyCollection
+- Attendance Devices Expo Implementation Profile
+- Company UI localization — mobile
+- ExchangeRate
+- ViewLayoutContext.tsx
+- Company Message Logs — mobile profile
+- Global administration access — api applied book
+- Global administration access — mobile applied book
+- MainClientBootstrap.tsx
+- Global administration access — review applied book
+- Global administration access — web applied book
+- .GetValidatedSettings
+- FileUploadInspectionService
+- ConfirmationDialog
+- InlineData
+- coa-hierarchy.ts
+- ErpSystem.BuildingBlocks.Application.csproj
+- Appointment
+- Authorized global UI texts — api applied book
+- Authorized global UI texts — mobile applied book
+- Authorized global UI texts — review applied book
+- localization-remote-data-source.ts
+- Authorized global UI texts — web applied book
+- Tenant module entitlements Expo implementation profile
+- Address Types Expo Implementation Profile
+- Managed Crystal Contract Registry Expo Implementation Profile
+- InvoiceRequest
+- ISelectionChallengeSource
+- Managed Crystal Report Manager Experience — Expo Disposition
+- Education Module — Master Build Plan
+- reporting/features/README.md
+- DomainRuleException
+- Company email templates — Screen / Workflow Contract
+- Server-Managed Feature Frontend Reference
+- sync-phase00-matrix.mjs
+- AuditTrailQueries.cs
+- .FiscalYearCreate_UsesAccountingUnitOfWork_WhenSharedRegistrationCompetes
+- Company Message Log Settings — Screen / Workflow Contract
+- ISecurityAuditService
 - Education Module — Pre-Plan Specification
-- ExcelViewer.tsx
-- .Normalize
-- IntegrationEventDispatchTests
-- SubCategoryCommands.cs
-- TenantManagementResponse
-- UserInvitationInfrastructureAdapters.cs
-- ERP Platform Template — Pre-Plan Specification
-- UserInvitationRequests.cs
-- PlatformSessionValidationOwnershipTests
-- ReportTemplatesController
-- EmploymentApplicationDto
-- measure-build.mjs
-- SubCategoryRequestValidator
-- compilerOptions
-- ICurrentActor
-- EmploymentApplicationsController
-- ReportTemplateRevision
-- SelectionChallengeContracts.cs
-- auth/constants.ts
-- LedgerSetupResourceScreen.tsx
-- ErpSystem.Modules.HR.Presentation.Features.Recruitment.V1
-- IOrganizationalStructureManagement
-- compilerOptions
-- JwtAuthenticationTokenService
-- .EveryAction_DispatchesItsSliceAndUsesCanonicalSuccessStatus
-- CoaHierarchyRemoteDataSource
-- mobile-react/scripts/check-i18n.mjs
-- PlatformTenant
-- operations-remote-data-source.ts
-- HttpContext
-- Party
-- AuthProvider.tsx
-- UserResponse
-- CancellationToken
-- LedgerSetupResourcePage.tsx
+- Company Message Logs — Screen / Workflow Contract
+- Company UI localization — Screen / Workflow Contract
+- Company user permission grants — Screen / Workflow Contract
+- Global administration access — Screen / Workflow Contract
+- Authorized global UI texts — Screen / Workflow Contract
+- InterviewType
+- ChartContainer
 - SolutionStructureTests
-- HrDbContextScopeTests
-- ReportTemplateLifecycleHandlers.cs
-- AdministrationRemoteDataSource
-- JobOffersController
-- JobRequisitionsController
-- ModuleDefinition
-- IStateValidationQueries
+- .AddPlatformApplication
+- ERP Architecture Constitution
+- Attendance Devices Review Artifacts
+- measure-build.mjs
+- ref_jest_globals
+- compilerOptions
+- SystemLocalizationStore
+- backend-session.ts
+- NotificationsScreen.tsx
+- userPermissionsService.ts
+- Ledger Setup Currency — Expo Implementation Profile
+- Attendance Devices Next.js Implementation Profile
+- JobPostingDto
+- Prompt المرحلة الأولى: ربط ماكينات البصمة وعرض البيانات الخام داخل HR
+- compilerOptions
+- Company Geographic Scope Expo Implementation Profile
+- ExportPdfFileService
+- FiscalYearUserSelection
+- mobile-react/scripts/check-i18n.mjs
+- Company Message Logs — web profile
+- operations-remote-data-source.ts
+- Tenant module entitlements Next.js implementation profile
+- ErpSystem.Modules.Inventory.Application.Features.Catalog.Categories.Contracts
+- Organizational Structure Next.js Implementation Profile
+- .SaveChangesAsync
+- Company user permission grants — api
+- RealtimeProvider.tsx
+- JobPosting
+- Managed Crystal Contract Registry — Screen / Workflow Contract
+- Company user permission grants — mobile
+- state-remote-data-source.ts
+- Company user permission grants — review
+- States Expo Mobile Reference
+- ModuleCatalog
+- Address
 - tokens/package.json
-- AttendanceAgentSupport.cs
-- CandidateReadStore
-- ContactsReferenceWorkflowTests
-- JobPostingRepository
-- .GetAllAsync
-- PlatformIdentityEmailSender
-- GetFiscalYearsQuery
-- Category
-- ReportCategoryResponse
-- ManagedCrystalTemplateValidationHandlerTests
+- Managed Crystal Contract Registry Next.js Implementation Profile
+- Business Discovery Interview
+- ReportTemplateFeatureTests
+- Managed Crystal Template Validation Next.js Implementation Profile
+- errorLogReporter.ts
+- ApplicationStatusFilter
+- Store
+- Notification
+- TestWebHostEnvironment
+- CrystalReportVersion
 - kanban-board-user-stories/README.md
 - check-i18n.mjs
-- ExecuteAttendancePullCommandHandler
+- workforce-trace-remote-data-source.ts
 - <Capability / Phase> — Customer Education & Video Guide
-- WorkforcePlanDomainTests
-- FiscalYearRemoteDataSource
-- ReportTemplateListItemResponse
-- Ledger Setup Books & Journal Definitions — Screen / Workflow Contract
-- publicEnv.ts
-- JobOpeningRepository
-- coa-hierarchy-remote-data-source.ts
-- ErpSystem.AttendanceConnector.Models
-- ModelSnapshot
-- .CreateDraft
-- IAddressTypeValidationQueries
-- apiService
-- Account
-- Appointment
-- ReportingDbContextDesignFactory
+- Accounting Chart of Accounts and Hierarchy — Expo Implementation Contract
+- FiscalYearDetail
+- Workforce Planning API Implementation Profile
+- server.ts
+- SystemLocalizationStore
+- FileUpload
+- apiClient
+- RecordingModule
+- DateTime
+- ledger-setup-remote-data-source.ts
+- PaginationRequest
+- Candidate
+- AppHtmlPreview.tsx
+- .Resolve
+- Mobile styling guide
 - JobOpening
-- ledger-setup-mock-data.ts
-- web-next/package.json
-- UserProfileMessages.cs
-- AuthController
-- .Require
-- fiscal-year.ts
-- AttendanceDeviceStore
-- FileUploadInspectionService
-- AddressTypeQueries.cs
-- IStaffingWriteStore
-- JobOpeningsController
-- core/api/index.ts
-- administration.ts
-- AccountsController
-- organizationalStructureSchema.ts
-- StubBudgetReadStore
-- .Create
-- env.ts
-- CountriesScreen.test.tsx
-- AttendanceRawStore
-- MediaContent.tsx
-- AccountingMessagingFoundationTests
-- ICurrentActor
-- RecordingSender
-- <Feature Name> Review Artifacts
-- ReportTemplateStore
-- RealtimeService
-- IFiscalYearWriteStore
+- Accounting Ledger Setup — API Implementation Contract
+- Workforce Planning Implementation Request
+- Platform Settings evidence
+- Address Types Review Artifacts
+- CompanyEmailTemplateContracts.cs
+- FiscalYearsScreen.tsx
+- <Business Capability> — Evidence Ledger
+- PlatformMailSettings
+- DefaultDistrictRepository
+- Timeline.tsx
+- Attendance Devices API Implementation Profile
+- AppForm
+- Frontend Architecture Reference
+- Phase 3 — Next.js Runtime Architecture 🟠
+- Phase 8 — Testing Strategy ✅
+- Accounting Chart of Accounts and Hierarchy — API Implementation Contract
+- Company Message Logs — api profile
+- Super Admin administration — Master plan
+- Managed Crystal Contract Registry API Implementation Profile
+- Managed Crystal Contract Registry — Implementation Request
+- Managed Crystal Contract Registry Feature Full Review
+- contacts/README.md
+- HrDbContextDesignFactory
+- getNextMockSample
+- PLAN_REGISTRY.md
+- GridFooter
+- Company email templates Phase 02 - Next.js Client
+- Company UI localization Phase 02 - Next.js Client
 - web-next/scripts/check-architecture.mjs
-- CreateReportTemplateCommandHandler
+- Company email templates — Mobile profile
 - Board Task Management - User Story
-- CrmModule.cs
-- .GetInstalled
-- reportApiService.ts
-- AddressType
-- ApiKey
+- Error Logs Phase 02 - Next.js Client
+- Accounting Chart of Accounts and Hierarchy — Cross-Platform Implementation Contract
+- Workforce Planning Web Reference
+- Currency
+- Company Message Logs Phase 02 - Next.js Client
 - Employee
-- AuthProvider.test.tsx
+- Platform Settings Phase 02 - Next.js Client
 - check-contract-matrix.mjs
 - Kanban Label Management - User Story
-- track-change-remote-data-source.ts
+- hr/features/README.md
 - application-relation.ts
-- ErpSystem.Modules.Accounting.Application.Features.Finance.LedgerSetup.Contracts
-- .GetAllAsync
-- InventoryDbContext
-- ReportCategoryQueries.cs
-- SubCategory
-- FiscalYearRepository
-- ERPSYSTEM Business Planning
-- GetDistrictsQuery
+- Company Message Logs — review profile
+- Address Types API Implementation Profile
+- HrDbContextScopeTests
+- Error Logs — API implementation profile
+- Store
+- ReferenceDataDbContextAuditTests
+- Global administration access Phase 02 - Next.js Client
+- Company email templates — API profile
 - Board Task Comment Management - User Story
-- NotificationRuntimeContracts.cs
-- WorkforceBudgetCommands.cs
-- web-next/src/shared/components/forms/layouts/index.ts
+- Company UI localization — web
+- Authorized global UI texts Phase 02 - Next.js Client
+- AuditTrailPage.tsx
 - Entity Implementation Guide
-- MainClientBootstrap.tsx
-- FiscalYearUserSelection
-- PlatformAuthenticationTokenWireCompatibilityTests
-- Ledger Setup Currency — Customer Education Pack
-- 3. Findings
+- ERP_FRONTEND_MASTER_PLAN.md
+- Company user permission grants Phase 02 - Next.js Client
+- .AddPlatformInfrastructure
+- accounting/features/README.md
+- Address Types Phase 02 - Next.js Client
 - OfflineOperationsPolicyResponse
-- ReportTemplateFeatureTests
-- ReportingDbContext
-- ReportingReportCategoryCqrsTests
-- .Save
-- What You Must Do When Invoked
-- RowVersionRequest
-- LedgerSetupLifecycleTests
-- ErpSystem.BuildingBlocks.Context.csproj
-- PlatformAuthTranslationScope.tsx
-- IHrUnitOfWork
-- InitialHr
-- IFileUploadInspectionService
-- ledger-setup-definitions.ts
-- PlatformTenantAccessOwnershipTests
+- IReadOnlyDictionary
+- Company email templates — Web profile
+- .AddReportingInfrastructure
+- Tenant module entitlements API implementation profile
+- States API Implementation Profile
+- Address Types Feature Full Review
+- Districts Review Artifacts
+- استخدام قوالب البريد الإلكتروني
+- States Feature Full Review
+- دليل استخدام سجلات الأخطاء / Error Logs
+- List
+- ConfigureSwaggerOptions
+- Scope
+- TenantSubscriptionStatus
 - include
-- getColorPalette
-- ContactsOutboxHealthCheckTests
+- .CreateContext
+- Crystal Report Manager Feature Integration Guide
 - ErpSystem.Modules.Platform.Contracts.csproj
-- fiscal-year-remote-data-source.ts
-- AccessTokenClaimMaterialContracts.cs
-- PlatformNotificationStore
-- ReportsCategoriesController
-- TenantRoleAssignmentService
-- .GetDashboard
-- UnitOfWorkOwnershipArchitectureTests
-- ErpSystem.Modules.CRM.Application.Features.Appointments.Abstractions
-- auth/login/components/LoginForm.tsx
-- AccountingLedgerSetupJsonLocalizer
+- Fiscal Years Implementation Request
+- Fiscal Years Expo Implementation Profile
+- cards/index.ts
+- استخدام لغات الشركة وترجمة الواجهة
+- Accounting Manual Acceptance Scenario Template
+- Accounting Ledger Setup Phase 01 - Domain and API
+- HostDataProtectionSettings
+- Fiscal Years Phase 03 - Expo Mobile Client
+- apiResponse.ts
+- IEnumerable
 - Discovery question bank
-- PlatformNotificationOwnershipTests
-- .Validate
-- PlatformFileOwnershipTests.cs
+- Branch
+- Ledger Setup Currency Review Artifacts
+- Organizational Structure Phase 03 - Expo Mobile Client
 - Kanban Column Management - User Story
-- RecordingTenantMembershipSource
-- ICompanyScoped
-- AddressRequestValidator
-- AuthenticationTokenContracts.cs
+- ErpSystem.Modules.Platform.Infrastructure.Features.Security.Authentication.Tokens
+- Accounting Chart of Accounts and Hierarchy — Next.js Implementation Contract
+- Company UI localization — Evidence and Phase 00 preflight
+- Managed Crystal Template Validation Phase 01 - Domain and API
 - scripts
-- PlatformApiKeyCqrsTests.cs
-- AddressTypeManagementContracts.cs
+- Address Types Next.js Implementation Profile
+- Accounting Ledger Setup Phase 03 - Expo Mobile Client
 - ERPSYSTEM Legacy Migration
-- ITenantModuleEntitlementSource
-- Documentation System and Template Integration Review
-- IReportCategoryStores.cs
-- ICountryValidationQueries
-- CrystalReportInspectorClientTests
-- .GetAllAsync
-- ReportTemplate
-- DistrictManagementContracts.cs
+- Managed Crystal Template Validation Phase 03 - Expo Mobile Client
+- Ledger Setup Company Settings — Screen / Workflow Contract
+- localization/company-ui-text-scope.ts
+- Required audit dimensions
+- CrystalReportInspectorClient
+- Accounting Chart of Accounts and Hierarchy Phase 01 - Domain and API
+- ReportingDbContext
+- Accounting Chart of Accounts and Hierarchy Implementation Request
 - .GetFiscalYearsAsync
-- RecordingWriteStore
-- DistrictValidationQueries
-- StateValidationQueries
-- OutboxMessage
-- PlatformScopeIsolationTests
-- AddressTypeCompanyIsolationTests
-- S5 — New-product workspace generator design
-- ErpSystem.Modules.Platform.Presentation
-- LedgerSetupCoaHierarchyTests
-- .GetAllChangesLogs
-- useSidebar
-- .Handle
-- Program
-- Result
-- OutboxMessage
-- StaffingRequest
-- .ScanAsync
-- ReportCategory
-- .AddDefinitionRules
-- CrystalReportUploadRequestSizeFilter
-- .GetAllAsync
-- أوامر الـ Migrations — مرجع سريع
-- Education Module — Discovery
-- CountryFilterButton.tsx
-- HostConcernOwnershipArchitectureTests
+- JobOfferStatus
+- Accounting Chart of Accounts and Hierarchy Phase 07 - Customer Education and Closure
+- Ledger Setup Currency Phase 01 - Domain and API
+- Company Geographic Scope Next.js Implementation Profile
+- Comprehensive page-loading hardening — 2026-09-17
+- ErpSystem.Modules.Platform.Application.Features.Platform.AuditTrail
+- Countries API Implementation Profile
+- apiService
+- EmploymentApplicationDto
+- Managed Crystal Template Validation Expo Implementation Profile
+- coa-hierarchy-remote-data-source.ts
+- Accounting Ledger Setup Phase 00 - Implementation Preflight
+- Attendance Devices Phase 03 - Expo Mobile Client (deferred)
+- Organizational Structure Phase 01 - Domain and API
+- IntegrationEvent
+- Countries API — Canonical Frontend Contract
+- Accounting Chart of Accounts and Hierarchy Phase 06 - Verification and Acceptance
+- Company Geographic Scope Implementation Request
+- Organizational Structure Feature Full Review
+- Workforce Planning Phase 03 - Expo Mobile Client
+- Company email templates Phase 01 - Domain and API
+- Managed Crystal Report Manager Experience Phase 00 - Implementation Preflight
+- Company email templates Phase 03 - Expo Mobile Client
+- check-dependency-compatibility.mjs
+- Company email templates Phase 07 - Customer Education and Closure
 - scripts
 - mobile-react/scripts/check-architecture.mjs
-- Accounting Core GL — Slice 1 Ledger Setup Execution Decomposition
-- ModuleLauncherScreen.tsx
-- DateTimeOffset
-- exportToExcel.ts
-- ReportCategoryStores.cs
-- reference-data/README.md
-- ErpSystem.Api.csproj
-- HostDeploymentConfigurationValidator
-- IDistrictValidationQueries
-- .InvokeForwardedHeadersAsync
-- ErpSystem.Modules.Accounting.Contracts
-- WorkforceBudgetPersistenceTests
-- locales/i18n.ts
-- .Accept
-- PlatformTenantsTranslationScope.tsx
-- IFiscalYearAuditTrail
-- FiscalYearReadStore
-- .Handle
-- .Handle
-- rolesUsers.ts
-- addressTypeUtils.ts
-- ValidationQueriesTests
-- EntityChangeLog
+- Managed Crystal Template Validation Phase 04 - Domain Actions and Lifecycle
+- Company Geographic Scope Phase 01 - Domain and API
 - {{RECIPE_TITLE}}
-- CancellationToken
-- ErpSystem.BuildingBlocks.Context
-- services.ts
-- Dispatcher
-- ErpSystem.Modules.Accounting.Domain.Finance.LedgerSetup.Entities
-- CompanyGeographicScopeScreen
-- .ReplaceClaimsAsync
-- PlatformInfrastructureCompositionTests
-- AddressTypeValidationQueries
-- .Resolve
-- platform/README.md
+- exportToExcel.ts
+- Company UI localization Phase 01 - Domain and API
+- reference-data/features/README.md
+- ErpSystem.Api.csproj
+- {{RECIPE_TITLE}}
+- Company UI localization Phase 03 - Expo Mobile Client
+- Company UI localization Phase 07 - Customer Education and Closure
+- company-geographic-scope-grid.ts
+- Company Geographic Scope Phase 06 - Final Reconciliation
+- .AddReportingInfrastructure
+- Error Logs Phase 01 - Domain and API
+- Addresses Phase 06 - Final Reconciliation
+- Error Logs Phase 03 - Expo Mobile Client
+- Error Logs Phase 07 - Customer Education and Closure
+- Company Message Logs Phase 01 - Domain and API
+- Company Message Logs Phase 03 - Expo Mobile Client
+- Company Message Logs Phase 07 - Customer Education and Closure
+- Platform Settings Phase 01 - Domain and API
+- Platform Settings Phase 03 - Expo Mobile Client
+- Platform Settings Phase 07 - Customer Education and Closure
+- Company UI localization — review
+- DateTime
+- core/api/index.ts
+- CrystalReportManagerPage.tsx
+- Platform Settings Implementation Request
+- 17. Non-functional requirements
+- Central Notes Registry
+- {{RECIPE_TITLE}}
+- Global administration access Phase 01 - Domain and API
+- Global administration access Phase 03 - Expo Mobile Client
+- Global administration access Phase 07 - Customer Education and Closure
+- RecruitmentDashboardStats.tsx
 - ErpSystem.ArchitectureTests.csproj
-- AccountPageQuery
+- Authorized global UI texts Phase 01 - Domain and API
 - test-backend.mjs
 - architecture-governance.mjs
-- JwtAuthenticationTokenValidationParametersFactory
-- PlatformTenantAdministrationOwnershipTests
-- .RecordUpdateAsync
-- .CheckHealthAsync
-- GoogleIdentityVerifier
-- RecordingScheduler
-- ReportTemplatesControllerContractTests
-- ERP System Mobile
-- ErpSystem.Modules.Accounting.Application/Validation/ValidationMessageKeys.cs
-- GetAuthenticationSessionContextQuery
-- IUserInvitationAccessWriter
-- AuthenticationFlowArchitectureTests
-- PlatformModuleMetadataTests.cs
-- TenantUserFoundationTests
-- mobile-react/AGENTS.md
-- ERP System Frontend
-- .MapResponse
-- .ToProblem
-- .RecordUpdateAsync
-- crystalReports.ts
-- {{RECIPE_TITLE}}
-- {{RECIPE_TITLE}}
+- Authorized global UI texts Phase 03 - Expo Mobile Client
+- Authorized global UI texts Phase 07 - Customer Education and Closure
+- GetCurrenciesQuery
+- IConfiguration
+- JobOpeningStatus
+- JobRequisitionStatus
+- Tenant module entitlements Phase 03 - Expo Mobile Client
+- Company user permission grants Phase 01 - Domain and API
+- Company user permission grants Phase 03 - Expo Mobile Client
+- Company user permission grants Phase 07 - Customer Education and Closure
+- Address Types Phase 01 - Domain and API
+- EmptyActor
+- AccountingDbContextDesignFactory
+- HrPermissions
+- GoogleUserInfo
+- Countries Review Artifacts
+- Phase 01 - Domain and API
+- connectivityService
+- Phase 03 - Expo Mobile Client
+- Districts Implementation Request
+- .OnResourceExecutionAsync
+- translation-usage.test.ts
 - jest
-- .WriteAsync
-- ErpSystem.Modules.HR.Application.Features.Attendance.Devices.Contracts
-- CompanyAccessOption
-- ReportTemplateLifecycleCommands.cs
-- NotificationsController
-- providers.tsx
-- CancellationToken
-- IReferenceDataCompanyGeographySource
-- ServerReportDesignerClient.tsx
-- .AddReportingInfrastructure
-- Task
-- Managed Crystal Reporting Reliability — Master Build Plan
-- Task
-- <Feature Name> Implementation Request
+- JobPostingStatus
+- Error Logs — implementation request and Phase 00 preflight
+- Attendance Devices Feature Review
+- Districts Phase 03 - Expo Mobile Client
+- env.ts
 - {{RECIPE_TITLE}}
+- Managed Crystal Report Manager Experience — Full Review
+- Ledger Setup Currency Implementation Request
+- ServerReportDesignerClient.tsx
+- Managed Crystal Contract Registry Phase 01 - Domain and API
+- PayFrequency
+- Language
+- ApplicationTelemetry
+- workforce-plan-draft-store.test.ts
+- .IsUniqueConstraintViolation
+- app.config.ts
+- Domain Development Guide
+- translation-parity.test.ts
+- CompanyLocalizationChangeKind
+- Actor
+- TestActor
+- Accounting Chart of Accounts and Hierarchy Review Artifacts
+- 1. Executive outcome
+- 2. Scope
+- Addresses Phase 02 - Next.js Client
+- Ledger Setup Currency — Customer Education Pack
+- 3. Ownership and existing-system relationship
+- Permission and Authorization Model
+- TestAuthenticationHandler
+- Plan Quality Gate
+- API Notes Index
+- Web Notes Index
+- Accounting Chart of Accounts and Hierarchy Phase 00 - Implementation Preflight
+- overrides
+- 23. Implementation phases
+- <Feature Name> Implementation Request
+- 26. Handoff
+- 0. Plan metadata
 - Business Planning Standard
 - Plan Creation Protocol
+- Ledger Setup Currency Phase 06 - Verification and Acceptance
 - erp-fixture.ts
-- WorkforceBudgetHandlerTests
-- WorkforceBudgetQueries.cs
-- WorkforcePlanAggregateConcurrencySqlTests
-- District
-- .PrepareHostRuntimeAsync
-- ControllerBase
-- UnsavedChangesContext.tsx
-- AccountingModule
-- ReportTemplateDetailResponse
+- Attendance Devices Implementation Request
+- StaffingRequest
+- Attendance Devices Phase 04 - Domain Actions and Lifecycle
+- 11. API / CQRS / contracts
+- 20. Risks
+- Workforce Planning Phase 04 - Domain Actions and Lifecycle
+- Company email templates Phase 00 - Implementation Preflight
+- 27. Central note references
+- Fiscal Years Phase 01 - Domain and API
+- Company email templates Phase 04 - Domain Actions and Lifecycle
+- Company email templates Phase 06 - Verification and Acceptance
+- Fiscal Years Feature Full Review
+- Districts Phase 02 - Next.js Client
 - New-ErpModule.ps1
-- CQRS Pattern (API)
-- List
+- Company UI localization — Implementation request
+- Company UI localization Phase 00 - Implementation Preflight
+- Company UI localization Phase 04 - Domain Actions and Lifecycle
+- Company UI localization Phase 06 - Verification and Acceptance
+- Error Logs Phase 00 - Implementation Preflight
+- Error Logs Phase 04 - Domain Actions and Lifecycle
+- Error Logs Phase 06 - Verification and Acceptance
+- Company Message Logs Phase 00 - Implementation Preflight
+- Company Message Logs Phase 04 - Domain Actions and Lifecycle
 - Generate-Documentation.ps1
-- {{RECIPE_TITLE}}
-- {{RECIPE_TITLE}}
-- {{RECIPE_TITLE}}
-- ErpSystem.Modules.Reporting.Infrastructure.Migrations
+- Company Message Logs Phase 06 - Verification and Acceptance
+- Platform Settings Phase 00 - Implementation Preflight
+- Platform Settings Phase 04 - Domain Actions and Lifecycle
+- Platform Settings Phase 06 - Verification and Acceptance
+- Global administration access Phase 00 - Implementation Preflight
+- Global administration access Phase 04 - Domain Actions and Lifecycle
+- Global administration access Phase 06 - Verification and Acceptance
+- Authorized global UI texts Phase 00 - Implementation Preflight
+- Authorized global UI texts Phase 04 - Domain Actions and Lifecycle
+- Authorized global UI texts Phase 06 - Verification and Acceptance
+- Accounting Ledger Setup Phase 07 - Customer Education and Closure
+- Company user permission grants Phase 00 - Implementation Preflight
+- Company user permission grants Phase 04 - Domain Actions and Lifecycle
+- Company user permission grants Phase 06 - Verification and Acceptance
+- 5. Domain model
+- Managed Crystal Template Validation Phase 02 - Next.js Client
+- Attendance Devices Phase 01 - Domain and API
+- Accounting Chart of Accounts and Hierarchy Phase 03 - Expo Mobile Client
+- Tenant module entitlements Phase 01 - Domain and API
+- Address Types Phase 03 - Expo Mobile Client
 - <Business Capability> — Master Build Plan
-- CompanyGeographyFeature.cs
+- {{RECIPE_TITLE}}
 - global.d.ts
-- .Handle
-- ICategoryValidationQueries
-- .ConsumeAsync
-- auth-remote-data-source.ts
-- error-dialog/normalizeErrorDetails.ts
-- UpdateDeviceCredentialsRequest
-- .GetPage
-- .ExecuteAtomicallyAsync
-- CategoryConfiguration
-- RecordingDistrictScheduler
-- RecordingFileStorage
-- IReportValidationQueries
+- {{RECIPE_TITLE}}
+- Accounting Ledger Setup Phase 02 - Next.js Client
+- Fiscal Years Phase 02 - Next.js Client
+- Addresses Phase 01 - Domain and API
+- Managed Crystal Report Manager Experience Phase 01 - Domain and API
+- Accounting Chart of Accounts and Hierarchy Phase 02 - Next.js Client
+- Address Types Implementation Request
+- Ledger Setup Currency Phase 02 - Next.js Client
+- Phase 4 — Provider & Client Runtime Optimization ✅
+- Accounting Ledger Setup Phase 04 - Domain Actions and Lifecycle
+- Phase 1 — Business Safety 🔴
+- Address Types Phase 04 - Domain Actions and Lifecycle
+- Attendance Devices Phase 02 - Next.js Client
+- Organizational Structure Phase 02 - Next.js Client
+- Managed Crystal Contract Registry Phase 00 - Implementation Preflight
+- Accounting Ledger Setup Phase 06 - Verification and Acceptance
+- Attendance Devices Phase 00 - Discovery and Evidence
+- Workforce Planning Phase 02 - Next.js Client
+- Organizational Structure Phase 00 - Discovery and Evidence
+- Organizational Structure Phase 05 - Integration and Runtime
+- Managed Crystal Template Validation Phase 07 - Customer Education and Closure
+- Workforce Planning Phase 00 - Discovery and Evidence
+- Workforce Planning Phase 05 - Integration and Runtime
+- Fiscal Years Phase 04 - Domain Actions and Lifecycle
+- Company email templates — Evidence and verification
 - pulltorefreshjs.d.ts
-- ErpSystem.Modules.HR.Presentation/AssemblyReference.cs
-- ContactsDbContext
-- workforce-plan-draft-store.test.ts
-- ApiKeyCommands.cs
-- InterviewsController
-- .CreateToken
-- PlatformOfflineOperationsPolicyTests
-- PointOfSaleModule.cs
-- TenantMembershipSnapshot
-- PlatformCompanyGeographicScopeStore
-- .Handle
-- contacts/README.md
-- StubContracts
+- Company email templates — Implementation request
+- Company email templates Phase 05 - Integration and Runtime
+- Accounting Chart of Accounts and Hierarchy Phase 04 - Domain Actions and Lifecycle
+- Company Geographic Scope Phase 05 - Integration and Runtime
+- Company Geographic Scope Phase 02 - Next.js Client
+- Company UI localization Phase 05 - Integration and Runtime
+- Error Logs Phase 05 - Integration and Runtime
+- Company Message Logs Phase 05 - Integration and Runtime
+- Platform Settings Phase 05 - Integration and Runtime
+- Global administration access Phase 05 - Integration and Runtime
+- Authorized global UI texts Phase 05 - Integration and Runtime
+- Company Geographic Scope Phase 03 - Expo Mobile Client
+- microsoft_entityframeworkcore
+- Company user permission grants Phase 05 - Integration and Runtime
+- Ledger Setup Currency Phase 00 - Implementation Preflight
+- IManagedCrystalReportContractSource
 - Done (before the slice is accepted)
 - Q: when focus input keyboard cover input
 - Q: fix style for buton : login as admin
@@ -682,640 +750,362 @@
 - Q: مراجعة شاملة لهيكل المشروع وتجهيزه كـ Modular Monolith لإضافة موديول حسابات وأنشطة مستقبلية
 - Q: Accounting لا يفتح داخل Visual Studio وأريد كل المشاريع بنفس الطريقة
 - Q: المفروض HR يكون داخل Modules مثل Accounting واسم المشروع العام ERP System
-- modules/README.md
-- ErpSystem.Modules.Reporting.Application/DependencyInjection.cs
-- ErpSystem.Modules.Accounting.Domain/AssemblyReference.cs
-- ErpSystem.Modules.HR.Contracts/AssemblyReference.cs
-- ErpSystem.Modules.HR.Domain/AssemblyReference.cs
-- Accounting Manual Acceptance Scenario Template
-- Business Discovery Interview
-- <Child Feature> — Screen / Workflow Contract
+- Tenant module entitlements Phase 04 - Domain Actions and Lifecycle
+- ExcelViewer.styles.ts
+- Phase 04 - Domain Actions and Lifecycle
+- StateValueComparer
+- check-foundation-readiness.mjs
+- Phase 02 - Next.js Client
 - money.ts
-- TenantModuleEntitlementRequest
-- ManagedUser
-- UploadedFile
-- PlatformDbContextDesignFactory
-- GeographicalLifecycleLocks
-- RecordingDistrictReadStore
-- ErpSystem.Modules.Reporting.Application.Features.Analytics.Reports.Contracts
-- CrmAppointmentCqrsTests
-- JobRequisitionDto
-- NotificationScope
+- States Phase 02 - Next.js Client
+- User permission grants and company UI localization — Discovery
+- Accounting Ledger Setup Phase 05 - Integration and Runtime
+- PlatformPermissions
+- Managed Crystal Report Manager Experience Phase 02 - Next.js Client
+- User permission grants and company UI localization — Research
+- Workforce Planning Phase 06 - Final Reconciliation
+- Fiscal Years Phase 05 - Integration and Runtime
+- {{RECIPE_TITLE}}
+- Districts Phase 04 - Domain Actions and Lifecycle
+- Fiscal Years Phase 06 - Final Reconciliation
+- Tenant module entitlements Phase 05 - Integration and Runtime
+- دليل توثيق ERP العام
+- Accounting Chart of Accounts and Hierarchy Phase 05 - Integration and Runtime
 - ErpSystem.AttendanceConnector.csproj
+- Company user permission grants — Evidence and preflight
 - assetlinks.json/route.ts
+- Ledger Setup Currency Phase 03 - Expo Mobile Client
+- Historical Phase 11 baseline
 - AttendanceDevicesPage.tsx
-- .ReadAsync
-- ReferenceDataDbContextAuditTests
-- ModulePersistenceFoundationTests
-- RoleOption
-- OrganizationalResources
-- CrystalReportLocks
-- @emotion/react
-- expo-asset
-- expo-audio
-- expo-constants
-- expo-file-system
-- expo-image-manipulator
-- server.ts
-- ReportTemplateRevisionResponse
-- expo-router
-- eslint.config.js
-- .Trimmed
-- .GetAll
-- react-i18next
-- WorkforcePlanLocks
-- expo-system-ui
-- reporting/README.md
-- expo-web-browser
+- Districts Phase 01 - Domain and API
+- Addresses Review Artifacts
+- Organizational Structure Phase 06 - Final Reconciliation
+- Phase 06 - Final Reconciliation
+- Platform Settings / إعدادات النظام
+- Attendance Devices Phase 06 - Final Reconciliation
+- message-logs-evidence.md
+- system-administration-access-evidence.md
+- system-ui-localization-evidence.md
+- system-ui-localization-request.md
+- user-company-permissions-request.md
+- platform-error-logs/SPEC_SUMMARY.md
+- platform-message-logs/DECISIONS.md
+- platform-message-logs/EVIDENCE.md
+- platform-message-logs/RESEARCH.md
+- platform-message-logs/SPEC_SUMMARY.md
+- platform-user-permissions-and-company-localization/DECISIONS.md
+- super-admin-administration/DECISIONS.md
+- super-admin-administration/DISCOVERY.md
+- education/system-administration-access.md
+- education/system-ui-localization.md
+- super-admin-administration/EVIDENCE.md
+- super-admin-administration/RESEARCH.md
+- super-admin-administration/SPEC_SUMMARY.md
+- States Phase 03 - Expo Mobile Client
+- Tenant module entitlements Phase 00 - Discovery and Evidence
+- Company message logs — Master plan
+- Districts Phase 00 - Discovery and Evidence
+- Phase 05 - Integration and Runtime
+- Ledger Setup Currency Phase 04 - Domain Actions and Lifecycle
+- Managed Crystal Contract Registry Phase 02 - Next.js Client
+- InitialHr
 - useMediaViewer.ts
-- .RemoveLines
+- States Phase 04 - Domain Actions and Lifecycle
 - Fiscal Years & Periods — Screen / Workflow Contract
 - Accounting Core GL — Pre-Plan Specification
-- Managed Crystal Contract Registry — Screen / Workflow Contract
-- Managed Crystal Report Manager Experience — Screen / Workflow Contract
-- Managed Crystal Template Validation — Screen / Workflow Contract
-- IModule
-- dialog/index.ts
-- TenantManagementRequest
-- .UpdatePolicy
-- ErpSystem.Modules.Accounting.Application.Features.Finance.FiscalYears.Contracts
-- runtime-preferences.ts
-- system/AGENTS.md
-- @hookform/resolvers
-- i18next
-- EntitiesService.cs
-- PlatformApiKeyCqrsTests
-- expo-print
-- expo-splash-screen
-- .BuildAsync
-- OfflineOperationsPolicyRow
-- react-i18next
-- Candidate
-- ContactsHttpHost
-- react-native
+- {{RECIPE_TITLE}}
+- {{RECIPE_TITLE}}
+- {{RECIPE_TITLE}}
+- TestActor
+- ICompanyUiCatalog
+- InventoryDbContextDesignFactory
+- Web/API Readiness Review
+- Attendance Devices Phase 05 - Integration and Runtime
+- Accounting Ledger Setup — Expo Implementation Contract
+- app/layout.tsx
+- Company Geographic Scope Phase 04 - Domain Actions and Lifecycle
+- ErpSystem.BuildingBlocks.Application.Common.Paginations
+- Accounting historical delivery phases
+- Business Feature Template
 - State.ts
-- AllowAllPermissions
-- ChartContainer.tsx
-- js-cookie
-- .RenderAsync
+- ErpSystem.BuildingBlocks.Context.Authentication
+- Mobile API compatibility matrix
 - Example: a greenfield discovery session (condensed)
+- Email confirmation links
 - offline-session-lease.ts
-- auth/permissions-parity.test.ts
-- .ScopedCategories
-- UserExtensions.cs
-- InitialCrm
-- RecruitmentDashboardSummaryDto
-- ErpSystem.Modules.PointOfSale.Infrastructure
-- palettes.ts
+- حماية التغييرات غير المحفوظة في الويب
+- API documentation
+- Mobile (Expo) documentation
+- src/index.ts
 - WorkforcePlanPersistenceTests
-- @syncfusion/ej2-base
-- @syncfusion/ej2-react-pdfviewer
-- FiscalYearDomainTests
-- eslint.config.mjs
-- browserSecurity.ts
-- next-env.d.ts
-- ErpSystem.Modules.CRM.Application/Validation/ValidationMessageKeys.cs
-- HrPermissions
-- DatabaseSettings.cs
-- CrmDbContext
-- .Render
-- RecordingDispatcher
-- ErpSystem.Modules.Inventory.Application/Validation/ValidationMessageKeys.cs
-- ErpSystem.Modules.Platform.Application.Features.Security.Users.Contracts
-- ReportingApiHardeningTests.cs
-- ApiKeyResponse
-- AddressesController
-- InventoryPermissions
-- StateCqrsArchitectureTests
+- LocalizationController.cs
+- PointOfSaleDbContext
+- UserProfileMessages.cs
 - API Versioning (V1)
-- ReferenceDataPermissions
-- ConnectorModels.cs
-- InventoryModule
-- مقارنة الـ Backend: HR API مقابل School/Standard API — وقرار أساس الـ Template
-- ErpSystem.Modules.Reporting.Application/Validation/ValidationMessageKeys.cs
-- ReportingPermissions
+- ZkComDeviceDriver
+- AI Report View Designer Implementation Plan
 - Entity Change Log Service
-- @app/tokens
-- axios
-- MigrationOperationsTests
-- lucide-react
-- @mui/x-data-grid
-- next
-- web-next/src/platform/modules/index.ts
-- @opentelemetry/instrumentation
+- FeatureModuleLayout.tsx
 - business/README.md
-- Ledger Setup COA & Hierarchy — Screen / Workflow Contract
-- accounting-core-gl/PLAN.md
-- Ledger Setup Currency — Screen / Workflow Contract
-- Ledger Setup Dimensions — Screen / Workflow Contract
-- .GoogleAuth
-- @react-oauth/google
-- @syncfusion/ej2-dropdowns
-- Ledger Setup Integration & Verification — Screen / Workflow Contract
-- Ledger Setup Link Accounts — Screen / Workflow Contract
-- Ledger Setup Posting Profiles — Screen / Workflow Contract
-- @syncfusion/ej2-navigations
-- IIntegrationEventPublisher
-- @app/tokens
-- @vercel/otel
-- use-workforce-planning-use-cases.ts
-- zustand
-- NotificationPopover.tsx
-- Accounting Core GL — Discovery
-- AuthenticationFeatureSettings
+- AccountingCompanySettings
 - Managed Crystal Reporting Reliability — Pre-Plan Specification
 - FiscalYearsPage.tsx
-- StaticTranslationScope.tsx
+- ref_react
 - <Business Capability> — Pre-Plan Specification
-- WorkforceBudgetsPage.tsx
-- extractErrorMessage
-- ProblemDetails
-- TenantAdministrationContracts.cs
-- Action
+- StaffingRequestsPage.tsx
 - otelEnvironment.ts
-- TimeZoneInfo
-- cspReport.ts
-- notification-schemas.ts
-- WebApplication
-- FiscalYearChange
-- string
-- SubcategoriesController
-- IConfiguration
-- useViewLayout.tsx
-- TenantAdminsController
-- IServiceCollection
-- IServiceCollection
-- ViewsController
-- ErpSystem.ArchitectureTests
-- ModuleMigrationIntegrationTests
-- Required audit dimensions
-- Exception
-- SqlServerTestDatabase
-- Expression
-- ModelBuilder
-- CancellationToken
-- fiscal-period-preview.ts
-- DbSet
-- EntityEntry
-- DependencyInjection
-- InitialInventory
-- CostCenterTreeDiagram.tsx
-- AttendanceDevicesArchitectureTests
-- Tenant
-- Func
-- InitialPlatform
-- OfflineOperationsPolicyStoreRecord
-- .Add
-- InitialReferenceData
-- DistrictCqrsArchitectureTests
-- IReadOnlyCollection
-- ErpSystem.Modules.Accounting.Presentation
+- .CreateAsync
+- ApiKey
 - 2. Design
-- ViewRequests.cs
-- InventoryModule.cs
-- .ExportCsv
-- ModelBuilder
-- BootstrapErrorBoundary
-- OfflineOperationsContracts.cs
-- string
-- PlatformSystemRoleStartupTask
-- useSession
-- CountryCqrsArchitectureTests
-- Task
-- RecruitmentActorEmployeeSource
-- TimeProvider
-- IConfiguration
-- check-dependency-compatibility.mjs
-- Task
+- ref_node_fs
 - compilerOptions
-- .GetValidatedSettings
-- EntityChangeLogDialog.tsx
-- Fact
-- ErpSystem.Modules.ReferenceData.Presentation
-- Task
-- TimeProvider
-- PlatformDomainHardeningTests
-- PointOfSaleDbContextDesignFactory
-- ErpSystem.Modules.Reporting.Application.Features.Analytics.ReportTemplates.Contracts
-- AddressTypeCqrsArchitectureTests
-- ControllerArchitectureTests
-- ModulePersistenceStructureTests
-- Type
-- AuthenticationTokenOptions
-- generate-module.mjs
-- HashSet
-- InitialContacts
-- useUnsavedChanges
-- GetReportDataSourcesQuery.cs
-- .ScopedSubCategories
-- PermissionAuthorizationPolicyProvider
-- HRModule
-- CrystalReportsControllerContractTests
-- LayerPurityTests
-- LocalizationOwnershipArchitectureTests
-- PermissionCatalogArchitectureTests
-- PlatformContractsArchitectureTests
-- string
-- DefaultHttpContext
-- Plan Quality Gate
-- check-release-readiness.mjs
-- Currency
-- ViewStore
-- .ToProblem
+- AuditTrailSaveChangesInterceptor
+- ref_node_path
+- currency.ts
 - decode-uri-component/package.json
-- HttpClient
-- Stream
-- Notification
-- FileUploadForms.cs
-- UserInvitationPolicy.cs
-- ServiceProvider
-- .Create
-- ErpSystem.Modules.Platform.Application.Validation
-- ErpSystem.Modules.ReferenceData.Application.Validation
-- hr/README.md
-- ERP Plans — Central Planning Reference
-- ErpSystem.Api.Hosting
-- release-readiness.mjs
-- chartUtils.ts
-- HostDataProtectionSettings
-- build.mjs
-- ErpSystem.Modules.HR.Domain.Recruitment.Entities
-- PlatformModule
-- .NotFound
-- AuthControllerAuthorizationTests
-- NotificationRequests.cs
-- CrmModule
-- .Handle
-- mui.ts
-- ReferenceDataModule
-- ContactsModule
-- NotificationParameters
-- graphify reference: extra exports and benchmark
-- ICompanyGeographySource
-- {{RECIPE_TITLE}}
-- mobile-react/package.json
-- ErpSystem.BuildingBlocks.Application.Abstractions.Messaging
+- microsoft_extensions_dependencyinjection
 - HR Management System
-- IUserInvitationTokenProvider
-- EchoLocalizer
-- FiscalYearContracts.cs
-- LocalizationProvider.tsx
-- CorrelationContextExtensions
-- ReportingAuthorizationTests
 - S3 + S4 — Unified theme change set
-- plans/README.md
-- {{RECIPE_TITLE}}
-- {{RECIPE_TITLE}}
 - index.js
-- PlatformSecurityAuditOwnershipTests.cs
-- ExcelViewer.styles.ts
-- ICacheService
+- .PlatformApplication_OwnsCanonicalRecordingPolicyAndSaveBoundary
 - presentation/components/CountriesChartView.tsx
-- ContactsApplicationPipelineTests
-- PointOfSaleModule
-- ReportValidationQueries
-- workforce-planning/layout.tsx
-- 17. Non-functional requirements
-- Central Notes Registry
-- check-native-config.mjs
-- DisplayDebugger.tsx
-- FileErrors
-- PermissionContracts.cs
-- ErpSystem.BuildingBlocks.Application.Common.Paginations
-- GeographicParentReassignmentHandlerTests
-- graphify reference: query, path, explain
-- Common/ValidationMessageKeys.cs
-- PointOfSaleModuleTests.cs
-- CrystalReportDetailResponse
-- sync-apps.mjs
-- ErpSystem.Modules.CRM.Contracts/AssemblyReference.cs
-- ErpSystem.Modules.CRM.Domain/AssemblyReference.cs
-- ErpSystem.Modules.Inventory.Contracts/AssemblyReference.cs
-- ErpSystem.Modules.Inventory.Domain/AssemblyReference.cs
-- ErpSystem.Modules.Platform.Contracts/AssemblyReference.cs
-- ErpSystem.Modules.Platform.Domain/AssemblyReference.cs
-- ErpSystem.Modules.PointOfSale.Contracts/AssemblyReference.cs
-- ErpSystem.Modules.PointOfSale.Domain/AssemblyReference.cs
-- ErpSystem.Modules.ReferenceData.Contracts/AssemblyReference.cs
-- ErpSystem.Modules.ReferenceData.Domain/AssemblyReference.cs
-- ErpSystem.Modules.Reporting.Contracts/AssemblyReference.cs
-- ErpSystem.Modules.Reporting.Domain/AssemblyReference.cs
-- graphify reference: add a URL and watch a folder
-- graphify reference: commit hook and native CLAUDE.md integration
-- graphify reference: incremental update and cluster-only
-- .CreateDataProtectionCertificate
-- notes/README.md
-- SingleUseEnumerable
-- run-local-native.mjs
-- tokens-augmentation.d.ts
+- HasPermissionAttribute
 - package.json
-- graphify reference: GitHub clone and cross-repo merge
-- graphify reference: transcribe video and audio
-- check-contrast.mjs
-- ErpSystem.Modules.ReferenceData.Application/DependencyInjection.cs
-- components/BackButton.tsx
 - CONFIGURATION.md
-- extraction-spec.md
-- file
-- expo-background-task
-- expo-image-picker
-- expo-observe
-- expo-symbols
-- expo-task-manager
-- @expo/vector-icons
-- framer-motion
-- @app/tokens
-- xlsx
-- check-android-export.mjs
-- browser-security.spec.ts
-- react-hook-form
-- xlsx
-- playwright.config.ts
 - src/modules/accounting/README.md
 - states/utils/fakeData.ts
 - utils/constants.ts
+- Get-PlanningExecutionStateErrors
 - contrast.ts
-- native.ts
 - sw.js
-- date-fns
-- manifest.ts
-- decode-uri-component
-- docx-preview
-- expo-document-picker
-- expo-image
-- expo-linear-gradient
-- expo-video
-- @fontsource/roboto
-- @microsoft/signalr
-- react-dom
-- @fullcalendar/react
-- react-native-gesture-handler
-- react-native-safe-area-context
-- @tanstack/react-query
-- @mui/material
-- react-native-toast-message
-- react-native-web
-- @opentelemetry/sdk-logs
-- react-native-worklets
-- @mui/icons-material
-- @syncfusion/ej2-splitbuttons
-- @mui/system
-- stylis
-- @syncfusion/ej2-inputs
-- @syncfusion/ej2-popups
-- @tanstack/react-query-devtools
-- temporal-polyfill
-- zod
 - ErpSystem.Modules.Reporting.Application.Features.Analytics.CrystalReports.Contracts
-- TenantMemberAuthorizationHandler
-- PrivateCrystalReportFileStorage
-- StateCommands.cs
-- PlatformHangfireAuthorizationFilter
-- .TryHandleAsync
-- PlatformFileUpload
-- CrystalReportRendererClientTests
-- .ResolveGroup
-- PlatformBootstrapUsersStartupTask
-- PlatformApplicationUser
-- ModuleGeneratorTests
+- ICrystalReportStore
+- CrystalReportRendererClient
 - IGeneralHubClient
-- FilesController
-- .Handle
-- Country
-- BackgroundJobDashboardResponse
-- Migration
-- ExportPdfFileService
-- HostInfrastructureServiceCollectionExtensions
-- RepositoryConventionTests
-- DistrictCommands.cs
-- InterviewDto
-- PlatformIdentityServiceCollectionExtensions
-- .Failure
-- AddressTypeChart.types.ts
-- useRecruitment.ts
+- RequestLoggingBehavior
+- .QueriesContractsAndHandlers_AreFeatureOwned
+- .AddPlatformApplication
 - ERP platform templates
-- @emotion/styled
-- lodash
-- TenantManagementScreen.tsx
-- IStringLocalizer
-- HostJsonStringLocalizer
 
 ## God Nodes (most connected - your core abstractions)
-1. `useAppTheme()` - 349 edges
-2. `useLocalization()` - 187 edges
-3. `Result` - 153 edges
-4. `AppText()` - 151 edges
-5. `PageResponse` - 130 edges
-6. `ROUTES` - 102 edges
-7. `ErpSystem.BuildingBlocks.Application.Common.Paginations` - 101 edges
-8. `AppIcon()` - 92 edges
-9. `IQuery` - 91 edges
-10. `IQueryHandler` - 91 edges
+1. `@mui/material` - 480 edges
+2. `useAppTheme()` - 366 edges
+3. `AppText()` - 344 edges
+4. `@mui/icons-material` - 318 edges
+5. `react-native` - 250 edges
+6. `vitest` - 218 edges
+7. `useLocalization()` - 193 edges
+8. `ICurrentActor` - 190 edges
+9. `AppIcon()` - 189 edges
+10. `PageResponse` - 166 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `loadCatalogs()` --indirect_call--> `file()`  [INFERRED]
-  mobile-react/scripts/check-i18n.mjs → web-next/src/platform/file-manager/components/file-upload/constants/fileUpload.type.test.ts
-- `operationsFor()` --indirect_call--> `file()`  [INFERRED]
-  mobile-react/scripts/sync-phase00-matrix.mjs → web-next/src/platform/file-manager/components/file-upload/constants/fileUpload.type.test.ts
-- `fetchFreshAccountDetail()` --references--> `queryClient`  [EXTRACTED]
-  web-next/src/modules/accounting/ledger-setup/coa-hierarchy/hooks/useCoaHierarchyQueries.ts → mobile-react/src/core/query/query-client.ts
-- `LauncherTile()` --calls--> `resolveModuleAccent()`  [EXTRACTED]
-  web-next/src/shared/components/layout/module-launcher/ModuleLauncher.tsx → web-next/src/shared/components/layout/navigation/moduleAccents.ts
-- `TestActor` --implements--> `ICurrentActor`  [EXTRACTED]
-  api/Modules/Accounting/ErpSystem.Modules.Accounting.Tests/AccountingReportingSourceTests.cs → api/BuildingBlocks/ErpSystem.BuildingBlocks.Context/Authentication/ICurrentActor.cs
+- `4.3 Result and error rules` --references--> `ErrorType`  [INFERRED]
+  documentation/guides/shared/CORE_FEATURE_CQRS_WEB_GUIDE.md → api/BuildingBlocks/ErpSystem.BuildingBlocks.Application/Common/Errors/ErrorType.cs
+- `9. Realtime and errors` --references--> `IRealtimeChangeDispatcher`  [INFERRED]
+  documentation/modules/hr/features/workforce-planning/workforce-planning-api.md → api/BuildingBlocks/ErpSystem.BuildingBlocks.Application/Common/Realtime/IRealtimeChangeDispatcher.cs
+- `1. Scope and ownership` --references--> `ICurrentActor`  [INFERRED]
+  documentation/modules/accounting/features/fiscal-years/fiscal-years-api.md → api/BuildingBlocks/ErpSystem.BuildingBlocks.Context/Authentication/ICurrentActor.cs
+- `3. Scope, authorization, and permissions` --references--> `ICurrentActor`  [INFERRED]
+  documentation/modules/accounting/features/ledger-setup-coa-hierarchy/ledger-setup-coa-hierarchy-api.md → api/BuildingBlocks/ErpSystem.BuildingBlocks.Context/Authentication/ICurrentActor.cs
+- `Approved product decisions translated for execution` --references--> `ICurrentActor`  [INFERRED]
+  documentation/modules/accounting/features/ledger-setup-currency/ledger-setup-currency-request.md → api/BuildingBlocks/ErpSystem.BuildingBlocks.Context/Authentication/ICurrentActor.cs
 
 ## Import Cycles
+- 4-file cycle: `mobile-react/src/platform/auth/index.ts -> mobile-react/src/platform/auth/presentation/rbac/RouteGuard.tsx -> mobile-react/src/platform/modules/index.ts -> mobile-react/src/platform/modules/presentation/queries/use-modules.ts -> mobile-react/src/platform/auth/index.ts`
 - 5-file cycle: `mobile-react/src/platform/auth/index.ts -> mobile-react/src/platform/auth/presentation/rbac/RouteGuard.tsx -> mobile-react/src/platform/modules/index.ts -> mobile-react/src/platform/modules/presentation/queries/use-modules.ts -> mobile-react/src/platform/modules/composition/use-module-use-cases.ts -> mobile-react/src/platform/auth/index.ts`
+- 5-file cycle: `mobile-react/src/platform/auth/index.ts -> mobile-react/src/platform/auth/presentation/rbac/RouteGuard.tsx -> mobile-react/src/platform/modules/index.ts -> mobile-react/src/platform/modules/presentation/screens/ModuleLauncherScreen.tsx -> mobile-react/src/platform/modules/presentation/queries/use-modules.ts -> mobile-react/src/platform/auth/index.ts`
+- 5-file cycle: `mobile-react/src/platform/auth/index.ts -> mobile-react/src/platform/auth/presentation/rbac/RouteGuard.tsx -> mobile-react/src/platform/modules/index.ts -> mobile-react/src/platform/modules/presentation/screens/SubmoduleEntryScreen.tsx -> mobile-react/src/platform/modules/presentation/queries/use-modules.ts -> mobile-react/src/platform/auth/index.ts`
 
-## Communities (1117 total, 166 thin omitted)
+## Communities (886 total, 66 thin omitted)
 
-### Community 0 - "Task"
-Cohesion: 0.06
-Nodes (45): AddressChange, Address, AddressErrors, AddressLifecycleSnapshot, AddressRequest, AddressResponse, CancellationToken, Error (+37 more)
+### Community 0 - "FileUploadSecurityTests"
+Cohesion: 0.07
+Nodes (26): FileUploadSecurityException, Code, FailureKind, FileUploadSecurityFailureKind, InvalidContent, MalwareDetected, ScannerUnavailable, ClamAvTcpClient (+18 more)
 
 ### Community 1 - "mobile-react/src/platform/auth/index.ts"
+Cohesion: 0.03
+Nodes (133): 7. Routes, modules, localization, and styles, 2. Route, Navigation and Authorization, Mobile source map, 5.8 الإعدادات, RegisterRoute(), CompanyLocalizationsRoute(), UserManagementRoute(), viewCompanyLocalizationsPermission (+125 more)
+
+### Community 2 - "ref_i18next"
 Cohesion: 0.02
-Nodes (143): UserManagementRoute(), viewOfflineOperationsPermission, viewUsersPermission, AdministrationLayout(), viewOfflineOperationsPermission, viewRolesPermission, viewUsersPermission, ModuleRoute() (+135 more)
+Nodes (207): createWorkforceBudgetSchema(), t, BASE_HEADERS, getOrganizationalImportHeaders(), getOrganizationalImportPolicy(), getOrganizationalImportTemplateFile(), getOrganizationalParentResource(), lookupByCode() (+199 more)
 
-### Community 2 - "excelService.ts"
-Cohesion: 0.10
-Nodes (36): BASE_HEADERS, getOrganizationalImportHeaders(), getOrganizationalImportPolicy(), getOrganizationalImportTemplateFile(), getOrganizationalParentResource(), lookupByCode(), ORGANIZATIONAL_IMPORT_MAX_BYTES, ORGANIZATIONAL_IMPORT_MAX_ROWS (+28 more)
-
-### Community 3 - "OrganizationalStructureManagementScreen.tsx"
+### Community 3 - "DistrictImportView.tsx"
 Cohesion: 0.03
-Nodes (121): createOrganizationalStructureUseCases(), OrganizationalStructureUseCases, SaveOrganizationalItemInput, organizationalStructureUseCases, useOrganizationalStructureUseCases(), organizationalStructureEndpoints, OrganizationalStructureRemoteDataSource, toOrganizationalStructureQuery() (+113 more)
+Nodes (125): BASE_HEADERS, EXTRA_HEADERS, getOrganizationalImportHeaders(), getOrganizationalImportPolicy(), getOrganizationalImportTemplateFile(), getOrganizationalParentResource(), lookup(), normalize() (+117 more)
 
-### Community 4 - "ErpSystem.Modules.ReferenceData.Application.Abstractions.Persistence"
+### Community 4 - "ErpSystem.BuildingBlocks.Application.Abstractions.Messaging"
 Cohesion: 0.03
-Nodes (68): IAddressTypeChangeScheduler, AddressTypeChange, AddressTypeResponse, AddressTypesCountResponse, DistrictResponse, DistrictsCountResponse, SimpleStateResponse, StatesCountResponse (+60 more)
+Nodes (75): ICommand, ICommandHandler, AddressTypeResponse, AddressTypesCountResponse, DistrictResponse, DistrictsCountResponse, StateResponse, StatesCountResponse (+67 more)
 
-### Community 5 - "CandidateDto"
-Cohesion: 0.11
-Nodes (24): CancellationToken, Task, ICandidateReadStore, ICandidateRepository, CancellationToken, Result, Task, CreateCandidateCommand (+16 more)
+### Community 5 - "PlatformDbContext"
+Cohesion: 0.03
+Nodes (75): ErrorLogCriteria, ErrorLogExport, ErrorLogPage, ErrorLogRequestHandler, Conflict, Forbidden, HasSystemScope, Invalid (+67 more)
 
-### Community 6 - "OrganizationalStructurePage.tsx"
-Cohesion: 0.06
-Nodes (32): metadata, metadata, metadata, metadata, metadata, metadata, metadata, metadata (+24 more)
+### Community 6 - "useAuth"
+Cohesion: 0.02
+Nodes (151): 5.9 الملف الشخصي, ProtectedRouteLayout(), useConnectivity(), listeners, subscribeToOfflineSyncRequests(), SyncRequestListener, AppColors, conflict() (+143 more)
 
-### Community 7 - ".Success"
-Cohesion: 0.05
-Nodes (80): Result, CancellationToken, IReadOnlyCollection, Task, TimeProvider, LedgerSetupLifecycle, CancellationToken, Result (+72 more)
+### Community 7 - "vitest"
+Cohesion: 0.01
+Nodes (286): Tenant create opens in a modal 2026-10-11, vitest, metadata, Page(), RolePermissionsRouteContent(), RolePermissionsRouteProps, Page(), Props (+278 more)
 
-### Community 8 - "navigation/BackButton.tsx"
+### Community 8 - "companyUiResources.ts"
 Cohesion: 0.12
-Nodes (14): HeaderBar(), HeaderBarProps, ImageToolbar(), ImageToolbarProps, TextToolbarProps, TopBar(), TopBarProps, TopControlsOverlay (+6 more)
+Nodes (33): companyUiCatalogVersion, resolveAvailableCompanyUiSource(), useCompanyLocalization(), getCompanyRuntime(), getCompanySettings(), getCompanyTexts(), resetCompanyText(), setCompanyDefault() (+25 more)
 
-### Community 9 - "workforce-budget-remote-data-source.ts"
-Cohesion: 0.08
-Nodes (38): createWorkforceBudgetUseCases(), WorkforceBudgetUseCases, detail, workforceBudgetEndpoints, toPositionEnvelopePageQuery(), toWorkforceBudgetPageQuery(), budgetLine, budgetSourcePlanPageSchema (+30 more)
-
-### Community 10 - "RecruitmentHarness"
-Cohesion: 0.09
-Nodes (31): ApplicationStatusFilter, CandidateDto, Employee, EmploymentApplicationDto, Fact, ICurrentActor, InterviewDto, InterviewScorecardTemplateDto (+23 more)
-
-### Community 11 - "reporting/public/index.ts"
-Cohesion: 0.07
-Nodes (30): AuthorizationClaims, AuthorizationRequirement, AuthorizationState, getAuthorizationState(), hasAnyRole(), isAuthorized(), PermissionMatchMode, session (+22 more)
-
-### Community 12 - "AddressType.ts"
-Cohesion: 0.03
-Nodes (101): metadata, AddressTypesCardView(), pageSizeOptions, AddressTypeImportView, AddressTypeReportPage, AddressTypesChartView, AddressTypesMultiView(), AddressTypesMultiViewProps (+93 more)
-
-### Community 13 - "RecruitmentContracts.cs"
-Cohesion: 0.03
-Nodes (57): ITenantScoped, TenantAuditableEntity, DateTimeOffset, IReadOnlyList, ApplicationStatusHistoryDto, EvaluationCriterionDto, HireCandidateMutation, InterviewEvaluationDto (+49 more)
-
-### Community 14 - "PersonalInfo.tsx"
-Cohesion: 0.05
-Nodes (47): metadata, BooleanSetter, describeProfileError(), getErrorStatus(), useProfileImage(), usePrefetchUserProfile(), USER_PROFILE_KEYS, UserInfoMutationOptions (+39 more)
-
-### Community 15 - "ErpSystem.BuildingBlocks.Context.Authentication"
-Cohesion: 0.02
-Nodes (95): ErrorType, string, ApiRoutes, Assembly, AssemblyReference, IServiceCollection, DependencyInjection, Error (+87 more)
-
-### Community 16 - "IQuery"
+### Community 9 - "TenantManagementScreen.tsx"
 Cohesion: 0.06
-Nodes (76): AccountCodeProposalResponse, AccountDimensionPolicyResponse, AccountLookupResponse, AccountTreeNodeResponse, ResolveAccountPreviewResponse, CancellationToken, IReadOnlyList, Result (+68 more)
+Nodes (50): 5.10 مركز الإشعارات, 5.11 مشغّل الـ Modules, 5.12 الاستيراد من Excel, 5.13 سجل التغييرات, 5.14 إدارة الـ Platform والـ Tenant, 5.15 أدوات الإدارة (optional), 5.17 التقويم والمواعيد (module), 5.1 Onboarding (+42 more)
+
+### Community 10 - "Result"
+Cohesion: 0.03
+Nodes (86): Error, Result, Result, Value, Error, IsFailure, IsSuccess, HrCurrencySnapshotErrors (+78 more)
+
+### Community 11 - "cspReport.ts"
+Cohesion: 0.24
+Nodes (12): CSP_REPORT_CONTENT_TYPES, POST(), asRecord(), CspViolation, normalizeBlockedSource(), normalizeCspViolationReports(), normalizeDirective(), normalizeDisposition() (+4 more)
+
+### Community 12 - "addressTypeUtils.ts"
+Cohesion: 0.48
+Nodes (6): addressTypeUtils, formatAddressTypesForSelect(), getActiveAddressTypes(), getAddressTypeDisplayName(), getAddressTypesCount(), searchAddressTypes()
+
+### Community 13 - "DateTimeOffset"
+Cohesion: 0.02
+Nodes (90): OutboxMessage, Attempts, CausationId, ContentType, CorrelationId, EventId, EventName, EventVersion (+82 more)
+
+### Community 14 - "WorkforceBudgetErrors"
+Cohesion: 0.04
+Nodes (75): BudgetPlanLinePeriodSnapshot, BudgetPlanLineSnapshot, BudgetPlanSnapshot, IWorkforceBudgetReadStore, IWorkforceBudgetWriteStore, ApproveWorkforceBudgetCommand, ApproveWorkforceBudgetCommandHandler, BudgetScope (+67 more)
+
+### Community 15 - "mediatr"
+Cohesion: 0.02
+Nodes (102): AuthorizationPolicyNames, ApiRoutes, AssemblyReference, AssemblyReference, AssemblyReference, AssemblyReference, AssemblyReference, AssemblyReference (+94 more)
+
+### Community 16 - ".SaveChangesAsync"
+Cohesion: 0.01
+Nodes (286): ILedgerSetupLocalizer, IAccountHierarchyLevelStore, IAccountingSettingsReadStore, IAccountingSettingsWriteStore, IAccountMappingStore, IAccountReadStore, IAccountWriteStore, IBookReadStore (+278 more)
 
 ### Community 17 - "HrDbContext"
-Cohesion: 0.04
-Nodes (54): AttendanceAgent, AttendanceDevice, AuditableEntity, Branch, CancellationToken, Candidate, CostCenter, DbSet (+46 more)
+Cohesion: 0.03
+Nodes (65): HrDbContext, ApplicationStatusHistories, AttendanceAgents, AttendanceDeviceCredentials, AttendanceDevices, Branches, Candidates, CostCenters (+57 more)
 
-### Community 18 - "UserManagementScreen.tsx"
-Cohesion: 0.07
-Nodes (55): SaveManagedUserInput, SaveRoleInput, useAdministrationUseCases(), RoleClaim, createInvitationPermissions, getErrorMessage(), InvitationManagementScreen(), resendInvitationPermissions (+47 more)
+### Community 18 - "WorkforcePlansPage.tsx"
+Cohesion: 0.08
+Nodes (46): Page(), Props, Props, statusKeys, WorkforcePlansCardView(), LookupOption, Props, statusKeys (+38 more)
 
-### Community 19 - "useCountryGridLogic.ts"
-Cohesion: 0.04
-Nodes (80): metadata, CountriesCardViewProps, CountryActionPermissions, CountryCardProps, CountryCardViewHeaderProps, CountryCardChips(), CountryCardChipsProps, CountryCardFooterProps (+72 more)
+### Community 19 - ".Handle"
+Cohesion: 0.06
+Nodes (40): IUserInvitationAccessWriter, IUserInvitationCompanyAccessQuery, IUserInvitationEmailSender, IUserInvitationIdentityGateway, IUserInvitationRepository, IUserInvitationRoleGateway, IUserInvitationTenantEligibilityQuery, IUserInvitationTokenProvider (+32 more)
 
 ### Community 20 - "Kanban Card Assignee Management - User Story"
 Cohesion: 0.04
 Nodes (53): 400 Bad Request, 404 Not Found, 409 Conflict, Accessibility Considerations, API Endpoints Summary, Assigning a Task, Audit Trail, Best Practices (+45 more)
 
-### Community 21 - "AppTextField"
-Cohesion: 0.05
-Nodes (76): addDateKey(), AppointmentDraft, AppointmentFormModal(), createInitialDraft(), switchAllDayMode(), toDateKey(), toLocalDateKey(), toLocalDateTime() (+68 more)
+### Community 21 - "MyForm"
+Cohesion: 0.02
+Nodes (292): Server-managed list contract, Shared native UI and style ownership, 6. Lists, forms, and optional views, Chart, Report, Import and Tree, Forms and mutations, Server-managed lists, Keep App-header context compact and unified, Reuse native UI and form contracts (+284 more)
 
-### Community 22 - "workforcePlanningNavigation.tsx"
-Cohesion: 0.05
-Nodes (51): capabilities, eas, failures, read(), repositoryRoot, requireFile(), root, scheduler (+43 more)
+### Community 22 - "FiscalYear"
+Cohesion: 0.08
+Nodes (21): CreateFiscalYearRequest, FiscalPeriodResponse, FiscalYearMutation, UpdateFiscalYearRequest, FiscalYear, Code, EndDate, Id (+13 more)
 
-### Community 23 - "src/index.ts"
-Cohesion: 0.25
-Nodes (15): AppTheme, ModuleColors, breakpoints, elevation, fontFamily, fontWeight, iconSize, layout (+7 more)
+### Community 23 - "NotificationPopover.tsx"
+Cohesion: 0.08
+Nodes (45): useSignalRConnection(), notifications, DismissAllNotificationsDialog(), NotificationBulkActions(), NotificationBulkActionsProps, NotificationPopover(), NotificationPopoverProps, NotificationPopoverHeader() (+37 more)
 
-### Community 24 - "CompanyGeographicScopePage.tsx"
-Cohesion: 0.12
-Nodes (24): metadata, CompanyGeographicScopeCardView(), CompanyGeographicScopeCardViewProps, CompanyGeographicScopeDataGrid(), CompanyGeographicScopeDataGridProps, clearUnselectedOperatingCountry(), ensureCountrySelected(), filterCompanyCountries() (+16 more)
+### Community 24 - "useRecruitment.ts"
+Cohesion: 0.07
+Nodes (26): recruitmentKeys, useAcceptJobOffer(), useApprovedStaffingRequestOptions(), useCandidates(), useCreateCandidate(), useCreateJobOffer(), useCreateJobOpening(), useCreateJobRequisition() (+18 more)
 
-### Community 25 - "cards/index.ts"
-Cohesion: 0.24
-Nodes (8): AnimatedStatCardProps, StatCardColor, AppChipProps, ColorKey, MetricCardProps, MetricSize, MetricSizeConfig, MetricVariant
+### Community 25 - "4. مراحل التنفيذ"
+Cohesion: 0.08
+Nodes (26): 4. مراحل التنفيذ, Gate, Gate, Gate, Gate, Gate, Gate, Gate (+18 more)
 
-### Community 26 - "mobile-react/src/platform/modules/index.ts"
-Cohesion: 0.13
-Nodes (28): AppRoute, accountingModuleDefinition, crmModuleDefinition, hrModuleDefinition, platformModuleDefinition, referenceDataModuleDefinition, useModuleUseCases(), moduleKeys (+20 more)
+### Community 26 - "ErpSystem.Modules.Reporting.Application.Features.Analytics.ReportTemplates.Contracts"
+Cohesion: 0.08
+Nodes (27): LifecycleConcurrency, ReportTemplateCommandRules, ReportDataSourceDescriptorResponse, GetReportDataSourcesQuery, GetReportDataSourcesQueryHandler, GetReportDataSourcesQueryValidator, GetReportTemplateRevisionQueryValidator, GetReportTemplateRevisionsQueryValidator (+19 more)
 
-### Community 27 - "ICommandHandler"
-Cohesion: 0.09
-Nodes (62): Result, ArchiveAccountHierarchyLevelCommand, ArchiveAccountHierarchyLevelCommandHandler, ArchiveAccountHierarchyLevelCommandValidator, ArchiveBookCommand, ArchiveBookCommandHandler, ArchiveBookCommandValidator, ArchiveDimensionDefinitionCommand (+54 more)
+### Community 27 - "AddressTypeErrors"
+Cohesion: 0.07
+Nodes (36): IAddressTypeReadStore, AddressTypeAddressListItem, AddressTypeDetailResponse, AddressTypeListItemResponse, AddressTypeMutation, AddressTypeWithAddressesResponse, CreateAddressTypeRequest, CreateAddressTypesRequest (+28 more)
 
-### Community 28 - "useImportDistricts.ts"
-Cohesion: 0.09
-Nodes (34): DistrictDataTable(), DistrictDataTableProps, createStateLookupIndex(), DISTRICT_IMPORT_HEADERS, DISTRICT_IMPORT_MAX_BYTES, DISTRICT_IMPORT_MAX_ROWS, DISTRICT_IMPORT_POLICY, DISTRICT_IMPORT_TEMPLATE_FILE (+26 more)
+### Community 28 - "IReadOnlySet"
+Cohesion: 0.06
+Nodes (33): CompanyAccessOption, CompanyAccessSnapshot, ICompanyAccessService, ICompanyAccessSource, CompanyAccessService, IUserCompanyPermissionsStore, ReplaceUserCompanyPermissionsRequest, UserCompanyPermissionItem (+25 more)
 
 ### Community 29 - "data-grid/index.ts"
+Cohesion: 0.05
+Nodes (60): قاعدة Grid الإلزامية, ClientDataGrid(), DynamicDataGrid, DynamicDataGridComponent, DataGridShellContext, DataGridShellContextValue, useDataGridShell(), getGridSortModelKey() (+52 more)
+
+### Community 30 - "StateErrors"
 Cohesion: 0.06
-Nodes (51): ClientDataGrid(), DynamicDataGrid, DynamicDataGridComponent, DataGridShellContext, DataGridShellContextValue, useDataGridShell(), getGridSortModelKey(), dataGridStyles (+43 more)
+Nodes (35): DependencyInjection, CountryErrors, CountryExists, CountryInUseByAddress, CountryInUseByCompany, CountryInUseByState, CountryNotFound, NoCountriesProvided (+27 more)
 
-### Community 30 - "JobRequisitionDto"
-Cohesion: 0.27
-Nodes (17): CancellationToken, IJobRequisitionReadStore, JobRequisition, JobRequisitionDto, JobRequisitionMutation, Result, Task, ApproveJobRequisitionCommand (+9 more)
-
-### Community 31 - "RealtimeEntityBridge.tsx"
-Cohesion: 0.09
-Nodes (28): BackendModuleSource, backendModuleSources, frontendDefinitions, fiscalYearKeys, accountingModuleDefinition, accountingRealtimeResources, registerAccountingRealtimeResources(), crmModuleDefinition (+20 more)
+### Community 31 - "SecurityAuditQueryRequest"
+Cohesion: 0.05
+Nodes (44): SecurityAuditQueryRequest, Action, ActorUserId, CompanyId, FromUtc, Outcome, TargetType, TenantId (+36 more)
 
 ### Community 32 - "offline/index.ts"
-Cohesion: 0.06
-Nodes (45): OFFLINE_MAINTENANCE_TASK, registerOfflineMaintenanceTask(), ConnectivityListener, ConnectivityService, ConnectivitySnapshot, initialSnapshot, sameSnapshot(), ConnectivityContext (+37 more)
+Cohesion: 0.07
+Nodes (47): expo-sqlite@~57.0.4, OFFLINE_MAINTENANCE_TASK, registerOfflineMaintenanceTask(), ConnectivityContext, ConnectivityProvider(), cleanupTerminalOutbox(), createVersion3Schema(), initializeOfflineDatabase() (+39 more)
 
-### Community 33 - "CancellationToken"
-Cohesion: 0.06
-Nodes (23): CancellationToken, DateOnly, IQueryable, IReadOnlyList, ReadOnlySpan, Task, AccountHierarchyLevelStore, AccountingSettingsReadStore (+15 more)
+### Community 33 - "next"
+Cohesion: 0.02
+Nodes (148): framer-motion, next, nextConfig, metadata, Page(), metadata, metadata, metadata (+140 more)
 
 ### Community 34 - "PageResponse"
-Cohesion: 0.07
-Nodes (56): IQuery, IQueryHandler, PageResponse, AttendanceAgentResponse, AttendanceBranchResponse, AttendanceDeviceResponse, ConnectorHealthResponse, ProviderResponse (+48 more)
+Cohesion: 0.01
+Nodes (190): MetaData, CurrentPage, HasNext, HasPrev, PageNumber, PageSize, TotalCount, TotalPages (+182 more)
 
-### Community 35 - "JobPostingDto"
-Cohesion: 0.10
-Nodes (24): JobPostingDto, CancellationToken, Task, IJobPostingReadStore, IJobPostingRepository, CancellationToken, Result, Task (+16 more)
+### Community 35 - "Result"
+Cohesion: 0.04
+Nodes (152): ICommand, ICommandHandler, ICurrentActor, ApproveJobDescriptionCommand, ApproveJobDescriptionCommandHandler, ArchiveOrganizationalStructureCommand, ArchiveOrganizationalStructureCommandHandler, CreateOrganizationalStructureBulkCommand (+144 more)
 
 ### Community 36 - "ProfileScreen.tsx"
-Cohesion: 0.06
-Nodes (47): ProfilePhotoUpload, createChangePasswordSchema(), createProfileSchema(), clamp(), CROP_GUIDE_COLORS, CropGesture, distance(), IdleGesture (+39 more)
-
-### Community 37 - "MyDataTable.tsx"
 Cohesion: 0.12
-Nodes (20): getDefaultRowKey(), MyDataTable(), MyDataTableColumn, MyDataTableProps, StyledTableCell, TableIconProps, toDisplayNode(), clampPage() (+12 more)
+Nodes (17): createProfileUseCases(), ProfileUseCases, profileRepository, profileUseCases, profileEndpoints, profileRemoteDataSource, userProfilePhotoSchema, userProfileSchema (+9 more)
 
-### Community 38 - "TenantAdministrationRequests.cs"
-Cohesion: 0.13
-Nodes (25): TenantAdministrationPage, TenantDashboardSummaryResponse, CancellationToken, IReadOnlyList, Task, ArchiveTenantAdministratorCommand, ArchiveTenantAdministratorCommandHandler, ArchiveTenantCommand (+17 more)
+### Community 37 - "Ledger Setup Currency — Cross-Platform Implementation Review"
+Cohesion: 0.22
+Nodes (8): 10. Handoff and next slices, 1. Purpose and decision, 2. Product boundary and operating model, 3. Domain contract, 5. Authorization and ownership, 8. Lifecycle, integration, and UI audit, 9. Verification evidence and known repository state, Ledger Setup Currency — Cross-Platform Implementation Review
 
-### Community 39 - "CancellationToken"
-Cohesion: 0.07
-Nodes (16): CancellationToken, DateOnly, IReadOnlyList, Task, IAccountHierarchyLevelStore, IAccountingSettingsReadStore, IAccountMappingStore, IAccountReadStore (+8 more)
+### Community 38 - "ICollection"
+Cohesion: 0.05
+Nodes (33): HostDeploymentConfigurationValidator, AttendanceAgent, Devices, Id, IsActive, LastSeenAtUtc, Name, NormalizedName (+25 more)
 
-### Community 40 - "EmploymentApplication"
-Cohesion: 0.09
-Nodes (17): DateTimeOffset, ApplicationStatusHistory, DateTimeOffset, Guid, ICollection, IReadOnlyCollection, IReadOnlyDictionary, List (+9 more)
-
-### Community 41 - "dependencies"
+### Community 39 - "22. Phased implementation"
 Cohesion: 0.04
-Nodes (47): expo, expo-crypto, expo-font, expo-haptics, expo-linking, expo-localization, expo-secure-store, expo-sharing (+39 more)
+Nodes (53): 22. Phased implementation, Deliverable, Deliverable, Deliverable, Deliverable, Deliverable, Deliverable, Deliverable (+45 more)
 
-### Community 42 - "forms/index.ts"
-Cohesion: 0.04
-Nodes (54): metadata, metadata, metadata, metadata, metadata, LocalizationDataGrid(), LocalizationDataGridProps, localizationKeys (+46 more)
+### Community 40 - "JobOfferDto"
+Cohesion: 0.05
+Nodes (41): JobOfferDto, AnnualSalarySnapshot, ApprovalDecisionReason, ApprovalHistory, ApprovalSubmittedById, ApprovalSubmittedOn, ApprovedById, ApprovedOn (+33 more)
+
+### Community 41 - "mobile-react/package.json"
+Cohesion: 0.03
+Nodes (107): dependencies, @app/tokens@file:../packages/tokens, axios@^1.21.0, dayjs@^1.11.13, decode-uri-component@file:./vendor/decode-uri-component-0...., expo-asset@~57.0.18, expo-audio@~57.0.5, expo-background-task@~57.0.21 (+99 more)
+
+### Community 42 - "PlatformDbContext"
+Cohesion: 0.02
+Nodes (83): CompanyCountry, CountryId, Id, IsDefault, UserCompanyPermissionGrant, Id, Permission, UserCompanyPermissionGrantSet (+75 more)
 
 ### Community 43 - "Kanban Card Attachment Management - User Story"
 Cohesion: 0.04
 Nodes (52): 400 Bad Request, 404 Not Found, 409 Conflict, Accessibility Considerations, API Endpoints Summary, Attaching Documentation, Audit Trail, Best Practices (+44 more)
 
 ### Community 44 - "TenantManagementPage.tsx"
-Cohesion: 0.03
-Nodes (97): metadata, metadata, createManagementPageResponseSchema(), managementPageMetadataSchema, ManagementPageMetadata, ManagementPageQuery, ManagementPageResponse, userPageKeys (+89 more)
+Cohesion: 0.04
+Nodes (88): metadata, Page(), TenantAdminsPage(), apiRoutes, createManagementPageResponseSchema(), managementPageMetadataSchema, ManagementPageMetadata, ManagementPageQuery (+80 more)
 
-### Community 45 - "OrganizationalStructure.ts"
-Cohesion: 0.05
-Nodes (68): operators, OrganizationalStructureCardViewHeader(), Props, ColumnsFactoryProps, getJobDescriptionStatus(), getOrganizationalStructureColumns(), ActionFactoryProps, makeOrganizationalStructureActions() (+60 more)
+### Community 45 - "OrganizationalStructurePage.tsx"
+Cohesion: 0.03
+Nodes (116): 2. Feature ownership, metadata, Page(), metadata, Page(), metadata, Page(), metadata (+108 more)
 
 ### Community 46 - "address-type.ts"
-Cohesion: 0.06
-Nodes (38): AddressTypeUseCases, createAddressTypeUseCases(), SaveAddressTypeInput, useAddressTypeUseCases(), addressTypeEndpoints, AddressTypeRemoteDataSource, toAddressTypePageQuery(), addressTypeDetailSchema (+30 more)
+Cohesion: 0.05
+Nodes (43): AddressTypeUseCases, createAddressTypeUseCases(), SaveAddressTypeInput, useAddressTypeUseCases(), addressTypeEndpoints, addressTypeRemoteDataSource, toAddressTypePageQuery(), addressTypeDetailSchema (+35 more)
 
 ### Community 47 - "offline-operations-policy-use-cases.ts"
 Cohesion: 0.06
@@ -1323,2283 +1113,2599 @@ Nodes (54): ScopedRecord, clampTtl(), createFailClosedState(), createOfflineOper
 
 ### Community 48 - "web-next/src/shared/components/charts/index.ts"
 Cohesion: 0.15
-Nodes (38): AreaChart(), AreaChartProps, ComposedChart(), ComposedChartProps, ComposedSeries, LineChart(), LineChartProps, ScatterChart() (+30 more)
+Nodes (34): recharts, AreaChartProps, ComposedChartProps, ComposedSeries, LineChartProps, ScatterChartProps, ScatterSeries, SparklineChartProps (+26 more)
 
-### Community 49 - "useAppReadOnly"
-Cohesion: 0.04
-Nodes (102): ADDRESS_TYPE_IMPORT_HEADERS, ADDRESS_TYPE_IMPORT_MAX_BYTES, ADDRESS_TYPE_IMPORT_MAX_ROWS, ADDRESS_TYPE_IMPORT_POLICY, ADDRESS_TYPE_IMPORT_TEMPLATE_FILE, AddressTypeImportRow, AddressTypeImportRowStatus, buildAddressTypeImportRows() (+94 more)
+### Community 49 - ".Handle"
+Cohesion: 0.09
+Nodes (31): ICrystalReportDataSource, ICrystalReportInspector, ICurrentPermissionChecker, RevalidateCrystalReportVersionCommandHandler, RevalidateCrystalReportVersionCommand, CrystalReportInspection, CurrentPermissionChecker, AllowAllPermissions (+23 more)
 
 ### Community 50 - "CancellationToken"
-Cohesion: 0.09
-Nodes (22): ApplicationStatusFilter, CancellationToken, Candidate, Employee, EmploymentApplication, EmploymentApplicationDto, JobOffer, JobOpening (+14 more)
+Cohesion: 0.01
+Nodes (87): IValidationQuery, ICacheService, DetectResult, DeviceEndpointRequest, ICurrencyWriteStore, AccountingCurrencyCatalogItem, FiscalYearPlanningSnapshot, IFiscalYearPlanningSource (+79 more)
 
 ### Community 51 - "LedgerSetupRecord"
-Cohesion: 0.12
-Nodes (15): createLedgerSetupUseCases(), LedgerSetupUseCases, ledgerSetupRepository, DefaultLedgerSetupRepository, LedgerSetupEntity, LedgerSetupEntityDefinition, LedgerSetupFormValues, LedgerSetupOption (+7 more)
-
-### Community 52 - "State"
 Cohesion: 0.13
-Nodes (13): CancellationToken, IReadOnlyCollection, IReadOnlyList, Task, IStateAuditTrail, IStateReadStore, IStateWriteStore, ICollection (+5 more)
+Nodes (13): createLedgerSetupUseCases(), LedgerSetupUseCases, ledgerSetupRepository, ledgerSetupUseCases, DefaultLedgerSetupRepository, LedgerSetupEntity, LedgerSetupFormValues, LedgerSetupOptionSource (+5 more)
 
-### Community 53 - "recruitment-schemas.ts"
+### Community 52 - "cookies.ts"
+Cohesion: 0.09
+Nodes (38): Client errors, navigation and Web Vitals, Observability and production diagnostics, Production collector, dashboards and alerts, Applied foundation — 2026-09-17, POST(), GET(), { resolveSessionMock }, GET() (+30 more)
+
+### Community 53 - "ref_react_i18next"
 Cohesion: 0.02
-Nodes (186): createRecruitmentUseCases(), RecruitmentUseCases, recruitmentRepository, recruitmentUseCases, recruitmentEndpoints, RecruitmentRemoteDataSource, applicationResponse, interviewPageResponse (+178 more)
+Nodes (371): 11A. Global working-year context, 2. Feature boundary, 4. Reuse and composition contract, 5.16 الحالات العامة, AuthRouteLayout(), AdministrationLayout(), viewInvitationsPermission, viewRolesPermission (+363 more)
 
-### Community 54 - "FileUploadPage.tsx"
-Cohesion: 0.14
-Nodes (16): FileUploadDialogProps, UploadActions(), UploadHeader(), UploadList(), UploadListItem(), UploadListItemProps, UploadStatusIcon(), UploadStatusIconProps (+8 more)
+### Community 54 - "IAsyncEnumerable"
+Cohesion: 0.04
+Nodes (28): AccountCodeProposalResponse, AccountListQuery, GetAccountCodeProposalQuery, GetAccountsQuery, PageNumber, PageSize, RecordStatus, Search (+20 more)
 
 ### Community 55 - "config/api/index.ts"
-Cohesion: 0.13
-Nodes (21): appointments, attendanceDevices, auth, AuthRoutes, addressTypes, companyGeographicScope, countries, districts (+13 more)
+Cohesion: 0.06
+Nodes (53): 5. Read Path, Detail, relation and lookup, Page query, advancedTools, exportRoutes, google, appointments, attendanceDevices (+45 more)
 
-### Community 56 - "CurrencyResponse"
-Cohesion: 0.11
-Nodes (31): CancellationToken, ICurrentActor, Result, Task, ArchiveCurrencyCommand, ArchiveCurrencyCommandHandler, ArchiveCurrencyCommandValidator, CreateCurrencyCommand (+23 more)
-
-### Community 57 - "Result"
-Cohesion: 0.17
-Nodes (26): AttendanceDeviceResponse, CancellationToken, PullRunResponse, Result, Task, CreateAttendanceAgentCommand, CreateAttendanceAgentCommandHandler, CreateAttendanceDeviceCommand (+18 more)
-
-### Community 58 - "StaffingCommands.cs"
-Cohesion: 0.12
-Nodes (39): CancellationToken, EnvelopeAmendmentDetailResponse, ICurrentActor, Result, StaffingRequestDetailResponse, Task, ApproveEnvelopeAmendmentCommand, ApproveEnvelopeAmendmentCommandHandler (+31 more)
-
-### Community 59 - "CrystalReportContracts.cs"
-Cohesion: 0.07
-Nodes (56): CrystalReportDataFailure, CrystalReportDataSet, CrystalReportDetailResponse, CrystalReportDownload, CrystalReportGrantRequest, CrystalReportIdentity, CrystalReportListItemResponse, CrystalReportPageResponse (+48 more)
-
-### Community 60 - "dependencies"
-Cohesion: 0.04
-Nodes (49): country-code-lookup, dayjs, @emotion/cache, file-saver, @hookform/resolvers, i18next, @mescius/activereportsjs-react, @microsoft/signalr (+41 more)
-
-### Community 61 - "RolePermissionsScreen.tsx"
-Cohesion: 0.02
-Nodes (144): formatMoney(), applyApiFieldErrors(), normalizeFieldPath(), toFormErrorMap(), useZodForm(), ZodFormOptions, CurrencyLookup, CurrencyForm() (+136 more)
-
-### Community 62 - "CurrencyOwnershipTests"
+### Community 56 - "BarChart.tsx"
 Cohesion: 0.10
-Nodes (15): CancellationToken, Fact, Func, IAsyncEnumerable, IReadOnlyCollection, IRequest, IStreamRequest, List (+7 more)
+Nodes (30): OrganizationalStructureChartView(), OrganizationalStructureChartViewProps, DistrictData, prepareDistrictData(), prepareStateData(), prepareTimelineData(), StateData, TimelineData (+22 more)
 
-### Community 63 - "StoredFile"
-Cohesion: 0.13
-Nodes (12): createFileManagerUseCases(), FileManagerUseCases, DefaultFileManagerRepository, AuthenticatedFileSource, PreparedFilePreview, StoredFile, UploadFileAsset, FileManagerRepository (+4 more)
+### Community 57 - "IReportTemplateStore"
+Cohesion: 0.12
+Nodes (31): IUnitOfWork, IPlatformUnitOfWork, IReportingUnitOfWork, IReportTemplateContentHashProvider, IReportTemplateStore, ArchiveReportTemplateCommandHandler, PublishReportTemplateCommandHandler, RestoreReportTemplateCommandHandler (+23 more)
 
-### Community 64 - "Task"
+### Community 58 - "IHrUnitOfWork"
+Cohesion: 0.05
+Nodes (75): IRealtimeChangeDispatcher, IWorkforcePlanReadStore, IWorkforcePlanWriteStore, ApproveWorkforcePlanCommand, ApproveWorkforcePlanCommandHandler, ApproveWorkforcePlanCommandValidator, ArchiveWorkforcePlanCommand, ArchiveWorkforcePlanCommandHandler (+67 more)
+
+### Community 59 - "UserInvitation"
+Cohesion: 0.07
+Nodes (25): UserInvitationUserCreationResult, UserInvitation, AcceptedOn, CompanyIds, CreatedOn, DefaultCompanyId, Email, ExpiresOn (+17 more)
+
+### Community 60 - "web-next/package.json"
+Cohesion: 0.02
+Nodes (121): country-code-lookup, date-fns, docx-preview, @emotion/cache, @emotion/react, @emotion/styled, file-saver, @fontsource/roboto (+113 more)
+
+### Community 61 - "OrganizationalResource"
+Cohesion: 0.03
+Nodes (113): 10. JobDescription decisions, 11. Lifecycle and permissions, 12. Localization, RTL, and accessibility, 13. Realtime and deep links, 14. Report and Import surfaces, 15. Verification, 16. 2026-09-08 review addendum, 1. Boundary and guarded route (+105 more)
+
+### Community 62 - "company-ui-resources.ts"
+Cohesion: 0.10
+Nodes (36): applyCompanyUiResources(), applySystemUiResources(), baseline, clearSystemUiResources(), clone(), companyOverrides, companyUiGeneration(), CompanyUiLanguage (+28 more)
+
+### Community 63 - "InventoryCatalogCqrsTests"
 Cohesion: 0.08
-Nodes (24): CancellationToken, DateOnly, Fact, FiscalYearPlanningSnapshot, Func, GetWorkforcePlansQuery, Harness, ICurrentActor (+16 more)
+Nodes (23): ICategoryEffects, ICategoryWriteStore, ToggleCategoryCommand, ToggleCategoryCommandHandler, Category, CategorySubcategories, Id, NameAr (+15 more)
+
+### Community 64 - "NavigationTitles"
+Cohesion: 0.04
+Nodes (48): NavigationTitles, ADDRESS_TYPES, ADVANCED_TOOLS_TITLE, API_ENDPOINTS, APPOINTMENTS, AUDIT_TRAIL, BASIC_DATA, CHART_EXAMPLES (+40 more)
 
 ### Community 65 - "AttendanceDevicePorts.cs"
-Cohesion: 0.07
-Nodes (32): DetectDeviceRequest, DetectDeviceResponse, CancellationToken, Guid, IReadOnlyList, Task, AttendanceAgentCredential, ConnectorAttendanceEndpoint (+24 more)
+Cohesion: 0.09
+Nodes (22): DetectAttendanceDeviceCommand, DetectDeviceRequest, DetectDeviceResponse, AttendanceAgentCredential, AttendancePullJobRequest, ConnectorAttendanceEndpoint, ConnectorEndpoint, ConnectorFailure (+14 more)
 
-### Community 66 - "BarChart.tsx"
-Cohesion: 0.10
-Nodes (27): OrganizationalStructureChartViewProps, DistrictData, prepareDistrictData(), prepareStateData(), prepareTimelineData(), StateData, TimelineData, usesArabicNames() (+19 more)
+### Community 66 - "WorkforceBudget"
+Cohesion: 0.02
+Nodes (88): PositionEnvelope, AuthorizedHeadcount, AuthorizedSalaryBudget, AvailableHeadcount, AvailableSalaryBudget, BranchId, CalculationPolicyVersion, ContractedSalaryBudget (+80 more)
 
-### Community 67 - "Task"
-Cohesion: 0.11
-Nodes (18): CancellationToken, CrystalReport, CrystalReportRoleGrant, CrystalReportRoleGrantResponse, CrystalReportVersion, Func, Guid, IReadOnlyList (+10 more)
+### Community 67 - "CountryCqrsHandlerTests"
+Cohesion: 0.08
+Nodes (33): BulkArchiveCountriesCommand, BulkArchiveCountriesCommandHandler, BulkArchiveCountriesCommandValidator, CreateCountryRequest, GetCountriesQuery, CurrencyCode, HasStates, PageNumber (+25 more)
 
-### Community 68 - "PlatformRoleManagementCqrsTests"
-Cohesion: 0.05
-Nodes (43): RoleClaimsSnapshot, RoleIdQuery, RoleIdQueryValidator, RoleRequest, CancellationToken, IStringLocalizer, Task, RoleRequestValidator (+35 more)
+### Community 68 - "BranchAddress"
+Cohesion: 0.04
+Nodes (53): AddressPurpose, Billing, Emergency, Mailing, Other, RegisteredOffice, Residential, WorkLocation (+45 more)
 
-### Community 69 - "app/_layout.tsx"
-Cohesion: 0.05
-Nodes (44): plugins, RootLayout(), unstable_settings, configureObserve(), FallbackErrorBoundary, FallbackErrorBoundaryState, ObserveErrorBoundary(), ObserveErrorBoundaryProps (+36 more)
+### Community 69 - "AppStatusBadge"
+Cohesion: 0.01
+Nodes (263): useCurrencyLookup(), createRecruitmentUseCases(), RecruitmentUseCases, recruitmentRepository, recruitmentUseCases, recruitmentEndpoints, recruitmentRemoteDataSource, applicationResponse (+255 more)
 
 ### Community 70 - "Kanban Board Management - User Story"
 Cohesion: 0.04
 Nodes (46): 400 Bad Request, 404 Not Found, 409 Conflict, Accessibility Considerations, API Endpoints Summary, Archiving Completed Project, Audit Trail, BackgroundColor (+38 more)
 
-### Community 71 - "useCountryImport.ts"
-Cohesion: 0.12
-Nodes (28): CountryDataTable(), CountryDataTableProps, COUNTRY_IMPORT_HEADERS, COUNTRY_IMPORT_MAX_BYTES, COUNTRY_IMPORT_MAX_ROWS, COUNTRY_IMPORT_POLICY, COUNTRY_IMPORT_TEMPLATE_FILE, CountryImportDuplicateTracker (+20 more)
+### Community 71 - "AppointmentManagementScreen.tsx"
+Cohesion: 0.05
+Nodes (82): useAppointmentPermissions(), addUtcDateKey(), AppointmentCalendarMode, AppointmentManagementScreen(), createAppointmentRange(), formatPeriodTitle(), getCalendarRenderHeight(), getCalendarScrollOffset() (+74 more)
 
 ### Community 72 - "TenantAdmin"
-Cohesion: 0.08
-Nodes (21): createTenantAdminUseCases(), TenantAdminUseCases, request, tenantAdminEndpoints, TenantAdminRemoteDataSource, admin, request, tenantAdminPageSchema (+13 more)
+Cohesion: 0.07
+Nodes (28): createTenantAdminUseCases(), TenantAdminUseCases, request, useTenantAdminUseCases(), tenantAdminEndpoints, tenantAdminRemoteDataSource, admin, request (+20 more)
 
-### Community 73 - "IModuleCatalogPolicy"
-Cohesion: 0.13
-Nodes (6): CancellationToken, IReadOnlyList, IReadOnlySet, Task, IModuleCatalogPolicy, ModulePermissionCatalogItem
+### Community 73 - "adr/README.md"
+Cohesion: 0.04
+Nodes (36): ADR-001: Modular Monolith and Single Module Ownership, Consequences, Context, Decision, ADR-002: Canonical Module Project Shape, Consequences, Context, Decision (+28 more)
 
-### Community 74 - "AuthenticationOperationResult"
-Cohesion: 0.08
-Nodes (39): CancellationToken, Task, AuthenticationOperationResult, AuthenticationSessionResponse, IAuthenticationAccountFlow, IAuthenticationLoginFlow, IAuthenticationSessionFlow, CancellationToken (+31 more)
-
-### Community 75 - "usePermissions"
+### Community 74 - "PlatformApplicationUser"
 Cohesion: 0.03
-Nodes (131): metadata, metadata, metadata, hasAllPermissions(), hasPermission(), FiscalYearContextSwitcherContent(), FiscalYearContextSwitcherProps, getFiscalYearName() (+123 more)
+Nodes (79): UserPermissionErrors, Conflict, Forbidden, Invalid, NotFound, PlatformApplicationUser, ArchivedOn, ArchiveReason (+71 more)
+
+### Community 75 - "ref_react_i18next"
+Cohesion: 0.02
+Nodes (298): Forms and shared UI, Reuse the shared experience, Form validation safety, Future Change Checklist, Platform Administration and Settings grouping, 8. Create and edit, 9. Forms and validation, 5-Point Cross-Platform UI Audit (+290 more)
 
 ### Community 76 - "ar.ts"
-Cohesion: 0.11
-Nodes (13): arAdministrationTenants, arAuthProfileOnboarding, arBasicData, arCommon, arCurrencies, arFiscalYears, arLedgerSetup, arModules (+5 more)
-
-### Community 77 - "auth/register/Register.tsx"
-Cohesion: 0.08
-Nodes (29): CompletedCheckIcon, CustomConnector, CustomConnectorProps, CustomStepIconProps, EnhancedStepper(), EnhancedStepperProps, StepIconContainer, StepIconContainerProps (+21 more)
-
-### Community 78 - "GlobalCrystalReportQueryTests"
-Cohesion: 0.05
-Nodes (44): ICrystalReportRenderer, CrystalReportDeploymentDownloadFailure, CrystalReportDeploymentDownloadResult, CrystalReportRenderFailure, CrystalReportRenderResult, CrystalReportRuntimeRequest, DeploymentCrystalReportDescriptor, Error (+36 more)
-
-### Community 79 - "transient/ErrorDialogHost.tsx"
-Cohesion: 0.10
-Nodes (30): TenantSelectionResponse, TenantSelectionDialogProps, DEV_CREDENTIALS, LoginAction, QuickLoginRole, createLoginValidationSchema(), LoginFormData, AppFeedbackHost() (+22 more)
-
-### Community 80 - "CrystalReportCommands.cs"
-Cohesion: 0.10
-Nodes (22): IReadOnlyList, Result, AddCrystalReportVersionCommand, AddCrystalReportVersionCommandValidator, ArchiveCrystalReportCommand, ArchiveCrystalReportCommandValidator, CreateCrystalReportCommand, CreateCrystalReportCommandValidator (+14 more)
-
-### Community 81 - "CancellationToken"
-Cohesion: 0.26
-Nodes (6): CancellationToken, IReadOnlyCollection, IReadOnlyDictionary, IReadOnlyList, Task, DistrictWriteStore
-
-### Community 82 - "AuthenticationOrchestrationContracts.cs"
 Cohesion: 0.09
-Nodes (27): int, TimeSpan, AuthenticationAuthenticatedLoginResult, AuthenticationChangePasswordRequest, AuthenticationCompanyOption, AuthenticationCompanySelectionLoginResult, AuthenticationCompanySelectionRequest, AuthenticationConfirmEmailRequest (+19 more)
+Nodes (16): arAdministrationTenants, arAuthProfileOnboarding, arBasicData, arCommon, arCompanyLocalizations, arCurrencies, arEmailTemplates, arErrorLogs (+8 more)
+
+### Community 77 - "خطة Van Sales والبيع الميداني"
+Cohesion: 0.04
+Nodes (45): 04A.00 — Evidence والحدود, 04A.01 — Sales route/trip/day, 04A.02 — Inventory vehicle location, 04A.03 — Customer، السعر والطلب, 04A.04 — Payments وAccounting handoff, 04A.05 — Mobile offline capture and sync, 04A.06 — Back-office monitoring and EOD, 04A.07 — Pilot، القياس والجاهزية (+37 more)
+
+### Community 78 - ".Handle"
+Cohesion: 0.06
+Nodes (46): ICrystalReportDeploymentSource, CrystalReportDeploymentDownloadFailure, None, SourceChanged, Unavailable, CrystalReportDeploymentDownloadResult, IsSuccess, DeploymentCrystalReportDescriptor (+38 more)
+
+### Community 79 - "IHrUnitOfWork"
+Cohesion: 0.03
+Nodes (82): IHrUnitOfWork, ClaimAttendanceAgentWorkCommand, ClaimAttendanceAgentWorkCommandHandler, HeartbeatAttendanceAgentCommand, HeartbeatAttendanceAgentCommandHandler, SubmitAttendanceAgentWorkResultCommand, SubmitAttendanceAgentWorkResultCommandHandler, CreateAttendanceAgentCommand (+74 more)
+
+### Community 80 - "JobRequisitionDto"
+Cohesion: 0.06
+Nodes (36): JobRequisitionDto, BranchId, BranchNameAr, BranchNameEn, BudgetJustification, BusinessReason, CreatedOn, DecisionReason (+28 more)
+
+### Community 81 - "دليل مراجعة جميع مراحل Workforce Planning to Hire V1.0"
+Cohesion: 0.05
+Nodes (43): 10. Phase 6 — Trace & Plan vs Commitment, 11. Phase 7 — Final Documentation, Database & Release Reconciliation, 12. مصفوفة التوقيع النهائي, 13. نموذج تسجيل عيب, 14. Current implementation handoff (2026-09-07), 1. الغرض من الدليل, 2. ورقة نتيجة موحدة, 3. التحقق العام قبل أي مرحلة (+35 more)
+
+### Community 82 - "InventoryDbContext"
+Cohesion: 0.09
+Nodes (18): SimpleCategoryResponse, SimpleSubCategoryResponse, DependencyInjection, CategoryEffects, CategoryReadStore, CompanyScopedCatalogCacheKey, SubcategoryConfiguration, SubCategoryEffects (+10 more)
 
 ### Community 83 - "JobRequisition"
-Cohesion: 0.08
-Nodes (20): DateOnly, DateTimeOffset, Guid, JobOffer, DateTimeOffset, JobOfferApprovalHistory, DateOnly, DateTimeOffset (+12 more)
+Cohesion: 0.04
+Nodes (45): JobRequisition, Branch, BranchId, BudgetJustification, BusinessReason, DecisionReason, Department, DepartmentId (+37 more)
 
 ### Community 84 - "HiringTraceResponse"
 Cohesion: 0.13
-Nodes (21): CancellationToken, Task, IWorkforceTraceReadStore, HiringTraceResponse, PlanCommitmentRowResponse, TraceEdgeDto, TraceNodeDto, CancellationToken (+13 more)
+Nodes (20): IWorkforceTraceReadStore, HiringTraceResponse, TraceEdgeDto, TraceNodeDto, GetHiringTraceByApplicationQuery, GetHiringTraceByApplicationQueryHandler, GetHiringTraceByApplicationQueryValidator, GetHiringTraceByEmployeeQuery (+12 more)
 
-### Community 85 - "PageHeader.tsx"
-Cohesion: 0.14
-Nodes (23): DesktopHeaderLayout(), DesktopHeaderLayoutProps, exportIcon(), HeaderActions(), HeaderActionsProps, MobileHeaderLayout(), MobileHeaderLayoutProps, partitionMobileViewOptions() (+15 more)
+### Community 85 - "ReportCategory"
+Cohesion: 0.06
+Nodes (26): ReportCategory, Id, Name, ReportMasters, ReportDetail, ColumnName, Id, PropertyName (+18 more)
 
 ### Community 86 - "District.ts"
-Cohesion: 0.04
-Nodes (90): metadata, DistrictAddressesSection(), DistrictAddressesSectionProps, DistrictCard(), DistrictCardProps, DistrictCardViewHeaderProps, DistrictCardViewPaginationProps, DistrictsCardViewProps (+82 more)
+Cohesion: 0.03
+Nodes (126): C-05 — الإجراءات, 2. Route and composition, @mui/icons-material, metadata, Page(), JobOffersGrid(), PendingAction, useApproveJobOffer() (+118 more)
 
-### Community 87 - "OrganizationalStructureManagement"
-Cohesion: 0.06
-Nodes (37): Branch, CancellationToken, CostCenter, DateOnly, Department, Division, EntityChangeLogsResponse, Error (+29 more)
+### Community 87 - "OrganizationalStructureItem"
+Cohesion: 0.02
+Nodes (113): LedgerSetupQueryFilters, IOrganizationalStructureChangeScheduler, ApproveJobDescriptionRequest, OrganizationalStructureChange, OrganizationalStructureItem, ApprovedByUserId, BranchId, BranchNameAr (+105 more)
 
-### Community 88 - "DistrictBulkCreateHandlerTests"
-Cohesion: 0.11
-Nodes (19): CancellationToken, District, DistrictChange, DistrictErrors, Fact, Func, IDistrictChangeScheduler, IDistrictWriteStore (+11 more)
+### Community 88 - "steps"
+Cohesion: 0.05
+Nodes (42): concurrency, cancel-in-progress, group, ConnectionStrings__DefaultConnection, ERPSYSTEM_TEST_SQLSERVER_CONNECTION, jobs, secret-scan, verify-api (+34 more)
 
-### Community 89 - "Task"
-Cohesion: 0.09
-Nodes (21): CancellationToken, District, DistrictDetailResponse, Func, IReadOnlyCollection, IReadOnlyDictionary, IReadOnlyList, State (+13 more)
+### Community 89 - "ReferenceDataDbContext"
+Cohesion: 0.02
+Nodes (89): CountryChange, ICountryReadStore, ICountryWriteStore, CountryDetailResponse, CountryListItemResponse, BulkArchiveCountriesResponse, CreateCountriesResponse, CountryReportDataResponse (+81 more)
 
-### Community 90 - "WorkforceTracePage.tsx"
-Cohesion: 0.12
-Nodes (18): useHiringTraceByApplication(), useHiringTraceByEmployee(), useHiringTraceByOffer(), usePlanCommitmentPage(), RootKind, WorkforceTracePage(), commitmentRowSchema, pageSchema (+10 more)
+### Community 90 - "file-manager-remote-data-source.ts"
+Cohesion: 0.10
+Nodes (13): createSensitiveCacheFile(), createFileManagerUseCases(), FileManagerUseCases, fileManagerEndpoints, fileManagerRemoteDataSource, prepareFilePreview(), sanitizeFileName(), storedFileSchema (+5 more)
 
 ### Community 91 - "ManagedCrystalReportContractRegistry"
-Cohesion: 0.05
-Nodes (36): IManagedCrystalReportContractSource, ManagedCrystalReportEntityDescriptor, GetPublishedCrystalReportsQueryValidator, CancellationToken, IEnumerable, IOptions, IReadOnlyDictionary, Task (+28 more)
+Cohesion: 0.04
+Nodes (35): Program, ManagedCrystalReportContractArtifact, ManagedCrystalReportColumnContract, ManagedCrystalReportColumnDto, Name, Nullable, Type, ManagedCrystalReportContractRegistry (+27 more)
 
-### Community 92 - "WorkforceTracePersistenceTests"
-Cohesion: 0.13
-Nodes (19): CancellationToken, PageResponse, Task, WorkforceTraceReadStore, CancellationToken, Fact, FiscalYearPlanningSnapshot, ICurrentActor (+11 more)
+### Community 92 - "staffing.ts"
+Cohesion: 0.11
+Nodes (24): createEnvelopeAmendmentUseCases(), EnvelopeAmendmentUseCases, createStaffingRequestUseCases(), StaffingRequestUseCases, EnvelopeAmendment, EnvelopeAmendmentDetail, EnvelopeAmendmentPageQuery, EnvelopeAmendmentRequest (+16 more)
 
 ### Community 93 - "Kanban Card Label Management - User Story"
 Cohesion: 0.05
 Nodes (43): 400 Bad Request, 404 Not Found, 409 Conflict, API Endpoints Summary, Applying Labels, Business Rules, Business Value, CreateKanbanCardLabels (+35 more)
 
-### Community 94 - "AccountsPage.tsx"
+### Community 94 - "Managed Crystal Reporting Reliability — Master Build Plan"
 Cohesion: 0.04
-Nodes (83): apiRoutes, ApiClientError, { get, post, put, remove }, AccountForm(), emptyValues, FormMode, Props, AccountsDataGrid() (+75 more)
+Nodes (47): 0. Plan metadata, 10. Persistence and migration, 11. API / CQRS / contracts, 13. Mobile experience, 14. 5-point structured-data parity audit, 15. Reporting / import / export / files, 16. Integrations and side effects, 17. Non-functional requirements (+39 more)
 
-### Community 95 - "state.ts"
+### Community 95 - "state-remote-data-source.ts"
 Cohesion: 0.05
-Nodes (33): createStateUseCases(), SaveStateInput, StateUseCases, stateRepository, stateEndpoints, StateRemoteDataSource, toStatePageQuery(), bulkArchiveStatesResultSchema (+25 more)
+Nodes (29): createStateUseCases(), SaveStateInput, StateUseCases, stateRepository, stateUseCases, stateRemoteDataSource, DefaultStateRepository, BulkArchiveStatesResponse (+21 more)
 
-### Community 96 - "JobOfferDto"
-Cohesion: 0.16
-Nodes (27): CancellationToken, ICurrentActor, IJobOfferReadStore, JobOfferDto, JobOfferLineage, List, Result, Task (+19 more)
+### Community 96 - "Ledger Setup Currency — Next.js Implementation Profile"
+Cohesion: 0.13
+Nodes (14): 10. Permissions and read-only mode, 11. Localization and RTL, 12. Responsive and accessibility contract, 13. Integration and cache invalidation, 14. Verification and optional capabilities, 1. Feature boundary, 2. Route and navigation, 3. Transport and contracts (+6 more)
 
-### Community 97 - "workforce-trace-remote-data-source.ts"
-Cohesion: 0.08
-Nodes (21): PageMetadata, pageMetadataSchema, PageQuery, PageResponse, toPageQuery(), createWorkforceTraceUseCases(), WorkforceTraceUseCases, workforceTraceEndpoints (+13 more)
+### Community 97 - "CurrenciesPage.tsx"
+Cohesion: 0.12
+Nodes (30): Page(), Props, activeCurrency, archivedCurrency, CapturedGridProps, gridState, renderGrid(), Props (+22 more)
 
-### Community 98 - "5. كتالوج أنماط الشاشات (Screen Patterns)"
-Cohesion: 0.06
-Nodes (33): 1. الفكرة في سطر, 2. شكل الـ Monorepo, 3.1 Tokens — تم التنفيذ, 3.2 قواعد بصرية مشتركة, 3. نظام التصميم (Design System), 4. كتالوج المكونات المشتركة (نفس الاسم ونفس الـ props على المنصتين), 5.10 مركز الإشعارات, 5.11 مشغّل الـ Modules (+25 more)
+### Community 98 - "Error Logs — Screen / Workflow Contract"
+Cohesion: 0.05
+Nodes (35): Error logs — Decisions, 0. Contract metadata, 10. i18n, RTL, accessibility, and responsive behavior, 11. Vertical execution ledger (strict one-active-step gate), 12. Verification contract, 13. Child exit gate, 14. Corrective amendment — 2026-10-18, 15. Corrective shared-criteria scope — 2026-10-18 (+27 more)
 
 ### Community 99 - "export/types.ts"
 Cohesion: 0.10
-Nodes (34): field(), excelExportAdapter, ExcelFormatOptions, pdfExportAdapter, PdfFormatOptions, collectRows(), filterRowColumns(), getExportableColumns() (+26 more)
+Nodes (33): excelExportAdapter, ExcelFormatOptions, pdfExportAdapter, PdfFormatOptions, collectRows(), filterRowColumns(), getExportableColumns(), mediaColumns (+25 more)
 
-### Community 100 - "CancellationToken"
-Cohesion: 0.12
-Nodes (16): EmploymentApplicationDto, CancellationToken, Task, IEmploymentApplicationReadStore, IEmploymentApplicationRepository, IRecruitmentHireRepository, RecruitmentHireLineage, CancellationToken (+8 more)
+### Community 100 - "companyUiResources.ts"
+Cohesion: 0.10
+Nodes (36): companyUiTextScope(), isCompanyUiText(), matches(), sourceScopes, systemPrefixes, UiTextScope, isAuthorizedSystemUiText(), rules (+28 more)
 
 ### Community 101 - "Kanban Card Management - User Story"
 Cohesion: 0.05
 Nodes (37): 400 Bad Request, 404 Not Found, 409 Conflict, API Endpoints Summary, Business Rules, Data Models, Database Schema, Description (+29 more)
 
-### Community 102 - "CancellationToken"
-Cohesion: 0.10
-Nodes (21): CancellationToken, DateOnly, IReadOnlyList, JobRequisition, JobRequisitionDto, PageResponse, PositionEnvelope, StaffingRequest (+13 more)
+### Community 102 - "ErrorLogCaptureQueue"
+Cohesion: 0.04
+Nodes (28): SafeExceptionDiagnostics, HostErrorLogMiddleware, ErrorLogCapture, ErrorLogSeverity, Critical, Error, Warning, ErrorLogSource (+20 more)
 
 ### Community 103 - "TenantManagementResponse"
 Cohesion: 0.08
-Nodes (23): createTenantUseCases(), TenantUseCases, request, useTenantUseCases(), tenantEndpoints, TenantRemoteDataSource, request, tenant (+15 more)
+Nodes (25): createTenantUseCases(), TenantUseCases, request, useTenantUseCases(), tenantEndpoints, tenantRemoteDataSource, request, tenant (+17 more)
 
 ### Community 104 - "WorkforcePlanDetail"
-Cohesion: 0.07
-Nodes (42): createWorkforcePlanUseCases(), WorkforcePlanUseCases, matchingServerDetail, mockCleanupObservedStatuses, mockOutbox, mockRemoteGetById, mockRemoteUpdate, mockRemoveSynced (+34 more)
+Cohesion: 0.06
+Nodes (44): createWorkforcePlanUseCases(), WorkforcePlanUseCases, matchingServerDetail, mockCleanupObservedStatuses, mockOutbox, mockRemoteGetById, mockRemoteUpdate, mockRemoveSynced (+36 more)
 
 ### Community 105 - "notification-remote-data-source.ts"
-Cohesion: 0.09
-Nodes (11): createNotificationUseCases(), NotificationUseCases, notificationEndpoints, NotificationRemoteDataSource, page, DefaultNotificationRepository, NotificationPageMetadata, NotificationPageResponse (+3 more)
+Cohesion: 0.07
+Nodes (14): createNotificationUseCases(), NotificationUseCases, notificationEndpoints, notificationRemoteDataSource, page, notificationPageSchema, notificationSchema, notificationSeveritySchema (+6 more)
 
-### Community 106 - "IntegrationEvent"
+### Community 106 - "AccountingDbContext"
+Cohesion: 0.08
+Nodes (40): FiscalYearErrors, FiscalYearCompanyContextRequired, FiscalYearCurrentCannotBeArchived, FiscalYearDuplicateCode, FiscalYearInvalidSelection, FiscalYearInvalidTransition, FiscalYearMustBeOpenForCurrent, FiscalYearNotArchivable (+32 more)
+
+### Community 107 - "SubCategoryResponse"
 Cohesion: 0.10
-Nodes (16): DateTimeOffset, Guid, IntegrationEvent, AccountingDbContext, CancellationToken, Exception, Func, Task (+8 more)
-
-### Community 107 - "StateBulkCreateHandlerTests"
-Cohesion: 0.09
-Nodes (22): CancellationToken, Fact, Func, IEnumerable, IMapper, IReadOnlyCollection, IReadOnlyList, IStateChangeScheduler (+14 more)
+Nodes (29): ISubCategoryEffects, ISubCategoryReadStore, ISubCategoryWriteStore, CreateSubCategoryCommand, CreateSubCategoryCommandHandler, CreateSubCategoryCommandValidator, ToggleSubCategoryCommandHandler, UpdateSubCategoryCommand (+21 more)
 
 ### Community 108 - "offline-policy/index.ts"
-Cohesion: 0.10
+Cohesion: 0.11
 Nodes (32): countriesRead, getOfflineCapabilityDefinition(), KnownOfflineCapabilityId, OFFLINE_CAPABILITY_DEFINITIONS, OFFLINE_CAPABILITY_IDS, workforcePlanUpdateDraft, scope, canExecuteOfflineCommand() (+24 more)
 
-### Community 109 - "Accounting Core GL — Master Build Plan"
+### Community 109 - "AuthenticationOperationResult"
 Cohesion: 0.04
-Nodes (57): 0. Plan metadata, 10. Persistence and migration, 11. API / CQRS / contracts, 12. Web experience, 13. Mobile experience, 14. 5-point structured-data parity audit, 15. Reporting / import / export / files, 16. Integrations and side effects (+49 more)
+Nodes (89): AuthenticationAuthenticatedLoginResult, AuthenticationChangePasswordRequest, AuthenticationCompanyOption, AuthenticationCompanySelectionLoginResult, AuthenticationCompanySelectionRequest, AuthenticationConfirmEmailRequest, AuthenticationEmailRequest, AuthenticationError (+81 more)
 
-### Community 110 - "useAddressTypeImport.ts"
+### Community 110 - "Type"
+Cohesion: 0.09
+Nodes (11): RealtimeResource, RealtimeResourceNameAttribute, Name, AuditIgnoreAttribute, ThrowingServiceProvider, ReportingAuthorizationTests, ModulePersistenceFoundationTests, TestActor (+3 more)
+
+### Community 111 - "AuditTrailTests"
 Cohesion: 0.10
-Nodes (29): AddressTypeDataTable(), AddressTypeDataTableProps, ADDRESS_TYPE_IMPORT_HEADERS, ADDRESS_TYPE_IMPORT_MAX_BYTES, ADDRESS_TYPE_IMPORT_MAX_ROWS, ADDRESS_TYPE_IMPORT_POLICY, ADDRESS_TYPE_IMPORT_TEMPLATE_FILE, createAddressTypeImportDuplicateTracker() (+21 more)
+Nodes (20): AuditTrailTests, ManualClock, NoiseRow, Id, Value, TestDbContext, Noise, Widgets (+12 more)
 
-### Community 111 - "states/components/chart-view/chartDataUtils.ts"
-Cohesion: 0.13
-Nodes (21): CountryData, DistrictData, getChartColors(), prepareCountryData(), prepareDistrictData(), prepareTimelineData(), states, TimelineData (+13 more)
-
-### Community 112 - "WorkforceBudget"
+### Community 112 - "types/index.ts"
 Cohesion: 0.07
-Nodes (17): IReadOnlyCollection, DateTimeOffset, IReadOnlyCollection, List, string, WorkforceBudget, WorkforceBudgetLine, WorkforceBudgetPeriodAllocation (+9 more)
+Nodes (32): InterviewEvaluationDialog(), InterviewEvaluationDialogProps, SkillRatingState, useCompleteInterview(), useInterviewScorecardTemplate(), useSubmitInterviewEvaluation(), ApplicationStatusHistoryDto, ApprovedStaffingRequestOptionDto (+24 more)
 
 ### Community 113 - "ErpModule"
-Cohesion: 0.09
-Nodes (17): createModuleUseCases(), ModuleUseCases, moduleEndpoints, ModuleRemoteDataSource, modules, erpModuleSchema, erpModulesSchema, moduleSubmoduleSchema (+9 more)
+Cohesion: 0.05
+Nodes (59): 2. نقاط القوة (تتنقل للـ template زي ما هي تقريبًا), HomeRoute(), AppRoute, getModuleAccent(), accountingModuleDefinition, crmModuleDefinition, hrModuleDefinition, platformModuleDefinition (+51 more)
 
 ### Community 114 - "clientTelemetryContract.ts"
-Cohesion: 0.08
-Nodes (42): ClientObservability(), handleWebVital(), ReportWebVitalsCallback, GlobalError(), GlobalErrorProps, onRouterTransitionStart(), beginClientNavigation(), classifyClientError() (+34 more)
+Cohesion: 0.06
+Nodes (53): noContent(), POST(), recordClientTelemetryEvent, ClientObservability(), handleWebVital(), ReportWebVitalsCallback, GlobalError(), GlobalErrorProps (+45 more)
 
 ### Community 115 - "خطة تطوير موديول الحسابات داخل ERPSYSTEM — Business Phases"
-Cohesion: 0.06
+Cohesion: 0.05
 Nodes (36): Phase 00 — 00R حسم نطاق وقرارات Accounting داخل ERPSYSTEM, Phase 01 — 01R التحقق من إعادة استخدام الأساس الفني, Phase 02 — التهيئة ودليل الحسابات, Phase 03 — ملفات الأطراف المحاسبية والمجموعات, Phase 04 — الأبعاد والتوزيعات, Phase 05 — الكتب واليوميات والعملات والترقيم, Phase 06 — محرك القيود والاعتماد, Phase 07 — الأستاذ المساعد والافتتاحيات (+28 more)
 
-### Community 116 - "OperationalFoundationTests"
-Cohesion: 0.11
-Nodes (3): Dictionary, Fact, OperationalFoundationTests
+### Community 116 - "Fact"
+Cohesion: 0.02
+Nodes (35): HostHealthCheckPredicates, AttendanceDeviceRawDataTests, PlatformPublicApplicationSettings, FrontendUrl, AuthEmailLinkBuilderTests, AuthenticationFlowArchitectureTests, CompanyLocalizationStoreTests, JwtProviderTests (+27 more)
 
-### Community 117 - "profile-remote-data-source.ts"
-Cohesion: 0.11
-Nodes (15): createProfileUseCases(), ProfileUseCases, profileRepository, profileUseCases, profileEndpoints, profileRemoteDataSource, userProfilePhotoSchema, userProfileSchema (+7 more)
+### Community 117 - "system_text_json"
+Cohesion: 0.04
+Nodes (19): AssemblyReference, MapsterService, ArchitectureTestAssembly, ErpSystem.Modules.Platform.Contracts.Communications, ErpSystem.Modules.HR.Application.Features.Attendance.Devices.Queries, ErpSystem.Modules.HR.Application.Features.Attendance.Devices.Mapping, ErpSystem.Modules.HR.Infrastructure.Features.Attendance.Devices.Services, ErpSystem.Modules.HR.Domain.Attendance.Devices.Entities (+11 more)
 
 ### Community 118 - "healthCheckService.ts"
-Cohesion: 0.18
-Nodes (17): HealthCheckPanel(), HealthStatusChip(), HealthStatusChipProps, statusConfig, healthCheckKeys, useHealthCheckQuery(), asOptionalString(), asString() (+9 more)
+Cohesion: 0.16
+Nodes (19): lucide-react, lucide-react@^1.47.0, HealthCheckPanel(), HealthStatusChip(), HealthStatusChipProps, statusConfig, healthCheckKeys, useHealthCheckQuery() (+11 more)
 
 ### Community 119 - "Account"
-Cohesion: 0.07
-Nodes (10): Account, DateOnly, AccountMapping, PostingProfile, AccountHierarchyLevel, AccountCurrencyPolicy, AccountMappingSourceType, AccountResolutionStatus (+2 more)
+Cohesion: 0.02
+Nodes (124): Account, AccountHierarchyLevel, AccountHierarchyLevelId, AllowPosting, Code, CurrencyPolicy, Id, ManualPostingPolicy (+116 more)
 
-### Community 120 - "Task"
-Cohesion: 0.13
-Nodes (13): TenantAdministrationError, TenantAdministrationErrorType, CancellationToken, Dictionary, IdentityResult, IQueryable, IReadOnlyCollection, IReadOnlyList (+5 more)
+### Community 120 - "MyTextField.tsx"
+Cohesion: 0.04
+Nodes (66): metadata, Page(), CompanyGeographicScopeCardView(), CompanyGeographicScopeCardViewProps, CompanyGeographicScopeDataGrid(), CompanyGeographicScopeDataGridProps, clearUnselectedOperatingCountry(), ensureCountrySelected() (+58 more)
 
-### Community 121 - "CompanyAuditableEntity"
-Cohesion: 0.11
-Nodes (24): CancellationToken, DateTime, Guid, IReadOnlyCollection, IReadOnlyList, Task, IAttendanceRawStore, DateTime (+16 more)
+### Community 121 - "AttendanceDevice"
+Cohesion: 0.03
+Nodes (74): AttendanceDeviceRequest, AttendanceDeviceMapping, InterviewParticipantDto, EmployeeId, EmployeeName, Id, IsLead, EmploymentApplicationMappingConfig (+66 more)
 
 ### Community 122 - "Kanban Board Member Management - User Story"
 Cohesion: 0.06
 Nodes (34): 400 Bad Request, 404 Not Found, 409 Conflict, API Endpoints Summary, Business Rules, Data Models, Database Schema, Enum: KanbanBoardRole (+26 more)
 
-### Community 123 - "PlatformContractSource"
-Cohesion: 0.25
-Nodes (8): CancellationToken, DateTime, Dictionary, IReadOnlyCollection, IReadOnlyList, IReadOnlySet, Task, PlatformContractSource
+### Community 123 - "deploy"
+Cohesion: 0.05
+Nodes (37): concurrency, cancel-in-progress, group, env, environment, if, name, runs-on (+29 more)
 
-### Community 124 - "WorkforcePlanCommands.cs"
-Cohesion: 0.09
-Nodes (47): CancellationToken, Error, FiscalYearPlanningSnapshot, ICurrentActor, IReadOnlyList, IWorkforcePlanWriteStore, Result, Task (+39 more)
+### Community 124 - "Interview"
+Cohesion: 0.04
+Nodes (49): Interview, CancellationReason, CompletedOn, EmploymentApplication, EmploymentApplicationId, EndsOn, Evaluations, Id (+41 more)
 
 ### Community 125 - "signalRService.ts"
-Cohesion: 0.07
-Nodes (22): SESSION_CHANGED_EVENT, getJwtExpiration(), parseRealtimeTokenPayload(), classifySignalRFailure(), getDiagnosticMessage(), getSignalRRestartDelayMs(), ReportTelemetry, RESTART_BACKOFF_MS (+14 more)
+Cohesion: 0.08
+Nodes (20): getJwtExpiration(), parseRealtimeTokenPayload(), classifySignalRFailure(), getDiagnosticMessage(), getSignalRRestartDelayMs(), ReportTelemetry, RESTART_BACKOFF_MS, SignalRDiagnosticPhase (+12 more)
 
-### Community 126 - "AccountingDbContext"
-Cohesion: 0.07
-Nodes (17): DateTime, AuditableEntity, IAccountingUnitOfWork, bool, DbSet, EntityEntry, ModelBuilder, string (+9 more)
+### Community 126 - "ReportTemplate"
+Cohesion: 0.03
+Nodes (64): TenantAuditableEntity, TenantId, RecruitmentSource, ApplicationsCount, Code, HiredCount, Id, IsActive (+56 more)
 
-### Community 127 - "CurrenciesPage.tsx"
-Cohesion: 0.10
-Nodes (34): CurrenciesDataGrid(), Props, activeCurrency, archivedCurrency, CapturedGridProps, gridState, CurrencyForm(), emptyValues (+26 more)
+### Community 127 - "useSession"
+Cohesion: 0.02
+Nodes (146): Keep global header context visually unified, 1. QueryClient bootstrap identity, 8. Protected utility routes own only the providers they require, Global context badge composition, User and company context lifecycle, Protected auth utility route composition, 9A. Global working-year context, 2. Feature boundary (+138 more)
 
-### Community 128 - ".GetPlanCommitment"
-Cohesion: 0.42
-Nodes (8): CancellationToken, HasPermission, HttpGet, IActionResult, ISender, ProducesResponseType, Task, WorkforceTraceController
+### Community 128 - "Screen Pattern Catalog"
+Cohesion: 0.05
+Nodes (41): Anti-patterns, Change Log, Checklist ظهور نمط شاشة جديد, P-001 — Server-managed Grid / CRUD, P-002 — Tree + Master / Detail, P-003 — Tabbed Form, P-005 — Singleton Settings Editor, P-006 — Scoped Relationship / Mapping Editor (+33 more)
 
-### Community 129 - "file-upload/index.ts"
-Cohesion: 0.17
-Nodes (12): ProfileImageDropZone(), ProfileImageDropZoneProps, FileDropZone, FileDropZoneProps, SpreadsheetImportCard(), SpreadsheetImportCardProps, SpreadsheetImportFeedback(), SpreadsheetImportFeedbackProps (+4 more)
+### Community 129 - "ErpSystem.Modules.Platform.Infrastructure/DependencyInjection.cs"
+Cohesion: 0.02
+Nodes (110): SelectionChallengeScopes, ChangePasswordRequest, ChangePasswordRequestValidator, SimpleUserResponse, UserChangedResponse, AuthenticationTokenClaimNames, SecurityAuditOutcome, Denied (+102 more)
 
-### Community 130 - "EntityChangeLogsResponse"
+### Community 130 - "PlatformFileMetadata"
 Cohesion: 0.12
-Nodes (20): CancellationToken, List, Task, GetAllEntityChangeLogsQuery, GetAllEntityChangeLogsQueryHandler, GetEntityChangeLogsQuery, GetEntityChangeLogsQueryHandler, CancellationToken (+12 more)
+Nodes (12): IFileMetadataStore, PlatformFileMetadata, PlatformFileMetadataDraft, UploadedFile, ContentType, FileExtension, FileName, Id (+4 more)
 
 ### Community 131 - "ErpSystem.Modules.Platform.Infrastructure.csproj"
-Cohesion: 0.06
-Nodes (36): net10.0, Microsoft.NET.Sdk, net10.0, FluentValidation, FluentValidation.DependencyInjectionExtensions, MediatR, Microsoft.Extensions.Localization.Abstractions, Newtonsoft.Json (+28 more)
+Cohesion: 0.05
+Nodes (38): net10.0, Microsoft.NET.Sdk, net10.0, FluentValidation, FluentValidation.DependencyInjectionExtensions, MediatR, Microsoft.Extensions.Localization.Abstractions, Newtonsoft.Json (+30 more)
 
-### Community 132 - "Book"
-Cohesion: 0.09
-Nodes (8): IAccountingSettingsWriteStore, IBookWriteStore, IJournalDefinitionWriteStore, AccountingCompanySettings, Book, JournalDefinition, JournalNumberingResetPolicy, AccountingSettingsWriteStore
-
-### Community 133 - "WorkforcePlansScreen.tsx"
-Cohesion: 0.13
-Nodes (35): useConnectivity(), subscribeToOfflineSyncRequests(), useWorkforcePlanUseCases(), mockCoordinatorRun, mockRegisterHandler, useWorkforcePlanDraftPilot(), WorkforcePlanFilterButton(), WorkforcePlanFilters (+27 more)
-
-### Community 134 - "OfflineOperationsPage.tsx"
-Cohesion: 0.16
-Nodes (24): metadata, capabilityPresentation, modeKey(), OfflineOperationsPage(), isNullableString(), isRecord(), offlineOperationsService, parseCapability() (+16 more)
-
-### Community 135 - "Currency"
-Cohesion: 0.10
-Nodes (17): CancellationToken, IReadOnlyList, Task, ICurrencyReadStore, ICurrencyWriteStore, CurrencyLookupResponse, IReadOnlyList, GetCurrencyLookupQuery (+9 more)
-
-### Community 136 - "LocalizationContracts.cs"
+### Community 132 - "JobOpeningDto"
 Cohesion: 0.07
-Nodes (28): CancellationToken, Dictionary, IReadOnlyDictionary, Task, ILocalizationEffects, ILocalizationResourceStore, LocalizationFailure, LocalizationKeyUpdate (+20 more)
+Nodes (33): JobOpeningDto, ActiveApplicationsCount, AvailablePositions, BranchId, BranchNameAr, BranchNameEn, ClosedOn, ClosureReason (+25 more)
 
-### Community 137 - "CountryCqrsHandlerTests"
+### Community 133 - "CategoryResponse"
 Cohesion: 0.13
-Nodes (11): CreateCountryCommand, Fact, IMapper, InlineData, Task, Theory, TypeAdapterConfig, CountryCqrsHandlerTests (+3 more)
+Nodes (21): ICategoryReadStore, CatalogActorScope, CreateCategoryCommand, CreateCategoryCommandHandler, CreateCategoryCommandValidator, UpdateCategoryCommand, UpdateCategoryCommandHandler, UpdateCategoryCommandValidator (+13 more)
 
-### Community 138 - "OrganizationalStructureItem"
-Cohesion: 0.15
-Nodes (28): CancellationToken, int, Result, Task, ApproveJobDescriptionCommand, ApproveJobDescriptionCommandHandler, ArchiveOrganizationalStructureCommand, ArchiveOrganizationalStructureCommandHandler (+20 more)
+### Community 134 - "CompanyLocalizationRepository"
+Cohesion: 0.12
+Nodes (12): CompanyLocalizationUseCases, createCompanyLocalizationUseCases(), useCompanyLocalizationUseCases(), companyLocalizationRemoteDataSource, DefaultCompanyLocalizationRepository, CompanyLocalizationRuntime, CompanyLocalizationScope, CompanyLocalizationSettings (+4 more)
+
+### Community 135 - "Organizational Structure Phase 04 - Domain Actions and Lifecycle"
+Cohesion: 0.25
+Nodes (7): Action ledger, Approved references, Evidence to capture, Exit checks, Organizational Structure Phase 04 - Domain Actions and Lifecycle, Purpose, Source fingerprints
+
+### Community 136 - "RecruitmentKanbanBoard.tsx"
+Cohesion: 0.08
+Nodes (26): CandidateDetailDialog(), CandidateDetailDialogProps, PIPELINE_STAGES, PipelineStageConfig, RecruitmentKanbanBoardProps, useApplication(), useApplications(), useHireApplication() (+18 more)
+
+### Community 137 - "WapilotWhatsAppSender"
+Cohesion: 0.11
+Nodes (17): IWhatsAppSender, WhatsAppSendResult, WhatsAppTextMessage, WapilotOptions, BaseUrl, DefaultCountryCallingCode, Enabled, InstanceId (+9 more)
+
+### Community 138 - "Enterprise SaaS Core Roadmap"
+Cohesion: 0.06
+Nodes (35): 10. MFA and Session Governance, 11. Enterprise SSO, 14. Outbox and Idempotency, 15. API Keys and Integration Platform, 16. Distributed Runtime Readiness, 17. CI/CD and Migrations, 18. Backups and Disaster Recovery, 19. Observability and SLOs (+27 more)
 
 ### Community 139 - "ERPSYSTEM Mobile Architecture Map"
-Cohesion: 0.04
-Nodes (43): API, session, and server state, Application boundary and stack, Authority and evidence, Clean feature layers, ERPSYSTEM Mobile Architecture Map, Offline foundation and safety ceiling, Optional capability boundaries, Owner dependencies and public APIs (+35 more)
+Cohesion: 0.07
+Nodes (24): 10. Documentation and handoff, 1. Preflight and relationship trace, 2. Select the documentation mode, 3. Define the feature and device contract, 4. Inventory shared and reference behavior, 5. Implement inside-out, then compose, 8. Full-stack parity audit, 9. Testing and verification (+16 more)
 
 ### Community 140 - "crystal-report-remote-data-source.ts"
 Cohesion: 0.10
-Nodes (20): createCrystalReportUseCases(), CrystalReportUseCases, crystalReportRepository, crystalReportEndpoints, CrystalReportRemoteDataSource, getMock, globalReport, postMock (+12 more)
+Nodes (20): createCrystalReportUseCases(), CrystalReportUseCases, crystalReportRepository, crystalReportEndpoints, crystalReportRemoteDataSource, getMock, globalReport, postMock (+12 more)
 
 ### Community 141 - "devDependencies"
 Cohesion: 0.05
-Nodes (41): @axe-core/playwright, cross-env, eslint, eslint-config-next, @eslint/eslintrc, eslint-plugin-import, eslint-plugin-react-refresh, mkcert (+33 more)
+Nodes (40): @axe-core/playwright, cross-env, eslint-config-next, @eslint/eslintrc, eslint-plugin-import, eslint-plugin-react-refresh, mkcert, @types/file-saver (+32 more)
 
 ### Community 142 - "ErpSystem.Modules.PointOfSale.Application.csproj"
-Cohesion: 0.08
+Cohesion: 0.06
 Nodes (25): net10.0, FluentValidation, FluentValidation.DependencyInjectionExtensions, MediatR, Microsoft.NET.Sdk, net10.0, Microsoft.NET.Sdk, net10.0 (+17 more)
 
-### Community 143 - "RealtimeProvider.tsx"
-Cohesion: 0.15
-Nodes (19): administrationQueryKeys, getAllRealtimeQueryKeys(), getRealtimeQueryKeys(), isKnownRealtimeResource(), QueryKey, queryKeysByResource, resourceAffectsSession(), parseRealtimeEntityChanged (+11 more)
+### Community 143 - "countries/components/CountriesChartView.tsx"
+Cohesion: 0.12
+Nodes (24): CurrencyData, getTotalStatesCount(), prepareCurrencyData(), prepareStatesCoverageData(), prepareStatesData(), prepareTimelineData(), StatesCoverageData, StatesData (+16 more)
 
-### Community 144 - "InventoryCatalogCqrsTests"
-Cohesion: 0.13
-Nodes (12): CancellationToken, Fact, IReadOnlyCollection, IReadOnlyList, ServiceProvider, Task, Type, InventoryCatalogCqrsTests (+4 more)
+### Community 144 - ".CategoryQueries_ExcludeCurrentRecordDuringUpdateCheck"
+Cohesion: 0.12
+Nodes (13): TestCurrentActor, CompanyId, TenantId, UserId, ValidationQueriesTests, Future channel boundary, Inventory architecture, Runtime ownership (+5 more)
 
-### Community 145 - "Address"
-Cohesion: 0.05
-Nodes (42): IpNetwork, CancellationToken, IReadOnlyList, Task, AddressLifecycleSnapshot, IAddressAuditTrail, IAddressReadStore, IAddressWriteStore (+34 more)
+### Community 145 - "AbstractValidator"
+Cohesion: 0.03
+Nodes (72): FluentValidationExtensions, AppointmentRequestValidator, AttendanceConcurrencyValidation, AttendanceDeviceRequestValidator, AttendancePageValidation, CreateAttendanceDeviceValidator, DeviceCredentialsValidator, DevicePageValidator (+64 more)
 
-### Community 146 - "CancellationToken"
-Cohesion: 0.17
-Nodes (11): AuthenticationError, AuthenticationErrorType, AuthenticationRefreshRequest, IAuthenticationSessionAdapter, CancellationToken, DateTime, ICollection, IdentityResult (+3 more)
+### Community 146 - "ApiKey"
+Cohesion: 0.06
+Nodes (36): IApiKeyEffects, IApiKeyReadStore, IApiKeyWriteStore, ApiKeyCommandMapping, CreateApiKeyCommand, CreateApiKeyCommandHandler, CreateApiKeyCommandValidator, RevokeApiKeyCommand (+28 more)
 
-### Community 147 - "[[...path]]/route.ts"
-Cohesion: 0.13
-Nodes (23): CSP_REPORT_CONTENT_TYPES, POST(), callBackend(), createBackendHeaders(), createProxyResponse(), excludedRequestHeaders, excludedResponseHeaders, GET (+15 more)
+### Community 147 - "address-types/components/AddressTypesChartView.tsx"
+Cohesion: 0.11
+Nodes (24): AddressTypesChartView(), AddressTypesChartViewProps, ChartLegendProps, EmptyChartStateProps, InitialLetterChartProps, InitialLetterData, LanguageData, LanguageDistributionChartProps (+16 more)
 
 ### Community 148 - "useAppointmentCalendar.ts"
-Cohesion: 0.11
-Nodes (34): appointmentFormToCreateRequest(), appointmentFormToRequest(), appointmentFormToUpdateRequest(), appointmentToCalendarEvent(), calendarEventToAppointmentForm(), calendarEventToUpdateRequest(), CalendarEventValue, CalendarSelection (+26 more)
-
-### Community 149 - "JobOfferRepository"
-Cohesion: 0.12
-Nodes (18): CancellationToken, EmploymentApplication, JobOffer, JobOfferApprovalHistory, JobOfferDto, JobOfferLineage, JobOpening, JobRequisition (+10 more)
-
-### Community 150 - "InventoryCatalogCqrsTests.cs"
-Cohesion: 0.06
-Nodes (30): SimpleCategoryResponse, Error, IStringLocalizer, CategoryErrors, SimpleSubCategoryResponse, Error, IStringLocalizer, SubCategoryErrors (+22 more)
-
-### Community 151 - "IPlatformAuthorizationSource"
 Cohesion: 0.10
-Nodes (22): CancellationToken, IReadOnlyCollection, Task, IPlatformAuthorizationSource, PlatformRoleOption, CancellationToken, IReadOnlyCollection, Task (+14 more)
+Nodes (36): @fullcalendar/react, @fullcalendar/react@^7.1.0, appointmentFormToCreateRequest(), appointmentFormToRequest(), appointmentFormToUpdateRequest(), appointmentToCalendarEvent(), calendarEventToAppointmentForm(), calendarEventToUpdateRequest() (+28 more)
 
-### Community 152 - "EntityChangeLogServiceTests"
-Cohesion: 0.09
-Nodes (26): CancellationToken, List, RecordingChangeLogStore, CancellationToken, IReadOnlyList, Task, EntityChangeLogQueryRecord, IEntityChangeLogQueryStore (+18 more)
+### Community 149 - "DateTimeOffset"
+Cohesion: 0.03
+Nodes (62): JobOffer, AnnualSalarySnapshot, ApprovalDecisionReason, ApprovalSubmittedById, ApprovalSubmittedOn, ApprovedById, ApprovedOn, BaseSalary (+54 more)
 
-### Community 153 - "Result"
+### Community 150 - "header/index.ts"
+Cohesion: 0.06
+Nodes (57): metadata, Page(), capabilityPresentation, modeKey(), OfflineOperationsPage(), isNullableString(), isRecord(), offlineOperationsService (+49 more)
+
+### Community 151 - "API Feature Development Workflow"
+Cohesion: 0.06
+Nodes (33): 10. Step 7 — Implement persistence and Infrastructure, 11. Step 8 — Handle commit and side effects correctly, 12. Step 9 — Add the Presentation endpoint, 13. Step 10 — Migration and data evolution, 14. Step 11 — Testing requirements, 15. Step 12 — Documentation update, 16. New module path, 17. Required review before handoff (+25 more)
+
+### Community 152 - "Mobile preview and production runbook"
+Cohesion: 0.18
+Nodes (11): Android runtime dependency boundary, Build and installation, Compatibility and recovery, Deferred Release Gates, EAS source-upload boundary, Live development with Fast Refresh, Mandatory device journeys, Mobile preview and production runbook (+3 more)
+
+### Community 153 - "3. سجل الملاحظات المرتبط بالمصدر"
+Cohesion: 0.06
+Nodes (34): 1. الحكم التنفيذي وحدود الأدلة, 2. ما يجب الحفاظ عليه, 3. سجل الملاحظات المرتبط بالمصدر, 4. هيكل مستهدف وحدود المسؤولية, 5. خطة التنفيذ على مراحل, 6. أوامر التحقق ونتائج هذه المراجعة, 7. قواعد إغلاق المراحل وتحديث التوثيق, 8. المصادر الرسمية المستخدمة لتقييد التوصيات (+26 more)
+
+### Community 154 - "MyDataGrid"
+Cohesion: 0.01
+Nodes (274): Server-managed list contract, C-02 — شكل القائمة, إثبات إعادة استخدام مكونات القوائم والفلاتر, 10. Review closure and intentionally deferred optimizations, 2. Realtime first connection versus reconnect, 3. ERP list pagination is server-first, 4. Shell data should not duplicate session identity, 5.1. Global module composition is refresh-safe and atomic (+266 more)
+
+### Community 155 - ".AddPlatformInfrastructure"
+Cohesion: 0.10
+Nodes (6): ApiKeyCredential, IApiKeyCredentialGenerator, InvitationSettings, ExpirationHours, DependencyInjection, ApiKeyCredentialGenerator
+
+### Community 156 - "ledger-setup.ts"
 Cohesion: 0.11
-Nodes (29): AddCrystalReportVersionCommand, CancellationToken, CrystalReportDetailResponse, CrystalReportErrors, CrystalReportInspection, CrystalReportRoleGrantResponse, CrystalReportVersion, Error (+21 more)
+Nodes (23): booleanOptions, companyOnly, currencyPolicyOptions, dimensionRequirementOptions, ledgerSetupDefinitions, ledgerSetupResourceEntities, manualPostingOptions, resetPolicyOptions (+15 more)
 
-### Community 154 - "Interview"
+### Community 157 - "Countries Feature Full Review"
+Cohesion: 0.06
+Nodes (33): 10. Final Reconciliation Checklist, 1. Review Manifest, 2. What “Follow Countries Exactly” Means, 3. Frozen Shared Contract, 4. Platform Responsibility Matrix, 5. Source Evidence Register, 6. Build Sequence for a New Three-Project Feature, 7. Intentional Platform Differences (+25 more)
+
+### Community 158 - "الأنماط المرشحة"
 Cohesion: 0.09
-Nodes (16): DateTimeOffset, IReadOnlyCollection, List, Interview, DateTimeOffset, InterviewEvaluation, InterviewParticipant, InterviewRecommendation (+8 more)
+Nodes (29): C-01 — حاوية النموذج, C-03 — فتح السجل, C-04 — حقول المراجع (Lookups), C-06 — الإجراءات الجماعية, C-07 — الحالة والألوان, C-08 — الحالات الإلزامية, C-09 — التجاوب والاتجاه, C-11 — قواعد السرعة والدقة (+21 more)
 
-### Community 155 - "useAppTheme"
-Cohesion: 0.02
-Nodes (301): RootNavigator(), styles, configureAxiosReadOnlyAccess(), AppLanguage, useLocalization(), useOnboarding(), useMockDataPreferences(), AppProviders() (+293 more)
-
-### Community 156 - "grouped-view/GroupedFilesView.tsx"
-Cohesion: 0.09
-Nodes (31): mapFiles(), MappedFile, sortFiles(), SortKey, FileTile(), FileTileProps, archiveExt, audioExt (+23 more)
-
-### Community 157 - "tenant.ts"
-Cohesion: 0.13
-Nodes (23): getModuleLabel(), humanizeCode(), moduleTranslationKeys, SubscriptionStatus, subscriptionStatuses, TenantModuleEntitlementRequest, TenantModuleEntitlementResponse, TenantPageMetadata (+15 more)
-
-### Community 158 - "BulletChart.tsx"
-Cohesion: 0.16
-Nodes (24): MetricCard(), formatPercentage(), clamp(), getFiniteExtent(), getSafeScaleMax(), normalizeValue(), NumericExtent, safePercentage() (+16 more)
-
-### Community 159 - "CancellationToken"
-Cohesion: 0.15
-Nodes (12): CancellationToken, DateOnly, IReadOnlyList, Task, ApprovedStaffingRequestCandidate, IJobRequisitionReadStore, IJobRequisitionRepository, IRecruitmentRequisitionPolicy (+4 more)
-
-### Community 160 - "use-countries.ts"
-Cohesion: 0.16
-Nodes (23): useOfflineReadPreferences(), useCountryUseCases(), isCountryOfflineReadError(), countryKeys, CountryReadMode, mockCountryUseCases, mockInvalidateQueries, mockUseMutation (+15 more)
-
-### Community 161 - "PlatformDbContext"
-Cohesion: 0.07
-Nodes (30): bool, CancellationToken, DbSet, Func, ICurrentActor, IReadOnlyCollection, ModelBuilder, string (+22 more)
-
-### Community 162 - "PositionEnvelope"
-Cohesion: 0.14
-Nodes (7): CancellationToken, Task, IJobOfferReadStore, IJobOfferRepository, JobOfferLineage, PositionEnvelope, PositionEnvelopeConfiguration
-
-### Community 163 - "PlatformFileOwnershipTests"
-Cohesion: 0.15
-Nodes (10): IWebHostEnvironment, string, PlatformFileStoragePaths, CancellationToken, Fact, Task, AllowFileUploadInspectionService, EmptyCurrentActor (+2 more)
-
-### Community 164 - "Task"
+### Community 159 - "Company user permission grants — web"
 Cohesion: 0.12
-Nodes (12): AuthorizationHandlerContext, CancellationToken, Fact, InlineData, IReadOnlyCollection, IReadOnlyList, IReadOnlySet, Task (+4 more)
+Nodes (16): 10. Persistence and side effects, 11. Verification, 12. Reuse, 13. Localization/accessibility, 14. Delivery, 15. Evidence and closure, 1. Ownership, 2. Approved scope (+8 more)
 
-### Community 165 - "staffing-remote-data-source.ts"
-Cohesion: 0.07
-Nodes (40): createEnvelopeAmendmentUseCases(), EnvelopeAmendmentUseCases, createStaffingRequestUseCases(), StaffingRequestUseCases, staffingEndpoints, staffingRemoteDataSource, toStaffingQuery(), amendmentStatus (+32 more)
+### Community 160 - "ModuleGeneratorTests"
+Cohesion: 0.14
+Nodes (10): GeneratorResult, IsolatedWorkspace, ApiRoot, DotnetCallsPath, HostProject, RegistryPath, Root, SolutionPath (+2 more)
+
+### Community 161 - ".Create"
+Cohesion: 0.22
+Nodes (8): Actor, CompanyId, CorrelationId, IsAuthenticated, Permissions, Roles, TenantId, UserId
+
+### Community 162 - "مخطط ERP SaaS متعدد القنوات"
+Cohesion: 0.06
+Nodes (31): API surface matrix, APIs وEvents, B2B وB2C, Channel quality policy, Commerce boundary, Integration contract/event map, Job Portal boundary, Microservice seams (+23 more)
+
+### Community 163 - "[[...path]]/route.ts"
+Cohesion: 0.15
+Nodes (21): callBackend(), createBackendHeaders(), createProxyResponse(), excludedRequestHeaders, excludedResponseHeaders, GET, getSetCookies(), handle() (+13 more)
+
+### Community 164 - "GetFiscalYearsQuery"
+Cohesion: 0.10
+Nodes (19): FiscalYearListItemResponse, GetFiscalYearsQuery, LifecycleStatus, PageNumber, PageSize, RecordStatus, Search, SearchField (+11 more)
+
+### Community 165 - "use-workforce-planning-use-cases.ts"
+Cohesion: 0.04
+Nodes (24): envelopeAmendmentUseCases, positionEnvelopeUseCases, staffingRequestUseCases, workforceBudgetUseCases, workforcePlanUseCases, workforceTraceUseCases, staffingEndpoints, staffingRemoteDataSource (+16 more)
 
 ### Community 166 - "GlobalSearchPanel.tsx"
-Cohesion: 0.13
-Nodes (28): GlobalSearchBar(), GlobalSearchBarProps, GlobalSearchButton(), GlobalSearchButtonProps, GlobalSearchModal(), GlobalSearchModalProps, GlobalSearchPanel(), GlobalSearchPanelProps (+20 more)
+Cohesion: 0.15
+Nodes (27): GlobalSearchBar(), GlobalSearchBarProps, GlobalSearchButton(), GlobalSearchButtonProps, GlobalSearchModal(), GlobalSearchModalProps, GlobalSearchPanel(), GlobalSearchPanelProps (+19 more)
 
 ### Community 167 - "api/[...path]/route.ts"
-Cohesion: 0.06
-Nodes (50): DELETE, GET, handle(), POST, problemResponse(), RouteParameters, applyAuthPayload(), backendFailureResponse() (+42 more)
+Cohesion: 0.07
+Nodes (39): DELETE, GET, handle(), POST, problemResponse(), RouteParameters, applyAuthPayload(), backendFailureResponse() (+31 more)
 
 ### Community 168 - "ErpSystem.Modules.ReferenceData.Infrastructure.csproj"
 Cohesion: 0.06
 Nodes (33): net10.0, Microsoft.NET.Sdk, net10.0, FluentValidation, FluentValidation.DependencyInjectionExtensions, Mapster, MediatR, Microsoft.Extensions.Localization.Abstractions (+25 more)
 
-### Community 169 - "MyTextField"
+### Community 169 - "AccountsPage.tsx"
 Cohesion: 0.02
-Nodes (111): boolOptions, emptyValues, OrganizationalStructureForm(), toFormValues(), useOrganizationalLookup(), getNextOrganizationalStructureMockData(), organizationalStructureMockDependenciesReady(), lookups (+103 more)
+Nodes (150): Screen Pattern Gate, Page(), Page(), Page(), Page(), Page(), Page(), Page() (+142 more)
 
-### Community 170 - ".SeedAsync"
-Cohesion: 0.13
-Nodes (16): CancellationToken, Func, IReadOnlyCollection, Task, CancellationToken, IReadOnlyCollection, IReadOnlyList, ReferenceDataDbContext (+8 more)
-
-### Community 171 - ".Create"
-Cohesion: 0.12
-Nodes (10): IModule, ErpModuleRegistry, Fact, BusinessControllerAuthorizationTests, Fact, ModuleDependencyInjectionCompositionTests, Fact, IReadOnlyList (+2 more)
-
-### Community 172 - "CrystalReport"
-Cohesion: 0.05
-Nodes (33): Guid, ICollection, CrystalReport, Guid, CrystalReportRight, CrystalReportRoleGrant, Guid, CrystalReportValidationStatus (+25 more)
-
-### Community 173 - "ErpSystem.Modules.HR.Infrastructure.Dependencies"
+### Community 170 - "steps"
 Cohesion: 0.06
-Nodes (21): Error, AttendanceDeviceErrors, IConfiguration, IServiceCollection, DatabaseService, IServiceCollection, ErrorsService, IServiceCollection (+13 more)
+Nodes (30): concurrency, cancel-in-progress, group, BACKEND_URL, jobs, verify-web, name, permissions (+22 more)
+
+### Community 171 - "PlatformTenant"
+Cohesion: 0.06
+Nodes (32): ITenantDashboardSummaryAdapter, TenantDashboardExpiringTenantResponse, TenantDashboardRecentTenantResponse, TenantDashboardSubscriptionStatusCounts, TenantDashboardSummaryResponse, GetTenantDashboardSummaryQuery, GetTenantDashboardSummaryQueryHandler, PlatformTenant (+24 more)
+
+### Community 172 - ".Scope"
+Cohesion: 0.11
+Nodes (17): NotificationErrors, NotificationNotFound, DismissAllNotificationsCommand, DismissAllNotificationsCommandHandler, DismissNotificationCommand, DismissNotificationCommandHandler, GetUnreadNotificationCountQuery, GetUnreadNotificationCountQueryHandler (+9 more)
+
+### Community 173 - "SystemLocalizationRepository"
+Cohesion: 0.16
+Nodes (8): createSystemLocalizationUseCases(), useSystemLocalizationUseCases(), DefaultSystemLocalizationRepository, CompanyLocalizationTextQuery, CompanyLocalizationTexts, SystemLocalizationRuntime, SystemLocalizationSettings, SystemLocalizationRepository
 
 ### Community 174 - "ERPSYSTEM Web Architecture Map"
 Cohesion: 0.05
-Nodes (38): Application boundary and stack, Authority and evidence, Dependency and public-API policy, ERPSYSTEM Web Architecture Map, Feature request flow, Forms and shared UI, Localization, accessibility, and performance, Optional capability boundaries (+30 more)
+Nodes (34): Application boundary and stack, Authority and evidence, Dependency and public-API policy, ERPSYSTEM Web Architecture Map, Feature request flow, Localization, accessibility, and performance, Optional capability boundaries, Routes, modules, and access (+26 more)
 
-### Community 175 - "StaffingContracts.cs"
-Cohesion: 0.14
-Nodes (23): CloseStaffingRequestRequest, CreateEnvelopeAmendmentRequest, CreateStaffingRequestRequest, EnvelopeAmendmentActionRequest, RejectEnvelopeAmendmentRequest, RejectStaffingRequestRequest, StaffingRequestActionRequest, CancellationToken (+15 more)
+### Community 175 - "PlatformUserInvitation"
+Cohesion: 0.08
+Nodes (26): PlatformUserInvitation, AcceptedOn, CompanyIds, CompanyIdsJson, CreatedOn, DefaultCompanyId, Email, ExpiresOn (+18 more)
 
 ### Community 176 - "district.ts"
-Cohesion: 0.05
-Nodes (45): createDistrictUseCases(), DistrictUseCases, SaveDistrictInput, useDistrictUseCases(), districtEndpoints, DistrictRemoteDataSource, toDistrictPageQuery(), bulkArchiveDistrictsResultSchema (+37 more)
+Cohesion: 0.06
+Nodes (32): createDistrictUseCases(), DistrictUseCases, SaveDistrictInput, districtEndpoints, districtRemoteDataSource, toDistrictPageQuery(), bulkArchiveDistrictsResultSchema, bulkCreateDistrictsResultSchema (+24 more)
 
-### Community 177 - "WorkforcePlanWriteStore"
-Cohesion: 0.10
-Nodes (18): CancellationToken, DateOnly, FiscalYearPlanningSnapshot, GetWorkforcePlansQuery, IReadOnlyCollection, IReadOnlyList, PageResponse, PositionPlanningSnapshot (+10 more)
-
-### Community 178 - "secure-storage.ts"
-Cohesion: 0.09
-Nodes (20): STORAGE_KEYS, OfflineReadableFeature, OnboardingContext, OnboardingContextValue, OnboardingProvider(), MockDataPreferencesContext, MockDataPreferencesContextValue, MockDataPreferencesProvider() (+12 more)
-
-### Community 179 - "ICommand"
-Cohesion: 0.13
-Nodes (33): ICommand, ICommandHandler, CancellationToken, Result, Task, ArchiveFiscalYearCommand, ArchiveFiscalYearCommandHandler, ArchiveFiscalYearCommandValidator (+25 more)
-
-### Community 180 - "StateQueries.cs"
-Cohesion: 0.13
-Nodes (27): BulkArchiveStatesResponse, CreateStateRequest, CreateStatesResponse, StateDetailResponse, StateDistrictListItem, StateListItemResponse, StateLookupResponse, StateMutation (+19 more)
-
-### Community 181 - "CrystalReportDataBuildResult"
-Cohesion: 0.13
-Nodes (24): CrystalReportDataBuildResult, CancellationToken, IReadOnlyDictionary, IReadOnlySet, Task, FiscalYearsCrystalReportDataProvider, CancellationToken, DataTable (+16 more)
-
-### Community 182 - "Task"
+### Community 177 - "Districts Next.js Implementation Reference"
 Cohesion: 0.07
-Nodes (22): AuthorizationHandlerContext, CancellationToken, DateTimeOffset, Fact, Guid, IReadOnlyList, IReadOnlySet, Task (+14 more)
+Nodes (27): 10. Handoff and remaining decisions, 1. Purpose and scope, 2. Audited baseline, 3. Domain and ownership decisions, 4. API contract, 5. Browser implementation, 6. Mobile implementation, 7. Intentional platform differences (+19 more)
+
+### Community 178 - "IAuthenticationTokenService"
+Cohesion: 0.12
+Nodes (13): GenerateRealtimeAuthenticationTokenQuery, GenerateRealtimeAuthenticationTokenQueryHandler, AccessTokenClaimValue, AuthenticationIssuedToken, AuthenticationTokenSubjectSnapshot, AuthenticationValidatedAccessToken, AuthenticationValidatedCompanySelectionToken, AuthenticationValidatedTenantSelectionToken (+5 more)
+
+### Community 179 - "FiscalYearCommands.cs"
+Cohesion: 0.07
+Nodes (45): IAccountingUnitOfWork, FiscalYearChange, IFiscalYearChangeScheduler, IFiscalYearReadStore, IFiscalYearWriteStore, ArchiveFiscalYearCommand, ArchiveFiscalYearCommandHandler, ArchiveFiscalYearCommandValidator (+37 more)
+
+### Community 180 - "JobRequisitionsGrid.tsx"
+Cohesion: 0.10
+Nodes (20): JobRequisitionsGrid(), JobRequisitionsGridProps, useApproveJobRequisition(), useCancelJobRequisition(), useJobRequisitions(), useRejectJobRequisition(), useSubmitJobRequisition(), EmploymentType (+12 more)
+
+### Community 181 - "Phase 2 Execution Contract — Workforce Budgets and Position Envelopes"
+Cohesion: 0.08
+Nodes (24): 10. Mobile implementation, 11. Realtime, localization, and permission behavior, 12. Required automated evidence, 13. Documentation and handoff, 14. Gate 2 acceptance, 1. Objective, 2. Current-state evidence and preconditions, 4.1 WorkforceBudgetStatus (+16 more)
+
+### Community 182 - "IReadOnlyList"
+Cohesion: 0.02
+Nodes (90): AuditTrailRecord, AuditTrailRecordDetails, AuditTrailSource, ModuleCode, FiscalYearLookupResponse, GetFiscalYearLookupQuery, GetFiscalYearLookupQueryHandler, AccountLookupResponse (+82 more)
 
 ### Community 183 - "OfflineScope"
 Cohesion: 0.07
-Nodes (29): OutboxCommand, OutboxStore, OfflineScope, errorMessage(), hasRequiredReplayGuard(), isAuthorizedForScope(), ReplaySafety, SyncAuthorization (+21 more)
+Nodes (24): mapOutboxRow(), OfflineOutboxRepository, requireText(), requireUuid(), normalizeOfflineScope(), OfflineScope, offlineScopeKey(), OfflineScopeRepository (+16 more)
 
 ### Community 184 - "expo"
-Cohesion: 0.06
-Nodes (31): backgroundColor, backgroundImage, foregroundImage, monochromeImage, adaptiveIcon, allowBackup, package, predictiveBackGestureEnabled (+23 more)
+Cohesion: 0.05
+Nodes (43): backgroundColor, backgroundImage, foregroundImage, monochromeImage, adaptiveIcon, allowBackup, package, predictiveBackGestureEnabled (+35 more)
 
-### Community 185 - "ZkComDeviceDriver"
+### Community 185 - "states/components/StatesChartView.tsx"
 Cohesion: 0.16
-Nodes (14): DeviceEndpointRequest, DeviceInfo, CancellationToken, Dictionary, Func, int, string, Task (+6 more)
+Nodes (19): CountryData, prepareCountryData(), prepareDistrictData(), prepareTimelineData(), states, TimelineData, usesArabicNames(), CountryBarChart() (+11 more)
 
-### Community 186 - ".SaveChangesAsync"
-Cohesion: 0.21
-Nodes (8): CancellationToken, Func, IReadOnlyCollection, Task, DbContextOptions, Fact, Task, FiscalYearCompanyIsolationTests
+### Community 186 - "FiscalPeriod"
+Cohesion: 0.09
+Nodes (17): FiscalPeriod, Code, EndDate, FiscalYear, FiscalYearId, Id, NameAr, NameEn (+9 more)
 
-### Community 187 - "AttendanceDeviceContracts.cs"
+### Community 187 - "Error Logs — cross-platform review"
 Cohesion: 0.08
-Nodes (30): AttendanceAgentHeartbeatResponse, AttendanceAgentInstallConfiguration, AttendanceAgentPunch, AttendanceAgentSession, AttendanceAgentTestResult, AttendanceAgentUser, AttendanceAgentWorkItemResponse, AttendanceAgentWorkResultResponse (+22 more)
+Nodes (24): 10. Persistence and side effects, 11. Verification, 12. Reuse, 13. Localization and accessibility, 14. Delivery, 15. Evidence and closure, 16. Corrective follow-up — 2026-10-18, 17. Shared component fidelity correction — 2026-10-18 (+16 more)
 
-### Community 188 - "auth/permissions.ts"
-Cohesion: 0.07
-Nodes (61): AppRoutes, AuthenticationRoutes, ModuleRoutes, OrganizationalStructureRoutes, PlatformRoutes, RouteKey, RouteValue, ShellRoutes (+53 more)
+### Community 188 - "Module documentation"
+Cohesion: 0.25
+Nodes (8): Future business and channel modules, Module documentation, `module.json` contract, Modules, Moving existing books, Ownership boundary, Reuse-first implementation rule, Status vocabulary
 
 ### Community 189 - "AppointmentRepository"
 Cohesion: 0.11
 Nodes (19): AppointmentUseCases, createAppointmentUseCases(), appointmentUseCases, useAppointmentUseCases(), appointmentEndpoints, appointmentRemoteDataSource, appointmentSchema, DefaultAppointmentRepository (+11 more)
 
-### Community 190 - "NotificationsScreen.tsx"
-Cohesion: 0.16
-Nodes (21): useNotificationUseCases(), AppNotification, NotificationFilter, NotificationSeverity, NotificationRow(), NotificationRowProps, styles, notificationFilterStatus() (+13 more)
+### Community 190 - "steps"
+Cohesion: 0.08
+Nodes (24): concurrency, cancel-in-progress, group, jobs, verify-mobile, name, permissions, contents (+16 more)
 
-### Community 191 - "LedgerSetupContracts.cs"
-Cohesion: 0.16
-Nodes (19): AccountDimensionPolicyRequest, AccountingSettingsMutation, AccountListQuery, AccountMappingRequest, AccountResolutionCandidateResponse, DimensionListQuery, LedgerSetupListQuery, PostingProfileRequest (+11 more)
+### Community 191 - "Core Feature CQRS and Web Implementation Guide"
+Cohesion: 0.07
+Nodes (29): 10. Countries Reference Map, 11. Recommended Core HR Delivery Order, 12. Feature Implementation Playbook, 13. Definition of Done, 14. Anti-Patterns, 1. Decisions, 3. Target Vertical Slice, 5. Handler Ownership (+21 more)
 
-### Community 192 - "WorkforcePlanQueries.cs"
-Cohesion: 0.11
-Nodes (34): CreateWorkforcePlanRequest, RejectWorkforcePlanRequest, UpdateWorkforcePlanRequest, WorkforcePlanActionRequest, WorkforcePlanDetailResponse, WorkforcePlanLineRequest, WorkforcePlanLineResponse, WorkforcePlanListItemResponse (+26 more)
+### Community 192 - "Error Logs — Expo implementation profile"
+Cohesion: 0.08
+Nodes (23): 10. Offline, 11. Security, 12. Integration, 13. Localization, 14. Verification, 15. Phase 00 handoff, 16. GUID compatibility and Settings navigation correction — 2026-10-18, 17. Administration navigation — 2026-10-18 (+15 more)
 
 ### Community 193 - "ErpSystem.Modules.Inventory.Application.csproj"
 Cohesion: 0.06
 Nodes (32): net10.0, FluentValidation, FluentValidation.DependencyInjectionExtensions, MediatR, Microsoft.Extensions.Localization.Abstractions, Microsoft.NET.Sdk, net10.0, Microsoft.NET.Sdk (+24 more)
 
-### Community 194 - "StaffingWriteStore"
-Cohesion: 0.11
-Nodes (17): CancellationToken, EnvelopeAmendment, EnvelopeAmendmentDetailResponse, EnvelopeAmendmentListItemResponse, GetEnvelopeAmendmentsQuery, GetStaffingRequestsQuery, PageResponse, PositionEnvelope (+9 more)
+### Community 194 - "CountriesScreen.tsx"
+Cohesion: 0.03
+Nodes (124): 10. Lifecycle actions, 11. Native Import, 12. Managed Report, 13. Accessibility, RTL, and responsive behavior, 14. Realtime, 15. Verification, 1. Scope, 2. Guarded route (+116 more)
 
-### Community 195 - "CancellationToken"
-Cohesion: 0.14
-Nodes (13): IReferenceDataUnitOfWork, CancellationToken, Country, Func, IReadOnlyCollection, IReadOnlyList, NoCompanyGeographyUsage, RecordingAuditTrail (+5 more)
+### Community 195 - "RecruitmentPage.tsx"
+Cohesion: 0.15
+Nodes (20): metadata, JobOpeningsGrid(), JobOpeningsGridProps, RecruitmentKanbanBoard(), useCloseJobOpening(), useJobOpenings(), useOpenJobOpening(), usePauseJobOpening() (+12 more)
 
 ### Community 196 - "3. Slice roadmap"
 Cohesion: 0.10
-Nodes (21): 0. Plan metadata, 1. Executive outcome, 2. Scope, 3. Slice roadmap, 4. Dependencies, 5. Quality gates, 6. Rules carried into every slice, Business problem (+13 more)
+Nodes (20): 0. Plan metadata, 1. Executive outcome, 2. Scope, 3. Slice roadmap, 4. Dependencies, 5. Quality gates, 6. Rules carried into every slice, Business problem (+12 more)
 
-### Community 197 - ".EveryAction_DispatchesItsSliceAndUsesCanonicalSuccessStatus"
-Cohesion: 0.26
-Nodes (15): BulkArchiveStatesRequest, CreateStatesRequest, UpdateStateRequest, CancellationToken, HasPermission, HttpDelete, HttpGet, HttpPost (+7 more)
+### Community 197 - "Error Logs — Next.js implementation profile"
+Cohesion: 0.08
+Nodes (23): 10. Data policy, 11. Localization, 12. Verification, 13. Integration, 14. Phase 00 handoff, 15. GUID compatibility and Settings navigation correction — 2026-10-18, 16. Shared criteria UI correction — 2026-10-18, 17. Administration navigation — 2026-10-18 (+15 more)
 
-### Community 198 - "client.ts"
-Cohesion: 0.09
-Nodes (18): ApiClient, ApiError, ApiErrorPayload, AppRequestConfig, asString(), createReadOnlyError(), getDataHeaders(), isPublicAuthenticationRequest() (+10 more)
+### Community 198 - "platform/features/README.md"
+Cohesion: 0.07
+Nodes (20): Approved references, Company Geographic Scope Phase 00 - Discovery and Evidence, Discovery checklist, Purpose, Required outputs, Source fingerprints, Approved references, Evidence to capture (+12 more)
 
 ### Community 199 - "http"
 Cohesion: 0.07
 Nodes (28): ASPNETCORE_ENVIRONMENT, applicationUrl, commandName, dotnetRunMessages, environmentVariables, launchBrowser, launchUrl, applicationUrl (+20 more)
 
-### Community 200 - ".Update"
-Cohesion: 0.14
-Nodes (13): CompanyCountryOptionResponse, UpdateCompanyGeographicScopeRequest, CancellationToken, HasPermission, HttpGet, HttpPut, IActionResult, ProducesResponseType (+5 more)
+### Community 200 - "Company Geographic Scope API Implementation Profile"
+Cohesion: 0.08
+Nodes (24): CompanyGeographicScopeTests, 10. Verification, 11. Consumer Rules, 1. Exact Source Inventory, 2. Domain Contract, 3. Persistence Contract, 4. Read Contract, 6. Atomicity and Concurrency (+16 more)
 
-### Community 201 - "TenantAdministrationResult"
-Cohesion: 0.15
-Nodes (16): CancellationToken, IReadOnlyList, Task, ITenantAdministratorFlow, ITenantManagementFlow, TenantAdministrationPageRequest, TenantAdministrationResult, TenantAdministratorResponse (+8 more)
+### Community 201 - "IQuery"
+Cohesion: 0.04
+Nodes (66): ArchiveTenantRequest, CreateTenantAdministratorRequest, ITenantAdministrationPolicy, ITenantAdministratorAdapter, ITenantAdministratorFlow, ITenantManagementAdapter, ITenantManagementFlow, RestoreTenantRequest (+58 more)
 
-### Community 202 - "CancellationToken"
-Cohesion: 0.11
-Nodes (17): CancellationToken, FileUpload, Guid, IReadOnlyCollection, IReadOnlyDictionary, IReadOnlyList, Stream, Task (+9 more)
+### Community 202 - "Company Message Logs — Screen / Workflow Contract"
+Cohesion: 0.09
+Nodes (22): 0. Contract metadata, 10. i18n, RTL, accessibility, and responsive behavior, 11. Vertical execution ledger (strict one-active-step gate), 12. Verification contract, 13. Child exit gate, 1. Child boundary and outcome, 2. UI Pattern Gate (mandatory before implementation), 3. Closest existing reference (+14 more)
 
-### Community 203 - "WorkforceBudgetContracts.cs"
-Cohesion: 0.18
-Nodes (19): BudgetSourcePlanLineResponse, BudgetSourcePlanPeriodResponse, CreateWorkforceBudgetRequest, RejectWorkforceBudgetRequest, UpdateWorkforceBudgetRequest, WorkforceBudgetActionRequest, WorkforceBudgetLineRequest, WorkforceBudgetLineResponse (+11 more)
+### Community 203 - "Districts API — Frontend Integration Guide"
+Cohesion: 0.09
+Nodes (23): Address Form Integration, Archive behaviour, Authentication, Cascading Dropdown Flow, Data Models, DELETE /api/v1/districts/{id}, DistrictRequest (POST / PUT body), DistrictResponse (GET response) (+15 more)
 
 ### Community 204 - "ErpSystem.Modules.HR.Infrastructure.csproj"
 Cohesion: 0.04
-Nodes (49): net10.0, FluentValidation, FluentValidation.DependencyInjectionExtensions, Mapster, MediatR, Microsoft.Extensions.Localization.Abstractions, Microsoft.Extensions.Logging.Abstractions, Microsoft.NET.Sdk (+41 more)
+Nodes (46): net10.0, FluentValidation, FluentValidation.DependencyInjectionExtensions, Mapster, MediatR, Microsoft.Extensions.Localization.Abstractions, Microsoft.Extensions.Logging.Abstractions, Microsoft.NET.Sdk (+38 more)
 
-### Community 205 - "DimensionsController"
-Cohesion: 0.24
-Nodes (14): DimensionDefinitionRequestValidator, DimensionValueRequestValidator, DimensionDefinitionRequest, DimensionValueRequest, CancellationToken, HasPermission, HttpDelete, HttpGet (+6 more)
+### Community 205 - "error-log-remote-data-source.ts"
+Cohesion: 0.14
+Nodes (21): expo-file-system@~57.0.6, expo-sharing@~57.0.24, createErrorLogUseCases(), row, errorLogEndpoints, errorLogParams(), errorLogRemoteDataSource, errorLogDetailSchema (+13 more)
 
 ### Community 206 - "ERPSYSTEM API Architecture Map"
 Cohesion: 0.05
 Nodes (36): Authority order, Canonical module shape, ERPSYSTEM API Architecture Map, Error, validation, mapping, and time conventions, Persistence and consistency, Representative implementations, Request and host flow, Runtime topology (+28 more)
 
-### Community 207 - "Result"
-Cohesion: 0.15
-Nodes (23): NotificationPageResponse, Error, NotificationErrors, CancellationToken, Result, Task, DismissAllNotificationsCommand, DismissAllNotificationsCommandHandler (+15 more)
+### Community 207 - "UnitOfWorkOwnershipArchitectureTests"
+Cohesion: 0.07
+Nodes (18): CompanyLocalizationOverride, Id, Key, Language, Source, Value, CompanyLocalizationSettings, CompanyId (+10 more)
 
-### Community 208 - "web-next/src/shared/components/dialogs/index.ts"
-Cohesion: 0.05
-Nodes (27): metadata, AppointmentCalendar(), calendarPlugins, appointmentCalendarStyles(), AppointmentDeleteDialog(), AppointmentDeleteDialogProps, AppointmentDialog(), AppointmentsPage() (+19 more)
+### Community 208 - "MessageLogEntry"
+Cohesion: 0.06
+Nodes (35): ResultExtensions, ExportMessageLogsQuery, ExportMessageLogsValidator, IMessageLogReader, ListMessageLogsQuery, ListMessageLogsValidator, MessageLogCriteria, MessageLogCriteriaValidator (+27 more)
 
-### Community 209 - "CrystalReportDeploymentSourceClientTests"
-Cohesion: 0.16
-Nodes (14): CancellationToken, Fact, HttpClient, HttpMessageHandler, HttpRequestMessage, HttpResponseMessage, Stream, Task (+6 more)
+### Community 209 - "devDependencies"
+Cohesion: 0.08
+Nodes (22): { defineConfig }, expoConfig, devDependencies, eslint@^9.25.0, eslint-config-expo@~57.0.2, jest@~29.7.0, jest-expo@~57.0.6, @react-native/jest-preset@0.86.3 (+14 more)
 
 ### Community 210 - "en.ts"
-Cohesion: 0.11
-Nodes (13): enAdministrationTenants, enAuthProfileOnboarding, enBasicData, enCommon, enCurrencies, enFiscalYears, enLedgerSetup, enModules (+5 more)
-
-### Community 211 - "CrmAppointmentCqrsTests.cs"
 Cohesion: 0.09
-Nodes (16): Error, IStringLocalizer, AppointmentErrors, IConfiguration, IServiceCollection, DependencyInjection, Appointment, EntityTypeBuilder (+8 more)
+Nodes (16): enAdministrationTenants, enAuthProfileOnboarding, enBasicData, enCommon, enCompanyLocalizations, enCurrencies, enEmailTemplates, enErrorLogs (+8 more)
 
-### Community 212 - "FutureBusinessModule"
-Cohesion: 0.17
-Nodes (11): CancellationToken, Fact, IConfiguration, IReadOnlyList, IServiceCollection, IServiceProvider, Task, EmptyCurrentActor (+3 more)
+### Community 211 - "PLAN_REGISTRY.md"
+Cohesion: 0.03
+Nodes (51): CustomerRelationshipManagement architecture, Future channel boundary, Runtime ownership, CustomerRelationshipManagement delivery roadmap, Foundation (verified), Planned, Current status, CustomerRelationshipManagement module (+43 more)
+
+### Community 212 - "Platform Settings â€” Mobile applied book"
+Cohesion: 0.09
+Nodes (21): 10. Verification, 11. Source inventory, 12. Phase 00 readiness, 13. Acceptance, 14. Verification and closure evidence, 15. Verification and closure evidence, 1. Scope, 20. Final applied acceptance — 2026-10-19 (+13 more)
 
 ### Community 213 - "سيناريو القبول اليدوي — الخطوة 01: السنوات والفترات المالية / Fiscal Years & Periods"
 Cohesion: 0.05
 Nodes (38): 10. تدقيق UI patterns والخمس رحلات, 11. التنظيف, 12. سجل النتيجة والأدلة, 13. قرارك الصريح بعد التنفيذ, 1. حالة السيناريو, 2.1 سجل الجاهزية الآلية — 2026-09-27, 2. ما سيجهزه وكيل التنفيذ قبل أن تبدأ, 3. حسابات الاختبار المطلوبة (+30 more)
 
-### Community 214 - "AudioPlayer.tsx"
-Cohesion: 0.07
-Nodes (27): MenuEntry, MoreMenu(), MoreMenuProps, PlaybackControls(), PlaybackControlsProps, ProgressBar(), ProgressBarProps, RepeatToggle() (+19 more)
-
-### Community 215 - "FiscalYearsController"
-Cohesion: 0.22
-Nodes (17): AllowTenantReadOnly, FiscalYearLifecycleAction, FiscalYearConcurrencyRequest, CancellationToken, HasPermission, HttpDelete, HttpGet, HttpPost (+9 more)
-
-### Community 216 - "JobOpeningDto"
-Cohesion: 0.15
-Nodes (24): JobOpeningDto, CancellationToken, Task, IJobOpeningReadStore, IJobOpeningRepository, CancellationToken, Result, Task (+16 more)
-
-### Community 217 - "RecruitmentSettingsRepository"
+### Community 214 - "company-localization-remote-data-source.ts"
 Cohesion: 0.14
-Nodes (13): CancellationToken, EvaluationCriterion, List, RecruitmentPolicy, RecruitmentSource, RecruitmentStage, RejectionReason, Task (+5 more)
+Nodes (15): companyUiCatalogVersion, companyLocalizationEndpoints, runtime, scope, settings, language, runtimeSchema, settingsSchema (+7 more)
+
+### Community 215 - "AuditableEntity"
+Cohesion: 0.07
+Nodes (31): IAuditTrailSource, ModuleCode, IAuditedEntity, AuditableEntity, CreatedById, CreatedByPc, CreatedOn, DeletedById (+23 more)
+
+### Community 216 - "CrmAppointmentCqrsTests.cs"
+Cohesion: 0.11
+Nodes (15): CrmPermissions, All, Appointments, CrmDomainHardeningTests, ErpSystem.Modules.CRM.Domain.Appointments.Entities, ErpSystem.Modules.CRM.Application.Features.Appointments.Contracts, ErpSystem.Modules.CRM.Tests, ErpSystem.Modules.CRM.Application.Features.Appointments.Commands (+7 more)
+
+### Community 217 - "Platform Settings â€” Web applied book"
+Cohesion: 0.09
+Nodes (21): 10. Tests, 11. Build, 12. Phase 00 source review, 13. Verification status, 14. Verification and closure evidence, 1. Scope, 20. Final applied acceptance — 2026-10-19, 21. Settings card fidelity correction — 2026-10-19 (+13 more)
 
 ### Community 218 - "ErpSystem.Modules.Reporting.Application.csproj"
 Cohesion: 0.07
-Nodes (28): net10.0, FluentValidation, FluentValidation.DependencyInjectionExtensions, MediatR, Microsoft.Extensions.Localization.Abstractions, Microsoft.NET.Sdk, net10.0, Microsoft.NET.Sdk (+20 more)
+Nodes (30): net10.0, Microsoft.NET.Sdk, net10.0, FluentValidation, FluentValidation.DependencyInjectionExtensions, MediatR, Microsoft.Extensions.Localization.Abstractions, Microsoft.NET.Sdk (+22 more)
 
-### Community 219 - "cookies.ts"
+### Community 219 - "States API — Frontend Integration Guide"
 Cohesion: 0.09
-Nodes (36): POST(), GET(), { resolveSessionMock }, GET(), { resolveSessionMock, setAuthCookiesMock, annotateScopeMock }, verifiedSession, definitiveRefreshRejectionStatuses, fetchVerifiedSession() (+28 more)
+Nodes (22): Archive behaviour, Authentication, Cascading Dropdowns (if used in address forms), Data Models, DELETE /api/v1/states/{id}, Dropdown: Country, Endpoint Details, Endpoints Summary (+14 more)
 
 ### Community 221 - "error-dialog/errorDialogStore.ts"
-Cohesion: 0.14
-Nodes (23): copyText(), ErrorDialogHost(), ErrorDialogView(), formatTechnicalDetails(), getServerSnapshot(), createReportId(), dismissErrorDialog(), emitChange() (+15 more)
+Cohesion: 0.11
+Nodes (31): ErrorDialogHost(), ErrorDialogView(), formatTechnicalDetails(), getServerSnapshot(), createReportId(), dismissErrorDialog(), emitChange(), getErrorDialogSnapshot() (+23 more)
 
-### Community 222 - "AddressTypeCommands.cs"
-Cohesion: 0.13
-Nodes (30): AddressTypeDetailResponse, AddressType, CancellationToken, ICurrentActor, IEnumerable, int, Result, Task (+22 more)
+### Community 222 - "useFileGridLogic.ts"
+Cohesion: 0.03
+Nodes (99): metadata, FileDeleteDialog(), FileDeleteDialogProps, FileUploadDialog(), FileUploadDialogProps, UploadActions(), UploadHeader(), UploadList() (+91 more)
 
-### Community 223 - "CurrencyBaselineMigrationTests.cs"
-Cohesion: 0.13
-Nodes (10): ModelBuilder, InitialAccounting, ModelBuilder, InitialHr, Fact, List, CurrencyBaselineMigrationTests, ExposedInitialAccounting (+2 more)
+### Community 223 - "Accounting Core GL — Master Build Plan"
+Cohesion: 0.04
+Nodes (50): 0. Plan metadata, 11. API / CQRS / contracts, 12. Web experience, 13. Mobile experience, 14. 5-point structured-data parity audit, 15. Reporting / import / export / files, 16. Integrations and side effects, 17. Non-functional requirements (+42 more)
 
-### Community 224 - "SubmitAttendanceAgentWorkResultCommandHandler"
-Cohesion: 0.21
-Nodes (17): CancellationToken, DevicePullRun, IAttendanceRawStore, Result, Task, TimeProvider, TimeSpan, ClaimAttendanceAgentWorkCommand (+9 more)
+### Community 224 - "documentation-ci.yml"
+Cohesion: 0.09
+Nodes (21): concurrency, cancel-in-progress, group, jobs, verify-documentation, name, permissions, contents (+13 more)
 
 ### Community 225 - "company-geographic-scope-remote-data-source.ts"
 Cohesion: 0.10
-Nodes (16): CompanyGeographicScopeUseCases, createCompanyGeographicScopeUseCases(), useCompanyGeographicScopeUseCases(), companyGeographicScopeEndpoints, CompanyGeographicScopeRemoteDataSource, scope, companyCountryOptionSchema, companyGeographicScopeSchema (+8 more)
+Nodes (17): CompanyGeographicScopeUseCases, createCompanyGeographicScopeUseCases(), useCompanyGeographicScopeUseCases(), companyGeographicScopeEndpoints, companyGeographicScopeRemoteDataSource, scope, companyCountryOptionSchema, companyGeographicScopeSchema (+9 more)
 
-### Community 226 - "StubModule"
-Cohesion: 0.13
-Nodes (13): CancellationToken, ICollection, IConfiguration, IEndpointRouteBuilder, IReadOnlyList, IServiceCollection, IServiceProvider, Task (+5 more)
+### Community 226 - "WorkforceBudgetsScreen.tsx"
+Cohesion: 0.07
+Nodes (47): createPositionEnvelopeUseCases(), PositionEnvelopeUseCases, createWorkforceBudgetUseCases(), WorkforceBudgetUseCases, detail, workforceBudgetEndpoints, toPositionEnvelopePageQuery(), toWorkforceBudgetPageQuery() (+39 more)
 
-### Community 227 - "ModuleCatalogItem"
-Cohesion: 0.19
-Nodes (15): ModuleCatalogItem, CancellationToken, IReadOnlyList, Task, GetAccessibleModulesQuery, GetAccessibleModulesQueryHandler, GetInstalledModulesQuery, GetInstalledModulesQueryHandler (+7 more)
-
-### Community 228 - "CancellationToken"
-Cohesion: 0.18
-Nodes (8): CancellationToken, Expression, IQueryable, IReadOnlyCollection, IReadOnlyList, Task, StateReadStore, StateWriteStore
-
-### Community 229 - "useImportStates.ts"
+### Community 227 - "Platform Settings â€” Master applied book"
 Cohesion: 0.10
-Nodes (34): CountryLookupAlert(), CountryLookupAlertProps, AnimatedBox, ImportStates(), ImportStatesProps, LoadingAlert(), LoadingAlertProps, NoDataMessage() (+26 more)
+Nodes (20): 10. Verification, 11. Customer education, 12. Acceptance, 13. Central notes, 1. Scope and authority, 20. Final applied acceptance — 2026-10-19, 21. Settings card fidelity correction — 2026-10-19, 22. Card correction acceptance (+12 more)
 
-### Community 230 - "PlatformTenantReadOnlyMiddlewareOwnershipTests"
-Cohesion: 0.11
-Nodes (19): HttpContext, ICurrentExecutionContext, IStringLocalizer, ITenantAccessService, Task, TenantReadOnlyMiddleware, CancellationToken, DateTime (+11 more)
+### Community 228 - "SystemLocalizationSettings"
+Cohesion: 0.13
+Nodes (12): SystemLocalizationOverride, Id, Key, Language, Source, Value, SystemLocalizationSettings, Id (+4 more)
 
-### Community 231 - "moduleAccents.ts"
-Cohesion: 0.25
-Nodes (9): ColoredIcon(), isModuleAccent(), ModuleAccent, moduleAccentRoles, moduleSequenceOrder, resolveModuleAccent(), resolveSequenceAccent(), NavigationIconSequenceContext (+1 more)
+### Community 229 - "email-template-remote.ts"
+Cohesion: 0.16
+Nodes (10): createEmailTemplateUseCases(), useEmailTemplateUseCases(), emailTemplateEndpoints, emailPreviewSchema, emailTemplatePageSchema, emailTemplateRemote, emailTemplateSchema, OnlineEmailTemplateReader (+2 more)
+
+### Community 230 - "Countries Full-Stack Web and Mobile Implementation Profile"
+Cohesion: 0.09
+Nodes (22): 11. Blueprint for the Next Feature, 12. Review Findings: Do Not Copy These Gaps, 13. Verification Matrix, 14. Final Reconciliation Checklist, 2. Source Map and Ownership, 4. Read Path Contract, 6. Detail and Write Contract, 7. Permission, Read-only and Action-State Contract (+14 more)
+
+### Community 231 - "Message logs — Discovery"
+Cohesion: 0.10
+Nodes (19): 10. Integrations, 11. Files/reports, 12. Scale/operations, 13. Rollout, 14. Acceptance, 1. Outcome, 2. Current process, 3. Actors/authority (+11 more)
 
 ### Community 232 - "JobDescription"
-Cohesion: 0.13
-Nodes (13): DateOnly, DateTimeOffset, ICollection, IEnumerable, JobDescription, List, JobDutyItem, JobDutySection (+5 more)
+Cohesion: 0.04
+Nodes (55): JobDescription, ApprovedByUserId, DecisionOn, DecisionReason, DutySections, EducationRequirements, EffectiveDate, ExpiryDate (+47 more)
 
-### Community 233 - "country.ts"
-Cohesion: 0.05
-Nodes (46): CountryUseCases, createCountryUseCases(), SaveCountryInput, CountryCachedValue, CountryLocalDataSource, unavailableCountryLocalDataSource, namespaces, pageKey() (+38 more)
+### Community 233 - "country-remote-data-source.ts"
+Cohesion: 0.04
+Nodes (65): 4. Type and Runtime Schema Contract, useOfflineReadPreferences(), CountryUseCases, createCountryUseCases(), SaveCountryInput, useCountryUseCases(), CountryCachedValue, CountryLocalDataSource (+57 more)
 
-### Community 234 - "DistrictsController"
-Cohesion: 0.37
-Nodes (10): CancellationToken, HasPermission, HttpDelete, HttpGet, HttpPost, HttpPut, IActionResult, ProducesResponseType (+2 more)
+### Community 234 - "User permission grants and company UI localization — Pre-plan specification"
+Cohesion: 0.10
+Nodes (18): Conflicts / drift and verification limits, Scope of investigation, User permission grants and company UI localization — Evidence ledger, Architecture and integrations, ASSUMPTIONS, Deferred, Domain and source of truth, Excluded (+10 more)
 
-### Community 235 - "fiscal-year-use-cases.ts"
-Cohesion: 0.23
-Nodes (5): SaveFiscalYearInput, detail, FiscalYearPage, FiscalYearPageQuery, normalizeFiscalYearRequest()
+### Community 235 - "CompanyEmailTemplateSettings"
+Cohesion: 0.10
+Nodes (17): AccountEmailCatalog, Definitions, AccountEmailDefinition, CompanyEmailTemplateOverride, Body, Id, Language, Subject (+9 more)
 
 ### Community 236 - "ErpSystem.sln"
-Cohesion: 0.08
+Cohesion: 0.07
 Nodes (28): net10.0, Microsoft.NET.Sdk, net10.0, FluentValidation, FluentValidation.DependencyInjectionExtensions, MediatR, Microsoft.NET.Sdk, net10.0 (+20 more)
 
-### Community 237 - "AttendanceDevicesController"
-Cohesion: 0.28
-Nodes (11): StartPullRequest, CancellationToken, HasPermission, HttpGet, HttpPatch, HttpPost, HttpPut, IActionResult (+3 more)
+### Community 237 - "Angular 22 and PrimeNG Web Migration — Master Build Plan"
+Cohesion: 0.09
+Nodes (22): 0. Plan metadata, 10. Shared UI and pattern mapping, 11. Forms, localization, accessibility and visual parity, 12. Platform/client classification and structured-data audit, 13. Specialist integrations, 14. Performance, reliability and observability, 15. Verification and acceptance, 16. Rollout, recovery and coexistence (+14 more)
 
 ### Community 238 - "ErpSystem.Modules.CRM.Application.csproj"
 Cohesion: 0.07
 Nodes (29): net10.0, FluentValidation, FluentValidation.DependencyInjectionExtensions, MediatR, Microsoft.Extensions.Localization.Abstractions, Microsoft.NET.Sdk, net10.0, Microsoft.NET.Sdk (+21 more)
 
-### Community 239 - "api/types.ts"
-Cohesion: 0.12
-Nodes (21): advancedTools, exportRoutes, google, files, reportTemplates, AddressTypesRoutes, AdvancedToolsRoutes, BoardTaskAttachmentsRoutes (+13 more)
+### Community 239 - "Company email templates — domain review"
+Cohesion: 0.18
+Nodes (11): 10. Closure and limits, 1. Scope and authority, 2. Verified current behavior, 3. Ownership and relationships, 4. Aggregate lifecycle, 5. Security and content, 6. Applicability, 7. Shared composition (+3 more)
 
-### Community 240 - "ErpSystem.Modules.Platform.Infrastructure.Features.Security.Authentication.Tokens"
-Cohesion: 0.05
-Nodes (27): ICurrentActorScope, IDisposable, ICurrentExecutionContextScope, CompanySelectionTokenResult, ValidatedCompanySelectionToken, IDisposable, CurrentActor, GoogleAuth (+19 more)
+### Community 240 - "HttpCurrentExecutionContext"
+Cohesion: 0.04
+Nodes (47): ICurrentActorScope, ICurrentExecutionContextScope, ExecutionOverride, ExecutionScope, HttpCurrentExecutionContext, CompanyId, CorrelationId, MachineName (+39 more)
 
-### Community 241 - "IRegister"
-Cohesion: 0.06
-Nodes (21): TypeAdapterConfig, AttendanceDeviceMapping, TypeAdapterConfig, EmploymentApplicationMappingConfig, TypeAdapterConfig, InterviewMappingConfig, TypeAdapterConfig, JobOfferMappingConfig (+13 more)
-
-### Community 242 - "CancellationToken"
-Cohesion: 0.13
-Nodes (13): CancellationToken, DateTime, Guid, IEnumerable, IReadOnlyCollection, Task, IUserInvitationEmailSender, IUserInvitationIdentityGateway (+5 more)
-
-### Community 243 - "FileRequests.cs"
-Cohesion: 0.13
-Nodes (23): IFileChangePublisher, PlatformFileChange, PlatformFileDownload, CancellationToken, Guid, IReadOnlyList, Task, DeleteFileCommand (+15 more)
-
-### Community 244 - "OrganizationalStructureController"
-Cohesion: 0.28
-Nodes (13): ApproveJobDescriptionRequest, OrganizationalStructureBulkCreateRequest, RejectJobDescriptionRequest, CancellationToken, HasPermission, HttpDelete, HttpGet, HttpPost (+5 more)
-
-### Community 245 - "Task"
-Cohesion: 0.17
-Nodes (10): CancellationToken, Fact, IConfiguration, IServiceCollection, IServiceProvider, Task, CatalogModule, PlatformModuleCatalogOwnershipTests (+2 more)
-
-### Community 246 - "FiscalYear"
+### Community 241 - ".Target_permissions_filter_settings_search_and_runtime"
 Cohesion: 0.14
-Nodes (7): Action, DateOnly, IReadOnlyCollection, List, FiscalYear, FiscalPeriodFrequency, FiscalYearStatus
+Nodes (17): SystemLocalizationErrors, CatalogOutdated, Conflict, Forbidden, Invalid, RoleLockResourceFactory, Actor, CompanyId (+9 more)
 
-### Community 247 - "RecruitmentCqrsFoundationTests"
-Cohesion: 0.15
-Nodes (12): CancellationToken, RecruitmentDashboardSummaryDto, Task, RecruitmentDashboardReadStore, Fact, ICurrentActor, Task, TypeAdapterConfig (+4 more)
+### Community 242 - "Division"
+Cohesion: 0.03
+Nodes (63): Division, CostCenterCode, Department, DepartmentId, DescriptionAr, DescriptionEn, DivisionCode, Employees (+55 more)
 
-### Community 248 - "IEntityTypeConfiguration"
+### Community 243 - "Error Logs — Phase 00 review and evidence ledger"
+Cohesion: 0.11
+Nodes (18): Administration / Settings navigation acceptance — 2026-10-18, API stage acceptance — 2026-10-17, Capability and scope decisions, Corrective acceptance — 2026-10-18: persisted GUIDs and Settings navigation, Current evidence and reuse, Detail/copy and richer diagnostics acceptance — 2026-10-19, Diagnostics section visibility correction — 2026-10-19, Error Logs — Phase 00 review and evidence ledger (+10 more)
+
+### Community 244 - "Platform Settings â€” Api applied book"
+Cohesion: 0.11
+Nodes (18): 10. Preflight, 11. Verification, 12. Rollout, 13. Limits, 1. Relationship and ownership, 20. Final applied acceptance — 2026-10-19, 21. Card correction API relationship, 23. Administration application grouping preflight — 2026-10-19 (+10 more)
+
+### Community 245 - "Platform Settings — Screen / Workflow Contract"
+Cohesion: 0.11
+Nodes (18): 0. Contract metadata, 10. i18n, RTL, accessibility, and responsive behavior, 11. Vertical execution ledger (strict one-active-step gate), 12. Verification contract, 13. Child exit gate, 14. Final closure, 15. Corrective card fidelity authorization — 2026-10-19, 16. Administration composition amendment - 2026-10-19 (+10 more)
+
+### Community 246 - "Clean Architecture and CQRS Guide"
 Cohesion: 0.09
-Nodes (22): AccountDimensionPolicy, DimensionDefinition, DimensionValue, ExchangeRateType, DimensionRequirementPolicy, DimensionValueSourceKind, EntityTypeBuilder, AccountConfiguration (+14 more)
+Nodes (22): ErrorType, Conflict, Forbidden, None, NotFound, PayloadTooLarge, ServiceUnavailable, Unauthorized (+14 more)
+
+### Community 247 - "RecordingStore"
+Cohesion: 0.18
+Nodes (12): UpdateOfflineOperationsPolicyRequest, FrozenTimeProvider, PlatformOfflineOperationsPolicyTests, RecordingStore, LastSave, ReadResult, SaveCalls, SaveResult (+4 more)
+
+### Community 248 - "EntityTypeBuilder"
+Cohesion: 0.03
+Nodes (64): AccountConfiguration, AccountHierarchyLevelConfiguration, AccountingCompanySettingsConfiguration, AccountMappingConfiguration, BookConfiguration, CurrencyConfiguration, DimensionDefinitionConfiguration, DimensionValueConfiguration (+56 more)
 
 ### Community 249 - "WorldMap.tsx"
-Cohesion: 0.16
-Nodes (22): getStringProperty(), hexToRgb(), isRecord(), isValidCoordinate(), isWorldTopology(), mixColors(), resolveGeographyIso2(), rgbToHex() (+14 more)
+Cohesion: 0.15
+Nodes (23): getStringProperty(), hexToRgb(), isRecord(), isValidCoordinate(), isWorldTopology(), MapLoadingState(), mixColors(), resolveGeographyIso2() (+15 more)
 
-### Community 250 - "CrystalReportsController"
-Cohesion: 0.25
-Nodes (13): CrystalReportConcurrencyRequest, CancellationToken, Consumes, Guid, HasPermission, HttpDelete, HttpGet, HttpPost (+5 more)
+### Community 250 - "Task"
+Cohesion: 0.01
+Nodes (110): FiscalYearConcurrencyRequest, UpdateFiscalYearContextRequest, AccountHierarchyLevelRequest, RowVersionRequest, CreateCurrencyRequest, CurrencyConcurrencyRequest, CurrencyMutation, UpdateCurrencyRequest (+102 more)
 
 ### Community 251 - "RealtimeChangeRequest"
-Cohesion: 0.02
-Nodes (68): CancellationToken, Task, IRealtimeChangeDispatcher, IRealtimeEntityPublisher, RealtimeAudience, RealtimeAudienceKind, Guid, RealtimeChangeRequest (+60 more)
+Cohesion: 0.05
+Nodes (27): RealtimeAudience, RealtimeAudienceKind, Company, CompanyPermission, Permission, Role, Tenant, TenantPermission (+19 more)
 
-### Community 252 - "ReferenceDataDbContext"
+### Community 252 - "chartUtils.ts"
+Cohesion: 0.15
+Nodes (18): getChartColors(), getChartColors(), getChartColors(), getChartColors(), categoricalSeries(), ChartPaletteName, formatCurrency(), getColorPalette() (+10 more)
+
+### Community 253 - "Workforce Planning Mobile Reference"
 Cohesion: 0.11
-Nodes (15): Address, AddressType, bool, Country, DbSet, District, ICurrentActor, ModelBuilder (+7 more)
+Nodes (17): 10. Lifecycle actions, 11. Permissions and read-only, 12. Realtime and query ownership, 13. Localization and RTL, 14. Verification, 15. Phase 2 budgets journey, 15. Status, 17. Phase 2 realtime, cache, and verification (+9 more)
 
-### Community 253 - "WhatsAppIntegrationTests"
-Cohesion: 0.08
-Nodes (24): CancellationToken, Task, IWhatsAppSender, WhatsAppSendResult, WhatsAppTextMessage, string, WapilotOptions, Action (+16 more)
+### Community 254 - "CrmDbContext"
+Cohesion: 0.14
+Nodes (12): CrmDbContext, Appointments, CurrentCompanyId, CurrentTenantId, AppointmentConfiguration, AppointmentReadStore, CrmAppointmentCqrsTests, FixedTimeProvider (+4 more)
 
-### Community 254 - "file-manager-remote-data-source.ts"
-Cohesion: 0.29
-Nodes (7): requireApiUrl(), createSensitiveCacheFile(), fileManagerEndpoints, fileManagerRemoteDataSource, prepareFilePreview(), sanitizeFileName(), storedFileSchema
+### Community 255 - "BackgroundJobDashboardResponse"
+Cohesion: 0.16
+Nodes (10): BackgroundJobDashboardResponse, IBackgroundJobDashboardReader, GetBackgroundJobDashboardQuery, GetBackgroundJobDashboardQueryHandler, BackgroundJobDashboardReader, PlatformHangfireDependencyInjection, BackgroundJobsControllerTests, StubDashboardReader (+2 more)
 
-### Community 255 - "OrganizationalStructureQueries.cs"
-Cohesion: 0.09
-Nodes (30): IOrganizationalStructureChangeScheduler, OrganizationalStructureChange, OrganizationalStructureLookup, CancellationToken, int, IReadOnlyList, Result, string (+22 more)
+### Community 256 - "OfflineOperationsPolicyRow"
+Cohesion: 0.11
+Nodes (18): OfflineOperationsPolicyHistoryRowConfiguration, OfflineOperationsPolicyHistoryRow, ChangedByUserId, ChangedOn, CompanyId, Id, NewModesJson, PolicyId (+10 more)
 
-### Community 256 - "components/layout/index.ts"
-Cohesion: 0.04
-Nodes (57): metadata, FileDeleteDialogProps, FILE_CONFIG, FILE_EXTENSION_TYPES, FILE_LIMITS, FilePolicyError, validateFilePolicy(), FilesDataGrid() (+49 more)
+### Community 257 - "Company UI localization — api"
+Cohesion: 0.11
+Nodes (17): 10. Verification, 11. Evidence and closure, 12. Reuse, 13. Localization/accessibility, 14. Delivery, 15. Risks, 1. Ownership, 2. Scope (+9 more)
 
-### Community 257 - "Store"
-Cohesion: 0.13
-Nodes (13): CancellationToken, Dictionary, EnvelopeAmendment, EnvelopeAmendmentDetailResponse, EnvelopeAmendmentListItemResponse, GetEnvelopeAmendmentsQuery, GetStaffingRequestsQuery, PageResponse (+5 more)
+### Community 258 - "HeatmapChart.tsx"
+Cohesion: 0.18
+Nodes (16): MetricCardProps, MetricSize, MetricSizeConfig, MetricVariant, clamp(), getFiniteExtent(), getSafeScaleMax(), normalizeValue() (+8 more)
 
-### Community 258 - "feedback/states/index.ts"
-Cohesion: 0.04
-Nodes (62): statusKeys, statusKeys, CountryCardViewPaginationProps, CountryCardViewPagination(), EmptyState(), EmptyStateProps, NoResultsState(), NoResultsStateProps (+54 more)
-
-### Community 259 - "devDependencies"
-Cohesion: 0.10
-Nodes (21): eslint-config-expo, jest, jest-expo, devDependencies, eslint, eslint-config-expo, jest, jest-expo (+13 more)
+### Community 259 - "audit-trail-remote-data-source.ts"
+Cohesion: 0.12
+Nodes (18): AuditTrailUseCases, createAuditTrailUseCases(), auditTrailEndpoints, createAuditTrailEndpoints(), auditTrailRemoteDataSource, createAuditTrailRemoteDataSource(), auditFieldChangeSchema, auditTrailDetailsSchema (+10 more)
 
 ### Community 260 - "Kanban Card Comment Management - User Story"
 Cohesion: 0.08
 Nodes (25): API Endpoints Summary, Business Rules, Data Models, Database Schema, Error Scenarios, Feature Overview, Kanban Card Comment Management - User Story, KanbanCardCommentRequest (+17 more)
 
-### Community 261 - "DistrictQueries.cs"
-Cohesion: 0.25
-Nodes (15): DistrictDetailResponse, DistrictLookupResponse, DistrictWithAddressesResponse, IReadOnlyList, Result, Task, GetDistrictByIdQuery, GetDistrictByIdQueryHandler (+7 more)
+### Community 262 - "OfflineOperationsPolicyStoreRecord"
+Cohesion: 0.22
+Nodes (8): IOfflineOperationsPolicyStore, OfflineOperationCapabilityIds, OfflineOperationModes, All, OfflineOperationsPolicyConflictException, OfflineOperationsPolicyStoreRecord, SaveOfflineOperationsPolicyRequest, OfflineOperationsPolicyStore
 
-### Community 262 - "AccountController"
-Cohesion: 0.21
-Nodes (11): ChangePasswordRequest, ChangePasswordRequestValidator, CancellationToken, Consumes, HttpGet, HttpPut, IActionResult, ISender (+3 more)
+### Community 263 - "erp-platform-template/PLAN.md"
+Cohesion: 0.04
+Nodes (45): 1. Discovery basis, 2. Business outcome, 3. Verified facts, 4. Requested decisions (owner), 5. Actors, 6. Open questions, ERP Platform Template — Discovery, Audit conclusion (+37 more)
 
-### Community 263 - "FiscalPeriod"
+### Community 264 - "ICurrentExecutionContext"
+Cohesion: 0.02
+Nodes (107): ConcurrencyConflictException, ExecutionContextHeaderNames, ICurrentExecutionContext, CompanyId, CorrelationId, MachineName, TenantId, UserId (+99 more)
+
+### Community 265 - "auth-remote-data-source.ts"
+Cohesion: 0.05
+Nodes (41): SecretKey, secretOptions, secureSession, webSessionSecrets, AuthUseCases, createAuthUseCases(), authRepository, apiRootUrl (+33 more)
+
+### Community 266 - "Department"
+Cohesion: 0.03
+Nodes (63): ICompanyScoped, CompanyId, ITenantScoped, TenantId, DomainGuard, Department, Branch, BranchId (+55 more)
+
+### Community 267 - "AuthProvider.test.tsx"
 Cohesion: 0.11
-Nodes (9): IReadOnlyCollection, DateOnly, FiscalPeriod, FiscalPeriodStatus, EntityTypeBuilder, FiscalPeriodConfiguration, FiscalYearConfiguration, FiscalYearUserSelectionConfiguration (+1 more)
+Nodes (15): ApiError, AuthProbe(), mockBeginTransition, mockCancelQueries, mockClearQueries, mockClearSensitiveFileCache, mockClearSession, mockGetAccessToken (+7 more)
 
-### Community 264 - "ContactsOutboxDispatcherOptions"
-Cohesion: 0.08
-Nodes (22): CancellationToken, Task, ContactsOutboxDispatcherWorker, IConfiguration, IServiceCollection, DependencyInjection, CancellationToken, HealthCheckContext (+14 more)
+### Community 268 - "Feature Documentation System README"
+Cohesion: 0.04
+Nodes (47): Root AGENTS.md, Graphify Knowledge Graph, CQRS Pattern (API), API AGENTS.md, Layer ownership, Mobile architecture, Mobile capability decisions, Mobile performance budgets (+39 more)
 
-### Community 265 - "AuthRepository"
+### Community 269 - ".PlatformStore_PreservesStoredMetadataAndProtectedFileBehavior"
 Cohesion: 0.07
-Nodes (15): AuthUseCases, createAuthUseCases(), DefaultAuthRepository, AcceptInvitationRequest, AuthResponse, CompanyOption, ConfirmEmailRequest, LoginOutcome (+7 more)
+Nodes (30): IFileBinaryStore, IFileChangePublisher, PlatformFileChange, PlatformFileDownload, Missing, DeleteFileCommand, DeleteFileCommandHandler, DownloadFileQuery (+22 more)
 
-### Community 266 - "CancellationToken"
-Cohesion: 0.25
-Nodes (13): ExchangeRateRequest, ExchangeRateTypeRequest, CancellationToken, HasPermission, HttpDelete, HttpGet, HttpPost, HttpPut (+5 more)
+### Community 270 - "IReadOnlyCollection"
+Cohesion: 0.02
+Nodes (46): CompetingUnitOfWork, RecordingAccountingUnitOfWork, ResourceSets, AttendanceRawStore, AuthenticationSessionContextRequest, CompanyCountryOptionResponse, CompanyGeographicScopeResponse, UpdateCompanyGeographicScopeRequest (+38 more)
 
-### Community 267 - "CategoryResponse"
-Cohesion: 0.15
-Nodes (24): CancellationToken, CompanyId, ICurrentActor, Result, Task, TenantId, CatalogActorScope, CreateCategoryCommand (+16 more)
+### Community 271 - "Attendance Devices Expo Implementation Profile"
+Cohesion: 0.12
+Nodes (16): 10. Pull Runs Contract, 11. Credentials and Branches, 12. Localization and Accessibility, 13. Realtime, 14. Reopening Trigger, 15. Verification, 1. Exact Source Inventory, 2. Product Decision (+8 more)
 
-### Community 268 - "Documentation README"
-Cohesion: 0.25
-Nodes (8): Centralized Documentation System, Root AGENTS.md, Graphify Knowledge Graph, Documentation README, Generated Phase Workflow (Phase 00-06), Feature Documentation System README, Recipe Manifest (Documentation Generation), Root README
+### Community 272 - "Company UI localization — mobile"
+Cohesion: 0.12
+Nodes (16): 10. Language/RTL, 11. Testing, 12. Device acceptance, 13. Intentional differences, 14. Delivery, 15. Evidence and closure, 1. Ownership, 2. Scope (+8 more)
 
-### Community 269 - "PlatformFileMetadata"
-Cohesion: 0.10
-Nodes (19): CancellationToken, Guid, IReadOnlyCollection, IReadOnlyList, Stream, Task, IFileBinaryStore, IFileMetadataStore (+11 more)
-
-### Community 270 - "AdministrationRepository"
-Cohesion: 0.11
-Nodes (3): createAdministrationUseCases(), UpdateRoleRequest, AdministrationRepository
-
-### Community 272 - "IWorkforcePlanWriteStore"
-Cohesion: 0.19
-Nodes (9): CancellationToken, DateOnly, IReadOnlyCollection, IReadOnlyList, Task, FiscalYearPlanningSnapshot, IWorkforcePlanReadStore, IWorkforcePlanWriteStore (+1 more)
-
-### Community 273 - "CancellationToken"
-Cohesion: 0.20
-Nodes (8): CancellationToken, Expression, IQueryable, IReadOnlyCollection, IReadOnlyList, Task, AddressTypeReadStore, AddressTypeWriteStore
+### Community 273 - "ExchangeRate"
+Cohesion: 0.05
+Nodes (41): ExchangeRate, EffectiveFrom, EffectiveTo, ExchangeRateType, ExchangeRateTypeId, FromCurrency, FromCurrencyId, Id (+33 more)
 
 ### Community 274 - "ViewLayoutContext.tsx"
 Cohesion: 0.11
-Nodes (10): GlobalPreferences, LayoutHookOptions, ViewLayoutContext, ViewLayoutContextValue, ViewLayoutProvider(), defaultViewLayoutManager, VIEW_LAYOUT_CONFIGS, ViewBreakpoints (+2 more)
+Nodes (11): GlobalPreferences, LayoutHookOptions, ViewLayoutContext, ViewLayoutContextValue, ViewLayoutProvider(), withViewLayout(), defaultViewLayoutManager, VIEW_LAYOUT_CONFIGS (+3 more)
 
-### Community 275 - ".ShouldApplyMigrations"
-Cohesion: 0.11
-Nodes (14): IConfiguration, InvalidOperationException, ModuleMigrationSettings, CancellationToken, IConfiguration, IReadOnlyList, IServiceCollection, IServiceProvider (+6 more)
+### Community 275 - "Company Message Logs — mobile profile"
+Cohesion: 0.12
+Nodes (16): 10. Transport, 11. State, 12. Locale/layout, 13. Mock, 14. Verification target, 15. Acceptance, 1. Ownership, 2. Shared inventory (+8 more)
 
-### Community 276 - "OfflineOutboxRepository"
-Cohesion: 0.07
-Nodes (16): mapOutboxRow(), OfflineOutboxRepository, requireText(), requireUuid(), scope, normalizeOfflineScope(), offlineScopeKey(), OfflineScopeRepository (+8 more)
+### Community 276 - "Global administration access — api applied book"
+Cohesion: 0.12
+Nodes (16): 10. Persistence and API preflight, 11. Verification, 12. Client composition, 13. Localization and accessibility, 14. Runtime and impact review, 15. Verification and acceptance, 1. Ownership, 2. Screen pattern (+8 more)
 
-### Community 277 - "AbstractValidator"
-Cohesion: 0.07
-Nodes (53): AbstractValidator, Result, AccountMappingRequestValidator, CreateAccountMappingCommand, CreateAccountMappingCommandHandler, CreateAccountMappingCommandValidator, CreateExchangeRateCommand, CreateExchangeRateCommandHandler (+45 more)
+### Community 277 - "Global administration access — mobile applied book"
+Cohesion: 0.12
+Nodes (16): 10. Persistence and API preflight, 11. Verification, 12. Client composition, 13. Localization and accessibility, 14. Runtime and impact review, 15. Verification and acceptance, 1. Ownership, 2. Screen pattern (+8 more)
 
-### Community 278 - ".PublishToPermissionAsync"
-Cohesion: 0.11
-Nodes (15): DateTime, NotificationPublicationPolicy, CancellationToken, Task, NotificationPublisher, INotificationPublicationPolicy, CancellationToken, string (+7 more)
+### Community 278 - "MainClientBootstrap.tsx"
+Cohesion: 0.17
+Nodes (14): 5.1 Unsaved changes, 5.2 Pull-to-refresh safety, 5.3 Navigation transition consistency, Applied closure, Objective, Phase 5 — Navigation & Mobile Runtime Safety ✅, Status, MainClientBootstrap() (+6 more)
 
-### Community 279 - "CancellationToken"
-Cohesion: 0.16
-Nodes (9): CancellationToken, DateOnly, Dictionary, IReadOnlyDictionary, IReadOnlyList, Task, FiscalYearAuditTrail, FiscalYearContextStore (+1 more)
+### Community 279 - "Global administration access — review applied book"
+Cohesion: 0.12
+Nodes (16): 10. Persistence and API preflight, 11. Verification, 12. Client composition, 13. Localization and accessibility, 14. Runtime and impact review, 15. Verification and acceptance, 1. Ownership, 2. Screen pattern (+8 more)
 
-### Community 280 - "FiscalYearDetail"
-Cohesion: 0.20
-Nodes (6): createFiscalYearUseCases(), FiscalYearUseCases, FiscalYearDetail, FiscalYearLifecycleAction, FiscalYearRequest, Props
+### Community 280 - "Global administration access — web applied book"
+Cohesion: 0.12
+Nodes (16): 10. Persistence and API preflight, 11. Verification, 12. Client composition, 13. Localization and accessibility, 14. Runtime and impact review, 15. Verification and acceptance, 1. Ownership, 2. Screen pattern (+8 more)
 
-### Community 282 - "coa-hierarchy.ts"
-Cohesion: 0.13
-Nodes (15): AccountCurrencyPolicy, AccountPageMetadata, AccountRecordStatus, AccountSearchField, AccountSearchOperator, AccountSortColumn, ManualPostingPolicy, SortDirection (+7 more)
+### Community 281 - ".GetValidatedSettings"
+Cohesion: 0.15
+Nodes (10): HostDistributedRuntimeServiceCollectionExtensions, HostDistributedRuntimeSettings, CacheInstanceName, Enabled, ExternalRateLimitingEnabled, RedisConnectionStringName, ReplicaCount, SessionAffinityEnabled (+2 more)
 
-### Community 283 - "UserInvitation"
-Cohesion: 0.16
-Nodes (11): DateTime, Guid, IEnumerable, IReadOnlyCollection, List, UserInvitation, CancellationToken, Guid (+3 more)
+### Community 283 - "ConfirmationDialog"
+Cohesion: 0.03
+Nodes (74): AdministrationUseCases, createAdministrationUseCases(), SaveManagedUserInput, SaveRoleInput, useAdministrationUseCases(), administrationEndpoints, administrationRemoteDataSource, companyOptionSchema (+66 more)
 
-### Community 284 - "Task"
-Cohesion: 0.21
-Nodes (8): Fact, InlineData, NetworkStream, Task, Theory, FileUploadSecurityTests, HealthStatus, TcpListener
+### Community 284 - "InlineData"
+Cohesion: 0.03
+Nodes (35): UserExtensions, PermissionRequirement, Permission, PermissionAuthorizationPolicyProvider, HostGlobalExceptionHandler, AttendanceProviderCatalog, OpenFiscalYearPlanningSource, TestActor (+27 more)
 
-### Community 285 - "CrystalReportDataSourceTests"
-Cohesion: 0.07
-Nodes (34): CancellationToken, IReadOnlyList, Task, IReferenceDataReportingSource, ReferenceAddressTypeReportRow, ReferenceCountryReportRow, ReferenceDistrictReportRow, ReferenceStateReportRow (+26 more)
+### Community 285 - "coa-hierarchy.ts"
+Cohesion: 0.05
+Nodes (34): CoaHierarchyUseCases, createCoaHierarchyUseCases(), SaveAccountInput, SaveHierarchyLevelInput, account, DefaultCoaHierarchyRepository, Account, AccountCurrencyPolicy (+26 more)
 
 ### Community 286 - "ErpSystem.BuildingBlocks.Application.csproj"
-Cohesion: 0.11
-Nodes (16): net10.0, FluentValidation, MediatR, Microsoft.Extensions.Localization.Abstractions, Microsoft.Extensions.Logging.Abstractions, Microsoft.NET.Sdk, net10.0, Microsoft.NET.Sdk (+8 more)
+Cohesion: 0.08
+Nodes (23): net10.0, FluentValidation, MediatR, Microsoft.Extensions.Localization.Abstractions, Microsoft.Extensions.Logging.Abstractions, Microsoft.NET.Sdk, net10.0, Microsoft.NET.Sdk (+15 more)
 
-### Community 287 - "AppointmentCommands.cs"
-Cohesion: 0.26
-Nodes (13): CancellationToken, Result, Task, AppointmentSchedule, CreateAppointmentCommand, CreateAppointmentCommandHandler, CreateAppointmentCommandValidator, DeleteAppointmentCommand (+5 more)
+### Community 287 - "Appointment"
+Cohesion: 0.07
+Nodes (34): IAppointmentChangeScheduler, IAppointmentReadStore, IAppointmentRepository, AppointmentSchedule, CreateAppointmentCommand, CreateAppointmentCommandHandler, CreateAppointmentCommandValidator, DeleteAppointmentCommand (+26 more)
 
-### Community 288 - "AddressTypesController"
-Cohesion: 0.33
-Nodes (10): CancellationToken, HasPermission, HttpDelete, HttpGet, HttpPost, HttpPut, IActionResult, ProducesResponseType (+2 more)
+### Community 288 - "Authorized global UI texts — api applied book"
+Cohesion: 0.12
+Nodes (16): 10. Client data ownership, 11. Runtime resource layers, 12. UI contract and acceptance, 13. Verification contract, 14. Implementation execution, 15. Phase 00 readiness, 1. Ownership and authorization, 2. Reviewed reference and shared screen pattern (+8 more)
 
-### Community 289 - "InterviewRepository"
-Cohesion: 0.15
-Nodes (13): CancellationToken, EmploymentApplication, Interview, InterviewDto, InterviewScorecardTemplateDto, IReadOnlyCollection, PageResponse, Task (+5 more)
+### Community 289 - "Authorized global UI texts — mobile applied book"
+Cohesion: 0.12
+Nodes (16): 10. Client data ownership, 11. Runtime resource layers, 12. UI contract and acceptance, 13. Verification contract, 14. Implementation execution, 15. Phase 00 readiness, 1. Ownership and authorization, 2. Reviewed reference and shared screen pattern (+8 more)
 
-### Community 290 - "StaffingPlanningHandlerTests"
-Cohesion: 0.23
-Nodes (9): Fact, Func, Harness, IReadOnlyCollection, PositionEnvelope, Task, Harness, StaffingPlanningHandlerTests (+1 more)
+### Community 290 - "Authorized global UI texts — review applied book"
+Cohesion: 0.12
+Nodes (16): 10. Client data ownership, 11. Runtime resource layers, 12. UI contract and acceptance, 13. Verification contract, 14. Implementation execution, 15. Phase 00 readiness, 1. Ownership and authorization, 2. Reviewed reference and shared screen pattern (+8 more)
 
 ### Community 291 - "localization-remote-data-source.ts"
-Cohesion: 0.14
-Nodes (16): createLocalizationUseCases(), LocalizationUseCases, localizationUseCases, useLocalizationUseCases(), localizationEndpoints, localizationRemoteDataSource, localizationSchema, DefaultLocalizationRepository (+8 more)
+Cohesion: 0.12
+Nodes (18): createLocalizationUseCases(), LocalizationUseCases, localizationUseCases, useLocalizationUseCases(), localizationEndpoints, localizationRemoteDataSource, localizationSchema, DefaultLocalizationRepository (+10 more)
 
-### Community 292 - "ErpSystem.Modules.CRM.Application.Features.Appointments.Contracts"
-Cohesion: 0.14
-Nodes (16): AppointmentRequest, UpdateAppointmentRequest, IStringLocalizer, AppointmentRequestValidator, CancellationToken, DateTimeOffset, HasPermission, HttpDelete (+8 more)
+### Community 292 - "Authorized global UI texts — web applied book"
+Cohesion: 0.12
+Nodes (16): 10. Client data ownership, 11. Runtime resource layers, 12. UI contract and acceptance, 13. Verification contract, 14. Implementation execution, 15. Phase 00 readiness, 1. Ownership and authorization, 2. Reviewed reference and shared screen pattern (+8 more)
 
-### Community 293 - "RecordingBudgetWriteStore"
-Cohesion: 0.16
-Nodes (9): BudgetPlanSnapshot, CancellationToken, Dictionary, FiscalYearPlanningSnapshot, PositionEnvelope, WorkforceBudget, WorkforcePlan, RecordingBudgetWriteStore (+1 more)
+### Community 293 - "Tenant module entitlements Expo implementation profile"
+Cohesion: 0.12
+Nodes (16): 10. Tenant editor, 11. Selection integrity, 12. Defaults and compatibility, 13. Localization and theming, 14. Verification, 15. Extension rule, 1. Feature boundary, 2. Expo Router layout (+8 more)
 
-### Community 294 - "CacheService"
-Cohesion: 0.25
-Nodes (7): CancellationToken, ILogger, Task, CacheService, ErpSystem.Modules.HR.Infrastructure.Common.Services, ICacheService, IDistributedCache
+### Community 294 - "Address Types Expo Implementation Profile"
+Cohesion: 0.12
+Nodes (16): 10. Import, 11. Report, 12. Notification and navigation, 13. Localization and accessibility, 14. Tests, 15. Verification, 1. Feature boundary, 2. Route and authorization (+8 more)
 
-### Community 295 - "HostRuntimeCompositionOwnershipTests"
-Cohesion: 0.06
-Nodes (27): CancellationToken, IEndpointRouteBuilder, Task, WebApplication, IHostRuntimeApplicationContributor, IHostRuntimeEndpointContributor, IHostRuntimeStartupTask, IEndpointRouteBuilder (+19 more)
+### Community 295 - "Managed Crystal Contract Registry Expo Implementation Profile"
+Cohesion: 0.12
+Nodes (16): 10. Import, 11. Report, 12. Notification and navigation, 13. Localization and accessibility, 14. Tests, 15. Verification, 1. Feature boundary, 2. Route and authorization (+8 more)
 
 ### Community 296 - "InvoiceRequest"
-Cohesion: 0.11
-Nodes (19): InvoiceRequest, InvoiceRequestValidator, CancellationToken, Task, GenerateInvoiceQrCodeQuery, GenerateInvoiceQrCodeQueryHandler, IInvoiceQrCodeGenerator, InvoiceQrCodeResult (+11 more)
+Cohesion: 0.18
+Nodes (11): InvoiceRequest, InvoiceRequestValidator, GenerateInvoiceQrCodeQuery, GenerateInvoiceQrCodeQueryHandler, IInvoiceQrCodeGenerator, InvoiceQrCodeResult, InvoiceQrCodeGenerator, ErpSystem.Modules.Accounting.Application.Features.Finance.Invoicing.Contracts (+3 more)
 
-### Community 297 - "coa-hierarchy-use-cases.ts"
-Cohesion: 0.17
-Nodes (7): CoaHierarchyUseCases, createCoaHierarchyUseCases(), SaveHierarchyLevelInput, AccountTreeNode, ProposedAccountCode, normalizeAccountRequest(), normalizeHierarchyLevelRequest()
+### Community 297 - "ISelectionChallengeSource"
+Cohesion: 0.16
+Nodes (9): ISelectionChallengeSource, SelectionChallengeConsumeRequest, SelectionChallengeSnapshot, SelectionChallengeService, AuthenticationSelectionChallengeStoreTests, RecordingSource, Stored, PlatformSelectionChallengeOwnershipTests (+1 more)
 
-### Community 298 - "UsersController"
-Cohesion: 0.35
-Nodes (9): CancellationToken, HasPermission, HttpGet, HttpPost, HttpPut, IActionResult, ISender, Task (+1 more)
+### Community 298 - "Managed Crystal Report Manager Experience — Expo Disposition"
+Cohesion: 0.12
+Nodes (16): 10. Permissions, 11. Offline, 12. Mock data, 13. i18n and accessibility, 14. Verification, 15. Status and handoff, 1. Scope, 2. Ownership (+8 more)
 
 ### Community 299 - "Education Module — Master Build Plan"
 Cohesion: 0.13
 Nodes (15): 0. Plan metadata, 12–13. Web and mobile, 16. Slice roadmap, 1. Executive outcome, 20. Quality gates, 2. Scope, 3. Ownership and existing-system relationship, 5. Domain model (draft) (+7 more)
 
-### Community 300 - ".Controller_IsThinAccountingOwnedSurface"
-Cohesion: 0.25
-Nodes (14): CreateCurrencyRequest, CurrencyConcurrencyRequest, CurrencyMutation, UpdateCurrencyRequest, CancellationToken, HasPermission, HttpDelete, HttpGet (+6 more)
+### Community 300 - "reporting/features/README.md"
+Cohesion: 0.02
+Nodes (117): Approved references, Evidence to capture, Managed Crystal Contract Registry Phase 03 - Expo Mobile Client, Mobile-specific decisions, Purpose, Read and interaction checks, Required structure, Source fingerprints (+109 more)
 
-### Community 301 - "WorkforcePlan"
-Cohesion: 0.08
-Nodes (15): CompanyAuditableEntity, DateOnly, DateTimeOffset, Guid, IReadOnlyCollection, List, WorkforcePlan, WorkforcePlanLine (+7 more)
+### Community 301 - "DomainRuleException"
+Cohesion: 0.05
+Nodes (32): DomainRuleException, Code, WorkforcePlan, ActivatedOn, ApprovedById, ApprovedOn, DecisionReason, Description (+24 more)
 
-### Community 302 - "GeographicalNameRulesTests"
-Cohesion: 0.16
-Nodes (9): PrintableTextRules, Fact, IEnumerable, InlineData, LocalizedString, Theory, EchoStringLocalizer, GeographicalNameRulesTests (+1 more)
+### Community 302 - "Company email templates — Screen / Workflow Contract"
+Cohesion: 0.12
+Nodes (16): 0. Contract metadata, 10. i18n, RTL, accessibility, and responsive behavior, 11. Vertical execution ledger (strict one-active-step gate), 12. Verification contract, 13. Child exit gate, 1. Child boundary and outcome, 2. UI Pattern Gate (mandatory before implementation), 3. Closest existing reference (+8 more)
 
-### Community 303 - "AccountHierarchyLevel"
-Cohesion: 0.16
-Nodes (6): account, AccountHierarchyLevel, AccountHierarchyLevelRequest, CoaHierarchyRepository, Props, HierarchyLevelMockContext
+### Community 303 - "Server-Managed Feature Frontend Reference"
+Cohesion: 0.11
+Nodes (18): 10. Forms and Dialogs, 11. Loading, Error, Empty, and Refresh States, 12. Localization, RTL, and Accessibility, 13. Reuse Rules, 14. Minimum Test Matrix, 15. Implementation Order, 16. Anti-Patterns, 17. Definition of Done (+10 more)
 
 ### Community 304 - "sync-phase00-matrix.mjs"
 Cohesion: 0.08
 Nodes (21): calleeVerb(), compact(), endpointImports(), endpointPermissionOverrides, endpointSources, existingEndpointSources, existingRouteSources, functionName() (+13 more)
 
-### Community 305 - "VideoPlayer.tsx"
-Cohesion: 0.08
-Nodes (21): formatTime(), TimeMark, TimeMarks(), TimeMarksProps, baseIconSx, ControlsBar(), ControlsBarProps, skipIconSx (+13 more)
+### Community 305 - "AuditTrailQueries.cs"
+Cohesion: 0.06
+Nodes (44): AuditAction, Created, Deleted, Modified, Restored, AuditTrailCursor, AuditTrailFilter, AuditTrailCursorCodec (+36 more)
 
-### Community 306 - "ICurrentExecutionContext"
-Cohesion: 0.08
-Nodes (21): string, ExecutionContextHeaderNames, ICurrentExecutionContext, TestExecutionContext, TestExecutionContext, TestExecutionContext, TestExecutionContext, TestExecutionContext (+13 more)
+### Community 306 - ".FiscalYearCreate_UsesAccountingUnitOfWork_WhenSharedRegistrationCompetes"
+Cohesion: 0.11
+Nodes (14): AccountingUnitOfWorkRegistrationTests, EchoLocalizer, TestActor, UserId, 10. Verification, 1. Scope and ownership, 3. Persistence model, 4. Read contract (+6 more)
 
-### Community 307 - "use-workforce-budgets.ts"
-Cohesion: 0.22
-Nodes (18): useWorkforceBudgetUseCases(), useBudgetSourcePlanSelector(), useApprovalMutation(), useApproveWorkforceBudget(), useBudgetMutation(), useBudgetSourcePlan(), useBudgetSourcePlans(), useCreateWorkforceBudget() (+10 more)
+### Community 307 - "Company Message Log Settings — Screen / Workflow Contract"
+Cohesion: 0.12
+Nodes (16): 0. Contract metadata, 10. i18n, RTL, accessibility, and responsive behavior, 11. Vertical execution ledger (strict one-active-step gate), 12. Verification contract, 13. Child exit gate, 1. Child boundary and outcome, 2. UI Pattern Gate (mandatory before implementation), 3. Closest existing reference (+8 more)
 
-### Community 308 - "RoleManagementCommands.cs"
-Cohesion: 0.07
-Nodes (40): CancellationToken, Result, Task, CreateRoleCommand, CreateRoleCommandHandler, CreateRoleCommandValidator, RoleManagementPolicy, ToggleRoleStatusCommand (+32 more)
+### Community 308 - "ISecurityAuditService"
+Cohesion: 0.03
+Nodes (70): IRoleLockResourceFactory, IRoleManagementReadStore, IRolePostCommitEffects, IRoleRepository, IRoleUnitOfWork, RoleClaimsMutationSnapshot, RoleClaimsSnapshot, RoleMutationSnapshot (+62 more)
 
 ### Community 309 - "Education Module — Pre-Plan Specification"
 Cohesion: 0.13
 Nodes (15): Architecture and integrations, ASSUMPTIONS, Deferred, Domain and source of truth, Education Module — Pre-Plan Specification, Excluded, OPEN RISKS / UNKNOWNS, Primary journeys (+7 more)
 
-### Community 310 - "ExcelViewer.tsx"
-Cohesion: 0.14
-Nodes (15): displayCell(), ExcelTable(), ExcelTableProps, StyledTableCell, StyledTableContainer, StyledTableHead, StyledTableRow, ExcelToolbar() (+7 more)
+### Community 310 - "Company Message Logs — Screen / Workflow Contract"
+Cohesion: 0.12
+Nodes (16): 0. Contract metadata, 10. i18n, RTL, accessibility, and responsive behavior, 11. Vertical execution ledger (strict one-active-step gate), 12. Verification contract, 13. Child exit gate, 1. Child boundary and outcome, 2. UI Pattern Gate (mandatory before implementation), 3. Closest existing reference (+8 more)
 
-### Community 311 - ".Normalize"
-Cohesion: 0.19
-Nodes (8): int, IRuleBuilder, IRuleBuilderOptions, IStringLocalizer, GeographicalNameRules, CancellationToken, Task, CountryValidationQueries
+### Community 311 - "Company UI localization — Screen / Workflow Contract"
+Cohesion: 0.12
+Nodes (16): 0. Contract metadata, 10. i18n, RTL, accessibility, and responsive behavior, 11. Vertical execution ledger (strict one-active-step gate), 12. Verification contract, 13. Child exit gate, 1. Child boundary and outcome, 2. UI Pattern Gate (mandatory before implementation), 3. Closest existing reference (+8 more)
 
-### Community 312 - "IntegrationEventDispatchTests"
-Cohesion: 0.14
-Nodes (15): CancellationToken, Task, CancellationToken, DateTimeOffset, DbContextOptions, Fact, List, Task (+7 more)
+### Community 312 - "Company user permission grants — Screen / Workflow Contract"
+Cohesion: 0.12
+Nodes (16): 0. Contract metadata, 10. i18n, RTL, accessibility, and responsive behavior, 11. Vertical execution ledger (strict one-active-step gate), 12. Verification contract, 13. Child exit gate, 1. Child boundary and outcome, 2. UI Pattern Gate (mandatory before implementation), 3. Closest existing reference (+8 more)
 
-### Community 313 - "SubCategoryCommands.cs"
-Cohesion: 0.32
-Nodes (11): CancellationToken, Result, Task, CreateSubCategoryCommand, CreateSubCategoryCommandHandler, CreateSubCategoryCommandValidator, ToggleSubCategoryCommand, ToggleSubCategoryCommandHandler (+3 more)
+### Community 313 - "Global administration access — Screen / Workflow Contract"
+Cohesion: 0.12
+Nodes (16): 0. Contract metadata, 10. i18n, RTL, accessibility, and responsive behavior, 11. Vertical execution ledger (strict one-active-step gate), 12. Verification contract, 13. Child exit gate, 1. Child boundary and outcome, 2. UI Pattern Gate (mandatory before implementation), 3. Closest existing reference (+8 more)
 
-### Community 314 - "TenantManagementResponse"
-Cohesion: 0.25
-Nodes (9): TenantManagementResponse, CreateTenantCommand, CreateTenantCommandHandler, CancellationToken, HttpRequestMessage, HttpResponseMessage, IReadOnlyList, Task (+1 more)
+### Community 314 - "Authorized global UI texts — Screen / Workflow Contract"
+Cohesion: 0.12
+Nodes (16): 0. Contract metadata, 10. i18n, RTL, accessibility, and responsive behavior, 11. Vertical execution ledger (strict one-active-step gate), 12. Verification contract, 13. Child exit gate, 1. Child boundary and outcome, 2. UI Pattern Gate (mandatory before implementation), 3. Closest existing reference (+8 more)
 
-### Community 315 - "UserInvitationInfrastructureAdapters.cs"
+### Community 315 - "InterviewType"
 Cohesion: 0.10
-Nodes (16): UserInvitationUserCreationResult, CancellationToken, DateTime, IEnumerable, IReadOnlyCollection, IReadOnlySet, Task, ValueTask (+8 more)
+Nodes (18): ApplicationSource, CareersPortal, EmployeeReferral, Internal, Manual, RecruitmentAgency, InterviewStatus, Cancelled (+10 more)
 
-### Community 316 - "ERP Platform Template — Pre-Plan Specification"
-Cohesion: 0.13
-Nodes (15): Architecture and integrations, ASSUMPTIONS, Deferred, Domain and source of truth, ERP Platform Template — Pre-Plan Specification, Excluded, OPEN RISKS / UNKNOWNS, Primary journeys (+7 more)
-
-### Community 317 - "UserInvitationRequests.cs"
-Cohesion: 0.16
-Nodes (23): IReadOnlySet, IUserInvitationCompanyAccessQuery, UserInvitationResponse, CancellationToken, DateTime, Guid, IReadOnlyCollection, Result (+15 more)
-
-### Community 318 - "PlatformSessionValidationOwnershipTests"
-Cohesion: 0.10
-Nodes (22): CancellationToken, Task, ISessionValidationService, ISessionValidationSource, RefreshSessionSnapshot, SessionValidationRequest, SessionValidationResult, SessionValidationSnapshot (+14 more)
-
-### Community 319 - "ReportTemplatesController"
-Cohesion: 0.26
-Nodes (15): CreateReportTemplateRequest, DuplicateReportTemplateRequest, ReportTemplateConcurrencyRequest, UpdateReportTemplateRequest, CancellationToken, Guid, HasPermission, HttpDelete (+7 more)
-
-### Community 320 - "EmploymentApplicationDto"
+### Community 316 - "ChartContainer"
 Cohesion: 0.32
-Nodes (15): CancellationToken, EmploymentApplicationDto, IEmploymentApplicationReadStore, Result, Task, HireEmploymentApplicationCommand, HireEmploymentApplicationCommandHandler, MoveEmploymentApplicationStageCommand (+7 more)
+Nodes (18): AreaChart(), ComposedChart(), LineChart(), ScatterChart(), SparklineChart(), ChartContainer(), getChartTheme(), resolveChartColors() (+10 more)
+
+### Community 317 - "SolutionStructureTests"
+Cohesion: 0.08
+Nodes (13): LocalizationOwnershipArchitectureTests, SolutionStructureTests, Adding a module, Canonical solution structure, Central package management, Compatibility values, Deployment configuration preflight, Durable messaging boundary (+5 more)
+
+### Community 318 - ".AddPlatformApplication"
+Cohesion: 0.04
+Nodes (46): AuthenticationFeaturePolicy, CanAutoProvisionGoogleUsers, CanSelfRegister, DefaultTenantId, AuthenticationFeatureSettings, DefaultTenantId, GoogleAutoProvisionEnabled, PublicSelfRegistrationEnabled (+38 more)
+
+### Community 319 - "ERP Architecture Constitution"
+Cohesion: 0.12
+Nodes (17): 10. ERP business architecture policies, 11. Quality, testing and maintainability, 12. Production and operational policies, 13. Non-negotiable architectural principles, 14. Foundation closure blockers, 15. Review order, 16. Project closure template, 1. Enforcement levels (+9 more)
+
+### Community 320 - "Attendance Devices Review Artifacts"
+Cohesion: 0.12
+Nodes (16): Attendance Devices Review Artifacts, Detail and write contract, Evidence register, Final reconciliation, Findings and handoffs, Frozen ownership decision, Import contract, Metadata (+8 more)
 
 ### Community 321 - "measure-build.mjs"
-Cohesion: 0.09
-Nodes (25): appPathsManifest, budgets, chunksRoot, files, fileSizeByPath, largest, nextRoot, protectedRouteEntries (+17 more)
+Cohesion: 0.10
+Nodes (28): appPathsManifest, budgets, chunksRoot, files, fileSizeByPath, largest, nextRoot, normalizeChunkPath() (+20 more)
 
-### Community 322 - "SubCategoryRequestValidator"
-Cohesion: 0.21
-Nodes (9): CancellationToken, Task, ISubCategoryValidationQueries, SubCategoryRequest, CancellationToken, IStringLocalizer, Task, SubCategoryRequestValidator (+1 more)
+### Community 322 - "ref_jest_globals"
+Cohesion: 0.20
+Nodes (13): createServerListState(), cycleServerListSort(), normalizePage(), normalizePageSize(), ServerListAction, serverListReducer(), ServerListSort, ServerListSortDirection (+5 more)
 
 ### Community 323 - "compilerOptions"
-Cohesion: 0.13
-Nodes (14): compilerOptions, allowImportingTsExtensions, erasableSyntaxOnly, lib, module, moduleResolution, noEmit, skipLibCheck (+6 more)
+Cohesion: 0.15
+Nodes (12): compilerOptions, allowImportingTsExtensions, erasableSyntaxOnly, lib, module, moduleResolution, noEmit, skipLibCheck (+4 more)
 
-### Community 324 - "ICurrentActor"
-Cohesion: 0.10
-Nodes (14): ICurrentActor, EmptyActor, TestActor, TestActor, TestActor, TestActor, TestActor, AccountingCurrencySnapshotValidation (+6 more)
+### Community 324 - "SystemLocalizationStore"
+Cohesion: 0.29
+Nodes (8): CompanyLocalizationRuntimeOverride, CompanyUiSourceInfo, ISystemLocalizationStore, SystemLocalizationRuntimeResponse, SystemLocalizationSettingsResponse, GetSystemLocalizationRuntimeQuery, GetSystemLocalizationSettingsQuery, SystemLocalizationQueryHandler
 
-### Community 325 - "EmploymentApplicationsController"
-Cohesion: 0.30
-Nodes (12): CancellationToken, HasPermission, HttpGet, HttpPost, IActionResult, ISender, ProducesResponseType, Task (+4 more)
+### Community 325 - "backend-session.ts"
+Cohesion: 0.15
+Nodes (14): definitiveRefreshRejectionStatuses, fetchVerifiedSession(), isTimeoutError(), refreshAuthTokens(), refreshRequests, RefreshResult, requestTokenRefresh(), ResolvedSession (+6 more)
 
-### Community 326 - "ReportTemplateRevision"
-Cohesion: 0.10
-Nodes (12): IReportTemplateContentHashProvider, Guid, ReportTemplateRevision, EntityTypeBuilder, ReportTemplateConfiguration, ReportTemplateContentHashProvider, EntityTypeBuilder, ReportTemplateRevisionConfiguration (+4 more)
+### Community 326 - "NotificationsScreen.tsx"
+Cohesion: 0.05
+Nodes (59): API, session, and server state, Application boundary and stack, Authority and evidence, Clean feature layers, ERPSYSTEM Mobile Architecture Map, Offline foundation and safety ceiling, Optional capability boundaries, Owner dependencies and public APIs (+51 more)
 
-### Community 327 - "SelectionChallengeContracts.cs"
-Cohesion: 0.09
-Nodes (25): CancellationToken, DateTime, string, Task, ISelectionChallengeService, ISelectionChallengeSource, SelectionChallengeConsumeRequest, SelectionChallengeRegistrationRequest (+17 more)
-
-### Community 328 - "auth/constants.ts"
+### Community 327 - "userPermissionsService.ts"
 Cohesion: 0.23
-Nodes (11): ACCESS_TOKEN_COOKIE, isPublicRoute(), PUBLIC_ROUTE_PREFIXES, PUBLIC_ROUTES, REFRESH_TOKEN_COOKIE, SESSION_REFRESHED_HEADER, SessionRouteObserver(), config (+3 more)
+Nodes (11): useUserCompanyPermissions(), endpoint(), getUserCompanyPermissions(), replaceUserCompanyPermissions(), response, transport, ReplaceUserPermissions, UserCompanyPermissions (+3 more)
 
-### Community 329 - "LedgerSetupResourceScreen.tsx"
-Cohesion: 0.22
-Nodes (17): ledgerSetupUseCases, getLedgerSetupAccount(), ledgerSetupKeys, useArchiveLedgerSetup(), useInvalidatingMutation(), useLedgerSetupAccountTree(), useLedgerSetupList(), useLedgerSetupLookups() (+9 more)
+### Community 328 - "Ledger Setup Currency — Expo Implementation Profile"
+Cohesion: 0.12
+Nodes (15): 10. Edit workflow, 11. View and lifecycle workflow, 12. Permissions and read-only mode, 13. Localization, theme, and safe area, 14. Responsive and UI parity audit, 15. Verification and optional capabilities, 1. Feature boundary, 2. Routes and navigation (+7 more)
 
-### Community 330 - "ErpSystem.Modules.HR.Presentation.Features.Recruitment.V1"
-Cohesion: 0.09
-Nodes (28): JobPostingMutation, CancellationToken, HasPermission, HttpGet, HttpPost, HttpPut, IActionResult, ProducesResponseType (+20 more)
+### Community 329 - "Attendance Devices Next.js Implementation Profile"
+Cohesion: 0.12
+Nodes (15): 10. Shared Components, 11. Localization, RTL and Accessibility, 12. Realtime and Freshness, 13. Verification, 14. Final Reconciliation, 1. Review Manifest, 2. Source Map and Ownership, 3. HTTP Contract (+7 more)
 
-### Community 331 - "IOrganizationalStructureManagement"
-Cohesion: 0.31
-Nodes (7): CancellationToken, DateOnly, IReadOnlyList, Result, Task, IOrganizationalStructureManagement, OrganizationalStructureMutation
+### Community 330 - "JobPostingDto"
+Cohesion: 0.05
+Nodes (55): IAttendanceAgentAuthenticator, IAttendanceAgentInstallationSettings, HostedApiBaseUrl, PollIntervalSeconds, JobPostingDto, Audience, ClosedOn, ClosesOn (+47 more)
+
+### Community 331 - "Prompt المرحلة الأولى: ربط ماكينات البصمة وعرض البيانات الخام داخل HR"
+Cohesion: 0.12
+Nodes (16): Device, DeviceCredential, DevicePullRun, Prompt المرحلة الأولى: ربط ماكينات البصمة وعرض البيانات الخام داخل HR, RawAttendancePunch, RawDeviceUser, الأمن, الاختبارات المطلوبة (+8 more)
 
 ### Community 332 - "compilerOptions"
-Cohesion: 0.06
-Nodes (30): dom, dom.iterable, esnext, .next/dev/types/**/*.ts, .next-e2e/dev/types/**/*.ts, .next-e2e/types/**/*.ts, next-env.d.ts, .next/types/**/*.ts (+22 more)
+Cohesion: 0.10
+Nodes (19): compilerOptions, allowJs, esModuleInterop, incremental, isolatedModules, jsx, lib, module (+11 more)
 
-### Community 333 - "JwtAuthenticationTokenService"
+### Community 333 - "Company Geographic Scope Expo Implementation Profile"
 Cohesion: 0.12
-Nodes (18): AccessTokenClaimValue, AccessTokenUserSnapshot, AuthenticationTokenOptions, AuthenticationTokenSubjectSnapshot, CancellationToken, ClaimsPrincipal, DateTime, IEnumerable (+10 more)
+Nodes (16): 10. Mutation and Read-only Rules, 11. Reuse Boundary, 12. Localization, 13. Capability Matrix, 14. Verification, 15. Consumer and Handoff Rules, 1. Feature Inventory, 2. Route and Navigation (+8 more)
 
-### Community 334 - ".EveryAction_DispatchesItsSliceAndUsesCanonicalSuccessStatus"
+### Community 335 - "FiscalYearUserSelection"
 Cohesion: 0.12
-Nodes (26): Result, CreateCountryCommand, BulkArchiveCountriesRequest, CountryMutation, CreateCountriesRequest, CreateCountryRequest, UpdateCountryRequest, CancellationToken (+18 more)
-
-### Community 335 - "CoaHierarchyRemoteDataSource"
-Cohesion: 0.12
-Nodes (5): coaHierarchyRepository, CoaHierarchyRemoteDataSource, AccountTreeTransport, DefaultCoaHierarchyRepository, flattenTree()
+Nodes (17): IFiscalYearContextStore, UpdateFiscalYearContextCommand, UpdateFiscalYearContextCommandHandler, UpdateFiscalYearContextCommandValidator, FiscalYearContextResponse, FiscalYearLocks, GetFiscalYearContextQuery, GetFiscalYearContextQueryHandler (+9 more)
 
 ### Community 336 - "mobile-react/scripts/check-i18n.mjs"
 Cohesion: 0.11
-Nodes (25): containsTranslationCall(), flattenCatalog(), flattenObject(), hasTranslationKey(), inspectSource(), isAlphabeticText(), isTechnicalLiteralAllowed(), isTranslationCall() (+17 more)
+Nodes (26): containsTranslationCall(), flattenCatalog(), flattenObject(), hasTranslationKey(), inspectSource(), isAlphabeticText(), isTechnicalLiteralAllowed(), isTranslationCall() (+18 more)
 
-### Community 337 - "PlatformTenant"
-Cohesion: 0.16
-Nodes (9): ITenantDashboardSummaryAdapter, TenantSubscriptionStatus, PlatformTenant, CancellationToken, DateTime, int, Task, PlatformTenantDashboardSummaryAdapter (+1 more)
+### Community 337 - "Company Message Logs — web profile"
+Cohesion: 0.12
+Nodes (15): 10. Cache, 11. States, 12. Locale/layout, 13. Verification target, 14. Acceptance, 1. Ownership, 2. Current reuse inventory, 3. Navigation target (+7 more)
 
 ### Community 338 - "operations-remote-data-source.ts"
 Cohesion: 0.12
-Nodes (14): requireApiRootUrl(), createOperationsUseCases(), OperationsUseCases, operationsEndpoints, operationsRemoteDataSource, backgroundJobDashboardSchema, healthCheckSchema, healthStatusSchema (+6 more)
+Nodes (13): createOperationsUseCases(), OperationsUseCases, operationsEndpoints, operationsRemoteDataSource, backgroundJobDashboardSchema, healthCheckSchema, healthStatusSchema, DefaultOperationsRepository (+5 more)
 
-### Community 340 - "Party"
-Cohesion: 0.10
-Nodes (14): CancellationToken, Guid, Task, IPartyStore, PartyResponseMapper, DateTimeOffset, Guid, Party (+6 more)
+### Community 339 - "Tenant module entitlements Next.js implementation profile"
+Cohesion: 0.12
+Nodes (15): 10. Selection integrity, 11. Localization and RTL, 12. Error and loading states, 13. Verification, 14. Extension rule, 1. Feature boundary, 2. Routes, 3. API client (+7 more)
 
-### Community 341 - "AuthProvider.tsx"
-Cohesion: 0.04
-Nodes (57): ApiProblemDetails, copyString(), isRecord(), normalizeProblemDetails(), toApiError(), ApiRequestConfig, AuthFailureHandler, axios (+49 more)
-
-### Community 342 - "UserResponse"
-Cohesion: 0.09
-Nodes (33): CancellationToken, IReadOnlyCollection, IReadOnlyList, PageResponse, Task, IUserManagementReadStore, UserCompanyOptionResponse, UserResponse (+25 more)
-
-### Community 343 - "CancellationToken"
+### Community 340 - "ErpSystem.Modules.Inventory.Application.Features.Catalog.Categories.Contracts"
 Cohesion: 0.11
-Nodes (19): BudgetPlanSnapshot, BudgetSourcePlanResponse, CancellationToken, FiscalYearPlanningSnapshot, GetBudgetSourcePlansQuery, GetPositionEnvelopesQuery, GetWorkforceBudgetsQuery, IReadOnlyList (+11 more)
+Nodes (10): CategoryRequestValidator, ErpSystem.Modules.Inventory.Application.Features.Catalog.Categories.Queries, ErpSystem.Modules.Inventory.Application.Features.Catalog.Categories.Abstractions, ErpSystem.Modules.Inventory.Application.Features.Catalog.Categories.Contracts, ErpSystem.Modules.Inventory.Infrastructure.Features.Catalog.Categories.Persistence, ErpSystem.Modules.Inventory.Infrastructure.Features.Catalog, ErpSystem.Modules.Inventory.Application.Features.Catalog.Categories.Commands, ErpSystem.Modules.Inventory.Application.Features.Catalog.SubCategories.Contracts (+2 more)
 
-### Community 344 - "LedgerSetupResourcePage.tsx"
+### Community 341 - "Organizational Structure Next.js Implementation Profile"
+Cohesion: 0.13
+Nodes (14): 10. JobDescription decision dialog, 11. Lifecycle feedback, 12. Localization and accessibility, 13. API and realtime integration, 14. Navigation and permissions, 15. Verification and intentional differences, 16. 2026-09-08 review addendum, 1. Boundary and route (+6 more)
+
+### Community 342 - ".SaveChangesAsync"
 Cohesion: 0.05
-Nodes (46): AccountsPage(), HierarchyLevelsPage(), booleanOptions, companyOnlyOption, currencyPolicyOptions, dimensionRequirementOptions, displayName(), entityDefinitions (+38 more)
+Nodes (48): PagedList, MetaData, IUserManagementReadStore, IUserManagementWriteStore, ArchiveUserCommand, ArchiveUserCommandHandler, ArchiveUserCommandValidator, ChangeManagedUserPasswordCommand (+40 more)
 
-### Community 345 - "SolutionStructureTests"
-Cohesion: 0.17
-Nodes (5): Fact, IEnumerable, List, string, SolutionStructureTests
+### Community 343 - "Company user permission grants — api"
+Cohesion: 0.12
+Nodes (16): 10. Persistence and side effects, 11. Verification, 12. Reuse, 13. Localization/accessibility, 14. Delivery, 15. Evidence and closure, 1. Ownership, 2. Approved scope (+8 more)
 
-### Community 346 - "HrDbContextScopeTests"
-Cohesion: 0.22
-Nodes (10): Branch, Candidate, DateTimeOffset, Fact, ICurrentActor, Task, TimeProvider, FixedTimeProvider (+2 more)
+### Community 344 - "RealtimeProvider.tsx"
+Cohesion: 0.14
+Nodes (20): administrationQueryKeys, getAllRealtimeQueryKeys(), getRealtimeQueryKeys(), isKnownRealtimeResource(), QueryKey, queryKeys, queryKeysByResource, resourceAffectsSession() (+12 more)
 
-### Community 347 - "ReportTemplateLifecycleHandlers.cs"
-Cohesion: 0.21
-Nodes (14): CancellationToken, ReportTemplate, Result, Task, ArchiveReportTemplateCommandHandler, LifecycleConcurrency, PublishReportTemplateCommandHandler, RestoreReportTemplateCommandHandler (+6 more)
+### Community 345 - "JobPosting"
+Cohesion: 0.05
+Nodes (33): JobPosting, Audience, ClosedOn, ClosesOn, DescriptionAr, DescriptionEn, Id, JobOpening (+25 more)
 
-### Community 349 - "JobOffersController"
-Cohesion: 0.30
-Nodes (12): CancellationToken, HasPermission, HttpGet, HttpPost, IActionResult, ISender, ProducesResponseType, Task (+4 more)
+### Community 346 - "Managed Crystal Contract Registry — Screen / Workflow Contract"
+Cohesion: 0.13
+Nodes (15): 0. Contract metadata, 10. i18n, RTL, accessibility, and responsive behavior, 11. Vertical execution ledger (strict one-active-step gate), 12. Verification contract, 13. Child exit gate, 1. Child boundary and outcome, 2. UI Pattern Gate (mandatory before implementation), 3. Closest existing reference (+7 more)
 
-### Community 350 - "JobRequisitionsController"
-Cohesion: 0.26
-Nodes (14): JobRequisitionMutation, JobRequisitionStatusFilter, CancellationToken, HasPermission, HttpGet, HttpPost, IActionResult, ISender (+6 more)
+### Community 347 - "Company user permission grants — mobile"
+Cohesion: 0.06
+Nodes (26): 10. Persistence and side effects, 11. Verification, 12. Reuse, 13. Localization/accessibility, 14. Delivery, 15. Evidence and closure, 1. Ownership, 2. Approved scope (+18 more)
 
-### Community 351 - "ModuleDefinition"
-Cohesion: 0.09
-Nodes (20): CancellationToken, IEndpointRouteBuilder, IReadOnlyDictionary, IReadOnlyList, IServiceCollection, IServiceProvider, List, Regex (+12 more)
+### Community 348 - "state-remote-data-source.ts"
+Cohesion: 0.28
+Nodes (11): stateEndpoints, toStatePageQuery(), bulkArchiveStatesResultSchema, bulkCreateStatesResultSchema, countrySchema, stateDetailObjectSchema, stateDetailSchema, stateLookupSchema (+3 more)
 
-### Community 352 - "IStateValidationQueries"
-Cohesion: 0.27
-Nodes (8): CancellationToken, Task, IStateValidationQueries, StateRequest, CancellationToken, IStringLocalizer, Task, StateRequestValidator
+### Community 349 - "Company user permission grants — review"
+Cohesion: 0.12
+Nodes (16): 10. Persistence and side effects, 11. Verification, 12. Reuse, 13. Localization/accessibility, 14. Delivery, 15. Evidence and closure, 1. Ownership, 2. Approved scope (+8 more)
+
+### Community 350 - "States Expo Mobile Reference"
+Cohesion: 0.12
+Nodes (15): 10. Permissions and lifecycle, 11. Report decision, 12. RTL, responsive, and accessibility, 13. Notifications and realtime, 14. Tests, 15. Verification, 1. Source inventory, 2. Route and policy (+7 more)
+
+### Community 351 - "ModuleCatalog"
+Cohesion: 0.04
+Nodes (32): IHostRuntimeApplicationContributor, IHostRuntimeEndpointContributor, IHostRuntimeStartupTask, ModuleCatalog, Definitions, LifecycleModules, Modules, TenantEntitlementDefinitions (+24 more)
+
+### Community 352 - "Address"
+Cohesion: 0.02
+Nodes (119): IRealtimeEntityPublisher, FiscalYearChangedJob, AppointmentChangedJob, AppointmentChangedJobRequest, OrganizationalStructureChangedJob, ICompanyGeographySource, INotificationPublisher, NotificationPublishError (+111 more)
 
 ### Community 353 - "tokens/package.json"
-Cohesion: 0.07
-Nodes (28): description, devDependencies, typescript, engines, node, exports, ./css, ./json (+20 more)
+Cohesion: 0.08
+Nodes (25): description, devDependencies, typescript@^5.9.0, engines, node, exports, ./css, ./json (+17 more)
 
-### Community 354 - "AttendanceAgentSupport.cs"
+### Community 354 - "Managed Crystal Contract Registry Next.js Implementation Profile"
+Cohesion: 0.12
+Nodes (15): 10. Realtime and cache, 11. Tests, 12. Verification, 13. Intentional platform differences, 14. Manual release, 1. Route and public boundary, 2. Transport and types, 3. Server list (+7 more)
+
+### Community 355 - "Business Discovery Interview"
 Cohesion: 0.11
-Nodes (14): CancellationToken, Guid, Task, AttendanceAgentAuthenticator, AttendanceAgentCredentialGenerator, AttendanceAgentInstallationSettings, AttendanceEventKeyGenerator, AttendanceAgentCredential (+6 more)
+Nodes (17): 10. Integrations and side effects, 11. Reports, imports, exports, and files, 12. Scale and operations, 13. Rollout and existing data, 14. Definition of success, 1. Outcome and problem, 2. Current business process, 3. Actors, authority, and separation of duties (+9 more)
 
-### Community 355 - "CandidateReadStore"
-Cohesion: 0.19
-Nodes (11): CancellationToken, Candidate, CandidateDto, Func, PageResponse, Task, CandidateReadStore, CandidateRepository (+3 more)
+### Community 356 - "ReportTemplateFeatureTests"
+Cohesion: 0.10
+Nodes (8): ReportTemplateDefinitionSafety, ReportTemplateContentHashProvider, ReportTemplateFeatureTests, TestCurrentActor, CompanyId, TenantId, UserId, MigrationOperationsTests
 
-### Community 356 - "ContactsReferenceWorkflowTests"
-Cohesion: 0.16
-Nodes (13): AccountingPartyReferenceUpdate, IAccountingPartyReferenceStore, CancellationToken, Task, AccountingPartyReferenceStore, bool, CancellationToken, DbContextOptions (+5 more)
+### Community 357 - "Managed Crystal Template Validation Next.js Implementation Profile"
+Cohesion: 0.12
+Nodes (15): 10. Realtime and cache, 11. Offline and mock data, 12. Tests, 13. Accessibility, RTL and responsive behavior, 14. Release disposition, 1. Boundary, 2. Route and transport, 3. Server list (+7 more)
 
-### Community 357 - "JobPostingRepository"
+### Community 358 - "errorLogReporter.ts"
+Cohesion: 0.24
+Nodes (10): classify(), configureErrorLogReporter(), ErrorLogReport, ErrorLogReportKind, isCapturedServerFailure(), primitiveSeen, reportErrorLog(), seen (+2 more)
+
+### Community 359 - "ApplicationStatusFilter"
+Cohesion: 0.14
+Nodes (14): ApplicationStatusFilter, Draft, Hired, Interviewed, InterviewScheduled, OfferAccepted, OfferDeclined, OfferIssued (+6 more)
+
+### Community 360 - "Store"
+Cohesion: 0.20
+Nodes (10): CompanyLocalizationErrors, CatalogOutdated, Conflict, Forbidden, Invalid, SetCompanyTextCommand, Catalog, Sources (+2 more)
+
+### Community 361 - "Notification"
+Cohesion: 0.05
+Nodes (41): NotificationQueryRequest, Category, Severity, Status, NotificationReadStatus, All, Read, Unread (+33 more)
+
+### Community 362 - "TestWebHostEnvironment"
 Cohesion: 0.18
-Nodes (11): CancellationToken, JobPosting, PageResponse, Task, JobPostingReadStore, JobPostingRepository, ErpSystem.Modules.HR.Infrastructure.Features.Recruitment.JobPostings.Persistence, IJobPostingReadStore (+3 more)
+Nodes (8): PlatformFileStoragePaths, TestWebHostEnvironment, ApplicationName, ContentRootFileProvider, ContentRootPath, EnvironmentName, WebRootFileProvider, WebRootPath
 
-### Community 358 - ".GetAllAsync"
-Cohesion: 0.18
-Nodes (12): CancellationToken, Expression, Func, IQueryable, IReadOnlyCollection, IReadOnlyList, string, SubCategory (+4 more)
-
-### Community 359 - "PlatformIdentityEmailSender"
-Cohesion: 0.16
-Nodes (13): CancellationToken, Guid, IEnumerable, IReadOnlyDictionary, string, Task, IPlatformIdentityEmailSender, PlatformIdentityEmailSender (+5 more)
-
-### Community 360 - "GetFiscalYearsQuery"
-Cohesion: 0.21
-Nodes (11): CancellationToken, IReadOnlyList, Task, IFiscalYearReadStore, FiscalYearListItemResponse, CancellationToken, string, Task (+3 more)
-
-### Community 361 - "Category"
-Cohesion: 0.15
-Nodes (10): CancellationToken, IReadOnlyList, Task, ICategoryEffects, ICategoryReadStore, ICategoryWriteStore, ICollection, Category (+2 more)
-
-### Community 362 - "ReportCategoryResponse"
-Cohesion: 0.33
-Nodes (12): CancellationToken, Result, Task, CreateReportCategoryCommand, CreateReportCategoryCommandHandler, CreateReportCategoryCommandValidator, ToggleReportCategoryCommand, ToggleReportCategoryCommandHandler (+4 more)
-
-### Community 363 - "ManagedCrystalTemplateValidationHandlerTests"
-Cohesion: 0.34
-Nodes (4): CrystalReportErrors, Fact, string, ManagedCrystalTemplateValidationHandlerTests
+### Community 363 - "CrystalReportVersion"
+Cohesion: 0.04
+Nodes (39): CrystalReportResponses, CrystalReport, CurrentPublishedVersionId, Description, DisplayName, EntityKey, Id, ReportKey (+31 more)
 
 ### Community 364 - "kanban-board-user-stories/README.md"
 Cohesion: 0.11
 Nodes (13): API Endpoints, Board Task Attachment - User Story, Error Scenarios, Feature Overview, Technical Notes, US-001: View Board Task Attachments, US-002: View Attachments by Task, US-003: Add Attachment (+5 more)
 
 ### Community 365 - "check-i18n.mjs"
-Cohesion: 0.10
-Nodes (19): allFailures, arKeys, checkTranslationKey(), decodeEntities(), duplicateValues, enKeys, flatten(), inspect() (+11 more)
+Cohesion: 0.12
+Nodes (26): add(), allFailures, arKeys, checkTranslationKey(), decodeEntities(), duplicateValues, enKeys, flatten() (+18 more)
 
-### Community 366 - "ExecuteAttendancePullCommandHandler"
-Cohesion: 0.24
-Nodes (10): CancellationToken, DateOnly, DateTime, DevicePullRun, Task, ExecuteAttendancePullCommand, ExecuteAttendancePullCommandHandler, ConnectorPunchesResult (+2 more)
+### Community 366 - "workforce-trace-remote-data-source.ts"
+Cohesion: 0.08
+Nodes (21): PageMetadata, pageMetadataSchema, PageQuery, PageResponse, toPageQuery(), createWorkforceTraceUseCases(), WorkforceTraceUseCases, workforceTraceEndpoints (+13 more)
 
 ### Community 367 - "<Capability / Phase> — Customer Education & Video Guide"
 Cohesion: 0.07
 Nodes (27): 10. Terminology, 11. Video recording script / storyboard, 12. Recording checklist, 13. What changed in this phase, 14. Source-of-truth references, 1. Document metadata, 2. What this feature gives the customer, 3. Before you start (+19 more)
 
-### Community 368 - "WorkforcePlanDomainTests"
-Cohesion: 0.28
-Nodes (4): Fact, InlineData, Theory, WorkforcePlanDomainTests
-
-### Community 369 - "FiscalYearRemoteDataSource"
+### Community 368 - "Accounting Chart of Accounts and Hierarchy — Expo Implementation Contract"
 Cohesion: 0.13
-Nodes (4): fiscalYearRepository, fiscalYearUseCases, FiscalYearRemoteDataSource, DefaultFiscalYearRepository
+Nodes (14): 10. Online/offline behavior, 11. Consistency and dependency behavior, 12. Localization, RTL, and accessibility, 14. Verification, 15. Deferred and handoff, 1. Feature boundary, 2. Route and module registration, 3. Domain and runtime schemas (+6 more)
 
-### Community 370 - "ReportTemplateListItemResponse"
-Cohesion: 0.27
-Nodes (12): ReportTemplateListItemResponse, IReadOnlyList, GetPublishedReportTemplatesQuery, GetPublishedReportTemplatesQueryValidator, GetReportTemplatesManagementQuery, GetReportTemplatesManagementQueryValidator, CancellationToken, IReadOnlyList (+4 more)
+### Community 369 - "FiscalYearDetail"
+Cohesion: 0.05
+Nodes (28): createFiscalYearUseCases(), FiscalYearUseCases, SaveFiscalYearInput, detail, fiscalYearRepository, fiscalYearUseCases, fiscalYearEndpoints, fiscalYearRemoteDataSource (+20 more)
 
-### Community 371 - "Ledger Setup Books & Journal Definitions — Screen / Workflow Contract"
-Cohesion: 0.12
-Nodes (15): 0. Contract metadata, 10. i18n, RTL, accessibility, and responsive behavior, 11. Vertical execution ledger (strict one-active-step gate), 12. Verification contract, 13. Child exit gate, 1. Child boundary and outcome, 2. UI Pattern Gate (mandatory before implementation), 3. Closest existing reference (+7 more)
+### Community 370 - "Workforce Planning API Implementation Profile"
+Cohesion: 0.14
+Nodes (13): 10. Persistence and migration gate, 11. API verification, 12. Phase 3–6 contracts, 1. Surface, 2. Domain model, 3. Contracts, 4. Validation, 5. Queries (+5 more)
 
-### Community 372 - "publicEnv.ts"
+### Community 371 - "server.ts"
+Cohesion: 0.21
+Nodes (13): BACKEND_OVERRIDE_COOKIE, BACKEND_OVERRIDE_HEADER, clearBackendOverride(), getStoredBackendOverride(), isBackendOriginAllowed(), normalizeBackendUrl(), parseBackendOrigins(), saveBackendOverride() (+5 more)
+
+### Community 372 - "SystemLocalizationStore"
+Cohesion: 0.14
+Nodes (13): CompanyLocalizationChange, ResetCompanyTextRequest, CompanyLocalizationCommandHandler, CompanyLocalizationValidation, ResetCompanyTextCommand, CompanyUiText, GetSystemLocalizationTextsValidator, ResetSystemTextCommand (+5 more)
+
+### Community 373 - "FileUpload"
 Cohesion: 0.09
-Nodes (14): metadata, metadata, metadata, normalizePublicOrigin(), parsePublicOrigins(), publicApiUrl, publicBackendAllowedOrigins, publicBackendOverrideEnabled (+6 more)
+Nodes (26): FileUpload, ContentType, FileName, Length, CrystalReportFileFailure, InspectionRejected, InspectionUnavailable, InvalidExtension (+18 more)
 
-### Community 373 - "JobOpeningRepository"
-Cohesion: 0.18
-Nodes (11): CancellationToken, JobOpening, JobOpeningDto, PageResponse, Task, JobOpeningReadStore, JobOpeningRepository, IJobOpeningReadStore (+3 more)
+### Community 374 - "apiClient"
+Cohesion: 0.03
+Nodes (120): 3. Frozen HTTP Contract, 5. View Contract, Transport types, Web Cards applied profile, Web Chart applied profile, Web Reports, metadata, Page() (+112 more)
 
-### Community 374 - "coa-hierarchy-remote-data-source.ts"
+### Community 375 - "RecordingModule"
+Cohesion: 0.09
+Nodes (12): HostOpenTelemetryServiceCollectionExtensions, HostOpenTelemetrySettings, Enabled, OtlpEndpoint, OtlpProtocol, ServiceName, ServiceNamespace, TraceSamplingRatio (+4 more)
+
+### Community 376 - "DateTime"
+Cohesion: 0.02
+Nodes (36): AddFiscalYearWorkingContext, EnforceOpenFiscalYearCurrentEligibility, AddAuditTrail, AccountingDbContextModelSnapshot, InitialContacts, AddAuditTrail, ContactsDbContextModelSnapshot, InitialCrm (+28 more)
+
+### Community 377 - "ledger-setup-remote-data-source.ts"
+Cohesion: 0.26
+Nodes (8): ledgerSetupEndpoints, baseUrl(), itemUrl(), ledgerSetupRemoteDataSource, lookupParams, ledgerSetupRecordListSchema, ledgerSetupRecordSchema, resolveAccountPreviewSchema
+
+### Community 378 - "PaginationRequest"
+Cohesion: 0.15
+Nodes (13): PaginationRequest, ColumnName, Operation, PageNumber, PageSize, SearchValue, SortDirection, PaginationRequestValidator (+5 more)
+
+### Community 379 - "Candidate"
+Cohesion: 0.01
+Nodes (143): ICandidateRepository, CreateCandidateCommand, CreateCandidateCommandHandler, UpdateCandidateCommand, UpdateCandidateCommandHandler, CandidateDto, City, CreatedOn (+135 more)
+
+### Community 380 - "AppHtmlPreview.tsx"
+Cohesion: 0.29
+Nodes (8): AppHtmlPreview(), AppHtmlPreviewProps, styles, AppHtmlPreview(), styles, isolatedPreviewHtml(), isSafePreviewNavigation(), react-native-webview
+
+### Community 381 - ".Resolve"
 Cohesion: 0.27
-Nodes (12): coaHierarchyEndpoints, toAccountPageQuery(), accountHierarchyLevelListSchema, accountHierarchyLevelSchema, accountLookupSchema, accountPageSchema, accountSchema, accountTreeNodeSchema (+4 more)
+Nodes (7): AccountResolutionStatus, Ambiguous, Missing, Resolved, AccountDeterminationResolver, AccountResolutionCandidate, AccountResolutionResult
 
-### Community 375 - "ErpSystem.AttendanceConnector.Models"
-Cohesion: 0.18
-Nodes (8): HashSet, IReadOnlyList, string, TimeSpan, AttendanceConnectorOptions, TargetPolicy, ErpSystem.AttendanceConnector.Models, ErpSystem.AttendanceConnector.Services
-
-### Community 376 - "ModelSnapshot"
-Cohesion: 0.13
-Nodes (9): ModelBuilder, AccountingDbContextModelSnapshot, ModelBuilder, ContactsDbContextModelSnapshot, ModelBuilder, PointOfSaleDbContextModelSnapshot, ModelBuilder, ReportingDbContextModelSnapshot (+1 more)
-
-### Community 378 - "IAddressTypeValidationQueries"
-Cohesion: 0.23
-Nodes (8): CancellationToken, Task, IAddressTypeValidationQueries, AddressTypeRequest, CancellationToken, IStringLocalizer, Task, AddressTypeRequestValidator
-
-### Community 379 - "apiService"
-Cohesion: 0.25
-Nodes (9): apiService, ledgerSetupEndpoints, baseUrl(), itemUrl(), ledgerSetupRemoteDataSource, lookupParams, ledgerSetupRecordListSchema, ledgerSetupRecordSchema (+1 more)
-
-### Community 380 - "Account"
-Cohesion: 0.17
-Nodes (5): SaveAccountInput, Account, AccountLookup, AccountRequest, Props
-
-### Community 381 - "Appointment"
-Cohesion: 0.11
-Nodes (12): CancellationToken, DateTimeOffset, IReadOnlyList, Task, IAppointmentChangeScheduler, IAppointmentReadStore, IAppointmentRepository, DateTimeOffset (+4 more)
+### Community 382 - "Mobile styling guide"
+Cohesion: 0.14
+Nodes (14): Accessibility and touch targets, Anti-patterns, Colocation and file shape, Light/dark themes, Migration order and verification, Mobile styling guide, New feature template, Ownership hierarchy (+6 more)
 
 ### Community 383 - "JobOpening"
-Cohesion: 0.21
-Nodes (7): DateTimeOffset, Guid, ICollection, JobOpening, JobOpeningStatus, EntityTypeBuilder, JobOpeningConfiguration
+Cohesion: 0.04
+Nodes (54): EvaluationCriterionDto, RecruitmentGeneralSettingsDto, AutoPublishOpening, DefaultCurrency, DefaultProbationMonths, EnablePublicPortal, EnforceHeadcountCapacity, InboundEmailAlias (+46 more)
 
-### Community 384 - "ledger-setup-mock-data.ts"
-Cohesion: 0.23
-Nodes (11): LedgerSetupField, LedgerSetupLookupSource, canCreateLedgerSetupMockDraft(), createLedgerSetupMockDraft(), LedgerSetupLookups, LedgerSetupMockDraftContext, lookupIds(), numberValue() (+3 more)
-
-### Community 385 - "web-next/package.json"
-Cohesion: 0.17
-Nodes (11): engines, node, npm, name, overrides, postcss, react, react-dom (+3 more)
-
-### Community 386 - "UserProfileMessages.cs"
-Cohesion: 0.23
-Nodes (15): UserPhoto, UserProfileResponse, CancellationToken, Result, Task, GetUserPhotoQuery, GetUserPhotoQueryHandler, GetUserProfileQuery (+7 more)
-
-### Community 387 - "AuthController"
-Cohesion: 0.28
-Nodes (12): AuthenticationResendConfirmationRequest, AllowAnonymous, Authorize, CancellationToken, EnableRateLimiting, HasPermission, HttpGet, HttpPost (+4 more)
-
-### Community 388 - ".Require"
-Cohesion: 0.12
-Nodes (15): CompanyId, ICurrentActor, TenantId, CatalogScope, CancellationToken, Category, IQueryable, IReadOnlyList (+7 more)
-
-### Community 389 - "fiscal-year.ts"
+### Community 384 - "Accounting Ledger Setup — API Implementation Contract"
 Cohesion: 0.15
-Nodes (12): FiscalPeriodFrequency, FiscalPeriodStatus, FiscalYear, FiscalYearLifecycleFilter, FiscalYearPageMetadata, FiscalYearRecordStatus, FiscalYearSortColumn, FiscalYearStatus (+4 more)
+Nodes (12): 10. Verification, 11. Deferred and excluded API work, 1. Scope and current baseline, 2. Domain model, 3. Scope, authorization, and permissions, 4. CQRS and HTTP surface, 5. Read contracts, 6. Write contracts and invariants (+4 more)
 
-### Community 390 - "AttendanceDeviceStore"
-Cohesion: 0.10
-Nodes (22): AttendanceAgent, AttendanceDevice, AttendanceDeviceResponse, CancellationToken, DevicePullRun, Guid, IQueryable, IReadOnlyList (+14 more)
+### Community 385 - "Workforce Planning Implementation Request"
+Cohesion: 0.14
+Nodes (13): Application and API boundaries, Database and rollout plan, Frozen domain contract, Offer governance and atomic hire, Phase 0 gate, Position Envelope and Amendment, Product boundary, Request metadata (+5 more)
 
-### Community 391 - "FileUploadInspectionService"
-Cohesion: 0.18
-Nodes (7): CancellationToken, IReadOnlyDictionary, ReadOnlySpan, Task, FileUploadInspectionService, Bytes, ReachedEndOfStream
+### Community 386 - "Platform Settings evidence"
+Cohesion: 0.14
+Nodes (13): 21. Settings card fidelity correction — 2026-10-19, Administration grouping acceptance - 2026-10-19, Administration grouping final decision - Verified, 2026-10-19, Administration icon correction acceptance - 2026-10-19, Card correction browser acceptance — 2026-10-19, Card correction final verification — Verified, 2026-10-19, Card correction regression evidence, Final bundle measurement (+5 more)
 
-### Community 392 - "AddressTypeQueries.cs"
-Cohesion: 0.18
-Nodes (21): AddressTypeDetailResponse, AddressTypeListItemResponse, AddressTypeLookupResponse, AddressTypeWithAddressesResponse, CancellationToken, int, IReadOnlyList, Result (+13 more)
-
-### Community 393 - "IStaffingWriteStore"
-Cohesion: 0.10
-Nodes (22): CancellationToken, Task, IStaffingReadStore, IStaffingWriteStore, StaffingFiscalYearSnapshot, EnvelopeAmendmentDetailResponse, EnvelopeAmendmentListItemResponse, StaffingRequestDetailResponse (+14 more)
-
-### Community 394 - "JobOpeningsController"
-Cohesion: 0.20
-Nodes (16): ApplicationStatusFilter, InterviewStatusFilter, JobOfferStatusFilter, JobOpeningStatusFilter, JobPostingStatusFilter, CancellationToken, HasPermission, HttpGet (+8 more)
-
-### Community 395 - "core/api/index.ts"
-Cohesion: 0.02
-Nodes (273): ApiError, CurrencyFilters, CurrencyPageMetadata, CurrencyRecordStatus, CurrencySearchField, CurrencySearchOperator, CurrencySortColumn, CurrencyFilterButton() (+265 more)
-
-### Community 396 - "administration.ts"
+### Community 387 - "Address Types Review Artifacts"
 Cohesion: 0.15
-Nodes (22): AdministrationUseCases, administrationEndpoints, companyOptionSchema, managedUserPageSchema, managedUserSchema, roleClaimSchema, roleOptionObjectSchema, roleOptionSchema (+14 more)
+Nodes (12): Address Types Review Artifacts, Capability decisions, Final reconciliation, Grid, card, report and write contract, Import contract, Integration register, Metadata, Permission and lifecycle matrix (+4 more)
 
-### Community 397 - "AccountsController"
+### Community 388 - "CompanyEmailTemplateContracts.cs"
+Cohesion: 0.09
+Nodes (26): AccountEmailScope, ChangeEmailTemplateRequest, CompanyEmailTemplateErrors, Conflict, Forbidden, Invalid, CompanyEmailTemplatePage, CompanyEmailTemplateRow (+18 more)
+
+### Community 389 - "FiscalYearsScreen.tsx"
+Cohesion: 0.07
+Nodes (48): FiscalPeriod, FiscalPeriodFrequency, FiscalPeriodStatus, FiscalYear, FiscalYearFilters, FiscalYearLifecycleFilter, FiscalYearLookup, FiscalYearPageMetadata (+40 more)
+
+### Community 390 - "<Business Capability> — Evidence Ledger"
 Cohesion: 0.25
-Nodes (13): AccountRequestValidator, AccountHierarchyLevelRequest, AccountRequest, CancellationToken, HasPermission, HttpDelete, HttpGet, HttpPost (+5 more)
+Nodes (7): Audit conclusion, <Business Capability> — Evidence Ledger, Conflicts / drift found, Evidence ledger, External/version-sensitive evidence, Gaps that code/evidence cannot answer, Scope of investigation
 
-### Community 398 - "organizationalStructureSchema.ts"
-Cohesion: 0.27
-Nodes (11): getOrganizationalStructureSchema(), optionalBoolean, optionalId, optionalNumber, optionalString(), t, formBoolean(), normalizeOptionalFormValue() (+3 more)
+### Community 391 - "PlatformMailSettings"
+Cohesion: 0.05
+Nodes (36): IAccountEmailContentPolicy, IAccountEmailRenderer, IAccountEmailScopeResolver, ValidatedEmailContent, IMessageAttemptRecorder, MessageAttemptCompletion, MessageAttemptSnapshot, MessageAttemptStart (+28 more)
 
-### Community 399 - "StubBudgetReadStore"
-Cohesion: 0.14
-Nodes (11): BudgetSourcePlanResponse, GetBudgetSourcePlansQuery, GetPositionEnvelopesQuery, GetWorkforceBudgetsQuery, PageResponse, PositionEnvelopeDetailResponse, PositionEnvelopeListItemResponse, WorkforceBudgetDetailResponse (+3 more)
-
-### Community 400 - ".Create"
-Cohesion: 0.33
-Nodes (10): CandidateMutation, CancellationToken, HasPermission, HttpGet, HttpPost, HttpPut, IActionResult, ProducesResponseType (+2 more)
-
-### Community 401 - "env.ts"
-Cohesion: 0.20
-Nodes (10): apiUrl, demoLoginEnabled, isPrivateDevelopmentHost(), parseBooleanFlag(), validateApiUrl(), apiRootUrl, realtimeEndpoints, ConnectionStateCallback (+2 more)
-
-### Community 402 - "CountriesScreen.test.tsx"
-Cohesion: 0.14
-Nodes (13): country, mockAllowedPermissions, mockArchive, mockBulkArchive, mockRestore, mockSave, mockSetFilters, mockSetOfflineReadEnabled (+5 more)
-
-### Community 403 - "AttendanceRawStore"
+### Community 393 - "Timeline.tsx"
 Cohesion: 0.21
-Nodes (11): CancellationToken, DateTime, DevicePullRun, Guid, IReadOnlyCollection, IReadOnlyList, RawAttendancePunch, RawDeviceUser (+3 more)
+Nodes (11): TimelineChartBaseProps, getItemValue(), isTimelineStatus(), Timeline(), TimelineBaseProps, TimelineKey, TimelinePriority, TimelineProps (+3 more)
 
-### Community 404 - "MediaContent.tsx"
-Cohesion: 0.16
-Nodes (10): AudioPlayer, ExcelViewer, ImageViewer, PdfViewer, TxtViewer, VideoPlayer, WordViewer, ensureSyncfusionLicense() (+2 more)
+### Community 394 - "Attendance Devices API Implementation Profile"
+Cohesion: 0.17
+Nodes (11): 10. Registration and Configuration, 11. Tests and Manual Matrix, 1. Exact Source Inventory, 2. Ownership and Persistence, 3. Transport Contract, 5. Query Contract, 6. Write Contract, 7. Validation and Errors (+3 more)
 
-### Community 405 - "AccountingMessagingFoundationTests"
-Cohesion: 0.31
-Nodes (6): DateTimeOffset, DbContextOptions, Fact, Task, AccountingMessagingFoundationTests, FixedTimeProvider
+### Community 395 - "AppForm"
+Cohesion: 0.02
+Nodes (225): Baseline evidence (2026-09-23), 9. Create workflow, Recruitment Mobile Reference, 9. Form and Validation Contract, 4. Reuse and composition contract, 2. UI Pattern Gate (mandatory before implementation), 4. كتالوج المكونات المشتركة (نفس الاسم ونفس الـ props على المنصتين), 5.5 الفورم (إنشاء/تعديل) (+217 more)
 
-### Community 406 - "ICurrentActor"
-Cohesion: 0.08
-Nodes (20): IConfiguration, DesignTimeActor, HrDbContextDesignFactory, AttendanceDeviceConcurrencyTests, TestActor, TestCurrentActor, Actor, TestActor (+12 more)
-
-### Community 407 - "RecordingSender"
-Cohesion: 0.26
-Nodes (6): CancellationToken, IAsyncEnumerable, IRequest, IStreamRequest, List, RecordingSender
-
-### Community 408 - "<Feature Name> Review Artifacts"
+### Community 396 - "Frontend Architecture Reference"
 Cohesion: 0.12
-Nodes (15): Detail and write contract, Evidence register, <Feature Name> Review Artifacts, Final reconciliation, Findings and handoffs, Grid and card contract, Import contract, Integration register (+7 more)
+Nodes (17): App Router Rules, Browser security and CSP rollout, CI Definition of Done and accessibility/browser regression policy, CSP violation collection and privacy, Current dependency security baseline, Dependency Direction, Enforced state and release smoke, Feature Implementation Guides (+9 more)
 
-### Community 409 - "ReportTemplateStore"
-Cohesion: 0.42
-Nodes (5): CancellationToken, Guid, IReadOnlyList, Task, ReportTemplateStore
+### Community 397 - "Phase 3 — Next.js Runtime Architecture 🟠"
+Cohesion: 0.15
+Nodes (13): 3.1 Cache Components, 3.2 Static Root Layout, 3.3 Runtime preferences boundary, 3.4 Partial Prerendering, 3.5 Remove incompatible route flags, 3.6 Client-only dynamic components, 3.7 Instant Navigation compatibility, 3.8 Security layering (+5 more)
 
-### Community 411 - "IFiscalYearWriteStore"
-Cohesion: 0.29
-Nodes (4): CancellationToken, DateOnly, Task, IFiscalYearWriteStore
+### Community 398 - "Phase 8 — Testing Strategy ✅"
+Cohesion: 0.15
+Nodes (13): 8.1 Unit tests, 8.2 Integration tests, 8.3 Playwright E2E, 8.4 Coverage thresholds, Applied closure — 2026-09-18, Authentication, Authorization, Business smoke (+5 more)
+
+### Community 399 - "Accounting Chart of Accounts and Hierarchy — API Implementation Contract"
+Cohesion: 0.15
+Nodes (12): 10. Verification, 11. Deferred and excluded API work, 1. Boundary and current baseline, 2. Domain model, 3. Scope, authorization, and permissions, 4. CQRS and HTTP surface, 5. Read contracts, 6. Write contracts and invariants (+4 more)
+
+### Community 400 - "Company Message Logs — api profile"
+Cohesion: 0.15
+Nodes (12): 10. Verification, 11. Acceptance, 1. Ownership, 2. Current sources, 3. Target contracts, 4. Authorization, 5. Validation, 6. Persistence target (+4 more)
+
+### Community 401 - "Super Admin administration — Master plan"
+Cohesion: 0.15
+Nodes (12): 0. Plan metadata, Active scope, Approved implementation request, Canonical roadmap, Delivery and acceptance, Edge, security and verification matrix, Existing-system relationship review, Feature Decomposition Gate (+4 more)
+
+### Community 402 - "Managed Crystal Contract Registry API Implementation Profile"
+Cohesion: 0.17
+Nodes (11): 10. Tests, 11. Deployment, 1. Purpose, 2. Domain and persistence, 3. Contract artifact, 4. Registry model, 6. Fiscal Years contract, 7. Authorization and scope (+3 more)
+
+### Community 403 - "Managed Crystal Contract Registry — Implementation Request"
+Cohesion: 0.15
+Nodes (12): Approved decisions, Business Rules Matrix, Edge Cases & Validation Matrix, Execution request, Existing-System Relationship Review, Impact Matrix, Import, offline and client decisions, Managed Crystal Contract Registry — Implementation Request (+4 more)
+
+### Community 404 - "Managed Crystal Contract Registry Feature Full Review"
+Cohesion: 0.17
+Nodes (11): 10. Handoff decision, 1. Review manifest, 2. Architecture boundary, 3. Frozen shared contract, 4. Entity contracts, 5. Permissions and scope, 6. Runtime and integration behavior, 7. Client disposition (+3 more)
+
+### Community 405 - "contacts/README.md"
+Cohesion: 0.13
+Nodes (10): Contacts API documentation, Verified foundation, Contacts architecture, Future channel boundary, Contacts delivery roadmap, Foundation (verified), Planned, Contacts feature catalog (+2 more)
+
+### Community 406 - "HrDbContextDesignFactory"
+Cohesion: 0.13
+Nodes (7): CrmDbContextDesignFactory, DesignTimeActor, CompanyId, TenantId, UserId, HrDbContextDesignFactory, ReferenceDataDbContextDesignFactory
+
+### Community 407 - "getNextMockSample"
+Cohesion: 0.27
+Nodes (7): getNextAddressTypeMockData(), samples, getNextCountryMockData(), samples, getNextStateMockData(), samples, getNextMockSample()
+
+### Community 408 - "PLAN_REGISTRY.md"
+Cohesion: 0.03
+Nodes (43): Reporting architecture, Runtime ownership, Foundation (verified), Planned, Reporting delivery roadmap, Current status, Feature catalog and guide, Reporting module (+35 more)
+
+### Community 409 - "GridFooter"
+Cohesion: 0.47
+Nodes (8): GridFooter(), NavigationButton(), NavigationButtonProps, getActiveRecordIndex(), getNextRecordIndex(), getPageForRecord(), getRecordNavigationBound(), getServerRecordIndex()
+
+### Community 410 - "Company email templates Phase 02 - Next.js Client"
+Cohesion: 0.20
+Nodes (9): Approved references, Company email templates Phase 02 - Next.js Client, Evidence to capture, Import checks, Purpose, Read-path contract, Required structure, Source fingerprints (+1 more)
+
+### Community 411 - "Company UI localization Phase 02 - Next.js Client"
+Cohesion: 0.20
+Nodes (9): Approved references, Company UI localization Phase 02 - Next.js Client, Evidence to capture, Import checks, Purpose, Read-path contract, Required structure, Source fingerprints (+1 more)
 
 ### Community 412 - "web-next/scripts/check-architecture.mjs"
-Cohesion: 0.05
-Nodes (40): appPageFiles, appRoot, appRouteViolations, cacheSafetyViolations, canonicalAppRoute(), codeQualityViolations, compatibilityViolations, cycles (+32 more)
+Cohesion: 0.04
+Nodes (44): appPageFiles, appRoot, appRouteViolations, cacheSafetyViolations, canonicalAppRoute(), codeQualityViolations, compatibilityViolations, cycles (+36 more)
 
-### Community 413 - "CreateReportTemplateCommandHandler"
-Cohesion: 0.19
-Nodes (13): CancellationToken, ReportTemplate, ReportTemplateDetailResponse, Result, Task, CreateReportTemplateCommandHandler, CancellationToken, ReportTemplateDetailResponse (+5 more)
+### Community 413 - "Company email templates — Mobile profile"
+Cohesion: 0.07
+Nodes (22): Foundation (verified), Platform delivery roadmap, Remaining policy, 10. Transport, 11. State/cache, 12. Locale/layout, 13. Mock, 14. Five-point audit/tests (+14 more)
 
 ### Community 414 - "Board Task Management - User Story"
 Cohesion: 0.12
 Nodes (15): API Endpoints, Board Task Management - User Story, Business Rules, Error Scenarios, Feature Overview, Notes, Permissions, Request/Response Schemas (+7 more)
 
-### Community 415 - "CrmModule.cs"
-Cohesion: 0.09
-Nodes (15): Assembly, AssemblyReference, IServiceCollection, DependencyInjection, IReadOnlyList, string, CrmPermissions, Assembly (+7 more)
+### Community 415 - "Error Logs Phase 02 - Next.js Client"
+Cohesion: 0.20
+Nodes (9): Approved references, Error Logs Phase 02 - Next.js Client, Evidence to capture, Import checks, Purpose, Read-path contract, Required structure, Source fingerprints (+1 more)
 
-### Community 416 - ".GetInstalled"
-Cohesion: 0.47
-Nodes (6): Authorize, CancellationToken, HttpGet, IActionResult, Task, ModulesController
+### Community 416 - "Accounting Chart of Accounts and Hierarchy — Cross-Platform Implementation Contract"
+Cohesion: 0.17
+Nodes (11): 10. Phase 00 handoff, 1. Scope, authority, and current/target boundary, 2. Existing-system relationship and closest reuse, 3. Domain model and D-024 code baseline, 4. Business rules and lifecycle, 5. Read/query contract, 6. Persistence, API, and permissions, 7. Web and Mobile product contract (+3 more)
 
-### Community 417 - "reportApiService.ts"
-Cohesion: 0.21
-Nodes (8): publicReportApiUrl, asString(), isRecord(), normalizeErrors(), ReportApiService, ReportError, ReportRequest, ReportRequestValue
+### Community 417 - "Workforce Planning Web Reference"
+Cohesion: 0.11
+Nodes (18): 10. Permissions, 11. Localization and RTL, 12. Realtime and cache, 13. Verification, 14. Status, 15. Phase 2 budgets journey, 16. Phase 2 envelopes journey, 17. Phase 2 realtime, cache, and verification (+10 more)
 
-### Community 418 - "AddressType"
-Cohesion: 0.18
-Nodes (10): CancellationToken, IReadOnlyCollection, IReadOnlyList, Task, IAddressTypeReadStore, IAddressTypeWriteStore, ICollection, AddressType (+2 more)
+### Community 418 - "Currency"
+Cohesion: 0.06
+Nodes (43): ArchiveCurrencyCommand, ArchiveCurrencyCommandHandler, ArchiveCurrencyCommandValidator, CreateCurrencyCommand, CreateCurrencyCommandHandler, CreateCurrencyCommandValidator, CurrencyCommandSupport, CurrencyMutationValidator (+35 more)
 
-### Community 419 - "ApiKey"
-Cohesion: 0.15
-Nodes (9): IApiKeyEffects, DateTime, ApiKey, EntityTypeBuilder, ApiKeyConfiguration, ApiKeyEffects, Action, DateTime (+1 more)
+### Community 419 - "Company Message Logs Phase 02 - Next.js Client"
+Cohesion: 0.20
+Nodes (9): Approved references, Company Message Logs Phase 02 - Next.js Client, Evidence to capture, Import checks, Purpose, Read-path contract, Required structure, Source fingerprints (+1 more)
 
 ### Community 420 - "Employee"
-Cohesion: 0.06
-Nodes (22): DateOnly, Guid, ICollection, Employee, DateOnly, EmployeeAssignment, DateOnly, EmployeeContract (+14 more)
+Cohesion: 0.02
+Nodes (88): Employee, Assignments, CandidateId, Contracts, EmployeeNumber, FirstName, HireDate, Id (+80 more)
 
-### Community 421 - "AuthProvider.test.tsx"
-Cohesion: 0.11
-Nodes (15): ApiError, AuthProbe(), mockBeginTransition, mockCancelQueries, mockClearQueries, mockClearSensitiveFileCache, mockClearSession, mockGetAccessToken (+7 more)
+### Community 421 - "Platform Settings Phase 02 - Next.js Client"
+Cohesion: 0.20
+Nodes (9): Approved references, Evidence to capture, Import checks, Platform Settings Phase 02 - Next.js Client, Purpose, Read-path contract, Required structure, Source fingerprints (+1 more)
 
 ### Community 422 - "check-contract-matrix.mjs"
 Cohesion: 0.08
-Nodes (15): endpointMemberCount, endpointSources, errors, matrix, matrixPath, mobileRoot, offlineModes, pagePaths (+7 more)
+Nodes (17): endpointMemberCount, endpointSources, errors, hasEndpointReference(), matrix, matrixPath, mobileRoot, offlineModes (+9 more)
 
 ### Community 423 - "Kanban Label Management - User Story"
 Cohesion: 0.12
 Nodes (15): API Endpoints, Business Rules, Error Scenarios, Feature Overview, Kanban Label Management - User Story, Notes, Permissions, Request/Response Schemas (+7 more)
 
-### Community 424 - "track-change-remote-data-source.ts"
-Cohesion: 0.15
-Nodes (13): createTrackChangeUseCases(), TrackChangeUseCases, trackChangeUseCases, useTrackChangeUseCases(), trackChangeEndpoints, toTrackChangeLogs(), trackChangeRemoteDataSource, trackChangeLogSchema (+5 more)
+### Community 424 - "hr/features/README.md"
+Cohesion: 0.07
+Nodes (23): Attendance Site Agent runbook, HR administrator flow, One-time deployment prerequisites, Operational constraints, Purpose, Execution request, Frozen product decisions, Import contract (+15 more)
 
 ### Community 425 - "application-relation.ts"
-Cohesion: 0.15
-Nodes (8): api, ErpSystemApi, legacyWeb, LegacyWebReference, mobileReact, MobileReactFrontend, webNext, WebNextFrontend
-
-### Community 426 - "ErpSystem.Modules.Accounting.Application.Features.Finance.LedgerSetup.Contracts"
-Cohesion: 0.51
-Nodes (4): ErpSystem.Modules.Accounting.Presentation.Features.Finance.LedgerSetup.V1, ErpSystem.Modules.Accounting.Application.Features.Finance.LedgerSetup.Commands, ErpSystem.Modules.Accounting.Application.Features.Finance.LedgerSetup.Queries, ErpSystem.Modules.Accounting.Application.Features.Finance.LedgerSetup.Contracts
-
-### Community 427 - ".GetAllAsync"
-Cohesion: 0.29
-Nodes (5): CancellationToken, IReadOnlyCollection, Task, IApiKeyReadStore, IApiKeyWriteStore
-
-### Community 428 - "InventoryDbContext"
-Cohesion: 0.15
-Nodes (10): bool, Category, CategorySubcategory, DbSet, ModelBuilder, string, SubCategory, InventoryDbContext (+2 more)
-
-### Community 429 - "ReportCategoryQueries.cs"
-Cohesion: 0.36
-Nodes (8): CancellationToken, IReadOnlyList, Result, Task, GetReportCategoriesQuery, GetReportCategoriesQueryHandler, GetReportCategoryByIdQuery, GetReportCategoryByIdQueryHandler
-
-### Community 430 - "SubCategory"
-Cohesion: 0.18
-Nodes (10): CancellationToken, IReadOnlyCollection, IReadOnlyList, Task, ISubCategoryEffects, ISubCategoryReadStore, ISubCategoryWriteStore, ICollection (+2 more)
-
-### Community 432 - "ERPSYSTEM Business Planning"
 Cohesion: 0.20
-Nodes (9): 1. Classify the request first, 2. New product workspace, 3. New module, 4. New feature (or substantial rebuild), 5. Existing-feature change or refactor, 6. Corrective change, 7. Screen pattern selection (every screen, every platform), Checks before handoff (+1 more)
+Nodes (6): api, ErpSystemApi, mobileReact, MobileReactFrontend, webNext, WebNextFrontend
 
-### Community 433 - "GetDistrictsQuery"
-Cohesion: 0.22
-Nodes (10): DistrictListItemResponse, CancellationToken, int, string, GetDistrictsQuery, GetDistrictsQueryHandler, GetDistrictsQueryValidator, Expression (+2 more)
+### Community 426 - "Company Message Logs — review profile"
+Cohesion: 0.17
+Nodes (11): 10. Closure, 1. Scope, 2. Verified source, 3. Relationship, 4. Domain target, 5. Security, 6. Applicability, 7. Shared reuse (+3 more)
+
+### Community 427 - "Address Types API Implementation Profile"
+Cohesion: 0.17
+Nodes (12): 10. Tests, 11. Deployment, 1. Purpose, 2. Domain and persistence, 3. Contracts, 4. Query contract, 5. Command contract, 6. Authorization and scope (+4 more)
+
+### Community 428 - "HrDbContextScopeTests"
+Cohesion: 0.24
+Nodes (6): FixedTimeProvider, HrDbContextScopeTests, TestActor, CompanyId, TenantId, UserId
+
+### Community 429 - "Error Logs — API implementation profile"
+Cohesion: 0.12
+Nodes (16): 10. Verification and status, 11. Phase 00 handoff, 12. Persisted identifier contract — 2026-10-18, 1. Ownership, 2. Scope, 4. Validation, 5. Authorization, 6. Contracts (+8 more)
+
+### Community 430 - "Store"
+Cohesion: 0.14
+Nodes (18): CompanyLocalizationRuntimeResponse, CompanyLocalizationSettingsResponse, CompanyLocalizationTextRow, CompanyLocalizationTextsQuery, CompanyLocalizationTextsResponse, ICompanyLocalizationStore, SetCompanyLanguageRequest, CompanyLocalizationQueryHandler (+10 more)
+
+### Community 431 - "ReferenceDataDbContextAuditTests"
+Cohesion: 0.27
+Nodes (6): FixedTimeProvider, ReferenceDataDbContextAuditTests, TestCurrentActor, CompanyId, TenantId, UserId
+
+### Community 432 - "Global administration access Phase 02 - Next.js Client"
+Cohesion: 0.20
+Nodes (9): Approved references, Evidence to capture, Global administration access Phase 02 - Next.js Client, Import checks, Purpose, Read-path contract, Required structure, Source fingerprints (+1 more)
+
+### Community 433 - "Company email templates — API profile"
+Cohesion: 0.11
+Nodes (16): Platform API documentation, Role-permission presentation contract, User administration contract, Verified foundation, 10. Verification, 11. Acceptance/operations, 1. Ownership, 2. Runtime sources (+8 more)
 
 ### Community 434 - "Board Task Comment Management - User Story"
 Cohesion: 0.13
 Nodes (14): API Endpoints, Board Task Comment Management - User Story, Business Rules, Data Contracts, Error Scenarios, Feature Overview, Notes, US-001: View Comments For A Task (+6 more)
 
-### Community 435 - "NotificationRuntimeContracts.cs"
-Cohesion: 0.13
-Nodes (14): DateTimeOffset, IReadOnlyCollection, IReadOnlyList, INotificationDeliveryEffects, INotificationInboxEffects, INotificationPermissionCatalog, INotificationPublicationStore, INotificationRecipientResolver (+6 more)
-
-### Community 436 - "WorkforceBudgetCommands.cs"
+### Community 435 - "Company UI localization — web"
 Cohesion: 0.11
-Nodes (34): BudgetPlanSnapshot, CancellationToken, Error, FiscalYearPlanningSnapshot, ICurrentActor, IReadOnlyList, Result, Task (+26 more)
+Nodes (17): 10. Language/RTL, 11. Super-admin behavior, 12. Verification, 13. Accessibility/localization, 14. Delivery, 15. Risks, 1. Ownership, 2. Scope (+9 more)
 
-### Community 437 - "web-next/src/shared/components/forms/layouts/index.ts"
-Cohesion: 0.22
-Nodes (10): FormSection(), FormSectionProps, FormStepActions(), FormStepActionsProps, FormStep, FormStepper(), FormStepperProps, FormTab (+2 more)
+### Community 436 - "Authorized global UI texts Phase 02 - Next.js Client"
+Cohesion: 0.20
+Nodes (9): Approved references, Authorized global UI texts Phase 02 - Next.js Client, Evidence to capture, Import checks, Purpose, Read-path contract, Required structure, Source fingerprints (+1 more)
+
+### Community 437 - "AuditTrailPage.tsx"
+Cohesion: 0.12
+Nodes (42): AuditActionChip(), AuditTrailDetailsDialog(), actionColors, actionLabel(), entityLabel(), fieldLabel(), formatAuditDate(), humanizeIdentifier() (+34 more)
 
 ### Community 438 - "Entity Implementation Guide"
 Cohesion: 0.12
-Nodes (20): Entity Implementation Guide, Frontend Feature Implementation Guide, Country Entity, AuditableEntity Base Class, Bilingual Names Pattern (NameAr/NameEn), FluentValidation, Localization (en-US / ar-EG), Mapster Object Mapping (+12 more)
+Nodes (19): Entity Implementation Guide, Frontend Feature Implementation Guide, Country Entity, AuditableEntity Base Class, Bilingual Names Pattern (NameAr/NameEn), FluentValidation, Localization (en-US / ar-EG), Mapster Object Mapping (+11 more)
 
-### Community 439 - "MainClientBootstrap.tsx"
-Cohesion: 0.38
-Nodes (7): MainClientBootstrap(), canPullToRefresh(), hasOpenModalSurface(), isEditableElement(), isPullToRefreshBlockedTarget(), PullToRefreshSafetyState, safeState
-
-### Community 440 - "FiscalYearUserSelection"
-Cohesion: 0.31
-Nodes (4): CancellationToken, Task, IFiscalYearContextStore, FiscalYearUserSelection
-
-### Community 441 - "PlatformAuthenticationTokenWireCompatibilityTests"
-Cohesion: 0.12
-Nodes (14): IAccessTokenClaimMaterialService, AccessTokenClaimMaterialService, string, AuthenticationTokenOptions, CancellationToken, Fact, InlineData, JwtSecurityToken (+6 more)
-
-### Community 442 - "Ledger Setup Currency — Customer Education Pack"
+### Community 439 - "ERP_FRONTEND_MASTER_PLAN.md"
 Cohesion: 0.04
-Nodes (41): Accounting API documentation, Contract rules, Current state, Accounting architecture, Financial ownership, Future commercial-channel boundary, Persistence and boundaries, Repository-specific platform reuse (+33 more)
+Nodes (53): 1. Architecture Goal, 2.1 Shared proxy security policy, 2.2 Generic BFF hardening, 2.3 SignalR BFF hardening, 2.4 Hangfire BFF hardening, 2.5 Logout hardening, 2.6 Session/company transition safety, 2.7 Demo Login (+45 more)
 
-### Community 443 - "3. Findings"
-Cohesion: 0.15
-Nodes (12): 1. Verdict, 2. What to keep as the platform core (do not rewrite), 3.1 Repository and naming, 3.2 API, 3.3 Web (`web-next`), 3.4 Mobile (`mobile-react`), 3.5 Documentation and planning, 3.6 Missing platform capabilities (template goal) (+4 more)
+### Community 440 - "Company user permission grants Phase 02 - Next.js Client"
+Cohesion: 0.20
+Nodes (9): Approved references, Company user permission grants Phase 02 - Next.js Client, Evidence to capture, Import checks, Purpose, Read-path contract, Required structure, Source fingerprints (+1 more)
+
+### Community 441 - ".AddPlatformInfrastructure"
+Cohesion: 0.04
+Nodes (43): AccessTokenClaimMaterialRequest, AccessTokenClaimMaterialResult, AccessTokenClaimMaterialSourceSnapshot, AccessTokenClaimNames, AccessTokenRoleClaimSnapshot, AccessTokenRoleSnapshot, AccessTokenTenantSnapshot, AccessTokenUserSnapshot (+35 more)
+
+### Community 442 - "accounting/features/README.md"
+Cohesion: 0.05
+Nodes (30): Accounting delivery roadmap, Foundation (verified), Planned delivery order, Approved references, Discovery checklist, Fiscal Years Phase 00 - Discovery and Evidence, Purpose, Required outputs (+22 more)
+
+### Community 443 - "Address Types Phase 02 - Next.js Client"
+Cohesion: 0.20
+Nodes (9): Address Types Phase 02 - Next.js Client, Approved references, Evidence to capture, Import checks, Purpose, Read-path contract, Required structure, Source fingerprints (+1 more)
 
 ### Community 444 - "OfflineOperationsPolicyResponse"
-Cohesion: 0.16
-Nodes (14): IReadOnlyDictionary, IReadOnlyList, OfflineOperationsCapabilitySafetyCatalog, OfflineOperationCapabilityResponse, OfflineOperationsPolicyResponse, CancellationToken, CompanyId, Task (+6 more)
+Cohesion: 0.20
+Nodes (10): OfflineOperationsCapabilitySafetyCatalog, OfflineOperationCapabilityResponse, OfflineOperationsPolicyResponse, OfflineOperationsPolicyScopeException, OfflineOperationsPolicyValidationException, GetOfflineOperationsPolicyQuery, GetOfflineOperationsPolicyQueryHandler, OfflineOperationsPolicyUseCase (+2 more)
 
-### Community 445 - "ReportTemplateFeatureTests"
+### Community 445 - "IReadOnlyDictionary"
+Cohesion: 0.05
+Nodes (47): LocalizationError, InvalidLanguage, LocalizationFileNotFound, LocalizationKeyNotFound, ILocalizationEffects, ILocalizationResourceStore, LocalizationFailure, FileNotFound (+39 more)
+
+### Community 446 - "Company email templates — Web profile"
+Cohesion: 0.11
+Nodes (16): 10. Cache/concurrency, 11. Feedback, 12. Locale/layout/accessibility, 13. Verification, 14. Acceptance/performance, 1. Ownership, 2. Reviewed reuse, 3. Navigation (+8 more)
+
+### Community 447 - ".AddReportingInfrastructure"
+Cohesion: 0.06
+Nodes (38): DependencyInjection, IReportCategoryEffects, IReportCategoryReadStore, CreateReportCategoryCommand, CreateReportCategoryCommandHandler, CreateReportCategoryCommandValidator, ToggleReportCategoryCommandHandler, UpdateReportCategoryCommand (+30 more)
+
+### Community 448 - "Tenant module entitlements API implementation profile"
+Cohesion: 0.06
+Nodes (32): Release artifact and container, 10. Tests and diagnostics, 11. Extension rule, 1. API responsibility, 2. Catalog endpoints, 3. Accessible catalog endpoint, 4.1. Explicit authentication scope sequence, 4. Tenant request contract (+24 more)
+
+### Community 449 - "States API Implementation Profile"
+Cohesion: 0.20
+Nodes (10): 10. Error and localization contract, 1. Boundary, 2. Transport contracts, 3. HTTP surface, 4. Paging, search, and sort, 5. Validation and normalization, 6. Create, bulk create, and update, 7. Archive, restore, and bulk archive (+2 more)
+
+### Community 450 - "Address Types Feature Full Review"
 Cohesion: 0.18
-Nodes (10): int, JsonElement, string, ReportTemplateDefinitionSafety, Fact, InlineData, string, Task (+2 more)
+Nodes (11): 10. Handoff decision, 1. Review manifest, 2. Architecture boundary, 3. Frozen shared contract, 4. HTTP contract, 5. Permissions and errors, 6. Views and shared UX, 7. Import and reporting (+3 more)
 
-### Community 446 - "ReportingDbContext"
-Cohesion: 0.08
-Nodes (22): AuditableEntity, bool, CancellationToken, CrystalReport, CrystalReportRoleGrant, CrystalReportVersion, DbSet, EntityEntry (+14 more)
+### Community 451 - "Districts Review Artifacts"
+Cohesion: 0.18
+Nodes (10): Capability decisions, Districts Review Artifacts, Evidence register, Final reconciliation, Intentional differences from States, Metadata, Open findings and release gates, Phase evidence (+2 more)
 
-### Community 447 - "ReportingReportCategoryCqrsTests"
-Cohesion: 0.10
-Nodes (19): CancellationToken, EntityChangeLogsRequest, EntityChangeLogsResponse, Fact, IReadOnlyList, List, ReportCategory, Task (+11 more)
+### Community 452 - "استخدام قوالب البريد الإلكتروني"
+Cohesion: 0.18
+Nodes (10): أسئلة شائعة, اختيار القالب, استخدام قوالب البريد الإلكتروني, العرض من الموبايل, العودة للقالب القياسي, الوصول والصلاحيات, تعديل النص وإدراج البيانات, سيناريو العرض والتدريب (+2 more)
 
-### Community 448 - ".Save"
-Cohesion: 0.29
-Nodes (8): SaveAccountingSettingsRequest, CancellationToken, HasPermission, HttpGet, HttpPut, IActionResult, Task, AccountingSettingsController
-
-### Community 449 - "What You Must Do When Invoked"
-Cohesion: 0.08
-Nodes (24): For /graphify add and --watch, For /graphify query, For the commit hook and native CLAUDE.md integration, For --update and --cluster-only, /graphify, Honesty Rules, Interpreter guard for subcommands, Part A - Structural extraction for code files (+16 more)
-
-### Community 450 - "RowVersionRequest"
-Cohesion: 0.22
-Nodes (16): BookRequestValidator, JournalDefinitionRequestValidator, BookRequest, JournalDefinitionRequest, RowVersionRequest, CancellationToken, HasPermission, HttpDelete (+8 more)
-
-### Community 451 - "LedgerSetupLifecycleTests"
-Cohesion: 0.51
-Nodes (3): Fact, Task, LedgerSetupLifecycleTests
-
-### Community 452 - "ErpSystem.BuildingBlocks.Context.csproj"
-Cohesion: 0.08
-Nodes (17): Action, net10.0, Microsoft.NET.Sdk, HttpContext, string, HostCorrelationContext, HttpContext, Task (+9 more)
-
-### Community 454 - "IHrUnitOfWork"
+### Community 453 - "States Feature Full Review"
 Cohesion: 0.20
-Nodes (5): IHrUnitOfWork, IPlatformUnitOfWork, IReportingUnitOfWork, ErpSystem.Modules.Platform.Application.Abstractions.Persistence, IUnitOfWork
+Nodes (10): 10. Verification and remaining review work, 1. Scope and ownership, 2. Discovery evidence, 3. Domain rules, 4. Lifecycle and authorization, 5. List contract, 6. API architecture, 7. Client architecture (+2 more)
 
-### Community 455 - "InitialHr"
-Cohesion: 0.22
-Nodes (5): MigrationBuilder, InitialHr, ModelBuilder, HrDbContextModelSnapshot, ErpSystem.Modules.HR.Infrastructure.Migrations
+### Community 454 - "دليل استخدام سجلات الأخطاء / Error Logs"
+Cohesion: 0.18
+Nodes (10): Settings entry update — 2026-10-19, البحث والتفاصيل والتصدير, الصلاحيات, الوصول للسجلات, تغيير مدة الاحتفاظ, حالة قسم تشخيص الخطأ على الويب, دليل استخدام سجلات الأخطاء / Error Logs, دليل التحقق وحدود التسليم (+2 more)
 
-### Community 456 - "IFileUploadInspectionService"
-Cohesion: 0.22
-Nodes (7): CancellationToken, Task, FileUploadSecurityException, FileUploadSecurityFailureKind, IFileUploadInspectionService, int, RecordingInspection
+### Community 455 - "List"
+Cohesion: 0.05
+Nodes (28): IRecruitmentSettingsRepository, RecruitmentSettingsDefaults, RecruitmentSettingsRepository, GenerateCsvExportQuery, GenerateCsvExportQueryHandler, GeneratedPdfExport, GenerateExcelExportQuery, GenerateExcelExportQueryHandler (+20 more)
 
-### Community 457 - "ledger-setup-definitions.ts"
+### Community 457 - "Scope"
 Cohesion: 0.20
-Nodes (9): booleanOptions, companyOnly, currencyPolicyOptions, dimensionRequirementOptions, ledgerSetupDefinitions, ledgerSetupResourceEntities, manualPostingOptions, resetPolicyOptions (+1 more)
+Nodes (10): App Router organization, Architecture enforcement, Dependency/type baseline, Exit gates, Objective, Ownership rules, Phase 0 — Green Baseline & Architecture Foundation ✅, Scope (+2 more)
 
-### Community 458 - "PlatformTenantAccessOwnershipTests"
-Cohesion: 0.12
-Nodes (16): CancellationToken, Task, ITenantAccessService, ITenantAccessSource, TenantAccessResponse, TenantAccessSnapshot, CancellationToken, Task (+8 more)
+### Community 458 - "TenantSubscriptionStatus"
+Cohesion: 0.07
+Nodes (18): HostCorrelationContext, HostCorrelationIdMiddleware, HostCultureMiddleware, HostProblemDetails, HostProblemDetailsResultFilter, TenantAccessResponse, AllowTenantReadOnlyAttribute, TenantReadOnlyMiddleware (+10 more)
 
 ### Community 459 - "include"
-Cohesion: 0.14
-Nodes (13): compilerOptions, paths, strict, types, extends, include, **/*.ts, **/*.tsx (+5 more)
+Cohesion: 0.25
+Nodes (7): compilerOptions, paths, strict, types, extends, include, expo/tsconfig.base
 
-### Community 460 - "getColorPalette"
-Cohesion: 0.09
-Nodes (28): CurrencyData, getChartColors(), getTotalStatesCount(), prepareCurrencyData(), prepareStatesCoverageData(), prepareStatesData(), prepareTimelineData(), StatesCoverageData (+20 more)
+### Community 460 - ".CreateContext"
+Cohesion: 0.33
+Nodes (5): AddressTypeCompanyIsolationTests, TestCurrentActor, CompanyId, TenantId, UserId
 
-### Community 461 - "ContactsOutboxHealthCheckTests"
-Cohesion: 0.10
-Nodes (18): CancellationToken, DateTimeOffset, Fact, IServiceProvider, ServiceProvider, Task, Type, AlwaysFailPublisher (+10 more)
+### Community 461 - "Crystal Report Manager Feature Integration Guide"
+Cohesion: 0.13
+Nodes (17): Managed Crystal reports, Report, Server-managed browser report templates, 11. Report Contract, 10. Verification matrix, 11. Definition of done, 1. Make the reporting decision first, 2. Source of truth and runtime flow (+9 more)
 
 ### Community 462 - "ErpSystem.Modules.Platform.Contracts.csproj"
 Cohesion: 0.07
 Nodes (30): net10.0, FluentValidation, FluentValidation.DependencyInjectionExtensions, MediatR, Microsoft.Extensions.Localization.Abstractions, Microsoft.NET.Sdk, net10.0, Microsoft.NET.Sdk (+22 more)
 
-### Community 463 - "fiscal-year-remote-data-source.ts"
+### Community 463 - "Fiscal Years Implementation Request"
 Cohesion: 0.20
-Nodes (12): fiscalYearEndpoints, toFiscalYearPageQuery(), fiscalYearContextSchema, fiscalYearDetailSchema, fiscalYearLookupItemSchema, fiscalYearLookupSchema, fiscalYearObjectSchema, fiscalYearPageSchema (+4 more)
+Nodes (9): Aggregate, API contract, Fiscal Years Implementation Request, Frozen domain contract, Invariants and lifecycle, Objective and ownership, Platform decisions, Request metadata (+1 more)
 
-### Community 464 - "AccessTokenClaimMaterialContracts.cs"
-Cohesion: 0.10
-Nodes (20): CancellationToken, string, Task, AccessTokenClaimMaterialRequest, AccessTokenClaimMaterialResult, AccessTokenClaimMaterialSourceSnapshot, AccessTokenClaimNames, AccessTokenRoleClaimSnapshot (+12 more)
-
-### Community 465 - "PlatformNotificationStore"
-Cohesion: 0.24
-Nodes (9): NotificationRecord, CancellationToken, DateTime, DateTimeOffset, IQueryable, IReadOnlyCollection, IReadOnlyList, Task (+1 more)
-
-### Community 466 - "ReportsCategoriesController"
-Cohesion: 0.33
-Nodes (9): CancellationToken, HasPermission, HttpDelete, HttpGet, HttpPost, HttpPut, IActionResult, Task (+1 more)
-
-### Community 467 - "TenantRoleAssignmentService"
-Cohesion: 0.28
-Nodes (8): CancellationToken, IEnumerable, IReadOnlyCollection, IReadOnlyList, PlatformApplicationRole, string, Task, TenantRoleAssignmentService
-
-### Community 468 - ".GetDashboard"
-Cohesion: 0.14
-Nodes (10): CancellationToken, HasPermission, HttpGet, IActionResult, ISender, Task, BackgroundJobsController, Fact (+2 more)
-
-### Community 469 - "UnitOfWorkOwnershipArchitectureTests"
-Cohesion: 0.20
-Nodes (6): Fact, InlineData, string, Theory, UnitOfWorkOwnershipArchitectureTests, Regex
-
-### Community 470 - "ErpSystem.Modules.CRM.Application.Features.Appointments.Abstractions"
-Cohesion: 0.33
-Nodes (7): CancellationToken, IReadOnlyList, Task, GetAppointmentsQuery, GetAppointmentsQueryHandler, ErpSystem.Modules.CRM.Application.Features.Appointments.Queries, ErpSystem.Modules.CRM.Application.Features.Appointments.Abstractions
-
-### Community 471 - "auth/login/components/LoginForm.tsx"
-Cohesion: 0.03
-Nodes (59): metadata, CompanySelectionDialogProps, DemoLoginSection(), DemoLoginSectionProps, DemoRole, DemoRoleOption, roleOptions, GoogleLoginButton() (+51 more)
-
-### Community 472 - "AccountingLedgerSetupJsonLocalizer"
+### Community 464 - "Fiscal Years Expo Implementation Profile"
 Cohesion: 0.12
-Nodes (9): ILedgerSetupLocalizer, Assembly, ConcurrentDictionary, CultureInfo, IEnumerable, IReadOnlyDictionary, string, AccountingLedgerSetupJsonLocalizer (+1 more)
+Nodes (16): 10. Edit workflow, 11. View and lifecycle workflow, 12. Permissions and read-only mode, 13. Localization, theme, and safe area, 14. Responsive and UI parity audit, 15. Verification and optional capabilities, 1. Feature boundary, 2. Routes and navigation (+8 more)
+
+### Community 465 - "cards/index.ts"
+Cohesion: 0.03
+Nodes (128): Card scroll, tenant status badge and late-hydration language 2026-10-10, @mui/system, metadata, AddressTypesCardView(), pageSizeOptions, AddressTypeImportView, AddressTypeReportPage, AddressTypesChartView (+120 more)
+
+### Community 466 - "استخدام لغات الشركة وترجمة الواجهة"
+Cohesion: 0.20
+Nodes (8): إعادة النص الأصلي, استخدام لغات الشركة وترجمة الواجهة, التحقق والتسليم, التعارضات والصلاحيات, تعديل نص, تعيين اللغة الافتراضية, فتح الشاشة, استخدام صلاحيات المستخدم داخل الشركة
+
+### Community 467 - "Accounting Manual Acceptance Scenario Template"
+Cohesion: 0.12
+Nodes (17): 10. Mandatory Mobile coverage, 11. API, security, and data-integrity checks, 12. Bilingual data and UI acceptance, 13. Five-point UI and pattern audit, 14. Cleanup and retained evidence, 15. Result and explicit user decision, 16. Failure and retest rule, 1. Purpose and authority (+9 more)
+
+### Community 468 - "Accounting Ledger Setup Phase 01 - Domain and API"
+Cohesion: 0.22
+Nodes (8): Accounting Ledger Setup Phase 01 - Domain and API, Approved references, Evidence to capture, Exit checks, Implementation order, Purpose, Required decisions, Source fingerprints
+
+### Community 469 - "HostDataProtectionSettings"
+Cohesion: 0.18
+Nodes (10): HostDataProtectionCertificateSettings, Password, Path, HostDataProtectionSettings, ApplicationName, KeyRingDirectory, PreviousProtectionCertificates, ProtectionCertificatePassword (+2 more)
+
+### Community 470 - "Fiscal Years Phase 03 - Expo Mobile Client"
+Cohesion: 0.22
+Nodes (8): Approved references, Evidence to capture, Fiscal Years Phase 03 - Expo Mobile Client, Mobile-specific decisions, Purpose, Read and interaction checks, Required structure, Source fingerprints
+
+### Community 471 - "apiResponse.ts"
+Cohesion: 0.02
+Nodes (151): zustand, metadata, metadata, Page(), metadata, metadata, auth, InvitationFormProps (+143 more)
+
+### Community 472 - "IEnumerable"
+Cohesion: 0.04
+Nodes (12): HostJsonStringLocalizer, Localizer, ControllerArchitectureTests, ModulePersistenceStructureTests, RepositoryConventionTests, SolutionProject, Closure decision, Earlier foundation findings retained (+4 more)
 
 ### Community 473 - "Discovery question bank"
 Cohesion: 0.14
 Nodes (13): 10. Quality attributes, 11. Migration (existing data), 1. Problem and goals, 2. Organization and tenancy, 3. Actors, 4. Workflows, 5. Business objects and rules, 6. Access and privacy (+5 more)
 
-### Community 474 - "PlatformNotificationOwnershipTests"
-Cohesion: 0.31
-Nodes (5): DateTime, Fact, Task, EmptyCurrentActor, PlatformNotificationOwnershipTests
+### Community 474 - "Branch"
+Cohesion: 0.03
+Nodes (70): CompanyAuditableEntity, CompanyId, Branch, BranchCode, ClosedOn, Departments, Email, Employees (+62 more)
 
-### Community 476 - "PlatformFileOwnershipTests.cs"
-Cohesion: 0.05
-Nodes (36): HostGlobalExceptionHandler, UploadFileRequest, IStringLocalizer, UploadFileRequestValidator, UploadImageRequest, IStringLocalizer, UploadImageRequestValidator, UploadManyFilesRequest (+28 more)
+### Community 475 - "Ledger Setup Currency Review Artifacts"
+Cohesion: 0.09
+Nodes (17): CurrencyBaselineMigrationTests, ExposedInitialAccounting, ExposedInitialHr, Detail and write contract, Final reconciliation, Findings and handoffs, Grid and card contract, Import contract (+9 more)
+
+### Community 476 - "Organizational Structure Phase 03 - Expo Mobile Client"
+Cohesion: 0.22
+Nodes (8): Approved references, Evidence to capture, Mobile-specific decisions, Organizational Structure Phase 03 - Expo Mobile Client, Purpose, Read and interaction checks, Required structure, Source fingerprints
 
 ### Community 477 - "Kanban Column Management - User Story"
 Cohesion: 0.14
 Nodes (13): API Endpoints, Business Rules, Errors, Feature Overview, Kanban Column Management - User Story, Notes, US-001: View Kanban Columns, US-002: Get Kanban Column By Id (+5 more)
 
-### Community 478 - "RecordingTenantMembershipSource"
-Cohesion: 0.31
-Nodes (6): CancellationToken, Fact, IReadOnlyList, Task, PlatformTenantMembershipOwnershipTests, RecordingTenantMembershipSource
+### Community 478 - "ErpSystem.Modules.Platform.Infrastructure.Features.Security.Authentication.Tokens"
+Cohesion: 0.13
+Nodes (10): GoogleAuth, AuthorizationEndpoint, ClientId, ClientSecret, RedirectUri, TokenEndpoint, UserInfoEndpoint, JwtAuthenticationSchemes (+2 more)
 
-### Community 479 - "ICompanyScoped"
-Cohesion: 0.33
-Nodes (4): ICompanyScoped, DateTime, PlatformApplicationUser, UserLogin
+### Community 479 - "Accounting Chart of Accounts and Hierarchy — Next.js Implementation Contract"
+Cohesion: 0.13
+Nodes (14): 10. Query state and truthful criteria, 11. Localization, RTL, and accessibility, 12. Responsive and shared-component contract, 13. Integration and cache behavior, 14. Verification and current gaps, 1. Feature boundary, 2. Route and module navigation, 3. Transport and types (+6 more)
 
-### Community 480 - "AddressRequestValidator"
-Cohesion: 0.44
-Nodes (5): AddressRequest, CancellationToken, IStringLocalizer, Task, AddressRequestValidator
+### Community 480 - "Company UI localization — Evidence and Phase 00 preflight"
+Cohesion: 0.22
+Nodes (8): 1. Approved scope, 2. Existing-system relationship, 3. Gate and risk review, 4. Verification ledger, Company/system catalog correction — 2026-10-17, Company UI localization — Evidence and Phase 00 preflight, Phase 06 Verification & Acceptance, Phase 07 Customer Education & Closure
 
-### Community 481 - "AuthenticationTokenContracts.cs"
-Cohesion: 0.12
-Nodes (14): AccessTokenClaimValue, AccessTokenUserSnapshot, CancellationToken, IReadOnlyCollection, Task, TokenValidationParameters, AuthenticationAccessTokenResult, AuthenticationIssuedToken (+6 more)
+### Community 481 - "Managed Crystal Template Validation Phase 01 - Domain and API"
+Cohesion: 0.22
+Nodes (8): Approved references, Evidence to capture, Exit checks, Implementation order, Managed Crystal Template Validation Phase 01 - Domain and API, Purpose, Required decisions, Source fingerprints
 
 ### Community 482 - "scripts"
-Cohesion: 0.08
-Nodes (26): scripts, build, capture:theme-baselines, cert:install, check, check:architecture, check:governance, check:i18n (+18 more)
+Cohesion: 0.07
+Nodes (27): scripts, build, capture:theme-baselines, cert:install, check, check:architecture, check:company-catalog, check:governance (+19 more)
 
-### Community 483 - "PlatformApiKeyCqrsTests.cs"
-Cohesion: 0.09
-Nodes (17): ApiKeyCredential, IApiKeyCredentialGenerator, CreateApiKeyRequest, CreateApiKeyRequestValidator, UpdateApiKeyRequest, UpdateApiKeyRequestValidator, Error, IStringLocalizer (+9 more)
+### Community 483 - "Address Types Next.js Implementation Profile"
+Cohesion: 0.12
+Nodes (15): 10. Realtime, 11. Tests, 12. Verification, 13. Intentional platform differences, 14. Manual release, 1. Route and public boundary, 2. Transport and types, 3. Server list (+7 more)
 
-### Community 484 - "AddressTypeManagementContracts.cs"
+### Community 484 - "Accounting Ledger Setup Phase 03 - Expo Mobile Client"
 Cohesion: 0.22
-Nodes (8): AddressTypeAddressListItem, AddressTypeMutation, BulkArchiveAddressTypesRequest, BulkArchiveAddressTypesResponse, CreateAddressTypeRequest, CreateAddressTypesRequest, CreateAddressTypesResponse, UpdateAddressTypeRequest
+Nodes (8): Accounting Ledger Setup Phase 03 - Expo Mobile Client, Approved references, Evidence to capture, Mobile-specific decisions, Purpose, Read and interaction checks, Required structure, Source fingerprints
 
 ### Community 485 - "ERPSYSTEM Legacy Migration"
 Cohesion: 0.20
 Nodes (9): 1. Intake, 2. Inventory, 3. Behavior extraction, 4. Defects and disposition, 5. Map to ERP ownership, 6. Screens, 7. Data migration (only when in scope), ERPSYSTEM Legacy Migration (+1 more)
 
-### Community 486 - "ITenantModuleEntitlementSource"
-Cohesion: 0.26
-Nodes (7): CancellationToken, IReadOnlyCollection, IReadOnlyList, IReadOnlySet, Task, ITenantModuleEntitlementSource, TenantModuleEntitlementResponse
-
-### Community 487 - "Documentation System and Template Integration Review"
-Cohesion: 0.20
-Nodes (9): 1. Conclusion, 2. How the pieces fit (target), 3. Template kit versus ERP system, 4. Documentation system — strengths to keep, 5. Findings, 6. What must exist (minimal set), 7. Clean-up inventory, 8. Order of work (+1 more)
-
-### Community 488 - "IReportCategoryStores.cs"
-Cohesion: 0.28
-Nodes (6): CancellationToken, IReadOnlyList, Task, IReportCategoryEffects, IReportCategoryReadStore, IReportCategoryRepository
-
-### Community 489 - "ICountryValidationQueries"
-Cohesion: 0.44
-Nodes (3): CancellationToken, Task, ICountryValidationQueries
-
-### Community 490 - "CrystalReportInspectorClientTests"
-Cohesion: 0.19
-Nodes (12): CancellationToken, Fact, HttpClient, HttpMessageHandler, HttpRequestMessage, HttpResponseMessage, Stream, Task (+4 more)
-
-### Community 491 - ".GetAllAsync"
-Cohesion: 0.31
-Nodes (5): CancellationToken, IReadOnlyCollection, Task, ApiKeyReadStore, ApiKeyWriteStore
-
-### Community 492 - "ReportTemplate"
-Cohesion: 0.16
-Nodes (8): CancellationToken, Guid, IReadOnlyList, Task, IReportTemplateStore, Guid, ICollection, ReportTemplate
-
-### Community 493 - "DistrictManagementContracts.cs"
+### Community 486 - "Managed Crystal Template Validation Phase 03 - Expo Mobile Client"
 Cohesion: 0.22
-Nodes (8): BulkArchiveDistrictsRequest, BulkArchiveDistrictsResponse, CreateDistrictRequest, CreateDistrictsRequest, CreateDistrictsResponse, DistrictAddressListItem, DistrictMutation, UpdateDistrictRequest
+Nodes (8): Approved references, Evidence to capture, Managed Crystal Template Validation Phase 03 - Expo Mobile Client, Mobile-specific decisions, Purpose, Read and interaction checks, Required structure, Source fingerprints
+
+### Community 487 - "Ledger Setup Company Settings — Screen / Workflow Contract"
+Cohesion: 0.14
+Nodes (14): 0. Contract metadata, 10. i18n, RTL, accessibility, and responsive behavior, 11. Vertical execution ledger (strict one-active-step gate), 12. Verification contract, 13. Child exit gate, 1. Child boundary and outcome, 2. UI Pattern Gate (mandatory before implementation), 3. Closest existing reference (+6 more)
+
+### Community 488 - "localization/company-ui-text-scope.ts"
+Cohesion: 0.25
+Nodes (7): companyRoots, companyUiTextScope(), matches(), sharedRoots, sourceScopes, systemPrefixes, UiTextScope
+
+### Community 489 - "Required audit dimensions"
+Cohesion: 0.13
+Nodes (14): Accuracy rule, Authentication/authorization, Commercial/service limits, Delivery and operations, Domain and data, Evidence Audit Standard, Evidence hierarchy, Evidence ledger format (+6 more)
+
+### Community 490 - "CrystalReportInspectorClient"
+Cohesion: 0.06
+Nodes (31): GoogleIdentityVerifier, GoogleTokenInfo, Audience, ExpiresIn, CrystalReportInspectionFailure, InvalidReport, None, ParameterMismatch (+23 more)
+
+### Community 491 - "Accounting Chart of Accounts and Hierarchy Phase 01 - Domain and API"
+Cohesion: 0.22
+Nodes (8): Accounting Chart of Accounts and Hierarchy Phase 01 - Domain and API, Approved references, Evidence to capture, Exit checks, Implementation order, Purpose, Required decisions, Source fingerprints
+
+### Community 492 - "ReportingDbContext"
+Cohesion: 0.09
+Nodes (15): EmptyActor, CompanyId, Instance, TenantId, UserId, ReportingDbContext, CrystalReportRoleGrants, CrystalReports (+7 more)
+
+### Community 493 - "Accounting Chart of Accounts and Hierarchy Implementation Request"
+Cohesion: 0.12
+Nodes (15): Accounting Chart of Accounts and Hierarchy Implementation Request, Approved product decisions, Business Rules Matrix, Edge Cases & Validation Matrix, Execution request, Existing-System Relationship Review, Impact Matrix, Import and reporting contracts (+7 more)
 
 ### Community 494 - ".GetFiscalYearsAsync"
-Cohesion: 0.12
-Nodes (13): CancellationToken, IReadOnlyList, Task, AccountingFiscalYearReportRow, IAccountingReportingSource, CancellationToken, IReadOnlyList, Task (+5 more)
+Cohesion: 0.29
+Nodes (4): AccountingReportingSource, AccountingReportingSourceTests, TestActor, UserId
 
-### Community 495 - "RecordingWriteStore"
-Cohesion: 0.07
-Nodes (23): CancellationToken, Result, Task, IUserManagementWriteStore, ChangeUserPasswordRequest, IStringLocalizer, ChangeUserPasswordRequestValidator, CreateUserRequest (+15 more)
-
-### Community 496 - "DistrictValidationQueries"
-Cohesion: 0.47
-Nodes (3): CancellationToken, Task, DistrictValidationQueries
-
-### Community 497 - "StateValidationQueries"
-Cohesion: 0.47
-Nodes (3): CancellationToken, Task, StateValidationQueries
-
-### Community 498 - "OutboxMessage"
-Cohesion: 0.15
-Nodes (13): CancellationToken, DateTimeOffset, Guid, IReadOnlyList, JsonSerializerOptions, Task, TimeSpan, ContactsOutbox (+5 more)
-
-### Community 499 - "PlatformScopeIsolationTests"
-Cohesion: 0.47
-Nodes (4): Fact, Task, PlatformScopeIsolationTests, TestActor
-
-### Community 500 - "AddressTypeCompanyIsolationTests"
-Cohesion: 0.39
-Nodes (5): DbContextOptions, Fact, Task, AddressTypeCompanyIsolationTests, TestCurrentActor
-
-### Community 501 - "S5 — New-product workspace generator design"
+### Community 495 - "JobOfferStatus"
 Cohesion: 0.22
-Nodes (8): 1. Goal, 2. Source of truth: `documentation/modules/*/module.json`, 3. Algorithm, 4. Minimal and full profiles, 5. CI, 6. Mobile module scaffold (S5.2), 7. Exit checks, S5 — New-product workspace generator design
+Nodes (9): JobOfferStatus, Accepted, Approved, Declined, Draft, Expired, Issued, PendingApproval (+1 more)
 
-### Community 502 - "ErpSystem.Modules.Platform.Presentation"
+### Community 496 - "Accounting Chart of Accounts and Hierarchy Phase 07 - Customer Education and Closure"
+Cohesion: 0.22
+Nodes (8): Accounting Chart of Accounts and Hierarchy Phase 07 - Customer Education and Closure, Approved references, Closure checks, Entry gate, Handoff decision, Purpose, Required customer-education output, Source fingerprints
+
+### Community 497 - "Ledger Setup Currency Phase 01 - Domain and API"
+Cohesion: 0.22
+Nodes (8): Approved references, Evidence to capture, Exit checks, Implementation order, Ledger Setup Currency Phase 01 - Domain and API, Purpose, Required decisions, Source fingerprints
+
+### Community 498 - "Company Geographic Scope Next.js Implementation Profile"
+Cohesion: 0.14
+Nodes (14): 10. Navigation Integration, 12. Capability Matrix, 13. Integration Rules, 14. Verification and Handoff, 1. Feature Inventory, 2. Route and Access, 3. Runtime Contract, 4. Query Ownership (+6 more)
+
+### Community 499 - "Comprehensive page-loading hardening — 2026-09-17"
+Cohesion: 0.12
+Nodes (16): Accepted follow-up optimizations after the cross-route pass, App / Shell / Platform public-boundary cleanup, Applied authentication performance findings — 2026-09-17, Comprehensive page-loading hardening — 2026-09-17, Dashboard API shape, ERP list request waterfalls, Final production measurements, Formal route-class budget baseline — 2026-09-18 (+8 more)
+
+### Community 500 - "ErpSystem.Modules.Platform.Application.Features.Platform.AuditTrail"
+Cohesion: 0.29
+Nodes (4): AuditTrailUserDirectory, ErpSystem.Modules.Platform.Application.Features.Platform.AuditTrail, ErpSystem.Modules.Platform.Infrastructure.Features.Platform.AuditTrail, ErpSystem.Modules.Platform.Presentation.Features.Platform.AuditTrail.V1
+
+### Community 501 - "Countries API Implementation Profile"
 Cohesion: 0.25
-Nodes (5): Assembly, AssemblyReference, IServiceCollection, DependencyInjection, ErpSystem.Modules.Platform.Presentation
+Nodes (7): ReferenceDataLockResources, 11. Test Evidence and Required Coverage, 12. Rules That Must Not Be Copied Blindly, 6. Write Path and Transaction Order, 7. Validation and Stable Errors, 9. Registration Checklist, Countries API Implementation Profile
 
-### Community 503 - "LedgerSetupCoaHierarchyTests"
-Cohesion: 0.19
-Nodes (10): Account, CancellationToken, Fact, IAsyncEnumerable, IRequest, IStreamRequest, List, Task (+2 more)
-
-### Community 504 - ".GetAllChangesLogs"
-Cohesion: 0.43
-Nodes (6): CancellationToken, HasPermission, HttpGet, IActionResult, Task, EntityChangeLogsController
-
-### Community 505 - "useSidebar"
-Cohesion: 0.09
-Nodes (23): ImageMenu(), ImageMenuProps, ImageViewerArea(), ImageViewerAreaProps, MediaErrorView(), MediaErrorViewProps, TextContent(), TextContentProps (+15 more)
-
-### Community 506 - ".Handle"
-Cohesion: 0.36
-Nodes (6): CancellationToken, Result, Task, BulkArchiveCountriesCommandHandler, BulkArchiveCountriesCommand, BulkArchiveCountriesResponse
-
-### Community 507 - "Program"
-Cohesion: 0.11
-Nodes (12): Program, Action, Stream, string, ManagedCrystalReportContractArtifact, Fact, InlineData, Theory (+4 more)
-
-### Community 508 - "Result"
-Cohesion: 0.26
-Nodes (14): CancellationToken, HashSet, IReadOnlyDictionary, Result, Task, DeleteLocalizationKeyCommand, DeleteLocalizationKeyCommandHandler, GetLocalizationQuery (+6 more)
-
-### Community 509 - "OutboxMessage"
-Cohesion: 0.16
-Nodes (13): CancellationToken, DateTimeOffset, Guid, IReadOnlyList, JsonSerializerOptions, Task, TimeSpan, AccountingOutbox (+5 more)
-
-### Community 510 - "StaffingRequest"
+### Community 502 - "apiService"
 Cohesion: 0.06
-Nodes (23): DateTimeOffset, EnvelopeAmendment, DateOnly, DateTimeOffset, StaffingRequest, EnvelopeAmendmentStatus, StaffingRequestCloseReason, StaffingRequestPriority (+15 more)
+Nodes (39): Architecture and API boundary, Authentication, tenant scope, and access control, Corrective readiness verification — 2026-10-27, Deferred Release Gates, Deployment and verification, External release checks, Files and security, Findings recorded before Phase 00 (+31 more)
 
-### Community 511 - ".ScanAsync"
-Cohesion: 0.20
-Nodes (9): CancellationToken, NetworkStream, Task, ClamAvTcpClient, FileMalwareScanStatus, IFileMalwareScanner, string, FileSecurityOptions (+1 more)
+### Community 503 - "EmploymentApplicationDto"
+Cohesion: 0.07
+Nodes (35): EmploymentApplicationDto, AvailableFrom, AverageEvaluationScore, BranchNameAr, BranchNameEn, CandidateEmail, CandidateId, CandidateName (+27 more)
 
-### Community 512 - "ReportCategory"
+### Community 504 - "Managed Crystal Template Validation Expo Implementation Profile"
+Cohesion: 0.12
+Nodes (16): 10. Import, 11. Report, 12. Notifications and navigation, 13. Offline and mock data, 14. Tests, 15. Accessibility and release disposition, 1. Boundary, 2. Route and authorization (+8 more)
+
+### Community 505 - "coa-hierarchy-remote-data-source.ts"
 Cohesion: 0.11
-Nodes (14): ICollection, ReportCategory, ReportDetail, ICollection, ReportMaster, EntityTypeBuilder, ReportCategoryConfiguration, EntityTypeBuilder (+6 more)
+Nodes (18): coaHierarchyRepository, coaHierarchyUseCases, coaHierarchyEndpoints, coaHierarchyRemoteDataSource, toAccountPageQuery(), accountHierarchyLevelListSchema, accountHierarchyLevelSchema, accountLookupSchema (+10 more)
 
-### Community 513 - ".AddDefinitionRules"
+### Community 506 - "Accounting Ledger Setup Phase 00 - Implementation Preflight"
 Cohesion: 0.25
-Nodes (5): AbstractValidator, Expression, Func, ReportTemplateCommandRules, ErpSystem.Modules.Reporting.Application.Features.Analytics.ReportTemplates.Commands
+Nodes (7): Accounting Ledger Setup Phase 00 - Implementation Preflight, Approved references, Drift rule, Preflight checklist, Purpose, Required outputs, Source fingerprints
 
-### Community 514 - "CrystalReportUploadRequestSizeFilter"
+### Community 507 - "Attendance Devices Phase 03 - Expo Mobile Client (deferred)"
+Cohesion: 0.22
+Nodes (8): Approved references, Attendance Devices Phase 03 - Expo Mobile Client (deferred), Evidence to capture, Mobile-specific decisions, Purpose, Read and interaction checks, Required structure, Source fingerprints
+
+### Community 508 - "Organizational Structure Phase 01 - Domain and API"
+Cohesion: 0.22
+Nodes (8): Approved references, Evidence to capture, Exit checks, Implementation order, Organizational Structure Phase 01 - Domain and API, Purpose, Required decisions, Source fingerprints
+
+### Community 509 - "IntegrationEvent"
+Cohesion: 0.05
+Nodes (30): IntegrationEvent, CausationId, CorrelationId, EventId, EventName, EventVersion, OccurredOnUtc, InboxConsumeResult (+22 more)
+
+### Community 510 - "Countries API — Canonical Frontend Contract"
+Cohesion: 0.14
+Nodes (14): Archive and restore, Bulk archive, Bulk create, Countries API — Canonical Frontend Contract, Create and update body, Detail and states, Endpoints, Frontend rules (+6 more)
+
+### Community 511 - "Accounting Chart of Accounts and Hierarchy Phase 06 - Verification and Acceptance"
 Cohesion: 0.25
-Nodes (6): long, Task, CrystalReportUploadRequestSizeFilter, IAsyncResourceFilter, ResourceExecutingContext, ResourceExecutionDelegate
+Nodes (7): Accounting Chart of Accounts and Hierarchy Phase 06 - Verification and Acceptance, Approved references, Customer-education gate, Purpose, Source fingerprints, Verification decision, Verification gates
 
-### Community 515 - ".GetAllAsync"
-Cohesion: 0.13
-Nodes (11): ICurrentActor, AppointmentScope, AppointmentChangeScheduler, Appointment, CancellationToken, DateTimeOffset, IReadOnlyList, Task (+3 more)
-
-### Community 516 - "أوامر الـ Migrations — مرجع سريع"
+### Community 512 - "Company Geographic Scope Implementation Request"
 Cohesion: 0.25
-Nodes (7): 1. عدّلت في كيان (Entity) وعايز تحدّث الداتابيز, 2. عايز تراجع الـ migration قبل ما يتطبّق, 3. عايز تطبّق migrations موجودة بس, 4. عايز تلغي migration لسه ما اتطبّقش, 5. عايز تتأكد إن مفيش تعديلات ناسي تعملها migration, أوامر الـ Migrations — مرجع سريع, مشاكل شائعة
+Nodes (7): API wire contract, Company Geographic Scope Implementation Request, Execution request, Frozen product decisions, Request metadata, Required implementation, Verification and handoff
 
-### Community 517 - "Education Module — Discovery"
+### Community 513 - "Organizational Structure Feature Full Review"
+Cohesion: 0.06
+Nodes (29): HrModuleDefinition, 4. Authorization Contract, 10. Authorization and error contract, 11. Tests and operational verification, 1. Boundary, 2. Resources and contracts, 3. HTTP surface, 4. Paging and criteria (+21 more)
+
+### Community 514 - "Workforce Planning Phase 03 - Expo Mobile Client"
+Cohesion: 0.22
+Nodes (8): Approved references, Evidence to capture, Mobile-specific decisions, Purpose, Read and interaction checks, Required structure, Source fingerprints, Workforce Planning Phase 03 - Expo Mobile Client
+
+### Community 515 - "Company email templates Phase 01 - Domain and API"
+Cohesion: 0.22
+Nodes (8): Approved references, Company email templates Phase 01 - Domain and API, Evidence to capture, Exit checks, Implementation order, Purpose, Required decisions, Source fingerprints
+
+### Community 516 - "Managed Crystal Report Manager Experience Phase 00 - Implementation Preflight"
 Cohesion: 0.25
-Nodes (8): 1. Discovery basis, 2. Business outcome, 3. Verified facts (School source), 4. Verified facts (ERP target), 5. Requested decisions (owner), 6. Proposed direction (to confirm), 7. Open questions, Education Module — Discovery
+Nodes (7): Approved references, Drift rule, Managed Crystal Report Manager Experience Phase 00 - Implementation Preflight, Preflight checklist, Purpose, Required outputs, Source fingerprints
 
-### Community 518 - "CountryFilterButton.tsx"
-Cohesion: 0.39
-Nodes (7): CountryFilters, CountrySearchField, CountrySearchOperator, CountryFilterButton(), CountryFilterButtonProps, CountryFilterValues, defaultValues
+### Community 517 - "Company email templates Phase 03 - Expo Mobile Client"
+Cohesion: 0.22
+Nodes (8): Approved references, Company email templates Phase 03 - Expo Mobile Client, Evidence to capture, Mobile-specific decisions, Purpose, Read and interaction checks, Required structure, Source fingerprints
 
-### Community 519 - "HostConcernOwnershipArchitectureTests"
-Cohesion: 0.21
-Nodes (6): Fact, IEnumerable, InlineData, string, Theory, HostConcernOwnershipArchitectureTests
+### Community 518 - "check-dependency-compatibility.mjs"
+Cohesion: 0.12
+Nodes (11): adversarialInput, adversarialOutput, decodePackage, decodeUriComponent, parsedQuery, project, projectId, queryString (+3 more)
+
+### Community 519 - "Company email templates Phase 07 - Customer Education and Closure"
+Cohesion: 0.22
+Nodes (8): Approved references, Closure checks, Company email templates Phase 07 - Customer Education and Closure, Entry gate, Handoff decision, Purpose, Required customer-education output, Source fingerprints
 
 ### Community 520 - "scripts"
-Cohesion: 0.09
-Nodes (22): scripts, android, check, check:architecture, check:contracts, check:dependencies, check:expo, check:export (+14 more)
+Cohesion: 0.08
+Nodes (26): scripts, android, check, check:architecture, check:company-catalog, check:contracts, check:dependencies, check:expo (+18 more)
 
 ### Community 521 - "mobile-react/scripts/check-architecture.mjs"
-Cohesion: 0.14
-Nodes (23): addViolation(), cleanLayers, crossesCleanBoundary(), extractModuleSpecifiers(), frameworkImports, getCleanLayerInfo(), getOwnerInfo(), inspectFile() (+15 more)
+Cohesion: 0.13
+Nodes (24): addViolation(), cleanLayers, crossesCleanBoundary(), extractModuleSpecifiers(), frameworkImports, getCleanLayerInfo(), getOwnerInfo(), inspectFile() (+16 more)
 
-### Community 522 - "Accounting Core GL — Slice 1 Ledger Setup Execution Decomposition"
-Cohesion: 0.11
-Nodes (19): 0. Authority and purpose, 10. Package 1G — Link Accounts, 11. Package 1H — Posting Profiles, 12. Package 1V — Integration & Verification, 13. Package completion checklist, 1. Execution rules, 2. Child package catalog and dependency order, 3. Screen Contract baseline (+11 more)
+### Community 522 - "Managed Crystal Template Validation Phase 04 - Domain Actions and Lifecycle"
+Cohesion: 0.25
+Nodes (7): Action ledger, Approved references, Evidence to capture, Exit checks, Managed Crystal Template Validation Phase 04 - Domain Actions and Lifecycle, Purpose, Source fingerprints
 
-### Community 523 - "ModuleLauncherScreen.tsx"
-Cohesion: 0.39
-Nodes (7): getModulePresentation(), getSubmodulePresentation(), ModuleLauncherScreen(), modulePresentations, styles, titleFor(), titleForSubmodule()
+### Community 523 - "Company Geographic Scope Phase 01 - Domain and API"
+Cohesion: 0.22
+Nodes (8): Approved references, Company Geographic Scope Phase 01 - Domain and API, Evidence to capture, Exit checks, Implementation order, Purpose, Required decisions, Source fingerprints
+
+### Community 524 - "{{RECIPE_TITLE}}"
+Cohesion: 0.25
+Nodes (7): Approved references, Drift rule, Preflight checklist, Purpose, {{RECIPE_TITLE}}, Required outputs, Source fingerprints
 
 ### Community 525 - "exportToExcel.ts"
-Cohesion: 0.24
-Nodes (9): ExportOptions, GridExportOptions, useGridExport(), exportGridToExcel(), ExportOptions, GridApi, GridApiRef, GridColumn (+1 more)
+Cohesion: 0.12
+Nodes (17): API boundary and contract rules, Authentication startup and post-login runtime rules, Browser E2E and CI testing contract, Modular ownership baseline, Navigation and mobile runtime safety baseline, On-demand feature tooling, Route and entitlement ownership baseline, Shared module shell behavior (+9 more)
 
-### Community 526 - "ReportCategoryStores.cs"
-Cohesion: 0.23
-Nodes (8): CancellationToken, IReadOnlyList, string, Task, ReportCategoryCacheKeys, ReportCategoryEffects, ReportCategoryReadStore, ReportCategoryRepository
+### Community 526 - "Company UI localization Phase 01 - Domain and API"
+Cohesion: 0.22
+Nodes (8): Approved references, Company UI localization Phase 01 - Domain and API, Evidence to capture, Exit checks, Implementation order, Purpose, Required decisions, Source fingerprints
 
-### Community 527 - "reference-data/README.md"
-Cohesion: 0.09
-Nodes (19): Current controller families, Persistence, integration, and verification, ReferenceData API documentation, Canonical evidence, Domain ownership, Persistence and lifecycle, ReferenceData architecture, Runtime boundary (+11 more)
+### Community 527 - "reference-data/features/README.md"
+Cohesion: 0.01
+Nodes (114): Canonical ownership contracts, Frontend Architecture Manifest, Module documentation parity, Ownership policy, Protected App Router manifest, Current controller families, Persistence, integration, and verification, ReferenceData API documentation (+106 more)
 
 ### Community 528 - "ErpSystem.Api.csproj"
 Cohesion: 0.07
-Nodes (27): net10.0, Microsoft.AspNetCore.Authentication.JwtBearer, Microsoft.EntityFrameworkCore.Design, Microsoft.EntityFrameworkCore.SqlServer, Microsoft.Extensions.Caching.Hybrid, Serilog.AspNetCore, net10.0, Microsoft.EntityFrameworkCore.InMemory (+19 more)
+Nodes (28): net10.0, Asp.Versioning.Mvc, Asp.Versioning.Mvc.ApiExplorer, FluentValidation, Microsoft.AspNetCore.Authentication.JwtBearer, Microsoft.EntityFrameworkCore.Design, Microsoft.EntityFrameworkCore.SqlServer, Microsoft.Extensions.Caching.Hybrid (+20 more)
 
-### Community 529 - "HostDeploymentConfigurationValidator"
+### Community 529 - "{{RECIPE_TITLE}}"
+Cohesion: 0.25
+Nodes (7): Approved references, Customer-education gate, Purpose, {{RECIPE_TITLE}}, Source fingerprints, Verification decision, Verification gates
+
+### Community 530 - "Company UI localization Phase 03 - Expo Mobile Client"
 Cohesion: 0.22
-Nodes (6): ICollection, IConfiguration, IEnumerable, IReadOnlyCollection, string, HostDeploymentConfigurationValidator
+Nodes (8): Approved references, Company UI localization Phase 03 - Expo Mobile Client, Evidence to capture, Mobile-specific decisions, Purpose, Read and interaction checks, Required structure, Source fingerprints
 
-### Community 530 - "IDistrictValidationQueries"
-Cohesion: 0.23
-Nodes (8): CancellationToken, Task, IDistrictValidationQueries, DistrictRequest, CancellationToken, IStringLocalizer, Task, DistrictRequestValidator
+### Community 531 - "Company UI localization Phase 07 - Customer Education and Closure"
+Cohesion: 0.22
+Nodes (8): Approved references, Closure checks, Company UI localization Phase 07 - Customer Education and Closure, Entry gate, Handoff decision, Purpose, Required customer-education output, Source fingerprints
 
-### Community 531 - ".InvokeForwardedHeadersAsync"
-Cohesion: 0.16
-Nodes (11): CancellationToken, IConfiguration, IOptions, IReadOnlyList, IServiceCollection, IServiceProvider, Task, SchemaStatusModule (+3 more)
+### Community 532 - "company-geographic-scope-grid.ts"
+Cohesion: 0.39
+Nodes (6): clearUnselectedOperatingCountry(), CompanyCountryIdInput, filterCompanyCountries(), normalizeCompanyCountryIds(), normalizeSearchValue(), countries
 
-### Community 532 - "ErpSystem.Modules.Accounting.Contracts"
-Cohesion: 0.08
-Nodes (24): Assembly, AssemblyReference, CancellationToken, IReadOnlyList, Task, AccountingCurrencyCatalogItem, IAccountingCurrencyCatalog, CancellationToken (+16 more)
-
-### Community 533 - "WorkforceBudgetPersistenceTests"
-Cohesion: 0.17
-Nodes (13): CancellationToken, FiscalYearPlanningSnapshot, NullFiscalYearPlanningSource, CancellationToken, Fact, FiscalYearPlanningSnapshot, InlineData, Task (+5 more)
-
-### Community 535 - ".Accept"
-Cohesion: 0.21
-Nodes (13): AllowAnonymous, CancellationToken, EnableRateLimiting, Guid, HasPermission, HttpDelete, HttpGet, HttpPost (+5 more)
-
-### Community 537 - "IFiscalYearAuditTrail"
-Cohesion: 0.48
-Nodes (3): CancellationToken, Task, IFiscalYearAuditTrail
-
-### Community 538 - "FiscalYearReadStore"
-Cohesion: 0.48
-Nodes (3): Expression, IQueryable, FiscalYearReadStore
-
-### Community 539 - ".Handle"
-Cohesion: 0.38
-Nodes (5): CancellationToken, Result, Task, ArchiveCountryCommandHandler, ArchiveCountryCommand
-
-### Community 540 - ".Handle"
-Cohesion: 0.38
-Nodes (5): CancellationToken, Result, Task, RestoreCountryCommandHandler, RestoreCountryCommand
-
-### Community 541 - "rolesUsers.ts"
+### Community 533 - "Company Geographic Scope Phase 06 - Final Reconciliation"
 Cohesion: 0.29
-Nodes (6): roles, userInvitations, users, RolesRoutes, UserInvitationsRoutes, UsersRoutes
+Nodes (6): Approved references, Company Geographic Scope Phase 06 - Final Reconciliation, Handoff decision, Purpose, Reconciliation gates, Source fingerprints
 
-### Community 542 - "addressTypeUtils.ts"
-Cohesion: 0.48
-Nodes (6): addressTypeUtils, formatAddressTypesForSelect(), getActiveAddressTypes(), getAddressTypeDisplayName(), getAddressTypesCount(), searchAddressTypes()
+### Community 534 - ".AddReportingInfrastructure"
+Cohesion: 0.04
+Nodes (65): IAccountingReportingSource, ICrystalReportDataProvider, EntityKey, DependencyInjection, FiscalYearsCrystalReportDataProvider, ApprovedFilters, EntityKey, CrystalReportDataSource (+57 more)
 
-### Community 543 - "ValidationQueriesTests"
-Cohesion: 0.40
-Nodes (4): Fact, Task, TestCurrentActor, ValidationQueriesTests
+### Community 535 - "Error Logs Phase 01 - Domain and API"
+Cohesion: 0.22
+Nodes (8): Approved references, Error Logs Phase 01 - Domain and API, Evidence to capture, Exit checks, Implementation order, Purpose, Required decisions, Source fingerprints
 
-### Community 544 - "EntityChangeLog"
-Cohesion: 0.40
-Nodes (4): DateTime, EntityChangeLog, EntityTypeBuilder, EntityChangeLogConfiguration
+### Community 536 - "Addresses Phase 06 - Final Reconciliation"
+Cohesion: 0.29
+Nodes (6): Addresses Phase 06 - Final Reconciliation, Approved references, Handoff decision, Purpose, Reconciliation gates, Source fingerprints
 
-### Community 545 - "{{RECIPE_TITLE}}"
-Cohesion: 0.20
-Nodes (9): Approved references, Evidence to capture, Import checks, Purpose, Read-path contract, {{RECIPE_TITLE}}, Required structure, Source fingerprints (+1 more)
+### Community 537 - "Error Logs Phase 03 - Expo Mobile Client"
+Cohesion: 0.22
+Nodes (8): Approved references, Error Logs Phase 03 - Expo Mobile Client, Evidence to capture, Mobile-specific decisions, Purpose, Read and interaction checks, Required structure, Source fingerprints
 
-### Community 546 - "CancellationToken"
-Cohesion: 0.26
-Nodes (6): CancellationToken, DateTime, Task, INotificationInboxService, INotificationInboxStore, NotificationStateMutation
+### Community 538 - "Error Logs Phase 07 - Customer Education and Closure"
+Cohesion: 0.22
+Nodes (8): Approved references, Closure checks, Entry gate, Error Logs Phase 07 - Customer Education and Closure, Handoff decision, Purpose, Required customer-education output, Source fingerprints
 
-### Community 547 - "ErpSystem.BuildingBlocks.Context"
+### Community 539 - "Company Message Logs Phase 01 - Domain and API"
+Cohesion: 0.22
+Nodes (8): Approved references, Company Message Logs Phase 01 - Domain and API, Evidence to capture, Exit checks, Implementation order, Purpose, Required decisions, Source fingerprints
+
+### Community 540 - "Company Message Logs Phase 03 - Expo Mobile Client"
+Cohesion: 0.22
+Nodes (8): Approved references, Company Message Logs Phase 03 - Expo Mobile Client, Evidence to capture, Mobile-specific decisions, Purpose, Read and interaction checks, Required structure, Source fingerprints
+
+### Community 541 - "Company Message Logs Phase 07 - Customer Education and Closure"
+Cohesion: 0.22
+Nodes (8): Approved references, Closure checks, Company Message Logs Phase 07 - Customer Education and Closure, Entry gate, Handoff decision, Purpose, Required customer-education output, Source fingerprints
+
+### Community 542 - "Platform Settings Phase 01 - Domain and API"
+Cohesion: 0.22
+Nodes (8): Approved references, Evidence to capture, Exit checks, Implementation order, Platform Settings Phase 01 - Domain and API, Purpose, Required decisions, Source fingerprints
+
+### Community 543 - "Platform Settings Phase 03 - Expo Mobile Client"
+Cohesion: 0.22
+Nodes (8): Approved references, Evidence to capture, Mobile-specific decisions, Platform Settings Phase 03 - Expo Mobile Client, Purpose, Read and interaction checks, Required structure, Source fingerprints
+
+### Community 544 - "Platform Settings Phase 07 - Customer Education and Closure"
+Cohesion: 0.22
+Nodes (8): Approved references, Closure checks, Entry gate, Handoff decision, Platform Settings Phase 07 - Customer Education and Closure, Purpose, Required customer-education output, Source fingerprints
+
+### Community 545 - "Company UI localization — review"
+Cohesion: 0.12
+Nodes (16): 10. Persistence and side effects, 11. Verification, 12. Reuse, 13. Localization/accessibility, 14. Delivery, 15. Evidence and closure, 1. Ownership, 2. Approved scope (+8 more)
+
+### Community 546 - "DateTime"
+Cohesion: 0.05
+Nodes (46): AttendanceAgentPunch, AuthenticationAccessTokenResult, NotificationPageResponse, GetNotificationsQuery, GetNotificationsQueryHandler, NotificationInboxService, NotificationPublisher, INotificationDeliveryEffects (+38 more)
+
+### Community 547 - "core/api/index.ts"
 Cohesion: 0.02
-Nodes (91): string, ExecutionContextClaimNames, IIntegrationEventOutbox, Assembly, AssemblyReference, IServiceCollection, DependencyInjection, IAccountingOutbox (+83 more)
+Nodes (114): M12 — P2: تعافي startup لا يغطي providers الخارجية, 3.2 قواعد بصرية مشتركة, ResendConfirmationRoute(), RootLayout(), RootNavigator(), unstable_settings, ApiProblemDetails, copyString() (+106 more)
 
-### Community 548 - "services.ts"
-Cohesion: 0.06
-Nodes (67): metadata, CrystalReportCreateDialog(), emptyValues, Props, CrystalReportDetailDialog(), Props, RIGHTS, CrystalReportImportDialog() (+59 more)
+### Community 548 - "CrystalReportManagerPage.tsx"
+Cohesion: 0.05
+Nodes (81): metadata, Page(), FiscalYearReportPage(), AddressTypeReportPage(), Props, CrystalReportDetailDialog(), Props, RIGHTS (+73 more)
 
-### Community 549 - "Dispatcher"
-Cohesion: 0.20
-Nodes (8): List, RealtimeChangeRequest, Dispatcher, RealtimeChangeRequest, RecordingDispatcher, RealtimeChangeRequest, RecordingRealtimeDispatcher, IRealtimeChangeDispatcher
+### Community 549 - "Platform Settings Implementation Request"
+Cohesion: 0.22
+Nodes (8): Approved product decisions / Existing-System Relationship Review, Authority and readiness, Business Rules Matrix, Edge Cases & Validation, Impact Matrix, Platform decisions, Platform Settings Implementation Request, Verification
 
-### Community 550 - "ErpSystem.Modules.Accounting.Domain.Finance.LedgerSetup.Entities"
-Cohesion: 0.07
-Nodes (13): DateOnly, ExchangeRate, IEnumerable, IReadOnlyList, AccountDeterminationResolver, AccountResolutionCandidate, AccountResolutionResult, Fact (+5 more)
+### Community 550 - "17. Non-functional requirements"
+Cohesion: 0.29
+Nodes (7): 17. Non-functional requirements, Commercial / legal applicability, Localization/accessibility/security, Observability, Performance and scale, Privacy and data handling, Reliability
 
-### Community 551 - "CompanyGeographicScopeScreen"
-Cohesion: 0.24
-Nodes (8): clearUnselectedOperatingCountry(), CompanyCountryIdInput, filterCompanyCountries(), normalizeCompanyCountryIds(), normalizeSearchValue(), countries, CompanyGeographicScopeScreen(), createCompanyGeographicScopeFormSchema()
+### Community 551 - "Central Notes Registry"
+Cohesion: 0.29
+Nodes (7): Central Notes Registry, Files, ID format, Moving scattered notes here, Required fields, Status vocabulary, Surface classification
 
-### Community 552 - ".ReplaceClaimsAsync"
-Cohesion: 0.08
-Nodes (29): CancellationToken, DateTime, Func, IReadOnlyCollection, IReadOnlyList, Result, Task, IRoleLockResourceFactory (+21 more)
+### Community 552 - "{{RECIPE_TITLE}}"
+Cohesion: 0.29
+Nodes (6): Approved references, Discovery checklist, Purpose, {{RECIPE_TITLE}}, Required outputs, Source fingerprints
 
-### Community 553 - "PlatformInfrastructureCompositionTests"
-Cohesion: 0.47
-Nodes (3): Fact, IConfiguration, PlatformInfrastructureCompositionTests
+### Community 553 - "Global administration access Phase 01 - Domain and API"
+Cohesion: 0.22
+Nodes (8): Approved references, Evidence to capture, Exit checks, Global administration access Phase 01 - Domain and API, Implementation order, Purpose, Required decisions, Source fingerprints
 
-### Community 554 - "AddressTypeValidationQueries"
-Cohesion: 0.60
-Nodes (3): CancellationToken, Task, AddressTypeValidationQueries
+### Community 554 - "Global administration access Phase 03 - Expo Mobile Client"
+Cohesion: 0.22
+Nodes (8): Approved references, Evidence to capture, Global administration access Phase 03 - Expo Mobile Client, Mobile-specific decisions, Purpose, Read and interaction checks, Required structure, Source fingerprints
 
-### Community 555 - ".Resolve"
-Cohesion: 0.31
-Nodes (5): string, CrystalReportStorageOptions, Fact, CrystalReportStorageOptionsTests, IDictionary
+### Community 555 - "Global administration access Phase 07 - Customer Education and Closure"
+Cohesion: 0.22
+Nodes (8): Approved references, Closure checks, Entry gate, Global administration access Phase 07 - Customer Education and Closure, Handoff decision, Purpose, Required customer-education output, Source fingerprints
 
-### Community 556 - "platform/README.md"
-Cohesion: 0.10
-Nodes (15): Platform API documentation, Role-permission presentation contract, User administration contract, Verified foundation, Authorization and execution scope, Deployment configuration security, Platform architecture, Runtime ownership (+7 more)
+### Community 556 - "RecruitmentDashboardStats.tsx"
+Cohesion: 0.38
+Nodes (5): RecruitmentDashboardStats(), StatCard(), StatCardProps, useRecruitmentSummary(), RecruitmentDashboardSummaryDto
 
 ### Community 557 - "ErpSystem.ArchitectureTests.csproj"
 Cohesion: 0.33
 Nodes (5): net10.0, Microsoft.NET.Test.Sdk, xunit, xunit.runner.visualstudio, Microsoft.NET.Sdk
 
+### Community 558 - "Authorized global UI texts Phase 01 - Domain and API"
+Cohesion: 0.22
+Nodes (8): Approved references, Authorized global UI texts Phase 01 - Domain and API, Evidence to capture, Exit checks, Implementation order, Purpose, Required decisions, Source fingerprints
+
 ### Community 559 - "test-backend.mjs"
-Cohesion: 0.11
-Nodes (14): companies, futureIso(), issueAuth(), json(), makeFiscalYear(), makeRoleFixture(), makeSession(), moduleCodeForPermissionGroup() (+6 more)
+Cohesion: 0.08
+Nodes (38): 0. Contract metadata, 10. i18n, RTL, accessibility, and responsive behavior, 11. Vertical execution ledger (strict one-active-step gate), 12. Verification contract, 13. Child exit gate, 1. Child boundary and outcome, 2. UI Pattern Gate (mandatory before implementation), 3. Closest existing reference (+30 more)
 
 ### Community 560 - "architecture-governance.mjs"
-Cohesion: 0.17
-Nodes (20): appRoot, canonicalAppRoute(), checkManifest(), collectModuleDocumentation(), collectProtectedRoutes(), main(), mainAppRoot, manifestPath (+12 more)
-
-### Community 561 - "JwtAuthenticationTokenValidationParametersFactory"
-Cohesion: 0.40
-Nodes (4): AuthenticationTokenOptions, TokenValidationParameters, JwtAuthenticationTokenValidationParametersFactory, IAuthenticationTokenValidationParametersFactory
-
-### Community 563 - ".RecordUpdateAsync"
-Cohesion: 0.50
-Nodes (3): IAddressTypeAuditTrail, Dictionary, AddressTypeAuditTrail
-
-### Community 564 - ".CheckHealthAsync"
 Cohesion: 0.06
-Nodes (23): Action, CancellationToken, HealthCheckContext, HealthCheckResult, Task, CrystalReportRuntimeHealthCheck, CancellationToken, HealthCheckContext (+15 more)
+Nodes (42): API Production Deployment Runbook, Application rollout, Current development deployment (2026-10-17), MonsterASP.NET (current hosting) via GitHub Actions, Post-deployment checks, Pre-deployment gate, Release inputs, Rollback and forward fix (+34 more)
 
-### Community 565 - "GoogleIdentityVerifier"
-Cohesion: 0.17
-Nodes (12): GoogleIdentity, IGoogleIdentityVerifier, CancellationToken, Func, HttpRequestMessage, HttpResponseMessage, string, Task (+4 more)
-
-### Community 566 - "RecordingScheduler"
-Cohesion: 0.50
-Nodes (4): List, RecordingScheduler, CountryChange, ICountryChangeScheduler
-
-### Community 568 - "ERP System Mobile"
-Cohesion: 0.40
-Nodes (4): ERP System Mobile, Local setup, Project structure, Verification
-
-### Community 569 - "ErpSystem.Modules.Accounting.Application/Validation/ValidationMessageKeys.cs"
-Cohesion: 0.50
-Nodes (3): string, ValidationMessageKeys, ErpSystem.Modules.Accounting.Application.Validation
-
-### Community 570 - "GetAuthenticationSessionContextQuery"
-Cohesion: 1.00
-Nodes (3): AuthenticationSessionContextResponse, GetAuthenticationSessionContextQuery, GetAuthenticationSessionContextQueryHandler
-
-### Community 575 - "mobile-react/AGENTS.md"
-Cohesion: 0.50
-Nodes (3): Expo HAS CHANGED, Mobile feature architecture, Mobile styling
-
-### Community 576 - "ERP System Frontend"
-Cohesion: 0.50
-Nodes (3): Development, ERP System Frontend, Modular architecture checks
-
-### Community 581 - "{{RECIPE_TITLE}}"
+### Community 561 - "Authorized global UI texts Phase 03 - Expo Mobile Client"
 Cohesion: 0.22
-Nodes (8): Approved references, Evidence to capture, Exit checks, Implementation order, Purpose, {{RECIPE_TITLE}}, Required decisions, Source fingerprints
+Nodes (8): Approved references, Authorized global UI texts Phase 03 - Expo Mobile Client, Evidence to capture, Mobile-specific decisions, Purpose, Read and interaction checks, Required structure, Source fingerprints
 
-### Community 582 - "{{RECIPE_TITLE}}"
+### Community 562 - "Authorized global UI texts Phase 07 - Customer Education and Closure"
+Cohesion: 0.22
+Nodes (8): Approved references, Authorized global UI texts Phase 07 - Customer Education and Closure, Closure checks, Entry gate, Handoff decision, Purpose, Required customer-education output, Source fingerprints
+
+### Community 563 - "GetCurrenciesQuery"
+Cohesion: 0.09
+Nodes (22): GetCurrenciesQuery, PageNumber, PageSize, RecordStatus, Search, SearchField, SearchOperator, SortBy (+14 more)
+
+### Community 564 - "IConfiguration"
+Cohesion: 0.01
+Nodes (138): IModule, Definition, Name, ModuleDefinition, AllowsTenantEntitlement, IsUserVisible, OptionalModuleDependencies, RequiredModuleDependencies (+130 more)
+
+### Community 565 - "JobOpeningStatus"
+Cohesion: 0.29
+Nodes (7): JobOpeningStatus, Cancelled, Closed, Draft, Filled, Open, Paused
+
+### Community 566 - "JobRequisitionStatus"
+Cohesion: 0.29
+Nodes (7): JobRequisitionStatus, Approved, Cancelled, Draft, Fulfilled, PendingApproval, Rejected
+
+### Community 567 - "Tenant module entitlements Phase 03 - Expo Mobile Client"
+Cohesion: 0.22
+Nodes (8): Approved references, Evidence to capture, Mobile-specific decisions, Purpose, Read and interaction checks, Required structure, Source fingerprints, Tenant module entitlements Phase 03 - Expo Mobile Client
+
+### Community 568 - "Company user permission grants Phase 01 - Domain and API"
+Cohesion: 0.22
+Nodes (8): Approved references, Company user permission grants Phase 01 - Domain and API, Evidence to capture, Exit checks, Implementation order, Purpose, Required decisions, Source fingerprints
+
+### Community 569 - "Company user permission grants Phase 03 - Expo Mobile Client"
+Cohesion: 0.22
+Nodes (8): Approved references, Company user permission grants Phase 03 - Expo Mobile Client, Evidence to capture, Mobile-specific decisions, Purpose, Read and interaction checks, Required structure, Source fingerprints
+
+### Community 570 - "Company user permission grants Phase 07 - Customer Education and Closure"
+Cohesion: 0.22
+Nodes (8): Approved references, Closure checks, Company user permission grants Phase 07 - Customer Education and Closure, Entry gate, Handoff decision, Purpose, Required customer-education output, Source fingerprints
+
+### Community 571 - "Address Types Phase 01 - Domain and API"
+Cohesion: 0.22
+Nodes (8): Address Types Phase 01 - Domain and API, Approved references, Evidence to capture, Exit checks, Implementation order, Purpose, Required decisions, Source fingerprints
+
+### Community 572 - "EmptyActor"
+Cohesion: 0.33
+Nodes (5): EmptyActor, CompanyId, Instance, TenantId, UserId
+
+### Community 574 - "HrPermissions"
+Cohesion: 0.33
+Nodes (6): HrPermissions, All, Attendance, OrganizationalStructure, Recruitment, Workforce
+
+### Community 575 - "GoogleUserInfo"
+Cohesion: 0.33
+Nodes (6): GoogleUserInfo, Email, EmailVerified, FamilyName, GivenName, Subject
+
+### Community 576 - "Countries Review Artifacts"
+Cohesion: 0.20
+Nodes (9): Countries Review Artifacts, Final reconciliation, Findings and required handoffs, Handoff decision, Intentional platform differences, Metadata, Requirement manifest, Shared contract snapshot (+1 more)
+
+### Community 577 - "Phase 01 - Domain and API"
+Cohesion: 0.22
+Nodes (8): Approved references, Evidence to capture, Exit checks, Implementation order, Phase 01 - Domain and API, Purpose, Required decisions, Source fingerprints
+
+### Community 578 - "connectivityService"
+Cohesion: 0.05
+Nodes (21): 8A. بروتوكول Command/Sync, ConnectivityListener, connectivityService, ConnectivitySnapshot, initialSnapshot, sameSnapshot(), OutboxCommand, OutboxStore (+13 more)
+
+### Community 579 - "Phase 03 - Expo Mobile Client"
+Cohesion: 0.22
+Nodes (8): Approved references, Evidence to capture, Mobile-specific decisions, Phase 03 - Expo Mobile Client, Purpose, Read and interaction checks, Required structure, Source fingerprints
+
+### Community 580 - "Districts Implementation Request"
+Cohesion: 0.22
+Nodes (8): Districts Implementation Request, Execution request, Frozen product decisions, Import contract, Reporting contract, Request metadata, Required implementation, Verification and handoff
+
+### Community 582 - "translation-usage.test.ts"
+Cohesion: 0.47
+Nodes (5): hasTranslation(), isRecord(), projectRoot, resolveKey(), sourceFiles()
+
+### Community 583 - "jest"
+Cohesion: 0.14
+Nodes (14): global, branches, functions, lines, statements, jest, cacheDirectory, collectCoverageFrom (+6 more)
+
+### Community 584 - "JobPostingStatus"
+Cohesion: 0.33
+Nodes (6): JobPostingStatus, Archived, Closed, Draft, Published, Scheduled
+
+### Community 585 - "Error Logs — implementation request and Phase 00 preflight"
+Cohesion: 0.22
+Nodes (8): Approved behavior and contracts, Authority, Business Rules Matrix, Edge Cases and Validation Matrix, Error Logs — implementation request and Phase 00 preflight, Execution and verification, Impact Matrix, Platform capability decisions
+
+### Community 586 - "Attendance Devices Feature Review"
+Cohesion: 0.17
+Nodes (11): 10. Handoff and Deferred Work, 1. Review Manifest, 2. Scope and Non-goals, 3. Frozen Shared Contract, 4. API, Site Agent, and Persistence Responsibility, 5. Provider Evidence, 6. Raw Data Contract, 7. Web Responsibility (+3 more)
+
+### Community 587 - "Districts Phase 03 - Expo Mobile Client"
+Cohesion: 0.22
+Nodes (8): Approved references, Districts Phase 03 - Expo Mobile Client, Evidence to capture, Mobile-specific decisions, Purpose, Read and interaction checks, Required structure, Source fingerprints
+
+### Community 588 - "env.ts"
+Cohesion: 0.11
+Nodes (13): apiUrl, demoLoginEnabled, isPrivateDevelopmentHost(), parseBooleanFlag(), requireApiRootUrl(), requireApiUrl(), validateApiUrl(), apiRootUrl (+5 more)
+
+### Community 589 - "{{RECIPE_TITLE}}"
 Cohesion: 0.22
 Nodes (8): Approved references, Evidence to capture, Mobile-specific decisions, Purpose, Read and interaction checks, {{RECIPE_TITLE}}, Required structure, Source fingerprints
 
-### Community 583 - "jest"
-Cohesion: 0.09
-Nodes (23): global, branches, functions, lines, statements, jest, cacheDirectory, collectCoverageFrom (+15 more)
+### Community 590 - "Managed Crystal Report Manager Experience — Full Review"
+Cohesion: 0.18
+Nodes (10): 10. Closure rule, 1. Scope and outcome, 2. Architecture and ownership, 3. Business lifecycle, 4. API and consistency, 6. Scope, permissions and errors, 7. Platform disposition, 8. Deferred and release work (+2 more)
 
-### Community 584 - ".WriteAsync"
-Cohesion: 0.15
-Nodes (13): CancellationToken, HttpContext, string, Task, HostProblemDetails, HostProblemDetailsResultFilter, Fact, Task (+5 more)
-
-### Community 585 - "ErpSystem.Modules.HR.Application.Features.Attendance.Devices.Contracts"
-Cohesion: 0.05
-Nodes (28): DateTime, TimeZoneInfo, RawAttendanceConversion, AttendancePullJobRequest, IAttendancePullScheduler, IReadOnlyList, AttendanceProviderCatalog, IConfiguration (+20 more)
-
-### Community 586 - "CompanyAccessOption"
-Cohesion: 0.22
-Nodes (10): CancellationToken, IReadOnlyList, Task, CompanyAccessOption, CompanyAccessSnapshot, ICompanyAccessService, CancellationToken, IReadOnlyList (+2 more)
-
-### Community 587 - "ReportTemplateLifecycleCommands.cs"
-Cohesion: 0.27
-Nodes (10): IRuleBuilder, Result, ArchiveReportTemplateCommand, ArchiveReportTemplateCommandValidator, PublishReportTemplateCommand, PublishReportTemplateCommandValidator, RestoreReportTemplateCommand, RestoreReportTemplateCommandValidator (+2 more)
-
-### Community 588 - "NotificationsController"
-Cohesion: 0.42
-Nodes (8): CancellationToken, HttpDelete, HttpGet, HttpPatch, IActionResult, ProducesResponseType, Task, NotificationsController
-
-### Community 589 - "providers.tsx"
-Cohesion: 0.19
-Nodes (17): ProvidersProps, RuntimePreferencesClientSync(), RuntimePreferences, AppEmotionCacheProvider(), ThemeDirection, ThemeDirectionContext, ThemeMode, ThemeModeContext (+9 more)
-
-### Community 591 - "IReferenceDataCompanyGeographySource"
-Cohesion: 0.16
-Nodes (13): CancellationToken, IReadOnlyCollection, IReadOnlyList, Task, IReferenceDataCompanyGeographySource, ReferenceCountryOption, CancellationToken, IReadOnlyCollection (+5 more)
+### Community 591 - "Ledger Setup Currency Implementation Request"
+Cohesion: 0.14
+Nodes (14): IAccountingCurrencyCatalog, Approved product decisions translated for execution, Business Rules Matrix, Edge Cases & Validation Matrix, Execution request, Impact Matrix, Import contract, Ledger Setup Currency Implementation Request (+6 more)
 
 ### Community 592 - "ServerReportDesignerClient.tsx"
-Cohesion: 0.07
-Nodes (40): EMPTY_REPORT_PARAMS, MyReportViewerProps, RenderReport, ReportParameterValue, ReportSearchParams, ReportViewer(), ReportViewerProps, UpdateReportSearchParams (+32 more)
+Cohesion: 0.06
+Nodes (46): @mescius/activereportsjs-react, @mescius/activereportsjs-react@^6.1.2, publicReportApiUrl, RenderReport, ReportParameterValue, ServerReportDesigner(), ServerReportDesignerClient, apiErrorMessage() (+38 more)
 
-### Community 593 - ".AddReportingInfrastructure"
-Cohesion: 0.24
-Nodes (7): IConfiguration, IServiceCollection, IServiceProvider, TimeSpan, DependencyInjection, CrystalReportStorageOptions, HttpClient
+### Community 593 - "Managed Crystal Contract Registry Phase 01 - Domain and API"
+Cohesion: 0.22
+Nodes (8): Approved references, Evidence to capture, Exit checks, Implementation order, Managed Crystal Contract Registry Phase 01 - Domain and API, Purpose, Required decisions, Source fingerprints
 
-### Community 595 - "Managed Crystal Reporting Reliability — Master Build Plan"
-Cohesion: 0.04
-Nodes (53): 0. Plan metadata, 10. Persistence and migration, 11. API / CQRS / contracts, 12. Web experience, 13. Mobile experience, 14. 5-point structured-data parity audit, 15. Reporting / import / export / files, 16. Integrations and side effects (+45 more)
+### Community 594 - "PayFrequency"
+Cohesion: 0.33
+Nodes (6): PayFrequency, Annual, Daily, Hourly, Monthly, Weekly
+
+### Community 595 - "Language"
+Cohesion: 0.02
+Nodes (87): 6.1 Define the report contract, 6.3 Add the entity to the shared contract artifact, 6.4 Prepare and publish report files, 6. Adding Crystal reports to a new feature, Work, Existing-System Relationship Review, Findings and ownership, Managed Crystal Contract Registry — Review Artifacts (+79 more)
+
+### Community 597 - "workforce-plan-draft-store.test.ts"
+Cohesion: 0.15
+Nodes (12): baseDetail, editingSnapshot, mockEnqueue, mockMarkBlocked, mockMarkConflict, mockOutboxGet, mockRecordGet, mockRecordPut (+4 more)
+
+### Community 600 - "Domain Development Guide"
+Cohesion: 0.17
+Nodes (11): Auditing, concurrency, and deletion, Commands and queries, Dependency flow, Domain Development Guide, Domain rules and validation, Events and realtime, Minimum tests for a new feature, Pragmatic Hybrid DDD classification (+3 more)
+
+### Community 601 - "translation-parity.test.ts"
+Cohesion: 0.70
+Nodes (4): collectInvalidLeafKeys(), collectLeafKeys(), collectSemanticKeys(), isRecord()
+
+### Community 602 - "CompanyLocalizationChangeKind"
+Cohesion: 0.50
+Nodes (4): CompanyLocalizationChangeKind, ResetText, SetDefault, SetText
+
+### Community 603 - "Actor"
+Cohesion: 0.50
+Nodes (4): Actor, CompanyId, TenantId, UserId
+
+### Community 604 - "TestActor"
+Cohesion: 0.50
+Nodes (4): TestActor, CompanyId, TenantId, UserId
+
+### Community 605 - "Accounting Chart of Accounts and Hierarchy Review Artifacts"
+Cohesion: 0.17
+Nodes (11): Accounting Chart of Accounts and Hierarchy Review Artifacts, Detail/write field contract, Evidence register, Final reconciliation, Findings and handoffs, Import/reporting contracts, Lifecycle and permissions, Metadata (+3 more)
+
+### Community 606 - "1. Executive outcome"
+Cohesion: 0.50
+Nodes (4): 1. Executive outcome, Business problem, Desired outcome, Success measures
+
+### Community 607 - "2. Scope"
+Cohesion: 0.50
+Nodes (4): 2. Scope, Deferred, Excluded, Required now
+
+### Community 608 - "Addresses Phase 02 - Next.js Client"
+Cohesion: 0.20
+Nodes (9): Addresses Phase 02 - Next.js Client, Approved references, Evidence to capture, Import checks, Purpose, Read-path contract, Required structure, Source fingerprints (+1 more)
+
+### Community 609 - "Ledger Setup Currency — Customer Education Pack"
+Cohesion: 0.17
+Nodes (11): 10. Support evidence, 1. Status and audience, 2. Access and permissions, 3. Field rules, 4. Web journey, 5. Mobile journey, 6. Expected recovery messages, 7. Arabic quick guide / دليل عربي مختصر (+3 more)
+
+### Community 610 - "3. Ownership and existing-system relationship"
+Cohesion: 0.50
+Nodes (4): 3. Ownership and existing-system relationship, Bounded-context owner, Cross-module dependencies, Existing-system relationship matrix
+
+### Community 611 - "Permission and Authorization Model"
+Cohesion: 0.29
+Nodes (7): Bilingual naming, Company direct user grants, Core rule, Enforcement and verification, Mandatory Permission Action Matrix, Permission and Authorization Model, Planning rule
+
+### Community 613 - "Plan Quality Gate"
+Cohesion: 0.20
+Nodes (10): Final reviewer questions, G0 — Scope and ownership, G1 — Business readiness, G2 — Architecture readiness, G3 — Product/client readiness, G4 — Delivery readiness, Phase closure gate — Customer education, Plan Quality Gate (+2 more)
+
+### Community 614 - "API Notes Index"
+Cohesion: 0.50
+Nodes (3): Active API notes, API note checklist, API Notes Index
+
+### Community 615 - "Web Notes Index"
+Cohesion: 0.50
+Nodes (3): Active Web notes, Web note checklist, Web Notes Index
+
+### Community 616 - "Accounting Chart of Accounts and Hierarchy Phase 00 - Implementation Preflight"
+Cohesion: 0.25
+Nodes (7): Accounting Chart of Accounts and Hierarchy Phase 00 - Implementation Preflight, Approved references, Drift rule, Preflight checklist, Purpose, Required outputs, Source fingerprints
+
+### Community 617 - "overrides"
+Cohesion: 0.50
+Nodes (4): overrides, postcss, react, react-dom
+
+### Community 618 - "23. Implementation phases"
+Cohesion: 0.67
+Nodes (3): 23. Implementation phases, Feature Decomposition Gate, Planning authority and execution rule
 
 ### Community 619 - "<Feature Name> Implementation Request"
 Cohesion: 0.13
 Nodes (14): Approved product decisions translated for execution, Business Rules Matrix, Edge Cases & Validation Matrix, Execution request, Existing-System Relationship Review, <Feature Name> Implementation Request, Impact Matrix, Import contract (+6 more)
 
-### Community 620 - "{{RECIPE_TITLE}}"
-Cohesion: 0.25
-Nodes (7): Action ledger, Approved references, Evidence to capture, Exit checks, Purpose, {{RECIPE_TITLE}}, Source fingerprints
+### Community 620 - "26. Handoff"
+Cohesion: 0.67
+Nodes (3): 26. Handoff, Approved implementation request, Canonical documents to create/update
 
 ### Community 622 - "Business Planning Standard"
-Cohesion: 0.11
+Cohesion: 0.10
 Nodes (19): Business Planning Standard, Core principle, Forbidden planning anti-patterns, Stage 0 — Intake and desired outcome, Stage 10 — Non-functional design, Stage 11 — Verification matrix, Stage 12 — Rollout, migration, and rollback, Stage 13 — Risks, decisions, and phases (+11 more)
 
 ### Community 623 - "Plan Creation Protocol"
-Cohesion: 0.10
+Cohesion: 0.11
 Nodes (19): Commercial and terms impact, Core sequence, P0 — Classify the request, P1 — Interview before solutioning, P2 — Investigate the current system, P3 — Confirm gaps, P4 — Applicability reviews, P5 — Produce the pre-plan specification (+11 more)
 
-### Community 625 - "erp-fixture.ts"
-Cohesion: 0.16
-Nodes (16): wcagTags, completeUserTenantAndCompanySelection(), currentCompanyTrigger(), invalidateAccessTokens(), invalidateAllSessions(), loginWithDemoRole(), resetTestBackend(), setCountriesMode() (+8 more)
-
-### Community 627 - "WorkforceBudgetHandlerTests"
+### Community 624 - "Ledger Setup Currency Phase 06 - Verification and Acceptance"
 Cohesion: 0.25
-Nodes (7): Fact, Harness, Task, WorkforceBudgetLineRequest, Harness, WorkforceBudgetHandlerTests, CreateWorkforceBudgetRequest
+Nodes (7): Approved references, Customer-education gate, Ledger Setup Currency Phase 06 - Verification and Acceptance, Purpose, Source fingerprints, Verification decision, Verification gates
 
-### Community 628 - "WorkforceBudgetQueries.cs"
+### Community 625 - "erp-fixture.ts"
 Cohesion: 0.10
-Nodes (32): CancellationToken, Task, BudgetPlanSnapshot, IWorkforceBudgetReadStore, IWorkforceBudgetWriteStore, BudgetSourcePlanResponse, PositionEnvelopeDetailResponse, PositionEnvelopeListItemResponse (+24 more)
+Nodes (23): @playwright/test, wcagTags, expect, expect, isCi, expect, frames, completeUserTenantAndCompanySelection() (+15 more)
 
-### Community 629 - "WorkforcePlanAggregateConcurrencySqlTests"
-Cohesion: 0.26
-Nodes (6): CancellationToken, Fact, FiscalYearPlanningSnapshot, Task, OpenFiscalYearPlanningSource, WorkforcePlanAggregateConcurrencySqlTests
+### Community 626 - "Attendance Devices Implementation Request"
+Cohesion: 0.25
+Nodes (7): Attendance Devices Implementation Request, Execution request, Frozen product decisions, Import contract, Request metadata, Required implementation, Verification and handoff
 
-### Community 631 - "District"
-Cohesion: 0.12
-Nodes (14): CancellationToken, IReadOnlyCollection, IReadOnlyDictionary, IReadOnlyList, Task, IDistrictAuditTrail, IDistrictReadStore, IDistrictWriteStore (+6 more)
+### Community 627 - "StaffingRequest"
+Cohesion: 0.02
+Nodes (154): OfferSalary, IStaffingReadStore, IStaffingWriteStore, StaffingFiscalYearSnapshot, ApproveEnvelopeAmendmentCommand, ApproveEnvelopeAmendmentCommandHandler, ApproveEnvelopeAmendmentCommandValidator, ApproveStaffingRequestCommand (+146 more)
 
-### Community 632 - ".PrepareHostRuntimeAsync"
-Cohesion: 0.24
-Nodes (6): IConfiguration, CancellationToken, IEndpointRouteBuilder, Task, WebApplication, HostRuntimeContributorExtensions
+### Community 628 - "Attendance Devices Phase 04 - Domain Actions and Lifecycle"
+Cohesion: 0.25
+Nodes (7): Action ledger, Approved references, Attendance Devices Phase 04 - Domain Actions and Lifecycle, Evidence to capture, Exit checks, Purpose, Source fingerprints
 
-### Community 633 - "ControllerBase"
-Cohesion: 0.08
-Nodes (28): LocalizationRequest, CancellationToken, Dictionary, HasPermission, HttpDelete, HttpGet, HttpPost, HttpPut (+20 more)
+### Community 631 - "Workforce Planning Phase 04 - Domain Actions and Lifecycle"
+Cohesion: 0.25
+Nodes (7): Action ledger, Approved references, Evidence to capture, Exit checks, Purpose, Source fingerprints, Workforce Planning Phase 04 - Domain Actions and Lifecycle
 
-### Community 634 - "UnsavedChangesContext.tsx"
-Cohesion: 0.06
-Nodes (29): metadata, metadata, RolePermissionsRouteProps, AuthenticatedChangePassword(), ProtectedChangePasswordPage(), ChangePassword(), ChangePasswordProps, PasswordChangeForm() (+21 more)
+### Community 632 - "Company email templates Phase 00 - Implementation Preflight"
+Cohesion: 0.25
+Nodes (7): Approved references, Company email templates Phase 00 - Implementation Preflight, Drift rule, Preflight checklist, Purpose, Required outputs, Source fingerprints
 
-### Community 636 - "AccountingModule"
-Cohesion: 0.27
-Nodes (7): CancellationToken, IConfiguration, IReadOnlyList, IServiceCollection, IServiceProvider, Task, AccountingModule
+### Community 634 - "Fiscal Years Phase 01 - Domain and API"
+Cohesion: 0.22
+Nodes (8): Approved references, Evidence to capture, Exit checks, Fiscal Years Phase 01 - Domain and API, Implementation order, Purpose, Required decisions, Source fingerprints
 
-### Community 637 - "ReportTemplateDetailResponse"
-Cohesion: 0.27
-Nodes (12): ReportTemplateDetailResponse, Result, GetPublishedReportTemplateByIdQuery, GetPublishedReportTemplateByIdQueryValidator, GetReportTemplateForManagementQuery, GetReportTemplateForManagementQueryValidator, CancellationToken, Result (+4 more)
+### Community 635 - "Company email templates Phase 04 - Domain Actions and Lifecycle"
+Cohesion: 0.25
+Nodes (7): Action ledger, Approved references, Company email templates Phase 04 - Domain Actions and Lifecycle, Evidence to capture, Exit checks, Purpose, Source fingerprints
 
-### Community 646 - "List"
-Cohesion: 0.27
-Nodes (11): ViewResponse, CancellationToken, List, Task, GetAllViewsQuery, GetAllViewsQueryHandler, GetAllViewTablesQuery, GetAllViewTablesQueryHandler (+3 more)
+### Community 636 - "Company email templates Phase 06 - Verification and Acceptance"
+Cohesion: 0.25
+Nodes (7): Approved references, Company email templates Phase 06 - Verification and Acceptance, Customer-education gate, Purpose, Source fingerprints, Verification decision, Verification gates
+
+### Community 637 - "Fiscal Years Feature Full Review"
+Cohesion: 0.18
+Nodes (10): 10. Handoff and next slices, 1. Purpose and decision, 2. Product boundary and operating model, 3. Domain contract, 4. API and persistence contract, 5. Authorization and ownership, 7A. UI Pattern contract, 8. Lifecycle, integration, and UI audit (+2 more)
+
+### Community 638 - "Districts Phase 02 - Next.js Client"
+Cohesion: 0.20
+Nodes (9): Approved references, Districts Phase 02 - Next.js Client, Evidence to capture, Import checks, Purpose, Read-path contract, Required structure, Source fingerprints (+1 more)
+
+### Community 640 - "Company UI localization — Implementation request"
+Cohesion: 0.25
+Nodes (7): Authorized scope correction — 2026-10-17, Business Rules Matrix, Company UI localization — Implementation request, Delivery and acceptance, Edge Cases and Validation, Existing-System Relationship Review, Impact Matrix
+
+### Community 641 - "Company UI localization Phase 00 - Implementation Preflight"
+Cohesion: 0.25
+Nodes (7): Approved references, Company UI localization Phase 00 - Implementation Preflight, Drift rule, Preflight checklist, Purpose, Required outputs, Source fingerprints
+
+### Community 642 - "Company UI localization Phase 04 - Domain Actions and Lifecycle"
+Cohesion: 0.25
+Nodes (7): Action ledger, Approved references, Company UI localization Phase 04 - Domain Actions and Lifecycle, Evidence to capture, Exit checks, Purpose, Source fingerprints
+
+### Community 643 - "Company UI localization Phase 06 - Verification and Acceptance"
+Cohesion: 0.25
+Nodes (7): Approved references, Company UI localization Phase 06 - Verification and Acceptance, Customer-education gate, Purpose, Source fingerprints, Verification decision, Verification gates
+
+### Community 644 - "Error Logs Phase 00 - Implementation Preflight"
+Cohesion: 0.25
+Nodes (7): Approved references, Drift rule, Error Logs Phase 00 - Implementation Preflight, Preflight checklist, Purpose, Required outputs, Source fingerprints
+
+### Community 645 - "Error Logs Phase 04 - Domain Actions and Lifecycle"
+Cohesion: 0.25
+Nodes (7): Action ledger, Approved references, Error Logs Phase 04 - Domain Actions and Lifecycle, Evidence to capture, Exit checks, Purpose, Source fingerprints
+
+### Community 646 - "Error Logs Phase 06 - Verification and Acceptance"
+Cohesion: 0.25
+Nodes (7): Approved references, Customer-education gate, Error Logs Phase 06 - Verification and Acceptance, Purpose, Source fingerprints, Verification decision, Verification gates
+
+### Community 647 - "Company Message Logs Phase 00 - Implementation Preflight"
+Cohesion: 0.25
+Nodes (7): Approved references, Company Message Logs Phase 00 - Implementation Preflight, Drift rule, Preflight checklist, Purpose, Required outputs, Source fingerprints
+
+### Community 648 - "Company Message Logs Phase 04 - Domain Actions and Lifecycle"
+Cohesion: 0.25
+Nodes (7): Action ledger, Approved references, Company Message Logs Phase 04 - Domain Actions and Lifecycle, Evidence to capture, Exit checks, Purpose, Source fingerprints
 
 ### Community 649 - "Generate-Documentation.ps1"
 Cohesion: 0.48
 Nodes (6): Assert-RepositoryPath(), Get-NormalizedText(), Get-NumberedSection(), Get-TextHash(), Resolve-SystemPath(), Test-RequiredSources()
 
-### Community 668 - "{{RECIPE_TITLE}}"
-Cohesion: 0.29
-Nodes (6): Approved references, Discovery checklist, Purpose, {{RECIPE_TITLE}}, Required outputs, Source fingerprints
+### Community 650 - "Company Message Logs Phase 06 - Verification and Acceptance"
+Cohesion: 0.25
+Nodes (7): Approved references, Company Message Logs Phase 06 - Verification and Acceptance, Customer-education gate, Purpose, Source fingerprints, Verification decision, Verification gates
 
-### Community 669 - "{{RECIPE_TITLE}}"
-Cohesion: 0.29
-Nodes (6): Approved references, Integration matrix, Purpose, {{RECIPE_TITLE}}, Runtime evidence, Source fingerprints
+### Community 651 - "Platform Settings Phase 00 - Implementation Preflight"
+Cohesion: 0.25
+Nodes (7): Approved references, Drift rule, Platform Settings Phase 00 - Implementation Preflight, Preflight checklist, Purpose, Required outputs, Source fingerprints
 
-### Community 670 - "{{RECIPE_TITLE}}"
-Cohesion: 0.29
-Nodes (6): Approved references, Handoff decision, Purpose, {{RECIPE_TITLE}}, Reconciliation gates, Source fingerprints
+### Community 652 - "Platform Settings Phase 04 - Domain Actions and Lifecycle"
+Cohesion: 0.25
+Nodes (7): Action ledger, Approved references, Evidence to capture, Exit checks, Platform Settings Phase 04 - Domain Actions and Lifecycle, Purpose, Source fingerprints
 
-### Community 671 - "ErpSystem.Modules.Reporting.Infrastructure.Migrations"
-Cohesion: 0.12
-Nodes (9): MigrationBuilder, ModelBuilder, InitialReporting, InitialReporting, MigrationBuilder, ModelBuilder, AddManagedCrystalTemplateValidation, AddManagedCrystalTemplateValidation (+1 more)
+### Community 653 - "Platform Settings Phase 06 - Verification and Acceptance"
+Cohesion: 0.25
+Nodes (7): Approved references, Customer-education gate, Platform Settings Phase 06 - Verification and Acceptance, Purpose, Source fingerprints, Verification decision, Verification gates
+
+### Community 654 - "Global administration access Phase 00 - Implementation Preflight"
+Cohesion: 0.25
+Nodes (7): Approved references, Drift rule, Global administration access Phase 00 - Implementation Preflight, Preflight checklist, Purpose, Required outputs, Source fingerprints
+
+### Community 655 - "Global administration access Phase 04 - Domain Actions and Lifecycle"
+Cohesion: 0.25
+Nodes (7): Action ledger, Approved references, Evidence to capture, Exit checks, Global administration access Phase 04 - Domain Actions and Lifecycle, Purpose, Source fingerprints
+
+### Community 656 - "Global administration access Phase 06 - Verification and Acceptance"
+Cohesion: 0.25
+Nodes (7): Approved references, Customer-education gate, Global administration access Phase 06 - Verification and Acceptance, Purpose, Source fingerprints, Verification decision, Verification gates
+
+### Community 657 - "Authorized global UI texts Phase 00 - Implementation Preflight"
+Cohesion: 0.25
+Nodes (7): Approved references, Authorized global UI texts Phase 00 - Implementation Preflight, Drift rule, Preflight checklist, Purpose, Required outputs, Source fingerprints
+
+### Community 658 - "Authorized global UI texts Phase 04 - Domain Actions and Lifecycle"
+Cohesion: 0.25
+Nodes (7): Action ledger, Approved references, Authorized global UI texts Phase 04 - Domain Actions and Lifecycle, Evidence to capture, Exit checks, Purpose, Source fingerprints
+
+### Community 659 - "Authorized global UI texts Phase 06 - Verification and Acceptance"
+Cohesion: 0.25
+Nodes (7): Approved references, Authorized global UI texts Phase 06 - Verification and Acceptance, Customer-education gate, Purpose, Source fingerprints, Verification decision, Verification gates
+
+### Community 660 - "Accounting Ledger Setup Phase 07 - Customer Education and Closure"
+Cohesion: 0.22
+Nodes (8): Accounting Ledger Setup Phase 07 - Customer Education and Closure, Approved references, Closure checks, Entry gate, Handoff decision, Purpose, Required customer-education output, Source fingerprints
+
+### Community 661 - "Company user permission grants Phase 00 - Implementation Preflight"
+Cohesion: 0.25
+Nodes (7): Approved references, Company user permission grants Phase 00 - Implementation Preflight, Drift rule, Preflight checklist, Purpose, Required outputs, Source fingerprints
+
+### Community 662 - "Company user permission grants Phase 04 - Domain Actions and Lifecycle"
+Cohesion: 0.25
+Nodes (7): Action ledger, Approved references, Company user permission grants Phase 04 - Domain Actions and Lifecycle, Evidence to capture, Exit checks, Purpose, Source fingerprints
+
+### Community 663 - "Company user permission grants Phase 06 - Verification and Acceptance"
+Cohesion: 0.25
+Nodes (7): Approved references, Company user permission grants Phase 06 - Verification and Acceptance, Customer-education gate, Purpose, Source fingerprints, Verification decision, Verification gates
+
+### Community 665 - "Managed Crystal Template Validation Phase 02 - Next.js Client"
+Cohesion: 0.20
+Nodes (9): Approved references, Evidence to capture, Import checks, Managed Crystal Template Validation Phase 02 - Next.js Client, Purpose, Read-path contract, Required structure, Source fingerprints (+1 more)
+
+### Community 666 - "Attendance Devices Phase 01 - Domain and API"
+Cohesion: 0.22
+Nodes (8): Approved references, Attendance Devices Phase 01 - Domain and API, Evidence to capture, Exit checks, Implementation order, Purpose, Required decisions, Source fingerprints
+
+### Community 667 - "Accounting Chart of Accounts and Hierarchy Phase 03 - Expo Mobile Client"
+Cohesion: 0.22
+Nodes (8): Accounting Chart of Accounts and Hierarchy Phase 03 - Expo Mobile Client, Approved references, Evidence to capture, Mobile-specific decisions, Purpose, Read and interaction checks, Required structure, Source fingerprints
+
+### Community 668 - "Tenant module entitlements Phase 01 - Domain and API"
+Cohesion: 0.22
+Nodes (8): Approved references, Evidence to capture, Exit checks, Implementation order, Purpose, Required decisions, Source fingerprints, Tenant module entitlements Phase 01 - Domain and API
+
+### Community 669 - "Address Types Phase 03 - Expo Mobile Client"
+Cohesion: 0.05
+Nodes (30): Address Types Phase 03 - Expo Mobile Client, Approved references, Evidence to capture, Mobile-specific decisions, Purpose, Read and interaction checks, Required structure, Source fingerprints (+22 more)
 
 ### Community 672 - "<Business Capability> — Master Build Plan"
-Cohesion: 0.04
-Nodes (46): 0. Plan metadata, 10. Persistence and migration, 11. API / CQRS / contracts, 12. Web experience, 13. Mobile experience, 14. 5-point structured-data parity audit, 15. Reporting / import / export / files, 16. Integrations and side effects (+38 more)
+Cohesion: 0.11
+Nodes (18): 10. Persistence and migration, 12. Web experience, 13. Mobile experience, 14. 5-point structured-data parity audit, 15. Reporting / import / export / files, 16. Integrations and side effects, 18. Test and verification matrix, 19. Rollout and migration plan (+10 more)
 
-### Community 673 - "CompanyGeographyFeature.cs"
-Cohesion: 0.29
-Nodes (11): CancellationToken, IReadOnlyCollection, Result, Task, GetCompanyGeographicScopeQuery, GetCompanyGeographicScopeQueryHandler, ICompanyGeographicScopeStore, UpdateCompanyGeographicScopeCommand (+3 more)
+### Community 673 - "{{RECIPE_TITLE}}"
+Cohesion: 0.22
+Nodes (8): Approved references, Evidence to capture, Exit checks, Implementation order, Purpose, {{RECIPE_TITLE}}, Required decisions, Source fingerprints
 
 ### Community 674 - "global.d.ts"
 Cohesion: 0.29
 Nodes (6): *.css, @fullcalendar/daygrid/main.css, @fullcalendar/list/main.css, @fullcalendar/timegrid/main.css, NodeJS, ProcessEnv
 
-### Community 675 - ".Handle"
+### Community 675 - "{{RECIPE_TITLE}}"
+Cohesion: 0.22
+Nodes (8): Approved references, Closure checks, Entry gate, Handoff decision, Purpose, {{RECIPE_TITLE}}, Required customer-education output, Source fingerprints
+
+### Community 677 - "Accounting Ledger Setup Phase 02 - Next.js Client"
+Cohesion: 0.20
+Nodes (9): Accounting Ledger Setup Phase 02 - Next.js Client, Approved references, Evidence to capture, Import checks, Purpose, Read-path contract, Required structure, Source fingerprints (+1 more)
+
+### Community 678 - "Fiscal Years Phase 02 - Next.js Client"
+Cohesion: 0.20
+Nodes (9): Approved references, Evidence to capture, Fiscal Years Phase 02 - Next.js Client, Import checks, Purpose, Read-path contract, Required structure, Source fingerprints (+1 more)
+
+### Community 679 - "Addresses Phase 01 - Domain and API"
+Cohesion: 0.22
+Nodes (8): Addresses Phase 01 - Domain and API, Approved references, Evidence to capture, Exit checks, Implementation order, Purpose, Required decisions, Source fingerprints
+
+### Community 681 - "Managed Crystal Report Manager Experience Phase 01 - Domain and API"
+Cohesion: 0.22
+Nodes (8): Approved references, Evidence to capture, Exit checks, Implementation order, Managed Crystal Report Manager Experience Phase 01 - Domain and API, Purpose, Required decisions, Source fingerprints
+
+### Community 683 - "Accounting Chart of Accounts and Hierarchy Phase 02 - Next.js Client"
+Cohesion: 0.20
+Nodes (9): Accounting Chart of Accounts and Hierarchy Phase 02 - Next.js Client, Approved references, Evidence to capture, Import checks, Purpose, Read-path contract, Required structure, Source fingerprints (+1 more)
+
+### Community 684 - "Address Types Implementation Request"
+Cohesion: 0.25
+Nodes (7): Address Types Implementation Request, Execution request, Frozen product decisions, Import contract, Request metadata, Required implementation, Verification and handoff
+
+### Community 685 - "Ledger Setup Currency Phase 02 - Next.js Client"
+Cohesion: 0.20
+Nodes (9): Approved references, Evidence to capture, Import checks, Ledger Setup Currency Phase 02 - Next.js Client, Purpose, Read-path contract, Required structure, Source fingerprints (+1 more)
+
+### Community 686 - "Phase 4 — Provider & Client Runtime Optimization ✅"
 Cohesion: 0.29
-Nodes (7): CancellationToken, IEnumerable, Result, Task, CreateCountriesCommandHandler, CreateCountriesCommand, CreateCountriesResponse
+Nodes (7): 4.1 i18n lazy loading, 4.2 Date provider scoping, 4.3 Syncfusion isolation, 4.4 Other heavy client packages, Objective, Phase 4 — Provider & Client Runtime Optimization ✅, Status
 
-### Community 677 - "ICategoryValidationQueries"
-Cohesion: 0.14
-Nodes (18): CancellationToken, IReadOnlyCollection, Task, ICategoryValidationQueries, CategoryRequest, CancellationToken, IStringLocalizer, Task (+10 more)
+### Community 688 - "Accounting Ledger Setup Phase 04 - Domain Actions and Lifecycle"
+Cohesion: 0.25
+Nodes (7): Accounting Ledger Setup Phase 04 - Domain Actions and Lifecycle, Action ledger, Approved references, Evidence to capture, Exit checks, Purpose, Source fingerprints
 
-### Community 678 - ".ConsumeAsync"
-Cohesion: 0.19
-Nodes (12): CancellationToken, Func, Task, IIntegrationEventInbox, IntegrationEventConsumeResult, IAccountingInbox, CancellationToken, Task (+4 more)
+### Community 690 - "Phase 1 — Business Safety 🔴"
+Cohesion: 0.29
+Nodes (7): Changes, Disable global mutation retries, Future rule, Objective, Phase 1 — Business Safety 🔴, Regression test, Status
 
-### Community 679 - "auth-remote-data-source.ts"
-Cohesion: 0.10
-Nodes (23): secureSession, apiRootUrl, AUTH_ENDPOINTS, authRemoteDataSource, isDefinitiveAuthenticationFailure(), performRefresh(), refreshedResponse, switchedResponse (+15 more)
+### Community 691 - "Address Types Phase 04 - Domain Actions and Lifecycle"
+Cohesion: 0.25
+Nodes (7): Action ledger, Address Types Phase 04 - Domain Actions and Lifecycle, Approved references, Evidence to capture, Exit checks, Purpose, Source fingerprints
 
-### Community 680 - "error-dialog/normalizeErrorDetails.ts"
-Cohesion: 0.51
-Nodes (8): asRecord(), cleanString(), finiteNumber(), isErrorDialogDetails(), normalizeErrorDetails(), normalizePayload(), toMessages(), uniqueMessages()
+### Community 692 - "Attendance Devices Phase 02 - Next.js Client"
+Cohesion: 0.20
+Nodes (9): Approved references, Attendance Devices Phase 02 - Next.js Client, Evidence to capture, Import checks, Purpose, Read-path contract, Required structure, Source fingerprints (+1 more)
 
-### Community 681 - "UpdateDeviceCredentialsRequest"
-Cohesion: 0.31
-Nodes (4): UpdateDeviceCredentialsRequest, IAttendanceCredentialProtector, AttendanceDeviceCredentialProtector, IDataProtector
+### Community 693 - "Organizational Structure Phase 02 - Next.js Client"
+Cohesion: 0.20
+Nodes (9): Approved references, Evidence to capture, Import checks, Organizational Structure Phase 02 - Next.js Client, Purpose, Read-path contract, Required structure, Source fingerprints (+1 more)
 
-### Community 682 - ".GetPage"
-Cohesion: 0.36
-Nodes (7): CancellationToken, HasPermission, HttpGet, IActionResult, ProducesResponseType, Task, PositionEnvelopesController
+### Community 694 - "Managed Crystal Contract Registry Phase 00 - Implementation Preflight"
+Cohesion: 0.25
+Nodes (7): Approved references, Drift rule, Managed Crystal Contract Registry Phase 00 - Implementation Preflight, Preflight checklist, Purpose, Required outputs, Source fingerprints
 
-### Community 683 - ".ExecuteAtomicallyAsync"
+### Community 695 - "Accounting Ledger Setup Phase 06 - Verification and Acceptance"
+Cohesion: 0.25
+Nodes (7): Accounting Ledger Setup Phase 06 - Verification and Acceptance, Approved references, Customer-education gate, Purpose, Source fingerprints, Verification decision, Verification gates
+
+### Community 696 - "Attendance Devices Phase 00 - Discovery and Evidence"
+Cohesion: 0.29
+Nodes (6): Approved references, Attendance Devices Phase 00 - Discovery and Evidence, Discovery checklist, Purpose, Required outputs, Source fingerprints
+
+### Community 697 - "Workforce Planning Phase 02 - Next.js Client"
+Cohesion: 0.20
+Nodes (9): Approved references, Evidence to capture, Import checks, Purpose, Read-path contract, Required structure, Source fingerprints, UI and action checks (+1 more)
+
+### Community 698 - "Organizational Structure Phase 00 - Discovery and Evidence"
+Cohesion: 0.29
+Nodes (6): Approved references, Discovery checklist, Organizational Structure Phase 00 - Discovery and Evidence, Purpose, Required outputs, Source fingerprints
+
+### Community 699 - "Organizational Structure Phase 05 - Integration and Runtime"
+Cohesion: 0.29
+Nodes (6): Approved references, Integration matrix, Organizational Structure Phase 05 - Integration and Runtime, Purpose, Runtime evidence, Source fingerprints
+
+### Community 700 - "Managed Crystal Template Validation Phase 07 - Customer Education and Closure"
 Cohesion: 0.22
-Nodes (5): Func, IReadOnlyCollection, WorkforceBudgetLine, WorkforceBudgetPeriodAllocation, RecordingUnitOfWork
+Nodes (8): Approved references, Closure checks, Entry gate, Handoff decision, Managed Crystal Template Validation Phase 07 - Customer Education and Closure, Purpose, Required customer-education output, Source fingerprints
 
-### Community 684 - "CategoryConfiguration"
-Cohesion: 0.22
-Nodes (6): Category, EntityTypeBuilder, CategoryConfiguration, CategorySubcategory, EntityTypeBuilder, CategorySubcategoryConfiguration
+### Community 701 - "Workforce Planning Phase 00 - Discovery and Evidence"
+Cohesion: 0.29
+Nodes (6): Approved references, Discovery checklist, Purpose, Required outputs, Source fingerprints, Workforce Planning Phase 00 - Discovery and Evidence
 
-### Community 686 - "RecordingDistrictScheduler"
-Cohesion: 0.28
-Nodes (7): DistrictChange, List, StateChange, RecordingDistrictScheduler, RecordingStateScheduler, IDistrictChangeScheduler, IStateChangeScheduler
+### Community 702 - "Workforce Planning Phase 05 - Integration and Runtime"
+Cohesion: 0.29
+Nodes (6): Approved references, Integration matrix, Purpose, Runtime evidence, Source fingerprints, Workforce Planning Phase 05 - Integration and Runtime
 
-### Community 702 - "RecordingFileStorage"
-Cohesion: 0.28
-Nodes (7): CrystalReportInspection, RecordingFileStorage, RecordingInspector, FileUpload, ICrystalReportFileStorage, ICrystalReportInspector, StoreCrystalReportFileResult
+### Community 703 - "Fiscal Years Phase 04 - Domain Actions and Lifecycle"
+Cohesion: 0.25
+Nodes (7): Action ledger, Approved references, Evidence to capture, Exit checks, Fiscal Years Phase 04 - Domain Actions and Lifecycle, Purpose, Source fingerprints
 
-### Community 703 - "IReportValidationQueries"
-Cohesion: 0.13
-Nodes (14): CancellationToken, Task, IReportValidationQueries, ReportCategoryRequest, CancellationToken, IStringLocalizer, Task, ReportCategoryRequestValidator (+6 more)
+### Community 704 - "Company email templates — Evidence and verification"
+Cohesion: 0.29
+Nodes (6): Company email templates — Evidence and verification, Final contract, Findings classified, Five-point UI audit, Phase ledger, Verification artifacts
 
 ### Community 705 - "pulltorefreshjs.d.ts"
 Cohesion: 0.33
 Nodes (3): PullToRefreshInstance, pulltorefreshjs, PullToRefreshOptions
 
-### Community 706 - "ErpSystem.Modules.HR.Presentation/AssemblyReference.cs"
+### Community 706 - "Company email templates — Implementation request"
+Cohesion: 0.29
+Nodes (6): Business Rules Matrix, Company email templates — Implementation request, Edge Cases & Validation, Existing-System Relationship Review, Impact Matrix, Phase 00 decision
+
+### Community 707 - "Company email templates Phase 05 - Integration and Runtime"
+Cohesion: 0.29
+Nodes (6): Approved references, Company email templates Phase 05 - Integration and Runtime, Integration matrix, Purpose, Runtime evidence, Source fingerprints
+
+### Community 709 - "Accounting Chart of Accounts and Hierarchy Phase 04 - Domain Actions and Lifecycle"
 Cohesion: 0.25
-Nodes (5): Assembly, AssemblyReference, IServiceCollection, DependencyInjection, ErpSystem.Modules.HR.Presentation
+Nodes (7): Accounting Chart of Accounts and Hierarchy Phase 04 - Domain Actions and Lifecycle, Action ledger, Approved references, Evidence to capture, Exit checks, Purpose, Source fingerprints
 
-### Community 707 - "ContactsDbContext"
-Cohesion: 0.15
-Nodes (10): bool, CancellationToken, DbSet, ModelBuilder, string, Task, ContactsDbContext, ContactsDbContextDesignFactory (+2 more)
+### Community 710 - "Company Geographic Scope Phase 05 - Integration and Runtime"
+Cohesion: 0.29
+Nodes (6): Approved references, Company Geographic Scope Phase 05 - Integration and Runtime, Integration matrix, Purpose, Runtime evidence, Source fingerprints
 
-### Community 708 - "workforce-plan-draft-store.test.ts"
-Cohesion: 0.15
-Nodes (12): baseDetail, editingSnapshot, mockEnqueue, mockMarkBlocked, mockMarkConflict, mockOutboxGet, mockRecordGet, mockRecordPut (+4 more)
+### Community 711 - "Company Geographic Scope Phase 02 - Next.js Client"
+Cohesion: 0.20
+Nodes (9): Approved references, Company Geographic Scope Phase 02 - Next.js Client, Evidence to capture, Import checks, Purpose, Read-path contract, Required structure, Source fingerprints (+1 more)
 
-### Community 709 - "ApiKeyCommands.cs"
-Cohesion: 0.27
-Nodes (13): CancellationToken, Result, Task, ApiKeyCommandMapping, CreateApiKeyCommand, CreateApiKeyCommandHandler, CreateApiKeyCommandValidator, RevokeApiKeyCommand (+5 more)
+### Community 713 - "Company UI localization Phase 05 - Integration and Runtime"
+Cohesion: 0.29
+Nodes (6): Approved references, Company UI localization Phase 05 - Integration and Runtime, Integration matrix, Purpose, Runtime evidence, Source fingerprints
 
-### Community 710 - "InterviewsController"
-Cohesion: 0.32
-Nodes (11): CancellationToken, HasPermission, HttpGet, HttpPost, IActionResult, ProducesResponseType, Task, CancelInterviewRequest (+3 more)
+### Community 714 - "Error Logs Phase 05 - Integration and Runtime"
+Cohesion: 0.29
+Nodes (6): Approved references, Error Logs Phase 05 - Integration and Runtime, Integration matrix, Purpose, Runtime evidence, Source fingerprints
 
-### Community 711 - ".CreateToken"
+### Community 715 - "Company Message Logs Phase 05 - Integration and Runtime"
+Cohesion: 0.29
+Nodes (6): Approved references, Company Message Logs Phase 05 - Integration and Runtime, Integration matrix, Purpose, Runtime evidence, Source fingerprints
+
+### Community 716 - "Platform Settings Phase 05 - Integration and Runtime"
+Cohesion: 0.29
+Nodes (6): Approved references, Integration matrix, Platform Settings Phase 05 - Integration and Runtime, Purpose, Runtime evidence, Source fingerprints
+
+### Community 717 - "Global administration access Phase 05 - Integration and Runtime"
+Cohesion: 0.29
+Nodes (6): Approved references, Global administration access Phase 05 - Integration and Runtime, Integration matrix, Purpose, Runtime evidence, Source fingerprints
+
+### Community 718 - "Authorized global UI texts Phase 05 - Integration and Runtime"
+Cohesion: 0.29
+Nodes (6): Approved references, Authorized global UI texts Phase 05 - Integration and Runtime, Integration matrix, Purpose, Runtime evidence, Source fingerprints
+
+### Community 719 - "Company Geographic Scope Phase 03 - Expo Mobile Client"
 Cohesion: 0.22
-Nodes (9): DateTime, int, List, PlatformRefreshToken, TimeSpan, RefreshTokenSessionPolicy, DateTime, Fact (+1 more)
+Nodes (8): Approved references, Company Geographic Scope Phase 03 - Expo Mobile Client, Evidence to capture, Mobile-specific decisions, Purpose, Read and interaction checks, Required structure, Source fingerprints
 
-### Community 712 - "PlatformOfflineOperationsPolicyTests"
-Cohesion: 0.24
-Nodes (7): DateTimeOffset, Fact, ServiceProvider, Task, TimeProvider, FrozenTimeProvider, PlatformOfflineOperationsPolicyTests
+### Community 720 - "microsoft_entityframeworkcore"
+Cohesion: 0.04
+Nodes (25): OutboxMessageConfiguration, WorkforceBudgetPeriodAllocationConfiguration, WorkforcePlanConfiguration, OfflineOperationsPolicyRowConfiguration, ErpSystem.Modules.Reporting.Infrastructure.Migrations, ErpSystem.Modules.Platform.Infrastructure.OfflineOperations, ErpSystem.Modules.Platform.Infrastructure.Migrations, ErpSystem.Modules.Inventory.Infrastructure (+17 more)
 
-### Community 713 - "PointOfSaleModule.cs"
-Cohesion: 0.11
-Nodes (11): Assembly, AssemblyReference, IServiceCollection, DependencyInjection, Assembly, AssemblyReference, IServiceCollection, DependencyInjection (+3 more)
+### Community 722 - "Company user permission grants Phase 05 - Integration and Runtime"
+Cohesion: 0.29
+Nodes (6): Approved references, Company user permission grants Phase 05 - Integration and Runtime, Integration matrix, Purpose, Runtime evidence, Source fingerprints
 
-### Community 714 - "TenantMembershipSnapshot"
-Cohesion: 0.10
-Nodes (20): ICompanyAccessSource, CancellationToken, IReadOnlyList, Task, ITenantMembershipService, ITenantMembershipSource, TenantMembershipSnapshot, CancellationToken (+12 more)
+### Community 723 - "Ledger Setup Currency Phase 00 - Implementation Preflight"
+Cohesion: 0.25
+Nodes (7): Approved references, Drift rule, Ledger Setup Currency Phase 00 - Implementation Preflight, Preflight checklist, Purpose, Required outputs, Source fingerprints
 
-### Community 721 - "PlatformCompanyGeographicScopeStore"
-Cohesion: 0.38
-Nodes (5): CompanyGeographicScopeResponse, CancellationToken, IReadOnlyCollection, Task, PlatformCompanyGeographicScopeStore
-
-### Community 722 - ".Handle"
-Cohesion: 0.36
-Nodes (6): CancellationToken, CountryDetailResponse, Result, Task, UpdateCountryCommandHandler, UpdateCountryCommand
-
-### Community 723 - "contacts/README.md"
-Cohesion: 0.12
-Nodes (12): Contacts API documentation, Verified foundation, Contacts architecture, Future channel boundary, Runtime ownership, Contacts delivery roadmap, Foundation (verified), Planned (+4 more)
-
-### Community 725 - "StubContracts"
-Cohesion: 0.40
-Nodes (4): IReadOnlyCollection, StubContracts, IManagedCrystalReportContractSource, ManagedCrystalReportEntityDescriptor
+### Community 725 - "IManagedCrystalReportContractSource"
+Cohesion: 0.05
+Nodes (37): IManagedCrystalReportContractSource, EntityDescriptors, Fingerprint, SchemaVersion, GetCrystalReportsManagementQueryValidator, GetDiscoveredCrystalReportsQueryValidator, GetPublishedCrystalReportsQueryValidator, RenderCrystalReportQueryValidator (+29 more)
 
 ### Community 726 - "Done (before the slice is accepted)"
 Cohesion: 0.25
@@ -3677,1155 +3783,447 @@ Nodes (4): Answer, Outcome, Q: Accounting لا يفتح داخل Visual Studio �
 Cohesion: 0.40
 Nodes (4): Answer, Outcome, Q: المفروض HR يكون داخل Modules مثل Accounting واسم المشروع العام ERP System, Source Nodes
 
-### Community 746 - "modules/README.md"
-Cohesion: 0.05
-Nodes (33): CustomerRelationshipManagement architecture, Future channel boundary, Runtime ownership, CustomerRelationshipManagement delivery roadmap, Foundation (verified), Planned, Current status, CustomerRelationshipManagement module (+25 more)
+### Community 745 - "Tenant module entitlements Phase 04 - Domain Actions and Lifecycle"
+Cohesion: 0.25
+Nodes (7): Action ledger, Approved references, Evidence to capture, Exit checks, Purpose, Source fingerprints, Tenant module entitlements Phase 04 - Domain Actions and Lifecycle
 
-### Community 750 - "ErpSystem.Modules.Reporting.Application/DependencyInjection.cs"
-Cohesion: 0.17
-Nodes (8): Assembly, AssemblyReference, IServiceCollection, DependencyInjection, Error, ReportTemplateErrors, ErpSystem.Modules.Reporting.Application.Features.Analytics.ReportTemplates.Errors, ErpSystem.Modules.Reporting.Application
+### Community 746 - "ExcelViewer.styles.ts"
+Cohesion: 0.25
+Nodes (7): InfoChip, StyledTableCell, StyledTableContainer, StyledTableHead, StyledTableRow, ToolbarContainer, ViewerContainer
 
-### Community 751 - "ErpSystem.Modules.Accounting.Domain/AssemblyReference.cs"
-Cohesion: 0.50
-Nodes (3): Assembly, AssemblyReference, ErpSystem.Modules.Accounting.Domain
+### Community 747 - "Phase 04 - Domain Actions and Lifecycle"
+Cohesion: 0.25
+Nodes (7): Action ledger, Approved references, Evidence to capture, Exit checks, Phase 04 - Domain Actions and Lifecycle, Purpose, Source fingerprints
 
-### Community 754 - "ErpSystem.Modules.HR.Contracts/AssemblyReference.cs"
-Cohesion: 0.50
-Nodes (3): Assembly, AssemblyReference, ErpSystem.Modules.HR.Contracts
+### Community 755 - "check-foundation-readiness.mjs"
+Cohesion: 0.25
+Nodes (8): capabilities, eas, failures, read(), repositoryRoot, requireFile(), root, scheduler
 
-### Community 755 - "ErpSystem.Modules.HR.Domain/AssemblyReference.cs"
-Cohesion: 0.50
-Nodes (3): Assembly, AssemblyReference, ErpSystem.Modules.HR.Domain
-
-### Community 756 - "Accounting Manual Acceptance Scenario Template"
-Cohesion: 0.12
-Nodes (17): 10. Mandatory Mobile coverage, 11. API, security, and data-integrity checks, 12. Bilingual data and UI acceptance, 13. Five-point UI and pattern audit, 14. Cleanup and retained evidence, 15. Result and explicit user decision, 16. Failure and retest rule, 1. Purpose and authority (+9 more)
-
-### Community 757 - "Business Discovery Interview"
-Cohesion: 0.12
-Nodes (17): 10. Integrations and side effects, 11. Reports, imports, exports, and files, 12. Scale and operations, 13. Rollout and existing data, 14. Definition of success, 1. Outcome and problem, 2. Current business process, 3. Actors, authority, and separation of duties (+9 more)
-
-### Community 758 - "<Child Feature> — Screen / Workflow Contract"
-Cohesion: 0.12
-Nodes (17): 0. Contract metadata, 10. i18n, RTL, accessibility, and responsive behavior, 11. Vertical execution ledger (strict one-active-step gate), 12. Verification contract, 13. Child exit gate, 1. Child boundary and outcome, 2. UI Pattern Gate (mandatory before implementation), 3. Closest existing reference (+9 more)
+### Community 757 - "Phase 02 - Next.js Client"
+Cohesion: 0.20
+Nodes (9): Approved references, Evidence to capture, Import checks, Phase 02 - Next.js Client, Purpose, Read-path contract, Required structure, Source fingerprints (+1 more)
 
 ### Community 759 - "money.ts"
-Cohesion: 0.25
-Nodes (11): DateOnlyString, parseDateOnly(), parseUtcInstant(), UtcInstantString, decimalFromNumber(), DecimalString, parseDecimalString(), createMoney() (+3 more)
-
-### Community 761 - "TenantModuleEntitlementRequest"
-Cohesion: 0.09
-Nodes (14): PermissionAccessMode, SubmoduleDefinition, TenantModuleEntitlementRequest, IReadOnlyCollection, ModuleSubmoduleCatalogItem, CancellationToken, IReadOnlyCollection, IReadOnlyList (+6 more)
-
-### Community 762 - "ManagedUser"
-Cohesion: 0.25
-Nodes (4): ManagedUser, ManagedUserActionsProps, ManagedUserCardProps, UserManagementStatsProps
-
-### Community 764 - "UploadedFile"
-Cohesion: 0.33
-Nodes (4): Guid, UploadedFile, EntityTypeBuilder, UploadedFileConfiguration
-
-### Community 767 - "RecordingDistrictReadStore"
-Cohesion: 0.22
-Nodes (7): PageResponse, RecordingDistrictReadStore, DistrictListItemResponse, GetDistrictsQuery, GetStatesQuery, IDistrictReadStore, StateListItemResponse
-
-### Community 772 - "ErpSystem.Modules.Reporting.Application.Features.Analytics.Reports.Contracts"
-Cohesion: 0.10
-Nodes (13): ReportDetailResponse, ReportMasterRequest, IStringLocalizer, ReportMasterRequestValidator, ReportMasterResponse, Error, IStringLocalizer, ReportCategoryErrors (+5 more)
-
-### Community 774 - "CrmAppointmentCqrsTests"
 Cohesion: 0.24
-Nodes (8): Appointment, DateTimeOffset, Fact, Task, TimeProvider, CrmAppointmentCqrsTests, FixedTimeProvider, InMemoryDatabaseRoot
+Nodes (12): DateOnlyString, parseDateOnly(), parseUtcInstant(), UtcInstantString, decimalFromNumber(), DecimalString, parseDecimalString(), createMoney() (+4 more)
 
-### Community 776 - "JobRequisitionDto"
-Cohesion: 0.18
-Nodes (19): DateOnly, DateTime, ApprovedStaffingRequestOptionDto, JobRequisitionDto, PositionHeadcountSummaryDto, CancellationToken, IEnumerable, IReadOnlyList (+11 more)
+### Community 760 - "States Phase 02 - Next.js Client"
+Cohesion: 0.20
+Nodes (9): Approved references, Evidence to capture, Import checks, Purpose, Read-path contract, Required structure, Source fingerprints, States Phase 02 - Next.js Client (+1 more)
 
-### Community 777 - "NotificationScope"
-Cohesion: 0.43
-Nodes (5): CancellationToken, DateTime, Task, NotificationInboxService, NotificationScope
+### Community 761 - "User permission grants and company UI localization — Discovery"
+Cohesion: 0.29
+Nodes (6): Actors, authority and remaining question, Interview applicability, Proposed behavior for specification review, Requested outcome and confirmed decisions, Screenshot observations, not automatically authorized scope, User permission grants and company UI localization — Discovery
+
+### Community 762 - "Accounting Ledger Setup Phase 05 - Integration and Runtime"
+Cohesion: 0.29
+Nodes (6): Accounting Ledger Setup Phase 05 - Integration and Runtime, Approved references, Integration matrix, Purpose, Runtime evidence, Source fingerprints
+
+### Community 765 - "PlatformPermissions"
+Cohesion: 0.29
+Nodes (6): PermissionClaimNames, PlatformPermissions, All, GlobalOperations, TenantAdministration, PlatformRoleNames
+
+### Community 767 - "Managed Crystal Report Manager Experience Phase 02 - Next.js Client"
+Cohesion: 0.20
+Nodes (9): Approved references, Evidence to capture, Import checks, Managed Crystal Report Manager Experience Phase 02 - Next.js Client, Purpose, Read-path contract, Required structure, Source fingerprints (+1 more)
+
+### Community 768 - "User permission grants and company UI localization — Research"
+Cohesion: 0.33
+Nodes (5): Implementation verification sources (2026-10-17), Later technical review, Reference provenance, Repository navigation and authority, User permission grants and company UI localization — Research
+
+### Community 772 - "Workforce Planning Phase 06 - Final Reconciliation"
+Cohesion: 0.29
+Nodes (6): Approved references, Handoff decision, Purpose, Reconciliation gates, Source fingerprints, Workforce Planning Phase 06 - Final Reconciliation
+
+### Community 773 - "Fiscal Years Phase 05 - Integration and Runtime"
+Cohesion: 0.29
+Nodes (6): Approved references, Fiscal Years Phase 05 - Integration and Runtime, Integration matrix, Purpose, Runtime evidence, Source fingerprints
+
+### Community 774 - "{{RECIPE_TITLE}}"
+Cohesion: 0.20
+Nodes (9): Approved references, Evidence to capture, Import checks, Purpose, Read-path contract, {{RECIPE_TITLE}}, Required structure, Source fingerprints (+1 more)
+
+### Community 775 - "Districts Phase 04 - Domain Actions and Lifecycle"
+Cohesion: 0.25
+Nodes (7): Action ledger, Approved references, Districts Phase 04 - Domain Actions and Lifecycle, Evidence to capture, Exit checks, Purpose, Source fingerprints
+
+### Community 777 - "Fiscal Years Phase 06 - Final Reconciliation"
+Cohesion: 0.29
+Nodes (6): Approved references, Fiscal Years Phase 06 - Final Reconciliation, Handoff decision, Purpose, Reconciliation gates, Source fingerprints
+
+### Community 778 - "Tenant module entitlements Phase 05 - Integration and Runtime"
+Cohesion: 0.13
+Nodes (12): Approved references, Integration matrix, Purpose, Runtime evidence, Source fingerprints, Tenant module entitlements Phase 05 - Integration and Runtime, Approved references, Handoff decision (+4 more)
+
+### Community 779 - "دليل توثيق ERP العام"
+Cohesion: 0.22
+Nodes (9): أين تكتب الوثيقة؟, استخدام مولّد التوثيق بدقة, بوابة القبول قبل اعتبار الميزة جاهزة, دليل القرار للـOffline في الموبايل, دليل توثيق ERP العام, دورة التحسين المستمرة للمكونات المشتركة, طريقة بدء ميزة جديدة, قاعدة الملكية (+1 more)
+
+### Community 780 - "Accounting Chart of Accounts and Hierarchy Phase 05 - Integration and Runtime"
+Cohesion: 0.29
+Nodes (6): Accounting Chart of Accounts and Hierarchy Phase 05 - Integration and Runtime, Approved references, Integration matrix, Purpose, Runtime evidence, Source fingerprints
+
+### Community 783 - "Company user permission grants — Evidence and preflight"
+Cohesion: 0.40
+Nodes (4): 1. Phase 00 Implementation Preflight, 2. Verification ledger, Company user permission grants — Evidence and preflight, Phase 06 Verification & Acceptance
+
+### Community 785 - "Ledger Setup Currency Phase 03 - Expo Mobile Client"
+Cohesion: 0.22
+Nodes (8): Approved references, Evidence to capture, Ledger Setup Currency Phase 03 - Expo Mobile Client, Mobile-specific decisions, Purpose, Read and interaction checks, Required structure, Source fingerprints
+
+### Community 786 - "Historical Phase 11 baseline"
+Cohesion: 0.29
+Nodes (7): Current security-maintenance baseline — 2026-10-27, Error detail/copy and launcher contrast recheck — 2026-10-19, Heavy viewer isolation, Historical Phase 11 baseline, Route-class budgets, Route-class definitions, Web Next Performance Baseline
 
 ### Community 787 - "AttendanceDevicesPage.tsx"
-Cohesion: 0.03
-Nodes (90): metadata, metadata, metadata, AttendanceAgentEnrollmentDialog(), AttendanceAgentEnrollmentDialogProps, downloadAgentConfiguration(), getAgentInstallerUrl(), getErrorMessages() (+82 more)
+Cohesion: 0.05
+Nodes (86): metadata, Page(), Page(), Page(), Page(), AttendanceAgentEnrollmentDialog(), AttendanceAgentEnrollmentDialogProps, downloadAgentConfiguration() (+78 more)
 
-### Community 788 - ".ReadAsync"
-Cohesion: 0.40
-Nodes (4): ValueTask, ShortReadStream, Memory, MemoryStream
-
-### Community 789 - "ReferenceDataDbContextAuditTests"
-Cohesion: 0.30
-Nodes (7): Country, DateTimeOffset, Fact, Task, TimeProvider, FixedTimeProvider, ReferenceDataDbContextAuditTests
-
-### Community 790 - "ModulePersistenceFoundationTests"
-Cohesion: 0.29
-Nodes (6): Fact, IConfiguration, ServiceProvider, string, Type, ModulePersistenceFoundationTests
-
-### Community 792 - "RoleOption"
-Cohesion: 0.29
-Nodes (4): RoleOption, RoleActionsProps, RoleCardProps, ManagedUserFormProps
-
-### Community 795 - "OrganizationalResources"
-Cohesion: 0.33
-Nodes (3): string, OrganizationalResources, ErpSystem.Modules.HR.Application.Features.OrganizationalStructure.Management
-
-### Community 797 - "CrystalReportLocks"
-Cohesion: 0.33
-Nodes (3): Guid, CrystalReportLocks, ErpSystem.Modules.Reporting.Application.Features.Analytics.CrystalReports.Coordination
-
-### Community 810 - "server.ts"
+### Community 788 - "Districts Phase 01 - Domain and API"
 Cohesion: 0.22
-Nodes (14): BACKEND_OVERRIDE_COOKIE, BACKEND_OVERRIDE_HEADER, clearBackendOverride(), getStoredBackendOverride(), isBackendOriginAllowed(), normalizeBackendUrl(), parseBackendOrigins(), saveBackendOverride() (+6 more)
+Nodes (8): Approved references, Districts Phase 01 - Domain and API, Evidence to capture, Exit checks, Implementation order, Purpose, Required decisions, Source fingerprints
 
-### Community 811 - "ReportTemplateRevisionResponse"
-Cohesion: 0.23
-Nodes (14): ReportTemplateRevisionResponse, IReadOnlyList, Result, GetReportTemplateRevisionQuery, GetReportTemplateRevisionQueryValidator, GetReportTemplateRevisionsQuery, GetReportTemplateRevisionsQueryValidator, CancellationToken (+6 more)
+### Community 789 - "Addresses Review Artifacts"
+Cohesion: 0.29
+Nodes (6): Addresses Review Artifacts, Decisions, Findings resolved, Remaining findings, Verification record, Verified source
 
-### Community 816 - ".Trimmed"
-Cohesion: 0.40
-Nodes (3): IRuleBuilder, IRuleBuilderOptions, FluentValidationExtensions
+### Community 790 - "Organizational Structure Phase 06 - Final Reconciliation"
+Cohesion: 0.29
+Nodes (6): Approved references, Handoff decision, Organizational Structure Phase 06 - Final Reconciliation, Purpose, Reconciliation gates, Source fingerprints
 
-### Community 817 - ".GetAll"
-Cohesion: 0.15
-Nodes (10): CancellationToken, HasPermission, HttpGet, IActionResult, Task, CategoriesController, ErpSystem.Modules.Inventory.Application.Features.Catalog.Categories.Queries, ErpSystem.Modules.Inventory.Application.Features.Catalog.Categories.Commands (+2 more)
+### Community 791 - "Phase 06 - Final Reconciliation"
+Cohesion: 0.29
+Nodes (6): Approved references, Handoff decision, Phase 06 - Final Reconciliation, Purpose, Reconciliation gates, Source fingerprints
 
-### Community 823 - "reporting/README.md"
-Cohesion: 0.17
-Nodes (8): Reporting architecture, Runtime ownership, Foundation (verified), Planned, Reporting delivery roadmap, Current status, Reporting module, Reporting web client documentation
+### Community 793 - "Attendance Devices Phase 06 - Final Reconciliation"
+Cohesion: 0.29
+Nodes (6): Approved references, Attendance Devices Phase 06 - Final Reconciliation, Handoff decision, Purpose, Reconciliation gates, Source fingerprints
+
+### Community 813 - "States Phase 03 - Expo Mobile Client"
+Cohesion: 0.22
+Nodes (8): Approved references, Evidence to capture, Mobile-specific decisions, Purpose, Read and interaction checks, Required structure, Source fingerprints, States Phase 03 - Expo Mobile Client
+
+### Community 815 - "Tenant module entitlements Phase 00 - Discovery and Evidence"
+Cohesion: 0.29
+Nodes (6): Approved references, Discovery checklist, Purpose, Required outputs, Source fingerprints, Tenant module entitlements Phase 00 - Discovery and Evidence
+
+### Community 816 - "Company message logs — Master plan"
+Cohesion: 0.18
+Nodes (10): 0. Plan metadata, Canonical roadmap, Company message logs — Master plan, Domain/business decisions, Feature Decomposition Gate, Gates and adversarial review, Outcome/authority, Product/privacy/commercial applicability (+2 more)
+
+### Community 818 - "Districts Phase 00 - Discovery and Evidence"
+Cohesion: 0.29
+Nodes (6): Approved references, Discovery checklist, Districts Phase 00 - Discovery and Evidence, Purpose, Required outputs, Source fingerprints
+
+### Community 820 - "Phase 05 - Integration and Runtime"
+Cohesion: 0.29
+Nodes (6): Approved references, Integration matrix, Phase 05 - Integration and Runtime, Purpose, Runtime evidence, Source fingerprints
+
+### Community 822 - "Ledger Setup Currency Phase 04 - Domain Actions and Lifecycle"
+Cohesion: 0.25
+Nodes (7): Action ledger, Approved references, Evidence to capture, Exit checks, Ledger Setup Currency Phase 04 - Domain Actions and Lifecycle, Purpose, Source fingerprints
+
+### Community 823 - "Managed Crystal Contract Registry Phase 02 - Next.js Client"
+Cohesion: 0.20
+Nodes (9): Approved references, Evidence to capture, Import checks, Managed Crystal Contract Registry Phase 02 - Next.js Client, Purpose, Read-path contract, Required structure, Source fingerprints (+1 more)
+
+### Community 824 - "InitialHr"
+Cohesion: 0.05
+Nodes (41): InitialAccounting, InitialHr, Accounting Ledger Setup Review Artifacts, Child execution packages and Screen Contract authority, Detail and write contract, Evidence register, Final reconciliation, Findings and handoffs (+33 more)
 
 ### Community 825 - "useMediaViewer.ts"
-Cohesion: 0.08
-Nodes (20): metadata, BusyOverlay(), Container, MediaContainer, MediaContent(), BackButtonOverlay, ControlsOverlay, LoadingOverlay (+12 more)
+Cohesion: 0.10
+Nodes (21): metadata, BackOverlayButton(), BusyOverlay(), ViewerControls(), Container, MediaContainer, BackButtonOverlay, ControlsOverlay (+13 more)
 
-### Community 826 - ".RemoveLines"
-Cohesion: 0.40
-Nodes (3): IReadOnlyCollection, WorkforceBudgetLine, WorkforceBudgetPeriodAllocation
+### Community 826 - "States Phase 04 - Domain Actions and Lifecycle"
+Cohesion: 0.25
+Nodes (7): Action ledger, Approved references, Evidence to capture, Exit checks, Purpose, Source fingerprints, States Phase 04 - Domain Actions and Lifecycle
 
 ### Community 827 - "Fiscal Years & Periods — Screen / Workflow Contract"
-Cohesion: 0.12
-Nodes (16): 0. Contract metadata, 10. i18n, RTL, accessibility, and responsive behavior, 11. Vertical execution ledger (strict one-active-step gate), 12. Verification contract, 13. Child exit gate, 1. Child boundary and outcome, 2. UI Pattern Gate (mandatory before implementation), 3. Closest existing reference (+8 more)
+Cohesion: 0.14
+Nodes (14): 0. Contract metadata, 10. i18n, RTL, accessibility, and responsive behavior, 11. Vertical execution ledger (strict one-active-step gate), 12. Verification contract, 13. Child exit gate, 1. Child boundary and outcome, 3. Closest existing reference, 5. Screen and workspace contract (+6 more)
 
 ### Community 828 - "Accounting Core GL — Pre-Plan Specification"
 Cohesion: 0.12
 Nodes (16): Accounting Core GL — Pre-Plan Specification, Architecture and integrations, ASSUMPTIONS, Deferred, Domain and source of truth, Excluded, OPEN RISKS / UNKNOWNS, Primary journeys (+8 more)
 
-### Community 829 - "Managed Crystal Contract Registry — Screen / Workflow Contract"
-Cohesion: 0.12
-Nodes (16): 0. Contract metadata, 10. i18n, RTL, accessibility, and responsive behavior, 11. Vertical execution ledger (strict one-active-step gate), 12. Verification contract, 13. Child exit gate, 1. Child boundary and outcome, 2. UI Pattern Gate (mandatory before implementation), 3. Closest existing reference (+8 more)
+### Community 832 - "{{RECIPE_TITLE}}"
+Cohesion: 0.25
+Nodes (7): Action ledger, Approved references, Evidence to capture, Exit checks, Purpose, {{RECIPE_TITLE}}, Source fingerprints
 
-### Community 830 - "Managed Crystal Report Manager Experience — Screen / Workflow Contract"
-Cohesion: 0.12
-Nodes (16): 0. Contract metadata, 10. i18n, RTL, accessibility, and responsive behavior, 11. Vertical execution ledger (strict one-active-step gate), 12. Verification contract, 13. Child exit gate, 1. Child boundary and outcome, 2. UI Pattern Gate (mandatory before implementation), 3. Closest existing reference (+8 more)
+### Community 833 - "{{RECIPE_TITLE}}"
+Cohesion: 0.29
+Nodes (6): Approved references, Integration matrix, Purpose, {{RECIPE_TITLE}}, Runtime evidence, Source fingerprints
 
-### Community 832 - "Managed Crystal Template Validation — Screen / Workflow Contract"
-Cohesion: 0.12
-Nodes (16): 0. Contract metadata, 10. i18n, RTL, accessibility, and responsive behavior, 11. Vertical execution ledger (strict one-active-step gate), 12. Verification contract, 13. Child exit gate, 1. Child boundary and outcome, 2. UI Pattern Gate (mandatory before implementation), 3. Closest existing reference (+8 more)
+### Community 836 - "{{RECIPE_TITLE}}"
+Cohesion: 0.29
+Nodes (6): Approved references, Handoff decision, Purpose, {{RECIPE_TITLE}}, Reconciliation gates, Source fingerprints
 
-### Community 833 - "IModule"
-Cohesion: 0.17
-Nodes (9): CancellationToken, IConfiguration, IEndpointRouteBuilder, IReadOnlyList, IServiceCollection, IServiceProvider, Task, WebApplication (+1 more)
+### Community 837 - "TestActor"
+Cohesion: 0.33
+Nodes (5): TestActor, CompanyId, MachineName, TenantId, UserId
 
-### Community 839 - "dialog/index.ts"
-Cohesion: 0.10
-Nodes (26): DialogTransition, FormContainer(), FormContent(), getFormOverlayIcon(), FormContext, FormContextType, FormProvider, useFormContext() (+18 more)
-
-### Community 842 - "TenantManagementRequest"
-Cohesion: 0.35
-Nodes (8): TenantManagementRequest, CancellationToken, HttpGet, HttpPost, HttpPut, IActionResult, Task, TenantsController
-
-### Community 843 - ".UpdatePolicy"
-Cohesion: 0.24
-Nodes (10): UpdateOfflineOperationsPolicyRequest, ActionResult, CancellationToken, HasPermission, HttpGet, HttpPut, ProblemDetails, Task (+2 more)
-
-### Community 844 - "ErpSystem.Modules.Accounting.Application.Features.Finance.FiscalYears.Contracts"
-Cohesion: 0.07
-Nodes (26): Error, FiscalYearErrors, FiscalYearResponseMapper, IReadOnlyList, string, AccountingPermissions, Fact, AccountingModuleFoundationTests (+18 more)
-
-### Community 845 - "runtime-preferences.ts"
-Cohesion: 0.14
-Nodes (15): metadata, preHydrationPaletteCss, viewport, Providers(), bootstrapPalettes, CookieReader, DEFAULT_RUNTIME_PREFERENCES, reconcileRuntimePreferences() (+7 more)
-
-### Community 849 - "EntitiesService.cs"
-Cohesion: 0.08
-Nodes (23): net10.0, Microsoft.NET.Sdk, CancellationToken, Task, IRecruitmentActorEmployeeSource, IServiceCollection, EntitiesService, ErpSystem.Modules.HR.Infrastructure.Persistence (+15 more)
-
-### Community 850 - "PlatformApiKeyCqrsTests"
+### Community 838 - "ICompanyUiCatalog"
 Cohesion: 0.13
-Nodes (12): CancellationToken, Fact, IAsyncEnumerable, IReadOnlyCollection, IRequest, IStreamRequest, List, Task (+4 more)
+Nodes (11): CompanyUiSource, ICompanyUiCatalog, Sources, CompanyLocalizationStore, CatalogArtifact, EmbeddedCompanyUiCatalog, Sources, Catalog (+3 more)
 
-### Community 853 - ".BuildAsync"
-Cohesion: 0.40
-Nodes (4): IReadOnlyDictionary, RecordingDataSource, CrystalReportDataBuildResult, ICrystalReportDataSource
+### Community 842 - "Web/API Readiness Review"
+Cohesion: 0.33
+Nodes (6): Contract baseline, Fixed priorities, Platform decisions, Readiness matrix, Verification, Web/API Readiness Review
 
-### Community 854 - "OfflineOperationsPolicyRow"
-Cohesion: 0.22
-Nodes (8): EntityTypeBuilder, OfflineOperationsPolicyHistoryRowConfiguration, OfflineOperationsPolicyRowConfiguration, DateTimeOffset, Guid, OfflineOperationsPolicyHistoryRow, OfflineOperationsPolicyRow, ErpSystem.Modules.Platform.Infrastructure.OfflineOperations
+### Community 843 - "Attendance Devices Phase 05 - Integration and Runtime"
+Cohesion: 0.29
+Nodes (6): Approved references, Attendance Devices Phase 05 - Integration and Runtime, Integration matrix, Purpose, Runtime evidence, Source fingerprints
 
-### Community 856 - "Candidate"
+### Community 844 - "Accounting Ledger Setup — Expo Implementation Contract"
+Cohesion: 0.09
+Nodes (20): AccountingPermissions, All, FiscalYears, Invoicing, LedgerSetup, 10. Link Accounts and resolution, 11. Permissions and online authority, 12. Offline/cache policy (+12 more)
+
+### Community 845 - "app/layout.tsx"
+Cohesion: 0.09
+Nodes (34): metadata, preHydrationPaletteCss, RootLayout(), viewport, Providers(), ProvidersProps, RuntimePreferencesClientSync(), bootstrapPalettes (+26 more)
+
+### Community 847 - "Company Geographic Scope Phase 04 - Domain Actions and Lifecycle"
+Cohesion: 0.25
+Nodes (7): Action ledger, Approved references, Company Geographic Scope Phase 04 - Domain Actions and Lifecycle, Evidence to capture, Exit checks, Purpose, Source fingerprints
+
+### Community 849 - "ErpSystem.BuildingBlocks.Application.Common.Paginations"
 Cohesion: 0.03
-Nodes (42): DomainGuard, DateOnly, ICollection, Branch, ICollection, CostCenter, ICollection, Department (+34 more)
+Nodes (81): OfferResult, OfferScope, WorkforceBudgetCommandValidation, GetBudgetSourcePlanByIdQueryValidator, GetBudgetSourcePlansQueryValidator, EntitiesService, NotificationRequestValidator, ErpSystem.Modules.HR.Infrastructure.Persistence (+73 more)
 
-### Community 857 - "ContactsHttpHost"
-Cohesion: 0.12
-Nodes (10): HttpClient, InlineData, IServiceCollection, Theory, ValueTask, WebApplication, ContactsHttpHost, ServiceCollectionAuthorizationExtensions (+2 more)
+### Community 850 - "Accounting historical delivery phases"
+Cohesion: 0.33
+Nodes (6): Accounting historical delivery phases, Historical dependency matrix, Historical reuse-inventory expectation, Historical rules captured from the source phases, Historical tracking and final acceptance artifacts, Scope and boundaries
+
+### Community 857 - "Business Feature Template"
+Cohesion: 0.40
+Nodes (5): Business Feature Template, Definition of done, Query and write convention, Standard responsibilities, Translation and route boundaries
 
 ### Community 859 - "State.ts"
-Cohesion: 0.04
-Nodes (90): metadata, StateCardProps, StateCardViewHeaderProps, StateCardViewPaginationProps, StatesCardViewProps, StateCardFooterProps, StateCardViewHeader(), ColumnsFactoryProps (+82 more)
+Cohesion: 0.03
+Nodes (104): 9. State-specific report decision, 10. Crystal report integration, 11. Localization and RTL, 12. Responsive and accessibility, 13. Test focus, 14. State-specific differences from Countries, 15. Verification, 1. Route and ownership (+96 more)
 
-### Community 860 - "AllowAllPermissions"
-Cohesion: 0.40
-Nodes (3): AllowAllPermissions, DenyBypassPermissionChecker, ICurrentPermissionChecker
+### Community 860 - "ErpSystem.BuildingBlocks.Context.Authentication"
+Cohesion: 0.03
+Nodes (57): ValidationMessageKeys, ValidationMessageKeys, ValidationMessageKeys, AccountingCurrencySnapshotValidation, ValidationMessageKeys, InventoryPermissions, All, Catalog (+49 more)
 
-### Community 861 - "ChartContainer.tsx"
-Cohesion: 0.13
-Nodes (15): LoadingChartState(), LoadingChartState(), ChartContainer(), visuallyHidden, TimelineChartBaseProps, getItemValue(), isTimelineStatus(), Timeline() (+7 more)
-
-### Community 863 - ".RenderAsync"
-Cohesion: 0.40
-Nodes (4): RecordingRenderer, CrystalReportRenderResult, CrystalReportRuntimeRequest, ICrystalReportRenderer
+### Community 863 - "Mobile API compatibility matrix"
+Cohesion: 0.33
+Nodes (5): Baseline coverage, Mobile API compatibility matrix, Offline policy is per surface, Ownership decisions closed before business development, Request, response, and permission boundary
 
 ### Community 864 - "Example: a greenfield discovery session (condensed)"
 Cohesion: 0.40
 Nodes (4): Example: a greenfield discovery session (condensed), Later: acceptance criteria for one capability (`PLAN.md` section 24), Session excerpt, What gets written
 
-### Community 867 - "offline-session-lease.ts"
-Cohesion: 0.16
-Nodes (21): offlineSessionLeaseUseCases, invalidateOfflineSessionLease(), invalidateOfflineSessionLeaseSnapshot(), isValidLease(), loadOfflineSessionLease(), loadOfflineSessionLeaseSnapshot(), OfflineSessionLeaseSnapshot, parsePointer() (+13 more)
-
-### Community 869 - "auth/permissions-parity.test.ts"
+### Community 866 - "Email confirmation links"
 Cohesion: 0.50
-Nodes (4): BackendPermissionSource, backendPermissionSources, classBody(), parsePermissionValues()
+Nodes (3): Development-only deep-link test, Email confirmation links, Required deployment settings
 
-### Community 870 - ".ScopedCategories"
-Cohesion: 0.31
-Nodes (6): CancellationToken, Category, IQueryable, IReadOnlyCollection, Task, CategoryValidationQueries
-
-### Community 872 - "InitialCrm"
+### Community 867 - "offline-session-lease.ts"
 Cohesion: 0.15
-Nodes (7): MigrationBuilder, ModelBuilder, InitialCrm, InitialCrm, ModelBuilder, CrmDbContextModelSnapshot, ErpSystem.Modules.CRM.Infrastructure.Migrations
+Nodes (20): offlineSessionLeaseUseCases, invalidateOfflineSessionLease(), invalidateOfflineSessionLeaseSnapshot(), isValidLease(), loadOfflineSessionLease(), loadOfflineSessionLeaseSnapshot(), OfflineSessionLeaseSnapshot, parsePointer() (+12 more)
 
-### Community 873 - "RecruitmentDashboardSummaryDto"
-Cohesion: 0.20
-Nodes (10): IReadOnlyDictionary, RecruitmentDashboardSummaryDto, CancellationToken, Task, GetRecruitmentDashboardSummaryQuery, GetRecruitmentDashboardSummaryQueryHandler, CancellationToken, Task (+2 more)
+### Community 872 - "حماية التغييرات غير المحفوظة في الويب"
+Cohesion: 0.22
+Nodes (9): Administration application grouping, Launcher icon foreground and sizing, Read-only detail fields and user-requested text copy, Rich content and safe HTML previews, Settings داخل Administration — القرار الحالي 2026-10-19, Shared reuse catalog, حماية التغييرات غير المحفوظة في الويب, قرار الإضافة أو التمديد (+1 more)
 
-### Community 874 - "ErpSystem.Modules.PointOfSale.Infrastructure"
-Cohesion: 0.12
-Nodes (9): IConfiguration, IServiceCollection, DependencyInjection, MigrationBuilder, ModelBuilder, InitialPointOfSale, InitialPointOfSale, ErpSystem.Modules.PointOfSale.Infrastructure (+1 more)
+### Community 875 - "API documentation"
+Cohesion: 0.50
+Nodes (4): API documentation, Architecture and rules, Configuration and operations, Feature books
 
-### Community 877 - "palettes.ts"
-Cohesion: 0.10
-Nodes (18): ModuleColorKey, moduleColorOrder, blueDark, blueLight, greenBrandDark, greenBrandLight, greenDark, greenLight (+10 more)
+### Community 876 - "Mobile (Expo) documentation"
+Cohesion: 0.50
+Nodes (4): Architecture and rules, Feature books, Mobile (Expo) documentation, Readiness records
+
+### Community 877 - "src/index.ts"
+Cohesion: 0.06
+Nodes (57): colorNames, colorVariables(), dist, json, root, staticVars, advisories, advisoryPairs (+49 more)
 
 ### Community 879 - "WorkforcePlanPersistenceTests"
-Cohesion: 0.19
-Nodes (10): CancellationToken, DateOnly, DbContextOptions, EmployeeAssignment, Fact, FiscalYearPlanningSnapshot, Task, WorkforcePlan (+2 more)
-
-### Community 884 - "FiscalYearDomainTests"
-Cohesion: 0.28
-Nodes (4): Fact, InlineData, Theory, FiscalYearDomainTests
-
-### Community 886 - "browserSecurity.ts"
-Cohesion: 0.24
-Nodes (12): nextConfig, BrowserSecurityEnvironment, buildContentSecurityPolicy(), buildReportingEndpointsHeader(), compact(), CONTENT_SECURITY_POLICY_HEADER, CSP_REPORTING_ENDPOINT_NAME, deduplicate() (+4 more)
-
-### Community 888 - "ErpSystem.Modules.CRM.Application/Validation/ValidationMessageKeys.cs"
-Cohesion: 0.50
-Nodes (3): string, ValidationMessageKeys, ErpSystem.Modules.CRM.Application.Validation
-
-### Community 889 - "HrPermissions"
-Cohesion: 0.50
-Nodes (3): IReadOnlyList, string, HrPermissions
-
-### Community 890 - "DatabaseSettings.cs"
-Cohesion: 0.50
-Nodes (3): string, DatabaseSettings, ErpSystem.Modules.HR.Infrastructure.Common.Settings
-
-### Community 891 - "CrmDbContext"
-Cohesion: 0.13
-Nodes (11): Appointment, bool, CancellationToken, DbSet, ModelBuilder, string, Task, TimeProvider (+3 more)
-
-### Community 893 - ".Render"
-Cohesion: 0.25
-Nodes (9): GlobalCrystalReportRenderRequest, CancellationToken, HttpGet, HttpPost, IActionResult, ProducesResponseType, Task, GlobalCrystalReportsController (+1 more)
-
-### Community 894 - "RecordingDispatcher"
-Cohesion: 0.67
-Nodes (3): List, RealtimeChangeRequest, RecordingDispatcher
-
-### Community 896 - "ErpSystem.Modules.Inventory.Application/Validation/ValidationMessageKeys.cs"
-Cohesion: 0.50
-Nodes (3): string, ValidationMessageKeys, ErpSystem.Modules.Inventory.Application.Validation
-
-### Community 897 - "ErpSystem.Modules.Platform.Application.Features.Security.Users.Contracts"
-Cohesion: 0.02
-Nodes (75): IValidationQuery, CancellationToken, Task, IRoleValidationQueries, CancellationToken, Task, IUserProfileEffects, IUserProfileStore (+67 more)
-
-### Community 900 - "ApiKeyResponse"
-Cohesion: 0.35
-Nodes (9): ApiKeyResponse, CancellationToken, IReadOnlyCollection, Result, Task, GetAllApiKeysQuery, GetAllApiKeysQueryHandler, GetApiKeyQuery (+1 more)
-
-### Community 901 - "AddressesController"
-Cohesion: 0.35
-Nodes (9): CancellationToken, HasPermission, HttpDelete, HttpGet, HttpPost, HttpPut, IActionResult, Task (+1 more)
-
-### Community 902 - "InventoryPermissions"
-Cohesion: 0.50
-Nodes (3): IReadOnlyList, string, InventoryPermissions
-
-### Community 903 - "StateCqrsArchitectureTests"
-Cohesion: 0.19
-Nodes (6): Fact, IEnumerable, LocalizedString, Task, EchoLocalizer, StateCqrsArchitectureTests
-
-### Community 907 - "ReferenceDataPermissions"
-Cohesion: 0.50
-Nodes (3): IReadOnlyList, string, ReferenceDataPermissions
-
-### Community 908 - "ConnectorModels.cs"
-Cohesion: 0.11
-Nodes (19): ConnectorError, ConnectorFailure, ConnectorHealth, DetectResult, ProviderInfo, PullAttendanceRequest, PullAttendanceResult, PullUsersResult (+11 more)
-
-### Community 909 - "InventoryModule"
 Cohesion: 0.27
-Nodes (7): CancellationToken, IConfiguration, IReadOnlyList, IServiceCollection, IServiceProvider, Task, InventoryModule
+Nodes (5): TestActor, CompanyId, TenantId, UserId, WorkforcePlanPersistenceTests
 
-### Community 910 - "مقارنة الـ Backend: HR API مقابل School/Standard API — وقرار أساس الـ Template"
+### Community 885 - "LocalizationController.cs"
+Cohesion: 0.40
+Nodes (3): LocalizationRequest, ErpSystem.Modules.Platform.Application.Features.Platform.Localization.Contracts, ErpSystem.Modules.Platform.Presentation.Features.Platform.Localization.V1
+
+### Community 891 - "PointOfSaleDbContext"
+Cohesion: 0.10
+Nodes (17): PointOfSaleDbContext, PointOfSaleDbContextDesignFactory, 1. عدّلت في كيان (Entity) وعايز تحدّث الداتابيز, 2. عايز تراجع الـ migration قبل ما يتطبّق, 3. عايز تطبّق migrations موجودة بس, 4. عايز تلغي migration لسه ما اتطبّقش, 5. عايز تتأكد إن مفيش تعديلات ناسي تعملها migration, أوامر الـ Migrations — مرجع سريع (+9 more)
+
+### Community 897 - "UserProfileMessages.cs"
 Cohesion: 0.09
-Nodes (18): 1. القرار المقترح, 2. المقارنة, 3. مشاكل في الـ HR API لازم تتصلح قبل ما يبقى template, 4. اللي يتنقل من School/Standard للأساس الجديد (بعد التحقق), 5. عقد الـ Auth الموحّد (القرار), 6. شكل الـ API في الـ template, 7. مشروع المدرسة بعد القرار, 8. الخطوات الجاية (+10 more)
+Nodes (26): IUserProfileEffects, IUserProfileStore, UserProfilePictureUpdateOutcome, Success, UserNotFound, UpdateProfilePictureRequest, UpdateProfileRequest, UserPhoto (+18 more)
 
-### Community 911 - "ErpSystem.Modules.Reporting.Application/Validation/ValidationMessageKeys.cs"
-Cohesion: 0.50
-Nodes (3): string, ValidationMessageKeys, ErpSystem.Modules.Reporting.Application.Validation
+### Community 908 - "ZkComDeviceDriver"
+Cohesion: 0.07
+Nodes (32): ConnectorError, ConnectorFailure, ConnectorHealth, DeviceInfo, ProviderInfo, PullAttendanceRequest, PullAttendanceResult, PullUsersResult (+24 more)
 
-### Community 912 - "ReportingPermissions"
-Cohesion: 0.50
-Nodes (3): IReadOnlyList, string, ReportingPermissions
-
-### Community 923 - "MigrationOperationsTests"
-Cohesion: 0.29
-Nodes (4): Fact, JsonElement, Task, MigrationOperationsTests
-
-### Community 927 - "web-next/src/platform/modules/index.ts"
+### Community 912 - "AI Report View Designer Implementation Plan"
 Cohesion: 0.04
-Nodes (69): ModuleRouteProps, ModuleSubmoduleRouteProps, UnavailableRouteProps, asRecord(), moduleApi, moduleKeys, parseModule(), parseModulesResponse() (+61 more)
+Nodes (50): ReportingPermissions, All, GlobalReports, Reports, 10. Validation pipeline, 11. Preview contract, 12. Publish contract, 13. Crystal data-source registration (+42 more)
+
+### Community 927 - "FeatureModuleLayout.tsx"
+Cohesion: 0.21
+Nodes (17): AppPath, ModuleContextBar(), PathAwareFeatureModuleLayout(), CompactNavigationLink(), FeatureModuleNavigation(), FeatureModuleNavigationProps, navigationIconSx(), navigationItemSx() (+9 more)
 
 ### Community 929 - "business/README.md"
-Cohesion: 0.03
-Nodes (58): Education Module — Decisions, Audit conclusion, Conflicts / drift found, Education Module — Evidence Ledger, Evidence ledger, External/version-sensitive evidence, Gaps that code/evidence cannot answer, Scope of investigation (+50 more)
+Cohesion: 0.02
+Nodes (85): 10. Product/design decisions, 11. Privacy / commercial / legal applicability, 12. Open decisions, 13. Planning consequences, 14. Discovery completion, 1. Discovery basis, 2. Business outcome, 3. Verified facts (+77 more)
 
-### Community 930 - "Ledger Setup COA & Hierarchy — Screen / Workflow Contract"
-Cohesion: 0.12
-Nodes (15): 0. Contract metadata, 10. i18n, RTL, accessibility, and responsive behavior, 11. Vertical execution ledger (strict one-active-step gate), 12. Verification contract, 13. Child exit gate, 1. Child boundary and outcome, 2. UI Pattern Gate (mandatory before implementation), 3. Closest existing reference (+7 more)
-
-### Community 931 - "accounting-core-gl/PLAN.md"
-Cohesion: 0.04
-Nodes (43): Accounting Core GL — Decision Log, 0. Contract metadata, 10. i18n, RTL, accessibility, and responsive behavior, 11. Vertical execution ledger (strict one-active-step gate), 12. Verification contract, 13. Child exit gate, 1. Child boundary and outcome, 2. UI Pattern Gate (mandatory before implementation) (+35 more)
-
-### Community 932 - "Ledger Setup Currency — Screen / Workflow Contract"
-Cohesion: 0.13
-Nodes (15): 0. Contract metadata, 10. i18n, RTL, accessibility, and responsive behavior, 11. Vertical execution ledger (strict one-active-step gate), 12. Verification contract, 13. Child exit gate, 1. Child boundary and outcome, 2. UI Pattern Gate (mandatory before implementation), 3. Closest existing reference (+7 more)
-
-### Community 933 - "Ledger Setup Dimensions — Screen / Workflow Contract"
-Cohesion: 0.13
-Nodes (15): 0. Contract metadata, 10. i18n, RTL, accessibility, and responsive behavior, 11. Vertical execution ledger (strict one-active-step gate), 12. Verification contract, 13. Child exit gate, 1. Child boundary and outcome, 2. UI Pattern Gate (mandatory before implementation), 3. Closest existing reference (+7 more)
-
-### Community 936 - ".GoogleAuth"
-Cohesion: 0.29
-Nodes (6): CancellationToken, HttpPost, IActionResult, Task, GoogleAuthController, GoogleAuthRequest
-
-### Community 939 - "Ledger Setup Integration & Verification — Screen / Workflow Contract"
-Cohesion: 0.12
-Nodes (15): 0. Contract metadata, 10. i18n, RTL, accessibility, and responsive behavior, 11. Vertical execution ledger (strict one-active-step gate), 12. Verification contract, 13. Child exit gate, 1. Child boundary and outcome, 2. UI Pattern Gate (mandatory before implementation), 3. Closest existing reference (+7 more)
-
-### Community 940 - "Ledger Setup Link Accounts — Screen / Workflow Contract"
-Cohesion: 0.12
-Nodes (15): 0. Contract metadata, 10. i18n, RTL, accessibility, and responsive behavior, 11. Vertical execution ledger (strict one-active-step gate), 12. Verification contract, 13. Child exit gate, 1. Child boundary and outcome, 2. UI Pattern Gate (mandatory before implementation), 3. Closest existing reference (+7 more)
-
-### Community 941 - "Ledger Setup Posting Profiles — Screen / Workflow Contract"
-Cohesion: 0.12
-Nodes (15): 0. Contract metadata, 10. i18n, RTL, accessibility, and responsive behavior, 11. Vertical execution ledger (strict one-active-step gate), 12. Verification contract, 13. Child exit gate, 1. Child boundary and outcome, 2. UI Pattern Gate (mandatory before implementation), 3. Closest existing reference (+7 more)
-
-### Community 943 - "IIntegrationEventPublisher"
-Cohesion: 0.18
-Nodes (8): CancellationToken, Task, IIntegrationEventHandler, IIntegrationEventPublisher, CancellationToken, InvalidOperationException, Task, InProcessIntegrationEventPublisher
-
-### Community 944 - "@app/tokens"
-Cohesion: 0.18
-Nodes (10): @app/tokens, Commands, CSS variables (non-MUI surfaces), Installing in an app, Mobile (Expo / React Native), Module icon colors, Rules, Semantic color names (+2 more)
-
-### Community 946 - "use-workforce-planning-use-cases.ts"
-Cohesion: 0.04
-Nodes (19): createPositionEnvelopeUseCases(), PositionEnvelopeUseCases, envelopeAmendmentUseCases, positionEnvelopeUseCases, staffingRequestUseCases, workforceBudgetUseCases, workforcePlanUseCases, workforceTraceUseCases (+11 more)
-
-### Community 949 - "NotificationPopover.tsx"
-Cohesion: 0.07
-Nodes (49): SignalRContext, SignalRContextValue, SignalRProvider(), useSignalRConnection(), notifications, DismissAllNotificationsDialog(), DismissAllNotificationsDialogProps, NotificationBulkActions() (+41 more)
-
-### Community 950 - "Accounting Core GL — Discovery"
-Cohesion: 0.12
-Nodes (15): 10. Product/design decisions, 11. Privacy / commercial / legal applicability, 12. Open decisions, 13. Planning consequences, 14. Discovery completion, 1. Discovery basis, 2. Business outcome, 3. Verified facts (+7 more)
-
-### Community 951 - "AuthenticationFeatureSettings"
-Cohesion: 0.22
-Nodes (7): AuthenticationFeaturePolicy, string, AuthenticationFeatureSettings, IAuthenticationFeaturePolicy, Fact, ServiceProvider, AuthenticationFeaturePolicyTests
+### Community 931 - "AccountingCompanySettings"
+Cohesion: 0.06
+Nodes (31): AccountingCompanySettings, FunctionalCurrency, FunctionalCurrencyId, Id, PrimaryBook, PrimaryBookId, Accounting architecture, Financial ownership (+23 more)
 
 ### Community 952 - "Managed Crystal Reporting Reliability — Pre-Plan Specification"
 Cohesion: 0.13
 Nodes (15): Architecture and integrations, ASSUMPTIONS, Deferred, Domain and source of truth, Excluded, Managed Crystal Reporting Reliability — Pre-Plan Specification, OPEN RISKS / UNKNOWNS, Primary journeys (+7 more)
 
 ### Community 953 - "FiscalYearsPage.tsx"
-Cohesion: 0.05
-Nodes (75): FiscalYearForm(), frequencies, Props, FiscalYearsCardView(), Props, FiscalYearsDataGrid(), Props, FiscalYearReportPage (+67 more)
+Cohesion: 0.04
+Nodes (94): 10. Permissions and read-only mode, 11. Localization and RTL, 12. Responsive and accessibility contract, 13. Integration and realtime, 14. Verification and optional capabilities, 1. Feature boundary, 2. Route and navigation, 3. UI pattern and transport contract (+86 more)
 
-### Community 954 - "StaticTranslationScope.tsx"
-Cohesion: 0.06
-Nodes (15): CrmTranslationScope(), HrAttendanceTranslationScope(), HrOrganizationalStructureTranslationScope(), HrRecruitmentTranslationScope(), PlatformAdvancedToolsTranslationScope(), PlatformCompanyGeographyTranslationScope(), PlatformFilesTranslationScope(), ReferenceAddressTypesTranslationScope() (+7 more)
+### Community 954 - "ref_react"
+Cohesion: 0.01
+Nodes (152): 14. Verification and optional capabilities, AuthShell(), AuthRouteLayout(), Layout(), Page(), Layout(), Layout(), Layout() (+144 more)
 
 ### Community 955 - "<Business Capability> — Pre-Plan Specification"
 Cohesion: 0.12
 Nodes (15): Architecture and integrations, ASSUMPTIONS, <Business Capability> — Pre-Plan Specification, Deferred, Domain and source of truth, Excluded, OPEN RISKS / UNKNOWNS, Primary journeys (+7 more)
 
-### Community 958 - "WorkforceBudgetsPage.tsx"
-Cohesion: 0.05
-Nodes (73): useFiscalYearLookup(), PositionEnvelopeDetails(), Props, PositionEnvelopesCardView(), Props, LookupOption, PositionEnvelopesDataGrid(), Props (+65 more)
-
-### Community 959 - "extractErrorMessage"
+### Community 959 - "StaffingRequestsPage.tsx"
 Cohesion: 0.02
-Nodes (139): hrRealtimeResources, EnvelopeAmendmentForm(), Props, Props, StaffingRequestForm(), Props, Props, WorkforcePlansCardView() (+131 more)
-
-### Community 962 - "TenantAdministrationContracts.cs"
-Cohesion: 0.08
-Nodes (16): IEnumerable, ArchiveTenantRequest, CreateTenantAdministratorRequest, ITenantAdministrationPolicy, ITenantAdministratorAdapter, ITenantManagementAdapter, RestoreTenantRequest, TenantAdministrationPageMetadata (+8 more)
+Nodes (162): Page(), Page(), Page(), Page(), Page(), hrRealtimeResources, Props, Props (+154 more)
 
 ### Community 966 - "otelEnvironment.ts"
-Cohesion: 0.24
+Cohesion: 0.26
 Nodes (13): getConfiguredBackendOrigins(), register(), splitConfiguredOrigins(), configurationError(), Environment, ratioTraceSamplers, readOptional(), supportedOtlpProtocols (+5 more)
 
-### Community 970 - "cspReport.ts"
-Cohesion: 0.33
-Nodes (10): asRecord(), CspViolation, normalizeBlockedSource(), normalizeCspViolationReports(), normalizeDirective(), normalizeDisposition(), normalizeReportingApiEntry(), normalizeStatusCode() (+2 more)
+### Community 991 - ".CreateAsync"
+Cohesion: 0.11
+Nodes (9): Fixture, Actor, Db, Realtime, Store, Fixture, Db, Store (+1 more)
 
-### Community 971 - "notification-schemas.ts"
-Cohesion: 0.38
-Nodes (5): notificationPageSchema, notificationSchema, notificationSeveritySchema, page, unreadNotificationCountSchema
-
-### Community 974 - "FiscalYearChange"
-Cohesion: 0.08
-Nodes (23): CancellationToken, Func, IReadOnlyCollection, Task, IUnitOfWork, FiscalYearChange, IFiscalYearChangeScheduler, CreateFiscalYearRequest (+15 more)
-
-### Community 977 - "SubcategoriesController"
-Cohesion: 0.34
-Nodes (9): CancellationToken, HasPermission, HttpDelete, HttpGet, HttpPost, HttpPut, IActionResult, Task (+1 more)
-
-### Community 979 - "useViewLayout.tsx"
-Cohesion: 0.36
-Nodes (8): getBrowserStorage(), LayoutStorage, readStoredViewLayout(), validLayouts, useViewLayout(), ViewLayoutChangeHandler, viewLayoutEventName(), writeStoredViewLayout()
-
-### Community 980 - "TenantAdminsController"
-Cohesion: 0.33
-Nodes (8): CancellationToken, HttpDelete, HttpGet, HttpPost, HttpPut, IActionResult, Task, TenantAdminsController
-
-### Community 985 - "ViewsController"
-Cohesion: 0.30
-Nodes (10): CancellationToken, HasPermission, HttpDelete, HttpGet, HttpPost, IActionResult, ISender, IWebHostEnvironment (+2 more)
-
-### Community 986 - "ErpSystem.ArchitectureTests"
-Cohesion: 0.14
-Nodes (5): ArchitectureTestAssembly, Fact, string, CurrencyOwnershipArchitectureTests, ErpSystem.ArchitectureTests
-
-### Community 987 - "ModuleMigrationIntegrationTests"
-Cohesion: 0.23
-Nodes (10): Assembly, IEnumerable, IReadOnlyList, IServiceProvider, SqlServerFact, Task, Type, ModuleMigrationIntegrationTests (+2 more)
-
-### Community 988 - "Required audit dimensions"
-Cohesion: 0.13
-Nodes (14): Accuracy rule, Authentication/authorization, Commercial/service limits, Delivery and operations, Domain and data, Evidence Audit Standard, Evidence hierarchy, Evidence ledger format (+6 more)
-
-### Community 991 - "SqlServerTestDatabase"
-Cohesion: 0.19
-Nodes (8): bool, CancellationToken, string, Task, ValueTask, SqlServerFactAttribute, SqlServerTestDatabase, FactAttribute
-
-### Community 996 - "fiscal-period-preview.ts"
-Cohesion: 0.36
-Nodes (8): addDays(), addMonthsClamped(), buildFiscalPeriodPreview(), endOfFiscalYear(), FiscalPeriodPreview, iso(), createFiscalYearSchema(), t
-
-### Community 999 - "DependencyInjection"
-Cohesion: 0.39
-Nodes (5): IConfiguration, IServiceCollection, string, DependencyInjection, AuthenticationTokenOptions
-
-### Community 1000 - "InitialInventory"
-Cohesion: 0.15
-Nodes (7): MigrationBuilder, ModelBuilder, InitialInventory, InitialInventory, ModelBuilder, InventoryDbContextModelSnapshot, ErpSystem.Modules.Inventory.Infrastructure.Migrations
-
-### Community 1001 - "CostCenterTreeDiagram.tsx"
-Cohesion: 0.18
-Nodes (11): CostCenterTreeDiagram(), CostCenterTreeDiagramProps, capture, items, HierarchicalTreeList(), HierarchicalTreeListProps, SplitTreeView(), sampleItems (+3 more)
-
-### Community 1003 - "Tenant"
-Cohesion: 0.19
-Nodes (6): DateTime, Tenant, SubscriptionStatus, TenantLifecycleStatus, ErpSystem.Modules.Platform.Domain.Tenancy.Entities, ErpSystem.Modules.Platform.Domain.Tenancy.Enums
-
-### Community 1005 - "InitialPlatform"
-Cohesion: 0.15
-Nodes (7): MigrationBuilder, ModelBuilder, InitialPlatform, InitialPlatform, ModelBuilder, PlatformDbContextModelSnapshot, ErpSystem.Modules.Platform.Infrastructure.Migrations
-
-### Community 1006 - "OfflineOperationsPolicyStoreRecord"
-Cohesion: 0.17
-Nodes (13): CancellationToken, Task, IOfflineOperationsPolicyStore, OfflineOperationsPolicyStoreRecord, SaveOfflineOperationsPolicyRequest, CancellationToken, DbUpdateException, IReadOnlyDictionary (+5 more)
-
-### Community 1007 - ".Add"
-Cohesion: 0.38
-Nodes (8): CancellationToken, HasPermission, HttpGet, HttpPost, HttpPut, IActionResult, Task, ApiKeysController
-
-### Community 1008 - "InitialReferenceData"
-Cohesion: 0.15
-Nodes (7): MigrationBuilder, ModelBuilder, InitialReferenceData, InitialReferenceData, ModelBuilder, ReferenceDataDbContextModelSnapshot, ErpSystem.Modules.ReferenceData.Infrastructure.Migrations
-
-### Community 1009 - "DistrictCqrsArchitectureTests"
-Cohesion: 0.19
-Nodes (6): Fact, IEnumerable, LocalizedString, Task, DistrictCqrsArchitectureTests, EchoLocalizer
-
-### Community 1011 - "ErpSystem.Modules.Accounting.Presentation"
-Cohesion: 0.25
-Nodes (5): Assembly, AssemblyReference, IServiceCollection, DependencyInjection, ErpSystem.Modules.Accounting.Presentation
+### Community 1003 - "ApiKey"
+Cohesion: 0.03
+Nodes (51): ApiKey, ClientUri, CompanyId, CreatedAt, Description, ExpiresAt, Id, IsActive (+43 more)
 
 ### Community 1012 - "2. Design"
-Cohesion: 0.14
-Nodes (13): 1. Problem, 2.1 Scope levels, 2.2 Grants, 2.3 Resolution, 2.4 Predicates are owned by the module, 2.5 Applying the scope, 2.6 Enforcement, 2. Design (+5 more)
-
-### Community 1016 - "ViewRequests.cs"
-Cohesion: 0.25
-Nodes (8): Result, CreateOrAlterViewCommand, CreateOrAlterViewCommandHandler, DropViewCommand, DropViewCommandHandler, IViewEffects, ViewDefinitionPolicy, ViewEffects
-
-### Community 1017 - "InventoryModule.cs"
 Cohesion: 0.11
-Nodes (11): Assembly, AssemblyReference, IServiceCollection, DependencyInjection, Assembly, AssemblyReference, IServiceCollection, DependencyInjection (+3 more)
+Nodes (16): AppointmentScope, CatalogScope, ErpSystem.Modules.CRM.Infrastructure.Features.Appointments, 1. Problem, 2.1 Scope levels, 2.2 Grants, 2.3 Resolution, 2.4 Predicates are owned by the module (+8 more)
 
-### Community 1018 - ".ExportCsv"
-Cohesion: 0.36
-Nodes (8): CancellationToken, Dictionary, HasPermission, HttpPost, IActionResult, List, Task, ExportController
-
-### Community 1020 - "BootstrapErrorBoundary"
-Cohesion: 0.20
-Nodes (4): BOOTSTRAP_COPY, BootstrapErrorBoundary, State, styles
-
-### Community 1021 - "OfflineOperationsContracts.cs"
-Cohesion: 0.19
-Nodes (10): ConcurrencyConflictException, ConnectorException, IReadOnlyList, string, OfflineOperationCapabilityIds, OfflineOperationModes, OfflineOperationsPolicyConflictException, OfflineOperationsPolicyScopeException (+2 more)
-
-### Community 1023 - "PlatformSystemRoleStartupTask"
-Cohesion: 0.37
-Nodes (7): CancellationToken, IdentityResult, IEnumerable, IReadOnlySet, PlatformApplicationRole, Task, PlatformSystemRoleStartupTask
-
-### Community 1024 - "useSession"
-Cohesion: 0.04
-Nodes (58): ContextShell(), MainShell(), NotificationRealtimeBridge, ReactQueryDevtools, RealtimeEntityBridge, metadata, rolePermissionsRoutePrefix, CompanySwitchVerificationOptions (+50 more)
-
-### Community 1025 - "CountryCqrsArchitectureTests"
-Cohesion: 0.22
-Nodes (5): Fact, InlineData, Theory, Type, CountryCqrsArchitectureTests
-
-### Community 1027 - "RecruitmentActorEmployeeSource"
-Cohesion: 0.33
-Nodes (4): CancellationToken, Task, RecruitmentActorEmployeeSource, IRecruitmentActorEmployeeSource
-
-### Community 1035 - "check-dependency-compatibility.mjs"
-Cohesion: 0.15
-Nodes (11): adversarialInput, adversarialOutput, decodePackage, decodeUriComponent, parsedQuery, queryString, require, startedAt (+3 more)
+### Community 1035 - "ref_node_fs"
+Cohesion: 0.07
+Nodes (27): relative(), ignore, policy, repositoryRoot, require, lib, problems, root (+19 more)
 
 ### Community 1038 - "compilerOptions"
-Cohesion: 0.15
-Nodes (12): compilerOptions, declaration, declarationMap, noEmit, outDir, rewriteRelativeImportExtensions, rootDir, sourceMap (+4 more)
+Cohesion: 0.17
+Nodes (11): compilerOptions, declaration, declarationMap, noEmit, outDir, rewriteRelativeImportExtensions, rootDir, sourceMap (+3 more)
 
-### Community 1039 - ".GetValidatedSettings"
-Cohesion: 0.26
-Nodes (5): IConfiguration, IServiceCollection, HostDistributedRuntimeServiceCollectionExtensions, string, HostDistributedRuntimeSettings
-
-### Community 1040 - "EntityChangeLogDialog.tsx"
-Cohesion: 0.25
-Nodes (5): SignalRLogger, EntityChangeLogDialog(), EntityChangeLogDialogProps, EntityChangeLogEntry, GroupedChangeLog
-
-### Community 1043 - "ErpSystem.Modules.ReferenceData.Presentation"
-Cohesion: 0.25
-Nodes (5): Assembly, AssemblyReference, IServiceCollection, DependencyInjection, ErpSystem.Modules.ReferenceData.Presentation
-
-### Community 1046 - "PlatformDomainHardeningTests"
-Cohesion: 0.43
-Nodes (3): DateTime, Fact, PlatformDomainHardeningTests
-
-### Community 1047 - "PointOfSaleDbContextDesignFactory"
-Cohesion: 0.24
-Nodes (6): bool, ModelBuilder, string, PointOfSaleDbContext, PointOfSaleDbContextDesignFactory, DbContext
-
-### Community 1048 - "ErpSystem.Modules.Reporting.Application.Features.Analytics.ReportTemplates.Contracts"
-Cohesion: 0.09
-Nodes (21): Result, CreateReportTemplateCommand, CreateReportTemplateCommandValidator, Result, DuplicateReportTemplateCommand, DuplicateReportTemplateCommandValidator, Result, UpdateReportTemplateCommand (+13 more)
-
-### Community 1049 - "AddressTypeCqrsArchitectureTests"
-Cohesion: 0.21
-Nodes (6): Fact, IEnumerable, LocalizedString, Task, AddressTypeCqrsArchitectureTests, EchoLocalizer
-
-### Community 1050 - "ControllerArchitectureTests"
-Cohesion: 0.23
-Nodes (5): Dictionary, Fact, IEnumerable, string, ControllerArchitectureTests
-
-### Community 1051 - "ModulePersistenceStructureTests"
-Cohesion: 0.39
-Nodes (4): Fact, IEnumerable, string, ModulePersistenceStructureTests
-
-### Community 1060 - "generate-module.mjs"
-Cohesion: 0.26
-Nodes (9): assertModuleCode(), assertModuleSlug(), generateModule(), identifier(), moduleFiles(), files, planned, root (+1 more)
-
-### Community 1062 - "InitialContacts"
-Cohesion: 0.20
-Nodes (5): MigrationBuilder, ModelBuilder, InitialContacts, InitialContacts, ErpSystem.Modules.Contacts.Infrastructure.Migrations
-
-### Community 1063 - "useUnsavedChanges"
-Cohesion: 0.06
-Nodes (37): AuthShell(), normalizeAppPath(), toAppPath(), languageLabels, LedgerSetupOverviewPage(), NavigationIconSequence(), useUnsavedChanges(), AuthLayout() (+29 more)
-
-### Community 1064 - "GetReportDataSourcesQuery.cs"
-Cohesion: 0.33
-Nodes (8): ReportDataSourceDescriptorResponse, CancellationToken, IReadOnlyList, Task, GetReportDataSourcesQuery, GetReportDataSourcesQueryHandler, GetReportDataSourcesQueryValidator, ErpSystem.Modules.Reporting.Application.Features.Analytics.ReportTemplates.Queries.GetReportDataSources
-
-### Community 1065 - ".ScopedSubCategories"
-Cohesion: 0.33
-Nodes (5): CancellationToken, IQueryable, SubCategory, Task, SubCategoryValidationQueries
-
-### Community 1066 - "PermissionAuthorizationPolicyProvider"
-Cohesion: 0.29
-Nodes (5): Task, PermissionAuthorizationPolicyProvider, AuthorizationOptions, AuthorizationPolicy, DefaultAuthorizationPolicyProvider
-
-### Community 1067 - "HRModule"
-Cohesion: 0.20
-Nodes (10): CancellationToken, IConfiguration, IReadOnlyList, IServiceCollection, IServiceProvider, Task, HRModule, IModule (+2 more)
-
-### Community 1068 - "CrystalReportsControllerContractTests"
-Cohesion: 0.27
-Nodes (4): Fact, InlineData, Theory, CrystalReportsControllerContractTests
-
-### Community 1069 - "LayerPurityTests"
-Cohesion: 0.35
-Nodes (3): Fact, string, LayerPurityTests
-
-### Community 1070 - "LocalizationOwnershipArchitectureTests"
-Cohesion: 0.22
-Nodes (5): Fact, InlineData, string, Theory, LocalizationOwnershipArchitectureTests
-
-### Community 1071 - "PermissionCatalogArchitectureTests"
-Cohesion: 0.25
-Nodes (5): Fact, GeneratedRegex, Regex, string, PermissionCatalogArchitectureTests
-
-### Community 1072 - "PlatformContractsArchitectureTests"
-Cohesion: 0.25
-Nodes (5): Fact, HashSet, IEnumerable, string, PlatformContractsArchitectureTests
-
-### Community 1075 - "Plan Quality Gate"
-Cohesion: 0.18
-Nodes (10): Final reviewer questions, G0 — Scope and ownership, G1 — Business readiness, G2 — Architecture readiness, G3 — Product/client readiness, G4 — Delivery readiness, Phase closure gate — Customer education, Plan Quality Gate (+2 more)
-
-### Community 1079 - "check-release-readiness.mjs"
-Cohesion: 0.18
-Nodes (8): eas, easJson, failures, local, missingHost, preview, requiredPaths, root
-
-### Community 1080 - "Currency"
+### Community 1047 - "AuditTrailSaveChangesInterceptor"
 Cohesion: 0.07
-Nodes (22): createCurrencyUseCases(), CurrencyUseCases, SaveCurrencyInput, currency, currencyRepository, currencyUseCases, currencyEndpoints, CurrencyRemoteDataSource (+14 more)
+Nodes (22): AuditFieldChange, AuditTrailEntry, Action, ChangeCount, ChangesJson, CompanyId, CorrelationId, EntityDisplay (+14 more)
 
-### Community 1081 - "ViewStore"
-Cohesion: 0.18
-Nodes (10): ViewRequest, CancellationToken, List, ReportingDbContext, Task, ViewStore, ErpSystem.Modules.Reporting.Application.Features.Analytics.Views, ErpSystem.Modules.Reporting.Application.Features.Analytics.Views.Contracts (+2 more)
+### Community 1060 - "ref_node_path"
+Cohesion: 0.04
+Nodes (45): assertAndroidBundlePolicy(), collectSources(), normalizeSource(), nativeSources, projectRoot, childEnvironment, projectRoot, requiredFiles (+37 more)
 
-### Community 1082 - ".ToProblem"
-Cohesion: 0.33
-Nodes (4): Result, ResultExtensions, ErrorType, ObjectResult
+### Community 1080 - "currency.ts"
+Cohesion: 0.06
+Nodes (34): createCurrencyUseCases(), CurrencyUseCases, SaveCurrencyInput, currency, currencyRepository, currencyUseCases, currencyEndpoints, currencyRemoteDataSource (+26 more)
 
 ### Community 1083 - "decode-uri-component/package.json"
 Cohesion: 0.18
 Nodes (10): description, engines, node, license, main, name, repository, sideEffects (+2 more)
 
-### Community 1086 - "Notification"
-Cohesion: 0.33
-Nodes (6): DateTime, Guid, PlatformApplicationUser, Notification, EntityTypeBuilder, NotificationConfiguration
-
-### Community 1087 - "FileUploadForms.cs"
-Cohesion: 0.43
-Nodes (6): IFormFile, IReadOnlyCollection, ImageUploadForm, MultipleFilesUploadForm, ProfilePictureUploadForm, SingleFileUploadForm
-
-### Community 1090 - "UserInvitationPolicy.cs"
-Cohesion: 0.31
-Nodes (5): DateTime, string, InvitationSettings, IUserInvitationPolicy, UserInvitationPolicy
-
-### Community 1092 - ".Create"
-Cohesion: 0.16
-Nodes (9): UserInvitationStatus, DateTime, Fact, IEnumerable, UserInvitationTests, ErpSystem.Modules.Platform.Infrastructure.Features.Security.Invitations.Persistence, ErpSystem.Modules.Platform.Application.Features.Security.Invitations.Policies, ErpSystem.Modules.Platform.Application.Features.Security.Invitations.Abstractions (+1 more)
-
-### Community 1094 - "ErpSystem.Modules.Platform.Application.Validation"
-Cohesion: 0.29
-Nodes (5): string, ValidationMessageKeys, string, ValidationPatterns, ErpSystem.Modules.Platform.Application.Validation
-
-### Community 1095 - "ErpSystem.Modules.ReferenceData.Application.Validation"
-Cohesion: 0.29
-Nodes (5): string, ValidationMessageKeys, string, ValidationPatterns, ErpSystem.Modules.ReferenceData.Application.Validation
-
-### Community 1097 - "hr/README.md"
-Cohesion: 0.08
-Nodes (20): HR API documentation, Digital-channel boundary, Documentation authority, Extraction status, HR architecture, Ownership, Persistence guarantees, Reuse-first workflow (+12 more)
-
-### Community 1100 - "ERP Plans — Central Planning Reference"
-Cohesion: 0.18
-Nodes (11): Canonical files, Central production/deferred notes, Creating a new plan, ERP Plans — Central Planning Reference, Non-negotiable rule, One planning flow, Plan status vocabulary, Purpose (+3 more)
-
-### Community 1111 - "ErpSystem.Api.Hosting"
+### Community 1111 - "microsoft_extensions_dependencyinjection"
 Cohesion: 0.02
-Nodes (65): ActionExecutingContext, ActionExecutionDelegate, Task, AsyncValidationFilter, ConfigureSwaggerOptions, List, string, HostCorsSettings (+57 more)
-
-### Community 1112 - "release-readiness.mjs"
-Cohesion: 0.27
-Nodes (9): checkContract(), checkProductionEnvironment(), gateManifestPath, normalizeHttpsOrigin(), readGateManifest(), repositoryRoot, REQUIRED_GATE_IDS, scriptDirectory (+1 more)
-
-### Community 1113 - "chartUtils.ts"
-Cohesion: 0.14
-Nodes (16): categoricalSeries(), ChartPaletteName, formatCurrency(), isChartPaletteName(), isColorArray(), rampSteps, rotateTo(), themeFor() (+8 more)
-
-### Community 1115 - "HostDataProtectionSettings"
-Cohesion: 0.32
-Nodes (4): List, string, HostDataProtectionCertificateSettings, HostDataProtectionSettings
-
-### Community 1116 - "build.mjs"
-Cohesion: 0.17
-Nodes (10): colorNames, colorVariables(), dist, json, root, staticVars, getTheme(), withBrandPrimary() (+2 more)
-
-### Community 1117 - "ErpSystem.Modules.HR.Domain.Recruitment.Entities"
-Cohesion: 0.05
-Nodes (22): DomainRuleException, CompanyDomainTests, ErpSystem.Modules.HR.Application.Features.Recruitment.EmploymentApplications.Mapping, ErpSystem.Modules.HR.Application.Features.Recruitment.JobOpenings.Mapping, ErpSystem.Modules.HR.Application.Features.Recruitment.Contracts, ErpSystem.Modules.HR.Infrastructure.Persistence.Configurations.Recruitment, ErpSystem.Modules.HR.Domain.OrganizationalStructure.Entities, ErpSystem.Modules.HR.Domain.OrganizationalStructure.Enums (+14 more)
-
-### Community 1118 - "PlatformModule"
-Cohesion: 0.21
-Nodes (8): CancellationToken, IConfiguration, IReadOnlyList, IServiceCollection, IServiceProvider, Task, WebApplication, PlatformModule
-
-### Community 1120 - "AuthControllerAuthorizationTests"
-Cohesion: 0.36
-Nodes (5): Fact, InlineData, Theory, AuthControllerAuthorizationTests, MethodInfo
-
-### Community 1122 - "NotificationRequests.cs"
-Cohesion: 0.12
-Nodes (14): NotificationQueryRequest, NotificationReadStatus, NotificationResponse, string, NotificationRequestValidator, ErpSystem.Modules.Platform.Application.Features.Platform.Notifications.Contracts, ErpSystem.Modules.Platform.Infrastructure.Features.Platform.Notifications.Mapping, ErpSystem.Modules.Platform.Contracts.Notifications (+6 more)
-
-### Community 1123 - "CrmModule"
-Cohesion: 0.27
-Nodes (7): CancellationToken, IConfiguration, IReadOnlyList, IServiceCollection, IServiceProvider, Task, CrmModule
-
-### Community 1124 - ".Handle"
-Cohesion: 0.36
-Nodes (6): CancellationToken, CountryDetailResponse, CreateCountryCommand, Result, Task, CreateCountryCommandHandler
-
-### Community 1125 - "mui.ts"
-Cohesion: 0.22
-Nodes (9): createMuiThemeOptions(), CreateMuiThemeOptionsConfig, MuiAppPalette, MuiDirection, MuiPaletteColor, MuiThemeOptionsFromTokens, MuiTypographyVariant, variant() (+1 more)
-
-### Community 1126 - "ReferenceDataModule"
-Cohesion: 0.27
-Nodes (7): CancellationToken, IConfiguration, IReadOnlyList, IServiceCollection, IServiceProvider, Task, ReferenceDataModule
-
-### Community 1129 - "ContactsModule"
-Cohesion: 0.27
-Nodes (7): CancellationToken, IConfiguration, IReadOnlyList, IServiceCollection, IServiceProvider, Task, ContactsModule
-
-### Community 1130 - "NotificationParameters"
-Cohesion: 0.50
-Nodes (3): IReadOnlyDictionary, JsonSerializerOptions, NotificationParameters
-
-### Community 1132 - "graphify reference: extra exports and benchmark"
-Cohesion: 0.22
-Nodes (8): graphify reference: extra exports and benchmark, Step 6b - Wiki (only if --wiki flag), Step 7 - Neo4j export (only if --neo4j or --neo4j-push flag), Step 7a - FalkorDB export (only if --falkordb or --falkordb-push flag), Step 7b - SVG export (only if --svg flag), Step 7c - GraphML export (only if --graphml flag), Step 7d - MCP server (only if --mcp flag), Step 8 - Token reduction benchmark (only if total_words > 5000)
-
-### Community 1138 - "ICompanyGeographySource"
-Cohesion: 0.17
-Nodes (10): CancellationToken, IReadOnlyCollection, Task, ICompanyGeographySource, CancellationToken, IReadOnlyCollection, Task, PlatformCompanyGeographySource (+2 more)
-
-### Community 1157 - "{{RECIPE_TITLE}}"
-Cohesion: 0.22
-Nodes (8): Approved references, Closure checks, Entry gate, Handoff decision, Purpose, {{RECIPE_TITLE}}, Required customer-education output, Source fingerprints
-
-### Community 1158 - "mobile-react/package.json"
-Cohesion: 0.22
-Nodes (8): main, name, overrides, decode-uri-component, xcode, private, version, uuid
-
-### Community 1159 - "ErpSystem.BuildingBlocks.Application.Abstractions.Messaging"
-Cohesion: 0.03
-Nodes (95): CountryChange, ICountryChangeScheduler, CancellationToken, IReadOnlyList, Task, ICountryReadStore, Result, ArchiveCountryCommand (+87 more)
+Nodes (90): ExecutionContextClaimNames, DependencyInjection, InboxMessageStatus, Failed, Processed, Processing, OutboxMessageStatus, Dead (+82 more)
 
 ### Community 1160 - "HR Management System"
 Cohesion: 0.53
 Nodes (6): Backend API (ASP.NET Core), HR Management System, Legacy Web Client (Scheduled for Removal), Mobile React Native Client, Next.js API Proxy, Web Next.js Frontend
 
-### Community 1162 - "EchoLocalizer"
-Cohesion: 0.50
-Nodes (3): IEnumerable, LocalizedString, EchoLocalizer
-
-### Community 1163 - "FiscalYearContracts.cs"
-Cohesion: 0.10
-Nodes (24): FiscalPeriodResponse, FiscalYearContextResponse, FiscalYearLookupResponse, FiscalYearMutation, UpdateFiscalYearContextRequest, UpdateFiscalYearRequest, CancellationToken, IReadOnlyList (+16 more)
-
-### Community 1167 - "LocalizationProvider.tsx"
-Cohesion: 0.13
-Nodes (17): appI18n, AppDirection, getDeviceLanguage(), isSupportedLanguage(), LocalizationContext, LocalizationContextValue, LocalizationProvider(), ar (+9 more)
-
-### Community 1168 - "CorrelationContextExtensions"
-Cohesion: 0.40
-Nodes (3): HttpContext, string, CorrelationContextExtensions
-
-### Community 1171 - "ReportingAuthorizationTests"
-Cohesion: 0.43
-Nodes (3): Fact, Type, ReportingAuthorizationTests
-
 ### Community 1173 - "S3 + S4 — Unified theme change set"
-Cohesion: 0.10
-Nodes (20): Applied 2026-10-06, Apply on the repository computer, Back/next arrows in RTL 2026-10-10, Card scroll, tenant status badge and late-hydration language 2026-10-10, Card view pagination below the window 2026-10-11, Chart view bottom spacing 2026-10-11, Color review follow-up 2026-10-07, Color review P2, mobile and font 2026-10-07 (+12 more)
-
-### Community 1176 - "plans/README.md"
-Cohesion: 0.11
-Nodes (10): Audit conclusion, <Business Capability> — Evidence Ledger, Conflicts / drift found, Evidence ledger, External/version-sensitive evidence, Gaps that code/evidence cannot answer, Scope of investigation, Follow-ups (+2 more)
-
-### Community 1196 - "{{RECIPE_TITLE}}"
-Cohesion: 0.25
-Nodes (7): Approved references, Drift rule, Preflight checklist, Purpose, {{RECIPE_TITLE}}, Required outputs, Source fingerprints
-
-### Community 1197 - "{{RECIPE_TITLE}}"
-Cohesion: 0.25
-Nodes (7): Approved references, Customer-education gate, Purpose, {{RECIPE_TITLE}}, Source fingerprints, Verification decision, Verification gates
+Cohesion: 0.04
+Nodes (50): ERP Platform Template — Decisions, 1. الفكرة في سطر, 2. شكل الـ Monorepo, 3.1 Tokens — تم التنفيذ, 3. نظام التصميم (Design System), 6.1 Auth والـ tenancy (عقد واحد للويب والموبايل), 6.2 القوائم, 6.3 الكتابة (+42 more)
 
 ### Community 1199 - "index.js"
 Cohesion: 0.43
 Nodes (7): customDecodeURIComponent(), decode(), decodeUriComponent(), isContinuationByte(), multiMatcher, parsePercentByte(), utf8SequenceLength()
 
-### Community 1200 - "PlatformSecurityAuditOwnershipTests.cs"
-Cohesion: 0.03
-Nodes (71): DateTime, SecurityAuditQueryRequest, SecurityAuditQueryRequestValidator, SecurityAuditPageResponse, SecurityAuditResponse, CancellationToken, Error, Result (+63 more)
-
-### Community 1201 - "ExcelViewer.styles.ts"
-Cohesion: 0.25
-Nodes (7): InfoChip, StyledTableCell, StyledTableContainer, StyledTableHead, StyledTableRow, ToolbarContainer, ViewerContainer
-
-### Community 1202 - "ICacheService"
-Cohesion: 0.39
-Nodes (4): CancellationToken, Task, ICacheService, ErpSystem.BuildingBlocks.Application.Common.Services
+### Community 1200 - ".PlatformApplication_OwnsCanonicalRecordingPolicyAndSaveBoundary"
+Cohesion: 0.12
+Nodes (17): ISecurityAuditRequestContextSource, ISecurityAuditStore, SecurityAuditRecord, SecurityAuditRequestContext, SecurityAuditService, HttpSecurityAuditRequestContextSource, SecurityAuditStore, FixedTimeProvider (+9 more)
 
 ### Community 1203 - "presentation/components/CountriesChartView.tsx"
+Cohesion: 0.06
+Nodes (66): 3. Shared design system, spacing, AddressTypesChartView(), styles, Country, getCountryChartSummary(), isArabicLanguage(), prepareCountryCoverageData() (+58 more)
+
+### Community 1241 - "HasPermissionAttribute"
 Cohesion: 0.04
-Nodes (73): AddressType, AddressTypesChartView(), styles, Country, getCountryChartSummary(), isArabicLanguage(), prepareCountryCoverageData(), prepareCountryCurrencyData() (+65 more)
-
-### Community 1207 - "ContactsApplicationPipelineTests"
-Cohesion: 0.52
-Nodes (3): Fact, Task, ContactsApplicationPipelineTests
-
-### Community 1209 - "PointOfSaleModule"
-Cohesion: 0.27
-Nodes (7): CancellationToken, IConfiguration, IReadOnlyList, IServiceCollection, IServiceProvider, Task, PointOfSaleModule
-
-### Community 1214 - "ReportValidationQueries"
-Cohesion: 0.60
-Nodes (3): CancellationToken, Task, ReportValidationQueries
-
-### Community 1223 - "17. Non-functional requirements"
-Cohesion: 0.29
-Nodes (7): 17. Non-functional requirements, Commercial / legal applicability, Localization/accessibility/security, Observability, Performance and scale, Privacy and data handling, Reliability
-
-### Community 1224 - "Central Notes Registry"
-Cohesion: 0.29
-Nodes (7): Central Notes Registry, Files, ID format, Moving scattered notes here, Required fields, Status vocabulary, Surface classification
-
-### Community 1233 - "check-native-config.mjs"
-Cohesion: 0.29
-Nodes (4): childEnvironment, projectRoot, requiredFiles, tempDirectory
-
-### Community 1237 - "DisplayDebugger.tsx"
-Cohesion: 0.43
-Nodes (5): copyText(), DisplayDebugger(), DisplayMetrics, formatPixelRatio(), formatSize()
-
-### Community 1239 - "FileErrors"
-Cohesion: 0.33
-Nodes (4): Error, IStringLocalizer, FileErrors, ErpSystem.Modules.Platform.Application.Features.Platform.Files.Errors
-
-### Community 1240 - "PermissionContracts.cs"
-Cohesion: 0.47
-Nodes (5): IReadOnlyList, string, PermissionClaimNames, PlatformPermissions, PlatformRoleNames
-
-### Community 1241 - "ErpSystem.BuildingBlocks.Application.Common.Paginations"
-Cohesion: 0.05
-Nodes (42): Error, MetaData, PagedList, int, string, PaginationRequest, PaginationRequestValidator, Error (+34 more)
-
-### Community 1242 - "GeographicParentReassignmentHandlerTests"
-Cohesion: 0.15
-Nodes (12): DistrictErrors, Fact, IEnumerable, IMapper, InlineData, LocalizedString, StateErrors, Theory (+4 more)
-
-### Community 1245 - "graphify reference: query, path, explain"
-Cohesion: 0.33
-Nodes (5): For /graphify explain, For /graphify path, graphify reference: query, path, explain, Step 0 — Constrained query expansion (REQUIRED before traversal), Step 1 — Traversal
-
-### Community 1254 - "Common/ValidationMessageKeys.cs"
-Cohesion: 0.40
-Nodes (3): string, ValidationMessageKeys, ErpSystem.BuildingBlocks.Application.Common
-
-### Community 1260 - "PointOfSaleModuleTests.cs"
-Cohesion: 0.40
-Nodes (3): Fact, PointOfSaleModuleTests, ErpSystem.Modules.PointOfSale.Tests
-
-### Community 1263 - "CrystalReportDetailResponse"
-Cohesion: 0.40
-Nodes (4): CrystalReportDetailResponse, IEnumerable, LocalizedString, EchoLocalizer
-
-### Community 1266 - "sync-apps.mjs"
-Cohesion: 0.33
-Nodes (5): apps, entries, manifest, packageDir, repoRoot
-
-### Community 1271 - "ErpSystem.Modules.CRM.Contracts/AssemblyReference.cs"
-Cohesion: 0.50
-Nodes (3): Assembly, AssemblyReference, ErpSystem.Modules.CRM.Contracts
-
-### Community 1272 - "ErpSystem.Modules.CRM.Domain/AssemblyReference.cs"
-Cohesion: 0.50
-Nodes (3): Assembly, AssemblyReference, ErpSystem.Modules.CRM.Domain
-
-### Community 1273 - "ErpSystem.Modules.Inventory.Contracts/AssemblyReference.cs"
-Cohesion: 0.50
-Nodes (3): Assembly, AssemblyReference, ErpSystem.Modules.Inventory.Contracts
-
-### Community 1274 - "ErpSystem.Modules.Inventory.Domain/AssemblyReference.cs"
-Cohesion: 0.50
-Nodes (3): Assembly, AssemblyReference, ErpSystem.Modules.Inventory.Domain
-
-### Community 1277 - "ErpSystem.Modules.Platform.Contracts/AssemblyReference.cs"
-Cohesion: 0.50
-Nodes (3): Assembly, AssemblyReference, ErpSystem.Modules.Platform.Contracts
-
-### Community 1278 - "ErpSystem.Modules.Platform.Domain/AssemblyReference.cs"
-Cohesion: 0.50
-Nodes (3): Assembly, AssemblyReference, ErpSystem.Modules.Platform.Domain
-
-### Community 1281 - "ErpSystem.Modules.PointOfSale.Contracts/AssemblyReference.cs"
-Cohesion: 0.50
-Nodes (3): Assembly, AssemblyReference, ErpSystem.Modules.PointOfSale.Contracts
-
-### Community 1282 - "ErpSystem.Modules.PointOfSale.Domain/AssemblyReference.cs"
-Cohesion: 0.50
-Nodes (3): Assembly, AssemblyReference, ErpSystem.Modules.PointOfSale.Domain
-
-### Community 1283 - "ErpSystem.Modules.ReferenceData.Contracts/AssemblyReference.cs"
-Cohesion: 0.50
-Nodes (3): Assembly, AssemblyReference, ErpSystem.Modules.ReferenceData.Contracts
-
-### Community 1284 - "ErpSystem.Modules.ReferenceData.Domain/AssemblyReference.cs"
-Cohesion: 0.50
-Nodes (3): Assembly, AssemblyReference, ErpSystem.Modules.ReferenceData.Domain
-
-### Community 1285 - "ErpSystem.Modules.Reporting.Contracts/AssemblyReference.cs"
-Cohesion: 0.50
-Nodes (3): Assembly, AssemblyReference, ErpSystem.Modules.Reporting.Contracts
-
-### Community 1286 - "ErpSystem.Modules.Reporting.Domain/AssemblyReference.cs"
-Cohesion: 0.50
-Nodes (3): Assembly, AssemblyReference, ErpSystem.Modules.Reporting.Domain
-
-### Community 1288 - "graphify reference: add a URL and watch a folder"
-Cohesion: 0.50
-Nodes (3): For /graphify add, For --watch, graphify reference: add a URL and watch a folder
-
-### Community 1289 - "graphify reference: commit hook and native CLAUDE.md integration"
-Cohesion: 0.50
-Nodes (3): For git commit hook, For native CLAUDE.md integration, graphify reference: commit hook and native CLAUDE.md integration
-
-### Community 1290 - "graphify reference: incremental update and cluster-only"
-Cohesion: 0.50
-Nodes (3): For --cluster-only, For --update (incremental re-extraction), graphify reference: incremental update and cluster-only
-
-### Community 1301 - "notes/README.md"
-Cohesion: 0.08
-Nodes (15): Active API notes, API note checklist, API Notes Index, Cross-Platform Notes Index, Tracked cross-platform notes, Decision Backlog, Deferred Items, Known Risks (+7 more)
-
-### Community 1304 - "SingleUseEnumerable"
-Cohesion: 0.40
-Nodes (4): int, SingleUseEnumerable, IEnumerable, IEnumerator
-
-### Community 1306 - "run-local-native.mjs"
-Cohesion: 0.50
-Nodes (3): child, expoCli, projectRoot
-
-### Community 1309 - "tokens-augmentation.d.ts"
-Cohesion: 0.50
-Nodes (3): @mui/material/styles, Palette, PaletteOptions
+Nodes (27): HasPermissionAttribute, TenantMemberAttribute, FiscalYearsControllerContractTests, AttendanceDevicesArchitectureTests, WorkforceBudgetsControllerContractTests, WorkforcePlansControllerContractTests, BackgroundNotificationJobTests, CompanyLocalizationsControllerTests (+19 more)
 
 ### Community 1313 - "package.json"
 Cohesion: 0.33
 Nodes (5): description, name, private, scripts, sync:tokens
 
-### Community 1327 - "check-contrast.mjs"
-Cohesion: 0.25
-Nodes (7): advisories, advisoryPairs, failures, textPairs, uiPairs, palettes, themePaletteOrder
-
-### Community 1330 - "ErpSystem.Modules.ReferenceData.Application/DependencyInjection.cs"
-Cohesion: 0.09
-Nodes (17): Assembly, AssemblyReference, IServiceCollection, DependencyInjection, Error, IStringLocalizer, AddressTypeErrors, Error (+9 more)
-
-### Community 1362 - "file"
-Cohesion: 0.33
-Nodes (5): lib, problems, root, src, file()
-
 ### Community 1410 - "contrast.ts"
 Cohesion: 0.70
 Nodes (4): channel(), contrastRatio(), parseHex(), relativeLuminance()
 
-### Community 1411 - "native.ts"
-Cohesion: 0.50
-Nodes (4): createMobileColors(), MobileColors, withAlpha(), SemanticColors
-
 ### Community 2335 - "ErpSystem.Modules.Reporting.Application.Features.Analytics.CrystalReports.Contracts"
-Cohesion: 0.09
-Nodes (18): ManagedCrystalReportColumnContract, IFormFile, CreateCrystalReportForm, CrystalReportFileForm, ErpSystem.Modules.Reporting.Application.Features.Analytics.CrystalReports.Contracts, ErpSystem.Modules.Reporting.Presentation.Features.Analytics.CrystalReports.V1, ErpSystem.Modules.Reporting.Infrastructure.Features.Analytics.CrystalReports.Persistence, ErpSystem.Modules.Reporting.Application.Abstractions.Persistence (+10 more)
+Cohesion: 0.04
+Nodes (41): ImageUploadForm, Image, MultipleFilesUploadForm, Files, ProfilePictureUploadForm, ProfilePicture, Remove, SingleFileUploadForm (+33 more)
 
-### Community 2338 - "TenantMemberAuthorizationHandler"
-Cohesion: 0.13
-Nodes (16): string, AuthorizationPolicyNames, HasPermissionAttribute, PermissionRequirement, TenantMemberAttribute, AuthorizationHandlerContext, Task, PermissionAuthorizationHandler (+8 more)
+### Community 2344 - "ICrystalReportStore"
+Cohesion: 0.02
+Nodes (74): IQuery, IQueryHandler, AccountingOutbox, AttendanceAgentSession, GetJobPostingByIdQuery, GetJobPostingByIdQueryHandler, GetJobRequisitionByIdQuery, GetJobRequisitionByIdQueryHandler (+66 more)
 
-### Community 2344 - "PrivateCrystalReportFileStorage"
+### Community 2364 - "CrystalReportRendererClient"
 Cohesion: 0.07
-Nodes (32): Stream, FileUpload, IFormFile, FormFileExtensions, IFileProvider, TestWebHostEnvironment, CrystalReportFileFailure, CrystalReportInspection (+24 more)
-
-### Community 2350 - "StateCommands.cs"
-Cohesion: 0.12
-Nodes (33): CancellationToken, IEnumerable, int, IReadOnlyList, Result, State, StateDetailResponse, Task (+25 more)
-
-### Community 2352 - "PlatformHangfireAuthorizationFilter"
-Cohesion: 0.11
-Nodes (15): HttpContext, PathString, PlatformHangfireAuthorizationFilter, List, string, PlatformHangfireSettings, DefaultHttpContext, Fact (+7 more)
-
-### Community 2353 - ".TryHandleAsync"
-Cohesion: 0.14
-Nodes (13): DbUpdateException, HostDatabaseExceptionClassifier, CancellationToken, Exception, HttpContext, ValueTask, Fact, InlineData (+5 more)
-
-### Community 2360 - "PlatformFileUpload"
-Cohesion: 0.16
-Nodes (11): Stream, PlatformFileUpload, CancellationToken, Guid, IReadOnlyCollection, IReadOnlyList, Stream, string (+3 more)
-
-### Community 2364 - "CrystalReportRendererClientTests"
-Cohesion: 0.16
-Nodes (12): CancellationToken, Fact, HttpClient, HttpRequestMessage, HttpResponseMessage, Stream, Task, TransportContext (+4 more)
-
-### Community 2367 - ".ResolveGroup"
-Cohesion: 0.13
-Nodes (14): ClaimsPrincipal, IReadOnlyCollection, IReadOnlySet, GeneralHubGroups, CancellationToken, IReadOnlySet, Task, SignalRRealtimeEntityPublisher (+6 more)
-
-### Community 2373 - "PlatformBootstrapUsersStartupTask"
-Cohesion: 0.12
-Nodes (19): CancellationToken, DateTime, IdentityResult, IEnumerable, InvalidOperationException, IReadOnlyCollection, IReadOnlyList, PlatformApplicationUser (+11 more)
-
-### Community 2376 - "PlatformApplicationUser"
-Cohesion: 0.06
-Nodes (29): DateTime, Guid, ICollection, IReadOnlyCollection, List, string, TimeSpan, PlatformApplicationRole (+21 more)
-
-### Community 2380 - "ModuleGeneratorTests"
-Cohesion: 0.18
-Nodes (10): Fact, InlineData, string, Theory, GeneratorResult, IsolatedWorkspace, ModuleGeneratorTests, GeneratorResult (+2 more)
+Nodes (38): ICrystalReportRenderer, CrystalReportDownload, CrystalReportRenderFailure, InvalidReport, None, RuntimeUnavailable, UnsupportedEntity, CrystalReportRenderResult (+30 more)
 
 ### Community 2387 - "IGeneralHubClient"
-Cohesion: 0.07
-Nodes (21): RealtimeEntityChanged, NotificationRealtimeResponse, HashSet, Task, GeneralHub, Task, IGeneralHubClient, CancellationToken (+13 more)
+Cohesion: 0.06
+Nodes (26): RealtimeEntityChanged, TenantRoleValidator, GeneralHub, GeneralHubGroups, IGeneralHubClient, SignalRRealtimeEntityPublisher, RealtimeEntityPublisherTests, RecordingClient (+18 more)
 
-### Community 2389 - "FilesController"
-Cohesion: 0.16
-Nodes (17): Authorize, CancellationToken, Consumes, Guid, HttpDelete, HttpGet, HttpPost, IActionResult (+9 more)
-
-### Community 2392 - ".Handle"
-Cohesion: 0.11
-Nodes (19): ActivitySource, CancellationToken, IServiceCollection, string, Task, ApplicationPipelineExtensions, ApplicationTelemetry, RequestLoggingBehavior (+11 more)
-
-### Community 2396 - "Country"
+### Community 2392 - "RequestLoggingBehavior"
 Cohesion: 0.09
-Nodes (21): CancellationToken, Task, ICountryAuditTrail, CancellationToken, IReadOnlyCollection, IReadOnlyList, Task, ICountryWriteStore (+13 more)
+Nodes (16): ApplicationPipelineExtensions, RequestLoggingBehavior, ValidationBehavior, CorrelationContextExtensions, AsyncValidationFilter, ApplicationPipelineBehaviorTests, TestCommand, TestCommandValidator (+8 more)
 
-### Community 2401 - "BackgroundJobDashboardResponse"
-Cohesion: 0.09
-Nodes (20): BackgroundJobDashboardResponse, IBackgroundJobDashboardReader, CancellationToken, Task, GetBackgroundJobDashboardQuery, GetBackgroundJobDashboardQueryHandler, TimeProvider, BackgroundJobDashboardReader (+12 more)
-
-### Community 2409 - "Migration"
-Cohesion: 0.10
-Nodes (12): MigrationBuilder, InitialAccounting, MigrationBuilder, ModelBuilder, AddFiscalYearWorkingContext, AddFiscalYearWorkingContext, MigrationBuilder, ModelBuilder (+4 more)
-
-### Community 2423 - "ExportPdfFileService"
-Cohesion: 0.10
-Nodes (19): Dictionary, List, IExportExcelService, Dictionary, List, IExportPdfFileService, DataTable, Dictionary (+11 more)
-
-### Community 2428 - "HostInfrastructureServiceCollectionExtensions"
-Cohesion: 0.14
-Nodes (11): HttpContext, IConfiguration, IEnumerable, IServiceCollection, string, TimeSpan, HostHealthCheckPredicates, HostInfrastructureServiceCollectionExtensions (+3 more)
-
-### Community 2439 - "RepositoryConventionTests"
-Cohesion: 0.18
-Nodes (7): Fact, IEnumerable, string, RepositoryConventionTests, SolutionProject, SolutionProject, XDocument
-
-### Community 2440 - "DistrictCommands.cs"
-Cohesion: 0.11
-Nodes (34): CancellationToken, District, DistrictDetailResponse, IEnumerable, int, IReadOnlyList, Result, Task (+26 more)
-
-### Community 2446 - "InterviewDto"
-Cohesion: 0.12
-Nodes (29): InterviewDto, InterviewScorecardTemplateDto, CancellationToken, IReadOnlyCollection, Task, IInterviewReadStore, IInterviewRepository, CancellationToken (+21 more)
-
-### Community 2450 - "PlatformIdentityServiceCollectionExtensions"
-Cohesion: 0.24
-Nodes (7): IConfiguration, IServiceCollection, string, Task, AuthenticationSchemes, PlatformIdentityServiceCollectionExtensions, TokenValidatedContext
-
-### Community 2453 - ".Failure"
-Cohesion: 0.17
-Nodes (17): Error, IStringLocalizer, UserErrors, CancellationToken, HashSet, IEnumerable, IReadOnlyCollection, IReadOnlySet (+9 more)
-
-### Community 2470 - "AddressTypeChart.types.ts"
-Cohesion: 0.09
-Nodes (25): AddressTypesChartView(), AddressTypesChartViewProps, ChartLegendProps, EmptyChartStateProps, InitialLetterChartProps, InitialLetterData, LanguageData, LanguageDistributionChartProps (+17 more)
-
-### Community 2486 - "useRecruitment.ts"
-Cohesion: 0.02
-Nodes (194): metadata, DecisionMode, JobDescriptionDecisionDialog(), Props, today(), getJobDescriptionDecisionSchema(), JobDescriptionDecisionValues, CandidateDetailDialog() (+186 more)
-
-### Community 2543 - "TenantManagementScreen.tsx"
-Cohesion: 0.09
-Nodes (33): useTenantAdminUseCases(), tenantAdminKeys, useDeleteTenantAdmin(), useRestoreTenantAdmin(), useSaveTenantAdmin(), useTenantAdminPage(), useTenantAdmins(), AdminStatus() (+25 more)
-
-### Community 2570 - "IStringLocalizer"
+### Community 2440 - ".QueriesContractsAndHandlers_AreFeatureOwned"
 Cohesion: 0.04
-Nodes (35): Type, IEnumerable, LocalizedString, EchoLocalizer, IEnumerable, LocalizedString, EchoLocalizer, IEnumerable (+27 more)
+Nodes (83): IDistrictChangeScheduler, IDistrictReadStore, ArchiveDistrictCommand, ArchiveDistrictCommandValidator, BulkArchiveDistrictsCommand, BulkArchiveDistrictsCommandHandler, BulkArchiveDistrictsCommandValidator, CreateDistrictCommand (+75 more)
 
-### Community 2571 - "HostJsonStringLocalizer"
-Cohesion: 0.13
-Nodes (13): CultureInfo, Dictionary, IEnumerable, JsonSerializerOptions, LocalizedString, string, HostJsonStringLocalizer, HostJsonStringLocalizerFactory (+5 more)
+### Community 2453 - ".AddPlatformApplication"
+Cohesion: 0.06
+Nodes (30): UserErrors, AdminSeatLimitReached, CannotManageOwnAccount, DisabledUser, DuplicatedConfirmation, DuplicatedEmail, DuplicatedUserName, EmailNotConfirmed (+22 more)
 
 ## Knowledge Gaps
-- **4610 isolated node(s):** `1. عدّلت في كيان (Entity) وعايز تحدّث الداتابيز`, `2. عايز تراجع الـ migration قبل ما يتطبّق`, `3. عايز تطبّق migrations موجودة بس`, `4. عايز تلغي migration لسه ما اتطبّقش`, `5. عايز تتأكد إن مفيش تعديلات ناسي تعملها migration` (+4605 more)
-  These have ≤1 connection - possible missing edges or undocumented components.
-- **166 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **3810 isolated node(s):** `Created`, `Modified`, `Deleted`, `Restored`, `ModuleCode` (+3805 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 12650 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **66 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Work-memory lessons
 
 **Preferred sources** — corroborated by past sessions; start here.
-- `proxy()` (2× useful, score=0.481427482)
-- `TenantDashboardPage()` (2× useful, score=0.481272746)
+- `proxy()` (2× useful, score=0.470325974)
+- `TenantDashboardPage()` (2× useful, score=0.470174806)
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `fetchFreshAccountDetail()` connect `AccountsPage.tsx` to `AuthProvider.tsx`?**
-  _High betweenness centrality (0.061) - this node is a cross-community bridge._
-- **Why does `queryClient` connect `AuthProvider.tsx` to `useAppTheme`, `AccountsPage.tsx`?**
-  _High betweenness centrality (0.061) - this node is a cross-community bridge._
-- **Why does `ErpSystem.BuildingBlocks.Application.Common.Paginations` connect `ErpSystem.BuildingBlocks.Application.Common.Paginations` to `ErpSystem.Modules.Platform.Application.Features.Security.Users.Contracts`, `ErpSystem.Modules.ReferenceData.Application.Abstractions.Persistence`, `CandidateDto`, `DistrictQueries.cs`, `ErpSystem.BuildingBlocks.Application.Abstractions.Messaging`, `JobRequisitionDto`, `AddressTypeQueries.cs`, `JobOpeningsController`, `InterviewDto`, `ErpSystem.BuildingBlocks.Context.Authentication`, `IQuery`, `IWorkforcePlanWriteStore`, `CancellationToken`, `CancellationToken`, `PageResponse`, `PositionEnvelope`, `JobPostingDto`, `CancellationToken`, `ErpSystem.Modules.Accounting.Application.Features.Finance.LedgerSetup.Contracts`, `PlatformSecurityAuditOwnershipTests.cs`, `State`, `StateQueries.cs`, `AttendanceDeviceContracts.cs`, `WorkforcePlanQueries.cs`, `AttendanceDevicePorts.cs`, `EmploymentApplicationsController`, `InterviewsController`, `ErpSystem.Modules.HR.Application.Features.Attendance.Devices.Contracts`, `ErpSystem.Modules.HR.Presentation.Features.Recruitment.V1`, `ErpSystem.Modules.Accounting.Application.Features.Finance.FiscalYears.Contracts`, `JobOpeningDto`, `ErpSystem.Modules.HR.Domain.Recruitment.Entities`, `JobOffersController`, `JobRequisitionsController`, `NotificationRequests.cs`, `CancellationToken`, `GetFiscalYearsQuery`, `WorkforceBudgetQueries.cs`, `OrganizationalStructureQueries.cs`?**
-  _High betweenness centrality (0.026) - this node is a cross-community bridge._
-- **What connects `1. عدّلت في كيان (Entity) وعايز تحدّث الداتابيز`, `2. عايز تراجع الـ migration قبل ما يتطبّق`, `3. عايز تطبّق migrations موجودة بس` to the rest of the system?**
-  _4610 weakly-connected nodes found - possible documentation gaps or missing edges._
-- **Should `Task` be split into smaller, more focused modules?**
-  _Cohesion score 0.057946069994262765 - nodes in this community are weakly interconnected._
+- **Why does `3. Non-negotiable architecture rules` connect `ref_react_i18next` to `Result`, `ICrystalReportStore`, `HrDbContext`, `MyForm`, `Phase 2 Execution Contract — Workforce Budgets and Position Envelopes`?**
+  _High betweenness centrality (0.090) - this node is a cross-community bridge._
+- **What connects `Created`, `Modified`, `Deleted` to the rest of the system?**
+  _3810 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Should `FileUploadSecurityTests` be split into smaller, more focused modules?**
+  _Cohesion score 0.07226107226107226 - nodes in this community are weakly interconnected._
+- **Why does `Candidate` connect `Candidate` to `Screen Pattern Catalog`, `DateTimeOffset`, `HrDbContext`, `ExchangeRate`, `MyForm`, `FiscalYear`, `S3 + S4 — Unified theme change set`, `الأنماط المرشحة`, `PageResponse`, `ICrystalReportStore`, `HrDbContextScopeTests`, `CancellationToken`, `3. Slice roadmap`, `ErpSystem.BuildingBlocks.Application.Common.Paginations`, `Language`, `Plan Quality Gate`, `Ledger Setup Company Settings — Screen / Workflow Contract`, `23. Implementation phases`, `Business Planning Standard`, `Plan Creation Protocol`, `Account`, `Interview`, `JobOpening`?**
+  _High betweenness centrality (0.070) - this node is a cross-community bridge._
 - **Should `mobile-react/src/platform/auth/index.ts` be split into smaller, more focused modules?**
-  _Cohesion score 0.01616915422885572 - nodes in this community are weakly interconnected._
-- **Should `excelService.ts` be split into smaller, more focused modules?**
-  _Cohesion score 0.09523809523809523 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.02543958099513655 - nodes in this community are weakly interconnected._
+- **Why does `ICurrentActor` connect `Result` to `Company Geographic Scope Implementation Request`, `Organizational Structure Feature Full Review`, `Result`, `WorkforceBudgetErrors`, `.SaveChangesAsync`, `HrDbContext`, `IReadOnlySet`, `StateErrors`, `PlatformDbContext`, `CancellationToken`, `GetCurrenciesQuery`, `IConfiguration`, `IReportTemplateStore`, `IHrUnitOfWork`, `EmptyActor`, `InventoryCatalogCqrsTests`, `CountryCqrsHandlerTests`, `BranchAddress`, `PlatformApplicationUser`, `ref_react_i18next`, `IHrUnitOfWork`, `Ledger Setup Currency Implementation Request`, `InventoryDbContext`, `HiringTraceResponse`, `OrganizationalStructureItem`, `ReferenceDataDbContext`, `Actor`, `TestActor`, `AccountingDbContext`, `Type`, `StaffingRequest`, `Fact`, `AttendanceDevice`, `.CategoryQueries_ExcludeCurrentRecordDuringUpdateCheck`, `.AddPlatformInfrastructure`, `.Create`, `.PlatformApplication_OwnsCanonicalRecordingPolicyAndSaveBoundary`, `FiscalYearCommands.cs`, `IReadOnlyList`, `HasPermissionAttribute`, `JobDescription`, `HttpCurrentExecutionContext`, `.Target_permissions_filter_settings_search_and_runtime`, `CrmDbContext`, `ICurrentExecutionContext`, `.PlatformStore_PreservesStoredMetadataAndProtectedFileBehavior`, `IReadOnlyCollection`, `InlineData`, `.FiscalYearCreate_UsesAccountingUnitOfWork_WhenSharedRegistrationCompetes`, `ISecurityAuditService`, `Company UI localization — Screen / Workflow Contract`, `Attendance Devices Review Artifacts`, `TestActor`, `ICompanyUiCatalog`, `FiscalYearUserSelection`, `.SaveChangesAsync`, `ErpSystem.BuildingBlocks.Context.Authentication`, `Address`, `ReportTemplateFeatureTests`, `CrystalReportVersion`, `WorkforcePlanPersistenceTests`, `Workforce Planning API Implementation Profile`, `JobOpening`, `PlatformMailSettings`, `.QueriesContractsAndHandlers_AreFeatureOwned`, `Accounting Chart of Accounts and Hierarchy — API Implementation Contract`, `HrDbContextDesignFactory`, `Currency`, `HrDbContextScopeTests`, `ReferenceDataDbContextAuditTests`, `.AddPlatformInfrastructure`, `.AddReportingInfrastructure`, `.CreateContext`, `Branch`, `ReportingDbContext`, `Accounting Chart of Accounts and Hierarchy Implementation Request`, `.GetFiscalYearsAsync`?**
+  _High betweenness centrality (0.066) - this node is a cross-community bridge._
+- **Should `ref_i18next` be split into smaller, more focused modules?**
+  _Cohesion score 0.01884570082449941 - nodes in this community are weakly interconnected._

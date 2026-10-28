@@ -151,11 +151,13 @@ const collectNavigationItems = (items: readonly NavigationItem[]): NavigationIte
       permissions.ViewCompanyGeographicScope,
     ]);
     const moduleFiltered = filterNavigationConfigByModules(permissionFiltered, []);
-    expect(paths(moduleFiltered)).toEqual(expect.arrayContaining([
+    const platformPaths = paths(moduleFiltered);
+    expect(platformPaths).toEqual(expect.arrayContaining([
       appRoutes.platform.administration.roles,
-      appRoutes.platform.advancedTools.localizationApi,
-      appRoutes.platform.companyGeographicScope,
+      appRoutes.platform.settings,
     ]));
+    expect(platformPaths).not.toContain(appRoutes.platform.advancedTools.localizationApi);
+    expect(platformPaths).not.toContain(appRoutes.platform.companyGeographicScope);
   });
 
   it("keeps every navigation permission aligned with its route policy", () => {

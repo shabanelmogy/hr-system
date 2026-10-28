@@ -1,7 +1,27 @@
 {
+  "cli": {
+    "version": ">=26.0.0",
+    "appVersionSource": "remote"
+  },
   "build": {
+    "development": {
+      "node": "22.23.4",
+      "environment": "preview",
+      "developmentClient": true,
+      "distribution": "internal",
+      "env": {
+        "EXPO_PUBLIC_RELEASE_CHANNEL": "development",
+        "EXPO_PUBLIC_API_CONTRACT_VERSION": "v1",
+        "EXPO_PUBLIC_DEMO_LOGIN_ENABLED": "true"
+      },
+      "android": {
+        "buildType": "apk"
+      },
+      "uploadSourceMaps": true
+    },
     "preview": {
-      "node": "22.13.0",
+      "node": "22.23.4",
+      "environment": "preview",
       "distribution": "internal",
       "env": {
         "EXPO_PUBLIC_RELEASE_CHANNEL": "preview",
@@ -14,7 +34,8 @@
       "uploadSourceMaps": true
     },
     "production": {
-      "node": "22.13.0",
+      "node": "22.23.4",
+      "environment": "production",
       "autoIncrement": true,
       "env": {
         "EXPO_PUBLIC_RELEASE_CHANNEL": "production",
