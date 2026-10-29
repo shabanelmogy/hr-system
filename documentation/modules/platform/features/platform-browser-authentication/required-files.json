@@ -1,0 +1,422 @@
+{
+  "schemaVersion": 1,
+  "status": "active",
+  "executionMode": "bounded-runtime",
+  "runtimeAuthorized": true,
+  "feature": "platform-browser-authentication",
+  "featureName": "Platform Browser Authentication",
+  "referenceFeature": "N/A",
+  "planId": "web-angular-migration",
+  "sliceId": "S0-AUTH-R2 — Browser transport",
+  "canonicalPlan": "documentation/plans/business/web-angular-migration/PLAN.md",
+  "featureDecompositionDecision": "Single feature",
+  "screenWorkflowContract": "documentation/plans/business/web-angular-migration/decomposition/platform-browser-authentication.md",
+  "plannedCustomerEducation": "N/A — technical transport unit without a new customer screen",
+  "purpose": "Current API browser transport and session correctness implementation/verification evidence; Angular UI is a later consumer.",
+  "reviewArtifact": "documentation/modules/platform/features/platform-browser-authentication/platform-browser-authentication-evidence.md",
+  "implementationRequest": "documentation/modules/platform/features/platform-browser-authentication/platform-browser-authentication-request.md",
+  "plannedCanonicalBooks": {
+    "master": "documentation/modules/platform/features/platform-browser-authentication/platform-browser-authentication-review.md",
+    "api": "documentation/modules/platform/features/platform-browser-authentication/platform-browser-authentication-api.md",
+    "web": "documentation/modules/platform/features/platform-browser-authentication/platform-browser-authentication-web.md",
+    "mobile": "documentation/modules/platform/features/platform-browser-authentication/platform-browser-authentication-mobile.md"
+  },
+  "sourceCollections": [],
+  "requiredFiles": [
+    {
+      "id": "root-agent-guidance",
+      "layer": "configuration",
+      "path": "AGENTS.md",
+      "purpose": "Repository-wide feature and documentation rules"
+    },
+    {
+      "id": "review-artifact",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/platform-browser-authentication/platform-browser-authentication-evidence.md",
+      "purpose": "Feature requirement, evidence, finding, and verification ledger"
+    },
+    {
+      "id": "implementation-request",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/platform-browser-authentication/platform-browser-authentication-request.md",
+      "purpose": "Copy-ready feature scope, platform decisions, contracts, and quality gates"
+    },
+    {
+      "id": "preflight-01",
+      "layer": "documentation",
+      "path": "documentation/plans/business/web-angular-migration/PLAN.md",
+      "purpose": "Verified existing Phase 00 evidence; not proof of target runtime"
+    },
+    {
+      "id": "preflight-02",
+      "layer": "documentation",
+      "path": "documentation/plans/business/web-angular-migration/BROWSER_AUTHENTICATION_CONTRACT.md",
+      "purpose": "Verified existing Phase 00 evidence; not proof of target runtime"
+    },
+    {
+      "id": "preflight-03",
+      "layer": "documentation",
+      "path": "documentation/plans/business/web-angular-migration/AUTHENTICATION_PREFLIGHT.md",
+      "purpose": "Verified existing Phase 00 evidence; not proof of target runtime"
+    },
+    {
+      "id": "preflight-04",
+      "layer": "documentation",
+      "path": "documentation/plans/business/web-angular-migration/decomposition/platform-browser-authentication.md",
+      "purpose": "Verified existing Phase 00 evidence; not proof of target runtime"
+    },
+    {
+      "id": "preflight-05",
+      "layer": "documentation",
+      "path": "documentation/plans/notes/DECISION_BACKLOG.md",
+      "purpose": "Verified existing Phase 00 evidence; not proof of target runtime"
+    },
+    {
+      "id": "preflight-06",
+      "layer": "documentation",
+      "path": "documentation/plans/notes/KNOWN_RISKS.md",
+      "purpose": "Verified existing Phase 00 evidence; not proof of target runtime"
+    },
+    {
+      "id": "preflight-07",
+      "layer": "source",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Presentation/Features/Security/Authentication/V1/AuthController.cs",
+      "purpose": "Verified existing Phase 00 evidence; not proof of target runtime"
+    },
+    {
+      "id": "preflight-08",
+      "layer": "source",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Presentation/Authentication/AuthenticationResultExtensions.cs",
+      "purpose": "Verified existing Phase 00 evidence; not proof of target runtime"
+    },
+    {
+      "id": "preflight-09",
+      "layer": "source",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Application/Authentication/Orchestration/AuthenticationOrchestrationContracts.cs",
+      "purpose": "Verified existing Phase 00 evidence; not proof of target runtime"
+    },
+    {
+      "id": "preflight-10",
+      "layer": "source",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Application/Authentication/Orchestration/AuthenticationRequests.cs",
+      "purpose": "Verified existing Phase 00 evidence; not proof of target runtime"
+    },
+    {
+      "id": "preflight-11",
+      "layer": "source",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Application/SessionValidation/SessionValidationService.cs",
+      "purpose": "Verified existing Phase 00 evidence; not proof of target runtime"
+    },
+    {
+      "id": "preflight-12",
+      "layer": "source",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Identity/PlatformIdentityAuthenticationAdapters.cs",
+      "purpose": "Verified existing Phase 00 evidence; not proof of target runtime"
+    },
+    {
+      "id": "preflight-13",
+      "layer": "source",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Identity/PlatformIdentityServiceCollectionExtensions.cs",
+      "purpose": "Verified existing Phase 00 evidence; not proof of target runtime"
+    },
+    {
+      "id": "preflight-14",
+      "layer": "source",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Identity/PlatformIdentityEntities.cs",
+      "purpose": "Verified existing Phase 00 evidence; not proof of target runtime"
+    },
+    {
+      "id": "preflight-15",
+      "layer": "source",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/PlatformDbContext.cs",
+      "purpose": "Verified existing Phase 00 evidence; not proof of target runtime"
+    },
+    {
+      "id": "preflight-16",
+      "layer": "source",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Tests/PlatformRefreshTokenTests.cs",
+      "purpose": "Verified existing Phase 00 evidence; not proof of target runtime"
+    },
+    {
+      "id": "preflight-17",
+      "layer": "source",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Tests/PlatformAuthenticationTokenWireCompatibilityTests.cs",
+      "purpose": "Verified existing Phase 00 evidence; not proof of target runtime"
+    },
+    {
+      "id": "preflight-18",
+      "layer": "source",
+      "path": "api/ErpSystem.Api/Hosting/HostInfrastructureServiceCollectionExtensions.cs",
+      "purpose": "Verified existing Phase 00 evidence; not proof of target runtime"
+    },
+    {
+      "id": "preflight-19",
+      "layer": "source",
+      "path": "api/ErpSystem.Api/Hosting/HostCorsSettings.cs",
+      "purpose": "Verified existing Phase 00 evidence; not proof of target runtime"
+    },
+    {
+      "id": "preflight-20",
+      "layer": "source",
+      "path": "web-next/src/lib/auth/cookies.ts",
+      "purpose": "Verified existing Phase 00 evidence; not proof of target runtime"
+    },
+    {
+      "id": "preflight-21",
+      "layer": "source",
+      "path": "web-next/src/lib/auth/backend-session.ts",
+      "purpose": "Verified existing Phase 00 evidence; not proof of target runtime"
+    },
+    {
+      "id": "preflight-22",
+      "layer": "source",
+      "path": "web-next/src/lib/auth/SessionContext.switch.test.tsx",
+      "purpose": "Verified existing Phase 00 evidence; not proof of target runtime"
+    },
+    {
+      "id": "preflight-23",
+      "layer": "source",
+      "path": "web-next/src/lib/auth/company-switch-verification.ts",
+      "purpose": "Verified existing Phase 00 evidence; not proof of target runtime"
+    },
+    {
+      "id": "preflight-24",
+      "layer": "source",
+      "path": "mobile-react/src/platform/auth/data/remote/auth/auth-endpoints.ts",
+      "purpose": "Verified existing Phase 00 evidence; not proof of target runtime"
+    },
+    {
+      "id": "preflight-25",
+      "layer": "source",
+      "path": "mobile-react/src/platform/auth/data/remote/auth/auth-remote-data-source.ts",
+      "purpose": "Verified existing Phase 00 evidence; not proof of target runtime"
+    },
+    {
+      "id": "preflight-26",
+      "layer": "source",
+      "path": "mobile-react/src/platform/auth/data/remote/auth/auth-remote-data-source.test.ts",
+      "purpose": "Verified existing Phase 00 evidence; not proof of target runtime"
+    },
+    {
+      "id": "preflight-27",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/platform-browser-authentication/platform-browser-authentication-review.md",
+      "purpose": "Verified existing Phase 00 evidence; not proof of target runtime"
+    },
+    {
+      "id": "preflight-28",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/platform-browser-authentication/platform-browser-authentication-api.md",
+      "purpose": "Verified existing Phase 00 evidence; not proof of target runtime"
+    },
+    {
+      "id": "preflight-29",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/platform-browser-authentication/platform-browser-authentication-web.md",
+      "purpose": "Verified existing Phase 00 evidence; not proof of target runtime"
+    },
+    {
+      "id": "preflight-30",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/platform-browser-authentication/platform-browser-authentication-mobile.md",
+      "purpose": "Verified existing Phase 00 evidence; not proof of target runtime"
+    },
+    {
+      "id": "preflight-probe-tests",
+      "purpose": "Isolated real JWT/SQL/HTTPS feasibility probes; not actual ERP browser lifecycle acceptance",
+      "path": "api/Tests/ErpSystem.IntegrationTests/BrowserAuthenticationPreflightTests.cs",
+      "layer": "test"
+    },
+    {
+      "id": "preflight-browser-probe",
+      "purpose": "Trusted Chromium CORS/antiforgery and header-capacity verification",
+      "path": "documentation/modules/platform/features/platform-browser-authentication/verification/browser-probe.mjs",
+      "layer": "test"
+    },
+    {
+      "id": "preflight-proof-report",
+      "purpose": "Measured limits, concurrency boundary, reproduction and remaining acceptance",
+      "path": "documentation/modules/platform/features/platform-browser-authentication/verification/PREFLIGHT_PROOF_REPORT.md",
+      "layer": "documentation"
+    },
+    {
+      "id": "preflight-result-token-capacity",
+      "purpose": "Actual isolated preflight probe measurements; no secrets",
+      "path": "documentation/modules/platform/features/platform-browser-authentication/verification/results/token-capacity.json",
+      "layer": "documentation"
+    },
+    {
+      "id": "preflight-result-sql-concurrency",
+      "purpose": "Actual isolated preflight probe measurements; no secrets",
+      "path": "documentation/modules/platform/features/platform-browser-authentication/verification/results/sql-concurrency.json",
+      "layer": "documentation"
+    },
+    {
+      "id": "preflight-result-https-antiforgery",
+      "purpose": "Actual isolated preflight probe measurements; no secrets",
+      "path": "documentation/modules/platform/features/platform-browser-authentication/verification/results/https-antiforgery.json",
+      "layer": "documentation"
+    },
+    {
+      "id": "preflight-follow-ups",
+      "layer": "documentation",
+      "path": "documentation/plans/notes/FOLLOW_UPS.md",
+      "purpose": "FOLLOW-011 canonical full-gate intermittent SQL finding and recurrence trigger"
+    },
+    {
+      "id": "session-runtime-readiness",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/platform-browser-authentication/SESSION_RUNTIME_READINESS.md",
+      "purpose": "Exact user-authorized runtime increment, G0-G3 gates, rules, concurrency and rollback"
+    },
+    {
+      "path": "api/Tests/ErpSystem.IntegrationTests/PlatformSessionLifecycleTests.cs",
+      "purpose": "Actual adapter/JWT/migrated SQL lifecycle, denial and deterministic race tests",
+      "layer": "test",
+      "id": "session-lifecycle-tests"
+    },
+    {
+      "path": "documentation/modules/platform/features/platform-browser-authentication/verification/SESSION_IMPLEMENTATION_REPORT.md",
+      "purpose": "Session correctness implementation and measured acceptance boundary",
+      "layer": "documentation",
+      "id": "session-implementation-report"
+    },
+    {
+      "path": "documentation/guides/api/Authentication_Configuration.md",
+      "purpose": "Current canonical API refresh/logout/switch and bounded history policy",
+      "layer": "documentation",
+      "id": "canonical-authentication-guide"
+    },
+    {
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Features/Security/Authentication/Services/RefreshTokenSessionPolicy.cs",
+      "purpose": "Existing reused grace/revocation/pruning policy",
+      "layer": "source",
+      "id": "shared-refresh-session-policy"
+    },
+    {
+      "id": "session-runtime-results",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/platform-browser-authentication/verification/results/session-runtime-verification.json",
+      "purpose": "Current Release full-gate/actual SQL adapter/retained-client counts for bounded session increment"
+    },
+    {
+      "id": "browser-runtime-readiness",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/platform-browser-authentication/BROWSER_RUNTIME_READINESS.md",
+      "purpose": "Exact approved browser transport runtime gates/security/verification/rollback"
+    },
+    {
+      "id": "browser-runtime-1",
+      "layer": "source",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Contracts/Authentication/Browser/BrowserAuthenticationDefaults.cs",
+      "purpose": "Actual R2 browser transport source/security/test/configuration or measured verification evidence"
+    },
+    {
+      "id": "browser-runtime-2",
+      "layer": "source",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Application/Authentication/Orchestration/BrowserAuthenticationContracts.cs",
+      "purpose": "Actual R2 browser transport source/security/test/configuration or measured verification evidence"
+    },
+    {
+      "id": "browser-runtime-3",
+      "layer": "source",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Authentication/Tokens/BrowserAuthenticationCookies.cs",
+      "purpose": "Actual R2 browser transport source/security/test/configuration or measured verification evidence"
+    },
+    {
+      "id": "browser-runtime-4",
+      "layer": "source",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Presentation/Authentication/BrowserAntiforgery.cs",
+      "purpose": "Actual R2 browser transport source/security/test/configuration or measured verification evidence"
+    },
+    {
+      "id": "browser-runtime-5",
+      "layer": "source",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Presentation/Authentication/BrowserAuthenticationMiddleware.cs",
+      "purpose": "Actual R2 browser transport source/security/test/configuration or measured verification evidence"
+    },
+    {
+      "id": "browser-runtime-6",
+      "layer": "source",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Presentation/Authentication/AuthenticationSessionContextRequestFactory.cs",
+      "purpose": "Actual R2 browser transport source/security/test/configuration or measured verification evidence"
+    },
+    {
+      "id": "browser-runtime-7",
+      "layer": "source",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Presentation/Features/Security/Authentication/V1/BrowserAuthController.cs",
+      "purpose": "Actual R2 browser transport source/security/test/configuration or measured verification evidence"
+    },
+    {
+      "id": "browser-runtime-8",
+      "layer": "source",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Tests/BrowserAuthenticationCookieTests.cs",
+      "purpose": "Actual R2 browser transport source/security/test/configuration or measured verification evidence"
+    },
+    {
+      "id": "browser-runtime-9",
+      "layer": "source",
+      "path": "api/Tests/ErpSystem.IntegrationTests/BrowserAuthenticationTransportTests.cs",
+      "purpose": "Actual R2 browser transport source/security/test/configuration or measured verification evidence"
+    },
+    {
+      "id": "browser-runtime-10",
+      "layer": "source",
+      "path": "api/Tests/ErpSystem.ArchitectureTests/PlatformContractsArchitectureTests.cs",
+      "purpose": "Actual R2 browser transport source/security/test/configuration or measured verification evidence"
+    },
+    {
+      "id": "browser-runtime-11",
+      "layer": "source",
+      "path": "api/Tests/ErpSystem.ArchitectureTests/ControllerArchitectureTests.cs",
+      "purpose": "Actual R2 browser transport source/security/test/configuration or measured verification evidence"
+    },
+    {
+      "id": "browser-runtime-12",
+      "layer": "source",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform/PlatformModule.cs",
+      "purpose": "Actual R2 browser transport source/security/test/configuration or measured verification evidence"
+    },
+    {
+      "id": "browser-runtime-13",
+      "layer": "source",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Presentation/DependencyInjection.cs",
+      "purpose": "Actual R2 browser transport source/security/test/configuration or measured verification evidence"
+    },
+    {
+      "id": "browser-runtime-14",
+      "layer": "documentation",
+      "path": "api/ErpSystem.Api/appsettings.example.json",
+      "purpose": "Actual R2 browser transport source/security/test/configuration or measured verification evidence"
+    },
+    {
+      "id": "browser-runtime-15",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/platform-browser-authentication/verification/browser-transport.mjs",
+      "purpose": "Actual R2 browser transport source/security/test/configuration or measured verification evidence"
+    },
+    {
+      "id": "browser-runtime-16",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/platform-browser-authentication/verification/results/browser-transport.json",
+      "purpose": "Actual R2 browser transport source/security/test/configuration or measured verification evidence"
+    },
+    {
+      "id": "browser-runtime-17",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/platform-browser-authentication/verification/BROWSER_IMPLEMENTATION_REPORT.md",
+      "purpose": "Actual R2 browser transport source/security/test/configuration or measured verification evidence"
+    },
+    {
+      "id": "browser-runtime-verification",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/platform-browser-authentication/verification/results/browser-runtime-verification.json",
+      "purpose": "Final Release full-gate and retained-client counts for bounded browser API transport"
+    }
+  ],
+  "finalizationChecklist": [
+    "Phase 00 evidence registered; close runtime-readiness findings before coding.",
+    "Extend requiredFiles with actual new source/tests as created; regenerate through the system.",
+    "Phase 06 requires actual API/browser/SQL/client evidence; no runtime acceptance is inferred."
+  ]
+}

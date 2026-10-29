@@ -15,6 +15,7 @@ Then reference its stable ID here.
 
 | Note ID | Type | Area | Summary | Canonical registry |
 | --- | --- | --- | --- | --- |
+| RISK-018 | Risk | Authentication contract/source drift | Shared refresh/logout/provider assumptions require API reconciliation and native bearer regression evidence. | `KNOWN_RISKS.md` |
 | FOLLOW-010 | Follow-up | SQLCipher bootstrap | Verified: requester confirms the app opens after Reload with the per-connection key correction. Broader offline business-write acceptance remains PROD-026. | `FOLLOW_UPS.md` |
 | PROD-009 | Production | EAS release | Real signed and installed release artifacts remain required. | `PRODUCTION_NOTES.md` |
 | PROD-010 | Production | Hosted E2E | Authenticated device journeys require a deployed API and release-like build. | `PRODUCTION_NOTES.md` |

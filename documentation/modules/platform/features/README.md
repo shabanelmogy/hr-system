@@ -12,6 +12,7 @@ single source for the documentation workflow.
 | Company Geographic Scope | Implemented | [review](company-geographic-scope/company-geographic-scope-review.md) · [API](company-geographic-scope/company-geographic-scope-api.md) · [web](company-geographic-scope/company-geographic-scope-web.md) · [mobile](company-geographic-scope/company-geographic-scope-mobile.md) |
 | Tenant Module Entitlements | Implemented | [review](tenant-module-entitlements/tenant-module-entitlements-review.md) · [API](tenant-module-entitlements/tenant-module-entitlements-api.md) · [web](tenant-module-entitlements/tenant-module-entitlements-web.md) · [mobile](tenant-module-entitlements/tenant-module-entitlements-mobile.md) |
 | Authentication and sessions | Implemented (no feature book yet) | `AuthController`, `AccountController`, `GoogleAuthController`; tenant/company selection; web login and mobile sign-in |
+| Browser authentication transport | Phase 00 evidence registered; runtime blocked | [review](platform-browser-authentication/platform-browser-authentication-review.md) · [API](platform-browser-authentication/platform-browser-authentication-api.md) · [Web](platform-browser-authentication/platform-browser-authentication-web.md) · [Mobile](platform-browser-authentication/platform-browser-authentication-mobile.md) · [readiness findings](platform-browser-authentication/platform-browser-authentication-evidence.md) |
 | Tenants and tenant administrators | Implemented (no feature book yet) | `TenantsController`, `TenantAdminsController`; web `super-admin/(platform)/tenants`; mobile `tenant-management` |
 | User invitations | Implemented (no feature book yet) | `UserInvitationsController` |
 | Module catalog | Implemented (no feature book yet) | `ModulesController` (`/api/v1/modules`, tenant entitlements) |
@@ -37,3 +38,14 @@ never edited by hand.
 - [Company UI localization](company-ui-localization/company-ui-localization-review.md): Closed for the requester-authorized automatic scope with Phase 06 Verified and Phase 07 education; PROD-026/FOLLOW-006/FOLLOW-007 remain explicit.
 
 - [Platform Settings](platform-settings/platform-settings-review.md): user-approved Administration > Settings workspace, actual shared tabs and independent existing configuration editors.
+- [Angular localization foundation](angular-localization-foundation/angular-localization-foundation-review.md): S1-A0 technical client port; strict Angular application, existing SQL translation API/catalog adapters and 14 passing tests. [Implementation/acceptance boundary](angular-localization-foundation/IMPLEMENTATION_REPORT.md); actual consumer acceptance FOLLOW-012.
+- [Angular theme foundation](angular-theme-foundation/angular-theme-foundation-review.md): S1-A1 shared token/PrimeNG theme/action, actual local Community key activated; FOLLOW-013 Verified and technical documentation Closed. [Implementation report](angular-theme-foundation/IMPLEMENTATION_REPORT.md).
+- [Angular form foundation](angular-form-foundation/angular-form-foundation-review.md): S1-A2 shared text/password CVA, form submission/error/focus and organized Shared folders; 38 unit tests/40 browser cases pass. [Implementation report](angular-form-foundation/IMPLEMENTATION_REPORT.md); Phase 06 Verified, remaining shared acceptance FOLLOW-014.
+
+- [Angular password sign-in](angular-password-sign-in/angular-password-sign-in-review.md): actual default login with current Next design, secure Cookie session and generic shared validation badges. [Implementation/verification](angular-password-sign-in/IMPLEMENTATION_REPORT.md); Phase 06 Verified, documentation/handoff is current.
+
+- [Angular application shell](angular-application-shell/IMPLEMENTATION_REPORT.md): S2-A1 Verified/Closed, shared responsive frame and PrimeNG preferences.
+- [Angular module navigation](angular-module-navigation/IMPLEMENTATION_REPORT.md): S2-A2 Verified/Closed, actual permitted catalog/guarded module and area routes.
+- [Angular role home](angular-role-home/IMPLEMENTATION_REPORT.md): S2-A3 Verified/Closed, role landing and actual read-only tenant summary; management/context workflows retain their own next steps.
+
+- [Angular company context preflight](angular-company-context/angular-company-context-review.md): sole Active S2-A4 source/proof investigation; existing browser endpoint reused, no runtime implementation claim.

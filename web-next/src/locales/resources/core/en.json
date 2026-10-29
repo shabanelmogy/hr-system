@@ -700,6 +700,10 @@
     "Close": "Close"
   },
   "modules": {
+    "acc": "Accounting",
+    "reference-data": "General Data",
+    "crm": "CRM",
+    "reporting": "Reporting",
     "title": "Applications",
     "description": "Choose an application, then open one of its enabled areas.",
     "submoduleDescription": "Choose an enabled area to continue.",
@@ -726,6 +730,10 @@
     "tenantRolesPermissions": "Roles and permissions",
     "tenantUsers": "Users",
     "submodules": {
+      "acc": { "ledger-setup": "Ledger setup" },
+      "reference-data": { "addresses": "Addresses" },
+      "crm": { "appointments": "Appointments" },
+      "reporting": { "analytics": "Analytics" },
       "hr": {
         "basic-data": "Basic data",
         "recruitment": "Recruitment",

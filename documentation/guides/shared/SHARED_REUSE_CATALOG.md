@@ -6,6 +6,11 @@
 
 ## كتالوج أنماط الشاشات
 
+P-015 Public authentication/scoped sign-in is Active: current Next Login/AuthLayout
+and native LoginForm/AppForm references are registered in SCREEN_PATTERN_CATALOG.
+Angular reuses its shared form/field/button/feedback and a shared choice dialog;
+auth challenge/session ownership remains Platform, public layout Shell.
+
 [SCREEN_PATTERN_CATALOG.md](SCREEN_PATTERN_CATALOG.md) هو المرجع الإلزامي
 لاختيار تركيب الشاشة قبل إنشاء Grid أو Tree/Master-Detail أو Tabbed Form.
 المعرفات الحالية هي:

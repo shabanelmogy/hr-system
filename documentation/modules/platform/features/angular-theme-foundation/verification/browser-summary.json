@@ -1,0 +1,41 @@
+{
+  "date": "2026-10-28",
+  "scope": "S1-A1 shared theme/action technical fixture",
+  "matrixCombinationsPassed": 40,
+  "palettes": [
+    "green",
+    "orange",
+    "blue",
+    "navy",
+    "monochrome"
+  ],
+  "modes": [
+    "light",
+    "dark"
+  ],
+  "languages": [
+    "en",
+    "ar"
+  ],
+  "widths": [
+    390,
+    1440
+  ],
+  "checks": [
+    "computed colors and primary gradient",
+    "status colors",
+    "font availability and label weight",
+    "minimum action geometry",
+    "no horizontal overflow",
+    "Tab focus",
+    "Enter and Space",
+    "selected palette",
+    "preference reload"
+  ],
+  "licenseKeyConfigured": true,
+  "licensedRuntimeAcceptance": "Verified: configured key, repeat 40-case matrix, fresh-page screenshot inspected; invalid license notice absent without bypass",
+  "businessUiAcceptance": "Not in this technical scope",
+  "phase06": "Verified",
+  "angularAnalytics": "Local and effective disabled; global user setting unchanged",
+  "productionInitialKb": 415.52
+}

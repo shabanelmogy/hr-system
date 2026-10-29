@@ -11,6 +11,7 @@ public static class DependencyInjection
     /// </summary>
     public static IServiceCollection AddPlatformPresentation(this IServiceCollection services)
     {
+        services.AddScoped<Authentication.BrowserAntiforgery>();
         services.AddControllers().AddApplicationPart(AssemblyReference.Assembly);
         return services;
     }

@@ -1,0 +1,15 @@
+<header class="auth-topbar">
+  <a class="brand" href="/login" [attr.aria-label]="'general.mainTitle' | uiText"><erp-icon name="team" /><strong>{{ 'general.mainTitle' | uiText }}</strong></a>
+  <div class="desktop-preferences">
+    <erp-option-select [label]="'general.lang' | uiText" [value]="locale.language()" [options]="languageOptions" (valueChange)="changeLanguage($event)" />
+    <erp-button appearance="icon" variant="text" [label]="(theme.mode() === 'light' ? 'general.darkMode' : 'general.lightMode') | uiText" (activated)="theme.setMode(theme.mode() === 'light' ? 'dark' : 'light')"><erp-icon buttonIcon [name]="theme.mode() === 'light' ? 'sun' : 'moon'" /></erp-button>
+  </div>
+  <details class="mobile-preferences"><summary [attr.aria-label]="'common.showMore' | uiText"><erp-icon name="more" /></summary>
+    <div><erp-option-select [label]="'general.lang' | uiText" [value]="locale.language()" [options]="languageOptions" (valueChange)="changeLanguage($event)" />
+      <erp-button [label]="(theme.mode() === 'light' ? 'general.darkMode' : 'general.lightMode') | uiText" variant="text" (activated)="theme.setMode(theme.mode() === 'light' ? 'dark' : 'light')" /></div>
+  </details>
+</header>
+<main class="auth-shell"><div class="auth-outer"><div class="auth-inner"><article class="auth-card">
+  <erp-auth-branding />
+  <section class="auth-panel"><ng-content /></section>
+</article></div></div></main>

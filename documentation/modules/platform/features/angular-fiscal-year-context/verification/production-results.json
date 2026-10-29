@@ -1,0 +1,78 @@
+[
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 390,
+    "passed": true
+  },
+  {
+    "language": "en",
+    "mode": "light",
+    "width": 1440,
+    "passed": true
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 390,
+    "passed": true
+  },
+  {
+    "language": "en",
+    "mode": "dark",
+    "width": 1440,
+    "passed": true
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 390,
+    "passed": true
+  },
+  {
+    "language": "ar",
+    "mode": "light",
+    "width": 1440,
+    "passed": true
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 390,
+    "passed": true
+  },
+  {
+    "language": "ar",
+    "mode": "dark",
+    "width": 1440,
+    "passed": true
+  },
+  {
+    "action": "lost-response",
+    "passed": true
+  },
+  {
+    "action": "rejected",
+    "passed": true
+  },
+  {
+    "action": "unverifiable",
+    "passed": true
+  },
+  {
+    "action": "empty",
+    "passed": true
+  },
+  {
+    "action": "malformed",
+    "passed": true
+  },
+  {
+    "action": "denied-permission",
+    "passed": true
+  },
+  {
+    "action": "cross-tab",
+    "passed": true
+  }
+]

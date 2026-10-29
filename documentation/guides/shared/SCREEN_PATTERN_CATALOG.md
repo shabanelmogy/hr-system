@@ -34,11 +34,16 @@
 | P-007 Settings Navigation Hub | `LedgerSetupOverviewPage` + Accounting module definition — `Implemented` | `LedgerSetupOverviewScreen` + Accounting module definition — `Implemented` | module navigation, page headers, permission-filtered route manifests | الـHub يكتشف ويفتح الرحلات فقط؛ لا يملك DTO عامًا أو CRUD أو business state للأطفال |
 | P-008 Global Scoped Context Selector | Tenant identity + Company + Fiscal Year through shared Topbar slots — `Implemented` | Tenant identity + Company + Fiscal Year through the generic App-header action slot — `Adapted` | Web `ContextBadge`/`ContextSwitcher` + unsaved-change registry؛ Mobile `AppContextBadge` + shared modal/card/button + `NavigationContextActionsProvider` | المالك يحمّل ويغيّر سياقه الموثوق فقط؛ Shell/Platform يملكان موضع التركيب العام ولا يستوردان business internals. Mobile يستخدم trigger مضغوطًا/modal على الهاتف مع نفس السلطة والحماية |
 
+| P-015 Public authentication / scoped sign-in | Current Next Login/AuthLayout/selection dialogs — `Implemented`; Angular password sign-in verified | Existing native LoginForm — `Adapted` | shared forms/fields/actions/validation feedback/dialog; retained native AppForm/AppTextField | Public sign-in and server-authoritative scope; platform-specific shell composition, existing contracts unchanged |
+
+| P-010 Dashboard / KPI Overview | Next TenantDashboardPage + dedicated summary endpoint — `Implemented` | Native TenantDashboardScreen — `Adapted` | metric cards, panels, progress/status and bounded lists | Every metric records owner/scope/snapshot or period; drill-down independently R/D/E; no fixture metrics in runtime |
+| P-016 Authenticated application shell | Next MainLayout/SideBar/TopBar/SettingsMenu — `Implemented` | Native main Drawer/AppNavigationHeader/theme picker — `Adapted` | generic app frame, navigation, overlay, avatar/context, theme controls | Shell owns layout; Platform owns verified session/context; business dashboard/module capabilities retain separate owners |
+
 هذه المصفوفة هي سجل حقيقة التنفيذ. لا يجوز تغيير حالة منصة إلى `Implemented`
 من دون مسار مصدر فعلي واختبار أو evidence مناسب، ولا يعني `Adapted` أن المنصة
 يمكنها حذف حقل أو validation أو permission من العقد المشترك.
 
-الأنماط `Candidate` (P-004 وP-008 حتى P-014) لا تظهر في هذه المصفوفة حتى تُفعّل؛
+الأنماط `Candidate` (P-004 وP-009 وP-011 حتى P-014؛ P-010 أصبح Active) لا تظهر في هذه المصفوفة حتى تُفعّل؛
 توصيفها وشروط تفعيلها في قسم «الأنماط المرشحة». قواعد اختيار النمط وقواعد التركيب
 المشتركة C-01..C-11 في القسمين المخصصين لهما.
 
@@ -481,7 +486,7 @@ Screen ID ولكل منصة في عقد الميزة (`FEATURE_DECOMPOSITION_TEM
 | 6 | هل هي قائمة عناصر تنتظر إجراء المستخدم الحالي (اعتماد/رفض/إسناد)؟ | P-014 Work Queue / Approval Inbox (Candidate) |
 | 7 | هل العناصر تنتقل بين مراحل ويحتاج المستخدم رؤية المراحل كأعمدة؟ | P-011 Kanban Board (Candidate) — مع P-001 كعرض بديل |
 | 8 | هل البيانات مرتبطة بالوقت (مواعيد، جداول، حجوزات) وتُقرأ على تقويم؟ | P-012 Calendar / Schedule (Candidate) |
-| 9 | هل الشاشة ملخص مؤشرات ورسوم لقراءة الوضع واتخاذ قرار؟ | P-010 Dashboard / KPI Overview (Candidate) |
+| 9 | هل الشاشة ملخص مؤشرات ورسوم لقراءة الوضع واتخاذ قرار؟ | P-010 Dashboard / KPI Overview |
 | 10 | هل هي مجموعة سجلات مسطحة مع بحث/تصفية/ترقيم وإنشاء/تعديل؟ | P-001 Server-managed Grid / CRUD |
 | 11 | هل يحتاج السجل الواحد صفحة قراءة غنية (بيانات + قوائم مرتبطة + نشاط)؟ | P-009 Record View (Candidate) — تُفتح من P-001 أو P-002 |
 
@@ -503,7 +508,7 @@ Screen ID ولكل منصة في عقد الميزة (`FEATURE_DECOMPOSITION_TEM
 | Workflow مرتب يحتاج إكمال خطوة قبل التالية | Candidate P-004 Stepper / Wizard | هل كل خطوة تتحقق وحدها؟ هل يُحفظ draft بين الخطوات؟ |
 | مستند رأس + سطور + دورة حياة | Candidate P-008 Transactional Document | من يحسب الإجماليات؟ ما حالات القراءة فقط؟ ما عقد الترحيل والعكس؟ |
 | سجل واحد يحتاج صفحة قراءة غنية | Candidate P-009 Record View | ما الأقسام؟ ما القوائم المرتبطة؟ هل يوجد Activity/Chatter؟ |
-| مؤشرات وملخصات لقرار | Candidate P-010 Dashboard | من يملك كل مؤشر؟ ما الفترة الافتراضية؟ إلى أين يذهب drill-down؟ |
+| مؤشرات وملخصات لقرار | P-010 Dashboard | من يملك كل مؤشر؟ ما الفترة الافتراضية؟ إلى أين يذهب drill-down؟ |
 | مراحل مرئية كأعمدة | Candidate P-011 Kanban | من يملك المراحل؟ ما قواعد الانتقال؟ هل يوجد WIP limit؟ |
 | بيانات زمنية على تقويم | Candidate P-012 Calendar | ما العروض (يوم/أسبوع/شهر/agenda)؟ ما قواعد التعارض والمنطقة الزمنية؟ |
 | نقاش/نشاط مرتبط بسجل | Candidate P-013 Activity & Chatter (مضمّن) | من يرى الرسائل؟ هل توجد إشارات ومرفقات؟ ما سياسة الاحتفاظ؟ |
@@ -656,12 +661,12 @@ Import يبقى view داخل P-001 كما هو. Import بخطوات (رفع ←
 - **Mobile:** ترويسة بطاقة، ثم أقسام عبر `AppSegmentedControl`، والإجراءات في قائمة.
 - **العقد المقترح:** طلب رئيسي للسجل وطلبات منفصلة للقوائم المرتبطة بترقيم؛ كل قائمة مرتبطة تحترم scope وصلاحية مالكها؛ عدم تحميل التبويبات غير المفتوحة.
 
-### P-010 — Dashboard / KPI Overview (Candidate)
+### P-010 — Dashboard / KPI Overview (Active — 2026-10-29)
 
 - **الاستخدام:** ملخص مؤشرات لقرار: رئيسية موديول، لوحة مدير.
-- **Web:** شبكة `MetricCard` ثم رسوم؛ فلتر فترة واحد للوحة.
-- **Mobile:** بطاقات مؤشرات عمودية ثم `AppChartCard`.
-- **العقد المقترح:** كل مؤشر له query مالك وفترة وscope؛ كل مؤشر يفتح P-001 مفلترًا (drill-down)؛ لا بيانات ثابتة أو تجريبية؛ الاستعلامات محدودة بالفترة؛ حالة فارغة لكل مؤشر.
+- **Web:** شبكة `MetricCard` ولوحات وقوائم أو رسوم حسب قرارات Required/Deferred/Excluded. فلتر الفترة يلزم للمؤشرات الزمنية؛ ملخص الحالة الحالية يعلن snapshot/window الخادم دون فلتر فترة مخترع.
+- **Mobile:** بطاقات مؤشرات ولوحات ملائمة للهاتف؛ `AppChartCard` عندما يكون الرسم Required. المرجع الحالي `TenantDashboardScreen` يحتفظ بتكييفه المسجل.
+- **العقد المعتمد:** كل مؤشر له query مالك وscope وsnapshot أو فترة معلنة. يقرر العقد drill-down لكل وجهة على حدة؛ لا رابط إلى طفل Deferred أو غير مسجل. لا أرقام تجريبية في runtime؛ حالات loading/error/forbidden/zero/empty صريحة. المراجع الفعلية وحدودها موثقة في P-010 reviewed snapshot reference أدناه.
 
 ### P-011 — Kanban Board (Candidate)
 
@@ -729,6 +734,27 @@ Import يبقى view داخل P-001 كما هو. Import بخطوات (رفع ←
 
 ## Anti-patterns
 
+### P-015 — Public authentication and scoped sign-in (Active)
+
+Reviewed 2026-10-28, owner Platform/Shell. Web reference `web-next/src/platform/auth/login/Login.tsx`,
+`components/LoginForm.tsx`, `components/LeftPanel.tsx`, `shell/auth-layout/AuthLayout.tsx`;
+Web Implemented. Native `mobile-react/src/platform/auth/presentation/login/components/LoginForm.tsx`
+uses AppForm/AppTextField/AppButton with compact stacked layout: Adapted. Existing
+Web loginValidation/loginResult tests and current native source are the reviewed evidence.
+Angular adapts framework only and must compare actual Next/Angular at equal EN/AR
+viewports/themes; reference source supplies the current layout, not Countries CRUD.
+
+Applies to public sign-in, password entry and explicit tenant/company challenge
+selection. Shared controls own form validation/focus/feedback and overlay lifecycle;
+Platform owns credentials, one-use challenge, actual auth/session result and error
+policy; Shell owns public navigation/preferences. Pending/invalid credentials,
+API outage, selection cancel/expiry and existing-session reload are Required.
+No dirty business draft or list/report/import/export view is invented. Narrow
+layouts hide the branding column; labels, focus/keyboard and RTL remain usable.
+Provider/register/password-reset capability is independently decided per exact
+contract; copying a button never establishes a working provider. No new native
+capability is implied by registering this existing reference.
+
 - نسخ JSX من Countries أو Add Tenant مع تغيير الأسماء فقط.
 - إنشاء Grid أو Form محلي يكرر shared toolbar/dialog/validation/dirty-state.
 - بناء renderer عام ضخم يحتوي قواعد كل الموديولات تحت flags غامضة.
@@ -764,3 +790,11 @@ Import يبقى view داخل P-001 كما هو. Import بخطوات (رفع ←
 التابات قبل تركيبها، والتغيير يحمي dirty/busy عبر النظام المشترك. المرجع
 PlatformSettingsPage وSettingsTabs تحت Platform، وعقده الموثق في
 platform-settings ضمن خطة platform-error-logs. لا يتطلب ذلك نمطًا بصريًا جديدًا.
+
+### P-016 — Authenticated application shell (Active)
+
+Reviewed source: `web-next/src/shell/main-layout/MainLayout.tsx`, `components/sidebar/SideBar.tsx`, `components/top-bar/TopBar.tsx` and SettingsMenu; native `mobile-react/app/(main)/_layout.tsx` and shared AppThemePalettePicker. Pattern composes authenticated header/navigation/content and local appearance controls, preserving owner policy and actual registered routes. It does not supply business dashboard metrics, module entitlements or context transition rules. Current Angular contract: S2-A1/angular-application-shell; exact current source and actual browser evidence required before implementation/acceptance claims.
+
+### P-010 reviewed snapshot reference (2026-10-29)
+
+Current Web platform/tenants/TenantDashboardPage.tsx and dedicated PlatformTenantDashboardSummaryAdapter own current active-lifecycle counts/capacity/statuses plus now..+30-day expiry and bounded recent/expiry lists (8). Native TenantDashboardScreen is Adapted/retained and currently derives its summary from its existing tenant list; no new client is instructed to copy that aggregation. A current-snapshot dashboard has no invented date filter. Each metric must name owner/scope/period and available drill-down; unavailable target workflows are Deferred under a central ID and receive no dead links. Loading/zero/error/forbidden, real numbers, responsive/RTL/focus and explicit Web/native decisions are required. S2-A3 contract records FOLLOW-015 for management/drill-down until their actual routes are ported.

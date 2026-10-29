@@ -1,0 +1,351 @@
+{
+  "schemaVersion": 1,
+  "status": "active",
+  "executionMode": "bounded-runtime",
+  "runtimeAuthorized": true,
+  "feature": "angular-application-shell",
+  "featureName": "Angular Authenticated Application Shell",
+  "referenceFeature": "N/A",
+  "planId": "web-angular-migration",
+  "sliceId": "S2-A1 — Authenticated shell and personal preferences",
+  "canonicalPlan": "documentation/plans/business/web-angular-migration/PLAN.md",
+  "featureDecompositionDecision": "Single feature",
+  "screenWorkflowContract": "documentation/plans/business/web-angular-migration/decomposition/angular-application-shell.md",
+  "plannedCustomerEducation": "documentation/plans/business/web-angular-migration/education/angular-application-shell.md",
+  "purpose": "Verified exact S2-A1 runtime, focused acceptance and canonical handoff",
+  "reviewArtifact": "documentation/modules/platform/features/angular-application-shell/angular-application-shell-evidence.md",
+  "implementationRequest": "documentation/modules/platform/features/angular-application-shell/angular-application-shell-request.md",
+  "plannedCanonicalBooks": {
+    "master": "documentation/modules/platform/features/angular-application-shell/angular-application-shell-review.md",
+    "api": "documentation/modules/platform/features/angular-application-shell/angular-application-shell-api.md",
+    "web": "documentation/modules/platform/features/angular-application-shell/angular-application-shell-web.md",
+    "mobile": "documentation/modules/platform/features/angular-application-shell/angular-application-shell-mobile.md"
+  },
+  "sourceCollections": [],
+  "requiredFiles": [
+    {
+      "id": "preflight-0",
+      "path": "documentation/modules/platform/features/angular-application-shell/angular-application-shell-review.md",
+      "layer": "documentation",
+      "purpose": "Current reviewed source/authority"
+    },
+    {
+      "id": "preflight-1",
+      "path": "documentation/modules/platform/features/angular-application-shell/angular-application-shell-api.md",
+      "layer": "documentation",
+      "purpose": "Current reviewed source/authority"
+    },
+    {
+      "id": "preflight-2",
+      "path": "documentation/modules/platform/features/angular-application-shell/angular-application-shell-web.md",
+      "layer": "documentation",
+      "purpose": "Current reviewed source/authority"
+    },
+    {
+      "id": "preflight-3",
+      "path": "documentation/modules/platform/features/angular-application-shell/angular-application-shell-mobile.md",
+      "layer": "documentation",
+      "purpose": "Current reviewed source/authority"
+    },
+    {
+      "id": "preflight-4",
+      "path": "documentation/modules/platform/features/angular-application-shell/angular-application-shell-evidence.md",
+      "layer": "documentation",
+      "purpose": "Current reviewed source/authority"
+    },
+    {
+      "id": "preflight-5",
+      "path": "documentation/modules/platform/features/angular-application-shell/angular-application-shell-request.md",
+      "layer": "documentation",
+      "purpose": "Current reviewed source/authority"
+    },
+    {
+      "id": "preflight-6",
+      "path": "documentation/plans/business/web-angular-migration/decomposition/angular-application-shell.md",
+      "layer": "documentation",
+      "purpose": "Current reviewed source/authority"
+    },
+    {
+      "id": "preflight-7",
+      "path": "web-next/src/shell/main-layout/MainLayout.tsx",
+      "layer": "web",
+      "purpose": "Current reviewed source/authority"
+    },
+    {
+      "id": "preflight-8",
+      "path": "web-next/src/shell/components/sidebar/SideBar.tsx",
+      "layer": "web",
+      "purpose": "Current reviewed source/authority"
+    },
+    {
+      "id": "preflight-9",
+      "path": "web-next/src/shell/components/sidebar/sidebarConstants.ts",
+      "layer": "web",
+      "purpose": "Current reviewed source/authority"
+    },
+    {
+      "id": "preflight-10",
+      "path": "web-next/src/shell/components/sidebar/UserProfile.tsx",
+      "layer": "web",
+      "purpose": "Current reviewed source/authority"
+    },
+    {
+      "id": "preflight-11",
+      "path": "web-next/src/shell/components/top-bar/TopBar.tsx",
+      "layer": "web",
+      "purpose": "Current reviewed source/authority"
+    },
+    {
+      "id": "preflight-12",
+      "path": "web-next/src/shell/components/top-bar/TopBarStyles.tsx",
+      "layer": "web",
+      "purpose": "Current reviewed source/authority"
+    },
+    {
+      "id": "preflight-13",
+      "path": "web-next/src/shell/components/top-bar/SettingsMenu.tsx",
+      "layer": "web",
+      "purpose": "Current reviewed source/authority"
+    },
+    {
+      "id": "preflight-14",
+      "path": "web-next/src/shell/components/top-bar/ThemePaletteSelector.tsx",
+      "layer": "web",
+      "purpose": "Current reviewed source/authority"
+    },
+    {
+      "id": "preflight-15",
+      "path": "web-next/src/shared/components/navigation/header/PageHeader.tsx",
+      "layer": "web",
+      "purpose": "Current reviewed source/authority"
+    },
+    {
+      "id": "preflight-16",
+      "path": "web-next/src/shared/components/layout/ContextBadge.tsx",
+      "layer": "web",
+      "purpose": "Current reviewed source/authority"
+    },
+    {
+      "id": "preflight-17",
+      "path": "web-next/src/platform/tenant-access/TenantNameBadge.tsx",
+      "layer": "web",
+      "purpose": "Current reviewed source/authority"
+    },
+    {
+      "id": "preflight-18",
+      "path": "web-next/src/platform/tenant-access/CompanyContextSwitcher.tsx",
+      "layer": "web",
+      "purpose": "Current reviewed source/authority"
+    },
+    {
+      "id": "preflight-19",
+      "path": "mobile-react/app/(main)/_layout.tsx",
+      "layer": "web",
+      "purpose": "Current reviewed source/authority"
+    },
+    {
+      "id": "preflight-20",
+      "path": "mobile-react/src/shared/components/controls/AppThemePalettePicker.tsx",
+      "layer": "web",
+      "purpose": "Current reviewed source/authority"
+    },
+    {
+      "id": "preflight-21",
+      "path": "web-angular/src/app/shared/ui/public-api.ts",
+      "layer": "web",
+      "purpose": "Current reviewed source/authority"
+    },
+    {
+      "id": "preflight-22",
+      "path": "web-angular/src/app/platform/auth/state/auth-session.ts",
+      "layer": "web",
+      "purpose": "Current reviewed source/authority"
+    },
+    {
+      "id": "preflight-23",
+      "path": "web-angular/src/theme/theme-service.ts",
+      "layer": "web",
+      "purpose": "Current reviewed source/authority"
+    },
+    {
+      "id": "preflight-24",
+      "path": "documentation/guides/shared/SCREEN_PATTERN_CATALOG.md",
+      "layer": "documentation",
+      "purpose": "Current reviewed source/authority"
+    },
+    {
+      "id": "preflight-25",
+      "path": "documentation/guides/web/architecture/ANGULAR_SHARED_COMPONENTS.md",
+      "layer": "documentation",
+      "purpose": "Current reviewed source/authority"
+    },
+    {
+      "id": "runtime-26",
+      "path": "web-angular/src/app/shared/ui/layout/application-frame.html",
+      "layer": "web",
+      "purpose": "Current implementation or acceptance evidence"
+    },
+    {
+      "id": "runtime-27",
+      "path": "web-angular/src/app/shared/ui/layout/application-frame.scss",
+      "layer": "web",
+      "purpose": "Current implementation or acceptance evidence"
+    },
+    {
+      "id": "runtime-28",
+      "path": "web-angular/src/app/shared/ui/layout/application-frame.spec.ts",
+      "layer": "web",
+      "purpose": "Current implementation or acceptance evidence"
+    },
+    {
+      "id": "runtime-29",
+      "path": "web-angular/src/app/shared/ui/layout/application-frame.ts",
+      "layer": "web",
+      "purpose": "Current implementation or acceptance evidence"
+    },
+    {
+      "id": "runtime-30",
+      "path": "web-angular/src/app/shared/ui/layout/context-badge.ts",
+      "layer": "web",
+      "purpose": "Current implementation or acceptance evidence"
+    },
+    {
+      "id": "runtime-31",
+      "path": "web-angular/src/app/shared/ui/layout/identity-avatar.ts",
+      "layer": "web",
+      "purpose": "Current implementation or acceptance evidence"
+    },
+    {
+      "id": "runtime-32",
+      "path": "web-angular/src/app/shared/ui/layout/navigation-list.spec.ts",
+      "layer": "web",
+      "purpose": "Current implementation or acceptance evidence"
+    },
+    {
+      "id": "runtime-33",
+      "path": "web-angular/src/app/shared/ui/layout/navigation-list.ts",
+      "layer": "web",
+      "purpose": "Current implementation or acceptance evidence"
+    },
+    {
+      "id": "runtime-34",
+      "path": "web-angular/src/app/shared/ui/layout/page-header.ts",
+      "layer": "web",
+      "purpose": "Current implementation or acceptance evidence"
+    },
+    {
+      "id": "runtime-35",
+      "path": "web-angular/src/app/shared/ui/layout/surface-card.ts",
+      "layer": "web",
+      "purpose": "Current implementation or acceptance evidence"
+    },
+    {
+      "id": "runtime-36",
+      "path": "web-angular/src/app/shared/ui/overlays/popover-panel.ts",
+      "layer": "web",
+      "purpose": "Current implementation or acceptance evidence"
+    },
+    {
+      "id": "runtime-37",
+      "path": "web-angular/src/app/shared/ui/controls/option-select.spec.ts",
+      "layer": "web",
+      "purpose": "Current implementation or acceptance evidence"
+    },
+    {
+      "id": "runtime-38",
+      "path": "web-angular/src/app/shared/ui/controls/option-select.ts",
+      "layer": "web",
+      "purpose": "Current implementation or acceptance evidence"
+    },
+    {
+      "id": "runtime-39",
+      "path": "web-angular/src/app/shared/ui/controls/palette-picker.spec.ts",
+      "layer": "web",
+      "purpose": "Current implementation or acceptance evidence"
+    },
+    {
+      "id": "runtime-40",
+      "path": "web-angular/src/app/shared/ui/controls/palette-picker.ts",
+      "layer": "web",
+      "purpose": "Current implementation or acceptance evidence"
+    },
+    {
+      "id": "runtime-41",
+      "path": "web-angular/src/app/shell/layout/main-shell.ts",
+      "layer": "web",
+      "purpose": "Current implementation or acceptance evidence"
+    },
+    {
+      "id": "runtime-42",
+      "path": "web-angular/src/app/shell/layout/main-shell.html",
+      "layer": "web",
+      "purpose": "Current implementation or acceptance evidence"
+    },
+    {
+      "id": "runtime-43",
+      "path": "web-angular/src/app/shell/layout/main-shell.scss",
+      "layer": "web",
+      "purpose": "Current implementation or acceptance evidence"
+    },
+    {
+      "id": "runtime-44",
+      "path": "web-angular/src/app/shell/public-api.ts",
+      "layer": "web",
+      "purpose": "Current implementation or acceptance evidence"
+    },
+    {
+      "id": "runtime-45",
+      "path": "web-angular/src/app/platform/auth/session.public-api.ts",
+      "layer": "web",
+      "purpose": "Current implementation or acceptance evidence"
+    },
+    {
+      "id": "runtime-46",
+      "path": "web-angular/src/app/platform/auth/pages/session-page.ts",
+      "layer": "web",
+      "purpose": "Current implementation or acceptance evidence"
+    },
+    {
+      "id": "runtime-47",
+      "path": "web-angular/src/app/app.routes.ts",
+      "layer": "web",
+      "purpose": "Current implementation or acceptance evidence"
+    },
+    {
+      "id": "runtime-48",
+      "path": "web-angular/src/theme/prime-preset.ts",
+      "layer": "web",
+      "purpose": "Current implementation or acceptance evidence"
+    },
+    {
+      "id": "runtime-49",
+      "path": "web-angular/scripts/verify-shell-browser.mjs",
+      "layer": "web",
+      "purpose": "Current implementation or acceptance evidence"
+    },
+    {
+      "id": "runtime-50",
+      "path": "web-angular/scripts/verify-language-select-browser.mjs",
+      "layer": "web",
+      "purpose": "Current implementation or acceptance evidence"
+    },
+    {
+      "id": "runtime-51",
+      "path": "web-angular/scripts/verify-login-browser.mjs",
+      "layer": "web",
+      "purpose": "Current implementation or acceptance evidence"
+    },
+    {
+      "id": "runtime-52",
+      "path": "documentation/modules/platform/features/angular-application-shell/IMPLEMENTATION_REPORT.md",
+      "layer": "documentation",
+      "purpose": "Current implementation or acceptance evidence"
+    },
+    {
+      "id": "runtime-53",
+      "path": "documentation/plans/business/web-angular-migration/education/angular-application-shell.md",
+      "layer": "documentation",
+      "purpose": "Current implementation or acceptance evidence"
+    }
+  ]
+}

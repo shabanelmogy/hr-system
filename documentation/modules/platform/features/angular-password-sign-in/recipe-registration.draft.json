@@ -1,0 +1,340 @@
+{
+  "status": "registered-preflight",
+  "executionMode": "bounded-runtime",
+  "runtimeAuthorized": true,
+  "referenceFeature": "N/A",
+  "planId": "web-angular-migration",
+  "sliceId": "S2-A0 — Password sign-in and session entry",
+  "canonicalPlan": "documentation/plans/business/web-angular-migration/PLAN.md",
+  "featureDecompositionDecision": "Single feature",
+  "screenWorkflowContract": "documentation/plans/business/web-angular-migration/decomposition/angular-password-sign-in.md",
+  "plannedCustomerEducation": "documentation/plans/business/web-angular-migration/education/angular-password-sign-in.md",
+  "instructions": "Merge these entries into recipe-manifest.json after Phase 00 has a final preflight required-files.json and all four initial applied implementation books. Extend the manifest/books with runtime evidence during implementation.",
+  "books": [
+    {
+      "id": "angular-password-sign-in-master",
+      "path": "../modules/platform/features/angular-password-sign-in/angular-password-sign-in-review.md",
+      "title": "Angular Password Sign-in and Session Entry cross-platform master review"
+    },
+    {
+      "id": "angular-password-sign-in-api",
+      "path": "../modules/platform/features/angular-password-sign-in/angular-password-sign-in-api.md",
+      "title": "Angular Password Sign-in and Session Entry API implementation profile"
+    },
+    {
+      "id": "angular-password-sign-in-web",
+      "path": "../modules/platform/features/angular-password-sign-in/angular-password-sign-in-web.md",
+      "title": "Angular Password Sign-in and Session Entry Next.js implementation profile"
+    },
+    {
+      "id": "angular-password-sign-in-mobile",
+      "path": "../modules/platform/features/angular-password-sign-in/angular-password-sign-in-mobile.md",
+      "title": "Angular Password Sign-in and Session Entry Expo implementation profile"
+    }
+  ],
+  "requiredFileManifest": "../modules/platform/features/angular-password-sign-in/required-files.json",
+  "recipes": [
+    {
+      "id": "angular-password-sign-in-phase-00-implementation-preflight",
+      "title": "Angular Password Sign-in and Session Entry Phase 00 - Implementation Preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "../modules/platform/features/angular-password-sign-in/generated/PHASE-00-implementation-preflight.md",
+      "sources": [
+        {
+          "book": "angular-password-sign-in-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-password-sign-in-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-password-sign-in-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "angular-password-sign-in-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-password-sign-in-phase-01-domain-api",
+      "title": "Angular Password Sign-in and Session Entry Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "../modules/platform/features/angular-password-sign-in/generated/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "angular-password-sign-in-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "angular-password-sign-in-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-password-sign-in-phase-02-web-client",
+      "title": "Angular Password Sign-in Phase 02 - Angular Client",
+      "template": "templates/PHASE-02-angular-client.template.md",
+      "output": "../modules/platform/features/angular-password-sign-in/generated/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "angular-password-sign-in-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-password-sign-in-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-password-sign-in-phase-03-mobile-client",
+      "title": "Angular Password Sign-in and Session Entry Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "../modules/platform/features/angular-password-sign-in/generated/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "angular-password-sign-in-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-password-sign-in-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-password-sign-in-phase-04-domain-actions",
+      "title": "Angular Password Sign-in and Session Entry Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "../modules/platform/features/angular-password-sign-in/generated/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "angular-password-sign-in-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-password-sign-in-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-password-sign-in-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-password-sign-in-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-password-sign-in-phase-05-integration-runtime",
+      "title": "Angular Password Sign-in and Session Entry Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "../modules/platform/features/angular-password-sign-in/generated/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "angular-password-sign-in-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "angular-password-sign-in-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-password-sign-in-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "angular-password-sign-in-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-password-sign-in-phase-06-verification-acceptance",
+      "title": "Angular Password Sign-in and Session Entry Phase 06 - Verification and Acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "../modules/platform/features/angular-password-sign-in/generated/PHASE-06-verification-acceptance.md",
+      "sources": [
+        {
+          "book": "angular-password-sign-in-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-password-sign-in-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-password-sign-in-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-password-sign-in-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-password-sign-in-phase-07-customer-education-closure",
+      "title": "Angular Password Sign-in and Session Entry Phase 07 - Customer Education and Closure",
+      "template": "templates/PHASE-07-customer-education-closure.template.md",
+      "output": "../modules/platform/features/angular-password-sign-in/generated/PHASE-07-customer-education-closure.md",
+      "sources": [
+        {
+          "book": "angular-password-sign-in-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-password-sign-in-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-password-sign-in-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -69,6 +69,11 @@ source paths below must be inspected before runtime work starts.
    reduce a real navigation cost; record `stacked` on Mobile when tabs are not
    useful. Child previews, reports, and read-only panels do not become separate
    CRUD features without their own boundary and contract.
+5. A technical transport/infrastructure unit with no customer UI records explicit
+   Web and Mobile rows with Pattern `N/A`, Platform status `Excluded`, every visual
+   view `Excluded`, and a concrete no-UI reason in the deviation column. Record
+   exact inspected transport/test paths and Required client regression separately.
+   This does not exempt a Required/Deferred screen from its real Pattern gate.
 
 ## 3. Closest existing reference
 

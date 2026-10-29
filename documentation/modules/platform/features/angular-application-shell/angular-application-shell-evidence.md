@@ -1,0 +1,7 @@
+# Angular application shell — evidence
+
+Current Phase 00 source/Shared/API/native audit and 237 recipes/planning passed before bounded runtime. Existing API stage Verified first, then Web, retained Mobile and integrated verification.
+
+Phase 06 Verified on 2026-10-29: Angular full check 14 files/59 tests and 6 architecture cases; strict templates/types, tokens/fonts/catalog and production build pass (427.54 kB initial / 114.90 kB transfer). Production artifact shell matrix passes 24 cases (two roles, EN/AR, light/dark, 390/900/1440). PrimeNG language selector passes 20 palette/mode/language cases including selected-row contrast >=4.5, closed foreground, keyboard selection/Escape/focus. Login browser acceptance passes 11 scenarios including 8 current Next visual pairs within 1px, real API/SQL login/reload/settings logout with Secure HttpOnly cookies, and scoped localization. Retained Mobile auth regression passes 2 tests. Actual Next desktop frame measures 64/280 sidebar and x=281,width=1159 expanded header at 1440; Angular matches. No API/native/schema or business-dashboard parity claim. Full historical API gate remains its own R2 evidence; hosted checks and FOLLOW-012/014/015 remain open.
+
+See IMPLEMENTATION_REPORT.md for resolved findings, exact commands, primary research and honest scope limitations. Documentation closes after generation/check; no simultaneous sibling runtime.

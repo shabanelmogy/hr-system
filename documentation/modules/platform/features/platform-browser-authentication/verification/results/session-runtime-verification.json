@@ -1,0 +1,79 @@
+{
+  "date": "2026-10-28",
+  "slice": "S0-AUTH-R1 — Session correctness",
+  "outcome": "Verified for bounded session increment; browser transport remains pending",
+  "api": {
+    "configuration": "Release",
+    "restore": "Passed",
+    "build": "Passed",
+    "buildErrors": 0,
+    "buildWarnings": 171,
+    "testProjects": 12,
+    "passed": 1139,
+    "failed": 0,
+    "skipped": 0,
+    "total": 1139,
+    "browserProbeEnabled": true
+  },
+  "actualSqlSessionCases": [
+    {
+      "name": "ErpSystem.IntegrationTests.PlatformSessionLifecycleTests.SourceExpiringDuringIssuance_CannotBeRefreshedOrSwitched",
+      "outcome": "Passed"
+    },
+    {
+      "name": "ErpSystem.IntegrationTests.PlatformSessionLifecycleTests.DisabledLockedOrStampChangedAccount_CannotRefreshOrSwitch",
+      "outcome": "Passed"
+    },
+    {
+      "name": "ErpSystem.IntegrationTests.PlatformSessionLifecycleTests.LateReuseRacingWithRefresh_SurfacesPersistenceConflictInsteadOfFalseRevocation",
+      "outcome": "Passed"
+    },
+    {
+      "name": "ErpSystem.IntegrationTests.PlatformSessionLifecycleTests.LateReuse_RevokesOnlyMatchingSession_AndLatestPairIsThenRejected",
+      "outcome": "Passed"
+    },
+    {
+      "name": "ErpSystem.IntegrationTests.PlatformSessionLifecycleTests.InvalidPairExpiryOrCompanyDenial_DoesNotRotateOrRevoke",
+      "outcome": "Passed"
+    },
+    {
+      "name": "ErpSystem.IntegrationTests.PlatformSessionLifecycleTests.ConcurrentRefreshAndSwitch_CommitOnlyOneReplacement_PreserveOtherDevice",
+      "outcome": "Passed"
+    },
+    {
+      "name": "ErpSystem.IntegrationTests.PlatformSessionLifecycleTests.CompanySwitch_ReplacesOnlyActiveSource_AndCannotResurrectLoggedOutSession",
+      "outcome": "Passed"
+    },
+    {
+      "name": "ErpSystem.IntegrationTests.PlatformSessionLifecycleTests.Logout_WithRetainedRotatedToken_RevokesSuccessorAndIsIdempotent",
+      "outcome": "Passed"
+    },
+    {
+      "name": "ErpSystem.IntegrationTests.PlatformSessionLifecycleTests.ConcurrentRefreshAndLogout_ReportLoserTruthfully_ThenLogoutConverges",
+      "outcome": "Passed"
+    },
+    {
+      "name": "ErpSystem.IntegrationTests.PlatformSessionLifecycleTests.ConcurrentRefreshes_CommitOneSuccessor_AndReturnConflictForLoser",
+      "outcome": "Passed"
+    },
+    {
+      "name": "ErpSystem.IntegrationTests.PlatformSessionLifecycleTests.Refresh_PreservesSessionAbsoluteExpiry_AndGraceRejectsWithoutRevocation",
+      "outcome": "Passed"
+    }
+  ],
+  "retainedClients": {
+    "next": {
+      "files": 4,
+      "passed": 28,
+      "failed": 0
+    },
+    "mobile": {
+      "files": 1,
+      "passed": 1,
+      "failed": 0
+    },
+    "scope": "Focused existing auth regressions; no new UI/device acceptance"
+  },
+  "database": "Existing migrations on disposable SQL databases; no user database/model/new migration changes",
+  "remaining": "DEC-027 browser Cookie routes/HTTP acceptance; RISK-018 provider/browser boundary; FOLLOW-011 earlier intermittent SQL history remains open"
+}

@@ -4,6 +4,10 @@ This is the default styling contract for every feature in `mobile-react` (Expo S
 
 ## Ownership hierarchy
 
+P-015 authentication reference is registered in SCREEN_PATTERN_CATALOG using the
+existing native LoginForm/AppForm composition as Adapted. Angular login migration
+does not change this native source/layout or authorize another native form shell.
+
 Use the narrowest owner that can express the rule:
 
 1. **`src/core/theme/theme.ts`** owns reusable design tokens: semantic colors, spacing, radii, typography sizes, and theme-mode behavior. Add a token only when it is genuinely app-wide and name it by meaning, not by a screen.

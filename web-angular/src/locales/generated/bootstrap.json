@@ -1,0 +1,12 @@
+{
+  "en": {
+    "common.reviewValidationErrors": "Review {{count}} validation errors",
+    "common.validationErrors": "Validation errors",
+    "general.mainTitle": "ERP System"
+  },
+  "ar": {
+    "common.reviewValidationErrors": "عرض أخطاء التحقق وعددها {{count}}",
+    "common.validationErrors": "أخطاء التحقق",
+    "general.mainTitle": "نظام ERP"
+  }
+}

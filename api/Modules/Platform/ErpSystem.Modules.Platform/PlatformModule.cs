@@ -45,6 +45,7 @@ public sealed class PlatformModule : IModule
 
     public void ConfigureApplication(WebApplication app)
     {
+        app.UseMiddleware<ErpSystem.Modules.Platform.Presentation.Authentication.BrowserAuthenticationMiddleware>();
         app.UseMiddleware<TenantReadOnlyMiddleware>();
     }
 

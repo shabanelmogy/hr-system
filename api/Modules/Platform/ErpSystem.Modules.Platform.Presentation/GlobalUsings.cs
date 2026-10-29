@@ -14,6 +14,7 @@ global using ErpSystem.BuildingBlocks.Authorization;
 global using ErpSystem.Modules.Platform.Application;
 global using ErpSystem.Modules.Platform.Application.Authentication.Tokens;
 global using ErpSystem.Modules.Platform.Contracts.Authentication.Tokens;
+global using ErpSystem.Modules.Platform.Contracts.Authentication.Browser;
 global using ErpSystem.Modules.Platform.Contracts.Tenancy;
 global using Microsoft.AspNetCore.Authorization;
 global using Microsoft.AspNetCore.Hosting;

@@ -18,6 +18,7 @@ public sealed class PlatformContractsArchitectureTests
     {
         "ErpSystem.Modules.Platform.Contracts",
         "ErpSystem.Modules.Platform.Contracts.Authentication.Tokens",
+        "ErpSystem.Modules.Platform.Contracts.Authentication.Browser",
         "ErpSystem.Modules.Platform.Contracts.Authorization",
         "ErpSystem.Modules.Platform.Contracts.CompanyAccess",
         "ErpSystem.Modules.Platform.Contracts.Communications",
@@ -33,6 +34,11 @@ public sealed class PlatformContractsArchitectureTests
     {
         "ErpSystem.Modules.Platform.Contracts.AssemblyReference",
         "ErpSystem.Modules.Platform.Contracts.Authentication.Tokens.AuthenticationTokenClaimNames",
+        // R2 transport constants/metadata are shared by JWT Infrastructure and
+        // Presentation only; no runtime port or framework dependency enters Contracts.
+        "ErpSystem.Modules.Platform.Contracts.Authentication.Browser.BrowserAuthenticationDefaults",
+        "ErpSystem.Modules.Platform.Contracts.Authentication.Browser.BrowserAuthenticationEndpointAttribute",
+        "ErpSystem.Modules.Platform.Contracts.Authentication.Browser.BearerOnlyAuthenticationAttribute",
         "ErpSystem.Modules.Platform.Contracts.Authorization.PermissionClaimNames",
         "ErpSystem.Modules.Platform.Contracts.Authorization.PlatformRoleNames",
         "ErpSystem.Modules.Platform.Contracts.Authorization.PlatformPermissions",

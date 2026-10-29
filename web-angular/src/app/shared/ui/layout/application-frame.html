@@ -1,0 +1,25 @@
+<header class="workspace-topbar"><div class="workspace-toolbar">
+  @if(navigationVisible()){<erp-button class="drawer-toggle" appearance="icon" variant="text" [label]="opened()?closeLabel():openLabel()" [expanded]="opened()" controls="workspace-navigation" (activated)="opened.set(!opened())"><erp-icon buttonIcon [name]="opened()?'menuOpen':'menu'" /></erp-button>}
+  <a class="brand" [routerLink]="homePath()" [attr.aria-label]="title()"><erp-icon name="team" /><strong>{{ title() }}</strong></a>
+  <div class="toolbar-spacer"></div><ng-content select="[workspaceContext]" /><div class="toolbar-spacer"></div>
+  <div class="workspace-actions"><ng-content select="[workspaceActions]" /></div>
+</div></header>
+<ng-template #navigation>
+  <div class="identity-card" [class.identity-compact]="desktop() && !opened()"><erp-identity-avatar [name]="name()" />
+    @if(!desktop() || opened()){<div class="identity-copy"><strong>{{ name() }}</strong><small>{{ subtitle() }}</small></div>}
+  </div>
+  <erp-navigation-list [expanded]="!desktop() || opened()" [entries]="entries()" [label]="navigationLabel()" [searchLabel]="searchLabel()" (selected)="activate($event)" />
+</ng-template>
+@if(navigationVisible()){@if(desktop()){
+  <aside class="workspace-sidebar" id="workspace-navigation" [attr.aria-label]="navigationLabel()">
+    <div class="drawer-header">@if(opened()){<erp-button appearance="icon" variant="text" [label]="closeLabel()" (activated)="opened.set(false)"><erp-icon buttonIcon name="chevron" /></erp-button>}</div>
+    <div class="sidebar-scroll"><ng-container *ngTemplateOutlet="navigation" /></div>
+  </aside>
+} @else {
+  <p-drawer [visible]="opened()" (visibleChange)="opened.set($event)" [position]="rtl()?'right':'left'" [header]="navigationLabel()"
+    [ariaCloseLabel]="closeLabel()" [blockScroll]="true" appendTo="body" [style]="{width:'280px'}">
+    <ng-container *ngTemplateOutlet="navigation" />
+  </p-drawer>
+}
+}
+<main class="workspace-main"><ng-content /></main>

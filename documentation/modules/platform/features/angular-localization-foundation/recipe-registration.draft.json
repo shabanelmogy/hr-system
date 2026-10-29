@@ -1,0 +1,340 @@
+{
+  "status": "registered-runtime",
+  "executionMode": "bounded-runtime",
+  "runtimeAuthorized": true,
+  "referenceFeature": "N/A",
+  "planId": "web-angular-migration",
+  "sliceId": "S1-A0 — Angular toolchain and localization runtime",
+  "canonicalPlan": "documentation/plans/business/web-angular-migration/PLAN.md",
+  "featureDecompositionDecision": "Single feature",
+  "screenWorkflowContract": "documentation/plans/business/web-angular-migration/decomposition/angular-localization-foundation.md",
+  "plannedCustomerEducation": "N/A - technical runtime, no customer workflow",
+  "instructions": "Entries are registered in the central manifest. Regenerate from canonical numbered books and current required-files.json; runtime evidence exists and is technical-scope Verified.",
+  "books": [
+    {
+      "id": "angular-localization-foundation-master",
+      "path": "../modules/platform/features/angular-localization-foundation/angular-localization-foundation-review.md",
+      "title": "Angular Toolchain and Localization Runtime cross-platform master review"
+    },
+    {
+      "id": "angular-localization-foundation-api",
+      "path": "../modules/platform/features/angular-localization-foundation/angular-localization-foundation-api.md",
+      "title": "Angular Toolchain and Localization Runtime API implementation profile"
+    },
+    {
+      "id": "angular-localization-foundation-web",
+      "path": "../modules/platform/features/angular-localization-foundation/angular-localization-foundation-web.md",
+      "title": "Angular localization foundation Angular Web profile"
+    },
+    {
+      "id": "angular-localization-foundation-mobile",
+      "path": "../modules/platform/features/angular-localization-foundation/angular-localization-foundation-mobile.md",
+      "title": "Angular Toolchain and Localization Runtime Expo implementation profile"
+    }
+  ],
+  "requiredFileManifest": "../modules/platform/features/angular-localization-foundation/required-files.json",
+  "recipes": [
+    {
+      "id": "angular-localization-foundation-phase-00-implementation-preflight",
+      "title": "Angular Toolchain and Localization Runtime Phase 00 - Implementation Preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "../modules/platform/features/angular-localization-foundation/generated/PHASE-00-implementation-preflight.md",
+      "sources": [
+        {
+          "book": "angular-localization-foundation-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-localization-foundation-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-localization-foundation-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "angular-localization-foundation-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-localization-foundation-phase-01-domain-api",
+      "title": "Angular Toolchain and Localization Runtime Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "../modules/platform/features/angular-localization-foundation/generated/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "angular-localization-foundation-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "angular-localization-foundation-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-localization-foundation-phase-02-web-client",
+      "title": "Angular Toolchain and Localization Runtime Phase 02 - Angular Client",
+      "template": "templates/PHASE-02-angular-client.template.md",
+      "output": "../modules/platform/features/angular-localization-foundation/generated/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "angular-localization-foundation-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-localization-foundation-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-localization-foundation-phase-03-mobile-client",
+      "title": "Angular Toolchain and Localization Runtime Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "../modules/platform/features/angular-localization-foundation/generated/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "angular-localization-foundation-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-localization-foundation-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-localization-foundation-phase-04-domain-actions",
+      "title": "Angular Toolchain and Localization Runtime Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "../modules/platform/features/angular-localization-foundation/generated/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "angular-localization-foundation-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-localization-foundation-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-localization-foundation-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-localization-foundation-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-localization-foundation-phase-05-integration-runtime",
+      "title": "Angular Toolchain and Localization Runtime Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "../modules/platform/features/angular-localization-foundation/generated/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "angular-localization-foundation-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "angular-localization-foundation-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-localization-foundation-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "angular-localization-foundation-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-localization-foundation-phase-06-verification-acceptance",
+      "title": "Angular Toolchain and Localization Runtime Phase 06 - Verification and Acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "../modules/platform/features/angular-localization-foundation/generated/PHASE-06-verification-acceptance.md",
+      "sources": [
+        {
+          "book": "angular-localization-foundation-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-localization-foundation-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-localization-foundation-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-localization-foundation-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-localization-foundation-phase-07-customer-education-closure",
+      "title": "Angular Toolchain and Localization Runtime Phase 07 - Customer Education and Closure",
+      "template": "templates/PHASE-07-customer-education-closure.template.md",
+      "output": "../modules/platform/features/angular-localization-foundation/generated/PHASE-07-customer-education-closure.md",
+      "sources": [
+        {
+          "book": "angular-localization-foundation-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-localization-foundation-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-localization-foundation-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,340 @@
+{
+  "status": "draft",
+  "executionMode": "preflight-only",
+  "runtimeAuthorized": false,
+  "referenceFeature": "N/A",
+  "planId": "web-angular-migration",
+  "sliceId": "S2-A4 — Browser company context transition",
+  "canonicalPlan": "documentation/plans/business/web-angular-migration/PLAN.md",
+  "featureDecompositionDecision": "Single feature",
+  "screenWorkflowContract": "documentation/plans/business/web-angular-migration/decomposition/angular-company-context.md",
+  "plannedCustomerEducation": "documentation/plans/business/web-angular-migration/education/angular-company-context.md",
+  "instructions": "Merge these entries into recipe-manifest.json after Phase 00 has a final preflight required-files.json and all four initial applied implementation books. Extend the manifest/books with runtime evidence during implementation.",
+  "books": [
+    {
+      "id": "angular-company-context-master",
+      "path": "../modules/platform/features/angular-company-context/angular-company-context-review.md",
+      "title": "Angular Secure Company Context cross-platform master review"
+    },
+    {
+      "id": "angular-company-context-api",
+      "path": "../modules/platform/features/angular-company-context/angular-company-context-api.md",
+      "title": "Angular Secure Company Context API implementation profile"
+    },
+    {
+      "id": "angular-company-context-web",
+      "path": "../modules/platform/features/angular-company-context/angular-company-context-web.md",
+      "title": "Angular Secure Company Context Next.js implementation profile"
+    },
+    {
+      "id": "angular-company-context-mobile",
+      "path": "../modules/platform/features/angular-company-context/angular-company-context-mobile.md",
+      "title": "Angular Secure Company Context Expo implementation profile"
+    }
+  ],
+  "requiredFileManifest": "../modules/platform/features/angular-company-context/required-files.json",
+  "recipes": [
+    {
+      "id": "angular-company-context-phase-00-implementation-preflight",
+      "title": "Angular Secure Company Context Phase 00 - Implementation Preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "../modules/platform/features/angular-company-context/generated/PHASE-00-implementation-preflight.md",
+      "sources": [
+        {
+          "book": "angular-company-context-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-company-context-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-company-context-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "angular-company-context-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-company-context-phase-01-domain-api",
+      "title": "Angular Secure Company Context Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "../modules/platform/features/angular-company-context/generated/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "angular-company-context-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "angular-company-context-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-company-context-phase-02-web-client",
+      "title": "Angular Secure Company Context Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "../modules/platform/features/angular-company-context/generated/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "angular-company-context-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-company-context-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-company-context-phase-03-mobile-client",
+      "title": "Angular Secure Company Context Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "../modules/platform/features/angular-company-context/generated/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "angular-company-context-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-company-context-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-company-context-phase-04-domain-actions",
+      "title": "Angular Secure Company Context Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "../modules/platform/features/angular-company-context/generated/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "angular-company-context-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-company-context-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-company-context-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-company-context-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-company-context-phase-05-integration-runtime",
+      "title": "Angular Secure Company Context Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "../modules/platform/features/angular-company-context/generated/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "angular-company-context-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "angular-company-context-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-company-context-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "angular-company-context-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-company-context-phase-06-verification-acceptance",
+      "title": "Angular Secure Company Context Phase 06 - Verification and Acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "../modules/platform/features/angular-company-context/generated/PHASE-06-verification-acceptance.md",
+      "sources": [
+        {
+          "book": "angular-company-context-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-company-context-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-company-context-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-company-context-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-company-context-phase-07-customer-education-closure",
+      "title": "Angular Secure Company Context Phase 07 - Customer Education and Closure",
+      "template": "templates/PHASE-07-customer-education-closure.template.md",
+      "output": "../modules/platform/features/angular-company-context/generated/PHASE-07-customer-education-closure.md",
+      "sources": [
+        {
+          "book": "angular-company-context-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-company-context-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-company-context-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -6,6 +6,7 @@ $planningRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
 $businessRoot = Join-Path $planningRoot "business"
 $notesRoot = Join-Path $planningRoot "notes"
 . (Join-Path $planningRoot "Check-Planning.ExecutionState.ps1")
+. (Join-Path $planningRoot "Check-Planning.UiPattern.ps1")
 
 $requiredFiles = @(
     "README.md",
@@ -20,6 +21,7 @@ $requiredFiles = @(
     "PLAN_QUALITY_GATE.md",
     "PLAN_REGISTRY.md",
     "Check-Planning.ExecutionState.ps1",
+    "Check-Planning.UiPattern.ps1",
     "New-BusinessPlan.ps1",
     "business/README.md",
     "notes/README.md",
@@ -242,8 +244,8 @@ if (Test-Path -LiteralPath $businessRoot -PathType Container) {
                             $errors.Add("Current feature contract '$($contractFile.FullName)' UI Pattern Gate platform '$platform' must be Web or Mobile")
                             continue
                         }
-                        if ($patternId -notmatch '^(?:P-[0-9]{3}|Candidate)\b') {
-                            $errors.Add("Current feature contract '$($contractFile.FullName)' UI Pattern Gate pattern '$patternId' must be P-### or Candidate")
+                        foreach ($patternError in @(Get-PlanningUiPatternErrors $patternId $platformStatus $capabilityDecisions $columns[15])) {
+                            $errors.Add("Current feature contract '$($contractFile.FullName)' $patternError")
                         }
                         if ([string]::IsNullOrWhiteSpace($referencePath) -or $referencePath -match '<|TBD' -or $referencePath -notmatch '/') {
                             $errors.Add("Current feature contract '$($contractFile.FullName)' UI Pattern Gate must contain an exact reviewed source path")

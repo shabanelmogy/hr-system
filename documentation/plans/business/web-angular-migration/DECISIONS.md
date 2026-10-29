@@ -17,6 +17,8 @@
 | D13 | Requester confirmed 2026-10-28 | Avoid unnecessary complexity; prefer existing framework/API capabilities, scoped reuse and minimal dependencies. | No speculative services, generic engines or empty abstraction layers; each addition needs a concrete consumer/requirement. |
 | D14 | Requester approved 2026-10-28 | Include ERP reliability/productivity recommendations as Required applicable acceptance: typed contracts, shared lookups, keyboard/structured editing, safe writes, precision/time, lifecycle/audit, volume/diagnostics and recovery. | ERP_ACCEPTANCE ERP-01..ERP-12; source-backed gaps gate the affected owner; no blanket domain rewrite or new infrastructure. |
 | D15 | Requester-approved assessment under D14; generator choice pending proof | Required representative OpenAPI client-generation proof, then one pinned generator if suitable or an explicit tested typed-service fallback. | S0 proof before broad transport rollout; FOLLOW-003 remains canonical for broader contract automation. |
+| D16 | Requester approved 2026-10-28 after the Sigma source review | Adopt SIG-01..SIG-08 as Required applicable acceptance: lookup bootstrap/watch, navigation request lifetime, loading ownership, attachment lifecycle, draft/confirmation safety, list URL criteria, shared compatibility and scroll ownership. | SIGMA_ACCEPTANCE owns details and external source provenance; S1 harnesses and first real consumers prove behavior under Angular 22/Strict/Zoneless. No runtime authorization or gate closure. |
+| D17 | Requester approved 2026-10-28 through the explicit browser-persistence choice | Preserve reload continuity with secure HttpOnly Cookies inside the existing Platform API; retain JSON/bearer routes for Next/Mobile. Persistent JS-readable token storage and memory-only re-login behavior are not the selected path. | BROWSER_AUTHENTICATION_CONTRACT defines the bounded target transport. DEC-027 remains Open for slice contract/proof; RISK-018 gates affected guarantees. No new BFF/server/identity system; runtime entry follows the exact slice gates. |
 
 ## D08 — BFF excluded by requester
 
@@ -44,3 +46,42 @@ scope isolation and no implicit write replay remain independent requirements.
 Each feature contract records the chosen mechanism, its lifetime/owner, complexity
 reason and verification. This approval settles D06 only; it does not approve the
 whole Draft or authorize runtime implementation.
+
+## D16 — Approved Sigma acceptance integration
+
+The requester explicitly approved including all eight recommendations after the
+source-only review of `F:/My Work/Sigma/SiGmaAngularFrontEnd`. Required behavior,
+owners, exact acceptance and external references are in
+[SIGMA_ACCEPTANCE](SIGMA_ACCEPTANCE.md); ROADMAP owns timing. These are acceptance
+details for the existing migration, not a port of Sigma architecture or business.
+ERP functional/security ownership, Angular 22, Strict/Zoneless, D06, shared tokens
+and direct API/no-BFF remain authoritative. Sigma's source/test definitions do
+not prove ERP runtime, and its package versions/constants/auth are not adopted.
+This approval integrates the requirements into planning only; G0-G4, central
+decisions and per-feature execution authorization remain unchanged.
+
+## D17 — Approved secure API Cookies
+
+The requester explicitly selected secure Cookies inside the current API after
+reviewing the persistence alternatives. This resolves browser-persistence choice;
+do not ask for it again. Angular remains a direct API client and keeps session
+continuity after reload. The API owns HttpOnly credential issuance/deletion;
+JavaScript receives sanitized session metadata and restricted selection challenges.
+
+[BROWSER_AUTHENTICATION_CONTRACT](BROWSER_AUTHENTICATION_CONTRACT.md) records the
+target routes, cookie/origin/antiforgery boundaries, existing bearer compatibility,
+required session reconciliation and acceptance. Concrete mechanisms still need
+Phase 00 and the exact execution contract; approval does not claim those mechanisms
+exist or their tests pass. Subsequent R1/R2 real SQL/Chromium evidence closes
+DEC-027 for the API binding; its current report owns that result. RISK-018 retains
+provider/ancestry/actual-consumer boundaries. No additional persistence-preference
+approval is needed.
+
+## D18 — Preserve database-backed UI translation
+
+The requester explicitly reaffirmed translation persistence while authorizing
+continuation. [LOCALIZATION_PARITY](LOCALIZATION_PARITY.md) freezes the existing
+company/system SQL ownership, keys/catalog fingerprint, runtime layers, revision/
+conflict/reset, permission and audit behavior. Angular reuses these APIs and keys.
+S1-A0 implements the technical runtime/service only; actual login/context/Settings
+save and reload acceptance is Required under FOLLOW-012 at S2/S4.

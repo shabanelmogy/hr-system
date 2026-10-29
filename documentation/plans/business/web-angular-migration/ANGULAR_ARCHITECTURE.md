@@ -5,6 +5,9 @@ Requester explicitly requires strong organization and the same shared-component-
 policy as Next. These are proposed Angular equivalents, not existing runtime files.
 State-management policy in section 6 is requester-approved under D06 on
 2026-10-28; the remaining Draft readiness and runtime gates still apply.
+Requester-approved D16 adds [SIGMA_ACCEPTANCE](SIGMA_ACCEPTANCE.md) SIG-01..SIG-08
+as detailed behavioral acceptance. This architecture owns component boundaries;
+that contract owns the added scenarios, evidence and adaptation limits.
 
 ## 1. Ownership before folders
 
@@ -157,6 +160,11 @@ is being owned, but their usage must remain consistent with the shared catalog.
 
 ## 5. Form contract
 
+Implemented shared folder ownership and current component contracts:
+[Angular shared components](../../../guides/web/architecture/ANGULAR_SHARED_COMPONENTS.md).
+Requester-approved organization uses buttons, forms and forms/fields, with a stable
+public API and collocated tests/styles. Later shared form controls remain FOLLOW-014.
+
 Detailed shared lookup, keyboard and structured-entry acceptance is owned by
 ERP_ACCEPTANCE ERP-02..ERP-04. Use that contract rather than creating divergent
 per-feature keyboard/lookup lifecycles. Typed wire generation is evaluated under
@@ -178,6 +186,12 @@ ERP-01; generated clients remain behind feature services and out of components.
 - Asynchronous load, server errors, nested arrays and status display are explicitly
   verified under Zoneless; Angular documentation notes model APIs alone do not
   schedule a component check.
+
+SIG-05 adds isolated child-draft commit/cancel and asynchronous confirmation race
+acceptance. SIG-04 applies at the first attachment consumer: file ownership and
+cleanup follow the actual API save/discard contract, preserving old files on
+failed or uncertain saves. Shared adapters remain generic; feature/API owners
+retain attachment authorization, references and retention policy.
 
 ## 6. State and query contract
 
@@ -208,15 +222,30 @@ freshness, errors, invalidation/realtime/cancellation and reset. Neither Signals
 nor SignalStore alone establishes cache correctness, company isolation or safe
 mutation retries. Keep those contracts and tests regardless of state mechanism.
 
+Apply SIG-01 for finite lookup bootstrap versus mounted refresh watches, SIG-02
+for route/session request lifetimes, SIG-03 for page/dialog/silent loading ownership,
+and SIG-06 for applied list criteria/URL serialization. Typed request metadata
+expresses reviewed lifetime/read exceptions; do not guess from endpoint names.
+Choose the smallest compatible library/framework mechanism that satisfies the
+contract. No custom query framework or Sigma endpoint/topic registry is mandated.
+
 ## 7. Translation/theme and accessibility
 
 Use namespaced en/ar catalogs with the existing company/system ownership model.
+Database-backed UI overrides, save/reset/revision/audit and runtime identity
+isolation are Required under [LOCALIZATION_PARITY](LOCALIZATION_PARITY.md).
+Angular must consume the same schema-3 web catalog/keys/version and existing API;
+static translation files alone do not satisfy this contract.
 Shared components accept translated labels or generic shared-scope keys; they do
 not import business namespaces. Logical CSS and document direction preserve RTL.
 Map semantic project tokens into one PrimeNG preset; use variant inputs rather
 than feature-level internal selectors, ng-deep or deep CSS forks.
 Keyboard/focus/aria/error links and compact/wide behavior are shared contracts.
 Feature tests still verify actual content and permission composition.
+SIG-07 additionally requires centrally owned PrimeNG internal translations,
+overlay mounting/stacking/focus and a shared compatibility suite. SIG-08 requires
+explicit scroll owners and reachable controls under the selected screen pattern;
+the rule does not impose Sigma's layout globally on ERP.
 
 ### Shared token package integration
 
@@ -248,9 +277,20 @@ Keep compiled outputs current through the package build/check workflow and verif
 retained consumers after any central token change. No package/runtime change is
 made by this planning clarification.
 
+S1-A1 subsequent implementation now consumes the compiled package and adds Angular
+to sync/CI. One theme adapter imports the adopted Aura button subpath, avoiding
+the full preset; shared action and currentMode/themePalette preferences exist.
+Thirty unit cases and 40 browser matrix cases pass with unchanged build budget.
+This is not full shared-form/control compatibility or S1 closure. Requester owns
+a Community key; actual local activation and licensed browser acceptance are now
+Verified under FOLLOW-013, and Phase 06 is Verified. Angular analytics is explicitly
+disabled in the workspace. Current evidence is the Platform
+angular-theme-foundation feature's implementation report and required manifest.
+
 ## 8. Executable governance required before broad migration
 
 Shared/API/feature test evidence must also map applicable ERP-01..ERP-12 IDs.
+Map applicable SIG-01..SIG-08 IDs alongside them using SIGMA_ACCEPTANCE.
 Use actual contract/concurrency/audit behavior; no parallel frontend business
 engine or speculative server dependency is introduced to satisfy a UI check.
 
@@ -263,6 +303,7 @@ engine or speculative server dependency is introduced to satisfy a UI check.
 | i18n/catalog | Visible literal policy, EN/AR key parity, namespace ownership and company override catalogs |
 | query/context | Scope keys, cancellation/reset/stale-response prevention and no automatic write replay |
 | tests/build | Unit/integration, production bundle budgets and fixture/live browser journeys |
+| shared compatibility | SIG-07 Strict/Zoneless behavior and actual browser geometry/locale/overlay checks on the pinned stack and upgrades; SIG-08 scroll/accessibility evidence |
 | documentation | Registered Angular evidence and up-to-date generated packets, without relabeling Next sources |
 
 Use AST/template-aware checks where feasible, including alias and dynamic imports,

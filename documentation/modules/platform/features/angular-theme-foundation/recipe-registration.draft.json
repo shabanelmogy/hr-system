@@ -1,0 +1,340 @@
+{
+  "status": "registered-runtime",
+  "executionMode": "bounded-runtime",
+  "runtimeAuthorized": true,
+  "referenceFeature": "N/A",
+  "planId": "web-angular-migration",
+  "sliceId": "S1-A1 — Shared theme and action control",
+  "canonicalPlan": "documentation/plans/business/web-angular-migration/PLAN.md",
+  "featureDecompositionDecision": "Single feature",
+  "screenWorkflowContract": "documentation/plans/business/web-angular-migration/decomposition/angular-theme-foundation.md",
+  "plannedCustomerEducation": "N/A - technical shared foundation",
+  "instructions": "Registered in central manifest. Regenerate from canonical numbered books/current final manifest. Actual local licensed runtime and Phase 06 Verified; documentation/handoff Active.",
+  "books": [
+    {
+      "id": "angular-theme-foundation-master",
+      "path": "../modules/platform/features/angular-theme-foundation/angular-theme-foundation-review.md",
+      "title": "Angular Shared Theme and Action Control cross-platform master review"
+    },
+    {
+      "id": "angular-theme-foundation-api",
+      "path": "../modules/platform/features/angular-theme-foundation/angular-theme-foundation-api.md",
+      "title": "Angular Shared Theme and Action Control API implementation profile"
+    },
+    {
+      "id": "angular-theme-foundation-web",
+      "path": "../modules/platform/features/angular-theme-foundation/angular-theme-foundation-web.md",
+      "title": "Angular Shared Theme and Action Control Next.js implementation profile"
+    },
+    {
+      "id": "angular-theme-foundation-mobile",
+      "path": "../modules/platform/features/angular-theme-foundation/angular-theme-foundation-mobile.md",
+      "title": "Angular Shared Theme and Action Control Expo implementation profile"
+    }
+  ],
+  "requiredFileManifest": "../modules/platform/features/angular-theme-foundation/required-files.json",
+  "recipes": [
+    {
+      "id": "angular-theme-foundation-phase-00-implementation-preflight",
+      "title": "Angular Shared Theme and Action Control Phase 00 - Implementation Preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "../modules/platform/features/angular-theme-foundation/generated/PHASE-00-implementation-preflight.md",
+      "sources": [
+        {
+          "book": "angular-theme-foundation-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-theme-foundation-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-theme-foundation-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "angular-theme-foundation-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-theme-foundation-phase-01-domain-api",
+      "title": "Angular Shared Theme and Action Control Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "../modules/platform/features/angular-theme-foundation/generated/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "angular-theme-foundation-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "angular-theme-foundation-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-theme-foundation-phase-02-web-client",
+      "title": "Angular Shared Theme and Action Control Phase 02 - Angular Client",
+      "template": "templates/PHASE-02-angular-client.template.md",
+      "output": "../modules/platform/features/angular-theme-foundation/generated/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "angular-theme-foundation-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-theme-foundation-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-theme-foundation-phase-03-mobile-client",
+      "title": "Angular Shared Theme and Action Control Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "../modules/platform/features/angular-theme-foundation/generated/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "angular-theme-foundation-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-theme-foundation-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-theme-foundation-phase-04-domain-actions",
+      "title": "Angular Shared Theme and Action Control Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "../modules/platform/features/angular-theme-foundation/generated/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "angular-theme-foundation-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-theme-foundation-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-theme-foundation-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-theme-foundation-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-theme-foundation-phase-05-integration-runtime",
+      "title": "Angular Shared Theme and Action Control Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "../modules/platform/features/angular-theme-foundation/generated/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "angular-theme-foundation-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "angular-theme-foundation-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-theme-foundation-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "angular-theme-foundation-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-theme-foundation-phase-06-verification-acceptance",
+      "title": "Angular Shared Theme and Action Control Phase 06 - Verification and Acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "../modules/platform/features/angular-theme-foundation/generated/PHASE-06-verification-acceptance.md",
+      "sources": [
+        {
+          "book": "angular-theme-foundation-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-theme-foundation-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-theme-foundation-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-theme-foundation-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-theme-foundation-phase-07-customer-education-closure",
+      "title": "Angular Shared Theme and Action Control Phase 07 - Customer Education and Closure",
+      "template": "templates/PHASE-07-customer-education-closure.template.md",
+      "output": "../modules/platform/features/angular-theme-foundation/generated/PHASE-07-customer-education-closure.md",
+      "sources": [
+        {
+          "book": "angular-theme-foundation-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-theme-foundation-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-theme-foundation-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    }
+  ]
+}

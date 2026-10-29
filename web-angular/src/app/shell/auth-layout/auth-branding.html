@@ -1,0 +1,10 @@
+<div class="decoration" aria-hidden="true"></div><div class="brand-content">
+    <h1>{{ 'auth.welcomeBack' | uiText:'platform-auth' }}</h1>
+    <p class="brand-subtitle">{{ 'auth.loginToAccessYourAccount' | uiText:'platform-auth' }}</p>
+    <div class="feature-list">@for (feature of features; track feature.title; let i = $index) {
+      <section class="feature" [class]="'feature feature-' + i"><span class="feature-icon" aria-hidden="true">{{ feature.icon }}</span>
+        <div><h2>{{ feature.title | uiText:'platform-auth' }}</h2><p>{{ feature.description | uiText:'platform-auth' }}</p></div>
+      </section>
+    }</div>
+    <footer class="branding-footer"><small>© {{ year }} {{ 'general.company' | uiText }}</small><div aria-hidden="true"><span>🌐</span><span>📧</span><span>📱</span></div></footer>
+  </div>

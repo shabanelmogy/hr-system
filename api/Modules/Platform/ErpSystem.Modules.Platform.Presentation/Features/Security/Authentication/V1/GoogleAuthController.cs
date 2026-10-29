@@ -5,6 +5,7 @@ namespace ErpSystem.Modules.Platform.Presentation.Features.Security.Authenticati
 
 [Route("api/account")]
 [ApiController]
+[BearerOnlyAuthentication]
 [AllowAnonymous]
 [EnableRateLimiting("authentication")]
 public sealed class GoogleAuthController(ISender sender) : ControllerBase

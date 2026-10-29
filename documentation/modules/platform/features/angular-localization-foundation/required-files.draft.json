@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "status": "draft",
+  "executionMode": "preflight-only",
+  "runtimeAuthorized": false,
+  "feature": "angular-localization-foundation",
+  "featureName": "Angular Toolchain and Localization Runtime",
+  "referenceFeature": "N/A",
+  "planId": "web-angular-migration",
+  "sliceId": "S1-A0 — Angular toolchain and localization runtime",
+  "canonicalPlan": "documentation/plans/business/web-angular-migration/PLAN.md",
+  "featureDecompositionDecision": "Single feature",
+  "screenWorkflowContract": "documentation/plans/business/web-angular-migration/decomposition/angular-localization-foundation.md",
+  "plannedCustomerEducation": "documentation/plans/business/web-angular-migration/education/angular-localization-foundation.md",
+  "purpose": "Draft evidence plan for Angular Toolchain and Localization Runtime. This file is not registered until every final source exists.",
+  "reviewArtifact": "documentation/modules/platform/features/angular-localization-foundation/angular-localization-foundation-evidence.md",
+  "implementationRequest": "documentation/modules/platform/features/angular-localization-foundation/angular-localization-foundation-request.md",
+  "plannedCanonicalBooks": {
+    "master": "documentation/modules/platform/features/angular-localization-foundation/angular-localization-foundation-review.md",
+    "api": "documentation/modules/platform/features/angular-localization-foundation/angular-localization-foundation-api.md",
+    "web": "documentation/modules/platform/features/angular-localization-foundation/angular-localization-foundation-web.md",
+    "mobile": "documentation/modules/platform/features/angular-localization-foundation/angular-localization-foundation-mobile.md"
+  },
+  "sourceCollections": [],
+  "requiredFiles": [
+    {
+      "id": "root-agent-guidance",
+      "layer": "configuration",
+      "path": "AGENTS.md",
+      "purpose": "Repository-wide feature and documentation rules"
+    },
+    {
+      "id": "review-artifact",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-localization-foundation/angular-localization-foundation-evidence.md",
+      "purpose": "Feature requirement, evidence, finding, and verification ledger"
+    },
+    {
+      "id": "implementation-request",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-localization-foundation/angular-localization-foundation-request.md",
+      "purpose": "Copy-ready feature scope, platform decisions, contracts, and quality gates"
+    }
+  ],
+  "finalizationChecklist": [
+    "Replace every placeholder in the review artifact.",
+    "Complete the Existing-System Relationship Review and every decision in angular-localization-foundation-request.md before implementation.",
+    "Complete the Business Rules Matrix with one primary owner, stable outcome/error, and required test for every known rule.",
+    "Complete every Edge Cases & Validation category with scenarios or an explicit N/A reason, enforcement layer, and required test.",
+    "Complete the Impact Matrix with Reuse, Extend, Change, Add, or reasoned N/A across every listed area.",
+    "Remove every remaining placeholder from angular-localization-foundation-request.md before runtime implementation.",
+    "Add Phase 00 current API, web, mobile, configuration, localization, and test evidence sources.",
+    "Classify every optional view, including Import, as Required, Deferred, or Excluded independently for web and mobile.",
+    "When Import is Required, add its API and applicable client runtime, route/configuration, localization, and focused-test paths.",
+    "Record and test the exact Import request envelope, limits, duplicate and relationship rules, atomicity, permissions, side effects, and retry behavior.",
+    "Add source collections with evidence-based minimum file counts.",
+    "Create the four initial applied implementation books from the approved plan plus verified current source; label target-only behavior explicitly.",
+    "Rename this file to required-files.json when the Phase 00 evidence paths exist; extend it with runtime files during implementation.",
+    "Update the review artifact to point at required-files.json and mark its documentation state Final.",
+    "Merge recipe-registration.draft.json into recipe-manifest.json after the Phase 00 books and preflight manifest are complete.",
+    "Write generated packets under documentation/modules/platform/features/angular-localization-foundation/generated/.",
+    "Run generation and then Generate-Documentation.ps1 -Check.",
+    "Complete phase 06 with an explicit verification decision.",
+    "Do not start customer-facing education until phase 06 records Verified.",
+    "For customer-visible work, complete phase 07 and its Customer Education Pack before Closed.",
+    "When Customer Education is Required, add the verified education document to required-files.json and rerun Generate-Documentation.ps1 -Check before Closed."
+  ]
+}

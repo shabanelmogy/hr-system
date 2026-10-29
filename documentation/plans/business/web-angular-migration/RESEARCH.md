@@ -10,6 +10,11 @@ Official sources reviewed 2026-10-28. Framework capabilities do not prove projec
 | [Reactive Forms](https://angular.dev/guide/forms/reactive-forms) | Explicit nested/dynamic form model; proposed ERP baseline. |
 | [Guards](https://angular.dev/guide/routing/route-guards) | Browser guards cannot replace server authorization. |
 | [Interceptors](https://angular.dev/guide/http/interceptors) | Central HTTP behavior; feature services still own transport contracts. |
+| [PrimeNG configuration](https://primeng.dev/configuration) | Central overlay mounting/stacking and runtime internal translations support SIG-07; actual ERP browser/focus/RTL behavior still needs proof. |
+| [Angular security / XSRF](https://angular.dev/best-practices/security) | Standard XSRF support is relative/same-origin and needs server verification; proposed cross-origin API cookies require explicit reviewed token bootstrap/header handling. |
+| [ASP.NET Core CORS](https://learn.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-10.0) | Exact allowed origins/credentials; CORS is not an authorization or antiforgery verifier. |
+| [ASP.NET Core antiforgery](https://learn.microsoft.com/en-us/aspnet/core/security/anti-request-forgery?view=aspnetcore-10.0) | A cookie-based browser extension requires a server-validated request-token contract, preserving existing header-only native calls. |
+| [OWASP HTML5 security](https://cheatsheetseries.owasp.org/cheatsheets/HTML5_Security_Cheat_Sheet.html) | Avoid browser session credentials in JavaScript-accessible persistent storage; HttpOnly does not remove XSS-driven action risk. |
 | [SignalStore](https://ngrx.io/guide/signals/signal-store) | Local/global scope and RxJS integration; not automatic server caching. |
 | [PrimeNG migration](https://primeng.dev/migration/v22) | Current component APIs differ from older tutorials; strict templates and reviewed replacements. |
 | [PrimeNG changelog](https://primeng.dev/changelog) | v22 supports Angular 22/Zoneless; 22.1.4 listed 2026-10-22. Verify exact selected peers. |
@@ -31,3 +36,16 @@ framework documentation does not justify adding an unwanted server.
 PrimeUI does not establish parity for Crystal, ActiveReportsJS designer,
 Syncfusion PDF, calendar or diagrams. Prove each required Angular adapter and
 its license separately under RISK-017.
+
+The source-only Sigma review and requester-approved behavioral details are
+recorded separately in [SIGMA_ACCEPTANCE](SIGMA_ACCEPTANCE.md), including exact
+external baseline/source symbols and SIG-01..SIG-08. Angular HttpContext supports
+typed local request metadata (SIG-02); Zoneless forms need actual rendering
+notifications (SIG-05/07). External source/test definitions are evidence of
+examples, not library compatibility or passing ERP tests.
+
+S0 authentication conclusions and the distinction between current bearer APIs
+and the proposed browser-cookie extension are in
+[AUTHENTICATION_PREFLIGHT](AUTHENTICATION_PREFLIGHT.md). Primary documentation
+supports the design trade-offs; actual source discrepancies remain RISK-018 and
+must not be replaced by generic framework assumptions.

@@ -21,7 +21,9 @@ param(
     [string]$Module,
 
     [ValidatePattern('^(?:none|[a-z][a-z0-9]*(?:-[a-z0-9]+)*)$')]
-    [string]$ReferenceFeature = 'none'
+    [string]$ReferenceFeature = 'none',
+
+    [switch]$PreflightOnly
 )
 
 Set-StrictMode -Version Latest
@@ -33,6 +35,7 @@ if ($FeatureName.Length -eq 0) {
 }
 
 $systemRoot = $PSScriptRoot
+. (Join-Path $systemRoot 'FeatureScaffold.Authorization.ps1')
 $repositoryRoot = [System.IO.Path]::GetFullPath((Join-Path $systemRoot '../..'))
 # Feature documentation lives with its owning module: documentation/modules/<slug>/features/<feature>/.
 $moduleManifest = Get-ChildItem -LiteralPath (Join-Path $repositoryRoot 'documentation/modules') -Directory |
@@ -101,9 +104,7 @@ if ($planText -notmatch ("(?im)^\|\s*Owning module\s*\|\s*" + [regex]::Escape($M
 if ($planText -notmatch [regex]::Escape($SliceId)) {
     throw "SliceId '$SliceId' was not found in canonical plan '$canonicalPlanRelativePath'. Use the exact authorized slice identifier/name from the plan."
 }
-if ($planText -notmatch '(?im)^\|\s*Status\s*\|\s*[^|]*(execution-ready|implementation ready|in progress|verified)[^|]*\|') {
-    throw "Canonical plan '$PlanId' is not marked execution-ready/Implementation Ready/In Progress/Verified. Resolve the planning gate before scaffolding runtime work."
-}
+Assert-FeatureScaffoldAuthorization -PlanText $planText -FeatureId $FeatureId -SliceId $SliceId -PreflightOnly ([bool]$PreflightOnly)
 
 $decompositionSection = [regex]::Match(
     $planText,
@@ -111,6 +112,7 @@ $decompositionSection = [regex]::Match(
 $decompositionDecision = 'Not declared - Phase 00 planning reconciliation required'
 $screenWorkflowContractRelativePath = 'N/A'
 if (-not $decompositionSection.Success) {
+    if ($PreflightOnly) { throw 'Preflight-only scaffolding requires a current Feature Decomposition Gate; legacy compatibility is not an authorization.' }
     Write-Warning "Canonical plan '$PlanId' predates the Feature Decomposition Gate. Scaffold creation may continue for compatibility, but Phase 00 blocks runtime implementation until the authorized slice is updated with the gate."
 } else {
 
@@ -168,15 +170,18 @@ if ($decompositionDecision -eq 'Single feature') {
     if ($sliceDecompositionRows.Count -ne 1) {
         throw "SliceId '$SliceId' is marked Single feature but declares $($sliceDecompositionRows.Count) feature rows."
     }
-} else {
-    $distinctChildIds = @($sliceDecompositionRows.FeatureId | Select-Object -Unique)
-    if ($distinctChildIds.Count -lt 2) {
-        throw "SliceId '$SliceId' is marked Decompose but must declare at least two distinct child Feature IDs."
+}
+if ($decompositionDecision -eq 'Decompose' -or $PreflightOnly) {
+    if ($decompositionDecision -eq 'Decompose') {
+        $distinctChildIds = @($sliceDecompositionRows.FeatureId | Select-Object -Unique)
+        if ($distinctChildIds.Count -lt 2) {
+            throw "SliceId '$SliceId' is marked Decompose but must declare at least two distinct child Feature IDs."
+        }
     }
     if ([string]::IsNullOrWhiteSpace($featureDecomposition.Contract) -or
         $featureDecomposition.Contract -match '^(?i:N/A)' -or
         $featureDecomposition.Contract -match '<[^>]+>|\bTBD\b') {
-        throw "Decomposed FeatureId '$FeatureId' must reference a completed Screen/Workflow Contract."
+        throw "FeatureId '$FeatureId' must reference a completed Screen/Workflow Contract for decomposition or preflight-only authorization."
     }
 
     $screenWorkflowContractRelativePath = $featureDecomposition.Contract -replace '\\', '/'
@@ -192,6 +197,7 @@ if ($decompositionDecision -eq 'Single feature') {
     }
 
     $screenWorkflowContractText = Get-Content -LiteralPath $screenWorkflowContractPath -Raw -Encoding UTF8
+    if ($PreflightOnly) { Assert-PreflightContract $screenWorkflowContractText }
     $requiredContractHeadings = @(
         '## 0. Contract metadata',
         '## 1. Child boundary and outcome',
@@ -294,10 +300,17 @@ $implementationRequest = $implementationRequest.Replace('<CustomerEducationPath>
 $implementationRequest = $implementationRequest.Replace('<platform | hr | accounting | ...>', $moduleDisplay)
 $implementationRequest = $implementationRequest.Replace('<repository-relative review artifact path>', $artifactRelativePath)
 $implementationRequest = $implementationRequest.Replace('<repository-relative draft or final manifest path>', $draftManifestRelativePath)
+if ($PreflightOnly) {
+    $restriction = "# Phase 00 ONLY - runtime implementation BLOCKED`n`nThis scaffold is authorized only for the exact plan/slice preflight. It grants no runtime readiness; record remaining gates and obtain the plan's bounded execution authority before editing application source.`n`n"
+    $artifact = $restriction + $artifact
+    $implementationRequest = $restriction + $implementationRequest
+}
 
 $draftManifest = [ordered]@{
     schemaVersion = 1
     status = 'draft'
+    executionMode = $(if ($PreflightOnly) { 'preflight-only' } else { 'implementation-preflight' })
+    runtimeAuthorized = $false
     feature = $FeatureId
     featureName = $FeatureName
     referenceFeature = $referenceDisplay
@@ -364,6 +377,8 @@ $webBookId = "$FeatureId-web"
 $mobileBookId = "$FeatureId-mobile"
 $registrationDraft = [ordered]@{
     status = 'draft'
+    executionMode = $(if ($PreflightOnly) { 'preflight-only' } else { 'implementation-preflight' })
+    runtimeAuthorized = $false
     referenceFeature = $referenceDisplay
     planId = $planIdDisplay
     sliceId = $sliceIdDisplay

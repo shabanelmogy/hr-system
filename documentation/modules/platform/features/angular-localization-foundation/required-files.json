@@ -1,0 +1,483 @@
+{
+  "schemaVersion": 1,
+  "status": "active",
+  "executionMode": "bounded-runtime",
+  "runtimeAuthorized": true,
+  "feature": "angular-localization-foundation",
+  "featureName": "Angular Toolchain and Localization Runtime",
+  "referenceFeature": "N/A",
+  "planId": "web-angular-migration",
+  "sliceId": "S1-A0 — Angular toolchain and localization runtime",
+  "canonicalPlan": "documentation/plans/business/web-angular-migration/PLAN.md",
+  "featureDecompositionDecision": "Single feature",
+  "screenWorkflowContract": "documentation/plans/business/web-angular-migration/decomposition/angular-localization-foundation.md",
+  "plannedCustomerEducation": "N/A - technical runtime, no customer workflow",
+  "purpose": "Current S1-A0 evidence; no future runtime paths.",
+  "reviewArtifact": "documentation/modules/platform/features/angular-localization-foundation/angular-localization-foundation-evidence.md",
+  "implementationRequest": "documentation/modules/platform/features/angular-localization-foundation/angular-localization-foundation-request.md",
+  "plannedCanonicalBooks": {
+    "master": "documentation/modules/platform/features/angular-localization-foundation/angular-localization-foundation-review.md",
+    "api": "documentation/modules/platform/features/angular-localization-foundation/angular-localization-foundation-api.md",
+    "web": "documentation/modules/platform/features/angular-localization-foundation/angular-localization-foundation-web.md",
+    "mobile": "documentation/modules/platform/features/angular-localization-foundation/angular-localization-foundation-mobile.md"
+  },
+  "sourceCollections": [],
+  "requiredFiles": [
+    {
+      "id": "root-agent-guidance",
+      "layer": "configuration",
+      "path": "AGENTS.md",
+      "purpose": "Repository-wide feature and documentation rules"
+    },
+    {
+      "id": "review-artifact",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-localization-foundation/angular-localization-foundation-evidence.md",
+      "purpose": "Feature requirement, evidence, finding, and verification ledger"
+    },
+    {
+      "id": "implementation-request",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-localization-foundation/angular-localization-foundation-request.md",
+      "purpose": "Copy-ready feature scope, platform decisions, contracts, and quality gates"
+    },
+    {
+      "id": "preflight-1",
+      "layer": "documentation",
+      "path": "documentation/plans/business/web-angular-migration/LOCALIZATION_PARITY.md",
+      "purpose": "Reviewed current source or exact authorization evidence"
+    },
+    {
+      "id": "preflight-2",
+      "layer": "documentation",
+      "path": "documentation/plans/business/web-angular-migration/decomposition/angular-localization-foundation.md",
+      "purpose": "Reviewed current source or exact authorization evidence"
+    },
+    {
+      "id": "preflight-3",
+      "layer": "documentation",
+      "path": "documentation/plans/business/web-angular-migration/PLAN.md",
+      "purpose": "Reviewed current source or exact authorization evidence"
+    },
+    {
+      "id": "preflight-4",
+      "layer": "documentation",
+      "path": "web-next/src/lib/localization/companyUiResources.ts",
+      "purpose": "Reviewed current source or exact authorization evidence"
+    },
+    {
+      "id": "preflight-5",
+      "layer": "documentation",
+      "path": "web-next/src/platform/company-localizations/hooks/useCompanyLocalization.ts",
+      "purpose": "Reviewed current source or exact authorization evidence"
+    },
+    {
+      "id": "preflight-6",
+      "layer": "documentation",
+      "path": "web-next/src/platform/company-localizations/services/companyLocalizationService.ts",
+      "purpose": "Reviewed current source or exact authorization evidence"
+    },
+    {
+      "id": "preflight-7",
+      "layer": "documentation",
+      "path": "web-next/src/platform/company-localizations/services/systemLocalizationService.ts",
+      "purpose": "Reviewed current source or exact authorization evidence"
+    },
+    {
+      "id": "preflight-8",
+      "layer": "documentation",
+      "path": "scripts/export-company-ui-catalog.mjs",
+      "purpose": "Reviewed current source or exact authorization evidence"
+    },
+    {
+      "id": "preflight-9",
+      "layer": "documentation",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Features/CompanyLocalization/company-ui-catalog.json",
+      "purpose": "Reviewed current source or exact authorization evidence"
+    },
+    {
+      "id": "preflight-10",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/company-ui-localization/required-files.json",
+      "purpose": "Reviewed current source or exact authorization evidence"
+    },
+    {
+      "id": "preflight-11",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/system-ui-localization/required-files.json",
+      "purpose": "Reviewed current source or exact authorization evidence"
+    },
+    {
+      "id": "preflight-12",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-localization-foundation/angular-localization-foundation-review.md",
+      "purpose": "Reviewed current source or exact authorization evidence"
+    },
+    {
+      "id": "preflight-13",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-localization-foundation/angular-localization-foundation-api.md",
+      "purpose": "Reviewed current source or exact authorization evidence"
+    },
+    {
+      "id": "preflight-14",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-localization-foundation/angular-localization-foundation-web.md",
+      "purpose": "Reviewed current source or exact authorization evidence"
+    },
+    {
+      "id": "preflight-15",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-localization-foundation/angular-localization-foundation-mobile.md",
+      "purpose": "Reviewed current source or exact authorization evidence"
+    },
+    {
+      "purpose": "Implemented Angular technical foundation source, config, generated catalog resource, test or verified report",
+      "id": "evidence-19",
+      "path": "web-angular/.editorconfig",
+      "layer": "web"
+    },
+    {
+      "purpose": "Implemented Angular technical foundation source, config, generated catalog resource, test or verified report",
+      "id": "evidence-20",
+      "path": "web-angular/.gitignore",
+      "layer": "web"
+    },
+    {
+      "purpose": "Implemented Angular technical foundation source, config, generated catalog resource, test or verified report",
+      "id": "evidence-21",
+      "path": "web-angular/.prettierrc",
+      "layer": "web"
+    },
+    {
+      "purpose": "Implemented Angular technical foundation source, config, generated catalog resource, test or verified report",
+      "id": "evidence-22",
+      "path": "web-angular/.vscode/extensions.json",
+      "layer": "web"
+    },
+    {
+      "purpose": "Implemented Angular technical foundation source, config, generated catalog resource, test or verified report",
+      "id": "evidence-23",
+      "path": "web-angular/.vscode/launch.json",
+      "layer": "web"
+    },
+    {
+      "purpose": "Implemented Angular technical foundation source, config, generated catalog resource, test or verified report",
+      "id": "evidence-24",
+      "path": "web-angular/.vscode/tasks.json",
+      "layer": "web"
+    },
+    {
+      "purpose": "Implemented Angular technical foundation source, config, generated catalog resource, test or verified report",
+      "id": "evidence-25",
+      "path": "web-angular/angular.json",
+      "layer": "web"
+    },
+    {
+      "purpose": "Implemented Angular technical foundation source, config, generated catalog resource, test or verified report",
+      "id": "evidence-26",
+      "path": "web-angular/package-lock.json",
+      "layer": "web"
+    },
+    {
+      "purpose": "Implemented Angular technical foundation source, config, generated catalog resource, test or verified report",
+      "id": "evidence-27",
+      "path": "web-angular/package.json",
+      "layer": "web"
+    },
+    {
+      "purpose": "Implemented Angular technical foundation source, config, generated catalog resource, test or verified report",
+      "id": "evidence-28",
+      "path": "web-angular/public/favicon.ico",
+      "layer": "web"
+    },
+    {
+      "purpose": "Implemented Angular technical foundation source, config, generated catalog resource, test or verified report",
+      "id": "evidence-29",
+      "path": "web-angular/scripts/check-architecture.mjs",
+      "layer": "web"
+    },
+    {
+      "purpose": "Implemented Angular technical foundation source, config, generated catalog resource, test or verified report",
+      "id": "evidence-30",
+      "path": "web-angular/scripts/export-ui-resources.mjs",
+      "layer": "web"
+    },
+    {
+      "purpose": "Implemented Angular technical foundation source, config, generated catalog resource, test or verified report",
+      "id": "evidence-31",
+      "path": "web-angular/src/app/app.config.ts",
+      "layer": "web"
+    },
+    {
+      "purpose": "Implemented Angular technical foundation source, config, generated catalog resource, test or verified report",
+      "id": "evidence-32",
+      "path": "web-angular/src/app/app.html",
+      "layer": "web"
+    },
+    {
+      "purpose": "Implemented Angular technical foundation source, config, generated catalog resource, test or verified report",
+      "id": "evidence-33",
+      "path": "web-angular/src/app/app.routes.ts",
+      "layer": "web"
+    },
+    {
+      "purpose": "Implemented Angular technical foundation source, config, generated catalog resource, test or verified report",
+      "id": "evidence-34",
+      "path": "web-angular/src/app/app.scss",
+      "layer": "web"
+    },
+    {
+      "purpose": "Implemented Angular technical foundation source, config, generated catalog resource, test or verified report",
+      "id": "evidence-35",
+      "path": "web-angular/src/app/app.spec.ts",
+      "layer": "web"
+    },
+    {
+      "purpose": "Implemented Angular technical foundation source, config, generated catalog resource, test or verified report",
+      "id": "evidence-36",
+      "path": "web-angular/src/app/app.ts",
+      "layer": "web"
+    },
+    {
+      "purpose": "Implemented Angular technical foundation source, config, generated catalog resource, test or verified report",
+      "id": "evidence-37",
+      "path": "web-angular/src/app/config/api-origin.ts",
+      "layer": "web"
+    },
+    {
+      "purpose": "Implemented Angular technical foundation source, config, generated catalog resource, test or verified report",
+      "id": "evidence-38",
+      "path": "web-angular/src/app/platform/localization/catalog.generated.ts",
+      "layer": "web"
+    },
+    {
+      "purpose": "Implemented Angular technical foundation source, config, generated catalog resource, test or verified report",
+      "id": "evidence-39",
+      "path": "web-angular/src/app/platform/localization/localization-runtime.spec.ts",
+      "layer": "web"
+    },
+    {
+      "purpose": "Implemented Angular technical foundation source, config, generated catalog resource, test or verified report",
+      "id": "evidence-40",
+      "path": "web-angular/src/app/platform/localization/localization-runtime.ts",
+      "layer": "web"
+    },
+    {
+      "purpose": "Implemented Angular technical foundation source, config, generated catalog resource, test or verified report",
+      "id": "evidence-41",
+      "path": "web-angular/src/app/platform/localization/localization-service.spec.ts",
+      "layer": "web"
+    },
+    {
+      "purpose": "Implemented Angular technical foundation source, config, generated catalog resource, test or verified report",
+      "id": "evidence-42",
+      "path": "web-angular/src/app/platform/localization/localization-service.ts",
+      "layer": "web"
+    },
+    {
+      "purpose": "Implemented Angular technical foundation source, config, generated catalog resource, test or verified report",
+      "id": "evidence-43",
+      "path": "web-angular/src/app/platform/localization/localization.types.ts",
+      "layer": "web"
+    },
+    {
+      "purpose": "Implemented Angular technical foundation source, config, generated catalog resource, test or verified report",
+      "id": "evidence-44",
+      "path": "web-angular/src/app/platform/localization/public-api.ts",
+      "layer": "web"
+    },
+    {
+      "purpose": "Implemented Angular technical foundation source, config, generated catalog resource, test or verified report",
+      "id": "evidence-45",
+      "path": "web-angular/src/app/platform/localization/system-access.generated.ts",
+      "layer": "web"
+    },
+    {
+      "purpose": "Implemented Angular technical foundation source, config, generated catalog resource, test or verified report",
+      "id": "evidence-46",
+      "path": "web-angular/src/app/platform/localization/text-scope.generated.ts",
+      "layer": "web"
+    },
+    {
+      "purpose": "Implemented Angular technical foundation source, config, generated catalog resource, test or verified report",
+      "id": "evidence-47",
+      "path": "web-angular/src/app/platform/localization/ui-text.pipe.ts",
+      "layer": "web"
+    },
+    {
+      "purpose": "Implemented Angular technical foundation source, config, generated catalog resource, test or verified report",
+      "id": "evidence-48",
+      "path": "web-angular/src/index.html",
+      "layer": "web"
+    },
+    {
+      "purpose": "Implemented Angular technical foundation source, config, generated catalog resource, test or verified report",
+      "id": "evidence-49",
+      "path": "web-angular/src/locales/generated/accounting.json",
+      "layer": "web"
+    },
+    {
+      "purpose": "Implemented Angular technical foundation source, config, generated catalog resource, test or verified report",
+      "id": "evidence-50",
+      "path": "web-angular/src/locales/generated/bootstrap.json",
+      "layer": "web"
+    },
+    {
+      "purpose": "Implemented Angular technical foundation source, config, generated catalog resource, test or verified report",
+      "id": "evidence-51",
+      "path": "web-angular/src/locales/generated/core.json",
+      "layer": "web"
+    },
+    {
+      "purpose": "Implemented Angular technical foundation source, config, generated catalog resource, test or verified report",
+      "id": "evidence-52",
+      "path": "web-angular/src/locales/generated/crm.json",
+      "layer": "web"
+    },
+    {
+      "purpose": "Implemented Angular technical foundation source, config, generated catalog resource, test or verified report",
+      "id": "evidence-53",
+      "path": "web-angular/src/locales/generated/hr-attendance.json",
+      "layer": "web"
+    },
+    {
+      "purpose": "Implemented Angular technical foundation source, config, generated catalog resource, test or verified report",
+      "id": "evidence-54",
+      "path": "web-angular/src/locales/generated/hr-org-structure.json",
+      "layer": "web"
+    },
+    {
+      "purpose": "Implemented Angular technical foundation source, config, generated catalog resource, test or verified report",
+      "id": "evidence-55",
+      "path": "web-angular/src/locales/generated/hr-recruitment.json",
+      "layer": "web"
+    },
+    {
+      "purpose": "Implemented Angular technical foundation source, config, generated catalog resource, test or verified report",
+      "id": "evidence-56",
+      "path": "web-angular/src/locales/generated/hr-workforce.json",
+      "layer": "web"
+    },
+    {
+      "purpose": "Implemented Angular technical foundation source, config, generated catalog resource, test or verified report",
+      "id": "evidence-57",
+      "path": "web-angular/src/locales/generated/module-accounting.json",
+      "layer": "web"
+    },
+    {
+      "purpose": "Implemented Angular technical foundation source, config, generated catalog resource, test or verified report",
+      "id": "evidence-58",
+      "path": "web-angular/src/locales/generated/module-hr.json",
+      "layer": "web"
+    },
+    {
+      "purpose": "Implemented Angular technical foundation source, config, generated catalog resource, test or verified report",
+      "id": "evidence-59",
+      "path": "web-angular/src/locales/generated/platform-advanced-tools.json",
+      "layer": "web"
+    },
+    {
+      "purpose": "Implemented Angular technical foundation source, config, generated catalog resource, test or verified report",
+      "id": "evidence-60",
+      "path": "web-angular/src/locales/generated/platform-auth.json",
+      "layer": "web"
+    },
+    {
+      "purpose": "Implemented Angular technical foundation source, config, generated catalog resource, test or verified report",
+      "id": "evidence-61",
+      "path": "web-angular/src/locales/generated/platform-company-geography.json",
+      "layer": "web"
+    },
+    {
+      "purpose": "Implemented Angular technical foundation source, config, generated catalog resource, test or verified report",
+      "id": "evidence-62",
+      "path": "web-angular/src/locales/generated/platform-files.json",
+      "layer": "web"
+    },
+    {
+      "purpose": "Implemented Angular technical foundation source, config, generated catalog resource, test or verified report",
+      "id": "evidence-63",
+      "path": "web-angular/src/locales/generated/platform-messages.json",
+      "layer": "web"
+    },
+    {
+      "purpose": "Implemented Angular technical foundation source, config, generated catalog resource, test or verified report",
+      "id": "evidence-64",
+      "path": "web-angular/src/locales/generated/platform-tenants.json",
+      "layer": "web"
+    },
+    {
+      "purpose": "Implemented Angular technical foundation source, config, generated catalog resource, test or verified report",
+      "id": "evidence-65",
+      "path": "web-angular/src/locales/generated/reference-address-types.json",
+      "layer": "web"
+    },
+    {
+      "purpose": "Implemented Angular technical foundation source, config, generated catalog resource, test or verified report",
+      "id": "evidence-66",
+      "path": "web-angular/src/locales/generated/reference-countries.json",
+      "layer": "web"
+    },
+    {
+      "purpose": "Implemented Angular technical foundation source, config, generated catalog resource, test or verified report",
+      "id": "evidence-67",
+      "path": "web-angular/src/locales/generated/reference-districts.json",
+      "layer": "web"
+    },
+    {
+      "purpose": "Implemented Angular technical foundation source, config, generated catalog resource, test or verified report",
+      "id": "evidence-68",
+      "path": "web-angular/src/locales/generated/reference-states.json",
+      "layer": "web"
+    },
+    {
+      "purpose": "Implemented Angular technical foundation source, config, generated catalog resource, test or verified report",
+      "id": "evidence-69",
+      "path": "web-angular/src/locales/generated/reporting.json",
+      "layer": "web"
+    },
+    {
+      "purpose": "Implemented Angular technical foundation source, config, generated catalog resource, test or verified report",
+      "id": "evidence-70",
+      "path": "web-angular/src/main.ts",
+      "layer": "web"
+    },
+    {
+      "purpose": "Implemented Angular technical foundation source, config, generated catalog resource, test or verified report",
+      "id": "evidence-71",
+      "path": "web-angular/src/styles.scss",
+      "layer": "web"
+    },
+    {
+      "purpose": "Implemented Angular technical foundation source, config, generated catalog resource, test or verified report",
+      "id": "evidence-72",
+      "path": "web-angular/tsconfig.app.json",
+      "layer": "web"
+    },
+    {
+      "purpose": "Implemented Angular technical foundation source, config, generated catalog resource, test or verified report",
+      "id": "evidence-73",
+      "path": "web-angular/tsconfig.json",
+      "layer": "web"
+    },
+    {
+      "purpose": "Implemented Angular technical foundation source, config, generated catalog resource, test or verified report",
+      "id": "evidence-74",
+      "path": "web-angular/tsconfig.spec.json",
+      "layer": "web"
+    },
+    {
+      "purpose": "Implemented Angular technical foundation source, config, generated catalog resource, test or verified report",
+      "id": "evidence-75",
+      "path": "documentation/modules/platform/features/angular-localization-foundation/IMPLEMENTATION_REPORT.md",
+      "layer": "documentation"
+    },
+    {
+      "layer": "documentation",
+      "purpose": "Angular-specific client phase recipe; no Next App Router assumptions",
+      "id": "angular-client-phase-template",
+      "path": "documentation/system/templates/PHASE-02-angular-client.template.md"
+    }
+  ]
+}

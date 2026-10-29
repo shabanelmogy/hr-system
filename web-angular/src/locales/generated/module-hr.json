@@ -1,0 +1,16 @@
+{
+  "en": {
+    "name": "Human Resources",
+    "submodules.attendance": "Attendance",
+    "submodules.basic-data": "Basic data",
+    "submodules.recruitment": "Recruitment",
+    "submodules.workforce": "Workforce planning"
+  },
+  "ar": {
+    "name": "الموارد البشرية",
+    "submodules.attendance": "الحضور والانصراف",
+    "submodules.basic-data": "البيانات الأساسية",
+    "submodules.recruitment": "التوظيف",
+    "submodules.workforce": "تخطيط القوى العاملة"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "evidence": "actual Platform claim builder and signer; synthetic long display fields, complete compiled permission catalogs; not a production maximum-role guarantee",
+  "measurements": [
+    {
+      "roles": 1,
+      "permissionCount": 258,
+      "jwtBytes": 10468,
+      "accessCookieParts": 5,
+      "cookieHeaderBytes": 11026,
+      "fits16KiBTotalBeforeOtherHeaders": true,
+      "fits32KiBTotalBeforeOtherHeaders": true
+    },
+    {
+      "roles": 10,
+      "permissionCount": 258,
+      "jwtBytes": 11793,
+      "accessCookieParts": 6,
+      "cookieHeaderBytes": 12381,
+      "fits16KiBTotalBeforeOtherHeaders": true,
+      "fits32KiBTotalBeforeOtherHeaders": true
+    },
+    {
+      "roles": 25,
+      "permissionCount": 258,
+      "jwtBytes": 13993,
+      "accessCookieParts": 6,
+      "cookieHeaderBytes": 14581,
+      "fits16KiBTotalBeforeOtherHeaders": true,
+      "fits32KiBTotalBeforeOtherHeaders": true
+    }
+  ]
+}

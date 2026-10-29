@@ -1,0 +1,28 @@
+{
+  "date": "2026-10-28",
+  "slice": "S0-AUTH-R2 — Browser transport",
+  "outcome": "Verified for bounded API transport; Angular consumer UI is next",
+  "api": {
+    "configuration": "Release",
+    "restore": "Passed",
+    "build": "Passed",
+    "buildErrors": 0,
+    "buildWarnings": 432,
+    "testProjects": 12,
+    "passed": 1157,
+    "failed": 0,
+    "skipped": 0,
+    "total": 1157,
+    "browserProbesEnabled": true
+  },
+  "focused": {
+    "cookieCases": 17,
+    "realBrowserSqlJourney": 1,
+    "sessionSqlScenarios": 11,
+    "nextFiles": 7,
+    "nextTests": 38,
+    "mobileTests": 1
+  },
+  "inheritedFinding": "FOLLOW-011: previous full run HR SQL pre-login connection timeout; targeted and complete rerun passed without source/timeout change",
+  "remaining": "Actual Angular foundation/login/context/cross-tab consumer; hosted configuration/proxy/device/provider acceptance separately owned"
+}

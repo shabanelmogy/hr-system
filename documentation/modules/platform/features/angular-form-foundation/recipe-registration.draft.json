@@ -1,0 +1,340 @@
+{
+  "status": "registered-runtime",
+  "executionMode": "bounded-runtime",
+  "runtimeAuthorized": true,
+  "referenceFeature": "N/A",
+  "planId": "web-angular-migration",
+  "sliceId": "S1-A2 — Shared text fields and form submission",
+  "canonicalPlan": "documentation/plans/business/web-angular-migration/PLAN.md",
+  "featureDecompositionDecision": "Single feature",
+  "screenWorkflowContract": "documentation/plans/business/web-angular-migration/decomposition/angular-form-foundation.md",
+  "plannedCustomerEducation": "N/A - technical shared primitive",
+  "instructions": "Registered in central manifest; regenerate from canonical numbered books/current manifest. Phase 06 Verified for exact technical S1-A2; education N/A, documentation/handoff Active.",
+  "books": [
+    {
+      "id": "angular-form-foundation-master",
+      "path": "../modules/platform/features/angular-form-foundation/angular-form-foundation-review.md",
+      "title": "Angular Shared Text Fields and Form Submission cross-platform master review"
+    },
+    {
+      "id": "angular-form-foundation-api",
+      "path": "../modules/platform/features/angular-form-foundation/angular-form-foundation-api.md",
+      "title": "Angular Shared Text Fields and Form Submission API implementation profile"
+    },
+    {
+      "id": "angular-form-foundation-web",
+      "path": "../modules/platform/features/angular-form-foundation/angular-form-foundation-web.md",
+      "title": "Angular Shared Text Fields and Form Submission Next.js implementation profile"
+    },
+    {
+      "id": "angular-form-foundation-mobile",
+      "path": "../modules/platform/features/angular-form-foundation/angular-form-foundation-mobile.md",
+      "title": "Angular Shared Text Fields and Form Submission Expo implementation profile"
+    }
+  ],
+  "requiredFileManifest": "../modules/platform/features/angular-form-foundation/required-files.json",
+  "recipes": [
+    {
+      "id": "angular-form-foundation-phase-00-implementation-preflight",
+      "title": "Angular Shared Text Fields and Form Submission Phase 00 - Implementation Preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "../modules/platform/features/angular-form-foundation/generated/PHASE-00-implementation-preflight.md",
+      "sources": [
+        {
+          "book": "angular-form-foundation-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-form-foundation-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-form-foundation-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "angular-form-foundation-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-form-foundation-phase-01-domain-api",
+      "title": "Angular Shared Text Fields and Form Submission Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "../modules/platform/features/angular-form-foundation/generated/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "angular-form-foundation-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "angular-form-foundation-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-form-foundation-phase-02-web-client",
+      "title": "Angular Shared Fields and Form Phase 02 - Angular Client",
+      "template": "templates/PHASE-02-angular-client.template.md",
+      "output": "../modules/platform/features/angular-form-foundation/generated/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "angular-form-foundation-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-form-foundation-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-form-foundation-phase-03-mobile-client",
+      "title": "Angular Shared Text Fields and Form Submission Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "../modules/platform/features/angular-form-foundation/generated/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "angular-form-foundation-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-form-foundation-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-form-foundation-phase-04-domain-actions",
+      "title": "Angular Shared Text Fields and Form Submission Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "../modules/platform/features/angular-form-foundation/generated/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "angular-form-foundation-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-form-foundation-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-form-foundation-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-form-foundation-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-form-foundation-phase-05-integration-runtime",
+      "title": "Angular Shared Text Fields and Form Submission Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "../modules/platform/features/angular-form-foundation/generated/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "angular-form-foundation-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "angular-form-foundation-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-form-foundation-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "angular-form-foundation-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-form-foundation-phase-06-verification-acceptance",
+      "title": "Angular Shared Text Fields and Form Submission Phase 06 - Verification and Acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "../modules/platform/features/angular-form-foundation/generated/PHASE-06-verification-acceptance.md",
+      "sources": [
+        {
+          "book": "angular-form-foundation-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-form-foundation-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-form-foundation-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-form-foundation-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-form-foundation-phase-07-customer-education-closure",
+      "title": "Angular Shared Text Fields and Form Submission Phase 07 - Customer Education and Closure",
+      "template": "templates/PHASE-07-customer-education-closure.template.md",
+      "output": "../modules/platform/features/angular-form-foundation/generated/PHASE-07-customer-education-closure.md",
+      "sources": [
+        {
+          "book": "angular-form-foundation-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-form-foundation-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-form-foundation-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    }
+  ]
+}

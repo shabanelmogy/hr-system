@@ -1,0 +1,5 @@
+# Angular working-year context — final request
+
+Documentation state: Final. Exact S2-A5 implemented after authorized current Phase00 and STATE_CONTRACT. Existing Accounting personal preference semantics, FiscalYears:View/TenantMember/AllowTenantReadOnly, server-only scope and unchanged schema/grants retained. Shared OptionSelect/ContextBadge/FeedbackState and lazy generic Shell slots reused. AuthSession serializes year/company/logout and verifies API identity; Accounting verifies one PUT or authoritative recovery GET. No blind retry or trusted broadcast payload.
+
+Phase06 Verified: Angular99/architecture7, production15, actual Angular/API/SQL/tab/reload with original preference restored; retained API17/Next7/native10 and company14/language20/shell24/home14/login10 pass. All runtime paths and redacted receipts are in required-files.json and IMPLEMENTATION_REPORT.md. CRUD/lifecycle/SetCurrent/reporting excluded; future dirty business fields FOLLOW-014, translation editor FOLLOW-012 and remaining workspace FOLLOW-015. Education followed verification.

@@ -1,0 +1,17 @@
+@use '@app/tokens/css';
+@use './theme/fonts';
+
+html { font-size: 16px; }
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--app-font-sans);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+*, *::before, *::after { box-sizing: border-box; }
+button, input, select, textarea { font: inherit; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}

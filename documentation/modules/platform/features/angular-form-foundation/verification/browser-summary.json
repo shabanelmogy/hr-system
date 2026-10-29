@@ -1,0 +1,16 @@
+{
+  "date": "2026-10-28",
+  "scope": "S1-A2 shared text fields and form submission technical fixture",
+  "phase06": "Verified",
+  "matrixPassed": 40,
+  "palettes": ["green", "orange", "blue", "navy", "monochrome"],
+  "modes": ["light", "dark"],
+  "languages": ["en", "ar"],
+  "widths": [390, 1440],
+  "checks": ["enabled invalid Save", "beneath-field messages", "summary links and first-invalid focus", "noValidate", "email validation", "clear and reset", "password reveal preserves value", "pending duplicate prevention", "nested server errors", "asynchronous patch", "in-place RTL switch", "input/action geometry and icon non-overlap", "errors below input", "no horizontal overflow", "no native dialogs or browser errors"],
+  "runtimeUnitTests": {"files": 6, "passed": 38},
+  "architectureTestsPassed": 6,
+  "retainedNextTests": {"files": 3, "passed": 6},
+  "productionInitialKb": 417.05,
+  "businessUiAcceptance": "Not in technical scope; actual login/editor/SQL acceptance remains separate"
+}

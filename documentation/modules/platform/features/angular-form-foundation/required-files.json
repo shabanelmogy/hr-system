@@ -1,0 +1,279 @@
+{
+  "schemaVersion": 1,
+  "status": "active",
+  "executionMode": "bounded-runtime",
+  "runtimeAuthorized": true,
+  "feature": "angular-form-foundation",
+  "featureName": "Angular Shared Text Fields and Form Submission",
+  "referenceFeature": "N/A",
+  "planId": "web-angular-migration",
+  "sliceId": "S1-A2 — Shared text fields and form submission",
+  "canonicalPlan": "documentation/plans/business/web-angular-migration/PLAN.md",
+  "featureDecompositionDecision": "Single feature",
+  "screenWorkflowContract": "documentation/plans/business/web-angular-migration/decomposition/angular-form-foundation.md",
+  "plannedCustomerEducation": "N/A - technical shared primitive",
+  "purpose": "Current implemented S1-A2 source/organization/verification; Phase 06 Verified.",
+  "reviewArtifact": "documentation/modules/platform/features/angular-form-foundation/angular-form-foundation-evidence.md",
+  "implementationRequest": "documentation/modules/platform/features/angular-form-foundation/angular-form-foundation-request.md",
+  "plannedCanonicalBooks": {
+    "master": "documentation/modules/platform/features/angular-form-foundation/angular-form-foundation-review.md",
+    "api": "documentation/modules/platform/features/angular-form-foundation/angular-form-foundation-api.md",
+    "web": "documentation/modules/platform/features/angular-form-foundation/angular-form-foundation-web.md",
+    "mobile": "documentation/modules/platform/features/angular-form-foundation/angular-form-foundation-mobile.md"
+  },
+  "sourceCollections": [],
+  "requiredFiles": [
+    {
+      "id": "root-agent-guidance",
+      "layer": "configuration",
+      "path": "AGENTS.md",
+      "purpose": "Repository-wide feature and documentation rules"
+    },
+    {
+      "id": "review-artifact",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-form-foundation/angular-form-foundation-evidence.md",
+      "purpose": "Feature requirement, evidence, finding, and verification ledger"
+    },
+    {
+      "id": "implementation-request",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-form-foundation/angular-form-foundation-request.md",
+      "purpose": "Copy-ready feature scope, platform decisions, contracts, and quality gates"
+    },
+    {
+      "id": "preflight-3",
+      "path": "web-next/src/shared/components/forms/dialog/MyForm.tsx",
+      "layer": "documentation",
+      "purpose": "Current reviewed source/exact contract"
+    },
+    {
+      "id": "preflight-4",
+      "path": "web-next/src/shared/components/forms/dialog/FormContainer.tsx",
+      "layer": "documentation",
+      "purpose": "Current reviewed source/exact contract"
+    },
+    {
+      "id": "preflight-5",
+      "path": "web-next/src/shared/components/forms/dialog/formErrorSummary.ts",
+      "layer": "documentation",
+      "purpose": "Current reviewed source/exact contract"
+    },
+    {
+      "id": "preflight-6",
+      "path": "web-next/src/shared/components/forms/text-fields/MyTextField.tsx",
+      "layer": "documentation",
+      "purpose": "Current reviewed source/exact contract"
+    },
+    {
+      "id": "preflight-7",
+      "path": "web-angular/src/app/shared/ui/buttons/action-button.ts",
+      "layer": "documentation",
+      "purpose": "Current reviewed source/exact contract"
+    },
+    {
+      "id": "preflight-8",
+      "path": "web-angular/src/theme/prime-preset.ts",
+      "layer": "documentation",
+      "purpose": "Current reviewed source/exact contract"
+    },
+    {
+      "id": "preflight-9",
+      "path": "web-angular/src/app/platform/localization/localization-runtime.ts",
+      "layer": "documentation",
+      "purpose": "Current reviewed source/exact contract"
+    },
+    {
+      "id": "preflight-10",
+      "path": "documentation/plans/business/web-angular-migration/decomposition/angular-form-foundation.md",
+      "layer": "documentation",
+      "purpose": "Current reviewed source/exact contract"
+    },
+    {
+      "id": "preflight-11",
+      "path": "documentation/plans/business/web-angular-migration/ANGULAR_ARCHITECTURE.md",
+      "layer": "documentation",
+      "purpose": "Current reviewed source/exact contract"
+    },
+    {
+      "id": "preflight-12",
+      "path": "documentation/modules/platform/features/angular-form-foundation/angular-form-foundation-review.md",
+      "layer": "documentation",
+      "purpose": "Current reviewed source/exact contract"
+    },
+    {
+      "id": "preflight-13",
+      "path": "documentation/modules/platform/features/angular-form-foundation/angular-form-foundation-api.md",
+      "layer": "documentation",
+      "purpose": "Current reviewed source/exact contract"
+    },
+    {
+      "id": "preflight-14",
+      "path": "documentation/modules/platform/features/angular-form-foundation/angular-form-foundation-web.md",
+      "layer": "documentation",
+      "purpose": "Current reviewed source/exact contract"
+    },
+    {
+      "id": "preflight-15",
+      "path": "documentation/modules/platform/features/angular-form-foundation/angular-form-foundation-mobile.md",
+      "layer": "documentation",
+      "purpose": "Current reviewed source/exact contract"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/public-api.ts",
+      "layer": "web",
+      "id": "implemented-16",
+      "purpose": "Current source/config/test/guide/evidence"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/buttons/action-button.scss",
+      "layer": "web",
+      "id": "implemented-17",
+      "purpose": "Current source/config/test/guide/evidence"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/buttons/action-button.spec.ts",
+      "layer": "web",
+      "id": "implemented-18",
+      "purpose": "Current source/config/test/guide/evidence"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/buttons/public-api.ts",
+      "layer": "web",
+      "id": "implemented-19",
+      "purpose": "Current source/config/test/guide/evidence"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/form-container.scss",
+      "layer": "web",
+      "id": "implemented-20",
+      "purpose": "Current source/config/test/guide/evidence"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/form-container.spec.ts",
+      "layer": "web",
+      "id": "implemented-21",
+      "purpose": "Current source/config/test/guide/evidence"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/form-container.ts",
+      "layer": "web",
+      "id": "implemented-22",
+      "purpose": "Current source/config/test/guide/evidence"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/form-errors.ts",
+      "layer": "web",
+      "id": "implemented-23",
+      "purpose": "Current source/config/test/guide/evidence"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/public-api.ts",
+      "layer": "web",
+      "id": "implemented-24",
+      "purpose": "Current source/config/test/guide/evidence"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/fields/text-field.scss",
+      "layer": "web",
+      "id": "implemented-25",
+      "purpose": "Current source/config/test/guide/evidence"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/fields/text-field.ts",
+      "layer": "web",
+      "id": "implemented-26",
+      "purpose": "Current source/config/test/guide/evidence"
+    },
+    {
+      "path": "web-angular/src/app/dev/form-preview.ts",
+      "layer": "web",
+      "id": "implemented-27",
+      "purpose": "Current source/config/test/guide/evidence"
+    },
+    {
+      "path": "web-angular/src/app/dev/form-fixture-validation.ts",
+      "layer": "web",
+      "id": "implemented-28",
+      "purpose": "Current source/config/test/guide/evidence"
+    },
+    {
+      "path": "web-angular/src/app/app.routes.ts",
+      "layer": "web",
+      "id": "implemented-29",
+      "purpose": "Current source/config/test/guide/evidence"
+    },
+    {
+      "path": "web-angular/src/app/app.routes.production.ts",
+      "layer": "web",
+      "id": "implemented-30",
+      "purpose": "Current source/config/test/guide/evidence"
+    },
+    {
+      "path": "web-angular/package.json",
+      "layer": "web",
+      "id": "implemented-31",
+      "purpose": "Current source/config/test/guide/evidence"
+    },
+    {
+      "path": "web-angular/package-lock.json",
+      "layer": "web",
+      "id": "implemented-32",
+      "purpose": "Current source/config/test/guide/evidence"
+    },
+    {
+      "path": "web-angular/angular.json",
+      "layer": "web",
+      "id": "implemented-33",
+      "purpose": "Current source/config/test/guide/evidence"
+    },
+    {
+      "path": "web-angular/scripts/architecture-rules.mjs",
+      "layer": "web",
+      "id": "implemented-34",
+      "purpose": "Current source/config/test/guide/evidence"
+    },
+    {
+      "path": "web-angular/scripts/architecture-rules.test.mjs",
+      "layer": "web",
+      "id": "implemented-35",
+      "purpose": "Current source/config/test/guide/evidence"
+    },
+    {
+      "path": "web-angular/scripts/check-architecture.mjs",
+      "layer": "web",
+      "id": "implemented-36",
+      "purpose": "Current source/config/test/guide/evidence"
+    },
+    {
+      "path": "web-angular/scripts/verify-form-browser.mjs",
+      "layer": "web",
+      "id": "implemented-37",
+      "purpose": "Current source/config/test/guide/evidence"
+    },
+    {
+      "path": "documentation/modules/platform/features/angular-form-foundation/IMPLEMENTATION_REPORT.md",
+      "layer": "web",
+      "id": "implemented-38",
+      "purpose": "Current source/config/test/guide/evidence"
+    },
+    {
+      "path": "documentation/modules/platform/features/angular-form-foundation/verification/browser-summary.json",
+      "layer": "web",
+      "id": "implemented-39",
+      "purpose": "Current source/config/test/guide/evidence"
+    },
+    {
+      "path": "documentation/guides/web/architecture/ANGULAR_SHARED_COMPONENTS.md",
+      "layer": "web",
+      "id": "implemented-40",
+      "purpose": "Current source/config/test/guide/evidence"
+    },
+    {
+      "path": "documentation/plans/notes/FOLLOW_UPS.md",
+      "layer": "web",
+      "id": "implemented-41",
+      "purpose": "Current source/config/test/guide/evidence"
+    }
+  ]
+}

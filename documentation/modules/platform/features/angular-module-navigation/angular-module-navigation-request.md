@@ -1,0 +1,3 @@
+# Angular module navigation — implementation request
+
+Exact S2-A2. Current source/API/Shared/native audit is recorded in the applied books and version-2 contract. Existing-System Relationship Review: use current catalog policy, no API change. Business Rules Matrix: server membership plus client registry; no arbitrary entryPath or unported CRUD. Edge Cases: malformed/duplicate/unknown response, stale identity, cancellation, retry/403, empty/forbidden, RTL and deep reload. Impact: Angular navigation and Shared composition only. Runtime remains blocked until current generated books and checks pass.

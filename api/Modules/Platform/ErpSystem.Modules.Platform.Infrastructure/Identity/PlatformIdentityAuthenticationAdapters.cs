@@ -8,6 +8,7 @@ using ErpSystem.Modules.Platform.Application.CompanyAccess;
 using ErpSystem.Modules.Platform.Application.Entitlements;
 using ErpSystem.Modules.Platform.Contracts.Authentication.Tokens;
 using ErpSystem.Modules.Platform.Application.TenantMembership;
+using ErpSystem.Modules.Platform.Infrastructure.Features.Security.Authentication.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
@@ -274,20 +275,39 @@ public sealed class PlatformIdentitySessionAdapter(
     ICompanyAccessService companyAccess,
     ICurrentExecutionContext current,
     IHttpContextAccessor httpContext,
-    TimeProvider timeProvider) : IAuthenticationSessionAdapter
+    TimeProvider timeProvider,
+    IAuthenticationSessionIssuanceGuard? issuanceGuard = null) : IAuthenticationSessionAdapter
 {
-    public async Task<AuthenticationOperationResult<AuthenticationSessionResponse>> IssueAsync(
+    public Task<AuthenticationOperationResult<AuthenticationSessionResponse>> IssueAsync(
         PlatformApplicationUser user,
         string tenantId,
         int companyId,
         CancellationToken cancellationToken,
-        string? replacedSessionId = null)
+        string? replacedSessionId = null) =>
+        IssueSessionAsync(user, tenantId, companyId, cancellationToken, replacedSessionId);
+
+    private async Task<AuthenticationOperationResult<AuthenticationSessionResponse>> IssueSessionAsync(
+        PlatformApplicationUser user,
+        string tenantId,
+        int companyId,
+        CancellationToken cancellationToken,
+        string? replacedSessionId = null,
+        PlatformRefreshToken? rotatedToken = null)
     {
+        var now = timeProvider.GetUtcNow().UtcDateTime;
+        if (user.IsDisabled || user.LockoutEnd > timeProvider.GetUtcNow() ||
+            (!string.IsNullOrWhiteSpace(replacedSessionId) && !user.RefreshTokens.Any(item =>
+                item.IsActiveAt(now) && item.CompanyId == current.CompanyId &&
+                string.Equals(item.SessionId, replacedSessionId, StringComparison.Ordinal))))
+        {
+            return Failure<AuthenticationSessionResponse>("Authentication.InvalidSession", "The active session scope is invalid.");
+        }
+
         var company = await companyAccess.GetAvailableCompanyAsync(user.Id, tenantId, companyId, cancellationToken);
         if (company is null)
             return Failure<AuthenticationSessionResponse>("Authentication.NoCompanyAccess", "The company is outside the user's active scope.");
 
-        var sessionId = Guid.NewGuid().ToString("N");
+        var sessionId = rotatedToken?.SessionId ?? Guid.NewGuid().ToString("N");
         var accessToken = await tokens.GenerateAccessTokenAsync(
             new AccessTokenUserSnapshot(
                 user.Id,
@@ -301,18 +321,25 @@ public sealed class PlatformIdentitySessionAdapter(
             tenantId,
             cancellationToken);
 
-        var now = timeProvider.GetUtcNow().UtcDateTime;
-        if (!string.IsNullOrWhiteSpace(replacedSessionId))
-        {
-            foreach (var existing in user.RefreshTokens.Where(item =>
-                         item.IsActiveAt(now) &&
-                         string.Equals(item.SessionId, replacedSessionId, StringComparison.Ordinal)))
-            {
-                existing.Revoke("Company switched", now);
-            }
-        }
+        now = timeProvider.GetUtcNow().UtcDateTime;
+        var admissionError = issuanceGuard?.Validate(accessToken.Token,
+            rotatedToken?.ExpiresOn ?? now.Add(AuthenticationSessionPolicy.RefreshTokenLifetime));
+        if (admissionError is not null)
+            return AuthenticationOperationResult.Failure<AuthenticationSessionResponse>(admissionError);
+        // Do not revoke anything until all replacement material is available.
+        if (rotatedToken is not null && !rotatedToken.IsActiveAt(now))
+            return Failure<AuthenticationSessionResponse>("Authentication.InvalidRefreshToken", "The refresh token is inactive.");
+        if (!string.IsNullOrWhiteSpace(replacedSessionId) && !user.RefreshTokens.Any(item =>
+                item.IsActiveAt(now) && item.CompanyId == current.CompanyId &&
+                string.Equals(item.SessionId, replacedSessionId, StringComparison.Ordinal)))
+            return Failure<AuthenticationSessionResponse>("Authentication.InvalidSession", "The active session scope is invalid.");
 
         var rawRefreshToken = WebEncoders.Base64UrlEncode(RandomNumberGenerator.GetBytes(64));
+        if (!string.IsNullOrWhiteSpace(replacedSessionId))
+            RefreshTokenSessionPolicy.RevokeSession(user.RefreshTokens, replacedSessionId, "Company switched", now);
+
+        rotatedToken?.Revoke(PlatformRefreshToken.RotationReason, now);
+
         var refresh = new PlatformRefreshToken
         {
             TokenHash = Hash(rawRefreshToken),
@@ -320,12 +347,12 @@ public sealed class PlatformIdentitySessionAdapter(
             JwtId = accessToken.JwtId,
             CompanyId = companyId,
             CreatedOn = now,
-            ExpiresOn = now.Add(AuthenticationSessionPolicy.RefreshTokenLifetime),
+            ExpiresOn = rotatedToken?.ExpiresOn ?? now.Add(AuthenticationSessionPolicy.RefreshTokenLifetime),
             CreatedByIp = httpContext.HttpContext?.Connection.RemoteIpAddress?.ToString(),
             CreatedByUserAgent = httpContext.HttpContext?.Request.Headers.UserAgent.ToString()
         };
         user.RefreshTokens.Add(refresh);
-        Prune(user.RefreshTokens, now);
+        RefreshTokenSessionPolicy.Prune(user.RefreshTokens, now);
 
         var update = await users.UpdateAsync(user);
         if (!update.Succeeded)
@@ -362,8 +389,13 @@ public sealed class PlatformIdentitySessionAdapter(
         if (user is null)
             return AuthenticationOperationResult.Success();
 
-        user.RefreshTokens.Single(item => item.TokenHash == hash)
-            .Revoke("Signed out", timeProvider.GetUtcNow().UtcDateTime);
+        var sessionId = user.RefreshTokens.Single(item => item.TokenHash == hash).SessionId;
+        var now = timeProvider.GetUtcNow().UtcDateTime;
+        if (!user.RefreshTokens.Any(item => item.IsActiveAt(now) &&
+                string.Equals(item.SessionId, sessionId, StringComparison.Ordinal)))
+            return AuthenticationOperationResult.Success();
+
+        RefreshTokenSessionPolicy.RevokeSession(user.RefreshTokens, sessionId, "Signed out", now);
         var result = await users.UpdateAsync(user);
         return result.Succeeded ? AuthenticationOperationResult.Success() : IdentityFailure(result);
     }
@@ -381,7 +413,7 @@ public sealed class PlatformIdentitySessionAdapter(
 
         var user = await users.Users.Include(item => item.RefreshTokens)
             .SingleOrDefaultAsync(item => item.Id == access.UserId, cancellationToken);
-        if (user is null || user.IsDisabled ||
+        if (user is null || user.IsDisabled || user.LockoutEnd > timeProvider.GetUtcNow() ||
             !string.Equals(user.SecurityStamp, access.SecurityStamp, StringComparison.Ordinal))
         {
             return Failure<AuthenticationSessionResponse>("Authentication.InvalidRefreshToken", "The refresh token is invalid.");
@@ -399,18 +431,22 @@ public sealed class PlatformIdentitySessionAdapter(
 
         if (!refresh.IsActiveAt(now))
         {
-            if (refresh.WasRotated && refresh.RevokedOn < now.Subtract(AuthenticationSessionPolicy.RotatedTokenReuseGracePeriod))
+            if (refresh.WasRotated && user.RefreshTokens.Any(item =>
+                    item.IsActiveAt(now) && string.Equals(item.SessionId, refresh.SessionId, StringComparison.Ordinal)))
             {
-                foreach (var active in user.RefreshTokens.Where(item =>
-                             item.IsActiveAt(now) && item.SessionId == refresh.SessionId))
-                    active.Revoke("Refresh token reuse detected", now);
-                await users.UpdateAsync(user);
+                if (RefreshTokenSessionPolicy.IsWithinRotationGracePeriod(refresh, now))
+                    return Failure<AuthenticationSessionResponse>("User.RefreshTokenAlreadyRotated",
+                        "The refresh token has already been rotated.", AuthenticationErrorType.Conflict);
+
+                RefreshTokenSessionPolicy.RevokeSession(user.RefreshTokens, refresh.SessionId, "Refresh token reuse detected", now);
+                var update = await users.UpdateAsync(user);
+                if (!update.Succeeded)
+                    return IdentityFailure<AuthenticationSessionResponse>(update);
             }
             return Failure<AuthenticationSessionResponse>("Authentication.InvalidRefreshToken", "The refresh token is inactive.");
         }
 
-        refresh.Revoke(PlatformRefreshToken.RotationReason, now);
-        return await IssueAsync(user, access.TenantId, refresh.CompanyId, cancellationToken);
+        return await IssueSessionAsync(user, access.TenantId, refresh.CompanyId, cancellationToken, rotatedToken: refresh);
     }
 
     public async Task<AuthenticationOperationResult<AuthenticationSessionResponse>> SwitchCompanyAsync(
@@ -426,7 +462,9 @@ public sealed class PlatformIdentitySessionAdapter(
 
         var user = await users.Users.Include(item => item.RefreshTokens)
             .SingleOrDefaultAsync(item => item.Id == current.UserId, cancellationToken);
-        return user is null
+        return user is null || !string.Equals(user.SecurityStamp,
+                httpContext.HttpContext?.User.FindFirst(AuthenticationTokenClaimNames.SecurityStamp)?.Value,
+                StringComparison.Ordinal)
             ? Failure<AuthenticationSessionResponse>("Authentication.InvalidSession", "The active session scope is invalid.")
             : await IssueAsync(user, current.TenantId, companyId, cancellationToken, sessionId);
     }
@@ -453,34 +491,26 @@ public sealed class PlatformIdentitySessionAdapter(
     internal static string Hash(string token) =>
         Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(token))).ToLowerInvariant();
 
-    private static void Prune(ICollection<PlatformRefreshToken> tokens, DateTime now)
-    {
-        var removable = tokens
-            .Where(item => !item.IsActiveAt(now))
-            .OrderByDescending(item => item.RevokedOn ?? item.ExpiresOn)
-            .Skip(AuthenticationSessionPolicy.MaxInactiveTokenHistory)
-            .ToArray();
-        foreach (var item in removable)
-            tokens.Remove(item);
-    }
-
     private static AuthenticationOperationResult Failure(
         string code,
         string description,
         AuthenticationErrorType type = AuthenticationErrorType.Unauthorized) =>
         AuthenticationOperationResult.Failure(new AuthenticationError(code, description, type));
 
-    private static AuthenticationOperationResult<T> Failure<T>(string code, string description) =>
-        AuthenticationOperationResult.Failure<T>(new AuthenticationError(code, description, AuthenticationErrorType.Unauthorized));
+    private static AuthenticationOperationResult<T> Failure<T>(string code, string description,
+        AuthenticationErrorType type = AuthenticationErrorType.Unauthorized) =>
+        AuthenticationOperationResult.Failure<T>(new AuthenticationError(code, description, type));
 
     private static AuthenticationOperationResult IdentityFailure(IdentityResult result) =>
-        Failure(result.Errors.First().Code, result.Errors.First().Description, AuthenticationErrorType.Validation);
+        AuthenticationOperationResult.Failure(IdentityError(result));
 
     private static AuthenticationOperationResult<T> IdentityFailure<T>(IdentityResult result) =>
-        AuthenticationOperationResult.Failure<T>(new AuthenticationError(
-            result.Errors.First().Code,
-            result.Errors.First().Description,
-            AuthenticationErrorType.Validation));
+        AuthenticationOperationResult.Failure<T>(IdentityError(result));
+
+    private static AuthenticationError IdentityError(IdentityResult result) =>
+        result.Errors.Any(error => string.Equals(error.Code, nameof(IdentityErrorDescriber.ConcurrencyFailure), StringComparison.Ordinal))
+            ? new AuthenticationError("User.RefreshTokenUpdateConflict", "The session changed during the request.", AuthenticationErrorType.Conflict)
+            : new AuthenticationError(result.Errors.First().Code, result.Errors.First().Description, AuthenticationErrorType.Validation);
 }
 
 public sealed class PlatformIdentityAccountAdapter(

@@ -21,6 +21,13 @@ OpenAPI generation assessment is Required; adopting a particular generator depen
 on compatibility proof. Reuse existing domain behavior; any newly discovered
 business/schema/API gap requires its own authorized owner slice.
 
+Requester-approved D16 adds [SIGMA_ACCEPTANCE](SIGMA_ACCEPTANCE.md) SIG-01..SIG-08:
+finite lookup bootstrap/watch, navigation request lifetimes, loading ownership,
+attachment lifecycle, isolated drafts/confirmation races, round-trippable list
+criteria, shared library compatibility and scroll ownership. ROADMAP assigns S1
+foundation gates plus actual first-consumer proof; Angular 22/Strict/Zoneless and
+ERP API/security remain authoritative over the external source examples.
+
 Excluded: Next deletion/retirement, native Expo conversion, redesign, future-only
 business capabilities, new domain schemas/rules and publishing during planning.
 
@@ -58,6 +65,18 @@ Business data and authorization stay server-owned; no UI-driven backfill.
 See [EVIDENCE](EVIDENCE.md) and [DISCOVERY](DISCOVERY.md). DEC-027, DEC-026 and
 RISK-017 remain explicit blockers at their affected gates. No delivery deadline
 is inferred from AI-assisted development. The requested plan is a reviewable Draft.
+
+S0 auth source audit is complete in
+[AUTHENTICATION_PREFLIGHT](AUTHENTICATION_PREFLIGHT.md). D17 requester-approved
+API HttpOnly browser cookies preserve persistent sessions; the target is defined in
+[BROWSER_AUTHENTICATION_CONTRACT](BROWSER_AUTHENTICATION_CONTRACT.md), not existing
+runtime. DEC-027 binding proof and RISK-018 actual auth
+contract reconciliation remain gates. No Angular runtime was created by the audit.
+
+Subsequent R1/R2 state: session correctness and direct browser Cookie transport are
+implemented with real SQL/Chromium focused acceptance. Current final gate and
+limitations are in the owning Platform feature's verification/BROWSER_IMPLEMENTATION_REPORT.md.
+Angular foundation/UI remains next; production/provider acceptance is separate.
 
 - [x] Scope, coexistence and drafting authority captured.
 - [x] Current source separated from proposals and unknowns.

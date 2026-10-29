@@ -15,8 +15,10 @@ Then reference its stable ID here.
 
 | Note ID | Type | Area | Summary | Canonical registry |
 | --- | --- | --- | --- | --- |
+| FOLLOW-015 | Follow-up | Angular authenticated workspace | S2-A1/2/3 frame, module discovery and read-only role home Verified; remaining exact workspace scope is canonical in FOLLOW_UPS.md. | `FOLLOW_UPS.md` |
 | DEC-025 | Decision | Angular direct API | Closed: requester excluded BFF; Angular calls the existing API. | `DECISION_BACKLOG.md` |
-| DEC-027 | Decision | Direct authentication | Bind actual API credentials/session/origins before Angular auth work. | `DECISION_BACKLOG.md` |
+| DEC-027 | Decision | Direct authentication | Closed: verified direct API Cookie contract ready for Angular consumer. | `DECISION_BACKLOG.md` |
+| RISK-018 | Risk | Authentication contract/source drift | Actual refresh/revocation/provider behavior gates Angular auth acceptance and retained Web compatibility. | `KNOWN_RISKS.md` |
 | DEC-026 | Decision | Pattern identity | Resolve duplicate P-008 meaning before affected contracts. | `DECISION_BACKLOG.md` |
 | RISK-016 | Risk | Client parity | Track drift while Next is retained. | `KNOWN_RISKS.md` |
 | RISK-017 | Risk | Specialist adapters | Prove required Angular integration compatibility/licensing. | `KNOWN_RISKS.md` |
@@ -46,6 +48,15 @@ Then reference its stable ID here.
 | FOLLOW-009 | Follow-up | Countries development SSR | Reference client rendering succeeds after a style-prefixer SSR fallback; isolate before the next Web release gate. | `FOLLOW_UPS.md` |
 
 ## Web note checklist
+
+`FOLLOW-012` — Angular persisted UI translation consumer acceptance; canonical
+scope, owner and reopening point are in FOLLOW_UPS.md.
+
+`FOLLOW-013` — Angular PrimeNG local license activation and actual licensed browser
+acceptance; canonical ownership/trigger are in FOLLOW_UPS.md.
+
+`FOLLOW-014` — Angular remaining shared form/control/dirty/dialog compatibility;
+canonical scope and first-consumer trigger are in FOLLOW_UPS.md.
 
 Use `Surface = Web` or `Surface = Cross-platform` for browser/App Router/BFF,
 shared UI, forms, accessibility, CSP, browser integrations, performance, and Web

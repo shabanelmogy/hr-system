@@ -1,0 +1,7 @@
+# Angular module navigation — evidence
+
+Current Phase 00 four books, 25 existing source paths, 245 recipes and planning passed before bounded runtime. API source stage then Web, native retained and integrated acceptance completed sequentially.
+
+Phase 06 Verified 2026-10-29: full Angular check 16 files/69 tests, 6 architecture cases, strict templates/types/tokens/fonts/catalog and production build (428.32 kB initial, 115.19 kB estimated transfer) pass with unchanged budgets. Fourteen production browser fixture scenarios pass (8 EN/AR/light/dark/390/1440 navigation cases plus empty/error/403/malformed/cancellation/global-role denial). Separate actual API/SQL admin login/catalog/overview/reload/logout passes, returning real permitted modules. Current Next actual browser comparison verifies 8 tile/icon geometry cases: 196x188 and 98x98 at 390, 196x206 and 108x108 at 1440. Retained Next catalog/registry/route tests 3 files/13 tests; native module registration 4 tests pass. Current shell regression 24 cases and login 11 scenarios including live API pass. API rebuild of the embedded catalog succeeds, 79 inherited analyzer warnings/0 errors. Canonical catalog checks 21 sources/7126 keys; generated schema-3 version a128a5f4b0bd57aa5c989727bf9c6726209be4b7ee181424940ddcc8d72e3f60.
+
+See IMPLEMENTATION_REPORT.md for commands/primary research and honest current availability. Customer education follows Phase 06 Verified.

@@ -244,7 +244,7 @@
     },
     "permissionDescriptions": {
       "CompanyEmailTemplates": "Customize account emails independently for this company.",
-      "MessageLogs": "Read and export company email attempt history."
+      "MessageLogs": "Company email attempt history."
     }
   },
   "users": {
@@ -575,5 +575,19 @@
     "loadFailed": "Unable to load system UI texts.",
     "resetTitle": "Restore the original system text?",
     "resetDescription": "The shipped text will be used again for Super Admin sessions."
+  },
+  "angularAuth": {
+    "updatingContext": "Updating your workspace...",
+    "invalidCredentials": "Username or password is incorrect.",
+    "unavailable": "Unable to connect. Check that the server is available and try again.",
+    "authenticationFailed": "Unable to sign in. Please try again.",
+    "selectionExpired": "Your selection expired. Please sign in again.",
+    "logoutFailed": "We could not confirm sign-out with the server. Please try again.",
+    "tooManyRequests": "Too many attempts. Please wait and try again.",
+    "providerUnavailable": "Google sign-in is currently unavailable.",
+    "sessionReady": "You are signed in",
+    "signOut": "Sign out",
+    "passwordRequestSent": "If the account is eligible, password reset instructions will be sent.",
+    "backToLogin": "Back to sign in"
   }
 }

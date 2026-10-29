@@ -1,7 +1,7 @@
 {
   "schemaVersion": 3,
   "versions": {
-    "web": "7477700cce4ce36d68ed2ffe8eb4af58e1957ea8092cb31e695cbb905f54212b",
+    "web": "a66a859b1e21ac87433b2e2c2ef81729ddb47fed57079d9b11278e0c3985f714",
     "mobile": "509b1f3679ad0290fbffe08a8a971e06718fd568016abb7057817fa3617a357f"
   },
   "sources": [
@@ -29650,6 +29650,13 @@
           "systemPermissions": null
         },
         {
+          "key": "modules.acc",
+          "en": "Accounting",
+          "ar": "الحسابات",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
           "key": "modules.accountDetermination",
           "en": "Account determination",
           "ar": "تحديد الحسابات",
@@ -29695,6 +29702,13 @@
           "key": "modules.chartOfAccounts",
           "en": "Chart of accounts",
           "ar": "دليل الحسابات",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "modules.crm",
+          "en": "CRM",
+          "ar": "إدارة العملاء",
           "scope": "shared",
           "systemPermissions": null
         },
@@ -29783,9 +29797,37 @@
           "systemPermissions": null
         },
         {
+          "key": "modules.reference-data",
+          "en": "General Data",
+          "ar": "البيانات العامة",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "modules.reporting",
+          "en": "Reporting",
+          "ar": "التقارير",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
           "key": "modules.submoduleDescription",
           "en": "Choose an enabled area to continue.",
           "ar": "اختر وحدة مفعلة للمتابعة.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "modules.submodules.acc.ledger-setup",
+          "en": "Ledger setup",
+          "ar": "إعدادات الأستاذ العام",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "modules.submodules.crm.appointments",
+          "en": "Appointments",
+          "ar": "المواعيد",
           "scope": "shared",
           "systemPermissions": null
         },
@@ -29835,6 +29877,20 @@
           "key": "modules.submodules.hr.workforce",
           "en": "Workforce planning",
           "ar": "تخطيط القوى العاملة",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "modules.submodules.reference-data.addresses",
+          "en": "Addresses",
+          "ar": "العناوين",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "modules.submodules.reporting.analytics",
+          "en": "Analytics",
+          "ar": "التحليلات",
           "scope": "shared",
           "systemPermissions": null
         },
@@ -40415,6 +40471,90 @@
           "systemPermissions": []
         },
         {
+          "key": "angularAuth.authenticationFailed",
+          "en": "Unable to sign in. Please try again.",
+          "ar": "تعذر تسجيل الدخول. حاول مرة أخرى.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "angularAuth.backToLogin",
+          "en": "Back to sign in",
+          "ar": "العودة لتسجيل الدخول",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "angularAuth.invalidCredentials",
+          "en": "Username or password is incorrect.",
+          "ar": "اسم المستخدم أو كلمة المرور غير صحيحة.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "angularAuth.logoutFailed",
+          "en": "We could not confirm sign-out with the server. Please try again.",
+          "ar": "تعذر تأكيد تسجيل الخروج من الخادم. حاول مرة أخرى.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "angularAuth.passwordRequestSent",
+          "en": "If the account is eligible, password reset instructions will be sent.",
+          "ar": "إذا كان الحساب مؤهلًا، ستُرسل إليه تعليمات إعادة تعيين كلمة المرور.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "angularAuth.providerUnavailable",
+          "en": "Google sign-in is currently unavailable.",
+          "ar": "تسجيل الدخول باستخدام Google غير متاح حاليًا.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "angularAuth.selectionExpired",
+          "en": "Your selection expired. Please sign in again.",
+          "ar": "انتهت صلاحية الاختيار. سجل الدخول مرة أخرى.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "angularAuth.sessionReady",
+          "en": "You are signed in",
+          "ar": "تم تسجيل الدخول",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "angularAuth.signOut",
+          "en": "Sign out",
+          "ar": "تسجيل الخروج",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "angularAuth.tooManyRequests",
+          "en": "Too many attempts. Please wait and try again.",
+          "ar": "محاولات كثيرة. انتظر قليلًا ثم حاول مرة أخرى.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "angularAuth.unavailable",
+          "en": "Unable to connect. Check that the server is available and try again.",
+          "ar": "تعذر الاتصال. تأكد من تشغيل الخادم ثم حاول مرة أخرى.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "angularAuth.updatingContext",
+          "en": "Updating your workspace...",
+          "ar": "جارٍ تحديث مساحة العمل...",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
           "key": "auth.acceptInvitation",
           "en": "Activate your account",
           "ar": "تفعيل الحساب",
@@ -42576,8 +42716,8 @@
         },
         {
           "key": "roles.permissionDescriptions.MessageLogs",
-          "en": "Read and export company email attempt history.",
-          "ar": "عرض وتصدير محاولات إرسال البريد الخاصة بالشركة.",
+          "en": "Company email attempt history.",
+          "ar": "سجل محاولات بريد الشركة.",
           "scope": "shared",
           "systemPermissions": null
         },

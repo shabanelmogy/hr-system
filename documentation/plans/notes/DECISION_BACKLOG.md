@@ -9,7 +9,7 @@ Required capability prevents an `Implementation Ready` status for that scope.
 | ID | Surface | Topic | Question | Owner | Blocking? | Status | Decision trigger / due | Related plan |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | DEC-025 | Cross-platform | Angular direct API architecture | Requester explicitly rejected BFF and unnecessary complexity on 2026-10-28. Angular calls existing .NET API directly; no new gateway/YARP/Redis/session-store requirement. Existing Next handlers remain Next-only. | ERP owner + API/Security + Web Architecture | No — direction resolved; DEC-027 binds actual auth | Closed | Reopen only on an explicitly approved architecture change | `web-angular-migration` |
-| DEC-027 | Cross-platform | Angular direct authentication binding | Review actual API cookie/token contracts and select the simplest secure compatible browser binding, including origins, credential handling, refresh/logout, context isolation and CSRF where applicable; no BFF or identity rewrite implied. | API/Security + Web Architecture | Yes — direct auth implementation / G2 | Open | Before implementing Angular authentication; resolve from source and focused tests | `web-angular-migration` |
+| DEC-027 | Cross-platform | Angular direct authentication binding | D17 API Cookies implemented and verified in R1/R2: actual password/select/reload/expiry/refresh/switch/logout, origin/CSRF/JWT/live SQL and retained bearer isolation; final Release 1157 passed. | API/Security + Web Architecture | No — bounded API contract/proof resolved; Angular consumer/deployment remains separate | Closed | Reopen only if browser transport/security/hosting topology changes; consume verified contract for Angular foundation/login | `web-angular-migration`; `documentation/modules/platform/features/platform-browser-authentication/verification/BROWSER_IMPLEMENTATION_REPORT.md` |
 | DEC-026 | Web | Screen pattern identifier collision | Resolve Active P-008 Global Scoped Context Selector versus Candidate P-008 Transactional Document and register unambiguous Angular adaptations. | Documentation owner + Web Architecture | Yes — affected UI contracts | Open | Before binding affected Angular screen contracts; unrelated source behavior is unchanged | `web-angular-migration`; `documentation/guides/shared/SCREEN_PATTERN_CATALOG.md` |
 | DEC-021 | Cross-platform | Direct user permission grant scope | Resolved 2026-10-17: direct business permission grants are company-specific within the Tenant and add to inherited roles; requester explicitly authorized implementation of this recommendation. | Product + Platform | No — resolved | Resolved | Reopen only if Tenant-wide direct grants or direct deny becomes a new requirement; see `documentation/plans/business/platform-user-permissions-and-company-localization/SPEC_SUMMARY.md` | `platform-user-permissions-and-company-localization` |
 | DEC-001 | Cross-platform | HR MVP scope | Does the first HR MVP include Leave only or Attendance as well? | Product + HR | Yes — affected HR expansion | Open | Before expanding the HR MVP scope | `enterprise-saas-core` |
@@ -50,6 +50,17 @@ change. Canonical plan: `documentation/plans/business/web-angular-migration/PLAN
 
 ### DEC-027 — Direct API authentication
 
+R2 closure on 2026-10-28: actual browser routes/Cookies/security and SQL session
+binding are implemented. Trusted Chromium/Identity/SQL proves the Required API
+journey and negative boundaries; retained Next 38/native 1 focused regressions pass.
+Final Release gate: 1157 passed, zero failed/skipped. DEC-027 is Closed for the API
+binding decision and proof. Actual Angular UI/cross-tab coordination, production
+origins/proxy checks and external-provider availability remain separately owned;
+none reopens persistence selection. Canonical current proof:
+`documentation/modules/platform/features/platform-browser-authentication/verification/BROWSER_IMPLEMENTATION_REPORT.md`.
+
+Historical baseline and progression:
+
 Source/context: explicit no-BFF direction under DEC-025, 2026-10-28. Owner/status
 and exact trigger are in the canonical row. Impact: Next's cookie/session helpers
 cannot simply be imported into Angular; choosing browser token persistence or
@@ -59,6 +70,31 @@ contract, before S2 runtime. Close with source-backed endpoint/credential/origin
 mapping and focused auth, refresh, logout, scope and applicable CSRF tests.
 Use the existing API/identity capability where suitable; no speculative server or
 identity rewrite. Canonical plan: `documentation/plans/business/web-angular-migration/PLAN.md`.
+
+S0 investigation completed 2026-10-28: current endpoint/credential/origin map,
+alternatives, bounded API browser-cookie extension, source gaps and
+verification are in `business/web-angular-migration/AUTHENTICATION_PREFLIGHT.md`.
+31 Platform policy/helper tests and 50 retained Web tests passed; no live cookie,
+browser/SQL auth or new API binding was verified. The requester subsequently
+selected secure API Cookies under D17. Persistence preference is resolved and
+must not be asked again. BROWSER_AUTHENTICATION_CONTRACT owns the target transport;
+RISK-018 owns discovered source/contract discrepancies. DEC-027 remains Open for
+the exact slice/preflight and implementation proof, not for persistence selection.
+
+Phase 00 package is now registered for S0-AUTH preflight only under
+`documentation/modules/platform/features/platform-browser-authentication/`.
+Three Phase 00 integration probes subsequently passed: actual JWT/chunk capacity,
+real SQL Identity/EF concurrency and trusted Chromium HTTPS/CORS/antiforgery.
+Selected bounds and the remaining adapter/deployment acceptance are canonical in
+`documentation/modules/platform/features/platform-browser-authentication/verification/PREFLIGHT_PROOF_REPORT.md`.
+Primitive feasibility is resolved; actual session policy/endpoint binding and exact
+runtime gate remain pending. One Active preparation owner does not close this note.
+
+Subsequent requester authorization activates S0-AUTH-R1 session correctness inside
+the same feature. SESSION_RUNTIME_READINESS.md records its passed G0-G3 and exact
+bounded runtime authority; actual session adapter repair/SQL tests are recorded in
+verification/SESSION_IMPLEMENTATION_REPORT.md. This is not browser binding: Cookie
+routes/HTTP acceptance remain pending, so DEC-027 stays Open without re-opening D17.
 
 ### DEC-026 — Screen pattern identity
 

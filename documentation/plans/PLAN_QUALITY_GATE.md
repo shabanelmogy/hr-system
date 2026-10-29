@@ -144,6 +144,15 @@ before the full capability/release receives that status. If an open G4 item coul
 change the implementation contract of the proposed slice, the slice is not
 authorized.
 
+Phase 00 evidence preparation is distinct from runtime execution authorization.
+A Draft plan may authorize one exact preflight-only slice/feature after its
+Feature Decomposition Gate is complete. Record that metadata, a single current
+contract/Active preparation owner, and the explicit runtime block. The scaffold's
+PreflightOnly mode creates evidence documents only. It cannot waive G0-G3 or any
+non-release G4 finding before application coding. Technical units without UI use
+explicit excluded Web/Mobile rows and a justified N/A pattern, not a fabricated
+screen reference; actual screens still require reviewed patterns.
+
 ## Phase closure gate — Customer education
 
 This is a **post-implementation** gate. It does not block `Implementation Ready`;

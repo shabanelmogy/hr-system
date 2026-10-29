@@ -1,0 +1,32 @@
+<erp-auth-layout>
+  <div class="login-header"><div class="lock-avatar"><erp-icon name="lock" /></div><h2>{{ 'auth.signIn' | uiText:'platform-auth' }}</h2></div>
+  <erp-form [form]="form" [title]="'auth.signIn' | uiText:'platform-auth'" [submitLabel]="'auth.login' | uiText:'platform-auth'"
+    appearance="plain" [hideHeader]="true" [submitFullWidth]="true" [pending]="auth.pending()"
+    [feedback]="auth.error() ? (auth.error()! | uiText:'platform-auth') : ''" (validSubmit)="login()">
+    <erp-text-field #username [formControl]="form.controls.username" [label]="'auth.userName' | uiText:'platform-auth'"
+      appearance="floating" [messages]="messages()" [maxLength]="50" [showCounter]="true" autocomplete="username" class="username-field">
+      <erp-icon fieldIcon name="user" class="input-icon" />
+    </erp-text-field>
+    <erp-text-field [formControl]="form.controls.password" [label]="'auth.password' | uiText:'platform-auth'"
+      appearance="floating" [messages]="messages()" type="password" autocomplete="current-password" [revealOnlyWithValue]="true" class="password-field">
+      <erp-icon fieldIcon name="lock" class="input-icon" />
+    </erp-text-field>
+    <div class="forgot-password"><a routerLink="/forgetPassword">{{ 'auth.doYouForgetPassword' | uiText:'platform-auth' }}</a></div>
+    <erp-icon formSubmitIcon name="login" buttonIcon />
+    <section afterSubmit class="demo-access">
+      <div class="demo-heading"><span class="demo-bolt"><erp-icon name="bolt" /></span><span>{{ 'auth.demoAccessTitle' | uiText:'platform-auth' }}</span><span class="demo-chip">{{ 'auth.demoAccessChip' | uiText:'platform-auth' }}</span></div>
+      <div class="demo-roles">@for (role of roles; track role.id) {
+        <erp-button [label]="role.key | uiText:'platform-auth'" appearance="quiet" severity="secondary" [disabled]="auth.pending()"
+          [class]="'demo-role demo-' + role.id" fullWidth (activated)="demo(role.id)"><span buttonIcon class="role-icon"><erp-icon [name]="role.icon" /></span></erp-button>
+      }</div>
+    </section>
+  </erp-form>
+  <div class="social-divider"><span>{{ 'googleAuth.orContinueWithGoogle' | uiText:'platform-auth' }}</span></div>
+  <erp-button class="google-login" [label]="'googleAuth.googleLogin' | uiText:'platform-auth'" appearance="quiet" severity="secondary"
+    variant="outlined" fullWidth [disabled]="auth.pending()" [title]="'angularAuth.providerUnavailable' | uiText:'platform-auth'"
+    (activated)="auth.error.set('angularAuth.providerUnavailable')"><erp-icon buttonIcon name="google" /></erp-button>
+  <erp-choice-dialog icon="building" [open]="auth.challenge() !== null" [identity]="selectionIdentity()" [title]="selectionTitle() | uiText:'platform-auth'"
+    [description]="selectionDescription() | uiText:'platform-auth'" [options]="options()" [pending]="auth.pending()"
+    [cancelLabel]="'actions.cancel' | uiText" [continueLabel]="selectionContinue() | uiText:'platform-auth'" [closeLabel]="'actions.close' | uiText"
+    (cancelled)="auth.cancelSelection(); form.controls.password.reset()" (chosen)="select($event)" />
+</erp-auth-layout>

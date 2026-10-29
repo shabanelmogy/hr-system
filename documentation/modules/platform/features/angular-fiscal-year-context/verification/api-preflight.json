@@ -1,0 +1,12 @@
+{
+  "evidence": "Existing local API and SQL; readiness only, no Angular year control",
+  "readStatus": 200,
+  "availableCount": 2,
+  "hasCurrent": true,
+  "hasSelection": true,
+  "mutationAttempted": true,
+  "selectionPersisted": true,
+  "originalPreferenceRestored": true,
+  "unknownCandidateRejected": 400,
+  "contextRetainedAfterDenial": true
+}

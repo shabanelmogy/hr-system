@@ -1,0 +1,33 @@
+@if(captions()==='ready'){<erp-page-header [title]="'superAdminDashboard.title' | uiText:'platform-tenants'" [subtitle]="'superAdminDashboard.subtitle' | uiText:'platform-tenants'" />}
+@let state=dashboard.state();
+@if(captions()==='error'){<erp-feedback-state kind="error" [title]="'common.error' | uiText" [message]="'globalError.description' | uiText" />}
+@else if(captions()==='loading'||state.kind==='loading'){<erp-feedback-state kind="loading" [title]="'common.loading' | uiText:'platform-tenants'" />}
+@else if(state.kind==='error'){<erp-feedback-state kind="error" [title]="'common.error' | uiText:'platform-tenants'" [message]="'globalError.description' | uiText:'platform-tenants'" [actionLabel]="'actions.retry' | uiText:'platform-tenants'" (action)="dashboard.retry()" />}
+@else if(state.kind==='forbidden'){<erp-feedback-state kind="forbidden" [title]="'authorization.forbidden.title' | uiText:'platform-tenants'" [message]="'authorization.forbidden.message' | uiText:'platform-tenants'" />}
+@else if(state.kind==='ready') { @let summary=state.data;
+  <div class="dashboard-content" data-dashboard="ready">
+    <div class="metrics">@for(metric of metrics();track metric.key){<erp-metric-card [label]="('superAdminDashboard.'+metric.key) | uiText:'platform-tenants'" [value]="number(metric.value)" [accent]="metric.accent" [icon]="metric.icon" />}</div>
+    <div class="panel-row">
+      <erp-surface-card [title]="'superAdminDashboard.accountCapacity' | uiText:'platform-tenants'" icon="chart" compact fill>
+        <div class="capacity"><erp-progress-meter [label]="'tenantManagement.admins' | uiText:'platform-tenants'" [description]="seats(summary.admins,summary.maxAdmins)" [used]="summary.admins" [limit]="summary.maxAdmins" />
+        <erp-progress-meter [label]="'tenantManagement.users' | uiText:'platform-tenants'" [description]="seats(summary.users,summary.maxUsers)" [used]="summary.users" [limit]="summary.maxUsers" /></div>
+      </erp-surface-card>
+      <erp-surface-card [title]="'superAdminDashboard.subscriptionOverview' | uiText:'platform-tenants'" icon="calendar" [accent]="secondaryAccent()" compact fill>
+        <div class="subscriptions"><div class="total"><small>{{ 'superAdminDashboard.totalTenants' | uiText:'platform-tenants' }}</small><strong>{{ number(summary.totalTenants) }}</strong></div>
+          <div class="status-segments" role="img" [attr.aria-label]="'superAdminDashboard.subscriptionOverview' | uiText:'platform-tenants'">@for(status of statuses;track status){@if(summary.subscriptionStatusCounts[status]){<span [style.background]="statusAccent(status)" [style.flex-grow]="summary.subscriptionStatusCounts[status]" [title]="('tenantManagement.statuses.'+status | uiText:'platform-tenants')+': '+number(summary.subscriptionStatusCounts[status])"></span>}}</div>
+          <div class="status-counts">@for(status of statuses;track status){<div [style.--status-accent]="statusAccent(status)"><span class="dot"></span><span>{{ ('tenantManagement.statuses.'+status) | uiText:'platform-tenants' }}</span><strong>{{ number(summary.subscriptionStatusCounts[status]) }}</strong></div>}</div>
+        </div>
+      </erp-surface-card>
+    </div>
+    <div class="panel-row">
+      <erp-surface-card [title]="'superAdminDashboard.expiringSubscriptions' | uiText:'platform-tenants'" icon="clock" accent="var(--warning)" compact fill>
+        @if(summary.expiringWithin30DaysTenants.length){<ul class="tenant-list">@for(tenant of summary.expiringWithin30DaysTenants;track tenant.id){<li><div><strong>{{ tenant.name }}</strong><small>{{ tenant.planName || ('tenantManagement.noPlan' | uiText:'platform-tenants') }}</small></div><div class="expiry"><strong>{{ remaining(tenant.subscriptionEndsOn) }}</strong><small>{{ date(tenant.subscriptionEndsOn) }}</small></div></li>}</ul>}
+        @else{<p class="empty success">{{ 'superAdminDashboard.noExpiringSubscriptions' | uiText:'platform-tenants' }}</p>}
+      </erp-surface-card>
+      <erp-surface-card [title]="'superAdminDashboard.recentTenants' | uiText:'platform-tenants'" icon="history" compact fill>
+        @if(summary.recentTenants.length){<ul class="tenant-list">@for(tenant of summary.recentTenants;track tenant.id){<li><div><strong>{{ tenant.name }}</strong><small>{{ tenant.identifier }}</small></div><erp-status-badge [label]="('tenantManagement.statuses.'+tenant.subscriptionStatus) | uiText:'platform-tenants'" [accent]="statusAccent(tenant.subscriptionStatus)" /></li>}</ul>}
+        @else{<p class="empty">{{ 'superAdminDashboard.noTenants' | uiText:'platform-tenants' }}</p>}
+      </erp-surface-card>
+    </div>
+  </div>
+}

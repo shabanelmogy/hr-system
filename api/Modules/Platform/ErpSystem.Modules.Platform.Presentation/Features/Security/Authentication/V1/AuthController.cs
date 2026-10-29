@@ -7,6 +7,7 @@ namespace ErpSystem.Modules.Platform.Presentation.Features.Security.Authenticati
 [ApiVersion("1.0")]
 [Route(ApiRoutes.BaseRoute)]
 [ApiController]
+[BearerOnlyAuthentication]
 public class AuthController(
     ISender sender) : ControllerBase
 {
@@ -101,26 +102,8 @@ public class AuthController(
     [Authorize]
     public async Task<IActionResult> Session(CancellationToken cancellationToken)
     {
-        var expiration = User.FindFirstValue(JwtRegisteredClaimNames.Exp);
-        _ = long.TryParse(expiration, out var expiresAtSeconds);
-        var tenantId = User.FindFirstValue(AuthenticationTokenClaimNames.TenantId) ?? string.Empty;
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? string.Empty;
-        var companyId = int.TryParse(User.FindFirstValue(AuthenticationTokenClaimNames.CompanyId), out var parsedCompanyId)
-            ? parsedCompanyId
-            : 0;
-        var session = await sender.Send(
-            new GetAuthenticationSessionContextQuery(new AuthenticationSessionContextRequest(
-                userId,
-                tenantId,
-                companyId,
-                User.FindFirstValue(ClaimTypes.Name) ?? string.Empty,
-                User.FindFirstValue(ClaimTypes.Email) ?? string.Empty,
-                User.FindFirstValue(AuthenticationTokenClaimNames.FirstName) ?? string.Empty,
-                User.FindFirstValue(AuthenticationTokenClaimNames.LastName) ?? string.Empty,
-                User.FindAll(ClaimTypes.Role).Select(claim => claim.Value).Distinct().ToArray(),
-                User.FindAll(PermissionClaimNames.Permission).Select(claim => claim.Value).Distinct().ToArray(),
-                expiresAtSeconds * 1000)),
-            cancellationToken);
+        var session = await sender.Send(new GetAuthenticationSessionContextQuery(
+            AuthenticationSessionContextRequestFactory.FromPrincipal(User)), cancellationToken);
 
         if (session is null)
             return Unauthorized();

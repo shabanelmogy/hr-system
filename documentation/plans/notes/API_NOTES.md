@@ -15,8 +15,10 @@ Then reference its stable ID here.
 
 | Note ID | Type | Area | Summary | Canonical registry |
 | --- | --- | --- | --- | --- |
+| FOLLOW-011 | Follow-up | SQL integration gate | First full run had two non-reproduced SQL failures; complete diagnostic repeat passed. Preserve diagnostics on recurrence. | `FOLLOW_UPS.md` |
 | DEC-025 | Decision | Angular direct API | Closed: no BFF; retain Next and reuse current API. | `DECISION_BACKLOG.md` |
-| DEC-027 | Decision | Direct authentication | Review actual cookie/token support and safe browser binding. | `DECISION_BACKLOG.md` |
+| DEC-027 | Decision | Direct authentication | Closed: direct API Cookie binding implemented/verified in R2; Angular consumer next. | `DECISION_BACKLOG.md` |
+| RISK-018 | Risk | Authentication contract/source drift | Session drift repaired/tested in S0-AUTH-R1; provider/browser acceptance remains open. | `KNOWN_RISKS.md` |
 | DEC-023 | Decision | Error-log capture | Select first-release capture boundaries. | `DECISION_BACKLOG.md` |
 | DEC-022 | Decision | Error-log lifecycle | Confirm retention and append-only/export policy. | `DECISION_BACKLOG.md` |
 | PROD-010 | Production | Hosted device/API E2E | Mobile authenticated release journeys require the deployed API. | `PRODUCTION_NOTES.md` |

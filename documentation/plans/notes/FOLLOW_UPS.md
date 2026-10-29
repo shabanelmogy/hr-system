@@ -5,6 +5,11 @@ business scope.
 
 | ID | Surface | Area | Follow-up | Owner | Priority | Status | Trigger / due condition | Related source |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| FOLLOW-015 | Web | Remaining Angular authenticated workspace parity | S2-A1 responsive frame/preferences, S2-A2 permitted module/area discovery and S2-A3 role home/read-only tenant summary and S2-A4 secure company transition with cross-tab coordination and S2-A5 personal working-year context are Verified. Full business navigation/actual child screens, management/drill-down, module context navigation, profile/photo and search/notifications remain Required under exact subsequent contracts and real API/browser acceptance. No fake metrics or dead routes. | Angular Web + Platform owners | High | Open | Next matching S2 contract and before declaring full S2 parity | `documentation/plans/business/web-angular-migration/ROADMAP.md`; `decomposition/angular-application-shell.md` |
+| FOLLOW-014 | Web | Angular remaining shared form compatibility | S1-A2 proves text/email/password CVA and submit/error/focus. S2-A0 additionally verifies shared ValidationSummary badges, preference select and actual scope-choice dialog for login; these are not business select/repeater/dirty editor proof. Required remaining select/date/reference controls, structured repeaters, dirty navigation and dialog/overlay/CVA acceptance stay governed by ANGULAR_ARCHITECTURE and SIG-07/08; register exact contracts and verify each before its first consumer/full S1 closure. | Angular Web + QA | High | Open | Next applicable S1 shared-form/control contract and before corresponding business editor is Verified | `documentation/plans/business/web-angular-migration/ANGULAR_ARCHITECTURE.md`; `documentation/plans/business/web-angular-migration/SIGMA_ACCEPTANCE.md`; `documentation/guides/web/architecture/ANGULAR_SHARED_COMPONENTS.md` |
+| FOLLOW-013 | Web | Angular PrimeNG local license activation | Verified 2026-10-28: requester supplied local Community key; generated ignored configuration without printing its value. Licensed build passes (415.52 kB initial); repeat 40-case browser matrix passes and fresh-page screenshot inspection confirms invalid-license notice absent without bypass. Phase 06 Verified. | ERP owner + Angular Web | High | Verified | Reopen on key/entitlement replacement or a reproduced license notice; deployed CI/hosting must configure its own authorized input | `documentation/modules/platform/features/angular-theme-foundation/IMPLEMENTATION_REPORT.md` |
+| FOLLOW-012 | Web | Angular persisted translation consumer acceptance | Login/context wiring and actual authorized system runtime read Verified under S2-A0 on 2026-10-28. Remaining Settings consumer acceptance: save a permitted text through real API, reload Angular to observe SQL persistence, verify company/permission isolation, stale revision/placeholder denial and Reset. Foundation unit/service tests are not live UI proof. | Angular Web + QA | High | Open | S2 login/context wiring and S4 localization Settings; before declaring those consumers Verified | `documentation/plans/business/web-angular-migration/LOCALIZATION_PARITY.md`; `documentation/modules/platform/features/angular-localization-foundation/IMPLEMENTATION_REPORT.md` |
+| FOLLOW-011 | API | Intermittent SQL integration gate | Two SQL integration tests failed in the first 2026-10-28 full Release run, then both passed individually and the complete repeat passed 1127/0 with one intentionally excluded browser probe. Root cause not established; retain diagnostic logging on recurrence. | API + QA | Medium | Open | Next reproduced SQL gate failure or before relying on CI stability for release | `documentation/modules/platform/features/platform-browser-authentication/verification/PREFLIGHT_PROOF_REPORT.md` section 5 |
 | FOLLOW-001 | Cross-platform | Governance | Keep Phase 13 architecture/documentation manifest synchronized with route/module changes. | Web Architecture | High | Open | Every structural change | `documentation/guides/web/architecture/frontend-architecture-manifest.md` |
 | FOLLOW-002 | Cross-platform | Planning | Register existing business plans in `PLAN_REGISTRY.md` without moving canonical files unnecessarily. | Architecture/Product | Medium | Open | When each plan is next reviewed | `documentation/plans/PLAN_REGISTRY.md` |
 | FOLLOW-003 | Cross-platform | Generated API contract parity | Exhaustive Web/API diff remains open. Angular migration now requires a bounded representative OpenAPI client-generation assessment, followed by a proven generator/check or recorded typed-service fallback; this does not close whole-API coverage. | Web + API Architecture | Medium | Open | Angular migration S0/S1; broader contract-registry scheduling or unreliable manual surface review | `documentation/guides/web/WEB_API_READINESS_REVIEW.md`; `documentation/plans/business/web-angular-migration/ERP_ACCEPTANCE.md` |
@@ -16,6 +21,33 @@ business scope.
 
 | FOLLOW-009 | Web | Countries development SSR | Isolate the intermittent style-prefixer SSR fallback described below; reference Grid/Cards client rendering passes. | Web shared UI / rendering infrastructure | Medium | Open | Next Countries/shared-rendering change or next Web release gate | `documentation/modules/reference-data/features/countries/countries-web.md` |
 | FOLLOW-010 | Mobile | SQLCipher transaction bootstrap | Verified 2026-10-28: after the per-connection SQLCipher key correction, the requester reloads the development client and confirms the application opens. No database/key reset is performed. Eight focused regressions and the full 194-suite/598-test gate pass; Android export passes. This closes the reported bootstrap failure only; real offline business-write acceptance remains PROD-026. | Mobile + QA | High | Verified | Reopen on a reproduced encrypted bootstrap/transaction connection regression | `documentation/guides/mobile/MOBILE_API_READINESS_REVIEW.md`; `mobile-react/src/core/offline/database.ts`; `database.test.ts` |
+
+## FOLLOW-011 — Intermittent SQL integration gate
+
+Observed during S0-AUTH verification on 2026-10-28: the first full Release run
+reported 1125 passed, two failed and one skipped. The failures were
+`ModuleMigrationIntegrationTests.InstalledModuleMigrations_ApplyOnCleanDatabase_AndSecondRunIsIdempotent`
+and `ErrorLogPersistenceTests.Sql_retention_cleanup_preserves_boundary_and_is_bounded_and_settings_races_are_audited_atomically`.
+The quiet original log did not preserve exception details. Both tests then passed
+in a targeted run, and a complete run with TRX diagnostics passed 1127 tests,
+zero failures, one intentional browser-preflight skip. No source correction was
+made between these runs. The new browser probe separately passed when enabled.
+
+Owner/priority/status/trigger are in the canonical row. Cause is unknown; do not
+attribute it to a product defect, environment saturation or the new isolated probe
+without evidence. On recurrence retain full exception/TRX details, correlate SQL
+and test concurrency, and correct the owning test/fixture/product only after
+diagnosis. No timeout increase, serialization workaround or ignored failure was
+introduced. A later green run is evidence of recovery, not proof of root-cause closure.
+
+R2 recheck on the same date retained TRX diagnostics. Platform/Architecture and
+all 187 integration tests passed, but HR's
+`WorkforcePlanAggregateConcurrencySqlTests.ChildOnlyAggregateUpdate_AdvancesParentRowVersion_AndRejectsStaleOverwrite`
+failed while opening SQL with pre-login handshake connection timeout (initialization
+16719ms, handshake 23ms). Its immediate targeted recheck passed. No HR source,
+connection timeout or serialization setting was changed; underlying cause remains
+unproven. This is an observed environment connection failure, not evidence of a
+browser-auth lifecycle defect. Retain it when assessing the full gate.
 
 ## FOLLOW-009 — Countries development SSR style-prefixer fallback
 

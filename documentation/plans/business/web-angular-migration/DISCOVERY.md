@@ -18,6 +18,8 @@ plan-drafting approval under P6, not runtime implementation authorization.
 | Organization/shared components | Requester explicitly requires best organization and the same shared-component policy. | Mandatory owner boundaries, generic reuse-first UI and automated bypass checks; see ANGULAR_ARCHITECTURE. |
 | BFF and complexity | Requester explicitly rejected BFF and requested simplicity on 2026-10-28. | Direct Angular-to-API architecture; no speculative gateway/session infrastructure; DEC-025 closed. |
 | ERP reliability/productivity | Requester asked to include the proposed ERP recommendations and make a comprehensive plan on 2026-10-28. | D14/D15 and ERP_ACCEPTANCE establish testable requirements, owners and timing without additional services or unrestricted scope. |
+| Sigma reference review | Requester approved including all eight reviewed recommendations on 2026-10-28. | D16 / SIGMA_ACCEPTANCE add Required applicable behavioral details, source-only external provenance and foundation/first-consumer gates; no runtime authorization. |
+| Browser persistence | Requester selected secure Cookies inside the existing API on 2026-10-28. | D17 approved: preserve reload continuity; API owns HttpOnly credentials; direct API/no-BFF and retained Next/native bearer contracts stay. Exact slice/preflight and live proof remain required. |
 
 ## Discovery dimensions
 

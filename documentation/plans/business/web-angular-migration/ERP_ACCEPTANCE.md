@@ -6,6 +6,11 @@ This document owns the detailed acceptance criteria; PLAN owns scope and ROADMAP
 owns order. No new server topology, business module or universal workflow engine
 is authorized. Apply each criterion to its actual feature; N/A needs evidence.
 
+Requester-approved D16 additionally adopts [SIGMA_ACCEPTANCE](SIGMA_ACCEPTANCE.md)
+SIG-01..SIG-08. Those details complement the ERP requirements using the mappings
+in that file; they do not renumber ERP-01..ERP-12 or create another business scope.
+Both sets require actual test/run evidence in applicable child contracts.
+
 ## 1. Requirement traceability
 
 | ID | Requirement | Owner | First application / completion gate |

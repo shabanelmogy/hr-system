@@ -4,9 +4,12 @@
 
 | Field | Value |
 | --- | --- |
-| Plan ID | `web-angular-migration` |
+| Plan ID | web-angular-migration |
 | Business capability | Angular 22 and PrimeNG Web Migration |
-| Owning module | Platform / Web Architecture; business owners remain unchanged |
+| Owning module | Platform |
+| Ownership coordination | Web Architecture; existing business module owners remain unchanged |
+| Preflight-only slice | S2-A6 — Application context navigation |
+| Preflight-only feature | angular-module-context-navigation |
 | Status | `Draft` |
 | Target milestone | Independent Angular client with verified current Web parity |
 | Primary owner | ERP owner + Web Architecture; API/Security for direct authentication |
@@ -27,9 +30,17 @@ ERP reliability/productivity requirements and their detailed acceptance authorit
 for inclusion on 2026-10-28. They strengthen acceptance within the conversion
 scope; they do not authorize unrelated business rebuilds or runtime work.
 
+Requester-approved D16 adopts the eight source-reviewed Sigma details as Required
+applicable acceptance: [SIGMA_ACCEPTANCE](SIGMA_ACCEPTANCE.md), SIG-01..SIG-08.
+That file owns their exact behavior, external evidence and adaptation limits;
+ROADMAP maps timing. Sigma is a source-only external reference, not proof of ERP
+runtime or a replacement for existing ERP ownership/security. Angular 22,
+Zoneless, Strict, D06 and no-BFF decisions remain unchanged.
+
 The requester authorized planning and confirmed a separate Angular application,
-retaining Next.js and functional parity first. No runtime work is authorized by
-this Draft. Angular architecture choices below are proposals unless explicitly
+retaining Next.js and functional parity first. Runtime is limited to the explicitly
+authorized feature contracts and exact bounded increments in section 17; this Draft grants
+no broader runtime authority. Angular architecture choices below are proposals unless explicitly
 identified as requester decisions. No live customer traffic exists per discovery.
 
 ## 1. Outcome and success measures
@@ -46,6 +57,7 @@ client for a large ERP, preserving existing product rules and ownership.
 | Quality | Existing Web gate outcomes | Equivalent Angular-specific gates plus live API acceptance and documented manual release checks |
 | Performance | Recorded Next production baseline | Comparable production measurements; freeze budgets from representative Angular routes, not a raw framework comparison |
 | ERP safety/productivity | Existing contracts/behavior to reconcile | Applicable ERP-01..ERP-12 verified: efficient entry, typed contracts, safe writes, correct values, audit and recovery |
+| Angular interaction reliability | Sigma source-reviewed examples; no ERP runtime claim | Applicable SIG-01..SIG-08 verified at foundation and real-consumer gates, with actual owner/lifetime and failure evidence |
 
 ## 2. Scope: Required / Deferred / Excluded
 
@@ -162,6 +174,11 @@ handling. Select the simplest secure compatible approach without duplicating
 Platform identity. Excluding a BFF does not by itself approve browser token storage,
 require an OAuth/identity rewrite or prove that cookie auth already exists.
 
+D17 now resolves persistence: the requester selected secure HttpOnly Cookies
+inside the existing API, retaining session continuity and bearer compatibility.
+The target transport is [BROWSER_AUTHENTICATION_CONTRACT](BROWSER_AUTHENTICATION_CONTRACT.md).
+This approved design does not imply runtime support already exists.
+
 Map the browser outcomes currently provided through Next to direct API contracts
 or ordinary hosting configuration. Proxy-only mechanics remain Next-specific;
 do not recreate all eight handlers merely to mimic their file structure. Preserve
@@ -176,13 +193,24 @@ must not race refresh tokens or show invalid work context.
 
 Decide origin/paths, explicit allowed origins, credential transport, refresh
 coordination across browser tabs, logout/revocation and expiry from the actual API.
-If cookie auth is selected, review cookie scope, CSRF and credentialed requests;
-if bearer auth is selected, review token exposure/storage and refresh behavior.
+For the selected cookie binding, review cookie scope, CSRF and credentialed requests;
+retained bearer consumers keep their reviewed token transport and refresh behavior.
 No automatic localStorage token persistence. Handle temporary auth outages without
 clearing a newer valid session. Next cookie chunking is source evidence, not a
-requirement to add equivalent machinery to Angular. Complete DEC-027 and its
-focused security tests before auth implementation; do not add server infrastructure
-as a shortcut around this direct-contract review.
+requirement to add equivalent machinery to Angular. Freeze DEC-027's exact design
+inputs in the authorized slice contract before auth implementation; close its
+runtime-proof requirement after focused security tests before auth acceptance.
+Do not add server infrastructure as a shortcut around this direct-contract review.
+
+S0 source investigation is recorded in
+[AUTHENTICATION_PREFLIGHT](AUTHENTICATION_PREFLIGHT.md). Current API routes issue
+JSON bearer credentials; Next owns its own HttpOnly cookies. D17 approves a
+bounded Platform API browser-cookie binding to preserve reload continuity without
+BFF. Persistence selection is resolved; exact slice/preflight and actual
+cookie/CSRF/origin proof remain under DEC-027. RISK-018 owns the discovered
+refresh/logout/provider source-contract
+gaps; passing helper/client tests does not settle them. This completes the source
+investigation deliverable only, not S0 or the auth execution gate.
 
 ## 7. Rules and edge cases
 
@@ -270,6 +298,11 @@ Kanban/calendar/document patterns require registration/review before related UI.
 Countries is a pilot shape, not a source of product fields for unrelated domains.
 
 ## 11. Forms, localization, accessibility and visual parity
+
+The requester explicitly reaffirmed database-persisted UI translation on 2026-10-28.
+[LOCALIZATION_PARITY](LOCALIZATION_PARITY.md) freezes the existing SQL-backed
+company/global runtime and save/reset/revision contract for Angular foundation
+and later Settings acceptance; no static-only replacement or key/catalog fork.
 
 Use typed Reactive Forms as proposed baseline, including FormArray builders for
 structured children. Test load-edit-save without loss, add/remove/reorder,
@@ -379,19 +412,40 @@ is required merely because the Angular client is new.
 
 ## 17. Delivery authority and decomposition
 
-[ROADMAP](ROADMAP.md) owns proposed dependency order and acceptance milestones.
-It is not an active execution roadmap yet. No feature is currently runtime Active.
-Before execution, close required gates and create the first version 2.0 contract
-from FEATURE_DECOMPOSITION_TEMPLATE, then declare exactly one ACTIVE_FEATURE_STEP
-in the execution roadmap. Subsequent features remain Queued/Blocked until closure.
+[ROADMAP](ROADMAP.md) owns dependency order and acceptance milestones. The requester
+authorized S0-AUTH preflight, session repair and browser transport, then continuing
+the Angular foundation while reaffirming persisted UI translations.
+S0-AUTH-R1 became execution-ready under the bounded slice rule, as recorded in
+documentation/modules/platform/features/platform-browser-authentication/SESSION_RUNTIME_READINESS.md.
+R2 browser transport was subsequently authorized and implemented under
+BROWSER_RUNTIME_READINESS.md; its actual Chromium/SQL acceptance and final gate are
+in verification/BROWSER_IMPLEMENTATION_REPORT.md. The API feature is Verified/Closed.
+S1-A0 localization and S1-A1 theme/action are now Verified/Closed; actual local
+Community-key activation passed under FOLLOW-013. S2-A0 through S2-A5 are Verified/Closed: sign-in, frame/preferences, module discovery, role home, company and personal fiscal-year context. Current Angular99/architecture7, production year15/company14/language20/shell24/home14/login10 and actual API/SQL/tab/reload/restoration proofs are in canonical reports. The requester authorizes continued sequential migration and reviews at the end. The sole Active preparation owner is angular-module-context-navigation, exact S2-A6 — Application context navigation; runtime remains blocked until current Phase00 source/cache/slot evidence and checks. Overall migration remains Draft; FOLLOW-012/014/015 retain other work.
 
 ### Feature Decomposition Gate
 
-Not passed. Each roadmap workstream contains distinct future feature contracts;
-the workstream row is not a scaffoldable umbrella feature. Before handing a slice
-to documentation/system, enter exact Single feature/Decompose decisions, stable
-child IDs and actual contract paths here. Only existing evidence can be registered
-in required-files manifests; proposed paths are not evidence.
+Passed for the exact preflight and subsequent session-runtime increments below. The remaining workstreams still
+need decomposition; this table grants no blanket runtime readiness.
+
+| Authorized slice | Decision | Feature ID | Screen/Workflow Contract | Coherent boundary |
+| --- | --- | --- | --- | --- |
+| S2-A6 — Application context navigation | Single feature | angular-module-context-navigation | documentation/plans/business/web-angular-migration/decomposition/angular-module-context-navigation.md | Existing permitted module/overview header navigation; shared scoped catalog and actual routes only |
+| S2-A5 — Accounting working fiscal-year context | Single feature | angular-fiscal-year-context | documentation/plans/business/web-angular-migration/decomposition/angular-fiscal-year-context.md | Existing per-user Accounting working-year header read/select; preserve server company-current/lifecycle ownership and exclude year CRUD |
+| S2-A4 — Browser company context transition | Single feature | angular-company-context | documentation/plans/business/web-angular-migration/decomposition/angular-company-context.md | Existing secure Cookie company switch, client scope invalidation/recovery and cross-tab revalidation; no new company/domain schema |
+| S2-A3 — Role-aware home and tenant summary | Single feature | angular-role-home | documentation/plans/business/web-angular-migration/decomposition/angular-role-home.md | Existing normal application landing and global read-only summary; no tenant/business CRUD |
+| S2-A2 — Accessible module discovery and navigation | Single feature | angular-module-navigation | documentation/plans/business/web-angular-migration/decomposition/angular-module-navigation.md | Read-only server-permitted module/area discovery, guarded routes, real empty destinations; business child screens remain FOLLOW-015 |
+| S2-A1 — Authenticated shell and personal preferences | Single feature | angular-application-shell | documentation/plans/business/web-angular-migration/decomposition/angular-application-shell.md | Current Next app frame/shared personal preferences; existing session owner; remaining workspace FOLLOW-015 |
+| S2-A0 — Password sign-in and session entry | Single feature | angular-password-sign-in | documentation/plans/business/web-angular-migration/decomposition/angular-password-sign-in.md | User explicitly requires actual default login with same Next design; existing Cookie API/typed challenges/session and shared controls; no business shell/schema/native rewrite |
+| S1-A2 — Shared text fields and form submission | Single feature | angular-form-foundation | documentation/plans/business/web-angular-migration/decomposition/angular-form-foundation.md | Typed Reactive Forms, shared text/password CVA and form submission/error/focus; technical harness only, no login/domain/dialog/select/date/tree or API/native change |
+| S1-A1 — Shared theme and action control | Single feature | angular-theme-foundation | documentation/plans/business/web-angular-migration/decomposition/angular-theme-foundation.md | Shared token/PrimeNG adapter, preferences/action and technical browser harness; no business form/screen/API/native change; bounded entry per current contract |
+| S1-A0 — Angular toolchain and localization runtime | Single feature | angular-localization-foundation | documentation/plans/business/web-angular-migration/decomposition/angular-localization-foundation.md | CLI/build plus persisted translation runtime/service contract; no new screen/schema/API; bounded entry per current contract |
+| S0-AUTH-R2 — Browser transport | Single feature | platform-browser-authentication | documentation/plans/business/web-angular-migration/decomposition/platform-browser-authentication.md | User-authorized API Cookie routes/security; BROWSER_RUNTIME_READINESS records passed G0-G3 and release-only G4; no new UI/schema |
+| S0-AUTH-R1 — Session correctness | Single feature | platform-browser-authentication | documentation/plans/business/web-angular-migration/decomposition/platform-browser-authentication.md | Repair existing refresh/logout/switch lifecycle and SQL races; G0-G3 passed for this increment, remaining G4 release-only; browser routes/UI excluded from this increment |
+| S0-AUTH — Browser authentication preflight | Single feature | platform-browser-authentication | documentation/plans/business/web-angular-migration/decomposition/platform-browser-authentication.md | Existing Platform browser session transport and necessary refresh/logout reconciliation; Phase 00 only, no application code changes |
+
+Only existing evidence enters required-files manifests. The feature contract
+records no new UI on both clients; transport regressions remain Required.
 
 Each child follows API -> Web -> Mobile -> integrated live verification ->
 documentation/closure. Existing API/Mobile may be revalidated or explicitly N/A
@@ -406,7 +460,7 @@ change; do not relabel Next evidence as Angular or edit generated packets.
 | --- | --- | --- |
 | G0 scope/ownership | Draft evidence prepared; not formally passed | Complete route classification and acceptance boundary review |
 | G1 rules | Not passed | Per-feature exact permission/API/lifecycle mapping |
-| G2 architecture | Blocked | DEC-027 direct authentication binding; query/translation/vendor/toolchain proof |
+| G2 architecture | Partial proof, not overall passed | DEC-027 API binding Closed; Angular toolchain/localization technical proof passed for S1-A0; query/vendor/actual consumer acceptance remains |
 | G3 client | Not passed | DEC-026 and Angular pattern references; screen contracts |
 | G4 execution/release | Not passed | CI/hosting evidence, representative acceptance and release checks |
 
@@ -416,6 +470,13 @@ retained-client drift; RISK-017 specialist integration parity. Their central
 registries own status and details; this plan references them. Existing PROD-001
 through PROD-008, PROD-019 and PROD-020 remain applicable as their exact contracts
 require; no existing release risk is erased by the conversion.
+
+S0-AUTH Phase 00 has three passing measured feasibility probes: actual JWT/chunk
+capacity, real SQL Identity/EF concurrency and trusted Chromium HTTPS/CORS/CSRF.
+The [proof report](../../../modules/platform/features/platform-browser-authentication/verification/PREFLIGHT_PROOF_REPORT.md)
+owns selected limits and remaining actual adapter/client/deployment acceptance.
+These resolve primitive feasibility only; overall and runtime gate statuses above
+are unchanged, DEC-027/RISK-018 remain open, and no business runtime changed.
 
 ## 19. Customer education and handoff
 

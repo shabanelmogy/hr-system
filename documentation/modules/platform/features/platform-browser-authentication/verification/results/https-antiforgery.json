@@ -1,0 +1,18 @@
+{
+  "certificateValidUntilUtc": "2028-11-21T10:35:09Z",
+  "evidence": "real Chromium, existing development certificate, isolated two-origin HTTPS framework harness; not deployed ERP browser endpoints",
+  "browser": {
+    "missing": 400,
+    "invalid": 400,
+    "valid": 204,
+    "csrfStatus": 200,
+    "wrongOrigin": 403,
+    "corsDenied": true,
+    "normalStatus": 200,
+    "simultaneousClientCookieBytes": 29217,
+    "overflowStatus": 431,
+    "httpsValidationEnabled": true,
+    "httpOnlySecureCookie": true
+  },
+  "successfulWrites": 1
+}

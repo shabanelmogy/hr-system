@@ -1,0 +1,9 @@
+{
+  "provider": "SQL Server LocalDB or explicit isolated test connection",
+  "migrations": "existing Platform migrations applied to disposable database; helper removes it",
+  "successfulWriters": 1,
+  "concurrencyFailures": 1,
+  "persistedRefreshRows": 2,
+  "activeRefreshRows": 1,
+  "evidence": "actual Platform EF model and Identity UserManager transaction; not the unmodified RefreshAsync business behavior"
+}

@@ -124,6 +124,16 @@ Decomposition Gate binds that exact `FeatureId` to one coherent execution unit
 before creating the scaffold. `Decompose` slices must define at least two child
 Feature IDs; run the scaffold once per child feature.
 
+For an explicitly authorized Phase 00 investigation before runtime readiness, use
+`New-FeatureDocumentation.ps1 -PreflightOnly` with the same required arguments.
+The canonical plan must name the exact `Preflight-only slice` and
+`Preflight-only feature` metadata and have a complete current decomposition row
+and version-2.0 contract, including no-UI exclusions when appropriate. This mode
+stamps the scaffold as preflight-only/runtime-blocked; it does not promote the
+overall plan or bypass runtime gates. The normal mode still rejects a Draft plan.
+One Active API stage may own Phase 00 only when the roadmap and contract explicitly
+say so; all application coding remains blocked until the exact runtime gates pass.
+
 For backward compatibility, a plan created before this gate existed may scaffold
 with a warning so Phase 00 can perform the planning reconciliation. That compatibility
 path does not authorize runtime work: Phase 00 remains blocked until the plan records

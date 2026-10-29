@@ -12,6 +12,14 @@ public sealed class ControllerArchitectureTests
     private static readonly Dictionary<string, IReadOnlySet<string>> AllowedAuxiliaryDependencies =
         new Dictionary<string, IReadOnlySet<string>>(StringComparer.OrdinalIgnoreCase)
         {
+            // R2: explicit HTTP Cookie/CSRF/JWT projection and redacted failure logging;
+            // every session business operation still goes through ISender.
+            [NormalizePath(Path.Combine("Platform", "ErpSystem.Modules.Platform.Presentation", "Features",
+                "Security", "Authentication", "V1", "BrowserAuthController.cs"))] = new HashSet<string>(StringComparer.Ordinal)
+            {
+                "IBrowserAuthenticationCookies", "BrowserAntiforgery",
+                "IAuthenticationTokenValidationParametersFactory", "ILogger<BrowserAuthController>"
+            },
             [NormalizePath(Path.Combine(
                 "HR",
                 "ErpSystem.Modules.HR.Presentation",

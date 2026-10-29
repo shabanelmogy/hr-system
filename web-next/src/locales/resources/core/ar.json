@@ -708,6 +708,10 @@
     "Close": "إغلاق"
   },
   "modules": {
+    "acc": "الحسابات",
+    "reference-data": "البيانات العامة",
+    "crm": "إدارة العملاء",
+    "reporting": "التقارير",
     "title": "التطبيقات",
     "description": "اختر تطبيقاً ثم افتح إحدى الوحدات المفعلة فيه.",
     "submoduleDescription": "اختر وحدة مفعلة للمتابعة.",
@@ -734,6 +738,10 @@
     "tenantRolesPermissions": "الأدوار والصلاحيات",
     "tenantUsers": "المستخدمون",
     "submodules": {
+      "acc": { "ledger-setup": "إعدادات الأستاذ العام" },
+      "reference-data": { "addresses": "العناوين" },
+      "crm": { "appointments": "المواعيد" },
+      "reporting": { "analytics": "التحليلات" },
       "hr": {
         "basic-data": "البيانات الأساسية",
         "recruitment": "التوظيف",

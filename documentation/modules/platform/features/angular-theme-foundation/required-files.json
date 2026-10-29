@@ -1,0 +1,705 @@
+{
+  "schemaVersion": 1,
+  "status": "active",
+  "executionMode": "bounded-runtime",
+  "runtimeAuthorized": true,
+  "feature": "angular-theme-foundation",
+  "featureName": "Angular Shared Theme and Action Control",
+  "referenceFeature": "N/A",
+  "planId": "web-angular-migration",
+  "sliceId": "S1-A1 — Shared theme and action control",
+  "canonicalPlan": "documentation/plans/business/web-angular-migration/PLAN.md",
+  "featureDecompositionDecision": "Single feature",
+  "screenWorkflowContract": "documentation/plans/business/web-angular-migration/decomposition/angular-theme-foundation.md",
+  "plannedCustomerEducation": "N/A - technical shared foundation",
+  "purpose": "Current implemented S1-A1 evidence; licensed runtime and Phase 06 Verified, documentation/handoff Active.",
+  "reviewArtifact": "documentation/modules/platform/features/angular-theme-foundation/angular-theme-foundation-evidence.md",
+  "implementationRequest": "documentation/modules/platform/features/angular-theme-foundation/angular-theme-foundation-request.md",
+  "plannedCanonicalBooks": {
+    "master": "documentation/modules/platform/features/angular-theme-foundation/angular-theme-foundation-review.md",
+    "api": "documentation/modules/platform/features/angular-theme-foundation/angular-theme-foundation-api.md",
+    "web": "documentation/modules/platform/features/angular-theme-foundation/angular-theme-foundation-web.md",
+    "mobile": "documentation/modules/platform/features/angular-theme-foundation/angular-theme-foundation-mobile.md"
+  },
+  "sourceCollections": [],
+  "requiredFiles": [
+    {
+      "id": "root-agent-guidance",
+      "layer": "configuration",
+      "path": "AGENTS.md",
+      "purpose": "Repository-wide feature and documentation rules"
+    },
+    {
+      "id": "review-artifact",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-theme-foundation/angular-theme-foundation-evidence.md",
+      "purpose": "Feature requirement, evidence, finding, and verification ledger"
+    },
+    {
+      "id": "implementation-request",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-theme-foundation/angular-theme-foundation-request.md",
+      "purpose": "Copy-ready feature scope, platform decisions, contracts, and quality gates"
+    },
+    {
+      "layer": "documentation",
+      "id": "preflight-3",
+      "path": "packages/tokens/package.json",
+      "purpose": "Reviewed existing source and exact contract/applied book"
+    },
+    {
+      "layer": "documentation",
+      "id": "preflight-4",
+      "path": "packages/tokens/src/index.ts",
+      "purpose": "Reviewed existing source and exact contract/applied book"
+    },
+    {
+      "layer": "documentation",
+      "id": "preflight-5",
+      "path": "packages/tokens/src/palettes.ts",
+      "purpose": "Reviewed existing source and exact contract/applied book"
+    },
+    {
+      "layer": "documentation",
+      "id": "preflight-6",
+      "path": "packages/tokens/src/scales.ts",
+      "purpose": "Reviewed existing source and exact contract/applied book"
+    },
+    {
+      "layer": "documentation",
+      "id": "preflight-7",
+      "path": "packages/tokens/src/mui.ts",
+      "purpose": "Reviewed existing source and exact contract/applied book"
+    },
+    {
+      "layer": "documentation",
+      "id": "preflight-8",
+      "path": "packages/tokens/scripts/sync-apps.mjs",
+      "purpose": "Reviewed existing source and exact contract/applied book"
+    },
+    {
+      "layer": "documentation",
+      "id": "preflight-9",
+      "path": "packages/tokens/dist/tokens.css",
+      "purpose": "Reviewed existing source and exact contract/applied book"
+    },
+    {
+      "layer": "documentation",
+      "id": "preflight-10",
+      "path": "web-next/src/theme/theme.ts",
+      "purpose": "Reviewed existing source and exact contract/applied book"
+    },
+    {
+      "layer": "documentation",
+      "id": "preflight-11",
+      "path": "web-next/src/shared/components/forms/buttons/MyButton.tsx",
+      "purpose": "Reviewed existing source and exact contract/applied book"
+    },
+    {
+      "layer": "documentation",
+      "id": "preflight-12",
+      "path": "web-next/src/app/runtime-preferences.ts",
+      "purpose": "Reviewed existing source and exact contract/applied book"
+    },
+    {
+      "layer": "documentation",
+      "id": "preflight-13",
+      "path": "web-next/src/fonts.css",
+      "purpose": "Reviewed existing source and exact contract/applied book"
+    },
+    {
+      "layer": "documentation",
+      "id": "preflight-14",
+      "path": "documentation/plans/business/web-angular-migration/decomposition/angular-theme-foundation.md",
+      "purpose": "Reviewed existing source and exact contract/applied book"
+    },
+    {
+      "layer": "documentation",
+      "id": "preflight-15",
+      "path": "documentation/plans/business/web-angular-migration/ANGULAR_ARCHITECTURE.md",
+      "purpose": "Reviewed existing source and exact contract/applied book"
+    },
+    {
+      "layer": "documentation",
+      "id": "preflight-16",
+      "path": "documentation/plans/business/web-angular-migration/LOCALIZATION_PARITY.md",
+      "purpose": "Reviewed existing source and exact contract/applied book"
+    },
+    {
+      "layer": "documentation",
+      "id": "preflight-17",
+      "path": "documentation/modules/platform/features/angular-theme-foundation/angular-theme-foundation-review.md",
+      "purpose": "Reviewed existing source and exact contract/applied book"
+    },
+    {
+      "layer": "documentation",
+      "id": "preflight-18",
+      "path": "documentation/modules/platform/features/angular-theme-foundation/angular-theme-foundation-api.md",
+      "purpose": "Reviewed existing source and exact contract/applied book"
+    },
+    {
+      "layer": "documentation",
+      "id": "preflight-19",
+      "path": "documentation/modules/platform/features/angular-theme-foundation/angular-theme-foundation-web.md",
+      "purpose": "Reviewed existing source and exact contract/applied book"
+    },
+    {
+      "layer": "documentation",
+      "id": "preflight-20",
+      "path": "documentation/modules/platform/features/angular-theme-foundation/angular-theme-foundation-mobile.md",
+      "purpose": "Reviewed existing source and exact contract/applied book"
+    },
+    {
+      "path": "web-angular/.editorconfig",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-22"
+    },
+    {
+      "path": "web-angular/.gitignore",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-23"
+    },
+    {
+      "path": "web-angular/.npmrc",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-24"
+    },
+    {
+      "path": "web-angular/.prettierrc",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-25"
+    },
+    {
+      "path": "web-angular/.vscode/extensions.json",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-26"
+    },
+    {
+      "path": "web-angular/.vscode/launch.json",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-27"
+    },
+    {
+      "path": "web-angular/.vscode/tasks.json",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-28"
+    },
+    {
+      "path": "web-angular/angular.json",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-29"
+    },
+    {
+      "path": "web-angular/package-lock.json",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-30"
+    },
+    {
+      "path": "web-angular/package.json",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-31"
+    },
+    {
+      "path": "web-angular/public/favicon.ico",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-32"
+    },
+    {
+      "path": "web-angular/public/fonts/ibm-plex-sans-arabic/OFL.txt",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-33"
+    },
+    {
+      "path": "web-angular/public/fonts/ibm-plex-sans-arabic/ibm-plex-sans-arabic-arabic-400-normal.woff2",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-34"
+    },
+    {
+      "path": "web-angular/public/fonts/ibm-plex-sans-arabic/ibm-plex-sans-arabic-arabic-500-normal.woff2",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-35"
+    },
+    {
+      "path": "web-angular/public/fonts/ibm-plex-sans-arabic/ibm-plex-sans-arabic-arabic-600-normal.woff2",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-36"
+    },
+    {
+      "path": "web-angular/public/fonts/ibm-plex-sans-arabic/ibm-plex-sans-arabic-arabic-700-normal.woff2",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-37"
+    },
+    {
+      "path": "web-angular/public/fonts/ibm-plex-sans-arabic/ibm-plex-sans-arabic-latin-400-normal.woff2",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-38"
+    },
+    {
+      "path": "web-angular/public/fonts/ibm-plex-sans-arabic/ibm-plex-sans-arabic-latin-500-normal.woff2",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-39"
+    },
+    {
+      "path": "web-angular/public/fonts/ibm-plex-sans-arabic/ibm-plex-sans-arabic-latin-600-normal.woff2",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-40"
+    },
+    {
+      "path": "web-angular/public/fonts/ibm-plex-sans-arabic/ibm-plex-sans-arabic-latin-700-normal.woff2",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-41"
+    },
+    {
+      "path": "web-angular/public/fonts/ibm-plex-sans-arabic/ibm-plex-sans-arabic-latin-ext-400-normal.woff2",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-42"
+    },
+    {
+      "path": "web-angular/public/fonts/ibm-plex-sans-arabic/ibm-plex-sans-arabic-latin-ext-500-normal.woff2",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-43"
+    },
+    {
+      "path": "web-angular/public/fonts/ibm-plex-sans-arabic/ibm-plex-sans-arabic-latin-ext-600-normal.woff2",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-44"
+    },
+    {
+      "path": "web-angular/public/fonts/ibm-plex-sans-arabic/ibm-plex-sans-arabic-latin-ext-700-normal.woff2",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-45"
+    },
+    {
+      "path": "web-angular/scripts/architecture-rules.mjs",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-46"
+    },
+    {
+      "path": "web-angular/scripts/architecture-rules.test.mjs",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-47"
+    },
+    {
+      "path": "web-angular/scripts/check-architecture.mjs",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-48"
+    },
+    {
+      "path": "web-angular/scripts/check-tokens.mjs",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-49"
+    },
+    {
+      "path": "web-angular/scripts/configure-license.mjs",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-50"
+    },
+    {
+      "path": "web-angular/scripts/export-ui-resources.mjs",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-51"
+    },
+    {
+      "path": "web-angular/scripts/sync-fonts.mjs",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-52"
+    },
+    {
+      "path": "web-angular/scripts/verify-theme-browser.mjs",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-53"
+    },
+    {
+      "path": "web-angular/src/app/app.config.ts",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-54"
+    },
+    {
+      "path": "web-angular/src/app/app.html",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-55"
+    },
+    {
+      "path": "web-angular/src/app/app.routes.production.ts",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-56"
+    },
+    {
+      "path": "web-angular/src/app/app.routes.ts",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-57"
+    },
+    {
+      "path": "web-angular/src/app/app.scss",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-58"
+    },
+    {
+      "path": "web-angular/src/app/app.spec.ts",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-59"
+    },
+    {
+      "path": "web-angular/src/app/app.ts",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-60"
+    },
+    {
+      "path": "web-angular/src/app/config/api-origin.ts",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-61"
+    },
+    {
+      "path": "web-angular/src/app/dev/theme-preview.ts",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-62"
+    },
+    {
+      "path": "web-angular/src/app/platform/localization/catalog.generated.ts",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-63"
+    },
+    {
+      "path": "web-angular/src/app/platform/localization/localization-runtime.spec.ts",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-64"
+    },
+    {
+      "path": "web-angular/src/app/platform/localization/localization-runtime.ts",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-65"
+    },
+    {
+      "path": "web-angular/src/app/platform/localization/localization-service.spec.ts",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-66"
+    },
+    {
+      "path": "web-angular/src/app/platform/localization/localization-service.ts",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-67"
+    },
+    {
+      "path": "web-angular/src/app/platform/localization/localization.types.ts",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-68"
+    },
+    {
+      "path": "web-angular/src/app/platform/localization/public-api.ts",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-69"
+    },
+    {
+      "path": "web-angular/src/app/platform/localization/system-access.generated.ts",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-70"
+    },
+    {
+      "path": "web-angular/src/app/platform/localization/text-scope.generated.ts",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-71"
+    },
+    {
+      "path": "web-angular/src/app/platform/localization/ui-text.pipe.ts",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-72"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/buttons/action-button.scss",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-73"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/buttons/action-button.spec.ts",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-74"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/buttons/action-button.ts",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-75"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/public-api.ts",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-76"
+    },
+    {
+      "path": "web-angular/src/index.html",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-77"
+    },
+    {
+      "path": "web-angular/src/locales/generated/accounting.json",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-78"
+    },
+    {
+      "path": "web-angular/src/locales/generated/bootstrap.json",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-79"
+    },
+    {
+      "path": "web-angular/src/locales/generated/core.json",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-80"
+    },
+    {
+      "path": "web-angular/src/locales/generated/crm.json",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-81"
+    },
+    {
+      "path": "web-angular/src/locales/generated/hr-attendance.json",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-82"
+    },
+    {
+      "path": "web-angular/src/locales/generated/hr-org-structure.json",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-83"
+    },
+    {
+      "path": "web-angular/src/locales/generated/hr-recruitment.json",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-84"
+    },
+    {
+      "path": "web-angular/src/locales/generated/hr-workforce.json",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-85"
+    },
+    {
+      "path": "web-angular/src/locales/generated/module-accounting.json",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-86"
+    },
+    {
+      "path": "web-angular/src/locales/generated/module-hr.json",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-87"
+    },
+    {
+      "path": "web-angular/src/locales/generated/platform-advanced-tools.json",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-88"
+    },
+    {
+      "path": "web-angular/src/locales/generated/platform-auth.json",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-89"
+    },
+    {
+      "path": "web-angular/src/locales/generated/platform-company-geography.json",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-90"
+    },
+    {
+      "path": "web-angular/src/locales/generated/platform-files.json",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-91"
+    },
+    {
+      "path": "web-angular/src/locales/generated/platform-messages.json",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-92"
+    },
+    {
+      "path": "web-angular/src/locales/generated/platform-tenants.json",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-93"
+    },
+    {
+      "path": "web-angular/src/locales/generated/reference-address-types.json",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-94"
+    },
+    {
+      "path": "web-angular/src/locales/generated/reference-countries.json",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-95"
+    },
+    {
+      "path": "web-angular/src/locales/generated/reference-districts.json",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-96"
+    },
+    {
+      "path": "web-angular/src/locales/generated/reference-states.json",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-97"
+    },
+    {
+      "path": "web-angular/src/locales/generated/reporting.json",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-98"
+    },
+    {
+      "path": "web-angular/src/main.ts",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-99"
+    },
+    {
+      "path": "web-angular/src/styles.scss",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-100"
+    },
+    {
+      "path": "web-angular/src/theme/_fonts.scss",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-101"
+    },
+    {
+      "path": "web-angular/src/theme/prime-preset.ts",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-102"
+    },
+    {
+      "path": "web-angular/src/theme/provide-theme.ts",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-103"
+    },
+    {
+      "path": "web-angular/src/theme/public-api.ts",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-104"
+    },
+    {
+      "path": "web-angular/src/theme/theme-service.spec.ts",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-105"
+    },
+    {
+      "path": "web-angular/src/theme/theme-service.ts",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-106"
+    },
+    {
+      "path": "web-angular/tsconfig.app.json",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-107"
+    },
+    {
+      "path": "web-angular/tsconfig.json",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-108"
+    },
+    {
+      "path": "web-angular/tsconfig.spec.json",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-109"
+    },
+    {
+      "path": ".github/workflows/angular-ci.yml",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-110"
+    },
+    {
+      "path": "documentation/modules/platform/features/angular-theme-foundation/IMPLEMENTATION_REPORT.md",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-111"
+    },
+    {
+      "path": "documentation/modules/platform/features/angular-theme-foundation/verification/browser-summary.json",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-112"
+    },
+    {
+      "path": "documentation/plans/notes/FOLLOW_UPS.md",
+      "purpose": "Current implemented source/config/test/font or canonical verification evidence",
+      "layer": "web",
+      "id": "implemented-113"
+    }
+  ]
+}

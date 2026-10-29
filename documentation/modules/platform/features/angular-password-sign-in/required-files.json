@@ -1,0 +1,513 @@
+{
+  "schemaVersion": 1,
+  "status": "active",
+  "executionMode": "bounded-runtime",
+  "runtimeAuthorized": true,
+  "feature": "angular-password-sign-in",
+  "featureName": "Angular Password Sign-in and Session Entry",
+  "referenceFeature": "N/A",
+  "planId": "web-angular-migration",
+  "sliceId": "S2-A0 — Password sign-in and session entry",
+  "canonicalPlan": "documentation/plans/business/web-angular-migration/PLAN.md",
+  "featureDecompositionDecision": "Single feature",
+  "screenWorkflowContract": "documentation/plans/business/web-angular-migration/decomposition/angular-password-sign-in.md",
+  "plannedCustomerEducation": "documentation/plans/business/web-angular-migration/education/angular-password-sign-in.md",
+  "purpose": "Current canonical login, shared validation feedback, transport, tests and handoff evidence; no future paths.",
+  "reviewArtifact": "documentation/modules/platform/features/angular-password-sign-in/angular-password-sign-in-evidence.md",
+  "implementationRequest": "documentation/modules/platform/features/angular-password-sign-in/angular-password-sign-in-request.md",
+  "plannedCanonicalBooks": {
+    "master": "documentation/modules/platform/features/angular-password-sign-in/angular-password-sign-in-review.md",
+    "api": "documentation/modules/platform/features/angular-password-sign-in/angular-password-sign-in-api.md",
+    "web": "documentation/modules/platform/features/angular-password-sign-in/angular-password-sign-in-web.md",
+    "mobile": "documentation/modules/platform/features/angular-password-sign-in/angular-password-sign-in-mobile.md"
+  },
+  "sourceCollections": [],
+  "requiredFiles": [
+    {
+      "id": "root-agent-guidance",
+      "layer": "configuration",
+      "path": "AGENTS.md",
+      "purpose": "Repository-wide feature and documentation rules"
+    },
+    {
+      "id": "review-artifact",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-password-sign-in/angular-password-sign-in-evidence.md",
+      "purpose": "Feature requirement, evidence, finding, and verification ledger"
+    },
+    {
+      "id": "implementation-request",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-password-sign-in/angular-password-sign-in-request.md",
+      "purpose": "Copy-ready feature scope, platform decisions, contracts, and quality gates"
+    },
+    {
+      "layer": "documentation",
+      "id": "source-3",
+      "path": "documentation/plans/business/web-angular-migration/decomposition/angular-password-sign-in.md",
+      "purpose": "Current reviewed contract/source"
+    },
+    {
+      "layer": "documentation",
+      "id": "source-4",
+      "path": "web-next/src/platform/auth/login/Login.tsx",
+      "purpose": "Current reviewed contract/source"
+    },
+    {
+      "layer": "documentation",
+      "id": "source-5",
+      "path": "web-next/src/platform/auth/login/components/LeftPanel.tsx",
+      "purpose": "Current reviewed contract/source"
+    },
+    {
+      "layer": "documentation",
+      "id": "source-6",
+      "path": "web-next/src/platform/auth/login/components/LoginForm.tsx",
+      "purpose": "Current reviewed contract/source"
+    },
+    {
+      "layer": "documentation",
+      "id": "source-7",
+      "path": "web-next/src/platform/auth/login/components/TenantSelectionDialog.tsx",
+      "purpose": "Current reviewed contract/source"
+    },
+    {
+      "layer": "documentation",
+      "id": "source-8",
+      "path": "web-next/src/platform/auth/login/components/CompanySelectionDialog.tsx",
+      "purpose": "Current reviewed contract/source"
+    },
+    {
+      "layer": "documentation",
+      "id": "source-9",
+      "path": "web-next/src/platform/auth/login/validation/loginValidation.ts",
+      "purpose": "Current reviewed contract/source"
+    },
+    {
+      "layer": "documentation",
+      "id": "source-10",
+      "path": "web-next/src/shell/auth-layout/AuthLayout.tsx",
+      "purpose": "Current reviewed contract/source"
+    },
+    {
+      "layer": "documentation",
+      "id": "source-11",
+      "path": "web-next/src/shell/components/top-bar/AuthTopBar.tsx",
+      "purpose": "Current reviewed contract/source"
+    },
+    {
+      "layer": "documentation",
+      "id": "source-12",
+      "path": "web-angular/src/app/shared/ui/public-api.ts",
+      "purpose": "Current reviewed contract/source"
+    },
+    {
+      "layer": "documentation",
+      "id": "source-13",
+      "path": "documentation/modules/platform/features/platform-browser-authentication/required-files.json",
+      "purpose": "Current reviewed contract/source"
+    },
+    {
+      "layer": "documentation",
+      "id": "source-14",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Application/Authentication/Orchestration/AuthenticationOrchestrationContracts.cs",
+      "purpose": "Current reviewed contract/source"
+    },
+    {
+      "layer": "documentation",
+      "id": "source-15",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Application/Authentication/Orchestration/BrowserAuthenticationContracts.cs",
+      "purpose": "Current reviewed contract/source"
+    },
+    {
+      "layer": "documentation",
+      "id": "source-16",
+      "path": "documentation/guides/shared/SCREEN_PATTERN_CATALOG.md",
+      "purpose": "Current reviewed contract/source"
+    },
+    {
+      "layer": "documentation",
+      "id": "source-17",
+      "path": "documentation/modules/platform/features/angular-password-sign-in/angular-password-sign-in-review.md",
+      "purpose": "Current reviewed contract/source"
+    },
+    {
+      "layer": "documentation",
+      "id": "source-18",
+      "path": "documentation/modules/platform/features/angular-password-sign-in/angular-password-sign-in-api.md",
+      "purpose": "Current reviewed contract/source"
+    },
+    {
+      "layer": "documentation",
+      "id": "source-19",
+      "path": "documentation/modules/platform/features/angular-password-sign-in/angular-password-sign-in-web.md",
+      "purpose": "Current reviewed contract/source"
+    },
+    {
+      "layer": "documentation",
+      "id": "source-20",
+      "path": "documentation/modules/platform/features/angular-password-sign-in/angular-password-sign-in-mobile.md",
+      "purpose": "Current reviewed contract/source"
+    },
+    {
+      "id": "runtime-21",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/auth/auth.fixture.ts",
+      "purpose": "Current implemented sign-in/shared feedback evidence"
+    },
+    {
+      "id": "runtime-22",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/auth/pages/login-page.html",
+      "purpose": "Current implemented sign-in/shared feedback evidence"
+    },
+    {
+      "id": "runtime-23",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/auth/pages/login-page.scss",
+      "purpose": "Current implemented sign-in/shared feedback evidence"
+    },
+    {
+      "id": "runtime-24",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/auth/pages/login-page.ts",
+      "purpose": "Current implemented sign-in/shared feedback evidence"
+    },
+    {
+      "id": "runtime-25",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/auth/pages/password-request-page.ts",
+      "purpose": "Current implemented sign-in/shared feedback evidence"
+    },
+    {
+      "id": "runtime-26",
+      "layer": "verification",
+      "path": "web-angular/src/app/platform/auth/pages/session-page.spec.ts",
+      "purpose": "Current implemented sign-in/shared feedback evidence"
+    },
+    {
+      "id": "runtime-27",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/auth/pages/session-page.ts",
+      "purpose": "Current implemented sign-in/shared feedback evidence"
+    },
+    {
+      "id": "runtime-28",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/auth/public-api.ts",
+      "purpose": "Current implemented sign-in/shared feedback evidence"
+    },
+    {
+      "id": "runtime-29",
+      "layer": "verification",
+      "path": "web-angular/src/app/platform/auth/services/browser-auth-service.spec.ts",
+      "purpose": "Current implemented sign-in/shared feedback evidence"
+    },
+    {
+      "id": "runtime-30",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/auth/services/browser-auth-service.ts",
+      "purpose": "Current implemented sign-in/shared feedback evidence"
+    },
+    {
+      "id": "runtime-31",
+      "layer": "verification",
+      "path": "web-angular/src/app/platform/auth/state/auth-session.spec.ts",
+      "purpose": "Current implemented sign-in/shared feedback evidence"
+    },
+    {
+      "id": "runtime-32",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/auth/state/auth-session.ts",
+      "purpose": "Current implemented sign-in/shared feedback evidence"
+    },
+    {
+      "id": "runtime-33",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/auth/types/auth-contracts.ts",
+      "purpose": "Current implemented sign-in/shared feedback evidence"
+    },
+    {
+      "id": "runtime-34",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/auth/validation/login-validation.ts",
+      "purpose": "Current implemented sign-in/shared feedback evidence"
+    },
+    {
+      "id": "runtime-35",
+      "layer": "web",
+      "path": "web-angular/src/app/shell/auth-layout/auth-branding.html",
+      "purpose": "Current implemented sign-in/shared feedback evidence"
+    },
+    {
+      "id": "runtime-36",
+      "layer": "web",
+      "path": "web-angular/src/app/shell/auth-layout/auth-branding.scss",
+      "purpose": "Current implemented sign-in/shared feedback evidence"
+    },
+    {
+      "id": "runtime-37",
+      "layer": "web",
+      "path": "web-angular/src/app/shell/auth-layout/auth-branding.ts",
+      "purpose": "Current implemented sign-in/shared feedback evidence"
+    },
+    {
+      "id": "runtime-38",
+      "layer": "web",
+      "path": "web-angular/src/app/shell/auth-layout/auth-layout.html",
+      "purpose": "Current implemented sign-in/shared feedback evidence"
+    },
+    {
+      "id": "runtime-39",
+      "layer": "web",
+      "path": "web-angular/src/app/shell/auth-layout/auth-layout.scss",
+      "purpose": "Current implemented sign-in/shared feedback evidence"
+    },
+    {
+      "id": "runtime-40",
+      "layer": "web",
+      "path": "web-angular/src/app/shell/auth-layout/auth-layout.ts",
+      "purpose": "Current implemented sign-in/shared feedback evidence"
+    },
+    {
+      "id": "runtime-41",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/buttons/action-button.scss",
+      "purpose": "Current implemented sign-in/shared feedback evidence"
+    },
+    {
+      "id": "runtime-42",
+      "layer": "verification",
+      "path": "web-angular/src/app/shared/ui/buttons/action-button.spec.ts",
+      "purpose": "Current implemented sign-in/shared feedback evidence"
+    },
+    {
+      "id": "runtime-43",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/buttons/action-button.ts",
+      "purpose": "Current implemented sign-in/shared feedback evidence"
+    },
+    {
+      "id": "runtime-44",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/buttons/public-api.ts",
+      "purpose": "Current implemented sign-in/shared feedback evidence"
+    },
+    {
+      "id": "runtime-45",
+      "layer": "verification",
+      "path": "web-angular/src/app/shared/ui/controls/option-select.spec.ts",
+      "purpose": "Current implemented sign-in/shared feedback evidence"
+    },
+    {
+      "id": "runtime-46",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/controls/option-select.ts",
+      "purpose": "Current implemented sign-in/shared feedback evidence"
+    },
+    {
+      "id": "runtime-47",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/dialogs/choice-dialog.ts",
+      "purpose": "Current implemented sign-in/shared feedback evidence"
+    },
+    {
+      "id": "runtime-48",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/fields/text-field.scss",
+      "purpose": "Current implemented sign-in/shared feedback evidence"
+    },
+    {
+      "id": "runtime-49",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/fields/text-field.ts",
+      "purpose": "Current implemented sign-in/shared feedback evidence"
+    },
+    {
+      "id": "runtime-50",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/form-container.scss",
+      "purpose": "Current implemented sign-in/shared feedback evidence"
+    },
+    {
+      "id": "runtime-51",
+      "layer": "verification",
+      "path": "web-angular/src/app/shared/ui/forms/form-container.spec.ts",
+      "purpose": "Current implemented sign-in/shared feedback evidence"
+    },
+    {
+      "id": "runtime-52",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/form-container.ts",
+      "purpose": "Current implemented sign-in/shared feedback evidence"
+    },
+    {
+      "id": "runtime-53",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/form-errors.ts",
+      "purpose": "Current implemented sign-in/shared feedback evidence"
+    },
+    {
+      "id": "runtime-54",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/public-api.ts",
+      "purpose": "Current implemented sign-in/shared feedback evidence"
+    },
+    {
+      "id": "runtime-55",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/validation-summary.scss",
+      "purpose": "Current implemented sign-in/shared feedback evidence"
+    },
+    {
+      "id": "runtime-56",
+      "layer": "verification",
+      "path": "web-angular/src/app/shared/ui/forms/validation-summary.spec.ts",
+      "purpose": "Current implemented sign-in/shared feedback evidence"
+    },
+    {
+      "id": "runtime-57",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/validation-summary.ts",
+      "purpose": "Current implemented sign-in/shared feedback evidence"
+    },
+    {
+      "id": "runtime-58",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/icons/app-icon.ts",
+      "purpose": "Current implemented sign-in/shared feedback evidence"
+    },
+    {
+      "id": "runtime-59",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/icons/LICENSE",
+      "purpose": "Current implemented sign-in/shared feedback evidence"
+    },
+    {
+      "id": "runtime-60",
+      "layer": "web",
+      "path": "web-angular/src/app/app.ts",
+      "purpose": "Current implemented sign-in/shared feedback evidence"
+    },
+    {
+      "id": "runtime-61",
+      "layer": "web",
+      "path": "web-angular/src/app/app.html",
+      "purpose": "Current implemented sign-in/shared feedback evidence"
+    },
+    {
+      "id": "runtime-62",
+      "layer": "verification",
+      "path": "web-angular/src/app/app.spec.ts",
+      "purpose": "Current implemented sign-in/shared feedback evidence"
+    },
+    {
+      "id": "runtime-63",
+      "layer": "web",
+      "path": "web-angular/src/app/app.routes.shared.ts",
+      "purpose": "Current implemented sign-in/shared feedback evidence"
+    },
+    {
+      "id": "runtime-64",
+      "layer": "web",
+      "path": "web-angular/src/app/app.routes.ts",
+      "purpose": "Current implemented sign-in/shared feedback evidence"
+    },
+    {
+      "id": "runtime-65",
+      "layer": "web",
+      "path": "web-angular/src/app/app.routes.production.ts",
+      "purpose": "Current implemented sign-in/shared feedback evidence"
+    },
+    {
+      "id": "runtime-66",
+      "layer": "web",
+      "path": "web-angular/src/theme/prime-preset.ts",
+      "purpose": "Current implemented sign-in/shared feedback evidence"
+    },
+    {
+      "id": "runtime-67",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/localization/localization-service.ts",
+      "purpose": "Current implemented sign-in/shared feedback evidence"
+    },
+    {
+      "id": "runtime-68",
+      "layer": "verification",
+      "path": "web-angular/src/app/platform/localization/localization-service.spec.ts",
+      "purpose": "Current implemented sign-in/shared feedback evidence"
+    },
+    {
+      "id": "runtime-69",
+      "layer": "web",
+      "path": "web-angular/scripts/export-ui-resources.mjs",
+      "purpose": "Current implemented sign-in/shared feedback evidence"
+    },
+    {
+      "id": "runtime-70",
+      "layer": "verification",
+      "path": "web-angular/scripts/verify-login-browser.mjs",
+      "purpose": "Current implemented sign-in/shared feedback evidence"
+    },
+    {
+      "id": "runtime-71",
+      "layer": "verification",
+      "path": "web-angular/scripts/verify-form-browser.mjs",
+      "purpose": "Current implemented sign-in/shared feedback evidence"
+    },
+    {
+      "id": "runtime-72",
+      "layer": "web",
+      "path": "web-angular/package.json",
+      "purpose": "Current implemented sign-in/shared feedback evidence"
+    },
+    {
+      "id": "runtime-73",
+      "layer": "web",
+      "path": "web-next/src/locales/resources/platform-auth/en.json",
+      "purpose": "Current implemented sign-in/shared feedback evidence"
+    },
+    {
+      "id": "runtime-74",
+      "layer": "web",
+      "path": "web-next/src/locales/resources/platform-auth/ar.json",
+      "purpose": "Current implemented sign-in/shared feedback evidence"
+    },
+    {
+      "id": "runtime-75",
+      "layer": "web",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Features/CompanyLocalization/company-ui-catalog.json",
+      "purpose": "Current implemented sign-in/shared feedback evidence"
+    },
+    {
+      "id": "runtime-76",
+      "layer": "documentation",
+      "path": "documentation/guides/web/architecture/ANGULAR_SHARED_COMPONENTS.md",
+      "purpose": "Current implemented sign-in/shared feedback evidence"
+    },
+    {
+      "id": "runtime-77",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-password-sign-in/IMPLEMENTATION_REPORT.md",
+      "purpose": "Current implemented sign-in/shared feedback evidence"
+    },
+    {
+      "id": "runtime-78",
+      "layer": "documentation",
+      "path": "documentation/plans/business/web-angular-migration/education/angular-password-sign-in.md",
+      "purpose": "Current implemented sign-in/shared feedback evidence"
+    },
+    {
+      "id": "runtime-79",
+      "layer": "web",
+      "path": "web-angular/src/locales/generated/bootstrap.json",
+      "purpose": "Current shared feedback bootstrap and inherited localization ownership"
+    },
+    {
+      "id": "runtime-80",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-localization-foundation/required-files.json",
+      "purpose": "Current shared feedback bootstrap and inherited localization ownership"
+    }
+  ]
+}

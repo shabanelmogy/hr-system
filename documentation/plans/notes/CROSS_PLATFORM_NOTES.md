@@ -17,7 +17,8 @@ Typical examples:
 | Note ID | Type | Area | Summary | Surfaces | Canonical registry |
 | --- | --- | --- | --- | --- | --- |
 | DEC-025 | Decision | Angular direct API | Closed: requester excluded BFF and additional infrastructure. | API + Web | `DECISION_BACKLOG.md` |
-| DEC-027 | Decision | Direct authentication | Preserve retained-client compatibility while binding Angular auth. | API + Web | `DECISION_BACKLOG.md` |
+| DEC-027 | Decision | Direct authentication | Closed: API Cookie binding verified with retained bearer compatibility; actual Angular UI next. | API + Web | `DECISION_BACKLOG.md` |
+| RISK-018 | Risk | Authentication contract/source drift | Session repair/SQL and retained-client focused tests passed; provider/browser acceptance stays open in the canonical registry. | API + Web + Mobile | `KNOWN_RISKS.md` |
 | DEC-023 | Decision | Error-log sources | Confirm first-release capture sources. | API + Web + Mobile | `DECISION_BACKLOG.md` |
 | DEC-022 | Decision | Error-log retention | Confirm lifecycle, retention and export scope. | API + Web + Mobile | `DECISION_BACKLOG.md` |
 | DEC-021 | Decision | Direct user grants | Resolved: company-specific additive business grants; role permissions preserved. | API + Web + Mobile | `DECISION_BACKLOG.md` |
