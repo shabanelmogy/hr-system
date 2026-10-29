@@ -13,13 +13,13 @@
 @if(navigationVisible()){@if(desktop()){
   <aside class="workspace-sidebar" id="workspace-navigation" [attr.aria-label]="navigationLabel()">
     <div class="drawer-header">@if(opened()){<erp-button appearance="icon" variant="text" [label]="closeLabel()" (activated)="opened.set(false)"><erp-icon buttonIcon name="chevron" /></erp-button>}</div>
-    <div class="sidebar-scroll"><ng-container *ngTemplateOutlet="navigation" /></div>
+    <erp-scroll-viewport class="sidebar-scroll" [label]="navigationLabel()"><ng-container *ngTemplateOutlet="navigation" /></erp-scroll-viewport>
   </aside>
 } @else {
   <p-drawer [visible]="opened()" (visibleChange)="opened.set($event)" [position]="rtl()?'right':'left'" [header]="navigationLabel()"
     [ariaCloseLabel]="closeLabel()" [blockScroll]="true" appendTo="body" [style]="{width:'280px'}">
-    <ng-container *ngTemplateOutlet="navigation" />
+    <erp-scroll-viewport [label]="navigationLabel()"><ng-container *ngTemplateOutlet="navigation" /></erp-scroll-viewport>
   </p-drawer>
 }
 }
-<main class="workspace-main"><ng-content /></main>
+<main class="workspace-main"><erp-scroll-viewport class="workspace-scroll" [label]="title()" [fillContent]="fillContent()"><ng-content /></erp-scroll-viewport></main>

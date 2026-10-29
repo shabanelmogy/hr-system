@@ -118,7 +118,7 @@ failure into partial success.
 | platform-browser-authentication-web | 6 | `0cb8d282665eab10947f26d8e7f8b61da88e4b155927725acaa99ecfadb65506` |
 | platform-browser-authentication-web | 7 | `63b256feb8056824a70b3d6140fa09878174c6a4b109f18fbbc1546166185502` |
 | platform-browser-authentication-web | 8 | `3b480eab32b081a85dd0a739f8911bf49c01ab5032ce617f1d0330e32e9d0df6` |
-| platform-browser-authentication-web | 9 | `64f430d5eb61e32e18ddf5a127626cafb8605df2efd968b39fc985d8d5bbb423` |
+| platform-browser-authentication-web | 9 | `a405ce7f7bc4b5c217e84ac35fc0eaae33cea91ec7ac4a2fb8c8afaf837b0496` |
 | platform-browser-authentication-web | 10 | `e8585061d8db42a2a0a3d2362f56cd0238abb04e8c2637898ba433e003dc9771` |
 | platform-browser-authentication-web | 11 | `5e94324c9106f0426ac4213869bc16a4f56411df86d32581f98138cc376b7887` |
 | platform-browser-authentication-web | 12 | `7575dd3727ecb36dc30f9d167594024d153a27123c5b3dc803d15cf0a1c6bc81` |

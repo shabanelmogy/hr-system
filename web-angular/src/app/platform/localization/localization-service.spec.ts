@@ -4,12 +4,13 @@ import { TestBed } from '@angular/core/testing';
 import { LocalizationService } from './localization-service';
 import { LocalizationRuntime } from './localization-runtime';
 import { uiCatalogVersion } from './catalog.generated';
+import { ERP_API_ORIGIN } from '../../config/api-origin';
 
 describe('Existing persisted UI translation HTTP contract', () => {
   let service: LocalizationService; let http: HttpTestingController; let runtime: LocalizationRuntime;
   beforeEach(() => {
     document.cookie = 'i18next=en; Path=/';
-    TestBed.configureTestingModule({ providers: [provideHttpClient(), provideHttpClientTesting()] });
+    TestBed.configureTestingModule({ providers: [provideHttpClient(), provideHttpClientTesting(), { provide: ERP_API_ORIGIN, useValue: 'https://localhost:7037' }] });
     service = TestBed.inject(LocalizationService); http = TestBed.inject(HttpTestingController); runtime = TestBed.inject(LocalizationRuntime);
   });
   afterEach(() => { http.verify(); TestBed.resetTestingModule(); document.cookie = 'i18next=; Path=/; Max-Age=0'; });

@@ -8,8 +8,8 @@
 | Business capability | Angular 22 and PrimeNG Web Migration |
 | Owning module | Platform |
 | Ownership coordination | Web Architecture; existing business module owners remain unchanged |
-| Preflight-only slice | S2-A6 — Application context navigation |
-| Preflight-only feature | angular-module-context-navigation |
+| Preflight-only slice | S1-A3 — Shared collection foundation |
+| Preflight-only feature | angular-collection-foundation |
 | Status | `Draft` |
 | Target milestone | Independent Angular client with verified current Web parity |
 | Primary owner | ERP owner + Web Architecture; API/Security for direct authentication |
@@ -263,6 +263,16 @@ database before claiming completion; otherwise record schema work N/A with evide
 
 ## 10. Shared UI and pattern mapping
 
+Requester-confirmed policy2026-10-29: every Angular workflow widget uses a
+shared PrimeNG adapter; no plain browser selects, radios, dialogs or unenhanced
+buttons. Reuse/extend existing shared controls before introducing another.
+Shared ScrollArea owns page/sidebar scrolling and follows @app/tokens; Select
+overlays retain their PrimeNG internals with matching themed scrolling. Context
+controls show complete desktop text and icons only on small or constrained
+toolbars, with PrimeNG Tooltip and accessible names. Architecture checks apply
+the widget rule to inline and external templates. S2-A6 acceptance includes this
+policy and the user's scrollbar/width refinements.
+
 | Existing behavior/reference | Proposed Angular composition | Acceptance |
 | --- | --- | --- |
 | PageHeader and shared list toolbar | ERP header/toolbar components over PrimeNG | Search/reset/actions/small-screen behavior preserved |
@@ -421,7 +431,7 @@ R2 browser transport was subsequently authorized and implemented under
 BROWSER_RUNTIME_READINESS.md; its actual Chromium/SQL acceptance and final gate are
 in verification/BROWSER_IMPLEMENTATION_REPORT.md. The API feature is Verified/Closed.
 S1-A0 localization and S1-A1 theme/action are now Verified/Closed; actual local
-Community-key activation passed under FOLLOW-013. S2-A0 through S2-A5 are Verified/Closed: sign-in, frame/preferences, module discovery, role home, company and personal fiscal-year context. Current Angular99/architecture7, production year15/company14/language20/shell24/home14/login10 and actual API/SQL/tab/reload/restoration proofs are in canonical reports. The requester authorizes continued sequential migration and reviews at the end. The sole Active preparation owner is angular-module-context-navigation, exact S2-A6 — Application context navigation; runtime remains blocked until current Phase00 source/cache/slot evidence and checks. Overall migration remains Draft; FOLLOW-012/014/015 retain other work.
+Community-key activation passed under FOLLOW-013. S2-A0 through S2-A5 are Verified/Closed: sign-in, frame/preferences, module discovery, role home, company and personal fiscal-year context. Current Angular99/architecture7, production year15/company14/language20/shell24/home14/login10 and actual API/SQL/tab/reload/restoration proofs are in canonical reports. The requester authorizes continued sequential migration and reviews at the end. S2-A6 application context navigation is Verified/Closed: Angular109/architecture9, production context24 and existing regressions, Next13/native7 and actual hosted catalog/navigation/reload/refresh/logout passed. The sole Active preparation owner is angular-collection-foundation, S1-A3 — Shared collection foundation; preflight-only, runtime blocked until current shared-control contract/decomposition and Phase00 checks. Overall migration remains Draft; FOLLOW-012/014/015 retain other work.
 
 ### Feature Decomposition Gate
 
@@ -430,6 +440,7 @@ need decomposition; this table grants no blanket runtime readiness.
 
 | Authorized slice | Decision | Feature ID | Screen/Workflow Contract | Coherent boundary |
 | --- | --- | --- | --- | --- |
+| S1-A3 — Shared collection foundation | Single feature | angular-collection-foundation | documentation/plans/business/web-angular-migration/decomposition/angular-collection-foundation.md | Technical shared collection evidence preflight only; no runtime screen or component authorization |
 | S2-A6 — Application context navigation | Single feature | angular-module-context-navigation | documentation/plans/business/web-angular-migration/decomposition/angular-module-context-navigation.md | Existing permitted module/overview header navigation; shared scoped catalog and actual routes only |
 | S2-A5 — Accounting working fiscal-year context | Single feature | angular-fiscal-year-context | documentation/plans/business/web-angular-migration/decomposition/angular-fiscal-year-context.md | Existing per-user Accounting working-year header read/select; preserve server company-current/lifecycle ownership and exclude year CRUD |
 | S2-A4 — Browser company context transition | Single feature | angular-company-context | documentation/plans/business/web-angular-migration/decomposition/angular-company-context.md | Existing secure Cookie company switch, client scope invalidation/recovery and cross-tab revalidation; no new company/domain schema |

@@ -6,16 +6,25 @@ import { AuthSession, type Session } from '../../auth/session.public-api';
 import { sessionFixture } from '../../auth/auth.fixture';
 import { catalogFixture } from '../module.fixture';
 import { ModuleCatalogState } from './module-catalog-state';
+import { ERP_API_ORIGIN } from '../../../config/api-origin';
 
 describe('Scoped module catalog state', () => {
   const url = 'https://localhost:7037/api/v1/modules/accessible';
   let user: ReturnType<typeof signal<Session|null>>; let state: ModuleCatalogState; let http: HttpTestingController;
   beforeEach(() => {
     user = signal<Session|null>(sessionFixture);
-    TestBed.configureTestingModule({ providers: [provideHttpClient(), provideHttpClientTesting(), ModuleCatalogState, { provide: AuthSession, useValue: { user,readIdentity:user } }] });
+    TestBed.configureTestingModule({ providers: [provideHttpClient(), provideHttpClientTesting(), { provide: ERP_API_ORIGIN, useValue: 'https://localhost:7037' }, ModuleCatalogState, { provide: AuthSession, useValue: { user,readIdentity:user } }] });
     state = TestBed.inject(ModuleCatalogState); http = TestBed.inject(HttpTestingController); TestBed.tick();
   });
-  afterEach(() => { http.verify({ ignoreCancelled: true }); });
+  afterEach(() => { http.verify({ ignoreCancelled: true }); vi.restoreAllMocks(); });
+  it('shares a fresh catalog on re-entry, refreshes after30 seconds and deduplicates refresh consumers',()=>{
+    const clock=vi.spyOn(Date,'now').mockReturnValue(1000);http.expectOne(url).flush(catalogFixture);
+    clock.mockReturnValue(30_999);state.refreshIfStale();http.expectNone(url);
+    clock.mockReturnValue(31_000);state.refreshIfStale();state.refreshIfStale();const refresh=http.expectOne(url);refresh.flush(catalogFixture);expect(state.state().kind).toBe('ready');
+  });
+  it('denies blank tenant scope without a request and masks the current catalog immediately',()=>{
+    http.expectOne(url).flush(catalogFixture);user.set({...sessionFixture,tenantId:'  '});expect(state.state()).toEqual({kind:'forbidden'});TestBed.tick();state.refreshIfStale();http.expectNone(url);
+  });
   it('sends one credentialed request for multiple consumers and ignores a retry while loading', () => {
     state.state(); state.state(); state.retry(); const request = http.expectOne(url);
     expect(request.request.withCredentials).toBe(true); expect(request.request.headers.has('Authorization')).toBe(false);

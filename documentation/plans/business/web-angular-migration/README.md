@@ -5,7 +5,7 @@
 
 هذه خطة الانتقال التدريجي إلى Angular 22 وPrimeNG مع الاحتفاظ بـweb-next. الخطة الشاملة ما زالت Draft، بينما شرائح التنفيذ المحددة لها أدلة قبول مستقلة. اكتملت مصادقة Cookies والأساس والترجمة والثيم والنماذج والدخول والهيكل والوحدات وصفحة البداية حسب الحساب وتبديل الشركة الآمن مع التبويبات. راجع ROADMAP لمعرفة الوحدة الوحيدة النشطة والخطوة التالية؛ لا تعني هذه النتائج اكتمال شاشات ERP كلها.
 
-أحدث النتائج: [سنة العمل المالية](../../../modules/platform/features/angular-fiscal-year-context/IMPLEMENTATION_REPORT.md)، [تبديل الشركة](../../../modules/platform/features/angular-company-context/IMPLEMENTATION_REPORT.md)، [الهيكل المشترك](../../../modules/platform/features/angular-application-shell/IMPLEMENTATION_REPORT.md)، [الوحدات والتنقل](../../../modules/platform/features/angular-module-navigation/IMPLEMENTATION_REPORT.md)، [صفحة البداية](../../../modules/platform/features/angular-role-home/IMPLEMENTATION_REPORT.md).
+أحدث نتيجة: [تبديل التطبيق](../../../modules/platform/features/angular-module-context-navigation/IMPLEMENTATION_REPORT.md)، ثم [سنة العمل المالية](../../../modules/platform/features/angular-fiscal-year-context/IMPLEMENTATION_REPORT.md)، [تبديل الشركة](../../../modules/platform/features/angular-company-context/IMPLEMENTATION_REPORT.md)، [الهيكل المشترك](../../../modules/platform/features/angular-application-shell/IMPLEMENTATION_REPORT.md)، [الوحدات والتنقل](../../../modules/platform/features/angular-module-navigation/IMPLEMENTATION_REPORT.md)، [صفحة البداية](../../../modules/platform/features/angular-role-home/IMPLEMENTATION_REPORT.md).
 
 ## اقرأ بالترتيب
 
@@ -17,6 +17,9 @@
 6. [REVIEW](REVIEW.md): مراجعة الجاهزية والقيود ونتائج فحوص الخطة.
 
 ## أدلة ومساعدة التنفيذ
+
+- [PRIMENG_TABLE_CAPABILITY_REVIEW](PRIMENG_TABLE_CAPABILITY_REVIEW.md): إمكانيات
+  Table22.1.4 الفعلية وحدودها وخيارات المكوّن المشترك المقترحة قبل التنفيذ.
 
 - [INVENTORY](INVENTORY.md): مسارات Next الحالية؛ وجود المسار لا يثبت اكتمال الميزة.
 - [EVIDENCE](EVIDENCE.md): حقائق المصدر مقابل المطلوب والافتراضات والمجهول.

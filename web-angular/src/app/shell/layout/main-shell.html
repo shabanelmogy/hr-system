@@ -5,6 +5,7 @@
     <div workspaceContext class="context-region">
       @if(!global()){
         <div class="context-group" role="group" [attr.aria-label]="'auth.currentContext' | uiText">
+          <ng-container *ngComponentOutlet="applicationComponent" />
           @if(user.tenantName){<erp-context-badge [label]="'auth.currentTenant' | uiText" [value]="user.tenantName" icon="building" class="tenant-context" />}
           @if(company()){
             @if(companyOptions().length>1){<erp-option-select appearance="context" commitMode="external" [label]="'auth.currentCompany' | uiText" [value]="''+user.companyId" [options]="companyOptions()" [disabled]="auth.pending()" [busy]="auth.contextChanging()" (valueChange)="switchCompany($event)" />}

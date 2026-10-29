@@ -70,7 +70,7 @@ try{
       await expect.poll(()=>state.requests).toBe(1);await p.goto(origin+'/forgetPassword');await expect(p.locator('input[type=email]')).toBeVisible();state.release();await expect(p.locator('.launcher-tile')).toHaveCount(0);
     }else{
       await expect(p.getByRole('heading',{name:text('en','common.error'),exact:true})).toBeVisible();state.action='ready';
-      await p.getByRole('button',{name:text('en','actions.retry'),exact:true}).click();await expect(p.locator('.launcher-tile')).toHaveCount(5);assert.equal(state.requests,2);
+      await p.locator('main').getByRole('button',{name:text('en','actions.retry'),exact:true}).click();await expect(p.locator('.launcher-tile')).toHaveCount(5);assert.equal(state.requests,2);
     }
     results.push({kind:'state',action,passed:true});await c.close();
   }

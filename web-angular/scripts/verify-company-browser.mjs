@@ -42,7 +42,7 @@ async function configure(language='en',mode='light',width=1440,options={}){
   await expect(p.locator('.launcher-tile')).toHaveCount(1);await expect(p.locator('.workspace-topbar')).toContainText(title(1));
   return {c,p,state};
 }
-const select=p=>p.locator('.context-group erp-option-select [role=combobox]');
+const select=p=>p.locator('.context-group > erp-option-select [role=combobox]');
 async function choose(p){await select(p).click();await p.getByRole('option',{name:/TWO/}).click();}
 async function committed(p,language='en'){
   await expect(select(p)).toContainText(language==='ar'?companies[1].nameAr:companies[1].nameEn);

@@ -112,7 +112,13 @@ by Hangfire/Next. Expired signed access identity is used only for CSRF binding,
 never authorization. Business permission/read-only gates still apply.
 
 Cookies `__Host-erp-angular-access`, `__Host-erp-angular-refresh` and
-`__Host-erp-angular-antiforgery` use Secure/HttpOnly/Lax/Path=/, no Domain. Access
+`__Host-erp-angular-antiforgery` use Secure/HttpOnly/Path=/, no Domain. SameSite
+defaults to Lax. Set `BrowserAuthentication:UseCrossSiteCookies=true` explicitly
+when the approved HTTPS frontend and API are on different sites, such as local
+Angular and the hosted test API. This uses None for session, antiforgery and
+deletion Cookies; exact origin allowlists and CSRF remain mandatory. The frontend
+origin must also be in host CORS with credentials enabled. Browser restrictions
+on third-party Cookies may still require a same-site hosting topology. Access
 Cookie survives to server refresh expiry to permit paired refresh; JWT expiry
 still denies access. Access JWT <=14336 ASCII bytes, chunk size 3000, at most five
 data chunks plus marker, own incoming Cookie budget <=16384 bytes. Malformed,

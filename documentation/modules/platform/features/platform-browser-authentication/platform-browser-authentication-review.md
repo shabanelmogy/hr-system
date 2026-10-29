@@ -18,6 +18,13 @@ N/A — technical unit. Existing Next/native shared UI unchanged; S2 owns Angula
 Cookie expiry/rejection/outage tested via production-route Chromium/SQL fixture; R1 SQL races verified. Actual Angular client transition UI remains pending.
 ## 9. Scope and security
 Existing live user/session/stamp/tenant/company authority; no client scope grants.
+
+Maintenance2026-10-29 extends only existing Cookie transport configuration for
+the requester-selected local Angular/hosted API topology. Default Lax is retained;
+explicit cross-site mode uses Secure None consistently for auth/CSRF/deletion.
+HTTPS, origin, permissions and antiforgery authority are unchanged. The
+[repair record](verification/HOSTED_CONFIGURATION_REPAIR.md) owns current
+source-versus-host findings, rule/edge/impact matrices and verification limits.
 ## 10. Persistence and side effects
 Existing PlatformDbContext. Three isolated feasibility proofs passed; selected limits and remaining runtime boundaries are in verification/PREFLIGHT_PROOF_REPORT.md.
 ## 11. Verification

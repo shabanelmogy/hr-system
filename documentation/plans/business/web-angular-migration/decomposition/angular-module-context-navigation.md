@@ -13,8 +13,8 @@ Execution order: API -> Web -> Mobile -> integrated live verification -> documen
 | Child feature name | Angular application context navigation |
 | Owner | Platform Modules; generic header slot |
 | Depends on | angular-fiscal-year-context Verified/Closed |
-| Execution status | Active |
-| Runtime authorization | Blocked preflight-only until current catalog scope/cache/root-slot design and canonical Phase00/checks pass |
+| Execution status | Closed |
+| Runtime authorization | Bounded runtime authorized: G0-G3 and current Phase00 passed for S2-A6 only; remaining G4 is release-only |
 
 
 ## 1. Child boundary and outcome
@@ -69,11 +69,11 @@ Existing core modules.currentApplication/switchApplication/overview keys and act
 
 | Order | Stage | Status | Entry gate | Exit gate | Evidence path |
 | ---: | --- | --- | --- | --- | --- |
-| 1 | API | Active | Previous child closed | Current catalog/scope/source audit | documentation/plans/business/web-angular-migration/decomposition/angular-module-context-navigation.md |
-| 2 | Web | Queued | Exact Phase00 and checks | Shared selector/root slot/scoped catalog verification | Same contract |
-| 3 | Mobile | Queued | Web verified | Retained focused regression | Same contract |
-| 4 | Integrated live verification | Queued | Prior stages verified | Actual catalog/navigation/scope, source/fixture browsers | Same contract |
-| 5 | Documentation and closure | Queued | Phase06 Verified | Canonical evidence/education | Same contract |
+| 1 | API | Verified | Previous child closed | Current controller/query tenant authority reviewed; no API change | documentation/plans/business/web-angular-migration/decomposition/angular-module-context-navigation.md |
+| 2 | Web | Verified | Phase00 generated/check and planning pass; user requested execution | Angular109/architecture9, production context24/modules14/company14/fiscal15/shell24 passed | Same contract |
+| 3 | Mobile | Verified | Web verified | Retained3 suites/7 tests; native launcher unchanged | Same contract |
+| 4 | Integrated live verification | Verified | Prior stages verified | Hosted catalog/navigation/reload/refresh200/logout204; production24 cases | Same contract |
+| 5 | Documentation and closure | Closed | Phase06 Verified | Canonical evidence, manifest/recipes and education completed | Same contract |
 
 Next-step rule: no sibling runtime until this child is Verified and documentation/closure is Closed.
 
@@ -83,8 +83,35 @@ Current catalog/authorization proof, schema/stale/cancel/dedupe, exact route sel
 
 ## 13. Child exit gate
 
-- [ ] Current Phase00 evidence/design/manifest/checks before bounded runtime.
-- [ ] Actual UI/API/navigation and retained regressions Verified.
-- [ ] Education after Phase06 Verified and final canonical closure.
+- [x] Current Phase00 evidence/design/manifest/checks before bounded runtime.
+- [x] Actual UI/API/navigation and retained regressions Verified.
+- [x] Education after Phase06 Verified and final canonical closure.
 
 FOLLOW-012/014/015 and hosted PROD-002/017/019/RISK-018 remain separate.
+
+## 14. Frozen runtime entry — 2026-10-29
+
+G0-G3 pass for the exact read/navigation child: source/server authority and actual
+routes reviewed; page-local catalog moves to authenticated app-composition component providers and
+is shared by header/page. Null readIdentity cancels/masks immediately even if a
+route injector is retained. Refresh stale catalog on workspace re-entry after30s,
+without polling or a second store. Shell gains a generic application-component
+slot supplied by app composition. Existing external-commit OptionSelect/ContextBadge
+renders translated label/current route, loading/error/retry/empty/forbidden.
+Router currentNavigation and auth pending/restoring/context change fence callbacks;
+NavigationEnd commits selection; false/rejected navigation retains prior route
+with closeable shared feedback. Blank tenant/global reads excluded.
+
+Initial four books, final existing-source manifest and Phase00 packet are registered
+under documentation/modules/platform/features/angular-module-context-navigation.
+Phase00 generator/check and Check-Planning passed before runtime code. Applicable
+ERP-03 and SIG-01/02/03/07/08 require this child's actual tests/browser proof;
+ERP-01/02/04..12 and SIG-04/05/06 are N/A to this bounded read/navigation surface
+(existing transport reused, no fields/entity/files/criteria/business mutation).
+Existing editable protected business screens are absent; FOLLOW-014 gates future
+discard approval. Remaining G4 PROD-002/017/019/RISK-018 is hosted/release/provider
+scope, not a change to this contract. No independent broad readiness claim.
+
+## 15. User steering after initial acceptance
+
+Requester requires PrimeNG interactive controls throughout Angular and improved scrollbars. Existing Select is PrimeNG; refine its generic shared popup and icons. Add shared PrimeNG ScrollArea viewport for app/sidebar scroll (ScrollPanel is deprecated in installed22.1.4), with existing tokens/RTL/keyboard and scroll regression proof. Reverification completed: Angular109/architecture9/config4; context24 with complete desktop labels, icon-only compact controls/Tooltip and wheel/keyboard/drag/RTL/resize proof; actual hosted smoke and affected regressions passed. No API/native application runtime or business scope change.

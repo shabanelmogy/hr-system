@@ -98,6 +98,17 @@ use explicit same-site HTTPS origins, no wildcard/subdomain allowance by default
 Cross-site hosting reopens cookie compatibility proof without silently widening
 Domain/SameSite or depending on unrestricted third-party cookies.
 
+Corrective revision2026-10-29 for the requester-selected hosted test API:
+local Angular remains `https://localhost:4210`; hosted API is
+`https://shabanhrms.runasp.net`. Exact4210 must be approved in both API browser
+and CORS allowlists. An explicit `BrowserAuthentication:UseCrossSiteCookies=true`
+uses Secure/HttpOnly/host-only SameSite=None for the three owned transport Cookies
+and their deletion; the default remains Lax for the reviewed same-site topology.
+Origin/CSRF/HTTPS enforcement is unchanged. This split-site topology reopens
+actual hosted Cookie compatibility proof under PROD-017/019, including browser
+third-party-Cookie policy; it is not a claim that changing `.env` alone enables it.
+See [repair evidence](../../../modules/platform/features/platform-browser-authentication/verification/HOSTED_CONFIGURATION_REPAIR.md).
+
 Phase 00 trusted Chromium HTTPS/antiforgery/CORS proof passed on dynamic ports.
 Port 4200 was already occupied: keep that listener and select/apply an available
 exact Angular origin during runtime setup. Checked-in ERP configuration was not

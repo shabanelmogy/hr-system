@@ -1,5 +1,12 @@
 import ts from 'typescript';
 
+export function inspectTemplate(template) {
+  const violations=[];
+  if (/<select\b|<input\b[^>]*\btype=["'](?:radio|checkbox|date|time|number)["']/.test(template)) violations.push('native widget bypass; use a shared PrimeNG control');
+  if (/<button\b(?![^>]*\bpButton\b)/.test(template)) violations.push('native button bypass; use shared action or PrimeNG directive');
+  return violations;
+}
+
 export function inspectSource(relative, source) {
   if (relative.endsWith('license.generated.ts')) return [];
   const tree = ts.createSourceFile(relative, source, ts.ScriptTarget.Latest, true);
@@ -14,6 +21,10 @@ export function inspectSource(relative, source) {
     if (!test && !shared && /shared\/ui\//.test(name) && !/shared\/ui\/public-api$/.test(name)) violations.add('shared internals import; use the public API');
   }
   function visit(node) {
+    if (!test && (ts.isNoSubstitutionTemplateLiteral(node) || ts.isStringLiteral(node))) {
+      for(const violation of inspectTemplate(node.text)) violations.add(violation);
+    }
+    if (!test && !relative.startsWith('src/app/composition/') && ts.isPropertyAssignment(node) && node.name.getText(tree) === 'providers' && /\bModuleCatalogState\b/.test(node.initializer.getText(tree))) violations.add('module catalog provider belongs in authenticated composition');
     if ((ts.isImportDeclaration(node) || ts.isExportDeclaration(node)) && node.moduleSpecifier && ts.isStringLiteral(node.moduleSpecifier)) checkModule(node.moduleSpecifier.text);
     if (ts.isCallExpression(node) && (node.expression.kind === ts.SyntaxKind.ImportKeyword || node.expression.getText(tree) === 'require') && node.arguments[0] && ts.isStringLiteral(node.arguments[0])) checkModule(node.arguments[0].text);
     if (!test && node.kind === ts.SyntaxKind.AnyKeyword) violations.add('untyped any');

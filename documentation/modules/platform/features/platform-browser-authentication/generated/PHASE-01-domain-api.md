@@ -89,5 +89,5 @@ existing-system review, implementation order, and Definition of Done.
 | platform-browser-authentication-api | 6 | `0a34aee7b4d1e0ac784f4f0ade83e50ddf83b91678b6a3b4a8247bda1e8df0d9` |
 | platform-browser-authentication-api | 7 | `0f32a5dfac86eff41cdc984b55819fb02961dc8219b55db378d3c29ec470e842` |
 | platform-browser-authentication-api | 8 | `26cc4d301319e508521dc58bb8dcd580b32bb021be0b65eb63efb67d48ee244d` |
-| platform-browser-authentication-api | 9 | `2e3d4bec94960add35b0c1adc738873e7cb7a1154bfbd9627cf7ef2d7b9aef6f` |
+| platform-browser-authentication-api | 9 | `19ce75cffb7afc5152f3f28adc221e860d2ef8b40eb3c4f3de9357c951ba4c99` |
 | platform-browser-authentication-api | 10 | `0e4108d4382344db7c74d76883a2e1b7804947764162e3298fbd32e9cf365e67` |

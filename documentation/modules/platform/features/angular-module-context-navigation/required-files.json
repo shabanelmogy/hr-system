@@ -1,0 +1,423 @@
+{
+  "schemaVersion": 1,
+  "status": "active",
+  "executionMode": "bounded-runtime",
+  "runtimeAuthorized": true,
+  "feature": "angular-module-context-navigation",
+  "featureName": "Angular application context navigation",
+  "referenceFeature": "N/A",
+  "planId": "web-angular-migration",
+  "sliceId": "S2-A6 — Application context navigation",
+  "canonicalPlan": "documentation/plans/business/web-angular-migration/PLAN.md",
+  "featureDecompositionDecision": "Single feature",
+  "screenWorkflowContract": "documentation/plans/business/web-angular-migration/decomposition/angular-module-context-navigation.md",
+  "plannedCustomerEducation": "documentation/plans/business/web-angular-migration/education/angular-module-context-navigation.md",
+  "purpose": "Final verified S2-A6 runtime, current sources, actual acceptance and education evidence.",
+  "reviewArtifact": "documentation/modules/platform/features/angular-module-context-navigation/angular-module-context-navigation-evidence.md",
+  "implementationRequest": "documentation/modules/platform/features/angular-module-context-navigation/angular-module-context-navigation-request.md",
+  "plannedCanonicalBooks": {
+    "master": "documentation/modules/platform/features/angular-module-context-navigation/angular-module-context-navigation-review.md",
+    "api": "documentation/modules/platform/features/angular-module-context-navigation/angular-module-context-navigation-api.md",
+    "web": "documentation/modules/platform/features/angular-module-context-navigation/angular-module-context-navigation-web.md",
+    "mobile": "documentation/modules/platform/features/angular-module-context-navigation/angular-module-context-navigation-mobile.md"
+  },
+  "sourceCollections": [],
+  "requiredFiles": [
+    {
+      "id": "root-agent-guidance",
+      "layer": "configuration",
+      "path": "AGENTS.md",
+      "purpose": "Repository-wide feature and documentation rules"
+    },
+    {
+      "id": "review-artifact",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-module-context-navigation/angular-module-context-navigation-evidence.md",
+      "purpose": "Feature requirement, evidence, finding, and verification ledger"
+    },
+    {
+      "id": "implementation-request",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-module-context-navigation/angular-module-context-navigation-request.md",
+      "purpose": "Copy-ready feature scope, platform decisions, contracts, and quality gates"
+    },
+    {
+      "id": "preflight-0",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-module-context-navigation/angular-module-context-navigation-review.md",
+      "purpose": "Reviewed current source/preflight evidence for exact S2-A6"
+    },
+    {
+      "id": "preflight-1",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-module-context-navigation/angular-module-context-navigation-api.md",
+      "purpose": "Reviewed current source/preflight evidence for exact S2-A6"
+    },
+    {
+      "id": "preflight-2",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-module-context-navigation/angular-module-context-navigation-web.md",
+      "purpose": "Reviewed current source/preflight evidence for exact S2-A6"
+    },
+    {
+      "id": "preflight-3",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-module-context-navigation/angular-module-context-navigation-mobile.md",
+      "purpose": "Reviewed current source/preflight evidence for exact S2-A6"
+    },
+    {
+      "id": "preflight-4",
+      "layer": "documentation",
+      "path": "documentation/plans/business/web-angular-migration/decomposition/angular-module-context-navigation.md",
+      "purpose": "Reviewed current source/preflight evidence for exact S2-A6"
+    },
+    {
+      "id": "preflight-5",
+      "layer": "documentation",
+      "path": "documentation/plans/business/web-angular-migration/PLAN.md",
+      "purpose": "Reviewed current source/preflight evidence for exact S2-A6"
+    },
+    {
+      "id": "preflight-6",
+      "layer": "documentation",
+      "path": "documentation/plans/business/web-angular-migration/MODULE_CONTEXT_PREFLIGHT.md",
+      "purpose": "Reviewed current source/preflight evidence for exact S2-A6"
+    },
+    {
+      "id": "preflight-7",
+      "layer": "web",
+      "path": "web-next/src/platform/modules/ModuleContextSwitcher.tsx",
+      "purpose": "Reviewed current source/preflight evidence for exact S2-A6"
+    },
+    {
+      "id": "preflight-8",
+      "layer": "web",
+      "path": "web-next/src/platform/modules/useModulesQuery.ts",
+      "purpose": "Reviewed current source/preflight evidence for exact S2-A6"
+    },
+    {
+      "id": "preflight-9",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/modules/state/module-catalog-state.ts",
+      "purpose": "Reviewed current source/preflight evidence for exact S2-A6"
+    },
+    {
+      "id": "preflight-10",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/modules/pages/module-workspace.ts",
+      "purpose": "Reviewed current source/preflight evidence for exact S2-A6"
+    },
+    {
+      "id": "preflight-11",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/modules/pages/module-browser.ts",
+      "purpose": "Reviewed current source/preflight evidence for exact S2-A6"
+    },
+    {
+      "id": "preflight-12",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/modules/presentation/module-registry.ts",
+      "purpose": "Reviewed current source/preflight evidence for exact S2-A6"
+    },
+    {
+      "id": "preflight-13",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/modules/presentation/module-access.ts",
+      "purpose": "Reviewed current source/preflight evidence for exact S2-A6"
+    },
+    {
+      "id": "preflight-14",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/modules/public-api.ts",
+      "purpose": "Reviewed current source/preflight evidence for exact S2-A6"
+    },
+    {
+      "id": "preflight-15",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/modules/services/module-catalog-service.ts",
+      "purpose": "Reviewed current source/preflight evidence for exact S2-A6"
+    },
+    {
+      "id": "preflight-16",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/modules/state/module-catalog-state.spec.ts",
+      "purpose": "Reviewed current source/preflight evidence for exact S2-A6"
+    },
+    {
+      "id": "preflight-17",
+      "layer": "web",
+      "path": "web-angular/src/app/composition/authenticated-routes.ts",
+      "purpose": "Reviewed current source/preflight evidence for exact S2-A6"
+    },
+    {
+      "id": "preflight-18",
+      "layer": "web",
+      "path": "web-angular/src/app/shell/context-slot.ts",
+      "purpose": "Reviewed current source/preflight evidence for exact S2-A6"
+    },
+    {
+      "id": "preflight-19",
+      "layer": "web",
+      "path": "web-angular/src/app/shell/public-api.ts",
+      "purpose": "Reviewed current source/preflight evidence for exact S2-A6"
+    },
+    {
+      "id": "preflight-20",
+      "layer": "web",
+      "path": "web-angular/src/app/shell/layout/main-shell.ts",
+      "purpose": "Reviewed current source/preflight evidence for exact S2-A6"
+    },
+    {
+      "id": "preflight-21",
+      "layer": "web",
+      "path": "web-angular/src/app/shell/layout/main-shell.html",
+      "purpose": "Reviewed current source/preflight evidence for exact S2-A6"
+    },
+    {
+      "id": "preflight-22",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/controls/option-select.ts",
+      "purpose": "Reviewed current source/preflight evidence for exact S2-A6"
+    },
+    {
+      "id": "preflight-23",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/data/scoped-read.ts",
+      "purpose": "Reviewed current source/preflight evidence for exact S2-A6"
+    },
+    {
+      "id": "preflight-24",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/data/scoped-read.spec.ts",
+      "purpose": "Reviewed current source/preflight evidence for exact S2-A6"
+    },
+    {
+      "id": "preflight-25",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Presentation/Features/Modules/V1/ModulesController.cs",
+      "purpose": "Reviewed current source/preflight evidence for exact S2-A6"
+    },
+    {
+      "id": "preflight-26",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Application/Modules/ModuleCatalogRequests.cs",
+      "purpose": "Reviewed current source/preflight evidence for exact S2-A6"
+    },
+    {
+      "id": "preflight-27",
+      "layer": "api",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Application/Modules/ModuleCatalogPolicy.cs",
+      "purpose": "Reviewed current source/preflight evidence for exact S2-A6"
+    },
+    {
+      "id": "preflight-28",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/modules/presentation/screens/ModuleLauncherScreen.tsx",
+      "purpose": "Reviewed current source/preflight evidence for exact S2-A6"
+    },
+    {
+      "id": "preflight-29",
+      "layer": "mobile",
+      "path": "mobile-react/src/platform/modules/application/module-use-cases.test.ts",
+      "purpose": "Reviewed current source/preflight evidence for exact S2-A6"
+    },
+    {
+      "id": "runtime-0",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-module-context-navigation/IMPLEMENTATION_REPORT.md",
+      "purpose": "Actual S2-A6 implementation, verification or education evidence"
+    },
+    {
+      "id": "runtime-1",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-module-context-navigation/verification/live-results.json",
+      "purpose": "Actual S2-A6 implementation, verification or education evidence"
+    },
+    {
+      "id": "runtime-2",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-module-context-navigation/verification/production-results.json",
+      "purpose": "Actual S2-A6 implementation, verification or education evidence"
+    },
+    {
+      "id": "runtime-3",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-module-context-navigation/verification/screenshots/overview-wide-en-light-1440.png",
+      "purpose": "Actual S2-A6 implementation, verification or education evidence"
+    },
+    {
+      "id": "runtime-4",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-module-context-navigation/verification/screenshots/all-contexts-ar-390.png",
+      "purpose": "Actual S2-A6 implementation, verification or education evidence"
+    },
+    {
+      "id": "runtime-5",
+      "layer": "documentation",
+      "path": "documentation/plans/business/web-angular-migration/education/angular-module-context-navigation.md",
+      "purpose": "Actual S2-A6 implementation, verification or education evidence"
+    },
+    {
+      "id": "runtime-6",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/modules/state/module-context-state.ts",
+      "purpose": "Actual S2-A6 implementation, verification or education evidence"
+    },
+    {
+      "id": "runtime-7",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/modules/state/module-context-state.spec.ts",
+      "purpose": "Actual S2-A6 implementation, verification or education evidence"
+    },
+    {
+      "id": "runtime-8",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/modules/components/module-context-control.ts",
+      "purpose": "Actual S2-A6 implementation, verification or education evidence"
+    },
+    {
+      "id": "runtime-9",
+      "layer": "web",
+      "path": "web-angular/src/app/shell/layout/main-shell.scss",
+      "purpose": "Actual S2-A6 implementation, verification or education evidence"
+    },
+    {
+      "id": "runtime-10",
+      "layer": "web",
+      "path": "web-angular/scripts/verify-module-context-browser.mjs",
+      "purpose": "Actual S2-A6 implementation, verification or education evidence"
+    },
+    {
+      "id": "runtime-11",
+      "layer": "web",
+      "path": "web-angular/scripts/verify-module-context-live.mjs",
+      "purpose": "Actual S2-A6 implementation, verification or education evidence"
+    },
+    {
+      "id": "runtime-12",
+      "layer": "web",
+      "path": "web-angular/scripts/verify-module-browser.mjs",
+      "purpose": "Actual S2-A6 implementation, verification or education evidence"
+    },
+    {
+      "id": "runtime-13",
+      "layer": "web",
+      "path": "web-angular/scripts/verify-company-browser.mjs",
+      "purpose": "Actual S2-A6 implementation, verification or education evidence"
+    },
+    {
+      "id": "runtime-14",
+      "layer": "web",
+      "path": "web-angular/scripts/architecture-rules.mjs",
+      "purpose": "Actual S2-A6 implementation, verification or education evidence"
+    },
+    {
+      "id": "runtime-15",
+      "layer": "web",
+      "path": "web-angular/scripts/architecture-rules.test.mjs",
+      "purpose": "Actual S2-A6 implementation, verification or education evidence"
+    },
+    {
+      "id": "runtime-16",
+      "layer": "web",
+      "path": "web-angular/package.json",
+      "purpose": "Actual S2-A6 implementation, verification or education evidence"
+    },
+    {
+      "id": "prime-ui-0",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/layout/scroll-viewport.ts",
+      "purpose": "Shared PrimeNG-only widget, responsive context or scrolling policy evidence"
+    },
+    {
+      "id": "prime-ui-1",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/layout/context-badge.ts",
+      "purpose": "Shared PrimeNG-only widget, responsive context or scrolling policy evidence"
+    },
+    {
+      "id": "prime-ui-2",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/layout/application-frame.ts",
+      "purpose": "Shared PrimeNG-only widget, responsive context or scrolling policy evidence"
+    },
+    {
+      "id": "prime-ui-3",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/layout/application-frame.html",
+      "purpose": "Shared PrimeNG-only widget, responsive context or scrolling policy evidence"
+    },
+    {
+      "id": "prime-ui-4",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/layout/application-frame.scss",
+      "purpose": "Shared PrimeNG-only widget, responsive context or scrolling policy evidence"
+    },
+    {
+      "id": "prime-ui-5",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/layout/application-frame.spec.ts",
+      "purpose": "Shared PrimeNG-only widget, responsive context or scrolling policy evidence"
+    },
+    {
+      "id": "prime-ui-6",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/controls/palette-picker.ts",
+      "purpose": "Shared PrimeNG-only widget, responsive context or scrolling policy evidence"
+    },
+    {
+      "id": "prime-ui-7",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/controls/palette-picker.spec.ts",
+      "purpose": "Shared PrimeNG-only widget, responsive context or scrolling policy evidence"
+    },
+    {
+      "id": "prime-ui-8",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/fields/text-field.ts",
+      "purpose": "Shared PrimeNG-only widget, responsive context or scrolling policy evidence"
+    },
+    {
+      "id": "prime-ui-9",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/public-api.ts",
+      "purpose": "Shared PrimeNG-only widget, responsive context or scrolling policy evidence"
+    },
+    {
+      "id": "prime-ui-10",
+      "layer": "web",
+      "path": "web-angular/src/styles.scss",
+      "purpose": "Shared PrimeNG-only widget, responsive context or scrolling policy evidence"
+    },
+    {
+      "id": "prime-ui-11",
+      "layer": "web",
+      "path": "web-angular/src/theme/prime-preset.ts",
+      "purpose": "Shared PrimeNG-only widget, responsive context or scrolling policy evidence"
+    },
+    {
+      "id": "prime-ui-12",
+      "layer": "web",
+      "path": "web-angular/scripts/check-architecture.mjs",
+      "purpose": "Shared PrimeNG-only widget, responsive context or scrolling policy evidence"
+    },
+    {
+      "id": "prime-screen-0",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-module-context-navigation/verification/screenshots/all-contexts-en-1440.png",
+      "purpose": "Final desktop full labels or compact themed PrimeNG scroll/menu visual proof"
+    },
+    {
+      "id": "prime-screen-1",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-module-context-navigation/verification/screenshots/scroll-menu-ar-390.png",
+      "purpose": "Final desktop full labels or compact themed PrimeNG scroll/menu visual proof"
+    },
+    {
+      "id": "prime-shared-form-proof",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-module-context-navigation/verification/shared-form-results.json",
+      "purpose": "40 browser combinations verify shared PrimeNG field actions and preserved form behavior"
+    }
+  ]
+}

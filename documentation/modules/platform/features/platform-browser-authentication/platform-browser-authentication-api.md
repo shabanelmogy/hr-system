@@ -18,6 +18,14 @@ N/A — no API-owned screen/metadata form engine.
 Current ProblemDetails reused; explicit origin/antiforgery errors, truthful logout 503 and precommit capacity 400 tested in real Chromium/SQL fixture.
 ## 9. Scope and security
 Default Bearer callback accepts bounded Cookies only without Authorization and outside bearer-only Auth/Google/hubs/Hangfire paths. Existing JWT/live validation reused; guarded business mutations require CSRF/Origin. Global antiforgery settings preserved.
+
+Corrective local/host testing support2026-10-29: BrowserAuthentication options now
+include UseCrossSiteCookies (default false/Lax). Explicit true applies None to
+all owned session, antiforgery and deletion Cookies while keeping Secure,
+HttpOnly, host-only Path=/ and existing origin/CSRF checks. Publish-owned test
+settings include exact HTTPS4210 in both browser/CORS allowlists. Effective
+remote HTTPS/origins and browser acceptance remain PROD-017/019; see
+[repair record](verification/HOSTED_CONFIGURATION_REPAIR.md).
 ## 10. Persistence and side effects
 PlatformDbContext owns state. Real adapter SQL tests prove one winner/one rollback for competing refresh/logout/switch/reuse saves. Current migrations apply to disposable databases; no new model/migration.
 ## 11. Verification

@@ -8,6 +8,7 @@ import AuraPopover from '@primeuix/themes/aura/popover';
 import AuraTag from '@primeuix/themes/aura/tag';
 import AuraProgressBar from '@primeuix/themes/aura/progressbar';
 import AuraSelect from '@primeuix/themes/aura/select';
+import AuraRadioButton from '@primeuix/themes/aura/radiobutton';
 import type { ButtonDesignTokens, ButtonTokenSections } from '@primeuix/themes/types/button';
 
 const rem = (value: number) => `${value / 16}rem`;
@@ -87,7 +88,7 @@ export function createPrimePreset(palette: ThemePalette): Preset {
     },
   } satisfies ButtonDesignTokens;
   // Import only the adopted component's preset; absent controls own their later adapters.
-  return definePreset({ components: { button: AuraButton, inputtext: AuraInputText, dialog: AuraDialog,drawer:AuraDrawer,popover:AuraPopover,tag:AuraTag,progressbar:AuraProgressBar,select:AuraSelect } }, {
+  return definePreset({ components: { button: AuraButton, inputtext: AuraInputText, dialog: AuraDialog,drawer:AuraDrawer,popover:AuraPopover,tag:AuraTag,progressbar:AuraProgressBar,select:AuraSelect,radiobutton:AuraRadioButton } }, {
     semantic: {
       disabledOpacity: '0.6', iconSize: rem(light.iconSize.sm),
       mask:{transitionDuration:`${light.motion.duration.fast}ms`},
@@ -100,9 +101,9 @@ export function createPrimePreset(palette: ThemePalette): Preset {
     },
     components: { button, select:{
       root:{fontSize:'1rem',fontWeight:'400',shadow:'none',paddingX:'12px',paddingY:'8px',borderRadius:'8px',transitionDuration:`${light.motion.duration.fast}ms`,focusRing:{width:'2px',style:'solid',color:'var(--ring)',offset:'2px',shadow:'none'}},
-      overlay:{background:'{content.background}',color:'{content.color}',borderColor:'{content.border.color}',borderRadius:'8px',shadow:light.elevation.lg.css},
-      list:{padding:'4px',gap:'2px'},
-      option:{padding:'8px 12px',fontSize:'14px',fontWeight:'400',borderRadius:'6px',selectedFontWeight:'600',color:'{text.color}',focusColor:'{text.color}',focusBackground:'{content.hover.background}',selectedBackground:'{highlight.background}',selectedColor:'{highlight.color}',selectedFocusBackground:'{highlight.focus.background}',selectedFocusColor:'{highlight.focus.color}'}
+      overlay:{background:'{content.background}',color:'{content.color}',borderColor:'{content.border.color}',borderRadius:'14px',shadow:light.elevation.lg.css},
+      list:{padding:'6px',gap:'4px'},
+      option:{padding:'10px 12px',fontSize:'14px',fontWeight:'400',borderRadius:'10px',selectedFontWeight:'600',color:'{text.color}',focusColor:'{text.color}',focusBackground:'{content.hover.background}',selectedBackground:'{highlight.background}',selectedColor:'{highlight.color}',selectedFocusBackground:'{highlight.focus.background}',selectedFocusColor:'{highlight.focus.color}'}
     }, drawer:{header:{padding:'12px 16px'},content:{padding:'0px'}}, dialog: { colorScheme: {
       light: { root: { background: light.colors.surface, color: light.colors.surfaceForeground, borderColor: light.colors.border } },
       dark: { root: { background: dark.colors.surface, color: dark.colors.surfaceForeground, borderColor: dark.colors.border } },

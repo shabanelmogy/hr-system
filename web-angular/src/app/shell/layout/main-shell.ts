@@ -1,6 +1,6 @@
 import { Component, computed, effect, inject, viewChild } from '@angular/core';
 import { NgComponentOutlet } from '@angular/common';
-import { SHELL_CONTEXT_COMPONENT,SHELL_CONTEXT_FEEDBACK } from '../context-slot';
+import { SHELL_CONTEXT_COMPONENT,SHELL_APPLICATION_COMPONENT,SHELL_CONTEXT_FEEDBACK } from '../context-slot';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { filter, map } from 'rxjs';
@@ -15,6 +15,7 @@ import { ThemeService } from '../../../theme/public-api';
   templateUrl:'./main-shell.html',styleUrl:'./main-shell.scss' })
 export class MainShell {
   readonly contextComponent=inject(SHELL_CONTEXT_COMPONENT);readonly extraFeedback=inject(SHELL_CONTEXT_FEEDBACK);
+  readonly applicationComponent=inject(SHELL_APPLICATION_COMPONENT);
   readonly auth=inject(AuthSession);readonly locale=inject(LocalizationRuntime);readonly theme=inject(ThemeService);private readonly router=inject(Router);
   readonly path=toSignal(this.router.events.pipe(filter((event):event is NavigationEnd=>event instanceof NavigationEnd),map(event=>event.urlAfterRedirects.split('?')[0])),{initialValue:this.router.url.split('?')[0]});
   readonly settings=viewChild.required<PopoverPanel>('settings');

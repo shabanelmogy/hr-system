@@ -3,6 +3,13 @@ import { TestBed } from '@angular/core/testing';
 import { Observable, Subject } from 'rxjs';
 import { createScopedRead } from './scoped-read';
 describe('Shared scoped read lifetime',()=>{
+  it('refreshes a ready read explicitly and deduplicates while loading without bypassing denial',()=>{
+    const identity=signal<{allowed:boolean}|null>({allowed:true}),responses:Subject<number>[]=[],load=vi.fn(()=>{const response=new Subject<number>();responses.push(response);return response;});
+    const read=TestBed.runInInjectionContext(()=>createScopedRead(identity,u=>u.allowed,load));TestBed.tick();
+    read.refresh();expect(load).toHaveBeenCalledTimes(1);responses[0].next(1);read.refresh();expect(read.state()).toEqual({kind:'loading'});
+    read.refresh();expect(load).toHaveBeenCalledTimes(2);responses[1].next(2);expect(read.state()).toEqual({kind:'ready',data:2});
+    identity.set({allowed:false});read.refresh();TestBed.tick();expect(load).toHaveBeenCalledTimes(2);
+  });
   it('deduplicates consumers, synchronously masks identity replacement and cancels on destruction',()=>{
     const identity=signal<{id:string}|null>({id:'one'}),teardown=vi.fn(),requests:Subject<number>[]=[];
     const read=TestBed.runInInjectionContext(()=>createScopedRead(identity,()=>true,()=>new Observable<number>(subscriber=>{const response=new Subject<number>();requests.push(response);const subscription=response.subscribe(subscriber);return()=>{subscription.unsubscribe();teardown();};})));

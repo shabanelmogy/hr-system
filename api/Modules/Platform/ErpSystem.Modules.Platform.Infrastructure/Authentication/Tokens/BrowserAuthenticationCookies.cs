@@ -4,10 +4,11 @@ using ErpSystem.Modules.Platform.Application.Authentication.Orchestration;
 using ErpSystem.Modules.Platform.Contracts.Authentication.Browser;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Options;
 
 namespace ErpSystem.Modules.Platform.Infrastructure.Authentication.Tokens;
 
-public sealed class BrowserAuthenticationCookies(IHttpContextAccessor accessor)
+public sealed class BrowserAuthenticationCookies(IHttpContextAccessor accessor, IOptions<BrowserAuthenticationOptions> options)
     : IBrowserAuthenticationCookies, IAuthenticationSessionIssuanceGuard
 {
     private static readonly ChunkingCookieManager Chunks = new()
@@ -85,9 +86,10 @@ public sealed class BrowserAuthenticationCookies(IHttpContextAccessor accessor)
     private static bool IsOwned(string name) => name.StartsWith(BrowserAuthenticationDefaults.AccessCookie, StringComparison.Ordinal) ||
         name == BrowserAuthenticationDefaults.RefreshCookie || name == BrowserAuthenticationDefaults.AntiforgeryCookie;
     private static bool IsTokenCharacter(char character) => char.IsAsciiLetterOrDigit(character) || character is '-' or '_' or '.';
-    private static CookieOptions Options(DateTime? expires = null) => new()
+    private CookieOptions Options(DateTime? expires = null) => new()
     {
-        Secure = true, HttpOnly = true, SameSite = SameSiteMode.Lax, Path = "/",
+        Secure = true, HttpOnly = true,
+        SameSite = options.Value.UseCrossSiteCookies ? SameSiteMode.None : SameSiteMode.Lax, Path = "/",
         IsEssential = true, Expires = expires is { } date ? new DateTimeOffset(DateTime.SpecifyKind(date, DateTimeKind.Utc)) : null
     };
 }

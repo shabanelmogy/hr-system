@@ -22,4 +22,5 @@ public sealed class BrowserAuthenticationOptions
 {
     public const string SectionName = "BrowserAuthentication";
     public List<string> AllowedOrigins { get; set; } = [];
+    public bool UseCrossSiteCookies { get; set; }
 }

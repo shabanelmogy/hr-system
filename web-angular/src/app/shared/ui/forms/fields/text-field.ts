@@ -2,6 +2,7 @@ import { booleanAttribute, ChangeDetectorRef, Component, computed, DestroyRef, D
 import { AbstractControl, ControlValueAccessor, NgControl } from '@angular/forms';
 import type { Subscription } from 'rxjs';
 import { InputText } from 'primeng/inputtext';
+import { ButtonDirective } from 'primeng/button';
 import { LocalizationRuntime, UiTextPipe } from '../../../../platform/localization/public-api';
 import { clearServerFieldError, type FieldMessages } from '../form-errors';
 
@@ -9,7 +10,7 @@ let fieldSequence = 0;
 
 @Component({
   selector: 'erp-text-field',
-  imports: [InputText, UiTextPipe],
+  imports: [InputText, UiTextPipe, ButtonDirective],
   template: `
     <label [for]="id" [class.floating-label]="appearance() === 'floating'" [class.visually-hidden]="labelVisibility() === 'sr-only'" [class.invalid]="!!error()">{{ label() }}@if (required()) { <span aria-hidden="true"> *</span> }</label>
     <div class="input-row" [class.invalid]="!!error()">
@@ -23,11 +24,11 @@ let fieldSequence = 0;
         (compositionstart)="composing = true" (compositionend)="compositionEnd($event)" />
       @if (showCounter() && maxLength(); as limit) { <span class="counter" [id]="id + '-counter'">{{ value().length }}/{{ limit }}</span> }
       @if (showClear() && value() && !readOnly() && !disabled()) {
-        <button type="button" class="field-action" [attr.aria-label]="'general.clear' | uiText"
+        <button pButton variant="text" type="button" class="field-action" [attr.aria-label]="'general.clear' | uiText"
           (click)="clear()"><span aria-hidden="true">×</span></button>
       }
       @if (type() === 'password' && (!revealOnlyWithValue() || value())) {
-        <button type="button" class="field-action reveal" [disabled]="disabled()" [attr.aria-pressed]="revealed()"
+        <button pButton variant="text" type="button" class="field-action reveal" [disabled]="disabled()" [attr.aria-pressed]="revealed()"
           [attr.aria-label]="(revealed() ? 'hidePassword' : 'showPassword') | uiText"
           (click)="revealed.set(!revealed())">
           <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/>

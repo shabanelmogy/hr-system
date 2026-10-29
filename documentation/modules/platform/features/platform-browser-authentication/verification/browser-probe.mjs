@@ -5,7 +5,8 @@ import path from 'node:path';
 const [root, appOrigin, apiOrigin] = process.argv.slice(2);
 const require = createRequire(path.join(root, 'web-next/package.json'));
 const { chromium } = require('@playwright/test');
-const browser = await chromium.launch({ headless: true });
+const browser = await chromium.launch({ headless: true,
+  ...(process.env.ERPSYSTEM_TEST_BROWSER_CHANNEL ? { channel: process.env.ERPSYSTEM_TEST_BROWSER_CHANNEL } : {}) });
 try {
   // HTTPS validation remains enabled; this checks the installed development trust.
   const context = await browser.newContext();

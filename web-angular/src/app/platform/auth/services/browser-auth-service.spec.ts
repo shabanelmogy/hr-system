@@ -9,7 +9,7 @@ describe('Browser authentication transport', () => {
   let service: BrowserAuthService; let http: HttpTestingController;
   const base = 'https://localhost:7037/api/v1/browser-auth/';
   beforeEach(() => {
-    TestBed.configureTestingModule({ providers: [provideHttpClient(), provideHttpClientTesting()] });
+    TestBed.configureTestingModule({ providers: [provideHttpClient(), provideHttpClientTesting(), { provide: ERP_API_ORIGIN, useValue: 'https://localhost:7037' }] });
     service = TestBed.inject(BrowserAuthService); http = TestBed.inject(HttpTestingController);
   });
   afterEach(() => { http.verify(); });

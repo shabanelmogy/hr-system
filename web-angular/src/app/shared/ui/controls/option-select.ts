@@ -4,25 +4,31 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Select } from 'primeng/select';
 import { ContextBadge } from '../layout/context-badge';
 import type { AppIconName } from '../icons/app-icon';
+import { AppIcon } from '../icons/app-icon';
 
-@Component({ selector: 'erp-option-select', imports:[ReactiveFormsModule,Select,ContextBadge],host:{'[class.context-control]':"appearance()==='context'"}, template: `
+@Component({ selector: 'erp-option-select', imports:[ReactiveFormsModule,Select,ContextBadge,AppIcon],host:{'[class.context-control]':"appearance()==='context'"}, template: `
   <div class="preference-select">
     <p-select [inputId]="id" [options]="selectableOptions()" optionLabel="label" optionValue="value" [ariaLabel]="appearance()==='context'?label()+': '+selectedLabel():label()"
       [formControl]="control" appendTo="body" [fluid]="appearance()!=='context'" [loading]="busy()" [placeholder]="emptyLabel()" [invalid]="invalid()"
+      [checkmark]="true" panelStyleClass="erp-select-overlay" scrollHeight="min(20rem, 60dvh)"
       [dt]="tokens()" [style]="{height:appearance()==='context'?'36px':'40px',color:'inherit',maxWidth:'100%'}">
       <ng-template #selectedItem let-option>@if(appearance()==='context'){<erp-context-badge [label]="label()" [value]="selectedLabel()" [icon]="icon()" />}@else{ {{ option?.label }} }</ng-template>
-      <ng-template #item let-option><span class="option-copy"><span>{{ option.label }}</span>@if(option.description){<small>{{ option.description }}</small>}</span></ng-template>
+      @if(menuLabel()){<ng-template #header><div class="select-menu-heading">{{ menuLabel() }}</div></ng-template>}
+      <ng-template #item let-option><span class="option-item">@if(option.icon){<span class="option-icon"><erp-icon [name]="option.icon" /></span>}<span class="option-copy"><span>{{ option.label }}</span>@if(option.description){<small>{{ option.description }}</small>}</span></span></ng-template>
     </p-select>
     @if(appearance()!=='context'){<label [for]="id">{{ label() }}</label>}
   </div>`, styles: `
     :host{display:inline-block;min-inline-size:7.8125rem}.preference-select{position:relative}
     label{position:absolute;z-index:1;inset-inline-start:0.625rem;top:-0.5rem;padding-inline:0.25rem;background:var(--option-label-background,var(--primary));font-size:0.75rem;line-height:1rem;color:inherit}
-    :host(.context-control){min-inline-size:0;max-inline-size:240px}.option-copy{display:flex;flex-direction:column;gap:2px}small{font-size:12px;color:var(--muted-foreground)}
+    :host(.context-control){min-inline-size:0;max-inline-size:none}.option-copy{display:flex;flex-direction:column;gap:2px}small{font-size:12px;color:var(--muted-foreground)}
+    .option-item{display:flex;align-items:center;gap:10px;min-width:0}.option-icon{width:32px;height:32px;display:grid;place-items:center;flex-shrink:0;background:var(--accent);color:var(--primary);border-radius:10px}.option-icon erp-icon{width:18px;height:18px}
+    .select-menu-heading{padding:12px 14px 10px;font-size:12px;font-weight:700;color:var(--muted-foreground);border-bottom:1px solid var(--border);margin-bottom:4px}
   ` })
 export class OptionSelect {
   private static sequence=0;readonly id='erp-preference-select-'+ ++OptionSelect.sequence;
   readonly label = input.required<string>(); readonly value = input.required<string>();
-  readonly options = input.required<readonly { value: string; label: string; description?:string }[]>();
+  readonly options = input.required<readonly { value: string; label: string; description?:string; icon?:AppIconName }[]>();
+  readonly menuLabel=input('');
   readonly appearance=input<'preference'|'context'>('preference');readonly icon=input<AppIconName>('company');
   readonly disabled=input(false);readonly busy=input(false);readonly commitMode=input<'immediate'|'external'>('immediate');
   readonly emptyLabel=input('');readonly invalid=input(false);

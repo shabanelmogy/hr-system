@@ -1,0 +1,78 @@
+{
+  "frontend": "https://localhost:4210",
+  "api": "https://shabanhrms.runasp.net",
+  "normalTlsValidation": true,
+  "actualApi": true,
+  "serverCatalog": true,
+  "sharedInitialRead": true,
+  "moduleAndOverview": true,
+  "reload": true,
+  "refresh": 200,
+  "logout": 204,
+  "statuses": [
+    {
+      "path": "/api/v1/browser-auth/session",
+      "status": 401
+    },
+    {
+      "path": "/api/v1/browser-auth/csrf",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/browser-auth/refresh",
+      "status": 401
+    },
+    {
+      "path": "/api/v1/browser-auth/login",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/browser-auth/csrf",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/modules/accessible",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/browser-auth/session",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/browser-auth/csrf",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/modules/accessible",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/browser-auth/csrf",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/browser-auth/refresh",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/browser-auth/session",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/browser-auth/csrf",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/modules/accessible",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/browser-auth/csrf",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/browser-auth/logout",
+      "status": 204
+    }
+  ]
+}

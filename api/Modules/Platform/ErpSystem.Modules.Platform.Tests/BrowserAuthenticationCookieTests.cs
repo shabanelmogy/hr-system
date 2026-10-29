@@ -24,7 +24,7 @@ public sealed class BrowserAuthenticationCookieTests
     public void Read_RejectsMalformedPartialExtraAndDuplicateMaterial(string header)
     {
         var context = new DefaultHttpContext(); context.Request.Headers.Cookie = header;
-        var cookies = new BrowserAuthenticationCookies(new HttpContextAccessor { HttpContext = context });
+        var cookies = new BrowserAuthenticationCookies(new HttpContextAccessor { HttpContext = context }, Options.Create(new BrowserAuthenticationOptions()));
         Assert.Throws<FormatException>(() => cookies.Read());
     }
 
@@ -32,7 +32,7 @@ public sealed class BrowserAuthenticationCookieTests
     public void Read_RejectsOversizeBeforeChunkAssembly_AndDoesNotReadNextCookies()
     {
         var context = new DefaultHttpContext();
-        var cookies = new BrowserAuthenticationCookies(new HttpContextAccessor { HttpContext = context });
+        var cookies = new BrowserAuthenticationCookies(new HttpContextAccessor { HttpContext = context }, Options.Create(new BrowserAuthenticationOptions()));
         context.Request.Headers.Cookie = "__Host-erp-angular-access=" + new string('x', BrowserAuthenticationDefaults.MaximumCookieHeaderBytes + 1);
         Assert.Throws<FormatException>(() => cookies.Read());
         context.Request.Headers.Cookie = "__Host-next-access=next-secret; __Host-next-refresh=next-refresh";
@@ -45,7 +45,7 @@ public sealed class BrowserAuthenticationCookieTests
     {
         var output = new DefaultHttpContext();
         output.Request.Headers.Cookie = "__Host-next-access=retained; __Host-erp-angular-accessC5=stale";
-        var cookies = new BrowserAuthenticationCookies(new HttpContextAccessor { HttpContext = output });
+        var cookies = new BrowserAuthenticationCookies(new HttpContextAccessor { HttpContext = output }, Options.Create(new BrowserAuthenticationOptions()));
         var expires = DateTime.UtcNow.AddDays(3);
         var token = new string('a', BrowserAuthenticationDefaults.MaximumAccessBytes);
         cookies.Write(new AuthenticationSessionResponse("user", "user", "First", "Last", "tenant", "Tenant", "Plan", 1,
@@ -55,7 +55,7 @@ public sealed class BrowserAuthenticationCookieTests
         var assignments = headers.Select(header => header.Split(';', 2)[0]).GroupBy(header => header.Split('=', 2)[0])
             .Select(group => group.Last()).Where(header => !header.EndsWith('=')).ToArray();
         var input = new DefaultHttpContext(); input.Request.Headers.Cookie = string.Join("; ", assignments);
-        var received = new BrowserAuthenticationCookies(new HttpContextAccessor { HttpContext = input }).Read();
+        var received = new BrowserAuthenticationCookies(new HttpContextAccessor { HttpContext = input }, Options.Create(new BrowserAuthenticationOptions())).Read();
         Assert.Equal(token, received.Token);
         Assert.Equal("refresh-material", received.RefreshToken);
         Assert.Equal(6, assignments.Count(value => value.StartsWith(BrowserAuthenticationDefaults.AccessCookie, StringComparison.Ordinal)));
@@ -68,11 +68,40 @@ public sealed class BrowserAuthenticationCookieTests
         });
     }
 
+    [Theory]
+    [InlineData(false, "lax")]
+    [InlineData(true, "none")]
+    public void ConfiguredSameSite_AppliesToSessionAntiforgeryAndDeletion_WithoutChangingSecurityFlags(bool crossSite, string sameSite)
+    {
+        var context = new DefaultHttpContext();
+        var cookies = new BrowserAuthenticationCookies(new HttpContextAccessor { HttpContext = context },
+            Options.Create(new BrowserAuthenticationOptions { UseCrossSiteCookies = crossSite }));
+        cookies.Write(new AuthenticationSessionResponse("user", "user", "First", "Last", "tenant", "Tenant", "Plan", 1,
+            "C", "شركة", "Company", "access-material", DateTime.UtcNow.AddMinutes(10), "refresh-material", DateTime.UtcNow.AddDays(1)));
+        cookies.WriteAntiforgery("synthetic-antiforgery");
+        var issued = context.Response.Headers.SetCookie.Select(value => value!).ToArray();
+        Assert.Contains(issued, header => header.StartsWith(BrowserAuthenticationDefaults.AccessCookie + "=", StringComparison.Ordinal));
+        Assert.Contains(issued, header => header.StartsWith(BrowserAuthenticationDefaults.RefreshCookie + "=", StringComparison.Ordinal));
+        Assert.Contains(issued, header => header.StartsWith(BrowserAuthenticationDefaults.AntiforgeryCookie + "=", StringComparison.Ordinal));
+        context.Response.Headers.SetCookie = default;
+        cookies.Clear();
+        var deleted = context.Response.Headers.SetCookie.Select(value => value!).ToArray();
+        Assert.NotEmpty(deleted);
+        Assert.All(issued.Concat(deleted), header =>
+        {
+            Assert.Contains("samesite=" + sameSite, header, StringComparison.OrdinalIgnoreCase);
+            Assert.Contains("secure", header, StringComparison.OrdinalIgnoreCase);
+            Assert.Contains("httponly", header, StringComparison.OrdinalIgnoreCase);
+            Assert.Contains("path=/", header, StringComparison.OrdinalIgnoreCase);
+            Assert.DoesNotContain("domain=", header, StringComparison.OrdinalIgnoreCase);
+        });
+    }
+
     [Fact]
     public void Admission_BoundsBrowserIssuanceBeforeCommit_AndRetainsBearerContract()
     {
         var context = new DefaultHttpContext();
-        var guard = new BrowserAuthenticationCookies(new HttpContextAccessor { HttpContext = context });
+        var guard = new BrowserAuthenticationCookies(new HttpContextAccessor { HttpContext = context }, Options.Create(new BrowserAuthenticationOptions()));
         var oversized = new string('a', BrowserAuthenticationDefaults.MaximumAccessBytes + 1);
         Assert.Null(guard.Validate(oversized, DateTime.UtcNow.AddDays(1)));
         context.SetEndpoint(new Endpoint(_ => Task.CompletedTask, new EndpointMetadataCollection(new BrowserAuthenticationEndpointAttribute()), "browser"));

@@ -49,6 +49,13 @@ public sealed class BrowserAuthenticationTransportTests
 
     [BrowserAuthenticationPreflightFact]
     public async Task RealBrowser_UsesProductionRoutesJwtIdentityAndSql_WithoutCredentialJson()
+        => await VerifyBrowserTransportAsync(crossSite: false);
+
+    [BrowserAuthenticationPreflightFact]
+    public async Task RealCrossSiteBrowser_UsesSecureNoneCookies_WithOriginAndCsrfEnforcement()
+        => await VerifyBrowserTransportAsync(crossSite: true);
+
+    private static async Task VerifyBrowserTransportAsync(bool crossSite)
     {
         var root = FindRoot();
         await using var database = await SqlServerTestDatabase.CreateAsync("BrowserAuthTransport");
@@ -69,7 +76,8 @@ public sealed class BrowserAuthenticationTransportTests
         {
             ["DatabaseSettings:ApplyMigrationsOnStartup"] = "true",
             ["CorsSettings:AllowedOrigins:0"] = "https://localhost:4210",
-            ["BrowserAuthentication:AllowedOrigins:0"] = "https://localhost:4210"
+            ["BrowserAuthentication:AllowedOrigins:0"] = "https://localhost:4210",
+            ["BrowserAuthentication:UseCrossSiteCookies"] = crossSite ? "true" : "false"
         });
         var state = new TransportState();
         builder.Services.AddSingleton(state);
@@ -135,11 +143,12 @@ public sealed class BrowserAuthenticationTransportTests
                 expires: DateTime.UtcNow.AddMinutes(-5), signingCredentials: new SigningCredentials(
                     new SymmetricSecurityKey(Encoding.UTF8.GetBytes(SigningKey)), SecurityAlgorithms.HmacSha256)));
             context.Response.Cookies.Append(BrowserAuthenticationDefaults.AccessCookie, jwt,
-                new CookieOptions { HttpOnly = true, Secure = true, SameSite = SameSiteMode.Lax, Path = "/" });
+                new CookieOptions { HttpOnly = true, Secure = true, SameSite = crossSite ? SameSiteMode.None : SameSiteMode.Lax, Path = "/" });
             await context.Response.CompleteAsync();
         }).RequireAuthorization();
         await app.StartAsync();
         var origins = app.Urls.Order(StringComparer.Ordinal).Select(url => url.Replace("127.0.0.1", "localhost", StringComparison.Ordinal)).ToArray();
+        if (crossSite) origins[1] = origins[1].Replace("localhost", "127.0.0.1", StringComparison.Ordinal);
         var allowed = app.Services.GetRequiredService<IOptions<BrowserAuthenticationOptions>>().Value.AllowedOrigins;
         allowed.Clear(); allowed.Add(origins[0]);
         var cors = app.Services.GetRequiredService<IOptions<CorsOptions>>().Value.GetPolicy(HostInfrastructureServiceCollectionExtensions.BrowserCorsPolicy)!;
@@ -149,6 +158,7 @@ public sealed class BrowserAuthenticationTransportTests
         start.ArgumentList.Add(Path.Combine(root, "documentation/modules/platform/features/platform-browser-authentication/verification/browser-transport.mjs"));
         foreach (var argument in new[] { root, origins[0], origins[1], companies[0].ToString(System.Globalization.CultureInfo.InvariantCulture), companies[1].ToString(System.Globalization.CultureInfo.InvariantCulture) })
             start.ArgumentList.Add(argument);
+        start.ArgumentList.Add(crossSite ? "None" : "Lax");
         using var process = Process.Start(start)!;
         var stdout = process.StandardOutput.ReadToEndAsync(); var stderr = process.StandardError.ReadToEndAsync();
         try { await process.WaitForExitAsync().WaitAsync(TimeSpan.FromSeconds(55)); }
@@ -164,7 +174,8 @@ public sealed class BrowserAuthenticationTransportTests
         using var result = JsonDocument.Parse(await stdout);
         var report = new { evidence = "Actual password/tenant/company controllers, JWT/live scope/Identity/SQL and trusted Chromium; test control endpoints exist only in this fixture", browser = result.RootElement.Clone(), state.Writes,
             schema = "Existing Platform migrations; no pending model change; disposable SQL database", logoutFailure = "503 and Cookie deletion verified; one intentionally unrevoked fixture session remains until database disposal" };
-        await File.WriteAllTextAsync(Path.Combine(root, "documentation/modules/platform/features/platform-browser-authentication/verification/results/browser-transport.json"),
+        var reportFile = crossSite ? "browser-transport-cross-site.json" : "browser-transport.json";
+        await File.WriteAllTextAsync(Path.Combine(root, "documentation/modules/platform/features/platform-browser-authentication/verification/results", reportFile),
             JsonSerializer.Serialize(report, ReportOptions) + Environment.NewLine);
         await app.StopAsync();
     }

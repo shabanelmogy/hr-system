@@ -1,5 +1,5 @@
 {
-  "certificateValidUntilUtc": "2028-11-21T10:35:09Z",
+  "certificateValidUntilUtc": "2028-10-13T08:10:54Z",
   "evidence": "real Chromium, existing development certificate, isolated two-origin HTTPS framework harness; not deployed ERP browser endpoints",
   "browser": {
     "missing": 400,

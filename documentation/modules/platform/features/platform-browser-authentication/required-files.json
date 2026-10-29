@@ -24,6 +24,18 @@
   "sourceCollections": [],
   "requiredFiles": [
     {
+      "id": "cross-site-browser-transport-result",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/platform-browser-authentication/verification/results/browser-transport-cross-site.json",
+      "purpose": "Real trusted browser/SQL split-site Secure None login, refresh, scope, antiforgery/origin denial and logout receipt"
+    },
+    {
+      "id": "hosted-browser-configuration-repair",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/platform-browser-authentication/verification/HOSTED_CONFIGURATION_REPAIR.md",
+      "purpose": "Local-host browser auth maintenance evidence, rules/impact, exact-origin and explicit cross-site Cookie verification"
+    },
+    {
       "id": "root-agent-guidance",
       "layer": "configuration",
       "path": "AGENTS.md",

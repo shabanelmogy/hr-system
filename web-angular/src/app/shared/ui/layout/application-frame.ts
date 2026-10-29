@@ -9,8 +9,9 @@ import { ActionButton } from '../buttons/public-api';
 import { AppIcon } from '../icons/app-icon';
 import { IdentityAvatar } from './identity-avatar';
 import { NavigationList, type NavigationEntry } from './navigation-list';
+import { ScrollViewport } from './scroll-viewport';
 
-@Component({ selector:'erp-application-frame', imports:[NgTemplateOutlet,RouterLink,Drawer,ActionButton,AppIcon,IdentityAvatar,NavigationList],
+@Component({ selector:'erp-application-frame', imports:[NgTemplateOutlet,RouterLink,Drawer,ActionButton,AppIcon,IdentityAvatar,NavigationList,ScrollViewport],
   templateUrl:'./application-frame.html',styleUrl:'./application-frame.scss',
   host:{'[class.expanded]':'navigationVisible() && desktop() && opened()','[class.compact]':'!desktop()','[class.sidebarless]':'!navigationVisible()','[class.filled]':'fillContent()'},
 })

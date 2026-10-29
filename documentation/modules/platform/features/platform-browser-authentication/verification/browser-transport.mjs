@@ -3,9 +3,10 @@ import assert from 'node:assert/strict';
 import { createRequire } from 'node:module';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
-const [root, appOrigin, apiOrigin, firstId, secondId] = process.argv.slice(2);
+const [root, appOrigin, apiOrigin, firstId, secondId, expectedSameSite = 'Lax'] = process.argv.slice(2);
 const { chromium, expect } = createRequire(path.join(root, 'web-next/package.json'))('@playwright/test');
-const browser = await chromium.launch({ headless: true });
+const browser = await chromium.launch({ headless: true,
+  ...(process.env.ERPSYSTEM_TEST_BROWSER_CHANNEL ? { channel: process.env.ERPSYSTEM_TEST_BROWSER_CHANNEL } : {}) });
 try {
   const context = await browser.newContext(); // TLS validation intentionally enabled.
   const page = await context.newPage();
@@ -77,7 +78,7 @@ try {
       oversizeBeforeCommit: 400, companySwitch: second, readonlyDenied: 423, logout: 204, realtimeBounded: true };
   }, { api: apiOrigin, first: Number(firstId), second: Number(secondId) });
   const own = (await context.cookies(apiOrigin)).filter(cookie => cookie.name.startsWith('__Host-erp-angular'));
-  assert.ok(own.length >= 3 && own.every(cookie => cookie.httpOnly && cookie.secure && cookie.sameSite === 'Lax' && cookie.path === '/'));
+  assert.ok(own.length >= 3 && own.every(cookie => cookie.httpOnly && cookie.secure && cookie.sameSite === expectedSameSite && cookie.path === '/'));
   const access = own.find(cookie => cookie.name === '__Host-erp-angular-access').value;
   const deniedWrite = await context.request.post(`${apiOrigin}/test/write`, { headers: { Origin: 'https://unapproved.invalid' } });
   assert.equal(deniedWrite.status(), 403, 'unapproved Origin cannot write through Cookies');
@@ -141,6 +142,7 @@ try {
   assert.equal((await context.cookies(apiOrigin)).filter(cookie => cookie.name.startsWith('__Host-erp-angular')).length, 0);
   process.stdout.write(JSON.stringify({ ...result, ...angularProof, wrongOrigin: 403, missingOrigin: 403, revocationFailure: failure,
     logoutCookiesCleared: true, httpsValidationEnabled: true, realPasswordAndSqlSelection: true,
+    cookieSameSite: expectedSameSite, crossSite: new URL(appOrigin).hostname !== new URL(apiOrigin).hostname,
     retainedHeaderWithoutCsrf: true, globalHangfireAntiforgeryPreserved: true,
     wrongOriginWrite: 403, partialCookieRejected: 401 }));
 } catch (error) {

@@ -24,6 +24,36 @@
   "sourceCollections": [],
   "requiredFiles": [
     {
+      "id": "api-environment",
+      "layer": "configuration",
+      "path": "web-angular/.env",
+      "purpose": "Tracked public local/host API selection and HTTPS origins"
+    },
+    {
+      "id": "api-environment-loader",
+      "layer": "web",
+      "path": "web-angular/scripts/configure-api.mjs",
+      "purpose": "Allowlisted API build input with dotenv/process precedence and URL validation"
+    },
+    {
+      "id": "api-environment-runner",
+      "layer": "web",
+      "path": "web-angular/scripts/run-angular.mjs",
+      "purpose": "Configure the selected API before Angular CLI commands"
+    },
+    {
+      "id": "api-environment-tests",
+      "layer": "web",
+      "path": "web-angular/scripts/configure-api.test.mjs",
+      "purpose": "Environment selection, precedence, invalid-origin and public-only emission verification"
+    },
+    {
+      "id": "api-environment-guide",
+      "layer": "documentation",
+      "path": "documentation/guides/web/ANGULAR_ENVIRONMENT.md",
+      "purpose": "Local/host commands, precedence and hosted acceptance limits"
+    },
+    {
       "id": "root-agent-guidance",
       "layer": "configuration",
       "path": "AGENTS.md",

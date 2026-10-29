@@ -10,6 +10,7 @@ export { ApplicationFrame } from './layout/application-frame';
 export { IdentityAvatar } from './layout/identity-avatar';
 export { ContextBadge } from './layout/context-badge';
 export { PageHeader } from './layout/page-header';
+export { ScrollViewport } from './layout/scroll-viewport';
 export { SurfaceCard } from './layout/surface-card';
 export { PalettePicker } from './controls/palette-picker';
 export type { NavigationEntry } from './layout/navigation-list';

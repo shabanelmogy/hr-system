@@ -22,5 +22,6 @@ export function createScopedRead<I extends object,T>(identity: Signal<I|null>, a
     const user=identity();if(user&&!allowed(user))return {kind:'forbidden'};
     return user&&snapshot().identity===user?snapshot().state:{kind:'loading'};
   });
-  return {state,retry:()=>{if(state().kind==='error')retries.next();}};
+  return {state,retry:()=>{if(state().kind==='error')retries.next();},
+    refresh:()=>{if(state().kind==='ready'||state().kind==='error')retries.next();}};
 }

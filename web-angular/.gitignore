@@ -46,3 +46,4 @@ Thumbs.db
 # Local license configuration and generated runtime input
 .env.local
 src/config/license.generated.ts
+src/config/api.generated.ts

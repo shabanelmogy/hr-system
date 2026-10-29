@@ -67,7 +67,7 @@ invalidation, success test, and failure test. Use `N/A` only with a reason.
 | platform-browser-authentication-web | 6 | `0cb8d282665eab10947f26d8e7f8b61da88e4b155927725acaa99ecfadb65506` |
 | platform-browser-authentication-web | 7 | `63b256feb8056824a70b3d6140fa09878174c6a4b109f18fbbc1546166185502` |
 | platform-browser-authentication-web | 8 | `3b480eab32b081a85dd0a739f8911bf49c01ab5032ce617f1d0330e32e9d0df6` |
-| platform-browser-authentication-web | 9 | `64f430d5eb61e32e18ddf5a127626cafb8605df2efd968b39fc985d8d5bbb423` |
+| platform-browser-authentication-web | 9 | `a405ce7f7bc4b5c217e84ac35fc0eaae33cea91ec7ac4a2fb8c8afaf837b0496` |
 | platform-browser-authentication-mobile | 9 | `ee88e7570c0c92759fc11905a984191f1b35504afdc1f82cffb14e21e514cabc` |
 | platform-browser-authentication-mobile | 10 | `55671e8beaf38554eacb8d95c72da2780692ea162c3bb358796621f03d69cb8c` |
 | platform-browser-authentication-mobile | 11 | `3b9b38136ee9eee63b85e9b06240286b646e8b78f3d34926eaea28e95760c620` |

@@ -1,19 +1,18 @@
 # Angular Web Migration — Proposed Delivery Roadmap
 
-Status: Draft overall; exactly one feature is Active. S2-A2 module discovery is Verified/Closed; S2-A3 role home is Verified/Closed; S2-A4 company context is Verified/Closed; S2-A5 working-year context is Verified/Closed; S2-A6 application context navigation preflight is current.
+Status: Draft overall; exactly one feature is Active. S2-A2 module discovery is Verified/Closed; S2-A3 role home is Verified/Closed; S2-A4 company context is Verified/Closed; S2-A5 working-year context is Verified/Closed; S2-A6 application context navigation is Verified/Closed; S1-A3 shared collection foundation preflight is current.
 R1 session correctness and R2 browser transport are Verified/Closed. S1-A0 Angular
 toolchain/localization runtime and its documentation are Closed. S1-A1 shared
 theme/action and licensed browser verification are Closed. S1-A2 text/form runtime
 and browser verification are Closed. S2-A0 login and shared validation badges are
 Verified/Closed. S2-A1 application shell/preferences is Verified/Closed.
 
-**ACTIVE_FEATURE_STEP:** `angular-module-context-navigation`
+**ACTIVE_FEATURE_STEP:** `angular-collection-foundation`
 
 Latest handoff: [RESUME](RESUME.md), updated2026-10-29. The requester selected the
-existing hosted test API for Angular/mobile testing. Angular remains on local7037;
-hosted health200 but browser csrf403/BrowserOriginDenied remains PROD-019, with
-host configuration under PROD-017. Resolve this corrective binding before counting
-local passes as hosted acceptance. S2-A6 runtime is still blocked by its preflight.
+existing hosted test API for Angular/mobile testing. Tracked web-angular/.env now
+selects host/local (default host), with explicit npm start/build overrides;
+actual hosted csrf/login/catalog/refresh/logout now pass. PROD-017/019 retain wider host/release checks. S2-A6 is Verified/Closed including final PrimeNG/scroll/responsive refinements; collection work remains preflight-only.
 
 | Feature unit | Status | Current work | Runtime boundary |
 | --- | --- | --- | --- |
@@ -27,10 +26,12 @@ local passes as hosted acceptance. S2-A6 runtime is still blocked by its preflig
 | angular-role-home | Closed | S2-A3 Phase 06 Verified; 77 tests, production14 + actual API and exact8 metric comparisons | Source role landing and actual read-only global summary |
 | angular-company-context | Closed | S2-A4 Phase06 Verified; Angular90/company14 and actual SQL/tab/logout | Shared context selector and trusted session/read/text coordination |
 | angular-fiscal-year-context | Closed | S2-A5 Phase06 Verified; Angular99/architecture7, production15 and actual UI/SQL/tab/reload/restoration | Shared context and lazy Accounting composition |
-| angular-module-context-navigation | Active | S2-A6 current source/catalog/header readiness | Preflight only; runtime blocked |
+| angular-module-context-navigation | Closed | S2-A6 Phase06 Verified and education/closure | Angular109/architecture9, context24, retained Next13/native7 and actual hosted catalog/navigation/reload/refresh/logout |
+| angular-collection-foundation | Active | S1-A3 shared collection current-source/contracts preflight | Evidence only; runtime blocked |
 | All later foundation/platform/business units | Queued | No sibling start | Follow dependency/gate order |
 
-Execution contract: [angular-module-context-navigation](decomposition/angular-module-context-navigation.md).
+Current preparation contract: [angular-collection-foundation](decomposition/angular-collection-foundation.md).
+Completed S2-A6 evidence: [implementation report](../../../modules/platform/features/angular-module-context-navigation/IMPLEMENTATION_REPORT.md).
 This marker identifies the sole feature owner. Exact bounded entry and technical
 results are in its contract and [completed company-context report](../../../modules/platform/features/angular-company-context/IMPLEMENTATION_REPORT.md).
 The following S0/R1/R2 entries retain their historical sequence; current statuses
@@ -177,3 +178,5 @@ Angular workaround or permission to redesign the ERP during conversion.
 | First structured editor | SIG-05 child cancel/commit and confirmation race proof with stable identities; subsequent structured editors inherit the same contract. |
 | First attachment-enabled feature | SIG-04 confirmed/failed/uncertain save, staged-file ownership, discard and server orphan handling under the actual API; advance the file adapter if this is before S8. |
 | Dependency upgrades and S9 | Re-run affected SIG-07 shared compatibility and SIG-08 browser/accessibility checks; close applicable SIG evidence across the feature ledger before release. |
+
+Final user refinements accepted: PrimeNG-only shared widgets, themed ScrollArea, full desktop context text and compact icon-only controls with Tooltip. Updated context24 and affected regression/live proofs passed; S2-A6 Closed and collection preflight is the sole Active preparation.

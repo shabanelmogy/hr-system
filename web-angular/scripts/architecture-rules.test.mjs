@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { inspectSource } from './architecture-rules.mjs';
+import { inspectSource, inspectTemplate } from './architecture-rules.mjs';
 
 test('shared PrimeNG import and template are allowed', () => {
   assert.deepEqual(inspectSource('src/app/shared/ui/button.ts', 'import { ButtonDirective as P } from "primeng/button"; const template = `<button pButton>Save</button>`;'), []);
@@ -34,4 +34,15 @@ test('only application composition can inject a business context into generic Sh
   assert.ok(inspectSource('src/app/shell/context.ts',source).includes('business module composition belongs in the app root, not Shell'));
   assert.deepEqual(inspectSource('src/app/composition/authenticated-routes.ts',source),[]);
   assert.deepEqual(inspectSource('src/app/shell/layout/main-shell.ts','import { tenantWorkspaceAllowed } from "../../platform/modules/public-api";'),[]);
+});
+test('module header and page must share the authenticated catalog provider',()=>{
+  const source='@Component({providers:[ModuleCatalogState]}) class ModuleWorkspace {}';
+  assert.ok(inspectSource('src/app/platform/modules/pages/module-workspace.ts',source).includes('module catalog provider belongs in authenticated composition'));
+  assert.deepEqual(inspectSource('src/app/composition/authenticated-routes.ts',source),[]);
+});
+test('shared controls must enhance interactive widgets with PrimeNG',()=>{
+  assert.ok(inspectTemplate('<button type="button">Go</button>').includes('native button bypass; use shared action or PrimeNG directive'));
+  assert.deepEqual(inspectTemplate('<button pButton type="button">Go</button><erp-option-select />'),[]);
+  for(const template of ['<select></select>','<input type="radio">','<button type="button">Go</button>'])assert.ok(inspectSource('src/app/shared/ui/control.ts','const template = `'+template+'`;').some(message=>message.startsWith('native')));
+  assert.deepEqual(inspectSource('src/app/shared/ui/control.ts','const template = `<p-select /><p-radiobutton /><button pButton type="button">Go</button>`;'),[]);
 });

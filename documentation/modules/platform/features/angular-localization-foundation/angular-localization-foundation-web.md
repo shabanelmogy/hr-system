@@ -24,6 +24,14 @@ Reuse API/schema/catalog. Add Angular CLI/localization runtime/typed service/tes
 Phase 06 Verified for exact S1-A0: Angular 3 files / 14 tests, strict types, production build (295.40 kB initial), architecture and Angular catalog checks passed. Canonical catalog check passed (21 sources / 7107 keys); retained Next localization 4 files / 10 tests passed. API/native sources unchanged; full suites not rerun for this client-only increment. IMPLEMENTATION_REPORT.md owns precise evidence and limits. Actual signed-in SQL/Angular consumer acceptance is FOLLOW-012, Required at S2/S4.
 ## 12. Operational behavior
 Independent Angular build; rollback new client source only. No deletion/rename/reseed of persisted translation data. Production hosting/origins remain PROD-017/019.
+
+Maintenance 2026-10-29: the tracked `web-angular/.env` selects `local` or `host`
+and defines their public HTTPS API origins. Npm Angular commands generate one
+allowlisted API build input consumed through ERP_API_ORIGIN; `.env.local` and
+process overrides are supported. See [Angular environment guide](../../../../guides/web/ANGULAR_ENVIRONMENT.md)
+for exact commands, precedence and rebuild semantics. Unit HTTP providers are
+independent of device selection. This does not certify hosted Cookie/CSRF access
+or change SQL/API/native/Next behavior.
 ## 13. Localization and accessibility
 Namespaced en/ar; placeholders compatible with existing i18next; plaintext output; lang/dir updates; no new business visual surface.
 ## 14. Delivery

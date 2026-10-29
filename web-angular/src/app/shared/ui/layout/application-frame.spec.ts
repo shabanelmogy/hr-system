@@ -6,6 +6,9 @@ import { provideAppTheme } from '../../../../theme/public-api';
 import { ApplicationFrame } from './application-frame';
 
 describe('Responsive shared application frame',()=>{
+  // jsdom has no layout/ResizeObserver; real resizing and scrolling are verified in Chrome.
+  beforeEach(()=>vi.stubGlobal('ResizeObserver',class {observe(){}unobserve(){}disconnect(){}}));
+  afterEach(()=>vi.unstubAllGlobals());
   it('resets expanded navigation across viewport changes and emits real navigation actions',async()=>{
     const viewport=new BehaviorSubject<BreakpointState>({matches:true,breakpoints:{}});
     TestBed.configureTestingModule({providers:[provideRouter([]),provideAppTheme(),{provide:BreakpointObserver,useValue:{observe:()=>viewport}}]});

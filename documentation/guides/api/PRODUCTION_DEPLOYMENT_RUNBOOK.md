@@ -32,6 +32,26 @@ supports this development deployment without changing the environment or the
 validator. Existing host environment variables still take precedence over JSON.
 There is no requirement to provision production-only services for this stage.
 
+Requester-approved test-host Swagger (2026-10-29): the local publish-owned
+`appsettings.json` now sets `SwaggerSettings:Enabled=true`, so Swagger and the
+root redirect are registered even if IIS labels this test site Production.
+The `site84639-WebDeploy` profile launches
+`https://shabanhrms.runasp.net/swagger/index.html` after publishing. Publish the
+current settings file, then restart/recycle the site. An environment variable
+`SwaggerSettings__Enabled` on the host overrides JSON; set it to true or remove
+an old false override for this test deployment. The credential-free production
+example retains false and business endpoint authorization remains enforced.
+
+Angular local/host testing correction (2026-10-29): the local publish-owned
+configuration now includes `https://localhost:4210` in both
+`CorsSettings:AllowedOrigins` and `BrowserAuthentication:AllowedOrigins`, and
+explicitly enables `BrowserAuthentication:UseCrossSiteCookies=true` for the
+localhost-to-hosted-API topology. The default in code/example remains Lax/false.
+Publish the new API binaries and settings together; `.env` changes on the client
+do not configure the remote server. Keep exact origin/CSRF/HTTPS enforcement and
+verify proxy HTTPS from the actual host before altering forwarded-header trust.
+See the [repair evidence](../../modules/platform/features/platform-browser-authentication/verification/HOSTED_CONFIGURATION_REPAIR.md).
+
 Production CI and Docker publishing explicitly use `/p:PublishAppSettings=false`
 and continue to receive deployment-owned configuration separately. For a manual
 production publish, use a clean output directory and pass the same property. Restore strict readiness and satisfy

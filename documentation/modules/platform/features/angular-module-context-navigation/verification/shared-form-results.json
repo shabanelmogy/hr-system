@@ -1,0 +1,646 @@
+{
+  "date": "2026-10-29T13:58:57.494Z",
+  "matrixPassed": 40,
+  "results": [
+    {
+      "palette": "green",
+      "mode": "light",
+      "language": "en",
+      "width": 390,
+      "geometry": {
+        "height": 44,
+        "width": 234,
+        "overlap": false,
+        "errorBelow": true
+      },
+      "noNativeDialogs": true,
+      "asyncPatch": true,
+      "serverFieldError": true,
+      "duplicateSaveBlocked": true
+    },
+    {
+      "palette": "green",
+      "mode": "light",
+      "language": "en",
+      "width": 1440,
+      "geometry": {
+        "height": 44,
+        "width": 464,
+        "overlap": false,
+        "errorBelow": true
+      },
+      "noNativeDialogs": true,
+      "asyncPatch": true,
+      "serverFieldError": true,
+      "duplicateSaveBlocked": true
+    },
+    {
+      "palette": "green",
+      "mode": "light",
+      "language": "ar",
+      "width": 390,
+      "geometry": {
+        "height": 44,
+        "width": 234,
+        "overlap": false,
+        "errorBelow": true
+      },
+      "noNativeDialogs": true,
+      "asyncPatch": true,
+      "serverFieldError": true,
+      "duplicateSaveBlocked": true
+    },
+    {
+      "palette": "green",
+      "mode": "light",
+      "language": "ar",
+      "width": 1440,
+      "geometry": {
+        "height": 44,
+        "width": 464,
+        "overlap": false,
+        "errorBelow": true
+      },
+      "noNativeDialogs": true,
+      "asyncPatch": true,
+      "serverFieldError": true,
+      "duplicateSaveBlocked": true
+    },
+    {
+      "palette": "green",
+      "mode": "dark",
+      "language": "en",
+      "width": 390,
+      "geometry": {
+        "height": 44,
+        "width": 234,
+        "overlap": false,
+        "errorBelow": true
+      },
+      "noNativeDialogs": true,
+      "asyncPatch": true,
+      "serverFieldError": true,
+      "duplicateSaveBlocked": true
+    },
+    {
+      "palette": "green",
+      "mode": "dark",
+      "language": "en",
+      "width": 1440,
+      "geometry": {
+        "height": 44,
+        "width": 464,
+        "overlap": false,
+        "errorBelow": true
+      },
+      "noNativeDialogs": true,
+      "asyncPatch": true,
+      "serverFieldError": true,
+      "duplicateSaveBlocked": true
+    },
+    {
+      "palette": "green",
+      "mode": "dark",
+      "language": "ar",
+      "width": 390,
+      "geometry": {
+        "height": 44,
+        "width": 234,
+        "overlap": false,
+        "errorBelow": true
+      },
+      "noNativeDialogs": true,
+      "asyncPatch": true,
+      "serverFieldError": true,
+      "duplicateSaveBlocked": true
+    },
+    {
+      "palette": "green",
+      "mode": "dark",
+      "language": "ar",
+      "width": 1440,
+      "geometry": {
+        "height": 44,
+        "width": 464,
+        "overlap": false,
+        "errorBelow": true
+      },
+      "noNativeDialogs": true,
+      "asyncPatch": true,
+      "serverFieldError": true,
+      "duplicateSaveBlocked": true
+    },
+    {
+      "palette": "orange",
+      "mode": "light",
+      "language": "en",
+      "width": 390,
+      "geometry": {
+        "height": 44,
+        "width": 234,
+        "overlap": false,
+        "errorBelow": true
+      },
+      "noNativeDialogs": true,
+      "asyncPatch": true,
+      "serverFieldError": true,
+      "duplicateSaveBlocked": true
+    },
+    {
+      "palette": "orange",
+      "mode": "light",
+      "language": "en",
+      "width": 1440,
+      "geometry": {
+        "height": 44,
+        "width": 464,
+        "overlap": false,
+        "errorBelow": true
+      },
+      "noNativeDialogs": true,
+      "asyncPatch": true,
+      "serverFieldError": true,
+      "duplicateSaveBlocked": true
+    },
+    {
+      "palette": "orange",
+      "mode": "light",
+      "language": "ar",
+      "width": 390,
+      "geometry": {
+        "height": 44,
+        "width": 234,
+        "overlap": false,
+        "errorBelow": true
+      },
+      "noNativeDialogs": true,
+      "asyncPatch": true,
+      "serverFieldError": true,
+      "duplicateSaveBlocked": true
+    },
+    {
+      "palette": "orange",
+      "mode": "light",
+      "language": "ar",
+      "width": 1440,
+      "geometry": {
+        "height": 44,
+        "width": 464,
+        "overlap": false,
+        "errorBelow": true
+      },
+      "noNativeDialogs": true,
+      "asyncPatch": true,
+      "serverFieldError": true,
+      "duplicateSaveBlocked": true
+    },
+    {
+      "palette": "orange",
+      "mode": "dark",
+      "language": "en",
+      "width": 390,
+      "geometry": {
+        "height": 44,
+        "width": 234,
+        "overlap": false,
+        "errorBelow": true
+      },
+      "noNativeDialogs": true,
+      "asyncPatch": true,
+      "serverFieldError": true,
+      "duplicateSaveBlocked": true
+    },
+    {
+      "palette": "orange",
+      "mode": "dark",
+      "language": "en",
+      "width": 1440,
+      "geometry": {
+        "height": 44,
+        "width": 464,
+        "overlap": false,
+        "errorBelow": true
+      },
+      "noNativeDialogs": true,
+      "asyncPatch": true,
+      "serverFieldError": true,
+      "duplicateSaveBlocked": true
+    },
+    {
+      "palette": "orange",
+      "mode": "dark",
+      "language": "ar",
+      "width": 390,
+      "geometry": {
+        "height": 44,
+        "width": 234,
+        "overlap": false,
+        "errorBelow": true
+      },
+      "noNativeDialogs": true,
+      "asyncPatch": true,
+      "serverFieldError": true,
+      "duplicateSaveBlocked": true
+    },
+    {
+      "palette": "orange",
+      "mode": "dark",
+      "language": "ar",
+      "width": 1440,
+      "geometry": {
+        "height": 44,
+        "width": 464,
+        "overlap": false,
+        "errorBelow": true
+      },
+      "noNativeDialogs": true,
+      "asyncPatch": true,
+      "serverFieldError": true,
+      "duplicateSaveBlocked": true
+    },
+    {
+      "palette": "blue",
+      "mode": "light",
+      "language": "en",
+      "width": 390,
+      "geometry": {
+        "height": 44,
+        "width": 234,
+        "overlap": false,
+        "errorBelow": true
+      },
+      "noNativeDialogs": true,
+      "asyncPatch": true,
+      "serverFieldError": true,
+      "duplicateSaveBlocked": true
+    },
+    {
+      "palette": "blue",
+      "mode": "light",
+      "language": "en",
+      "width": 1440,
+      "geometry": {
+        "height": 44,
+        "width": 464,
+        "overlap": false,
+        "errorBelow": true
+      },
+      "noNativeDialogs": true,
+      "asyncPatch": true,
+      "serverFieldError": true,
+      "duplicateSaveBlocked": true
+    },
+    {
+      "palette": "blue",
+      "mode": "light",
+      "language": "ar",
+      "width": 390,
+      "geometry": {
+        "height": 44,
+        "width": 234,
+        "overlap": false,
+        "errorBelow": true
+      },
+      "noNativeDialogs": true,
+      "asyncPatch": true,
+      "serverFieldError": true,
+      "duplicateSaveBlocked": true
+    },
+    {
+      "palette": "blue",
+      "mode": "light",
+      "language": "ar",
+      "width": 1440,
+      "geometry": {
+        "height": 44,
+        "width": 464,
+        "overlap": false,
+        "errorBelow": true
+      },
+      "noNativeDialogs": true,
+      "asyncPatch": true,
+      "serverFieldError": true,
+      "duplicateSaveBlocked": true
+    },
+    {
+      "palette": "blue",
+      "mode": "dark",
+      "language": "en",
+      "width": 390,
+      "geometry": {
+        "height": 44,
+        "width": 234,
+        "overlap": false,
+        "errorBelow": true
+      },
+      "noNativeDialogs": true,
+      "asyncPatch": true,
+      "serverFieldError": true,
+      "duplicateSaveBlocked": true
+    },
+    {
+      "palette": "blue",
+      "mode": "dark",
+      "language": "en",
+      "width": 1440,
+      "geometry": {
+        "height": 44,
+        "width": 464,
+        "overlap": false,
+        "errorBelow": true
+      },
+      "noNativeDialogs": true,
+      "asyncPatch": true,
+      "serverFieldError": true,
+      "duplicateSaveBlocked": true
+    },
+    {
+      "palette": "blue",
+      "mode": "dark",
+      "language": "ar",
+      "width": 390,
+      "geometry": {
+        "height": 44,
+        "width": 234,
+        "overlap": false,
+        "errorBelow": true
+      },
+      "noNativeDialogs": true,
+      "asyncPatch": true,
+      "serverFieldError": true,
+      "duplicateSaveBlocked": true
+    },
+    {
+      "palette": "blue",
+      "mode": "dark",
+      "language": "ar",
+      "width": 1440,
+      "geometry": {
+        "height": 44,
+        "width": 464,
+        "overlap": false,
+        "errorBelow": true
+      },
+      "noNativeDialogs": true,
+      "asyncPatch": true,
+      "serverFieldError": true,
+      "duplicateSaveBlocked": true
+    },
+    {
+      "palette": "navy",
+      "mode": "light",
+      "language": "en",
+      "width": 390,
+      "geometry": {
+        "height": 44,
+        "width": 234,
+        "overlap": false,
+        "errorBelow": true
+      },
+      "noNativeDialogs": true,
+      "asyncPatch": true,
+      "serverFieldError": true,
+      "duplicateSaveBlocked": true
+    },
+    {
+      "palette": "navy",
+      "mode": "light",
+      "language": "en",
+      "width": 1440,
+      "geometry": {
+        "height": 44,
+        "width": 464,
+        "overlap": false,
+        "errorBelow": true
+      },
+      "noNativeDialogs": true,
+      "asyncPatch": true,
+      "serverFieldError": true,
+      "duplicateSaveBlocked": true
+    },
+    {
+      "palette": "navy",
+      "mode": "light",
+      "language": "ar",
+      "width": 390,
+      "geometry": {
+        "height": 44,
+        "width": 234,
+        "overlap": false,
+        "errorBelow": true
+      },
+      "noNativeDialogs": true,
+      "asyncPatch": true,
+      "serverFieldError": true,
+      "duplicateSaveBlocked": true
+    },
+    {
+      "palette": "navy",
+      "mode": "light",
+      "language": "ar",
+      "width": 1440,
+      "geometry": {
+        "height": 44,
+        "width": 464,
+        "overlap": false,
+        "errorBelow": true
+      },
+      "noNativeDialogs": true,
+      "asyncPatch": true,
+      "serverFieldError": true,
+      "duplicateSaveBlocked": true
+    },
+    {
+      "palette": "navy",
+      "mode": "dark",
+      "language": "en",
+      "width": 390,
+      "geometry": {
+        "height": 44,
+        "width": 234,
+        "overlap": false,
+        "errorBelow": true
+      },
+      "noNativeDialogs": true,
+      "asyncPatch": true,
+      "serverFieldError": true,
+      "duplicateSaveBlocked": true
+    },
+    {
+      "palette": "navy",
+      "mode": "dark",
+      "language": "en",
+      "width": 1440,
+      "geometry": {
+        "height": 44,
+        "width": 464,
+        "overlap": false,
+        "errorBelow": true
+      },
+      "noNativeDialogs": true,
+      "asyncPatch": true,
+      "serverFieldError": true,
+      "duplicateSaveBlocked": true
+    },
+    {
+      "palette": "navy",
+      "mode": "dark",
+      "language": "ar",
+      "width": 390,
+      "geometry": {
+        "height": 44,
+        "width": 234,
+        "overlap": false,
+        "errorBelow": true
+      },
+      "noNativeDialogs": true,
+      "asyncPatch": true,
+      "serverFieldError": true,
+      "duplicateSaveBlocked": true
+    },
+    {
+      "palette": "navy",
+      "mode": "dark",
+      "language": "ar",
+      "width": 1440,
+      "geometry": {
+        "height": 44,
+        "width": 464,
+        "overlap": false,
+        "errorBelow": true
+      },
+      "noNativeDialogs": true,
+      "asyncPatch": true,
+      "serverFieldError": true,
+      "duplicateSaveBlocked": true
+    },
+    {
+      "palette": "monochrome",
+      "mode": "light",
+      "language": "en",
+      "width": 390,
+      "geometry": {
+        "height": 44,
+        "width": 234,
+        "overlap": false,
+        "errorBelow": true
+      },
+      "noNativeDialogs": true,
+      "asyncPatch": true,
+      "serverFieldError": true,
+      "duplicateSaveBlocked": true
+    },
+    {
+      "palette": "monochrome",
+      "mode": "light",
+      "language": "en",
+      "width": 1440,
+      "geometry": {
+        "height": 44,
+        "width": 464,
+        "overlap": false,
+        "errorBelow": true
+      },
+      "noNativeDialogs": true,
+      "asyncPatch": true,
+      "serverFieldError": true,
+      "duplicateSaveBlocked": true
+    },
+    {
+      "palette": "monochrome",
+      "mode": "light",
+      "language": "ar",
+      "width": 390,
+      "geometry": {
+        "height": 44,
+        "width": 234,
+        "overlap": false,
+        "errorBelow": true
+      },
+      "noNativeDialogs": true,
+      "asyncPatch": true,
+      "serverFieldError": true,
+      "duplicateSaveBlocked": true
+    },
+    {
+      "palette": "monochrome",
+      "mode": "light",
+      "language": "ar",
+      "width": 1440,
+      "geometry": {
+        "height": 44,
+        "width": 464,
+        "overlap": false,
+        "errorBelow": true
+      },
+      "noNativeDialogs": true,
+      "asyncPatch": true,
+      "serverFieldError": true,
+      "duplicateSaveBlocked": true
+    },
+    {
+      "palette": "monochrome",
+      "mode": "dark",
+      "language": "en",
+      "width": 390,
+      "geometry": {
+        "height": 44,
+        "width": 234,
+        "overlap": false,
+        "errorBelow": true
+      },
+      "noNativeDialogs": true,
+      "asyncPatch": true,
+      "serverFieldError": true,
+      "duplicateSaveBlocked": true
+    },
+    {
+      "palette": "monochrome",
+      "mode": "dark",
+      "language": "en",
+      "width": 1440,
+      "geometry": {
+        "height": 44,
+        "width": 464,
+        "overlap": false,
+        "errorBelow": true
+      },
+      "noNativeDialogs": true,
+      "asyncPatch": true,
+      "serverFieldError": true,
+      "duplicateSaveBlocked": true
+    },
+    {
+      "palette": "monochrome",
+      "mode": "dark",
+      "language": "ar",
+      "width": 390,
+      "geometry": {
+        "height": 44,
+        "width": 234,
+        "overlap": false,
+        "errorBelow": true
+      },
+      "noNativeDialogs": true,
+      "asyncPatch": true,
+      "serverFieldError": true,
+      "duplicateSaveBlocked": true
+    },
+    {
+      "palette": "monochrome",
+      "mode": "dark",
+      "language": "ar",
+      "width": 1440,
+      "geometry": {
+        "height": 44,
+        "width": 464,
+        "overlap": false,
+        "errorBelow": true
+      },
+      "noNativeDialogs": true,
+      "asyncPatch": true,
+      "serverFieldError": true,
+      "duplicateSaveBlocked": true
+    }
+  ]
+}
