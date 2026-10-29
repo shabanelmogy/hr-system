@@ -9,6 +9,12 @@ Verified/Closed. S2-A1 application shell/preferences is Verified/Closed.
 
 **ACTIVE_FEATURE_STEP:** `angular-module-context-navigation`
 
+Latest handoff: [RESUME](RESUME.md), updated2026-10-29. The requester selected the
+existing hosted test API for Angular/mobile testing. Angular remains on local7037;
+hosted health200 but browser csrf403/BrowserOriginDenied remains PROD-019, with
+host configuration under PROD-017. Resolve this corrective binding before counting
+local passes as hosted acceptance. S2-A6 runtime is still blocked by its preflight.
+
 | Feature unit | Status | Current work | Runtime boundary |
 | --- | --- | --- | --- |
 | platform-browser-authentication | Closed | R1/R2 technical API Verified and documented | Final Release 1157/0/0, Next 38/native 1; DEC-027 Closed; release/provider scope remains central |

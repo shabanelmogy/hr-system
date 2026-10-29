@@ -85,3 +85,13 @@ company/system SQL ownership, keys/catalog fingerprint, runtime layers, revision
 conflict/reset, permission and audit behavior. Angular reuses these APIs and keys.
 S1-A0 implements the technical runtime/service only; actual login/context/Settings
 save and reload acceptance is Required under FOLLOW-012 at S2/S4.
+
+## Hosted test API preference — requester confirmed 2026-10-29
+
+Use the existing https://shabanhrms.runasp.net API as the intended Angular test
+backend so the requester can also test mobile against the hosted environment.
+This does not request a new Angular frontend hosting site. Current source still
+binds local7037; hosted health200 but csrf403/Authentication.BrowserOriginDenied is
+an observed unresolved binding issue under PROD-019/017, not a completed switch.
+Preserve the approved secure Cookie/no-BFF contract and prove actual browser
+origin/HTTPS/session behavior before claiming hosted acceptance. See RESUME.md.

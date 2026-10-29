@@ -1,5 +1,8 @@
 # خطة Angular — ابدأ من هنا
 
+**للاستكمال من جهاز آخر:** اقرأ [آخر نقطة محفوظة](RESUME.md) أولًا؛ تشمل آخر
+نتائج التنفيذ، واختيار الـAPI التجريبي، وعائق ربطه الحالي، والخطوة التالية.
+
 هذه خطة الانتقال التدريجي إلى Angular 22 وPrimeNG مع الاحتفاظ بـweb-next. الخطة الشاملة ما زالت Draft، بينما شرائح التنفيذ المحددة لها أدلة قبول مستقلة. اكتملت مصادقة Cookies والأساس والترجمة والثيم والنماذج والدخول والهيكل والوحدات وصفحة البداية حسب الحساب وتبديل الشركة الآمن مع التبويبات. راجع ROADMAP لمعرفة الوحدة الوحيدة النشطة والخطوة التالية؛ لا تعني هذه النتائج اكتمال شاشات ERP كلها.
 
 أحدث النتائج: [سنة العمل المالية](../../../modules/platform/features/angular-fiscal-year-context/IMPLEMENTATION_REPORT.md)، [تبديل الشركة](../../../modules/platform/features/angular-company-context/IMPLEMENTATION_REPORT.md)، [الهيكل المشترك](../../../modules/platform/features/angular-application-shell/IMPLEMENTATION_REPORT.md)، [الوحدات والتنقل](../../../modules/platform/features/angular-module-navigation/IMPLEMENTATION_REPORT.md)، [صفحة البداية](../../../modules/platform/features/angular-role-home/IMPLEMENTATION_REPORT.md).
