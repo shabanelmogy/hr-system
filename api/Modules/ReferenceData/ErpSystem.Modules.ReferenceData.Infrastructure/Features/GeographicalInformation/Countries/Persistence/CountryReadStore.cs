@@ -49,6 +49,7 @@ public sealed class CountryReadStore(
                 : query.Where(country => !country.States.Any(state => !state.IsDeleted));
         }
 
+        query = CountryGridFilterExpressions.Apply(query, request.Filters);
         query = ApplyOrdering(query, request.SortBy, request.SortDirection);
         var totalCount = await query.CountAsync(cancellationToken);
         var items = await query
@@ -151,7 +152,7 @@ public sealed class CountryReadStore(
         return query.Where(Expression.Lambda<Func<Country, bool>>(predicate, country));
     }
 
-    private static Expression CreateSearchCondition(
+    internal static Expression CreateSearchCondition(
         Expression property,
         string searchOperator,
         string search)

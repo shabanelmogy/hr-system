@@ -1,0 +1,482 @@
+[
+  {
+    "palette": "green",
+    "mode": "light",
+    "language": "en",
+    "width": 390,
+    "geometry": {
+      "page": 390,
+      "width": 390,
+      "footer": 155
+    },
+    "passed": true
+  },
+  {
+    "palette": "green",
+    "mode": "light",
+    "language": "en",
+    "width": 1440,
+    "geometry": {
+      "page": 1440,
+      "width": 1440,
+      "footer": 57
+    },
+    "passed": true
+  },
+  {
+    "palette": "green",
+    "mode": "light",
+    "language": "ar",
+    "width": 390,
+    "geometry": {
+      "page": 390,
+      "width": 390,
+      "footer": 155
+    },
+    "passed": true
+  },
+  {
+    "palette": "green",
+    "mode": "light",
+    "language": "ar",
+    "width": 1440,
+    "geometry": {
+      "page": 1440,
+      "width": 1440,
+      "footer": 57
+    },
+    "passed": true
+  },
+  {
+    "palette": "green",
+    "mode": "dark",
+    "language": "en",
+    "width": 390,
+    "geometry": {
+      "page": 390,
+      "width": 390,
+      "footer": 155
+    },
+    "passed": true
+  },
+  {
+    "palette": "green",
+    "mode": "dark",
+    "language": "en",
+    "width": 1440,
+    "geometry": {
+      "page": 1440,
+      "width": 1440,
+      "footer": 57
+    },
+    "passed": true
+  },
+  {
+    "palette": "green",
+    "mode": "dark",
+    "language": "ar",
+    "width": 390,
+    "geometry": {
+      "page": 390,
+      "width": 390,
+      "footer": 155
+    },
+    "passed": true
+  },
+  {
+    "palette": "green",
+    "mode": "dark",
+    "language": "ar",
+    "width": 1440,
+    "geometry": {
+      "page": 1440,
+      "width": 1440,
+      "footer": 57
+    },
+    "passed": true
+  },
+  {
+    "palette": "orange",
+    "mode": "light",
+    "language": "en",
+    "width": 390,
+    "geometry": {
+      "page": 390,
+      "width": 390,
+      "footer": 155
+    },
+    "passed": true
+  },
+  {
+    "palette": "orange",
+    "mode": "light",
+    "language": "en",
+    "width": 1440,
+    "geometry": {
+      "page": 1440,
+      "width": 1440,
+      "footer": 57
+    },
+    "passed": true
+  },
+  {
+    "palette": "orange",
+    "mode": "light",
+    "language": "ar",
+    "width": 390,
+    "geometry": {
+      "page": 390,
+      "width": 390,
+      "footer": 155
+    },
+    "passed": true
+  },
+  {
+    "palette": "orange",
+    "mode": "light",
+    "language": "ar",
+    "width": 1440,
+    "geometry": {
+      "page": 1440,
+      "width": 1440,
+      "footer": 57
+    },
+    "passed": true
+  },
+  {
+    "palette": "orange",
+    "mode": "dark",
+    "language": "en",
+    "width": 390,
+    "geometry": {
+      "page": 390,
+      "width": 390,
+      "footer": 155
+    },
+    "passed": true
+  },
+  {
+    "palette": "orange",
+    "mode": "dark",
+    "language": "en",
+    "width": 1440,
+    "geometry": {
+      "page": 1440,
+      "width": 1440,
+      "footer": 57
+    },
+    "passed": true
+  },
+  {
+    "palette": "orange",
+    "mode": "dark",
+    "language": "ar",
+    "width": 390,
+    "geometry": {
+      "page": 390,
+      "width": 390,
+      "footer": 155
+    },
+    "passed": true
+  },
+  {
+    "palette": "orange",
+    "mode": "dark",
+    "language": "ar",
+    "width": 1440,
+    "geometry": {
+      "page": 1440,
+      "width": 1440,
+      "footer": 57
+    },
+    "passed": true
+  },
+  {
+    "palette": "blue",
+    "mode": "light",
+    "language": "en",
+    "width": 390,
+    "geometry": {
+      "page": 390,
+      "width": 390,
+      "footer": 155
+    },
+    "passed": true
+  },
+  {
+    "palette": "blue",
+    "mode": "light",
+    "language": "en",
+    "width": 1440,
+    "geometry": {
+      "page": 1440,
+      "width": 1440,
+      "footer": 57
+    },
+    "passed": true
+  },
+  {
+    "palette": "blue",
+    "mode": "light",
+    "language": "ar",
+    "width": 390,
+    "geometry": {
+      "page": 390,
+      "width": 390,
+      "footer": 155
+    },
+    "passed": true
+  },
+  {
+    "palette": "blue",
+    "mode": "light",
+    "language": "ar",
+    "width": 1440,
+    "geometry": {
+      "page": 1440,
+      "width": 1440,
+      "footer": 57
+    },
+    "passed": true
+  },
+  {
+    "palette": "blue",
+    "mode": "dark",
+    "language": "en",
+    "width": 390,
+    "geometry": {
+      "page": 390,
+      "width": 390,
+      "footer": 155
+    },
+    "passed": true
+  },
+  {
+    "palette": "blue",
+    "mode": "dark",
+    "language": "en",
+    "width": 1440,
+    "geometry": {
+      "page": 1440,
+      "width": 1440,
+      "footer": 57
+    },
+    "passed": true
+  },
+  {
+    "palette": "blue",
+    "mode": "dark",
+    "language": "ar",
+    "width": 390,
+    "geometry": {
+      "page": 390,
+      "width": 390,
+      "footer": 155
+    },
+    "passed": true
+  },
+  {
+    "palette": "blue",
+    "mode": "dark",
+    "language": "ar",
+    "width": 1440,
+    "geometry": {
+      "page": 1440,
+      "width": 1440,
+      "footer": 57
+    },
+    "passed": true
+  },
+  {
+    "palette": "navy",
+    "mode": "light",
+    "language": "en",
+    "width": 390,
+    "geometry": {
+      "page": 390,
+      "width": 390,
+      "footer": 155
+    },
+    "passed": true
+  },
+  {
+    "palette": "navy",
+    "mode": "light",
+    "language": "en",
+    "width": 1440,
+    "geometry": {
+      "page": 1440,
+      "width": 1440,
+      "footer": 57
+    },
+    "passed": true
+  },
+  {
+    "palette": "navy",
+    "mode": "light",
+    "language": "ar",
+    "width": 390,
+    "geometry": {
+      "page": 390,
+      "width": 390,
+      "footer": 155
+    },
+    "passed": true
+  },
+  {
+    "palette": "navy",
+    "mode": "light",
+    "language": "ar",
+    "width": 1440,
+    "geometry": {
+      "page": 1440,
+      "width": 1440,
+      "footer": 57
+    },
+    "passed": true
+  },
+  {
+    "palette": "navy",
+    "mode": "dark",
+    "language": "en",
+    "width": 390,
+    "geometry": {
+      "page": 390,
+      "width": 390,
+      "footer": 155
+    },
+    "passed": true
+  },
+  {
+    "palette": "navy",
+    "mode": "dark",
+    "language": "en",
+    "width": 1440,
+    "geometry": {
+      "page": 1440,
+      "width": 1440,
+      "footer": 57
+    },
+    "passed": true
+  },
+  {
+    "palette": "navy",
+    "mode": "dark",
+    "language": "ar",
+    "width": 390,
+    "geometry": {
+      "page": 390,
+      "width": 390,
+      "footer": 155
+    },
+    "passed": true
+  },
+  {
+    "palette": "navy",
+    "mode": "dark",
+    "language": "ar",
+    "width": 1440,
+    "geometry": {
+      "page": 1440,
+      "width": 1440,
+      "footer": 57
+    },
+    "passed": true
+  },
+  {
+    "palette": "monochrome",
+    "mode": "light",
+    "language": "en",
+    "width": 390,
+    "geometry": {
+      "page": 390,
+      "width": 390,
+      "footer": 155
+    },
+    "passed": true
+  },
+  {
+    "palette": "monochrome",
+    "mode": "light",
+    "language": "en",
+    "width": 1440,
+    "geometry": {
+      "page": 1440,
+      "width": 1440,
+      "footer": 57
+    },
+    "passed": true
+  },
+  {
+    "palette": "monochrome",
+    "mode": "light",
+    "language": "ar",
+    "width": 390,
+    "geometry": {
+      "page": 390,
+      "width": 390,
+      "footer": 155
+    },
+    "passed": true
+  },
+  {
+    "palette": "monochrome",
+    "mode": "light",
+    "language": "ar",
+    "width": 1440,
+    "geometry": {
+      "page": 1440,
+      "width": 1440,
+      "footer": 57
+    },
+    "passed": true
+  },
+  {
+    "palette": "monochrome",
+    "mode": "dark",
+    "language": "en",
+    "width": 390,
+    "geometry": {
+      "page": 390,
+      "width": 390,
+      "footer": 155
+    },
+    "passed": true
+  },
+  {
+    "palette": "monochrome",
+    "mode": "dark",
+    "language": "en",
+    "width": 1440,
+    "geometry": {
+      "page": 1440,
+      "width": 1440,
+      "footer": 57
+    },
+    "passed": true
+  },
+  {
+    "palette": "monochrome",
+    "mode": "dark",
+    "language": "ar",
+    "width": 390,
+    "geometry": {
+      "page": 390,
+      "width": 390,
+      "footer": 155
+    },
+    "passed": true
+  },
+  {
+    "palette": "monochrome",
+    "mode": "dark",
+    "language": "ar",
+    "width": 1440,
+    "geometry": {
+      "page": 1440,
+      "width": 1440,
+      "footer": 57
+    },
+    "passed": true
+  }
+]

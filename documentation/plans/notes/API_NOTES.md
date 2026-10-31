@@ -32,7 +32,7 @@ Then reference its stable ID here.
 | DEF-009 | Deferred | Workforce authorization | Delegable budget-approval permission remains deferred. | `DEFERRED_ITEMS.md` |
 | RISK-004 | Risk | Authentication | Current refresh rotation lacks full multi-generation token-family ancestry. | `KNOWN_RISKS.md` |
 | RISK-005 | Risk | Platform effects | Future critical post-commit effects must use an outbox rather than best-effort dispatch. | `KNOWN_RISKS.md` |
-| FOLLOW-003 | Follow-up | Contract parity | Angular migration requires scoped generation proof; exhaustive Web/API automation remains open. | `FOLLOW_UPS.md` |
+| FOLLOW-003 | Follow-up | Contract parity | Scoped assessment Verified; typed fallback and remaining remediation/whole-API automation are FOLLOW-003. | `FOLLOW_UPS.md` |
 | PROD-022 | Production | Delivery security | Deployment approval gates and artifact signing/provenance remain Production Scale work. | `PRODUCTION_NOTES.md` |
 | PROD-023 | Production | Disaster recovery | Backup/restore/RPO/RTO evidence remains Production Scale work. | `PRODUCTION_NOTES.md` |
 | PROD-024 | Production | Observability | Central error tracking, dashboards, alerts, SLOs, and redaction remain Production Scale work. | `PRODUCTION_NOTES.md` |

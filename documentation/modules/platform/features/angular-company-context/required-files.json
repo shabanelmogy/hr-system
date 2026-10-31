@@ -358,6 +358,24 @@
       "path": "web-next/src/locales/resources/platform-auth/ar.json",
       "layer": "web",
       "purpose": "Actual implementation or acceptance evidence"
+    },
+    {
+      "id": "visibility-correction-0",
+      "path": "documentation/modules/platform/features/angular-company-context/verification/VISIBILITY_REVALIDATION_CORRECTION.md",
+      "layer": "documentation",
+      "purpose": "Actual first-focus revalidation correction and collection browser verification"
+    },
+    {
+      "id": "visibility-correction-1",
+      "path": "web-angular/scripts/verify-countries-screen-browser.mjs",
+      "layer": "web",
+      "purpose": "Actual first-focus revalidation correction and collection browser verification"
+    },
+    {
+      "id": "visibility-company-regression-current",
+      "path": "documentation/modules/platform/features/angular-company-context/verification/VISIBILITY_COMPANY_BROWSER_RESULTS.json",
+      "layer": "documentation",
+      "purpose": "Fourteen existing company/cross-tab scenarios rerun after focus correction"
     }
   ],
   "finalizationChecklist": [

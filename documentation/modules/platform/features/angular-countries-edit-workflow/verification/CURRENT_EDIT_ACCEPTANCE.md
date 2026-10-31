@@ -1,0 +1,11 @@
+# Current Create/Edit acceptance — 2026-10-30
+
+Phase06 Verified for exact S3-A3. Full Angular check:65 files/379 tests,4 configuration and11 architecture tests; type/catalog/token/font checks and production build pass. Initial498.62 kB/129.72 kB transfer without changing budgets. The early eager feedback import exceeded the initial budget; lightweight public notification entry and deferred native Toast/error hosts corrected it. No unresolved build failure remains.
+
+Actual authenticated shell Countries browser:8 Create/Edit cases and8 retained read/control cases, EN/AR × light/dark ×390/1440. Intercepted synthetic commands prove six-field normalization, enabled invalid Save, inline field errors/first-invalid focus, dirty keep/discard, pending lock, Create/Edit from Grid/Cards, success native Toast, general error Modal, uncertain outcome/no replay and authoritative read-only replacement. Read regression covers shared filters/options/paging/View. Driver selectors target body-appended native dialogs by accessible name, consistent with PrimeNG Dialog metadata. Translation of shared Actions uses existing core actions.buttons (AR العمليات), not a duplicate literal.
+
+Sources: scripts/verify-country-actions-browser.mjs and scripts/verify-countries-screen-browser.mjs --focused under web-angular; reproducible driver checked into the feature manifest. Local execution artifacts .codex-tmp/angular-country-actions/edit-results.json and countries-edit-read-regression.log are supplemental, not required durable paths. Screenshot inspection confirms opaque themed native Toast and contained compact RTL layout.
+
+Existing API1162 passed/0failed/3 opt-in skips is retained unchanged-source evidence, not newly executed live command proof. No API/schema change, migration N/A; no host business writes or deployment. Mobile native UI Excluded from this migration child and retained. Five-point applicability: flat six-field create/edit and View supported; existing list/Card fields retained; dev mock generator uses coherent countries; nested builders N/A. Full five-view parity, lifecycle and hosting publication remain separately Required. PROD-019/023 and FOLLOW-016 remain central limitations.
+
+Subsequent S3-A4 combined browser8 and full Angular390 retain Create/Edit regression coverage; lifecycle owns the expanded driver/results.

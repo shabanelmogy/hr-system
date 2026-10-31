@@ -1,0 +1,14 @@
+@keyframes erp-edited-record-flash{
+  0%,100%{background-color:light-dark(color-mix(in srgb,var(--info) 12%,var(--surface)),color-mix(in srgb,var(--info) 20%,var(--surface)))}
+  35%,65%{background-color:light-dark(color-mix(in srgb,var(--success) 28%,var(--surface)),color-mix(in srgb,var(--success) 50%,var(--surface)))}
+}
+tr.edited-row>td{animation:erp-edited-record-flash 1.2s ease-in-out 2}
+@keyframes erp-edited-card-flash{
+  0%,100%{box-shadow:0 0 0 2px color-mix(in srgb,var(--info) 40%,transparent)}
+  35%,65%{box-shadow:0 0 0 3px color-mix(in srgb,var(--success) 60%,transparent)}
+}
+.cards article.edited-row{animation:erp-edited-card-flash 1.2s ease-in-out 2;border-color:var(--info)}
+@media(prefers-reduced-motion:reduce){
+ tr.edited-row>td{animation:none;background-color:color-mix(in srgb,var(--info) 15%,var(--surface))}
+ .cards article.edited-row{animation:none;box-shadow:0 0 0 2px color-mix(in srgb,var(--info) 40%,transparent)}
+}

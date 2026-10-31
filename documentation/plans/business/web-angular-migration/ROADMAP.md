@@ -1,18 +1,18 @@
 # Angular Web Migration — Proposed Delivery Roadmap
 
-Status: Draft overall; exactly one feature is Active. S2-A2 module discovery is Verified/Closed; S2-A3 role home is Verified/Closed; S2-A4 company context is Verified/Closed; S2-A5 working-year context is Verified/Closed; S2-A6 application context navigation is Verified/Closed; S1-A3 shared collection foundation preflight is current.
+Status: Draft overall; exactly one feature is Active. S2-A2 module discovery is Verified/Closed; S2-A3 role home is Verified/Closed; S2-A4 company context is Verified/Closed; S2-A5 working-year context is Verified/Closed; S2-A6 application context navigation is Verified/Closed; S1-A3 shared collection foundation is Verified/Closed; S1-A4 reference selection is Verified/Closed; S0-API-01 assessment is Verified/Closed; S1-A5 local form close is Verified/Closed; S1-A6 unsaved navigation/context is Verified/Closed; S1-A7 date-only field is Verified/Closed; S1-A8 numeric field is Verified/Closed; S1-A9 boolean field is Verified/Closed; S1-A10 multiline is Verified/Closed; S1-A11 collection criteria is Verified/Closed; S1-A12 scoped read is Verified/Closed; S1-A13 exit assessment is Closed; S3-A0 global Crystal/PDF minimum is Verified/Closed; S3-A1 source-only preparation is Verified/Closed; S3-A2 bounded Countries read is Verified/Closed; remaining S1-A14 powers are Queued; S3-A3 Create/Edit Verified/Closed; S3-A4 lifecycle Verified/Closed; D28 context filter/icons Verified; remaining S1-A14 Queued; D29–D32 S3-A3 form/record correction Verified/Closed; S3-A5 Chart Verified/Closed; S3-A6 Report Verified/Closed; S3-A7 Import preflight Active.
 R1 session correctness and R2 browser transport are Verified/Closed. S1-A0 Angular
 toolchain/localization runtime and its documentation are Closed. S1-A1 shared
 theme/action and licensed browser verification are Closed. S1-A2 text/form runtime
 and browser verification are Closed. S2-A0 login and shared validation badges are
 Verified/Closed. S2-A1 application shell/preferences is Verified/Closed.
 
-**ACTIVE_FEATURE_STEP:** `angular-collection-foundation`
+**ACTIVE_FEATURE_STEP:** `angular-countries-import-view`
 
-Latest handoff: [RESUME](RESUME.md), updated2026-10-29. The requester selected the
+Latest handoff: [RESUME](RESUME.md), updated2026-10-31. The requester selected the
 existing hosted test API for Angular/mobile testing. Tracked web-angular/.env now
 selects host/local (default host), with explicit npm start/build overrides;
-actual hosted csrf/login/catalog/refresh/logout now pass. PROD-017/019 retain wider host/release checks. S2-A6 is Verified/Closed including final PrimeNG/scroll/responsive refinements; collection work remains preflight-only.
+actual hosted csrf/login/catalog/refresh/logout now pass. PROD-017/019 retain wider host/release checks. S2-A6 is Verified/Closed including final PrimeNG/scroll/responsive refinements; S1-A3 is closed within its technical kit; new catalog resource deployment is PROD-019. S1-A4 is technically Verified/Closed; S0-API-01 assessment is Verified/Closed with typed-service fallback; S1-A5 local form close is Verified/Closed; S1-A6 unsaved navigation/context is Verified/Closed; S1-A7 date-only field is Verified/Closed; S1-A8 numeric field is Verified/Closed; S1-A9 boolean field is Verified/Closed; S1-A10 multiline is Verified/Closed; S1-A11 collection criteria is Verified/Closed; S1-A12 scoped read is Verified/Closed; S1-A13 exit assessment is Closed; S3-A0 global Crystal/PDF minimum is Verified/Closed; S3-A1 source-only preparation is Verified/Closed; S3-A2 bounded Countries read is Verified/Closed; remaining S1-A14 powers are Queued; S3-A3 Create/Edit Verified/Closed; S3-A4 lifecycle Verified/Closed; D28 context filter/icons Verified; remaining S1-A14 Queued; D29–D32 S3-A3 form/record correction Verified/Closed; S3-A5 Chart Verified/Closed; S3-A6 Report Verified/Closed; S3-A7 Import preflight Active.
 
 | Feature unit | Status | Current work | Runtime boundary |
 | --- | --- | --- | --- |
@@ -27,10 +27,44 @@ actual hosted csrf/login/catalog/refresh/logout now pass. PROD-017/019 retain wi
 | angular-company-context | Closed | S2-A4 Phase06 Verified; Angular90/company14 and actual SQL/tab/logout | Shared context selector and trusted session/read/text coordination |
 | angular-fiscal-year-context | Closed | S2-A5 Phase06 Verified; Angular99/architecture7, production15 and actual UI/SQL/tab/reload/restoration | Shared context and lazy Accounting composition |
 | angular-module-context-navigation | Closed | S2-A6 Phase06 Verified and education/closure | Angular109/architecture9, context24, retained Next13/native7 and actual hosted catalog/navigation/reload/refresh/logout |
-| angular-collection-foundation | Active | S1-A3 shared collection current-source/contracts preflight | Evidence only; runtime blocked |
+| angular-collection-foundation | Closed | S1-A3 Phase06 Verified; technical handoff and canonical closure | Angular119/architecture10/config4, collection40+final8/layout8, source8, API40/catalog7, retained Next11 and regressions |
+| angular-reference-selection-foundation | Closed | S1-A4 Phase06 Verified; canonical closure | Angular127/architecture10/config4, reference40+final8, forms40 and retained regressions; no business lookup/native UI |
+| angular-api-contract-generation-proof | Closed | S0-API-01 Verified assessment and typed-service fallback | Actual hosted spec,109 generated files/strict compile/determinism,4 projection/13 transport checks; raw runtime adoption rejected |
+| angular-form-close-foundation | Closed | S1-A5 Phase06 Verified and canonical closure | Angular138/architecture10/config4, close40+final8, forms40/reference8/login10/context24/language20; local close only |
+| angular-unsaved-navigation-foundation | Closed | S1-A6 Phase06 Verified and canonical closure | Angular160/architecture10/config4; route40+final8/context8 and retained regressions; registered owners only |
+| angular-date-field-foundation | Closed | S1-A7 Phase06 Verified and canonical closure | Angular173, date40+final8/timezone10, API43/catalog7 and retained regressions; date-only technical input only |
+| angular-numeric-field-foundation | Closed | S1-A8 Phase06 Verified and canonical closure | Angular188, numeric40+8/forms40 and retained regressions, API43/catalog7; exact input only, owner financial mapping separate |
+| angular-boolean-field-foundation | Closed | S1-A9 Phase06 Verified and canonical closure | Angular198, boolean40+8 and fresh regressions/API43/catalog7; strict false/true and native readonly proof |
+| angular-multiline-field-foundation | Closed | S1-A10 Phase06 Verified and canonical closure | Angular206, multiline40+8 and fresh form/field/date/login/language regressions; same Shared TextField/template |
+| angular-collection-criteria-foundation | Closed | S1-A11 Phase06 Verified and canonical closure |252unit/criteria40+8/collection8/navigation8/login10/language20; bounded public criteria/URL/history, generic projected action spacing |
+| angular-scoped-read-lifetime-foundation | Closed | S1-A12 Phase06 Verified and canonical closure |264unit/read40+8/context24/home14/company14/fiscal15/login10/language20; finite snapshot/current invalidation/teardown |
+| angular-foundation-exit-assessment | Closed | S1-A13 read-only assessment Verified |373recipe/planning; foundation mechanisms reviewed, reporting prerequisite before complete Countries, no full S1/release claim |
+| angular-managed-reporting-adapter | Closed | S3-A0 bounded global Crystal/PDF Phase06 Verified and technical handoff |295unit/PDF40+8/login10/language20/context24/API17/localization43/catalog7;473.99kB; no full Countries/manager/native/live claim. ActiveReports Excluded DEC-028 |
+| angular-countries-pilot-preparation | Closed | S3-A1 source-only audit/decomposition Phase06 Verified | Current source snapshot/API74/Next13/389recipes/planning;7child contracts; no runtime/UI/schema change |
+| angular-grid-capabilities | Queued | S1-A14 shared Table capabilities implementation | User-required complete Table powers and exact Next visual fidelity; FOLLOW-016; no consumer API fiction |
+| angular-countries-read-workspace | Closed | S3-A2 bounded read corrections Verified | Current Angular362/build; actual-route8 and shared collection8; centered native record navigation, edge settings and stable focus (D24/D25) and read-dialog correction passed; full source/host acceptance remains Not Verified; other pilot children Required |
+| angular-countries-edit-workflow | Closed | S3-A3 Countries create and edit workflow | Six-field shared form with detail loading, errors/focus/summary, unsaved protection, dev mock data, safe pending/uncertain outcomes, current scoped list reconciliation. |
+| angular-countries-lifecycle | Closed | S3-A4 Countries archive and restore | Shared confirmation for archive/restore/bulk, exact action authority and read-only barriers, active current-page selection, dependency failures, no hard deletion. |
+| angular-countries-chart-view | Closed | S3-A5 Countries page-scoped charts | Shared chart adapter and four charts: currencies,creation timeline,states count and states coverage; total matching versus visible-page labels, locale/theme/responsive/empty/loading. |
+| angular-countries-report-view | Closed | S3-A6 Countries managed report integration | Compose the existing Reporting global Crystal/PDF owner in the Countries view, preserving independent applied criteria, source/hash/permission/cancel and mobile open/download behavior. |
+| angular-countries-import-view | Active | S3-A7 Countries XLSX import | Reusable bounded XLSX file/template/parser/preview/row status and validation composition. One valid-row batch, no invalid-row upload, duplicate feedback and uncertain-submission recovery. |
+| angular-countries-pilot-acceptance | Queued | S3-A8 Countries complete pilot acceptance | Complete current-source comparison across all five views and actions, realtime invalidation/reconnect, source/layout/paging/focus/full lifecycle/host/production-size acceptance. Enable business route only after complete coverage. |
 | All later foundation/platform/business units | Queued | No sibling start | Follow dependency/gate order |
 
-Current preparation contract: [angular-collection-foundation](decomposition/angular-collection-foundation.md).
+Current execution contract: [angular-countries-import-view](decomposition/angular-countries-import-view.md). Source/API/Phase00 only; Import runtime remains gated. S3-A6 Report bounded acceptance Verified/Closed; full422tests, Report40+8/source8/command8/Chart8/standalone8. S3-A5 Chart and D29–D32 command corrections retain verified bounded proof. Full source pixel/host/pilot/Table matrix remains Not Verified.
+
+Completed assessment: [S1-A13 report](../../../modules/platform/features/angular-foundation-exit-assessment/ASSESSMENT_REPORT.md).
+Completed scoped read: [S1-A12 report](../../../modules/platform/features/angular-scoped-read-lifetime-foundation/IMPLEMENTATION_REPORT.md).
+Completed criteria: [S1-A11 report](../../../modules/platform/features/angular-collection-criteria-foundation/IMPLEMENTATION_REPORT.md).
+Completed multiline: [S1-A10 report](../../../modules/platform/features/angular-multiline-field-foundation/IMPLEMENTATION_REPORT.md).
+Completed boolean field: [S1-A9 report](../../../modules/platform/features/angular-boolean-field-foundation/IMPLEMENTATION_REPORT.md).
+Completed numeric field: [S1-A8 report](../../../modules/platform/features/angular-numeric-field-foundation/IMPLEMENTATION_REPORT.md).
+Completed date field: [S1-A7 report](../../../modules/platform/features/angular-date-field-foundation/IMPLEMENTATION_REPORT.md).
+Completed registered-draft transitions: [S1-A6 report](../../../modules/platform/features/angular-unsaved-navigation-foundation/IMPLEMENTATION_REPORT.md).
+Completed local-close proof: [S1-A5 report](../../../modules/platform/features/angular-form-close-foundation/IMPLEMENTATION_REPORT.md).
+Completed ERP-01 assessment: [report](../../../modules/platform/features/angular-api-contract-generation-proof/IMPLEMENTATION_REPORT.md).
+Completed reference proof: [S1-A4 report](../../../modules/platform/features/angular-reference-selection-foundation/IMPLEMENTATION_REPORT.md).
+Completed collection proof: [S1-A3 report](../../../modules/platform/features/angular-collection-foundation/IMPLEMENTATION_REPORT.md).
 Completed S2-A6 evidence: [implementation report](../../../modules/platform/features/angular-module-context-navigation/IMPLEMENTATION_REPORT.md).
 This marker identifies the sole feature owner. Exact bounded entry and technical
 results are in its contract and [completed company-context report](../../../modules/platform/features/angular-company-context/IMPLEMENTATION_REPORT.md).
@@ -78,12 +112,12 @@ Actual signed-in consumer/SQL persistence acceptance is FOLLOW-012 at S2/S4.
 | S0 Baseline and architecture proof | Classify all routes/views/partials; freeze API/permission map, DEC-027 direct authentication, package peers, license entitlements; prove form/table/translation/vendor adapters | Planning review; no-BFF DEC-025 selected | Decisions resolved for authorized slice; baseline ledger; no placeholder counted as complete | M |
 | S1 Angular foundation | Independent app/build/CI; owner boundaries, theme/tokens, locales, transport/query policy, shared forms/table/cards/feedback | S0 | Strict template/type/build tests, shared behavior tests, no raw-grid/form bypass | L |
 | S2 Platform access and shell | Direct API authentication/session, all current auth journeys, context transitions, launcher/guards/navigation, preferences | S1; DEC-027 | Fixture and live API auth/scope tests; late-response and refresh-race tests; compact/wide EN/AR | L/XL |
-| S3 Reference pilot | Reporting adapter minimum first, then complete Countries; then States and Districts separately | S2; specialist proof | Countries Grid/Cards/Chart/Report/Import and required designer path; archive/restore/bulk; States parent dependency; all permissions and paging | L/XL |
+| S3 Reference pilot | Reporting adapter minimum first, then complete Countries; then States and Districts separately | S2; specialist proof | Countries Grid/Cards/Chart/Report/Import (ActiveReports viewer/designer Excluded by DEC-028); archive/restore/bulk; States parent dependency; all permissions and paging | L/XL |
 | S4 Remaining Platform and ReferenceData | Address Types/company geography; users/roles/permissions; tenants/admins/invitations; profile/settings/localizations; logs/tools/offline operations | S3; each actual dependency | One feature accepted at a time; exact data-scope and override catalogs; no feature omitted because similar CRUD exists | XL |
 | S5 Accounting current scope | Currencies/fiscal years, ledger setup hub, singleton company settings, accounts/hierarchy, dimensions/books/journals/rates/determination | S3/S4 context; actual lookup dependencies | Current implemented resource paths classified and ported; settings not turned into generic DTO; hierarchy/concurrency evidence | XL |
 | S6 HR organization | Branches/departments/divisions/cost centers; titles/levels/positions/descriptions | S4; required Accounting lookups | Structured children create/edit/view/list/mock; tree move and cycle/permission tests; responsive direct Move alternative | XL |
 | S7 HR operational flows | Workforce plans/budgets/envelopes/requests/amendments/trace; attendance devices/users/punches/pull runs; recruitment | S5/S6 as actual dependency graph requires | Workflow/permission/trace and device API evidence; Kanban pattern review before UI | XL |
-| S8 CRM, files and specialist closure | Appointments; remaining reports/designer/manager, file/media integrations, global search/notifications and specialist tools | S2; specialist adapters proven early | Calendar/realtime/date behavior, representative reports and file MIME/range/upload tests; no roadmap vendor feature assumed available | L/XL |
+| S8 CRM, files and specialist closure | Appointments; remaining managed Crystal/PDF reports/manager, file/media integrations, global search/notifications and specialist tools | S2; specialist adapters proven early | Calendar/realtime/date behavior, representative reports and file MIME/range/upload tests; no roadmap vendor feature assumed available | L/XL |
 | S9 Full parity and release readiness | Close every inventory row; full cross-feature acceptance, security/accessibility/performance, deployment/recovery, customer education | All required features | No unexplained gap; live API/DB evidence; independent Next/Angular builds; release-only checks recorded | L |
 
 Effort labels indicate uncertainty/relative size, not elapsed days or a commitment.
@@ -179,4 +213,24 @@ Angular workaround or permission to redesign the ERP during conversion.
 | First attachment-enabled feature | SIG-04 confirmed/failed/uncertain save, staged-file ownership, discard and server orphan handling under the actual API; advance the file adapter if this is before S8. |
 | Dependency upgrades and S9 | Re-run affected SIG-07 shared compatibility and SIG-08 browser/accessibility checks; close applicable SIG evidence across the feature ledger before release. |
 
-Final user refinements accepted: PrimeNG-only shared widgets, themed ScrollArea, full desktop context text and compact icon-only controls with Tooltip. Updated context24 and affected regression/live proofs passed; S2-A6 Closed and collection preflight is the sole Active preparation.
+Final user refinements accepted: PrimeNG-only shared widgets, themed ScrollArea, full desktop context text and compact icon-only controls with Tooltip. Updated context24 and affected regression/live proofs passed; S2-A6 and S1-A3 Closed; S3-A0 reporting minimum is Verified/Closed; S3-A1 preparation Closed; Historical standalone S3-A2 proof is retained; its correction and S3-A3 are now Queued behind current Countries screen priority. No S1 exit/Countries acceptance is claimed.
+
+DEC-028: ActiveReports is Excluded by explicit requester cancellation; no future Angular viewer/designer/SDK placeholder. Existing source references are historical/current-source evidence only.
+
+Historical standalone S3-A2 Phase06 proof2026-10-30 is retained in its report/books/manifest. Requester correction reopened its acceptance; S3-A2/S3-A3 are now Queued behind current Countries screen priority. Other children stay Queued; DEC-028 excludes ActiveReports.
+
+Requester navigation correction2026-10-30: S3-A2 reopened only for Dashboard Data → existing sidebar hierarchy → Countries preview inside the authenticated shell. Direct country shortcut rejected; no production business route or sibling/write runtime. Prior standalone acceptance retained, current shell-entry acceptance pending. S3-A3 preflight queued until this correction closes.
+
+Latest requester correction2026-10-30: historical S1-A14 bounded implementation (now queued for remaining generic powers); S3-A2 correction queued on this dependency, not accepted. Exact Next appearance is mandatory. Native PrimeNG advanced filters include real AND/OR contract; Countries API/host follow-on must implement actual global query semantics.
+
+
+Requester priority override2026-10-30: complete the actual Countries screen in all
+details as the migration reference before proceeding to other business screens.
+S3-A2 read/shell/header/column-filter integration is the sole Active step now.
+S1-A14 keeps its validated reusable progress but remaining generic extras are Queued;
+its full closure no longer blocks actual Countries UI integration. Next complete
+the existing Countries edit/lifecycle/chart/report/import children and full pilot
+acceptance sequentially, without dummy view buttons or omitted source workflows.
+Current hosted API supports one text condition plus status; native column menus
+must use that real contract until the true combined-query API is implemented and
+published. Full advanced filtering remains Required before full Countries acceptance.

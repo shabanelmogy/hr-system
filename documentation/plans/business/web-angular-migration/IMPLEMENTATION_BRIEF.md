@@ -66,3 +66,12 @@ manual/release checks by central ID. Update owning canonical profiles/manifests
 and regenerate through the system. Only existing paths enter evidence manifests.
 Phase 06 must be Verified before Phase 07 education/closure; do not activate the
 next feature until the current contract closes.
+
+## Requester scope correction —2026-10-30 DEC-028
+
+ActiveReports viewer/designer/SDK and associated authoring/licensing work are
+Excluded from Angular migration by explicit requester instruction. References to
+existing Next/native/API implementations are source evidence only and do not
+reinstate that target. Current Angular reporting uses managed Crystal/PDF. Other
+reporting manager, permissions, binary transport and PDF lifecycle requirements
+remain governed by their owning contracts. No ActiveReports runtime placeholder.

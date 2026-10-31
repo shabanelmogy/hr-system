@@ -1,0 +1,555 @@
+{
+  "schemaVersion": 1,
+  "status": "closed",
+  "executionMode": "verified-bounded-runtime",
+  "runtimeAuthorized": true,
+  "feature": "angular-collection-foundation",
+  "featureName": "Angular shared collection foundation",
+  "referenceFeature": "N/A",
+  "planId": "web-angular-migration",
+  "sliceId": "S1-A3 — Shared collection foundation",
+  "canonicalPlan": "documentation/plans/business/web-angular-migration/PLAN.md",
+  "featureDecompositionDecision": "Single feature",
+  "screenWorkflowContract": "documentation/plans/business/web-angular-migration/decomposition/angular-collection-foundation.md",
+  "plannedCustomerEducation": "documentation/plans/business/web-angular-migration/education/angular-collection-foundation.md",
+  "purpose": "Verified bounded shared collection runtime, retained source and portable acceptance evidence",
+  "reviewArtifact": "documentation/modules/platform/features/angular-collection-foundation/angular-collection-foundation-evidence.md",
+  "implementationRequest": "documentation/modules/platform/features/angular-collection-foundation/angular-collection-foundation-request.md",
+  "plannedCanonicalBooks": {
+    "master": "documentation/modules/platform/features/angular-collection-foundation/angular-collection-foundation-review.md",
+    "api": "documentation/modules/platform/features/angular-collection-foundation/angular-collection-foundation-api.md",
+    "web": "documentation/modules/platform/features/angular-collection-foundation/angular-collection-foundation-web.md",
+    "mobile": "documentation/modules/platform/features/angular-collection-foundation/angular-collection-foundation-mobile.md"
+  },
+  "sourceCollections": [
+    {
+      "id": "shared-collection-runtime",
+      "path": "web-angular/src/app/shared/ui/collections",
+      "patterns": [
+        "*.ts",
+        "*.html",
+        "*.scss"
+      ],
+      "minimumFiles": 14,
+      "layer": "web",
+      "purpose": "Actual typed shared collection controls, lifecycle and tests"
+    }
+  ],
+  "requiredFiles": [
+    {
+      "id": "preflight-0",
+      "path": "documentation/modules/platform/features/angular-collection-foundation/angular-collection-foundation-api.md",
+      "layer": "documentation",
+      "purpose": "Existing inspected source or frozen scope"
+    },
+    {
+      "id": "preflight-1",
+      "path": "documentation/modules/platform/features/angular-collection-foundation/angular-collection-foundation-evidence.md",
+      "layer": "documentation",
+      "purpose": "Existing inspected source or frozen scope"
+    },
+    {
+      "id": "preflight-2",
+      "path": "documentation/modules/platform/features/angular-collection-foundation/angular-collection-foundation-mobile.md",
+      "layer": "documentation",
+      "purpose": "Existing inspected source or frozen scope"
+    },
+    {
+      "id": "preflight-3",
+      "path": "documentation/modules/platform/features/angular-collection-foundation/angular-collection-foundation-request.md",
+      "layer": "documentation",
+      "purpose": "Existing inspected source or frozen scope"
+    },
+    {
+      "id": "preflight-4",
+      "path": "documentation/modules/platform/features/angular-collection-foundation/angular-collection-foundation-review.md",
+      "layer": "documentation",
+      "purpose": "Existing inspected source or frozen scope"
+    },
+    {
+      "id": "preflight-5",
+      "path": "documentation/modules/platform/features/angular-collection-foundation/angular-collection-foundation-web.md",
+      "layer": "documentation",
+      "purpose": "Existing inspected source or frozen scope"
+    },
+    {
+      "id": "preflight-6",
+      "path": "documentation/modules/platform/features/angular-collection-foundation/SHARED_COLLECTION_CONTRACT.md",
+      "layer": "documentation",
+      "purpose": "Existing inspected source or frozen scope"
+    },
+    {
+      "id": "preflight-7",
+      "path": "AGENTS.md",
+      "layer": "documentation",
+      "purpose": "Existing inspected source or frozen scope"
+    },
+    {
+      "id": "preflight-8",
+      "path": "documentation/plans/business/web-angular-migration/PLAN.md",
+      "layer": "documentation",
+      "purpose": "Existing inspected source or frozen scope"
+    },
+    {
+      "id": "preflight-9",
+      "path": "documentation/plans/business/web-angular-migration/decomposition/angular-collection-foundation.md",
+      "layer": "documentation",
+      "purpose": "Existing inspected source or frozen scope"
+    },
+    {
+      "id": "preflight-10",
+      "path": "documentation/plans/business/web-angular-migration/PRIMENG_TABLE_CAPABILITY_REVIEW.md",
+      "layer": "documentation",
+      "purpose": "Existing inspected source or frozen scope"
+    },
+    {
+      "id": "preflight-11",
+      "path": "documentation/guides/web/architecture/ANGULAR_SHARED_COMPONENTS.md",
+      "layer": "documentation",
+      "purpose": "Existing inspected source or frozen scope"
+    },
+    {
+      "id": "preflight-12",
+      "path": "documentation/guides/shared/SCREEN_PATTERN_CATALOG.md",
+      "layer": "documentation",
+      "purpose": "Existing inspected source or frozen scope"
+    },
+    {
+      "id": "preflight-13",
+      "path": "documentation/modules/reference-data/features/countries/required-files.json",
+      "layer": "documentation",
+      "purpose": "Existing inspected source or frozen scope"
+    },
+    {
+      "id": "preflight-14",
+      "path": "web-next/src/shared/components/data-grid/core/MyDataGrid.tsx",
+      "layer": "web",
+      "purpose": "Existing inspected source or frozen scope"
+    },
+    {
+      "id": "preflight-15",
+      "path": "web-next/src/shared/components/data-grid/core/types.ts",
+      "layer": "web",
+      "purpose": "Existing inspected source or frozen scope"
+    },
+    {
+      "id": "preflight-16",
+      "path": "web-next/src/shared/components/data-grid/core/pagination.ts",
+      "layer": "web",
+      "purpose": "Existing inspected source or frozen scope"
+    },
+    {
+      "id": "preflight-17",
+      "path": "web-next/src/shared/components/data-grid/navigation/GridFooter.tsx",
+      "layer": "web",
+      "purpose": "Existing inspected source or frozen scope"
+    },
+    {
+      "id": "preflight-18",
+      "path": "web-next/src/shared/components/data-grid/navigation/recordNavigation.ts",
+      "layer": "web",
+      "purpose": "Existing inspected source or frozen scope"
+    },
+    {
+      "id": "preflight-19",
+      "path": "web-next/src/shared/components/data-grid/toolbar/DataGridToolbar.tsx",
+      "layer": "web",
+      "purpose": "Existing inspected source or frozen scope"
+    },
+    {
+      "id": "preflight-20",
+      "path": "web-next/src/shared/components/data-grid/toolbar/GridOptionsButton.tsx",
+      "layer": "web",
+      "purpose": "Existing inspected source or frozen scope"
+    },
+    {
+      "id": "preflight-21",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/grid-view/CountriesDataGrid.tsx",
+      "layer": "web",
+      "purpose": "Existing inspected source or frozen scope"
+    },
+    {
+      "id": "preflight-22",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/utils/countryPageQuery.ts",
+      "layer": "web",
+      "purpose": "Existing inspected source or frozen scope"
+    },
+    {
+      "id": "preflight-23",
+      "path": "mobile-react/src/shared/components/data-table/AppDataTable.tsx",
+      "layer": "mobile",
+      "purpose": "Existing inspected source or frozen scope"
+    },
+    {
+      "id": "preflight-24",
+      "path": "web-angular/src/app/shared/ui/public-api.ts",
+      "layer": "web",
+      "purpose": "Existing inspected source or frozen scope"
+    },
+    {
+      "id": "preflight-25",
+      "path": "web-angular/src/app/shared/ui/controls/option-select.ts",
+      "layer": "web",
+      "purpose": "Existing inspected source or frozen scope"
+    },
+    {
+      "id": "preflight-26",
+      "path": "web-angular/src/app/shared/ui/layout/scroll-viewport.ts",
+      "layer": "web",
+      "purpose": "Existing inspected source or frozen scope"
+    },
+    {
+      "id": "preflight-27",
+      "path": "web-angular/src/app/shared/ui/forms/fields/text-field.ts",
+      "layer": "web",
+      "purpose": "Existing inspected source or frozen scope"
+    },
+    {
+      "id": "preflight-28",
+      "path": "web-angular/src/app/shared/ui/overlays/popover-panel.ts",
+      "layer": "web",
+      "purpose": "Existing inspected source or frozen scope"
+    },
+    {
+      "id": "preflight-29",
+      "path": "web-angular/src/app/shared/ui/feedback/feedback-state.ts",
+      "layer": "web",
+      "purpose": "Existing inspected source or frozen scope"
+    },
+    {
+      "id": "preflight-30",
+      "path": "web-angular/src/theme/prime-preset.ts",
+      "layer": "web",
+      "purpose": "Existing inspected source or frozen scope"
+    },
+    {
+      "id": "preflight-31",
+      "path": "web-angular/scripts/architecture-rules.mjs",
+      "layer": "web",
+      "purpose": "Existing inspected source or frozen scope"
+    },
+    {
+      "id": "preflight-32",
+      "path": "web-angular/package.json",
+      "layer": "web",
+      "purpose": "Existing inspected source or frozen scope"
+    },
+    {
+      "id": "preflight-33",
+      "path": "web-next/src/locales/resources/core/en.json",
+      "layer": "web",
+      "purpose": "Existing inspected source or frozen scope"
+    },
+    {
+      "id": "preflight-34",
+      "path": "web-next/src/locales/resources/core/ar.json",
+      "layer": "web",
+      "purpose": "Existing inspected source or frozen scope"
+    },
+    {
+      "id": "actual-35",
+      "path": "web-angular/src/app/shared/ui/collections/card-list.ts",
+      "layer": "web",
+      "purpose": "Actual implementation or portable S1-A3 verification evidence"
+    },
+    {
+      "id": "actual-36",
+      "path": "web-angular/src/app/shared/ui/collections/collection-controller.spec.ts",
+      "layer": "web",
+      "purpose": "Actual implementation or portable S1-A3 verification evidence"
+    },
+    {
+      "id": "actual-37",
+      "path": "web-angular/src/app/shared/ui/collections/collection-controller.ts",
+      "layer": "web",
+      "purpose": "Actual implementation or portable S1-A3 verification evidence"
+    },
+    {
+      "id": "actual-38",
+      "path": "web-angular/src/app/shared/ui/collections/collection-feedback.ts",
+      "layer": "web",
+      "purpose": "Actual implementation or portable S1-A3 verification evidence"
+    },
+    {
+      "id": "actual-39",
+      "path": "web-angular/src/app/shared/ui/collections/collection-focus.ts",
+      "layer": "web",
+      "purpose": "Actual implementation or portable S1-A3 verification evidence"
+    },
+    {
+      "id": "actual-40",
+      "path": "web-angular/src/app/shared/ui/collections/collection-footer.ts",
+      "layer": "web",
+      "purpose": "Actual implementation or portable S1-A3 verification evidence"
+    },
+    {
+      "id": "actual-41",
+      "path": "web-angular/src/app/shared/ui/collections/collection-frame.ts",
+      "layer": "web",
+      "purpose": "Actual implementation or portable S1-A3 verification evidence"
+    },
+    {
+      "id": "actual-42",
+      "path": "web-angular/src/app/shared/ui/collections/collection-logic.spec.ts",
+      "layer": "web",
+      "purpose": "Actual implementation or portable S1-A3 verification evidence"
+    },
+    {
+      "id": "actual-43",
+      "path": "web-angular/src/app/shared/ui/collections/collection-logic.ts",
+      "layer": "web",
+      "purpose": "Actual implementation or portable S1-A3 verification evidence"
+    },
+    {
+      "id": "actual-44",
+      "path": "web-angular/src/app/shared/ui/collections/collection-templates.ts",
+      "layer": "web",
+      "purpose": "Actual implementation or portable S1-A3 verification evidence"
+    },
+    {
+      "id": "actual-45",
+      "path": "web-angular/src/app/shared/ui/collections/collection.types.ts",
+      "layer": "web",
+      "purpose": "Actual implementation or portable S1-A3 verification evidence"
+    },
+    {
+      "id": "actual-46",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid.html",
+      "layer": "web",
+      "purpose": "Actual implementation or portable S1-A3 verification evidence"
+    },
+    {
+      "id": "actual-47",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid.scss",
+      "layer": "web",
+      "purpose": "Actual implementation or portable S1-A3 verification evidence"
+    },
+    {
+      "id": "actual-48",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid.ts",
+      "layer": "web",
+      "purpose": "Actual implementation or portable S1-A3 verification evidence"
+    },
+    {
+      "id": "actual-49",
+      "path": "web-angular/src/app/dev/collection-preview.ts",
+      "layer": "web",
+      "purpose": "Actual implementation or portable S1-A3 verification evidence"
+    },
+    {
+      "id": "actual-50",
+      "path": "web-angular/src/app/app.routes.ts",
+      "layer": "web",
+      "purpose": "Actual implementation or portable S1-A3 verification evidence"
+    },
+    {
+      "id": "actual-51",
+      "path": "web-angular/scripts/verify-collection-browser.mjs",
+      "layer": "web",
+      "purpose": "Actual implementation or portable S1-A3 verification evidence"
+    },
+    {
+      "id": "actual-52",
+      "path": "web-angular/scripts/verify-collection-reference.mjs",
+      "layer": "web",
+      "purpose": "Actual implementation or portable S1-A3 verification evidence"
+    },
+    {
+      "id": "actual-53",
+      "path": "web-angular/scripts/verify-login-browser.mjs",
+      "layer": "web",
+      "purpose": "Actual implementation or portable S1-A3 verification evidence"
+    },
+    {
+      "id": "actual-54",
+      "path": "web-angular/scripts/architecture-rules.test.mjs",
+      "layer": "web",
+      "purpose": "Actual implementation or portable S1-A3 verification evidence"
+    },
+    {
+      "id": "actual-55",
+      "path": "web-angular/scripts/check-architecture.mjs",
+      "layer": "web",
+      "purpose": "Actual implementation or portable S1-A3 verification evidence"
+    },
+    {
+      "id": "actual-56",
+      "path": "web-angular/scripts/export-ui-resources.mjs",
+      "layer": "web",
+      "purpose": "Actual implementation or portable S1-A3 verification evidence"
+    },
+    {
+      "id": "actual-57",
+      "path": "web-angular/src/locales/generated/bootstrap.json",
+      "layer": "web",
+      "purpose": "Actual implementation or portable S1-A3 verification evidence"
+    },
+    {
+      "id": "actual-58",
+      "path": "web-angular/src/locales/generated/core.json",
+      "layer": "web",
+      "purpose": "Actual implementation or portable S1-A3 verification evidence"
+    },
+    {
+      "id": "actual-59",
+      "path": "web-angular/src/app/platform/localization/catalog.generated.ts",
+      "layer": "web",
+      "purpose": "Actual implementation or portable S1-A3 verification evidence"
+    },
+    {
+      "id": "actual-60",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Features/CompanyLocalization/company-ui-catalog.json",
+      "layer": "api",
+      "purpose": "Actual implementation or portable S1-A3 verification evidence"
+    },
+    {
+      "id": "actual-61",
+      "path": "documentation/modules/platform/features/angular-collection-foundation/IMPLEMENTATION_REPORT.md",
+      "layer": "documentation",
+      "purpose": "Actual implementation or portable S1-A3 verification evidence"
+    },
+    {
+      "id": "actual-62",
+      "path": "documentation/modules/platform/features/angular-collection-foundation/verification/angular-dark-ar-390-cards.png",
+      "layer": "documentation",
+      "purpose": "Actual implementation or portable S1-A3 verification evidence"
+    },
+    {
+      "id": "actual-63",
+      "path": "documentation/modules/platform/features/angular-collection-foundation/verification/angular-dark-ar-390-table.png",
+      "layer": "documentation",
+      "purpose": "Actual implementation or portable S1-A3 verification evidence"
+    },
+    {
+      "id": "actual-64",
+      "path": "documentation/modules/platform/features/angular-collection-foundation/verification/angular-light-en-1440-cards.png",
+      "layer": "documentation",
+      "purpose": "Actual implementation or portable S1-A3 verification evidence"
+    },
+    {
+      "id": "actual-65",
+      "path": "documentation/modules/platform/features/angular-collection-foundation/verification/angular-light-en-1440-table.png",
+      "layer": "documentation",
+      "purpose": "Actual implementation or portable S1-A3 verification evidence"
+    },
+    {
+      "id": "actual-66",
+      "path": "documentation/modules/platform/features/angular-collection-foundation/verification/focused-results.json",
+      "layer": "documentation",
+      "purpose": "Actual implementation or portable S1-A3 verification evidence"
+    },
+    {
+      "id": "actual-67",
+      "path": "documentation/modules/platform/features/angular-collection-foundation/verification/layout-results.json",
+      "layer": "documentation",
+      "purpose": "Actual implementation or portable S1-A3 verification evidence"
+    },
+    {
+      "id": "actual-68",
+      "path": "documentation/modules/platform/features/angular-collection-foundation/verification/next-dark-ar-390-cards.png",
+      "layer": "documentation",
+      "purpose": "Actual implementation or portable S1-A3 verification evidence"
+    },
+    {
+      "id": "actual-69",
+      "path": "documentation/modules/platform/features/angular-collection-foundation/verification/next-dark-ar-390-table.png",
+      "layer": "documentation",
+      "purpose": "Actual implementation or portable S1-A3 verification evidence"
+    },
+    {
+      "id": "actual-70",
+      "path": "documentation/modules/platform/features/angular-collection-foundation/verification/next-light-en-1440-cards.png",
+      "layer": "documentation",
+      "purpose": "Actual implementation or portable S1-A3 verification evidence"
+    },
+    {
+      "id": "actual-71",
+      "path": "documentation/modules/platform/features/angular-collection-foundation/verification/next-light-en-1440-table.png",
+      "layer": "documentation",
+      "purpose": "Actual implementation or portable S1-A3 verification evidence"
+    },
+    {
+      "id": "actual-72",
+      "path": "documentation/modules/platform/features/angular-collection-foundation/verification/next-reference-results.json",
+      "layer": "documentation",
+      "purpose": "Actual implementation or portable S1-A3 verification evidence"
+    },
+    {
+      "id": "actual-73",
+      "path": "documentation/modules/platform/features/angular-collection-foundation/verification/README.md",
+      "layer": "documentation",
+      "purpose": "Actual implementation or portable S1-A3 verification evidence"
+    },
+    {
+      "id": "actual-74",
+      "path": "documentation/modules/platform/features/angular-collection-foundation/verification/results.json",
+      "layer": "documentation",
+      "purpose": "Actual implementation or portable S1-A3 verification evidence"
+    },
+    {
+      "id": "technical-review-handoff",
+      "path": "documentation/plans/business/web-angular-migration/education/angular-collection-foundation.md",
+      "layer": "documentation",
+      "purpose": "Technical review and portable handoff after Phase06 Verified; customer education N/A"
+    },
+    {
+      "id": "criteria-extension-0",
+      "path": "web-angular/src/app/shared/ui/collections/collection-slots.scss",
+      "layer": "web",
+      "purpose": "Current optional criteria/type alias evolution"
+    },
+    {
+      "id": "criteria-extension-1",
+      "path": "web-angular/src/app/shared/data/collection-criteria.ts",
+      "layer": "web",
+      "purpose": "Current optional criteria/type alias evolution"
+    },
+    {
+      "id": "criteria-extension-2",
+      "path": "web-angular/src/app/shared/data/collection-criteria.spec.ts",
+      "layer": "web",
+      "purpose": "Current optional criteria/type alias evolution"
+    },
+    {
+      "id": "criteria-extension-3",
+      "path": "web-angular/src/app/shared/data/route-collection-criteria.ts",
+      "layer": "web",
+      "purpose": "Current optional criteria/type alias evolution"
+    },
+    {
+      "id": "criteria-extension-4",
+      "path": "web-angular/src/app/shared/data/route-collection-criteria.spec.ts",
+      "layer": "web",
+      "purpose": "Current optional criteria/type alias evolution"
+    },
+    {
+      "id": "criteria-extension-5",
+      "path": "web-angular/src/app/shared/data/public-api.ts",
+      "layer": "web",
+      "purpose": "Current optional criteria/type alias evolution"
+    }
+  ],
+  "finalizationChecklist": [
+    "Replace every placeholder in the review artifact.",
+    "Complete the Existing-System Relationship Review and every decision in angular-collection-foundation-request.md before implementation.",
+    "Complete the Business Rules Matrix with one primary owner, stable outcome/error, and required test for every known rule.",
+    "Complete every Edge Cases & Validation category with scenarios or an explicit N/A reason, enforcement layer, and required test.",
+    "Complete the Impact Matrix with Reuse, Extend, Change, Add, or reasoned N/A across every listed area.",
+    "Remove every remaining placeholder from angular-collection-foundation-request.md before runtime implementation.",
+    "Add Phase 00 current API, web, mobile, configuration, localization, and test evidence sources.",
+    "Classify every optional view, including Import, as Required, Deferred, or Excluded independently for web and mobile.",
+    "When Import is Required, add its API and applicable client runtime, route/configuration, localization, and focused-test paths.",
+    "Record and test the exact Import request envelope, limits, duplicate and relationship rules, atomicity, permissions, side effects, and retry behavior.",
+    "Add source collections with evidence-based minimum file counts.",
+    "Create the four initial applied implementation books from the approved plan plus verified current source; label target-only behavior explicitly.",
+    "Rename this file to required-files.json when the Phase 00 evidence paths exist; extend it with runtime files during implementation.",
+    "Update the review artifact to point at required-files.json and mark its documentation state Final.",
+    "Merge recipe-registration.draft.json into recipe-manifest.json after the Phase 00 books and preflight manifest are complete.",
+    "Write generated packets under documentation/modules/platform/features/angular-collection-foundation/generated/.",
+    "Run generation and then Generate-Documentation.ps1 -Check.",
+    "Complete phase 06 with an explicit verification decision.",
+    "Do not start customer-facing education until phase 06 records Verified.",
+    "For customer-visible work, complete phase 07 and its Customer Education Pack before Closed.",
+    "When Customer Education is Required, add the verified education document to required-files.json and rerun Generate-Documentation.ps1 -Check before Closed."
+  ]
+}

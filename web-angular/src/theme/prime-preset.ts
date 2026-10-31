@@ -9,6 +9,15 @@ import AuraTag from '@primeuix/themes/aura/tag';
 import AuraProgressBar from '@primeuix/themes/aura/progressbar';
 import AuraSelect from '@primeuix/themes/aura/select';
 import AuraRadioButton from '@primeuix/themes/aura/radiobutton';
+import AuraDataTable from '@primeuix/themes/aura/datatable';
+import AuraPaginator from '@primeuix/themes/aura/paginator';
+import AuraCheckbox from '@primeuix/themes/aura/checkbox';
+import AuraDatePicker from '@primeuix/themes/aura/datepicker';
+import AuraToggleSwitch from '@primeuix/themes/aura/toggleswitch';
+import AuraTextarea from '@primeuix/themes/aura/textarea';
+import AuraTabs from '@primeuix/themes/aura/tabs';
+import AuraSelectButton from '@primeuix/themes/aura/selectbutton';
+import AuraToggleButton from '@primeuix/themes/aura/togglebutton';
 import type { ButtonDesignTokens, ButtonTokenSections } from '@primeuix/themes/types/button';
 
 const rem = (value: number) => `${value / 16}rem`;
@@ -52,7 +61,7 @@ function semantics(theme: AppTheme) {
       floatLabelColor: c.mutedForeground, iconColor: c.mutedForeground },
     highlight: { background: c.accent, focusBackground: c.accent, color: c.accentForeground, focusColor: c.accentForeground },
     mask: { background: c.overlay, color: c.primaryForeground },
-    overlay:{modal:{background:c.surface,borderColor:c.border,color:c.surfaceForeground},popover:{background:c.surface,borderColor:c.border,color:c.surfaceForeground}},
+    overlay:{modal:{background:c.surface,borderColor:c.border,color:c.surfaceForeground},popover:{background:c.surface,borderColor:c.border,color:c.surfaceForeground},select:{background:c.surface,borderColor:c.border,color:c.surfaceForeground}},
   };
 }
 
@@ -88,7 +97,7 @@ export function createPrimePreset(palette: ThemePalette): Preset {
     },
   } satisfies ButtonDesignTokens;
   // Import only the adopted component's preset; absent controls own their later adapters.
-  return definePreset({ components: { button: AuraButton, inputtext: AuraInputText, dialog: AuraDialog,drawer:AuraDrawer,popover:AuraPopover,tag:AuraTag,progressbar:AuraProgressBar,select:AuraSelect,radiobutton:AuraRadioButton } }, {
+  return definePreset({ components: { button: AuraButton, inputtext: AuraInputText, dialog: AuraDialog,drawer:AuraDrawer,popover:AuraPopover,tag:AuraTag,progressbar:AuraProgressBar,select:AuraSelect,radiobutton:AuraRadioButton,datatable:AuraDataTable,paginator:AuraPaginator,checkbox:AuraCheckbox,datepicker:AuraDatePicker,toggleswitch:AuraToggleSwitch,textarea:AuraTextarea,tabs:AuraTabs,selectbutton:AuraSelectButton,togglebutton:AuraToggleButton } }, {
     semantic: {
       disabledOpacity: '0.6', iconSize: rem(light.iconSize.sm),
       mask:{transitionDuration:`${light.motion.duration.fast}ms`},
@@ -96,10 +105,12 @@ export function createPrimePreset(palette: ThemePalette): Preset {
       focusRing: { width: '2px', style: 'solid', color: 'var(--ring)', offset: '2px', shadow: 'none' },
       typography: { fontFamily: 'var(--app-font-sans)', fontSize: rem(light.text.bodySmall.fontSize), fontWeight: light.text.bodySmall.fontWeight, lineHeight: '1.5' },
       formField: { borderRadius: rem(light.radius.md) },
-      overlay: { modal: { borderRadius: rem(light.radius.md), padding: rem(light.spacing.xxl), shadow: light.elevation.lg.css },popover:{borderRadius:'16px',padding:'6px',shadow:light.elevation.lg.css} },
+      overlay: { modal: { borderRadius: rem(light.radius.md), padding: rem(light.spacing.xxl), shadow: light.elevation.lg.css },popover:{borderRadius:'16px',padding:'6px',shadow:light.elevation.lg.css},select:{borderRadius:'6px',shadow:light.elevation.lg.css} },
       colorScheme: { light: semantics(light), dark: semantics(dark) },
     },
-    components: { button, select:{
+    components: { button,
+      togglebutton:{root:{background:'{content.background}',checkedBackground:'{content.background}',hoverBackground:'{content.hover.background}',borderColor:'{content.border.color}',checkedBorderColor:'{content.border.color}',color:'{text.muted.color}',hoverColor:'{text.color}',checkedColor:'{primary.color}'},content:{checkedBackground:'{highlight.background}'}},
+      select:{
       root:{fontSize:'1rem',fontWeight:'400',shadow:'none',paddingX:'12px',paddingY:'8px',borderRadius:'8px',transitionDuration:`${light.motion.duration.fast}ms`,focusRing:{width:'2px',style:'solid',color:'var(--ring)',offset:'2px',shadow:'none'}},
       overlay:{background:'{content.background}',color:'{content.color}',borderColor:'{content.border.color}',borderRadius:'14px',shadow:light.elevation.lg.css},
       list:{padding:'6px',gap:'4px'},
@@ -107,7 +118,8 @@ export function createPrimePreset(palette: ThemePalette): Preset {
     }, drawer:{header:{padding:'12px 16px'},content:{padding:'0px'}}, dialog: { colorScheme: {
       light: { root: { background: light.colors.surface, color: light.colors.surfaceForeground, borderColor: light.colors.border } },
       dark: { root: { background: dark.colors.surface, color: dark.colors.surfaceForeground, borderColor: dark.colors.border } },
-    } }, inputtext: { root: { paddingX: rem(light.spacing.md), paddingY: '0.5625rem',
+    } }, textarea: { root: { paddingX: rem(light.spacing.md), paddingY: '0.5625rem',
+      borderRadius: rem(light.radius.md), fontSize: rem(light.text.body.fontSize), shadow: 'none' } }, inputtext: { root: { paddingX: rem(light.spacing.md), paddingY: '0.5625rem',
       borderRadius: rem(light.radius.md), fontSize: rem(light.text.body.fontSize), shadow: 'none' } } },
   });
 }

@@ -83,3 +83,12 @@ Angular foundation/UI remains next; production/provider acceptance is separate.
 - [x] No-BFF/direct-API direction explicitly selected by requester.
 - [ ] Direct authentication/origin/credential binding and integration spikes verified.
 - [ ] Per-feature permission/UI contracts and G0–G4 complete.
+
+## Requester scope correction —2026-10-30 DEC-028
+
+ActiveReports viewer/designer/SDK and associated authoring/licensing work are
+Excluded from Angular migration by explicit requester instruction. References to
+existing Next/native/API implementations are source evidence only and do not
+reinstate that target. Current Angular reporting uses managed Crystal/PDF. Other
+reporting manager, permissions, binary transport and PDF lifecycle requirements
+remain governed by their owning contracts. No ActiveReports runtime placeholder.

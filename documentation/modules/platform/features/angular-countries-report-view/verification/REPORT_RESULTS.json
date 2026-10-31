@@ -1,0 +1,1522 @@
+[
+  {
+    "palette": "green",
+    "mode": "light",
+    "language": "en",
+    "width": 390,
+    "focused": false,
+    "geometry": {
+      "panel": {
+        "x": 12,
+        "y": 184.625,
+        "width": 366,
+        "height": 359.375
+      },
+      "document": {
+        "x": 12,
+        "y": 608,
+        "width": 366,
+        "height": 160
+      },
+      "frame": {
+        "height": 583.375,
+        "bottom": 768
+      },
+      "viewport": {
+        "width": 390,
+        "height": 780
+      },
+      "page": 390
+    },
+    "independentCriteria": true,
+    "oneHeader": true,
+    "controlledSidebar": true,
+    "explicitRefresh": true,
+    "cancelAndRevoke": true,
+    "authorityGuard": true,
+    "fallback": false,
+    "passed": true
+  },
+  {
+    "palette": "green",
+    "mode": "light",
+    "language": "en",
+    "width": 1440,
+    "focused": false,
+    "geometry": {
+      "panel": {
+        "x": 88,
+        "y": 184,
+        "width": 280,
+        "height": 842
+      },
+      "document": {
+        "x": 432,
+        "y": 184,
+        "width": 984,
+        "height": 842
+      },
+      "frame": {
+        "height": 842,
+        "bottom": 1026
+      },
+      "viewport": {
+        "width": 1440,
+        "height": 1050
+      },
+      "page": 1440
+    },
+    "independentCriteria": true,
+    "oneHeader": true,
+    "controlledSidebar": true,
+    "explicitRefresh": true,
+    "cancelAndRevoke": true,
+    "authorityGuard": true,
+    "fallback": false,
+    "passed": true
+  },
+  {
+    "palette": "green",
+    "mode": "light",
+    "language": "ar",
+    "width": 390,
+    "focused": false,
+    "geometry": {
+      "panel": {
+        "x": 12,
+        "y": 182,
+        "width": 366,
+        "height": 362
+      },
+      "document": {
+        "x": 12,
+        "y": 608,
+        "width": 366,
+        "height": 160
+      },
+      "frame": {
+        "height": 586,
+        "bottom": 768
+      },
+      "viewport": {
+        "width": 390,
+        "height": 780
+      },
+      "page": 390
+    },
+    "independentCriteria": true,
+    "oneHeader": true,
+    "controlledSidebar": true,
+    "explicitRefresh": true,
+    "cancelAndRevoke": true,
+    "authorityGuard": true,
+    "fallback": false,
+    "passed": true
+  },
+  {
+    "palette": "green",
+    "mode": "light",
+    "language": "ar",
+    "width": 1440,
+    "focused": false,
+    "geometry": {
+      "panel": {
+        "x": 1072,
+        "y": 184,
+        "width": 280,
+        "height": 842
+      },
+      "document": {
+        "x": 24,
+        "y": 184,
+        "width": 984,
+        "height": 842
+      },
+      "frame": {
+        "height": 842,
+        "bottom": 1026
+      },
+      "viewport": {
+        "width": 1440,
+        "height": 1050
+      },
+      "page": 1440
+    },
+    "independentCriteria": true,
+    "oneHeader": true,
+    "controlledSidebar": true,
+    "explicitRefresh": true,
+    "cancelAndRevoke": true,
+    "authorityGuard": true,
+    "fallback": false,
+    "passed": true
+  },
+  {
+    "palette": "green",
+    "mode": "dark",
+    "language": "en",
+    "width": 390,
+    "focused": false,
+    "geometry": {
+      "panel": {
+        "x": 12,
+        "y": 184.625,
+        "width": 366,
+        "height": 359.375
+      },
+      "document": {
+        "x": 12,
+        "y": 608,
+        "width": 366,
+        "height": 160
+      },
+      "frame": {
+        "height": 583.375,
+        "bottom": 768
+      },
+      "viewport": {
+        "width": 390,
+        "height": 780
+      },
+      "page": 390
+    },
+    "independentCriteria": true,
+    "oneHeader": true,
+    "controlledSidebar": true,
+    "explicitRefresh": true,
+    "cancelAndRevoke": true,
+    "authorityGuard": true,
+    "fallback": false,
+    "passed": true
+  },
+  {
+    "palette": "green",
+    "mode": "dark",
+    "language": "en",
+    "width": 1440,
+    "focused": false,
+    "geometry": {
+      "panel": {
+        "x": 88,
+        "y": 184,
+        "width": 280,
+        "height": 842
+      },
+      "document": {
+        "x": 432,
+        "y": 184,
+        "width": 984,
+        "height": 842
+      },
+      "frame": {
+        "height": 842,
+        "bottom": 1026
+      },
+      "viewport": {
+        "width": 1440,
+        "height": 1050
+      },
+      "page": 1440
+    },
+    "independentCriteria": true,
+    "oneHeader": true,
+    "controlledSidebar": true,
+    "explicitRefresh": true,
+    "cancelAndRevoke": true,
+    "authorityGuard": true,
+    "fallback": false,
+    "passed": true
+  },
+  {
+    "palette": "green",
+    "mode": "dark",
+    "language": "ar",
+    "width": 390,
+    "focused": false,
+    "geometry": {
+      "panel": {
+        "x": 12,
+        "y": 182,
+        "width": 366,
+        "height": 362
+      },
+      "document": {
+        "x": 12,
+        "y": 608,
+        "width": 366,
+        "height": 160
+      },
+      "frame": {
+        "height": 586,
+        "bottom": 768
+      },
+      "viewport": {
+        "width": 390,
+        "height": 780
+      },
+      "page": 390
+    },
+    "independentCriteria": true,
+    "oneHeader": true,
+    "controlledSidebar": true,
+    "explicitRefresh": true,
+    "cancelAndRevoke": true,
+    "authorityGuard": true,
+    "fallback": false,
+    "passed": true
+  },
+  {
+    "palette": "green",
+    "mode": "dark",
+    "language": "ar",
+    "width": 1440,
+    "focused": false,
+    "geometry": {
+      "panel": {
+        "x": 1072,
+        "y": 184,
+        "width": 280,
+        "height": 842
+      },
+      "document": {
+        "x": 24,
+        "y": 184,
+        "width": 984,
+        "height": 842
+      },
+      "frame": {
+        "height": 842,
+        "bottom": 1026
+      },
+      "viewport": {
+        "width": 1440,
+        "height": 1050
+      },
+      "page": 1440
+    },
+    "independentCriteria": true,
+    "oneHeader": true,
+    "controlledSidebar": true,
+    "explicitRefresh": true,
+    "cancelAndRevoke": true,
+    "authorityGuard": true,
+    "fallback": false,
+    "passed": true
+  },
+  {
+    "palette": "orange",
+    "mode": "light",
+    "language": "en",
+    "width": 390,
+    "focused": false,
+    "geometry": {
+      "panel": {
+        "x": 12,
+        "y": 184.625,
+        "width": 366,
+        "height": 359.375
+      },
+      "document": {
+        "x": 12,
+        "y": 608,
+        "width": 366,
+        "height": 160
+      },
+      "frame": {
+        "height": 583.375,
+        "bottom": 768
+      },
+      "viewport": {
+        "width": 390,
+        "height": 780
+      },
+      "page": 390
+    },
+    "independentCriteria": true,
+    "oneHeader": true,
+    "controlledSidebar": true,
+    "explicitRefresh": true,
+    "cancelAndRevoke": true,
+    "authorityGuard": true,
+    "fallback": false,
+    "passed": true
+  },
+  {
+    "palette": "orange",
+    "mode": "light",
+    "language": "en",
+    "width": 1440,
+    "focused": false,
+    "geometry": {
+      "panel": {
+        "x": 88,
+        "y": 184,
+        "width": 280,
+        "height": 842
+      },
+      "document": {
+        "x": 432,
+        "y": 184,
+        "width": 984,
+        "height": 842
+      },
+      "frame": {
+        "height": 842,
+        "bottom": 1026
+      },
+      "viewport": {
+        "width": 1440,
+        "height": 1050
+      },
+      "page": 1440
+    },
+    "independentCriteria": true,
+    "oneHeader": true,
+    "controlledSidebar": true,
+    "explicitRefresh": true,
+    "cancelAndRevoke": true,
+    "authorityGuard": true,
+    "fallback": false,
+    "passed": true
+  },
+  {
+    "palette": "orange",
+    "mode": "light",
+    "language": "ar",
+    "width": 390,
+    "focused": false,
+    "geometry": {
+      "panel": {
+        "x": 12,
+        "y": 182,
+        "width": 366,
+        "height": 362
+      },
+      "document": {
+        "x": 12,
+        "y": 608,
+        "width": 366,
+        "height": 160
+      },
+      "frame": {
+        "height": 586,
+        "bottom": 768
+      },
+      "viewport": {
+        "width": 390,
+        "height": 780
+      },
+      "page": 390
+    },
+    "independentCriteria": true,
+    "oneHeader": true,
+    "controlledSidebar": true,
+    "explicitRefresh": true,
+    "cancelAndRevoke": true,
+    "authorityGuard": true,
+    "fallback": false,
+    "passed": true
+  },
+  {
+    "palette": "orange",
+    "mode": "light",
+    "language": "ar",
+    "width": 1440,
+    "focused": false,
+    "geometry": {
+      "panel": {
+        "x": 1072,
+        "y": 184,
+        "width": 280,
+        "height": 842
+      },
+      "document": {
+        "x": 24,
+        "y": 184,
+        "width": 984,
+        "height": 842
+      },
+      "frame": {
+        "height": 842,
+        "bottom": 1026
+      },
+      "viewport": {
+        "width": 1440,
+        "height": 1050
+      },
+      "page": 1440
+    },
+    "independentCriteria": true,
+    "oneHeader": true,
+    "controlledSidebar": true,
+    "explicitRefresh": true,
+    "cancelAndRevoke": true,
+    "authorityGuard": true,
+    "fallback": false,
+    "passed": true
+  },
+  {
+    "palette": "orange",
+    "mode": "dark",
+    "language": "en",
+    "width": 390,
+    "focused": false,
+    "geometry": {
+      "panel": {
+        "x": 12,
+        "y": 184.625,
+        "width": 366,
+        "height": 359.375
+      },
+      "document": {
+        "x": 12,
+        "y": 608,
+        "width": 366,
+        "height": 160
+      },
+      "frame": {
+        "height": 583.375,
+        "bottom": 768
+      },
+      "viewport": {
+        "width": 390,
+        "height": 780
+      },
+      "page": 390
+    },
+    "independentCriteria": true,
+    "oneHeader": true,
+    "controlledSidebar": true,
+    "explicitRefresh": true,
+    "cancelAndRevoke": true,
+    "authorityGuard": true,
+    "fallback": false,
+    "passed": true
+  },
+  {
+    "palette": "orange",
+    "mode": "dark",
+    "language": "en",
+    "width": 1440,
+    "focused": false,
+    "geometry": {
+      "panel": {
+        "x": 88,
+        "y": 184,
+        "width": 280,
+        "height": 842
+      },
+      "document": {
+        "x": 432,
+        "y": 184,
+        "width": 984,
+        "height": 842
+      },
+      "frame": {
+        "height": 842,
+        "bottom": 1026
+      },
+      "viewport": {
+        "width": 1440,
+        "height": 1050
+      },
+      "page": 1440
+    },
+    "independentCriteria": true,
+    "oneHeader": true,
+    "controlledSidebar": true,
+    "explicitRefresh": true,
+    "cancelAndRevoke": true,
+    "authorityGuard": true,
+    "fallback": false,
+    "passed": true
+  },
+  {
+    "palette": "orange",
+    "mode": "dark",
+    "language": "ar",
+    "width": 390,
+    "focused": false,
+    "geometry": {
+      "panel": {
+        "x": 12,
+        "y": 182,
+        "width": 366,
+        "height": 362
+      },
+      "document": {
+        "x": 12,
+        "y": 608,
+        "width": 366,
+        "height": 160
+      },
+      "frame": {
+        "height": 586,
+        "bottom": 768
+      },
+      "viewport": {
+        "width": 390,
+        "height": 780
+      },
+      "page": 390
+    },
+    "independentCriteria": true,
+    "oneHeader": true,
+    "controlledSidebar": true,
+    "explicitRefresh": true,
+    "cancelAndRevoke": true,
+    "authorityGuard": true,
+    "fallback": false,
+    "passed": true
+  },
+  {
+    "palette": "orange",
+    "mode": "dark",
+    "language": "ar",
+    "width": 1440,
+    "focused": false,
+    "geometry": {
+      "panel": {
+        "x": 1072,
+        "y": 184,
+        "width": 280,
+        "height": 842
+      },
+      "document": {
+        "x": 24,
+        "y": 184,
+        "width": 984,
+        "height": 842
+      },
+      "frame": {
+        "height": 842,
+        "bottom": 1026
+      },
+      "viewport": {
+        "width": 1440,
+        "height": 1050
+      },
+      "page": 1440
+    },
+    "independentCriteria": true,
+    "oneHeader": true,
+    "controlledSidebar": true,
+    "explicitRefresh": true,
+    "cancelAndRevoke": true,
+    "authorityGuard": true,
+    "fallback": false,
+    "passed": true
+  },
+  {
+    "palette": "blue",
+    "mode": "light",
+    "language": "en",
+    "width": 390,
+    "focused": false,
+    "geometry": {
+      "panel": {
+        "x": 12,
+        "y": 184.625,
+        "width": 366,
+        "height": 359.375
+      },
+      "document": {
+        "x": 12,
+        "y": 608,
+        "width": 366,
+        "height": 160
+      },
+      "frame": {
+        "height": 583.375,
+        "bottom": 768
+      },
+      "viewport": {
+        "width": 390,
+        "height": 780
+      },
+      "page": 390
+    },
+    "independentCriteria": true,
+    "oneHeader": true,
+    "controlledSidebar": true,
+    "explicitRefresh": true,
+    "cancelAndRevoke": true,
+    "authorityGuard": true,
+    "fallback": false,
+    "passed": true
+  },
+  {
+    "palette": "blue",
+    "mode": "light",
+    "language": "en",
+    "width": 1440,
+    "focused": false,
+    "geometry": {
+      "panel": {
+        "x": 88,
+        "y": 184,
+        "width": 280,
+        "height": 842
+      },
+      "document": {
+        "x": 432,
+        "y": 184,
+        "width": 984,
+        "height": 842
+      },
+      "frame": {
+        "height": 842,
+        "bottom": 1026
+      },
+      "viewport": {
+        "width": 1440,
+        "height": 1050
+      },
+      "page": 1440
+    },
+    "independentCriteria": true,
+    "oneHeader": true,
+    "controlledSidebar": true,
+    "explicitRefresh": true,
+    "cancelAndRevoke": true,
+    "authorityGuard": true,
+    "fallback": false,
+    "passed": true
+  },
+  {
+    "palette": "blue",
+    "mode": "light",
+    "language": "ar",
+    "width": 390,
+    "focused": false,
+    "geometry": {
+      "panel": {
+        "x": 12,
+        "y": 182,
+        "width": 366,
+        "height": 362
+      },
+      "document": {
+        "x": 12,
+        "y": 608,
+        "width": 366,
+        "height": 160
+      },
+      "frame": {
+        "height": 586,
+        "bottom": 768
+      },
+      "viewport": {
+        "width": 390,
+        "height": 780
+      },
+      "page": 390
+    },
+    "independentCriteria": true,
+    "oneHeader": true,
+    "controlledSidebar": true,
+    "explicitRefresh": true,
+    "cancelAndRevoke": true,
+    "authorityGuard": true,
+    "fallback": false,
+    "passed": true
+  },
+  {
+    "palette": "blue",
+    "mode": "light",
+    "language": "ar",
+    "width": 1440,
+    "focused": false,
+    "geometry": {
+      "panel": {
+        "x": 1072,
+        "y": 184,
+        "width": 280,
+        "height": 842
+      },
+      "document": {
+        "x": 24,
+        "y": 184,
+        "width": 984,
+        "height": 842
+      },
+      "frame": {
+        "height": 842,
+        "bottom": 1026
+      },
+      "viewport": {
+        "width": 1440,
+        "height": 1050
+      },
+      "page": 1440
+    },
+    "independentCriteria": true,
+    "oneHeader": true,
+    "controlledSidebar": true,
+    "explicitRefresh": true,
+    "cancelAndRevoke": true,
+    "authorityGuard": true,
+    "fallback": false,
+    "passed": true
+  },
+  {
+    "palette": "blue",
+    "mode": "dark",
+    "language": "en",
+    "width": 390,
+    "focused": false,
+    "geometry": {
+      "panel": {
+        "x": 12,
+        "y": 184.625,
+        "width": 366,
+        "height": 359.375
+      },
+      "document": {
+        "x": 12,
+        "y": 608,
+        "width": 366,
+        "height": 160
+      },
+      "frame": {
+        "height": 583.375,
+        "bottom": 768
+      },
+      "viewport": {
+        "width": 390,
+        "height": 780
+      },
+      "page": 390
+    },
+    "independentCriteria": true,
+    "oneHeader": true,
+    "controlledSidebar": true,
+    "explicitRefresh": true,
+    "cancelAndRevoke": true,
+    "authorityGuard": true,
+    "fallback": false,
+    "passed": true
+  },
+  {
+    "palette": "blue",
+    "mode": "dark",
+    "language": "en",
+    "width": 1440,
+    "focused": false,
+    "geometry": {
+      "panel": {
+        "x": 88,
+        "y": 184,
+        "width": 280,
+        "height": 842
+      },
+      "document": {
+        "x": 432,
+        "y": 184,
+        "width": 984,
+        "height": 842
+      },
+      "frame": {
+        "height": 842,
+        "bottom": 1026
+      },
+      "viewport": {
+        "width": 1440,
+        "height": 1050
+      },
+      "page": 1440
+    },
+    "independentCriteria": true,
+    "oneHeader": true,
+    "controlledSidebar": true,
+    "explicitRefresh": true,
+    "cancelAndRevoke": true,
+    "authorityGuard": true,
+    "fallback": false,
+    "passed": true
+  },
+  {
+    "palette": "blue",
+    "mode": "dark",
+    "language": "ar",
+    "width": 390,
+    "focused": false,
+    "geometry": {
+      "panel": {
+        "x": 12,
+        "y": 182,
+        "width": 366,
+        "height": 362
+      },
+      "document": {
+        "x": 12,
+        "y": 608,
+        "width": 366,
+        "height": 160
+      },
+      "frame": {
+        "height": 586,
+        "bottom": 768
+      },
+      "viewport": {
+        "width": 390,
+        "height": 780
+      },
+      "page": 390
+    },
+    "independentCriteria": true,
+    "oneHeader": true,
+    "controlledSidebar": true,
+    "explicitRefresh": true,
+    "cancelAndRevoke": true,
+    "authorityGuard": true,
+    "fallback": false,
+    "passed": true
+  },
+  {
+    "palette": "blue",
+    "mode": "dark",
+    "language": "ar",
+    "width": 1440,
+    "focused": false,
+    "geometry": {
+      "panel": {
+        "x": 1072,
+        "y": 184,
+        "width": 280,
+        "height": 842
+      },
+      "document": {
+        "x": 24,
+        "y": 184,
+        "width": 984,
+        "height": 842
+      },
+      "frame": {
+        "height": 842,
+        "bottom": 1026
+      },
+      "viewport": {
+        "width": 1440,
+        "height": 1050
+      },
+      "page": 1440
+    },
+    "independentCriteria": true,
+    "oneHeader": true,
+    "controlledSidebar": true,
+    "explicitRefresh": true,
+    "cancelAndRevoke": true,
+    "authorityGuard": true,
+    "fallback": false,
+    "passed": true
+  },
+  {
+    "palette": "navy",
+    "mode": "light",
+    "language": "en",
+    "width": 390,
+    "focused": false,
+    "geometry": {
+      "panel": {
+        "x": 12,
+        "y": 184.625,
+        "width": 366,
+        "height": 359.375
+      },
+      "document": {
+        "x": 12,
+        "y": 608,
+        "width": 366,
+        "height": 160
+      },
+      "frame": {
+        "height": 583.375,
+        "bottom": 768
+      },
+      "viewport": {
+        "width": 390,
+        "height": 780
+      },
+      "page": 390
+    },
+    "independentCriteria": true,
+    "oneHeader": true,
+    "controlledSidebar": true,
+    "explicitRefresh": true,
+    "cancelAndRevoke": true,
+    "authorityGuard": true,
+    "fallback": false,
+    "passed": true
+  },
+  {
+    "palette": "navy",
+    "mode": "light",
+    "language": "en",
+    "width": 1440,
+    "focused": false,
+    "geometry": {
+      "panel": {
+        "x": 88,
+        "y": 184,
+        "width": 280,
+        "height": 842
+      },
+      "document": {
+        "x": 432,
+        "y": 184,
+        "width": 984,
+        "height": 842
+      },
+      "frame": {
+        "height": 842,
+        "bottom": 1026
+      },
+      "viewport": {
+        "width": 1440,
+        "height": 1050
+      },
+      "page": 1440
+    },
+    "independentCriteria": true,
+    "oneHeader": true,
+    "controlledSidebar": true,
+    "explicitRefresh": true,
+    "cancelAndRevoke": true,
+    "authorityGuard": true,
+    "fallback": false,
+    "passed": true
+  },
+  {
+    "palette": "navy",
+    "mode": "light",
+    "language": "ar",
+    "width": 390,
+    "focused": false,
+    "geometry": {
+      "panel": {
+        "x": 12,
+        "y": 182,
+        "width": 366,
+        "height": 362
+      },
+      "document": {
+        "x": 12,
+        "y": 608,
+        "width": 366,
+        "height": 160
+      },
+      "frame": {
+        "height": 586,
+        "bottom": 768
+      },
+      "viewport": {
+        "width": 390,
+        "height": 780
+      },
+      "page": 390
+    },
+    "independentCriteria": true,
+    "oneHeader": true,
+    "controlledSidebar": true,
+    "explicitRefresh": true,
+    "cancelAndRevoke": true,
+    "authorityGuard": true,
+    "fallback": false,
+    "passed": true
+  },
+  {
+    "palette": "navy",
+    "mode": "light",
+    "language": "ar",
+    "width": 1440,
+    "focused": false,
+    "geometry": {
+      "panel": {
+        "x": 1072,
+        "y": 184,
+        "width": 280,
+        "height": 842
+      },
+      "document": {
+        "x": 24,
+        "y": 184,
+        "width": 984,
+        "height": 842
+      },
+      "frame": {
+        "height": 842,
+        "bottom": 1026
+      },
+      "viewport": {
+        "width": 1440,
+        "height": 1050
+      },
+      "page": 1440
+    },
+    "independentCriteria": true,
+    "oneHeader": true,
+    "controlledSidebar": true,
+    "explicitRefresh": true,
+    "cancelAndRevoke": true,
+    "authorityGuard": true,
+    "fallback": false,
+    "passed": true
+  },
+  {
+    "palette": "navy",
+    "mode": "dark",
+    "language": "en",
+    "width": 390,
+    "focused": false,
+    "geometry": {
+      "panel": {
+        "x": 12,
+        "y": 184.625,
+        "width": 366,
+        "height": 359.375
+      },
+      "document": {
+        "x": 12,
+        "y": 608,
+        "width": 366,
+        "height": 160
+      },
+      "frame": {
+        "height": 583.375,
+        "bottom": 768
+      },
+      "viewport": {
+        "width": 390,
+        "height": 780
+      },
+      "page": 390
+    },
+    "independentCriteria": true,
+    "oneHeader": true,
+    "controlledSidebar": true,
+    "explicitRefresh": true,
+    "cancelAndRevoke": true,
+    "authorityGuard": true,
+    "fallback": false,
+    "passed": true
+  },
+  {
+    "palette": "navy",
+    "mode": "dark",
+    "language": "en",
+    "width": 1440,
+    "focused": false,
+    "geometry": {
+      "panel": {
+        "x": 88,
+        "y": 184,
+        "width": 280,
+        "height": 842
+      },
+      "document": {
+        "x": 432,
+        "y": 184,
+        "width": 984,
+        "height": 842
+      },
+      "frame": {
+        "height": 842,
+        "bottom": 1026
+      },
+      "viewport": {
+        "width": 1440,
+        "height": 1050
+      },
+      "page": 1440
+    },
+    "independentCriteria": true,
+    "oneHeader": true,
+    "controlledSidebar": true,
+    "explicitRefresh": true,
+    "cancelAndRevoke": true,
+    "authorityGuard": true,
+    "fallback": false,
+    "passed": true
+  },
+  {
+    "palette": "navy",
+    "mode": "dark",
+    "language": "ar",
+    "width": 390,
+    "focused": false,
+    "geometry": {
+      "panel": {
+        "x": 12,
+        "y": 182,
+        "width": 366,
+        "height": 362
+      },
+      "document": {
+        "x": 12,
+        "y": 608,
+        "width": 366,
+        "height": 160
+      },
+      "frame": {
+        "height": 586,
+        "bottom": 768
+      },
+      "viewport": {
+        "width": 390,
+        "height": 780
+      },
+      "page": 390
+    },
+    "independentCriteria": true,
+    "oneHeader": true,
+    "controlledSidebar": true,
+    "explicitRefresh": true,
+    "cancelAndRevoke": true,
+    "authorityGuard": true,
+    "fallback": false,
+    "passed": true
+  },
+  {
+    "palette": "navy",
+    "mode": "dark",
+    "language": "ar",
+    "width": 1440,
+    "focused": false,
+    "geometry": {
+      "panel": {
+        "x": 1072,
+        "y": 184,
+        "width": 280,
+        "height": 842
+      },
+      "document": {
+        "x": 24,
+        "y": 184,
+        "width": 984,
+        "height": 842
+      },
+      "frame": {
+        "height": 842,
+        "bottom": 1026
+      },
+      "viewport": {
+        "width": 1440,
+        "height": 1050
+      },
+      "page": 1440
+    },
+    "independentCriteria": true,
+    "oneHeader": true,
+    "controlledSidebar": true,
+    "explicitRefresh": true,
+    "cancelAndRevoke": true,
+    "authorityGuard": true,
+    "fallback": false,
+    "passed": true
+  },
+  {
+    "palette": "monochrome",
+    "mode": "light",
+    "language": "en",
+    "width": 390,
+    "focused": false,
+    "geometry": {
+      "panel": {
+        "x": 12,
+        "y": 184.625,
+        "width": 366,
+        "height": 359.375
+      },
+      "document": {
+        "x": 12,
+        "y": 608,
+        "width": 366,
+        "height": 160
+      },
+      "frame": {
+        "height": 583.375,
+        "bottom": 768
+      },
+      "viewport": {
+        "width": 390,
+        "height": 780
+      },
+      "page": 390
+    },
+    "independentCriteria": true,
+    "oneHeader": true,
+    "controlledSidebar": true,
+    "explicitRefresh": true,
+    "cancelAndRevoke": true,
+    "authorityGuard": true,
+    "fallback": false,
+    "passed": true
+  },
+  {
+    "palette": "monochrome",
+    "mode": "light",
+    "language": "en",
+    "width": 1440,
+    "focused": false,
+    "geometry": {
+      "panel": {
+        "x": 88,
+        "y": 184,
+        "width": 280,
+        "height": 842
+      },
+      "document": {
+        "x": 432,
+        "y": 184,
+        "width": 984,
+        "height": 842
+      },
+      "frame": {
+        "height": 842,
+        "bottom": 1026
+      },
+      "viewport": {
+        "width": 1440,
+        "height": 1050
+      },
+      "page": 1440
+    },
+    "independentCriteria": true,
+    "oneHeader": true,
+    "controlledSidebar": true,
+    "explicitRefresh": true,
+    "cancelAndRevoke": true,
+    "authorityGuard": true,
+    "fallback": false,
+    "passed": true
+  },
+  {
+    "palette": "monochrome",
+    "mode": "light",
+    "language": "ar",
+    "width": 390,
+    "focused": false,
+    "geometry": {
+      "panel": {
+        "x": 12,
+        "y": 182,
+        "width": 366,
+        "height": 362
+      },
+      "document": {
+        "x": 12,
+        "y": 608,
+        "width": 366,
+        "height": 160
+      },
+      "frame": {
+        "height": 586,
+        "bottom": 768
+      },
+      "viewport": {
+        "width": 390,
+        "height": 780
+      },
+      "page": 390
+    },
+    "independentCriteria": true,
+    "oneHeader": true,
+    "controlledSidebar": true,
+    "explicitRefresh": true,
+    "cancelAndRevoke": true,
+    "authorityGuard": true,
+    "fallback": false,
+    "passed": true
+  },
+  {
+    "palette": "monochrome",
+    "mode": "light",
+    "language": "ar",
+    "width": 1440,
+    "focused": false,
+    "geometry": {
+      "panel": {
+        "x": 1072,
+        "y": 184,
+        "width": 280,
+        "height": 842
+      },
+      "document": {
+        "x": 24,
+        "y": 184,
+        "width": 984,
+        "height": 842
+      },
+      "frame": {
+        "height": 842,
+        "bottom": 1026
+      },
+      "viewport": {
+        "width": 1440,
+        "height": 1050
+      },
+      "page": 1440
+    },
+    "independentCriteria": true,
+    "oneHeader": true,
+    "controlledSidebar": true,
+    "explicitRefresh": true,
+    "cancelAndRevoke": true,
+    "authorityGuard": true,
+    "fallback": false,
+    "passed": true
+  },
+  {
+    "palette": "monochrome",
+    "mode": "dark",
+    "language": "en",
+    "width": 390,
+    "focused": false,
+    "geometry": {
+      "panel": {
+        "x": 12,
+        "y": 184.625,
+        "width": 366,
+        "height": 359.375
+      },
+      "document": {
+        "x": 12,
+        "y": 608,
+        "width": 366,
+        "height": 160
+      },
+      "frame": {
+        "height": 583.375,
+        "bottom": 768
+      },
+      "viewport": {
+        "width": 390,
+        "height": 780
+      },
+      "page": 390
+    },
+    "independentCriteria": true,
+    "oneHeader": true,
+    "controlledSidebar": true,
+    "explicitRefresh": true,
+    "cancelAndRevoke": true,
+    "authorityGuard": true,
+    "fallback": false,
+    "passed": true
+  },
+  {
+    "palette": "monochrome",
+    "mode": "dark",
+    "language": "en",
+    "width": 1440,
+    "focused": false,
+    "geometry": {
+      "panel": {
+        "x": 88,
+        "y": 184,
+        "width": 280,
+        "height": 842
+      },
+      "document": {
+        "x": 432,
+        "y": 184,
+        "width": 984,
+        "height": 842
+      },
+      "frame": {
+        "height": 842,
+        "bottom": 1026
+      },
+      "viewport": {
+        "width": 1440,
+        "height": 1050
+      },
+      "page": 1440
+    },
+    "independentCriteria": true,
+    "oneHeader": true,
+    "controlledSidebar": true,
+    "explicitRefresh": true,
+    "cancelAndRevoke": true,
+    "authorityGuard": true,
+    "fallback": false,
+    "passed": true
+  },
+  {
+    "palette": "monochrome",
+    "mode": "dark",
+    "language": "ar",
+    "width": 390,
+    "focused": false,
+    "geometry": {
+      "panel": {
+        "x": 12,
+        "y": 182,
+        "width": 366,
+        "height": 362
+      },
+      "document": {
+        "x": 12,
+        "y": 608,
+        "width": 366,
+        "height": 160
+      },
+      "frame": {
+        "height": 586,
+        "bottom": 768
+      },
+      "viewport": {
+        "width": 390,
+        "height": 780
+      },
+      "page": 390
+    },
+    "independentCriteria": true,
+    "oneHeader": true,
+    "controlledSidebar": true,
+    "explicitRefresh": true,
+    "cancelAndRevoke": true,
+    "authorityGuard": true,
+    "fallback": false,
+    "passed": true
+  },
+  {
+    "palette": "monochrome",
+    "mode": "dark",
+    "language": "ar",
+    "width": 1440,
+    "focused": false,
+    "geometry": {
+      "panel": {
+        "x": 1072,
+        "y": 184,
+        "width": 280,
+        "height": 842
+      },
+      "document": {
+        "x": 24,
+        "y": 184,
+        "width": 984,
+        "height": 842
+      },
+      "frame": {
+        "height": 842,
+        "bottom": 1026
+      },
+      "viewport": {
+        "width": 1440,
+        "height": 1050
+      },
+      "page": 1440
+    },
+    "independentCriteria": true,
+    "oneHeader": true,
+    "controlledSidebar": true,
+    "explicitRefresh": true,
+    "cancelAndRevoke": true,
+    "authorityGuard": true,
+    "fallback": false,
+    "passed": true
+  }
+]

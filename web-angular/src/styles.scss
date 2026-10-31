@@ -1,5 +1,6 @@
 @use '@app/tokens/css';
 @use './theme/fonts';
+@use './app/shared/ui/layout/scrollbar' as scrolling;
 
 html { font-size: 16px; }
 body {
@@ -12,11 +13,8 @@ body {
 }
 *, *::before, *::after { box-sizing: border-box; }
 button, input, select, textarea { font: inherit; }
-.erp-select-overlay .p-select-list-container{scrollbar-width:thin;scrollbar-color:color-mix(in srgb,var(--primary) 55%,var(--border)) transparent;overscroll-behavior:contain}
-.erp-select-overlay .p-select-list-container::-webkit-scrollbar{width:6px;height:6px}
-.erp-select-overlay .p-select-list-container::-webkit-scrollbar-track{background:transparent}
-.erp-select-overlay .p-select-list-container::-webkit-scrollbar-thumb{background:color-mix(in srgb,var(--primary) 55%,var(--border));border-radius:999px}
-.erp-select-overlay .p-select-list-container::-webkit-scrollbar-thumb:hover{background:var(--primary)}
+.erp-native-scrollbar,.p-select-list-container { @include scrolling.native-scrollbar; }
+.p-select-list-container { overscroll-behavior: contain; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
 }

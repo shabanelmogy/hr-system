@@ -16,7 +16,7 @@ if (version !== catalog.versions.web) throw new Error('Catalog fingerprint is in
 const outputs = new Map();
 const loaders = [];
 // Shared validation feedback must render immediately, even before a route's core chunk loads.
-const bootstrapKeys = ['general.mainTitle', 'common.validationErrors', 'common.reviewValidationErrors'];
+const bootstrapKeys = ['general.mainTitle', 'messages.unsavedChangesTitle', 'messages.unsavedChangesConfirm', 'messages.discardChanges', 'actions.cancel', 'common.validationErrors', 'common.reviewValidationErrors', 'validation.invalidDate', 'validation.required', 'dateField', 'numericField', 'booleanField', 'auditLog.fields.StartDate', 'auditLog.fields.EndDate', 'collections', 'reference', 'common.noOptionsFound', 'pagination', 'common.loading', 'common.error', 'actions.retry', 'actions.gridOptions', 'general.search', 'general.clear', 'general.reset', 'views.grid', 'views.cards', 'authorization.forbidden.title'];
 for (const source of sources) {
   const resources = { en: {}, ar: {} };
   for (const entry of source.entries) {
@@ -25,8 +25,8 @@ for (const source of sources) {
   }
   outputs.set(`src/locales/generated/${source.namespace}.json`, JSON.stringify(resources, null, 2) + '\n');
   if (source.namespace === 'core') outputs.set('src/locales/generated/bootstrap.json', JSON.stringify({
-    en: Object.fromEntries(Object.entries(resources.en).filter(([key]) => bootstrapKeys.some(base => key === base || key.startsWith(base + '_')))),
-    ar: Object.fromEntries(Object.entries(resources.ar).filter(([key]) => bootstrapKeys.some(base => key === base || key.startsWith(base + '_')))),
+    en: Object.fromEntries(Object.entries(resources.en).filter(([key]) => bootstrapKeys.some(base => key === base || key.startsWith(base + '_') || key.startsWith(base + '.')))),
+    ar: Object.fromEntries(Object.entries(resources.ar).filter(([key]) => bootstrapKeys.some(base => key === base || key.startsWith(base + '_') || key.startsWith(base + '.')))),
   }, null, 2) + '\n');
   loaders.push(`  ${JSON.stringify(source.namespace)}: () => import('../../../locales/generated/${source.namespace}.json').then(module => module.default),`);
 }

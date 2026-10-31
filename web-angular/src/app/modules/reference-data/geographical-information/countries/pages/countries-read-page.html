@@ -1,0 +1,79 @@
+<main>
+  <erp-page-header variant="collection" [title]="'countries.viewTitle'|uiText:'reference-countries'" [views]="views()" [view]="view()" [total]="state.total()" [totalLabel]="'pagination.items'|uiText" [filterable]="view()!=='chart'" [filterVisible]="toolbarVisible()" (viewChange)="chooseView($event)" (refresh)="refreshCurrent()" (filterToggle)="toolbarVisible.set(!toolbarVisible())" [primaryAction]="editor.canCreate()?{label:countryText('countries.add'),icon:'add'}:null" (primaryActivated)="editor.create()" />
+  <ng-template #bulkAction>@if(lifecycle.selected().length){<erp-button data-testid="archive-selected" [label]="'countries.bulkArchiveAction'|uiText:'reference-countries':{count:lifecycle.selected().length}" severity="warn" [disabled]="lifecycle.pending()" (activated)="lifecycle.requestBulk()"><erp-icon buttonIcon name="archive" /></erp-button>}</ng-template>
+  <ng-template #statusFilter><erp-option-select data-testid="status" [controlHeight]="view()==='grid'?36:40" [label]="'countries.status.label'|uiText:'reference-countries'" [value]="state.query().status" [options]="statuses()" (valueChange)="state.changeStatus($event)" /></ng-template>
+  <ng-template #criteria>
+    <ng-container [ngTemplateOutlet]="statusFilter" />
+    @if(view()==='cards'||view()==='chart'){
+      <erp-option-select data-testid="sort" [controlWidth]="220" [label]="'general.sortBy'|uiText" [value]="state.query().sortBy" [options]="sorts()" (valueChange)="chooseSort($event)" />
+      <erp-sort-direction-button data-testid="direction" [direction]="state.query().sortDirection" (directionChange)="state.changeSort({field:state.query().sortBy,direction:$event})" />
+    }
+    <erp-button data-testid="reset" [label]="'general.reset'|uiText" variant="text" (activated)="state.reset()" />
+  </ng-template>
+  <div class="collection" data-testid="countries" [attr.data-kind]="state.source().kind">
+    @if(view()==='grid'){
+      <erp-data-table [recordRequest]="records.request()" [selectionEnabled]="lifecycle.allowed()" [selectable]="lifecycle.selectable" (selectionChange)="lifecycle.select($event)" [recordNavigation]="true" appearance="reference" toolbarLayout="single-row" actionDisplay="inline" [stickyActions]="true" [contextActions]="actions" (rowAction)="act($event)" [advancedFilters]="true" [filters]="state.columnFilters()" (filtersChange)="state.changeColumnFilters($event)" [toolbarVisible]="toolbarVisible()" [display]="{resizableColumns:'fit',reorderableColumns:true,columnManagement:true}" [source]="state.source()" [label]="'countries.viewTitle'|uiText:'reference-countries'" [columns]="columns()" [rowId]="id" [rowLabel]="rowLabel" [search]="search()" [sort]="sort()"
+        (pageChange)="state.changePage($event)" (searchChange)="state.changeSearch($event)" (sortChange)="state.changeSort($event)" (retry)="state.refresh()" (rowActivated)="state.open($event.id)">
+        <div toolbarContent class="grid-actions"><ng-container [ngTemplateOutlet]="bulkAction" /><erp-button data-testid="reset" [label]="'general.reset'|uiText" variant="text" (activated)="state.reset()"><erp-icon buttonIcon name="reset" /></erp-button></div>
+        <div toolbarFilters class="filters"><ng-container [ngTemplateOutlet]="statusFilter" /></div>
+        <ng-template [erpCollectionCell]="columns()[1]" let-row><span class="country-name"><erp-icon name="flag" />{{row.nameAr}}</span></ng-template>
+        <ng-template [erpCollectionCell]="columns()[2]" let-row><span class="country-name"><erp-icon name="flag" />{{row.nameEn}}</span></ng-template>
+        <ng-template [erpCollectionCell]="columns()[5]" let-row>@if(row.phoneCode){<erp-status-badge [label]="phone(row.phoneCode)" accent="var(--primary)" />}</ng-template>
+        <ng-template [erpCollectionCell]="columns()[6]" let-row>@if(row.currencyCode){<erp-status-badge [label]="row.currencyCode" accent="var(--primary)" />}</ng-template>
+        <ng-template [erpCollectionCell]="columns()[7]" let-row><erp-status-badge [label]="number(row.statesCount)" [accent]="row.statesCount>0?'var(--success)':'var(--muted-foreground)'" /></ng-template>
+        <ng-template [erpCollectionCell]="columns()[10]" let-row><erp-status-badge [label]="status(row)" [accent]="row.isDeleted?'var(--destructive)':'var(--success)'" /></ng-template>
+        <ng-template erpCollectionEmpty><erp-feedback-state kind="empty" [title]="'countries.noCountriesAvailable'|uiText:'reference-countries'" /></ng-template>
+      </erp-data-table>
+    }@else if(view()==='cards'){
+      <erp-card-list [searchMaxWidth]="400" [toolbarVisible]="toolbarVisible()" toolbarLayout="single-row" [recordRequest]="records.request()" [selectionEnabled]="lifecycle.allowed()" [selectable]="lifecycle.selectable" (selectionChange)="lifecycle.select($event)" [recordNavigation]="true" [source]="state.source()" [label]="'countries.viewTitle'|uiText:'reference-countries'" [rowId]="id" [rowLabel]="rowLabel" [search]="search()" layout="responsive" appearance="entity"
+        (pageChange)="state.changePage($event)" (searchChange)="state.changeSearch($event)" (retry)="state.refresh()" (rowActivated)="state.open($event.id)">
+        <div toolbarContent><ng-container [ngTemplateOutlet]="bulkAction" /></div><div toolbarFilters class="filters"><ng-container [ngTemplateOutlet]="criteria" /></div>
+        <ng-template [erpCollectionCardHeader]="state.source()" let-row>
+          <div class="card-heading"><div><h2 dir="auto">{{rowLabel(row)}}</h2><p dir="auto">{{otherName(row)}}</p></div><erp-status-badge appearance="solid" [contrast]="qualityContrast(row)" [label]="number(quality(row))+'%'" [accent]="qualityAccent(row)" /></div>
+          <div class="chips">
+            @if(row.alpha2Code){<erp-status-badge [label]="row.alpha2Code" accent="var(--primary)" />}
+            @if(row.alpha3Code){<erp-status-badge [label]="row.alpha3Code" />}
+            <erp-status-badge appearance="outline" [label]="('general.id'|uiText)+': '+row.id" />
+            @if(row.isDeleted){<erp-status-badge [label]="status(row)" accent="var(--destructive)" />}
+          </div>
+        </ng-template>
+        <ng-template [erpCollectionCard]="state.source()" let-row>
+          <dl>
+            @if(row.phoneCode){<div><dt>{{'countries.phoneCode'|uiText:'reference-countries'}}</dt><dd><bdi>{{phone(row.phoneCode)}}</bdi></dd></div>}
+            @if(row.currencyCode){<div><dt>{{'countries.currencyCode'|uiText:'reference-countries'}}</dt><dd><bdi>{{row.currencyCode}}</bdi></dd></div>}
+            <div><dt><erp-icon name="globe" />{{'countries.states'|uiText:'reference-countries'}}</dt><dd><erp-status-badge appearance="outline" [label]="number(row.statesCount)" [accent]="row.statesCount>0?'var(--success)':'var(--muted-foreground)'" /></dd></div>
+          </dl>
+          <erp-progress-meter appearance="inline" [label]="'general.dataQuality'|uiText" [description]="qualityLevel(row)" [used]="quality(row)" [limit]="100" [accent]="qualityAccent(row)" />
+          <p class="created"><erp-icon name="calendar" />{{date(row.createdOn)}}</p>
+        </ng-template>
+        <ng-template [erpCollectionCardFooter]="state.source()" let-row><erp-row-actions [actions]="actions(row)" [rowKey]="row.id" (activated)="act({row:row,action:$event})" /></ng-template>
+        <ng-template erpCollectionEmpty><erp-feedback-state kind="empty" [title]="'countries.noCountriesAvailable'|uiText:'reference-countries'" /></ng-template>
+      </erp-card-list>
+    }@else if(view()==='chart'){
+      @defer(on immediate){
+      <erp-collection-chart-view [source]="state.source()" [rowId]="id" [label]="'countries.charts.title'|uiText:'reference-countries'" [toolbarVisible]="false" [metrics]="analytics().metrics" [plots]="analytics().plots" (searchChange)="state.changeSearch($event)" (retry)="state.refresh()">
+        <ng-template erpCollectionEmpty><erp-feedback-state kind="empty" icon="globe" [title]="'countries.charts.title'|uiText:'reference-countries'" [message]="'countries.charts.noData'|uiText:'reference-countries'" [actionLabel]="editor.canCreate()?countryText('countries.addFirstCountry'):''" (action)="editor.create()" /></ng-template>
+      </erp-collection-chart-view>
+      }@placeholder{<erp-feedback-state kind="loading" [title]="'common.loading'|uiText" />}
+    }@else if(view()==='report'&&canReport()){
+      @defer(on immediate){<erp-global-report-view #countryReport [embedded]="true" [showFilterBar]="toolbarVisible()" [catalogErrorMessage]="countryText('countries.reportCatalogError')" [unavailableMessage]="countryText('countries.reportUnavailable')" />}@placeholder{<erp-feedback-state kind="loading" [title]="'common.loading'|uiText" />}
+    }
+  </div>
+  <erp-dialog-panel [open]="state.detailOpen()" [title]="'countries.view'|uiText:'reference-countries'" [description]="'countries.viewSubtitle'|uiText:'reference-countries'" [closeLabel]="'actions.close'|uiText" icon="globe" [manualInitialFocus]="true" [showFooter]="false" (closeRequested)="state.close()">
+    @switch(state.detail().kind){
+      @case('loading'){<erp-feedback-state kind="loading" [title]="'common.loading'|uiText" />}
+      @case('error'){<erp-feedback-state kind="error" [title]="'countries.fetchError'|uiText:'reference-countries'" [actionLabel]="'actions.retry'|uiText" (action)="state.retryDetail()" />}
+      @case('forbidden'){<erp-feedback-state kind="forbidden" [title]="'authorization.forbidden.title'|uiText" />}
+      @case('ready'){@if(detailCountry();as country){<erp-country-read-details [country]="country" (closed)="state.close()" />}}
+    }
+  </erp-dialog-panel>
+  <erp-country-editor (saved)="saved($event)" />
+  <erp-confirmation-dialog [open]="lifecycle.open()" [pending]="lifecycle.pending()"
+    [title]="(lifecycle.action()==='bulk'?'countries.bulkArchiveTitle':lifecycle.action()==='restore'?'countries.restoreTitle':'countries.archiveTitle')|uiText:'reference-countries'"
+    [description]="(lifecycle.action()==='bulk'?'countries.bulkArchiveDescription':lifecycle.action()==='restore'?'countries.restoreDescription':'countries.archiveDescription')|uiText:'reference-countries'"
+    [cancelLabel]="'actions.cancel'|uiText" [confirmLabel]="lifecycle.action()==='bulk'?locale.translate('countries.bulkArchiveConfirm','reference-countries',{count:lifecycle.count()}):text(lifecycle.action()==='restore'?'actions.restore':'actions.archive')"
+    [severity]="lifecycle.action()==='restore'?'success':'warn'" (confirmed)="lifecycle.confirm()" (cancelled)="lifecycle.cancel()">
+    @if(lifecycle.action()==='bulk'){<p>{{'countries.selectedCount'|uiText:'reference-countries':{count:lifecycle.count()} }}</p>}
+    @for(row of lifecycle.targets();track row.id){<p dir="auto">{{rowLabel(row)}} <bdi>({{row.id}})</bdi></p>}
+  </erp-confirmation-dialog>
+</main>

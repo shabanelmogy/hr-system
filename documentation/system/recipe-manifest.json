@@ -722,6 +722,406 @@
       "id": "angular-module-context-navigation-mobile",
       "path": "../modules/platform/features/angular-module-context-navigation/angular-module-context-navigation-mobile.md",
       "title": "Angular application context navigation Expo implementation profile"
+    },
+    {
+      "id": "angular-collection-foundation-master",
+      "path": "../modules/platform/features/angular-collection-foundation/angular-collection-foundation-review.md",
+      "title": "Angular shared collection foundation cross-platform master review"
+    },
+    {
+      "id": "angular-collection-foundation-api",
+      "path": "../modules/platform/features/angular-collection-foundation/angular-collection-foundation-api.md",
+      "title": "Angular shared collection foundation API implementation profile"
+    },
+    {
+      "id": "angular-collection-foundation-web",
+      "path": "../modules/platform/features/angular-collection-foundation/angular-collection-foundation-web.md",
+      "title": "Angular shared collection foundation Angular web implementation profile"
+    },
+    {
+      "id": "angular-collection-foundation-mobile",
+      "path": "../modules/platform/features/angular-collection-foundation/angular-collection-foundation-mobile.md",
+      "title": "Angular shared collection foundation Expo implementation profile"
+    },
+    {
+      "id": "angular-reference-selection-foundation-master",
+      "path": "../modules/platform/features/angular-reference-selection-foundation/angular-reference-selection-foundation-review.md",
+      "title": "Angular shared reference selection foundation cross-platform master review"
+    },
+    {
+      "id": "angular-reference-selection-foundation-api",
+      "path": "../modules/platform/features/angular-reference-selection-foundation/angular-reference-selection-foundation-api.md",
+      "title": "Angular shared reference selection foundation API implementation profile"
+    },
+    {
+      "id": "angular-reference-selection-foundation-web",
+      "path": "../modules/platform/features/angular-reference-selection-foundation/angular-reference-selection-foundation-web.md",
+      "title": "Angular shared reference selection Web implementation profile"
+    },
+    {
+      "id": "angular-reference-selection-foundation-mobile",
+      "path": "../modules/platform/features/angular-reference-selection-foundation/angular-reference-selection-foundation-mobile.md",
+      "title": "Angular shared reference selection foundation Expo implementation profile"
+    },
+    {
+      "id": "angular-api-contract-generation-proof-master",
+      "path": "../modules/platform/features/angular-api-contract-generation-proof/angular-api-contract-generation-proof-review.md",
+      "title": "Angular API contract generation compatibility proof cross-platform master review"
+    },
+    {
+      "id": "angular-api-contract-generation-proof-api",
+      "path": "../modules/platform/features/angular-api-contract-generation-proof/angular-api-contract-generation-proof-api.md",
+      "title": "Angular API contract generation compatibility proof API implementation profile"
+    },
+    {
+      "id": "angular-api-contract-generation-proof-web",
+      "path": "../modules/platform/features/angular-api-contract-generation-proof/angular-api-contract-generation-proof-web.md",
+      "title": "Angular API contract generation compatibility proof Next.js implementation profile"
+    },
+    {
+      "id": "angular-api-contract-generation-proof-mobile",
+      "path": "../modules/platform/features/angular-api-contract-generation-proof/angular-api-contract-generation-proof-mobile.md",
+      "title": "Angular API contract generation compatibility proof Expo implementation profile"
+    },
+    {
+      "id": "angular-form-close-foundation-master",
+      "path": "../modules/platform/features/angular-form-close-foundation/angular-form-close-foundation-review.md",
+      "title": "Shared form close and discard protection preparation cross-platform master review"
+    },
+    {
+      "id": "angular-form-close-foundation-api",
+      "path": "../modules/platform/features/angular-form-close-foundation/angular-form-close-foundation-api.md",
+      "title": "Shared form close and discard protection preparation API implementation profile"
+    },
+    {
+      "id": "angular-form-close-foundation-web",
+      "path": "../modules/platform/features/angular-form-close-foundation/angular-form-close-foundation-web.md",
+      "title": "Shared form close and discard protection preparation Next.js implementation profile"
+    },
+    {
+      "id": "angular-form-close-foundation-mobile",
+      "path": "../modules/platform/features/angular-form-close-foundation/angular-form-close-foundation-mobile.md",
+      "title": "Shared form close and discard protection preparation Expo implementation profile"
+    },
+    {
+      "id": "angular-unsaved-navigation-foundation-master",
+      "path": "../modules/platform/features/angular-unsaved-navigation-foundation/angular-unsaved-navigation-foundation-review.md",
+      "title": "Shared unsaved navigation and context protection preparation cross-platform master review"
+    },
+    {
+      "id": "angular-unsaved-navigation-foundation-api",
+      "path": "../modules/platform/features/angular-unsaved-navigation-foundation/angular-unsaved-navigation-foundation-api.md",
+      "title": "Shared unsaved navigation and context protection preparation API implementation profile"
+    },
+    {
+      "id": "angular-unsaved-navigation-foundation-web",
+      "path": "../modules/platform/features/angular-unsaved-navigation-foundation/angular-unsaved-navigation-foundation-web.md",
+      "title": "Shared unsaved navigation and context protection preparation Next.js implementation profile"
+    },
+    {
+      "id": "angular-unsaved-navigation-foundation-mobile",
+      "path": "../modules/platform/features/angular-unsaved-navigation-foundation/angular-unsaved-navigation-foundation-mobile.md",
+      "title": "Shared unsaved navigation and context protection preparation Expo implementation profile"
+    },
+    {
+      "id": "angular-date-field-foundation-master",
+      "path": "../modules/platform/features/angular-date-field-foundation/angular-date-field-foundation-review.md",
+      "title": "Shared date-only field preparation cross-platform master review"
+    },
+    {
+      "id": "angular-date-field-foundation-api",
+      "path": "../modules/platform/features/angular-date-field-foundation/angular-date-field-foundation-api.md",
+      "title": "Shared date-only field preparation API implementation profile"
+    },
+    {
+      "id": "angular-date-field-foundation-web",
+      "path": "../modules/platform/features/angular-date-field-foundation/angular-date-field-foundation-web.md",
+      "title": "Shared date-only field preparation Next.js implementation profile"
+    },
+    {
+      "id": "angular-date-field-foundation-mobile",
+      "path": "../modules/platform/features/angular-date-field-foundation/angular-date-field-foundation-mobile.md",
+      "title": "Shared date-only field preparation Expo implementation profile"
+    },
+    {
+      "id": "angular-numeric-field-foundation-master",
+      "path": "../modules/platform/features/angular-numeric-field-foundation/angular-numeric-field-foundation-review.md",
+      "title": "Shared numeric field preparation cross-platform master review"
+    },
+    {
+      "id": "angular-numeric-field-foundation-api",
+      "path": "../modules/platform/features/angular-numeric-field-foundation/angular-numeric-field-foundation-api.md",
+      "title": "Shared numeric field preparation API implementation profile"
+    },
+    {
+      "id": "angular-numeric-field-foundation-web",
+      "path": "../modules/platform/features/angular-numeric-field-foundation/angular-numeric-field-foundation-web.md",
+      "title": "Shared numeric field preparation Next.js implementation profile"
+    },
+    {
+      "id": "angular-numeric-field-foundation-mobile",
+      "path": "../modules/platform/features/angular-numeric-field-foundation/angular-numeric-field-foundation-mobile.md",
+      "title": "Shared numeric field preparation Expo implementation profile"
+    },
+    {
+      "id": "angular-boolean-field-foundation-master",
+      "path": "../modules/platform/features/angular-boolean-field-foundation/angular-boolean-field-foundation-review.md",
+      "title": "Shared boolean field preparation cross-platform master review"
+    },
+    {
+      "id": "angular-boolean-field-foundation-api",
+      "path": "../modules/platform/features/angular-boolean-field-foundation/angular-boolean-field-foundation-api.md",
+      "title": "Shared boolean field preparation API implementation profile"
+    },
+    {
+      "id": "angular-boolean-field-foundation-web",
+      "path": "../modules/platform/features/angular-boolean-field-foundation/angular-boolean-field-foundation-web.md",
+      "title": "Shared boolean field preparation Next.js implementation profile"
+    },
+    {
+      "id": "angular-boolean-field-foundation-mobile",
+      "path": "../modules/platform/features/angular-boolean-field-foundation/angular-boolean-field-foundation-mobile.md",
+      "title": "Shared boolean field preparation Expo implementation profile"
+    },
+    {
+      "id": "angular-multiline-field-foundation-master",
+      "path": "../modules/platform/features/angular-multiline-field-foundation/angular-multiline-field-foundation-review.md",
+      "title": "Shared multiline text preparation cross-platform master review"
+    },
+    {
+      "id": "angular-multiline-field-foundation-api",
+      "path": "../modules/platform/features/angular-multiline-field-foundation/angular-multiline-field-foundation-api.md",
+      "title": "Shared multiline text preparation API implementation profile"
+    },
+    {
+      "id": "angular-multiline-field-foundation-web",
+      "path": "../modules/platform/features/angular-multiline-field-foundation/angular-multiline-field-foundation-web.md",
+      "title": "Shared multiline text preparation Next.js implementation profile"
+    },
+    {
+      "id": "angular-multiline-field-foundation-mobile",
+      "path": "../modules/platform/features/angular-multiline-field-foundation/angular-multiline-field-foundation-mobile.md",
+      "title": "Shared multiline text preparation Expo implementation profile"
+    },
+    {
+      "id": "angular-collection-criteria-foundation-master",
+      "path": "../modules/platform/features/angular-collection-criteria-foundation/angular-collection-criteria-foundation-review.md",
+      "title": "Shared collection criteria URL preparation cross-platform master review"
+    },
+    {
+      "id": "angular-collection-criteria-foundation-api",
+      "path": "../modules/platform/features/angular-collection-criteria-foundation/angular-collection-criteria-foundation-api.md",
+      "title": "Shared collection criteria URL preparation API implementation profile"
+    },
+    {
+      "id": "angular-collection-criteria-foundation-web",
+      "path": "../modules/platform/features/angular-collection-criteria-foundation/angular-collection-criteria-foundation-web.md",
+      "title": "Shared collection criteria URL preparation Next.js implementation profile"
+    },
+    {
+      "id": "angular-collection-criteria-foundation-mobile",
+      "path": "../modules/platform/features/angular-collection-criteria-foundation/angular-collection-criteria-foundation-mobile.md",
+      "title": "Shared collection criteria URL preparation Expo implementation profile"
+    },
+    {
+      "id": "angular-scoped-read-lifetime-foundation-master",
+      "path": "../modules/platform/features/angular-scoped-read-lifetime-foundation/angular-scoped-read-lifetime-foundation-review.md",
+      "title": "Shared scoped read lifecycle preparation cross-platform master review"
+    },
+    {
+      "id": "angular-scoped-read-lifetime-foundation-api",
+      "path": "../modules/platform/features/angular-scoped-read-lifetime-foundation/angular-scoped-read-lifetime-foundation-api.md",
+      "title": "Shared scoped read lifecycle preparation API implementation profile"
+    },
+    {
+      "id": "angular-scoped-read-lifetime-foundation-web",
+      "path": "../modules/platform/features/angular-scoped-read-lifetime-foundation/angular-scoped-read-lifetime-foundation-web.md",
+      "title": "Shared scoped read lifecycle preparation Next.js implementation profile"
+    },
+    {
+      "id": "angular-scoped-read-lifetime-foundation-mobile",
+      "path": "../modules/platform/features/angular-scoped-read-lifetime-foundation/angular-scoped-read-lifetime-foundation-mobile.md",
+      "title": "Shared scoped read lifecycle preparation Expo implementation profile"
+    },
+    {
+      "id": "angular-foundation-exit-assessment-master",
+      "path": "../modules/platform/features/angular-foundation-exit-assessment/angular-foundation-exit-assessment-review.md",
+      "title": "Foundation exit and pilot readiness assessment cross-platform master review"
+    },
+    {
+      "id": "angular-foundation-exit-assessment-api",
+      "path": "../modules/platform/features/angular-foundation-exit-assessment/angular-foundation-exit-assessment-api.md",
+      "title": "Foundation exit and pilot readiness assessment API implementation profile"
+    },
+    {
+      "id": "angular-foundation-exit-assessment-web",
+      "path": "../modules/platform/features/angular-foundation-exit-assessment/angular-foundation-exit-assessment-web.md",
+      "title": "Foundation exit and pilot readiness assessment Next.js implementation profile"
+    },
+    {
+      "id": "angular-foundation-exit-assessment-mobile",
+      "path": "../modules/platform/features/angular-foundation-exit-assessment/angular-foundation-exit-assessment-mobile.md",
+      "title": "Foundation exit and pilot readiness assessment Expo implementation profile"
+    },
+    {
+      "id": "angular-managed-reporting-adapter-master",
+      "path": "../modules/platform/features/angular-managed-reporting-adapter/angular-managed-reporting-adapter-review.md",
+      "title": "Managed reporting adapter preparation cross-platform master review"
+    },
+    {
+      "id": "angular-managed-reporting-adapter-api",
+      "path": "../modules/platform/features/angular-managed-reporting-adapter/angular-managed-reporting-adapter-api.md",
+      "title": "Managed reporting adapter preparation API implementation profile"
+    },
+    {
+      "id": "angular-managed-reporting-adapter-web",
+      "path": "../modules/platform/features/angular-managed-reporting-adapter/angular-managed-reporting-adapter-web.md",
+      "title": "Managed reporting adapter preparation Next.js implementation profile"
+    },
+    {
+      "id": "angular-managed-reporting-adapter-mobile",
+      "path": "../modules/platform/features/angular-managed-reporting-adapter/angular-managed-reporting-adapter-mobile.md",
+      "title": "Managed reporting adapter preparation Expo implementation profile"
+    },
+    {
+      "id": "angular-countries-pilot-preparation-master",
+      "path": "../modules/platform/features/angular-countries-pilot-preparation/angular-countries-pilot-preparation-review.md",
+      "title": "Countries pilot preparation cross-platform master review"
+    },
+    {
+      "id": "angular-countries-pilot-preparation-api",
+      "path": "../modules/platform/features/angular-countries-pilot-preparation/angular-countries-pilot-preparation-api.md",
+      "title": "Countries pilot preparation API implementation profile"
+    },
+    {
+      "id": "angular-countries-pilot-preparation-web",
+      "path": "../modules/platform/features/angular-countries-pilot-preparation/angular-countries-pilot-preparation-web.md",
+      "title": "Countries pilot preparation Next.js implementation profile"
+    },
+    {
+      "id": "angular-countries-pilot-preparation-mobile",
+      "path": "../modules/platform/features/angular-countries-pilot-preparation/angular-countries-pilot-preparation-mobile.md",
+      "title": "Countries pilot preparation Expo implementation profile"
+    },
+    {
+      "id": "angular-countries-read-workspace-master",
+      "path": "../modules/platform/features/angular-countries-read-workspace/angular-countries-read-workspace-review.md",
+      "title": "Countries read workspace cross-platform master review"
+    },
+    {
+      "id": "angular-countries-read-workspace-api",
+      "path": "../modules/platform/features/angular-countries-read-workspace/angular-countries-read-workspace-api.md",
+      "title": "Countries read workspace API implementation profile"
+    },
+    {
+      "id": "angular-countries-read-workspace-web",
+      "path": "../modules/platform/features/angular-countries-read-workspace/angular-countries-read-workspace-web.md",
+      "title": "Countries read workspace Next.js implementation profile"
+    },
+    {
+      "id": "angular-countries-read-workspace-mobile",
+      "path": "../modules/platform/features/angular-countries-read-workspace/angular-countries-read-workspace-mobile.md",
+      "title": "Countries read workspace Expo implementation profile"
+    },
+    {
+      "id": "angular-grid-capabilities-master",
+      "path": "../modules/platform/features/angular-grid-capabilities/angular-grid-capabilities-review.md",
+      "title": "Complete shared PrimeNG Table capabilities cross-platform master review"
+    },
+    {
+      "id": "angular-grid-capabilities-api",
+      "path": "../modules/platform/features/angular-grid-capabilities/angular-grid-capabilities-api.md",
+      "title": "Complete shared PrimeNG Table capabilities API implementation profile"
+    },
+    {
+      "id": "angular-grid-capabilities-web",
+      "path": "../modules/platform/features/angular-grid-capabilities/angular-grid-capabilities-web.md",
+      "title": "Complete shared PrimeNG Table capabilities Next.js implementation profile"
+    },
+    {
+      "id": "angular-grid-capabilities-mobile",
+      "path": "../modules/platform/features/angular-grid-capabilities/angular-grid-capabilities-mobile.md",
+      "title": "Complete shared PrimeNG Table capabilities Expo implementation profile"
+    },
+    {
+      "id": "angular-countries-edit-workflow-master",
+      "path": "../modules/platform/features/angular-countries-edit-workflow/angular-countries-edit-workflow-review.md",
+      "title": "Countries create and edit workflow cross-platform master review"
+    },
+    {
+      "id": "angular-countries-edit-workflow-api",
+      "path": "../modules/platform/features/angular-countries-edit-workflow/angular-countries-edit-workflow-api.md",
+      "title": "Countries create and edit workflow API implementation profile"
+    },
+    {
+      "id": "angular-countries-edit-workflow-web",
+      "path": "../modules/platform/features/angular-countries-edit-workflow/angular-countries-edit-workflow-web.md",
+      "title": "Countries create and edit workflow Next.js implementation profile"
+    },
+    {
+      "id": "angular-countries-edit-workflow-mobile",
+      "path": "../modules/platform/features/angular-countries-edit-workflow/angular-countries-edit-workflow-mobile.md",
+      "title": "Countries create and edit workflow Expo implementation profile"
+    },
+    {
+      "id": "angular-countries-lifecycle-master",
+      "path": "../modules/platform/features/angular-countries-lifecycle/angular-countries-lifecycle-review.md",
+      "title": "Countries archive and restore cross-platform master review"
+    },
+    {
+      "id": "angular-countries-lifecycle-api",
+      "path": "../modules/platform/features/angular-countries-lifecycle/angular-countries-lifecycle-api.md",
+      "title": "Countries archive and restore API implementation profile"
+    },
+    {
+      "id": "angular-countries-lifecycle-web",
+      "path": "../modules/platform/features/angular-countries-lifecycle/angular-countries-lifecycle-web.md",
+      "title": "Countries archive and restore Next.js implementation profile"
+    },
+    {
+      "id": "angular-countries-lifecycle-mobile",
+      "path": "../modules/platform/features/angular-countries-lifecycle/angular-countries-lifecycle-mobile.md",
+      "title": "Countries archive and restore Expo implementation profile"
+    },
+    {
+      "id": "angular-countries-chart-view-master",
+      "path": "../modules/platform/features/angular-countries-chart-view/angular-countries-chart-view-review.md",
+      "title": "Countries page-scoped charts cross-platform master review"
+    },
+    {
+      "id": "angular-countries-chart-view-api",
+      "path": "../modules/platform/features/angular-countries-chart-view/angular-countries-chart-view-api.md",
+      "title": "Countries page-scoped charts API implementation profile"
+    },
+    {
+      "id": "angular-countries-chart-view-web",
+      "path": "../modules/platform/features/angular-countries-chart-view/angular-countries-chart-view-web.md",
+      "title": "Countries page-scoped charts Next.js implementation profile"
+    },
+    {
+      "id": "angular-countries-chart-view-mobile",
+      "path": "../modules/platform/features/angular-countries-chart-view/angular-countries-chart-view-mobile.md",
+      "title": "Countries page-scoped charts Expo implementation profile"
+    },
+    {
+      "id": "angular-countries-report-view-master",
+      "path": "../modules/platform/features/angular-countries-report-view/angular-countries-report-view-review.md",
+      "title": "Countries managed report integration cross-platform master review"
+    },
+    {
+      "id": "angular-countries-report-view-api",
+      "path": "../modules/platform/features/angular-countries-report-view/angular-countries-report-view-api.md",
+      "title": "Countries managed report integration API implementation profile"
+    },
+    {
+      "id": "angular-countries-report-view-web",
+      "path": "../modules/platform/features/angular-countries-report-view/angular-countries-report-view-web.md",
+      "title": "Countries managed report integration Next.js implementation profile"
+    },
+    {
+      "id": "angular-countries-report-view-mobile",
+      "path": "../modules/platform/features/angular-countries-report-view/angular-countries-report-view-mobile.md",
+      "title": "Countries managed report integration Expo implementation profile"
     }
   ],
   "requiredFileManifests": [
@@ -759,7 +1159,27 @@
     "../modules/platform/features/angular-role-home/required-files.json",
     "../modules/platform/features/angular-company-context/required-files.json",
     "../modules/platform/features/angular-fiscal-year-context/required-files.json",
-    "../modules/platform/features/angular-module-context-navigation/required-files.json"
+    "../modules/platform/features/angular-module-context-navigation/required-files.json",
+    "../modules/platform/features/angular-collection-foundation/required-files.json",
+    "../modules/platform/features/angular-reference-selection-foundation/required-files.json",
+    "../modules/platform/features/angular-api-contract-generation-proof/required-files.json",
+    "../modules/platform/features/angular-form-close-foundation/required-files.json",
+    "../modules/platform/features/angular-unsaved-navigation-foundation/required-files.json",
+    "../modules/platform/features/angular-date-field-foundation/required-files.json",
+    "../modules/platform/features/angular-numeric-field-foundation/required-files.json",
+    "../modules/platform/features/angular-boolean-field-foundation/required-files.json",
+    "../modules/platform/features/angular-multiline-field-foundation/required-files.json",
+    "../modules/platform/features/angular-collection-criteria-foundation/required-files.json",
+    "../modules/platform/features/angular-scoped-read-lifetime-foundation/required-files.json",
+    "../modules/platform/features/angular-foundation-exit-assessment/required-files.json",
+    "../modules/platform/features/angular-managed-reporting-adapter/required-files.json",
+    "../modules/platform/features/angular-countries-pilot-preparation/required-files.json",
+    "../modules/platform/features/angular-countries-read-workspace/required-files.json",
+    "../modules/platform/features/angular-grid-capabilities/required-files.json",
+    "../modules/platform/features/angular-countries-edit-workflow/required-files.json",
+    "../modules/platform/features/angular-countries-lifecycle/required-files.json",
+    "../modules/platform/features/angular-countries-chart-view/required-files.json",
+    "../modules/platform/features/angular-countries-report-view/required-files.json"
   ],
   "recipes": [
     {
@@ -11253,6 +11673,6046 @@
         },
         {
           "book": "angular-module-context-navigation-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-collection-foundation-phase-00-implementation-preflight",
+      "title": "Angular shared collection foundation Phase 00 - Implementation Preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "../modules/platform/features/angular-collection-foundation/generated/PHASE-00-implementation-preflight.md",
+      "sources": [
+        {
+          "book": "angular-collection-foundation-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-collection-foundation-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-collection-foundation-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "angular-collection-foundation-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-collection-foundation-phase-01-domain-api",
+      "title": "Angular shared collection foundation Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "../modules/platform/features/angular-collection-foundation/generated/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "angular-collection-foundation-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "angular-collection-foundation-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-collection-foundation-phase-02-web-client",
+      "title": "Angular shared collection foundation Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "../modules/platform/features/angular-collection-foundation/generated/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "angular-collection-foundation-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-collection-foundation-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-collection-foundation-phase-03-mobile-client",
+      "title": "Angular shared collection foundation Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "../modules/platform/features/angular-collection-foundation/generated/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "angular-collection-foundation-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-collection-foundation-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-collection-foundation-phase-04-domain-actions",
+      "title": "Angular shared collection foundation Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "../modules/platform/features/angular-collection-foundation/generated/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "angular-collection-foundation-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-collection-foundation-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-collection-foundation-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-collection-foundation-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-collection-foundation-phase-05-integration-runtime",
+      "title": "Angular shared collection foundation Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "../modules/platform/features/angular-collection-foundation/generated/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "angular-collection-foundation-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "angular-collection-foundation-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-collection-foundation-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "angular-collection-foundation-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-collection-foundation-phase-06-verification-acceptance",
+      "title": "Angular shared collection foundation Phase 06 - Verification and Acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "../modules/platform/features/angular-collection-foundation/generated/PHASE-06-verification-acceptance.md",
+      "sources": [
+        {
+          "book": "angular-collection-foundation-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-collection-foundation-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-collection-foundation-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-collection-foundation-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-collection-foundation-phase-07-customer-education-closure",
+      "title": "Angular shared collection foundation Phase 07 - Customer Education and Closure",
+      "template": "templates/PHASE-07-customer-education-closure.template.md",
+      "output": "../modules/platform/features/angular-collection-foundation/generated/PHASE-07-customer-education-closure.md",
+      "sources": [
+        {
+          "book": "angular-collection-foundation-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-collection-foundation-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-collection-foundation-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-reference-selection-foundation-phase-00-implementation-preflight",
+      "title": "Angular shared reference selection foundation Phase 00 - Implementation Preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "../modules/platform/features/angular-reference-selection-foundation/generated/PHASE-00-implementation-preflight.md",
+      "sources": [
+        {
+          "book": "angular-reference-selection-foundation-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-reference-selection-foundation-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-reference-selection-foundation-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "angular-reference-selection-foundation-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-reference-selection-foundation-phase-01-domain-api",
+      "title": "Angular shared reference selection foundation Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "../modules/platform/features/angular-reference-selection-foundation/generated/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "angular-reference-selection-foundation-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "angular-reference-selection-foundation-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-reference-selection-foundation-phase-02-web-client",
+      "title": "Angular shared reference selection foundation Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "../modules/platform/features/angular-reference-selection-foundation/generated/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "angular-reference-selection-foundation-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-reference-selection-foundation-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-reference-selection-foundation-phase-03-mobile-client",
+      "title": "Angular shared reference selection foundation Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "../modules/platform/features/angular-reference-selection-foundation/generated/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "angular-reference-selection-foundation-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-reference-selection-foundation-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-reference-selection-foundation-phase-04-domain-actions",
+      "title": "Angular shared reference selection foundation Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "../modules/platform/features/angular-reference-selection-foundation/generated/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "angular-reference-selection-foundation-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-reference-selection-foundation-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-reference-selection-foundation-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-reference-selection-foundation-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-reference-selection-foundation-phase-05-integration-runtime",
+      "title": "Angular shared reference selection foundation Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "../modules/platform/features/angular-reference-selection-foundation/generated/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "angular-reference-selection-foundation-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "angular-reference-selection-foundation-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-reference-selection-foundation-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "angular-reference-selection-foundation-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-reference-selection-foundation-phase-06-verification-acceptance",
+      "title": "Angular shared reference selection foundation Phase 06 - Verification and Acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "../modules/platform/features/angular-reference-selection-foundation/generated/PHASE-06-verification-acceptance.md",
+      "sources": [
+        {
+          "book": "angular-reference-selection-foundation-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-reference-selection-foundation-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-reference-selection-foundation-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-reference-selection-foundation-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-reference-selection-foundation-phase-07-customer-education-closure",
+      "title": "Angular shared reference selection foundation Phase 07 - Customer Education and Closure",
+      "template": "templates/PHASE-07-customer-education-closure.template.md",
+      "output": "../modules/platform/features/angular-reference-selection-foundation/generated/PHASE-07-customer-education-closure.md",
+      "sources": [
+        {
+          "book": "angular-reference-selection-foundation-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-reference-selection-foundation-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-reference-selection-foundation-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-api-contract-generation-proof-phase-00-implementation-preflight",
+      "title": "Angular API contract generation compatibility proof Phase 00 - Implementation Preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "../modules/platform/features/angular-api-contract-generation-proof/generated/PHASE-00-implementation-preflight.md",
+      "sources": [
+        {
+          "book": "angular-api-contract-generation-proof-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-api-contract-generation-proof-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-api-contract-generation-proof-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "angular-api-contract-generation-proof-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-api-contract-generation-proof-phase-01-domain-api",
+      "title": "Angular API contract generation compatibility proof Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "../modules/platform/features/angular-api-contract-generation-proof/generated/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "angular-api-contract-generation-proof-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "angular-api-contract-generation-proof-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-api-contract-generation-proof-phase-02-web-client",
+      "title": "Angular API contract generation compatibility proof Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "../modules/platform/features/angular-api-contract-generation-proof/generated/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "angular-api-contract-generation-proof-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-api-contract-generation-proof-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-api-contract-generation-proof-phase-03-mobile-client",
+      "title": "Angular API contract generation compatibility proof Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "../modules/platform/features/angular-api-contract-generation-proof/generated/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "angular-api-contract-generation-proof-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-api-contract-generation-proof-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-api-contract-generation-proof-phase-04-domain-actions",
+      "title": "Angular API contract generation compatibility proof Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "../modules/platform/features/angular-api-contract-generation-proof/generated/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "angular-api-contract-generation-proof-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-api-contract-generation-proof-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-api-contract-generation-proof-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-api-contract-generation-proof-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-api-contract-generation-proof-phase-05-integration-runtime",
+      "title": "Angular API contract generation compatibility proof Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "../modules/platform/features/angular-api-contract-generation-proof/generated/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "angular-api-contract-generation-proof-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "angular-api-contract-generation-proof-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-api-contract-generation-proof-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "angular-api-contract-generation-proof-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-api-contract-generation-proof-phase-06-verification-acceptance",
+      "title": "Angular API contract generation compatibility proof Phase 06 - Verification and Acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "../modules/platform/features/angular-api-contract-generation-proof/generated/PHASE-06-verification-acceptance.md",
+      "sources": [
+        {
+          "book": "angular-api-contract-generation-proof-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-api-contract-generation-proof-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-api-contract-generation-proof-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-api-contract-generation-proof-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-api-contract-generation-proof-phase-07-customer-education-closure",
+      "title": "Angular API contract generation compatibility proof Phase 07 - Customer Education and Closure",
+      "template": "templates/PHASE-07-customer-education-closure.template.md",
+      "output": "../modules/platform/features/angular-api-contract-generation-proof/generated/PHASE-07-customer-education-closure.md",
+      "sources": [
+        {
+          "book": "angular-api-contract-generation-proof-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-api-contract-generation-proof-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-api-contract-generation-proof-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-form-close-foundation-phase-00-implementation-preflight",
+      "title": "Shared form close and discard protection preparation Phase 00 - Implementation Preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "../modules/platform/features/angular-form-close-foundation/generated/PHASE-00-implementation-preflight.md",
+      "sources": [
+        {
+          "book": "angular-form-close-foundation-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-form-close-foundation-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-form-close-foundation-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "angular-form-close-foundation-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-form-close-foundation-phase-01-domain-api",
+      "title": "Shared form close and discard protection preparation Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "../modules/platform/features/angular-form-close-foundation/generated/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "angular-form-close-foundation-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "angular-form-close-foundation-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-form-close-foundation-phase-02-web-client",
+      "title": "Shared form close and discard protection preparation Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "../modules/platform/features/angular-form-close-foundation/generated/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "angular-form-close-foundation-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-form-close-foundation-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-form-close-foundation-phase-03-mobile-client",
+      "title": "Shared form close and discard protection preparation Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "../modules/platform/features/angular-form-close-foundation/generated/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "angular-form-close-foundation-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-form-close-foundation-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-form-close-foundation-phase-04-domain-actions",
+      "title": "Shared form close and discard protection preparation Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "../modules/platform/features/angular-form-close-foundation/generated/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "angular-form-close-foundation-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-form-close-foundation-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-form-close-foundation-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-form-close-foundation-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-form-close-foundation-phase-05-integration-runtime",
+      "title": "Shared form close and discard protection preparation Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "../modules/platform/features/angular-form-close-foundation/generated/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "angular-form-close-foundation-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "angular-form-close-foundation-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-form-close-foundation-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "angular-form-close-foundation-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-form-close-foundation-phase-06-verification-acceptance",
+      "title": "Shared form close and discard protection preparation Phase 06 - Verification and Acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "../modules/platform/features/angular-form-close-foundation/generated/PHASE-06-verification-acceptance.md",
+      "sources": [
+        {
+          "book": "angular-form-close-foundation-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-form-close-foundation-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-form-close-foundation-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-form-close-foundation-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-form-close-foundation-phase-07-customer-education-closure",
+      "title": "Shared form close and discard protection preparation Phase 07 - Customer Education and Closure",
+      "template": "templates/PHASE-07-customer-education-closure.template.md",
+      "output": "../modules/platform/features/angular-form-close-foundation/generated/PHASE-07-customer-education-closure.md",
+      "sources": [
+        {
+          "book": "angular-form-close-foundation-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-form-close-foundation-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-form-close-foundation-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-unsaved-navigation-foundation-phase-00-implementation-preflight",
+      "title": "Shared unsaved navigation and context protection preparation Phase 00 - Implementation Preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "../modules/platform/features/angular-unsaved-navigation-foundation/generated/PHASE-00-implementation-preflight.md",
+      "sources": [
+        {
+          "book": "angular-unsaved-navigation-foundation-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-unsaved-navigation-foundation-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-unsaved-navigation-foundation-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "angular-unsaved-navigation-foundation-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-unsaved-navigation-foundation-phase-01-domain-api",
+      "title": "Shared unsaved navigation and context protection preparation Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "../modules/platform/features/angular-unsaved-navigation-foundation/generated/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "angular-unsaved-navigation-foundation-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "angular-unsaved-navigation-foundation-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-unsaved-navigation-foundation-phase-02-web-client",
+      "title": "Shared unsaved navigation and context protection preparation Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "../modules/platform/features/angular-unsaved-navigation-foundation/generated/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "angular-unsaved-navigation-foundation-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-unsaved-navigation-foundation-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-unsaved-navigation-foundation-phase-03-mobile-client",
+      "title": "Shared unsaved navigation and context protection preparation Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "../modules/platform/features/angular-unsaved-navigation-foundation/generated/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "angular-unsaved-navigation-foundation-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-unsaved-navigation-foundation-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-unsaved-navigation-foundation-phase-04-domain-actions",
+      "title": "Shared unsaved navigation and context protection preparation Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "../modules/platform/features/angular-unsaved-navigation-foundation/generated/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "angular-unsaved-navigation-foundation-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-unsaved-navigation-foundation-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-unsaved-navigation-foundation-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-unsaved-navigation-foundation-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-unsaved-navigation-foundation-phase-05-integration-runtime",
+      "title": "Shared unsaved navigation and context protection preparation Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "../modules/platform/features/angular-unsaved-navigation-foundation/generated/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "angular-unsaved-navigation-foundation-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "angular-unsaved-navigation-foundation-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-unsaved-navigation-foundation-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "angular-unsaved-navigation-foundation-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-unsaved-navigation-foundation-phase-06-verification-acceptance",
+      "title": "Shared unsaved navigation and context protection preparation Phase 06 - Verification and Acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "../modules/platform/features/angular-unsaved-navigation-foundation/generated/PHASE-06-verification-acceptance.md",
+      "sources": [
+        {
+          "book": "angular-unsaved-navigation-foundation-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-unsaved-navigation-foundation-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-unsaved-navigation-foundation-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-unsaved-navigation-foundation-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-unsaved-navigation-foundation-phase-07-customer-education-closure",
+      "title": "Shared unsaved navigation and context protection preparation Phase 07 - Customer Education and Closure",
+      "template": "templates/PHASE-07-customer-education-closure.template.md",
+      "output": "../modules/platform/features/angular-unsaved-navigation-foundation/generated/PHASE-07-customer-education-closure.md",
+      "sources": [
+        {
+          "book": "angular-unsaved-navigation-foundation-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-unsaved-navigation-foundation-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-unsaved-navigation-foundation-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-date-field-foundation-phase-00-implementation-preflight",
+      "title": "Shared date-only field preparation Phase 00 - Implementation Preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "../modules/platform/features/angular-date-field-foundation/generated/PHASE-00-implementation-preflight.md",
+      "sources": [
+        {
+          "book": "angular-date-field-foundation-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-date-field-foundation-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-date-field-foundation-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "angular-date-field-foundation-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-date-field-foundation-phase-01-domain-api",
+      "title": "Shared date-only field preparation Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "../modules/platform/features/angular-date-field-foundation/generated/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "angular-date-field-foundation-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "angular-date-field-foundation-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-date-field-foundation-phase-02-web-client",
+      "title": "Shared date-only field preparation Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "../modules/platform/features/angular-date-field-foundation/generated/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "angular-date-field-foundation-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-date-field-foundation-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-date-field-foundation-phase-03-mobile-client",
+      "title": "Shared date-only field preparation Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "../modules/platform/features/angular-date-field-foundation/generated/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "angular-date-field-foundation-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-date-field-foundation-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-date-field-foundation-phase-04-domain-actions",
+      "title": "Shared date-only field preparation Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "../modules/platform/features/angular-date-field-foundation/generated/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "angular-date-field-foundation-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-date-field-foundation-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-date-field-foundation-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-date-field-foundation-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-date-field-foundation-phase-05-integration-runtime",
+      "title": "Shared date-only field preparation Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "../modules/platform/features/angular-date-field-foundation/generated/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "angular-date-field-foundation-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "angular-date-field-foundation-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-date-field-foundation-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "angular-date-field-foundation-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-date-field-foundation-phase-06-verification-acceptance",
+      "title": "Shared date-only field preparation Phase 06 - Verification and Acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "../modules/platform/features/angular-date-field-foundation/generated/PHASE-06-verification-acceptance.md",
+      "sources": [
+        {
+          "book": "angular-date-field-foundation-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-date-field-foundation-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-date-field-foundation-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-date-field-foundation-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-date-field-foundation-phase-07-customer-education-closure",
+      "title": "Shared date-only field preparation Phase 07 - Customer Education and Closure",
+      "template": "templates/PHASE-07-customer-education-closure.template.md",
+      "output": "../modules/platform/features/angular-date-field-foundation/generated/PHASE-07-customer-education-closure.md",
+      "sources": [
+        {
+          "book": "angular-date-field-foundation-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-date-field-foundation-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-date-field-foundation-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-numeric-field-foundation-phase-00-implementation-preflight",
+      "title": "Shared numeric field preparation Phase 00 - Implementation Preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "../modules/platform/features/angular-numeric-field-foundation/generated/PHASE-00-implementation-preflight.md",
+      "sources": [
+        {
+          "book": "angular-numeric-field-foundation-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-numeric-field-foundation-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-numeric-field-foundation-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "angular-numeric-field-foundation-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-numeric-field-foundation-phase-01-domain-api",
+      "title": "Shared numeric field preparation Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "../modules/platform/features/angular-numeric-field-foundation/generated/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "angular-numeric-field-foundation-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "angular-numeric-field-foundation-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-numeric-field-foundation-phase-02-web-client",
+      "title": "Shared numeric field preparation Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "../modules/platform/features/angular-numeric-field-foundation/generated/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "angular-numeric-field-foundation-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-numeric-field-foundation-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-numeric-field-foundation-phase-03-mobile-client",
+      "title": "Shared numeric field preparation Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "../modules/platform/features/angular-numeric-field-foundation/generated/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "angular-numeric-field-foundation-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-numeric-field-foundation-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-numeric-field-foundation-phase-04-domain-actions",
+      "title": "Shared numeric field preparation Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "../modules/platform/features/angular-numeric-field-foundation/generated/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "angular-numeric-field-foundation-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-numeric-field-foundation-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-numeric-field-foundation-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-numeric-field-foundation-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-numeric-field-foundation-phase-05-integration-runtime",
+      "title": "Shared numeric field preparation Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "../modules/platform/features/angular-numeric-field-foundation/generated/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "angular-numeric-field-foundation-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "angular-numeric-field-foundation-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-numeric-field-foundation-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "angular-numeric-field-foundation-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-numeric-field-foundation-phase-06-verification-acceptance",
+      "title": "Shared numeric field preparation Phase 06 - Verification and Acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "../modules/platform/features/angular-numeric-field-foundation/generated/PHASE-06-verification-acceptance.md",
+      "sources": [
+        {
+          "book": "angular-numeric-field-foundation-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-numeric-field-foundation-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-numeric-field-foundation-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-numeric-field-foundation-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-numeric-field-foundation-phase-07-customer-education-closure",
+      "title": "Shared numeric field preparation Phase 07 - Customer Education and Closure",
+      "template": "templates/PHASE-07-customer-education-closure.template.md",
+      "output": "../modules/platform/features/angular-numeric-field-foundation/generated/PHASE-07-customer-education-closure.md",
+      "sources": [
+        {
+          "book": "angular-numeric-field-foundation-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-numeric-field-foundation-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-numeric-field-foundation-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-boolean-field-foundation-phase-00-implementation-preflight",
+      "title": "Shared boolean field preparation Phase 00 - Implementation Preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "../modules/platform/features/angular-boolean-field-foundation/generated/PHASE-00-implementation-preflight.md",
+      "sources": [
+        {
+          "book": "angular-boolean-field-foundation-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-boolean-field-foundation-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-boolean-field-foundation-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "angular-boolean-field-foundation-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-boolean-field-foundation-phase-01-domain-api",
+      "title": "Shared boolean field preparation Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "../modules/platform/features/angular-boolean-field-foundation/generated/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "angular-boolean-field-foundation-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "angular-boolean-field-foundation-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-boolean-field-foundation-phase-02-web-client",
+      "title": "Shared boolean field preparation Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "../modules/platform/features/angular-boolean-field-foundation/generated/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "angular-boolean-field-foundation-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-boolean-field-foundation-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-boolean-field-foundation-phase-03-mobile-client",
+      "title": "Shared boolean field preparation Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "../modules/platform/features/angular-boolean-field-foundation/generated/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "angular-boolean-field-foundation-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-boolean-field-foundation-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-boolean-field-foundation-phase-04-domain-actions",
+      "title": "Shared boolean field preparation Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "../modules/platform/features/angular-boolean-field-foundation/generated/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "angular-boolean-field-foundation-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-boolean-field-foundation-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-boolean-field-foundation-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-boolean-field-foundation-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-boolean-field-foundation-phase-05-integration-runtime",
+      "title": "Shared boolean field preparation Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "../modules/platform/features/angular-boolean-field-foundation/generated/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "angular-boolean-field-foundation-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "angular-boolean-field-foundation-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-boolean-field-foundation-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "angular-boolean-field-foundation-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-boolean-field-foundation-phase-06-verification-acceptance",
+      "title": "Shared boolean field preparation Phase 06 - Verification and Acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "../modules/platform/features/angular-boolean-field-foundation/generated/PHASE-06-verification-acceptance.md",
+      "sources": [
+        {
+          "book": "angular-boolean-field-foundation-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-boolean-field-foundation-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-boolean-field-foundation-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-boolean-field-foundation-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-boolean-field-foundation-phase-07-customer-education-closure",
+      "title": "Shared boolean field preparation Phase 07 - Customer Education and Closure",
+      "template": "templates/PHASE-07-customer-education-closure.template.md",
+      "output": "../modules/platform/features/angular-boolean-field-foundation/generated/PHASE-07-customer-education-closure.md",
+      "sources": [
+        {
+          "book": "angular-boolean-field-foundation-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-boolean-field-foundation-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-boolean-field-foundation-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-multiline-field-foundation-phase-00-implementation-preflight",
+      "title": "Shared multiline text preparation Phase 00 - Implementation Preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "../modules/platform/features/angular-multiline-field-foundation/generated/PHASE-00-implementation-preflight.md",
+      "sources": [
+        {
+          "book": "angular-multiline-field-foundation-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-multiline-field-foundation-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-multiline-field-foundation-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "angular-multiline-field-foundation-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-multiline-field-foundation-phase-01-domain-api",
+      "title": "Shared multiline text preparation Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "../modules/platform/features/angular-multiline-field-foundation/generated/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "angular-multiline-field-foundation-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "angular-multiline-field-foundation-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-multiline-field-foundation-phase-02-web-client",
+      "title": "Shared multiline text preparation Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "../modules/platform/features/angular-multiline-field-foundation/generated/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "angular-multiline-field-foundation-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-multiline-field-foundation-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-multiline-field-foundation-phase-03-mobile-client",
+      "title": "Shared multiline text preparation Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "../modules/platform/features/angular-multiline-field-foundation/generated/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "angular-multiline-field-foundation-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-multiline-field-foundation-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-multiline-field-foundation-phase-04-domain-actions",
+      "title": "Shared multiline text preparation Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "../modules/platform/features/angular-multiline-field-foundation/generated/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "angular-multiline-field-foundation-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-multiline-field-foundation-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-multiline-field-foundation-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-multiline-field-foundation-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-multiline-field-foundation-phase-05-integration-runtime",
+      "title": "Shared multiline text preparation Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "../modules/platform/features/angular-multiline-field-foundation/generated/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "angular-multiline-field-foundation-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "angular-multiline-field-foundation-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-multiline-field-foundation-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "angular-multiline-field-foundation-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-multiline-field-foundation-phase-06-verification-acceptance",
+      "title": "Shared multiline text preparation Phase 06 - Verification and Acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "../modules/platform/features/angular-multiline-field-foundation/generated/PHASE-06-verification-acceptance.md",
+      "sources": [
+        {
+          "book": "angular-multiline-field-foundation-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-multiline-field-foundation-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-multiline-field-foundation-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-multiline-field-foundation-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-multiline-field-foundation-phase-07-customer-education-closure",
+      "title": "Shared multiline text preparation Phase 07 - Customer Education and Closure",
+      "template": "templates/PHASE-07-customer-education-closure.template.md",
+      "output": "../modules/platform/features/angular-multiline-field-foundation/generated/PHASE-07-customer-education-closure.md",
+      "sources": [
+        {
+          "book": "angular-multiline-field-foundation-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-multiline-field-foundation-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-multiline-field-foundation-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-collection-criteria-foundation-phase-00-implementation-preflight",
+      "title": "Shared collection criteria URL preparation Phase 00 - Implementation Preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "../modules/platform/features/angular-collection-criteria-foundation/generated/PHASE-00-implementation-preflight.md",
+      "sources": [
+        {
+          "book": "angular-collection-criteria-foundation-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-collection-criteria-foundation-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-collection-criteria-foundation-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "angular-collection-criteria-foundation-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-collection-criteria-foundation-phase-01-domain-api",
+      "title": "Shared collection criteria URL preparation Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "../modules/platform/features/angular-collection-criteria-foundation/generated/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "angular-collection-criteria-foundation-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "angular-collection-criteria-foundation-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-collection-criteria-foundation-phase-02-web-client",
+      "title": "Shared collection criteria URL preparation Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "../modules/platform/features/angular-collection-criteria-foundation/generated/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "angular-collection-criteria-foundation-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-collection-criteria-foundation-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-collection-criteria-foundation-phase-03-mobile-client",
+      "title": "Shared collection criteria URL preparation Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "../modules/platform/features/angular-collection-criteria-foundation/generated/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "angular-collection-criteria-foundation-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-collection-criteria-foundation-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-collection-criteria-foundation-phase-04-domain-actions",
+      "title": "Shared collection criteria URL preparation Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "../modules/platform/features/angular-collection-criteria-foundation/generated/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "angular-collection-criteria-foundation-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-collection-criteria-foundation-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-collection-criteria-foundation-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-collection-criteria-foundation-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-collection-criteria-foundation-phase-05-integration-runtime",
+      "title": "Shared collection criteria URL preparation Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "../modules/platform/features/angular-collection-criteria-foundation/generated/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "angular-collection-criteria-foundation-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "angular-collection-criteria-foundation-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-collection-criteria-foundation-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "angular-collection-criteria-foundation-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-collection-criteria-foundation-phase-06-verification-acceptance",
+      "title": "Shared collection criteria URL preparation Phase 06 - Verification and Acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "../modules/platform/features/angular-collection-criteria-foundation/generated/PHASE-06-verification-acceptance.md",
+      "sources": [
+        {
+          "book": "angular-collection-criteria-foundation-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-collection-criteria-foundation-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-collection-criteria-foundation-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-collection-criteria-foundation-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-collection-criteria-foundation-phase-07-customer-education-closure",
+      "title": "Shared collection criteria URL preparation Phase 07 - Customer Education and Closure",
+      "template": "templates/PHASE-07-customer-education-closure.template.md",
+      "output": "../modules/platform/features/angular-collection-criteria-foundation/generated/PHASE-07-customer-education-closure.md",
+      "sources": [
+        {
+          "book": "angular-collection-criteria-foundation-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-collection-criteria-foundation-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-collection-criteria-foundation-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-scoped-read-lifetime-foundation-phase-00-implementation-preflight",
+      "title": "Shared scoped read lifecycle preparation Phase 00 - Implementation Preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "../modules/platform/features/angular-scoped-read-lifetime-foundation/generated/PHASE-00-implementation-preflight.md",
+      "sources": [
+        {
+          "book": "angular-scoped-read-lifetime-foundation-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-scoped-read-lifetime-foundation-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-scoped-read-lifetime-foundation-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "angular-scoped-read-lifetime-foundation-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-scoped-read-lifetime-foundation-phase-01-domain-api",
+      "title": "Shared scoped read lifecycle preparation Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "../modules/platform/features/angular-scoped-read-lifetime-foundation/generated/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "angular-scoped-read-lifetime-foundation-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "angular-scoped-read-lifetime-foundation-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-scoped-read-lifetime-foundation-phase-02-web-client",
+      "title": "Shared scoped read lifecycle preparation Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "../modules/platform/features/angular-scoped-read-lifetime-foundation/generated/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "angular-scoped-read-lifetime-foundation-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-scoped-read-lifetime-foundation-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-scoped-read-lifetime-foundation-phase-03-mobile-client",
+      "title": "Shared scoped read lifecycle preparation Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "../modules/platform/features/angular-scoped-read-lifetime-foundation/generated/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "angular-scoped-read-lifetime-foundation-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-scoped-read-lifetime-foundation-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-scoped-read-lifetime-foundation-phase-04-domain-actions",
+      "title": "Shared scoped read lifecycle preparation Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "../modules/platform/features/angular-scoped-read-lifetime-foundation/generated/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "angular-scoped-read-lifetime-foundation-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-scoped-read-lifetime-foundation-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-scoped-read-lifetime-foundation-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-scoped-read-lifetime-foundation-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-scoped-read-lifetime-foundation-phase-05-integration-runtime",
+      "title": "Shared scoped read lifecycle preparation Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "../modules/platform/features/angular-scoped-read-lifetime-foundation/generated/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "angular-scoped-read-lifetime-foundation-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "angular-scoped-read-lifetime-foundation-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-scoped-read-lifetime-foundation-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "angular-scoped-read-lifetime-foundation-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-scoped-read-lifetime-foundation-phase-06-verification-acceptance",
+      "title": "Shared scoped read lifecycle preparation Phase 06 - Verification and Acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "../modules/platform/features/angular-scoped-read-lifetime-foundation/generated/PHASE-06-verification-acceptance.md",
+      "sources": [
+        {
+          "book": "angular-scoped-read-lifetime-foundation-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-scoped-read-lifetime-foundation-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-scoped-read-lifetime-foundation-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-scoped-read-lifetime-foundation-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-scoped-read-lifetime-foundation-phase-07-customer-education-closure",
+      "title": "Shared scoped read lifecycle preparation Phase 07 - Customer Education and Closure",
+      "template": "templates/PHASE-07-customer-education-closure.template.md",
+      "output": "../modules/platform/features/angular-scoped-read-lifetime-foundation/generated/PHASE-07-customer-education-closure.md",
+      "sources": [
+        {
+          "book": "angular-scoped-read-lifetime-foundation-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-scoped-read-lifetime-foundation-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-scoped-read-lifetime-foundation-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-foundation-exit-assessment-phase-00-implementation-preflight",
+      "title": "Foundation exit and pilot readiness assessment Phase 00 - Implementation Preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "../modules/platform/features/angular-foundation-exit-assessment/generated/PHASE-00-implementation-preflight.md",
+      "sources": [
+        {
+          "book": "angular-foundation-exit-assessment-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-foundation-exit-assessment-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-foundation-exit-assessment-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "angular-foundation-exit-assessment-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-foundation-exit-assessment-phase-01-domain-api",
+      "title": "Foundation exit and pilot readiness assessment Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "../modules/platform/features/angular-foundation-exit-assessment/generated/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "angular-foundation-exit-assessment-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "angular-foundation-exit-assessment-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-foundation-exit-assessment-phase-02-web-client",
+      "title": "Foundation exit and pilot readiness assessment Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "../modules/platform/features/angular-foundation-exit-assessment/generated/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "angular-foundation-exit-assessment-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-foundation-exit-assessment-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-foundation-exit-assessment-phase-03-mobile-client",
+      "title": "Foundation exit and pilot readiness assessment Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "../modules/platform/features/angular-foundation-exit-assessment/generated/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "angular-foundation-exit-assessment-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-foundation-exit-assessment-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-foundation-exit-assessment-phase-04-domain-actions",
+      "title": "Foundation exit and pilot readiness assessment Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "../modules/platform/features/angular-foundation-exit-assessment/generated/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "angular-foundation-exit-assessment-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-foundation-exit-assessment-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-foundation-exit-assessment-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-foundation-exit-assessment-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-foundation-exit-assessment-phase-05-integration-runtime",
+      "title": "Foundation exit and pilot readiness assessment Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "../modules/platform/features/angular-foundation-exit-assessment/generated/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "angular-foundation-exit-assessment-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "angular-foundation-exit-assessment-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-foundation-exit-assessment-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "angular-foundation-exit-assessment-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-foundation-exit-assessment-phase-06-verification-acceptance",
+      "title": "Foundation exit and pilot readiness assessment Phase 06 - Verification and Acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "../modules/platform/features/angular-foundation-exit-assessment/generated/PHASE-06-verification-acceptance.md",
+      "sources": [
+        {
+          "book": "angular-foundation-exit-assessment-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-foundation-exit-assessment-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-foundation-exit-assessment-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-foundation-exit-assessment-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-foundation-exit-assessment-phase-07-customer-education-closure",
+      "title": "Foundation exit and pilot readiness assessment Phase 07 - Customer Education and Closure",
+      "template": "templates/PHASE-07-customer-education-closure.template.md",
+      "output": "../modules/platform/features/angular-foundation-exit-assessment/generated/PHASE-07-customer-education-closure.md",
+      "sources": [
+        {
+          "book": "angular-foundation-exit-assessment-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-foundation-exit-assessment-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-foundation-exit-assessment-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-managed-reporting-adapter-phase-00-implementation-preflight",
+      "title": "Managed reporting adapter preparation Phase 00 - Implementation Preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "../modules/platform/features/angular-managed-reporting-adapter/generated/PHASE-00-implementation-preflight.md",
+      "sources": [
+        {
+          "book": "angular-managed-reporting-adapter-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-managed-reporting-adapter-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-managed-reporting-adapter-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "angular-managed-reporting-adapter-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-managed-reporting-adapter-phase-01-domain-api",
+      "title": "Managed reporting adapter preparation Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "../modules/platform/features/angular-managed-reporting-adapter/generated/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "angular-managed-reporting-adapter-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "angular-managed-reporting-adapter-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-managed-reporting-adapter-phase-02-web-client",
+      "title": "Managed reporting adapter preparation Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "../modules/platform/features/angular-managed-reporting-adapter/generated/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "angular-managed-reporting-adapter-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-managed-reporting-adapter-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-managed-reporting-adapter-phase-03-mobile-client",
+      "title": "Managed reporting adapter preparation Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "../modules/platform/features/angular-managed-reporting-adapter/generated/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "angular-managed-reporting-adapter-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-managed-reporting-adapter-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-managed-reporting-adapter-phase-04-domain-actions",
+      "title": "Managed reporting adapter preparation Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "../modules/platform/features/angular-managed-reporting-adapter/generated/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "angular-managed-reporting-adapter-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-managed-reporting-adapter-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-managed-reporting-adapter-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-managed-reporting-adapter-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-managed-reporting-adapter-phase-05-integration-runtime",
+      "title": "Managed reporting adapter preparation Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "../modules/platform/features/angular-managed-reporting-adapter/generated/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "angular-managed-reporting-adapter-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "angular-managed-reporting-adapter-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-managed-reporting-adapter-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "angular-managed-reporting-adapter-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-managed-reporting-adapter-phase-06-verification-acceptance",
+      "title": "Managed reporting adapter preparation Phase 06 - Verification and Acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "../modules/platform/features/angular-managed-reporting-adapter/generated/PHASE-06-verification-acceptance.md",
+      "sources": [
+        {
+          "book": "angular-managed-reporting-adapter-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-managed-reporting-adapter-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-managed-reporting-adapter-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-managed-reporting-adapter-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-managed-reporting-adapter-phase-07-customer-education-closure",
+      "title": "Managed reporting adapter preparation Phase 07 - Customer Education and Closure",
+      "template": "templates/PHASE-07-customer-education-closure.template.md",
+      "output": "../modules/platform/features/angular-managed-reporting-adapter/generated/PHASE-07-customer-education-closure.md",
+      "sources": [
+        {
+          "book": "angular-managed-reporting-adapter-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-managed-reporting-adapter-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-managed-reporting-adapter-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-pilot-preparation-phase-00-implementation-preflight",
+      "title": "Countries pilot preparation Phase 00 - Implementation Preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "../modules/platform/features/angular-countries-pilot-preparation/generated/PHASE-00-implementation-preflight.md",
+      "sources": [
+        {
+          "book": "angular-countries-pilot-preparation-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-countries-pilot-preparation-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-countries-pilot-preparation-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "angular-countries-pilot-preparation-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-pilot-preparation-phase-01-domain-api",
+      "title": "Countries pilot preparation Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "../modules/platform/features/angular-countries-pilot-preparation/generated/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "angular-countries-pilot-preparation-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "angular-countries-pilot-preparation-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-pilot-preparation-phase-02-web-client",
+      "title": "Countries pilot preparation Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "../modules/platform/features/angular-countries-pilot-preparation/generated/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "angular-countries-pilot-preparation-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-countries-pilot-preparation-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-pilot-preparation-phase-03-mobile-client",
+      "title": "Countries pilot preparation Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "../modules/platform/features/angular-countries-pilot-preparation/generated/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "angular-countries-pilot-preparation-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-countries-pilot-preparation-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-pilot-preparation-phase-04-domain-actions",
+      "title": "Countries pilot preparation Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "../modules/platform/features/angular-countries-pilot-preparation/generated/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "angular-countries-pilot-preparation-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-countries-pilot-preparation-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-countries-pilot-preparation-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-countries-pilot-preparation-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-pilot-preparation-phase-05-integration-runtime",
+      "title": "Countries pilot preparation Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "../modules/platform/features/angular-countries-pilot-preparation/generated/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "angular-countries-pilot-preparation-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "angular-countries-pilot-preparation-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-countries-pilot-preparation-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "angular-countries-pilot-preparation-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-pilot-preparation-phase-06-verification-acceptance",
+      "title": "Countries pilot preparation Phase 06 - Verification and Acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "../modules/platform/features/angular-countries-pilot-preparation/generated/PHASE-06-verification-acceptance.md",
+      "sources": [
+        {
+          "book": "angular-countries-pilot-preparation-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-countries-pilot-preparation-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-countries-pilot-preparation-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-countries-pilot-preparation-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-pilot-preparation-phase-07-customer-education-closure",
+      "title": "Countries pilot preparation Phase 07 - Customer Education and Closure",
+      "template": "templates/PHASE-07-customer-education-closure.template.md",
+      "output": "../modules/platform/features/angular-countries-pilot-preparation/generated/PHASE-07-customer-education-closure.md",
+      "sources": [
+        {
+          "book": "angular-countries-pilot-preparation-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-countries-pilot-preparation-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-countries-pilot-preparation-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-read-workspace-phase-00-implementation-preflight",
+      "title": "Countries read workspace Phase 00 - Implementation Preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "../modules/platform/features/angular-countries-read-workspace/generated/PHASE-00-implementation-preflight.md",
+      "sources": [
+        {
+          "book": "angular-countries-read-workspace-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-countries-read-workspace-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-countries-read-workspace-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "angular-countries-read-workspace-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-read-workspace-phase-01-domain-api",
+      "title": "Countries read workspace Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "../modules/platform/features/angular-countries-read-workspace/generated/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "angular-countries-read-workspace-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "angular-countries-read-workspace-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-read-workspace-phase-02-web-client",
+      "title": "Countries read workspace Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "../modules/platform/features/angular-countries-read-workspace/generated/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "angular-countries-read-workspace-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-countries-read-workspace-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-read-workspace-phase-03-mobile-client",
+      "title": "Countries read workspace Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "../modules/platform/features/angular-countries-read-workspace/generated/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "angular-countries-read-workspace-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-countries-read-workspace-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-read-workspace-phase-04-domain-actions",
+      "title": "Countries read workspace Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "../modules/platform/features/angular-countries-read-workspace/generated/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "angular-countries-read-workspace-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-countries-read-workspace-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-countries-read-workspace-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-countries-read-workspace-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-read-workspace-phase-05-integration-runtime",
+      "title": "Countries read workspace Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "../modules/platform/features/angular-countries-read-workspace/generated/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "angular-countries-read-workspace-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "angular-countries-read-workspace-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-countries-read-workspace-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "angular-countries-read-workspace-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-read-workspace-phase-06-verification-acceptance",
+      "title": "Countries read workspace Phase 06 - Verification and Acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "../modules/platform/features/angular-countries-read-workspace/generated/PHASE-06-verification-acceptance.md",
+      "sources": [
+        {
+          "book": "angular-countries-read-workspace-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-countries-read-workspace-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-countries-read-workspace-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-countries-read-workspace-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-read-workspace-phase-07-customer-education-closure",
+      "title": "Countries read workspace Phase 07 - Customer Education and Closure",
+      "template": "templates/PHASE-07-customer-education-closure.template.md",
+      "output": "../modules/platform/features/angular-countries-read-workspace/generated/PHASE-07-customer-education-closure.md",
+      "sources": [
+        {
+          "book": "angular-countries-read-workspace-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-countries-read-workspace-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-countries-read-workspace-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-grid-capabilities-phase-00-implementation-preflight",
+      "title": "Complete shared PrimeNG Table capabilities Phase 00 - Implementation Preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "../modules/platform/features/angular-grid-capabilities/generated/PHASE-00-implementation-preflight.md",
+      "sources": [
+        {
+          "book": "angular-grid-capabilities-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-grid-capabilities-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-grid-capabilities-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "angular-grid-capabilities-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-grid-capabilities-phase-01-domain-api",
+      "title": "Complete shared PrimeNG Table capabilities Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "../modules/platform/features/angular-grid-capabilities/generated/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "angular-grid-capabilities-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "angular-grid-capabilities-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-grid-capabilities-phase-02-web-client",
+      "title": "Complete shared PrimeNG Table capabilities Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "../modules/platform/features/angular-grid-capabilities/generated/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "angular-grid-capabilities-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-grid-capabilities-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-grid-capabilities-phase-03-mobile-client",
+      "title": "Complete shared PrimeNG Table capabilities Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "../modules/platform/features/angular-grid-capabilities/generated/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "angular-grid-capabilities-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-grid-capabilities-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-grid-capabilities-phase-04-domain-actions",
+      "title": "Complete shared PrimeNG Table capabilities Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "../modules/platform/features/angular-grid-capabilities/generated/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "angular-grid-capabilities-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-grid-capabilities-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-grid-capabilities-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-grid-capabilities-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-grid-capabilities-phase-05-integration-runtime",
+      "title": "Complete shared PrimeNG Table capabilities Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "../modules/platform/features/angular-grid-capabilities/generated/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "angular-grid-capabilities-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "angular-grid-capabilities-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-grid-capabilities-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "angular-grid-capabilities-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-grid-capabilities-phase-06-verification-acceptance",
+      "title": "Complete shared PrimeNG Table capabilities Phase 06 - Verification and Acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "../modules/platform/features/angular-grid-capabilities/generated/PHASE-06-verification-acceptance.md",
+      "sources": [
+        {
+          "book": "angular-grid-capabilities-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-grid-capabilities-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-grid-capabilities-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-grid-capabilities-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-grid-capabilities-phase-07-customer-education-closure",
+      "title": "Complete shared PrimeNG Table capabilities Phase 07 - Customer Education and Closure",
+      "template": "templates/PHASE-07-customer-education-closure.template.md",
+      "output": "../modules/platform/features/angular-grid-capabilities/generated/PHASE-07-customer-education-closure.md",
+      "sources": [
+        {
+          "book": "angular-grid-capabilities-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-grid-capabilities-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-grid-capabilities-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-edit-workflow-phase-00-implementation-preflight",
+      "title": "Countries create and edit workflow Phase 00 - Implementation Preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "../modules/platform/features/angular-countries-edit-workflow/generated/PHASE-00-implementation-preflight.md",
+      "sources": [
+        {
+          "book": "angular-countries-edit-workflow-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-countries-edit-workflow-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-countries-edit-workflow-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "angular-countries-edit-workflow-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-edit-workflow-phase-01-domain-api",
+      "title": "Countries create and edit workflow Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "../modules/platform/features/angular-countries-edit-workflow/generated/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "angular-countries-edit-workflow-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "angular-countries-edit-workflow-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-edit-workflow-phase-02-web-client",
+      "title": "Countries create and edit workflow Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "../modules/platform/features/angular-countries-edit-workflow/generated/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "angular-countries-edit-workflow-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-countries-edit-workflow-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-edit-workflow-phase-03-mobile-client",
+      "title": "Countries create and edit workflow Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "../modules/platform/features/angular-countries-edit-workflow/generated/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "angular-countries-edit-workflow-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-countries-edit-workflow-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-edit-workflow-phase-04-domain-actions",
+      "title": "Countries create and edit workflow Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "../modules/platform/features/angular-countries-edit-workflow/generated/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "angular-countries-edit-workflow-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-countries-edit-workflow-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-countries-edit-workflow-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-countries-edit-workflow-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-edit-workflow-phase-05-integration-runtime",
+      "title": "Countries create and edit workflow Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "../modules/platform/features/angular-countries-edit-workflow/generated/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "angular-countries-edit-workflow-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "angular-countries-edit-workflow-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-countries-edit-workflow-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "angular-countries-edit-workflow-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-edit-workflow-phase-06-verification-acceptance",
+      "title": "Countries create and edit workflow Phase 06 - Verification and Acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "../modules/platform/features/angular-countries-edit-workflow/generated/PHASE-06-verification-acceptance.md",
+      "sources": [
+        {
+          "book": "angular-countries-edit-workflow-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-countries-edit-workflow-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-countries-edit-workflow-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-countries-edit-workflow-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-edit-workflow-phase-07-customer-education-closure",
+      "title": "Countries create and edit workflow Phase 07 - Customer Education and Closure",
+      "template": "templates/PHASE-07-customer-education-closure.template.md",
+      "output": "../modules/platform/features/angular-countries-edit-workflow/generated/PHASE-07-customer-education-closure.md",
+      "sources": [
+        {
+          "book": "angular-countries-edit-workflow-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-countries-edit-workflow-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-countries-edit-workflow-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-lifecycle-phase-00-implementation-preflight",
+      "title": "Countries archive and restore Phase 00 - Implementation Preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "../modules/platform/features/angular-countries-lifecycle/generated/PHASE-00-implementation-preflight.md",
+      "sources": [
+        {
+          "book": "angular-countries-lifecycle-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-countries-lifecycle-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-countries-lifecycle-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "angular-countries-lifecycle-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-lifecycle-phase-01-domain-api",
+      "title": "Countries archive and restore Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "../modules/platform/features/angular-countries-lifecycle/generated/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "angular-countries-lifecycle-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "angular-countries-lifecycle-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-lifecycle-phase-02-web-client",
+      "title": "Countries archive and restore Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "../modules/platform/features/angular-countries-lifecycle/generated/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "angular-countries-lifecycle-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-countries-lifecycle-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-lifecycle-phase-03-mobile-client",
+      "title": "Countries archive and restore Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "../modules/platform/features/angular-countries-lifecycle/generated/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "angular-countries-lifecycle-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-countries-lifecycle-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-lifecycle-phase-04-domain-actions",
+      "title": "Countries archive and restore Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "../modules/platform/features/angular-countries-lifecycle/generated/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "angular-countries-lifecycle-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-countries-lifecycle-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-countries-lifecycle-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-countries-lifecycle-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-lifecycle-phase-05-integration-runtime",
+      "title": "Countries archive and restore Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "../modules/platform/features/angular-countries-lifecycle/generated/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "angular-countries-lifecycle-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "angular-countries-lifecycle-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-countries-lifecycle-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "angular-countries-lifecycle-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-lifecycle-phase-06-verification-acceptance",
+      "title": "Countries archive and restore Phase 06 - Verification and Acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "../modules/platform/features/angular-countries-lifecycle/generated/PHASE-06-verification-acceptance.md",
+      "sources": [
+        {
+          "book": "angular-countries-lifecycle-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-countries-lifecycle-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-countries-lifecycle-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-countries-lifecycle-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-lifecycle-phase-07-customer-education-closure",
+      "title": "Countries archive and restore Phase 07 - Customer Education and Closure",
+      "template": "templates/PHASE-07-customer-education-closure.template.md",
+      "output": "../modules/platform/features/angular-countries-lifecycle/generated/PHASE-07-customer-education-closure.md",
+      "sources": [
+        {
+          "book": "angular-countries-lifecycle-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-countries-lifecycle-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-countries-lifecycle-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-chart-view-phase-00-implementation-preflight",
+      "title": "Countries page-scoped charts Phase 00 - Implementation Preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "../modules/platform/features/angular-countries-chart-view/generated/PHASE-00-implementation-preflight.md",
+      "sources": [
+        {
+          "book": "angular-countries-chart-view-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-countries-chart-view-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-countries-chart-view-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "angular-countries-chart-view-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-chart-view-phase-01-domain-api",
+      "title": "Countries page-scoped charts Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "../modules/platform/features/angular-countries-chart-view/generated/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "angular-countries-chart-view-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "angular-countries-chart-view-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-chart-view-phase-02-web-client",
+      "title": "Countries page-scoped charts Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "../modules/platform/features/angular-countries-chart-view/generated/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "angular-countries-chart-view-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-countries-chart-view-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-chart-view-phase-03-mobile-client",
+      "title": "Countries page-scoped charts Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "../modules/platform/features/angular-countries-chart-view/generated/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "angular-countries-chart-view-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-countries-chart-view-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-chart-view-phase-04-domain-actions",
+      "title": "Countries page-scoped charts Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "../modules/platform/features/angular-countries-chart-view/generated/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "angular-countries-chart-view-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-countries-chart-view-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-countries-chart-view-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-countries-chart-view-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-chart-view-phase-05-integration-runtime",
+      "title": "Countries page-scoped charts Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "../modules/platform/features/angular-countries-chart-view/generated/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "angular-countries-chart-view-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "angular-countries-chart-view-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-countries-chart-view-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "angular-countries-chart-view-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-chart-view-phase-06-verification-acceptance",
+      "title": "Countries page-scoped charts Phase 06 - Verification and Acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "../modules/platform/features/angular-countries-chart-view/generated/PHASE-06-verification-acceptance.md",
+      "sources": [
+        {
+          "book": "angular-countries-chart-view-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-countries-chart-view-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-countries-chart-view-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-countries-chart-view-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-chart-view-phase-07-customer-education-closure",
+      "title": "Countries page-scoped charts Phase 07 - Customer Education and Closure",
+      "template": "templates/PHASE-07-customer-education-closure.template.md",
+      "output": "../modules/platform/features/angular-countries-chart-view/generated/PHASE-07-customer-education-closure.md",
+      "sources": [
+        {
+          "book": "angular-countries-chart-view-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-countries-chart-view-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-countries-chart-view-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-report-view-phase-00-implementation-preflight",
+      "title": "Countries managed report integration Phase 00 - Implementation Preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "../modules/platform/features/angular-countries-report-view/generated/PHASE-00-implementation-preflight.md",
+      "sources": [
+        {
+          "book": "angular-countries-report-view-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-countries-report-view-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-countries-report-view-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "angular-countries-report-view-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-report-view-phase-01-domain-api",
+      "title": "Countries managed report integration Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "../modules/platform/features/angular-countries-report-view/generated/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "angular-countries-report-view-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "angular-countries-report-view-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-report-view-phase-02-web-client",
+      "title": "Countries managed report integration Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "../modules/platform/features/angular-countries-report-view/generated/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "angular-countries-report-view-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-countries-report-view-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-report-view-phase-03-mobile-client",
+      "title": "Countries managed report integration Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "../modules/platform/features/angular-countries-report-view/generated/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "angular-countries-report-view-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-countries-report-view-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-report-view-phase-04-domain-actions",
+      "title": "Countries managed report integration Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "../modules/platform/features/angular-countries-report-view/generated/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "angular-countries-report-view-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-countries-report-view-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-countries-report-view-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-countries-report-view-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-report-view-phase-05-integration-runtime",
+      "title": "Countries managed report integration Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "../modules/platform/features/angular-countries-report-view/generated/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "angular-countries-report-view-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "angular-countries-report-view-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-countries-report-view-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "angular-countries-report-view-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-report-view-phase-06-verification-acceptance",
+      "title": "Countries managed report integration Phase 06 - Verification and Acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "../modules/platform/features/angular-countries-report-view/generated/PHASE-06-verification-acceptance.md",
+      "sources": [
+        {
+          "book": "angular-countries-report-view-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-countries-report-view-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-countries-report-view-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-countries-report-view-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-report-view-phase-07-customer-education-closure",
+      "title": "Countries managed report integration Phase 07 - Customer Education and Closure",
+      "template": "templates/PHASE-07-customer-education-closure.template.md",
+      "output": "../modules/platform/features/angular-countries-report-view/generated/PHASE-07-customer-education-closure.md",
+      "sources": [
+        {
+          "book": "angular-countries-report-view-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-countries-report-view-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-countries-report-view-mobile",
           "sections": [
             14,
             15

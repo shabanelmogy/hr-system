@@ -1,0 +1,138 @@
+[
+  {
+    "palette": "green",
+    "mode": "light",
+    "language": "en",
+    "width": 390,
+    "geometry": {
+      "x": 16,
+      "y": 367.984375,
+      "width": 358,
+      "height": 214.03125,
+      "footerBottom": 581.015625,
+      "labelled": true,
+      "pageWidth": 390,
+      "viewportHeight": 950
+    },
+    "passed": true
+  },
+  {
+    "palette": "green",
+    "mode": "light",
+    "language": "en",
+    "width": 1440,
+    "geometry": {
+      "x": 420,
+      "y": 377.984375,
+      "width": 600,
+      "height": 194.015625,
+      "footerBottom": 571,
+      "labelled": true,
+      "pageWidth": 1440,
+      "viewportHeight": 950
+    },
+    "passed": true
+  },
+  {
+    "palette": "green",
+    "mode": "light",
+    "language": "ar",
+    "width": 390,
+    "geometry": {
+      "x": 16,
+      "y": 377.984375,
+      "width": 358,
+      "height": 194.015625,
+      "footerBottom": 571,
+      "labelled": true,
+      "pageWidth": 390,
+      "viewportHeight": 950
+    },
+    "passed": true
+  },
+  {
+    "palette": "green",
+    "mode": "light",
+    "language": "ar",
+    "width": 1440,
+    "geometry": {
+      "x": 420,
+      "y": 377.984375,
+      "width": 600,
+      "height": 194.015625,
+      "footerBottom": 571,
+      "labelled": true,
+      "pageWidth": 1440,
+      "viewportHeight": 950
+    },
+    "passed": true
+  },
+  {
+    "palette": "green",
+    "mode": "dark",
+    "language": "en",
+    "width": 390,
+    "geometry": {
+      "x": 16,
+      "y": 367.984375,
+      "width": 358,
+      "height": 214.03125,
+      "footerBottom": 581.015625,
+      "labelled": true,
+      "pageWidth": 390,
+      "viewportHeight": 950
+    },
+    "passed": true
+  },
+  {
+    "palette": "green",
+    "mode": "dark",
+    "language": "en",
+    "width": 1440,
+    "geometry": {
+      "x": 420,
+      "y": 377.984375,
+      "width": 600,
+      "height": 194.015625,
+      "footerBottom": 571,
+      "labelled": true,
+      "pageWidth": 1440,
+      "viewportHeight": 950
+    },
+    "passed": true
+  },
+  {
+    "palette": "green",
+    "mode": "dark",
+    "language": "ar",
+    "width": 390,
+    "geometry": {
+      "x": 16,
+      "y": 377.984375,
+      "width": 358,
+      "height": 194.015625,
+      "footerBottom": 571,
+      "labelled": true,
+      "pageWidth": 390,
+      "viewportHeight": 950
+    },
+    "passed": true
+  },
+  {
+    "palette": "green",
+    "mode": "dark",
+    "language": "ar",
+    "width": 1440,
+    "geometry": {
+      "x": 420,
+      "y": 377.984375,
+      "width": 600,
+      "height": 194.015625,
+      "footerBottom": 571,
+      "labelled": true,
+      "pageWidth": 1440,
+      "viewportHeight": 950
+    },
+    "passed": true
+  }
+]

@@ -1,0 +1,340 @@
+{
+  "status": "draft",
+  "executionMode": "preflight-only",
+  "runtimeAuthorized": false,
+  "referenceFeature": "N/A",
+  "planId": "web-angular-migration",
+  "sliceId": "S1-A7 — Shared date-only field preparation",
+  "canonicalPlan": "documentation/plans/business/web-angular-migration/PLAN.md",
+  "featureDecompositionDecision": "Single feature",
+  "screenWorkflowContract": "documentation/plans/business/web-angular-migration/decomposition/angular-date-field-foundation.md",
+  "plannedCustomerEducation": "documentation/plans/business/web-angular-migration/education/angular-date-field-foundation.md",
+  "instructions": "Merge these entries into recipe-manifest.json after Phase 00 has a final preflight required-files.json and all four initial applied implementation books. Extend the manifest/books with runtime evidence during implementation.",
+  "books": [
+    {
+      "id": "angular-date-field-foundation-master",
+      "path": "../modules/platform/features/angular-date-field-foundation/angular-date-field-foundation-review.md",
+      "title": "Shared date-only field preparation cross-platform master review"
+    },
+    {
+      "id": "angular-date-field-foundation-api",
+      "path": "../modules/platform/features/angular-date-field-foundation/angular-date-field-foundation-api.md",
+      "title": "Shared date-only field preparation API implementation profile"
+    },
+    {
+      "id": "angular-date-field-foundation-web",
+      "path": "../modules/platform/features/angular-date-field-foundation/angular-date-field-foundation-web.md",
+      "title": "Shared date-only field preparation Next.js implementation profile"
+    },
+    {
+      "id": "angular-date-field-foundation-mobile",
+      "path": "../modules/platform/features/angular-date-field-foundation/angular-date-field-foundation-mobile.md",
+      "title": "Shared date-only field preparation Expo implementation profile"
+    }
+  ],
+  "requiredFileManifest": "../modules/platform/features/angular-date-field-foundation/required-files.json",
+  "recipes": [
+    {
+      "id": "angular-date-field-foundation-phase-00-implementation-preflight",
+      "title": "Shared date-only field preparation Phase 00 - Implementation Preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "../modules/platform/features/angular-date-field-foundation/generated/PHASE-00-implementation-preflight.md",
+      "sources": [
+        {
+          "book": "angular-date-field-foundation-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-date-field-foundation-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-date-field-foundation-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "angular-date-field-foundation-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-date-field-foundation-phase-01-domain-api",
+      "title": "Shared date-only field preparation Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "../modules/platform/features/angular-date-field-foundation/generated/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "angular-date-field-foundation-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "angular-date-field-foundation-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-date-field-foundation-phase-02-web-client",
+      "title": "Shared date-only field preparation Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "../modules/platform/features/angular-date-field-foundation/generated/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "angular-date-field-foundation-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-date-field-foundation-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-date-field-foundation-phase-03-mobile-client",
+      "title": "Shared date-only field preparation Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "../modules/platform/features/angular-date-field-foundation/generated/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "angular-date-field-foundation-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-date-field-foundation-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-date-field-foundation-phase-04-domain-actions",
+      "title": "Shared date-only field preparation Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "../modules/platform/features/angular-date-field-foundation/generated/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "angular-date-field-foundation-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-date-field-foundation-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-date-field-foundation-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-date-field-foundation-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-date-field-foundation-phase-05-integration-runtime",
+      "title": "Shared date-only field preparation Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "../modules/platform/features/angular-date-field-foundation/generated/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "angular-date-field-foundation-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "angular-date-field-foundation-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-date-field-foundation-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "angular-date-field-foundation-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-date-field-foundation-phase-06-verification-acceptance",
+      "title": "Shared date-only field preparation Phase 06 - Verification and Acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "../modules/platform/features/angular-date-field-foundation/generated/PHASE-06-verification-acceptance.md",
+      "sources": [
+        {
+          "book": "angular-date-field-foundation-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-date-field-foundation-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-date-field-foundation-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-date-field-foundation-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-date-field-foundation-phase-07-customer-education-closure",
+      "title": "Shared date-only field preparation Phase 07 - Customer Education and Closure",
+      "template": "templates/PHASE-07-customer-education-closure.template.md",
+      "output": "../modules/platform/features/angular-date-field-foundation/generated/PHASE-07-customer-education-closure.md",
+      "sources": [
+        {
+          "book": "angular-date-field-foundation-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-date-field-foundation-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-date-field-foundation-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    }
+  ]
+}

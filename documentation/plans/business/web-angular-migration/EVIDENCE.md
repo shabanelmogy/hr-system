@@ -46,3 +46,12 @@ exhaustive feature-completeness or live runtime certification.
 No Angular app/BFF/dependency/schema change was made during planning. No browser,
 live API/database, performance or deployment verification is claimed for Angular.
 Inherited failures keep their central notes; migration does not close them.
+
+## Requester scope correction —2026-10-30 DEC-028
+
+ActiveReports viewer/designer/SDK and associated authoring/licensing work are
+Excluded from Angular migration by explicit requester instruction. References to
+existing Next/native/API implementations are source evidence only and do not
+reinstate that target. Current Angular reporting uses managed Crystal/PDF. Other
+reporting manager, permissions, binary transport and PDF lifecycle requirements
+remain governed by their owning contracts. No ActiveReports runtime placeholder.

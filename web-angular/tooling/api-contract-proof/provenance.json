@@ -1,0 +1,18 @@
+{
+  "apiVersion": "1.0",
+  "openapi": "3.0.4",
+  "projectionSha256": "6bc3f900b5921fa4baec8ed1574be6b0e3b776a281eec59039a2d393ace400f9",
+  "proofTags": [
+    "Countries",
+    "EnvelopeAmendments",
+    "Files",
+    "FiscalYears"
+  ],
+  "rawByteLength": 792353,
+  "rawSha256": "5cc5eeb788439efb0fd8fa900561ba668cae437d25a29e00fb142cf61ea3ead0",
+  "retrievedAtUtc": "2026-10-29T19:43:22.808Z",
+  "sourceUrl": "https://shabanhrms.runasp.net/swagger/v1/swagger.json",
+  "totalPaths": 381,
+  "totalSchemas": 344,
+  "warning": "Observed public schema projection; no schema repair, source-build identity or whole-API adoption claim"
+}

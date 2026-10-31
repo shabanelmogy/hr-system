@@ -353,6 +353,12 @@ endpoint; it must not accept arbitrary client URLs or database connection string
 
 ## 11. Test Evidence and Required Coverage
 
+Angular D29–D32 bounded consumer correction Verified: one-column shared Add/Edit/counter badges and shared edited active flash, predecessor after archive and keyboard navigation. Current evidence platform/angular-countries-edit-workflow/verification/FORM_RECORD_ACCEPTANCE.md. API/entity/schema/Next/native unchanged, migration N/A. Full Countries views/source/host gates remain Required.
+
+Angular D28 bounded context filter/icons is Verified separately in platform/angular-grid-capabilities/verification/CELL_CONTEXT_ACCEPTANCE.md. Countries exposes raw status/date values through shared filterValue; reset replaces optional structured criteria. No API/Next/native runtime change. Prior owner evidence and full-pilot limitations remain.
+
+Angular consumer handoff2026-10-30: bounded Create/Edit and archive/restore/bulk are Verified in the separate migration features angular-countries-edit-workflow and angular-countries-lifecycle under documentation/modules/platform/features/. Their CURRENT_EDIT_ACCEPTANCE.md/CURRENT_LIFECYCLE_ACCEPTANCE.md own executed Angular evidence. API contracts/entity/schema and existing Next/native consumers remain unchanged; no host business-write or full Countries pilot claim. Shared success Toast/general error Modal, translated pinned Actions header/cells and current-page native selection are Angular presentation capabilities. Required Chart/managed Crystal-PDF/Import/full-pilot children remain queued or preflight-only.
+
 | Test source | Proven behavior |
 |---|---|
 | `CountryCqrsHandlerTests.cs` | Mapping, page/search/filter/sort, detail/relation, transaction order and lifecycle lock resources, duplicate checks, atomic bulk behavior and validators |
@@ -372,6 +378,79 @@ For a copied feature, add persistence tests for scope, unique indexes and
 relationships when those guarantees are not fully represented by the Countries
 in-memory handler suite.
 
+### S3-A5 verified Angular charts — 2026-10-31
+
+Phase06 Verified on 2026-10-31 for exact S3-A5 and requester Cards refinements.
+Full npm run check passed: 75 files/417 tests, 4 configuration/12 architecture,
+types/catalog/tokens/fonts and production build. Initial498.98kB/130.00kB estimated
+transfer; unchanged500kB warning budget. Chart renderer212.09kB/63.63kB remains lazy.
+Actual authenticated shell browser40 passed five palettes × light/dark × EN/AR ×
+390×780/1440×1050. Native canvases painted, source data/counts/zeroes/UTC timeline,
+theme/locale repaint without GET, reduced motion, text alternatives, first-page
+reset with criteria, retry, stale authority mask and destruction verified. Native
+scroll reaches the lower plots; desktop chart rows fill the available viewport.
+Current Next source8 comparisons and fresh command/form/record regressions8 pass.
+See verification/CURRENT_CHART_ACCEPTANCE.md and durable JSON/screenshots/logs.
+No hosted business writes/deployment, schema/migration, native-device or full-pilot
+acceptance. PROD-019/023, S1-A14/FOLLOW-016 and remaining pilot children stay open.
+
+P-001 Countries collection with embedded Chart; current Next Chart source is the
+reviewed baseline. Verified same four plot semantics/order, summary metrics,
+font/title16px/600, card padding8px/radius16px, theme palette, source captions and
+contained responsive scroll. Native PrimeNG Chart/Chart.js replaces Recharts; tick
+placement, bar sizing and pie geometry follow that engine and are not certified as
+pixel-identical plot internals. Full five-view visual acceptance remains S3-A8.
+Requester D33 explicitly removes Chart toolbar/header Filter and scope paragraph;
+Chart inherits Grid/Cards criteria and resets page1. Cards retains one shared
+single-row toolbar/toggle, short accessible arrow+Asc/Desc, Search max400px and
+Sort By220px. Narrow viewports scroll the toolbar internally. No feature-local shell.
+
+Canonical Angular proof: documentation/modules/platform/features/angular-countries-chart-view/verification/CURRENT_CHART_ACCEPTANCE.md. Existing API/native runtime unchanged; no domain/schema migration. Native rendering remains retained, new native work Excluded.
+
+### S3-A6 Countries Report — 2026-10-31
+
+Phase06 Verified2026-10-31 for exact S3-A6 Countries managed Crystal/PDF integration.
+Full npm run check:75files/422tests,4configuration/12architecture,types/catalog/
+tokens/fonts/build passed; initial499.84kB/130.16kB estimated transfer, unchanged
+500kB budget. Entry437recipes/planning passed before application edits.
+Actual authenticated Countries Report40 palette/mode/EN-AR/390×780/1440×1050 cases,
+focused failure/authority/mobile-PDF-fallback8, current Next source8, retained command8,
+Chart8 and standalone Reporting8 passed. Durable JSON/logs/screenshots are in verification/.
+No live hosted render/business write, actual Crystal engine/RPT output, native device,
+schema/migration, full five-view pixel acceptance or production release claim.
+
+Countries consumes GlobalReportView and globalReportAllowed through Reporting's
+public API, lazy inside the existing collection workspace. Exact Countries:View
+workspace authority and super_admin + GlobalCrystalReports:View gate visible/direct
+Report entry; current read-only actors may render. Losing authority destroys the
+embedded report and falls back to Grid. Header Refresh reloads report catalog/source
+and regenerates; other views keep existing refresh. Header Filter controls report
+criteria without discarding form/selection or rerendering. No nested PageHeader.
+Reporting keeps existing catalog/service/PDF validation/cancellation. Applied filters
+and selected report now belong to the immutable actor; replacement clears them and
+draft fields. Explicit reload regenerates even if source/hash is unchanged. Shared
+ReportWorkspace reference appearance uses280px sidebar/gap64 and contained scrolling;
+FormContainer sidebar appearance keeps Search/Reset full width; PdfViewer fill mode
+retains safe open/download, capability fallback, lease cleanup and finite inline area.
+Existing standalone report defaults remain compatible; no new package or translation key.
+
+Current source CountryReportPage/ManagedCrystalReportView/ReportViewer was rendered
+at identical viewports/locales/modes with the same synthetic report catalog and PDF.
+Verified independent NameAr/NameEn criteria, report selector, first catalog report,
+source SHA256 request, desktop280px sidebar/gap64, compact stacked layout and global
+permission rule. Source fixture lacks the report grant, so browser interception adds
+GlobalCrystalReports:View to that fixture session only; no real permission is changed.
+Retain the approved S3-A0 draft/applied correction: language/selection uses applied
+values; Reset clears and applies once. Angular uses the existing shared labeled fields,
+validation/counters, native PrimeNG controls and explicit safe PDF Open/Download bar;
+Next uses its MUI field/iframe presentation. Label/input heights and button styling
+are not certified pixel-identical; remaining source visual reconciliation is S3-A8,
+not implicitly closed by bounded Report behavior acceptance. Native browser PDF
+internals are opaque: iframe assignment is not proof that an RPT engine rendered.
+PDF-disabled cases prove fallback/download bytes; valid synthetic PDF is not real RPT output.
+
+Canonical proof: documentation/modules/platform/features/angular-countries-report-view/verification/CURRENT_REPORT_ACCEPTANCE.md. New native UI Excluded; current native retained.
+
 ## 12. Rules That Must Not Be Copied Blindly
 
 | Countries decision | Required replacement question |
@@ -388,3 +467,17 @@ in-memory handler suite.
 An exact implementation follows the source sequence and tests above. It does not
 wrap the CQRS slice in a broad business-service facade, return one DTO everywhere, add a toggle endpoint, save
 inside stores, schedule before commit, or filter a downloaded page in a client.
+
+
+## Native advanced column-filter extension — 2026-10-30
+
+Authorized owner change: extend existing global Countries list CQRS/read-store with
+optional typed bounded per-column filters and a POST /api/v1/countries/query read
+endpoint. Full frozen rules, actor/permission, compatibility, validation/edge and
+impact/verification matrices are in the migration child's
+ADVANCED_FILTER_CONTRACT.md. No entity/schema/write/lifecycle changes. Existing
+GET/Next/native clients stay compatible; new native advanced-filter UI is Excluded
+from Angular migration. Angular menu uses real AND/OR criteria before count/paging;
+no current-page emulation. Source implementation/verification is in progress, not
+hosted publication or complete Countries acceptance. FOLLOW-016/PROD-019 own the
+remaining combined-query and deployed catalog integration.

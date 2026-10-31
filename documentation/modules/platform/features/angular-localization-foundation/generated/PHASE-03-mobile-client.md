@@ -83,4 +83,4 @@ profile and do not leave an unreachable route, component, or translation surface
 | angular-localization-foundation-mobile | 12 | `4df921c53578650ee76e8a453619da14a1a2cdaa1fad626c8f36e28cfb83d3b8` |
 | angular-localization-foundation-mobile | 13 | `a4f2b92cb7b0ddb46e4abfbc3ffd75253df09b1252afe8221c3bde9d44d2dd2e` |
 | angular-localization-foundation-mobile | 14 | `8eb0574471e920e016444fe94f7ac5951ad3ffdb506efa474a7154c2ad240f95` |
-| angular-localization-foundation-mobile | 15 | `1f0ba56b18e34cf44b7c9c6560feed30a0c7f4b54d243de794be546b475d1ee9` |
+| angular-localization-foundation-mobile | 15 | `62ec30b9ccbca9d50a4cdc7e810991d098bf7138418711b4f7f9e1ef03d68a98` |

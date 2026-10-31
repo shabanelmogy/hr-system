@@ -57,3 +57,12 @@ section 6; approval does not extend to all other proposals.
 
 Discovery batch completed with requester answers. Remaining technical decisions
 are explicit gates; they are not silently treated as approved.
+
+## Requester scope correction —2026-10-30 DEC-028
+
+ActiveReports viewer/designer/SDK and associated authoring/licensing work are
+Excluded from Angular migration by explicit requester instruction. References to
+existing Next/native/API implementations are source evidence only and do not
+reinstate that target. Current Angular reporting uses managed Crystal/PDF. Other
+reporting manager, permissions, binary transport and PDF lifecycle requirements
+remain governed by their owning contracts. No ActiveReports runtime placeholder.

@@ -37,6 +37,7 @@ public sealed record GetCountriesQuery : IQuery<PageResponse<CountryListItemResp
     public bool? HasStates { get; init; }
     public string SortBy { get; init; } = "nameEn";
     public string SortDirection { get; init; } = "asc";
+    public IReadOnlyList<CountryFilterGroup>? Filters { get; init; }
 }
 
 public sealed class GetCountriesQueryValidator : AbstractValidator<GetCountriesQuery>
@@ -56,6 +57,9 @@ public sealed class GetCountriesQueryValidator : AbstractValidator<GetCountriesQ
         RuleFor(query => query.PageNumber).GreaterThan(0);
         RuleFor(query => query.PageSize).InclusiveBetween(1, GetCountriesQuery.MaxPageSize);
         RuleFor(query => query.Search).MaximumLength(200);
+        RuleFor(query => query.Filters).Must(CountryGridFilters.IsValid)
+            .WithErrorCode("Countries.InvalidFilters")
+            .WithMessage("Country filters must contain unique supported fields, type-correct values and at most four rules per field.");
         RuleFor(query => query.SearchField)
             .NotEmpty()
             .Must(field => GetCountriesQuery.SearchFields.Contains(field, StringComparer.OrdinalIgnoreCase));

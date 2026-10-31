@@ -30,6 +30,92 @@ namespace ErpSystem.Modules.ReferenceData.Tests;
 
 public sealed class CountryCqrsHandlerTests
 {
+    private static CountryFilterConstraint FilterRule(string mode, object value) =>
+        new(mode, System.Text.Json.JsonSerializer.SerializeToElement(value));
+
+    [Fact]
+    public async Task AdvancedFilters_RejectUnknownDuplicateOversizedAndWrongTypedRules()
+    {
+        var validator = new GetCountriesQueryValidator();
+        IReadOnlyList<CountryFilterGroup>[] invalid =
+        [
+            [new("unknown", "and", [FilterRule("equals", "x")])],
+            [new("id", "and", [FilterRule("equals", "1")])],
+            [new("nameEn", "and", [FilterRule("contains", " ")])],
+            [new("nameEn", "and", [FilterRule("contains", new string('x', 201))])],
+            [new("createdOn", "and", [FilterRule("dateIs", "2026-02-30")])],
+            [new("isDeleted", "and", [FilterRule("equals", 0)])],
+            [new("id", "and", [FilterRule("equals", 1)]), new("id", "or", [FilterRule("equals", 2)])],
+            [new("id", "xor", [FilterRule("equals", 1)])],
+            [new("id", "and", Enumerable.Repeat(FilterRule("equals", 1), 5).ToArray())]
+        ];
+        foreach (var filters in invalid)
+            Assert.False((await validator.ValidateAsync(new GetCountriesQuery { Filters = filters })).IsValid);
+        Assert.True((await validator.ValidateAsync(new GetCountriesQuery
+        {
+            Filters = [new("id", "and", [FilterRule("gte", 0)]), new("isDeleted", "and", [FilterRule("equals", false)])]
+        })).IsValid);
+    }
+
+    [Fact]
+    public async Task AdvancedFilters_CombineOrRulesWithOtherFieldsBeforeCountAndPaging()
+    {
+        await using var context = CreateContext();
+        context.Countries.AddRange(
+            new Country { Id = 1, NameAr = "مصر", NameEn = "Egypt" },
+            new Country { Id = 2, NameAr = "السودان", NameEn = "Sudan" },
+            new Country { Id = 3, NameAr = "إسبانيا", NameEn = "Spain" });
+        await context.SaveChangesAsync();
+        var page = await new CountryReadStore(context, CreateConfig()).GetPageAsync(new GetCountriesQuery
+        {
+            PageSize = 1, SortBy = "nameEn", Filters =
+            [
+                new("nameEn", "or", [FilterRule("startsWith", "Eg"), FilterRule("startsWith", "Sud")]),
+                new("id", "and", [FilterRule("gte", 0), FilterRule("lte", 2)])
+            ]
+        }, CancellationToken.None);
+        Assert.Equal(2, page.MetaData.TotalCount);
+        Assert.Equal("Egypt", Assert.Single(page.Items).NameEn);
+        Assert.True(page.MetaData.HasNext);
+    }
+
+    [Fact]
+    public void AdvancedFilters_PreserveFalseNullDatesAndActiveChildCounts()
+    {
+        var rows = new[]
+        {
+            new Country { Id = 1, NameEn = "Egypt", NameAr = "مصر", CreatedOn = new DateTime(2026, 1, 15, 23, 59, 59), States = [new State { IsDeleted = false }, new State { IsDeleted = true }] },
+            new Country { Id = 2, NameEn = "Other", NameAr = "آخر", CreatedOn = new DateTime(2026, 1, 16), UpdatedOn = new DateTime(2026, 1, 15), IsDeleted = true }
+        };
+        var query = CountryGridFilterExpressions.Apply(rows.AsQueryable(),
+        [
+            new("createdOn", "and", [FilterRule("dateIs", "2026-01-15")]),
+            new("updatedOn", "and", [FilterRule("dateIsNot", "2026-01-15")]),
+            new("isDeleted", "and", [FilterRule("equals", false)]),
+            new("statesCount", "and", [FilterRule("equals", 1)])
+        ]);
+        Assert.Equal(1, Assert.Single(query).Id);
+        Assert.Empty(CountryGridFilterExpressions.Apply(rows.AsQueryable(), [new("createdOn", "and", [FilterRule("dateAfter", "9999-12-31")])]));
+    }
+
+    [Fact]
+    public void AdvancedFilters_TranslateToSqlServerWithoutExecutingOrInterpolatingSql()
+    {
+        var options = new DbContextOptionsBuilder<ReferenceDataDbContext>()
+            .UseSqlServer("Server=localhost;Database=TranslationOnly;Integrated Security=true;TrustServerCertificate=true")
+            .Options;
+        using var context = new ReferenceDataDbContext(options, new TestCurrentActor());
+        var sql = CountryGridFilterExpressions.Apply(context.Countries.IgnoreQueryFilters(),
+        [
+            new("nameEn", "or", [FilterRule("contains", "Egypt"), FilterRule("notEquals", "Sudan")]),
+            new("statesCount", "and", [FilterRule("gte", 0)]),
+            new("updatedOn", "and", [FilterRule("dateIsNot", "2026-01-15")])
+        ]).ToQueryString();
+        Assert.Contains("WHERE", sql, StringComparison.Ordinal);
+        Assert.Contains("COUNT(", sql, StringComparison.Ordinal);
+        Assert.Contains("NameEn", sql, StringComparison.Ordinal);
+    }
+
     [Fact]
     public void Mapping_NormalizesMutationAndPreservesEntityOwnedFields()
     {

@@ -1,0 +1,9 @@
+{
+  "services": true,
+  "promises": false,
+  "apiService": false,
+  "module": false,
+  "enumStyle": "alias",
+  "removeStaleFiles": false,
+  "silent": true
+}

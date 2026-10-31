@@ -1,0 +1,14 @@
+{
+  "name": "erp-angular-api-contract-proof",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Isolated ERP-01 assessment tooling; no generated application imports",
+  "dependencies": {
+    "ng-openapi-gen": "1.1.0"
+  },
+  "devDependencies": {
+    "@angular/core": "22.2.3",
+    "@types/node": "24.10.1",
+    "rxjs": "7.8.2"
+  }
+}

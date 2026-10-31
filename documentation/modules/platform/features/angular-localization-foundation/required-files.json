@@ -508,6 +508,30 @@
       "purpose": "Angular-specific client phase recipe; no Next App Router assumptions",
       "id": "angular-client-phase-template",
       "path": "documentation/system/templates/PHASE-02-angular-client.template.md"
+    },
+    {
+      "id": "date-locale-0",
+      "path": "web-angular/src/theme/calendar-locale.ts",
+      "layer": "web",
+      "purpose": "Date/calendar consumer of existing SQL-backed localization"
+    },
+    {
+      "id": "date-locale-1",
+      "path": "web-angular/src/theme/calendar-locale.spec.ts",
+      "layer": "web",
+      "purpose": "Date/calendar consumer of existing SQL-backed localization"
+    },
+    {
+      "id": "date-locale-2",
+      "path": "web-angular/src/theme/calendar-public-api.ts",
+      "layer": "web",
+      "purpose": "Date/calendar consumer of existing SQL-backed localization"
+    },
+    {
+      "id": "date-locale-3",
+      "path": "documentation/modules/platform/features/angular-date-field-foundation/IMPLEMENTATION_REPORT.md",
+      "layer": "documentation",
+      "purpose": "Date/calendar consumer of existing SQL-backed localization"
     }
   ]
 }

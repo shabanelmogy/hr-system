@@ -1,6 +1,16 @@
 export { TextField } from './fields/text-field';
+export { DateField } from './fields/date-field';
+export { NumericField } from './fields/numeric-field';
+export { BooleanField } from './fields/boolean-field';
+export { compareNumericText,normalizeNumericText,numericTextErrors } from './fields/numeric-text';
+export type { NumericOptions } from './fields/numeric-text';
+export { isDateOnly,dateOnlyErrors,dateOnlyToLocal,localToDateOnly,normalizeDateDigits } from './fields/date-only';
+export { ReferenceField } from './fields/reference-field';
+export type { ReferenceId,ReferenceOption,ReferenceQuery,ReferenceResult,ReferenceSource,ReferenceSelection } from './fields/reference.types';
 export { FormContainer } from './form-container';
 export { ValidationSummary } from './validation-summary';
 export type { ValidationIssue } from './validation-summary';
 export { applyServerFieldErrors, clearServerFieldError } from './form-errors';
 export type { FieldMessages } from './form-errors';
+export { FormCloseGuard } from './form-close-guard';
+export type { CloseConsent } from './local-close-controller';

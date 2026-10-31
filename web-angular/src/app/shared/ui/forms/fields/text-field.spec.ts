@@ -1,0 +1,44 @@
+import { Component,signal } from '@angular/core';
+import { FormControl,FormGroup,ReactiveFormsModule,Validators } from '@angular/forms';
+import { TestBed } from '@angular/core/testing';import { By } from '@angular/platform-browser';
+import { provideAppTheme } from '../../../../../theme/public-api';
+import { LocalizationRuntime } from '../../../../platform/localization/public-api';
+import { TextField } from './text-field';import { NumericField } from './numeric-field';
+import { FormContainer } from '../form-container';import { applyServerFieldErrors } from '../form-errors';
+@Component({imports:[ReactiveFormsModule,FormContainer,TextField,NumericField],template:`<erp-form [form]="form" title="Fixture" submitLabel="Save fixture"><erp-text-field [formControl]="form.controls.value" label="Text fixture" help="Help fixture" [multiline]="multiline()" [rows]="rows()" [type]="type()" [readOnly]="readonly()" [maxLength]="20" [showCounter]="true" [messages]="messages" /><erp-numeric-field [formControl]="form.controls.number" label="Number fixture" multiline /></erp-form>`})
+class Composition{
+ readonly form=new FormGroup({value:new FormControl('',{nonNullable:true,validators:[Validators.required,Validators.maxLength(20)]}),number:new FormControl('',{nonNullable:true})});
+ readonly multiline=signal(true);readonly rows=signal(3);readonly readonly=signal(false);readonly type=signal<'text'|'email'|'password'>('text');readonly messages={required:'Required fixture',maxlength:'Long fixture'};
+}
+describe('TextField shared multiline mode',()=>{
+ beforeEach(async()=>{TestBed.configureTestingModule({providers:[provideAppTheme()]});await TestBed.inject(LocalizationRuntime).loadNamespace('core');});
+ async function setup(){const fixture=TestBed.createComponent(Composition);await fixture.whenStable();const field=fixture.debugElement.query(By.directive(TextField)).componentInstance as TextField;const root=fixture.nativeElement as HTMLElement;return{fixture,field,root,owner:fixture.componentInstance,textarea:root.querySelector('textarea')!};}
+ it('describes only an actual counter and never truncates a loaded value when the limit is enabled later',async()=>{
+  const fixture=TestBed.createComponent(TextField);fixture.componentRef.setInput('label','Counter fixture');fixture.componentRef.setInput('showCounter',true);fixture.componentInstance.writeValue('Loaded text');await fixture.whenStable();const root=fixture.nativeElement as HTMLElement,input=root.querySelector('input')!;
+  expect(root.querySelector('.counter')).toBeNull();expect(input.getAttribute('aria-describedby')).toBeNull();fixture.componentRef.setInput('maxLength',5);await fixture.whenStable();expect(input.value).toBe('Loaded text');expect(root.querySelector('.counter')?.textContent?.trim()).toBe('11/5');expect(input.getAttribute('aria-describedby')).toContain('-counter');
+ });
+ it('uses real PrimeNG textarea and shared enabled submit, summary and current focus',async()=>{
+  const{fixture,root,textarea}=await setup();expect(textarea.classList.contains('p-textarea')).toBe(true);expect(textarea.rows).toBe(3);expect(root.querySelectorAll('erp-text-field')).toHaveLength(1);const submit=root.querySelector<HTMLButtonElement>('button[type=submit]')!;expect(submit.disabled).toBe(false);expect(root.querySelector('form')!.noValidate).toBe(true);submit.click();await fixture.whenStable();expect(root.querySelectorAll('.error-summary a')).toHaveLength(1);expect(document.activeElement).toBe(textarea);expect(textarea.getAttribute('aria-describedby')).toContain('-error');expect(textarea.getAttribute('aria-describedby')).toContain('-counter');expect(root.querySelector('.error')?.textContent).toBe('Required fixture');
+ });
+ it('preserves Unicode/newlines/literal markup and emits one actual string change',async()=>{
+  const{fixture,owner,textarea}=await setup();const changes=vi.fn();owner.form.controls.value.valueChanges.subscribe(changes);textarea.value='عربي🙂\n<x>\n end ';textarea.dispatchEvent(new Event('input'));await fixture.whenStable();expect(owner.form.controls.value.value).toBe('عربي🙂\n<x>\n end ');expect(changes).toHaveBeenCalledOnce();expect(owner.form.controls.value.dirty).toBe(true);expect(textarea.querySelector('x')).toBeNull();textarea.dispatchEvent(new Event('blur'));expect(owner.form.controls.value.touched).toBe(true);
+ });
+ it('buffers IME until composition end and does not duplicate its final input',async()=>{
+  const{fixture,owner,textarea}=await setup();const changes=vi.fn();owner.form.controls.value.valueChanges.subscribe(changes);textarea.dispatchEvent(new CompositionEvent('compositionstart'));textarea.value='نص\n中文';textarea.dispatchEvent(new Event('input'));expect(owner.form.controls.value.value).toBe('');textarea.dispatchEvent(new CompositionEvent('compositionend'));textarea.dispatchEvent(new Event('input'));await fixture.whenStable();expect(owner.form.controls.value.value).toBe('نص\n中文');expect(changes).toHaveBeenCalledOnce();
+ });
+ it('keeps writeValue/reset silent and focuses the current branch after a quiet swap',async()=>{
+  const{fixture,owner,field,textarea,root}=await setup();const changes=vi.fn();owner.form.controls.value.valueChanges.subscribe(changes);field.writeValue('Write\nvalue');await fixture.whenStable();expect(textarea.value).toBe('Write\nvalue');expect(changes).not.toHaveBeenCalled();owner.form.controls.value.setValue('Owner\nvalue',{emitEvent:false});owner.multiline.set(false);await fixture.whenStable();field.focus();expect(document.activeElement).toBe(root.querySelector('erp-text-field input'));expect(owner.form.controls.value.value).toBe('Owner\nvalue');owner.multiline.set(true);await fixture.whenStable();field.focus();expect(document.activeElement).toBe(root.querySelector('textarea'));expect(root.querySelector('textarea')!.value).toBe('Owner\nvalue');expect(changes).not.toHaveBeenCalled();owner.form.reset(undefined,{emitEvent:false});await fixture.whenStable();expect(root.querySelector('textarea')!.value).toBe('');expect(owner.form.pristine).toBe(true);
+ });
+ it('blocks readonly/disabled input and stale clear without touching or emitting',async()=>{
+  const{fixture,owner,field,textarea}=await setup();owner.form.controls.value.setValue('Keep');const changes=vi.fn();owner.form.controls.value.valueChanges.subscribe(changes);owner.readonly.set(true);await fixture.whenStable();expect(textarea.readOnly).toBe(true);textarea.value='Rejected';field.onInput({target:textarea} as unknown as Event);field.clear();expect(owner.form.controls.value.value).toBe('Keep');expect(owner.form.controls.value.untouched).toBe(true);owner.readonly.set(false);owner.form.controls.value.disable({emitEvent:false});await fixture.whenStable();expect(textarea.disabled).toBe(true);field.clear();field.onInput({target:textarea} as unknown as Event);expect(changes).not.toHaveBeenCalled();expect(owner.form.controls.value.value).toBe('Keep');
+ });
+ it('reuses server error priority, clear, required validation and current focus',async()=>{
+  const{fixture,owner,field,textarea,root}=await setup();owner.form.controls.value.setValue('Before');applyServerFieldErrors(owner.form,{value:'Server fixture'});await fixture.whenStable();expect(root.querySelector('.error')?.textContent).toBe('Server fixture');textarea.value='After';textarea.dispatchEvent(new Event('input'));await fixture.whenStable();expect(root.querySelector('.error')).toBeNull();field.clear();await fixture.whenStable();expect(owner.form.controls.value.value).toBe('');expect(root.querySelector('.error')?.textContent).toBe('Required fixture');expect(document.activeElement).toBe(textarea);
+ });
+ it('uses safe row configuration and leaves programmatic max-length validation to owner',async()=>{
+  const{fixture,owner,textarea,root}=await setup();for(const value of[0,-1,2.5,21,NaN,Infinity]){owner.rows.set(value);await fixture.whenStable();expect(textarea.rows).toBe(3);}owner.rows.set(6);await fixture.whenStable();expect(textarea.rows).toBe(6);owner.form.controls.value.setValue('🙂'.repeat(11));owner.form.markAllAsTouched();await fixture.whenStable();expect(textarea.value).toBe('🙂'.repeat(11));expect(root.querySelector('.counter')?.textContent).toBe('22/20');expect(root.querySelector('.error')?.textContent).toBe('Long fixture');
+ });
+ it('keeps numeric, email and password as single-line inputs despite multiline flag',async()=>{
+  const{fixture,owner,root}=await setup();expect(root.querySelector('erp-numeric-field textarea')).toBeNull();expect(root.querySelector('erp-numeric-field input')?.getAttribute('inputmode')).toBe('decimal');for(const type of['email','password'] as const){owner.type.set(type);await fixture.whenStable();expect(root.querySelector('erp-text-field textarea')).toBeNull();expect(root.querySelector('erp-text-field input')?.getAttribute('type')).toBe(type);}owner.type.set('text');await fixture.whenStable();expect(root.querySelector('erp-text-field textarea')).not.toBeNull();
+ });
+});

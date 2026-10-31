@@ -1,87 +1,103 @@
-# آخر نقطة لاستكمال انتقال Angular
+# Current handoff — 2026-10-31 S3-A6 Countries Report
 
-آخر تحديث: **2026-10-29 — Africa/Cairo**. ROADMAP يملك حالة التنفيذ، والتقارير تملك أدلة القبول.
+S3-A6 Countries managed Report integration Verified/Closed. Prior S3-A5 Chart/D33,
+S3-A2 read, S3-A3 Create/Edit/D29–D32 and S3-A4 lifecycle retain bounded acceptance.
+Full Countries/source pixel/host/Table acceptance remains Not Verified.
 
-## آخر شريحة مكتملة
+## Current review surface
 
-**S2-A6 / angular-module-context-navigation أصبحت Verified/Closed.** القائمة المشتركة في الشريط تعرض التطبيقات المسموحة والنظرة العامة، وتتابع المسار والرجوع والتحديث. تشترك مع الصفحة في كتالوج واحد، وتخفي النتائج القديمة أثناء تغيير السياق. مكونات الحالة داخل AuthenticatedApplication تُتلف عند مغادرة الهيكل. طُبق طلب PrimeNG لكل عناصر التحكم المشتركة، وتحسين ScrollArea، وإظهار النص كاملًا على الكمبيوتر والأيقونات فقط على المساحات الصغيرة مع Tooltip.
+Dashboard Data → sidebar → geographical information → Countries authenticated
+development preview. Grid/Cards/Chart/Report/View/Create/Edit/Archive/Restore/Bulk
+available under exact existing authority. Report button requires Countries:View
+and super_admin + GlobalCrystalReports:View. Header Filter controls independent
+report criteria; Header Refresh reloads catalog/hash and regenerates. Shared form
+NameAr/NameEn200 + native report selection + Search/Reset; draft remains until
+Search, language/selection uses applied values. Actor replacement clears draft/
+applied/selection; leaving destroys requests/PDF leases. Safe PDF open/download
+and mobile fallback retained. No nested header or feature-local report shell.
 
-- [تقرير التنفيذ](../../../modules/platform/features/angular-module-context-navigation/IMPLEMENTATION_REPORT.md).
-- [دليل الاستخدام والتدريب](education/angular-module-context-navigation.md).
-- الفحص الكامل لـAngular:25 ملفًا /109 اختبارات وحدة،9 فحوص معمارية،4 اختبارات إعداد، والأنواع والترجمة والألوان والخطوط والبناء نجحت.434.41 kB أولي /116.17 kB نقل تقديري.
--24 حالة متصفح للإضافة؛ تراجع التطبيقات14 والشركة14 والسنة15 والهيكل24 واللغة20 نجح. النماذج المشتركة40 حالة نجحت على سيرفر التطوير لأن dev/forms مستبعد من الإنتاج. Next:3 ملفات/13 اختبارًا؛ Native:3 مجموعات/7 اختبارات نجحت.
-- تجربة فعلية بمتصفح Chrome موثوق، Angular4210 والـAPI المستضاف: طلب كتالوج200 واحد مشترك، التبديل والعودة، التحديث، refresh200 ثم تحديث آخر وlogout204. لا تُنقل هذه النتائج إلى ادعاء نجاح كل بوابات الإصدار.
+## Executed proof
 
-الشرائح السابقة مغلقة: مصادقة Cookies، تأسيس Angular والترجمة والثيم والنماذج، ثم S2-A0 إلى S2-A5 للدخول والهيكل والتطبيقات والبداية والشركة وسنة العمل. شاشات ERP كلها لم تُنقل بعد والخطة الشاملة ما زالت Draft.
+Phase06 Verified2026-10-31 for exact S3-A6 Countries managed Crystal/PDF integration.
+Full npm run check:75files/422tests,4configuration/12architecture,types/catalog/
+tokens/fonts/build passed; initial499.84kB/130.19kB estimated transfer, unchanged
+500kB budget. Entry437recipes/planning passed before application edits.
+Actual authenticated Countries Report40 palette/mode/EN-AR/390×780/1440×1050 cases,
+focused failure/authority/mobile-PDF-fallback8, current Next source8, retained command8,
+Chart8 and standalone Reporting8 passed. Durable JSON/logs/screenshots are in verification/.
+No live hosted render/business write, actual Crystal engine/RPT output, native device,
+schema/migration, full five-view pixel acceptance or production release claim.
 
-## نقطة الاستكمال الوحيدة
+Countries consumes GlobalReportView and globalReportAllowed through Reporting's
+public API, lazy inside the existing collection workspace. Exact Countries:View
+workspace authority and super_admin + GlobalCrystalReports:View gate visible/direct
+Report entry; current read-only actors may render. Losing authority destroys the
+embedded report and falls back to Grid. Header Refresh reloads report catalog/source
+and regenerates; other views keep existing refresh. Header Filter controls report
+criteria without discarding form/selection or rerendering. No nested PageHeader.
+Reporting keeps existing catalog/service/PDF validation/cancellation. Applied filters
+and selected report now belong to the immutable actor; replacement clears them and
+draft fields. Explicit reload regenerates even if source/hash is unchanged. Shared
+ReportWorkspace reference appearance uses280px sidebar/gap64 and contained scrolling;
+FormContainer sidebar appearance keeps Search/Reset full width; PdfViewer fill mode
+retains safe open/download, capability fallback, lease cleanup and finite inline area.
+Existing standalone report defaults remain compatible; no new package or translation key.
 
-**angular-collection-foundation / S1-A3 — Shared collection foundation** هي الشريحة النشطة الجديدة للتحضير فقط.
+Canonical proof: documentation/modules/platform/features/angular-countries-report-view/verification/CURRENT_REPORT_ACCEPTANCE.md. Durable results/screenshots/logs and current-source
+snapshot/manifest live beside it. Reproduce via verify-country-report-browser.mjs
+(40, --focused8), source verify-country-report-reference.mjs and retained command/
+Chart/standalone-report drivers. All business API calls intercepted fixtures.
 
-[عقد التحضير](decomposition/angular-collection-foundation.md) يبدأ بمراجعة MyDataGrid وشريط البحث/الفلاتر والفرز والصفحات والتذييل والتنقل بين السجلات وCards وحالات العرض، ثم تجميد أصغر عقد مشترك مناسب لـAngular قبل Countries. لا يوجد تصريح بتنفيذ جداول أو شاشات أعمال قبل Phase00 واكتمال العقود. لم يبدأ كود هذه الشريحة. لا تفتح أكثر من Feature واحدة.
+## Remaining sequence
 
-تقدم التحضير: تمت مراجعة MyDataGrid وCountries ومراجعة التوثيق الرسمي وواجهات
-PrimeNG22.1.4 المثبتة بناءً على طلب المستخدم معرفة أقصى الخيارات. النتيجة في
-[مراجعة إمكانيات Table](PRIMENG_TABLE_CAPABILITY_REVIEW.md). Table متاح؛ منتجا
-DataGrid PRO وSheet ما زالا Roadmap وفق المصدر الرسمي وقت المراجعة. فرز وفلاتر
-Countries الحالية أبسط من أقصى إمكانيات Table؛ لا يُفعّل أي خيار غير مدعوم من
-عقد الخادم. سكافولد أدلة Phase00 مبدئي وغير مسجل؛ الخطوة القادمة تجميد نطاق
-المكونات والخيارات المتوافقة ثم إكمال Phase00 قبل runtime. لا يوجد ادعاء قبول
-Grid جديد أو اختبارات متصفح جديدة لهذه المراجعة.
+1. Sole Active next S3-A7 angular-countries-import-view source/API/Phase00 only.
+   Shared bounded XLSX file/template/parser/preview/row validation, one valid batch,
+   duplicate feedback and uncertain-submission recovery. Own entry gate first.
+2. S3-A8 full pilot: five views/actions/current-source visuals/keyboard/paging,
+   realtime invalidation/reconnect, hosted session/RBAC/production size/release.
+3. S1-A14/FOLLOW-016 complete native Table matrix remains Required. Then reuse the
+   completed Countries template for States/Districts and subsequent screens.
+4. Managed Crystal manager/other specialist release scopes stay in their own units.
 
-المتبقي: FOLLOW-012 لمحرر الترجمات وحفظها/إعادة ضبطها/التعارض؛ FOLLOW-014 لحقول الأعمال وحماية المسودات؛ FOLLOW-015 لباقي الهيكل والشاشات والبحث/الإشعارات/الملف. تم إقفال جزء تبديل التطبيق فقط من FOLLOW-015.
+## Limits and continuation
 
-## إعدادات المحلي والهوست
+Current source CountryReportPage/ManagedCrystalReportView/ReportViewer was rendered
+at identical viewports/locales/modes with the same synthetic report catalog and PDF.
+Verified independent NameAr/NameEn criteria, report selector, first catalog report,
+source SHA256 request, desktop280px sidebar/gap64, compact stacked layout and global
+permission rule. Source fixture lacks the report grant, so browser interception adds
+GlobalCrystalReports:View to that fixture session only; no real permission is changed.
+Retain the approved S3-A0 draft/applied correction: language/selection uses applied
+values; Reset clears and applies once. Angular uses the existing shared labeled fields,
+validation/counters, native PrimeNG controls and explicit safe PDF Open/Download bar;
+Next uses its MUI field/iframe presentation. Label/input heights and button styling
+are not certified pixel-identical; remaining source visual reconciliation is S3-A8,
+not implicitly closed by bounded Report behavior acceptance. Native browser PDF
+internals are opaque: iframe assignment is not proof that an RPT engine rendered.
+PDF-disabled cases prove fallback/download bytes; valid synthetic PDF is not real RPT output.
 
-- المستخدم اختار API التجربة https://shabanhrms.runasp.net. ملف web-angular/.env العام متتبع في Git ويختار host/local؛ الافتراضي host. أوامر start:local/start:host وbuild:local/build:host متاحة؛ يلزم إعادة تشغيل/بناء عند التغيير. [الدليل](../../../guides/web/ANGULAR_ENVIRONMENT.md).
-- خطأ BrowserOriginDenied السابق لم يعد يمنع الدخول في الفحص اللاحق: csrf/login/catalog/refresh/logout الفعلية نجحت. PROD-017/019 يحتفظان بباقي تحقق الاستضافة والإصدار.
-- المستخدم طلب Swagger على هوست التجربة: إعداد النشر المحلي SwaggerSettings.Enabled=true، وبروفايل WebDeploy يفتح HTTPS/Swagger. الحزمة محليًا ببيئة Production أعادت root302 وSwagger/OpenAPI200، وبقيت مسارات الأعمال401 لغير المسجل. لم ينفذ الوكيل نشرًا عن بُعد؛ تطبيق الإعداد على الموقع يحتاج Publish/Restart إن لم يكن المستخدم نفذه. [سجل الإصلاح](../../../modules/platform/features/platform-browser-authentication/verification/HOSTED_CONFIGURATION_REPAIR.md).
-- لا BFF أو رموز جلسة في JavaScript أو مخزن NgRx عالمي إلزامي. نفس سياسة Signals والمكونات المشتركة و@app/tokens محفوظة.
+No new package/key/API/schema/native code or migration. Catalog remains21sources/
+7269keys/20namespaces/hash6c3bd907be5bbfdf9245a9a3c84d1cc813d4fbab6fb0f2d74173ff14024c8041.
+PROD-019 owns host publication/SQL overrides; PROD-023/RISK-008/017 actual engine/
+physical browser/full release. ActiveReports Excluded. Whole migration Draft.
+Two inherited planning warnings: education-module/erp-platform-template missing
+v2 contracts. No deploy/commit/push. Preserve any user-owned4210 process; it may
+have been stopped by the user/environment during the task. Agent preview4220/
+Next3100/backend3199 stop after verification. Regenerate packets from canonical
+numbered books/manifests; do not rerun temporary mutation helpers.
 
-## جهاز آخر ومزامنة الملفات
 
-اقرأ AGENTS.md وهذا الملخص وROADMAP والعقد الحالي، وافحص المصدر قبل الاعتماد على نتائج جهاز سابق. التطبيق في web-angular/. شهادات HTTPS ومفتاح PrimeUI داخل إعدادات محلية متجاهلة ولا تنتقل تلقائيًا. .env.local والأسرار خارج Git.
+Measured source spacing correction: current Next theme.spacing=8 converts the
+ReportViewer numeric MARGIN_BETWEEN=8 to64px, not8px. REFERENCE_RESULTS records
+a64px desktop and compact gap. Angular reference workspace now uses64px
+with finite contained height; the source gap mismatch is corrected. Shared field/
+button geometry remains under RISK-016/S3-A8 full-source visual acceptance. See
+https://mui.com/system/spacing/ for numeric spacing transformation.
 
-توجد تغييرات معدلة وغير متتبعة، و.env فقط أضيف للـstaging بطلب المستخدم السابق. لم ينشأ commit/push في جلسة التنفيذ هذه. الحفظ على القرص لا يزامن جهازًا آخر؛ يلزم نقل التغييرات أو تسجيلها ومزامنتها عبر Git. لا تنقل Cookies أو كلمات مرور أو سجلات خام. السيرفر المحلي4210 كان موجودًا ويظل مملوكًا للمستخدم؛ معاينة4220 المؤقتة تُوقف بعد التحقق.
 
-## خطوات البدء على الجهاز الآخر
-
-1. زامن كود المشروع والتوثيق والملفات الجديدة معًا. قبل الانتقال تأكد أن
-   التعديلات المطلوبة أُضيفت إلى commit ثم رُفعت، وعلى الجهاز الآخر اعمل pull
-   للفرع والـcommit نفسيهما. مجرد وجود remote أو staging لا ينقل التغييرات.
-2. اقرأ بالترتيب: AGENTS.md، هذا الملف، ROADMAP.md، ثم
-   decomposition/angular-collection-foundation.md وPRIMENG_TABLE_CAPABILITY_REVIEW.md.
-3. الشريحة الوحيدة الحالية S1-A3 للتحضير. استكمل مسودة أدلة Phase00 الموجودة
-   تحت documentation/modules/platform/features/angular-collection-foundation/؛
-   لا تعِد السكافولد فوقها. لم تُسجل مسودتا manifest/recipes بعد، ولم يبدأ
-   runtime الجداول. جمّد عقد الخيارات والملكية والتوافق، ثم أكمل الكتب الأربعة
-   والـmanifest/recipes والفحوص قبل التنفيذ. توفر خيار في PrimeNG لا يعني
-   اعتماده أو أن API الحالي يدعمه.
-4. استخدم إصدار Node المطابق لـengines في web-angular/package.json. الألوان
-   المشتركة packages/tokens/dist متتبعة في Git؛ لا تنسخ node_modules أو dist
-   الخاص بتطبيق Angular من الجهاز القديم. ثبّت اعتماديات Angular من lockfile.
-5. أعد إعداد PRIMEUI_LICENSE_KEY محليًا في web-angular/.env.local، وجهّز
-   شهادات HTTPS موثوقة للجهاز في web-next/certificates/localhost.pem و
-   localhost-key.pem حسب أمر start. هذه الإعدادات متجاهلة في Git وتحتاج تجهيزًا
-   مستقلًا. ملف web-angular/.env العام يملك URL واختيار host/local.
-6. من جذر المستودع، بعد تجهيز البيئة، شغّل:
-
-   ```powershell
-   npm --prefix web-angular ci
-   npm --prefix web-angular run check
-   npm --prefix web-angular run start:host
-   ```
-
-   للاختبار على API محلي استخدم start:local بعد تشغيله وإعداد الأصل المسموح؛
-   start:host يستخدم API التجربة المستضاف. تثبيت المتصفح والشهادات المحلية لازم
-   قبل اختبارات Chrome؛ لا تعتبر أدلة الجهاز السابق إعادة تحقق على الجهاز الجديد.
-7. حدّث هذا الملف وROADMAP بعد كل مرحلة مكتملة، مع Feature واحدة نشطة فقط.
-
-نص تسليم جاهز للمحادثة الجديدة:
-
-> استكمل خطة web-angular-migration من RESUME.md وROADMAP.md. آخر شريحة مكتملة
-> S2-A6. الشريحة الحالية الوحيدة S1-A3 / angular-collection-foundation في Phase00؛
-> استكمل عقد المكونات المشتركة بعد PRIMENG_TABLE_CAPABILITY_REVIEW.md ثم نفذ وفق
-> بوابات الخطة. حافظ على PrimeNG عبر Shared، ومكتبة @app/tokens، وNext كما هو،
-> وسياسة Signals دون BFF أو مخزن عالمي إلزامي. افحص المصدر والبيئة ولا تفترض
-> انتقال التعديلات المحلية أو نجاح اختبارات الجهاز السابق على الجهاز الجديد.
+Final spacing/PDF layout correction: full422-test check repeated after64px spacing
+and link presentation changes. Final production build after the CSS-only fill
+minimum correction is recorded separately as FINAL_BUILD.log (499.84kB/130.19kB).
+The final40 browser matrix checks exact64px spacing and that the embedded iframe
+stays within the document area. Prior command/Chart/standalone regressions retain
+their unchanged functional coverage; report controls receive a compact final pass.

@@ -1,0 +1,4 @@
+.cards.responsive { grid-template-columns: 1fr; gap: 24px; padding: 12px; }
+@media (min-width: 600px) { .cards.responsive { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 900px) { .cards.responsive { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (min-width: 1200px) { .cards.responsive { grid-template-columns: repeat(4, minmax(0, 1fr)); } }

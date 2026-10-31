@@ -99,4 +99,4 @@ or feature-local document.
 | angular-role-home-web | 13 | `e55af14d30d5c713f1629c69ece73be17f6f6f02273c21e4a7c067af65869cdc` |
 | angular-role-home-mobile | 1 | `f984be175a16c176b96a040e2653b65d903c05bee762fe5a3c150470c6a97bb5` |
 | angular-role-home-mobile | 14 | `1d027bc20ed0bcbe5fb1530e64bdab6f6dfee98c396873ba3fc376bf8a5f2005` |
-| angular-role-home-mobile | 15 | `c6bf374dca3c2400696af77c01651f9e70a902b88b301dceb41b665744807628` |
+| angular-role-home-mobile | 15 | `ae3d868cb4ab8937d5dc057abf44e72deda56eaf166efd283c40897473b739da` |

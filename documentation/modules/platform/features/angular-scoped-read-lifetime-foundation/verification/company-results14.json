@@ -1,0 +1,86 @@
+[
+  {
+    "kind": "transition",
+    "language": "en",
+    "mode": "light",
+    "width": 390,
+    "passed": true
+  },
+  {
+    "kind": "transition",
+    "language": "en",
+    "mode": "light",
+    "width": 1440,
+    "passed": true
+  },
+  {
+    "kind": "transition",
+    "language": "en",
+    "mode": "dark",
+    "width": 390,
+    "passed": true
+  },
+  {
+    "kind": "transition",
+    "language": "en",
+    "mode": "dark",
+    "width": 1440,
+    "passed": true
+  },
+  {
+    "kind": "transition",
+    "language": "ar",
+    "mode": "light",
+    "width": 390,
+    "passed": true
+  },
+  {
+    "kind": "transition",
+    "language": "ar",
+    "mode": "light",
+    "width": 1440,
+    "passed": true
+  },
+  {
+    "kind": "transition",
+    "language": "ar",
+    "mode": "dark",
+    "width": 390,
+    "passed": true
+  },
+  {
+    "kind": "transition",
+    "language": "ar",
+    "mode": "dark",
+    "width": 1440,
+    "passed": true
+  },
+  {
+    "kind": "outcome",
+    "action": "denied",
+    "passed": true
+  },
+  {
+    "kind": "outcome",
+    "action": "lost-response",
+    "passed": true
+  },
+  {
+    "kind": "outcome",
+    "action": "unverifiable",
+    "passed": true
+  },
+  {
+    "kind": "outcome",
+    "action": "locale-delay",
+    "passed": true
+  },
+  {
+    "kind": "cross-tab-switch-and-logout",
+    "passed": true
+  },
+  {
+    "kind": "single-company-readonly",
+    "passed": true
+  }
+]

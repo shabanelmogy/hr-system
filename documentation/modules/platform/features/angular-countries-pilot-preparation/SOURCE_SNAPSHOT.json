@@ -1,0 +1,1488 @@
+{
+  "date": "2026-10-30",
+  "baseCommit": "a2c56412c39daa1540c4024cea3de35a516e6b5c",
+  "workingTree": "preserved local modifications; not a clean commit",
+  "countryRequiredManifestPaths": 139,
+  "files": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "7425eda9be0fb003304e54495996ded9f732001878bde8f17f7eec5bdc693d6e",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/BuildingBlocks/ErpSystem.BuildingBlocks.Application/Abstractions/Persistence/IUnitOfWork.cs",
+      "sha256": "0a06ca93989beefc7a027d484a07873a224eec61bec85a591830d58d2e8fb146",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/BuildingBlocks/ErpSystem.BuildingBlocks.Application/Common/Paginations/MetaData.cs",
+      "sha256": "96c2a982cc95f5303c76592fef446c2d9cda87be96115ce0556a621525970606",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/BuildingBlocks/ErpSystem.BuildingBlocks.Application/Common/Paginations/PagedList.cs",
+      "sha256": "f894b668eaf964d93f224e799a77dcdcbdeda8fd6f25bb7d4494486a0b65b9c1",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/BuildingBlocks/ErpSystem.BuildingBlocks.Application/Common/Paginations/PaginationRequest.cs",
+      "sha256": "683f25685088f233448de534f56fd7edd8e84e9c586f5f0965175fa188122c96",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/ErpSystem.Api/Localization/Resources/ar-EG.json",
+      "sha256": "261791417841adcbc03167def399c933e01923c576b6239e353b3c56c866765f",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/ErpSystem.Api/Localization/Resources/en-US.json",
+      "sha256": "9796f69dc83c870908935589871f796be3aad188a341556af80c26dc8b50e34f",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Dependencies/DatabaseService.cs",
+      "sha256": "b49d36292b40badd0b3ca3e800bd185fe3da7b156cd5730144c08c1538e56631",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Dependencies/EntitiesService.cs",
+      "sha256": "3369efa46a5c5de27f2ee9238d05a56cf5825b80e4420766aba5113e62c2351a",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Persistence/HrDbContext.cs",
+      "sha256": "f8954b3053598d419db46e4297c84b59c9d437758f2819eb532c8c0d4d104528",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Abstractions/ICountryChangeScheduler.cs",
+      "sha256": "c58d8b6bdc019336939f55418653f19d331e5c85b829b2041287cb1a829c5dee",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Abstractions/ICountryReadStore.cs",
+      "sha256": "066db4801e04b74b5b8528c53a32597f8d1556859acc1abba58d40f6422b439c",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Abstractions/ICountryValidationQueries.cs",
+      "sha256": "8a10493330f87d1d81511141526b10eb65179d25f38a6807a2d79bc50d96f2bf",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Abstractions/ICountryWriteStore.cs",
+      "sha256": "d115a8235bae67ba14c25623be1cc8494c2f83f56a28d701302d196b622c82f7",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/ArchiveCountry/ArchiveCountryCommand.cs",
+      "sha256": "0853f2ff3630eeccd0123c17398b68b0a53c5233a5572dc4604ff88aac6b4257",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/ArchiveCountry/ArchiveCountryCommandHandler.cs",
+      "sha256": "74b3e23e6ff426b4c2a7657bc4633999b1a20b9ba5826f258ad841bd6f79fa99",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/BulkArchiveCountries/BulkArchiveCountriesCommand.cs",
+      "sha256": "0b3d2a9f56b607c0578e4fa3469cbfb873943c3dc7a4189019ca9b477ea17b1f",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/BulkArchiveCountries/BulkArchiveCountriesCommandHandler.cs",
+      "sha256": "4dc8ea8c48853d5661f7a4711294f674867bafc3ee2b1d199bc3650ba8c148a9",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/BulkArchiveCountries/BulkArchiveCountriesCommandValidator.cs",
+      "sha256": "b90b7d14909f8bc3f59d3e2a281a5e1124b6580e383059b1762d8cff118f0815",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/CountryMutationValidator.cs",
+      "sha256": "7956533aa10dae10cfdb640b5fafe2dd9e724e376254051f3f42f0a41508ab27",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/CreateCountries/CreateCountriesCommand.cs",
+      "sha256": "3ffb8296dc7bf980e91228aa962b15f7284387eace5fd757a671c6cbeb3d5966",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/CreateCountries/CreateCountriesCommandHandler.cs",
+      "sha256": "ee10fdd13b2cb0d43efabfdd93c8f4433949aab4dd5d0a165e7fe319a907abdf",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/CreateCountries/CreateCountriesCommandValidator.cs",
+      "sha256": "e827532758c1fd4cc9f3f9c64405263d998a3f227447ccb38391dc5bd17e4ab5",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/CreateCountry/CreateCountryCommand.cs",
+      "sha256": "04f6454269942c8baf2ea6eb72f827a6c38c05aa3b6acfc7d1c0a92419774170",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/CreateCountry/CreateCountryCommandHandler.cs",
+      "sha256": "77f7fab651bdfa9a6bbd3abe7c7833d820b205f724a783f470e8be12014657d6",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/CreateCountry/CreateCountryCommandValidator.cs",
+      "sha256": "09fbf72d5315cd0fa2a817a1d75fa2250a7c228f08721ae8f1ea940523236b64",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/RestoreCountry/RestoreCountryCommand.cs",
+      "sha256": "7ebe2ddb8b9d232c618bb817516154955aa78403188707cbbcbe09e8d8b46dfe",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/RestoreCountry/RestoreCountryCommandHandler.cs",
+      "sha256": "4189a85cef81013bc2aa1ed5b6ecaa5a33e09586d27aa12b52b29b9ae9bf9ede",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/UpdateCountry/UpdateCountryCommand.cs",
+      "sha256": "2b1fe1bdebffe86d8397cb98d350289cf2ce6871bf80642eeb69abecec4afc3d",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/UpdateCountry/UpdateCountryCommandHandler.cs",
+      "sha256": "466277869c9eb59bd2f992d94ef876f35b300f04f2addbade5c583854a8401d8",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/UpdateCountry/UpdateCountryCommandValidator.cs",
+      "sha256": "3dc8bfaab0875aba72d73334827b8f5678d57a4511c4fb958ca5d1b700fa5dc5",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Contracts/CountryDetailResponse.cs",
+      "sha256": "2ad4186a72fc5909845355c39a95a1bae1b29536d562a606f5707f956447a934",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Contracts/CountryListItemResponse.cs",
+      "sha256": "1a79e3810c009ab5ba20511126e27258ef824d00d1920de1cc49699de377148e",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Contracts/CountryMutation.cs",
+      "sha256": "b649dcb7830831c83ec6ddfff9a1553b0fc4cd826c9c1a86991cf4333249e5b3",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Contracts/CountryReportDataResponse.cs",
+      "sha256": "98a390753fd1d6177a4954ddab1c346d00614fcc33dbaa7524240c3e78d5675a",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Contracts/CountryResponse.cs",
+      "sha256": "411b457b69b446a72835ce4149d5c3885f0d4ab476877e5de3b50ab7a232378a",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Contracts/SimpleCountryResponse.cs",
+      "sha256": "fe945720f48be136e62fceb451226ceb790da2b64ec2390ff896d23194c5d07a",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Errors/CountryErrors.cs",
+      "sha256": "8c2e380f19a1a2dcfee0c848a301b6ddfe6ed9531ca9ede5e5e0735dc1ed0880",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Mapping/CountryMappingConfig.cs",
+      "sha256": "88acc9ecc0376c01b0d36f1abffbba2c6e01544d09d63d97835613b4df5e64a3",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Queries/GetCountries/GetCountriesQuery.cs",
+      "sha256": "8a6dd46f20ae12c4043117df4d8ae66b428dca6a1a52449280881a107569c242",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Queries/GetCountries/GetCountriesQueryHandler.cs",
+      "sha256": "6b2c52dbbccfc7210cdfa835da869fac538d83b6bb7ef65f0249c613b8d80d60",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Queries/GetCountryById/GetCountryByIdQuery.cs",
+      "sha256": "6d5e245d1ed630a9631956373336216aae769ae02ffe20299a633e4fa1576faa",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Queries/GetCountryById/GetCountryByIdQueryHandler.cs",
+      "sha256": "8bdf6a37990b23d46e6256106836e1161366d3835d7866617be1dbdd222889d9",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Queries/GetCountryLookup/GetCountryLookupQuery.cs",
+      "sha256": "2134184157651200a0c0a75d4747beb74ee263c62f8ce87cd3d48d98da051292",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Queries/GetCountryReportData/GetCountryReportDataQuery.cs",
+      "sha256": "c4a8dbfcf4734283081591f55d0d496d48355b7b02d3cf59dd90b10294b1137a",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Queries/GetCountryWithStates/GetCountryWithStatesQuery.cs",
+      "sha256": "bf1b2a8c71873622a66ccdc1a65ec2795af67ae6561ad4f60f96928e95d47a1a",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Queries/GetCountryWithStates/GetCountryWithStatesQueryHandler.cs",
+      "sha256": "1ad9d67ca8c57704686d443e72c3513c610438923cad4b912c1e13628700b62c",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Districts/Commands/DistrictCommands.cs",
+      "sha256": "df022011a30720e3fc47d879855477adedf012d8539d2f732ee023354e485e84",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/GeographicalLifecycleLocks.cs",
+      "sha256": "8a7d6e9ad827ea01e311b6ee69d009ce39a41057f7c10bebb119a1bc849996ba",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/States/Commands/StateCommands.cs",
+      "sha256": "15b78281e2e220dce8b9ea1a481ff6b76e06193709ef281a2ed56c4bfb3fea90",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Validation/GeographicalNameRules.cs",
+      "sha256": "ee4075684233fbaa2c73cc879ebbde83ecaa5e63cddb930f1651eef38cbe7682",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Contracts/Authorization/ReferenceDataPermissions.cs",
+      "sha256": "4423331ec3c810c73cea33f2b1f4db4b0a654cd9ee9ecb40261a24f664f58b73",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Domain/GeographicalInformation/Countries/Entities/Country.cs",
+      "sha256": "4286944c15bb670b5b235400ec82025122c8162e4e63ffbc8a5a17fb9b4da5de",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Infrastructure/Features/GeographicalInformation/Countries/Jobs/CountryChangeScheduler.cs",
+      "sha256": "982f4b0d1b370a68b537b23d7eaa26875a5d5c9b50d423a8cb0cbd7f7c77aaa6",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Infrastructure/Features/GeographicalInformation/Countries/Jobs/CountryChangedJob.cs",
+      "sha256": "bd5551b562af4ee312c935d22e7d05a9c15563244e26fe7cb1e6477585f8189c",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Infrastructure/Features/GeographicalInformation/Countries/Persistence/CountryConfiguration.cs",
+      "sha256": "bd39630a951543078bf3ef2bacc6072dc7d0ce123d68fce3052e08f34face557",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Infrastructure/Features/GeographicalInformation/Countries/Persistence/CountryReadStore.cs",
+      "sha256": "2a52a8436002de0525e5b8318576c11f26b80abb1bd5836d3c7477a29eae5ad2",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Infrastructure/Features/GeographicalInformation/Countries/Persistence/CountryValidationQueries.cs",
+      "sha256": "e27057fe6d449b829d9d56d597540c57543b94feadced50edf1efe938e515b05",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Infrastructure/Features/GeographicalInformation/Countries/Persistence/CountryWriteStore.cs",
+      "sha256": "c7c868268a3a6d5e3fe9c6343f64508c2086b0f7b47f613a3c12da1b162b6115",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Infrastructure/Mapping/MapsterService.cs",
+      "sha256": "fa15f25ce1e12187a94b770861fba3d013f369fdbe15af697f8955974374c48a",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Infrastructure/Seeds/EgyptGeographicSeed.cs",
+      "sha256": "09f7784ecd19e9d97e58f1deb83a3ca13534750d1363018e3e9299b5dca866ff",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Presentation/Features/GeographicalInformation/Countries/V1/CountriesController.cs",
+      "sha256": "43c5197d7a3baf75f2601b9d48ac2ad95d8037a8650883e36cd5ac9b6263af03",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Tests/CountriesControllerCqrsTests.cs",
+      "sha256": "0daac726193fd1390cc816c44e470c597b0b373798bf721a8830865b1714d769",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Tests/CountryCqrsArchitectureTests.cs",
+      "sha256": "271927a5afc4ceca42e6af386359735bf0a9cd1a13bef8d3827d564916f03082",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Tests/CountryCqrsHandlerTests.cs",
+      "sha256": "56973df8a00e662ea9c8d1c97bbbf3def218533ff332683e6555489cbbe1c2b6",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Tests/EgyptGeographicSeedTests.cs",
+      "sha256": "f9d27428ab6d4c7d01e2f88bea629117e20c2b4a004508f49ee2b5f8d77b2ac5",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Tests/GeographicalNameRulesTests.cs",
+      "sha256": "be3df0f3671d014e654178202c8206458b58ac28edddbffd601b3d0aef836008",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Abstractions/IReportTemplateStore.cs",
+      "sha256": "4530678dec8781c0cb24f1f39580682e0d522050463ca6ba7db3a2de4c1bdec4",
+      "classification": "current-source; ActiveReports references are retained-client evidence only, Excluded from Angular by DEC-028"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Commands/ChangeReportTemplateLifecycle/ReportTemplateLifecycleCommands.cs",
+      "sha256": "fd4effc39e908fdd5b759b80ee355588a0997d412ad4acf3093f3ea28f38ba21",
+      "classification": "current-source; ActiveReports references are retained-client evidence only, Excluded from Angular by DEC-028"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Commands/ChangeReportTemplateLifecycle/ReportTemplateLifecycleHandlers.cs",
+      "sha256": "a0bd03618ca14f2b3e78340b03cec6b4009f96a7f6c6e46943b9a8ec67f0b5d6",
+      "classification": "current-source; ActiveReports references are retained-client evidence only, Excluded from Angular by DEC-028"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Commands/CreateReportTemplate/CreateReportTemplateCommand.cs",
+      "sha256": "a0be21d886374f2c741328bc48a3f385e8a07c0f05d792259eb5c70ca2e8898c",
+      "classification": "current-source; ActiveReports references are retained-client evidence only, Excluded from Angular by DEC-028"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Commands/CreateReportTemplate/CreateReportTemplateCommandHandler.cs",
+      "sha256": "547d476d6782c08761a1c96444945bbfd26e5a52230c121f509bdab1a7c606d4",
+      "classification": "current-source; ActiveReports references are retained-client evidence only, Excluded from Angular by DEC-028"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Commands/DuplicateReportTemplate/DuplicateReportTemplateCommand.cs",
+      "sha256": "59fde26db199f2e5f85c0579c91050c4fe51a9d453c8844c3f1ffbd947cb961b",
+      "classification": "current-source; ActiveReports references are retained-client evidence only, Excluded from Angular by DEC-028"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Commands/DuplicateReportTemplate/DuplicateReportTemplateCommandHandler.cs",
+      "sha256": "5e75c75206613d7254b426b8cc9506417d65fabfaa1e2366fb3855da77e3c646",
+      "classification": "current-source; ActiveReports references are retained-client evidence only, Excluded from Angular by DEC-028"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Commands/ReportTemplateCommandRules.cs",
+      "sha256": "ac059a212e3e66b3bae8da840c538f44ce998bcf321315e867b4f77f4abb5cb6",
+      "classification": "current-source; ActiveReports references are retained-client evidence only, Excluded from Angular by DEC-028"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Commands/UpdateReportTemplate/UpdateReportTemplateCommand.cs",
+      "sha256": "79e7e7450c27070cf8b08fbf06fc1cffe97caed2ba18c4c2ce615f6a65e0dacc",
+      "classification": "current-source; ActiveReports references are retained-client evidence only, Excluded from Angular by DEC-028"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Commands/UpdateReportTemplate/UpdateReportTemplateCommandHandler.cs",
+      "sha256": "eac0b70aa002cc90a5c0c819c70f90f68b768e9a1d10023bed8daa7438babf8f",
+      "classification": "current-source; ActiveReports references are retained-client evidence only, Excluded from Angular by DEC-028"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Contracts/ReportTemplateContracts.cs",
+      "sha256": "62aada18cac1528f1caddd4b0ceaca088debe32352c2115f642c374c718df5f3",
+      "classification": "current-source; ActiveReports references are retained-client evidence only, Excluded from Angular by DEC-028"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Errors/ReportTemplateErrors.cs",
+      "sha256": "abac083109daa2033d64da65ceba0f940544de84a509210dc1082d42af6b71cb",
+      "classification": "current-source; ActiveReports references are retained-client evidence only, Excluded from Angular by DEC-028"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Queries/GetReportDataSources/GetReportDataSourcesQuery.cs",
+      "sha256": "64f80680e9da410902084998a6ff6c6a40cd84d3dc17cccf772d9a996e7d1475",
+      "classification": "current-source; ActiveReports references are retained-client evidence only, Excluded from Angular by DEC-028"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Queries/GetReportTemplateById/GetReportTemplateByIdQueries.cs",
+      "sha256": "48f73e73f341a682e6f10a1ec356b0d139df6adad606ae2f19fd62f3ce748b8c",
+      "classification": "current-source; ActiveReports references are retained-client evidence only, Excluded from Angular by DEC-028"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Queries/GetReportTemplateById/GetReportTemplateByIdQueryHandlers.cs",
+      "sha256": "c7e04c36a6d982166686a8e84d734fef90c3264b86ccc6d88411c58c3fdb09c1",
+      "classification": "current-source; ActiveReports references are retained-client evidence only, Excluded from Angular by DEC-028"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Queries/GetReportTemplateRevisions/GetReportTemplateRevisionsQueries.cs",
+      "sha256": "68214a65301681e1b4c07813c8f920b905367fd1216ef17ca5ab43d5f95c9f98",
+      "classification": "current-source; ActiveReports references are retained-client evidence only, Excluded from Angular by DEC-028"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Queries/GetReportTemplateRevisions/GetReportTemplateRevisionsQueryHandlers.cs",
+      "sha256": "8cf5a81616f54fc56a1621339ea13c1e5b8ef0c130684fd40609692620afbe05",
+      "classification": "current-source; ActiveReports references are retained-client evidence only, Excluded from Angular by DEC-028"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Queries/GetReportTemplates/GetReportTemplatesQueries.cs",
+      "sha256": "a870dc9eecccea5dc1937a0c930b3475dc18da97f00b5c8d074983426dddf39b",
+      "classification": "current-source; ActiveReports references are retained-client evidence only, Excluded from Angular by DEC-028"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Queries/GetReportTemplates/GetReportTemplatesQueryHandlers.cs",
+      "sha256": "094fbf5107f22a3a8d49b46036bf6419508611caa6da4eec18e3045e7b10f02b",
+      "classification": "current-source; ActiveReports references are retained-client evidence only, Excluded from Angular by DEC-028"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Validation/ReportTemplateDefinitionSafety.cs",
+      "sha256": "e339ad36f977c5dac88bc7c420218b680f08d1fa2325c5acb826761da631c506",
+      "classification": "current-source; ActiveReports references are retained-client evidence only, Excluded from Angular by DEC-028"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Domain/Analytics/ReportTemplates/Entities/ReportTemplate.cs",
+      "sha256": "ef851df0febdef65c75369f1478a95f7df0d6c9b71b551d87ca460ec05bf995f",
+      "classification": "current-source; ActiveReports references are retained-client evidence only, Excluded from Angular by DEC-028"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Domain/Analytics/ReportTemplates/Entities/ReportTemplateRevision.cs",
+      "sha256": "34ac2085f8fae20c3531eb6a4c46011ef18a2e13fb5f0afca65a11b43e7198b6",
+      "classification": "current-source; ActiveReports references are retained-client evidence only, Excluded from Angular by DEC-028"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/ReportTemplates/Persistence/ReportTemplateStore.cs",
+      "sha256": "f6745e522105e1470bff7173c9c7588aae493031f9aaa7a749b15ebe6348f2ea",
+      "classification": "current-source; ActiveReports references are retained-client evidence only, Excluded from Angular by DEC-028"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Presentation/Features/Analytics/CrystalReports/V1/GlobalCrystalReportsController.cs",
+      "sha256": "5dea5c40a47d7dc32bdc184214bc84888f1415e3a65ef3b9cd54070932b84740",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Presentation/Features/Analytics/ReportTemplates/V1/ReportTemplatesController.cs",
+      "sha256": "9629751d7c14b0ad82b088279a5917a12d0fa2bb07cdf8f1c4a7c61cf3922706",
+      "classification": "current-source; ActiveReports references are retained-client evidence only, Excluded from Angular by DEC-028"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/GlobalCrystalReportQueryTests.cs",
+      "sha256": "2532116d77bba97873cf291b4492b80afeedaf2fe582b897a379c55b39f7aa1b",
+      "classification": "current-source"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/ReportTemplateFeatureTests.cs",
+      "sha256": "6e99e07f5ad4be01acd51c537e6b6e62d7c8194cc8a03b0e3dc2a7201a6f0c64",
+      "classification": "current-source; ActiveReports references are retained-client evidence only, Excluded from Angular by DEC-028"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/ReportTemplatesControllerContractTests.cs",
+      "sha256": "8916200cc3d7b082b7d6772ee28fb031c2c69497cb2dc295d24ebbf5685e79c0",
+      "classification": "current-source; ActiveReports references are retained-client evidence only, Excluded from Angular by DEC-028"
+    },
+    {
+      "path": "documentation/modules/platform/features/angular-managed-reporting-adapter/GLOBAL_PDF_CONTRACT.md",
+      "sha256": "acf14eb775986757f42dddd05c6fb93c13709d3301044d3dc32bd06649a65d6a",
+      "classification": "current-source"
+    },
+    {
+      "path": "documentation/modules/reference-data/features/countries/countries-api.md",
+      "sha256": "c09773ccb126ce50ca6bc5ff822ebbeadda792c20bd6de0b0861a4267bbff7c9",
+      "classification": "current-source"
+    },
+    {
+      "path": "documentation/modules/reference-data/features/countries/countries-mobile.md",
+      "sha256": "ba48aa9bb045e96706aa6fc5dba2dfe8ba01847df43c3840062d6986fd62b3be",
+      "classification": "current-source"
+    },
+    {
+      "path": "documentation/modules/reference-data/features/countries/countries-review.md",
+      "sha256": "01f8c6a20bfc6287024a67d27d2881b1fe029c6e9bc83dba571b4b8d91e1d73d",
+      "classification": "current-source"
+    },
+    {
+      "path": "documentation/modules/reference-data/features/countries/countries-web.md",
+      "sha256": "05c68000baf5736ccd51c7d69713f84b069b4a4a83f0e121b4d22aec33784fcc",
+      "classification": "current-source"
+    },
+    {
+      "path": "documentation/modules/reporting/CRYSTAL_REPORT_MANAGER_INTEGRATION_GUIDE.md",
+      "sha256": "c430b9b65017f41421e578990adc350ed3a6d1de17b335debe01eb1ca467862d",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/AGENTS.md",
+      "sha256": "d0e86ef2d2d476041307d7819a1bb9e411690e8e692f610ed19d465eaee1c379",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/app/(main)/basic-data/geographical-information/countries.tsx",
+      "sha256": "c5c33cdbf83ffc5b37b3e03ac1c22ebe9797db4542c707d42e8f8ee38cfcb6d4",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/package.json",
+      "sha256": "21988a9666f13d36724f7236dd7a3263da273b9a4c61fdb7ca193bab8cf7b4d4",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/core/constants/routes.ts",
+      "sha256": "92c701120fd1f537491afd70a5aa8c29577994d7e1d1a6866295312b5d5994ea",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/core/localization/translations/ar-basic-data.ts",
+      "sha256": "eea96b2a8e452841434ee0de78e873f7ff40b3294d72841a3e7eac1e9683fad3",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/core/localization/translations/ar-common.ts",
+      "sha256": "fad9ceaafbaed36ce5810dbd2aeef9c8085e6c5bbe80711b45b68eee900f6c19",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/core/localization/translations/en-basic-data.ts",
+      "sha256": "a72f45f513242aede0ee630b457c312cb299e71464962b6ed2e91ea2f1ec1a3c",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/core/localization/translations/en-common.ts",
+      "sha256": "4dd7966bcc28d525c64c640c19b27384cbd7ead87d69d79d9976e43eaf7a5c0d",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/modules/hr/basic-data/presentation/screens/GeographicalInformationScreen.tsx",
+      "sha256": "d990def5be253beadfb9a0b85e2278e6a1f410b50aef52979a6cb5a583c8cc4a",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/modules/reference-data/geography/countries/application/country-use-cases.test.ts",
+      "sha256": "0d464ac757e5d12a0c4746398506340337a095526abf149f470e82f3827b70bf",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/modules/reference-data/geography/countries/application/country-use-cases.ts",
+      "sha256": "3d673927949799cb66624e6bf061e5010773c8208db7d67609d3cdd8679d9227",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/modules/reference-data/geography/countries/composition/use-country-use-cases.ts",
+      "sha256": "9d29270423d537b6ecb5fda9a6fa59bada5767d4dda99f112ae8447671e4b89f",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/modules/reference-data/geography/countries/data/local/country-local-data-source.ts",
+      "sha256": "800d7618a5c1063b11f074f2b974e78ebd52ac4ca921bb8735ad313e72301e86",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/modules/reference-data/geography/countries/data/local/sqlite-country-local-data-source.ts",
+      "sha256": "84e27196657d764daa6d1fe400806bd16b37453055d994a6151cd66668e65faf",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/modules/reference-data/geography/countries/data/remote/__tests__/country-bulk-remote.test.ts",
+      "sha256": "a0b17d59bf3d1b52ec42341f160473ca7694d00697e2618b83b3d9f2f3099894",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/modules/reference-data/geography/countries/data/remote/__tests__/country-remote-boundary.test.ts",
+      "sha256": "095a7cc96ef00e5fb8bff4d1d9c6283faf49a7973dceb8c8d0e68cc451027a16",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/modules/reference-data/geography/countries/data/remote/country-endpoints.ts",
+      "sha256": "5713c65381ad62ddf5b7b693d5d1894705db5e7b9701e8feb8fbcf575d9a83ea",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/modules/reference-data/geography/countries/data/remote/country-remote-data-source.ts",
+      "sha256": "66697f4d6190e57c04bf0f1580e295eb1f648b5bc9139f2174958a6d9c7d8fdf",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/modules/reference-data/geography/countries/data/remote/country-schemas.ts",
+      "sha256": "a95848f8acfdf61c3ec22dbe6449489d4f6cbbefca583421f6d13578ba1b46e5",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/modules/reference-data/geography/countries/data/repositories/default-country-repository.test.ts",
+      "sha256": "289f4641f272a549caa952220bdd08de0f724a6a1194afff0f52ebd21a6eff68",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/modules/reference-data/geography/countries/data/repositories/default-country-repository.ts",
+      "sha256": "b62c0d7d0f18fe87a86679bc622fc002811066763cf40a44727d0887727d649a",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/modules/reference-data/geography/countries/domain/models/country.ts",
+      "sha256": "b883dd395fc2620cc69f4d07897738bdcf39b4f61dff6d76cf00f59ad38ac189",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/modules/reference-data/geography/countries/domain/policies/country-request-policy.test.ts",
+      "sha256": "7a801491b12dba929c067ccd5863539804582b07bc6c9b83f8e3a04ffe4e2e27",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/modules/reference-data/geography/countries/domain/policies/country-request-policy.ts",
+      "sha256": "85bb266c6b7ee5fdbc1f8c5d9670ec8a8728dce905eb45872ff284e000c7574a",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/modules/reference-data/geography/countries/domain/repositories/country-repository.ts",
+      "sha256": "f7ec35d4ead1e47992a969f22abf8cb45f20664abc00b03f1b5664cd03da8fd9",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/modules/reference-data/geography/countries/index.ts",
+      "sha256": "eb22221293a9de1ce492f9376d3019be0eae78c2f74d18a06c3736b8799ff87d",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/modules/reference-data/geography/countries/presentation/components/CountriesChartView.tsx",
+      "sha256": "8d688b1d2da0360f4f2fee9f6d037e1acaf28b597ad946c811bbb98fecc4116f",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/modules/reference-data/geography/countries/presentation/components/CountryCard.tsx",
+      "sha256": "4c3dacf7a087cc90bbf8f3ce34527be8b773ea7e61d526d4481f4322c5059c71",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/modules/reference-data/geography/countries/presentation/components/CountryFilterButton.tsx",
+      "sha256": "060a997f1f241de7f60e576a133113f1a74978d844d776a43a5c3f3e2f5f1ea5",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/modules/reference-data/geography/countries/presentation/components/CountryForm.tsx",
+      "sha256": "f62a1dd99f69c8d398459a5bbe4e9583399d7630daee214714d3e72d1805950e",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/modules/reference-data/geography/countries/presentation/components/CountryReportView.tsx",
+      "sha256": "a4e2f91516e0830713f5f0e1f68a35ca4ced8b3cf2de7476395d3282f0ced948",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/modules/reference-data/geography/countries/presentation/components/chart-view/country-chart-data.test.ts",
+      "sha256": "f52aec1dc08a75657da2b5c524fa4ba8a1042ba35a29319eaebf64e105ece94e",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/modules/reference-data/geography/countries/presentation/components/chart-view/country-chart-data.ts",
+      "sha256": "839b1974fc8ef79bbfd6310904bb9e9f78bd0a9e777c7abdfa7dd113c5d9f9f2",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/modules/reference-data/geography/countries/presentation/components/import-data/CountryImportView.tsx",
+      "sha256": "66b4a77d513b40ce34ddbb314d034f7c5b79b65a60416032fc08766b5eaacfce",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/modules/reference-data/geography/countries/presentation/components/import-data/country-import.test.ts",
+      "sha256": "822991da33c114937c725ced9af4bab026c9abc17b1796028524358bc236f0bc",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/modules/reference-data/geography/countries/presentation/components/import-data/country-import.ts",
+      "sha256": "b273e945ab5fc067c7487c26cad91c462c67b58fa65ac6cfa3b7af4da2cf6e2c",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/modules/reference-data/geography/countries/presentation/queries/country-keys.ts",
+      "sha256": "6abaea382f920a8b005ea06fa5be7994b89311b6d799dc10086e00e3e365918a",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/modules/reference-data/geography/countries/presentation/queries/use-countries.test.ts",
+      "sha256": "82ba1fcab3f45fa13da484217c2b241700845ae560224eadc447d9f1d2434ca5",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/modules/reference-data/geography/countries/presentation/queries/use-countries.ts",
+      "sha256": "5698fdb33e8a173873d2157f23e5dd97592e713d95c9d17c733014152a6ff15f",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/modules/reference-data/geography/countries/presentation/screens/CountriesScreen.test.tsx",
+      "sha256": "d2db745eea7509167c4513e59f8932058aa85ca313e502182f2f4c1b83a4c365",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/modules/reference-data/geography/countries/presentation/screens/CountriesScreen.tsx",
+      "sha256": "6f7649b58b129ea332e39a1d1620475687e11226d770475356234d2a90374002",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/modules/reference-data/geography/countries/presentation/utils/country-mock-data.ts",
+      "sha256": "9dc335e8535efb0a57504fae78c4d3201b8ffec49d88e6887907c2c8aa1f66c3",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/modules/reference-data/geography/countries/presentation/validation/country-request-schema.ts",
+      "sha256": "25d788efc44ef40c5a13fe6bbe112e985d4992153fe817f70d976af631f0025f",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/modules/reference-data/validation/geographical-name.test.ts",
+      "sha256": "258217592957b1e929df2e2282f6ce5723c1ee57b8e97e86913e6088ef04f285",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/modules/reference-data/validation/geographical-name.ts",
+      "sha256": "f63c333cb7b71af182faee46bdcbb7b818db0501589ea26e4d16f5a6ffd4657d",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/platform/auth/presentation/rbac/permissions.ts",
+      "sha256": "8603c173b0b614779f87a93eed22720ed6d4ac2e42ed44835ea9e0f0e2ede641",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/platform/auth/presentation/rbac/route-manifest.ts",
+      "sha256": "f20718128e821aa63569108f29be61156197429b691fbef6089b057ae062b5d1",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/platform/realtime/application/realtime-query-registry.ts",
+      "sha256": "681d3aedb7b8268408e896ec1e2ca06d86ca997ae0aabf487964ac73012158c0",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/platform/reporting/access.ts",
+      "sha256": "57bf7a6716d7e25059d7a9157cf85d6637052baa9264016a18479c6843c7fd1c",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/platform/reporting/application/crystal-report-use-cases.test.ts",
+      "sha256": "e5af1bb2cb46d28962fb12fda4ce98accd3d0cb3c593f6e370ebb3b1ff9a2447",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/platform/reporting/application/crystal-report-use-cases.ts",
+      "sha256": "f921ff75b8f091d5619d58170e504ad3263dd07c36185c4f081607bfe7ecc79f",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/platform/reporting/composition/crystal-reports.ts",
+      "sha256": "6f7597c4c6dc60624a05b2d204d2a11a7c6040b75d1c99282d40b8200b8780a1",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/platform/reporting/data/remote/crystal-report-endpoints.ts",
+      "sha256": "04667d289f162288b9e7b6e875d68e46a3ae61ebec2e2638eb33f8f0d03f6225",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/platform/reporting/data/remote/crystal-report-remote-data-source.test.ts",
+      "sha256": "ef335da0c6d7724b5714f3c0e2558eadea65f0a60edb2beb652b851c92975b0b",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/platform/reporting/data/remote/crystal-report-remote-data-source.ts",
+      "sha256": "6706c7ebe4590009cfe87615c58a4ab1abc5fc5ca094463b0dcde6396a53eb8a",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/platform/reporting/data/remote/crystal-report-schemas.ts",
+      "sha256": "9638eadd1f4b773e8aabf569a06ec78befb69f9cf2530d5ca1b530c58d47506b",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/platform/reporting/data/repositories/default-crystal-report-repository.test.ts",
+      "sha256": "31c2e8b5c09ce83b9615b6c82f1d3f2493299f60cd1f9f105e71420adaa52abd",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/platform/reporting/data/repositories/default-crystal-report-repository.ts",
+      "sha256": "423427ef403268e1edc95a206c6ecfdc15581d7b0ee02d834f78a5a349feb68d",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/platform/reporting/domain/models/crystal-report.ts",
+      "sha256": "50ccaa017b7d2ccb9552115c50d4ea3efdb2f06b5dc64a15ccaabf7aeb1f205f",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/platform/reporting/domain/repositories/crystal-report-repository.ts",
+      "sha256": "ed5699450735268bdda18490310624c9067f6132b6540f798db8434d0669d0cc",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/platform/reporting/index.ts",
+      "sha256": "3f24482c7b17c4773294d6c310fa48861c59f4cec9475eda2cf78a512f02b06f",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/platform/reporting/presentation/ManagedCrystalReportView.tsx",
+      "sha256": "45257ed37c78e679207c3e8475483d5d8707e0d13abbd72ebb43491ba9410d9f",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/platform/reporting/presentation/useManagedReportAvailability.ts",
+      "sha256": "53616c1faad03dd268581ba9b7507621f71026cd5f1c079715034d1a699ce954",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/shared/components/data-table/AppDataTable.tsx",
+      "sha256": "6721b7489dc25df1e8b5d27fb32b01cc55a6cacad40ccfeb60cd7ad7c534b66c",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/shared/components/forms/AppForm.tsx",
+      "sha256": "bebb07305ba22047511eab2d3f7da2735a3bef4ed8af51feb7130b2947374321",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/shared/components/layout/AppPageHeader.tsx",
+      "sha256": "cb9ab5ee994d41f220853920f5811653304167354f98120c94cf7d75c915384c",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/shared/components/layout/AppScreen.tsx",
+      "sha256": "188ecc06c1545e3db38467dfad92e9a99e9b2de0a07278379a78dae82d675497",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/shared/components/multi-view/AppListScreen.tsx",
+      "sha256": "8a04bc7557e2daee978bb707ce372a9005d9d64ab8fc6837c01dfd4c8b00228f",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/shared/listing/useServerListState.ts",
+      "sha256": "9eae868c3b7112011cfe8777a1a43173676696947f1d11edc5073181a467a14f",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/shared/utils/mockData.test.ts",
+      "sha256": "e2fb04b68d93d18a82fabdd446a167fc6cbc5f9290be741c1d842fff938143ca",
+      "classification": "current-source"
+    },
+    {
+      "path": "mobile-react/src/shared/utils/mockData.ts",
+      "sha256": "e8f553d15fdf6846815bffc6ad5117b8e427c8ff95e36e3037e6a3c50450b3f0",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-angular/src/app/composition/authenticated-routes.ts",
+      "sha256": "274d1a1e023c47644048f7486995ab0c428017c2f46d1d5bdbb3e9d8deb2b291",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-angular/src/app/shared/data/scoped-read.ts",
+      "sha256": "da18e85781a52a80365aa42bdb34f44d9619a12f0c6378987cd21bfdf89ff621",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/card-list.ts",
+      "sha256": "ffd7b43e60b68effa7266e2145e6d9aa28c28c8642ff611acc50c5cc88a826ac",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid.ts",
+      "sha256": "052384bde78fe9778b9547d62db8310c913de3860042a6b8de6bf99bbf346697",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/dialogs/dialog-panel.ts",
+      "sha256": "a2e486d712b1759d2cd702d28dae4c64cf5a23d34c00f278c27c284b116e0334",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/public-api.ts",
+      "sha256": "93131f38b742414feb6eaaf859ab16d071843872947521376506334074aca394",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/AGENTS.md",
+      "sha256": "366d068558db76d5953e8ed5e325b30e0adc556bb091f361609a734cb4da3908",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/e2e/business-smoke.spec.ts",
+      "sha256": "5a3cb35db64ba513dba266a899d5a0c86151673a86860a12665fe53a86e3ac70",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/e2e/support/test-backend.mjs",
+      "sha256": "c4a68ea6c6ff01f3feaa966c88783cef49b6d7a4b74f89b7aee868e03e6433ad",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/package.json",
+      "sha256": "c02f94105a366a50ca729573713a157ca858af46ec73bbb6b668473454c85a10",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/app/(main)/super-admin/(reference-data)/geography/countries/page.tsx",
+      "sha256": "70394141766bf556533477a5cceca6927c8bfd5e1733fec50e67e23ef1370b52",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/config/api/basicData.ts",
+      "sha256": "caa0c7a3ef8171e774784083aa77b3a03fc914d7d9ad2091b5ac6204dc03ffeb",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/config/routes.ts",
+      "sha256": "d32cd988587f8215ac1b76b936caba269dca07e7ec7783f26a5b63967d431371",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/lib/auth/permissions.ts",
+      "sha256": "61e21782aba1350e4c5379f2436e048df810ad9568258d2f6653d83d1b17f9d7",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/lib/auth/route-access.ts",
+      "sha256": "2239e67ad75470026e461849001cbb89175f8de5e5480bf4c380d31ce94c1290",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/locales/resources/reference-countries/ar.json",
+      "sha256": "6e663b37a83e228485a113571913b2e6d4230f87590e201b572cf8fd9d566d33",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/locales/resources/reference-countries/en.json",
+      "sha256": "94a818377a44839bb4623192ec7c876a953c82d1cbbca36cf8550b85f1bd64c0",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/CountriesCardView.tsx",
+      "sha256": "85e1ada5aa590d0a2c38445f54ba4d13b47c6010c83a8d8b4497f831f9a757d4",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/CountriesChartView.tsx",
+      "sha256": "81859b6f1142d8419cd4120f2d00847b5c70daa76487ca6b957d7aaf3754def7",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/CountriesMultiView.tsx",
+      "sha256": "ce391b593267d1b212c5b50cc5a6d5b4a7ab040fceb6c4e9212424efe2b0fe15",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/CountryArchiveDialog.tsx",
+      "sha256": "f7385655ea7b8789d1f278c8fd511a24ace160aceee90e62853c3cfb849b0e96",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/CountryBulkArchiveDialog.tsx",
+      "sha256": "5bca7715299433f2d3032fb8ec5d7a8aca936dc8a3901f551c46213b457bc65f",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/CountryForm.tsx",
+      "sha256": "aecc50e13c359860be0635e390c953ea464a5abb4d7f5f2d0b04235fc728491e",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/CountryRestoreDialog.tsx",
+      "sha256": "71fe6ed82f0b2f1897dfc915eefdb0b8df162cacd95d8d32a31151661999c1e0",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/card-view/CountryCard.tsx",
+      "sha256": "e5635282e6485f5ef5ad065165863e690beaf99a79c1bc1567226784d86cf9eb",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/card-view/CountryCard.types.ts",
+      "sha256": "d4cd778b9218232dfa9079b7e8fd39830165e6e02284db83566fb9b2ea212098",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/card-view/CountryCardChips.tsx",
+      "sha256": "2285ae50b7f1cb5e77cfe507cc91fcc8f11d114e798c74be91cef8359d353edf",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/card-view/CountryCardFooter.tsx",
+      "sha256": "37d0b128d6d5c7330c0b0fcdb9906bb2ae0fe95f4e2cadf1f0f122b9835e1a9e",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/card-view/CountryCardUtils.ts",
+      "sha256": "db3f575711fc7b2bfdbe3524f9bc8d83d4296954fc35b3b6c6a8bc1f9df81c2f",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/card-view/CountryCardViewHeader.tsx",
+      "sha256": "98c548c0facef235f8260398d0af3298fd00b2aa86e75c2b0b66d77a1739a7a3",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/card-view/CountryCardViewPagination.tsx",
+      "sha256": "9dd2d2beb2cdaea18b1dd749d9fc7491e11e937d176214613dd60824132bd636",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/card-view/CountryDetails.tsx",
+      "sha256": "22e9e06f6f24f58bc858d07f8ca301d3b70ea3fa32a4d0030eb1708c88e5f42b",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/card-view/CountryStatesSection.tsx",
+      "sha256": "eae6260f3fabe366db1600fdf4776d89dc912465947659c8c12a448569855d49",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/card-view/EmptyState.tsx",
+      "sha256": "eeaa60402b9868ae28674d9551485075e9a45ed240f9aa70ecde0cabaa5aabc4",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/card-view/NoResultsState.tsx",
+      "sha256": "b431077ed9390af2f662228e47ddfa77c80636ccfac2d76f1479a928781a303e",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/card-view/index.ts",
+      "sha256": "01536283d998e00b42b47d90e34756c461a47f834aefc2f8e81093b3e8357c02",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/chart-view/CurrencyChart.tsx",
+      "sha256": "df8feaf54d7ce05cece662f1f3ad420d7c800d979af3fa725d14fb2093839017",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/chart-view/EmptyChartState.tsx",
+      "sha256": "d5b7bfea803b1e72b069b64ebd65654500fdf623cc3174678fc847dff719d4d2",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/chart-view/LoadingChartState.tsx",
+      "sha256": "2f8d32c757745cb375fa1c7ae455a3b2774557db151d3f77b38eed541f09c1ba",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/chart-view/StatesChart.tsx",
+      "sha256": "cb2579b6b3479681c6cf5b27179c7a561c28e710cce5b49a80e3ff916f1c6f02",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/chart-view/StatesCoverageChart.tsx",
+      "sha256": "7e3d85bc2172b83db27e0ad11370895bf7e52161e31fe4f98c1196731d3ab914",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/chart-view/SummaryCards.tsx",
+      "sha256": "39a5c6234df840e2988c1587da9fcb8f2156d33c43b91bc4f6ab3ccf2d282c16",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/chart-view/TimelineChart.tsx",
+      "sha256": "a2e1d92ebe27e4a245b2f2069334b3546832997904241c3b545a421096d35340",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/chart-view/chartDataUtils.test.ts",
+      "sha256": "feb9b475d6a9ed2572b05dac47a05d104fce30c6e3dcdc5294d394ef8a669cf4",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/chart-view/chartDataUtils.ts",
+      "sha256": "5db808ff9710c60748ca3bd0b12733e3c318817aa7fd4a0a033cdccbbcf1d8ea",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/chart-view/index.ts",
+      "sha256": "0cbdcd8044b31ca903c65bf05e62bc129f64c3408cc1cf50197dcb7656651094",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/grid-view/Columns.test.tsx",
+      "sha256": "cd3008bc1cb860630c3622dededbbdbffd9c8132af10581687a855879164b479",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/grid-view/Columns.tsx",
+      "sha256": "18f2c4af0f1b46cf8de4a1569b221a025f626de2213d85aac59baed839119a9f",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/grid-view/CountriesDataGrid.tsx",
+      "sha256": "3f7137aa74f8a3c6df7e0f971c62fcaf56ddb5d95a3aa1c84d42b4903f164778",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/grid-view/CountryCellRenderers.test.tsx",
+      "sha256": "363b7304de658a459716727b19aba53ac72b0e1c8b3b6de63ed04c66aaf1269f",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/grid-view/CountryCellRenderers.tsx",
+      "sha256": "123c71b028ba3b5b59cee1ab45a0d4d6a20b45031f9f0d21b68df74d18a63382",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/grid-view/GridActions.tsx",
+      "sha256": "5469d909d86e15fea3b05576a657511eaca998830e9eff589c7c718ba28cc6f3",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/import-data/CountryDataTable.tsx",
+      "sha256": "0bda44500c710ea575127b94a4fa0a9c3682dd8ac7cd45d66413f904f374f925",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/import-data/ImportCountries.tsx",
+      "sha256": "120238de8f413cd549177648826805feb691715ea7e7778071d85a161409d942",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/import-data/LoadingAlert.tsx",
+      "sha256": "0f4134743cbab6e5feab6da5e0eba6bfe24ea255bd872a9b0cc43f314b5abb42",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/import-data/NoDataMessage.tsx",
+      "sha256": "a823d49f76f566971eea8d432a81b6da722c64e5adc8757884169c420e9a79eb",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/import-data/UseCountryColumns.tsx",
+      "sha256": "8d11426e5929b21e35d0261b5950ffd79fdbf642a24ed17aa3a6010ca4699983",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/import-data/countryImport.test.ts",
+      "sha256": "bdb677f5ed68e6bb5c692a716bbe9d10f07666d0801a99fae97a5f208fd65f20",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/import-data/countryImport.ts",
+      "sha256": "6296712baf55e42af1b340e646d45ed80ac0ccd227e9d8be6e1d57f804b54683",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/import-data/index.ts",
+      "sha256": "0c00ced05de4df95f64373510334ecb0830e2cbbc1fc278f711c5a85a4e0f322",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/import-data/types.ts",
+      "sha256": "92ba007ffc3296417ce91573b1ef3bbde7971bc6ebd8e338ba24241bdc97e3ca",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/import-data/useCountryImport.ts",
+      "sha256": "39ec9f7bbec1d797a74587d111404544d417777daec2233a183c8ce630c1c5c3",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/hooks/countryQueryKeys.ts",
+      "sha256": "8219c58a44f93c186ff1dcaa7363241a309e5c0c7f712f2a2f4036ea15923bee",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/hooks/useCountryGridLogic.ts",
+      "sha256": "53129a48d463c409202a322f0858dfc43b372b6de3a32de183ad9b74dc39c4f6",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/hooks/useCountryQueries.test.ts",
+      "sha256": "1cfc73eb59107107b2b84f801f3fd525562961a33d10a98482dde2f4006eb219",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/hooks/useCountryQueries.ts",
+      "sha256": "8242d5d7cc091405d705a021f7e4b1f7ed91f74dec0d38fa352cb931fc090b1d",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/index.ts",
+      "sha256": "9a401d6f4a559a88f8a400259bb1bf33e5b670d79d50be469a158d75629cf46a",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/pages/CountriesPage.test.tsx",
+      "sha256": "dcf16c5b87e319864240227aecce614a82063ac5f8bf2ba5aba8651a42f09905",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/pages/CountriesPage.tsx",
+      "sha256": "9a79c87dce66cebbda6d56f0ee4af2da42db5f4195ee323195d7d9277ebac79a",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/public/index.ts",
+      "sha256": "3ec270f481db55334e9717d0f0d71930d9c541d12533a6b4deee687d9aff8c47",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/reports/pages/CountryReportPage.tsx",
+      "sha256": "3d89edb3f4aa7e583a4104f66b4cb1f828e78f789261c0641dbfd43561343261",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/services/countryService.test.ts",
+      "sha256": "133c6ce995228fb604e776e811f20d27c0c9836df054041ca598138402513dfd",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/services/countryService.ts",
+      "sha256": "d142c2f570097a657136edab899eceb82d57969b63eb40789d7d907b04ed0017",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/types/Country.ts",
+      "sha256": "45a71b8f19042b3ea420a14074fb19a11af285de5896f110858db9afd1984081",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/utils/countryMockData.test.ts",
+      "sha256": "1cab844b165c7e5db20d2a67f271edf7849d1a3d581e854e8865de55d1aa9c41",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/utils/countryMockData.ts",
+      "sha256": "ceb59e3c6da3ecec53b9b9a62ae09e9964fce85c91dd991867064a8bb71e084d",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/utils/countryPageQuery.test.ts",
+      "sha256": "513b934273cc1ee18cc31e3b2a6210cdad0932b20d10b951e12ac2129cc0bbe5",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/utils/countryPageQuery.ts",
+      "sha256": "636098a255e3b1de5a5defaf600a2bf3e842ccc11a8e0259622fc2e81a864021",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/utils/countryPermissions.test.ts",
+      "sha256": "f30e9f873537834771f98f94aa34aa99129101c2946fc023af13ab2f28c111f4",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/utils/countryPermissions.ts",
+      "sha256": "cdddcd203bb7dab272275ff5052788e8e211402ebeaf1cf720f2a989b1e7219d",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/utils/validation.ts",
+      "sha256": "c540ba46631303332785ef4748bda5626f467d1fb4b35ac1b0878236235d0b76",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/validation/nameValidation.test.ts",
+      "sha256": "5da1293aa4b2cd3116be12b7ac24452623e89eda0acba496515295530b9840e0",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/validation/nameValidation.ts",
+      "sha256": "9413bf8b6ed26c7e79b14b89297c9a6cb692f6496f550fd8f445d74cb412a5a6",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reporting/crystal-report-manager/ManagedCrystalReportView.test.tsx",
+      "sha256": "ab78573069a9e75d099c9ded5a91cf1076ce23fb7a99463216e64563e6d1d193",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reporting/public/useManagedReportAvailability.integration.test.tsx",
+      "sha256": "b3485af6861844da99244ef6cda693582aedd91422af978f844d65e115192aac",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reporting/public/useManagedReportAvailability.test.ts",
+      "sha256": "44ce273769d7b7c3c94dc6f502d1ec6dfc80c404ca99d2b1c88086f7efd0187b",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/modules/reporting/public/useManagedReportAvailability.ts",
+      "sha256": "ca3a23988e42d64737b6d7126271dc6ef8c4e23b81e87afee852668943719f4c",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/platform/realtime/realtimeQueryRegistry.ts",
+      "sha256": "297201a9851879b64876dec8961ce8551285b41b8d24f149b6721ed79593a288",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/shared/components/data-grid/core/MyDataGrid.tsx",
+      "sha256": "01050849feb526f4443b4f001cc1c2e9247bf60e945a4de6060f4b34b8779be6",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/shared/components/data-grid/core/controlledModels.test.ts",
+      "sha256": "7892ee7025a3232b207c78ca18702b7711ad471a1b03c1f23e7ae5bba9875435",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/shared/components/data-grid/core/controlledModels.ts",
+      "sha256": "b01d4b3a6d00d1073d2e0f713d7e0bcf501c5ebc7a358318d6b46c6c339be044",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/shared/components/data-grid/core/pagination.test.ts",
+      "sha256": "737c0c03390d531d5babc1f80ed2ab26067b4bbec907594b4a3a8fe9643f8458",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/shared/components/data-grid/core/pagination.ts",
+      "sha256": "b02772b0cc527e3418b24c1dc1876f56be9680c6db1ee0fdd5363082fd7d34d0",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/shared/components/data-grid/navigation/GridFooter.tsx",
+      "sha256": "ef5f2558050340d983fdc88934a8639e1299bd371a52d7d99025d3a024c61f67",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/shared/components/data-grid/toolbar/DataGridToolbar.tsx",
+      "sha256": "bed416e5df6d98785e7ffaffb4b3c8ed82090cd88fe75f8fffa0c89d90fb1971",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/shared/components/data-grid/toolbar/GridOptionsButton.tsx",
+      "sha256": "174bbb89b6aa5280e7843f365d07e19812f8aa5e8b6f34a58c0f0575c05b2158",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/shared/components/file-upload/SpreadsheetImportCard.tsx",
+      "sha256": "dd09158fa01787411847f127b361d199e1a8a1ade0f3b408f3413e5e4ffc46c4",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/shared/components/forms/dialog/FormContainer.tsx",
+      "sha256": "b09d2325c734e88952eb0c24fd6dcbad41808ac08fadfa0f2918dcc68806d638",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/shared/components/forms/dialog/FormFooter.tsx",
+      "sha256": "8bdbcd09e36e599d9ea04128e2db2e9baf945624b646cd019a575b4fd810037c",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/shared/components/forms/dialog/types.ts",
+      "sha256": "ef4bed94a8f1e156b6828c1eb29b5624e6d19107269afafd43319fe760e63004",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/shared/components/layout/feature-module/FeatureModuleLayout.tsx",
+      "sha256": "2883e9e111150cce73cb386712e647bd018ee9986db85fbb4195cf24f779ab29",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/shared/components/navigation/header/PageHeader.tsx",
+      "sha256": "0efc46f47993b89f545096a66fd3c34db562ccff93c49c4f6f355952aa834a6d",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/shared/hooks/useAdaptivePagination.test.ts",
+      "sha256": "42c5ac04944be98c27460c9a9a8be9685a5c97e91b984c3df8818825a4fcd103",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/shared/hooks/useAdaptivePagination.ts",
+      "sha256": "21ac21c36a93bb65f59bf17362ad0a40383b75b2e7bfec5bee16553fbc099981",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/shared/hooks/useServerListState.ts",
+      "sha256": "e413fc22161b95a4d608d69d0460e1b811e823ce8f5fb5f0afc6ee681762cdf0",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/shared/reporting/components/MyReportViewer.tsx",
+      "sha256": "b6d7124ba2af671227b644e0a7a92461cc250e64420388bdf25c97f78ed233c6",
+      "classification": "current-source; ActiveReports references are retained-client evidence only, Excluded from Angular by DEC-028"
+    },
+    {
+      "path": "web-next/src/shared/reporting/components/ReportViewer.tsx",
+      "sha256": "a8aea69b432e678e318800878bfe34fbbd5e6f6da91e72069f538eccff1815e9",
+      "classification": "current-source; ActiveReports references are retained-client evidence only, Excluded from Angular by DEC-028"
+    },
+    {
+      "path": "web-next/src/shared/reporting/components/ServerReportDesigner.tsx",
+      "sha256": "3c80207288797cbab89c69f6e687c27dbccee1df4a248deeb6837624d5704fdf",
+      "classification": "current-source; ActiveReports references are retained-client evidence only, Excluded from Angular by DEC-028"
+    },
+    {
+      "path": "web-next/src/shared/reporting/components/ServerReportDesignerClient.tsx",
+      "sha256": "8731825db778a84c7a32e0aa55417f07ffadd7cdcc2f9b8db29d7f732a928baa",
+      "classification": "current-source; ActiveReports references are retained-client evidence only, Excluded from Angular by DEC-028"
+    },
+    {
+      "path": "web-next/src/shared/reporting/components/ServerReportViewer.tsx",
+      "sha256": "b31452694c1491fcd03719c25a7cb50fb33c609b924eb4062aa14e64927504b6",
+      "classification": "current-source; ActiveReports references are retained-client evidence only, Excluded from Angular by DEC-028"
+    },
+    {
+      "path": "web-next/src/shared/reporting/components/ServerReportViewerClient.tsx",
+      "sha256": "e0574fdd854d0b4d8b85fed5e22b5b5f313738d963ca5655e666fb1f8ca23cbd",
+      "classification": "current-source; ActiveReports references are retained-client evidence only, Excluded from Angular by DEC-028"
+    },
+    {
+      "path": "web-next/src/shared/reporting/components/index.ts",
+      "sha256": "6c94da68ac8bff9d013a6fdad8e9b6f3fbe69ea902a11f54d6d59cd49217083e",
+      "classification": "current-source; ActiveReports references are retained-client evidence only, Excluded from Angular by DEC-028"
+    },
+    {
+      "path": "web-next/src/shared/reporting/index.ts",
+      "sha256": "c2b813b087d923a520a82ce38cd2139166e08bb0d17157b2aa513f5bed2ce4a1",
+      "classification": "current-source; ActiveReports references are retained-client evidence only, Excluded from Angular by DEC-028"
+    },
+    {
+      "path": "web-next/src/shared/reporting/services/reportApiService.ts",
+      "sha256": "389a73a228fdea4a5f58077faeed60ce914f1f20c6fd517b8deef7a402ef29aa",
+      "classification": "current-source; ActiveReports references are retained-client evidence only, Excluded from Angular by DEC-028"
+    },
+    {
+      "path": "web-next/src/shared/reporting/services/reportTemplateService.test.ts",
+      "sha256": "260af4a51a446f01a2622dfb23ce05d9d4c3db26615556d4d357b2cd25fb5295",
+      "classification": "current-source; ActiveReports references are retained-client evidence only, Excluded from Angular by DEC-028"
+    },
+    {
+      "path": "web-next/src/shared/reporting/services/reportTemplateService.ts",
+      "sha256": "eee79403185f10cfba5ec2e5d2a31a9b3ddf1e5039bc7e61646beb9dc1fa2a27",
+      "classification": "current-source; ActiveReports references are retained-client evidence only, Excluded from Angular by DEC-028"
+    },
+    {
+      "path": "web-next/src/shared/reporting/types/reportTemplate.ts",
+      "sha256": "c0dfccc5209e315aca5343da16df220b8ab6134ead95d293d6fbc69d897a40be",
+      "classification": "current-source; ActiveReports references are retained-client evidence only, Excluded from Angular by DEC-028"
+    },
+    {
+      "path": "web-next/src/shared/services/excelService.test.ts",
+      "sha256": "36667ebea96a165a7619c97b4a53ca59f2f1d609720dfe3f85fe9b0d9733bc8a",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/shared/services/excelService.ts",
+      "sha256": "ff281175812657b0eb785e88b2779a1bfdab7bc612a0a9cdc29e5518856a060f",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/shared/utils/bulkSelection.test.ts",
+      "sha256": "d473108794a411afb8d58dbfa1a3e0bc860dfac6f72862d0fbe82f8b110dcc45",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/shared/utils/bulkSelection.ts",
+      "sha256": "2f2a65f382de5540abdf0c379343a007e1bdb6f197d3d5c643a750511d9dfcbc",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/shared/utils/mockData.test.ts",
+      "sha256": "1d1a4308842947afb59f899bec7e3b7d6324d1692d96ca0e65cd12c2de1131a7",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/shared/utils/mockData.ts",
+      "sha256": "17b1d652cbd8aa5f68424dd88b077b5d91b519fc0672041da8cdf39ee3eedb2a",
+      "classification": "current-source"
+    },
+    {
+      "path": "web-next/src/shell/components/sidebar/configs/superAdminConfig.tsx",
+      "sha256": "b59c5579fbb6b97a5e0da74b1907eb195d5a90e809f1eaf855985cccde1e8fec",
+      "classification": "current-source"
+    }
+  ]
+}

@@ -1,0 +1,357 @@
+{
+  "schemaVersion": 1,
+  "status": "final",
+  "executionMode": "bounded-runtime",
+  "runtimeAuthorized": true,
+  "feature": "angular-countries-lifecycle",
+  "featureName": "Countries archive and restore",
+  "referenceFeature": "N/A",
+  "planId": "web-angular-migration",
+  "sliceId": "S3-A4 — Countries archive and restore",
+  "canonicalPlan": "documentation/plans/business/web-angular-migration/PLAN.md",
+  "featureDecompositionDecision": "Single feature",
+  "screenWorkflowContract": "documentation/plans/business/web-angular-migration/decomposition/angular-countries-lifecycle.md",
+  "plannedCustomerEducation": "documentation/plans/business/web-angular-migration/education/angular-countries-lifecycle.md",
+  "purpose": "Verified Countries lifecycle implementation and bounded acceptance",
+  "reviewArtifact": "documentation/modules/platform/features/angular-countries-lifecycle/angular-countries-lifecycle-evidence.md",
+  "implementationRequest": "documentation/modules/platform/features/angular-countries-lifecycle/angular-countries-lifecycle-request.md",
+  "plannedCanonicalBooks": {
+    "master": "documentation/modules/platform/features/angular-countries-lifecycle/angular-countries-lifecycle-review.md",
+    "api": "documentation/modules/platform/features/angular-countries-lifecycle/angular-countries-lifecycle-api.md",
+    "web": "documentation/modules/platform/features/angular-countries-lifecycle/angular-countries-lifecycle-web.md",
+    "mobile": "documentation/modules/platform/features/angular-countries-lifecycle/angular-countries-lifecycle-mobile.md"
+  },
+  "sourceCollections": [],
+  "requiredFiles": [
+    {
+      "id": "root-agent-guidance",
+      "layer": "configuration",
+      "path": "AGENTS.md",
+      "purpose": "Repository-wide feature and documentation rules"
+    },
+    {
+      "id": "review-artifact",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-lifecycle/angular-countries-lifecycle-evidence.md",
+      "purpose": "Feature requirement, evidence, finding, and verification ledger"
+    },
+    {
+      "id": "implementation-request",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-lifecycle/angular-countries-lifecycle-request.md",
+      "purpose": "Copy-ready feature scope, platform decisions, contracts, and quality gates"
+    },
+    {
+      "id": "preflight-0",
+      "path": "documentation/plans/business/web-angular-migration/PLAN.md",
+      "layer": "documentation",
+      "purpose": "Reviewed existing implementation or frozen entry contract"
+    },
+    {
+      "id": "preflight-1",
+      "path": "documentation/plans/business/web-angular-migration/DECISIONS.md",
+      "layer": "documentation",
+      "purpose": "Reviewed existing implementation or frozen entry contract"
+    },
+    {
+      "id": "preflight-2",
+      "path": "documentation/plans/business/web-angular-migration/decomposition/angular-countries-lifecycle.md",
+      "layer": "documentation",
+      "purpose": "Reviewed existing implementation or frozen entry contract"
+    },
+    {
+      "id": "preflight-3",
+      "path": "documentation/guides/web/architecture/ANGULAR_SHARED_COMPONENTS.md",
+      "layer": "documentation",
+      "purpose": "Reviewed existing implementation or frozen entry contract"
+    },
+    {
+      "id": "preflight-4",
+      "path": "documentation/modules/platform/features/angular-countries-edit-workflow/verification/CURRENT_EDIT_ACCEPTANCE.md",
+      "layer": "documentation",
+      "purpose": "Reviewed existing implementation or frozen entry contract"
+    },
+    {
+      "id": "preflight-5",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/ArchiveCountry/ArchiveCountryCommand.cs",
+      "layer": "api",
+      "purpose": "Reviewed existing implementation or frozen entry contract"
+    },
+    {
+      "id": "preflight-6",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/ArchiveCountry/ArchiveCountryCommandHandler.cs",
+      "layer": "api",
+      "purpose": "Reviewed existing implementation or frozen entry contract"
+    },
+    {
+      "id": "preflight-7",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/BulkArchiveCountries/BulkArchiveCountriesCommand.cs",
+      "layer": "api",
+      "purpose": "Reviewed existing implementation or frozen entry contract"
+    },
+    {
+      "id": "preflight-8",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/BulkArchiveCountries/BulkArchiveCountriesCommandHandler.cs",
+      "layer": "api",
+      "purpose": "Reviewed existing implementation or frozen entry contract"
+    },
+    {
+      "id": "preflight-9",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/BulkArchiveCountries/BulkArchiveCountriesCommandValidator.cs",
+      "layer": "api",
+      "purpose": "Reviewed existing implementation or frozen entry contract"
+    },
+    {
+      "id": "preflight-10",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/RestoreCountry/RestoreCountryCommand.cs",
+      "layer": "api",
+      "purpose": "Reviewed existing implementation or frozen entry contract"
+    },
+    {
+      "id": "preflight-11",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/RestoreCountry/RestoreCountryCommandHandler.cs",
+      "layer": "api",
+      "purpose": "Reviewed existing implementation or frozen entry contract"
+    },
+    {
+      "id": "preflight-12",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Errors/CountryErrors.cs",
+      "layer": "api",
+      "purpose": "Reviewed existing implementation or frozen entry contract"
+    },
+    {
+      "id": "preflight-13",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Presentation/Features/GeographicalInformation/Countries/V1/CountriesController.cs",
+      "layer": "api",
+      "purpose": "Reviewed existing implementation or frozen entry contract"
+    },
+    {
+      "id": "preflight-14",
+      "path": "documentation/modules/platform/features/angular-countries-lifecycle/angular-countries-lifecycle-review.md",
+      "layer": "documentation",
+      "purpose": "Reviewed existing implementation or frozen entry contract"
+    },
+    {
+      "id": "preflight-15",
+      "path": "documentation/modules/platform/features/angular-countries-lifecycle/angular-countries-lifecycle-api.md",
+      "layer": "documentation",
+      "purpose": "Reviewed existing implementation or frozen entry contract"
+    },
+    {
+      "id": "preflight-16",
+      "path": "documentation/modules/platform/features/angular-countries-lifecycle/angular-countries-lifecycle-web.md",
+      "layer": "documentation",
+      "purpose": "Reviewed existing implementation or frozen entry contract"
+    },
+    {
+      "id": "preflight-17",
+      "path": "documentation/modules/platform/features/angular-countries-lifecycle/angular-countries-lifecycle-mobile.md",
+      "layer": "documentation",
+      "purpose": "Reviewed existing implementation or frozen entry contract"
+    },
+    {
+      "id": "preflight-18",
+      "path": "web-angular/src/app/shared/ui/dialogs/confirmation-dialog.ts",
+      "layer": "web",
+      "purpose": "Reviewed existing implementation or frozen entry contract"
+    },
+    {
+      "id": "preflight-19",
+      "path": "web-angular/src/app/shared/ui/dialogs/dialog-panel.ts",
+      "layer": "web",
+      "purpose": "Reviewed existing implementation or frozen entry contract"
+    },
+    {
+      "id": "preflight-20",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid.ts",
+      "layer": "web",
+      "purpose": "Reviewed existing implementation or frozen entry contract"
+    },
+    {
+      "id": "preflight-21",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid.html",
+      "layer": "web",
+      "purpose": "Reviewed existing implementation or frozen entry contract"
+    },
+    {
+      "id": "preflight-22",
+      "path": "web-angular/src/app/shared/ui/collections/card-list.ts",
+      "layer": "web",
+      "purpose": "Reviewed existing implementation or frozen entry contract"
+    },
+    {
+      "id": "preflight-23",
+      "path": "web-angular/src/app/shared/ui/collections/collection-controller.ts",
+      "layer": "web",
+      "purpose": "Reviewed existing implementation or frozen entry contract"
+    },
+    {
+      "id": "preflight-24",
+      "path": "web-angular/src/app/shared/ui/feedback/feedback-notifications.ts",
+      "layer": "web",
+      "purpose": "Reviewed existing implementation or frozen entry contract"
+    },
+    {
+      "id": "preflight-25",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/CountryArchiveDialog.tsx",
+      "layer": "web",
+      "purpose": "Reviewed existing implementation or frozen entry contract"
+    },
+    {
+      "id": "preflight-26",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/CountryRestoreDialog.tsx",
+      "layer": "web",
+      "purpose": "Reviewed existing implementation or frozen entry contract"
+    },
+    {
+      "id": "implemented-0",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/types/country-actions.ts",
+      "layer": "web",
+      "purpose": "Actual implementation, canonical localization or executed verification evidence"
+    },
+    {
+      "id": "implemented-1",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/types/country-lifecycle.ts",
+      "layer": "web",
+      "purpose": "Actual implementation, canonical localization or executed verification evidence"
+    },
+    {
+      "id": "implemented-2",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/services/country-service.ts",
+      "layer": "web",
+      "purpose": "Actual implementation, canonical localization or executed verification evidence"
+    },
+    {
+      "id": "implemented-3",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/services/country-service.spec.ts",
+      "layer": "web",
+      "purpose": "Actual implementation, canonical localization or executed verification evidence"
+    },
+    {
+      "id": "implemented-4",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/state/country-lifecycle-state.ts",
+      "layer": "web",
+      "purpose": "Actual implementation, canonical localization or executed verification evidence"
+    },
+    {
+      "id": "implemented-5",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/state/country-lifecycle-state.spec.ts",
+      "layer": "web",
+      "purpose": "Actual implementation, canonical localization or executed verification evidence"
+    },
+    {
+      "id": "implemented-6",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/state/country-editor-state.ts",
+      "layer": "web",
+      "purpose": "Actual implementation, canonical localization or executed verification evidence"
+    },
+    {
+      "id": "implemented-7",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page.ts",
+      "layer": "web",
+      "purpose": "Actual implementation, canonical localization or executed verification evidence"
+    },
+    {
+      "id": "implemented-8",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page.html",
+      "layer": "web",
+      "purpose": "Actual implementation, canonical localization or executed verification evidence"
+    },
+    {
+      "id": "implemented-9",
+      "path": "web-angular/src/app/shared/data/command-failure.ts",
+      "layer": "web",
+      "purpose": "Actual implementation, canonical localization or executed verification evidence"
+    },
+    {
+      "id": "implemented-10",
+      "path": "web-angular/src/app/shared/data/command-failure.spec.ts",
+      "layer": "web",
+      "purpose": "Actual implementation, canonical localization or executed verification evidence"
+    },
+    {
+      "id": "implemented-11",
+      "path": "web-angular/scripts/verify-country-actions-browser.mjs",
+      "layer": "web",
+      "purpose": "Actual implementation, canonical localization or executed verification evidence"
+    },
+    {
+      "id": "implemented-12",
+      "path": "web-angular/scripts/verify-countries-screen-browser.mjs",
+      "layer": "web",
+      "purpose": "Actual implementation, canonical localization or executed verification evidence"
+    },
+    {
+      "id": "implemented-13",
+      "path": "web-next/src/locales/resources/reference-countries/en.json",
+      "layer": "web",
+      "purpose": "Actual implementation, canonical localization or executed verification evidence"
+    },
+    {
+      "id": "implemented-14",
+      "path": "web-next/src/locales/resources/reference-countries/ar.json",
+      "layer": "web",
+      "purpose": "Actual implementation, canonical localization or executed verification evidence"
+    },
+    {
+      "id": "implemented-15",
+      "path": "web-angular/src/locales/generated/reference-countries.json",
+      "layer": "web",
+      "purpose": "Actual implementation, canonical localization or executed verification evidence"
+    },
+    {
+      "id": "implemented-16",
+      "path": "web-angular/src/app/platform/localization/catalog.generated.ts",
+      "layer": "web",
+      "purpose": "Actual implementation, canonical localization or executed verification evidence"
+    },
+    {
+      "id": "implemented-18",
+      "path": "documentation/modules/platform/features/angular-countries-lifecycle/verification/CURRENT_LIFECYCLE_ACCEPTANCE.md",
+      "layer": "documentation",
+      "purpose": "Actual implementation, canonical localization or executed verification evidence"
+    },
+    {
+      "id": "implemented-19",
+      "path": "documentation/modules/platform/features/angular-countries-lifecycle/verification/ACTIONS_RESULTS.json",
+      "layer": "documentation",
+      "purpose": "Actual implementation, canonical localization or executed verification evidence"
+    },
+    {
+      "id": "implemented-20",
+      "path": "documentation/plans/business/web-angular-migration/education/angular-countries-lifecycle.md",
+      "layer": "documentation",
+      "purpose": "Actual implementation, canonical localization or executed verification evidence"
+    },
+    {
+      "id": "implemented-21",
+      "path": "web-angular/src/app/shared/ui/layout/page-header.ts",
+      "layer": "web",
+      "purpose": "Actual implementation, canonical localization or executed verification evidence"
+    },
+    {
+      "id": "implemented-22",
+      "path": "web-angular/src/app/shared/ui/layout/page-header.scss",
+      "layer": "web",
+      "purpose": "Actual implementation, canonical localization or executed verification evidence"
+    },
+    {
+      "id": "implemented-23",
+      "path": "web-angular/src/app/shared/ui/buttons/action-button.scss",
+      "layer": "web",
+      "purpose": "Actual implementation, canonical localization or executed verification evidence"
+    },
+    {
+      "id": "implemented-24",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid.scss",
+      "layer": "web",
+      "purpose": "Actual implementation, canonical localization or executed verification evidence"
+    },
+    {
+      "id": "implemented-25",
+      "path": "web-angular/src/app/shared/ui/public-api.ts",
+      "layer": "web",
+      "purpose": "Actual implementation, canonical localization or executed verification evidence"
+    }
+  ]
+}

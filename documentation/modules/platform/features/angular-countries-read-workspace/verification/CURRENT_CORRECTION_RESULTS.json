@@ -1,0 +1,133 @@
+{
+  "date": "2026-10-30",
+  "scope": "Current shared UI correction; complete Countries/source parity and hosted deployment remain Not Verified",
+  "primeNg": {
+    "version": "22.1.4",
+    "plugin": "primeng@primeui 1.0.0",
+    "transport": "Native PrimeNG MCP chat tools now available and called directly",
+    "documentation": {
+      "tool": "get_component",
+      "component": "paginator",
+      "sections": [
+        "basic",
+        "template",
+        "currentpagereport"
+      ],
+      "includeApi": true,
+      "source": "primeui://primeng/components/paginator.md",
+      "publicUrl": "https://primeng.dev/paginator"
+    },
+    "validation": {
+      "tool": "validate_usage",
+      "source": "web-angular/src/app/shared/ui/collections/collection-footer.ts",
+      "component": "Angular Paginator Component",
+      "valid": true,
+      "issues": []
+    },
+    "additionalValidation": {
+      "component": "Select",
+      "valid": true,
+      "issues": [],
+      "features": [
+        "native small size",
+        "supported label/dropdown Pass Through",
+        "centered value/full accessible name"
+      ]
+    }
+  },
+  "angular": {
+    "command": "npm run check",
+    "testFilesPassed": 61,
+    "testsPassed": 362,
+    "testsFailed": 0,
+    "configurationTestsPassed": 4,
+    "architectureRuleTestsPassed": 10,
+    "typeCheck": "passed",
+    "architecture": "passed",
+    "catalog": "passed",
+    "fonts": "passed",
+    "tokens": "passed",
+    "productionBuild": "passed",
+    "initialRawKB": 496.42,
+    "estimatedTransferKB": 129.19,
+    "componentStyleBudgetWarnings": 0
+  },
+  "actualRouteBrowser": {
+    "casesPassed": 8,
+    "languages": [
+      "en",
+      "ar"
+    ],
+    "modes": [
+      "light",
+      "dark"
+    ],
+    "widths": [
+      390,
+      1440
+    ],
+    "assertions": [
+      "one native record navigator: four native buttons, one current/total record indicator, no numbered page links or second arrow group",
+      "navigator center offset0px and settings logical edge offset0px in all eight cases",
+      "dropdown80x32: selected number horizontal/vertical offset0px, fully visible, accessible name retained",
+      "edge total-pages metadata reflects authoritative total/server page size",
+      "stable verified window focus plus blank/row clicks: no loading, no collection request, same row DOM node",
+      "native local record moves without HTTP, remote boundary targets preserve server page size and focus",
+      "one-page record movement, size change reset, Grid/Cards and filter/modal/detail journeys"
+    ],
+    "testTransport": "Intercepted API responses; no live credentials or business writes",
+    "results": "CURRENT_BROWSER_RESULTS.json"
+  },
+  "sharedCollectionBrowser": {
+    "casesPassed": 8,
+    "scope": "Historical D23 pass; D24 shared regression recorded separately after completion",
+    "coverage": "Grid/Cards, record/page/keyboard navigation, selection, presentation options, scope/state changes and unknown totals",
+    "recordBar": "One reusable group inside the native Paginator; Countries opt in, default false elsewhere"
+  },
+  "api": {
+    "scope": "Earlier unchanged API full-solution Release gate",
+    "testsPassed": 1162,
+    "testsFailed": 0,
+    "testsSkipped": 3,
+    "skips": "Opt-in live browser authentication/CSRF",
+    "buildErrors": 0,
+    "buildWarnings": 473,
+    "schemaMigration": "N/A; no entity/schema change"
+  },
+  "remaining": [
+    "Complete current-source S3-A2 acceptance",
+    "S3-A3 create/edit handlers",
+    "S3-A4 lifecycle handlers",
+    "Chart/Report/Import views",
+    "Hosted query/catalog publish and verification: PROD-019",
+    "S1-A14 remaining capability matrix"
+  ],
+  "sourceSHA256": {
+    "web-angular/src/app/shared/ui/collections/collection-footer.ts": "8b5a0e458a23afe4650880793e5354623cf7d25c87309e654ea25936d81ecee1",
+    "web-angular/src/app/shared/ui/collections/collection-frame.ts": "6111d989bd6ad55a91101c3a86e08e0a9b75fe762c700bdc2f89745b40fb4324",
+    "web-angular/src/app/shared/ui/collections/my-data-grid.ts": "fe912af37a68969cb6508415b61fc82fdfe929bf872884a460171c93d44d3ca8",
+    "web-angular/src/app/shared/ui/collections/card-list.ts": "f2a238f69e4dd8dbcfeb198fc2392762cf720f1ac7dac022670407944525f931",
+    "web-angular/src/app/shared/ui/collections/row-actions.ts": "925dc7c92fdcbc6fc3e1607dfe46238b1c9f6b3e249e407648c6571f732356cd",
+    "web-angular/src/app/shared/ui/forms/form-container.ts": "2672da9c1963d5fe8dbb98fd1fab0ef86b0b4a505831c3a2c609774775ec3bd5",
+    "web-angular/src/app/shared/ui/dialogs/dialog-panel.ts": "368bc4aa7269949e10304ba1e1643a9b65659e86a356a96c60da47d5191aff69",
+    "web-angular/scripts/verify-countries-screen-browser.mjs": "a4c0393f4eac784ec2063d63b1eff6dcca2a19b089056569d2888fbd0afd190f",
+    "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page.html": "084eb782d04248c2cfe945998d95f5815bcf310258f3b4f9bcbbdfd58b5c127b",
+    "web-angular/src/app/shared/ui/collections/collection-controller.spec.ts": "740aedb4bfc0e2aa2d0df9339ea790983eeca39395a3d16b325af9f4d014cf88",
+    "web-angular/src/app/shared/ui/collections/grid-capabilities.spec.ts": "cf5fdcaef7361ae1afccad258258343c1619e89ce91ff9b0ff6cba3daee0fed4",
+    "web-angular/scripts/verify-collection-browser.mjs": "a902284c78af9581eb449a6929e0ab527d9a782d648e19a1eb15514812cf827b",
+    "web-angular/src/app/platform/auth/state/auth-session.ts": "a37fcbc3f3d215634dbfee399109a197e519fd597a42aa620694f2caf99b7b07",
+    "web-angular/src/app/platform/auth/state/auth-session.spec.ts": "79d486f5f3e279f86c2977e28aa1a7b9b9643231954c64c2e2e447201d5d70b5",
+    "web-angular/src/app/shared/ui/controls/option-select.ts": "4ce8744038315fc1b27b5e33cf8fe524a153fd2a8df59713829c536bfdf8b762"
+  },
+  "decision": "D24/D25: one native record navigator centered; edge size/pages metadata; centered value; non-disruptive verified focus",
+  "focused": {
+    "testFilesPassed": 3,
+    "testsPassed": 41,
+    "scope": "Auth owner, shared Grid adapter and Select"
+  },
+  "companyContextBrowser": {
+    "casesPassed": 14,
+    "scope": "Existing production-route company/cross-tab fixtures after auth focus correction; no live host claim",
+    "results": "documentation/modules/platform/features/angular-company-context/verification/VISIBILITY_COMPANY_BROWSER_RESULTS.json"
+  }
+}

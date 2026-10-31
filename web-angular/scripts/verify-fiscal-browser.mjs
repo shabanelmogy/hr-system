@@ -5,21 +5,23 @@ import {chromium,expect} from '@playwright/test';
 import {sessionFixture} from '../src/app/platform/auth/auth.fixture.ts';
 import {fiscalContextFixture as fixture} from '../src/app/modules/accounting/fiscal-year-context/fiscal-context.fixture.ts';
 const root=path.resolve(import.meta.dirname,'..'),origin=process.env.ANGULAR_PREVIEW_ORIGIN??'https://localhost:4220',output=path.join(root,'../.codex-tmp/angular-fiscal-context');fs.mkdirSync(output,{recursive:true});
+const apiOrigin=process.env.ANGULAR_API_ORIGIN??'https://localhost:7037';
 const captions=JSON.parse(fs.readFileSync(path.join(root,'src/locales/generated/accounting.json'),'utf8'));
 const core=JSON.parse(fs.readFileSync(path.join(root,'src/locales/generated/core.json'),'utf8'));
 const version=fs.readFileSync(path.join(root,'src/app/platform/localization/catalog.generated.ts'),'utf8').match(/[a-f0-9]{64}/)[0];
 const browser=await chromium.launch({channel:'chrome'}),results=[],errors=[];
+const pendingFixtureReleases=[];
 async function configure(language='en',mode='light',width=1440,action='ready'){
  const c=await browser.newContext({ignoreHTTPSErrors:true,viewport:{width,height:900},reducedMotion:'reduce'});await c.addCookies(Object.entries({i18next:language,currentMode:mode}).map(([name,value])=>({name,value,url:origin})));
  const state={selected:1,writes:0,reads:0,authenticated:true,action};
- await c.route('https://localhost:7037/api/**',async route=>{
+ await c.route(apiOrigin+'/api/**',async route=>{
   const req=route.request(),p=new URL(req.url()).pathname;let status=200,body;const context=()=>({...fixture,selectedFiscalYear:fixture.availableFiscalYears[state.selected-1],hasUserOverride:state.selected!==1});
   if(p.endsWith('/csrf'))body={requestToken:'synthetic'};
   else if(p.endsWith('/session')||p.endsWith('/refresh')){status=state.authenticated?200:401;body={isAuthenticated:true,user:{...sessionFixture,permissions:state.action==='denied-permission'?[]:['FiscalYears:View']}};}
   else if(p.endsWith('/logout')){state.authenticated=false;status=204;}
   else if(p.endsWith('/fiscal-years/context')){
    if(req.method()==='PUT'){
-    state.writes++;assert.equal(req.headers()['x-erp-xsrf'],'synthetic');if(state.action==='delay')await new Promise(resolve=>state.release=resolve);
+    state.writes++;assert.equal(req.headers()['x-erp-xsrf'],'synthetic');if(state.action==='delay')await new Promise(resolve=>{state.release=resolve;pendingFixtureReleases.push(resolve);});
     if(!['rejected','unverifiable'].includes(state.action))state.selected=req.postDataJSON().fiscalYearId;
     if(['rejected','lost-response','unverifiable'].includes(state.action))status=503;
    }else{state.reads++;if(state.action==='unverifiable')status=503;}
@@ -39,9 +41,10 @@ try{
   const{c,p,state}=await configure(language,mode,width);await expect(control(p)).toContainText(language==='ar'?'السنة 2026':'Year 2026');state.action='delay';await choose(p,language);
   await expect.poll(()=>state.writes).toBe(1);await expect(control(p)).toContainText(language==='ar'?'السنة 2026':'Year 2026');await expect(p.locator('.scope-view')).toBeHidden();state.release();
   await expect(control(p)).toContainText(language==='ar'?'السنة 2027':'Year 2027');await expect(p.locator('.scope-view')).toBeVisible();assert.equal(state.writes,1);assert.equal(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
-  await p.reload();await expect(control(p)).toContainText(language==='ar'?'السنة 2027':'Year 2027');await p.screenshot({path:path.join(output,`fiscal-${language}-${mode}-${width}.png`),fullPage:true});results.push({language,mode,width,passed:true});await c.close();
+  await p.reload();await expect(control(p)).toContainText(language==='ar'?'السنة 2027':'Year 2027');await p.screenshot({path:path.join(output,`fiscal-${language}-${mode}-${width}.png`),fullPage:true});results.push({language,mode,width,passed:true});console.log(`Fiscal passed ${language}/${mode}/${width}`);await c.close();
  }
  for(const action of ['lost-response','rejected','unverifiable','empty','malformed','denied-permission']){
+  console.log(`Fiscal checking ${action}`);
   const {c,p,state}=await configure('en','light',1440,['lost-response','rejected','unverifiable'].includes(action)?'ready':action);
   if(['lost-response','rejected','unverifiable'].includes(action)){
    await expect(control(p)).toContainText('Year 2026');state.action=action;await choose(p);
@@ -52,8 +55,8 @@ try{
   }else if(action==='empty'){await expect(control(p)).toContainText(captions.en['fiscalYears.context.noSelection']);await expect(control(p)).toHaveAttribute('aria-disabled','true');}
   else if(action==='denied-permission'){await expect(control(p)).toHaveCount(0);assert.equal(state.reads,0);}
   else{await expect(p.getByRole('alert')).toContainText(captions.en['fiscalYears.context.loadError']);state.action='ready';await p.locator('erp-fiscal-context').getByRole('button',{name:core.en['actions.retry'],exact:true}).click();await expect(control(p)).toContainText('Year 2026');}
-  results.push({action,passed:true});await c.close();
+  results.push({action,passed:true});console.log(`Fiscal passed ${action}`);await c.close();
  }
  {const{c,p,state}=await configure(),other=await c.newPage();await other.goto(origin+'/apps');await expect(control(other)).toContainText('Year 2026');await choose(p);await expect(control(other)).toContainText('Year 2027');assert.equal(state.writes,1);results.push({action:'cross-tab',passed:true});await c.close();}
  assert.deepEqual(errors,[]);fs.writeFileSync(path.join(output,'production-results.json'),JSON.stringify(results,null,2));console.log(`Fiscal context passed: ${results.length} production browser scenarios.`);
-}finally{await browser.close();}
+}finally{for(const release of pendingFixtureReleases)release();await browser.close();}

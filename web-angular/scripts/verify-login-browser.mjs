@@ -7,6 +7,7 @@ import { chromium, expect } from '@playwright/test';
 const app = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const output = path.resolve(app, '../.codex-tmp/login-parity'); fs.mkdirSync(output, { recursive: true });
 const origin = process.env.ANGULAR_PREVIEW_ORIGIN ?? 'https://localhost:4210';
+const api = process.env.ANGULAR_API_ORIGIN ?? 'https://localhost:7037';
 const nextOrigin = process.env.NEXT_PREVIEW_ORIGIN ?? 'https://localhost:3000';
 const authText = JSON.parse(fs.readFileSync(path.join(app, 'src/locales/generated/platform-auth.json'), 'utf8'));
 const core = JSON.parse(fs.readFileSync(path.join(app, 'src/locales/generated/core.json'), 'utf8'));
@@ -27,7 +28,7 @@ async function context(language = 'en', width = 1440, mode = 'light', url = orig
 }
 async function mock(context) {
   const state = { authenticated: false, action: 'invalid', posts: [] };
-  await context.route('https://localhost:7037/api/**', async route => {
+  await context.route(api + '/api/**', async route => {
     const request = route.request(); const pathname = new URL(request.url()).pathname;
     let status = 200; let body;
     if (request.method() === 'POST') state.posts.push({ path: pathname, csrf: !!request.headers()['x-erp-xsrf'], credentials: request.headers()['authorization'] === undefined });

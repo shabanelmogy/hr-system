@@ -1,0 +1,560 @@
+{
+  "schemaVersion": 1,
+  "status": "final",
+  "executionMode": "bounded-runtime",
+  "runtimeAuthorized": true,
+  "feature": "angular-countries-edit-workflow",
+  "featureName": "Countries create and edit workflow",
+  "referenceFeature": "N/A",
+  "planId": "web-angular-migration",
+  "sliceId": "S3-A3 — Countries create and edit workflow",
+  "canonicalPlan": "documentation/plans/business/web-angular-migration/PLAN.md",
+  "featureDecompositionDecision": "Single feature",
+  "screenWorkflowContract": "documentation/plans/business/web-angular-migration/decomposition/angular-countries-edit-workflow.md",
+  "plannedCustomerEducation": "documentation/plans/business/web-angular-migration/education/angular-countries-edit-workflow.md",
+  "purpose": "Verified bounded Create/Edit plus D29–D32 shared form/record interaction correction",
+  "reviewArtifact": "documentation/modules/platform/features/angular-countries-edit-workflow/angular-countries-edit-workflow-evidence.md",
+  "implementationRequest": "documentation/modules/platform/features/angular-countries-edit-workflow/angular-countries-edit-workflow-request.md",
+  "plannedCanonicalBooks": {
+    "master": "documentation/modules/platform/features/angular-countries-edit-workflow/angular-countries-edit-workflow-review.md",
+    "api": "documentation/modules/platform/features/angular-countries-edit-workflow/angular-countries-edit-workflow-api.md",
+    "web": "documentation/modules/platform/features/angular-countries-edit-workflow/angular-countries-edit-workflow-web.md",
+    "mobile": "documentation/modules/platform/features/angular-countries-edit-workflow/angular-countries-edit-workflow-mobile.md"
+  },
+  "sourceCollections": [],
+  "requiredFiles": [
+    {
+      "id": "root-agent-guidance",
+      "layer": "configuration",
+      "path": "AGENTS.md",
+      "purpose": "Repository-wide feature and documentation rules"
+    },
+    {
+      "id": "review-artifact",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-edit-workflow/angular-countries-edit-workflow-evidence.md",
+      "purpose": "Feature requirement, evidence, finding, and verification ledger"
+    },
+    {
+      "id": "implementation-request",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-edit-workflow/angular-countries-edit-workflow-request.md",
+      "purpose": "Copy-ready feature scope, platform decisions, contracts, and quality gates"
+    },
+    {
+      "id": "preflight-source-0",
+      "path": "documentation/plans/business/web-angular-migration/PLAN.md",
+      "layer": "documentation",
+      "purpose": "Verified current source or canonical preflight contract"
+    },
+    {
+      "id": "preflight-source-1",
+      "path": "documentation/plans/business/web-angular-migration/DECISIONS.md",
+      "layer": "documentation",
+      "purpose": "Verified current source or canonical preflight contract"
+    },
+    {
+      "id": "preflight-source-2",
+      "path": "documentation/plans/business/web-angular-migration/decomposition/angular-countries-edit-workflow.md",
+      "layer": "documentation",
+      "purpose": "Verified current source or canonical preflight contract"
+    },
+    {
+      "id": "preflight-source-3",
+      "path": "documentation/guides/web/architecture/ANGULAR_SHARED_COMPONENTS.md",
+      "layer": "documentation",
+      "purpose": "Verified current source or canonical preflight contract"
+    },
+    {
+      "id": "preflight-source-4",
+      "path": "documentation/guides/web/architecture/ANGULAR_PRIMENG_WORKFLOW.md",
+      "layer": "documentation",
+      "purpose": "Verified current source or canonical preflight contract"
+    },
+    {
+      "id": "preflight-source-5",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Presentation/Features/GeographicalInformation/Countries/V1/CountriesController.cs",
+      "layer": "api",
+      "purpose": "Verified current source or canonical preflight contract"
+    },
+    {
+      "id": "preflight-source-6",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Contracts/CountryMutation.cs",
+      "layer": "api",
+      "purpose": "Verified current source or canonical preflight contract"
+    },
+    {
+      "id": "preflight-source-7",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/CountryMutationValidator.cs",
+      "layer": "api",
+      "purpose": "Verified current source or canonical preflight contract"
+    },
+    {
+      "id": "preflight-source-8",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Validation/GeographicalNameRules.cs",
+      "layer": "api",
+      "purpose": "Verified current source or canonical preflight contract"
+    },
+    {
+      "id": "preflight-source-9",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Contracts/Authorization/ReferenceDataPermissions.cs",
+      "layer": "api",
+      "purpose": "Verified current source or canonical preflight contract"
+    },
+    {
+      "id": "preflight-source-10",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/CountryForm.tsx",
+      "layer": "web",
+      "purpose": "Verified current source or canonical preflight contract"
+    },
+    {
+      "id": "preflight-source-11",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/grid-view/GridActions.tsx",
+      "layer": "web",
+      "purpose": "Verified current source or canonical preflight contract"
+    },
+    {
+      "id": "preflight-source-12",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/utils/validation.ts",
+      "layer": "web",
+      "purpose": "Verified current source or canonical preflight contract"
+    },
+    {
+      "id": "preflight-source-13",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/hooks/useCountryGridLogic.ts",
+      "layer": "web",
+      "purpose": "Verified current source or canonical preflight contract"
+    },
+    {
+      "id": "preflight-source-14",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/services/country-service.ts",
+      "layer": "web",
+      "purpose": "Verified current source or canonical preflight contract"
+    },
+    {
+      "id": "preflight-source-15",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/state/country-read-state.ts",
+      "layer": "web",
+      "purpose": "Verified current source or canonical preflight contract"
+    },
+    {
+      "id": "preflight-source-16",
+      "path": "web-angular/src/app/shared/ui/forms/form-container.ts",
+      "layer": "web",
+      "purpose": "Verified current source or canonical preflight contract"
+    },
+    {
+      "id": "preflight-source-17",
+      "path": "web-angular/src/app/shared/ui/forms/form-close-guard.ts",
+      "layer": "web",
+      "purpose": "Verified current source or canonical preflight contract"
+    },
+    {
+      "id": "preflight-source-18",
+      "path": "web-angular/src/app/shared/ui/forms/form-errors.ts",
+      "layer": "web",
+      "purpose": "Verified current source or canonical preflight contract"
+    },
+    {
+      "id": "preflight-source-19",
+      "path": "web-angular/src/app/shared/ui/dialogs/dialog-panel.ts",
+      "layer": "web",
+      "purpose": "Verified current source or canonical preflight contract"
+    },
+    {
+      "id": "preflight-source-20",
+      "path": "web-angular/src/app/shared/data/unsaved-changes.ts",
+      "layer": "web",
+      "purpose": "Verified current source or canonical preflight contract"
+    },
+    {
+      "id": "preflight-source-21",
+      "path": "web-angular/src/app/shared/ui/collections/row-actions.ts",
+      "layer": "web",
+      "purpose": "Verified current source or canonical preflight contract"
+    },
+    {
+      "id": "preflight-source-22",
+      "path": "web-angular/src/app/platform/auth/services/browser-mutation-security.ts",
+      "layer": "web",
+      "purpose": "Verified current source or canonical preflight contract"
+    },
+    {
+      "id": "preflight-source-23",
+      "path": "documentation/modules/platform/features/angular-countries-edit-workflow/angular-countries-edit-workflow-review.md",
+      "layer": "documentation",
+      "purpose": "Verified current source or canonical preflight contract"
+    },
+    {
+      "id": "preflight-source-24",
+      "path": "documentation/modules/platform/features/angular-countries-edit-workflow/angular-countries-edit-workflow-api.md",
+      "layer": "documentation",
+      "purpose": "Verified current source or canonical preflight contract"
+    },
+    {
+      "id": "preflight-source-25",
+      "path": "documentation/modules/platform/features/angular-countries-edit-workflow/angular-countries-edit-workflow-web.md",
+      "layer": "documentation",
+      "purpose": "Verified current source or canonical preflight contract"
+    },
+    {
+      "id": "preflight-source-26",
+      "path": "documentation/modules/platform/features/angular-countries-edit-workflow/angular-countries-edit-workflow-mobile.md",
+      "layer": "documentation",
+      "purpose": "Verified current source or canonical preflight contract"
+    },
+    {
+      "id": "implemented-0",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-editor.ts",
+      "layer": "web",
+      "purpose": "Actual bounded implementation or verification evidence"
+    },
+    {
+      "id": "implemented-1",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/state/country-editor-state.ts",
+      "layer": "web",
+      "purpose": "Actual bounded implementation or verification evidence"
+    },
+    {
+      "id": "implemented-2",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/state/country-editor-state.spec.ts",
+      "layer": "web",
+      "purpose": "Actual bounded implementation or verification evidence"
+    },
+    {
+      "id": "implemented-3",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/types/country-actions.ts",
+      "layer": "web",
+      "purpose": "Actual bounded implementation or verification evidence"
+    },
+    {
+      "id": "implemented-4",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/validation/country-mutation.ts",
+      "layer": "web",
+      "purpose": "Actual bounded implementation or verification evidence"
+    },
+    {
+      "id": "implemented-5",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/validation/country-mutation.spec.ts",
+      "layer": "web",
+      "purpose": "Actual bounded implementation or verification evidence"
+    },
+    {
+      "id": "implemented-7",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/services/country-service.spec.ts",
+      "layer": "web",
+      "purpose": "Actual bounded implementation or verification evidence"
+    },
+    {
+      "id": "implemented-8",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page.ts",
+      "layer": "web",
+      "purpose": "Actual bounded implementation or verification evidence"
+    },
+    {
+      "id": "implemented-9",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page.html",
+      "layer": "web",
+      "purpose": "Actual bounded implementation or verification evidence"
+    },
+    {
+      "id": "implemented-10",
+      "path": "web-angular/src/app/shared/data/command-failure.ts",
+      "layer": "web",
+      "purpose": "Actual bounded implementation or verification evidence"
+    },
+    {
+      "id": "implemented-11",
+      "path": "web-angular/src/app/shared/data/command-failure.spec.ts",
+      "layer": "web",
+      "purpose": "Actual bounded implementation or verification evidence"
+    },
+    {
+      "id": "implemented-12",
+      "path": "web-angular/src/app/shared/ui/feedback/feedback-notifications.ts",
+      "layer": "web",
+      "purpose": "Actual bounded implementation or verification evidence"
+    },
+    {
+      "id": "implemented-13",
+      "path": "web-angular/src/app/shared/ui/feedback/feedback-notifications.spec.ts",
+      "layer": "web",
+      "purpose": "Actual bounded implementation or verification evidence"
+    },
+    {
+      "id": "implemented-14",
+      "path": "web-angular/src/app/shared/ui/feedback/notifications.public-api.ts",
+      "layer": "web",
+      "purpose": "Actual bounded implementation or verification evidence"
+    },
+    {
+      "id": "implemented-15",
+      "path": "web-angular/src/app/shared/ui/feedback/notification-toast.ts",
+      "layer": "web",
+      "purpose": "Actual bounded implementation or verification evidence"
+    },
+    {
+      "id": "implemented-16",
+      "path": "web-angular/src/app/shared/ui/dialogs/error-modal-host.ts",
+      "layer": "web",
+      "purpose": "Actual bounded implementation or verification evidence"
+    },
+    {
+      "id": "implemented-19",
+      "path": "web-angular/src/theme/prime-toast-preset.ts",
+      "layer": "web",
+      "purpose": "Actual bounded implementation or verification evidence"
+    },
+    {
+      "id": "implemented-20",
+      "path": "web-angular/src/app/app.ts",
+      "layer": "web",
+      "purpose": "Actual bounded implementation or verification evidence"
+    },
+    {
+      "id": "implemented-21",
+      "path": "web-angular/src/app/app.html",
+      "layer": "web",
+      "purpose": "Actual bounded implementation or verification evidence"
+    },
+    {
+      "id": "implemented-22",
+      "path": "web-angular/scripts/verify-country-actions-browser.mjs",
+      "layer": "web",
+      "purpose": "Actual bounded implementation or verification evidence"
+    },
+    {
+      "id": "implemented-23",
+      "path": "web-angular/scripts/verify-countries-screen-browser.mjs",
+      "layer": "web",
+      "purpose": "Actual bounded implementation or verification evidence"
+    },
+    {
+      "id": "implemented-24",
+      "path": "documentation/modules/platform/features/angular-countries-edit-workflow/verification/CURRENT_EDIT_ACCEPTANCE.md",
+      "layer": "documentation",
+      "purpose": "Actual bounded implementation or verification evidence"
+    },
+    {
+      "id": "implemented-25",
+      "path": "documentation/plans/business/web-angular-migration/education/angular-countries-edit-workflow.md",
+      "layer": "documentation",
+      "purpose": "Actual bounded implementation or verification evidence"
+    },
+    {
+      "id": "d29-form-layout-contract",
+      "path": "documentation/modules/platform/features/angular-countries-edit-workflow/FORM_LAYOUT_CORRECTION.md",
+      "layer": "documentation",
+      "purpose": "Current bounded user-authorized presentation correction"
+    },
+    {
+      "id": "form-record-0",
+      "path": "documentation/modules/platform/features/angular-countries-edit-workflow/verification/FORM_RECORD_ACCEPTANCE.md",
+      "layer": "documentation",
+      "purpose": "Actual shared form/record implementation or executed acceptance"
+    },
+    {
+      "id": "form-record-1",
+      "path": "documentation/modules/platform/features/angular-countries-edit-workflow/verification/FORM_RECORD_RESULTS.json",
+      "layer": "documentation",
+      "purpose": "Actual shared form/record implementation or executed acceptance"
+    },
+    {
+      "id": "form-record-3",
+      "path": "documentation/modules/platform/features/angular-countries-edit-workflow/verification/FORM_AR_DESKTOP.png",
+      "layer": "documentation",
+      "purpose": "Actual shared form/record implementation or executed acceptance"
+    },
+    {
+      "id": "form-record-4",
+      "path": "documentation/modules/platform/features/angular-countries-edit-workflow/verification/KEYBOARD_AR_COMPACT.png",
+      "layer": "documentation",
+      "purpose": "Actual shared form/record implementation or executed acceptance"
+    },
+    {
+      "id": "form-record-5",
+      "path": "documentation/modules/platform/features/angular-countries-edit-workflow/verification/KEYBOARD_AR_DARK.png",
+      "layer": "documentation",
+      "purpose": "Actual shared form/record implementation or executed acceptance"
+    },
+    {
+      "id": "form-record-6",
+      "path": "web-angular/src/app/shared/ui/forms/fields/character-count-badge.ts",
+      "layer": "web",
+      "purpose": "Actual shared form/record implementation or executed acceptance"
+    },
+    {
+      "id": "form-record-7",
+      "path": "web-angular/src/app/shared/ui/forms/fields/text-field.ts",
+      "layer": "web",
+      "purpose": "Actual shared form/record implementation or executed acceptance"
+    },
+    {
+      "id": "form-record-8",
+      "path": "web-angular/src/app/shared/ui/forms/fields/text-field.html",
+      "layer": "web",
+      "purpose": "Actual shared form/record implementation or executed acceptance"
+    },
+    {
+      "id": "form-record-9",
+      "path": "web-angular/src/app/shared/ui/forms/fields/text-field.scss",
+      "layer": "web",
+      "purpose": "Actual shared form/record implementation or executed acceptance"
+    },
+    {
+      "id": "form-record-10",
+      "path": "web-angular/src/app/shared/ui/forms/fields/text-field.spec.ts",
+      "layer": "web",
+      "purpose": "Actual shared form/record implementation or executed acceptance"
+    },
+    {
+      "id": "form-record-11",
+      "path": "web-angular/src/app/shared/ui/forms/fields/numeric-field.ts",
+      "layer": "web",
+      "purpose": "Actual shared form/record implementation or executed acceptance"
+    },
+    {
+      "id": "form-record-13",
+      "path": "web-angular/src/app/shared/ui/forms/form-container.scss",
+      "layer": "web",
+      "purpose": "Actual shared form/record implementation or executed acceptance"
+    },
+    {
+      "id": "form-record-14",
+      "path": "web-angular/src/app/shared/ui/forms/form-container.spec.ts",
+      "layer": "web",
+      "purpose": "Actual shared form/record implementation or executed acceptance"
+    },
+    {
+      "id": "form-record-15",
+      "path": "web-angular/src/app/shared/ui/collections/collection-record-feedback.ts",
+      "layer": "web",
+      "purpose": "Actual shared form/record implementation or executed acceptance"
+    },
+    {
+      "id": "form-record-16",
+      "path": "web-angular/src/app/shared/ui/collections/collection-record-feedback.spec.ts",
+      "layer": "web",
+      "purpose": "Actual shared form/record implementation or executed acceptance"
+    },
+    {
+      "id": "form-record-17",
+      "path": "web-angular/src/app/shared/ui/collections/collection-controller.ts",
+      "layer": "web",
+      "purpose": "Actual shared form/record implementation or executed acceptance"
+    },
+    {
+      "id": "form-record-18",
+      "path": "web-angular/src/app/shared/ui/collections/collection-keyboard.ts",
+      "layer": "web",
+      "purpose": "Actual shared form/record implementation or executed acceptance"
+    },
+    {
+      "id": "form-record-19",
+      "path": "web-angular/src/app/shared/ui/collections/collection-keyboard.spec.ts",
+      "layer": "web",
+      "purpose": "Actual shared form/record implementation or executed acceptance"
+    },
+    {
+      "id": "form-record-20",
+      "path": "web-angular/src/app/shared/ui/collections/collection-focus.ts",
+      "layer": "web",
+      "purpose": "Actual shared form/record implementation or executed acceptance"
+    },
+    {
+      "id": "form-record-21",
+      "path": "web-angular/src/app/shared/ui/collections/collection-row-flash.scss",
+      "layer": "web",
+      "purpose": "Actual shared form/record implementation or executed acceptance"
+    },
+    {
+      "id": "form-record-22",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid.ts",
+      "layer": "web",
+      "purpose": "Actual shared form/record implementation or executed acceptance"
+    },
+    {
+      "id": "form-record-23",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid.html",
+      "layer": "web",
+      "purpose": "Actual shared form/record implementation or executed acceptance"
+    },
+    {
+      "id": "form-record-24",
+      "path": "web-angular/src/app/shared/ui/collections/card-list.ts",
+      "layer": "web",
+      "purpose": "Actual shared form/record implementation or executed acceptance"
+    },
+    {
+      "id": "form-record-25",
+      "path": "web-angular/src/app/shared/ui/public-api.ts",
+      "layer": "web",
+      "purpose": "Actual shared form/record implementation or executed acceptance"
+    },
+    {
+      "id": "form-record-27",
+      "path": "web-angular/src/app/shared/ui/dialogs/dialog-panel.spec.ts",
+      "layer": "web",
+      "purpose": "Actual shared form/record implementation or executed acceptance"
+    },
+    {
+      "id": "form-record-28",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid.scss",
+      "layer": "web",
+      "purpose": "Actual shared form/record implementation or executed acceptance"
+    },
+    {
+      "id": "form-record-33",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/state/country-lifecycle-state.ts",
+      "layer": "web",
+      "purpose": "Actual shared form/record implementation or executed acceptance"
+    },
+    {
+      "id": "form-record-34",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/state/country-lifecycle-state.spec.ts",
+      "layer": "web",
+      "purpose": "Actual shared form/record implementation or executed acceptance"
+    },
+    {
+      "id": "form-record-36",
+      "path": "web-angular/scripts/verify-form-browser.mjs",
+      "layer": "web",
+      "purpose": "Actual shared form/record implementation or executed acceptance"
+    },
+    {
+      "id": "form-record-37",
+      "path": "web-next/src/locales/resources/core/en.json",
+      "layer": "web",
+      "purpose": "Actual shared form/record implementation or executed acceptance"
+    },
+    {
+      "id": "form-record-38",
+      "path": "web-next/src/locales/resources/core/ar.json",
+      "layer": "web",
+      "purpose": "Actual shared form/record implementation or executed acceptance"
+    }
+  ],
+  "finalizationChecklist": [
+    "Replace every placeholder in the review artifact.",
+    "Complete the Existing-System Relationship Review and every decision in angular-countries-edit-workflow-request.md before implementation.",
+    "Complete the Business Rules Matrix with one primary owner, stable outcome/error, and required test for every known rule.",
+    "Complete every Edge Cases & Validation category with scenarios or an explicit N/A reason, enforcement layer, and required test.",
+    "Complete the Impact Matrix with Reuse, Extend, Change, Add, or reasoned N/A across every listed area.",
+    "Remove every remaining placeholder from angular-countries-edit-workflow-request.md before runtime implementation.",
+    "Add Phase 00 current API, web, mobile, configuration, localization, and test evidence sources.",
+    "Classify every optional view, including Import, as Required, Deferred, or Excluded independently for web and mobile.",
+    "When Import is Required, add its API and applicable client runtime, route/configuration, localization, and focused-test paths.",
+    "Record and test the exact Import request envelope, limits, duplicate and relationship rules, atomicity, permissions, side effects, and retry behavior.",
+    "Add source collections with evidence-based minimum file counts.",
+    "Create the four initial applied implementation books from the approved plan plus verified current source; label target-only behavior explicitly.",
+    "Rename this file to required-files.json when the Phase 00 evidence paths exist; extend it with runtime files during implementation.",
+    "Update the review artifact to point at required-files.json and mark its documentation state Final.",
+    "Merge recipe-registration.draft.json into recipe-manifest.json after the Phase 00 books and preflight manifest are complete.",
+    "Write generated packets under documentation/modules/platform/features/angular-countries-edit-workflow/generated/.",
+    "Run generation and then Generate-Documentation.ps1 -Check.",
+    "Complete phase 06 with an explicit verification decision.",
+    "Do not start customer-facing education until phase 06 records Verified.",
+    "For customer-visible work, complete phase 07 and its Customer Education Pack before Closed.",
+    "When Customer Education is Required, add the verified education document to required-files.json and rerun Generate-Documentation.ps1 -Check before Closed."
+  ]
+}

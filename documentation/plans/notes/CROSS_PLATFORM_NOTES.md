@@ -40,7 +40,7 @@ Typical examples:
 | DEF-023 | Deferred | Attendance geofence | Geofence radius waits for mobile attendance capture. | API + Mobile | `DEFERRED_ITEMS.md` |
 | DEF-024 | Deferred | Employee management | Employee screens, direct manager, and import/export wait for the Employee slice. | API + Web + Mobile | `DEFERRED_ITEMS.md` |
 | RISK-005 | Risk | Platform post-commit effects | Future critical external effects require transactional outbox semantics. | API + Web + Mobile | `KNOWN_RISKS.md` |
-| FOLLOW-003 | Follow-up | Contract parity | Required Angular generation proof is bounded; whole-API contract automation remains open. | API + Web | `FOLLOW_UPS.md` |
+| FOLLOW-003 | Follow-up | Contract parity | Scoped assessment Verified with typed fallback; metadata/security/whole-API work remains FOLLOW-003. | API + Web | `FOLLOW_UPS.md` |
 | PROD-023 | Production | Recovery | Link migration release to canonical backup/restore and data-integrity proof. | API + Web + Data + Infrastructure | `PRODUCTION_NOTES.md` |
 | DEC-001 | Decision | HR MVP | Leave-only versus Attendance scope remains open for the affected HR expansion. | API + Web + Mobile | `DECISION_BACKLOG.md` |
 | DEC-002 | Decision | Payroll ownership | First-party Payroll versus provider integration remains open. | API + Web + Mobile | `DECISION_BACKLOG.md` |

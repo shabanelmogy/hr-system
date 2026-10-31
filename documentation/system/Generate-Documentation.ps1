@@ -260,6 +260,15 @@ foreach ($recipeEntry in $selectedRecipes) {
         continue
     }
 
+    # Do not truncate unchanged packets. Besides avoiding unnecessary file watcher
+    # activity, this permits generation while an editor/indexer maps an existing
+    # packet into memory on Windows. Changed packets still use the normal writer.
+    if ([System.IO.File]::Exists($outputPath) -and
+        [System.IO.File]::ReadAllText($outputPath) -ceq $expected) {
+        Write-Host "Unchanged $($recipeEntry.output)"
+        continue
+    }
+
     $outputDirectory = Split-Path -Parent $outputPath
     New-Item -ItemType Directory -Path $outputDirectory -Force | Out-Null
     $utf8NoBom = New-Object System.Text.UTF8Encoding($false)

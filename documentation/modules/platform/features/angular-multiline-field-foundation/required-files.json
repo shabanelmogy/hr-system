@@ -1,0 +1,314 @@
+{
+  "schemaVersion": 1,
+  "status": "closed",
+  "executionMode": "verified-bounded-runtime",
+  "runtimeAuthorized": true,
+  "feature": "angular-multiline-field-foundation",
+  "featureName": "Shared multiline text preparation",
+  "referenceFeature": "N/A",
+  "planId": "web-angular-migration",
+  "sliceId": "S1-A10 â€” Shared multiline text preparation",
+  "canonicalPlan": "documentation/plans/business/web-angular-migration/PLAN.md",
+  "featureDecompositionDecision": "Single feature",
+  "screenWorkflowContract": "documentation/plans/business/web-angular-migration/decomposition/angular-multiline-field-foundation.md",
+  "plannedCustomerEducation": "documentation/plans/business/web-angular-migration/education/angular-multiline-field-foundation.md",
+  "purpose": "Frozen existing TextField multiline extension/current source",
+  "reviewArtifact": "documentation/modules/platform/features/angular-multiline-field-foundation/angular-multiline-field-foundation-evidence.md",
+  "implementationRequest": "documentation/modules/platform/features/angular-multiline-field-foundation/angular-multiline-field-foundation-request.md",
+  "plannedCanonicalBooks": {
+    "master": "documentation/modules/platform/features/angular-multiline-field-foundation/angular-multiline-field-foundation-review.md",
+    "api": "documentation/modules/platform/features/angular-multiline-field-foundation/angular-multiline-field-foundation-api.md",
+    "web": "documentation/modules/platform/features/angular-multiline-field-foundation/angular-multiline-field-foundation-web.md",
+    "mobile": "documentation/modules/platform/features/angular-multiline-field-foundation/angular-multiline-field-foundation-mobile.md"
+  },
+  "sourceCollections": [],
+  "requiredFiles": [
+    {
+      "id": "phase00-0",
+      "path": "documentation/modules/platform/features/angular-multiline-field-foundation/MULTILINE_FIELD_CONTRACT.md",
+      "layer": "documentation",
+      "purpose": "Actual source or frozen contract"
+    },
+    {
+      "id": "phase00-1",
+      "path": "documentation/modules/platform/features/angular-multiline-field-foundation/angular-multiline-field-foundation-review.md",
+      "layer": "documentation",
+      "purpose": "Actual source or frozen contract"
+    },
+    {
+      "id": "phase00-2",
+      "path": "documentation/modules/platform/features/angular-multiline-field-foundation/angular-multiline-field-foundation-api.md",
+      "layer": "documentation",
+      "purpose": "Actual source or frozen contract"
+    },
+    {
+      "id": "phase00-3",
+      "path": "documentation/modules/platform/features/angular-multiline-field-foundation/angular-multiline-field-foundation-web.md",
+      "layer": "documentation",
+      "purpose": "Actual source or frozen contract"
+    },
+    {
+      "id": "phase00-4",
+      "path": "documentation/modules/platform/features/angular-multiline-field-foundation/angular-multiline-field-foundation-mobile.md",
+      "layer": "documentation",
+      "purpose": "Actual source or frozen contract"
+    },
+    {
+      "id": "phase00-5",
+      "path": "documentation/modules/platform/features/angular-multiline-field-foundation/angular-multiline-field-foundation-request.md",
+      "layer": "documentation",
+      "purpose": "Actual source or frozen contract"
+    },
+    {
+      "id": "phase00-6",
+      "path": "documentation/modules/platform/features/angular-multiline-field-foundation/angular-multiline-field-foundation-evidence.md",
+      "layer": "documentation",
+      "purpose": "Actual source or frozen contract"
+    },
+    {
+      "id": "phase00-7",
+      "path": "documentation/plans/business/web-angular-migration/PLAN.md",
+      "layer": "documentation",
+      "purpose": "Actual source or frozen contract"
+    },
+    {
+      "id": "phase00-8",
+      "path": "documentation/plans/business/web-angular-migration/decomposition/angular-multiline-field-foundation.md",
+      "layer": "documentation",
+      "purpose": "Actual source or frozen contract"
+    },
+    {
+      "id": "phase00-9",
+      "path": "AGENTS.md",
+      "layer": "web",
+      "purpose": "Actual source or frozen contract"
+    },
+    {
+      "id": "phase00-10",
+      "path": "web-angular/src/app/shared/ui/forms/form-field-control.ts",
+      "layer": "web",
+      "purpose": "Actual source or frozen contract"
+    },
+    {
+      "id": "phase00-11",
+      "path": "web-angular/src/app/shared/ui/forms/form-container.ts",
+      "layer": "web",
+      "purpose": "Actual source or frozen contract"
+    },
+    {
+      "id": "phase00-12",
+      "path": "web-angular/src/app/shared/ui/forms/fields/text-field.ts",
+      "layer": "web",
+      "purpose": "Actual source or frozen contract"
+    },
+    {
+      "id": "phase00-13",
+      "path": "web-angular/src/app/shared/ui/forms/fields/text-field.html",
+      "layer": "web",
+      "purpose": "Actual source or frozen contract"
+    },
+    {
+      "id": "phase00-14",
+      "path": "web-angular/src/app/shared/ui/forms/fields/text-field.scss",
+      "layer": "web",
+      "purpose": "Actual source or frozen contract"
+    },
+    {
+      "id": "phase00-15",
+      "path": "web-angular/src/app/shared/ui/forms/fields/numeric-field.ts",
+      "layer": "web",
+      "purpose": "Actual source or frozen contract"
+    },
+    {
+      "id": "phase00-16",
+      "path": "web-angular/src/theme/prime-preset.ts",
+      "layer": "web",
+      "purpose": "Actual source or frozen contract"
+    },
+    {
+      "id": "phase00-17",
+      "path": "web-next/src/shared/components/forms/text-fields/MyTextField.tsx",
+      "layer": "web",
+      "purpose": "Actual source or frozen contract"
+    },
+    {
+      "id": "phase00-18",
+      "path": "web-next/src/shared/components/forms/text-fields/internals/types.ts",
+      "layer": "web",
+      "purpose": "Actual source or frozen contract"
+    },
+    {
+      "id": "phase00-19",
+      "path": "mobile-react/src/shared/components/controls/AppTextField.tsx",
+      "layer": "web",
+      "purpose": "Actual source or frozen contract"
+    },
+    {
+      "id": "verified-0",
+      "path": "documentation/modules/platform/features/angular-multiline-field-foundation/IMPLEMENTATION_REPORT.md",
+      "layer": "documentation",
+      "purpose": "Current runtime or acceptance evidence"
+    },
+    {
+      "id": "verified-1",
+      "path": "documentation/plans/business/web-angular-migration/education/angular-multiline-field-foundation.md",
+      "layer": "documentation",
+      "purpose": "Current runtime or acceptance evidence"
+    },
+    {
+      "id": "verified-2",
+      "path": "documentation/guides/web/architecture/ANGULAR_SHARED_COMPONENTS.md",
+      "layer": "documentation",
+      "purpose": "Current runtime or acceptance evidence"
+    },
+    {
+      "id": "verified-3",
+      "path": "web-angular/src/app/shared/ui/forms/fields/text-field.spec.ts",
+      "layer": "web",
+      "purpose": "Current runtime or acceptance evidence"
+    },
+    {
+      "id": "verified-4",
+      "path": "web-angular/src/app/dev/multiline-preview.ts",
+      "layer": "web",
+      "purpose": "Current runtime or acceptance evidence"
+    },
+    {
+      "id": "verified-5",
+      "path": "web-angular/src/app/app.routes.ts",
+      "layer": "web",
+      "purpose": "Current runtime or acceptance evidence"
+    },
+    {
+      "id": "verified-6",
+      "path": "web-angular/scripts/verify-multiline-browser.mjs",
+      "layer": "web",
+      "purpose": "Current runtime or acceptance evidence"
+    },
+    {
+      "id": "verified-7",
+      "path": "web-angular/package.json",
+      "layer": "web",
+      "purpose": "Current runtime or acceptance evidence"
+    },
+    {
+      "id": "verified-8",
+      "path": "documentation/system/Generate-Documentation.ps1",
+      "layer": "documentation",
+      "purpose": "Current runtime or acceptance evidence"
+    },
+    {
+      "id": "verified-9",
+      "path": "documentation/system/tests/Generation.Unchanged.Tests.ps1",
+      "layer": "documentation",
+      "purpose": "Current runtime or acceptance evidence"
+    },
+    {
+      "id": "verified-10",
+      "path": "documentation/modules/platform/features/angular-multiline-field-foundation/verification/boolean-results8.json",
+      "layer": "documentation",
+      "purpose": "Current runtime or acceptance evidence"
+    },
+    {
+      "id": "verified-11",
+      "path": "documentation/modules/platform/features/angular-multiline-field-foundation/verification/dark-ar-390-errors.png",
+      "layer": "documentation",
+      "purpose": "Current runtime or acceptance evidence"
+    },
+    {
+      "id": "verified-12",
+      "path": "documentation/modules/platform/features/angular-multiline-field-foundation/verification/dark-ar-390-form.png",
+      "layer": "documentation",
+      "purpose": "Current runtime or acceptance evidence"
+    },
+    {
+      "id": "verified-13",
+      "path": "documentation/modules/platform/features/angular-multiline-field-foundation/verification/date-results8.json",
+      "layer": "documentation",
+      "purpose": "Current runtime or acceptance evidence"
+    },
+    {
+      "id": "verified-14",
+      "path": "documentation/modules/platform/features/angular-multiline-field-foundation/verification/form-results40.json",
+      "layer": "documentation",
+      "purpose": "Current runtime or acceptance evidence"
+    },
+    {
+      "id": "verified-15",
+      "path": "documentation/modules/platform/features/angular-multiline-field-foundation/verification/language-results20.json",
+      "layer": "documentation",
+      "purpose": "Current runtime or acceptance evidence"
+    },
+    {
+      "id": "verified-16",
+      "path": "documentation/modules/platform/features/angular-multiline-field-foundation/verification/light-en-1440-errors.png",
+      "layer": "documentation",
+      "purpose": "Current runtime or acceptance evidence"
+    },
+    {
+      "id": "verified-17",
+      "path": "documentation/modules/platform/features/angular-multiline-field-foundation/verification/light-en-1440-form.png",
+      "layer": "documentation",
+      "purpose": "Current runtime or acceptance evidence"
+    },
+    {
+      "id": "verified-18",
+      "path": "documentation/modules/platform/features/angular-multiline-field-foundation/verification/login-results10.json",
+      "layer": "documentation",
+      "purpose": "Current runtime or acceptance evidence"
+    },
+    {
+      "id": "verified-19",
+      "path": "documentation/modules/platform/features/angular-multiline-field-foundation/verification/multiline-focused8.json",
+      "layer": "documentation",
+      "purpose": "Current runtime or acceptance evidence"
+    },
+    {
+      "id": "verified-20",
+      "path": "documentation/modules/platform/features/angular-multiline-field-foundation/verification/multiline-results40.json",
+      "layer": "documentation",
+      "purpose": "Current runtime or acceptance evidence"
+    },
+    {
+      "id": "verified-21",
+      "path": "documentation/modules/platform/features/angular-multiline-field-foundation/verification/numeric-results8.json",
+      "layer": "documentation",
+      "purpose": "Current runtime or acceptance evidence"
+    },
+    {
+      "id": "verified-22",
+      "path": "documentation/modules/platform/features/angular-multiline-field-foundation/verification/README.md",
+      "layer": "documentation",
+      "purpose": "Current runtime or acceptance evidence"
+    },
+    {
+      "id": "verified-23",
+      "path": "documentation/modules/platform/features/angular-multiline-field-foundation/verification/reference-results8.json",
+      "layer": "documentation",
+      "purpose": "Current runtime or acceptance evidence"
+    }
+  ],
+  "finalizationChecklist": [
+    "Replace every placeholder in the review artifact.",
+    "Complete the Existing-System Relationship Review and every decision in angular-multiline-field-foundation-request.md before implementation.",
+    "Complete the Business Rules Matrix with one primary owner, stable outcome/error, and required test for every known rule.",
+    "Complete every Edge Cases & Validation category with scenarios or an explicit N/A reason, enforcement layer, and required test.",
+    "Complete the Impact Matrix with Reuse, Extend, Change, Add, or reasoned N/A across every listed area.",
+    "Remove every remaining placeholder from angular-multiline-field-foundation-request.md before runtime implementation.",
+    "Add Phase 00 current API, web, mobile, configuration, localization, and test evidence sources.",
+    "Classify every optional view, including Import, as Required, Deferred, or Excluded independently for web and mobile.",
+    "When Import is Required, add its API and applicable client runtime, route/configuration, localization, and focused-test paths.",
+    "Record and test the exact Import request envelope, limits, duplicate and relationship rules, atomicity, permissions, side effects, and retry behavior.",
+    "Add source collections with evidence-based minimum file counts.",
+    "Create the four initial applied implementation books from the approved plan plus verified current source; label target-only behavior explicitly.",
+    "Rename this file to required-files.json when the Phase 00 evidence paths exist; extend it with runtime files during implementation.",
+    "Update the review artifact to point at required-files.json and mark its documentation state Final.",
+    "Merge recipe-registration.draft.json into recipe-manifest.json after the Phase 00 books and preflight manifest are complete.",
+    "Write generated packets under documentation/modules/platform/features/angular-multiline-field-foundation/generated/.",
+    "Run generation and then Generate-Documentation.ps1 -Check.",
+    "Complete phase 06 with an explicit verification decision.",
+    "Do not start customer-facing education until phase 06 records Verified.",
+    "For customer-visible work, complete phase 07 and its Customer Education Pack before Closed.",
+    "When Customer Education is Required, add the verified education document to required-files.json and rerun Generate-Documentation.ps1 -Check before Closed."
+  ]
+}

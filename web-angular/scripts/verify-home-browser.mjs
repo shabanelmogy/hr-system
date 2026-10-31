@@ -5,12 +5,13 @@ import { chromium,expect } from '@playwright/test';
 import { sessionFixture } from '../src/app/platform/auth/auth.fixture.ts';
 import { dashboardFixture } from '../src/app/platform/tenants/dashboard.fixture.ts';
 const origin=process.env.ANGULAR_PREVIEW_ORIGIN??'https://localhost:4210',root=path.resolve(import.meta.dirname,'..'),output=path.join(root,'../.codex-tmp/angular-home');fs.mkdirSync(output,{recursive:true});
+const api=process.env.ANGULAR_API_ORIGIN??'https://localhost:7037';
 const core=JSON.parse(fs.readFileSync(path.join(root,'src/locales/generated/core.json'),'utf8'));
 const captions=JSON.parse(fs.readFileSync(path.join(root,'src/locales/generated/platform-tenants.json'),'utf8'));
 const version=fs.readFileSync(path.join(root,'src/app/platform/localization/catalog.generated.ts'),'utf8').match(/[a-f0-9]{64}/)[0];
 const browser=await chromium.launch({channel:'chrome'}),results=[],errors=[];
 async function context(language='en',width=1440,mode='light',height=1000){const c=await browser.newContext({ignoreHTTPSErrors:true,viewport:{width,height},reducedMotion:'reduce'});await c.addCookies(Object.entries({i18next:language,currentMode:mode,themePalette:'green'}).map(([name,value])=>({name,value,url:origin})));return c;}
-async function mock(c,state){await c.route('https://localhost:7037/api/**',async route=>{
+async function mock(c,state){await c.route(api+'/api/**',async route=>{
  const p=new URL(route.request().url()).pathname;let status=200,body;
  if(p.endsWith('/csrf'))body={requestToken:'synthetic'};
  else if(p.endsWith('/session')||p.endsWith('/refresh'))body={isAuthenticated:true,user:{...sessionFixture,roles:[state.role??'super_admin']}};

@@ -1,14 +1,16 @@
 import { Component, computed, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { catchError, from, map, of, timeout } from 'rxjs';
-import { FeedbackState, MetricCard, PageHeader, ProgressMeter, StatusBadge, SurfaceCard } from '../../../shared/ui/public-api';
+import { ActionButton, AppIcon, FeedbackState, MetricCard, PageHeader, ProgressMeter, StatusBadge, SurfaceCard } from '../../../shared/ui/public-api';
 import { LocalizationRuntime, UiTextPipe } from '../../localization/public-api';
 import { ThemeService } from '../../../../theme/public-api';
 import { DashboardState } from '../state/dashboard-state';
+import { SHELL_DATA_NAVIGATION } from '../../../shell/public-api';
 import { subscriptionStatuses } from '../types/dashboard-contracts';
 import { daysRemaining, statusAccent } from '../presentation/dashboard-utils';
-@Component({imports:[FeedbackState,MetricCard,PageHeader,ProgressMeter,StatusBadge,SurfaceCard,UiTextPipe],providers:[DashboardState],templateUrl:'./dashboard-page.html',styleUrl:'./dashboard-page.scss'})
+@Component({imports:[ActionButton,AppIcon,FeedbackState,MetricCard,PageHeader,ProgressMeter,StatusBadge,SurfaceCard,UiTextPipe],providers:[DashboardState],templateUrl:'./dashboard-page.html',styleUrl:'./dashboard-page.scss'})
 export class DashboardPage {
+  readonly dataNavigation=inject(SHELL_DATA_NAVIGATION);
   readonly dashboard=inject(DashboardState);readonly locale=inject(LocalizationRuntime);private readonly theme=inject(ThemeService);
   readonly statuses=subscriptionStatuses;readonly statusAccent=statusAccent;
   readonly secondaryAccent=computed(()=>this.theme.theme().colors.brand2);

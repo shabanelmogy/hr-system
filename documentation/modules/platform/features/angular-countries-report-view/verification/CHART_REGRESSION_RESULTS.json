@@ -1,0 +1,1962 @@
+[
+  {
+    "palette": "green",
+    "mode": "light",
+    "language": "en",
+    "width": 390,
+    "geometry": {
+      "controls": [
+        {
+          "centerY": 227.625,
+          "width": 155,
+          "height": 40
+        },
+        {
+          "centerY": 227.625,
+          "width": 165,
+          "height": 40
+        },
+        {
+          "centerY": 227.625,
+          "width": 218,
+          "height": 42
+        },
+        {
+          "centerY": 227.625,
+          "width": 125,
+          "height": 40
+        },
+        {
+          "centerY": 227.625,
+          "width": 220,
+          "height": 40
+        },
+        {
+          "centerY": 227.625,
+          "width": 110.484375,
+          "height": 44
+        },
+        {
+          "centerY": 227.625,
+          "width": 84.734375,
+          "height": 44
+        }
+      ],
+      "width": 340,
+      "scrollWidth": 1120,
+      "searchWidth": 218,
+      "sortWidth": 220,
+      "field": {
+        "style": "max-width: 400px;",
+        "width": 220,
+        "configured": 400
+      },
+      "sort": {
+        "style": "width: 220px; flex-basis: 220px; flex-shrink: 0;",
+        "width": 220,
+        "configured": 220
+      }
+    },
+    "charts": [
+      {
+        "id": "states",
+        "type": "bar",
+        "labels": [
+          "Country 11",
+          "Country 8",
+          "Country 5",
+          "Country 10",
+          "Country 7",
+          "Country 4"
+        ],
+        "values": [
+          [
+            2,
+            2,
+            2,
+            1,
+            1,
+            1
+          ]
+        ],
+        "color": "#0F766E",
+        "gradient": false,
+        "width": 338,
+        "height": 281,
+        "painted": true,
+        "rtl": false,
+        "animation": false,
+        "live": 4,
+        "canvasLabel": "States by Country",
+        "presentation": {
+          "padding": "8px",
+          "radius": "16px",
+          "titleSize": "16px",
+          "titleWeight": "600",
+          "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif"
+        }
+      },
+      {
+        "id": "coverage",
+        "type": "pie",
+        "labels": [
+          "With states",
+          "Without states"
+        ],
+        "values": [
+          [
+            6,
+            4
+          ]
+        ],
+        "color": [
+          "#A21CAF",
+          "#15803D"
+        ],
+        "gradient": false,
+        "width": 338,
+        "height": 300,
+        "painted": true,
+        "rtl": false,
+        "animation": false,
+        "live": 4,
+        "canvasLabel": "Countries With and Without States",
+        "presentation": {
+          "padding": "8px",
+          "radius": "16px",
+          "titleSize": "16px",
+          "titleWeight": "600",
+          "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif"
+        }
+      },
+      {
+        "id": "currencies",
+        "type": "bar",
+        "labels": [
+          "USD",
+          "EGP"
+        ],
+        "values": [
+          [
+            5,
+            2
+          ]
+        ],
+        "color": [
+          "#4D7C0F",
+          "#A21CAF"
+        ],
+        "gradient": false,
+        "width": 338,
+        "height": 300,
+        "painted": true,
+        "rtl": false,
+        "animation": false,
+        "live": 4,
+        "canvasLabel": "Top Currencies",
+        "presentation": {
+          "padding": "8px",
+          "radius": "16px",
+          "titleSize": "16px",
+          "titleWeight": "600",
+          "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif"
+        }
+      },
+      {
+        "id": "timeline",
+        "type": "line",
+        "labels": [
+          "2026-01",
+          "2026-02",
+          "2026-03"
+        ],
+        "values": [
+          [
+            2,
+            6,
+            10
+          ]
+        ],
+        "color": "gradient",
+        "gradient": true,
+        "width": 338,
+        "height": 300,
+        "painted": true,
+        "rtl": false,
+        "animation": false,
+        "live": 4,
+        "canvasLabel": "Countries Added Over Time",
+        "presentation": {
+          "padding": "8px",
+          "radius": "16px",
+          "titleSize": "16px",
+          "titleWeight": "600",
+          "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif"
+        }
+      }
+    ],
+    "layout": {
+      "columns": 1,
+      "autoRows": "minmax(280px, 1fr)",
+      "templateRows": "352.594px 352.594px 352.594px 352.594px",
+      "plotHeight": 1440.375,
+      "plotStyle": null,
+      "containers": [
+        {
+          "tag": "DIV",
+          "className": "chart-scroll",
+          "type": "size",
+          "height": 224.1875
+        }
+      ],
+      "viewportHeight": 224.1875,
+      "panels": [
+        {
+          "width": 354,
+          "height": 352.59375
+        },
+        {
+          "width": 354,
+          "height": 352.59375
+        },
+        {
+          "width": 354,
+          "height": 352.59375
+        },
+        {
+          "width": 354,
+          "height": 352.59375
+        }
+      ]
+    },
+    "cardOneRow": true,
+    "compactSort": true,
+    "filterToggle": true,
+    "chartNoFiltersOrScopeText": true,
+    "firstPageRetainsCriteria": true,
+    "pageOnlyCounts": true,
+    "nativePaint": true,
+    "accessibleAlternatives": true,
+    "repaintNoGet": true,
+    "zeroAndEmpty": true,
+    "errorRetry": true,
+    "authorityMask": true,
+    "destroyOnExit": true,
+    "passed": true
+  },
+  {
+    "palette": "green",
+    "mode": "light",
+    "language": "en",
+    "width": 1440,
+    "geometry": {
+      "controls": [
+        {
+          "centerY": 231,
+          "width": 155,
+          "height": 40
+        },
+        {
+          "centerY": 231,
+          "width": 165,
+          "height": 40
+        },
+        {
+          "centerY": 231,
+          "width": 375.78125,
+          "height": 42
+        },
+        {
+          "centerY": 231,
+          "width": 125,
+          "height": 40
+        },
+        {
+          "centerY": 231,
+          "width": 220,
+          "height": 40
+        },
+        {
+          "centerY": 231,
+          "width": 110.484375,
+          "height": 44
+        },
+        {
+          "centerY": 231,
+          "width": 84.734375,
+          "height": 44
+        }
+      ],
+      "width": 1294,
+      "scrollWidth": 1294,
+      "searchWidth": 375.78125,
+      "sortWidth": 220,
+      "field": {
+        "style": "max-width: 400px;",
+        "width": 377.78125,
+        "configured": 400
+      },
+      "sort": {
+        "style": "width: 220px; flex-basis: 220px; flex-shrink: 0;",
+        "width": 220,
+        "configured": 220
+      }
+    },
+    "charts": [
+      {
+        "id": "states",
+        "type": "bar",
+        "labels": [
+          "Country 11",
+          "Country 8",
+          "Country 5",
+          "Country 10",
+          "Country 7",
+          "Country 4"
+        ],
+        "values": [
+          [
+            2,
+            2,
+            2,
+            1,
+            1,
+            1
+          ]
+        ],
+        "color": "#0F766E",
+        "gradient": false,
+        "width": 637,
+        "height": 660.59375,
+        "painted": true,
+        "rtl": false,
+        "animation": false,
+        "live": 4,
+        "canvasLabel": "States by Country",
+        "presentation": {
+          "padding": "8px",
+          "radius": "16px",
+          "titleSize": "16px",
+          "titleWeight": "600",
+          "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif"
+        }
+      },
+      {
+        "id": "coverage",
+        "type": "pie",
+        "labels": [
+          "With states",
+          "Without states"
+        ],
+        "values": [
+          [
+            6,
+            4
+          ]
+        ],
+        "color": [
+          "#A21CAF",
+          "#15803D"
+        ],
+        "gradient": false,
+        "width": 637,
+        "height": 679.59375,
+        "painted": true,
+        "rtl": false,
+        "animation": false,
+        "live": 4,
+        "canvasLabel": "Countries With and Without States",
+        "presentation": {
+          "padding": "8px",
+          "radius": "16px",
+          "titleSize": "16px",
+          "titleWeight": "600",
+          "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif"
+        }
+      },
+      {
+        "id": "currencies",
+        "type": "bar",
+        "labels": [
+          "USD",
+          "EGP"
+        ],
+        "values": [
+          [
+            5,
+            2
+          ]
+        ],
+        "color": [
+          "#4D7C0F",
+          "#A21CAF"
+        ],
+        "gradient": false,
+        "width": 637,
+        "height": 679.59375,
+        "painted": true,
+        "rtl": false,
+        "animation": false,
+        "live": 4,
+        "canvasLabel": "Top Currencies",
+        "presentation": {
+          "padding": "8px",
+          "radius": "16px",
+          "titleSize": "16px",
+          "titleWeight": "600",
+          "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif"
+        }
+      },
+      {
+        "id": "timeline",
+        "type": "line",
+        "labels": [
+          "2026-01",
+          "2026-02",
+          "2026-03"
+        ],
+        "values": [
+          [
+            2,
+            6,
+            10
+          ]
+        ],
+        "color": "gradient",
+        "gradient": true,
+        "width": 637,
+        "height": 679.59375,
+        "painted": true,
+        "rtl": false,
+        "animation": false,
+        "live": 4,
+        "canvasLabel": "Countries Added Over Time",
+        "presentation": {
+          "padding": "8px",
+          "radius": "16px",
+          "titleSize": "16px",
+          "titleWeight": "600",
+          "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif"
+        }
+      }
+    ],
+    "layout": {
+      "columns": 2,
+      "autoRows": "732.203px",
+      "templateRows": "732.203px 732.203px",
+      "plotHeight": 744.203125,
+      "plotStyle": null,
+      "containers": [
+        {
+          "tag": "DIV",
+          "className": "chart-scroll",
+          "type": "size",
+          "height": 744.203125
+        }
+      ],
+      "viewportHeight": 744.203125,
+      "panels": [
+        {
+          "width": 653,
+          "height": 732.203125
+        },
+        {
+          "width": 653,
+          "height": 732.203125
+        },
+        {
+          "width": 653,
+          "height": 732.203125
+        },
+        {
+          "width": 653,
+          "height": 732.203125
+        }
+      ]
+    },
+    "cardOneRow": true,
+    "compactSort": true,
+    "filterToggle": true,
+    "chartNoFiltersOrScopeText": true,
+    "firstPageRetainsCriteria": true,
+    "pageOnlyCounts": true,
+    "nativePaint": true,
+    "accessibleAlternatives": true,
+    "repaintNoGet": true,
+    "zeroAndEmpty": true,
+    "errorRetry": true,
+    "authorityMask": true,
+    "destroyOnExit": true,
+    "passed": true
+  },
+  {
+    "palette": "green",
+    "mode": "light",
+    "language": "ar",
+    "width": 390,
+    "geometry": {
+      "controls": [
+        {
+          "centerY": 225,
+          "width": 155,
+          "height": 40
+        },
+        {
+          "centerY": 225,
+          "width": 165,
+          "height": 40
+        },
+        {
+          "centerY": 225,
+          "width": 218,
+          "height": 42
+        },
+        {
+          "centerY": 225,
+          "width": 125,
+          "height": 40
+        },
+        {
+          "centerY": 225,
+          "width": 220,
+          "height": 40
+        },
+        {
+          "centerY": 225,
+          "width": 105.78125,
+          "height": 44
+        },
+        {
+          "centerY": 225,
+          "width": 113.28125,
+          "height": 44
+        }
+      ],
+      "width": 340,
+      "scrollWidth": 1144,
+      "searchWidth": 218,
+      "sortWidth": 220,
+      "field": {
+        "style": "max-width: 400px;",
+        "width": 220,
+        "configured": 400
+      },
+      "sort": {
+        "style": "width: 220px; flex-basis: 220px; flex-shrink: 0;",
+        "width": 220,
+        "configured": 220
+      }
+    },
+    "charts": [
+      {
+        "id": "states",
+        "type": "bar",
+        "labels": [
+          "دولة 11",
+          "دولة 8",
+          "دولة 5",
+          "دولة 10",
+          "دولة 7",
+          "دولة 4"
+        ],
+        "values": [
+          [
+            2,
+            2,
+            2,
+            1,
+            1,
+            1
+          ]
+        ],
+        "color": "#0F766E",
+        "gradient": false,
+        "width": 338,
+        "height": 281,
+        "painted": true,
+        "rtl": true,
+        "animation": false,
+        "live": 4,
+        "canvasLabel": "المحافظات حسب الدولة",
+        "presentation": {
+          "padding": "8px",
+          "radius": "16px",
+          "titleSize": "16px",
+          "titleWeight": "600",
+          "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif"
+        }
+      },
+      {
+        "id": "coverage",
+        "type": "pie",
+        "labels": [
+          "بها محافظات",
+          "بدون محافظات"
+        ],
+        "values": [
+          [
+            6,
+            4
+          ]
+        ],
+        "color": [
+          "#A21CAF",
+          "#15803D"
+        ],
+        "gradient": false,
+        "width": 338,
+        "height": 300,
+        "painted": true,
+        "rtl": true,
+        "animation": false,
+        "live": 4,
+        "canvasLabel": "الدول التي بها محافظات وبدون محافظات",
+        "presentation": {
+          "padding": "8px",
+          "radius": "16px",
+          "titleSize": "16px",
+          "titleWeight": "600",
+          "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif"
+        }
+      },
+      {
+        "id": "currencies",
+        "type": "bar",
+        "labels": [
+          "USD",
+          "EGP"
+        ],
+        "values": [
+          [
+            5,
+            2
+          ]
+        ],
+        "color": [
+          "#4D7C0F",
+          "#A21CAF"
+        ],
+        "gradient": false,
+        "width": 338,
+        "height": 300,
+        "painted": true,
+        "rtl": true,
+        "animation": false,
+        "live": 4,
+        "canvasLabel": "أهم العملات",
+        "presentation": {
+          "padding": "8px",
+          "radius": "16px",
+          "titleSize": "16px",
+          "titleWeight": "600",
+          "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif"
+        }
+      },
+      {
+        "id": "timeline",
+        "type": "line",
+        "labels": [
+          "2026-01",
+          "2026-02",
+          "2026-03"
+        ],
+        "values": [
+          [
+            2,
+            6,
+            10
+          ]
+        ],
+        "color": "gradient",
+        "gradient": true,
+        "width": 338,
+        "height": 300,
+        "painted": true,
+        "rtl": true,
+        "animation": false,
+        "live": 4,
+        "canvasLabel": "الدول المضافة عبر الوقت",
+        "presentation": {
+          "padding": "8px",
+          "radius": "16px",
+          "titleSize": "16px",
+          "titleWeight": "600",
+          "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif"
+        }
+      }
+    ],
+    "layout": {
+      "columns": 1,
+      "autoRows": "minmax(280px, 1fr)",
+      "templateRows": "352.594px 352.594px 352.594px 352.594px",
+      "plotHeight": 1440.375,
+      "plotStyle": null,
+      "containers": [
+        {
+          "tag": "DIV",
+          "className": "chart-scroll",
+          "type": "size",
+          "height": 226.8125
+        }
+      ],
+      "viewportHeight": 226.8125,
+      "panels": [
+        {
+          "width": 354,
+          "height": 352.59375
+        },
+        {
+          "width": 354,
+          "height": 352.59375
+        },
+        {
+          "width": 354,
+          "height": 352.59375
+        },
+        {
+          "width": 354,
+          "height": 352.59375
+        }
+      ]
+    },
+    "cardOneRow": true,
+    "compactSort": true,
+    "filterToggle": true,
+    "chartNoFiltersOrScopeText": true,
+    "firstPageRetainsCriteria": true,
+    "pageOnlyCounts": true,
+    "nativePaint": true,
+    "accessibleAlternatives": true,
+    "repaintNoGet": true,
+    "zeroAndEmpty": true,
+    "errorRetry": true,
+    "authorityMask": true,
+    "destroyOnExit": true,
+    "passed": true
+  },
+  {
+    "palette": "green",
+    "mode": "light",
+    "language": "ar",
+    "width": 1440,
+    "geometry": {
+      "controls": [
+        {
+          "centerY": 231,
+          "width": 155,
+          "height": 40
+        },
+        {
+          "centerY": 231,
+          "width": 165,
+          "height": 40
+        },
+        {
+          "centerY": 231,
+          "width": 351.9375,
+          "height": 42
+        },
+        {
+          "centerY": 231,
+          "width": 125,
+          "height": 40
+        },
+        {
+          "centerY": 231,
+          "width": 220,
+          "height": 40
+        },
+        {
+          "centerY": 231,
+          "width": 105.78125,
+          "height": 44
+        },
+        {
+          "centerY": 231,
+          "width": 113.28125,
+          "height": 44
+        }
+      ],
+      "width": 1294,
+      "scrollWidth": 1294,
+      "searchWidth": 351.9375,
+      "sortWidth": 220,
+      "field": {
+        "style": "max-width: 400px;",
+        "width": 353.9375,
+        "configured": 400
+      },
+      "sort": {
+        "style": "width: 220px; flex-basis: 220px; flex-shrink: 0;",
+        "width": 220,
+        "configured": 220
+      }
+    },
+    "charts": [
+      {
+        "id": "states",
+        "type": "bar",
+        "labels": [
+          "دولة 11",
+          "دولة 8",
+          "دولة 5",
+          "دولة 10",
+          "دولة 7",
+          "دولة 4"
+        ],
+        "values": [
+          [
+            2,
+            2,
+            2,
+            1,
+            1,
+            1
+          ]
+        ],
+        "color": "#0F766E",
+        "gradient": false,
+        "width": 637,
+        "height": 660.59375,
+        "painted": true,
+        "rtl": true,
+        "animation": false,
+        "live": 4,
+        "canvasLabel": "المحافظات حسب الدولة",
+        "presentation": {
+          "padding": "8px",
+          "radius": "16px",
+          "titleSize": "16px",
+          "titleWeight": "600",
+          "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif"
+        }
+      },
+      {
+        "id": "coverage",
+        "type": "pie",
+        "labels": [
+          "بها محافظات",
+          "بدون محافظات"
+        ],
+        "values": [
+          [
+            6,
+            4
+          ]
+        ],
+        "color": [
+          "#A21CAF",
+          "#15803D"
+        ],
+        "gradient": false,
+        "width": 637,
+        "height": 679.59375,
+        "painted": true,
+        "rtl": true,
+        "animation": false,
+        "live": 4,
+        "canvasLabel": "الدول التي بها محافظات وبدون محافظات",
+        "presentation": {
+          "padding": "8px",
+          "radius": "16px",
+          "titleSize": "16px",
+          "titleWeight": "600",
+          "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif"
+        }
+      },
+      {
+        "id": "currencies",
+        "type": "bar",
+        "labels": [
+          "USD",
+          "EGP"
+        ],
+        "values": [
+          [
+            5,
+            2
+          ]
+        ],
+        "color": [
+          "#4D7C0F",
+          "#A21CAF"
+        ],
+        "gradient": false,
+        "width": 637,
+        "height": 679.59375,
+        "painted": true,
+        "rtl": true,
+        "animation": false,
+        "live": 4,
+        "canvasLabel": "أهم العملات",
+        "presentation": {
+          "padding": "8px",
+          "radius": "16px",
+          "titleSize": "16px",
+          "titleWeight": "600",
+          "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif"
+        }
+      },
+      {
+        "id": "timeline",
+        "type": "line",
+        "labels": [
+          "2026-01",
+          "2026-02",
+          "2026-03"
+        ],
+        "values": [
+          [
+            2,
+            6,
+            10
+          ]
+        ],
+        "color": "gradient",
+        "gradient": true,
+        "width": 637,
+        "height": 679.59375,
+        "painted": true,
+        "rtl": true,
+        "animation": false,
+        "live": 4,
+        "canvasLabel": "الدول المضافة عبر الوقت",
+        "presentation": {
+          "padding": "8px",
+          "radius": "16px",
+          "titleSize": "16px",
+          "titleWeight": "600",
+          "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif"
+        }
+      }
+    ],
+    "layout": {
+      "columns": 2,
+      "autoRows": "732.203px",
+      "templateRows": "732.203px 732.203px",
+      "plotHeight": 744.203125,
+      "plotStyle": null,
+      "containers": [
+        {
+          "tag": "DIV",
+          "className": "chart-scroll",
+          "type": "size",
+          "height": 744.203125
+        }
+      ],
+      "viewportHeight": 744.203125,
+      "panels": [
+        {
+          "width": 653,
+          "height": 732.203125
+        },
+        {
+          "width": 653,
+          "height": 732.203125
+        },
+        {
+          "width": 653,
+          "height": 732.203125
+        },
+        {
+          "width": 653,
+          "height": 732.203125
+        }
+      ]
+    },
+    "cardOneRow": true,
+    "compactSort": true,
+    "filterToggle": true,
+    "chartNoFiltersOrScopeText": true,
+    "firstPageRetainsCriteria": true,
+    "pageOnlyCounts": true,
+    "nativePaint": true,
+    "accessibleAlternatives": true,
+    "repaintNoGet": true,
+    "zeroAndEmpty": true,
+    "errorRetry": true,
+    "authorityMask": true,
+    "destroyOnExit": true,
+    "passed": true
+  },
+  {
+    "palette": "green",
+    "mode": "dark",
+    "language": "en",
+    "width": 390,
+    "geometry": {
+      "controls": [
+        {
+          "centerY": 227.625,
+          "width": 155,
+          "height": 40
+        },
+        {
+          "centerY": 227.625,
+          "width": 165,
+          "height": 40
+        },
+        {
+          "centerY": 227.625,
+          "width": 218,
+          "height": 42
+        },
+        {
+          "centerY": 227.625,
+          "width": 125,
+          "height": 40
+        },
+        {
+          "centerY": 227.625,
+          "width": 220,
+          "height": 40
+        },
+        {
+          "centerY": 227.625,
+          "width": 110.484375,
+          "height": 44
+        },
+        {
+          "centerY": 227.625,
+          "width": 84.734375,
+          "height": 44
+        }
+      ],
+      "width": 340,
+      "scrollWidth": 1120,
+      "searchWidth": 218,
+      "sortWidth": 220,
+      "field": {
+        "style": "max-width: 400px;",
+        "width": 220,
+        "configured": 400
+      },
+      "sort": {
+        "style": "width: 220px; flex-basis: 220px; flex-shrink: 0;",
+        "width": 220,
+        "configured": 220
+      }
+    },
+    "charts": [
+      {
+        "id": "states",
+        "type": "bar",
+        "labels": [
+          "Country 11",
+          "Country 8",
+          "Country 5",
+          "Country 10",
+          "Country 7",
+          "Country 4"
+        ],
+        "values": [
+          [
+            2,
+            2,
+            2,
+            1,
+            1,
+            1
+          ]
+        ],
+        "color": "#5EEAD4",
+        "gradient": false,
+        "width": 338,
+        "height": 281,
+        "painted": true,
+        "rtl": false,
+        "animation": false,
+        "live": 4,
+        "canvasLabel": "States by Country",
+        "presentation": {
+          "padding": "8px",
+          "radius": "16px",
+          "titleSize": "16px",
+          "titleWeight": "600",
+          "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif"
+        }
+      },
+      {
+        "id": "coverage",
+        "type": "pie",
+        "labels": [
+          "With states",
+          "Without states"
+        ],
+        "values": [
+          [
+            6,
+            4
+          ]
+        ],
+        "color": [
+          "#F0ABFC",
+          "#4ADE80"
+        ],
+        "gradient": false,
+        "width": 338,
+        "height": 300,
+        "painted": true,
+        "rtl": false,
+        "animation": false,
+        "live": 4,
+        "canvasLabel": "Countries With and Without States",
+        "presentation": {
+          "padding": "8px",
+          "radius": "16px",
+          "titleSize": "16px",
+          "titleWeight": "600",
+          "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif"
+        }
+      },
+      {
+        "id": "currencies",
+        "type": "bar",
+        "labels": [
+          "USD",
+          "EGP"
+        ],
+        "values": [
+          [
+            5,
+            2
+          ]
+        ],
+        "color": [
+          "#A3E635",
+          "#F0ABFC"
+        ],
+        "gradient": false,
+        "width": 338,
+        "height": 300,
+        "painted": true,
+        "rtl": false,
+        "animation": false,
+        "live": 4,
+        "canvasLabel": "Top Currencies",
+        "presentation": {
+          "padding": "8px",
+          "radius": "16px",
+          "titleSize": "16px",
+          "titleWeight": "600",
+          "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif"
+        }
+      },
+      {
+        "id": "timeline",
+        "type": "line",
+        "labels": [
+          "2026-01",
+          "2026-02",
+          "2026-03"
+        ],
+        "values": [
+          [
+            2,
+            6,
+            10
+          ]
+        ],
+        "color": "gradient",
+        "gradient": true,
+        "width": 338,
+        "height": 300,
+        "painted": true,
+        "rtl": false,
+        "animation": false,
+        "live": 4,
+        "canvasLabel": "Countries Added Over Time",
+        "presentation": {
+          "padding": "8px",
+          "radius": "16px",
+          "titleSize": "16px",
+          "titleWeight": "600",
+          "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif"
+        }
+      }
+    ],
+    "layout": {
+      "columns": 1,
+      "autoRows": "minmax(280px, 1fr)",
+      "templateRows": "352.594px 352.594px 352.594px 352.594px",
+      "plotHeight": 1440.375,
+      "plotStyle": null,
+      "containers": [
+        {
+          "tag": "DIV",
+          "className": "chart-scroll",
+          "type": "size",
+          "height": 224.1875
+        }
+      ],
+      "viewportHeight": 224.1875,
+      "panels": [
+        {
+          "width": 354,
+          "height": 352.59375
+        },
+        {
+          "width": 354,
+          "height": 352.59375
+        },
+        {
+          "width": 354,
+          "height": 352.59375
+        },
+        {
+          "width": 354,
+          "height": 352.59375
+        }
+      ]
+    },
+    "cardOneRow": true,
+    "compactSort": true,
+    "filterToggle": true,
+    "chartNoFiltersOrScopeText": true,
+    "firstPageRetainsCriteria": true,
+    "pageOnlyCounts": true,
+    "nativePaint": true,
+    "accessibleAlternatives": true,
+    "repaintNoGet": true,
+    "zeroAndEmpty": true,
+    "errorRetry": true,
+    "authorityMask": true,
+    "destroyOnExit": true,
+    "passed": true
+  },
+  {
+    "palette": "green",
+    "mode": "dark",
+    "language": "en",
+    "width": 1440,
+    "geometry": {
+      "controls": [
+        {
+          "centerY": 231,
+          "width": 155,
+          "height": 40
+        },
+        {
+          "centerY": 231,
+          "width": 165,
+          "height": 40
+        },
+        {
+          "centerY": 231,
+          "width": 375.78125,
+          "height": 42
+        },
+        {
+          "centerY": 231,
+          "width": 125,
+          "height": 40
+        },
+        {
+          "centerY": 231,
+          "width": 220,
+          "height": 40
+        },
+        {
+          "centerY": 231,
+          "width": 110.484375,
+          "height": 44
+        },
+        {
+          "centerY": 231,
+          "width": 84.734375,
+          "height": 44
+        }
+      ],
+      "width": 1294,
+      "scrollWidth": 1294,
+      "searchWidth": 375.78125,
+      "sortWidth": 220,
+      "field": {
+        "style": "max-width: 400px;",
+        "width": 377.78125,
+        "configured": 400
+      },
+      "sort": {
+        "style": "width: 220px; flex-basis: 220px; flex-shrink: 0;",
+        "width": 220,
+        "configured": 220
+      }
+    },
+    "charts": [
+      {
+        "id": "states",
+        "type": "bar",
+        "labels": [
+          "Country 11",
+          "Country 8",
+          "Country 5",
+          "Country 10",
+          "Country 7",
+          "Country 4"
+        ],
+        "values": [
+          [
+            2,
+            2,
+            2,
+            1,
+            1,
+            1
+          ]
+        ],
+        "color": "#5EEAD4",
+        "gradient": false,
+        "width": 637,
+        "height": 660.59375,
+        "painted": true,
+        "rtl": false,
+        "animation": false,
+        "live": 4,
+        "canvasLabel": "States by Country",
+        "presentation": {
+          "padding": "8px",
+          "radius": "16px",
+          "titleSize": "16px",
+          "titleWeight": "600",
+          "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif"
+        }
+      },
+      {
+        "id": "coverage",
+        "type": "pie",
+        "labels": [
+          "With states",
+          "Without states"
+        ],
+        "values": [
+          [
+            6,
+            4
+          ]
+        ],
+        "color": [
+          "#F0ABFC",
+          "#4ADE80"
+        ],
+        "gradient": false,
+        "width": 637,
+        "height": 679.59375,
+        "painted": true,
+        "rtl": false,
+        "animation": false,
+        "live": 4,
+        "canvasLabel": "Countries With and Without States",
+        "presentation": {
+          "padding": "8px",
+          "radius": "16px",
+          "titleSize": "16px",
+          "titleWeight": "600",
+          "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif"
+        }
+      },
+      {
+        "id": "currencies",
+        "type": "bar",
+        "labels": [
+          "USD",
+          "EGP"
+        ],
+        "values": [
+          [
+            5,
+            2
+          ]
+        ],
+        "color": [
+          "#A3E635",
+          "#F0ABFC"
+        ],
+        "gradient": false,
+        "width": 637,
+        "height": 679.59375,
+        "painted": true,
+        "rtl": false,
+        "animation": false,
+        "live": 4,
+        "canvasLabel": "Top Currencies",
+        "presentation": {
+          "padding": "8px",
+          "radius": "16px",
+          "titleSize": "16px",
+          "titleWeight": "600",
+          "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif"
+        }
+      },
+      {
+        "id": "timeline",
+        "type": "line",
+        "labels": [
+          "2026-01",
+          "2026-02",
+          "2026-03"
+        ],
+        "values": [
+          [
+            2,
+            6,
+            10
+          ]
+        ],
+        "color": "gradient",
+        "gradient": true,
+        "width": 637,
+        "height": 679.59375,
+        "painted": true,
+        "rtl": false,
+        "animation": false,
+        "live": 4,
+        "canvasLabel": "Countries Added Over Time",
+        "presentation": {
+          "padding": "8px",
+          "radius": "16px",
+          "titleSize": "16px",
+          "titleWeight": "600",
+          "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif"
+        }
+      }
+    ],
+    "layout": {
+      "columns": 2,
+      "autoRows": "732.203px",
+      "templateRows": "732.203px 732.203px",
+      "plotHeight": 744.203125,
+      "plotStyle": null,
+      "containers": [
+        {
+          "tag": "DIV",
+          "className": "chart-scroll",
+          "type": "size",
+          "height": 744.203125
+        }
+      ],
+      "viewportHeight": 744.203125,
+      "panels": [
+        {
+          "width": 653,
+          "height": 732.203125
+        },
+        {
+          "width": 653,
+          "height": 732.203125
+        },
+        {
+          "width": 653,
+          "height": 732.203125
+        },
+        {
+          "width": 653,
+          "height": 732.203125
+        }
+      ]
+    },
+    "cardOneRow": true,
+    "compactSort": true,
+    "filterToggle": true,
+    "chartNoFiltersOrScopeText": true,
+    "firstPageRetainsCriteria": true,
+    "pageOnlyCounts": true,
+    "nativePaint": true,
+    "accessibleAlternatives": true,
+    "repaintNoGet": true,
+    "zeroAndEmpty": true,
+    "errorRetry": true,
+    "authorityMask": true,
+    "destroyOnExit": true,
+    "passed": true
+  },
+  {
+    "palette": "green",
+    "mode": "dark",
+    "language": "ar",
+    "width": 390,
+    "geometry": {
+      "controls": [
+        {
+          "centerY": 225,
+          "width": 155,
+          "height": 40
+        },
+        {
+          "centerY": 225,
+          "width": 165,
+          "height": 40
+        },
+        {
+          "centerY": 225,
+          "width": 218,
+          "height": 42
+        },
+        {
+          "centerY": 225,
+          "width": 125,
+          "height": 40
+        },
+        {
+          "centerY": 225,
+          "width": 220,
+          "height": 40
+        },
+        {
+          "centerY": 225,
+          "width": 105.78125,
+          "height": 44
+        },
+        {
+          "centerY": 225,
+          "width": 113.28125,
+          "height": 44
+        }
+      ],
+      "width": 340,
+      "scrollWidth": 1144,
+      "searchWidth": 218,
+      "sortWidth": 220,
+      "field": {
+        "style": "max-width: 400px;",
+        "width": 220,
+        "configured": 400
+      },
+      "sort": {
+        "style": "width: 220px; flex-basis: 220px; flex-shrink: 0;",
+        "width": 220,
+        "configured": 220
+      }
+    },
+    "charts": [
+      {
+        "id": "states",
+        "type": "bar",
+        "labels": [
+          "دولة 11",
+          "دولة 8",
+          "دولة 5",
+          "دولة 10",
+          "دولة 7",
+          "دولة 4"
+        ],
+        "values": [
+          [
+            2,
+            2,
+            2,
+            1,
+            1,
+            1
+          ]
+        ],
+        "color": "#5EEAD4",
+        "gradient": false,
+        "width": 338,
+        "height": 281,
+        "painted": true,
+        "rtl": true,
+        "animation": false,
+        "live": 4,
+        "canvasLabel": "المحافظات حسب الدولة",
+        "presentation": {
+          "padding": "8px",
+          "radius": "16px",
+          "titleSize": "16px",
+          "titleWeight": "600",
+          "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif"
+        }
+      },
+      {
+        "id": "coverage",
+        "type": "pie",
+        "labels": [
+          "بها محافظات",
+          "بدون محافظات"
+        ],
+        "values": [
+          [
+            6,
+            4
+          ]
+        ],
+        "color": [
+          "#F0ABFC",
+          "#4ADE80"
+        ],
+        "gradient": false,
+        "width": 338,
+        "height": 300,
+        "painted": true,
+        "rtl": true,
+        "animation": false,
+        "live": 4,
+        "canvasLabel": "الدول التي بها محافظات وبدون محافظات",
+        "presentation": {
+          "padding": "8px",
+          "radius": "16px",
+          "titleSize": "16px",
+          "titleWeight": "600",
+          "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif"
+        }
+      },
+      {
+        "id": "currencies",
+        "type": "bar",
+        "labels": [
+          "USD",
+          "EGP"
+        ],
+        "values": [
+          [
+            5,
+            2
+          ]
+        ],
+        "color": [
+          "#A3E635",
+          "#F0ABFC"
+        ],
+        "gradient": false,
+        "width": 338,
+        "height": 300,
+        "painted": true,
+        "rtl": true,
+        "animation": false,
+        "live": 4,
+        "canvasLabel": "أهم العملات",
+        "presentation": {
+          "padding": "8px",
+          "radius": "16px",
+          "titleSize": "16px",
+          "titleWeight": "600",
+          "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif"
+        }
+      },
+      {
+        "id": "timeline",
+        "type": "line",
+        "labels": [
+          "2026-01",
+          "2026-02",
+          "2026-03"
+        ],
+        "values": [
+          [
+            2,
+            6,
+            10
+          ]
+        ],
+        "color": "gradient",
+        "gradient": true,
+        "width": 338,
+        "height": 300,
+        "painted": true,
+        "rtl": true,
+        "animation": false,
+        "live": 4,
+        "canvasLabel": "الدول المضافة عبر الوقت",
+        "presentation": {
+          "padding": "8px",
+          "radius": "16px",
+          "titleSize": "16px",
+          "titleWeight": "600",
+          "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif"
+        }
+      }
+    ],
+    "layout": {
+      "columns": 1,
+      "autoRows": "minmax(280px, 1fr)",
+      "templateRows": "352.594px 352.594px 352.594px 352.594px",
+      "plotHeight": 1440.375,
+      "plotStyle": null,
+      "containers": [
+        {
+          "tag": "DIV",
+          "className": "chart-scroll",
+          "type": "size",
+          "height": 226.8125
+        }
+      ],
+      "viewportHeight": 226.8125,
+      "panels": [
+        {
+          "width": 354,
+          "height": 352.59375
+        },
+        {
+          "width": 354,
+          "height": 352.59375
+        },
+        {
+          "width": 354,
+          "height": 352.59375
+        },
+        {
+          "width": 354,
+          "height": 352.59375
+        }
+      ]
+    },
+    "cardOneRow": true,
+    "compactSort": true,
+    "filterToggle": true,
+    "chartNoFiltersOrScopeText": true,
+    "firstPageRetainsCriteria": true,
+    "pageOnlyCounts": true,
+    "nativePaint": true,
+    "accessibleAlternatives": true,
+    "repaintNoGet": true,
+    "zeroAndEmpty": true,
+    "errorRetry": true,
+    "authorityMask": true,
+    "destroyOnExit": true,
+    "passed": true
+  },
+  {
+    "palette": "green",
+    "mode": "dark",
+    "language": "ar",
+    "width": 1440,
+    "geometry": {
+      "controls": [
+        {
+          "centerY": 231,
+          "width": 155,
+          "height": 40
+        },
+        {
+          "centerY": 231,
+          "width": 165,
+          "height": 40
+        },
+        {
+          "centerY": 231,
+          "width": 351.9375,
+          "height": 42
+        },
+        {
+          "centerY": 231,
+          "width": 125,
+          "height": 40
+        },
+        {
+          "centerY": 231,
+          "width": 220,
+          "height": 40
+        },
+        {
+          "centerY": 231,
+          "width": 105.78125,
+          "height": 44
+        },
+        {
+          "centerY": 231,
+          "width": 113.28125,
+          "height": 44
+        }
+      ],
+      "width": 1294,
+      "scrollWidth": 1294,
+      "searchWidth": 351.9375,
+      "sortWidth": 220,
+      "field": {
+        "style": "max-width: 400px;",
+        "width": 353.9375,
+        "configured": 400
+      },
+      "sort": {
+        "style": "width: 220px; flex-basis: 220px; flex-shrink: 0;",
+        "width": 220,
+        "configured": 220
+      }
+    },
+    "charts": [
+      {
+        "id": "states",
+        "type": "bar",
+        "labels": [
+          "دولة 11",
+          "دولة 8",
+          "دولة 5",
+          "دولة 10",
+          "دولة 7",
+          "دولة 4"
+        ],
+        "values": [
+          [
+            2,
+            2,
+            2,
+            1,
+            1,
+            1
+          ]
+        ],
+        "color": "#5EEAD4",
+        "gradient": false,
+        "width": 637,
+        "height": 660.59375,
+        "painted": true,
+        "rtl": true,
+        "animation": false,
+        "live": 4,
+        "canvasLabel": "المحافظات حسب الدولة",
+        "presentation": {
+          "padding": "8px",
+          "radius": "16px",
+          "titleSize": "16px",
+          "titleWeight": "600",
+          "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif"
+        }
+      },
+      {
+        "id": "coverage",
+        "type": "pie",
+        "labels": [
+          "بها محافظات",
+          "بدون محافظات"
+        ],
+        "values": [
+          [
+            6,
+            4
+          ]
+        ],
+        "color": [
+          "#F0ABFC",
+          "#4ADE80"
+        ],
+        "gradient": false,
+        "width": 637,
+        "height": 679.59375,
+        "painted": true,
+        "rtl": true,
+        "animation": false,
+        "live": 4,
+        "canvasLabel": "الدول التي بها محافظات وبدون محافظات",
+        "presentation": {
+          "padding": "8px",
+          "radius": "16px",
+          "titleSize": "16px",
+          "titleWeight": "600",
+          "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif"
+        }
+      },
+      {
+        "id": "currencies",
+        "type": "bar",
+        "labels": [
+          "USD",
+          "EGP"
+        ],
+        "values": [
+          [
+            5,
+            2
+          ]
+        ],
+        "color": [
+          "#A3E635",
+          "#F0ABFC"
+        ],
+        "gradient": false,
+        "width": 637,
+        "height": 679.59375,
+        "painted": true,
+        "rtl": true,
+        "animation": false,
+        "live": 4,
+        "canvasLabel": "أهم العملات",
+        "presentation": {
+          "padding": "8px",
+          "radius": "16px",
+          "titleSize": "16px",
+          "titleWeight": "600",
+          "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif"
+        }
+      },
+      {
+        "id": "timeline",
+        "type": "line",
+        "labels": [
+          "2026-01",
+          "2026-02",
+          "2026-03"
+        ],
+        "values": [
+          [
+            2,
+            6,
+            10
+          ]
+        ],
+        "color": "gradient",
+        "gradient": true,
+        "width": 637,
+        "height": 679.59375,
+        "painted": true,
+        "rtl": true,
+        "animation": false,
+        "live": 4,
+        "canvasLabel": "الدول المضافة عبر الوقت",
+        "presentation": {
+          "padding": "8px",
+          "radius": "16px",
+          "titleSize": "16px",
+          "titleWeight": "600",
+          "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif"
+        }
+      }
+    ],
+    "layout": {
+      "columns": 2,
+      "autoRows": "732.203px",
+      "templateRows": "732.203px 732.203px",
+      "plotHeight": 744.203125,
+      "plotStyle": null,
+      "containers": [
+        {
+          "tag": "DIV",
+          "className": "chart-scroll",
+          "type": "size",
+          "height": 744.203125
+        }
+      ],
+      "viewportHeight": 744.203125,
+      "panels": [
+        {
+          "width": 653,
+          "height": 732.203125
+        },
+        {
+          "width": 653,
+          "height": 732.203125
+        },
+        {
+          "width": 653,
+          "height": 732.203125
+        },
+        {
+          "width": 653,
+          "height": 732.203125
+        }
+      ]
+    },
+    "cardOneRow": true,
+    "compactSort": true,
+    "filterToggle": true,
+    "chartNoFiltersOrScopeText": true,
+    "firstPageRetainsCriteria": true,
+    "pageOnlyCounts": true,
+    "nativePaint": true,
+    "accessibleAlternatives": true,
+    "repaintNoGet": true,
+    "zeroAndEmpty": true,
+    "errorRetry": true,
+    "authorityMask": true,
+    "destroyOnExit": true,
+    "passed": true
+  }
+]

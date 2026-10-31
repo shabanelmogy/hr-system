@@ -5,6 +5,7 @@ import { chromium, expect } from '@playwright/test';
 import { sessionFixture } from '../src/app/platform/auth/auth.fixture.ts';
 
 const root=path.resolve(import.meta.dirname,'..'),origin=process.env.ANGULAR_PREVIEW_ORIGIN??'https://localhost:4220';
+const apiOrigin=process.env.ANGULAR_API_ORIGIN??'https://localhost:7037';
 const output=path.join(root,'../.codex-tmp/angular-company'); fs.mkdirSync(output,{recursive:true});
 const core=JSON.parse(fs.readFileSync(path.join(root,'src/locales/generated/core.json'),'utf8'));
 const auth=JSON.parse(fs.readFileSync(path.join(root,'src/locales/generated/platform-auth.json'),'utf8'));
@@ -18,7 +19,7 @@ async function configure(language='en',mode='light',width=1440,options={}){
   const c=await browser.newContext({ignoreHTTPSErrors:true,viewport:{width,height:900},reducedMotion:'reduce'});
   await c.addCookies(Object.entries({i18next:language,currentMode:mode}).map(([name,value])=>({name,value,url:origin})));
   const state={company:1,authenticated:true,mutations:0,sessionReads:0,catalogReads:0,action:'ready',...options};
-  await c.route('https://localhost:7037/api/**',async route=>{
+  await c.route(apiOrigin+'/api/**',async route=>{
     const request=route.request(),p=new URL(request.url()).pathname;let status=200,body;
     assert.equal(request.headers().authorization,undefined);
     if(p.endsWith('/csrf'))body={requestToken:'synthetic'};

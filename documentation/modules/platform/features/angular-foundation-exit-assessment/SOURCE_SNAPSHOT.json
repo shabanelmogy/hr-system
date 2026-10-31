@@ -1,0 +1,116 @@
+{
+  "date": "2026-10-30",
+  "kind": "read-only local source snapshot",
+  "remoteCiExecuted": false,
+  "runtimeChanged": false,
+  "sources": [
+    {
+      "path": "web-angular/src/app/shared/ui/public-api.ts",
+      "sha256": "bd379fdc684a7bea0bc43c43ef0073d039e6f032186ea07e7b4915d740de609a"
+    },
+    {
+      "path": "web-angular/src/app/shared/data/public-api.ts",
+      "sha256": "d54cd5818df035d13ef41378d9800f6a7e02e8899a822b0d59cafd4e296e8187"
+    },
+    {
+      "path": "web-angular/src/app/shared/data/scoped-read.ts",
+      "sha256": "da18e85781a52a80365aa42bdb34f44d9619a12f0c6378987cd21bfdf89ff621"
+    },
+    {
+      "path": "web-angular/src/app/shared/data/collection-criteria.ts",
+      "sha256": "3af4e417902f7c4b3f0daa604c235ad5c1797c428c566cb2cf7f72754655f744"
+    },
+    {
+      "path": "web-angular/src/app/app.routes.production.ts",
+      "sha256": "7a7921f43146c0735aa1cb9f63d9c0e3dfbf3657128a2e3aec3ca8b3d4e97b56"
+    },
+    {
+      "path": "web-angular/tsconfig.json",
+      "sha256": "69b560107349d43a0df125796c5ba2272be4e642118f3bdb7c9926ca5a715142"
+    },
+    {
+      "path": "web-angular/angular.json",
+      "sha256": "0beb87d1f7600cc11778b6856f2e9691220c8cf74207a6b055ef9639ec0f19b6"
+    },
+    {
+      "path": ".github/workflows/angular-ci.yml",
+      "sha256": "46d7f0ae27afbfb0f619b02c21f6f730b2ccfdf4da4aefaad1567fb2322becce"
+    },
+    {
+      "path": "packages/tokens/scripts/sync-apps.mjs",
+      "sha256": "f229816dbfcce4b21cea7aedb60ffc8ebe9a546b096df6a26d470e71dad535a8"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/reports/pages/CountryReportPage.tsx",
+      "sha256": "3d89edb3f4aa7e583a4104f66b4cb1f828e78f789261c0641dbfd43561343261"
+    },
+    {
+      "path": "web-next/src/modules/reporting/crystal-report-manager/ManagedCrystalReportView.tsx",
+      "sha256": "10beeacf26f173bd9b25deb778f37eb0604677bdc6f0c2455473ce1082f3abb3"
+    },
+    {
+      "path": "web-next/src/modules/reporting/crystal-report-manager/services.ts",
+      "sha256": "677243ce420bd04b9417ad4b7ca4a456abf147560f1d1b7bfaf9112323e566e2"
+    },
+    {
+      "path": "web-next/src/modules/reporting/public/useManagedReportAvailability.ts",
+      "sha256": "ca3a23988e42d64737b6d7126271dc6ef8c4e23b81e87afee852668943719f4c"
+    },
+    {
+      "path": "web-next/src/shared/reporting/components/ReportViewer.tsx",
+      "sha256": "a8aea69b432e678e318800878bfe34fbbd5e6f6da91e72069f538eccff1815e9"
+    },
+    {
+      "path": "web-next/src/shared/reporting/components/ServerReportViewerClient.tsx",
+      "sha256": "e0574fdd854d0b4d8b85fed5e22b5b5f313738d963ca5655e666fb1f8ca23cbd"
+    },
+    {
+      "path": "documentation/modules/platform/features/angular-form-foundation/IMPLEMENTATION_REPORT.md",
+      "sha256": "8a6616dda8660018fb016d1b4d6fc4c040fda58741c77473cedd28f2979bfa3f"
+    },
+    {
+      "path": "documentation/modules/platform/features/angular-collection-foundation/IMPLEMENTATION_REPORT.md",
+      "sha256": "03be5471d30bc50aa745bd07e89ee1407e602d14d7d112959a447a273eb5a8ae"
+    },
+    {
+      "path": "documentation/modules/platform/features/angular-reference-selection-foundation/IMPLEMENTATION_REPORT.md",
+      "sha256": "9230d0b6096151538dbae03f0f6dce6bf6fb5ba109d83ebd5d4b2d320e626f24"
+    },
+    {
+      "path": "documentation/modules/platform/features/angular-form-close-foundation/IMPLEMENTATION_REPORT.md",
+      "sha256": "58fd63e79b3bf16264684d317146bd76fc9627fcaa842f745b8ac9f8c398ebd0"
+    },
+    {
+      "path": "documentation/modules/platform/features/angular-unsaved-navigation-foundation/IMPLEMENTATION_REPORT.md",
+      "sha256": "5b8a14a4e167ff1858c094a04fc194f3997844961fba1650227a39dbed2f832f"
+    },
+    {
+      "path": "documentation/modules/platform/features/angular-date-field-foundation/IMPLEMENTATION_REPORT.md",
+      "sha256": "011bd18d4e68a93f3e073955b2e949a2a93eac5c194e1b10373dbffc75667b38"
+    },
+    {
+      "path": "documentation/modules/platform/features/angular-numeric-field-foundation/IMPLEMENTATION_REPORT.md",
+      "sha256": "fd6f7da53e1dfa093922c2167d977dba32e725a4cad2ee07af5e61c53d3e5fe8"
+    },
+    {
+      "path": "documentation/modules/platform/features/angular-boolean-field-foundation/IMPLEMENTATION_REPORT.md",
+      "sha256": "3d4438d2065b731119ffe0feaf956260cb20743711f0d6eb97afe95d65b74c77"
+    },
+    {
+      "path": "documentation/modules/platform/features/angular-multiline-field-foundation/IMPLEMENTATION_REPORT.md",
+      "sha256": "781ff025211a4db6b8e7e6ddf97c1eba2b8bc41d851aaf3056cca61b4c57becb"
+    },
+    {
+      "path": "documentation/modules/platform/features/angular-collection-criteria-foundation/IMPLEMENTATION_REPORT.md",
+      "sha256": "91c0ae0c4be76d9c8f45adbb8a586c028a1a845d3ca84518bdccd7d3cd08898a"
+    },
+    {
+      "path": "documentation/modules/platform/features/angular-scoped-read-lifetime-foundation/IMPLEMENTATION_REPORT.md",
+      "sha256": "a3a381a9599efb876b4f75e00920fbaa9bcbbaf2a5657a260fe24e0dff7aadd2"
+    },
+    {
+      "path": "documentation/modules/platform/features/angular-api-contract-generation-proof/IMPLEMENTATION_REPORT.md",
+      "sha256": "d2ade167cfbcd0b1dce854a387e3d046ef707cf10721cc1959f02a6bee76f73a"
+    }
+  ]
+}

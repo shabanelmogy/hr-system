@@ -1,0 +1,286 @@
+[
+  {
+    "mode": "light",
+    "language": "en",
+    "width": 390,
+    "geometry": {
+      "panel": {
+        "x": 12,
+        "y": 184.625,
+        "width": 366,
+        "height": 392
+      },
+      "document": {
+        "x": 12,
+        "y": 640.625,
+        "width": 366,
+        "height": 264
+      },
+      "labels": [
+        "Name Arabic",
+        "Name English",
+        "Report Forms"
+      ],
+      "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif"
+    },
+    "renders": [
+      {
+        "entityKey": "countries",
+        "expectedSha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "language": "en",
+        "filters": {}
+      }
+    ],
+    "passed": true
+  },
+  {
+    "mode": "light",
+    "language": "en",
+    "width": 1440,
+    "geometry": {
+      "panel": {
+        "x": 88,
+        "y": 183.984375,
+        "width": 280,
+        "height": 930
+      },
+      "document": {
+        "x": 432,
+        "y": 183.984375,
+        "width": 984,
+        "height": 930
+      },
+      "labels": [
+        "Name Arabic",
+        "Name English",
+        "Report Forms"
+      ],
+      "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif"
+    },
+    "renders": [
+      {
+        "entityKey": "countries",
+        "expectedSha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "language": "en",
+        "filters": {}
+      }
+    ],
+    "passed": true
+  },
+  {
+    "mode": "light",
+    "language": "ar",
+    "width": 390,
+    "geometry": {
+      "panel": {
+        "x": 12,
+        "y": 174,
+        "width": 366,
+        "height": 392
+      },
+      "document": {
+        "x": 12,
+        "y": 630,
+        "width": 366,
+        "height": 264
+      },
+      "labels": [
+        "الإسم بالعربى",
+        "الإسم بالانجليزى",
+        "اشكال التقارير"
+      ],
+      "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif"
+    },
+    "renders": [
+      {
+        "entityKey": "countries",
+        "expectedSha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "language": "ar",
+        "filters": {}
+      }
+    ],
+    "passed": true
+  },
+  {
+    "mode": "light",
+    "language": "ar",
+    "width": 1440,
+    "geometry": {
+      "panel": {
+        "x": 1072,
+        "y": 183.984375,
+        "width": 280,
+        "height": 930
+      },
+      "document": {
+        "x": 24,
+        "y": 183.984375,
+        "width": 984,
+        "height": 930
+      },
+      "labels": [
+        "الإسم بالعربى",
+        "الإسم بالانجليزى",
+        "اشكال التقارير"
+      ],
+      "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif"
+    },
+    "renders": [
+      {
+        "entityKey": "countries",
+        "expectedSha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "language": "ar",
+        "filters": {}
+      }
+    ],
+    "passed": true
+  },
+  {
+    "mode": "dark",
+    "language": "en",
+    "width": 390,
+    "geometry": {
+      "panel": {
+        "x": 12,
+        "y": 184.625,
+        "width": 366,
+        "height": 392
+      },
+      "document": {
+        "x": 12,
+        "y": 640.625,
+        "width": 366,
+        "height": 264
+      },
+      "labels": [
+        "Name Arabic",
+        "Name English",
+        "Report Forms"
+      ],
+      "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif"
+    },
+    "renders": [
+      {
+        "entityKey": "countries",
+        "expectedSha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "language": "en",
+        "filters": {}
+      },
+      {
+        "entityKey": "countries",
+        "expectedSha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "language": "en",
+        "filters": {}
+      }
+    ],
+    "passed": true
+  },
+  {
+    "mode": "dark",
+    "language": "en",
+    "width": 1440,
+    "geometry": {
+      "panel": {
+        "x": 88,
+        "y": 183.984375,
+        "width": 280,
+        "height": 930
+      },
+      "document": {
+        "x": 432,
+        "y": 183.984375,
+        "width": 984,
+        "height": 930
+      },
+      "labels": [
+        "Name Arabic",
+        "Name English",
+        "Report Forms"
+      ],
+      "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif"
+    },
+    "renders": [
+      {
+        "entityKey": "countries",
+        "expectedSha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "language": "en",
+        "filters": {}
+      },
+      {
+        "entityKey": "countries",
+        "expectedSha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "language": "en",
+        "filters": {}
+      }
+    ],
+    "passed": true
+  },
+  {
+    "mode": "dark",
+    "language": "ar",
+    "width": 390,
+    "geometry": {
+      "panel": {
+        "x": 12,
+        "y": 174,
+        "width": 366,
+        "height": 392
+      },
+      "document": {
+        "x": 12,
+        "y": 630,
+        "width": 366,
+        "height": 264
+      },
+      "labels": [
+        "الإسم بالعربى",
+        "الإسم بالانجليزى",
+        "اشكال التقارير"
+      ],
+      "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif"
+    },
+    "renders": [
+      {
+        "entityKey": "countries",
+        "expectedSha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "language": "ar",
+        "filters": {}
+      }
+    ],
+    "passed": true
+  },
+  {
+    "mode": "dark",
+    "language": "ar",
+    "width": 1440,
+    "geometry": {
+      "panel": {
+        "x": 1072,
+        "y": 183.984375,
+        "width": 280,
+        "height": 930
+      },
+      "document": {
+        "x": 24,
+        "y": 183.984375,
+        "width": 984,
+        "height": 930
+      },
+      "labels": [
+        "الإسم بالعربى",
+        "الإسم بالانجليزى",
+        "اشكال التقارير"
+      ],
+      "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif"
+    },
+    "renders": [
+      {
+        "entityKey": "countries",
+        "expectedSha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "language": "ar",
+        "filters": {}
+      }
+    ],
+    "passed": true
+  }
+]

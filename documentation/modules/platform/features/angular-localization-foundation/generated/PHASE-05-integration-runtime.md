@@ -57,4 +57,4 @@ realtime, notification, localization, report, or Import integration is reachable
 | angular-localization-foundation-mobile | 2 | `dbb9c391093ad2e63ab72da54097310c2dfddd667487d0934e43c8bb5ca9c928` |
 | angular-localization-foundation-mobile | 11 | `5dab27474a1b99ba062fd373bdbdb3dd3a8a6fe523b6dbf3da6991fc4335f10e` |
 | angular-localization-foundation-mobile | 12 | `4df921c53578650ee76e8a453619da14a1a2cdaa1fad626c8f36e28cfb83d3b8` |
-| angular-localization-foundation-mobile | 15 | `1f0ba56b18e34cf44b7c9c6560feed30a0c7f4b54d243de794be546b475d1ee9` |
+| angular-localization-foundation-mobile | 15 | `62ec30b9ccbca9d50a4cdc7e810991d098bf7138418711b4f7f9e1ef03d68a98` |

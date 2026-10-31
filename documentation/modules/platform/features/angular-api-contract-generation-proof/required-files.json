@@ -1,0 +1,254 @@
+{
+  "schemaVersion": 1,
+  "status": "closed",
+  "executionMode": "verified-tooling-assessment",
+  "runtimeAuthorized": false,
+  "feature": "angular-api-contract-generation-proof",
+  "featureName": "Angular API contract generation compatibility proof",
+  "referenceFeature": "N/A",
+  "planId": "web-angular-migration",
+  "sliceId": "S0-API-01 — API contract generation compatibility proof",
+  "canonicalPlan": "documentation/plans/business/web-angular-migration/PLAN.md",
+  "featureDecompositionDecision": "Single feature",
+  "screenWorkflowContract": "documentation/plans/business/web-angular-migration/decomposition/angular-api-contract-generation-proof.md",
+  "plannedCustomerEducation": "documentation/plans/business/web-angular-migration/education/angular-api-contract-generation-proof.md",
+  "purpose": "Verified ERP-01 assessment and documented typed-service fallback",
+  "reviewArtifact": "documentation/modules/platform/features/angular-api-contract-generation-proof/angular-api-contract-generation-proof-evidence.md",
+  "implementationRequest": "documentation/modules/platform/features/angular-api-contract-generation-proof/angular-api-contract-generation-proof-request.md",
+  "plannedCanonicalBooks": {
+    "master": "documentation/modules/platform/features/angular-api-contract-generation-proof/angular-api-contract-generation-proof-review.md",
+    "api": "documentation/modules/platform/features/angular-api-contract-generation-proof/angular-api-contract-generation-proof-api.md",
+    "web": "documentation/modules/platform/features/angular-api-contract-generation-proof/angular-api-contract-generation-proof-web.md",
+    "mobile": "documentation/modules/platform/features/angular-api-contract-generation-proof/angular-api-contract-generation-proof-mobile.md"
+  },
+  "sourceCollections": [],
+  "requiredFiles": [
+    {
+      "id": "phase00-0",
+      "path": "documentation/modules/platform/features/angular-api-contract-generation-proof/angular-api-contract-generation-proof-request.md",
+      "layer": "documentation",
+      "purpose": "Inspected current source or exact technical scope"
+    },
+    {
+      "id": "phase00-1",
+      "path": "documentation/modules/platform/features/angular-api-contract-generation-proof/angular-api-contract-generation-proof-evidence.md",
+      "layer": "documentation",
+      "purpose": "Inspected current source or exact technical scope"
+    },
+    {
+      "id": "phase00-2",
+      "path": "documentation/modules/platform/features/angular-api-contract-generation-proof/angular-api-contract-generation-proof-review.md",
+      "layer": "documentation",
+      "purpose": "Inspected current source or exact technical scope"
+    },
+    {
+      "id": "phase00-3",
+      "path": "documentation/modules/platform/features/angular-api-contract-generation-proof/angular-api-contract-generation-proof-api.md",
+      "layer": "documentation",
+      "purpose": "Inspected current source or exact technical scope"
+    },
+    {
+      "id": "phase00-4",
+      "path": "documentation/modules/platform/features/angular-api-contract-generation-proof/angular-api-contract-generation-proof-web.md",
+      "layer": "documentation",
+      "purpose": "Inspected current source or exact technical scope"
+    },
+    {
+      "id": "phase00-5",
+      "path": "documentation/modules/platform/features/angular-api-contract-generation-proof/angular-api-contract-generation-proof-mobile.md",
+      "layer": "documentation",
+      "purpose": "Inspected current source or exact technical scope"
+    },
+    {
+      "id": "phase00-6",
+      "path": "documentation/plans/business/web-angular-migration/PLAN.md",
+      "layer": "documentation",
+      "purpose": "Inspected current source or exact technical scope"
+    },
+    {
+      "id": "phase00-7",
+      "path": "documentation/plans/business/web-angular-migration/ERP_ACCEPTANCE.md",
+      "layer": "documentation",
+      "purpose": "Inspected current source or exact technical scope"
+    },
+    {
+      "id": "phase00-8",
+      "path": "documentation/plans/business/web-angular-migration/decomposition/angular-api-contract-generation-proof.md",
+      "layer": "documentation",
+      "purpose": "Inspected current source or exact technical scope"
+    },
+    {
+      "id": "phase00-9",
+      "path": "AGENTS.md",
+      "layer": "web",
+      "purpose": "Inspected current source or exact technical scope"
+    },
+    {
+      "id": "phase00-10",
+      "path": "api/ErpSystem.Api/Hosting/ConfigureSwaggerOptions.cs",
+      "layer": "api",
+      "purpose": "Inspected current source or exact technical scope"
+    },
+    {
+      "id": "phase00-11",
+      "path": "api/ErpSystem.Api/Hosting/HostProblemDetails.cs",
+      "layer": "api",
+      "purpose": "Inspected current source or exact technical scope"
+    },
+    {
+      "id": "phase00-12",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Presentation/Features/GeographicalInformation/Countries/V1/CountriesController.cs",
+      "layer": "api",
+      "purpose": "Inspected current source or exact technical scope"
+    },
+    {
+      "id": "phase00-13",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Contracts/CountryDetailResponse.cs",
+      "layer": "api",
+      "purpose": "Inspected current source or exact technical scope"
+    },
+    {
+      "id": "phase00-14",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Queries/GetCountries/GetCountriesQuery.cs",
+      "layer": "api",
+      "purpose": "Inspected current source or exact technical scope"
+    },
+    {
+      "id": "phase00-15",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Presentation/Features/Finance/FiscalYears/V1/FiscalYearsController.cs",
+      "layer": "api",
+      "purpose": "Inspected current source or exact technical scope"
+    },
+    {
+      "id": "phase00-16",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Presentation/Features/Platform/Files/V1/FilesController.cs",
+      "layer": "api",
+      "purpose": "Inspected current source or exact technical scope"
+    },
+    {
+      "id": "phase00-17",
+      "path": "web-angular/src/app/modules/accounting/fiscal-year-context/services/fiscal-context-service.ts",
+      "layer": "web",
+      "purpose": "Inspected current source or exact technical scope"
+    },
+    {
+      "id": "phase00-18",
+      "path": "web-angular/package.json",
+      "layer": "web",
+      "purpose": "Inspected current source or exact technical scope"
+    },
+    {
+      "id": "phase00-19",
+      "path": "mobile-react/package.json",
+      "layer": "web",
+      "purpose": "Inspected current source or exact technical scope"
+    },
+    {
+      "id": "final-20",
+      "path": "documentation/modules/platform/features/angular-api-contract-generation-proof/IMPLEMENTATION_REPORT.md",
+      "layer": "documentation",
+      "purpose": "Actual final reproducible evidence/tooling; no app imports"
+    },
+    {
+      "id": "final-21",
+      "path": "documentation/modules/platform/features/angular-api-contract-generation-proof/verification/README.md",
+      "layer": "documentation",
+      "purpose": "Actual final reproducible evidence/tooling; no app imports"
+    },
+    {
+      "id": "final-22",
+      "path": "documentation/modules/platform/features/angular-api-contract-generation-proof/verification/results.json",
+      "layer": "documentation",
+      "purpose": "Actual final reproducible evidence/tooling; no app imports"
+    },
+    {
+      "id": "final-23",
+      "path": "web-angular/tooling/api-contract-proof/generator.json",
+      "layer": "web",
+      "purpose": "Actual final reproducible evidence/tooling; no app imports"
+    },
+    {
+      "id": "final-24",
+      "path": "web-angular/tooling/api-contract-proof/host-v1.subset.json",
+      "layer": "web",
+      "purpose": "Actual final reproducible evidence/tooling; no app imports"
+    },
+    {
+      "id": "final-25",
+      "path": "web-angular/tooling/api-contract-proof/package-lock.json",
+      "layer": "web",
+      "purpose": "Actual final reproducible evidence/tooling; no app imports"
+    },
+    {
+      "id": "final-26",
+      "path": "web-angular/tooling/api-contract-proof/package.json",
+      "layer": "web",
+      "purpose": "Actual final reproducible evidence/tooling; no app imports"
+    },
+    {
+      "id": "final-27",
+      "path": "web-angular/tooling/api-contract-proof/projection.mjs",
+      "layer": "web",
+      "purpose": "Actual final reproducible evidence/tooling; no app imports"
+    },
+    {
+      "id": "final-28",
+      "path": "web-angular/tooling/api-contract-proof/projection.test.mjs",
+      "layer": "web",
+      "purpose": "Actual final reproducible evidence/tooling; no app imports"
+    },
+    {
+      "id": "final-29",
+      "path": "web-angular/tooling/api-contract-proof/provenance.json",
+      "layer": "web",
+      "purpose": "Actual final reproducible evidence/tooling; no app imports"
+    },
+    {
+      "id": "final-30",
+      "path": "web-angular/tooling/api-contract-proof/transport-probe.ts",
+      "layer": "web",
+      "purpose": "Actual final reproducible evidence/tooling; no app imports"
+    },
+    {
+      "id": "final-31",
+      "path": "web-angular/tooling/api-contract-proof/verify.mjs",
+      "layer": "web",
+      "purpose": "Actual final reproducible evidence/tooling; no app imports"
+    },
+    {
+      "id": "canonical-32",
+      "path": "documentation/plans/notes/FOLLOW_UPS.md",
+      "layer": "documentation",
+      "purpose": "Canonical fallback decision or outstanding scope"
+    },
+    {
+      "id": "canonical-33",
+      "path": "documentation/plans/business/web-angular-migration/ANGULAR_ARCHITECTURE.md",
+      "layer": "documentation",
+      "purpose": "Canonical fallback decision or outstanding scope"
+    }
+  ],
+  "finalizationChecklist": [
+    "Replace every placeholder in the review artifact.",
+    "Complete the Existing-System Relationship Review and every decision in angular-api-contract-generation-proof-request.md before implementation.",
+    "Complete the Business Rules Matrix with one primary owner, stable outcome/error, and required test for every known rule.",
+    "Complete every Edge Cases & Validation category with scenarios or an explicit N/A reason, enforcement layer, and required test.",
+    "Complete the Impact Matrix with Reuse, Extend, Change, Add, or reasoned N/A across every listed area.",
+    "Remove every remaining placeholder from angular-api-contract-generation-proof-request.md before runtime implementation.",
+    "Add Phase 00 current API, web, mobile, configuration, localization, and test evidence sources.",
+    "Classify every optional view, including Import, as Required, Deferred, or Excluded independently for web and mobile.",
+    "When Import is Required, add its API and applicable client runtime, route/configuration, localization, and focused-test paths.",
+    "Record and test the exact Import request envelope, limits, duplicate and relationship rules, atomicity, permissions, side effects, and retry behavior.",
+    "Add source collections with evidence-based minimum file counts.",
+    "Create the four initial applied implementation books from the approved plan plus verified current source; label target-only behavior explicitly.",
+    "Rename this file to required-files.json when the Phase 00 evidence paths exist; extend it with runtime files during implementation.",
+    "Update the review artifact to point at required-files.json and mark its documentation state Final.",
+    "Merge recipe-registration.draft.json into recipe-manifest.json after the Phase 00 books and preflight manifest are complete.",
+    "Write generated packets under documentation/modules/platform/features/angular-api-contract-generation-proof/generated/.",
+    "Run generation and then Generate-Documentation.ps1 -Check.",
+    "Complete phase 06 with an explicit verification decision.",
+    "Do not start customer-facing education until phase 06 records Verified.",
+    "For customer-visible work, complete phase 07 and its Customer Education Pack before Closed.",
+    "When Customer Education is Required, add the verified education document to required-files.json and rerun Generate-Documentation.ps1 -Check before Closed."
+  ]
+}

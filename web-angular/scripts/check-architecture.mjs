@@ -8,7 +8,7 @@ const violations = [];
 for (const file of walk(path.join(root, 'src')).filter(file => /\.(?:ts|html)$/.test(file))) {
   const relative = path.relative(root, file).replaceAll('\\', '/');
   const source = fs.readFileSync(file, 'utf8');
-  const findings=file.endsWith('.html')?inspectTemplate(source):inspectSource(relative, source);
+  const findings=file.endsWith('.html')?inspectTemplate(source,relative):inspectSource(relative, source);
   violations.push(...findings.map(reason => `${relative}: ${reason}`));
 }
 if (violations.length) throw new Error(violations.join('\n'));

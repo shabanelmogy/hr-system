@@ -1,0 +1,1166 @@
+{
+  "schemaVersion": 1,
+  "status": "queued",
+  "executionMode": "bounded-runtime",
+  "runtimeAuthorized": true,
+  "feature": "angular-grid-capabilities",
+  "featureName": "Complete shared PrimeNG Table capabilities",
+  "referenceFeature": "N/A",
+  "planId": "web-angular-migration",
+  "sliceId": "S1-A14 — Complete shared PrimeNG Table capabilities",
+  "canonicalPlan": "documentation/plans/business/web-angular-migration/PLAN.md",
+  "featureDecompositionDecision": "Single feature",
+  "screenWorkflowContract": "documentation/plans/business/web-angular-migration/decomposition/angular-grid-capabilities.md",
+  "plannedCustomerEducation": "documentation/plans/business/web-angular-migration/education/angular-grid-capabilities.md",
+  "purpose": "Actual shared runtime; D28 bounded context/filter/icons Verified; complete matrix Not Verified",
+  "reviewArtifact": "documentation/modules/platform/features/angular-grid-capabilities/angular-grid-capabilities-evidence.md",
+  "implementationRequest": "documentation/modules/platform/features/angular-grid-capabilities/angular-grid-capabilities-request.md",
+  "plannedCanonicalBooks": {
+    "master": "documentation/modules/platform/features/angular-grid-capabilities/angular-grid-capabilities-review.md",
+    "api": "documentation/modules/platform/features/angular-grid-capabilities/angular-grid-capabilities-api.md",
+    "web": "documentation/modules/platform/features/angular-grid-capabilities/angular-grid-capabilities-web.md",
+    "mobile": "documentation/modules/platform/features/angular-grid-capabilities/angular-grid-capabilities-mobile.md"
+  },
+  "sourceCollections": [],
+  "requiredFiles": [
+    {
+      "id": "phase00-0",
+      "path": "documentation/modules/platform/features/angular-grid-capabilities/CAPABILITY_MATRIX.md",
+      "layer": "documentation",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-1",
+      "path": "documentation/modules/platform/features/angular-grid-capabilities/NEXT_HEADER_MEASUREMENTS.json",
+      "layer": "documentation",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-2",
+      "path": "documentation/plans/business/web-angular-migration/PLAN.md",
+      "layer": "documentation",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-3",
+      "path": "documentation/plans/business/web-angular-migration/ROADMAP.md",
+      "layer": "documentation",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-4",
+      "path": "documentation/plans/business/web-angular-migration/decomposition/angular-grid-capabilities.md",
+      "layer": "documentation",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-5",
+      "path": "documentation/plans/business/web-angular-migration/PRIMENG_TABLE_CAPABILITY_REVIEW.md",
+      "layer": "documentation",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-6",
+      "path": "documentation/plans/notes/FOLLOW_UPS.md",
+      "layer": "documentation",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-7",
+      "path": "documentation/plans/notes/KNOWN_RISKS.md",
+      "layer": "documentation",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-8",
+      "path": "documentation/plans/notes/PRODUCTION_NOTES.md",
+      "layer": "documentation",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-9",
+      "path": "documentation/guides/web/architecture/ANGULAR_SHARED_COMPONENTS.md",
+      "layer": "documentation",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-10",
+      "path": "web-angular/package.json",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-11",
+      "path": "web-angular/package-lock.json",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-12",
+      "path": "documentation/modules/platform/features/angular-grid-capabilities/angular-grid-capabilities-review.md",
+      "layer": "documentation",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-13",
+      "path": "documentation/modules/platform/features/angular-grid-capabilities/angular-grid-capabilities-api.md",
+      "layer": "documentation",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-14",
+      "path": "documentation/modules/platform/features/angular-grid-capabilities/angular-grid-capabilities-web.md",
+      "layer": "documentation",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-15",
+      "path": "documentation/modules/platform/features/angular-grid-capabilities/angular-grid-capabilities-mobile.md",
+      "layer": "documentation",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-16",
+      "path": "documentation/modules/platform/features/angular-grid-capabilities/angular-grid-capabilities-request.md",
+      "layer": "documentation",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-17",
+      "path": "documentation/modules/platform/features/angular-grid-capabilities/angular-grid-capabilities-evidence.md",
+      "layer": "documentation",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-18",
+      "path": "web-angular/src/app/shared/ui/collections/card-list.scss",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-19",
+      "path": "web-angular/src/app/shared/ui/collections/card-list.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-20",
+      "path": "web-angular/src/app/shared/ui/collections/collection-controller.spec.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-21",
+      "path": "web-angular/src/app/shared/ui/collections/collection-controller.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-22",
+      "path": "web-angular/src/app/shared/ui/collections/collection-feedback.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-23",
+      "path": "web-angular/src/app/shared/ui/collections/collection-focus.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-24",
+      "path": "web-angular/src/app/shared/ui/collections/collection-footer.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-25",
+      "path": "web-angular/src/app/shared/ui/collections/collection-frame.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-26",
+      "path": "web-angular/src/app/shared/ui/collections/collection-logic.spec.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-27",
+      "path": "web-angular/src/app/shared/ui/collections/collection-logic.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-28",
+      "path": "web-angular/src/app/shared/ui/collections/collection-read-compatibility.spec.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-29",
+      "path": "web-angular/src/app/shared/ui/collections/collection-slots.scss",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-30",
+      "path": "web-angular/src/app/shared/ui/collections/collection-templates.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-31",
+      "path": "web-angular/src/app/shared/ui/collections/collection.types.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-32",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid.html",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-33",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid.scss",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-34",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-35",
+      "path": "web-angular/src/app/shared/ui/layout/application-frame.html",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-36",
+      "path": "web-angular/src/app/shared/ui/layout/application-frame.scss",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-37",
+      "path": "web-angular/src/app/shared/ui/layout/application-frame.spec.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-38",
+      "path": "web-angular/src/app/shared/ui/layout/application-frame.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-39",
+      "path": "web-angular/src/app/shared/ui/layout/context-badge.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-40",
+      "path": "web-angular/src/app/shared/ui/layout/identity-avatar.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-41",
+      "path": "web-angular/src/app/shared/ui/layout/launcher-grid.scss",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-42",
+      "path": "web-angular/src/app/shared/ui/layout/launcher-grid.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-43",
+      "path": "web-angular/src/app/shared/ui/layout/launcher-tile.scss",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-44",
+      "path": "web-angular/src/app/shared/ui/layout/launcher-tile.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-45",
+      "path": "web-angular/src/app/shared/ui/layout/navigation-list.spec.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-46",
+      "path": "web-angular/src/app/shared/ui/layout/navigation-list.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-47",
+      "path": "web-angular/src/app/shared/ui/layout/page-header.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-48",
+      "path": "web-angular/src/app/shared/ui/layout/report-workspace.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-49",
+      "path": "web-angular/src/app/shared/ui/layout/scroll-viewport.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-50",
+      "path": "web-angular/src/app/shared/ui/layout/surface-card.scss",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-51",
+      "path": "web-angular/src/app/shared/ui/layout/surface-card.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-52",
+      "path": "web-angular/src/app/shared/ui/forms/form-close-guard.spec.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-53",
+      "path": "web-angular/src/app/shared/ui/forms/form-close-guard.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-54",
+      "path": "web-angular/src/app/shared/ui/forms/form-container.scss",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-55",
+      "path": "web-angular/src/app/shared/ui/forms/form-container.spec.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-56",
+      "path": "web-angular/src/app/shared/ui/forms/form-container.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-57",
+      "path": "web-angular/src/app/shared/ui/forms/form-errors.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-58",
+      "path": "web-angular/src/app/shared/ui/forms/form-field-control.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-59",
+      "path": "web-angular/src/app/shared/ui/forms/form-read-compatibility.spec.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-60",
+      "path": "web-angular/src/app/shared/ui/forms/local-close-controller.spec.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-61",
+      "path": "web-angular/src/app/shared/ui/forms/local-close-controller.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-62",
+      "path": "web-angular/src/app/shared/ui/forms/public-api.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-63",
+      "path": "web-angular/src/app/shared/ui/forms/validation-summary.scss",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-64",
+      "path": "web-angular/src/app/shared/ui/forms/validation-summary.spec.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-65",
+      "path": "web-angular/src/app/shared/ui/forms/validation-summary.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-66",
+      "path": "web-angular/src/app/shared/ui/forms/fields/boolean-field.scss",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-67",
+      "path": "web-angular/src/app/shared/ui/forms/fields/boolean-field.spec.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-68",
+      "path": "web-angular/src/app/shared/ui/forms/fields/boolean-field.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-69",
+      "path": "web-angular/src/app/shared/ui/forms/fields/date-field.spec.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-70",
+      "path": "web-angular/src/app/shared/ui/forms/fields/date-field.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-71",
+      "path": "web-angular/src/app/shared/ui/forms/fields/date-only.spec.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-72",
+      "path": "web-angular/src/app/shared/ui/forms/fields/date-only.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-73",
+      "path": "web-angular/src/app/shared/ui/forms/fields/field-chrome.scss",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-74",
+      "path": "web-angular/src/app/shared/ui/forms/fields/numeric-field.spec.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-75",
+      "path": "web-angular/src/app/shared/ui/forms/fields/numeric-field.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-76",
+      "path": "web-angular/src/app/shared/ui/forms/fields/numeric-text.spec.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-77",
+      "path": "web-angular/src/app/shared/ui/forms/fields/numeric-text.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-78",
+      "path": "web-angular/src/app/shared/ui/forms/fields/reference-field.scss",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-79",
+      "path": "web-angular/src/app/shared/ui/forms/fields/reference-field.spec.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-80",
+      "path": "web-angular/src/app/shared/ui/forms/fields/reference-field.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-81",
+      "path": "web-angular/src/app/shared/ui/forms/fields/reference.types.spec.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-82",
+      "path": "web-angular/src/app/shared/ui/forms/fields/reference.types.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-83",
+      "path": "web-angular/src/app/shared/ui/forms/fields/text-field.html",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-84",
+      "path": "web-angular/src/app/shared/ui/forms/fields/text-field.scss",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-85",
+      "path": "web-angular/src/app/shared/ui/forms/fields/text-field.spec.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-86",
+      "path": "web-angular/src/app/shared/ui/forms/fields/text-field.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-87",
+      "path": "web-angular/src/app/shared/data/collection-criteria.spec.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-88",
+      "path": "web-angular/src/app/shared/data/collection-criteria.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-89",
+      "path": "web-angular/src/app/shared/data/pdf-document.spec.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-90",
+      "path": "web-angular/src/app/shared/data/pdf-document.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-91",
+      "path": "web-angular/src/app/shared/data/public-api.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-92",
+      "path": "web-angular/src/app/shared/data/route-collection-criteria.spec.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-93",
+      "path": "web-angular/src/app/shared/data/route-collection-criteria.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-94",
+      "path": "web-angular/src/app/shared/data/scoped-read.spec.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-95",
+      "path": "web-angular/src/app/shared/data/scoped-read.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-96",
+      "path": "web-angular/src/app/shared/data/unsaved-changes.spec.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-97",
+      "path": "web-angular/src/app/shared/data/unsaved-changes.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-98",
+      "path": "web-angular/src/app/shared/data/unsaved-navigation.spec.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-99",
+      "path": "web-angular/src/app/shared/data/unsaved-navigation.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-100",
+      "path": "web-next/src/shared/components/navigation/header/index.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-101",
+      "path": "web-next/src/shared/components/navigation/header/PageHeader.tsx",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-102",
+      "path": "web-next/src/shared/components/navigation/header/multi-view-header/DesktopHeaderLayout.tsx",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-103",
+      "path": "web-next/src/shared/components/navigation/header/multi-view-header/HeaderActions.tsx",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-104",
+      "path": "web-next/src/shared/components/navigation/header/multi-view-header/MobileHeaderLayout.tsx",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-105",
+      "path": "web-next/src/shared/components/navigation/header/multi-view-header/mobileViewOptions.test.tsx",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-106",
+      "path": "web-next/src/shared/components/navigation/header/multi-view-header/mobileViewOptions.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-107",
+      "path": "web-next/src/shared/components/navigation/header/multi-view-header/types.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-108",
+      "path": "web-next/src/shared/components/navigation/header/multi-view-header/ViewActivities.tsx",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-109",
+      "path": "web-next/src/shared/components/navigation/header/multi-view-header/viewOptions.tsx",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-110",
+      "path": "web-next/src/shared/components/navigation/header/multi-view-header/ViewToggle.tsx",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-111",
+      "path": "web-next/src/shared/components/data-grid/index.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-112",
+      "path": "web-next/src/shared/components/data-grid/core/ClientDataGrid.tsx",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-113",
+      "path": "web-next/src/shared/components/data-grid/core/context.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-114",
+      "path": "web-next/src/shared/components/data-grid/core/controlledModels.test.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-115",
+      "path": "web-next/src/shared/components/data-grid/core/controlledModels.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-116",
+      "path": "web-next/src/shared/components/data-grid/core/MyDataGrid.test.tsx",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-117",
+      "path": "web-next/src/shared/components/data-grid/core/MyDataGrid.tsx",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-118",
+      "path": "web-next/src/shared/components/data-grid/core/pagination.test.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-119",
+      "path": "web-next/src/shared/components/data-grid/core/pagination.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-120",
+      "path": "web-next/src/shared/components/data-grid/core/types.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-121",
+      "path": "web-next/src/shared/components/data-grid/navigation/GridFooter.tsx",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-122",
+      "path": "web-next/src/shared/components/data-grid/navigation/recordNavigation.test.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-123",
+      "path": "web-next/src/shared/components/data-grid/navigation/recordNavigation.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-124",
+      "path": "web-next/src/shared/components/data-grid/renderers/DataGridCellRenderers.test.tsx",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-125",
+      "path": "web-next/src/shared/components/data-grid/renderers/DataGridCellRenderers.tsx",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-126",
+      "path": "web-next/src/shared/components/data-grid/table/MyDataTable.tsx",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-127",
+      "path": "web-next/src/shared/components/data-grid/table/pagination.test.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-128",
+      "path": "web-next/src/shared/components/data-grid/table/pagination.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-129",
+      "path": "web-next/src/shared/components/data-grid/toolbar/DataGridToolbar.tsx",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-130",
+      "path": "web-next/src/shared/components/data-grid/toolbar/GridOptionsButton.tsx",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-131",
+      "path": "web-angular/src/app/shared/ui/public-api.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-132",
+      "path": "web-angular/src/app/shared/ui/buttons/action-button.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-133",
+      "path": "web-angular/src/app/shared/ui/buttons/action-button.scss",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-134",
+      "path": "web-angular/src/app/shared/ui/controls/option-select.ts",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "phase00-135",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/grid-view/Columns.tsx",
+      "layer": "source",
+      "purpose": "Current source/reference evidence; availability is not new runtime proof"
+    },
+    {
+      "id": "runtime-136",
+      "path": "documentation/modules/platform/features/angular-grid-capabilities/RUNTIME_STATUS.md",
+      "layer": "documentation",
+      "purpose": "Actual current shared Grid runtime or executed verification source; acceptance remains bounded by RUNTIME_STATUS and CAPABILITY_MATRIX"
+    },
+    {
+      "id": "runtime-137",
+      "path": "web-angular/scripts/verify-grid-capabilities-browser.mjs",
+      "layer": "source",
+      "purpose": "Actual current shared Grid runtime or executed verification source; acceptance remains bounded by RUNTIME_STATUS and CAPABILITY_MATRIX"
+    },
+    {
+      "id": "runtime-138",
+      "path": "web-angular/src/app/dev/grid-capabilities-preview.ts",
+      "layer": "source",
+      "purpose": "Actual current shared Grid runtime or executed verification source; acceptance remains bounded by RUNTIME_STATUS and CAPABILITY_MATRIX"
+    },
+    {
+      "id": "runtime-139",
+      "path": "web-angular/src/app/shared/ui/collections/collection-frame.scss",
+      "layer": "source",
+      "purpose": "Actual current shared Grid runtime or executed verification source; acceptance remains bounded by RUNTIME_STATUS and CAPABILITY_MATRIX"
+    },
+    {
+      "id": "runtime-140",
+      "path": "web-angular/src/app/shared/ui/collections/grid-capabilities.spec.ts",
+      "layer": "source",
+      "purpose": "Actual current shared Grid runtime or executed verification source; acceptance remains bounded by RUNTIME_STATUS and CAPABILITY_MATRIX"
+    },
+    {
+      "id": "runtime-141",
+      "path": "web-angular/src/app/shared/ui/collections/grid-column-widths.ts",
+      "layer": "source",
+      "purpose": "Actual current shared Grid runtime or executed verification source; acceptance remains bounded by RUNTIME_STATUS and CAPABILITY_MATRIX"
+    },
+    {
+      "id": "runtime-142",
+      "path": "web-angular/src/app/shared/ui/collections/grid-export.ts",
+      "layer": "source",
+      "purpose": "Actual current shared Grid runtime or executed verification source; acceptance remains bounded by RUNTIME_STATUS and CAPABILITY_MATRIX"
+    },
+    {
+      "id": "runtime-143",
+      "path": "web-angular/src/app/shared/ui/collections/grid-filter-adapter.ts",
+      "layer": "source",
+      "purpose": "Actual current shared Grid runtime or executed verification source; acceptance remains bounded by RUNTIME_STATUS and CAPABILITY_MATRIX"
+    },
+    {
+      "id": "runtime-144",
+      "path": "web-angular/src/app/shared/ui/collections/grid-filter-input.ts",
+      "layer": "source",
+      "purpose": "Actual current shared Grid runtime or executed verification source; acceptance remains bounded by RUNTIME_STATUS and CAPABILITY_MATRIX"
+    },
+    {
+      "id": "runtime-145",
+      "path": "web-angular/src/app/shared/ui/collections/grid-filter.types.spec.ts",
+      "layer": "source",
+      "purpose": "Actual current shared Grid runtime or executed verification source; acceptance remains bounded by RUNTIME_STATUS and CAPABILITY_MATRIX"
+    },
+    {
+      "id": "runtime-146",
+      "path": "web-angular/src/app/shared/ui/collections/grid-filter.types.ts",
+      "layer": "source",
+      "purpose": "Actual current shared Grid runtime or executed verification source; acceptance remains bounded by RUNTIME_STATUS and CAPABILITY_MATRIX"
+    },
+    {
+      "id": "runtime-147",
+      "path": "web-angular/src/app/shared/ui/collections/grid-header-groups.ts",
+      "layer": "source",
+      "purpose": "Actual current shared Grid runtime or executed verification source; acceptance remains bounded by RUNTIME_STATUS and CAPABILITY_MATRIX"
+    },
+    {
+      "id": "runtime-148",
+      "path": "web-angular/src/app/shared/ui/collections/grid-headers.spec.ts",
+      "layer": "source",
+      "purpose": "Actual current shared Grid runtime or executed verification source; acceptance remains bounded by RUNTIME_STATUS and CAPABILITY_MATRIX"
+    },
+    {
+      "id": "runtime-149",
+      "path": "web-angular/src/app/shared/ui/collections/grid-options.spec.ts",
+      "layer": "source",
+      "purpose": "Actual current shared Grid runtime or executed verification source; acceptance remains bounded by RUNTIME_STATUS and CAPABILITY_MATRIX"
+    },
+    {
+      "id": "runtime-150",
+      "path": "web-angular/src/app/shared/ui/collections/grid-options.types.ts",
+      "layer": "source",
+      "purpose": "Actual current shared Grid runtime or executed verification source; acceptance remains bounded by RUNTIME_STATUS and CAPABILITY_MATRIX"
+    },
+    {
+      "id": "runtime-151",
+      "path": "web-angular/src/app/shared/ui/collections/grid-presentation.ts",
+      "layer": "source",
+      "purpose": "Actual current shared Grid runtime or executed verification source; acceptance remains bounded by RUNTIME_STATUS and CAPABILITY_MATRIX"
+    },
+    {
+      "id": "runtime-152",
+      "path": "web-angular/src/app/shared/ui/feedback/status-badge.ts",
+      "layer": "source",
+      "purpose": "Actual current shared Grid runtime or executed verification source; acceptance remains bounded by RUNTIME_STATUS and CAPABILITY_MATRIX"
+    },
+    {
+      "id": "runtime-153",
+      "path": "web-angular/src/app/shared/ui/layout/page-header.scss",
+      "layer": "source",
+      "purpose": "Actual current shared Grid runtime or executed verification source; acceptance remains bounded by RUNTIME_STATUS and CAPABILITY_MATRIX"
+    },
+    {
+      "id": "runtime-154",
+      "path": "web-angular/src/app/shared/ui/layout/page-header.spec.ts",
+      "layer": "source",
+      "purpose": "Actual current shared Grid runtime or executed verification source; acceptance remains bounded by RUNTIME_STATUS and CAPABILITY_MATRIX"
+    },
+    {
+      "id": "runtime-155",
+      "path": "web-angular/src/theme/grid-locale.spec.ts",
+      "layer": "source",
+      "purpose": "Actual current shared Grid runtime or executed verification source; acceptance remains bounded by RUNTIME_STATUS and CAPABILITY_MATRIX"
+    },
+    {
+      "id": "runtime-156",
+      "path": "web-angular/src/theme/grid-locale.ts",
+      "layer": "source",
+      "purpose": "Actual current shared Grid runtime or executed verification source; acceptance remains bounded by RUNTIME_STATUS and CAPABILITY_MATRIX"
+    },
+    {
+      "id": "runtime-157",
+      "path": "web-angular/src/theme/grid-public-api.ts",
+      "layer": "source",
+      "purpose": "Actual current shared Grid runtime or executed verification source; acceptance remains bounded by RUNTIME_STATUS and CAPABILITY_MATRIX"
+    },
+    {
+      "id": "runtime-158",
+      "path": "documentation/modules/platform/features/angular-grid-capabilities/verification/green-light-ar-1440-grid.png",
+      "layer": "documentation",
+      "purpose": "Executed current-source bounded verification; complete feature acceptance remains Not Verified"
+    },
+    {
+      "id": "runtime-159",
+      "path": "documentation/modules/platform/features/angular-grid-capabilities/verification/green-light-ar-390-grid.png",
+      "layer": "documentation",
+      "purpose": "Executed current-source bounded verification; complete feature acceptance remains Not Verified"
+    },
+    {
+      "id": "runtime-160",
+      "path": "documentation/modules/platform/features/angular-grid-capabilities/verification/green-light-en-1440-grid.png",
+      "layer": "documentation",
+      "purpose": "Executed current-source bounded verification; complete feature acceptance remains Not Verified"
+    },
+    {
+      "id": "runtime-161",
+      "path": "documentation/modules/platform/features/angular-grid-capabilities/verification/green-light-en-390-grid.png",
+      "layer": "documentation",
+      "purpose": "Executed current-source bounded verification; complete feature acceptance remains Not Verified"
+    },
+    {
+      "id": "runtime-162",
+      "path": "documentation/modules/platform/features/angular-grid-capabilities/verification/GRID_BROWSER_RESULTS.json",
+      "layer": "documentation",
+      "purpose": "Executed current-source bounded verification; complete feature acceptance remains Not Verified"
+    },
+    {
+      "id": "runtime-163",
+      "path": "documentation/modules/platform/features/angular-grid-capabilities/verification/light-ar-390-filter.png",
+      "layer": "documentation",
+      "purpose": "Executed current-source bounded verification; complete feature acceptance remains Not Verified"
+    },
+    {
+      "id": "runtime-164",
+      "path": "documentation/modules/platform/features/angular-grid-capabilities/verification/light-en-390-filter.png",
+      "layer": "documentation",
+      "purpose": "Executed current-source bounded verification; complete feature acceptance remains Not Verified"
+    },
+    {
+      "id": "runtime-165",
+      "path": "documentation/modules/platform/features/angular-grid-capabilities/verification/README.md",
+      "layer": "documentation",
+      "purpose": "Executed current-source bounded verification; complete feature acceptance remains Not Verified"
+    },
+    {
+      "id": "runtime-166",
+      "path": "web-angular/src/app/shared/ui/documents/pdf-viewer.spec.ts",
+      "layer": "source",
+      "purpose": "Executed current-source bounded verification; complete feature acceptance remains Not Verified"
+    },
+    {
+      "id": "runtime-167",
+      "path": "web-angular/src/theme/calendar-locale.spec.ts",
+      "layer": "source",
+      "purpose": "Executed current-source bounded verification; complete feature acceptance remains Not Verified"
+    },
+    {
+      "id": "current-grid-shared-filter-contract",
+      "path": "web-angular/src/app/shared/data/grid-filter.ts",
+      "layer": "web",
+      "purpose": "Vendor-independent strict filter schema"
+    },
+    {
+      "id": "current-grid-country-filter-owner",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/types/country-filters.ts",
+      "layer": "web",
+      "purpose": "Countries allowlist and bounded typed criteria"
+    },
+    {
+      "id": "current-grid-actual-screen-browser",
+      "path": "web-angular/scripts/verify-countries-screen-browser.mjs",
+      "layer": "web",
+      "purpose": "Actual shell/sidebar/filter/options/browser verification"
+    },
+    {
+      "id": "current-grid-primeng-workflow",
+      "path": "documentation/guides/web/architecture/ANGULAR_PRIMENG_WORKFLOW.md",
+      "layer": "documentation",
+      "purpose": "Requester-approved shared/native/MCP-first template workflow"
+    },
+    {
+      "id": "current-grid-current-grid-review",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/CURRENT_GRID_REVIEW.md",
+      "layer": "documentation",
+      "purpose": "Current verification, intentional differences and release boundaries"
+    },
+    {
+      "id": "cell-context-filter-contract",
+      "path": "documentation/modules/platform/features/angular-grid-capabilities/CELL_CONTEXT_FILTER_CONTRACT.md",
+      "layer": "documentation",
+      "purpose": "Exact user-authorized bounded context-filter contract"
+    },
+    {
+      "id": "cell-context-0",
+      "path": "web-angular/src/app/shared/ui/overlays/context-menu-panel.ts",
+      "layer": "web",
+      "purpose": "Actual bounded shared context/filter implementation or verification"
+    },
+    {
+      "id": "cell-context-1",
+      "path": "web-angular/src/app/shared/ui/overlays/context-menu-panel.spec.ts",
+      "layer": "web",
+      "purpose": "Actual bounded shared context/filter implementation or verification"
+    },
+    {
+      "id": "cell-context-2",
+      "path": "web-angular/src/app/shared/ui/collections/grid-cell-filter.ts",
+      "layer": "web",
+      "purpose": "Actual bounded shared context/filter implementation or verification"
+    },
+    {
+      "id": "cell-context-3",
+      "path": "web-angular/src/app/shared/ui/collections/grid-cell-filter.spec.ts",
+      "layer": "web",
+      "purpose": "Actual bounded shared context/filter implementation or verification"
+    },
+    {
+      "id": "cell-context-10",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page.ts",
+      "layer": "web",
+      "purpose": "Actual bounded shared context/filter implementation or verification"
+    },
+    {
+      "id": "cell-context-11",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/state/country-read-state.ts",
+      "layer": "web",
+      "purpose": "Actual bounded shared context/filter implementation or verification"
+    },
+    {
+      "id": "cell-context-12",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/state/country-read-state.spec.ts",
+      "layer": "web",
+      "purpose": "Actual bounded shared context/filter implementation or verification"
+    },
+    {
+      "id": "cell-context-14",
+      "path": "web-angular/scripts/verify-country-actions-browser.mjs",
+      "layer": "web",
+      "purpose": "Actual bounded shared context/filter implementation or verification"
+    },
+    {
+      "id": "cell-context-15",
+      "path": "web-next/src/locales/resources/core/en.json",
+      "layer": "web",
+      "purpose": "Actual bounded shared context/filter implementation or verification"
+    },
+    {
+      "id": "cell-context-16",
+      "path": "web-next/src/locales/resources/core/ar.json",
+      "layer": "web",
+      "purpose": "Actual bounded shared context/filter implementation or verification"
+    },
+    {
+      "id": "cell-context-17",
+      "path": "documentation/modules/platform/features/angular-grid-capabilities/verification/CELL_CONTEXT_ACCEPTANCE.md",
+      "layer": "documentation",
+      "purpose": "Actual bounded shared context/filter implementation or verification"
+    },
+    {
+      "id": "cell-context-18",
+      "path": "documentation/modules/platform/features/angular-grid-capabilities/verification/CELL_CONTEXT_RESULTS.json",
+      "layer": "documentation",
+      "purpose": "Actual bounded shared context/filter implementation or verification"
+    }
+  ],
+  "finalizationChecklist": [
+    "Replace every placeholder in the review artifact.",
+    "Complete the Existing-System Relationship Review and every decision in angular-grid-capabilities-request.md before implementation.",
+    "Complete the Business Rules Matrix with one primary owner, stable outcome/error, and required test for every known rule.",
+    "Complete every Edge Cases & Validation category with scenarios or an explicit N/A reason, enforcement layer, and required test.",
+    "Complete the Impact Matrix with Reuse, Extend, Change, Add, or reasoned N/A across every listed area.",
+    "Remove every remaining placeholder from angular-grid-capabilities-request.md before runtime implementation.",
+    "Add Phase 00 current API, web, mobile, configuration, localization, and test evidence sources.",
+    "Classify every optional view, including Import, as Required, Deferred, or Excluded independently for web and mobile.",
+    "When Import is Required, add its API and applicable client runtime, route/configuration, localization, and focused-test paths.",
+    "Record and test the exact Import request envelope, limits, duplicate and relationship rules, atomicity, permissions, side effects, and retry behavior.",
+    "Add source collections with evidence-based minimum file counts.",
+    "Create the four initial applied implementation books from the approved plan plus verified current source; label target-only behavior explicitly.",
+    "Rename this file to required-files.json when the Phase 00 evidence paths exist; extend it with runtime files during implementation.",
+    "Update the review artifact to point at required-files.json and mark its documentation state Final.",
+    "Merge recipe-registration.draft.json into recipe-manifest.json after the Phase 00 books and preflight manifest are complete.",
+    "Write generated packets under documentation/modules/platform/features/angular-grid-capabilities/generated/.",
+    "Run generation and then Generate-Documentation.ps1 -Check.",
+    "Complete phase 06 with an explicit verification decision.",
+    "Do not start customer-facing education until phase 06 records Verified.",
+    "For customer-visible work, complete phase 07 and its Customer Education Pack before Closed.",
+    "When Customer Education is Required, add the verified education document to required-files.json and rerun Generate-Documentation.ps1 -Check before Closed."
+  ]
+}

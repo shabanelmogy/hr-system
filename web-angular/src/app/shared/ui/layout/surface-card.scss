@@ -1,0 +1,22 @@
+:host(.entity-card) section {
+  position: relative;
+  border-radius: 6px;
+  border-color: color-mix(in srgb, var(--card-accent) 15%, transparent);
+  background: linear-gradient(135deg, var(--surface), color-mix(in srgb, var(--card-accent) 2%, var(--surface)));
+  box-shadow: 0 2px 3px #00000020;
+}
+:host(.entity-card) section::before { content: ''; position: absolute; inset: 0 0 auto; height: 4px; background: var(--card-accent); opacity: .8; }
+:host(.entity-card) header.custom-header { padding: 32px 16px 0; }
+:host(.entity-card) .surface-content { padding: 8px 16px 16px; }
+:host(.entity-card) .surface-footer { padding: 8px 16px; }
+
+.surface-heading{min-width:0}.surface-subtitle{margin:4px 0 0;color:var(--muted-foreground);font-size:12px;line-height:1.25}
+:host(.chart-card) section{padding:8px;border:0;border-radius:16px;box-shadow:0 2px 1px -1px #0003,0 1px 1px #00000024,0 1px 3px #0000001f;transition:box-shadow .3s}
+:host(.chart-card) section:hover{box-shadow:0 2px 4px -1px #0003,0 4px 5px #00000024,0 1px 10px #0000001f}
+:host(.chart-card) header{padding:0 0 4px;margin-bottom:6px;border-bottom:1px solid color-mix(in srgb,var(--border) 8%,transparent);display:grid;grid-template-columns:20px minmax(0,1fr);align-items:start;column-gap:6px;row-gap:0;flex-shrink:0}
+:host(.chart-card) h2{font-size:16px;line-height:1.6;font-weight:600;color:var(--primary)}
+:host(.chart-card) .panel-icon{width:20px;height:20px;margin-top:3px;border-radius:0;background:none;color:var(--primary)}
+:host(.chart-card) .surface-content{padding:0;position:relative}
+@media(prefers-reduced-motion:reduce){:host(.chart-card) section{transition:none}}
+
+:host(.chart-card) .surface-subtitle{grid-column:1/-1;margin:4px 0 0}

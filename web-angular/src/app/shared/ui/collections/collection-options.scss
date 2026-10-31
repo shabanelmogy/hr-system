@@ -1,0 +1,14 @@
+.grid-options{color:var(--foreground);--option-label-background:var(--surface)}
+.column-count{margin-inline-start:8px;padding:2px 8px;border-radius:12px;font-size:12px;background:color-mix(in srgb,var(--primary) 10%,var(--surface));color:var(--primary)}
+.option-section h3{margin:0;font-size:14px;font-weight:600}.option-section p,.options-hint{font-size:13px;color:var(--muted-foreground);line-height:1.6;margin:6px 0 16px}
+.density-preview{border:1px solid var(--border);border-radius:8px;margin-block-start:16px;overflow:hidden;background:var(--surface)}
+.density-preview>div{display:flex;gap:20px;align-items:center;padding:12px 16px;border-bottom:1px solid var(--border)}.density-preview>div:last-child{border-bottom:0}.density-preview[data-density=compact]>div{padding-block:7px}.density-preview[data-density=comfortable]>div{padding-block:18px}.density-preview i{height:6px;border-radius:3px;background:color-mix(in srgb,var(--muted-foreground) 18%,var(--surface));flex:1}.density-preview i:first-child{flex:.4;background:color-mix(in srgb,var(--primary) 22%,var(--surface))}
+.owner-options{border-top:1px solid var(--border);padding-top:16px;margin-top:20px}.owner-options:empty,.owner-options:has(>[gridOptions]:empty){display:none}
+.column-list{display:flex;flex-direction:column;gap:8px;margin-block-start:16px;max-block-size:min(44dvh,420px);overflow:auto;padding:2px;overscroll-behavior:contain}
+.column-option{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px;border:1px solid var(--border);border-radius:8px;background:var(--surface)}
+.column-option.column-hidden{background:var(--muted)}.column-visibility{display:flex;align-items:center;gap:10px;min-width:0;flex:1}.column-visibility label{font-size:14px;font-weight:500;cursor:pointer;overflow-wrap:anywhere}
+.column-controls,.column-order{display:flex;align-items:center;gap:4px}.column-controls{flex:0 0 220px;gap:12px}.column-controls erp-option-select{flex:1;min-width:0}.column-order erp-button{--action-icon-size:32px}.column-order erp-icon{width:18px;height:18px}
+.grid-options erp-text-field{--touch-target:36px}.grid-options erp-text-field erp-icon{width:18px;height:18px;margin-inline-start:12px;color:var(--muted-foreground)}
+.options-actions{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%}
+
+@media(max-width:599px){.column-option{flex-wrap:wrap}.column-visibility{flex-basis:100%}.column-controls{flex:1 1 100%;justify-content:flex-end}.column-controls erp-option-select{max-width:200px}}

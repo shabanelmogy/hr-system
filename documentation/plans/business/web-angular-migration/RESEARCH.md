@@ -49,3 +49,12 @@ and the proposed browser-cookie extension are in
 [AUTHENTICATION_PREFLIGHT](AUTHENTICATION_PREFLIGHT.md). Primary documentation
 supports the design trade-offs; actual source discrepancies remain RISK-018 and
 must not be replaced by generic framework assumptions.
+
+## Requester scope correction —2026-10-30 DEC-028
+
+ActiveReports viewer/designer/SDK and associated authoring/licensing work are
+Excluded from Angular migration by explicit requester instruction. References to
+existing Next/native/API implementations are source evidence only and do not
+reinstate that target. Current Angular reporting uses managed Crystal/PDF. Other
+reporting manager, permissions, binary transport and PDF lifecycle requirements
+remain governed by their owning contracts. No ActiveReports runtime placeholder.

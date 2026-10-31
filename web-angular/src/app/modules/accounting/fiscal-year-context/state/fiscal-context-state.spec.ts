@@ -6,6 +6,7 @@ import { sessionFixture } from '../../../../platform/auth/auth.fixture';
 import { FiscalContextService } from '../services/fiscal-context-service';
 import { fiscalContextFixture as fixture } from '../fiscal-context.fixture';
 import { FiscalContextState } from './fiscal-context-state';
+import { UnsavedChanges } from '../../../../shared/data/public-api';
 describe('Accounting context scope and outcome owner',()=>{
  const permitted={...sessionFixture,permissions:['FiscalYears:View']};
  function setup(initial:Session=sessionFixture){
@@ -34,5 +35,11 @@ describe('Accounting context scope and outcome owner',()=>{
   const {state,service,user}=setup(permitted);service.select.mockRejectedValue(Error('denied'));
   expect(await state.select(2)).toBe(false);expect(state.error()).toBe('fiscalYears.context.switchError');
   service.read.mockReturnValue(throwError(()=>Error('offline')));expect(await state.select(2)).toBe(false);expect(user()).toBeNull();expect(state.context()).toBeNull();
+ });
+ it('quarantines old registered drafts when an external read verifies another working year',()=>{
+  const {state,service,user}=setup(permitted);const invalidate=vi.fn();
+  TestBed.inject(UnsavedChanges).register({read:()=>({identity:'year-editor',revision:1,active:true,unsaved:true,pending:false}),invalidate});
+  service.read.mockReturnValue(of({...fixture,selectedFiscalYear:fixture.availableFiscalYears[1],hasUserOverride:true}));
+  user.set({...permitted});TestBed.tick();expect(state.context()?.selectedFiscalYear?.id).toBe(2);expect(invalidate).toHaveBeenCalledOnce();
  });
 });

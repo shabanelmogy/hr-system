@@ -1,0 +1,130 @@
+[
+  {
+    "palette": "green",
+    "mode": "light",
+    "language": "en",
+    "width": 390,
+    "geometry": {
+      "height": 114,
+      "width": 193.390625,
+      "resize": "vertical",
+      "maxHeight": "384px",
+      "paddingInline": 12,
+      "paddingBlock": 9,
+      "page": 390
+    },
+    "passed": true
+  },
+  {
+    "palette": "green",
+    "mode": "light",
+    "language": "en",
+    "width": 1440,
+    "geometry": {
+      "height": 114,
+      "width": 821.390625,
+      "resize": "vertical",
+      "maxHeight": "384px",
+      "paddingInline": 12,
+      "paddingBlock": 9,
+      "page": 1440
+    },
+    "passed": true
+  },
+  {
+    "palette": "green",
+    "mode": "light",
+    "language": "ar",
+    "width": 390,
+    "geometry": {
+      "height": 114,
+      "width": 193.390625,
+      "resize": "vertical",
+      "maxHeight": "384px",
+      "paddingInline": 12,
+      "paddingBlock": 9,
+      "page": 390
+    },
+    "passed": true
+  },
+  {
+    "palette": "green",
+    "mode": "light",
+    "language": "ar",
+    "width": 1440,
+    "geometry": {
+      "height": 114,
+      "width": 821.390625,
+      "resize": "vertical",
+      "maxHeight": "384px",
+      "paddingInline": 12,
+      "paddingBlock": 9,
+      "page": 1440
+    },
+    "passed": true
+  },
+  {
+    "palette": "green",
+    "mode": "dark",
+    "language": "en",
+    "width": 390,
+    "geometry": {
+      "height": 114,
+      "width": 193.390625,
+      "resize": "vertical",
+      "maxHeight": "384px",
+      "paddingInline": 12,
+      "paddingBlock": 9,
+      "page": 390
+    },
+    "passed": true
+  },
+  {
+    "palette": "green",
+    "mode": "dark",
+    "language": "en",
+    "width": 1440,
+    "geometry": {
+      "height": 114,
+      "width": 821.390625,
+      "resize": "vertical",
+      "maxHeight": "384px",
+      "paddingInline": 12,
+      "paddingBlock": 9,
+      "page": 1440
+    },
+    "passed": true
+  },
+  {
+    "palette": "green",
+    "mode": "dark",
+    "language": "ar",
+    "width": 390,
+    "geometry": {
+      "height": 114,
+      "width": 193.390625,
+      "resize": "vertical",
+      "maxHeight": "384px",
+      "paddingInline": 12,
+      "paddingBlock": 9,
+      "page": 390
+    },
+    "passed": true
+  },
+  {
+    "palette": "green",
+    "mode": "dark",
+    "language": "ar",
+    "width": 1440,
+    "geometry": {
+      "height": 114,
+      "width": 821.390625,
+      "resize": "vertical",
+      "maxHeight": "384px",
+      "paddingInline": 12,
+      "paddingBlock": 9,
+      "page": 1440
+    },
+    "passed": true
+  }
+]

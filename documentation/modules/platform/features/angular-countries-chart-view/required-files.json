@@ -1,0 +1,662 @@
+{
+  "schemaVersion": 1,
+  "status": "final",
+  "executionMode": "bounded-runtime",
+  "runtimeAuthorized": true,
+  "feature": "angular-countries-chart-view",
+  "featureName": "Countries page-scoped charts",
+  "referenceFeature": "N/A",
+  "planId": "web-angular-migration",
+  "sliceId": "S3-A5 — Countries page-scoped charts",
+  "canonicalPlan": "documentation/plans/business/web-angular-migration/PLAN.md",
+  "featureDecompositionDecision": "Single feature",
+  "screenWorkflowContract": "documentation/plans/business/web-angular-migration/decomposition/angular-countries-chart-view.md",
+  "plannedCustomerEducation": "documentation/plans/business/web-angular-migration/education/angular-countries-chart-view.md",
+  "purpose": "Verified S3-A5 Chart and D33 shared Cards toolbar acceptance; complete pilot remains separate",
+  "reviewArtifact": "documentation/modules/platform/features/angular-countries-chart-view/angular-countries-chart-view-evidence.md",
+  "implementationRequest": "documentation/modules/platform/features/angular-countries-chart-view/angular-countries-chart-view-request.md",
+  "plannedCanonicalBooks": {
+    "master": "documentation/modules/platform/features/angular-countries-chart-view/angular-countries-chart-view-review.md",
+    "api": "documentation/modules/platform/features/angular-countries-chart-view/angular-countries-chart-view-api.md",
+    "web": "documentation/modules/platform/features/angular-countries-chart-view/angular-countries-chart-view-web.md",
+    "mobile": "documentation/modules/platform/features/angular-countries-chart-view/angular-countries-chart-view-mobile.md"
+  },
+  "sourceCollections": [],
+  "requiredFiles": [
+    {
+      "id": "chart-entry-0",
+      "path": "AGENTS.md",
+      "layer": "web",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "chart-entry-1",
+      "path": "documentation/plans/business/web-angular-migration/PLAN.md",
+      "layer": "documentation",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "chart-entry-2",
+      "path": "documentation/plans/business/web-angular-migration/decomposition/angular-countries-chart-view.md",
+      "layer": "documentation",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "chart-entry-3",
+      "path": "documentation/modules/platform/features/angular-countries-chart-view/CHART_SOURCE_CONTRACT.md",
+      "layer": "documentation",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "chart-entry-4",
+      "path": "documentation/modules/platform/features/angular-countries-chart-view/verification/SDK_FEASIBILITY_RESULTS.json",
+      "layer": "documentation",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "chart-entry-5",
+      "path": "documentation/modules/platform/features/angular-countries-chart-view/angular-countries-chart-view-request.md",
+      "layer": "documentation",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "chart-entry-6",
+      "path": "documentation/modules/platform/features/angular-countries-chart-view/angular-countries-chart-view-evidence.md",
+      "layer": "documentation",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "chart-entry-7",
+      "path": "documentation/guides/web/architecture/ANGULAR_SHARED_COMPONENTS.md",
+      "layer": "documentation",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "chart-entry-8",
+      "path": "documentation/guides/shared/SCREEN_PATTERN_CATALOG.md",
+      "layer": "documentation",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "chart-entry-9",
+      "path": "web-angular/package.json",
+      "layer": "web",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "chart-entry-10",
+      "path": "web-angular/package-lock.json",
+      "layer": "web",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "chart-entry-11",
+      "path": "web-angular/angular.json",
+      "layer": "web",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "chart-entry-12",
+      "path": "web-angular/src/theme/theme-service.ts",
+      "layer": "web",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "chart-entry-13",
+      "path": "web-angular/src/app/shared/ui/cards/metric-card.ts",
+      "layer": "web",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "chart-entry-14",
+      "path": "web-angular/src/app/shared/ui/layout/surface-card.ts",
+      "layer": "web",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "chart-entry-15",
+      "path": "web-angular/src/app/shared/ui/layout/surface-card.scss",
+      "layer": "web",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "chart-entry-16",
+      "path": "web-angular/src/app/shared/ui/layout/scroll-viewport.ts",
+      "layer": "web",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "chart-entry-17",
+      "path": "web-angular/src/app/shared/ui/collections/collection-frame.ts",
+      "layer": "web",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "chart-entry-18",
+      "path": "web-angular/src/app/shared/ui/collections/collection-controller.ts",
+      "layer": "web",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "chart-entry-19",
+      "path": "web-angular/src/app/shared/ui/feedback/feedback-state.ts",
+      "layer": "web",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "chart-entry-20",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page.ts",
+      "layer": "web",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "chart-entry-21",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/state/country-read-state.ts",
+      "layer": "web",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "chart-entry-22",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/types/country.ts",
+      "layer": "web",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "chart-entry-23",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/services/country-service.ts",
+      "layer": "web",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "chart-entry-24",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/CountriesChartView.tsx",
+      "layer": "web",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "chart-entry-25",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/CountriesMultiView.tsx",
+      "layer": "web",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "chart-entry-26",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/chart-view/chartDataUtils.ts",
+      "layer": "web",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "chart-entry-27",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/chart-view/chartDataUtils.test.ts",
+      "layer": "web",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "chart-entry-28",
+      "path": "web-next/src/shared/components/charts/core/ChartContainer.tsx",
+      "layer": "web",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "chart-entry-29",
+      "path": "web-next/src/shared/components/charts/core/chartUtils.ts",
+      "layer": "web",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "chart-entry-30",
+      "path": "web-next/src/shared/components/charts/core/chartTheme.ts",
+      "layer": "web",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "chart-entry-31",
+      "path": "web-next/src/locales/resources/core/en.json",
+      "layer": "web",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "chart-entry-32",
+      "path": "web-next/src/locales/resources/core/ar.json",
+      "layer": "web",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "chart-entry-33",
+      "path": "web-next/src/locales/resources/reference-countries/en.json",
+      "layer": "web",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "chart-entry-34",
+      "path": "web-next/src/locales/resources/reference-countries/ar.json",
+      "layer": "web",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "chart-entry-35",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/presentation/screens/CountriesScreen.tsx",
+      "layer": "mobile",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "chart-entry-36",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Presentation/Features/GeographicalInformation/Countries/V1/CountriesController.cs",
+      "layer": "api",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "chart-entry-37",
+      "path": "documentation/modules/platform/features/angular-countries-chart-view/angular-countries-chart-view-review.md",
+      "layer": "documentation",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "chart-entry-38",
+      "path": "documentation/modules/platform/features/angular-countries-chart-view/angular-countries-chart-view-api.md",
+      "layer": "documentation",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "chart-entry-39",
+      "path": "documentation/modules/platform/features/angular-countries-chart-view/angular-countries-chart-view-web.md",
+      "layer": "documentation",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "chart-entry-40",
+      "path": "documentation/modules/platform/features/angular-countries-chart-view/angular-countries-chart-view-mobile.md",
+      "layer": "documentation",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "chart-entry-41",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/chart-view/StatesChart.tsx",
+      "layer": "web",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "chart-entry-42",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/chart-view/StatesCoverageChart.tsx",
+      "layer": "web",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "chart-entry-43",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/chart-view/CurrencyChart.tsx",
+      "layer": "web",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "chart-entry-44",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/chart-view/TimelineChart.tsx",
+      "layer": "web",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "chart-entry-45",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/chart-view/SummaryCards.tsx",
+      "layer": "web",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "chart-entry-46",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/chart-view/EmptyChartState.tsx",
+      "layer": "web",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "chart-entry-47",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/chart-view/LoadingChartState.tsx",
+      "layer": "web",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "chart-final-48",
+      "path": "web-angular/src/app/shared/ui/charts/chart-panel.ts",
+      "layer": "web",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "chart-final-49",
+      "path": "web-angular/src/app/shared/ui/charts/chart-presentation.spec.ts",
+      "layer": "web",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "chart-final-50",
+      "path": "web-angular/src/app/shared/ui/charts/chart-presentation.ts",
+      "layer": "web",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "chart-final-51",
+      "path": "web-angular/src/app/shared/ui/charts/chart-renderer.ts",
+      "layer": "web",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "chart-final-52",
+      "path": "web-angular/src/app/shared/ui/charts/chart-slice-labels.ts",
+      "layer": "web",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "chart-final-53",
+      "path": "web-angular/src/app/shared/ui/charts/chart.types.ts",
+      "layer": "web",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "chart-final-54",
+      "path": "web-angular/src/app/shared/ui/charts/collection-chart-view.spec.ts",
+      "layer": "web",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "chart-final-55",
+      "path": "web-angular/src/app/shared/ui/charts/collection-chart-view.ts",
+      "layer": "web",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "chart-final-56",
+      "path": "web-angular/src/app/shared/ui/charts/public-api.ts",
+      "layer": "web",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "chart-final-57",
+      "path": "web-angular/src/app/shared/ui/controls/sort-direction-button.ts",
+      "layer": "web",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "chart-final-58",
+      "path": "web-angular/src/app/shared/ui/controls/sort-direction-button.spec.ts",
+      "layer": "web",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "chart-final-59",
+      "path": "web-angular/src/app/shared/ui/controls/option-select.ts",
+      "layer": "web",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "chart-final-60",
+      "path": "web-angular/src/app/shared/ui/buttons/action-button.ts",
+      "layer": "web",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "chart-final-61",
+      "path": "web-angular/src/app/shared/ui/collections/card-list.ts",
+      "layer": "web",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "chart-final-62",
+      "path": "web-angular/src/app/shared/ui/collections/collection-frame.scss",
+      "layer": "web",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "chart-final-63",
+      "path": "web-angular/src/app/shared/ui/icons/app-icon.ts",
+      "layer": "web",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "chart-final-64",
+      "path": "web-angular/src/app/shared/ui/public-api.ts",
+      "layer": "web",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "chart-final-65",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/utils/country-chart-data.ts",
+      "layer": "web",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "chart-final-66",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/utils/country-chart-data.spec.ts",
+      "layer": "web",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "chart-final-67",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page.spec.ts",
+      "layer": "web",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "chart-final-68",
+      "path": "web-angular/scripts/architecture-rules.mjs",
+      "layer": "web",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "chart-final-69",
+      "path": "web-angular/scripts/architecture-rules.test.mjs",
+      "layer": "web",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "chart-final-70",
+      "path": "web-angular/scripts/verify-country-charts-browser.mjs",
+      "layer": "web",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "chart-final-71",
+      "path": "web-angular/scripts/verify-country-charts-reference.mjs",
+      "layer": "web",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "chart-final-72",
+      "path": "web-angular/scripts/verify-country-actions-browser.mjs",
+      "layer": "web",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "chart-final-73",
+      "path": "web-angular/scripts/export-ui-resources.mjs",
+      "layer": "web",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "chart-final-74",
+      "path": "scripts/export-company-ui-catalog.mjs",
+      "layer": "web",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "chart-final-75",
+      "path": "web-angular/src/locales/generated/core.json",
+      "layer": "web",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "chart-final-76",
+      "path": "web-angular/src/app/platform/localization/catalog.generated.ts",
+      "layer": "web",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "chart-final-77",
+      "path": "web-next/src/config/company-ui-catalog-version.ts",
+      "layer": "web",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "chart-final-78",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Features/CompanyLocalization/company-ui-catalog.json",
+      "layer": "web",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "chart-final-79",
+      "path": "documentation/plans/notes/PRODUCTION_NOTES.md",
+      "layer": "documentation",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "chart-final-80",
+      "path": "documentation/modules/platform/features/angular-countries-chart-view/verification/ANGULAR_CHECK.log",
+      "layer": "documentation",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "chart-final-81",
+      "path": "documentation/modules/platform/features/angular-countries-chart-view/verification/CHART_JS_LICENSE.md",
+      "layer": "documentation",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "chart-final-82",
+      "path": "documentation/modules/platform/features/angular-countries-chart-view/verification/CHART_RESULTS.json",
+      "layer": "documentation",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "chart-final-83",
+      "path": "documentation/modules/platform/features/angular-countries-chart-view/verification/COMMAND_REGRESSION_RESULTS.json",
+      "layer": "documentation",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "chart-final-84",
+      "path": "documentation/modules/platform/features/angular-countries-chart-view/verification/CURRENT_CHART_ACCEPTANCE.md",
+      "layer": "documentation",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "chart-final-85",
+      "path": "documentation/modules/platform/features/angular-countries-chart-view/verification/ENTRY_DOCUMENTATION_CHECK.log",
+      "layer": "documentation",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "chart-final-86",
+      "path": "documentation/modules/platform/features/angular-countries-chart-view/verification/ENTRY_GENERATION.log",
+      "layer": "documentation",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "chart-final-87",
+      "path": "documentation/modules/platform/features/angular-countries-chart-view/verification/ENTRY_PLANNING_CHECK.log",
+      "layer": "documentation",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "chart-final-88",
+      "path": "documentation/modules/platform/features/angular-countries-chart-view/verification/REFERENCE_RESULTS.json",
+      "layer": "documentation",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "chart-final-89",
+      "path": "documentation/modules/platform/features/angular-countries-chart-view/verification/screenshots/blue-dark-ar-1440-charts.png",
+      "layer": "documentation",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "chart-final-90",
+      "path": "documentation/modules/platform/features/angular-countries-chart-view/verification/screenshots/green-light-ar-390-charts-lower.png",
+      "layer": "documentation",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "chart-final-91",
+      "path": "documentation/modules/platform/features/angular-countries-chart-view/verification/screenshots/green-light-ar-390-charts.png",
+      "layer": "documentation",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "chart-final-92",
+      "path": "documentation/modules/platform/features/angular-countries-chart-view/verification/screenshots/green-light-en-1440-cards-toolbar.png",
+      "layer": "documentation",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "chart-final-93",
+      "path": "documentation/modules/platform/features/angular-countries-chart-view/verification/screenshots/green-light-en-1440-charts-lower.png",
+      "layer": "documentation",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "chart-final-94",
+      "path": "documentation/modules/platform/features/angular-countries-chart-view/verification/screenshots/green-light-en-1440-charts.png",
+      "layer": "documentation",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "chart-final-95",
+      "path": "documentation/modules/platform/features/angular-countries-chart-view/verification/screenshots/next-light-ar-390-charts.png",
+      "layer": "documentation",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "chart-final-96",
+      "path": "documentation/modules/platform/features/angular-countries-chart-view/verification/screenshots/next-light-en-1440-charts.png",
+      "layer": "documentation",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "chart-final-97",
+      "path": "documentation/modules/platform/features/angular-countries-chart-view/verification/screenshots/orange-dark-en-390-charts.png",
+      "layer": "documentation",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "chart-final-98",
+      "path": "documentation/plans/business/web-angular-migration/education/angular-countries-chart-view.md",
+      "layer": "documentation",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "chart-source-snapshot",
+      "path": "documentation/modules/platform/features/angular-countries-chart-view/verification/SOURCE_SNAPSHOT.json",
+      "layer": "documentation",
+      "purpose": "Current exact source hashes and base commit for reproducible handoff"
+    },
+    {
+      "id": "chart-final-final_documentation_check",
+      "path": "documentation/modules/platform/features/angular-countries-chart-view/verification/FINAL_DOCUMENTATION_CHECK.log",
+      "layer": "documentation",
+      "purpose": "Executed canonical closure gate evidence; no runtime change"
+    },
+    {
+      "id": "chart-final-final_planning_check",
+      "path": "documentation/modules/platform/features/angular-countries-chart-view/verification/FINAL_PLANNING_CHECK.log",
+      "layer": "documentation",
+      "purpose": "Executed canonical closure gate evidence; no runtime change"
+    }
+  ],
+  "finalizationChecklist": [
+    "Replace every placeholder in the review artifact.",
+    "Complete the Existing-System Relationship Review and every decision in angular-countries-chart-view-request.md before implementation.",
+    "Complete the Business Rules Matrix with one primary owner, stable outcome/error, and required test for every known rule.",
+    "Complete every Edge Cases & Validation category with scenarios or an explicit N/A reason, enforcement layer, and required test.",
+    "Complete the Impact Matrix with Reuse, Extend, Change, Add, or reasoned N/A across every listed area.",
+    "Remove every remaining placeholder from angular-countries-chart-view-request.md before runtime implementation.",
+    "Add Phase 00 current API, web, mobile, configuration, localization, and test evidence sources.",
+    "Classify every optional view, including Import, as Required, Deferred, or Excluded independently for web and mobile.",
+    "When Import is Required, add its API and applicable client runtime, route/configuration, localization, and focused-test paths.",
+    "Record and test the exact Import request envelope, limits, duplicate and relationship rules, atomicity, permissions, side effects, and retry behavior.",
+    "Add source collections with evidence-based minimum file counts.",
+    "Create the four initial applied implementation books from the approved plan plus verified current source; label target-only behavior explicitly.",
+    "Rename this file to required-files.json when the Phase 00 evidence paths exist; extend it with runtime files during implementation.",
+    "Update the review artifact to point at required-files.json and mark its documentation state Final.",
+    "Merge recipe-registration.draft.json into recipe-manifest.json after the Phase 00 books and preflight manifest are complete.",
+    "Write generated packets under documentation/modules/platform/features/angular-countries-chart-view/generated/.",
+    "Run generation and then Generate-Documentation.ps1 -Check.",
+    "Complete phase 06 with an explicit verification decision.",
+    "Do not start customer-facing education until phase 06 records Verified.",
+    "For customer-visible work, complete phase 07 and its Customer Education Pack before Closed.",
+    "When Customer Education is Required, add the verified education document to required-files.json and rerun Generate-Documentation.ps1 -Check before Closed."
+  ]
+}

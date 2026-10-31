@@ -1,0 +1,314 @@
+{
+  "schemaVersion": 1,
+  "status": "closed",
+  "executionMode": "read-only-assessment",
+  "runtimeAuthorized": false,
+  "feature": "angular-foundation-exit-assessment",
+  "featureName": "Foundation exit and pilot readiness assessment",
+  "referenceFeature": "N/A",
+  "planId": "web-angular-migration",
+  "sliceId": "S1-A13 — Foundation exit and pilot readiness assessment",
+  "canonicalPlan": "documentation/plans/business/web-angular-migration/PLAN.md",
+  "featureDecompositionDecision": "Single feature",
+  "screenWorkflowContract": "documentation/plans/business/web-angular-migration/decomposition/angular-foundation-exit-assessment.md",
+  "plannedCustomerEducation": "documentation/plans/business/web-angular-migration/education/angular-foundation-exit-assessment.md",
+  "purpose": "Verified read-only S1/pilot prerequisite assessment; no runtime authority",
+  "reviewArtifact": "documentation/modules/platform/features/angular-foundation-exit-assessment/angular-foundation-exit-assessment-evidence.md",
+  "implementationRequest": "documentation/modules/platform/features/angular-foundation-exit-assessment/angular-foundation-exit-assessment-request.md",
+  "plannedCanonicalBooks": {
+    "master": "documentation/modules/platform/features/angular-foundation-exit-assessment/angular-foundation-exit-assessment-review.md",
+    "api": "documentation/modules/platform/features/angular-foundation-exit-assessment/angular-foundation-exit-assessment-api.md",
+    "web": "documentation/modules/platform/features/angular-foundation-exit-assessment/angular-foundation-exit-assessment-web.md",
+    "mobile": "documentation/modules/platform/features/angular-foundation-exit-assessment/angular-foundation-exit-assessment-mobile.md"
+  },
+  "sourceCollections": [],
+  "requiredFiles": [
+    {
+      "id": "assessment-0",
+      "path": "web-angular/src/app/shared/ui/public-api.ts",
+      "layer": "web",
+      "purpose": "Current read-only source or assessment evidence"
+    },
+    {
+      "id": "assessment-1",
+      "path": "web-angular/src/app/shared/data/public-api.ts",
+      "layer": "web",
+      "purpose": "Current read-only source or assessment evidence"
+    },
+    {
+      "id": "assessment-2",
+      "path": "web-angular/src/app/shared/data/scoped-read.ts",
+      "layer": "web",
+      "purpose": "Current read-only source or assessment evidence"
+    },
+    {
+      "id": "assessment-3",
+      "path": "web-angular/src/app/shared/data/collection-criteria.ts",
+      "layer": "web",
+      "purpose": "Current read-only source or assessment evidence"
+    },
+    {
+      "id": "assessment-4",
+      "path": "web-angular/src/app/app.routes.production.ts",
+      "layer": "web",
+      "purpose": "Current read-only source or assessment evidence"
+    },
+    {
+      "id": "assessment-5",
+      "path": "web-angular/tsconfig.json",
+      "layer": "web",
+      "purpose": "Current read-only source or assessment evidence"
+    },
+    {
+      "id": "assessment-6",
+      "path": "web-angular/angular.json",
+      "layer": "web",
+      "purpose": "Current read-only source or assessment evidence"
+    },
+    {
+      "id": "assessment-7",
+      "path": ".github/workflows/angular-ci.yml",
+      "layer": "configuration",
+      "purpose": "Current read-only source or assessment evidence"
+    },
+    {
+      "id": "assessment-8",
+      "path": "packages/tokens/scripts/sync-apps.mjs",
+      "layer": "web",
+      "purpose": "Current read-only source or assessment evidence"
+    },
+    {
+      "id": "assessment-9",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/reports/pages/CountryReportPage.tsx",
+      "layer": "web",
+      "purpose": "Current read-only source or assessment evidence"
+    },
+    {
+      "id": "assessment-10",
+      "path": "web-next/src/modules/reporting/crystal-report-manager/ManagedCrystalReportView.tsx",
+      "layer": "web",
+      "purpose": "Current read-only source or assessment evidence"
+    },
+    {
+      "id": "assessment-11",
+      "path": "web-next/src/modules/reporting/crystal-report-manager/services.ts",
+      "layer": "web",
+      "purpose": "Current read-only source or assessment evidence"
+    },
+    {
+      "id": "assessment-12",
+      "path": "web-next/src/modules/reporting/public/useManagedReportAvailability.ts",
+      "layer": "web",
+      "purpose": "Current read-only source or assessment evidence"
+    },
+    {
+      "id": "assessment-13",
+      "path": "web-next/src/shared/reporting/components/ReportViewer.tsx",
+      "layer": "web",
+      "purpose": "Current read-only source or assessment evidence"
+    },
+    {
+      "id": "assessment-14",
+      "path": "web-next/src/shared/reporting/components/ServerReportViewerClient.tsx",
+      "layer": "web",
+      "purpose": "Current read-only source or assessment evidence"
+    },
+    {
+      "id": "assessment-15",
+      "path": "documentation/modules/platform/features/angular-form-foundation/IMPLEMENTATION_REPORT.md",
+      "layer": "documentation",
+      "purpose": "Current read-only source or assessment evidence"
+    },
+    {
+      "id": "assessment-16",
+      "path": "documentation/modules/platform/features/angular-collection-foundation/IMPLEMENTATION_REPORT.md",
+      "layer": "documentation",
+      "purpose": "Current read-only source or assessment evidence"
+    },
+    {
+      "id": "assessment-17",
+      "path": "documentation/modules/platform/features/angular-reference-selection-foundation/IMPLEMENTATION_REPORT.md",
+      "layer": "documentation",
+      "purpose": "Current read-only source or assessment evidence"
+    },
+    {
+      "id": "assessment-18",
+      "path": "documentation/modules/platform/features/angular-form-close-foundation/IMPLEMENTATION_REPORT.md",
+      "layer": "documentation",
+      "purpose": "Current read-only source or assessment evidence"
+    },
+    {
+      "id": "assessment-19",
+      "path": "documentation/modules/platform/features/angular-unsaved-navigation-foundation/IMPLEMENTATION_REPORT.md",
+      "layer": "documentation",
+      "purpose": "Current read-only source or assessment evidence"
+    },
+    {
+      "id": "assessment-20",
+      "path": "documentation/modules/platform/features/angular-date-field-foundation/IMPLEMENTATION_REPORT.md",
+      "layer": "documentation",
+      "purpose": "Current read-only source or assessment evidence"
+    },
+    {
+      "id": "assessment-21",
+      "path": "documentation/modules/platform/features/angular-numeric-field-foundation/IMPLEMENTATION_REPORT.md",
+      "layer": "documentation",
+      "purpose": "Current read-only source or assessment evidence"
+    },
+    {
+      "id": "assessment-22",
+      "path": "documentation/modules/platform/features/angular-boolean-field-foundation/IMPLEMENTATION_REPORT.md",
+      "layer": "documentation",
+      "purpose": "Current read-only source or assessment evidence"
+    },
+    {
+      "id": "assessment-23",
+      "path": "documentation/modules/platform/features/angular-multiline-field-foundation/IMPLEMENTATION_REPORT.md",
+      "layer": "documentation",
+      "purpose": "Current read-only source or assessment evidence"
+    },
+    {
+      "id": "assessment-24",
+      "path": "documentation/modules/platform/features/angular-collection-criteria-foundation/IMPLEMENTATION_REPORT.md",
+      "layer": "documentation",
+      "purpose": "Current read-only source or assessment evidence"
+    },
+    {
+      "id": "assessment-25",
+      "path": "documentation/modules/platform/features/angular-scoped-read-lifetime-foundation/IMPLEMENTATION_REPORT.md",
+      "layer": "documentation",
+      "purpose": "Current read-only source or assessment evidence"
+    },
+    {
+      "id": "assessment-26",
+      "path": "documentation/modules/platform/features/angular-api-contract-generation-proof/IMPLEMENTATION_REPORT.md",
+      "layer": "documentation",
+      "purpose": "Current read-only source or assessment evidence"
+    },
+    {
+      "id": "assessment-27",
+      "path": "documentation/modules/platform/features/angular-foundation-exit-assessment/ASSESSMENT_REPORT.md",
+      "layer": "documentation",
+      "purpose": "Current read-only source or assessment evidence"
+    },
+    {
+      "id": "assessment-28",
+      "path": "documentation/modules/platform/features/angular-foundation-exit-assessment/SOURCE_SNAPSHOT.json",
+      "layer": "documentation",
+      "purpose": "Current read-only source or assessment evidence"
+    },
+    {
+      "id": "assessment-29",
+      "path": "documentation/modules/platform/features/angular-foundation-exit-assessment/angular-foundation-exit-assessment-review.md",
+      "layer": "documentation",
+      "purpose": "Current read-only source or assessment evidence"
+    },
+    {
+      "id": "assessment-30",
+      "path": "documentation/modules/platform/features/angular-foundation-exit-assessment/angular-foundation-exit-assessment-api.md",
+      "layer": "documentation",
+      "purpose": "Current read-only source or assessment evidence"
+    },
+    {
+      "id": "assessment-31",
+      "path": "documentation/modules/platform/features/angular-foundation-exit-assessment/angular-foundation-exit-assessment-web.md",
+      "layer": "documentation",
+      "purpose": "Current read-only source or assessment evidence"
+    },
+    {
+      "id": "assessment-32",
+      "path": "documentation/modules/platform/features/angular-foundation-exit-assessment/angular-foundation-exit-assessment-mobile.md",
+      "layer": "documentation",
+      "purpose": "Current read-only source or assessment evidence"
+    },
+    {
+      "id": "assessment-33",
+      "path": "documentation/modules/platform/features/angular-foundation-exit-assessment/angular-foundation-exit-assessment-request.md",
+      "layer": "documentation",
+      "purpose": "Current read-only source or assessment evidence"
+    },
+    {
+      "id": "assessment-34",
+      "path": "documentation/modules/platform/features/angular-foundation-exit-assessment/angular-foundation-exit-assessment-evidence.md",
+      "layer": "documentation",
+      "purpose": "Current read-only source or assessment evidence"
+    },
+    {
+      "id": "assessment-35",
+      "path": "documentation/plans/business/web-angular-migration/PLAN.md",
+      "layer": "documentation",
+      "purpose": "Current read-only source or assessment evidence"
+    },
+    {
+      "id": "assessment-36",
+      "path": "documentation/plans/business/web-angular-migration/ROADMAP.md",
+      "layer": "documentation",
+      "purpose": "Current read-only source or assessment evidence"
+    },
+    {
+      "id": "assessment-37",
+      "path": "documentation/plans/business/web-angular-migration/ANGULAR_ARCHITECTURE.md",
+      "layer": "documentation",
+      "purpose": "Current read-only source or assessment evidence"
+    },
+    {
+      "id": "assessment-38",
+      "path": "documentation/plans/business/web-angular-migration/SIGMA_ACCEPTANCE.md",
+      "layer": "documentation",
+      "purpose": "Current read-only source or assessment evidence"
+    },
+    {
+      "id": "assessment-39",
+      "path": "documentation/plans/business/web-angular-migration/ERP_ACCEPTANCE.md",
+      "layer": "documentation",
+      "purpose": "Current read-only source or assessment evidence"
+    },
+    {
+      "id": "assessment-40",
+      "path": "documentation/plans/business/web-angular-migration/decomposition/angular-foundation-exit-assessment.md",
+      "layer": "documentation",
+      "purpose": "Current read-only source or assessment evidence"
+    },
+    {
+      "id": "assessment-41",
+      "path": "documentation/plans/notes/FOLLOW_UPS.md",
+      "layer": "documentation",
+      "purpose": "Current read-only source or assessment evidence"
+    },
+    {
+      "id": "assessment-42",
+      "path": "documentation/plans/notes/KNOWN_RISKS.md",
+      "layer": "documentation",
+      "purpose": "Current read-only source or assessment evidence"
+    },
+    {
+      "id": "assessment-43",
+      "path": "documentation/plans/notes/PRODUCTION_NOTES.md",
+      "layer": "documentation",
+      "purpose": "Current read-only source or assessment evidence"
+    }
+  ],
+  "finalizationChecklist": [
+    "Replace every placeholder in the review artifact.",
+    "Complete the Existing-System Relationship Review and every decision in angular-foundation-exit-assessment-request.md before implementation.",
+    "Complete the Business Rules Matrix with one primary owner, stable outcome/error, and required test for every known rule.",
+    "Complete every Edge Cases & Validation category with scenarios or an explicit N/A reason, enforcement layer, and required test.",
+    "Complete the Impact Matrix with Reuse, Extend, Change, Add, or reasoned N/A across every listed area.",
+    "Remove every remaining placeholder from angular-foundation-exit-assessment-request.md before runtime implementation.",
+    "Add Phase 00 current API, web, mobile, configuration, localization, and test evidence sources.",
+    "Classify every optional view, including Import, as Required, Deferred, or Excluded independently for web and mobile.",
+    "When Import is Required, add its API and applicable client runtime, route/configuration, localization, and focused-test paths.",
+    "Record and test the exact Import request envelope, limits, duplicate and relationship rules, atomicity, permissions, side effects, and retry behavior.",
+    "Add source collections with evidence-based minimum file counts.",
+    "Create the four initial applied implementation books from the approved plan plus verified current source; label target-only behavior explicitly.",
+    "Rename this file to required-files.json when the Phase 00 evidence paths exist; extend it with runtime files during implementation.",
+    "Update the review artifact to point at required-files.json and mark its documentation state Final.",
+    "Merge recipe-registration.draft.json into recipe-manifest.json after the Phase 00 books and preflight manifest are complete.",
+    "Write generated packets under documentation/modules/platform/features/angular-foundation-exit-assessment/generated/.",
+    "Run generation and then Generate-Documentation.ps1 -Check.",
+    "Complete phase 06 with an explicit verification decision.",
+    "Do not start customer-facing education until phase 06 records Verified.",
+    "For customer-visible work, complete phase 07 and its Customer Education Pack before Closed.",
+    "When Customer Education is Required, add the verified education document to required-files.json and rerun Generate-Documentation.ps1 -Check before Closed."
+  ]
+}

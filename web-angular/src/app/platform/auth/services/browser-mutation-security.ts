@@ -4,5 +4,5 @@ import { BrowserAuthService } from './browser-auth-service';
 @Injectable({providedIn:'root'})
 export class BrowserMutationSecurity {
  private readonly transport=inject(BrowserAuthService);
- csrf():Promise<string>{return this.transport.csrf();}
+ csrf(renew=false):Promise<string>{if(renew)this.transport.resetCsrf();return this.transport.csrf();}
 }

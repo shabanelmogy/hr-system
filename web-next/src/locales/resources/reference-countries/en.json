@@ -1,5 +1,6 @@
 {
   "countries": {
+    "mutationUncertain": "The server outcome could not be confirmed. Close this form and review the latest list before trying this action again.",
     "dashboard": {
       "totalCountries": "Total Countries",
       "totalMatching": "Matching Countries",
@@ -191,6 +192,10 @@
     "import": {
       "duplicateInFile": "Duplicate of another country row in this file",
       "importSuccess": "{{count}} countries uploaded"
-    }
+    },
+    "lifecycleUncertain": "The server outcome could not be confirmed. Review the refreshed list before trying this action again.",
+    "inUseByState": "This country cannot be archived because it has active states.",
+    "inUseByAddress": "This country cannot be archived because active addresses use it.",
+    "inUseByCompany": "This country cannot be archived because a company uses it."
   }
 }

@@ -1,0 +1,392 @@
+{
+  "schemaVersion": 1,
+  "status": "closed",
+  "executionMode": "verified-bounded-runtime",
+  "runtimeAuthorized": true,
+  "feature": "angular-numeric-field-foundation",
+  "featureName": "Shared numeric field preparation",
+  "referenceFeature": "N/A",
+  "planId": "web-angular-migration",
+  "sliceId": "S1-A8 — Shared numeric field preparation",
+  "canonicalPlan": "documentation/plans/business/web-angular-migration/PLAN.md",
+  "featureDecompositionDecision": "Single feature",
+  "screenWorkflowContract": "documentation/plans/business/web-angular-migration/decomposition/angular-numeric-field-foundation.md",
+  "plannedCustomerEducation": "documentation/plans/business/web-angular-migration/education/angular-numeric-field-foundation.md",
+  "purpose": "Verified exact numeric field/shared template/current source and portable proof",
+  "reviewArtifact": "documentation/modules/platform/features/angular-numeric-field-foundation/angular-numeric-field-foundation-evidence.md",
+  "implementationRequest": "documentation/modules/platform/features/angular-numeric-field-foundation/angular-numeric-field-foundation-request.md",
+  "plannedCanonicalBooks": {
+    "master": "documentation/modules/platform/features/angular-numeric-field-foundation/angular-numeric-field-foundation-review.md",
+    "api": "documentation/modules/platform/features/angular-numeric-field-foundation/angular-numeric-field-foundation-api.md",
+    "web": "documentation/modules/platform/features/angular-numeric-field-foundation/angular-numeric-field-foundation-web.md",
+    "mobile": "documentation/modules/platform/features/angular-numeric-field-foundation/angular-numeric-field-foundation-mobile.md"
+  },
+  "sourceCollections": [],
+  "requiredFiles": [
+    {
+      "id": "phase00-0",
+      "path": "documentation/modules/platform/features/angular-numeric-field-foundation/NUMERIC_FIELD_CONTRACT.md",
+      "layer": "documentation",
+      "purpose": "Actual inspected evidence or frozen contract"
+    },
+    {
+      "id": "phase00-1",
+      "path": "documentation/modules/platform/features/angular-numeric-field-foundation/angular-numeric-field-foundation-review.md",
+      "layer": "documentation",
+      "purpose": "Actual inspected evidence or frozen contract"
+    },
+    {
+      "id": "phase00-2",
+      "path": "documentation/modules/platform/features/angular-numeric-field-foundation/angular-numeric-field-foundation-api.md",
+      "layer": "documentation",
+      "purpose": "Actual inspected evidence or frozen contract"
+    },
+    {
+      "id": "phase00-3",
+      "path": "documentation/modules/platform/features/angular-numeric-field-foundation/angular-numeric-field-foundation-web.md",
+      "layer": "documentation",
+      "purpose": "Actual inspected evidence or frozen contract"
+    },
+    {
+      "id": "phase00-4",
+      "path": "documentation/modules/platform/features/angular-numeric-field-foundation/angular-numeric-field-foundation-mobile.md",
+      "layer": "documentation",
+      "purpose": "Actual inspected evidence or frozen contract"
+    },
+    {
+      "id": "phase00-5",
+      "path": "documentation/modules/platform/features/angular-numeric-field-foundation/angular-numeric-field-foundation-request.md",
+      "layer": "documentation",
+      "purpose": "Actual inspected evidence or frozen contract"
+    },
+    {
+      "id": "phase00-6",
+      "path": "documentation/modules/platform/features/angular-numeric-field-foundation/angular-numeric-field-foundation-evidence.md",
+      "layer": "documentation",
+      "purpose": "Actual inspected evidence or frozen contract"
+    },
+    {
+      "id": "phase00-7",
+      "path": "documentation/plans/business/web-angular-migration/PLAN.md",
+      "layer": "documentation",
+      "purpose": "Actual inspected evidence or frozen contract"
+    },
+    {
+      "id": "phase00-8",
+      "path": "documentation/plans/business/web-angular-migration/decomposition/angular-numeric-field-foundation.md",
+      "layer": "documentation",
+      "purpose": "Actual inspected evidence or frozen contract"
+    },
+    {
+      "id": "phase00-9",
+      "path": "documentation/plans/business/web-angular-migration/ERP_ACCEPTANCE.md",
+      "layer": "documentation",
+      "purpose": "Actual inspected evidence or frozen contract"
+    },
+    {
+      "id": "phase00-10",
+      "path": "AGENTS.md",
+      "layer": "web",
+      "purpose": "Actual inspected evidence or frozen contract"
+    },
+    {
+      "id": "phase00-11",
+      "path": "web-angular/src/app/shared/ui/forms/fields/text-field.ts",
+      "layer": "web",
+      "purpose": "Actual inspected evidence or frozen contract"
+    },
+    {
+      "id": "phase00-12",
+      "path": "web-angular/src/app/shared/ui/forms/form-field-control.ts",
+      "layer": "web",
+      "purpose": "Actual inspected evidence or frozen contract"
+    },
+    {
+      "id": "phase00-13",
+      "path": "web-angular/src/app/shared/ui/forms/form-container.ts",
+      "layer": "web",
+      "purpose": "Actual inspected evidence or frozen contract"
+    },
+    {
+      "id": "phase00-14",
+      "path": "web-next/src/shared/components/forms/text-fields/MyTextField.tsx",
+      "layer": "web",
+      "purpose": "Actual inspected evidence or frozen contract"
+    },
+    {
+      "id": "phase00-15",
+      "path": "web-next/src/shared/components/forms/text-fields/internals/EditableTextField.tsx",
+      "layer": "web",
+      "purpose": "Actual inspected evidence or frozen contract"
+    },
+    {
+      "id": "phase00-16",
+      "path": "mobile-react/src/shared/components/controls/AppTextField.tsx",
+      "layer": "web",
+      "purpose": "Actual inspected evidence or frozen contract"
+    },
+    {
+      "id": "phase00-17",
+      "path": "mobile-react/src/core/erp/decimal.ts",
+      "layer": "web",
+      "purpose": "Actual inspected evidence or frozen contract"
+    },
+    {
+      "id": "phase00-18",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Application/Features/Finance/LedgerSetup/Contracts/LedgerSetupContracts.cs",
+      "layer": "api",
+      "purpose": "Actual inspected evidence or frozen contract"
+    },
+    {
+      "id": "phase00-19",
+      "path": "api/Modules/Accounting/ErpSystem.Modules.Accounting.Infrastructure/Features/Finance/LedgerSetup/Persistence/LedgerSetupConfigurations.cs",
+      "layer": "api",
+      "purpose": "Actual inspected evidence or frozen contract"
+    },
+    {
+      "id": "runtime-0",
+      "path": "web-angular/src/app/shared/ui/forms/fields/text-field.html",
+      "layer": "web",
+      "purpose": "Actual numeric runtime or synchronized source evidence"
+    },
+    {
+      "id": "runtime-1",
+      "path": "web-angular/src/app/shared/ui/forms/fields/numeric-text.ts",
+      "layer": "web",
+      "purpose": "Actual numeric runtime or synchronized source evidence"
+    },
+    {
+      "id": "runtime-2",
+      "path": "web-angular/src/app/shared/ui/forms/fields/numeric-text.spec.ts",
+      "layer": "web",
+      "purpose": "Actual numeric runtime or synchronized source evidence"
+    },
+    {
+      "id": "runtime-3",
+      "path": "web-angular/src/app/shared/ui/forms/fields/numeric-field.ts",
+      "layer": "web",
+      "purpose": "Actual numeric runtime or synchronized source evidence"
+    },
+    {
+      "id": "runtime-4",
+      "path": "web-angular/src/app/shared/ui/forms/fields/numeric-field.spec.ts",
+      "layer": "web",
+      "purpose": "Actual numeric runtime or synchronized source evidence"
+    },
+    {
+      "id": "runtime-5",
+      "path": "web-angular/src/app/dev/numeric-preview.ts",
+      "layer": "web",
+      "purpose": "Actual numeric runtime or synchronized source evidence"
+    },
+    {
+      "id": "runtime-6",
+      "path": "web-angular/scripts/verify-numeric-browser.mjs",
+      "layer": "web",
+      "purpose": "Actual numeric runtime or synchronized source evidence"
+    },
+    {
+      "id": "runtime-7",
+      "path": "web-angular/src/app/shared/ui/forms/public-api.ts",
+      "layer": "web",
+      "purpose": "Actual numeric runtime or synchronized source evidence"
+    },
+    {
+      "id": "runtime-8",
+      "path": "web-angular/src/app/shared/ui/public-api.ts",
+      "layer": "web",
+      "purpose": "Actual numeric runtime or synchronized source evidence"
+    },
+    {
+      "id": "runtime-9",
+      "path": "web-angular/src/app/app.routes.ts",
+      "layer": "web",
+      "purpose": "Actual numeric runtime or synchronized source evidence"
+    },
+    {
+      "id": "runtime-10",
+      "path": "web-angular/src/locales/generated/core.json",
+      "layer": "web",
+      "purpose": "Actual numeric runtime or synchronized source evidence"
+    },
+    {
+      "id": "runtime-11",
+      "path": "web-angular/src/locales/generated/bootstrap.json",
+      "layer": "web",
+      "purpose": "Actual numeric runtime or synchronized source evidence"
+    },
+    {
+      "id": "runtime-12",
+      "path": "web-angular/src/app/platform/localization/catalog.generated.ts",
+      "layer": "web",
+      "purpose": "Actual numeric runtime or synchronized source evidence"
+    },
+    {
+      "id": "runtime-13",
+      "path": "web-angular/scripts/export-ui-resources.mjs",
+      "layer": "web",
+      "purpose": "Actual numeric runtime or synchronized source evidence"
+    },
+    {
+      "id": "runtime-14",
+      "path": "web-next/src/locales/resources/core/en.json",
+      "layer": "web",
+      "purpose": "Actual numeric runtime or synchronized source evidence"
+    },
+    {
+      "id": "runtime-15",
+      "path": "web-next/src/locales/resources/core/ar.json",
+      "layer": "web",
+      "purpose": "Actual numeric runtime or synchronized source evidence"
+    },
+    {
+      "id": "runtime-16",
+      "path": "web-next/src/config/company-ui-catalog-version.ts",
+      "layer": "web",
+      "purpose": "Actual numeric runtime or synchronized source evidence"
+    },
+    {
+      "id": "runtime-17",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Features/CompanyLocalization/company-ui-catalog.json",
+      "layer": "api",
+      "purpose": "Actual numeric runtime or synchronized source evidence"
+    },
+    {
+      "id": "final-0",
+      "path": "documentation/modules/platform/features/angular-numeric-field-foundation/IMPLEMENTATION_REPORT.md",
+      "layer": "documentation",
+      "purpose": "Actual final evidence or consumer handoff"
+    },
+    {
+      "id": "final-1",
+      "path": "documentation/plans/business/web-angular-migration/education/angular-numeric-field-foundation.md",
+      "layer": "documentation",
+      "purpose": "Actual final evidence or consumer handoff"
+    },
+    {
+      "id": "final-2",
+      "path": "documentation/guides/web/architecture/ANGULAR_SHARED_COMPONENTS.md",
+      "layer": "documentation",
+      "purpose": "Actual final evidence or consumer handoff"
+    },
+    {
+      "id": "final-3",
+      "path": "documentation/modules/platform/features/angular-numeric-field-foundation/verification/close-results8.json",
+      "layer": "documentation",
+      "purpose": "Actual final evidence or consumer handoff"
+    },
+    {
+      "id": "final-4",
+      "path": "documentation/modules/platform/features/angular-numeric-field-foundation/verification/dark-ar-390-errors.png",
+      "layer": "documentation",
+      "purpose": "Actual final evidence or consumer handoff"
+    },
+    {
+      "id": "final-5",
+      "path": "documentation/modules/platform/features/angular-numeric-field-foundation/verification/dark-ar-390-form.png",
+      "layer": "documentation",
+      "purpose": "Actual final evidence or consumer handoff"
+    },
+    {
+      "id": "final-6",
+      "path": "documentation/modules/platform/features/angular-numeric-field-foundation/verification/date-results8.json",
+      "layer": "documentation",
+      "purpose": "Actual final evidence or consumer handoff"
+    },
+    {
+      "id": "final-7",
+      "path": "documentation/modules/platform/features/angular-numeric-field-foundation/verification/form-results40.json",
+      "layer": "documentation",
+      "purpose": "Actual final evidence or consumer handoff"
+    },
+    {
+      "id": "final-8",
+      "path": "documentation/modules/platform/features/angular-numeric-field-foundation/verification/language-results20.json",
+      "layer": "documentation",
+      "purpose": "Actual final evidence or consumer handoff"
+    },
+    {
+      "id": "final-9",
+      "path": "documentation/modules/platform/features/angular-numeric-field-foundation/verification/light-en-1440-errors.png",
+      "layer": "documentation",
+      "purpose": "Actual final evidence or consumer handoff"
+    },
+    {
+      "id": "final-10",
+      "path": "documentation/modules/platform/features/angular-numeric-field-foundation/verification/light-en-1440-form.png",
+      "layer": "documentation",
+      "purpose": "Actual final evidence or consumer handoff"
+    },
+    {
+      "id": "final-11",
+      "path": "documentation/modules/platform/features/angular-numeric-field-foundation/verification/login-results10.json",
+      "layer": "documentation",
+      "purpose": "Actual final evidence or consumer handoff"
+    },
+    {
+      "id": "final-12",
+      "path": "documentation/modules/platform/features/angular-numeric-field-foundation/verification/navigation-results8.json",
+      "layer": "documentation",
+      "purpose": "Actual final evidence or consumer handoff"
+    },
+    {
+      "id": "final-13",
+      "path": "documentation/modules/platform/features/angular-numeric-field-foundation/verification/numeric-focused8.json",
+      "layer": "documentation",
+      "purpose": "Actual final evidence or consumer handoff"
+    },
+    {
+      "id": "final-14",
+      "path": "documentation/modules/platform/features/angular-numeric-field-foundation/verification/numeric-results40.json",
+      "layer": "documentation",
+      "purpose": "Actual final evidence or consumer handoff"
+    },
+    {
+      "id": "final-15",
+      "path": "documentation/modules/platform/features/angular-numeric-field-foundation/verification/README.md",
+      "layer": "documentation",
+      "purpose": "Actual final evidence or consumer handoff"
+    },
+    {
+      "id": "final-16",
+      "path": "documentation/modules/platform/features/angular-numeric-field-foundation/verification/reference-results8.json",
+      "layer": "documentation",
+      "purpose": "Actual final evidence or consumer handoff"
+    },
+    {
+      "id": "final-17",
+      "path": "web-angular/package.json",
+      "layer": "web",
+      "purpose": "Actual final evidence or consumer handoff"
+    },
+    {
+      "id": "shared-multiline-regression",
+      "path": "web-angular/src/app/shared/ui/forms/fields/text-field.spec.ts",
+      "layer": "web",
+      "purpose": "Current inherited TextField mode/locks/template regression"
+    }
+  ],
+  "finalizationChecklist": [
+    "Replace every placeholder in the review artifact.",
+    "Complete the Existing-System Relationship Review and every decision in angular-numeric-field-foundation-request.md before implementation.",
+    "Complete the Business Rules Matrix with one primary owner, stable outcome/error, and required test for every known rule.",
+    "Complete every Edge Cases & Validation category with scenarios or an explicit N/A reason, enforcement layer, and required test.",
+    "Complete the Impact Matrix with Reuse, Extend, Change, Add, or reasoned N/A across every listed area.",
+    "Remove every remaining placeholder from angular-numeric-field-foundation-request.md before runtime implementation.",
+    "Add Phase 00 current API, web, mobile, configuration, localization, and test evidence sources.",
+    "Classify every optional view, including Import, as Required, Deferred, or Excluded independently for web and mobile.",
+    "When Import is Required, add its API and applicable client runtime, route/configuration, localization, and focused-test paths.",
+    "Record and test the exact Import request envelope, limits, duplicate and relationship rules, atomicity, permissions, side effects, and retry behavior.",
+    "Add source collections with evidence-based minimum file counts.",
+    "Create the four initial applied implementation books from the approved plan plus verified current source; label target-only behavior explicitly.",
+    "Rename this file to required-files.json when the Phase 00 evidence paths exist; extend it with runtime files during implementation.",
+    "Update the review artifact to point at required-files.json and mark its documentation state Final.",
+    "Merge recipe-registration.draft.json into recipe-manifest.json after the Phase 00 books and preflight manifest are complete.",
+    "Write generated packets under documentation/modules/platform/features/angular-numeric-field-foundation/generated/.",
+    "Run generation and then Generate-Documentation.ps1 -Check.",
+    "Complete phase 06 with an explicit verification decision.",
+    "Do not start customer-facing education until phase 06 records Verified.",
+    "For customer-visible work, complete phase 07 and its Customer Education Pack before Closed.",
+    "When Customer Education is Required, add the verified education document to required-files.json and rerun Generate-Documentation.ps1 -Check before Closed."
+  ]
+}

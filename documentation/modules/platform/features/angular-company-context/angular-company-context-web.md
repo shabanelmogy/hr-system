@@ -44,6 +44,13 @@ Implemented and verified: deduplicate switch, pause/cancel scoped reads before m
 
 Phase 06 Verified: full Angular check 22 files/90 tests, 6 architecture cases, strict templates/types/catalog/tokens/fonts and unchanged-budget build; 14 production company cases, 20 language, 24 shell, 14 home, 14 module and 10 synthetic login regressions pass. Existing Next switch5/native auth6 tests pass. Real isolated Angular/production Cookie/JWT/SQL proof passes with explicitly synthetic catalog/locale reads. Current local trusted4210 real demo/API/SQL landing/reload/logout passes; demo has one company. See IMPLEMENTATION_REPORT.md for exact limits and reproduction.
 
+Current corrective verification (2026-10-30): full Angular61files/362tests and
+build passed; focused auth/Grid/Select41 tests passed. Eight actual protected
+collection browser cases verified unchanged-focus stability with no loading,
+refetch or row replacement, including first blank/row clicks. See
+verification/VISIBILITY_REVALIDATION_CORRECTION.md for changed authority, consent,
+late-reply and fail-closed guards; original S2-A4 proof above remains historical.
+
 ## 12. Operations
 
 No current API/schema change is required by route presence. Any real gap discovered must extend the existing owner through API workflow and corresponding gates. No production business company is created for preflight. Hosted origin/provider checks remain PROD-002/017/019/RISK-018.
@@ -63,3 +70,16 @@ See the current company context contract, final required-files.json and IMPLEMEN
 Current implementation follows TRANSITION_READINESS.md. One canonical bilingual angularAuth.updatingContext key synchronizes the 21-source/7127-key schema3 catalog and embedded API. Phase 06 is Verified; education was authored afterward. No API endpoint/schema/grant or retained native/Next runtime change.
 
 Angular profile: Shell composes the existing public selector/context/feedback. Platform owns transport, signals and invalidation; Shared owns generic rendering and scoped-read lifecycle. Protected content remains mounted but hidden/inert during transition; the header stays at last verified identity.
+
+## 16. Visibility revalidation correction — 2026-10-30
+
+Requester-reported first-click loading was traced to window focus triggering the
+full context coordinator for an unchanged session. AuthSession now coalesces a
+background verified-session check and retains the same readIdentity when the full
+normalized Session is unchanged. Actual differences, missing/failed verification
+use the existing masked coordinator; external hints still mask immediately and
+late background replies cannot overwrite a newer transition. Dirty consent is
+not canceled for an unchanged focus hint. See
+verification/VISIBILITY_REVALIDATION_CORRECTION.md and current source tests.
+API/schema, cookies/CSRF, permission grants, retained Next and native clients are
+unchanged; migration N/A. PROD-019 owns manual hosted focus/cross-tab release proof.

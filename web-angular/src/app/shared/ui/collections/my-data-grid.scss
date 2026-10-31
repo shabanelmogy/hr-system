@@ -1,0 +1,35 @@
+:host{display:flex;min-width:0;min-height:0;height:100%;flex-direction:column}
+.table-body{flex:1;min-height:0;min-width:0;overflow:hidden;--action-min-height:calc(var(--collection-row-height) - 10px);--action-icon-size:min(36px,calc(var(--collection-row-height) - 10px));--action-padding-y:0px}p-table{display:block;height:100%}
+:host ::ng-deep .p-datatable{display:flex;flex-direction:column;height:100%;min-height:0;font-size:14px}
+:host ::ng-deep .p-datatable-table-container{flex:1;min-height:0;overscroll-behavior:contain}
+:host ::ng-deep .p-datatable-table{border-collapse:separate;border-spacing:0;table-layout:fixed}
+// PrimeNG 22.1.4 assigns its frozen class to both bodies when frozenValue exists.
+// Only the first body contains frozen records; the ordinary body must scroll.
+:host ::ng-deep .p-datatable-table > tbody.p-datatable-frozen-tbody + tbody.p-datatable-frozen-tbody{position:static}
+// FrozenColumn 22.1.4 leaves inline offsets behind on unpin/side changes.
+// Preserve native positioning while neutralizing the inactive physical edge.
+:host ::ng-deep [pFrozenColumn]:not(.p-datatable-frozen-column){left:auto!important;right:auto!important}
+:host ::ng-deep .p-datatable-frozen-column.p-datatable-frozen-column-left{right:auto!important}
+:host ::ng-deep .p-datatable-frozen-column:not(.p-datatable-frozen-column-left){left:auto!important}
+  // FrozenColumn 22.1.4 calculates left offsets from previous DOM siblings even
+  // in RTL. The shared trailing action cell is the last DOM cell: its physical
+  // left offset must be zero, or it covers the leading selection checkbox.
+  :host-context([dir=rtl]) ::ng-deep .action-cell.p-datatable-frozen-column-left{left:0!important}
+th{height:56px;padding:8px 16px;text-align:start;background:var(--surface);color:var(--muted-foreground);font-weight:600;border-bottom:1px solid var(--border);white-space:nowrap}
+td{height:var(--collection-row-height);padding:4px 16px;border-bottom:1px solid var(--border);color:var(--foreground);background:var(--surface)}
+tr.active-row td{background:color-mix(in srgb,var(--primary) 6%,var(--surface))}tr.active-row td:first-child{box-shadow:inset 3px 0 var(--primary)}
+:host-context([dir=rtl]) tr.active-row td:first-child{box-shadow:inset -3px 0 var(--primary)}
+tr.selected-row td{background:color-mix(in srgb,var(--primary) 13%,var(--surface))}tr:focus-visible{outline:2px solid var(--ring);outline-offset:-2px}tr:hover td{background:var(--accent)}
+// Keyboard owns the active indicator even when the pointer stays on the old row.
+.table-body:has(tr:focus-visible) tr:hover:not(.active-row):not(.selected-row)>td{background:var(--surface)}
+.table-body:has(tr:focus-visible) tr.active-row:not(.selected-row)>td{background:color-mix(in srgb,var(--primary) 6%,var(--surface))}
+.table-body:has(tr:focus-visible) tr.selected-row>td{background:color-mix(in srgb,var(--primary) 13%,var(--surface))}
+.selection-cell{width:48px;min-width:48px;padding-inline:12px}.cell-text{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}p-sorticon{display:inline-block;margin-inline-start:4px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.column-header{display:flex;align-items:center;gap:0;min-width:0;white-space:nowrap}.column-header.center{justify-content:center}.column-header.end{justify-content:flex-end}.column-filter{display:inline-flex;margin-inline-start:4px;flex-shrink:0}
+.reference-grid th{padding:0 10px;color:var(--foreground);font-size:14px;font-weight:500;line-height:20px}.reference-grid td{padding:0 10px}.reference-grid th:not(.selection-cell)::after{content:'';position:absolute;inset-inline-end:0;top:calc(50% - 8px);height:16px;border-inline-end:1px solid var(--border)}.reference-grid th:not(.p-datatable-frozen-column){position:relative}
+.reference-grid p-sorticon{opacity:0}.reference-grid th:hover p-sorticon,.reference-grid th[aria-sort=ascending] p-sorticon,.reference-grid th[aria-sort=descending] p-sorticon{opacity:1}
+.detail-row td{height:auto;padding:16px;background:var(--surface)}
+.group-column-header{text-align:center}.column-footer td{font-weight:600;background:var(--background)}
+.column-header>span:first-child{min-width:0;overflow:hidden;text-overflow:ellipsis}p-sorticon{flex-shrink:0}
+.action-cell{text-align:center;padding-inline:8px!important}

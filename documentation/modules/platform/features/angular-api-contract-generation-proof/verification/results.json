@@ -1,0 +1,45 @@
+{
+  "angular": "22.2.3",
+  "deterministicGeneration": true,
+  "fallback": "Keep typed owner services with unknown-to-runtime-schema validation and focused contract/transport tests; assess each business contract before adoption",
+  "findings": [
+    "Schema optional/nullability lacks required source guarantees",
+    "No typed ProblemDetails extension/validation contract",
+    "Missing binary response metadata",
+    "Default transport lacks cross-origin Cookie/CSRF policy",
+    "JSON media aliases collide to a wildcard request type",
+    "Generated any violates current architecture policy"
+  ],
+  "generatedFiles": 109,
+  "generator": "ng-openapi-gen@1.1.0",
+  "liveSchemaChecked": true,
+  "paths": 32,
+  "phase06": "Verified assessment; unadapted runtime adoption rejected",
+  "projectionSha256": "6bc3f900b5921fa4baec8ed1574be6b0e3b776a281eec59039a2d393ace400f9",
+  "rawGeneratedFilesRejectedByAnyPolicy": 61,
+  "rawSha256": "5cc5eeb788439efb0fd8fa900561ba668cae437d25a29e00fb142cf61ea3ead0",
+  "schemas": 35,
+  "sourceUrl": "https://shabanhrms.runasp.net/swagger/v1/swagger.json",
+  "strictAngularCompilation": true,
+  "transport": {
+    "businessWrites": 0,
+    "checks": [
+      "Actual query names, paging, Unicode and false preserved",
+      "Unadapted cross-origin Cookie credential gap reproduced",
+      "Numeric zero path ID is serialized without a synthetic sentinel",
+      "Opaque concurrency token, date-only and numeric enum survive unchanged",
+      "Unadapted mutation has no current CSRF header",
+      "Observed media alias collision emits wildcard JSON content type",
+      "Observable unsubscribe reaches backend teardown",
+      "ProblemDetails extensions/nested validation are raw unknown transport, not generated validation",
+      "Multipart Blob uses FormData without setting its boundary header",
+      "Missing binary response metadata produces text request instead of Blob",
+      "Supplemental repeated query array encoding; no live binder claim",
+      "Decimal JSON number has no automatic decimal string conversion",
+      "Schema accepts incomplete response, requiring existing owner runtime validation"
+    ],
+    "count": 13,
+    "networkRequests": 0
+  },
+  "typescript": "6.0.3"
+}

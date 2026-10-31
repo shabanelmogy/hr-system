@@ -99,4 +99,4 @@ or feature-local document.
 | angular-localization-foundation-web | 13 | `a4f2b92cb7b0ddb46e4abfbc3ffd75253df09b1252afe8221c3bde9d44d2dd2e` |
 | angular-localization-foundation-mobile | 1 | `265fd2b4b95c9c933ce3aef4ccca2b46b645ca9b779d2684869d104faa9be73d` |
 | angular-localization-foundation-mobile | 14 | `8eb0574471e920e016444fe94f7ac5951ad3ffdb506efa474a7154c2ad240f95` |
-| angular-localization-foundation-mobile | 15 | `1f0ba56b18e34cf44b7c9c6560feed30a0c7f4b54d243de794be546b475d1ee9` |
+| angular-localization-foundation-mobile | 15 | `62ec30b9ccbca9d50a4cdc7e810991d098bf7138418711b4f7f9e1ef03d68a98` |

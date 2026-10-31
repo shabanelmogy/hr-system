@@ -22,6 +22,16 @@ namespace ErpSystem.Modules.ReferenceData.Tests;
 public sealed class CountriesControllerCqrsTests
 {
     [Fact]
+    public async Task AdvancedQuery_IsAReadDispatchUsingTheExistingCountriesQuery()
+    {
+        var sender = new RecordingSender();
+        var query = new GetCountriesQuery { Status = "all", Filters = [] };
+        var result = Assert.IsType<OkObjectResult>(await new CountriesController(sender).QueryPage(query, CancellationToken.None));
+        Assert.Same(query, Assert.Single(sender.Requests));
+        Assert.IsType<PageResponse<CountryListItemResponse>>(result.Value);
+    }
+
+    [Fact]
     public async Task EveryAction_DispatchesItsSliceAndUsesCanonicalSuccessStatus()
     {
         var sender = new RecordingSender();

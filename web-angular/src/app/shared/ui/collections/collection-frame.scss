@@ -1,0 +1,20 @@
+.reference-shell{border-radius:8px}.reference-shell .collection-toolbar{gap:4px;flex-wrap:wrap;--action-font-size:11.2px;--action-min-height:36px;--action-padding-y:0px}
+.reference-shell .search-controls{gap:4px;flex:1 1 540px;min-width:540px;max-width:760px;flex-wrap:nowrap}
+.reference-shell .search-field{flex:0 0 155px}.reference-shell .search-operator{flex:0 0 165px}.reference-shell .search-controls erp-text-field{flex:1 1 220px;min-width:220px;--touch-target:34px;--field-control-height:34px;--field-padding-y:5px;--radius:16px;--field-font-weight:400}
+.reference-shell .search-controls erp-icon{width:20px;height:20px;color:var(--muted-foreground);margin-inline-start:12px}.reference-shell .toolbar-content{margin-inline-start:auto;flex-shrink:0;flex-wrap:nowrap;min-width:max-content}
+.collection-shell{padding:16px;box-sizing:border-box}
+.collection-shell .collection-toolbar{padding:0 0 12px}
+@media(max-width:1199px){.reference-shell .search-controls{max-width:640px}}
+@media(max-width:899px){.reference-shell .search-controls{flex-direction:column;align-items:stretch;min-width:160px;max-width:560px;flex:1 1 100%}.reference-shell .search-field,.reference-shell .search-operator,.reference-shell .search-controls erp-text-field{flex:0 0 auto;width:100%;min-width:0}.reference-shell .search-controls erp-text-field{margin-bottom:0}}
+@media(max-width:599px){.collection-shell{padding:12px}.collection-shell .collection-toolbar{padding:0 0 12px}}
+
+.single-row-toolbar .collection-toolbar{flex-wrap:nowrap;overflow-x:auto;gap:8px;padding-block:8px 12px;overscroll-behavior-inline:contain}
+.single-row-toolbar .collection-toolbar .search-controls{flex:1 0 540px;flex-direction:row;align-items:center;flex-wrap:nowrap;min-width:540px;max-width:none}
+.single-row-toolbar .collection-toolbar .search-controls .search-field{flex:0 0 155px;width:auto}
+.single-row-toolbar .collection-toolbar .search-controls .search-operator{flex:0 0 165px;width:auto}
+.single-row-toolbar .collection-toolbar .search-controls erp-text-field{flex:1 0 220px;min-width:220px;width:auto}
+.single-row-toolbar .collection-toolbar .filter-region{flex:0 0 auto;padding:0}
+.single-row-toolbar .collection-toolbar .toolbar-content{flex:0 0 auto;margin-inline-start:0}
+.single-row-toolbar .collection-toolbar>erp-button{flex-shrink:0}
+:host ::ng-deep .single-row-toolbar .filter-region [toolbarFilters]{display:flex;align-items:center;gap:8px;flex-wrap:nowrap;white-space:nowrap;flex:0 0 auto;min-width:max-content}
+.collection-shell.plain-shell{padding:0;border:0;border-radius:0;background:transparent}

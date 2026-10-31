@@ -1,0 +1,1952 @@
+{
+  "schemaVersion": 1,
+  "status": "closed",
+  "executionMode": "verified-preflight-only",
+  "runtimeAuthorized": false,
+  "feature": "angular-countries-pilot-preparation",
+  "featureName": "Countries pilot preparation",
+  "referenceFeature": "N/A",
+  "planId": "web-angular-migration",
+  "sliceId": "S3-A1 — Countries pilot preparation",
+  "canonicalPlan": "documentation/plans/business/web-angular-migration/PLAN.md",
+  "featureDecompositionDecision": "Single feature",
+  "screenWorkflowContract": "documentation/plans/business/web-angular-migration/decomposition/angular-countries-pilot-preparation.md",
+  "plannedCustomerEducation": "documentation/plans/business/web-angular-migration/education/angular-countries-pilot-preparation.md",
+  "purpose": "Current-source Countries audit and exact migration preparation; no runtime authorization",
+  "reviewArtifact": "documentation/modules/platform/features/angular-countries-pilot-preparation/angular-countries-pilot-preparation-evidence.md",
+  "implementationRequest": "documentation/modules/platform/features/angular-countries-pilot-preparation/angular-countries-pilot-preparation-request.md",
+  "plannedCanonicalBooks": {
+    "master": "documentation/modules/platform/features/angular-countries-pilot-preparation/angular-countries-pilot-preparation-review.md",
+    "api": "documentation/modules/platform/features/angular-countries-pilot-preparation/angular-countries-pilot-preparation-api.md",
+    "web": "documentation/modules/platform/features/angular-countries-pilot-preparation/angular-countries-pilot-preparation-web.md",
+    "mobile": "documentation/modules/platform/features/angular-countries-pilot-preparation/angular-countries-pilot-preparation-mobile.md"
+  },
+  "sourceCollections": [],
+  "requiredFiles": [
+    {
+      "id": "evidence-0",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-preparation/AUDIT_REPORT.md",
+      "layer": "documentation",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-1",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-preparation/SOURCE_SNAPSHOT.json",
+      "layer": "documentation",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-2",
+      "path": "documentation/plans/business/web-angular-migration/PLAN.md",
+      "layer": "documentation",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-3",
+      "path": "documentation/plans/business/web-angular-migration/ROADMAP.md",
+      "layer": "documentation",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-4",
+      "path": "documentation/plans/business/web-angular-migration/decomposition/angular-countries-pilot-preparation.md",
+      "layer": "documentation",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-5",
+      "path": "documentation/plans/notes/KNOWN_RISKS.md",
+      "layer": "documentation",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-6",
+      "path": "documentation/plans/notes/DECISION_BACKLOG.md",
+      "layer": "documentation",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-7",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-preparation/angular-countries-pilot-preparation-review.md",
+      "layer": "documentation",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-8",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-preparation/angular-countries-pilot-preparation-api.md",
+      "layer": "documentation",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-9",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-preparation/angular-countries-pilot-preparation-web.md",
+      "layer": "documentation",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-10",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-preparation/angular-countries-pilot-preparation-mobile.md",
+      "layer": "documentation",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-11",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-preparation/angular-countries-pilot-preparation-request.md",
+      "layer": "documentation",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-12",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-preparation/angular-countries-pilot-preparation-evidence.md",
+      "layer": "documentation",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-13",
+      "path": "AGENTS.md",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-14",
+      "path": "api/BuildingBlocks/ErpSystem.BuildingBlocks.Application/Abstractions/Persistence/IUnitOfWork.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-15",
+      "path": "api/BuildingBlocks/ErpSystem.BuildingBlocks.Application/Common/Paginations/MetaData.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-16",
+      "path": "api/BuildingBlocks/ErpSystem.BuildingBlocks.Application/Common/Paginations/PagedList.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-17",
+      "path": "api/BuildingBlocks/ErpSystem.BuildingBlocks.Application/Common/Paginations/PaginationRequest.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-18",
+      "path": "api/ErpSystem.Api/Localization/Resources/ar-EG.json",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-19",
+      "path": "api/ErpSystem.Api/Localization/Resources/en-US.json",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-20",
+      "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Dependencies/DatabaseService.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-21",
+      "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Dependencies/EntitiesService.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-22",
+      "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Persistence/HrDbContext.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-23",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Abstractions/ICountryChangeScheduler.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-24",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Abstractions/ICountryReadStore.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-25",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Abstractions/ICountryValidationQueries.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-26",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Abstractions/ICountryWriteStore.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-27",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/ArchiveCountry/ArchiveCountryCommand.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-28",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/ArchiveCountry/ArchiveCountryCommandHandler.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-29",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/BulkArchiveCountries/BulkArchiveCountriesCommand.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-30",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/BulkArchiveCountries/BulkArchiveCountriesCommandHandler.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-31",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/BulkArchiveCountries/BulkArchiveCountriesCommandValidator.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-32",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/CountryMutationValidator.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-33",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/CreateCountries/CreateCountriesCommand.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-34",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/CreateCountries/CreateCountriesCommandHandler.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-35",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/CreateCountries/CreateCountriesCommandValidator.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-36",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/CreateCountry/CreateCountryCommand.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-37",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/CreateCountry/CreateCountryCommandHandler.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-38",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/CreateCountry/CreateCountryCommandValidator.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-39",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/RestoreCountry/RestoreCountryCommand.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-40",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/RestoreCountry/RestoreCountryCommandHandler.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-41",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/UpdateCountry/UpdateCountryCommand.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-42",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/UpdateCountry/UpdateCountryCommandHandler.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-43",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/UpdateCountry/UpdateCountryCommandValidator.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-44",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Contracts/CountryDetailResponse.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-45",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Contracts/CountryListItemResponse.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-46",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Contracts/CountryMutation.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-47",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Contracts/CountryReportDataResponse.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-48",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Contracts/CountryResponse.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-49",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Contracts/SimpleCountryResponse.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-50",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Errors/CountryErrors.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-51",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Mapping/CountryMappingConfig.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-52",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Queries/GetCountries/GetCountriesQuery.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-53",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Queries/GetCountries/GetCountriesQueryHandler.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-54",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Queries/GetCountryById/GetCountryByIdQuery.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-55",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Queries/GetCountryById/GetCountryByIdQueryHandler.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-56",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Queries/GetCountryLookup/GetCountryLookupQuery.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-57",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Queries/GetCountryReportData/GetCountryReportDataQuery.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-58",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Queries/GetCountryWithStates/GetCountryWithStatesQuery.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-59",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Queries/GetCountryWithStates/GetCountryWithStatesQueryHandler.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-60",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Districts/Commands/DistrictCommands.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-61",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/GeographicalLifecycleLocks.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-62",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/States/Commands/StateCommands.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-63",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Validation/GeographicalNameRules.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-64",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Contracts/Authorization/ReferenceDataPermissions.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-65",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Domain/GeographicalInformation/Countries/Entities/Country.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-66",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Infrastructure/Features/GeographicalInformation/Countries/Jobs/CountryChangeScheduler.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-67",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Infrastructure/Features/GeographicalInformation/Countries/Jobs/CountryChangedJob.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-68",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Infrastructure/Features/GeographicalInformation/Countries/Persistence/CountryConfiguration.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-69",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Infrastructure/Features/GeographicalInformation/Countries/Persistence/CountryReadStore.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-70",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Infrastructure/Features/GeographicalInformation/Countries/Persistence/CountryValidationQueries.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-71",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Infrastructure/Features/GeographicalInformation/Countries/Persistence/CountryWriteStore.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-72",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Infrastructure/Mapping/MapsterService.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-73",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Infrastructure/Seeds/EgyptGeographicSeed.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-74",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Presentation/Features/GeographicalInformation/Countries/V1/CountriesController.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-75",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Tests/CountriesControllerCqrsTests.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-76",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Tests/CountryCqrsArchitectureTests.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-77",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Tests/CountryCqrsHandlerTests.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-78",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Tests/EgyptGeographicSeedTests.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-79",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Tests/GeographicalNameRulesTests.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-80",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Abstractions/IReportTemplateStore.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-81",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Commands/ChangeReportTemplateLifecycle/ReportTemplateLifecycleCommands.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-82",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Commands/ChangeReportTemplateLifecycle/ReportTemplateLifecycleHandlers.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-83",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Commands/CreateReportTemplate/CreateReportTemplateCommand.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-84",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Commands/CreateReportTemplate/CreateReportTemplateCommandHandler.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-85",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Commands/DuplicateReportTemplate/DuplicateReportTemplateCommand.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-86",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Commands/DuplicateReportTemplate/DuplicateReportTemplateCommandHandler.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-87",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Commands/ReportTemplateCommandRules.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-88",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Commands/UpdateReportTemplate/UpdateReportTemplateCommand.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-89",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Commands/UpdateReportTemplate/UpdateReportTemplateCommandHandler.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-90",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Contracts/ReportTemplateContracts.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-91",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Errors/ReportTemplateErrors.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-92",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Queries/GetReportDataSources/GetReportDataSourcesQuery.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-93",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Queries/GetReportTemplateById/GetReportTemplateByIdQueries.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-94",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Queries/GetReportTemplateById/GetReportTemplateByIdQueryHandlers.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-95",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Queries/GetReportTemplateRevisions/GetReportTemplateRevisionsQueries.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-96",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Queries/GetReportTemplateRevisions/GetReportTemplateRevisionsQueryHandlers.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-97",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Queries/GetReportTemplates/GetReportTemplatesQueries.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-98",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Queries/GetReportTemplates/GetReportTemplatesQueryHandlers.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-99",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Validation/ReportTemplateDefinitionSafety.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-100",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Domain/Analytics/ReportTemplates/Entities/ReportTemplate.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-101",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Domain/Analytics/ReportTemplates/Entities/ReportTemplateRevision.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-102",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/ReportTemplates/Persistence/ReportTemplateStore.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-103",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Presentation/Features/Analytics/CrystalReports/V1/GlobalCrystalReportsController.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-104",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Presentation/Features/Analytics/ReportTemplates/V1/ReportTemplatesController.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-105",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/GlobalCrystalReportQueryTests.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-106",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/ReportTemplateFeatureTests.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-107",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/ReportTemplatesControllerContractTests.cs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-108",
+      "path": "documentation/modules/platform/features/angular-managed-reporting-adapter/GLOBAL_PDF_CONTRACT.md",
+      "layer": "documentation",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-109",
+      "path": "documentation/modules/reference-data/features/countries/countries-api.md",
+      "layer": "documentation",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-110",
+      "path": "documentation/modules/reference-data/features/countries/countries-mobile.md",
+      "layer": "documentation",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-111",
+      "path": "documentation/modules/reference-data/features/countries/countries-review.md",
+      "layer": "documentation",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-112",
+      "path": "documentation/modules/reference-data/features/countries/countries-web.md",
+      "layer": "documentation",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-113",
+      "path": "documentation/modules/reporting/CRYSTAL_REPORT_MANAGER_INTEGRATION_GUIDE.md",
+      "layer": "documentation",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-114",
+      "path": "mobile-react/AGENTS.md",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-115",
+      "path": "mobile-react/app/(main)/basic-data/geographical-information/countries.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-116",
+      "path": "mobile-react/package.json",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-117",
+      "path": "mobile-react/src/core/constants/routes.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-118",
+      "path": "mobile-react/src/core/localization/translations/ar-basic-data.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-119",
+      "path": "mobile-react/src/core/localization/translations/ar-common.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-120",
+      "path": "mobile-react/src/core/localization/translations/en-basic-data.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-121",
+      "path": "mobile-react/src/core/localization/translations/en-common.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-122",
+      "path": "mobile-react/src/modules/hr/basic-data/presentation/screens/GeographicalInformationScreen.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-123",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/application/country-use-cases.test.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-124",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/application/country-use-cases.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-125",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/composition/use-country-use-cases.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-126",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/data/local/country-local-data-source.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-127",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/data/local/sqlite-country-local-data-source.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-128",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/data/remote/__tests__/country-bulk-remote.test.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-129",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/data/remote/__tests__/country-remote-boundary.test.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-130",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/data/remote/country-endpoints.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-131",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/data/remote/country-remote-data-source.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-132",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/data/remote/country-schemas.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-133",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/data/repositories/default-country-repository.test.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-134",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/data/repositories/default-country-repository.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-135",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/domain/models/country.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-136",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/domain/policies/country-request-policy.test.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-137",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/domain/policies/country-request-policy.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-138",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/domain/repositories/country-repository.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-139",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/index.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-140",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/presentation/components/CountriesChartView.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-141",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/presentation/components/CountryCard.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-142",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/presentation/components/CountryFilterButton.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-143",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/presentation/components/CountryForm.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-144",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/presentation/components/CountryReportView.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-145",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/presentation/components/chart-view/country-chart-data.test.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-146",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/presentation/components/chart-view/country-chart-data.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-147",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/presentation/components/import-data/CountryImportView.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-148",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/presentation/components/import-data/country-import.test.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-149",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/presentation/components/import-data/country-import.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-150",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/presentation/queries/country-keys.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-151",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/presentation/queries/use-countries.test.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-152",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/presentation/queries/use-countries.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-153",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/presentation/screens/CountriesScreen.test.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-154",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/presentation/screens/CountriesScreen.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-155",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/presentation/utils/country-mock-data.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-156",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/presentation/validation/country-request-schema.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-157",
+      "path": "mobile-react/src/modules/reference-data/validation/geographical-name.test.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-158",
+      "path": "mobile-react/src/modules/reference-data/validation/geographical-name.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-159",
+      "path": "mobile-react/src/platform/auth/presentation/rbac/permissions.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-160",
+      "path": "mobile-react/src/platform/auth/presentation/rbac/route-manifest.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-161",
+      "path": "mobile-react/src/platform/realtime/application/realtime-query-registry.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-162",
+      "path": "mobile-react/src/platform/reporting/access.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-163",
+      "path": "mobile-react/src/platform/reporting/application/crystal-report-use-cases.test.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-164",
+      "path": "mobile-react/src/platform/reporting/application/crystal-report-use-cases.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-165",
+      "path": "mobile-react/src/platform/reporting/composition/crystal-reports.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-166",
+      "path": "mobile-react/src/platform/reporting/data/remote/crystal-report-endpoints.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-167",
+      "path": "mobile-react/src/platform/reporting/data/remote/crystal-report-remote-data-source.test.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-168",
+      "path": "mobile-react/src/platform/reporting/data/remote/crystal-report-remote-data-source.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-169",
+      "path": "mobile-react/src/platform/reporting/data/remote/crystal-report-schemas.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-170",
+      "path": "mobile-react/src/platform/reporting/data/repositories/default-crystal-report-repository.test.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-171",
+      "path": "mobile-react/src/platform/reporting/data/repositories/default-crystal-report-repository.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-172",
+      "path": "mobile-react/src/platform/reporting/domain/models/crystal-report.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-173",
+      "path": "mobile-react/src/platform/reporting/domain/repositories/crystal-report-repository.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-174",
+      "path": "mobile-react/src/platform/reporting/index.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-175",
+      "path": "mobile-react/src/platform/reporting/presentation/ManagedCrystalReportView.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-176",
+      "path": "mobile-react/src/platform/reporting/presentation/useManagedReportAvailability.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-177",
+      "path": "mobile-react/src/shared/components/data-table/AppDataTable.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-178",
+      "path": "mobile-react/src/shared/components/forms/AppForm.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-179",
+      "path": "mobile-react/src/shared/components/layout/AppPageHeader.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-180",
+      "path": "mobile-react/src/shared/components/layout/AppScreen.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-181",
+      "path": "mobile-react/src/shared/components/multi-view/AppListScreen.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-182",
+      "path": "mobile-react/src/shared/listing/useServerListState.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-183",
+      "path": "mobile-react/src/shared/utils/mockData.test.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-184",
+      "path": "mobile-react/src/shared/utils/mockData.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-185",
+      "path": "web-angular/src/app/composition/authenticated-routes.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-186",
+      "path": "web-angular/src/app/shared/data/scoped-read.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-187",
+      "path": "web-angular/src/app/shared/ui/collections/card-list.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-188",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-189",
+      "path": "web-angular/src/app/shared/ui/dialogs/dialog-panel.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-190",
+      "path": "web-angular/src/app/shared/ui/public-api.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-191",
+      "path": "web-next/AGENTS.md",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-192",
+      "path": "web-next/e2e/business-smoke.spec.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-193",
+      "path": "web-next/e2e/support/test-backend.mjs",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-194",
+      "path": "web-next/package.json",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-195",
+      "path": "web-next/src/app/(main)/super-admin/(reference-data)/geography/countries/page.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-196",
+      "path": "web-next/src/config/api/basicData.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-197",
+      "path": "web-next/src/config/routes.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-198",
+      "path": "web-next/src/lib/auth/permissions.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-199",
+      "path": "web-next/src/lib/auth/route-access.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-200",
+      "path": "web-next/src/locales/resources/reference-countries/ar.json",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-201",
+      "path": "web-next/src/locales/resources/reference-countries/en.json",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-202",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/CountriesCardView.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-203",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/CountriesChartView.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-204",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/CountriesMultiView.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-205",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/CountryArchiveDialog.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-206",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/CountryBulkArchiveDialog.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-207",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/CountryForm.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-208",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/CountryRestoreDialog.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-209",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/card-view/CountryCard.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-210",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/card-view/CountryCard.types.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-211",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/card-view/CountryCardChips.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-212",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/card-view/CountryCardFooter.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-213",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/card-view/CountryCardUtils.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-214",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/card-view/CountryCardViewHeader.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-215",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/card-view/CountryCardViewPagination.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-216",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/card-view/CountryDetails.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-217",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/card-view/CountryStatesSection.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-218",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/card-view/EmptyState.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-219",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/card-view/NoResultsState.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-220",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/card-view/index.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-221",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/chart-view/CurrencyChart.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-222",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/chart-view/EmptyChartState.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-223",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/chart-view/LoadingChartState.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-224",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/chart-view/StatesChart.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-225",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/chart-view/StatesCoverageChart.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-226",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/chart-view/SummaryCards.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-227",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/chart-view/TimelineChart.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-228",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/chart-view/chartDataUtils.test.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-229",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/chart-view/chartDataUtils.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-230",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/chart-view/index.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-231",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/grid-view/Columns.test.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-232",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/grid-view/Columns.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-233",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/grid-view/CountriesDataGrid.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-234",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/grid-view/CountryCellRenderers.test.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-235",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/grid-view/CountryCellRenderers.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-236",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/grid-view/GridActions.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-237",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/import-data/CountryDataTable.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-238",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/import-data/ImportCountries.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-239",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/import-data/LoadingAlert.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-240",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/import-data/NoDataMessage.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-241",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/import-data/UseCountryColumns.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-242",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/import-data/countryImport.test.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-243",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/import-data/countryImport.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-244",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/import-data/index.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-245",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/import-data/types.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-246",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/import-data/useCountryImport.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-247",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/hooks/countryQueryKeys.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-248",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/hooks/useCountryGridLogic.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-249",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/hooks/useCountryQueries.test.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-250",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/hooks/useCountryQueries.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-251",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/index.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-252",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/pages/CountriesPage.test.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-253",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/pages/CountriesPage.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-254",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/public/index.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-255",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/reports/pages/CountryReportPage.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-256",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/services/countryService.test.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-257",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/services/countryService.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-258",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/types/Country.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-259",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/utils/countryMockData.test.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-260",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/utils/countryMockData.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-261",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/utils/countryPageQuery.test.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-262",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/utils/countryPageQuery.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-263",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/utils/countryPermissions.test.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-264",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/utils/countryPermissions.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-265",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/utils/validation.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-266",
+      "path": "web-next/src/modules/reference-data/geographical-information/validation/nameValidation.test.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-267",
+      "path": "web-next/src/modules/reference-data/geographical-information/validation/nameValidation.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-268",
+      "path": "web-next/src/modules/reporting/crystal-report-manager/ManagedCrystalReportView.test.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-269",
+      "path": "web-next/src/modules/reporting/public/useManagedReportAvailability.integration.test.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-270",
+      "path": "web-next/src/modules/reporting/public/useManagedReportAvailability.test.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-271",
+      "path": "web-next/src/modules/reporting/public/useManagedReportAvailability.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-272",
+      "path": "web-next/src/platform/realtime/realtimeQueryRegistry.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-273",
+      "path": "web-next/src/shared/components/data-grid/core/MyDataGrid.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-274",
+      "path": "web-next/src/shared/components/data-grid/core/controlledModels.test.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-275",
+      "path": "web-next/src/shared/components/data-grid/core/controlledModels.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-276",
+      "path": "web-next/src/shared/components/data-grid/core/pagination.test.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-277",
+      "path": "web-next/src/shared/components/data-grid/core/pagination.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-278",
+      "path": "web-next/src/shared/components/data-grid/navigation/GridFooter.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-279",
+      "path": "web-next/src/shared/components/data-grid/toolbar/DataGridToolbar.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-280",
+      "path": "web-next/src/shared/components/data-grid/toolbar/GridOptionsButton.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-281",
+      "path": "web-next/src/shared/components/file-upload/SpreadsheetImportCard.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-282",
+      "path": "web-next/src/shared/components/forms/dialog/FormContainer.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-283",
+      "path": "web-next/src/shared/components/forms/dialog/FormFooter.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-284",
+      "path": "web-next/src/shared/components/forms/dialog/types.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-285",
+      "path": "web-next/src/shared/components/layout/feature-module/FeatureModuleLayout.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-286",
+      "path": "web-next/src/shared/components/navigation/header/PageHeader.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-287",
+      "path": "web-next/src/shared/hooks/useAdaptivePagination.test.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-288",
+      "path": "web-next/src/shared/hooks/useAdaptivePagination.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-289",
+      "path": "web-next/src/shared/hooks/useServerListState.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-290",
+      "path": "web-next/src/shared/reporting/components/MyReportViewer.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-291",
+      "path": "web-next/src/shared/reporting/components/ReportViewer.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-292",
+      "path": "web-next/src/shared/reporting/components/ServerReportDesigner.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-293",
+      "path": "web-next/src/shared/reporting/components/ServerReportDesignerClient.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-294",
+      "path": "web-next/src/shared/reporting/components/ServerReportViewer.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-295",
+      "path": "web-next/src/shared/reporting/components/ServerReportViewerClient.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-296",
+      "path": "web-next/src/shared/reporting/components/index.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-297",
+      "path": "web-next/src/shared/reporting/index.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-298",
+      "path": "web-next/src/shared/reporting/services/reportApiService.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-299",
+      "path": "web-next/src/shared/reporting/services/reportTemplateService.test.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-300",
+      "path": "web-next/src/shared/reporting/services/reportTemplateService.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-301",
+      "path": "web-next/src/shared/reporting/types/reportTemplate.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-302",
+      "path": "web-next/src/shared/services/excelService.test.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-303",
+      "path": "web-next/src/shared/services/excelService.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-304",
+      "path": "web-next/src/shared/utils/bulkSelection.test.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-305",
+      "path": "web-next/src/shared/utils/bulkSelection.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-306",
+      "path": "web-next/src/shared/utils/mockData.test.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-307",
+      "path": "web-next/src/shared/utils/mockData.ts",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "evidence-308",
+      "path": "web-next/src/shell/components/sidebar/configs/superAdminConfig.tsx",
+      "layer": "source",
+      "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
+    },
+    {
+      "id": "closure-309",
+      "path": "documentation/plans/business/web-angular-migration/education/angular-countries-pilot-preparation.md",
+      "layer": "documentation",
+      "purpose": "Existing child contract or verified technical handoff"
+    },
+    {
+      "id": "closure-310",
+      "path": "documentation/plans/business/web-angular-migration/decomposition/angular-countries-chart-view.md",
+      "layer": "documentation",
+      "purpose": "Existing child contract or verified technical handoff"
+    },
+    {
+      "id": "closure-311",
+      "path": "documentation/plans/business/web-angular-migration/decomposition/angular-countries-edit-workflow.md",
+      "layer": "documentation",
+      "purpose": "Existing child contract or verified technical handoff"
+    },
+    {
+      "id": "closure-312",
+      "path": "documentation/plans/business/web-angular-migration/decomposition/angular-countries-import-view.md",
+      "layer": "documentation",
+      "purpose": "Existing child contract or verified technical handoff"
+    },
+    {
+      "id": "closure-313",
+      "path": "documentation/plans/business/web-angular-migration/decomposition/angular-countries-lifecycle.md",
+      "layer": "documentation",
+      "purpose": "Existing child contract or verified technical handoff"
+    },
+    {
+      "id": "closure-314",
+      "path": "documentation/plans/business/web-angular-migration/decomposition/angular-countries-pilot-acceptance.md",
+      "layer": "documentation",
+      "purpose": "Existing child contract or verified technical handoff"
+    },
+    {
+      "id": "closure-315",
+      "path": "documentation/plans/business/web-angular-migration/decomposition/angular-countries-read-workspace.md",
+      "layer": "documentation",
+      "purpose": "Existing child contract or verified technical handoff"
+    },
+    {
+      "id": "closure-316",
+      "path": "documentation/plans/business/web-angular-migration/decomposition/angular-countries-report-view.md",
+      "layer": "documentation",
+      "purpose": "Existing child contract or verified technical handoff"
+    }
+  ],
+  "finalizationChecklist": [
+    "Replace every placeholder in the review artifact.",
+    "Complete the Existing-System Relationship Review and every decision in angular-countries-pilot-preparation-request.md before implementation.",
+    "Complete the Business Rules Matrix with one primary owner, stable outcome/error, and required test for every known rule.",
+    "Complete every Edge Cases & Validation category with scenarios or an explicit N/A reason, enforcement layer, and required test.",
+    "Complete the Impact Matrix with Reuse, Extend, Change, Add, or reasoned N/A across every listed area.",
+    "Remove every remaining placeholder from angular-countries-pilot-preparation-request.md before runtime implementation.",
+    "Add Phase 00 current API, web, mobile, configuration, localization, and test evidence sources.",
+    "Classify every optional view, including Import, as Required, Deferred, or Excluded independently for web and mobile.",
+    "When Import is Required, add its API and applicable client runtime, route/configuration, localization, and focused-test paths.",
+    "Record and test the exact Import request envelope, limits, duplicate and relationship rules, atomicity, permissions, side effects, and retry behavior.",
+    "Add source collections with evidence-based minimum file counts.",
+    "Create the four initial applied implementation books from the approved plan plus verified current source; label target-only behavior explicitly.",
+    "Rename this file to required-files.json when the Phase 00 evidence paths exist; extend it with runtime files during implementation.",
+    "Update the review artifact to point at required-files.json and mark its documentation state Final.",
+    "Merge recipe-registration.draft.json into recipe-manifest.json after the Phase 00 books and preflight manifest are complete.",
+    "Write generated packets under documentation/modules/platform/features/angular-countries-pilot-preparation/generated/.",
+    "Run generation and then Generate-Documentation.ps1 -Check.",
+    "Complete phase 06 with an explicit verification decision.",
+    "Do not start customer-facing education until phase 06 records Verified.",
+    "For customer-visible work, complete phase 07 and its Customer Education Pack before Closed.",
+    "When Customer Education is Required, add the verified education document to required-files.json and rerun Generate-Documentation.ps1 -Check before Closed."
+  ]
+}

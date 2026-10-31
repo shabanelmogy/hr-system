@@ -2,6 +2,13 @@
 
 This system turns reviewed implementations such as Countries and States into repeatable evidence-based workflows for API, Next.js, and Expo features. It follows the useful structure of the Sigma ERP recipe system while remaining specific to this repository.
 
+Generation skips packets whose exact text is already current, preserving their
+timestamps and allowing unchanged packets to remain mapped by Windows readers.
+Changed packets retain the existing writer and fail visibly if locked; the
+generator never suppresses stale-output errors. Run
+`./documentation/system/tests/Generation.Unchanged.Tests.ps1` to verify generation
+against an actual read-only memory mapping, then run the full `-Check` gate.
+
 For new business capabilities and substantial rebuilds, this is the **execution and
 verification system after planning**, not a parallel product-planning system.
 The canonical flow is:

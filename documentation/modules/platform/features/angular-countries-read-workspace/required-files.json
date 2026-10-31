@@ -1,0 +1,2672 @@
+{
+  "schemaVersion": 1,
+  "status": "final",
+  "executionMode": "bounded-runtime",
+  "runtimeAuthorized": true,
+  "feature": "angular-countries-read-workspace",
+  "featureName": "Countries read workspace",
+  "referenceFeature": "N/A",
+  "planId": "web-angular-migration",
+  "sliceId": "S3-A2 — Countries read workspace",
+  "canonicalPlan": "documentation/plans/business/web-angular-migration/PLAN.md",
+  "featureDecompositionDecision": "Single feature",
+  "screenWorkflowContract": "documentation/plans/business/web-angular-migration/decomposition/angular-countries-read-workspace.md",
+  "plannedCustomerEducation": "documentation/plans/business/web-angular-migration/education/angular-countries-read-workspace.md",
+  "purpose": "Frozen read-only global Countries workspace; current-source Phase00 evidence",
+  "reviewArtifact": "documentation/modules/platform/features/angular-countries-read-workspace/angular-countries-read-workspace-evidence.md",
+  "implementationRequest": "documentation/modules/platform/features/angular-countries-read-workspace/angular-countries-read-workspace-request.md",
+  "plannedCanonicalBooks": {
+    "master": "documentation/modules/platform/features/angular-countries-read-workspace/angular-countries-read-workspace-review.md",
+    "api": "documentation/modules/platform/features/angular-countries-read-workspace/angular-countries-read-workspace-api.md",
+    "web": "documentation/modules/platform/features/angular-countries-read-workspace/angular-countries-read-workspace-web.md",
+    "mobile": "documentation/modules/platform/features/angular-countries-read-workspace/angular-countries-read-workspace-mobile.md"
+  },
+  "sourceCollections": [],
+  "requiredFiles": [
+    {
+      "id": "phase00-0",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/GLOBAL_COUNTRY_READ_CONTRACT.md",
+      "layer": "documentation",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-1",
+      "path": "documentation/plans/business/web-angular-migration/PLAN.md",
+      "layer": "documentation",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-2",
+      "path": "documentation/plans/business/web-angular-migration/ROADMAP.md",
+      "layer": "documentation",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-3",
+      "path": "documentation/plans/business/web-angular-migration/decomposition/angular-countries-read-workspace.md",
+      "layer": "documentation",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-4",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-preparation/AUDIT_REPORT.md",
+      "layer": "documentation",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-5",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-preparation/SOURCE_SNAPSHOT.json",
+      "layer": "documentation",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-6",
+      "path": "documentation/plans/notes/KNOWN_RISKS.md",
+      "layer": "documentation",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-7",
+      "path": "documentation/plans/notes/PRODUCTION_NOTES.md",
+      "layer": "documentation",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-8",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/angular-countries-read-workspace-review.md",
+      "layer": "documentation",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-9",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/angular-countries-read-workspace-api.md",
+      "layer": "documentation",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-10",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/angular-countries-read-workspace-web.md",
+      "layer": "documentation",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-11",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/angular-countries-read-workspace-mobile.md",
+      "layer": "documentation",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-12",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/angular-countries-read-workspace-request.md",
+      "layer": "documentation",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-13",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/angular-countries-read-workspace-evidence.md",
+      "layer": "documentation",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-14",
+      "path": "AGENTS.md",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-15",
+      "path": "api/BuildingBlocks/ErpSystem.BuildingBlocks.Application/Abstractions/Persistence/IUnitOfWork.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-16",
+      "path": "api/BuildingBlocks/ErpSystem.BuildingBlocks.Application/Common/Paginations/MetaData.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-17",
+      "path": "api/BuildingBlocks/ErpSystem.BuildingBlocks.Application/Common/Paginations/PagedList.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-18",
+      "path": "api/BuildingBlocks/ErpSystem.BuildingBlocks.Application/Common/Paginations/PaginationRequest.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-19",
+      "path": "api/ErpSystem.Api/Localization/Resources/ar-EG.json",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-20",
+      "path": "api/ErpSystem.Api/Localization/Resources/en-US.json",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-21",
+      "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Dependencies/DatabaseService.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-22",
+      "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Dependencies/EntitiesService.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-23",
+      "path": "api/Modules/HR/ErpSystem.Modules.HR.Infrastructure/Persistence/HrDbContext.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-24",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Abstractions/ICountryChangeScheduler.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-25",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Abstractions/ICountryReadStore.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-26",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Abstractions/ICountryValidationQueries.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-27",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Abstractions/ICountryWriteStore.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-28",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/ArchiveCountry/ArchiveCountryCommand.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-29",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/ArchiveCountry/ArchiveCountryCommandHandler.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-30",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/BulkArchiveCountries/BulkArchiveCountriesCommand.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-31",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/BulkArchiveCountries/BulkArchiveCountriesCommandHandler.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-32",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/BulkArchiveCountries/BulkArchiveCountriesCommandValidator.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-33",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/CountryMutationValidator.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-34",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/CreateCountries/CreateCountriesCommand.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-35",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/CreateCountries/CreateCountriesCommandHandler.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-36",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/CreateCountries/CreateCountriesCommandValidator.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-37",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/CreateCountry/CreateCountryCommand.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-38",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/CreateCountry/CreateCountryCommandHandler.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-39",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/CreateCountry/CreateCountryCommandValidator.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-40",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/RestoreCountry/RestoreCountryCommand.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-41",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/RestoreCountry/RestoreCountryCommandHandler.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-42",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/UpdateCountry/UpdateCountryCommand.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-43",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/UpdateCountry/UpdateCountryCommandHandler.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-44",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/UpdateCountry/UpdateCountryCommandValidator.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-45",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Contracts/CountryDetailResponse.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-46",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Contracts/CountryListItemResponse.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-47",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Contracts/CountryMutation.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-48",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Contracts/CountryReportDataResponse.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-49",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Contracts/CountryResponse.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-50",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Contracts/SimpleCountryResponse.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-51",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Errors/CountryErrors.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-52",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Mapping/CountryMappingConfig.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-53",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Queries/GetCountries/GetCountriesQuery.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-54",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Queries/GetCountries/GetCountriesQueryHandler.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-55",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Queries/GetCountryById/GetCountryByIdQuery.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-56",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Queries/GetCountryById/GetCountryByIdQueryHandler.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-57",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Queries/GetCountryLookup/GetCountryLookupQuery.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-58",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Queries/GetCountryReportData/GetCountryReportDataQuery.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-59",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Queries/GetCountryWithStates/GetCountryWithStatesQuery.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-60",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Queries/GetCountryWithStates/GetCountryWithStatesQueryHandler.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-61",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Districts/Commands/DistrictCommands.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-62",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/GeographicalLifecycleLocks.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-63",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/States/Commands/StateCommands.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-64",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Validation/GeographicalNameRules.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-65",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Contracts/Authorization/ReferenceDataPermissions.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-66",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Domain/GeographicalInformation/Countries/Entities/Country.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-67",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Infrastructure/Features/GeographicalInformation/Countries/Jobs/CountryChangeScheduler.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-68",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Infrastructure/Features/GeographicalInformation/Countries/Jobs/CountryChangedJob.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-69",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Infrastructure/Features/GeographicalInformation/Countries/Persistence/CountryConfiguration.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-70",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Infrastructure/Features/GeographicalInformation/Countries/Persistence/CountryReadStore.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-71",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Infrastructure/Features/GeographicalInformation/Countries/Persistence/CountryValidationQueries.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-72",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Infrastructure/Features/GeographicalInformation/Countries/Persistence/CountryWriteStore.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-73",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Infrastructure/Mapping/MapsterService.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-74",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Infrastructure/Seeds/EgyptGeographicSeed.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-75",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Presentation/Features/GeographicalInformation/Countries/V1/CountriesController.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-76",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Tests/CountriesControllerCqrsTests.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-77",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Tests/CountryCqrsArchitectureTests.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-78",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Tests/CountryCqrsHandlerTests.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-79",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Tests/EgyptGeographicSeedTests.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-80",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Tests/GeographicalNameRulesTests.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-81",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Abstractions/IReportTemplateStore.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-82",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Commands/ChangeReportTemplateLifecycle/ReportTemplateLifecycleCommands.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-83",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Commands/ChangeReportTemplateLifecycle/ReportTemplateLifecycleHandlers.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-84",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Commands/CreateReportTemplate/CreateReportTemplateCommand.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-85",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Commands/CreateReportTemplate/CreateReportTemplateCommandHandler.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-86",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Commands/DuplicateReportTemplate/DuplicateReportTemplateCommand.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-87",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Commands/DuplicateReportTemplate/DuplicateReportTemplateCommandHandler.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-88",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Commands/ReportTemplateCommandRules.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-89",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Commands/UpdateReportTemplate/UpdateReportTemplateCommand.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-90",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Commands/UpdateReportTemplate/UpdateReportTemplateCommandHandler.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-91",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Contracts/ReportTemplateContracts.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-92",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Errors/ReportTemplateErrors.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-93",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Queries/GetReportDataSources/GetReportDataSourcesQuery.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-94",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Queries/GetReportTemplateById/GetReportTemplateByIdQueries.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-95",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Queries/GetReportTemplateById/GetReportTemplateByIdQueryHandlers.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-96",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Queries/GetReportTemplateRevisions/GetReportTemplateRevisionsQueries.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-97",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Queries/GetReportTemplateRevisions/GetReportTemplateRevisionsQueryHandlers.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-98",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Queries/GetReportTemplates/GetReportTemplatesQueries.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-99",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Queries/GetReportTemplates/GetReportTemplatesQueryHandlers.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-100",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/ReportTemplates/Validation/ReportTemplateDefinitionSafety.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-101",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Domain/Analytics/ReportTemplates/Entities/ReportTemplate.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-102",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Domain/Analytics/ReportTemplates/Entities/ReportTemplateRevision.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-103",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/ReportTemplates/Persistence/ReportTemplateStore.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-104",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Presentation/Features/Analytics/CrystalReports/V1/GlobalCrystalReportsController.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-105",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Presentation/Features/Analytics/ReportTemplates/V1/ReportTemplatesController.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-106",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/GlobalCrystalReportQueryTests.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-107",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/ReportTemplateFeatureTests.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-108",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/ReportTemplatesControllerContractTests.cs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-109",
+      "path": "documentation/modules/platform/features/angular-managed-reporting-adapter/GLOBAL_PDF_CONTRACT.md",
+      "layer": "documentation",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-110",
+      "path": "documentation/modules/reference-data/features/countries/countries-api.md",
+      "layer": "documentation",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-111",
+      "path": "documentation/modules/reference-data/features/countries/countries-mobile.md",
+      "layer": "documentation",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-112",
+      "path": "documentation/modules/reference-data/features/countries/countries-review.md",
+      "layer": "documentation",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-113",
+      "path": "documentation/modules/reference-data/features/countries/countries-web.md",
+      "layer": "documentation",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-114",
+      "path": "documentation/modules/reporting/CRYSTAL_REPORT_MANAGER_INTEGRATION_GUIDE.md",
+      "layer": "documentation",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-115",
+      "path": "mobile-react/AGENTS.md",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-116",
+      "path": "mobile-react/app/(main)/basic-data/geographical-information/countries.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-117",
+      "path": "mobile-react/package.json",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-118",
+      "path": "mobile-react/src/core/constants/routes.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-119",
+      "path": "mobile-react/src/core/localization/translations/ar-basic-data.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-120",
+      "path": "mobile-react/src/core/localization/translations/ar-common.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-121",
+      "path": "mobile-react/src/core/localization/translations/en-basic-data.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-122",
+      "path": "mobile-react/src/core/localization/translations/en-common.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-123",
+      "path": "mobile-react/src/modules/hr/basic-data/presentation/screens/GeographicalInformationScreen.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-124",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/application/country-use-cases.test.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-125",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/application/country-use-cases.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-126",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/composition/use-country-use-cases.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-127",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/data/local/country-local-data-source.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-128",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/data/local/sqlite-country-local-data-source.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-129",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/data/remote/__tests__/country-bulk-remote.test.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-130",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/data/remote/__tests__/country-remote-boundary.test.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-131",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/data/remote/country-endpoints.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-132",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/data/remote/country-remote-data-source.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-133",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/data/remote/country-schemas.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-134",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/data/repositories/default-country-repository.test.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-135",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/data/repositories/default-country-repository.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-136",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/domain/models/country.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-137",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/domain/policies/country-request-policy.test.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-138",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/domain/policies/country-request-policy.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-139",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/domain/repositories/country-repository.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-140",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/index.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-141",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/presentation/components/CountriesChartView.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-142",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/presentation/components/CountryCard.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-143",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/presentation/components/CountryFilterButton.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-144",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/presentation/components/CountryForm.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-145",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/presentation/components/CountryReportView.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-146",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/presentation/components/chart-view/country-chart-data.test.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-147",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/presentation/components/chart-view/country-chart-data.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-148",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/presentation/components/import-data/CountryImportView.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-149",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/presentation/components/import-data/country-import.test.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-150",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/presentation/components/import-data/country-import.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-151",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/presentation/queries/country-keys.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-152",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/presentation/queries/use-countries.test.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-153",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/presentation/queries/use-countries.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-154",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/presentation/screens/CountriesScreen.test.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-155",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/presentation/screens/CountriesScreen.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-156",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/presentation/utils/country-mock-data.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-157",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/presentation/validation/country-request-schema.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-158",
+      "path": "mobile-react/src/modules/reference-data/validation/geographical-name.test.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-159",
+      "path": "mobile-react/src/modules/reference-data/validation/geographical-name.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-160",
+      "path": "mobile-react/src/platform/auth/presentation/rbac/permissions.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-161",
+      "path": "mobile-react/src/platform/auth/presentation/rbac/route-manifest.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-162",
+      "path": "mobile-react/src/platform/realtime/application/realtime-query-registry.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-163",
+      "path": "mobile-react/src/platform/reporting/access.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-164",
+      "path": "mobile-react/src/platform/reporting/application/crystal-report-use-cases.test.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-165",
+      "path": "mobile-react/src/platform/reporting/application/crystal-report-use-cases.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-166",
+      "path": "mobile-react/src/platform/reporting/composition/crystal-reports.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-167",
+      "path": "mobile-react/src/platform/reporting/data/remote/crystal-report-endpoints.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-168",
+      "path": "mobile-react/src/platform/reporting/data/remote/crystal-report-remote-data-source.test.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-169",
+      "path": "mobile-react/src/platform/reporting/data/remote/crystal-report-remote-data-source.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-170",
+      "path": "mobile-react/src/platform/reporting/data/remote/crystal-report-schemas.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-171",
+      "path": "mobile-react/src/platform/reporting/data/repositories/default-crystal-report-repository.test.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-172",
+      "path": "mobile-react/src/platform/reporting/data/repositories/default-crystal-report-repository.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-173",
+      "path": "mobile-react/src/platform/reporting/domain/models/crystal-report.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-174",
+      "path": "mobile-react/src/platform/reporting/domain/repositories/crystal-report-repository.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-175",
+      "path": "mobile-react/src/platform/reporting/index.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-176",
+      "path": "mobile-react/src/platform/reporting/presentation/ManagedCrystalReportView.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-177",
+      "path": "mobile-react/src/platform/reporting/presentation/useManagedReportAvailability.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-178",
+      "path": "mobile-react/src/shared/components/data-table/AppDataTable.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-179",
+      "path": "mobile-react/src/shared/components/forms/AppForm.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-180",
+      "path": "mobile-react/src/shared/components/layout/AppPageHeader.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-181",
+      "path": "mobile-react/src/shared/components/layout/AppScreen.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-182",
+      "path": "mobile-react/src/shared/components/multi-view/AppListScreen.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-183",
+      "path": "mobile-react/src/shared/listing/useServerListState.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-184",
+      "path": "mobile-react/src/shared/utils/mockData.test.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-185",
+      "path": "mobile-react/src/shared/utils/mockData.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-186",
+      "path": "web-angular/src/app/composition/authenticated-routes.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-187",
+      "path": "web-angular/src/app/shared/data/scoped-read.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-188",
+      "path": "web-angular/src/app/shared/ui/collections/card-list.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-189",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-190",
+      "path": "web-angular/src/app/shared/ui/dialogs/dialog-panel.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-191",
+      "path": "web-angular/src/app/shared/ui/public-api.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-192",
+      "path": "web-next/AGENTS.md",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-193",
+      "path": "web-next/e2e/business-smoke.spec.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-194",
+      "path": "web-next/e2e/support/test-backend.mjs",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-195",
+      "path": "web-next/package.json",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-196",
+      "path": "web-next/src/app/(main)/super-admin/(reference-data)/geography/countries/page.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-197",
+      "path": "web-next/src/config/api/basicData.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-198",
+      "path": "web-next/src/config/routes.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-199",
+      "path": "web-next/src/lib/auth/permissions.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-200",
+      "path": "web-next/src/lib/auth/route-access.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-201",
+      "path": "web-next/src/locales/resources/reference-countries/ar.json",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-202",
+      "path": "web-next/src/locales/resources/reference-countries/en.json",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-203",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/CountriesCardView.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-204",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/CountriesChartView.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-205",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/CountriesMultiView.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-206",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/CountryArchiveDialog.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-207",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/CountryBulkArchiveDialog.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-208",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/CountryForm.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-209",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/CountryRestoreDialog.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-210",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/card-view/CountryCard.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-211",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/card-view/CountryCard.types.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-212",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/card-view/CountryCardChips.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-213",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/card-view/CountryCardFooter.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-214",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/card-view/CountryCardUtils.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-215",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/card-view/CountryCardViewHeader.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-216",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/card-view/CountryCardViewPagination.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-217",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/card-view/CountryDetails.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-218",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/card-view/CountryStatesSection.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-219",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/card-view/EmptyState.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-220",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/card-view/NoResultsState.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-221",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/card-view/index.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-222",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/chart-view/CurrencyChart.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-223",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/chart-view/EmptyChartState.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-224",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/chart-view/LoadingChartState.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-225",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/chart-view/StatesChart.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-226",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/chart-view/StatesCoverageChart.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-227",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/chart-view/SummaryCards.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-228",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/chart-view/TimelineChart.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-229",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/chart-view/chartDataUtils.test.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-230",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/chart-view/chartDataUtils.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-231",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/chart-view/index.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-232",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/grid-view/Columns.test.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-233",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/grid-view/Columns.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-234",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/grid-view/CountriesDataGrid.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-235",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/grid-view/CountryCellRenderers.test.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-236",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/grid-view/CountryCellRenderers.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-237",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/grid-view/GridActions.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-238",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/import-data/CountryDataTable.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-239",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/import-data/ImportCountries.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-240",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/import-data/LoadingAlert.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-241",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/import-data/NoDataMessage.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-242",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/import-data/UseCountryColumns.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-243",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/import-data/countryImport.test.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-244",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/import-data/countryImport.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-245",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/import-data/index.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-246",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/import-data/types.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-247",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/import-data/useCountryImport.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-248",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/hooks/countryQueryKeys.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-249",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/hooks/useCountryGridLogic.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-250",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/hooks/useCountryQueries.test.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-251",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/hooks/useCountryQueries.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-252",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/index.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-253",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/pages/CountriesPage.test.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-254",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/pages/CountriesPage.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-255",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/public/index.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-256",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/reports/pages/CountryReportPage.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-257",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/services/countryService.test.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-258",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/services/countryService.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-259",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/types/Country.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-260",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/utils/countryMockData.test.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-261",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/utils/countryMockData.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-262",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/utils/countryPageQuery.test.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-263",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/utils/countryPageQuery.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-264",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/utils/countryPermissions.test.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-265",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/utils/countryPermissions.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-266",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/utils/validation.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-267",
+      "path": "web-next/src/modules/reference-data/geographical-information/validation/nameValidation.test.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-268",
+      "path": "web-next/src/modules/reference-data/geographical-information/validation/nameValidation.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-269",
+      "path": "web-next/src/modules/reporting/crystal-report-manager/ManagedCrystalReportView.test.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-270",
+      "path": "web-next/src/modules/reporting/public/useManagedReportAvailability.integration.test.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-271",
+      "path": "web-next/src/modules/reporting/public/useManagedReportAvailability.test.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-272",
+      "path": "web-next/src/modules/reporting/public/useManagedReportAvailability.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-273",
+      "path": "web-next/src/platform/realtime/realtimeQueryRegistry.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-274",
+      "path": "web-next/src/shared/components/data-grid/core/MyDataGrid.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-275",
+      "path": "web-next/src/shared/components/data-grid/core/controlledModels.test.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-276",
+      "path": "web-next/src/shared/components/data-grid/core/controlledModels.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-277",
+      "path": "web-next/src/shared/components/data-grid/core/pagination.test.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-278",
+      "path": "web-next/src/shared/components/data-grid/core/pagination.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-279",
+      "path": "web-next/src/shared/components/data-grid/navigation/GridFooter.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-280",
+      "path": "web-next/src/shared/components/data-grid/toolbar/DataGridToolbar.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-281",
+      "path": "web-next/src/shared/components/data-grid/toolbar/GridOptionsButton.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-282",
+      "path": "web-next/src/shared/components/file-upload/SpreadsheetImportCard.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-283",
+      "path": "web-next/src/shared/components/forms/dialog/FormContainer.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-284",
+      "path": "web-next/src/shared/components/forms/dialog/FormFooter.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-285",
+      "path": "web-next/src/shared/components/forms/dialog/types.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-286",
+      "path": "web-next/src/shared/components/layout/feature-module/FeatureModuleLayout.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-287",
+      "path": "web-next/src/shared/components/navigation/header/PageHeader.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-288",
+      "path": "web-next/src/shared/hooks/useAdaptivePagination.test.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-289",
+      "path": "web-next/src/shared/hooks/useAdaptivePagination.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-290",
+      "path": "web-next/src/shared/hooks/useServerListState.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-291",
+      "path": "web-next/src/shared/reporting/components/MyReportViewer.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-292",
+      "path": "web-next/src/shared/reporting/components/ReportViewer.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-293",
+      "path": "web-next/src/shared/reporting/components/ServerReportDesigner.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-294",
+      "path": "web-next/src/shared/reporting/components/ServerReportDesignerClient.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-295",
+      "path": "web-next/src/shared/reporting/components/ServerReportViewer.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-296",
+      "path": "web-next/src/shared/reporting/components/ServerReportViewerClient.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-297",
+      "path": "web-next/src/shared/reporting/components/index.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-298",
+      "path": "web-next/src/shared/reporting/index.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-299",
+      "path": "web-next/src/shared/reporting/services/reportApiService.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-300",
+      "path": "web-next/src/shared/reporting/services/reportTemplateService.test.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-301",
+      "path": "web-next/src/shared/reporting/services/reportTemplateService.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-302",
+      "path": "web-next/src/shared/reporting/types/reportTemplate.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-303",
+      "path": "web-next/src/shared/services/excelService.test.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-304",
+      "path": "web-next/src/shared/services/excelService.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-305",
+      "path": "web-next/src/shared/utils/bulkSelection.test.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-306",
+      "path": "web-next/src/shared/utils/bulkSelection.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-307",
+      "path": "web-next/src/shared/utils/mockData.test.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-308",
+      "path": "web-next/src/shared/utils/mockData.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-309",
+      "path": "web-next/src/shell/components/sidebar/configs/superAdminConfig.tsx",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-310",
+      "path": "web-angular/src/app/shared/ui/forms/form-container.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-311",
+      "path": "web-angular/src/app/shared/ui/collections/collection-frame.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-312",
+      "path": "web-angular/src/app/shared/ui/collections/collection-templates.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "phase00-313",
+      "path": "web-angular/src/app/shared/ui/layout/surface-card.ts",
+      "layer": "source",
+      "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
+    },
+    {
+      "id": "runtime-314",
+      "path": "web-angular/src/app/modules/reference-data/public-api.ts",
+      "layer": "source",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-315",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/country.fixture.ts",
+      "layer": "source",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-316",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-read-details.ts",
+      "layer": "source",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-317",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page.html",
+      "layer": "source",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-318",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page.scss",
+      "layer": "source",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-319",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page.spec.ts",
+      "layer": "source",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-320",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page.ts",
+      "layer": "source",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-321",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/services/country-service.spec.ts",
+      "layer": "source",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-322",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/services/country-service.ts",
+      "layer": "source",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-323",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/state/country-read-state.spec.ts",
+      "layer": "source",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-324",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/state/country-read-state.ts",
+      "layer": "source",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-325",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/types/country.spec.ts",
+      "layer": "source",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-326",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/types/country.ts",
+      "layer": "source",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-327",
+      "path": "web-angular/src/app/app.routes.ts",
+      "layer": "source",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-328",
+      "path": "web-angular/src/app/shared/ui/collections/collection.types.ts",
+      "layer": "source",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-329",
+      "path": "web-angular/src/app/shared/ui/collections/card-list.scss",
+      "layer": "source",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-330",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid.html",
+      "layer": "source",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-331",
+      "path": "web-angular/src/app/shared/ui/collections/collection-read-compatibility.spec.ts",
+      "layer": "source",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-332",
+      "path": "web-angular/src/app/shared/ui/forms/form-read-compatibility.spec.ts",
+      "layer": "source",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-333",
+      "path": "web-angular/src/app/shared/ui/layout/surface-card.scss",
+      "layer": "source",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-334",
+      "path": "web-angular/src/app/shared/ui/controls/progress-meter.ts",
+      "layer": "source",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-335",
+      "path": "web-angular/src/app/shared/ui/feedback/status-badge.ts",
+      "layer": "source",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-336",
+      "path": "web-angular/src/app/shared/ui/icons/app-icon.ts",
+      "layer": "source",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-337",
+      "path": "web-angular/scripts/verify-countries-browser.mjs",
+      "layer": "source",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-338",
+      "path": "web-angular/scripts/verify-collection-reference.mjs",
+      "layer": "source",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-339",
+      "path": "web-angular/scripts/verify-language-select-browser.mjs",
+      "layer": "source",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-340",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/IMPLEMENTATION_REPORT.md",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-341",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/RUNTIME_SNAPSHOT.json",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-342",
+      "path": "documentation/plans/business/web-angular-migration/education/angular-countries-read-workspace.md",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-343",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/countries-read-browser-focused.log",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-344",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/countries-read-browser-full.log",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-345",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/countries-read-full-check.log",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-346",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/countries-read-reference.log",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-347",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/countries-regression-collections.log",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-348",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/countries-regression-context.log",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-349",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/countries-regression-home.log",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-350",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/countries-regression-language.log",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-351",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/countries-regression-login.log",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-352",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/countries-regression-reporting.log",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-353",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/README.md",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-354",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/focused/dark-ar-1440-detail.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-355",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/focused/dark-ar-390-detail.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-356",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/focused/dark-en-1440-detail.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-357",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/focused/dark-en-390-detail.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-358",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/focused/green-dark-ar-1440-cards.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-359",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/focused/green-dark-ar-1440-grid.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-360",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/focused/green-dark-ar-390-cards.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-361",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/focused/green-dark-ar-390-grid.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-362",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/focused/green-dark-en-1440-cards.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-363",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/focused/green-dark-en-1440-grid.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-364",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/focused/green-dark-en-390-cards.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-365",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/focused/green-dark-en-390-grid.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-366",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/focused/green-light-ar-1440-cards.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-367",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/focused/green-light-ar-1440-grid.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-368",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/focused/green-light-ar-390-cards.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-369",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/focused/green-light-ar-390-grid.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-370",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/focused/green-light-en-1440-cards.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-371",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/focused/green-light-en-1440-grid.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-372",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/focused/green-light-en-390-cards.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-373",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/focused/green-light-en-390-grid.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-374",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/focused/light-ar-1440-detail.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-375",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/focused/light-ar-390-detail.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-376",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/focused/light-en-1440-detail.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-377",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/focused/light-en-390-detail.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-378",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/focused/results.json",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-379",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/full/green-dark-ar-1440-cards.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-380",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/full/green-dark-ar-1440-grid.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-381",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/full/green-dark-ar-390-cards.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-382",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/full/green-dark-ar-390-grid.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-383",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/full/green-dark-en-1440-cards.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-384",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/full/green-dark-en-1440-grid.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-385",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/full/green-dark-en-390-cards.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-386",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/full/green-dark-en-390-grid.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-387",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/full/green-light-ar-1440-cards.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-388",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/full/green-light-ar-1440-grid.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-389",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/full/green-light-ar-390-cards.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-390",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/full/green-light-ar-390-grid.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-391",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/full/green-light-en-1440-cards.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-392",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/full/green-light-en-1440-grid.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-393",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/full/green-light-en-390-cards.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-394",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/full/green-light-en-390-grid.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-395",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/full/results.json",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-396",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/reference/dark-ar-1440-cards.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-397",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/reference/dark-ar-1440-table.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-398",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/reference/dark-ar-390-cards.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-399",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/reference/dark-ar-390-table.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-400",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/reference/dark-en-1440-cards.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-401",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/reference/dark-en-1440-table.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-402",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/reference/dark-en-390-cards.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-403",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/reference/dark-en-390-table.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-404",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/reference/light-ar-1440-cards.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-405",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/reference/light-ar-1440-table.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-406",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/reference/light-ar-390-cards.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-407",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/reference/light-ar-390-table.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-408",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/reference/light-en-1440-cards.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-409",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/reference/light-en-1440-table.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-410",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/reference/light-en-390-cards.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-411",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/reference/light-en-390-table.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "runtime-412",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/reference/results.json",
+      "layer": "documentation",
+      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
+    },
+    {
+      "id": "final-check-results",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/CHECK_RESULTS.md",
+      "layer": "documentation",
+      "purpose": "Executed final bounded checks and explicit release/inherited limits"
+    },
+    {
+      "id": "shared-public-contract",
+      "path": "documentation/guides/web/architecture/ANGULAR_SHARED_COMPONENTS.md",
+      "layer": "documentation",
+      "purpose": "Canonical shared public component compatibility contract"
+    },
+    {
+      "id": "native-advanced-filter-contract",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/ADVANCED_FILTER_CONTRACT.md",
+      "layer": "documentation",
+      "purpose": "Requester-authorized actual native menu and bounded additive server query preflight"
+    },
+    {
+      "id": "current-grid-shared-filter-contract",
+      "path": "web-angular/src/app/shared/data/grid-filter.ts",
+      "layer": "web",
+      "purpose": "Vendor-independent strict filter schema"
+    },
+    {
+      "id": "current-grid-country-filter-owner",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/types/country-filters.ts",
+      "layer": "web",
+      "purpose": "Countries allowlist and bounded typed criteria"
+    },
+    {
+      "id": "current-grid-actual-screen-browser",
+      "path": "web-angular/scripts/verify-countries-screen-browser.mjs",
+      "layer": "web",
+      "purpose": "Actual shell/sidebar/filter/options/browser verification"
+    },
+    {
+      "id": "current-grid-api-filter-contract",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Queries/GetCountries/CountryGridFilters.cs",
+      "layer": "api",
+      "purpose": "Strict additive advanced-query validation"
+    },
+    {
+      "id": "current-grid-api-filter-expressions",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Infrastructure/Features/GeographicalInformation/Countries/Persistence/CountryGridFilterExpressions.cs",
+      "layer": "api",
+      "purpose": "Validated EF query expressions before count and paging"
+    },
+    {
+      "id": "current-grid-primeng-workflow",
+      "path": "documentation/guides/web/architecture/ANGULAR_PRIMENG_WORKFLOW.md",
+      "layer": "documentation",
+      "purpose": "Requester-approved shared/native/MCP-first template workflow"
+    },
+    {
+      "id": "current-grid-current-grid-review",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/CURRENT_GRID_REVIEW.md",
+      "layer": "documentation",
+      "purpose": "Current verification, intentional differences and release boundaries"
+    },
+    {
+      "id": "current-correction-evidence-0",
+      "path": "web-angular/src/app/shared/ui/collections/collection-footer.ts",
+      "layer": "web",
+      "purpose": "Actual current shared component source or executed bounded correction evidence"
+    },
+    {
+      "id": "current-correction-evidence-4",
+      "path": "web-angular/src/app/shared/ui/collections/row-actions.ts",
+      "layer": "web",
+      "purpose": "Actual current shared component source or executed bounded correction evidence"
+    },
+    {
+      "id": "current-correction-evidence-8",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/CURRENT_CORRECTION_RESULTS.json",
+      "layer": "documentation",
+      "purpose": "Actual current shared component source or executed bounded correction evidence"
+    },
+    {
+      "id": "current-correction-evidence-9",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/CURRENT_BROWSER_RESULTS.json",
+      "layer": "documentation",
+      "purpose": "Actual current shared component source or executed bounded correction evidence"
+    },
+    {
+      "id": "row-navigation-current-0",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/ROW_NAVIGATION_REVIEW.md",
+      "layer": "documentation",
+      "purpose": "D23 record movement correction and executed verification"
+    },
+    {
+      "id": "row-navigation-current-1",
+      "path": "web-angular/src/app/shared/ui/collections/collection-controller.spec.ts",
+      "layer": "web",
+      "purpose": "D23 record movement correction and executed verification"
+    },
+    {
+      "id": "row-navigation-shared-current-proof",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/ROW_NAVIGATION_SHARED_RESULTS.json",
+      "layer": "documentation",
+      "purpose": "Executed eight-case shared collection regression after D23"
+    },
+    {
+      "id": "single-navigation-d24-review",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/SINGLE_NAVIGATION_REVIEW.md",
+      "layer": "documentation",
+      "purpose": "D24 native single record indicator, source and verification"
+    },
+    {
+      "id": "footer-focus-current-0",
+      "path": "web-angular/src/app/platform/auth/state/auth-session.ts",
+      "layer": "web",
+      "purpose": "Current focus/centered shared control source or visually inspected executed browser evidence"
+    },
+    {
+      "id": "footer-focus-current-1",
+      "path": "web-angular/src/app/platform/auth/state/auth-session.spec.ts",
+      "layer": "web",
+      "purpose": "Current focus/centered shared control source or visually inspected executed browser evidence"
+    },
+    {
+      "id": "footer-focus-current-2",
+      "path": "web-angular/src/app/shared/ui/controls/option-select.ts",
+      "layer": "web",
+      "purpose": "Current focus/centered shared control source or visually inspected executed browser evidence"
+    },
+    {
+      "id": "footer-focus-current-3",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/current-single-navigation/light-en-1440-footer.png",
+      "layer": "documentation",
+      "purpose": "Current focus/centered shared control source or visually inspected executed browser evidence"
+    },
+    {
+      "id": "footer-focus-current-4",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/current-single-navigation/dark-ar-390-footer.png",
+      "layer": "documentation",
+      "purpose": "Current focus/centered shared control source or visually inspected executed browser evidence"
+    },
+    {
+      "id": "current-bounded-read-closure",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/CURRENT_READ_CLOSURE.md",
+      "layer": "documentation",
+      "purpose": "Current bounded read verification and explicit remaining children/release boundary"
+    }
+  ],
+  "finalizationChecklist": [
+    "Replace every placeholder in the review artifact.",
+    "Complete the Existing-System Relationship Review and every decision in angular-countries-read-workspace-request.md before implementation.",
+    "Complete the Business Rules Matrix with one primary owner, stable outcome/error, and required test for every known rule.",
+    "Complete every Edge Cases & Validation category with scenarios or an explicit N/A reason, enforcement layer, and required test.",
+    "Complete the Impact Matrix with Reuse, Extend, Change, Add, or reasoned N/A across every listed area.",
+    "Remove every remaining placeholder from angular-countries-read-workspace-request.md before runtime implementation.",
+    "Add Phase 00 current API, web, mobile, configuration, localization, and test evidence sources.",
+    "Classify every optional view, including Import, as Required, Deferred, or Excluded independently for web and mobile.",
+    "When Import is Required, add its API and applicable client runtime, route/configuration, localization, and focused-test paths.",
+    "Record and test the exact Import request envelope, limits, duplicate and relationship rules, atomicity, permissions, side effects, and retry behavior.",
+    "Add source collections with evidence-based minimum file counts.",
+    "Create the four initial applied implementation books from the approved plan plus verified current source; label target-only behavior explicitly.",
+    "Rename this file to required-files.json when the Phase 00 evidence paths exist; extend it with runtime files during implementation.",
+    "Update the review artifact to point at required-files.json and mark its documentation state Final.",
+    "Merge recipe-registration.draft.json into recipe-manifest.json after the Phase 00 books and preflight manifest are complete.",
+    "Write generated packets under documentation/modules/platform/features/angular-countries-read-workspace/generated/.",
+    "Run generation and then Generate-Documentation.ps1 -Check.",
+    "Complete phase 06 with an explicit verification decision.",
+    "Do not start customer-facing education until phase 06 records Verified.",
+    "For customer-visible work, complete phase 07 and its Customer Education Pack before Closed.",
+    "When Customer Education is Required, add the verified education document to required-files.json and rerun Generate-Documentation.ps1 -Check before Closed."
+  ]
+}

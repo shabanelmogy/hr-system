@@ -274,6 +274,18 @@
       "layer": "web",
       "id": "implemented-41",
       "purpose": "Current source/config/test/guide/evidence"
+    },
+    {
+      "id": "shared-text-template",
+      "path": "web-angular/src/app/shared/ui/forms/fields/text-field.html",
+      "layer": "web",
+      "purpose": "Current shared TextField template extracted unchanged and reused by numeric input"
+    },
+    {
+      "id": "shared-multiline-regression",
+      "path": "web-angular/src/app/shared/ui/forms/fields/text-field.spec.ts",
+      "layer": "web",
+      "purpose": "Current inherited TextField mode/locks/template regression"
     }
   ]
 }

@@ -1,5 +1,6 @@
-import { Component, computed } from '@angular/core';
+import { Component, computed, isDevMode } from '@angular/core';
 import { RouterOutlet, type Routes } from '@angular/router';
+import { unsavedNavigationGuard } from '../shared/data/public-api';
 import { FiscalContextControl,FiscalContextState } from '../modules/accounting/fiscal-year-context/public-api';
 import { LocalizationRuntime } from '../platform/localization/public-api';
 import { ModuleCatalogState, ModuleContextState, ModuleContextControl } from '../platform/modules/public-api';
@@ -17,4 +18,5 @@ import { shellRoutes,SHELL_CONTEXT_COMPONENT,SHELL_APPLICATION_COMPONENT,SHELL_C
  }),deps:[FiscalContextState,LocalizationRuntime,ModuleContextState]},
 ]})
 export class AuthenticatedApplication {}
-export const authenticatedRoutes:Routes=[{path:'',component:AuthenticatedApplication,children:shellRoutes}];
+const workspaceRoutes:Routes=shellRoutes.map(route=>({...route,children:[...(route.children??[]),...(isDevMode()?[{path:'dev/countries',loadComponent:()=>import('../modules/reference-data/public-api').then(module=>module.CountriesReadPage)}]:[])]}));
+export const authenticatedRoutes:Routes=[{path:'',component:AuthenticatedApplication,canDeactivate:[unsavedNavigationGuard],runGuardsAndResolvers:'always',children:workspaceRoutes}];

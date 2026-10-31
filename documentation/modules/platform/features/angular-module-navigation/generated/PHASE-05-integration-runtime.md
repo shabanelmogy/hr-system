@@ -57,4 +57,4 @@ realtime, notification, localization, report, or Import integration is reachable
 | angular-module-navigation-mobile | 2 | `666b864631d96453655347da71a1b8b875e31e8fca1fc4333ff4bc694d7ac355` |
 | angular-module-navigation-mobile | 11 | `b4c289942920da35fc175c9081cb5d577f732a62a5ed72c8877847cdbaef54f8` |
 | angular-module-navigation-mobile | 12 | `322cb4f8bacc05c7ffa8fdcd53bdbe483e44414b260b25f91f248729033fe297` |
-| angular-module-navigation-mobile | 15 | `2e5b39e07ba356b4a597d12423b57713431d321862280812c18134268bc2ef58` |
+| angular-module-navigation-mobile | 15 | `452488eaf324f65f31839480b064e4bd2f7e3c44ca780f6e7856e7a7ab924c0e` |

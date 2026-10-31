@@ -1,0 +1,139 @@
+{
+  "date": "2026-10-30",
+  "scope": "angular-countries-read-workspace",
+  "provenance": "Actual dirty-checkout source after final runtime freeze; no clean-commit or deployment assertion",
+  "files": [
+    {
+      "path": "web-angular/scripts/verify-collection-reference.mjs",
+      "sha256": "f63aea1d60220e891ad50268a0e823063fbce5c01f92b56c6796b6b806ae676e"
+    },
+    {
+      "path": "web-angular/scripts/verify-countries-browser.mjs",
+      "sha256": "51ad24cdd0b56d24ce2939fda0eae1748afea95e993475a895c45fced2b282ed"
+    },
+    {
+      "path": "web-angular/scripts/verify-language-select-browser.mjs",
+      "sha256": "0bfe059029e245c46cdc86b3f0b4292be55f1f34ec12d1e8776b36fbf9051296"
+    },
+    {
+      "path": "web-angular/src/app/app.routes.ts",
+      "sha256": "0abec2cb7725d8ae18ac87ea867bae4e76a630aa9d92205f66b0a740a584c484"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-read-details.ts",
+      "sha256": "055b7778ac0d489d44002c88fc207912cf51f465993c6db6c9768d52849e90f2"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/country.fixture.ts",
+      "sha256": "809feb249d81041f07c55c7d24be759f248ee11903d8dca881ee563348a07f4d"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page.html",
+      "sha256": "f94cdac7ad68dea90978d5b64ecf97e9b2fd51ab388daec44d3b46bc009abba7"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page.scss",
+      "sha256": "95d88a0c2c97d5f75adf413d74c78a0a2dbdb918c90a1c0e1f5bae4205b36161"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page.spec.ts",
+      "sha256": "66ca5f6d9243477d49305a3f18ffc14c5a9fff4beb651a0f1cf2df4639acbc4b"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page.ts",
+      "sha256": "452dff6557327be49ef35b5de9d05b62a2ca8c23c1301209099f9bdd5802863b"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/services/country-service.spec.ts",
+      "sha256": "8e07c7009fa319b779c3c29e7184dcdc46b1322313c9bc60426e52dcbab9e55a"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/services/country-service.ts",
+      "sha256": "349b0fab620a88512f5b47d41bdcfce233c16864f236017669668f5303b33d5c"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/state/country-read-state.spec.ts",
+      "sha256": "5235f4074ba402d8133ddfe08f5310e9caa7e8346d6983018be6ce39dbda427b"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/state/country-read-state.ts",
+      "sha256": "63e32331fe5d417863ca01434974c9b27beb41ee38e1b803c162ec254a08b912"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/types/country.spec.ts",
+      "sha256": "729fec8bc0734c19abe363123bc2461ec85fcabf149c7c4aa311670c72d08887"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/types/country.ts",
+      "sha256": "ba3ea35cec0e053dabb1e5a1ea623eac06823abff2d694ab88e3c9c31450ad80"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/public-api.ts",
+      "sha256": "5747aa02a7ee357307df9e5a33a62545c07ae284711f7f5a0994df3fe76106bd"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/card-list.scss",
+      "sha256": "0810868285bd846db5d1131e030bbd06f9902e5c0986e5ed2e2d4fcec17e1959"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/card-list.ts",
+      "sha256": "7667e2b6dfcd5c1d2a255ff670f4153022e986eba1e5bc705e94dce0712f8d4d"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/collection-frame.ts",
+      "sha256": "ec4fc63e7795067a5afc6959554e3f0371a21b5aacff0b8c6986a4b399d04547"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/collection-read-compatibility.spec.ts",
+      "sha256": "9a931b975e443c7d326a3bd8fd0ea3210315f9447dea3df44d6df7d9ddcd34af"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/collection-templates.ts",
+      "sha256": "042b2375fda33d7a8a9b981c90add59f73b32d254edc5be41541e4083a89c113"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/collection.types.ts",
+      "sha256": "2921d8b0a64a31eacb23e24834d115e6f63bfc66c043dceaa2edf747c56f50d5"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid.html",
+      "sha256": "0054317e538e1e60c4e14980f3d0047fa267102675e5a70e63810711ec9a7b0c"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid.ts",
+      "sha256": "1f94169d6f761af224daa280aefd3e1816cfdc8c09449bd679fc968b13b94094"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/controls/progress-meter.ts",
+      "sha256": "5974aeb6568ac1667f7ff983b93d1d798fb66560512087482095a7d14961c2b1"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/feedback/status-badge.ts",
+      "sha256": "82461a6051cf066d1bd836f489af3bfad731dc6d1079bbdbb5aae8c4a610b03d"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/form-container.ts",
+      "sha256": "768287e7ff21a5be452cf3ff850a7a08fc761e77b766477fa28f6d5138ae9bf5"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/form-read-compatibility.spec.ts",
+      "sha256": "9fcb19a6e7b446c69063c7e9fadc99c0f3763cd596b0d1e5e4dccf49b1acc19c"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/icons/app-icon.ts",
+      "sha256": "e62ce3c8595f04ed133ffe2ba4b6d29f9ee6c7b4a42a393ed9b50d0d5ae95d34"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/layout/surface-card.scss",
+      "sha256": "99601ed5896fcac26ceed9c7a436a9436a896fe54ae8de2fcd17580c308e08c5"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/layout/surface-card.ts",
+      "sha256": "fd21e2e08ce18dc37b7f01b0f936c73bdddfc54715953b5b2cafd4cc835a5d33"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/public-api.ts",
+      "sha256": "7dec8bbc7089cf8fc8f6da4ef332dfed20d366b015217e4ab7bece44752cf303"
+    }
+  ]
+}

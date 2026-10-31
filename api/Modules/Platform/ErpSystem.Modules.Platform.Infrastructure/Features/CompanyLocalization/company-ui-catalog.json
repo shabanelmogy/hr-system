@@ -1,7 +1,7 @@
 {
   "schemaVersion": 3,
   "versions": {
-    "web": "a66a859b1e21ac87433b2e2c2ef81729ddb47fed57079d9b11278e0c3985f714",
+    "web": "6c3bd907be5bbfdf9245a9a3c84d1cc813d4fbab6fb0f2d74173ff14024c8041",
     "mobile": "509b1f3679ad0290fbffe08a8a971e06718fd568016abb7057817fa3617a357f"
   },
   "sources": [
@@ -25728,6 +25728,55 @@
           "systemPermissions": null
         },
         {
+          "key": "booleanField.checkbox",
+          "en": "Checkbox option",
+          "ar": "خيار بمربع اختيار",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "booleanField.help",
+          "en": "Both enabled and disabled are valid values. Changes are saved when you submit.",
+          "ar": "التفعيل والإيقاف قيمتان صحيحتان. تُحفظ التعديلات عند الإرسال.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "booleanField.invalid",
+          "en": "Choose a valid enabled or disabled value.",
+          "ar": "اختر قيمة تفعيل أو إيقاف صحيحة.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "booleanField.requiredHelp",
+          "en": "This example requires explicit confirmation before submission.",
+          "ar": "هذا المثال يتطلب تأكيدًا صريحًا قبل الإرسال.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "booleanField.requiredLabel",
+          "en": "Required confirmation",
+          "ar": "تأكيد مطلوب",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "booleanField.switch",
+          "en": "Switch option",
+          "ar": "خيار بمفتاح تبديل",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "booleanField.title",
+          "en": "Boolean inputs",
+          "ar": "حقول نعم ولا",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
           "key": "chartCommon.category",
           "en": "Category",
           "ar": "الفئة",
@@ -25871,6 +25920,496 @@
           "key": "chartCommon.value",
           "en": "Value",
           "ar": "القيمة",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.addRule",
+          "en": "Add rule",
+          "ar": "إضافة شرط",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.apply",
+          "en": "Apply",
+          "ar": "تطبيق",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.clear",
+          "en": "Clear",
+          "ar": "مسح",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.clearSort",
+          "en": "Clear sorting",
+          "ar": "إلغاء الترتيب",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.columnPosition",
+          "en": "Column position",
+          "ar": "موضع العمود",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.columnWidth",
+          "en": "Column width",
+          "ar": "عرض العمود",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.columns",
+          "en": "Columns",
+          "ar": "الأعمدة",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.columnsDescription",
+          "en": "Choose visible columns, change their order, or pin them while scrolling.",
+          "ar": "اختر الأعمدة الظاهرة وغيّر ترتيبها أو ثبّتها أثناء التمرير.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.comfortable",
+          "en": "Comfortable",
+          "ar": "مريح",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.compact",
+          "en": "Compact",
+          "ar": "مضغوط",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.contains",
+          "en": "Contains",
+          "ar": "يحتوي على",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.contextMenu",
+          "en": "Context menu",
+          "ar": "القائمة السياقية",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.dateAfter",
+          "en": "Date is after",
+          "ar": "التاريخ بعد",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.dateBefore",
+          "en": "Date is before",
+          "ar": "التاريخ قبل",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.dateIs",
+          "en": "Date is",
+          "ar": "التاريخ هو",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.dateIsNot",
+          "en": "Date is not",
+          "ar": "التاريخ ليس",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.density",
+          "en": "Row density",
+          "ar": "كثافة الصفوف",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.densityDescription",
+          "en": "Choose the spacing that suits the way you work.",
+          "ar": "اختر المسافات المناسبة لطريقة عملك.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.displayOptions",
+          "en": "Display",
+          "ar": "العرض",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.endsWith",
+          "en": "Ends with",
+          "ar": "ينتهي بـ",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.equals",
+          "en": "Equals",
+          "ar": "يساوي",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.exportCsv",
+          "en": "Export visible records as CSV",
+          "ar": "تصدير السجلات المعروضة بصيغة CSV",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.falseValue",
+          "en": "False",
+          "ar": "غير صحيح",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.filter",
+          "en": "Filter {{column}}",
+          "ar": "تصفية {{column}}",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.filterByCellValue",
+          "en": "Filter by this value",
+          "ar": "تصفية حسب هذه القيمة",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.filterConstraint",
+          "en": "Filter condition",
+          "ar": "شرط التصفية",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.filterMenu",
+          "en": "Filter menu",
+          "ar": "قائمة التصفية",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.filterOperator",
+          "en": "Filter operator",
+          "ar": "عامل التصفية",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.filterValue",
+          "en": "Filter value",
+          "ar": "قيمة التصفية",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.filters",
+          "en": "Additional filters",
+          "ar": "فلاتر إضافية",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.gridLines",
+          "en": "Grid lines",
+          "ar": "خطوط الجدول",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.gt",
+          "en": "Greater than",
+          "ar": "أكبر من",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.gte",
+          "en": "Greater than or equal to",
+          "ar": "أكبر من أو يساوي",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.hideFilterMenu",
+          "en": "Hide filter menu",
+          "ar": "إخفاء قائمة التصفية",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.invalidConfiguration",
+          "en": "This combination of grid options is invalid or unsupported.",
+          "ar": "هذه المجموعة من إعدادات الجدول غير صحيحة أو غير مدعومة.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.invalidFilter",
+          "en": "Review the filter conditions. One or more values are invalid or unsupported.",
+          "ar": "راجع شروط التصفية؛ توجد قيمة غير صحيحة أو غير مدعومة.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.lt",
+          "en": "Less than",
+          "ar": "أقل من",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.lte",
+          "en": "Less than or equal to",
+          "ar": "أقل من أو يساوي",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.matchAll",
+          "en": "Match all",
+          "ar": "مطابقة الكل",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.matchAny",
+          "en": "Match any",
+          "ar": "مطابقة أي شرط",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.moveNext",
+          "en": "Move column later",
+          "ar": "نقل العمود للتالي",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.movePrevious",
+          "en": "Move column earlier",
+          "ar": "نقل العمود للسابق",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.notContains",
+          "en": "Does not contain",
+          "ar": "لا يحتوي على",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.notEquals",
+          "en": "Does not equal",
+          "ar": "لا يساوي",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.optionsDescription",
+          "en": "Customize the table layout. Changes apply immediately.",
+          "ar": "خصص طريقة عرض الجدول. تُطبق التغييرات مباشرةً.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.pinEnd",
+          "en": "Pin to end",
+          "ar": "تثبيت في النهاية",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.pinStart",
+          "en": "Pin to start",
+          "ar": "تثبيت في البداية",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.recordNavigation",
+          "en": "Record navigation",
+          "ar": "التنقل بين السجلات",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.removeRule",
+          "en": "Remove rule",
+          "ar": "حذف الشرط",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.resetDisplay",
+          "en": "Reset table layout",
+          "ar": "استعادة تنسيق الجدول",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.rowActions",
+          "en": "Record actions",
+          "ar": "إجراءات السجل",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.searchColumns",
+          "en": "Search columns",
+          "ar": "ابحث عن عمود",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.selectPage",
+          "en": "Select all eligible records on this page",
+          "ar": "تحديد كل السجلات المتاحة في هذه الصفحة",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.selectRecord",
+          "en": "Select record {{record}}",
+          "ar": "تحديد السجل {{record}}",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.selected",
+          "en": "{{count}} selected on this page",
+          "ar": "{{count}} محدد في هذه الصفحة",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.selectionMode",
+          "en": "Selection mode",
+          "ar": "طريقة تحديد السجلات",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.selectionMultiple",
+          "en": "Multiple records",
+          "ar": "سجلات متعددة",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.selectionRadio",
+          "en": "Radio selection",
+          "ar": "تحديد باختيار دائري",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.selectionRange",
+          "en": "Range selection",
+          "ar": "تحديد نطاق",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.selectionSingle",
+          "en": "Single record",
+          "ar": "سجل واحد",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.showFilterMenu",
+          "en": "Show filter menu",
+          "ar": "عرض قائمة التصفية",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.sortAscending",
+          "en": "Sort ascending",
+          "ar": "ترتيب تصاعدي",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.sortAscendingShort",
+          "en": "Asc",
+          "ar": "تصاعدي",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.sortDescending",
+          "en": "Sort descending",
+          "ar": "ترتيب تنازلي",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.sortDescendingShort",
+          "en": "Desc",
+          "ar": "تنازلي",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.standard",
+          "en": "Standard",
+          "ar": "عادي",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.startsWith",
+          "en": "Starts with",
+          "ar": "يبدأ بـ",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.stripedRows",
+          "en": "Striped rows",
+          "ar": "صفوف متبادلة اللون",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.trueValue",
+          "en": "True",
+          "ar": "صحيح",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "collections.unpin",
+          "en": "Unpin",
+          "ar": "إلغاء التثبيت",
           "scope": "shared",
           "systemPermissions": null
         },
@@ -26354,6 +26893,279 @@
           "key": "dashboard.welcome",
           "en": "Welcome",
           "ar": "مرحبا",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "dateField.chooseDate",
+          "en": "Choose date",
+          "ar": "اختيار التاريخ",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "dateField.chooseMonth",
+          "en": "Choose month",
+          "ar": "اختيار الشهر",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "dateField.chooseYear",
+          "en": "Choose year",
+          "ar": "اختيار السنة",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "dateField.day0",
+          "en": "Sunday",
+          "ar": "الأحد",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "dateField.day1",
+          "en": "Monday",
+          "ar": "الاثنين",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "dateField.day2",
+          "en": "Tuesday",
+          "ar": "الثلاثاء",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "dateField.day3",
+          "en": "Wednesday",
+          "ar": "الأربعاء",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "dateField.day4",
+          "en": "Thursday",
+          "ar": "الخميس",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "dateField.day5",
+          "en": "Friday",
+          "ar": "الجمعة",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "dateField.day6",
+          "en": "Saturday",
+          "ar": "السبت",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "dateField.dayShort0",
+          "en": "Su",
+          "ar": "ح",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "dateField.dayShort1",
+          "en": "Mo",
+          "ar": "ن",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "dateField.dayShort2",
+          "en": "Tu",
+          "ar": "ث",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "dateField.dayShort3",
+          "en": "We",
+          "ar": "ر",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "dateField.dayShort4",
+          "en": "Th",
+          "ar": "خ",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "dateField.dayShort5",
+          "en": "Fr",
+          "ar": "ج",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "dateField.dayShort6",
+          "en": "Sa",
+          "ar": "س",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "dateField.earlyYearsHelp",
+          "en": "Dates before year 0100 can be entered directly.",
+          "ar": "يمكن إدخال التواريخ قبل سنة 0100 مباشرةً.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "dateField.formatHelp",
+          "en": "Use YYYY-MM-DD. The selected calendar day does not change with the time zone.",
+          "ar": "استخدم YYYY-MM-DD. اليوم المختار لا يتغير باختلاف المنطقة الزمنية.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "dateField.invalidBounds",
+          "en": "The date limits are invalid.",
+          "ar": "حدود التاريخ غير صحيحة.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "dateField.month1",
+          "en": "January",
+          "ar": "يناير",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "dateField.month10",
+          "en": "October",
+          "ar": "أكتوبر",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "dateField.month11",
+          "en": "November",
+          "ar": "نوفمبر",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "dateField.month12",
+          "en": "December",
+          "ar": "ديسمبر",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "dateField.month2",
+          "en": "February",
+          "ar": "فبراير",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "dateField.month3",
+          "en": "March",
+          "ar": "مارس",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "dateField.month4",
+          "en": "April",
+          "ar": "أبريل",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "dateField.month5",
+          "en": "May",
+          "ar": "مايو",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "dateField.month6",
+          "en": "June",
+          "ar": "يونيو",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "dateField.month7",
+          "en": "July",
+          "ar": "يوليو",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "dateField.month8",
+          "en": "August",
+          "ar": "أغسطس",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "dateField.month9",
+          "en": "September",
+          "ar": "سبتمبر",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "dateField.nextDecade",
+          "en": "Next decade",
+          "ar": "العقد التالي",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "dateField.nextMonth",
+          "en": "Next month",
+          "ar": "الشهر التالي",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "dateField.nextYear",
+          "en": "Next year",
+          "ar": "السنة التالية",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "dateField.outOfRange",
+          "en": "Choose a date from {{min}} to {{max}}.",
+          "ar": "اختر تاريخًا من {{min}} إلى {{max}}.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "dateField.prevDecade",
+          "en": "Previous decade",
+          "ar": "العقد السابق",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "dateField.prevMonth",
+          "en": "Previous month",
+          "ar": "الشهر السابق",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "dateField.prevYear",
+          "en": "Previous year",
+          "ar": "السنة السابقة",
           "scope": "shared",
           "systemPermissions": null
         },
@@ -30203,6 +31015,83 @@
           "systemPermissions": null
         },
         {
+          "key": "numericField.capacity",
+          "en": "Use at most {{max}} characters.",
+          "ar": "استخدم {{max}} حرفًا بحد أقصى.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "numericField.configuration",
+          "en": "The numeric limits are invalid.",
+          "ar": "حدود الرقم غير صحيحة.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "numericField.decimal",
+          "en": "Decimal value",
+          "ar": "قيمة عشرية",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "numericField.help",
+          "en": "Enter digits with a dot or Arabic decimal separator. Grouping and commas are not accepted.",
+          "ar": "أدخل الأرقام مع النقطة أو الفاصل العشري العربي. فواصل الآلاف والفاصلة الإنجليزية غير مقبولة.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "numericField.integer",
+          "en": "Enter a whole number without decimal places.",
+          "ar": "أدخل عددًا صحيحًا دون منازل عشرية.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "numericField.integerLabel",
+          "en": "Integer value",
+          "ar": "قيمة صحيحة",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "numericField.invalid",
+          "en": "Enter a complete number without grouping, commas or exponents.",
+          "ar": "أدخل رقمًا كاملًا دون فواصل آلاف أو فاصلة إنجليزية أو أسس.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "numericField.precision",
+          "en": "Use at most {{digits}} integer digits.",
+          "ar": "استخدم {{digits}} أرقام صحيحة بحد أقصى.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "numericField.range",
+          "en": "Enter a value from {{min}} to {{max}}.",
+          "ar": "أدخل قيمة من {{min}} إلى {{max}}.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "numericField.scale",
+          "en": "Use at most {{digits}} decimal places.",
+          "ar": "استخدم {{digits}} منازل عشرية بحد أقصى.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "numericField.title",
+          "en": "Numeric input",
+          "ar": "الإدخال الرقمي",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
           "key": "organizationalStructure.resources.branches",
           "en": "Branches",
           "ar": "الفروع",
@@ -30483,6 +31372,41 @@
           "systemPermissions": null
         },
         {
+          "key": "reference.currentSelection",
+          "en": "Current selection",
+          "ar": "القيمة المختارة حاليًا",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "reference.emptySelection",
+          "en": "No reference selected",
+          "ar": "لم يتم اختيار مرجع",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "reference.loadMore",
+          "en": "Load more",
+          "ar": "تحميل المزيد",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "reference.selectionMessage",
+          "en": "{0} selected",
+          "ar": "تم تحديد {0}",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "reference.unavailable",
+          "en": "Reference unavailable",
+          "ar": "المرجع غير متاح",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
           "key": "reports.clearFilters",
           "en": "Clear Filters",
           "ar": "مسح عوامل التصفية",
@@ -30497,6 +31421,13 @@
           "systemPermissions": null
         },
         {
+          "key": "reports.invalidPdf",
+          "en": "The server did not return a valid PDF document.",
+          "ar": "لم يُرجع الخادم مستند PDF صالحًا.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
           "key": "reports.noDataMatches",
           "en": "No matching data",
           "ar": "لا توجد بيانات مطابقة",
@@ -30507,6 +31438,20 @@
           "key": "reports.noResultsFound",
           "en": "No results found",
           "ar": "لا توجد نتائج",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "reports.openPdf",
+          "en": "Open PDF",
+          "ar": "فتح ملف PDF",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "reports.previewUnavailable",
+          "en": "Inline PDF preview is unavailable in this browser. Open or download the document to view it.",
+          "ar": "معاينة PDF داخل الصفحة غير متاحة في هذا المتصفح. افتح المستند أو نزّله لعرضه.",
           "scope": "shared",
           "systemPermissions": null
         },
@@ -30535,6 +31480,13 @@
           "key": "reports.searchUpper",
           "en": "Search",
           "ar": "بحث",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "reports.sourceChanged",
+          "en": "The report source has changed. Reload the report list before trying again.",
+          "ar": "تغيّر مصدر التقرير. أعد تحميل قائمة التقارير قبل المحاولة مرة أخرى.",
           "scope": "shared",
           "systemPermissions": null
         },
@@ -30997,6 +31949,13 @@
           "key": "validation.arabicOnly",
           "en": "Arabic letters only allowed",
           "ar": "مسموح الحروف العربية فقط",
+          "scope": "shared",
+          "systemPermissions": []
+        },
+        {
+          "key": "validation.characterCount",
+          "en": "{{current}} of {{max}} characters used",
+          "ar": "تم استخدام {{current}} من {{max}} حرف",
           "scope": "shared",
           "systemPermissions": []
         },
@@ -48489,6 +49448,33 @@
           ]
         },
         {
+          "key": "countries.inUseByAddress",
+          "en": "This country cannot be archived because active addresses use it.",
+          "ar": "لا يمكن أرشفة هذه الدولة لوجود عناوين نشطة مرتبطة بها.",
+          "scope": "system",
+          "systemPermissions": [
+            "Countries:View"
+          ]
+        },
+        {
+          "key": "countries.inUseByCompany",
+          "en": "This country cannot be archived because a company uses it.",
+          "ar": "لا يمكن أرشفة هذه الدولة لارتباطها بإحدى الشركات.",
+          "scope": "system",
+          "systemPermissions": [
+            "Countries:View"
+          ]
+        },
+        {
+          "key": "countries.inUseByState",
+          "en": "This country cannot be archived because it has active states.",
+          "ar": "لا يمكن أرشفة هذه الدولة لوجود محافظات نشطة مرتبطة بها.",
+          "scope": "system",
+          "systemPermissions": [
+            "Countries:View"
+          ]
+        },
+        {
           "key": "countries.invalidAlpha2Code",
           "en": "Invalid Alpha-2 country code",
           "ar": "رمز ألفا 2 للدولة غير صالح",
@@ -48528,6 +49514,15 @@
           "key": "countries.invalidPhoneCode",
           "en": "Invalid phone code for the country",
           "ar": "رمز الهاتف للدولة غير صالح",
+          "scope": "system",
+          "systemPermissions": [
+            "Countries:View"
+          ]
+        },
+        {
+          "key": "countries.lifecycleUncertain",
+          "en": "The server outcome could not be confirmed. Review the refreshed list before trying this action again.",
+          "ar": "تعذّر تأكيد نتيجة العملية. راجع القائمة المحدّثة قبل محاولة تنفيذها مرة أخرى.",
           "scope": "system",
           "systemPermissions": [
             "Countries:View"
@@ -48582,6 +49577,15 @@
           "key": "countries.mapView.title",
           "en": "World Map View",
           "ar": "عرض الخريطة العالمية",
+          "scope": "system",
+          "systemPermissions": [
+            "Countries:View"
+          ]
+        },
+        {
+          "key": "countries.mutationUncertain",
+          "en": "The server outcome could not be confirmed. Close this form and review the latest list before trying this action again.",
+          "ar": "لم نتمكن من تأكيد نتيجة العملية على الخادم. أغلق النموذج وراجع أحدث البيانات قبل محاولة تنفيذ العملية مرة أخرى.",
           "scope": "system",
           "systemPermissions": [
             "Countries:View"

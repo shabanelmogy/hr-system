@@ -33,6 +33,19 @@ public sealed class CountriesController(ISender sender) : ControllerBase
         CancellationToken cancellationToken) =>
         Ok(await sender.Send(query, cancellationToken));
 
+    /// <summary>Queries countries with bounded native column rules before counting and paging.</summary>
+    [HttpPost("query")]
+    [RequestSizeLimit(32768)]
+    [HasPermission(ReferenceDataPermissions.ViewCountries)]
+    [ProducesResponseType(typeof(PageResponse<CountryListItemResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    public async Task<IActionResult> QueryPage(
+        [FromBody] GetCountriesQuery query,
+        CancellationToken cancellationToken) =>
+        Ok(await sender.Send(query, cancellationToken));
+
     /// <summary>Returns lightweight active countries for selectors.</summary>
     [HttpGet("lookup")]
     [HasPermission(ReferenceDataPermissions.ViewCountries)]

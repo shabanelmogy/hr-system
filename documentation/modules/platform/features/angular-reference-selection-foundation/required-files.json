@@ -1,0 +1,358 @@
+{
+  "schemaVersion": 1,
+  "status": "closed",
+  "executionMode": "verified-bounded-runtime",
+  "runtimeAuthorized": true,
+  "feature": "angular-reference-selection-foundation",
+  "featureName": "Angular shared reference selection foundation",
+  "referenceFeature": "N/A",
+  "planId": "web-angular-migration",
+  "sliceId": "S1-A4 — Shared reference selection preparation",
+  "canonicalPlan": "documentation/plans/business/web-angular-migration/PLAN.md",
+  "featureDecompositionDecision": "Single feature",
+  "screenWorkflowContract": "documentation/plans/business/web-angular-migration/decomposition/angular-reference-selection-foundation.md",
+  "plannedCustomerEducation": "documentation/plans/business/web-angular-migration/education/angular-reference-selection-foundation.md",
+  "purpose": "Verified bounded reference-field kit and retained source/portable evidence",
+  "reviewArtifact": "documentation/modules/platform/features/angular-reference-selection-foundation/angular-reference-selection-foundation-evidence.md",
+  "implementationRequest": "documentation/modules/platform/features/angular-reference-selection-foundation/angular-reference-selection-foundation-request.md",
+  "plannedCanonicalBooks": {
+    "master": "documentation/modules/platform/features/angular-reference-selection-foundation/angular-reference-selection-foundation-review.md",
+    "api": "documentation/modules/platform/features/angular-reference-selection-foundation/angular-reference-selection-foundation-api.md",
+    "web": "documentation/modules/platform/features/angular-reference-selection-foundation/angular-reference-selection-foundation-web.md",
+    "mobile": "documentation/modules/platform/features/angular-reference-selection-foundation/angular-reference-selection-foundation-mobile.md"
+  },
+  "sourceCollections": [
+    {
+      "id": "field-adapters",
+      "path": "web-angular/src/app/shared/ui/forms/fields",
+      "layer": "web",
+      "minimumFiles": 8,
+      "purpose": "Actual shared text/reference adapters and tests"
+    }
+  ],
+  "requiredFiles": [
+    {
+      "id": "phase00-0",
+      "path": "documentation/modules/platform/features/angular-reference-selection-foundation/SHARED_REFERENCE_CONTRACT.md",
+      "layer": "documentation",
+      "purpose": "Current inspected source or frozen exact contract"
+    },
+    {
+      "id": "phase00-1",
+      "path": "documentation/modules/platform/features/angular-reference-selection-foundation/angular-reference-selection-foundation-request.md",
+      "layer": "documentation",
+      "purpose": "Current inspected source or frozen exact contract"
+    },
+    {
+      "id": "phase00-2",
+      "path": "documentation/modules/platform/features/angular-reference-selection-foundation/angular-reference-selection-foundation-evidence.md",
+      "layer": "documentation",
+      "purpose": "Current inspected source or frozen exact contract"
+    },
+    {
+      "id": "phase00-3",
+      "path": "documentation/modules/platform/features/angular-reference-selection-foundation/angular-reference-selection-foundation-review.md",
+      "layer": "documentation",
+      "purpose": "Current inspected source or frozen exact contract"
+    },
+    {
+      "id": "phase00-4",
+      "path": "documentation/modules/platform/features/angular-reference-selection-foundation/angular-reference-selection-foundation-api.md",
+      "layer": "documentation",
+      "purpose": "Current inspected source or frozen exact contract"
+    },
+    {
+      "id": "phase00-5",
+      "path": "documentation/modules/platform/features/angular-reference-selection-foundation/angular-reference-selection-foundation-web.md",
+      "layer": "documentation",
+      "purpose": "Current inspected source or frozen exact contract"
+    },
+    {
+      "id": "phase00-6",
+      "path": "documentation/modules/platform/features/angular-reference-selection-foundation/angular-reference-selection-foundation-mobile.md",
+      "layer": "documentation",
+      "purpose": "Current inspected source or frozen exact contract"
+    },
+    {
+      "id": "phase00-7",
+      "path": "documentation/plans/business/web-angular-migration/PLAN.md",
+      "layer": "documentation",
+      "purpose": "Current inspected source or frozen exact contract"
+    },
+    {
+      "id": "phase00-8",
+      "path": "documentation/plans/business/web-angular-migration/decomposition/angular-reference-selection-foundation.md",
+      "layer": "documentation",
+      "purpose": "Current inspected source or frozen exact contract"
+    },
+    {
+      "id": "phase00-9",
+      "path": "AGENTS.md",
+      "layer": "web",
+      "purpose": "Current inspected source or frozen exact contract"
+    },
+    {
+      "id": "phase00-10",
+      "path": "web-next/src/shared/components/forms/selects/MySelect.tsx",
+      "layer": "web",
+      "purpose": "Current inspected source or frozen exact contract"
+    },
+    {
+      "id": "phase00-11",
+      "path": "web-next/src/modules/reference-data/geographical-information/states/components/StateForm.tsx",
+      "layer": "web",
+      "purpose": "Current inspected source or frozen exact contract"
+    },
+    {
+      "id": "phase00-12",
+      "path": "mobile-react/src/shared/components/controls/AppSelectField.tsx",
+      "layer": "web",
+      "purpose": "Current inspected source or frozen exact contract"
+    },
+    {
+      "id": "phase00-13",
+      "path": "documentation/modules/reference-data/features/countries/countries-api-contract.md",
+      "layer": "documentation",
+      "purpose": "Current inspected source or frozen exact contract"
+    },
+    {
+      "id": "phase00-14",
+      "path": "documentation/modules/reference-data/features/states/states-api.md",
+      "layer": "documentation",
+      "purpose": "Current inspected source or frozen exact contract"
+    },
+    {
+      "id": "phase00-15",
+      "path": "web-angular/src/app/shared/ui/controls/option-select.ts",
+      "layer": "web",
+      "purpose": "Current inspected source or frozen exact contract"
+    },
+    {
+      "id": "phase00-16",
+      "path": "web-angular/src/app/shared/ui/forms/fields/text-field.ts",
+      "layer": "web",
+      "purpose": "Current inspected source or frozen exact contract"
+    },
+    {
+      "id": "phase00-17",
+      "path": "web-angular/src/app/shared/ui/forms/fields/text-field.scss",
+      "layer": "web",
+      "purpose": "Current inspected source or frozen exact contract"
+    },
+    {
+      "id": "phase00-18",
+      "path": "web-angular/src/app/shared/ui/forms/form-container.ts",
+      "layer": "web",
+      "purpose": "Current inspected source or frozen exact contract"
+    },
+    {
+      "id": "phase00-19",
+      "path": "web-angular/src/app/shared/ui/forms/form-errors.ts",
+      "layer": "web",
+      "purpose": "Current inspected source or frozen exact contract"
+    },
+    {
+      "id": "phase00-20",
+      "path": "web-angular/src/app/shared/ui/forms/form-container.spec.ts",
+      "layer": "web",
+      "purpose": "Current inspected source or frozen exact contract"
+    },
+    {
+      "id": "phase00-21",
+      "path": "web-angular/src/app/shared/ui/public-api.ts",
+      "layer": "web",
+      "purpose": "Current inspected source or frozen exact contract"
+    },
+    {
+      "id": "phase00-22",
+      "path": "web-angular/src/theme/prime-preset.ts",
+      "layer": "web",
+      "purpose": "Current inspected source or frozen exact contract"
+    },
+    {
+      "id": "actual-23",
+      "path": "web-angular/src/app/shared/ui/forms/fields/field-chrome.scss",
+      "layer": "web",
+      "purpose": "Actual shared implementation or portable reference-selection evidence"
+    },
+    {
+      "id": "actual-24",
+      "path": "web-angular/src/app/shared/ui/forms/fields/reference-field.scss",
+      "layer": "web",
+      "purpose": "Actual shared implementation or portable reference-selection evidence"
+    },
+    {
+      "id": "actual-25",
+      "path": "web-angular/src/app/shared/ui/forms/fields/reference-field.spec.ts",
+      "layer": "web",
+      "purpose": "Actual shared implementation or portable reference-selection evidence"
+    },
+    {
+      "id": "actual-26",
+      "path": "web-angular/src/app/shared/ui/forms/fields/reference-field.ts",
+      "layer": "web",
+      "purpose": "Actual shared implementation or portable reference-selection evidence"
+    },
+    {
+      "id": "actual-27",
+      "path": "web-angular/src/app/shared/ui/forms/fields/reference.types.spec.ts",
+      "layer": "web",
+      "purpose": "Actual shared implementation or portable reference-selection evidence"
+    },
+    {
+      "id": "actual-28",
+      "path": "web-angular/src/app/shared/ui/forms/fields/reference.types.ts",
+      "layer": "web",
+      "purpose": "Actual shared implementation or portable reference-selection evidence"
+    },
+    {
+      "id": "actual-29",
+      "path": "web-angular/src/app/shared/ui/forms/form-field-control.ts",
+      "layer": "web",
+      "purpose": "Actual shared implementation or portable reference-selection evidence"
+    },
+    {
+      "id": "actual-30",
+      "path": "web-angular/src/app/shared/ui/forms/public-api.ts",
+      "layer": "web",
+      "purpose": "Actual shared implementation or portable reference-selection evidence"
+    },
+    {
+      "id": "actual-31",
+      "path": "web-angular/src/app/dev/reference-preview.ts",
+      "layer": "web",
+      "purpose": "Actual shared implementation or portable reference-selection evidence"
+    },
+    {
+      "id": "actual-32",
+      "path": "web-angular/src/app/app.routes.ts",
+      "layer": "web",
+      "purpose": "Actual shared implementation or portable reference-selection evidence"
+    },
+    {
+      "id": "actual-33",
+      "path": "web-angular/scripts/verify-reference-browser.mjs",
+      "layer": "web",
+      "purpose": "Actual shared implementation or portable reference-selection evidence"
+    },
+    {
+      "id": "actual-34",
+      "path": "web-angular/scripts/export-ui-resources.mjs",
+      "layer": "web",
+      "purpose": "Actual shared implementation or portable reference-selection evidence"
+    },
+    {
+      "id": "actual-35",
+      "path": "web-angular/src/locales/generated/core.json",
+      "layer": "web",
+      "purpose": "Actual shared implementation or portable reference-selection evidence"
+    },
+    {
+      "id": "actual-36",
+      "path": "web-angular/src/locales/generated/bootstrap.json",
+      "layer": "web",
+      "purpose": "Actual shared implementation or portable reference-selection evidence"
+    },
+    {
+      "id": "actual-37",
+      "path": "web-angular/src/app/platform/localization/catalog.generated.ts",
+      "layer": "web",
+      "purpose": "Actual shared implementation or portable reference-selection evidence"
+    },
+    {
+      "id": "actual-38",
+      "path": "web-next/src/locales/resources/core/en.json",
+      "layer": "web",
+      "purpose": "Actual shared implementation or portable reference-selection evidence"
+    },
+    {
+      "id": "actual-39",
+      "path": "web-next/src/locales/resources/core/ar.json",
+      "layer": "web",
+      "purpose": "Actual shared implementation or portable reference-selection evidence"
+    },
+    {
+      "id": "actual-40",
+      "path": "api/Modules/Platform/ErpSystem.Modules.Platform.Infrastructure/Features/CompanyLocalization/company-ui-catalog.json",
+      "layer": "api",
+      "purpose": "Actual shared implementation or portable reference-selection evidence"
+    },
+    {
+      "id": "actual-41",
+      "path": "documentation/modules/platform/features/angular-reference-selection-foundation/verification/dark-ar-390-form.png",
+      "layer": "documentation",
+      "purpose": "Actual shared implementation or portable reference-selection evidence"
+    },
+    {
+      "id": "actual-42",
+      "path": "documentation/modules/platform/features/angular-reference-selection-foundation/verification/dark-ar-390-open.png",
+      "layer": "documentation",
+      "purpose": "Actual shared implementation or portable reference-selection evidence"
+    },
+    {
+      "id": "actual-43",
+      "path": "documentation/modules/platform/features/angular-reference-selection-foundation/verification/focused-results.json",
+      "layer": "documentation",
+      "purpose": "Actual shared implementation or portable reference-selection evidence"
+    },
+    {
+      "id": "actual-44",
+      "path": "documentation/modules/platform/features/angular-reference-selection-foundation/verification/light-en-1440-form.png",
+      "layer": "documentation",
+      "purpose": "Actual shared implementation or portable reference-selection evidence"
+    },
+    {
+      "id": "actual-45",
+      "path": "documentation/modules/platform/features/angular-reference-selection-foundation/verification/light-en-1440-open.png",
+      "layer": "documentation",
+      "purpose": "Actual shared implementation or portable reference-selection evidence"
+    },
+    {
+      "id": "actual-46",
+      "path": "documentation/modules/platform/features/angular-reference-selection-foundation/verification/README.md",
+      "layer": "documentation",
+      "purpose": "Actual shared implementation or portable reference-selection evidence"
+    },
+    {
+      "id": "actual-47",
+      "path": "documentation/modules/platform/features/angular-reference-selection-foundation/verification/results.json",
+      "layer": "documentation",
+      "purpose": "Actual shared implementation or portable reference-selection evidence"
+    },
+    {
+      "id": "actual-48",
+      "path": "documentation/modules/platform/features/angular-reference-selection-foundation/IMPLEMENTATION_REPORT.md",
+      "layer": "documentation",
+      "purpose": "Actual shared implementation or portable reference-selection evidence"
+    },
+    {
+      "id": "actual-49",
+      "path": "documentation/plans/business/web-angular-migration/education/angular-reference-selection-foundation.md",
+      "layer": "documentation",
+      "purpose": "Actual shared implementation or portable reference-selection evidence"
+    }
+  ],
+  "finalizationChecklist": [
+    "Replace every placeholder in the review artifact.",
+    "Complete the Existing-System Relationship Review and every decision in angular-reference-selection-foundation-request.md before implementation.",
+    "Complete the Business Rules Matrix with one primary owner, stable outcome/error, and required test for every known rule.",
+    "Complete every Edge Cases & Validation category with scenarios or an explicit N/A reason, enforcement layer, and required test.",
+    "Complete the Impact Matrix with Reuse, Extend, Change, Add, or reasoned N/A across every listed area.",
+    "Remove every remaining placeholder from angular-reference-selection-foundation-request.md before runtime implementation.",
+    "Add Phase 00 current API, web, mobile, configuration, localization, and test evidence sources.",
+    "Classify every optional view, including Import, as Required, Deferred, or Excluded independently for web and mobile.",
+    "When Import is Required, add its API and applicable client runtime, route/configuration, localization, and focused-test paths.",
+    "Record and test the exact Import request envelope, limits, duplicate and relationship rules, atomicity, permissions, side effects, and retry behavior.",
+    "Add source collections with evidence-based minimum file counts.",
+    "Create the four initial applied implementation books from the approved plan plus verified current source; label target-only behavior explicitly.",
+    "Rename this file to required-files.json when the Phase 00 evidence paths exist; extend it with runtime files during implementation.",
+    "Update the review artifact to point at required-files.json and mark its documentation state Final.",
+    "Merge recipe-registration.draft.json into recipe-manifest.json after the Phase 00 books and preflight manifest are complete.",
+    "Write generated packets under documentation/modules/platform/features/angular-reference-selection-foundation/generated/.",
+    "Run generation and then Generate-Documentation.ps1 -Check.",
+    "Complete phase 06 with an explicit verification decision.",
+    "Do not start customer-facing education until phase 06 records Verified.",
+    "For customer-visible work, complete phase 07 and its Customer Education Pack before Closed.",
+    "When Customer Education is Required, add the verified education document to required-files.json and rerun Generate-Documentation.ps1 -Check before Closed."
+  ]
+}

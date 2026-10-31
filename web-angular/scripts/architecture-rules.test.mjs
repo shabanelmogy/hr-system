@@ -5,6 +5,14 @@ import { inspectSource, inspectTemplate } from './architecture-rules.mjs';
 test('shared PrimeNG import and template are allowed', () => {
   assert.deepEqual(inspectSource('src/app/shared/ui/button.ts', 'import { ButtonDirective as P } from "primeng/button"; const template = `<button pButton>Save</button>`;'), []);
 });
+test('collection shells and external templates stay behind the shared public API',()=>{
+ for(const markup of ['<p-table />','<p-paginator />','<p-checkbox />','<table></table>']){
+  assert.ok(inspectTemplate(markup,'src/app/modules/example.html').includes('shared collection/control bypass'));
+  assert.ok(inspectSource('src/app/modules/example.ts','const template=`'+markup+'`;').includes('shared template control bypass'));
+ }
+ assert.deepEqual(inspectTemplate('<erp-data-table /><erp-card-list />','src/app/modules/example.html'),[]);
+ assert.deepEqual(inspectTemplate('<p-table />','src/app/shared/ui/collections/table.html'),[]);
+});
 test('aliased, dynamic and re-exported feature bypasses are rejected', () => {
   for (const source of ['import { Button as Alias } from "primeng/button";', 'const component = import("primeng/table");', 'export { Select as Alias } from "primeng/select";']) {
     assert.ok(inspectSource('src/app/modules/example.ts', source).includes('shared PrimeNG control bypass'));
@@ -28,6 +36,16 @@ test('feature templates must compose shared form and fields', () => {
 test('features cannot depend on shared folder internals', () => {
   assert.ok(inspectSource('src/app/modules/example.ts', 'import { TextField } from "../../shared/ui/forms/fields/text-field";').includes('shared internals import; use the public API'));
   assert.deepEqual(inspectSource('src/app/modules/example.ts', 'import { TextField } from "../../shared/ui/public-api";'), []);
+});
+test('chart capability uses its lazy public entry and keeps native engines inside Shared',()=>{
+  assert.deepEqual(inspectSource('src/app/modules/example.ts','import { CollectionChartView } from "../../shared/ui/charts/public-api";'),[]);
+  assert.ok(inspectSource('src/app/modules/example.ts','import { ChartRenderer } from "../../shared/ui/charts/chart-renderer";').includes('shared internals import; use the public API'));
+  assert.ok(inspectSource('src/app/modules/example.ts','import Chart from "chart.js/auto";').includes('shared chart engine bypass'));
+  assert.deepEqual(inspectSource('src/app/shared/ui/charts/chart-renderer.ts','import Chart from "chart.js/auto";'),[]);
+});
+test('composition can use the lightweight feedback public entry without importing native hosts',()=>{
+  assert.deepEqual(inspectSource('src/app/app.ts','import { FeedbackNotifications } from "./shared/ui/feedback/notifications.public-api";'),[]);
+  assert.ok(inspectSource('src/app/app.ts','import { FeedbackNotifications } from "./shared/ui/feedback/feedback-notifications";').includes('shared internals import; use the public API'));
 });
 test('only application composition can inject a business context into generic Shell',()=>{
   const source='import { FiscalContextControl } from "../modules/accounting/fiscal-year-context/public-api";';

@@ -1,0 +1,40 @@
+[
+  {
+    "palette": "green",
+    "mode": "light",
+    "language": "en",
+    "width": 390,
+    "focused": true,
+    "geometry": {
+      "panel": {
+        "x": 12,
+        "y": 184.625,
+        "width": 366,
+        "height": 359.375
+      },
+      "document": {
+        "x": 12,
+        "y": 608,
+        "width": 366,
+        "height": 160
+      },
+      "frame": {
+        "height": 583.375,
+        "bottom": 768
+      },
+      "viewport": {
+        "width": 390,
+        "height": 780
+      },
+      "page": 390
+    },
+    "independentCriteria": true,
+    "oneHeader": true,
+    "controlledSidebar": true,
+    "explicitRefresh": true,
+    "cancelAndRevoke": true,
+    "authorityGuard": true,
+    "fallback": true,
+    "passed": true
+  }
+]

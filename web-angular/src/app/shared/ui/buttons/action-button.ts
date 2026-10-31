@@ -6,14 +6,14 @@ import type { ButtonSeverity } from 'primeng/types/button';
   selector: 'erp-button',
   imports: [ButtonDirective, ButtonLabel],
   template: `
-    <button #control pButton [type]="type()" [severity]="severity()"
+    <button #control pButton [iconOnly]="appearance()==='icon'" [type]="type()" [severity]="severity()"
       [variant]="primeVariant()"
       [raised]="variant() === 'contained'"
       [disabled]="disabled() || busy()" [attr.aria-busy]="busy() ? 'true' : null"
       [attr.aria-pressed]="pressed()"
       [attr.aria-expanded]="expanded()" [attr.aria-controls]="controls()" [attr.aria-haspopup]="hasPopup()"
-      [class.erp-action-fluid]="fullWidth()" [class.quiet]="appearance() === 'quiet'" [class.icon-only]="appearance() === 'icon'"
-      [attr.aria-label]="appearance() === 'icon' ? label() : null" (click)="activate($event)">
+      [class.erp-action-fluid]="fullWidth()" [class.quiet]="appearance() === 'quiet'" [class.icon-only]="appearance() === 'icon'" [class.view-toggle]="appearance()==='toggle'"
+      [attr.aria-label]="accessibleLabel() ?? (appearance() === 'icon' ? label() : null)" (click)="activate($event)">
       @if (busy()) { <span class="erp-action-spinner" aria-hidden="true"></span> }
       <ng-content select="[buttonIcon]" />
       <span pButtonLabel>{{ label() }}@if (description()) { <span class="erp-action-description">{{ description() }}</span> }</span>
@@ -24,6 +24,7 @@ import type { ButtonSeverity } from 'primeng/types/button';
 })
 export class ActionButton {
   readonly label = input.required<string>();
+  readonly accessibleLabel = input<string|null>(null);
   readonly description = input('');
   readonly type = input<'button' | 'submit' | 'reset'>('button');
   readonly severity = input<ButtonSeverity>('primary');
@@ -39,7 +40,7 @@ export class ActionButton {
   readonly expanded = input<boolean | null>(null);
   readonly controls = input<string | null>(null);
   readonly hasPopup = input<'dialog' | 'menu' | null>(null);
-  readonly appearance = input<'default' | 'quiet' | 'icon'>('default');
+  readonly appearance = input<'default' | 'quiet' | 'icon' | 'toggle'>('default');
   readonly activated = output<MouseEvent>();
   private readonly control = viewChild.required<ElementRef<HTMLButtonElement>>('control');
 

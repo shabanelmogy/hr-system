@@ -1,0 +1,184 @@
+[
+  {
+    "kind": "dashboard",
+    "language": "en",
+    "mode": "light",
+    "width": 390,
+    "metric": {
+      "x": 13,
+      "y": 177.015625,
+      "width": 150,
+      "height": 82.078125
+    },
+    "icon": {
+      "x": 120,
+      "y": 186.015625,
+      "width": 34,
+      "height": 34
+    },
+    "passed": true
+  },
+  {
+    "kind": "dashboard",
+    "language": "en",
+    "mode": "light",
+    "width": 1440,
+    "metric": {
+      "x": 89,
+      "y": 173.015625,
+      "width": 207.65625,
+      "height": 81.796875
+    },
+    "icon": {
+      "x": 253.65625,
+      "y": 182.015625,
+      "width": 34,
+      "height": 34
+    },
+    "passed": true
+  },
+  {
+    "kind": "dashboard",
+    "language": "en",
+    "mode": "dark",
+    "width": 390,
+    "metric": {
+      "x": 13,
+      "y": 177.015625,
+      "width": 150,
+      "height": 82.078125
+    },
+    "icon": {
+      "x": 120,
+      "y": 186.015625,
+      "width": 34,
+      "height": 34
+    },
+    "passed": true
+  },
+  {
+    "kind": "dashboard",
+    "language": "en",
+    "mode": "dark",
+    "width": 1440,
+    "metric": {
+      "x": 89,
+      "y": 173.015625,
+      "width": 207.65625,
+      "height": 81.796875
+    },
+    "icon": {
+      "x": 253.65625,
+      "y": 182.015625,
+      "width": 34,
+      "height": 34
+    },
+    "passed": true
+  },
+  {
+    "kind": "dashboard",
+    "language": "ar",
+    "mode": "light",
+    "width": 390,
+    "metric": {
+      "x": 227,
+      "y": 177.015625,
+      "width": 150,
+      "height": 82.078125
+    },
+    "icon": {
+      "x": 236,
+      "y": 186.015625,
+      "width": 34,
+      "height": 34
+    },
+    "passed": true
+  },
+  {
+    "kind": "dashboard",
+    "language": "ar",
+    "mode": "light",
+    "width": 1440,
+    "metric": {
+      "x": 1143.34375,
+      "y": 173.015625,
+      "width": 207.65625,
+      "height": 81.796875
+    },
+    "icon": {
+      "x": 1152.34375,
+      "y": 182.015625,
+      "width": 34,
+      "height": 34
+    },
+    "passed": true
+  },
+  {
+    "kind": "dashboard",
+    "language": "ar",
+    "mode": "dark",
+    "width": 390,
+    "metric": {
+      "x": 227,
+      "y": 177.015625,
+      "width": 150,
+      "height": 82.078125
+    },
+    "icon": {
+      "x": 236,
+      "y": 186.015625,
+      "width": 34,
+      "height": 34
+    },
+    "passed": true
+  },
+  {
+    "kind": "dashboard",
+    "language": "ar",
+    "mode": "dark",
+    "width": 1440,
+    "metric": {
+      "x": 1143.34375,
+      "y": 173.015625,
+      "width": 207.65625,
+      "height": 81.796875
+    },
+    "icon": {
+      "x": 1152.34375,
+      "y": 182.015625,
+      "width": 34,
+      "height": 34
+    },
+    "passed": true
+  },
+  {
+    "kind": "state",
+    "action": "empty",
+    "passed": true
+  },
+  {
+    "kind": "state",
+    "action": "error",
+    "passed": true
+  },
+  {
+    "kind": "state",
+    "action": "forbidden",
+    "passed": true
+  },
+  {
+    "kind": "state",
+    "action": "malformed",
+    "passed": true
+  },
+  {
+    "kind": "state",
+    "action": "ordinary",
+    "passed": true
+  },
+  {
+    "kind": "state",
+    "action": "sql-text",
+    "passed": true
+  }
+]

@@ -1,0 +1,5 @@
+@use './field-chrome';
+.boolean-control{display:flex;align-items:center;gap:12px;min-block-size:var(--touch-target);padding:8px 12px;border:1px solid var(--input);border-radius:var(--radius);background:var(--surface)}
+.boolean-control.invalid{border-color:var(--destructive)}.boolean-control:focus-within{outline:2px solid var(--ring);outline-offset:2px}
+label{margin:0;min-inline-size:0;flex:1;cursor:pointer;overflow-wrap:anywhere;min-block-size:28px;display:flex;align-items:center;gap:4px}
+.locked label,.disabled label{cursor:default}.disabled{opacity:.6}p-checkbox,p-toggleswitch{display:inline-flex;align-items:center;flex-shrink:0;min-block-size:28px}

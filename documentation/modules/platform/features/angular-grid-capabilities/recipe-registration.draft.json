@@ -1,0 +1,340 @@
+{
+  "status": "draft",
+  "executionMode": "preflight-only",
+  "runtimeAuthorized": false,
+  "referenceFeature": "N/A",
+  "planId": "web-angular-migration",
+  "sliceId": "S1-A14 — Complete shared PrimeNG Table capabilities",
+  "canonicalPlan": "documentation/plans/business/web-angular-migration/PLAN.md",
+  "featureDecompositionDecision": "Single feature",
+  "screenWorkflowContract": "documentation/plans/business/web-angular-migration/decomposition/angular-grid-capabilities.md",
+  "plannedCustomerEducation": "documentation/plans/business/web-angular-migration/education/angular-grid-capabilities.md",
+  "instructions": "Merge these entries into recipe-manifest.json after Phase 00 has a final preflight required-files.json and all four initial applied implementation books. Extend the manifest/books with runtime evidence during implementation.",
+  "books": [
+    {
+      "id": "angular-grid-capabilities-master",
+      "path": "../modules/platform/features/angular-grid-capabilities/angular-grid-capabilities-review.md",
+      "title": "Complete shared PrimeNG Table capabilities cross-platform master review"
+    },
+    {
+      "id": "angular-grid-capabilities-api",
+      "path": "../modules/platform/features/angular-grid-capabilities/angular-grid-capabilities-api.md",
+      "title": "Complete shared PrimeNG Table capabilities API implementation profile"
+    },
+    {
+      "id": "angular-grid-capabilities-web",
+      "path": "../modules/platform/features/angular-grid-capabilities/angular-grid-capabilities-web.md",
+      "title": "Complete shared PrimeNG Table capabilities Next.js implementation profile"
+    },
+    {
+      "id": "angular-grid-capabilities-mobile",
+      "path": "../modules/platform/features/angular-grid-capabilities/angular-grid-capabilities-mobile.md",
+      "title": "Complete shared PrimeNG Table capabilities Expo implementation profile"
+    }
+  ],
+  "requiredFileManifest": "../modules/platform/features/angular-grid-capabilities/required-files.json",
+  "recipes": [
+    {
+      "id": "angular-grid-capabilities-phase-00-implementation-preflight",
+      "title": "Complete shared PrimeNG Table capabilities Phase 00 - Implementation Preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "../modules/platform/features/angular-grid-capabilities/generated/PHASE-00-implementation-preflight.md",
+      "sources": [
+        {
+          "book": "angular-grid-capabilities-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-grid-capabilities-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-grid-capabilities-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "angular-grid-capabilities-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-grid-capabilities-phase-01-domain-api",
+      "title": "Complete shared PrimeNG Table capabilities Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "../modules/platform/features/angular-grid-capabilities/generated/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "angular-grid-capabilities-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "angular-grid-capabilities-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-grid-capabilities-phase-02-web-client",
+      "title": "Complete shared PrimeNG Table capabilities Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "../modules/platform/features/angular-grid-capabilities/generated/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "angular-grid-capabilities-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-grid-capabilities-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-grid-capabilities-phase-03-mobile-client",
+      "title": "Complete shared PrimeNG Table capabilities Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "../modules/platform/features/angular-grid-capabilities/generated/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "angular-grid-capabilities-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-grid-capabilities-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-grid-capabilities-phase-04-domain-actions",
+      "title": "Complete shared PrimeNG Table capabilities Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "../modules/platform/features/angular-grid-capabilities/generated/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "angular-grid-capabilities-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-grid-capabilities-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-grid-capabilities-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-grid-capabilities-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-grid-capabilities-phase-05-integration-runtime",
+      "title": "Complete shared PrimeNG Table capabilities Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "../modules/platform/features/angular-grid-capabilities/generated/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "angular-grid-capabilities-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "angular-grid-capabilities-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-grid-capabilities-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "angular-grid-capabilities-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-grid-capabilities-phase-06-verification-acceptance",
+      "title": "Complete shared PrimeNG Table capabilities Phase 06 - Verification and Acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "../modules/platform/features/angular-grid-capabilities/generated/PHASE-06-verification-acceptance.md",
+      "sources": [
+        {
+          "book": "angular-grid-capabilities-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-grid-capabilities-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-grid-capabilities-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-grid-capabilities-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-grid-capabilities-phase-07-customer-education-closure",
+      "title": "Complete shared PrimeNG Table capabilities Phase 07 - Customer Education and Closure",
+      "template": "templates/PHASE-07-customer-education-closure.template.md",
+      "output": "../modules/platform/features/angular-grid-capabilities/generated/PHASE-07-customer-education-closure.md",
+      "sources": [
+        {
+          "book": "angular-grid-capabilities-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-grid-capabilities-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-grid-capabilities-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    }
+  ]
+}

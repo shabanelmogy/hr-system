@@ -1,0 +1,338 @@
+{
+  "schemaVersion": 1,
+  "status": "closed",
+  "executionMode": "verified-bounded-runtime",
+  "runtimeAuthorized": true,
+  "feature": "angular-scoped-read-lifetime-foundation",
+  "featureName": "Shared scoped read lifecycle preparation",
+  "referenceFeature": "N/A",
+  "planId": "web-angular-migration",
+  "sliceId": "S1-A12 — Shared scoped read lifecycle preparation",
+  "canonicalPlan": "documentation/plans/business/web-angular-migration/PLAN.md",
+  "featureDecompositionDecision": "Single feature",
+  "screenWorkflowContract": "documentation/plans/business/web-angular-migration/decomposition/angular-scoped-read-lifetime-foundation.md",
+  "plannedCustomerEducation": "documentation/plans/business/web-angular-migration/education/angular-scoped-read-lifetime-foundation.md",
+  "purpose": "Frozen existing scoped read lifecycle/source evidence",
+  "reviewArtifact": "documentation/modules/platform/features/angular-scoped-read-lifetime-foundation/angular-scoped-read-lifetime-foundation-evidence.md",
+  "implementationRequest": "documentation/modules/platform/features/angular-scoped-read-lifetime-foundation/angular-scoped-read-lifetime-foundation-request.md",
+  "plannedCanonicalBooks": {
+    "master": "documentation/modules/platform/features/angular-scoped-read-lifetime-foundation/angular-scoped-read-lifetime-foundation-review.md",
+    "api": "documentation/modules/platform/features/angular-scoped-read-lifetime-foundation/angular-scoped-read-lifetime-foundation-api.md",
+    "web": "documentation/modules/platform/features/angular-scoped-read-lifetime-foundation/angular-scoped-read-lifetime-foundation-web.md",
+    "mobile": "documentation/modules/platform/features/angular-scoped-read-lifetime-foundation/angular-scoped-read-lifetime-foundation-mobile.md"
+  },
+  "sourceCollections": [],
+  "requiredFiles": [
+    {
+      "id": "phase00-0",
+      "path": "documentation/modules/platform/features/angular-scoped-read-lifetime-foundation/SCOPED_READ_CONTRACT.md",
+      "layer": "documentation",
+      "purpose": "Actual source or frozen contract"
+    },
+    {
+      "id": "phase00-1",
+      "path": "documentation/modules/platform/features/angular-scoped-read-lifetime-foundation/angular-scoped-read-lifetime-foundation-review.md",
+      "layer": "documentation",
+      "purpose": "Actual source or frozen contract"
+    },
+    {
+      "id": "phase00-2",
+      "path": "documentation/modules/platform/features/angular-scoped-read-lifetime-foundation/angular-scoped-read-lifetime-foundation-api.md",
+      "layer": "documentation",
+      "purpose": "Actual source or frozen contract"
+    },
+    {
+      "id": "phase00-3",
+      "path": "documentation/modules/platform/features/angular-scoped-read-lifetime-foundation/angular-scoped-read-lifetime-foundation-web.md",
+      "layer": "documentation",
+      "purpose": "Actual source or frozen contract"
+    },
+    {
+      "id": "phase00-4",
+      "path": "documentation/modules/platform/features/angular-scoped-read-lifetime-foundation/angular-scoped-read-lifetime-foundation-mobile.md",
+      "layer": "documentation",
+      "purpose": "Actual source or frozen contract"
+    },
+    {
+      "id": "phase00-5",
+      "path": "documentation/modules/platform/features/angular-scoped-read-lifetime-foundation/angular-scoped-read-lifetime-foundation-request.md",
+      "layer": "documentation",
+      "purpose": "Actual source or frozen contract"
+    },
+    {
+      "id": "phase00-6",
+      "path": "documentation/modules/platform/features/angular-scoped-read-lifetime-foundation/angular-scoped-read-lifetime-foundation-evidence.md",
+      "layer": "documentation",
+      "purpose": "Actual source or frozen contract"
+    },
+    {
+      "id": "phase00-7",
+      "path": "documentation/plans/business/web-angular-migration/PLAN.md",
+      "layer": "documentation",
+      "purpose": "Actual source or frozen contract"
+    },
+    {
+      "id": "phase00-8",
+      "path": "documentation/plans/business/web-angular-migration/SIGMA_ACCEPTANCE.md",
+      "layer": "documentation",
+      "purpose": "Actual source or frozen contract"
+    },
+    {
+      "id": "phase00-9",
+      "path": "documentation/plans/business/web-angular-migration/decomposition/angular-scoped-read-lifetime-foundation.md",
+      "layer": "documentation",
+      "purpose": "Actual source or frozen contract"
+    },
+    {
+      "id": "phase00-10",
+      "path": "documentation/plans/notes/FOLLOW_UPS.md",
+      "layer": "documentation",
+      "purpose": "Actual source or frozen contract"
+    },
+    {
+      "id": "phase00-11",
+      "path": "documentation/plans/notes/WEB_NOTES.md",
+      "layer": "documentation",
+      "purpose": "Actual source or frozen contract"
+    },
+    {
+      "id": "phase00-12",
+      "path": "AGENTS.md",
+      "layer": "web",
+      "purpose": "Actual source or frozen contract"
+    },
+    {
+      "id": "phase00-13",
+      "path": "web-angular/src/app/shared/data/scoped-read.ts",
+      "layer": "web",
+      "purpose": "Actual source or frozen contract"
+    },
+    {
+      "id": "phase00-14",
+      "path": "web-angular/src/app/shared/data/scoped-read.spec.ts",
+      "layer": "web",
+      "purpose": "Actual source or frozen contract"
+    },
+    {
+      "id": "phase00-15",
+      "path": "web-angular/src/app/shared/data/public-api.ts",
+      "layer": "web",
+      "purpose": "Actual source or frozen contract"
+    },
+    {
+      "id": "phase00-16",
+      "path": "web-angular/src/app/platform/auth/state/auth-session.ts",
+      "layer": "web",
+      "purpose": "Actual source or frozen contract"
+    },
+    {
+      "id": "phase00-17",
+      "path": "web-angular/src/app/platform/modules/state/module-catalog-state.ts",
+      "layer": "web",
+      "purpose": "Actual source or frozen contract"
+    },
+    {
+      "id": "phase00-18",
+      "path": "web-angular/src/app/platform/modules/services/module-catalog-service.ts",
+      "layer": "web",
+      "purpose": "Actual source or frozen contract"
+    },
+    {
+      "id": "phase00-19",
+      "path": "web-angular/src/app/platform/tenants/state/dashboard-state.ts",
+      "layer": "web",
+      "purpose": "Actual source or frozen contract"
+    },
+    {
+      "id": "phase00-20",
+      "path": "web-angular/src/app/platform/tenants/services/dashboard-service.ts",
+      "layer": "web",
+      "purpose": "Actual source or frozen contract"
+    },
+    {
+      "id": "phase00-21",
+      "path": "web-angular/src/app/modules/accounting/fiscal-year-context/state/fiscal-context-state.ts",
+      "layer": "web",
+      "purpose": "Actual source or frozen contract"
+    },
+    {
+      "id": "phase00-22",
+      "path": "web-angular/src/app/modules/accounting/fiscal-year-context/services/fiscal-context-service.ts",
+      "layer": "web",
+      "purpose": "Actual source or frozen contract"
+    },
+    {
+      "id": "phase00-23",
+      "path": "web-angular/src/app/shared/ui/feedback/feedback-state.ts",
+      "layer": "web",
+      "purpose": "Actual source or frozen contract"
+    },
+    {
+      "id": "phase00-24",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/hooks/useCountryQueries.ts",
+      "layer": "web",
+      "purpose": "Actual source or frozen contract"
+    },
+    {
+      "id": "phase00-25",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/presentation/queries/use-countries.ts",
+      "layer": "web",
+      "purpose": "Actual source or frozen contract"
+    },
+    {
+      "id": "runtime-0",
+      "path": "web-angular/src/app/dev/read-preview-probe.ts",
+      "layer": "web",
+      "purpose": "Current neutral scoped read lifetime runtime/test; acceptance ongoing"
+    },
+    {
+      "id": "runtime-1",
+      "path": "web-angular/src/app/dev/read-preview.ts",
+      "layer": "web",
+      "purpose": "Current neutral scoped read lifetime runtime/test; acceptance ongoing"
+    },
+    {
+      "id": "runtime-2",
+      "path": "web-angular/src/app/app.routes.ts",
+      "layer": "web",
+      "purpose": "Current neutral scoped read lifetime runtime/test; acceptance ongoing"
+    },
+    {
+      "id": "runtime-3",
+      "path": "web-angular/scripts/verify-read-browser.mjs",
+      "layer": "web",
+      "purpose": "Current neutral scoped read lifetime runtime/test; acceptance ongoing"
+    },
+    {
+      "id": "runtime-4",
+      "path": "web-angular/package.json",
+      "layer": "web",
+      "purpose": "Current neutral scoped read lifetime runtime/test; acceptance ongoing"
+    },
+    {
+      "id": "verified-0",
+      "path": "documentation/modules/platform/features/angular-scoped-read-lifetime-foundation/IMPLEMENTATION_REPORT.md",
+      "layer": "documentation",
+      "purpose": "Current acceptance or consumer evidence"
+    },
+    {
+      "id": "verified-1",
+      "path": "documentation/plans/business/web-angular-migration/education/angular-scoped-read-lifetime-foundation.md",
+      "layer": "documentation",
+      "purpose": "Current acceptance or consumer evidence"
+    },
+    {
+      "id": "verified-2",
+      "path": "documentation/guides/web/architecture/ANGULAR_SHARED_COMPONENTS.md",
+      "layer": "documentation",
+      "purpose": "Current acceptance or consumer evidence"
+    },
+    {
+      "id": "verified-3",
+      "path": "web-angular/scripts/verify-home-browser.mjs",
+      "layer": "web",
+      "purpose": "Current acceptance or consumer evidence"
+    },
+    {
+      "id": "verified-4",
+      "path": "documentation/modules/platform/features/angular-scoped-read-lifetime-foundation/verification/company-results14.json",
+      "layer": "documentation",
+      "purpose": "Current acceptance or consumer evidence"
+    },
+    {
+      "id": "verified-5",
+      "path": "documentation/modules/platform/features/angular-scoped-read-lifetime-foundation/verification/context-results24.json",
+      "layer": "documentation",
+      "purpose": "Current acceptance or consumer evidence"
+    },
+    {
+      "id": "verified-6",
+      "path": "documentation/modules/platform/features/angular-scoped-read-lifetime-foundation/verification/dark-ar-390-error.png",
+      "layer": "documentation",
+      "purpose": "Current acceptance or consumer evidence"
+    },
+    {
+      "id": "verified-7",
+      "path": "documentation/modules/platform/features/angular-scoped-read-lifetime-foundation/verification/dark-ar-390-ready.png",
+      "layer": "documentation",
+      "purpose": "Current acceptance or consumer evidence"
+    },
+    {
+      "id": "verified-8",
+      "path": "documentation/modules/platform/features/angular-scoped-read-lifetime-foundation/verification/fiscal-results15.json",
+      "layer": "documentation",
+      "purpose": "Current acceptance or consumer evidence"
+    },
+    {
+      "id": "verified-9",
+      "path": "documentation/modules/platform/features/angular-scoped-read-lifetime-foundation/verification/home-results14.json",
+      "layer": "documentation",
+      "purpose": "Current acceptance or consumer evidence"
+    },
+    {
+      "id": "verified-10",
+      "path": "documentation/modules/platform/features/angular-scoped-read-lifetime-foundation/verification/language-results20.json",
+      "layer": "documentation",
+      "purpose": "Current acceptance or consumer evidence"
+    },
+    {
+      "id": "verified-11",
+      "path": "documentation/modules/platform/features/angular-scoped-read-lifetime-foundation/verification/light-en-1440-error.png",
+      "layer": "documentation",
+      "purpose": "Current acceptance or consumer evidence"
+    },
+    {
+      "id": "verified-12",
+      "path": "documentation/modules/platform/features/angular-scoped-read-lifetime-foundation/verification/light-en-1440-ready.png",
+      "layer": "documentation",
+      "purpose": "Current acceptance or consumer evidence"
+    },
+    {
+      "id": "verified-13",
+      "path": "documentation/modules/platform/features/angular-scoped-read-lifetime-foundation/verification/login-results10.json",
+      "layer": "documentation",
+      "purpose": "Current acceptance or consumer evidence"
+    },
+    {
+      "id": "verified-14",
+      "path": "documentation/modules/platform/features/angular-scoped-read-lifetime-foundation/verification/read-focused8.json",
+      "layer": "documentation",
+      "purpose": "Current acceptance or consumer evidence"
+    },
+    {
+      "id": "verified-15",
+      "path": "documentation/modules/platform/features/angular-scoped-read-lifetime-foundation/verification/read-results40.json",
+      "layer": "documentation",
+      "purpose": "Current acceptance or consumer evidence"
+    },
+    {
+      "id": "verified-16",
+      "path": "documentation/modules/platform/features/angular-scoped-read-lifetime-foundation/verification/README.md",
+      "layer": "documentation",
+      "purpose": "Current acceptance or consumer evidence"
+    }
+  ],
+  "finalizationChecklist": [
+    "Replace every placeholder in the review artifact.",
+    "Complete the Existing-System Relationship Review and every decision in angular-scoped-read-lifetime-foundation-request.md before implementation.",
+    "Complete the Business Rules Matrix with one primary owner, stable outcome/error, and required test for every known rule.",
+    "Complete every Edge Cases & Validation category with scenarios or an explicit N/A reason, enforcement layer, and required test.",
+    "Complete the Impact Matrix with Reuse, Extend, Change, Add, or reasoned N/A across every listed area.",
+    "Remove every remaining placeholder from angular-scoped-read-lifetime-foundation-request.md before runtime implementation.",
+    "Add Phase 00 current API, web, mobile, configuration, localization, and test evidence sources.",
+    "Classify every optional view, including Import, as Required, Deferred, or Excluded independently for web and mobile.",
+    "When Import is Required, add its API and applicable client runtime, route/configuration, localization, and focused-test paths.",
+    "Record and test the exact Import request envelope, limits, duplicate and relationship rules, atomicity, permissions, side effects, and retry behavior.",
+    "Add source collections with evidence-based minimum file counts.",
+    "Create the four initial applied implementation books from the approved plan plus verified current source; label target-only behavior explicitly.",
+    "Rename this file to required-files.json when the Phase 00 evidence paths exist; extend it with runtime files during implementation.",
+    "Update the review artifact to point at required-files.json and mark its documentation state Final.",
+    "Merge recipe-registration.draft.json into recipe-manifest.json after the Phase 00 books and preflight manifest are complete.",
+    "Write generated packets under documentation/modules/platform/features/angular-scoped-read-lifetime-foundation/generated/.",
+    "Run generation and then Generate-Documentation.ps1 -Check.",
+    "Complete phase 06 with an explicit verification decision.",
+    "Do not start customer-facing education until phase 06 records Verified.",
+    "For customer-visible work, complete phase 07 and its Customer Education Pack before Closed.",
+    "When Customer Education is Required, add the verified education document to required-files.json and rerun Generate-Documentation.ps1 -Check before Closed."
+  ]
+}

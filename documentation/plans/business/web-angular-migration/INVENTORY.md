@@ -107,3 +107,12 @@ Snapshot: 2026-10-28 working tree. All entries below are source-presence evidenc
 - Source owner here is inferred from route-group markers and must be reconciled with the generated architecture manifest before G0 closes.
 - Future live acceptance records must contain source baseline, target route, contract ID, views/actions, scope, test evidence and unresolved differences.
 
+
+## Requester scope correction —2026-10-30 DEC-028
+
+ActiveReports viewer/designer/SDK and associated authoring/licensing work are
+Excluded from Angular migration by explicit requester instruction. References to
+existing Next/native/API implementations are source evidence only and do not
+reinstate that target. Current Angular reporting uses managed Crystal/PDF. Other
+reporting manager, permissions, binary transport and PDF lifecycle requirements
+remain governed by their owning contracts. No ActiveReports runtime placeholder.

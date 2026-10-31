@@ -6,13 +6,14 @@ import { chromium,expect } from '@playwright/test';
 import { contrastRatio,themePaletteOrder } from '@app/tokens';
 const output=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'../../.codex-tmp/angular-shell');fs.mkdirSync(output,{recursive:true});
 const origin=process.env.ANGULAR_PREVIEW_ORIGIN??'https://localhost:4210';
+const api=process.env.ANGULAR_API_ORIGIN??'https://localhost:7037';
 const hex=value=>'#'+value.match(/[\d.]+/g).slice(0,3).map(v=>Number(v).toString(16).padStart(2,'0')).join('');
 const browser=await chromium.launch({channel:'chrome'});const results=[];
 try{
   for(const palette of themePaletteOrder)for(const mode of ['light','dark'])for(const language of ['en','ar']){
     const context=await browser.newContext({ignoreHTTPSErrors:true,viewport:{width:1440,height:1000},reducedMotion:'reduce'});
     await context.addCookies(Object.entries({themePalette:palette,currentMode:mode,i18next:language}).map(([name,value])=>({name,value,url:origin})));
-    await context.route('https://localhost:7037/api/**',r=>r.fulfill({status:r.request().url().endsWith('/csrf')?200:401,contentType:'application/json',body:JSON.stringify({requestToken:'fixture'})}));
+    await context.route(api+'/api/**',r=>r.fulfill({status:r.request().url().endsWith('/csrf')?200:401,contentType:'application/json',body:JSON.stringify({requestToken:'fixture'})}));
     const p=await context.newPage();await p.goto(origin+'/login');const wrapper=p.locator('.desktop-preferences erp-option-select');await wrapper.waitFor();
     await expect(wrapper.locator('p-select')).toHaveCount(1);await expect(wrapper.locator('select')).toHaveCount(0);
     await expect(wrapper.locator('.p-select-label')).toHaveText(language==='en'?'English':'العربية');

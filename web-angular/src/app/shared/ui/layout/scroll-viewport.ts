@@ -3,7 +3,7 @@ import { ScrollAreaModule } from 'primeng/scrollarea';
 
 /** Shared PrimeNG scrolling surface; feature pages supply content, never another scrollbar shell. */
 @Component({selector:'erp-scroll-viewport',imports:[ScrollAreaModule],template:`
-  <p-scrollarea variant="auto" [dt]="tokens" [style]="{width:'100%',height:'100%'}">
+  <p-scrollarea variant="auto" [dt]="tokens" [style]="{width:'100%',height:'100%',border:'0'}">
     <p-scrollarea-viewport class="scroll-viewport" role="region" [attr.aria-label]="label()" [style.overflow-x]="'hidden'">
       <p-scrollarea-content class="scroll-content" [class.fill]="fillContent()"><ng-content /></p-scrollarea-content>
     </p-scrollarea-viewport>

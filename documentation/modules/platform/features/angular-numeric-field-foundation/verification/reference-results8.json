@@ -1,0 +1,122 @@
+[
+  {
+    "palette": "green",
+    "mode": "light",
+    "language": "en",
+    "width": 390,
+    "geometry": {
+      "viewport": 390,
+      "pageWidth": 390,
+      "field": 332,
+      "combo": 252,
+      "height": 46,
+      "clear": 40
+    },
+    "passed": true
+  },
+  {
+    "palette": "green",
+    "mode": "light",
+    "language": "en",
+    "width": 1440,
+    "geometry": {
+      "viewport": 1440,
+      "pageWidth": 1440,
+      "field": 589,
+      "combo": 509,
+      "height": 46,
+      "clear": 40
+    },
+    "passed": true
+  },
+  {
+    "palette": "green",
+    "mode": "light",
+    "language": "ar",
+    "width": 390,
+    "geometry": {
+      "viewport": 390,
+      "pageWidth": 390,
+      "field": 332,
+      "combo": 252,
+      "height": 46,
+      "clear": 40
+    },
+    "passed": true
+  },
+  {
+    "palette": "green",
+    "mode": "light",
+    "language": "ar",
+    "width": 1440,
+    "geometry": {
+      "viewport": 1440,
+      "pageWidth": 1440,
+      "field": 589,
+      "combo": 509,
+      "height": 46,
+      "clear": 40
+    },
+    "passed": true
+  },
+  {
+    "palette": "green",
+    "mode": "dark",
+    "language": "en",
+    "width": 390,
+    "geometry": {
+      "viewport": 390,
+      "pageWidth": 390,
+      "field": 332,
+      "combo": 252,
+      "height": 46,
+      "clear": 40
+    },
+    "passed": true
+  },
+  {
+    "palette": "green",
+    "mode": "dark",
+    "language": "en",
+    "width": 1440,
+    "geometry": {
+      "viewport": 1440,
+      "pageWidth": 1440,
+      "field": 589,
+      "combo": 509,
+      "height": 46,
+      "clear": 40
+    },
+    "passed": true
+  },
+  {
+    "palette": "green",
+    "mode": "dark",
+    "language": "ar",
+    "width": 390,
+    "geometry": {
+      "viewport": 390,
+      "pageWidth": 390,
+      "field": 332,
+      "combo": 252,
+      "height": 46,
+      "clear": 40
+    },
+    "passed": true
+  },
+  {
+    "palette": "green",
+    "mode": "dark",
+    "language": "ar",
+    "width": 1440,
+    "geometry": {
+      "viewport": 1440,
+      "pageWidth": 1440,
+      "field": 589,
+      "combo": 509,
+      "height": 46,
+      "clear": 40
+    },
+    "passed": true
+  }
+]

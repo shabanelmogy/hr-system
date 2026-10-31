@@ -1,4 +1,6 @@
-@if(captions()==='ready'){<erp-page-header [title]="'superAdminDashboard.title' | uiText:'platform-tenants'" [subtitle]="'superAdminDashboard.subtitle' | uiText:'platform-tenants'" />}
+@if(captions()==='ready'){<erp-page-header [title]="'superAdminDashboard.title' | uiText:'platform-tenants'" [subtitle]="'superAdminDashboard.subtitle' | uiText:'platform-tenants'">
+  @if(dataNavigation?.available()){<erp-button data-testid="open-data" [label]="'menu.basicData'|uiText" variant="outlined" (activated)="dataNavigation.open()"><erp-icon buttonIcon name="dataset" /></erp-button>}
+</erp-page-header>}
 @let state=dashboard.state();
 @if(captions()==='error'){<erp-feedback-state kind="error" [title]="'common.error' | uiText" [message]="'globalError.description' | uiText" />}
 @else if(captions()==='loading'||state.kind==='loading'){<erp-feedback-state kind="loading" [title]="'common.loading' | uiText:'platform-tenants'" />}

@@ -1,0 +1,41 @@
+import { Component,signal } from '@angular/core';
+import { FormControl,FormGroup,ReactiveFormsModule,Validators } from '@angular/forms';
+import { TestBed } from '@angular/core/testing';import { By } from '@angular/platform-browser';
+import { Checkbox } from 'primeng/checkbox';import { ToggleSwitch } from 'primeng/toggleswitch';
+import { provideAppTheme } from '../../../../../theme/public-api';import { LocalizationRuntime } from '../../../../platform/localization/public-api';
+import { FormContainer } from '../form-container';import { TextField } from './text-field';import { applyServerFieldErrors } from '../form-errors';import { BooleanField } from './boolean-field';
+
+@Component({imports:[ReactiveFormsModule,FormContainer,TextField,BooleanField],template:`<erp-form [form]="form" title="Boolean fixture" submitLabel="Save fixture"><erp-text-field [formControl]="form.controls.name" label="Name fixture" [messages]="messages" /><erp-boolean-field [formControl]="form.controls.value" label="Option fixture" help="Boolean help" [kind]="kind()" [readOnly]="readonly()" required [messages]="messages" /><erp-boolean-field [formControl]="form.controls.consent" label="Consent fixture" [messages]="messages" /></erp-form>`})
+class Composition{readonly form=new FormGroup({name:new FormControl('fixture',{nonNullable:true,validators:Validators.required}),value:new FormControl(false,{nonNullable:true}),consent:new FormControl(false,{nonNullable:true,validators:Validators.requiredTrue})});readonly readonly=signal(false);readonly kind=signal<'checkbox'|'switch'>('checkbox');readonly messages={required:'Required fixture'};}
+describe('Strict BooleanField in shared forms',()=>{
+ beforeEach(async()=>{TestBed.configureTestingModule({providers:[provideAppTheme()]});await TestBed.inject(LocalizationRuntime).loadNamespace('core');});
+ async function setup(){const fixture=TestBed.createComponent(Composition);await fixture.whenStable();const nodes=fixture.debugElement.queryAll(By.directive(BooleanField));return{fixture,owner:fixture.componentInstance,field:nodes[0].componentInstance as BooleanField,consent:nodes[1].componentInstance as BooleanField,root:fixture.nativeElement as HTMLElement};}
+ it('treats false as valid data independently from requiredTrue even with visual required',async()=>{
+  const{fixture,owner,root}=await setup();expect(owner.form.controls.value.valid).toBe(true);expect(owner.form.controls.consent.errors).toHaveProperty('required');const submit=root.querySelector<HTMLButtonElement>('button[type=submit]')!;expect(submit.disabled).toBe(false);submit.click();await fixture.whenStable();expect(root.querySelectorAll('.error-summary a')).toHaveLength(1);expect(root.querySelectorAll('.error')).toHaveLength(1);expect(document.activeElement?.getAttribute('id')).toBe(root.querySelectorAll('erp-boolean-field input')[1].getAttribute('id'));
+ });
+ it('preserves literal true/false on silent write/reset and never coerces strings to true',async()=>{
+  const{fixture,owner,field}=await setup();const changed=vi.fn();owner.form.controls.value.valueChanges.subscribe(changed);field.writeValue(true);await fixture.whenStable();expect(field.value()).toBe(true);field.writeValue('false');await fixture.whenStable();expect(field.value()).toBe(false);expect(changed).not.toHaveBeenCalled();owner.form.controls.value.setValue(true);owner.form.reset();await fixture.whenStable();expect(owner.form.controls.value.value).toBe(false);expect(field.value()).toBe(false);expect(owner.form.controls.value.pristine).toBe(true);
+ });
+ it('rejects null, strings, numbers and objects in the owner model without truthiness',async()=>{
+  const{fixture,owner,field}=await setup();for(const value of [null,undefined,'false','true',0,1,{}]){owner.form.controls.value.setValue(value as unknown as boolean);await fixture.whenStable();expect(owner.form.controls.value.errors).toHaveProperty('booleanValue');expect(field.value()).toBe(false);}owner.form.controls.value.setValue(false);await fixture.whenStable();expect(owner.form.controls.value.valid).toBe(true);
+ });
+ for(const kind of ['checkbox','switch'] as const)it(`uses the real ${kind} vendor CVA once and guards stale readonly/disabled callbacks`,async()=>{
+  const{fixture,owner,field}=await setup();owner.kind.set(kind);await fixture.whenStable();const vendor=fixture.debugElement.query(kind==='checkbox'?By.directive(Checkbox):By.directive(ToggleSwitch)).componentInstance as Checkbox|ToggleSwitch;const changed=vi.fn();owner.form.controls.value.valueChanges.subscribe(changed);
+  if(vendor instanceof Checkbox)vendor.handleChange(new Event('change'));else vendor.onClick(new MouseEvent('click'));await fixture.whenStable();expect(owner.form.controls.value.value).toBe(true);expect(changed).toHaveBeenCalledOnce();owner.readonly.set(true);await fixture.whenStable();field.choose(false);expect(owner.form.controls.value.value).toBe(true);expect(field.control.value).toBe(true);owner.form.controls.value.disable({emitEvent:false});await fixture.whenStable();field.choose(false);expect(owner.form.controls.value.value).toBe(true);expect(changed).toHaveBeenCalledOnce();
+ });
+ it('preserves value and pristine state when swapping checkbox and switch',async()=>{
+  const{fixture,owner,field,root}=await setup();owner.form.controls.value.setValue(true);await fixture.whenStable();const changes=vi.fn();owner.form.controls.value.valueChanges.subscribe(changes);owner.kind.set('switch');await fixture.whenStable();expect(root.querySelector('p-toggleswitch input')?.getAttribute('role')).toBe('switch');expect(field.control.value).toBe(true);expect(owner.form.controls.value.pristine).toBe(true);expect(changes).not.toHaveBeenCalled();field.focus();expect(document.activeElement).toBe(root.querySelector('p-toggleswitch input'));
+ });
+ it('cancels native checkbox activation while readonly so its checked state cannot diverge',async()=>{
+  const{fixture,owner,root,field}=await setup();owner.form.controls.value.setValue(true);owner.readonly.set(true);await fixture.whenStable();const input=root.querySelector<HTMLInputElement>('erp-boolean-field input')!;input.click();await fixture.whenStable();expect(input.checked).toBe(true);expect(owner.form.controls.value.value).toBe(true);expect(input.disabled).toBe(false);field.focus();expect(document.activeElement).toBe(input);owner.readonly.set(false);await fixture.whenStable();input.click();await fixture.whenStable();expect(owner.form.controls.value.value).toBe(false);
+ });
+ it('keeps server errors until a real edit and exposes help/error ARIA on the current control',async()=>{
+  const{fixture,owner,field,root}=await setup();applyServerFieldErrors(owner.form,{value:'Server fixture'});field.writeValue(false);await fixture.whenStable();expect(field.error()).toBe('Server fixture');expect(root.querySelectorAll('erp-boolean-field input')[0].getAttribute('aria-describedby')).toContain('-error');field.choose(true);await fixture.whenStable();expect(field.error()).toBeNull();expect(owner.form.controls.value.dirty).toBe(true);field.blur();expect(owner.form.controls.value.touched).toBe(true);
+ });
+ it('discovers mixed fields in DOM order and focuses the correct summary link',async()=>{
+  const{fixture,owner,root}=await setup();owner.form.controls.name.setValue('');root.querySelector<HTMLButtonElement>('button[type=submit]')!.click();await fixture.whenStable();const links=root.querySelectorAll<HTMLAnchorElement>('.error-summary a');expect(links).toHaveLength(2);expect(document.activeElement).toBe(root.querySelector('erp-text-field input'));links[1].click();await fixture.whenStable();expect(document.activeElement).toBe(root.querySelectorAll('erp-boolean-field input')[1]);
+ });
+ it('removes only its own validator on replacement and destruction',async()=>{
+  const{fixture,owner}=await setup(),old=owner.form.controls.value;old.setValue('false' as unknown as boolean);expect(old.errors).toHaveProperty('booleanValue');const next=new FormControl('false' as unknown as boolean,{nonNullable:true,validators:Validators.requiredTrue});owner.form.setControl('value',next);await fixture.whenStable();expect(old.errors).toBeNull();expect(next.errors).toHaveProperty('booleanValue');fixture.destroy();expect(next.errors).toEqual({required:true});
+ });
+});

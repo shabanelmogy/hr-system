@@ -1,6 +1,6 @@
 @if(auth.user();as user){
-  <erp-application-frame [title]="'general.mainTitle' | uiText" homePath="/home" [name]="name()" [subtitle]="role()" [rtl]="locale.direction()==='rtl'"
-    [navigationLabel]="'general.mainTitle' | uiText" [entries]="navigation()" [searchLabel]="'general.search' | uiText" [navigationVisible]="path()!=='/apps'" [fillContent]="global() && (path()==='/home'||path()==='/super-admin')"
+  <erp-application-frame #frame [title]="'general.mainTitle' | uiText" homePath="/home" [name]="name()" [subtitle]="role()" [rtl]="locale.direction()==='rtl'"
+    [navigationLabel]="'general.mainTitle' | uiText" [entries]="navigation()" [expandedEntries]="expandedEntries()" [searchLabel]="'general.search' | uiText" [navigationVisible]="path()!=='/apps'" [fillContent]="global() && (path()==='/home'||path()==='/super-admin'||path()==='/dev/countries')"
     [openLabel]="'menu.openSidebar' | uiText" [closeLabel]="'menu.closeSidebar' | uiText" (activated)="activate($event)">
     <div workspaceContext class="context-region">
       @if(!global()){

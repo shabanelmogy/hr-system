@@ -99,4 +99,4 @@ or feature-local document.
 | angular-module-navigation-web | 13 | `9ece4d0a3c48dc7b34f4a00ff0a152ddbb883467ee696490e4852b490d3cdffa` |
 | angular-module-navigation-mobile | 1 | `6eeb04af3afc06c72b55828c7f764d7c0b33f24ab866cca1a75b71c2b9b360bb` |
 | angular-module-navigation-mobile | 14 | `fa17e0400b75d5bbbcf658b7e28fb037f01bf4988b758143b59ae0884f064283` |
-| angular-module-navigation-mobile | 15 | `2e5b39e07ba356b4a597d12423b57713431d321862280812c18134268bc2ef58` |
+| angular-module-navigation-mobile | 15 | `452488eaf324f65f31839480b064e4bd2f7e3c44ca780f6e7856e7a7ab924c0e` |

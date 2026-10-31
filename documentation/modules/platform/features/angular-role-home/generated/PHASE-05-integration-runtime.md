@@ -57,4 +57,4 @@ realtime, notification, localization, report, or Import integration is reachable
 | angular-role-home-mobile | 2 | `b897606c0ca6644b476e0d49a4efb8d0c00b2b42c1b37d8f6282224dcb9ad071` |
 | angular-role-home-mobile | 11 | `091fbcbc24ef465bd0fa7e2e1b02611b0ddaca9d52a29c2deb40c8220573e104` |
 | angular-role-home-mobile | 12 | `61c9f87d0e0bbe8f149e1ec5f4dd673d136de6fe271eed0177c4ef0c3e7055c4` |
-| angular-role-home-mobile | 15 | `c6bf374dca3c2400696af77c01651f9e70a902b88b301dceb41b665744807628` |
+| angular-role-home-mobile | 15 | `ae3d868cb4ab8937d5dc057abf44e72deda56eaf166efd283c40897473b739da` |

@@ -44,3 +44,7 @@ Phase 00 current books/manifest/planning and 221 recipes passed before bounded r
 
 ## 15. Evidence and closure
 Current source paths only, updated buttons/forms/fields and stable public API. Runtime/config/test/summary and central shared guide registered; regenerate phase packets from numbered books. Phase 06 Verified, education N/A; no business editor/login or full S1 completion claim.
+
+S1-A8 shared-source evolution2026-10-30: TextField HTML moved unchanged to fields/text-field.html and reused by NumericField; generic inputMode/textDirection hints added. FormFieldControl can notify validation summaries on constraint-only changes without emitting value events. Existing form/date behavior retained; current acceptance belongs to angular-numeric-field-foundation/IMPLEMENTATION_REPORT.md after verification. No API/domain/native change to this foundation.
+
+S1-A10 shared-source evolution2026-10-30: TextField now supports an optional plain-text PrimeNG textarea branch in the same template/lifecycle, rows1..20/default3 and locked clear guard. NumericField explicitly remains single input; DateField retains its own date-only input template. Existing defaults retained; current206unit and multiline/form/numeric/date/retained browser acceptance belongs to angular-multiline-field-foundation/IMPLEMENTATION_REPORT.md. No API/schema/native/resource change.

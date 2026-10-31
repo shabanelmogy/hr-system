@@ -12,3 +12,11 @@ erp-validation-summary, .form-feedback { margin: 1.5rem 1.5rem 0; color: var(--d
 .plain footer { padding: 0; border: 0; display: block; }
 .plain erp-validation-summary, .plain .form-feedback { margin: 0 0 1rem; }
 .form-feedback.success { color: var(--success); }
+.sidebar-form .form-content{padding:16px;gap:16px}
+.sidebar-form footer{display:flex;flex-direction:column-reverse;gap:16px;padding:8px 16px 16px;border:0}
+.sidebar-form erp-validation-summary,.sidebar-form .form-feedback{margin:16px 16px 0}
+.dialog-form .form-content { gap: 20px; }
+.dialog-form footer { display:flex;justify-content:flex-end;gap:12px;margin-block-start:20px;padding-block-start:16px;border-block-start:1px solid var(--border); }
+.form-tools{display:flex;align-items:center;gap:8px;margin-inline-end:auto}.form-tools:empty{display:none}
+.dialog-form footer{position:sticky;inset-block-end:0;z-index:1;background:var(--surface);padding-block-end:8px}
+@media(max-width:599px){.dialog-form .form-tools:not(:empty){flex-basis:100%}.dialog-form footer{gap:10px}}

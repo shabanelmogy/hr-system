@@ -1,0 +1,482 @@
+[
+  {
+    "mode": "light",
+    "language": "en",
+    "width": 390,
+    "geometry": [
+      {
+        "title": "States by Country",
+        "width": 354,
+        "height": 280,
+        "padding": "8px",
+        "radius": "16px",
+        "titleSize": "16px",
+        "titleWeight": "600",
+        "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif",
+        "barCount": 6,
+        "pieCount": 0,
+        "areaCount": 0
+      },
+      {
+        "title": "Countries With and Without States",
+        "width": 354,
+        "height": 280,
+        "padding": "8px",
+        "radius": "16px",
+        "titleSize": "16px",
+        "titleWeight": "600",
+        "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif",
+        "barCount": 0,
+        "pieCount": 2,
+        "areaCount": 0
+      },
+      {
+        "title": "Top Currencies",
+        "width": 354,
+        "height": 280,
+        "padding": "8px",
+        "radius": "16px",
+        "titleSize": "16px",
+        "titleWeight": "600",
+        "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif",
+        "barCount": 2,
+        "pieCount": 0,
+        "areaCount": 0
+      },
+      {
+        "title": "Countries Added Over Time",
+        "width": 354,
+        "height": 280,
+        "padding": "8px",
+        "radius": "16px",
+        "titleSize": "16px",
+        "titleWeight": "600",
+        "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif",
+        "barCount": 0,
+        "pieCount": 0,
+        "areaCount": 1
+      }
+    ],
+    "passed": true
+  },
+  {
+    "mode": "light",
+    "language": "en",
+    "width": 1440,
+    "geometry": [
+      {
+        "title": "States by Country",
+        "width": 653,
+        "height": 654.21875,
+        "padding": "8px",
+        "radius": "16px",
+        "titleSize": "16px",
+        "titleWeight": "600",
+        "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif",
+        "barCount": 6,
+        "pieCount": 0,
+        "areaCount": 0
+      },
+      {
+        "title": "Countries With and Without States",
+        "width": 653,
+        "height": 654.21875,
+        "padding": "8px",
+        "radius": "16px",
+        "titleSize": "16px",
+        "titleWeight": "600",
+        "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif",
+        "barCount": 0,
+        "pieCount": 2,
+        "areaCount": 0
+      },
+      {
+        "title": "Top Currencies",
+        "width": 653,
+        "height": 654.21875,
+        "padding": "8px",
+        "radius": "16px",
+        "titleSize": "16px",
+        "titleWeight": "600",
+        "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif",
+        "barCount": 2,
+        "pieCount": 0,
+        "areaCount": 0
+      },
+      {
+        "title": "Countries Added Over Time",
+        "width": 653,
+        "height": 654.21875,
+        "padding": "8px",
+        "radius": "16px",
+        "titleSize": "16px",
+        "titleWeight": "600",
+        "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif",
+        "barCount": 0,
+        "pieCount": 0,
+        "areaCount": 1
+      }
+    ],
+    "passed": true
+  },
+  {
+    "mode": "light",
+    "language": "ar",
+    "width": 390,
+    "geometry": [
+      {
+        "title": "المحافظات حسب الدولة",
+        "width": 354,
+        "height": 280,
+        "padding": "8px",
+        "radius": "16px",
+        "titleSize": "16px",
+        "titleWeight": "600",
+        "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif",
+        "barCount": 6,
+        "pieCount": 0,
+        "areaCount": 0
+      },
+      {
+        "title": "الدول التي بها محافظات وبدون محافظات",
+        "width": 354,
+        "height": 280,
+        "padding": "8px",
+        "radius": "16px",
+        "titleSize": "16px",
+        "titleWeight": "600",
+        "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif",
+        "barCount": 0,
+        "pieCount": 2,
+        "areaCount": 0
+      },
+      {
+        "title": "أهم العملات",
+        "width": 354,
+        "height": 280,
+        "padding": "8px",
+        "radius": "16px",
+        "titleSize": "16px",
+        "titleWeight": "600",
+        "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif",
+        "barCount": 2,
+        "pieCount": 0,
+        "areaCount": 0
+      },
+      {
+        "title": "الدول المضافة عبر الوقت",
+        "width": 354,
+        "height": 280,
+        "padding": "8px",
+        "radius": "16px",
+        "titleSize": "16px",
+        "titleWeight": "600",
+        "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif",
+        "barCount": 0,
+        "pieCount": 0,
+        "areaCount": 1
+      }
+    ],
+    "passed": true
+  },
+  {
+    "mode": "light",
+    "language": "ar",
+    "width": 1440,
+    "geometry": [
+      {
+        "title": "المحافظات حسب الدولة",
+        "width": 653,
+        "height": 654.21875,
+        "padding": "8px",
+        "radius": "16px",
+        "titleSize": "16px",
+        "titleWeight": "600",
+        "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif",
+        "barCount": 6,
+        "pieCount": 0,
+        "areaCount": 0
+      },
+      {
+        "title": "الدول التي بها محافظات وبدون محافظات",
+        "width": 653,
+        "height": 654.21875,
+        "padding": "8px",
+        "radius": "16px",
+        "titleSize": "16px",
+        "titleWeight": "600",
+        "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif",
+        "barCount": 0,
+        "pieCount": 2,
+        "areaCount": 0
+      },
+      {
+        "title": "أهم العملات",
+        "width": 653,
+        "height": 654.21875,
+        "padding": "8px",
+        "radius": "16px",
+        "titleSize": "16px",
+        "titleWeight": "600",
+        "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif",
+        "barCount": 2,
+        "pieCount": 0,
+        "areaCount": 0
+      },
+      {
+        "title": "الدول المضافة عبر الوقت",
+        "width": 653,
+        "height": 654.21875,
+        "padding": "8px",
+        "radius": "16px",
+        "titleSize": "16px",
+        "titleWeight": "600",
+        "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif",
+        "barCount": 0,
+        "pieCount": 0,
+        "areaCount": 1
+      }
+    ],
+    "passed": true
+  },
+  {
+    "mode": "dark",
+    "language": "en",
+    "width": 390,
+    "geometry": [
+      {
+        "title": "States by Country",
+        "width": 354,
+        "height": 280,
+        "padding": "8px",
+        "radius": "16px",
+        "titleSize": "16px",
+        "titleWeight": "600",
+        "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif",
+        "barCount": 6,
+        "pieCount": 0,
+        "areaCount": 0
+      },
+      {
+        "title": "Countries With and Without States",
+        "width": 354,
+        "height": 280,
+        "padding": "8px",
+        "radius": "16px",
+        "titleSize": "16px",
+        "titleWeight": "600",
+        "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif",
+        "barCount": 0,
+        "pieCount": 2,
+        "areaCount": 0
+      },
+      {
+        "title": "Top Currencies",
+        "width": 354,
+        "height": 280,
+        "padding": "8px",
+        "radius": "16px",
+        "titleSize": "16px",
+        "titleWeight": "600",
+        "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif",
+        "barCount": 2,
+        "pieCount": 0,
+        "areaCount": 0
+      },
+      {
+        "title": "Countries Added Over Time",
+        "width": 354,
+        "height": 280,
+        "padding": "8px",
+        "radius": "16px",
+        "titleSize": "16px",
+        "titleWeight": "600",
+        "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif",
+        "barCount": 0,
+        "pieCount": 0,
+        "areaCount": 1
+      }
+    ],
+    "passed": true
+  },
+  {
+    "mode": "dark",
+    "language": "en",
+    "width": 1440,
+    "geometry": [
+      {
+        "title": "States by Country",
+        "width": 653,
+        "height": 654.21875,
+        "padding": "8px",
+        "radius": "16px",
+        "titleSize": "16px",
+        "titleWeight": "600",
+        "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif",
+        "barCount": 6,
+        "pieCount": 0,
+        "areaCount": 0
+      },
+      {
+        "title": "Countries With and Without States",
+        "width": 653,
+        "height": 654.21875,
+        "padding": "8px",
+        "radius": "16px",
+        "titleSize": "16px",
+        "titleWeight": "600",
+        "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif",
+        "barCount": 0,
+        "pieCount": 2,
+        "areaCount": 0
+      },
+      {
+        "title": "Top Currencies",
+        "width": 653,
+        "height": 654.21875,
+        "padding": "8px",
+        "radius": "16px",
+        "titleSize": "16px",
+        "titleWeight": "600",
+        "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif",
+        "barCount": 2,
+        "pieCount": 0,
+        "areaCount": 0
+      },
+      {
+        "title": "Countries Added Over Time",
+        "width": 653,
+        "height": 654.21875,
+        "padding": "8px",
+        "radius": "16px",
+        "titleSize": "16px",
+        "titleWeight": "600",
+        "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif",
+        "barCount": 0,
+        "pieCount": 0,
+        "areaCount": 1
+      }
+    ],
+    "passed": true
+  },
+  {
+    "mode": "dark",
+    "language": "ar",
+    "width": 390,
+    "geometry": [
+      {
+        "title": "المحافظات حسب الدولة",
+        "width": 354,
+        "height": 280,
+        "padding": "8px",
+        "radius": "16px",
+        "titleSize": "16px",
+        "titleWeight": "600",
+        "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif",
+        "barCount": 6,
+        "pieCount": 0,
+        "areaCount": 0
+      },
+      {
+        "title": "الدول التي بها محافظات وبدون محافظات",
+        "width": 354,
+        "height": 280,
+        "padding": "8px",
+        "radius": "16px",
+        "titleSize": "16px",
+        "titleWeight": "600",
+        "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif",
+        "barCount": 0,
+        "pieCount": 2,
+        "areaCount": 0
+      },
+      {
+        "title": "أهم العملات",
+        "width": 354,
+        "height": 280,
+        "padding": "8px",
+        "radius": "16px",
+        "titleSize": "16px",
+        "titleWeight": "600",
+        "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif",
+        "barCount": 2,
+        "pieCount": 0,
+        "areaCount": 0
+      },
+      {
+        "title": "الدول المضافة عبر الوقت",
+        "width": 354,
+        "height": 280,
+        "padding": "8px",
+        "radius": "16px",
+        "titleSize": "16px",
+        "titleWeight": "600",
+        "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif",
+        "barCount": 0,
+        "pieCount": 0,
+        "areaCount": 1
+      }
+    ],
+    "passed": true
+  },
+  {
+    "mode": "dark",
+    "language": "ar",
+    "width": 1440,
+    "geometry": [
+      {
+        "title": "المحافظات حسب الدولة",
+        "width": 653,
+        "height": 654.21875,
+        "padding": "8px",
+        "radius": "16px",
+        "titleSize": "16px",
+        "titleWeight": "600",
+        "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif",
+        "barCount": 6,
+        "pieCount": 0,
+        "areaCount": 0
+      },
+      {
+        "title": "الدول التي بها محافظات وبدون محافظات",
+        "width": 653,
+        "height": 654.21875,
+        "padding": "8px",
+        "radius": "16px",
+        "titleSize": "16px",
+        "titleWeight": "600",
+        "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif",
+        "barCount": 0,
+        "pieCount": 2,
+        "areaCount": 0
+      },
+      {
+        "title": "أهم العملات",
+        "width": 653,
+        "height": 654.21875,
+        "padding": "8px",
+        "radius": "16px",
+        "titleSize": "16px",
+        "titleWeight": "600",
+        "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif",
+        "barCount": 2,
+        "pieCount": 0,
+        "areaCount": 0
+      },
+      {
+        "title": "الدول المضافة عبر الوقت",
+        "width": 653,
+        "height": 654.21875,
+        "padding": "8px",
+        "radius": "16px",
+        "titleSize": "16px",
+        "titleWeight": "600",
+        "font": "\"IBM Plex Sans Arabic\", \"Segoe UI\", Tahoma, system-ui, sans-serif",
+        "barCount": 0,
+        "pieCount": 0,
+        "areaCount": 1
+      }
+    ],
+    "passed": true
+  }
+]

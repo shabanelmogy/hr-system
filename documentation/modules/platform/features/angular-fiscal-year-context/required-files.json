@@ -376,6 +376,12 @@
       "path": "documentation/plans/business/web-angular-migration/education/angular-fiscal-year-context.md",
       "layer": "documentation",
       "purpose": "Actual implementation or acceptance"
+    },
+    {
+      "id": "scoped-read-lifetime-evolution",
+      "path": "web-angular/src/app/shared/data/scoped-read.spec.ts",
+      "layer": "web",
+      "purpose": "Current shared finite snapshot/lifetime regression"
     }
   ],
   "finalizationChecklist": [

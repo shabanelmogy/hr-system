@@ -20,6 +20,7 @@ export class ApplicationFrame {
   readonly homePath=input.required<string>();
   readonly openLabel=input.required<string>(); readonly closeLabel=input.required<string>(); readonly searchLabel=input.required<string>();
   readonly entries=input.required<readonly NavigationEntry[]>(); readonly activated=output<string>(); readonly opened=signal(false);
+  readonly expandedEntries=input<readonly string[]>([]);
   readonly desktop=toSignal(inject(BreakpointObserver).observe('(min-width:900px)').pipe(map(value=>value.matches)),{initialValue:false});
   readonly rtl=input(false);
   readonly navigationVisible=input(true);

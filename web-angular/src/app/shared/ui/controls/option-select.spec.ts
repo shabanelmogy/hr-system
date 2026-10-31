@@ -1,4 +1,6 @@
 import { TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+import { Select } from 'primeng/select';
 import { provideAppTheme } from '../../../../theme/public-api';
 import { OptionSelect } from './option-select';
 
@@ -29,5 +31,15 @@ describe('Shared preference selector', () => {
     f.componentInstance.control.setValue('2');await f.whenStable();expect(changed).toHaveBeenCalledExactlyOnceWith('2');expect(f.componentInstance.control.value).toBe('1');expect((f.nativeElement as HTMLElement).querySelector('.p-select-label')?.textContent).toContain('First');
     f.componentRef.setInput('value','2');await f.whenStable();expect((f.nativeElement as HTMLElement).querySelector('.p-select-label')?.textContent).toContain('Second');expect(changed).toHaveBeenCalledTimes(1);
     f.componentRef.setInput('busy',true);await f.whenStable();f.componentInstance.control.setValue('1');expect(changed).toHaveBeenCalledTimes(1);expect(f.componentInstance.control.value).toBe('2');
+  });
+  it('reconciles actual vendor CVA completion so a rejected external selection can be retried',async()=>{
+    const fixture=TestBed.createComponent(OptionSelect);
+    for(const [key,value]of Object.entries({label:'Company',value:'1',options:[{value:'1',label:'First'},{value:'2',label:'Second'}],commitMode:'external'}))fixture.componentRef.setInput(key,value);
+    const changed=vi.fn();fixture.componentInstance.valueChange.subscribe(changed);await fixture.whenStable();
+    const select=fixture.debugElement.query(By.directive(Select)).componentInstance as Select;
+    select.onOptionSelect(new Event('click'),{value:'2',label:'Second'});await fixture.whenStable();
+    expect(select.modelValue()).toBe('1');expect((fixture.nativeElement as HTMLElement).querySelector('.p-select-label')?.textContent).toContain('First');
+    select.onOptionSelect(new Event('click'),{value:'2',label:'Second'});await fixture.whenStable();
+    expect(changed).toHaveBeenCalledTimes(2);expect(select.modelValue()).toBe('1');
   });
 });

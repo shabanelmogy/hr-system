@@ -170,6 +170,17 @@ ERP_ACCEPTANCE ERP-02..ERP-04. Use that contract rather than creating divergent
 per-feature keyboard/lookup lifecycles. Typed wire generation is evaluated under
 ERP-01; generated clients remain behind feature services and out of components.
 
+ERP-01 assessment2026-10-29 is Verified for its bounded compatibility proof:
+ng-openapi-gen1.1.0 compiles against current Angular, but raw runtime adoption is
+rejected. The accepted migration path remains typed owner services with unknown
+input narrowed by runtime schemas and focused contract/transport tests. Keep
+current cross-origin Cookie/CSRF/context handling and typed binary/error adapters.
+Do not import the disposable generated code, duplicate wire DTO authorities, or
+exempt generated `any` from architecture checks. Reconsider adoption only through
+FOLLOW-003 after the observed metadata/media/security gaps are reconciled.
+The [assessment report](../../../modules/platform/features/angular-api-contract-generation-proof/IMPLEMENTATION_REPORT.md)
+owns the actual hosted snapshot/provenance, dimension matrix and reproducible proof.
+
 - One authoritative typed Reactive Form per editor; child sections receive typed
   controls or documented nested groups. Do not mirror every value into Signals.
 - Feature validators are reusable and live in validation; generic primitives may
@@ -270,9 +281,11 @@ five palettes in light/dark, EN/AR and core controls, including status contrast 
 selection/focus/disabled states. Feature code uses shared semantic tokens or the
 adapter's variables; raw hex colors require a documented external-content case.
 
-At S1 add Angular to the package consumption/synchronization and CI verification
-contract. The current `packages/tokens/scripts/sync-apps.mjs` lists only Next and
-Expo; do not claim Angular is synchronized until that integration is implemented.
+Current S1 source includes Angular in package consumption/synchronization:
+`packages/tokens/scripts/sync-apps.mjs` lists web-next, mobile-react and web-angular.
+Angular CI configuration checks canonical tokens and the client independently.
+S1-A13 assessment verifies this source and retained local token checks; it does
+not claim an executed remote CI run or deployed environment.
 Keep compiled outputs current through the package build/check workflow and verify
 retained consumers after any central token change. No package/runtime change is
 made by this planning clarification.
@@ -323,3 +336,12 @@ Source policies: repository AGENTS, shared SCREEN_PATTERN_CATALOG/SHARED_REUSE_C
 current frontend architecture, Countries/States applied books. Angular equivalents
 must be registered centrally before runtime business implementation; the existing
 Next-specific policies remain unchanged for Next.
+
+## Requester scope correction —2026-10-30 DEC-028
+
+ActiveReports viewer/designer/SDK and associated authoring/licensing work are
+Excluded from Angular migration by explicit requester instruction. References to
+existing Next/native/API implementations are source evidence only and do not
+reinstate that target. Current Angular reporting uses managed Crystal/PDF. Other
+reporting manager, permissions, binary transport and PDF lifecycle requirements
+remain governed by their owning contracts. No ActiveReports runtime placeholder.

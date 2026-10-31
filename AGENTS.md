@@ -100,6 +100,19 @@ Rules:
 
 ## Shared component first (mandatory)
 
+- Reusability is a template requirement: every recurring UI structure, interaction,
+  or presentation rule belongs in the target application's shared library. Feature
+  pages own business data, permissions and callbacks only. Extend the existing
+  shared component first; do not create another feature-local copy.
+- For Angular, consult the PrimeNG MCP before implementing or changing a shared
+  control. Prefer the installed version's built-in properties, components and
+  templates, then documented tokens/Pass Through. Add shared custom behavior only
+  for an evidenced gap. Record MCP metadata limits and verify with Angular checks
+  and browser behavior; never describe an unavailable tool as having validated code.
+- Angular collection screens consume the shared `MyDataGrid` public API. Grid
+  options, modal layout, spacing, filters, column controls and feedback must remain
+  generic shared capabilities; feature pages supply the domain contracts.
+
 - This is a mandatory implementation rule, not visual guidance: use the existing
   shared component; extend it generically when close; create a reusable shared
   component only when none exists or fits. Never replace an existing shared

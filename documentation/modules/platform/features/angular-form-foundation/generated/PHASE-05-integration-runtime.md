@@ -57,4 +57,4 @@ realtime, notification, localization, report, or Import integration is reachable
 | angular-form-foundation-mobile | 2 | `f2251a944a00c8155b578e2ac7e59625798f5ab536762ef52fd00529ba0982d6` |
 | angular-form-foundation-mobile | 11 | `391d65f6b02080f8b4bacf2293b5a07a1aa69f834d784a1d94b4bb86400ee81c` |
 | angular-form-foundation-mobile | 12 | `70f10c72924980a36133310b0a7b4dc18511cb110b18323a79dd960adcbc8be3` |
-| angular-form-foundation-mobile | 15 | `bb0ba2166b7cab7268b923b76e2966b644a13dd0b94fa7ed5e8af97ec6211a18` |
+| angular-form-foundation-mobile | 15 | `54f8cda59095ce454f27c117ced12176d1875b32cd22697e8b4351e002588c77` |

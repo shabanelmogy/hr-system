@@ -1,0 +1,130 @@
+[
+  {
+    "palette": "green",
+    "mode": "light",
+    "language": "en",
+    "width": 390,
+    "geometry": {
+      "documentWidth": 390,
+      "viewport": 390,
+      "rowHeight": 52,
+      "footerHeight": 155,
+      "cardColumns": 1
+    },
+    "pageGets": 29,
+    "detailGets": 4,
+    "passed": true
+  },
+  {
+    "palette": "green",
+    "mode": "light",
+    "language": "en",
+    "width": 1440,
+    "geometry": {
+      "documentWidth": 1440,
+      "viewport": 1440,
+      "rowHeight": 52,
+      "footerHeight": 57,
+      "cardColumns": 4
+    },
+    "pageGets": 29,
+    "detailGets": 4,
+    "passed": true
+  },
+  {
+    "palette": "green",
+    "mode": "light",
+    "language": "ar",
+    "width": 390,
+    "geometry": {
+      "documentWidth": 390,
+      "viewport": 390,
+      "rowHeight": 52,
+      "footerHeight": 155,
+      "cardColumns": 1
+    },
+    "pageGets": 29,
+    "detailGets": 4,
+    "passed": true
+  },
+  {
+    "palette": "green",
+    "mode": "light",
+    "language": "ar",
+    "width": 1440,
+    "geometry": {
+      "documentWidth": 1440,
+      "viewport": 1440,
+      "rowHeight": 52,
+      "footerHeight": 57,
+      "cardColumns": 4
+    },
+    "pageGets": 29,
+    "detailGets": 4,
+    "passed": true
+  },
+  {
+    "palette": "green",
+    "mode": "dark",
+    "language": "en",
+    "width": 390,
+    "geometry": {
+      "documentWidth": 390,
+      "viewport": 390,
+      "rowHeight": 52,
+      "footerHeight": 155,
+      "cardColumns": 1
+    },
+    "pageGets": 29,
+    "detailGets": 4,
+    "passed": true
+  },
+  {
+    "palette": "green",
+    "mode": "dark",
+    "language": "en",
+    "width": 1440,
+    "geometry": {
+      "documentWidth": 1440,
+      "viewport": 1440,
+      "rowHeight": 52,
+      "footerHeight": 57,
+      "cardColumns": 4
+    },
+    "pageGets": 29,
+    "detailGets": 4,
+    "passed": true
+  },
+  {
+    "palette": "green",
+    "mode": "dark",
+    "language": "ar",
+    "width": 390,
+    "geometry": {
+      "documentWidth": 390,
+      "viewport": 390,
+      "rowHeight": 52,
+      "footerHeight": 155,
+      "cardColumns": 1
+    },
+    "pageGets": 29,
+    "detailGets": 4,
+    "passed": true
+  },
+  {
+    "palette": "green",
+    "mode": "dark",
+    "language": "ar",
+    "width": 1440,
+    "geometry": {
+      "documentWidth": 1440,
+      "viewport": 1440,
+      "rowHeight": 52,
+      "footerHeight": 57,
+      "cardColumns": 4
+    },
+    "pageGets": 29,
+    "detailGets": 4,
+    "passed": true
+  }
+]

@@ -8,7 +8,7 @@
   <div class="identity-card" [class.identity-compact]="desktop() && !opened()"><erp-identity-avatar [name]="name()" />
     @if(!desktop() || opened()){<div class="identity-copy"><strong>{{ name() }}</strong><small>{{ subtitle() }}</small></div>}
   </div>
-  <erp-navigation-list [expanded]="!desktop() || opened()" [entries]="entries()" [label]="navigationLabel()" [searchLabel]="searchLabel()" (selected)="activate($event)" />
+  <erp-navigation-list [expanded]="!desktop() || opened()" [entries]="entries()" [expandedEntries]="expandedEntries()" [label]="navigationLabel()" [searchLabel]="searchLabel()" (selected)="activate($event)" (expansionRequested)="opened.set(true)" />
 </ng-template>
 @if(navigationVisible()){@if(desktop()){
   <aside class="workspace-sidebar" id="workspace-navigation" [attr.aria-label]="navigationLabel()">

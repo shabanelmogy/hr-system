@@ -25,9 +25,11 @@ button[aria-pressed='true'] {
 @keyframes erp-action-spin { to { transform: rotate(360deg); } }
 @media (prefers-reduced-motion: reduce) { .erp-action-spinner { animation: none; } }
 .quiet { box-shadow: none; text-align: start; justify-content: flex-start; background:var(--action-quiet-background,var(--secondary));font-size:var(--action-font-size,1rem);border-radius:var(--action-radius,1rem);padding-inline:var(--action-padding-x,1rem);min-block-size:var(--action-min-height,var(--touch-target)); }
-.icon-only { padding: 0; inline-size: 2.5rem; block-size: 2.5rem; min-block-size: 2.5rem; border-radius: 50%; color: inherit; background: transparent; border: 0; box-shadow: none; }
+.icon-only { padding: 0; inline-size:var(--action-icon-size,2.5rem);block-size:var(--action-icon-size,2.5rem);min-block-size:var(--action-icon-size,2.5rem);border-radius:var(--action-icon-radius,50%);color:var(--action-icon-color,inherit);background:var(--action-icon-background,transparent);border:0;box-shadow:none; }
 .icon-only span[pButtonLabel] { display: none; }
 .quiet span[pButtonLabel] { flex: 0 1 auto; font-weight: inherit; }
+.view-toggle{min-height:var(--action-min-height,36px);border:1px solid var(--border);border-radius:4px;padding:5px var(--action-toggle-padding-x,10px);min-width:32px;font-weight:400;font-size:var(--action-font-size,14px);line-height:var(--action-line-height,1.75);color:var(--muted-foreground);box-shadow:0 1px 3px var(--border);gap:8px;background:var(--surface)}
+.view-toggle span[pButtonLabel]{display:var(--action-label-display,block);font-weight:400}.view-toggle[aria-pressed=true]{background:var(--primary);color:var(--primary-foreground);border-color:var(--border);box-shadow:0 2px 8px color-mix(in srgb,var(--primary) 25%,transparent)}
 .quiet.p-button-text{border-width:0}
 .erp-action-description { display:block; font-size:0.875rem; line-height:1.43; color:var(--muted-foreground); font-weight:400; }
 .quiet { justify-content: var(--action-justify, flex-start); text-align: var(--action-text-align, start); padding-block: var(--action-padding-y, 0.45rem); font-weight: var(--action-font-weight, 600); border-color:var(--action-border-color,var(--border)); }

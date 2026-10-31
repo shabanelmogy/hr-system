@@ -1,0 +1,500 @@
+{
+  "schemaVersion": 1,
+  "status": "final",
+  "executionMode": "bounded-runtime",
+  "runtimeAuthorized": true,
+  "feature": "angular-countries-report-view",
+  "featureName": "Countries managed report integration",
+  "referenceFeature": "N/A",
+  "planId": "web-angular-migration",
+  "sliceId": "S3-A6 — Countries managed report integration",
+  "canonicalPlan": "documentation/plans/business/web-angular-migration/PLAN.md",
+  "featureDecompositionDecision": "Single feature",
+  "screenWorkflowContract": "documentation/plans/business/web-angular-migration/decomposition/angular-countries-report-view.md",
+  "plannedCustomerEducation": "documentation/plans/business/web-angular-migration/education/angular-countries-report-view.md",
+  "purpose": "Verified bounded S3-A6 Countries Report integration and shared compatible extensions",
+  "reviewArtifact": "documentation/modules/platform/features/angular-countries-report-view/angular-countries-report-view-evidence.md",
+  "implementationRequest": "documentation/modules/platform/features/angular-countries-report-view/angular-countries-report-view-request.md",
+  "plannedCanonicalBooks": {
+    "master": "documentation/modules/platform/features/angular-countries-report-view/angular-countries-report-view-review.md",
+    "api": "documentation/modules/platform/features/angular-countries-report-view/angular-countries-report-view-api.md",
+    "web": "documentation/modules/platform/features/angular-countries-report-view/angular-countries-report-view-web.md",
+    "mobile": "documentation/modules/platform/features/angular-countries-report-view/angular-countries-report-view-mobile.md"
+  },
+  "sourceCollections": [],
+  "requiredFiles": [
+    {
+      "id": "report-entry-0",
+      "path": "AGENTS.md",
+      "layer": "web",
+      "purpose": "Current implementation/source or frozen bounded entry evidence"
+    },
+    {
+      "id": "report-entry-1",
+      "path": "documentation/plans/business/web-angular-migration/PLAN.md",
+      "layer": "documentation",
+      "purpose": "Current implementation/source or frozen bounded entry evidence"
+    },
+    {
+      "id": "report-entry-2",
+      "path": "documentation/plans/business/web-angular-migration/decomposition/angular-countries-report-view.md",
+      "layer": "documentation",
+      "purpose": "Current implementation/source or frozen bounded entry evidence"
+    },
+    {
+      "id": "report-entry-3",
+      "path": "documentation/modules/platform/features/angular-managed-reporting-adapter/GLOBAL_PDF_CONTRACT.md",
+      "layer": "documentation",
+      "purpose": "Current implementation/source or frozen bounded entry evidence"
+    },
+    {
+      "id": "report-entry-4",
+      "path": "documentation/guides/web/architecture/ANGULAR_SHARED_COMPONENTS.md",
+      "layer": "documentation",
+      "purpose": "Current implementation/source or frozen bounded entry evidence"
+    },
+    {
+      "id": "report-entry-5",
+      "path": "documentation/guides/shared/SCREEN_PATTERN_CATALOG.md",
+      "layer": "documentation",
+      "purpose": "Current implementation/source or frozen bounded entry evidence"
+    },
+    {
+      "id": "report-entry-6",
+      "path": "web-angular/package.json",
+      "layer": "web",
+      "purpose": "Current implementation/source or frozen bounded entry evidence"
+    },
+    {
+      "id": "report-entry-7",
+      "path": "web-angular/package-lock.json",
+      "layer": "web",
+      "purpose": "Current implementation/source or frozen bounded entry evidence"
+    },
+    {
+      "id": "report-entry-8",
+      "path": "web-angular/src/app/modules/reporting/public-api.ts",
+      "layer": "web",
+      "purpose": "Current implementation/source or frozen bounded entry evidence"
+    },
+    {
+      "id": "report-entry-9",
+      "path": "web-angular/src/app/shared/ui/layout/report-workspace.ts",
+      "layer": "web",
+      "purpose": "Current implementation/source or frozen bounded entry evidence"
+    },
+    {
+      "id": "report-entry-10",
+      "path": "web-angular/src/app/shared/ui/documents/pdf-viewer.ts",
+      "layer": "web",
+      "purpose": "Current implementation/source or frozen bounded entry evidence"
+    },
+    {
+      "id": "report-entry-11",
+      "path": "web-angular/src/app/shared/ui/forms/form-container.ts",
+      "layer": "web",
+      "purpose": "Current implementation/source or frozen bounded entry evidence"
+    },
+    {
+      "id": "report-entry-12",
+      "path": "web-angular/src/app/shared/ui/forms/form-container.scss",
+      "layer": "web",
+      "purpose": "Current implementation/source or frozen bounded entry evidence"
+    },
+    {
+      "id": "report-entry-13",
+      "path": "web-angular/src/app/shared/ui/layout/scroll-viewport.ts",
+      "layer": "web",
+      "purpose": "Current implementation/source or frozen bounded entry evidence"
+    },
+    {
+      "id": "report-entry-14",
+      "path": "web-angular/src/app/shared/data/pdf-document.ts",
+      "layer": "web",
+      "purpose": "Current implementation/source or frozen bounded entry evidence"
+    },
+    {
+      "id": "report-entry-15",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page.ts",
+      "layer": "web",
+      "purpose": "Current implementation/source or frozen bounded entry evidence"
+    },
+    {
+      "id": "report-entry-16",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page.html",
+      "layer": "web",
+      "purpose": "Current implementation/source or frozen bounded entry evidence"
+    },
+    {
+      "id": "report-entry-17",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/reports/pages/CountryReportPage.tsx",
+      "layer": "web",
+      "purpose": "Current implementation/source or frozen bounded entry evidence"
+    },
+    {
+      "id": "report-entry-18",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/CountriesMultiView.tsx",
+      "layer": "web",
+      "purpose": "Current implementation/source or frozen bounded entry evidence"
+    },
+    {
+      "id": "report-entry-19",
+      "path": "web-next/src/modules/reporting/crystal-report-manager/ManagedCrystalReportView.tsx",
+      "layer": "web",
+      "purpose": "Current implementation/source or frozen bounded entry evidence"
+    },
+    {
+      "id": "report-entry-20",
+      "path": "web-next/src/shared/reporting/components/ReportViewer.tsx",
+      "layer": "web",
+      "purpose": "Current implementation/source or frozen bounded entry evidence"
+    },
+    {
+      "id": "report-entry-21",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/presentation/screens/CountriesScreen.tsx",
+      "layer": "mobile",
+      "purpose": "Current implementation/source or frozen bounded entry evidence"
+    },
+    {
+      "id": "report-entry-22",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Presentation/Features/Analytics/CrystalReports/V1/GlobalCrystalReportsController.cs",
+      "layer": "api",
+      "purpose": "Current implementation/source or frozen bounded entry evidence"
+    },
+    {
+      "id": "report-entry-23",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/CrystalReports/Queries/CrystalReportQueries.cs",
+      "layer": "api",
+      "purpose": "Current implementation/source or frozen bounded entry evidence"
+    },
+    {
+      "id": "report-entry-24",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/CrystalReports/Queries/CrystalReportQueryHandlers.cs",
+      "layer": "api",
+      "purpose": "Current implementation/source or frozen bounded entry evidence"
+    },
+    {
+      "id": "report-entry-25",
+      "path": "web-angular/src/app/modules/reporting/global-reports/report.fixture.ts",
+      "layer": "web",
+      "purpose": "Current implementation/source or frozen bounded entry evidence"
+    },
+    {
+      "id": "report-entry-26",
+      "path": "web-angular/src/app/modules/reporting/global-reports/components/global-report-view.spec.ts",
+      "layer": "web",
+      "purpose": "Current implementation/source or frozen bounded entry evidence"
+    },
+    {
+      "id": "report-entry-27",
+      "path": "web-angular/src/app/modules/reporting/global-reports/components/global-report-view.ts",
+      "layer": "web",
+      "purpose": "Current implementation/source or frozen bounded entry evidence"
+    },
+    {
+      "id": "report-entry-28",
+      "path": "web-angular/src/app/modules/reporting/global-reports/services/global-report-service.spec.ts",
+      "layer": "web",
+      "purpose": "Current implementation/source or frozen bounded entry evidence"
+    },
+    {
+      "id": "report-entry-29",
+      "path": "web-angular/src/app/modules/reporting/global-reports/services/global-report-service.ts",
+      "layer": "web",
+      "purpose": "Current implementation/source or frozen bounded entry evidence"
+    },
+    {
+      "id": "report-entry-30",
+      "path": "web-angular/src/app/modules/reporting/global-reports/state/global-report-state.spec.ts",
+      "layer": "web",
+      "purpose": "Current implementation/source or frozen bounded entry evidence"
+    },
+    {
+      "id": "report-entry-31",
+      "path": "web-angular/src/app/modules/reporting/global-reports/state/global-report-state.ts",
+      "layer": "web",
+      "purpose": "Current implementation/source or frozen bounded entry evidence"
+    },
+    {
+      "id": "report-entry-32",
+      "path": "web-angular/src/app/modules/reporting/global-reports/types/global-report.spec.ts",
+      "layer": "web",
+      "purpose": "Current implementation/source or frozen bounded entry evidence"
+    },
+    {
+      "id": "report-entry-33",
+      "path": "web-angular/src/app/modules/reporting/global-reports/types/global-report.ts",
+      "layer": "web",
+      "purpose": "Current implementation/source or frozen bounded entry evidence"
+    },
+    {
+      "id": "report-entry-34",
+      "path": "web-angular/src/app/modules/reporting/global-reports/validation/report-filter-validator.ts",
+      "layer": "web",
+      "purpose": "Current implementation/source or frozen bounded entry evidence"
+    },
+    {
+      "id": "report-entry-35",
+      "path": "documentation/modules/platform/features/angular-countries-report-view/angular-countries-report-view-api.md",
+      "layer": "documentation",
+      "purpose": "Current implementation/source or frozen bounded entry evidence"
+    },
+    {
+      "id": "report-entry-36",
+      "path": "documentation/modules/platform/features/angular-countries-report-view/angular-countries-report-view-evidence.md",
+      "layer": "documentation",
+      "purpose": "Current implementation/source or frozen bounded entry evidence"
+    },
+    {
+      "id": "report-entry-37",
+      "path": "documentation/modules/platform/features/angular-countries-report-view/angular-countries-report-view-mobile.md",
+      "layer": "documentation",
+      "purpose": "Current implementation/source or frozen bounded entry evidence"
+    },
+    {
+      "id": "report-entry-38",
+      "path": "documentation/modules/platform/features/angular-countries-report-view/angular-countries-report-view-request.md",
+      "layer": "documentation",
+      "purpose": "Current implementation/source or frozen bounded entry evidence"
+    },
+    {
+      "id": "report-entry-39",
+      "path": "documentation/modules/platform/features/angular-countries-report-view/angular-countries-report-view-review.md",
+      "layer": "documentation",
+      "purpose": "Current implementation/source or frozen bounded entry evidence"
+    },
+    {
+      "id": "report-entry-40",
+      "path": "documentation/modules/platform/features/angular-countries-report-view/angular-countries-report-view-web.md",
+      "layer": "documentation",
+      "purpose": "Current implementation/source or frozen bounded entry evidence"
+    },
+    {
+      "id": "report-entry-41",
+      "path": "documentation/modules/platform/features/angular-countries-report-view/REPORT_SOURCE_CONTRACT.md",
+      "layer": "documentation",
+      "purpose": "Current implementation/source or frozen bounded entry evidence"
+    },
+    {
+      "id": "report-implemented-42",
+      "path": "web-angular/src/app/shared/ui/icons/app-icon.ts",
+      "layer": "web",
+      "purpose": "Actual implemented consumer/shared verification source"
+    },
+    {
+      "id": "report-implemented-43",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page.spec.ts",
+      "layer": "web",
+      "purpose": "Actual implemented consumer/shared verification source"
+    },
+    {
+      "id": "report-implemented-44",
+      "path": "web-angular/scripts/verify-country-report-browser.mjs",
+      "layer": "web",
+      "purpose": "Actual implemented consumer/shared verification source"
+    },
+    {
+      "id": "report-implemented-45",
+      "path": "web-angular/scripts/verify-country-report-reference.mjs",
+      "layer": "web",
+      "purpose": "Actual implemented consumer/shared verification source"
+    },
+    {
+      "id": "report-implemented-46",
+      "path": "web-angular/scripts/support/report-pdf-fixture.mjs",
+      "layer": "web",
+      "purpose": "Actual implemented consumer/shared verification source"
+    },
+    {
+      "id": "report-final-47",
+      "path": "web-angular/scripts/verify-reporting-browser.mjs",
+      "layer": "web",
+      "purpose": "Actual bounded implementation or verified acceptance"
+    },
+    {
+      "id": "report-final-48",
+      "path": "web-angular/scripts/verify-country-actions-browser.mjs",
+      "layer": "web",
+      "purpose": "Actual bounded implementation or verified acceptance"
+    },
+    {
+      "id": "report-final-49",
+      "path": "web-angular/scripts/verify-country-charts-browser.mjs",
+      "layer": "web",
+      "purpose": "Actual bounded implementation or verified acceptance"
+    },
+    {
+      "id": "report-final-50",
+      "path": "documentation/plans/business/web-angular-migration/education/angular-countries-report-view.md",
+      "layer": "documentation",
+      "purpose": "Actual bounded implementation or verified acceptance"
+    },
+    {
+      "id": "report-final-51",
+      "path": "documentation/modules/platform/features/angular-countries-report-view/verification/ANGULAR_CHECK.log",
+      "layer": "documentation",
+      "purpose": "Actual bounded implementation or verified acceptance"
+    },
+    {
+      "id": "report-final-52",
+      "path": "documentation/modules/platform/features/angular-countries-report-view/verification/CHART_REGRESSION_RESULTS.json",
+      "layer": "documentation",
+      "purpose": "Actual bounded implementation or verified acceptance"
+    },
+    {
+      "id": "report-final-53",
+      "path": "documentation/modules/platform/features/angular-countries-report-view/verification/COMMAND_REGRESSION_RESULTS.json",
+      "layer": "documentation",
+      "purpose": "Actual bounded implementation or verified acceptance"
+    },
+    {
+      "id": "report-final-54",
+      "path": "documentation/modules/platform/features/angular-countries-report-view/verification/CURRENT_REPORT_ACCEPTANCE.md",
+      "layer": "documentation",
+      "purpose": "Actual bounded implementation or verified acceptance"
+    },
+    {
+      "id": "report-final-55",
+      "path": "documentation/modules/platform/features/angular-countries-report-view/verification/ENTRY_DOCUMENTATION_CHECK.log",
+      "layer": "documentation",
+      "purpose": "Actual bounded implementation or verified acceptance"
+    },
+    {
+      "id": "report-final-56",
+      "path": "documentation/modules/platform/features/angular-countries-report-view/verification/ENTRY_GENERATION.log",
+      "layer": "documentation",
+      "purpose": "Actual bounded implementation or verified acceptance"
+    },
+    {
+      "id": "report-final-57",
+      "path": "documentation/modules/platform/features/angular-countries-report-view/verification/ENTRY_PLANNING_CHECK.log",
+      "layer": "documentation",
+      "purpose": "Actual bounded implementation or verified acceptance"
+    },
+    {
+      "id": "report-final-58",
+      "path": "documentation/modules/platform/features/angular-countries-report-view/verification/REFERENCE_RESULTS.json",
+      "layer": "documentation",
+      "purpose": "Actual bounded implementation or verified acceptance"
+    },
+    {
+      "id": "report-final-59",
+      "path": "documentation/modules/platform/features/angular-countries-report-view/verification/REPORT_FOCUSED_RESULTS.json",
+      "layer": "documentation",
+      "purpose": "Actual bounded implementation or verified acceptance"
+    },
+    {
+      "id": "report-final-60",
+      "path": "documentation/modules/platform/features/angular-countries-report-view/verification/REPORT_RESULTS.json",
+      "layer": "documentation",
+      "purpose": "Actual bounded implementation or verified acceptance"
+    },
+    {
+      "id": "report-final-61",
+      "path": "documentation/modules/platform/features/angular-countries-report-view/verification/STANDALONE_REPORT_REGRESSION_RESULTS.json",
+      "layer": "documentation",
+      "purpose": "Actual bounded implementation or verified acceptance"
+    },
+    {
+      "id": "report-final-62",
+      "path": "documentation/modules/platform/features/angular-countries-report-view/verification/screenshots/blue-dark-ar-1440-ready.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded implementation or verified acceptance"
+    },
+    {
+      "id": "report-final-63",
+      "path": "documentation/modules/platform/features/angular-countries-report-view/verification/screenshots/green-dark-ar-390-ready-fallback.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded implementation or verified acceptance"
+    },
+    {
+      "id": "report-final-64",
+      "path": "documentation/modules/platform/features/angular-countries-report-view/verification/screenshots/green-light-ar-390-ready.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded implementation or verified acceptance"
+    },
+    {
+      "id": "report-final-65",
+      "path": "documentation/modules/platform/features/angular-countries-report-view/verification/screenshots/green-light-en-1440-ready.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded implementation or verified acceptance"
+    },
+    {
+      "id": "report-final-66",
+      "path": "documentation/modules/platform/features/angular-countries-report-view/verification/screenshots/next-light-ar-390-ready.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded implementation or verified acceptance"
+    },
+    {
+      "id": "report-final-67",
+      "path": "documentation/modules/platform/features/angular-countries-report-view/verification/screenshots/next-light-en-1440-ready.png",
+      "layer": "documentation",
+      "purpose": "Actual bounded implementation or verified acceptance"
+    },
+    {
+      "id": "report-source-snapshot",
+      "path": "documentation/modules/platform/features/angular-countries-report-view/verification/SOURCE_SNAPSHOT.json",
+      "layer": "documentation",
+      "purpose": "Exact current source hashes/base commit for review"
+    },
+    {
+      "id": "report-final-final_documentation_check",
+      "path": "documentation/modules/platform/features/angular-countries-report-view/verification/FINAL_DOCUMENTATION_CHECK.log",
+      "layer": "documentation",
+      "purpose": "Executed canonical closure gates"
+    },
+    {
+      "id": "report-final-final_planning_check",
+      "path": "documentation/modules/platform/features/angular-countries-report-view/verification/FINAL_PLANNING_CHECK.log",
+      "layer": "documentation",
+      "purpose": "Executed canonical closure gates"
+    },
+    {
+      "id": "report-final-extra-71",
+      "path": "documentation/modules/platform/features/angular-countries-report-view/verification/FINAL_BUILD.log",
+      "layer": "documentation",
+      "purpose": "Final current layout/build/controls or central source-fidelity boundary evidence"
+    },
+    {
+      "id": "report-final-extra-72",
+      "path": "documentation/modules/platform/features/angular-countries-report-view/verification/REPORT_COMPACT_CONTROLS_RESULTS.json",
+      "layer": "documentation",
+      "purpose": "Final current layout/build/controls or central source-fidelity boundary evidence"
+    },
+    {
+      "id": "report-final-extra-73",
+      "path": "documentation/modules/platform/features/angular-countries-report-view/verification/screenshots/green-light-en-390-ready-fallback.png",
+      "layer": "documentation",
+      "purpose": "Final current layout/build/controls or central source-fidelity boundary evidence"
+    },
+    {
+      "id": "report-final-extra-74",
+      "path": "documentation/plans/notes/KNOWN_RISKS.md",
+      "layer": "documentation",
+      "purpose": "Final current layout/build/controls or central source-fidelity boundary evidence"
+    }
+  ],
+  "finalizationChecklist": [
+    "Replace every placeholder in the review artifact.",
+    "Complete the Existing-System Relationship Review and every decision in angular-countries-report-view-request.md before implementation.",
+    "Complete the Business Rules Matrix with one primary owner, stable outcome/error, and required test for every known rule.",
+    "Complete every Edge Cases & Validation category with scenarios or an explicit N/A reason, enforcement layer, and required test.",
+    "Complete the Impact Matrix with Reuse, Extend, Change, Add, or reasoned N/A across every listed area.",
+    "Remove every remaining placeholder from angular-countries-report-view-request.md before runtime implementation.",
+    "Add Phase 00 current API, web, mobile, configuration, localization, and test evidence sources.",
+    "Classify every optional view, including Import, as Required, Deferred, or Excluded independently for web and mobile.",
+    "When Import is Required, add its API and applicable client runtime, route/configuration, localization, and focused-test paths.",
+    "Record and test the exact Import request envelope, limits, duplicate and relationship rules, atomicity, permissions, side effects, and retry behavior.",
+    "Add source collections with evidence-based minimum file counts.",
+    "Create the four initial applied implementation books from the approved plan plus verified current source; label target-only behavior explicitly.",
+    "Rename this file to required-files.json when the Phase 00 evidence paths exist; extend it with runtime files during implementation.",
+    "Update the review artifact to point at required-files.json and mark its documentation state Final.",
+    "Merge recipe-registration.draft.json into recipe-manifest.json after the Phase 00 books and preflight manifest are complete.",
+    "Write generated packets under documentation/modules/platform/features/angular-countries-report-view/generated/.",
+    "Run generation and then Generate-Documentation.ps1 -Check.",
+    "Complete phase 06 with an explicit verification decision.",
+    "Do not start customer-facing education until phase 06 records Verified.",
+    "For customer-visible work, complete phase 07 and its Customer Education Pack before Closed.",
+    "When Customer Education is Required, add the verified education document to required-files.json and rerun Generate-Documentation.ps1 -Check before Closed."
+  ]
+}

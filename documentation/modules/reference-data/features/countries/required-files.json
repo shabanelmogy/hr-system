@@ -887,6 +887,456 @@
       "layer": "mobile-react-config",
       "path": "mobile-react/package.json",
       "purpose": "Mobile verification commands and dependencies"
+    },
+    {
+      "id": "current-grid-shared-filter-contract",
+      "path": "web-angular/src/app/shared/data/grid-filter.ts",
+      "layer": "web",
+      "purpose": "Vendor-independent strict filter schema"
+    },
+    {
+      "id": "current-grid-country-filter-owner",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/types/country-filters.ts",
+      "layer": "web",
+      "purpose": "Countries allowlist and bounded typed criteria"
+    },
+    {
+      "id": "current-grid-actual-screen-browser",
+      "path": "web-angular/scripts/verify-countries-screen-browser.mjs",
+      "layer": "web",
+      "purpose": "Actual shell/sidebar/filter/options/browser verification"
+    },
+    {
+      "id": "current-grid-api-filter-contract",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Queries/GetCountries/CountryGridFilters.cs",
+      "layer": "api",
+      "purpose": "Strict additive advanced-query validation"
+    },
+    {
+      "id": "current-grid-api-filter-expressions",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Infrastructure/Features/GeographicalInformation/Countries/Persistence/CountryGridFilterExpressions.cs",
+      "layer": "api",
+      "purpose": "Validated EF query expressions before count and paging"
+    },
+    {
+      "id": "current-grid-primeng-workflow",
+      "path": "documentation/guides/web/architecture/ANGULAR_PRIMENG_WORKFLOW.md",
+      "layer": "documentation",
+      "purpose": "Requester-approved shared/native/MCP-first template workflow"
+    },
+    {
+      "id": "current-grid-current-grid-review",
+      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/CURRENT_GRID_REVIEW.md",
+      "layer": "documentation",
+      "purpose": "Current verification, intentional differences and release boundaries"
+    },
+    {
+      "id": "s3-a5-chart-entry-9",
+      "path": "web-angular/package.json",
+      "layer": "web",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "s3-a5-chart-entry-10",
+      "path": "web-angular/package-lock.json",
+      "layer": "web",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "s3-a5-chart-entry-11",
+      "path": "web-angular/angular.json",
+      "layer": "web",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "s3-a5-chart-entry-12",
+      "path": "web-angular/src/theme/theme-service.ts",
+      "layer": "web",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "s3-a5-chart-entry-13",
+      "path": "web-angular/src/app/shared/ui/cards/metric-card.ts",
+      "layer": "web",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "s3-a5-chart-entry-14",
+      "path": "web-angular/src/app/shared/ui/layout/surface-card.ts",
+      "layer": "web",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "s3-a5-chart-entry-15",
+      "path": "web-angular/src/app/shared/ui/layout/surface-card.scss",
+      "layer": "web",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "s3-a5-chart-entry-16",
+      "path": "web-angular/src/app/shared/ui/layout/scroll-viewport.ts",
+      "layer": "web",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "s3-a5-chart-entry-17",
+      "path": "web-angular/src/app/shared/ui/collections/collection-frame.ts",
+      "layer": "web",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "s3-a5-chart-entry-18",
+      "path": "web-angular/src/app/shared/ui/collections/collection-controller.ts",
+      "layer": "web",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "s3-a5-chart-entry-19",
+      "path": "web-angular/src/app/shared/ui/feedback/feedback-state.ts",
+      "layer": "web",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "s3-a5-chart-entry-20",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page.ts",
+      "layer": "web",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "s3-a5-chart-entry-21",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/state/country-read-state.ts",
+      "layer": "web",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "s3-a5-chart-entry-22",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/types/country.ts",
+      "layer": "web",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "s3-a5-chart-entry-23",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/services/country-service.ts",
+      "layer": "web",
+      "purpose": "Verified current source or canonical bounded preflight evidence"
+    },
+    {
+      "id": "s3-a5-chart-final-48",
+      "path": "web-angular/src/app/shared/ui/charts/chart-panel.ts",
+      "layer": "web",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "s3-a5-chart-final-49",
+      "path": "web-angular/src/app/shared/ui/charts/chart-presentation.spec.ts",
+      "layer": "web",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "s3-a5-chart-final-50",
+      "path": "web-angular/src/app/shared/ui/charts/chart-presentation.ts",
+      "layer": "web",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "s3-a5-chart-final-51",
+      "path": "web-angular/src/app/shared/ui/charts/chart-renderer.ts",
+      "layer": "web",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "s3-a5-chart-final-52",
+      "path": "web-angular/src/app/shared/ui/charts/chart-slice-labels.ts",
+      "layer": "web",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "s3-a5-chart-final-53",
+      "path": "web-angular/src/app/shared/ui/charts/chart.types.ts",
+      "layer": "web",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "s3-a5-chart-final-54",
+      "path": "web-angular/src/app/shared/ui/charts/collection-chart-view.spec.ts",
+      "layer": "web",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "s3-a5-chart-final-55",
+      "path": "web-angular/src/app/shared/ui/charts/collection-chart-view.ts",
+      "layer": "web",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "s3-a5-chart-final-56",
+      "path": "web-angular/src/app/shared/ui/charts/public-api.ts",
+      "layer": "web",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "s3-a5-chart-final-57",
+      "path": "web-angular/src/app/shared/ui/controls/sort-direction-button.ts",
+      "layer": "web",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "s3-a5-chart-final-58",
+      "path": "web-angular/src/app/shared/ui/controls/sort-direction-button.spec.ts",
+      "layer": "web",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "s3-a5-chart-final-59",
+      "path": "web-angular/src/app/shared/ui/controls/option-select.ts",
+      "layer": "web",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "s3-a5-chart-final-60",
+      "path": "web-angular/src/app/shared/ui/buttons/action-button.ts",
+      "layer": "web",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "s3-a5-chart-final-61",
+      "path": "web-angular/src/app/shared/ui/collections/card-list.ts",
+      "layer": "web",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "s3-a5-chart-final-62",
+      "path": "web-angular/src/app/shared/ui/collections/collection-frame.scss",
+      "layer": "web",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "s3-a5-chart-final-63",
+      "path": "web-angular/src/app/shared/ui/icons/app-icon.ts",
+      "layer": "web",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "s3-a5-chart-final-64",
+      "path": "web-angular/src/app/shared/ui/public-api.ts",
+      "layer": "web",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "s3-a5-chart-final-65",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/utils/country-chart-data.ts",
+      "layer": "web",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "s3-a5-chart-final-66",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/utils/country-chart-data.spec.ts",
+      "layer": "web",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "s3-a5-chart-final-67",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page.spec.ts",
+      "layer": "web",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "s3-a5-chart-final-68",
+      "path": "web-angular/scripts/architecture-rules.mjs",
+      "layer": "web",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "s3-a5-chart-final-69",
+      "path": "web-angular/scripts/architecture-rules.test.mjs",
+      "layer": "web",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "s3-a5-chart-final-70",
+      "path": "web-angular/scripts/verify-country-charts-browser.mjs",
+      "layer": "web",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "s3-a5-chart-final-71",
+      "path": "web-angular/scripts/verify-country-charts-reference.mjs",
+      "layer": "web",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "s3-a5-chart-final-72",
+      "path": "web-angular/scripts/verify-country-actions-browser.mjs",
+      "layer": "web",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "s3-a5-chart-final-73",
+      "path": "web-angular/scripts/export-ui-resources.mjs",
+      "layer": "web",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "s3-a5-chart-final-75",
+      "path": "web-angular/src/locales/generated/core.json",
+      "layer": "web",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "s3-a5-chart-final-76",
+      "path": "web-angular/src/app/platform/localization/catalog.generated.ts",
+      "layer": "web",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "s3-a5-chart-final-84",
+      "path": "documentation/modules/platform/features/angular-countries-chart-view/verification/CURRENT_CHART_ACCEPTANCE.md",
+      "layer": "documentation",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "s3-a5-chart-final-98",
+      "path": "documentation/plans/business/web-angular-migration/education/angular-countries-chart-view.md",
+      "layer": "documentation",
+      "purpose": "Current implemented shared/feature source or durable verified acceptance"
+    },
+    {
+      "id": "s3-a6-report-entry-8",
+      "path": "web-angular/src/app/modules/reporting/public-api.ts",
+      "layer": "web",
+      "purpose": "Current implementation/source or frozen bounded entry evidence"
+    },
+    {
+      "id": "s3-a6-report-entry-9",
+      "path": "web-angular/src/app/shared/ui/layout/report-workspace.ts",
+      "layer": "web",
+      "purpose": "Current implementation/source or frozen bounded entry evidence"
+    },
+    {
+      "id": "s3-a6-report-entry-10",
+      "path": "web-angular/src/app/shared/ui/documents/pdf-viewer.ts",
+      "layer": "web",
+      "purpose": "Current implementation/source or frozen bounded entry evidence"
+    },
+    {
+      "id": "s3-a6-report-entry-11",
+      "path": "web-angular/src/app/shared/ui/forms/form-container.ts",
+      "layer": "web",
+      "purpose": "Current implementation/source or frozen bounded entry evidence"
+    },
+    {
+      "id": "s3-a6-report-entry-12",
+      "path": "web-angular/src/app/shared/ui/forms/form-container.scss",
+      "layer": "web",
+      "purpose": "Current implementation/source or frozen bounded entry evidence"
+    },
+    {
+      "id": "s3-a6-report-entry-14",
+      "path": "web-angular/src/app/shared/data/pdf-document.ts",
+      "layer": "web",
+      "purpose": "Current implementation/source or frozen bounded entry evidence"
+    },
+    {
+      "id": "s3-a6-report-entry-16",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page.html",
+      "layer": "web",
+      "purpose": "Current implementation/source or frozen bounded entry evidence"
+    },
+    {
+      "id": "s3-a6-report-entry-25",
+      "path": "web-angular/src/app/modules/reporting/global-reports/report.fixture.ts",
+      "layer": "web",
+      "purpose": "Current implementation/source or frozen bounded entry evidence"
+    },
+    {
+      "id": "s3-a6-report-entry-26",
+      "path": "web-angular/src/app/modules/reporting/global-reports/components/global-report-view.spec.ts",
+      "layer": "web",
+      "purpose": "Current implementation/source or frozen bounded entry evidence"
+    },
+    {
+      "id": "s3-a6-report-entry-27",
+      "path": "web-angular/src/app/modules/reporting/global-reports/components/global-report-view.ts",
+      "layer": "web",
+      "purpose": "Current implementation/source or frozen bounded entry evidence"
+    },
+    {
+      "id": "s3-a6-report-entry-28",
+      "path": "web-angular/src/app/modules/reporting/global-reports/services/global-report-service.spec.ts",
+      "layer": "web",
+      "purpose": "Current implementation/source or frozen bounded entry evidence"
+    },
+    {
+      "id": "s3-a6-report-entry-29",
+      "path": "web-angular/src/app/modules/reporting/global-reports/services/global-report-service.ts",
+      "layer": "web",
+      "purpose": "Current implementation/source or frozen bounded entry evidence"
+    },
+    {
+      "id": "s3-a6-report-entry-30",
+      "path": "web-angular/src/app/modules/reporting/global-reports/state/global-report-state.spec.ts",
+      "layer": "web",
+      "purpose": "Current implementation/source or frozen bounded entry evidence"
+    },
+    {
+      "id": "s3-a6-report-entry-31",
+      "path": "web-angular/src/app/modules/reporting/global-reports/state/global-report-state.ts",
+      "layer": "web",
+      "purpose": "Current implementation/source or frozen bounded entry evidence"
+    },
+    {
+      "id": "s3-a6-report-entry-32",
+      "path": "web-angular/src/app/modules/reporting/global-reports/types/global-report.spec.ts",
+      "layer": "web",
+      "purpose": "Current implementation/source or frozen bounded entry evidence"
+    },
+    {
+      "id": "s3-a6-report-entry-33",
+      "path": "web-angular/src/app/modules/reporting/global-reports/types/global-report.ts",
+      "layer": "web",
+      "purpose": "Current implementation/source or frozen bounded entry evidence"
+    },
+    {
+      "id": "s3-a6-report-entry-34",
+      "path": "web-angular/src/app/modules/reporting/global-reports/validation/report-filter-validator.ts",
+      "layer": "web",
+      "purpose": "Current implementation/source or frozen bounded entry evidence"
+    },
+    {
+      "id": "s3-a6-report-implemented-44",
+      "path": "web-angular/scripts/verify-country-report-browser.mjs",
+      "layer": "web",
+      "purpose": "Actual implemented consumer/shared verification source"
+    },
+    {
+      "id": "s3-a6-report-implemented-45",
+      "path": "web-angular/scripts/verify-country-report-reference.mjs",
+      "layer": "web",
+      "purpose": "Actual implemented consumer/shared verification source"
+    },
+    {
+      "id": "s3-a6-report-implemented-46",
+      "path": "web-angular/scripts/support/report-pdf-fixture.mjs",
+      "layer": "web",
+      "purpose": "Actual implemented consumer/shared verification source"
+    },
+    {
+      "id": "s3-a6-report-final-47",
+      "path": "web-angular/scripts/verify-reporting-browser.mjs",
+      "layer": "web",
+      "purpose": "Actual bounded implementation or verified acceptance"
+    },
+    {
+      "id": "s3-a6-report-final-50",
+      "path": "documentation/plans/business/web-angular-migration/education/angular-countries-report-view.md",
+      "layer": "documentation",
+      "purpose": "Actual bounded implementation or verified acceptance"
+    },
+    {
+      "id": "s3-a6-report-final-54",
+      "path": "documentation/modules/platform/features/angular-countries-report-view/verification/CURRENT_REPORT_ACCEPTANCE.md",
+      "layer": "documentation",
+      "purpose": "Actual bounded implementation or verified acceptance"
     }
   ]
 }

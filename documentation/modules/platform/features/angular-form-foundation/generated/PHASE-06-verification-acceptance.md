@@ -84,4 +84,4 @@ on the original plan alone.
 | angular-form-foundation-web | 13 | `d369cbf630d95eb29023602fbe352a2095526c95a1d43009ad38382a265e53c6` |
 | angular-form-foundation-web | 14 | `31cf6ca8ba62d489b09c1844f693f761227241e974459440821f57be559bf031` |
 | angular-form-foundation-mobile | 14 | `31cf6ca8ba62d489b09c1844f693f761227241e974459440821f57be559bf031` |
-| angular-form-foundation-mobile | 15 | `bb0ba2166b7cab7268b923b76e2966b644a13dd0b94fa7ed5e8af97ec6211a18` |
+| angular-form-foundation-mobile | 15 | `54f8cda59095ce454f27c117ced12176d1875b32cd22697e8b4351e002588c77` |

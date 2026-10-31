@@ -1,0 +1,134 @@
+[
+  {
+    "type": "bar",
+    "locale": "en",
+    "width": 374,
+    "version": "4.6.1",
+    "rtl": false,
+    "painted": true,
+    "height": 300,
+    "remaining": 0,
+    "passed": true
+  },
+  {
+    "type": "line",
+    "locale": "en",
+    "width": 374,
+    "version": "4.6.1",
+    "rtl": false,
+    "painted": true,
+    "height": 300,
+    "remaining": 0,
+    "passed": true
+  },
+  {
+    "type": "doughnut",
+    "locale": "en",
+    "width": 374,
+    "version": "4.6.1",
+    "rtl": false,
+    "painted": true,
+    "height": 300,
+    "remaining": 0,
+    "passed": true
+  },
+  {
+    "type": "bar",
+    "locale": "en",
+    "width": 1424,
+    "version": "4.6.1",
+    "rtl": false,
+    "painted": true,
+    "height": 300,
+    "remaining": 0,
+    "passed": true
+  },
+  {
+    "type": "line",
+    "locale": "en",
+    "width": 1424,
+    "version": "4.6.1",
+    "rtl": false,
+    "painted": true,
+    "height": 300,
+    "remaining": 0,
+    "passed": true
+  },
+  {
+    "type": "doughnut",
+    "locale": "en",
+    "width": 1424,
+    "version": "4.6.1",
+    "rtl": false,
+    "painted": true,
+    "height": 300,
+    "remaining": 0,
+    "passed": true
+  },
+  {
+    "type": "bar",
+    "locale": "ar",
+    "width": 374,
+    "version": "4.6.1",
+    "rtl": true,
+    "painted": true,
+    "height": 300,
+    "remaining": 0,
+    "passed": true
+  },
+  {
+    "type": "line",
+    "locale": "ar",
+    "width": 374,
+    "version": "4.6.1",
+    "rtl": true,
+    "painted": true,
+    "height": 300,
+    "remaining": 0,
+    "passed": true
+  },
+  {
+    "type": "doughnut",
+    "locale": "ar",
+    "width": 374,
+    "version": "4.6.1",
+    "rtl": true,
+    "painted": true,
+    "height": 300,
+    "remaining": 0,
+    "passed": true
+  },
+  {
+    "type": "bar",
+    "locale": "ar",
+    "width": 1424,
+    "version": "4.6.1",
+    "rtl": true,
+    "painted": true,
+    "height": 300,
+    "remaining": 0,
+    "passed": true
+  },
+  {
+    "type": "line",
+    "locale": "ar",
+    "width": 1424,
+    "version": "4.6.1",
+    "rtl": true,
+    "painted": true,
+    "height": 300,
+    "remaining": 0,
+    "passed": true
+  },
+  {
+    "type": "doughnut",
+    "locale": "ar",
+    "width": 1424,
+    "version": "4.6.1",
+    "rtl": true,
+    "painted": true,
+    "height": 300,
+    "remaining": 0,
+    "passed": true
+  }
+]
