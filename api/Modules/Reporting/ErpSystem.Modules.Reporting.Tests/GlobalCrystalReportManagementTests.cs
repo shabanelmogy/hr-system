@@ -23,6 +23,103 @@ public sealed class GlobalCrystalReportManagementTests
 {
     private static readonly ManagedCrystalReportContractRegistry Contracts = ManagedCrystalReportContractRegistry.LoadEmbedded();
 
+    private static GlobalCrystalReportFilterRule Filter(string mode, object value) =>
+        new(mode, System.Text.Json.JsonSerializer.SerializeToElement(value));
+
+    [Fact]
+    public void ColumnFilters_RejectUnknownDuplicateOversizedWrongTypedAndUnknownChoiceRules()
+    {
+        var validator = new GetGlobalCrystalReportManagementQueryValidator();
+        IReadOnlyList<GlobalCrystalReportFilterGroup>[] invalid =
+        [
+            [new("unknown", "and", [Filter("equals", "x")])],
+            [new("displayName", "and", [Filter("contains", new string('x', 201))])],
+            [new("displayName", "and", [Filter("contains", " ")])],
+            [new("entityKey", "and", [Filter("equals", "employees")])],
+            [new("status", "and", [Filter("contains", "published")])],
+            [new("status", "and", [Filter("equals", "unknown")])],
+            [new("updatedOn", "and", [Filter("dateIs", "2026-02-30")])],
+            [new("currentVersionNumber", "and", [Filter("equals", "1")])],
+            [new("currentVersionNumber", "and", [Filter("equals", 0)])],
+            [new("displayName", "xor", [Filter("contains", "x")])],
+            [new("displayName", "and", Enumerable.Repeat(Filter("contains", "x"), 5).ToArray())],
+            [new("reportKey", "and", [Filter("equals", "x")]), new("reportKey", "or", [Filter("equals", "y")])]
+        ];
+        foreach (var filters in invalid)
+            Assert.False(validator.Validate(new GetGlobalCrystalReportManagementQuery(null, null, 1, 10) { Filters = filters }).IsValid);
+        Assert.True(validator.Validate(new GetGlobalCrystalReportManagementQuery(null, null, 1, 10)
+        {
+            Filters = [new("entityKey", "and", [Filter("equals", "countries")]), new("status", "and", [Filter("notEquals", "archived")])]
+        }).IsValid);
+    }
+
+    [Fact]
+    public async Task ColumnFilters_ApplyBeforeCountAndPagingAndPreserveEntityAuthority()
+    {
+        await using var context = Context(Guid.NewGuid().ToString(), new Actor(true));
+        context.GlobalCrystalReports.AddRange(
+            GlobalCrystalReport.CreateDraft("countries", "countries-alpha", "Alpha", null),
+            GlobalCrystalReport.CreateDraft("countries", "countries-beta", "Beta", null),
+            GlobalCrystalReport.CreateDraft("countries", "countries-gamma", "Gamma", null),
+            GlobalCrystalReport.CreateDraft("states", "states-alpha", "Alpha", null));
+        await context.SaveChangesAsync();
+        var handler = new GetGlobalCrystalReportManagementQueryHandler(new GlobalCrystalReportStore(context), Policy(["Countries:Edit"]), Errors());
+        var request = new GetGlobalCrystalReportManagementQuery(null, null, 2, 1)
+        {
+            Filters = [new("displayName", "or", [Filter("startsWith", "al"), Filter("endsWith", "TA")])]
+        };
+        var result = await handler.Handle(request, default);
+        Assert.True(result.IsSuccess);
+        Assert.Equal(2, result.Value.TotalCount);
+        Assert.Equal("Beta", Assert.Single(result.Value.Items).DisplayName);
+        var blocked = await handler.Handle(request with
+        {
+            Page = 1, Filters = [new("entityKey", "and", [Filter("equals", "states")])]
+        }, default);
+        Assert.Empty(blocked.Value.Items);
+        Assert.Equal(0, blocked.Value.TotalCount);
+    }
+
+    [Fact]
+    public void ColumnFilters_HandleNullDatesAndPublishedVersionsWithoutTreatingDraftAsVersionZero()
+    {
+        var draft = GlobalCrystalReport.Create("countries", "countries-draft", null);
+        var published = GlobalCrystalReport.Create("countries", "countries-published", null);
+        var version = Version(published.Id, 2);
+        published.AddVersion(version);
+        published.Publish(version, Contracts.Fingerprint);
+        var rows = new[] { draft, published }.AsQueryable();
+        Assert.Same(published, Assert.Single(GlobalCrystalReportFilterExpressions.Apply(rows,
+            [new("currentVersionNumber", "and", [Filter("notEquals", 1)]), new("status", "and", [Filter("equals", "published")])])));
+        Assert.Equal(2, GlobalCrystalReportFilterExpressions.Apply(rows,
+            [new("updatedOn", "and", [Filter("dateIsNot", "2026-11-04")])]).Count());
+        Assert.Empty(GlobalCrystalReportFilterExpressions.Apply(rows,
+            [new("updatedOn", "and", [Filter("dateAfter", "9999-12-31")])]));
+        Assert.Empty(GlobalCrystalReportFilterExpressions.Apply(rows,
+            [new("updatedOn", "and", [Filter("dateIs", "2026-11-04")])]));
+    }
+
+    [Fact]
+    public void ColumnFilters_TranslateAllFieldKindsToSqlServer()
+    {
+        var options = new DbContextOptionsBuilder<ReportingDbContext>()
+            .UseSqlServer("Server=localhost;Database=TranslationOnly;Integrated Security=true;TrustServerCertificate=true").Options;
+        using var context = new ReportingDbContext(options, new Actor(true));
+        var sql = GlobalCrystalReportFilterExpressions.Apply(context.GlobalCrystalReports,
+        [
+            new("displayName", "or", [Filter("contains", "Directory"), Filter("notContains", "Old")]),
+            new("reportKey", "and", [Filter("startsWith", "countries")]),
+            new("entityKey", "and", [Filter("equals", "countries")]),
+            new("status", "and", [Filter("notEquals", "archived")]),
+            new("currentVersionNumber", "and", [Filter("gte", 1)]),
+            new("updatedOn", "and", [Filter("dateIsNot", "2026-11-04")])
+        ]).ToQueryString();
+        Assert.Contains("WHERE", sql, StringComparison.Ordinal);
+        Assert.Contains("UPPER", sql, StringComparison.Ordinal);
+        Assert.Contains("VersionNumber", sql, StringComparison.Ordinal);
+        Assert.Contains("UpdatedOn", sql, StringComparison.Ordinal);
+    }
+
     [Fact]
     public async Task Create_ReportsRejectedSourceWithoutCreatingARecordOrPublishing()
     {

@@ -1,5 +1,10 @@
 # Accounting Core GL — Discovery
 
+> **Current discovery cycle: reopened 2026-11-04.** Sections 1–14 preserve the
+> earlier interview. Section 15 records the current requester instructions and
+> supersedes earlier implementation-acceptance/readiness assumptions for this
+> cycle. New business choices are proposals until the requester answers them.
+
 ## 1. Discovery basis
 
 This discovery consolidates the requester-approved direction to start Accounting
@@ -162,3 +167,147 @@ General Ledger and Trial Balance.
 - [x] Privacy/commercial/legal applicability reviewed.
 - [x] High-cost unresolved decisions have stable owners/IDs.
 - [x] Requester approved preparation of the plan.
+
+## 15. Reopened comparison and simplification review — 2026-11-04
+
+### Verified facts and review baseline
+
+- The existing plan, decisions and child contracts are available for comparison.
+- The requester explicitly directs this review to assume **zero accepted
+  implementation of the Accounting plan**. This is an acceptance baseline, not a
+  claim that historical API/Next/Mobile source does not exist.
+- The requester has not moved Accounting into Angular; Angular is the target Web
+  client. Historical Next screens do not satisfy an Angular delivery gate.
+- No runtime behavior or live database has been verified in this review cycle.
+
+### Requested decisions
+
+- Review the existing plan against official Odoo Accounting/setup documentation.
+- Evaluate changes for business fit, simpler use, implementation and maintenance.
+- Odoo supplies comparison ideas; matching Odoo is not a product requirement.
+- Initial Accounting release jurisdiction: **Egypt**, explicitly selected by the
+  requester on 2026-11-04. In a later clarification the requester selected
+  **Egypt and Saudi Arabia for the initial design**. Egypt remains the last
+  explicitly selected first launch; simultaneous Saudi launch is not assumed.
+- The first release targets a **general system for multiple activities** and
+  includes **B2B invoices and B2C sales with Accounting**. The requester further
+  explicitly requires **electronic invoices and electronic receipts**. These
+  Egyptian integrations cannot remain deferred beyond the first operational
+  release. Exact sector/document/tax/report coverage remains DEC-032.
+- Use the project's discovery interview and Superpowers brainstorming approach:
+  inspect the existing choices, explain alternatives/trade-offs, ask focused
+  questions, then record the requester's choices.
+- Use the existing canonical files: discovery answers here, external research in
+  `RESEARCH.md`, selected rules in `DECISIONS.md`, and the revised master plan
+  after the discovery/specification is mature. Do not create a parallel plan tree.
+
+### First review topic — fiscal localization (order corrected 2026-11-04)
+
+The requester identified fiscal localization as the prerequisite to the COA
+discussion. Official Odoo sources confirm that dependency. Begin by resolving
+DEC-007's initial jurisdictions and the impact on core account/setup contracts.
+The country-selection part is resolved as **Egypt for first launch**, with
+**Egypt and Saudi Arabia for initial design**. DEC-007 remains open for the
+applicable requirements and verification. Electronic invoice/receipt inclusion
+is resolved for the Egyptian launch; detailed coverage, country rollout and
+delivery decomposition remain open. Country selection alone does not settle them.
+Identify country-specific chart constraints/templates, tax/report/document
+requirements and retention implications without assuming any country from the
+conversation language. Decide release scope for each capability separately.
+
+The prior plan treated DEC-007 as release-only; that classification is not valid
+for country-dependent design choices in this reopened review. Completing this
+discovery topic does not imply that all localization runtime must be built first.
+Country-pack boundaries and implementation order remain planning decisions.
+
+### Fiscal-localization research and issuance discussion — 2026-11-04
+
+The detailed source comparison, observed code gaps, architecture alternatives,
+package/version lifecycle and proposed acceptance scenarios are in
+[`FISCAL_LOCALIZATION_REVIEW.md`](FISCAL_LOCALIZATION_REVIEW.md).
+
+Confirmed requester answers:
+
+| Question | Answer | Consequence |
+| --- | --- | --- |
+| Initial business activities | General system for multiple activities | Design common capabilities and define supported sector cases explicitly; no assumption of every sector's compliance |
+| First operational accounting scope | B2B invoicing and B2C sales with Accounting | Historical manual-GL-only release scope must be revised; a GL foundation may remain an earlier build slice |
+| Electronic channels | Explicitly include electronic invoices and electronic receipts | Egyptian eInvoice and eReceipt are Required for first operational release |
+| Saudi direction | Initial design should cover Egypt and Saudi Arabia; requester identified ZATCA as Saudi | Country policies/adapters are first-class; Saudi simultaneous launch remains unspecified |
+| ERP screen versus POS/offline | Requester asked which is best; no option approved | Recommend online ERP invoicing first and a POS UI over the same services when needed; offline issuance remains a separate unapproved decision |
+| Company and fiscal-country boundary | Requester selected the first option as more suitable and asked what Odoo uses | Initial scope uses one primary fiscal country per legal company, with separate Company records for actual independent Egyptian/Saudi entities. Cross-country registrations within one legal entity are Deferred until a concrete case reopens D-034/DEC-034 |
+
+The company-boundary comparison was verified against official Odoo 19 Companies,
+Multi-company, Accounting and Fiscal Localizations documentation. It supports
+company-specific country packages and parent-inherited branch localization.
+Odoo also supports optional account sharing; our independent-chart direction is
+a local selection consistent with D-010, not an assertion that Odoo forbids sharing.
+This settles the initial country/company boundary only. Fiscal-site mapping,
+registered devices, signing and master-data contracts remain open under DEC-034.
+
+Proposals awaiting discussion include a shared GL/tax capability with distinct
+country adapters, effective fiscal profiles, optional editable starter charts,
+frozen document facts/rules and separate commercial/fiscal/posting states.
+Do not attribute these proposals to the requester. Existing D-006 online-only
+financial posting is not silently replaced by an offline sales assumption.
+
+Material remaining questions are centrally tracked: DEC-032 (coverage and
+rollout), DEC-033 (issue/post/delivery/correction/outage semantics) and DEC-034
+(fiscal sites, authoritative masters, devices and signing topology). DEC-007
+continues to own applicable statutory rules, versions and retention evidence.
+
+### Open decisions — COA discussion queued after localization
+
+| Note | Review question | Previous plan | Proposal for discussion | Owner / resolution trigger |
+| --- | --- | --- | --- | --- |
+| DEC-029 | Is separately configured account-level metadata necessary? | Company level master, level posting policy and account posting flag | Consider deriving depth from parent/child relationships and using explicit group/posting-account behavior; retain level configuration if named levels or level-wide rules are needed | ERP owner + Accounting; answer before freezing the COA model |
+| DEC-030 | What account-code experience best fits accountants? | Editable server-proposed, non-hierarchical `ACC-####` | Consider familiar user-editable financial codes; decide whether codes express hierarchy and how proposals work before specifying automation | ERP owner + Accounting; answer before freezing COA code generation/validation |
+| DEC-031 | How does a new company start its chart? | Independent company chart; template initialization allowed in principle, delivery not specified | Consider an optional editable starter template with a blank-chart option; no statutory/localization claim without DEC-007 | ERP owner + Accounting; answer before freezing company chart onboarding |
+
+These are review proposals, not newly approved business rules. Central records
+and blocking points are in `documentation/plans/notes/DECISION_BACKLOG.md`.
+DEC-007 remains open and is the current first discussion topic. DEC-029/030/031
+remain unanswered until the localization design impact is understood.
+
+### Planning consequences
+
+- Current state is discovery/Draft; former G0–G3 results are historical and must
+  be re-evaluated for the revised scope and Angular client.
+- No active roadmap marker, historical contract or generated packet authorizes
+  runtime work during this review.
+- Record each comparison as: current plan → official reference → alternatives →
+  use/maintenance impact → requester decision. A difference from Odoo alone is
+  not a defect.
+- Review one coherent topic at a time, starting with fiscal localization and
+  target-jurisdiction requirements, then company setup and Chart of Accounts.
+  Later topics include currencies/FX, books/journals,
+  dimensions, account determination, journals/posting, reports and period control.
+- Reuse shared Angular controls and the established Reactive Forms approach when
+  screen contracts are prepared; business review does not authorize a form-system
+  migration or new shared-control implementation.
+
+### Glossary for this discussion
+
+| Term | Meaning in this review | Owner's wording / caution |
+| --- | --- | --- |
+| Fiscal localization | Country-dependent accounting/fiscal setup and requirements; scope may include charts, taxes, reports and certifications | التوطين المالي/المحاسبي; separate from UI translation and Fiscal Years |
+| Chart of Accounts | Company-owned organization of financial accounts | دليل الحسابات / شجرة الحسابات |
+| Hierarchy level | Depth in the account tree; whether it also needs separately configured names/rules is DEC-029 | مستوى الحساب |
+| Group account | A hierarchy node used for aggregation; its posting policy must be explicit | حساب تجميعي |
+| Posting account | An eligible account that can receive journal lines | حساب يقبل الترحيل |
+| Journal definition | Configuration that groups and numbers entries | اليومية; distinct from القيد المحاسبي |
+| Zero implementation baseline | No part is accepted as delivered for the restarted plan review | Does not erase or deny historical source |
+
+### Current completion
+
+- [x] Requester's review purpose and Angular/zero-acceptance baseline captured.
+- [x] Official Odoo 19.0 comparison sources registered in `RESEARCH.md`.
+- [x] Initial release country selected: Egypt.
+- [x] Initial design expanded to Egypt and Saudi Arabia by requester.
+- [x] Initial company fiscal-country boundary selected (D-034).
+- [x] Multiple activities, B2B/B2C and electronic invoice/receipt inclusion captured.
+- [ ] Initial jurisdictions and localization design impact reviewed (DEC-007).
+- [ ] Subsequent COA decision batch answered (DEC-029/030/031).
+- [ ] Remaining business topics reviewed and agreed.
+- [ ] Revised `SPEC_SUMMARY.md` reviewed before master-plan changes.
+- [ ] Revised scope/contracts pass their applicable readiness gates.

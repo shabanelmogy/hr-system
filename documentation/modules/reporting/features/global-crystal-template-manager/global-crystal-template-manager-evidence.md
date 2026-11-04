@@ -455,3 +455,331 @@ Upload and Publish. Official source references and exact test names are in the
 receipt. No dev server, deployment, live report writes or native changes occurred.
 Phase06 remains Not Verified for overall hosted/native acceptance under FOLLOW-024/
 PROD-028; this bounded implementation passed its technical gates.
+
+## 33. Vertical-line mirroring correction — 2026-11-04
+
+The requester requires vertical lines to mirror instead of disappearing. This
+supersedes the English vertical suppression rule in section30 and the historical
+RESTORE_DIRECTION_2026-11-03.md receipt. Current corrective scope/preflight:
+VERTICAL_LINES_2026-11-04.md, existing plan global-crystal-template-management/GCT-1.
+
+CrystalReportDirection now snapshots RAS line objects, deep-clones each axis-aligned
+line, changes both X endpoints on the detached clone, and commits through
+ReportObjectController.Modify. It retains Y endpoints, start/end sections,
+extend-to-bottom, original suppression and formatting. Arabic design coordinates,
+English field/text/picture/chart mirroring, centered text and diagonal-line policy
+are retained. Horizontal lines use the same atomic path. No original RPT save,
+database query, schema, permission, publication or request-contract change.
+
+The actual SAP13.0.4000 Release/x64 build and complete .NET Framework4.8 contract/
+HTTP harness pass.14 language/geometry cases and pre-export wiring pass; the new
+regression first failed against the previous suppression policy. Native Windows
+PowerShell64-bit execution is now available. The optional native verification
+script loads Countries.tests.rpt by temporary copy, binds two synthetic API rows,
+adds four in-memory fixture lines, and invokes the real compiled Apply method.
+Both languages pass endpoint/style/visibility/section assertions and export PDFs.
+Visible red vertical, blue horizontal and green cross-section lines are present
+and mirrored in the actual PDF vectors; the design-suppressed yellow line remains
+absent. Both PDF images were visually reviewed. The source RPT contains no lines;
+fixture lines are deliberately injected only in memory and its SHA256 is unchanged.
+This proves the shared native correction with fixtures, not every hosted template.
+
+Portable current evidence: verification/vertical-lines/verification.json,
+native-direction.json, pdf-lines.json and the two synthetic PDFs. The native
+script is Verify-CrystalReportDirection.ps1 in the existing ContractTests project.
+Earlier environment-limited receipts remain historical. Publish only
+CrystalReportGeneratorApi for this correction, then verify the intended hosted
+RPT in AR/EN. No agent deployment or server restart occurred.
+
+Angular and Next consumers inherit the renderer fix through the existing language
+request. Their screens are unchanged; no client gate rerun is claimed. Mobile
+management remains Excluded; existing viewers inherit the same renderer. The ERP
+modular API and database are unchanged. FOLLOW-024/PROD-028 remain Open for the
+broader integrated/hosted acceptance, Phase06 remains Not Verified overall and
+DEF-027/028 remain Deferred. No Phase07 closure is claimed.
+
+Official research: [SAP clone/modify report objects](https://help.sap.com/doc/1eb6ed2630b940d49d85e22ba94c35bc/4.3.2/en-US/Tomodifyareportobject.html).
+
+## 34. Native PDF viewer theme and new-tab printing — 2026-11-04
+
+The requester explicitly retained the iframe after reviewing the PDF.js tradeoff.
+Shared PdfViewer keeps its original native PDF preview and validated Blob resource
+contract. Application-owned Open/Download toolbar styling now uses surface,
+foreground, border and radius tokens in standalone and fill layouts. The iframe
+uses muted background and explicitly inherits the root color-scheme. No filter,
+inversion, PDF byte rewrite, native toolbar injection or renderer SDK is used.
+PDF.js experimentation and its dependencies/assets/localization additions were
+withdrawn before delivery. Existing Open PDF opens the same original Blob in a new
+tab; the user prints with that tab's native PDF toolbar/Ctrl+P. Automatic print
+prompts are not promised. The user confirmed keeping the embedded preview.
+
+Browser-owned PDF toolbar/backdrop theming differs by browser. The Edge probe
+remains light even with computed color-scheme:dark; native Chrome has dark chrome.
+Application styles cannot guarantee dark native PDF controls. This accepted limit
+is recorded under FOLLOW-024; hosted rollout checks remain PROD-028. Preserve white
+paper and original report colors. No report regeneration or iframe recreation is
+needed for theme changes. Existing API/report permissions and lifecycle are intact.
+
+Verification evidence is registered under verification/pdf-viewer-theme/. The full
+Angular gate passed522tests across91files, formatting, zero-warning lint, config,
+tokens/fonts/catalog, architecture, strict types/templates and production build.
+The initial bundle stays495.63kB. The browser harness loads production assets using
+isolated routes and synthetic auth/API/PDF data; it starts no server and writes no
+live report. Chrome/Edge x EN/AR x1213/390px provide8cases with live light-to-dark
+switching, original iframe/Blob identity, no new render call, token colors,
+unmodified downloaded bytes and an actual original-PDF new tab. Screenshots are
+visual evidence with native rendering limits; iframe.load is not rendering proof.
+Separate native PDF probes show browser toolbar differences and original paper.
+Overall Phase06 remains Not Verified under FOLLOW-024/PROD-028; no Phase07 closure.
+
+Scope/preflight: PDF_VIEWER_THEME_2026-11-04.md, plan
+ global-crystal-template-management/GCT-1. PrimeNG MCP had no available tools in the
+session; no MCP validation is claimed. Reused existing PrimeNG pButton anchors.
+No Angular/API server start/restart, live writes or host deployment occurred.
+
+
+## 35. Shared sidebar tabs, RTL indicator and manager pagination — 2026-11-04
+
+Open PDF and Download now render inside the report sidebar Options tab. Search
+retains selection and criteria. Shared PdfViewer exports one actions TemplateRef
+and owns the single validated Blob; no duplicated links or leases. Its inline
+actions return when the sidebar is hidden. ReportWorkspace adds an optional
+reportActions slot and labelled ContentTabs; keepAlive preserves mounted controls.
+Server validation returns to Search before the established shared error focus.
+Tab switches preserve draft values, iframe identity and render request count.
+
+Shared ContentTabs uses PrimeNG design tokens: a2px active tab border and a0px
+separate activeBar. Installed22.1.4 measures physical offsetLeft but its style
+consumes logical inset-inline-start; the first PT correction also exposed stale
+width after font loading. Official research led to the tab-owned border, which
+follows actual label/font size and RTL without cached coordinates or observers.
+The underline no longer slides between tabs. Default keyboard/focus/ARIA remain
+PrimeNG-owned. Browser checks cover both tabs and live language switching.
+
+The requester corrected the pagination approach: reuse Countries exactly.
+CountriesReadPage already sets MyDataGrid.recordNavigation=true. Enable this same
+existing input for the manager's main, registration and version grids. Withdraw
+the proposed CollectionFooter redesign entirely; its HTML/SCSS/TS are unchanged.
+The same existing footer supplies record position/total, first/previous/next/last,
+page count and OptionSelect, including its existing RTL and compact behavior.
+No page-number strip, new pagination component or layout policy is introduced.
+Within-page record movement reuses loaded rows; crossing pages uses the existing
+controller page callback. Changing size resets pageIndex0 as in Countries.
+
+Bilingual reports.viewerOptions is authored in the canonical Next core resources
+and exported through the existing catalog generators. Runtime fingerprint:
+13210765d2afb878148664cdfe80c76fd187a4c66b2d8e4160baf9d24be1e219.
+Rollout must synchronize Angular and ErpSystem.Api embedded localization catalog;
+Next runtime screens, Crystal API, permissions and database schema are unchanged.
+
+Verification: verification/sidebar-actions/verification.json and registered
+browser receipts/screenshots. Eight Chrome/Edge x EN/AR x1213/390 cases exercise
+light/dark, active border, live language change, preserved form/document and
+original PDF download/new-tab opening. Six manager EN/AR x1213/780/390 cases check
+bounds, non-overlap, within-page navigation without requests, last-record server
+page loading and size reset. Synthetic production-asset
+routing starts no server and writes no live data. Iframe screenshots prove only
+the application shell; native PDF pixels may be omitted by browser capture. Native
+paper/output proof and accepted toolbar limitations remain section34.
+
+Full Angular quality gate results are in the receipt, including formatting, lint,
+architecture, strict types/templates, tests and production build. This is bounded
+UI evidence; overall Phase06 stays Not Verified, FOLLOW-024/PROD-028 remain Open,
+DEF-027/028 remain Deferred. No Phase07 closure or host deployment.
+
+Scope: PDF_SIDEBAR_ACTIONS_2026-11-04.md, approved GCT-1. PrimeNG MCP was unavailable;
+installed source and official docs were used, not MCP validation. References:
+[Tabs](https://primeng.dev/tabs), [Paginator](https://primeng.dev/paginator),
+[translated indicator issue](https://github.com/primefaces/primeng/issues/17940).
+
+## 36. Countries column filters in the main manager — 2026-11-04
+
+Requester requires the existing Countries column-filter controls. The main manager
+enables MyDataGrid.advancedFilters, controlled filters and filtersChange for all six
+data columns: displayName/reportKey text, entityKey/status choices, published
+currentVersionNumber integer and updatedOn date. Existing shared PrimeNG ColumnFilter,
+GridFilterInput, TextField/NumericField/DateField and OptionSelect are reused. No new
+application component, pagination implementation or feature-local filter shell.
+Countries recordNavigation=true remains on all three manager grids. Candidate and
+version grids retain their existing contracts; these column rules target the main catalog.
+
+Apply/Clear resets pageIndex0. Draft editing does not request data. Multiple field
+groups combine with AND; each group supports AND/OR and at most four constraints.
+Entity/status labels are translated while the wire uses stable keys. Shared optional
+GridColumnFilter.choices accepts bounded unique nonempty values and explicit
+equals/notEquals modes. Blank All clears to null; unlisted values are rejected.
+Feature service/state retain HTTP, validation, identity reset and criteria ownership.
+
+Reporting extends its current query/handler/store through POST /manage/query, a
+32768-byte authenticated read body. Existing GET remains compatible when no rules
+exist. Six fields, four rules per field, text200 and strict typed/allowlisted values
+are validated; nested unknown members, duplicate fields and bad dates/modes fail.
+Existing SuperAdmin/View permission and editable entity allowlist apply unchanged.
+Rules run before count/order/page; topbar entity/status/search are additional AND
+restrictions. Existing default excludes archived reports: archived column criteria
+must also agree with the topbar archive scope. Current version means the displayed
+published version, never draft version0. Numeric comparisons exclude null versions;
+dateIsNot includes null dates and UTC day ranges handle the maximum date safely.
+Text comparisons are case insensitive and expression-based; no SQL interpolation.
+No domain entity/schema/migration, business write, company runtime or Crystal change.
+
+Verification is recorded in verification/column-filters/verification.json. Full
+Angular check passes530tests/92files,26architecture tests, zero-warning lint,
+formatting, strict types/templates and production build (495.63kB initial).
+Focused Angular29/4files and API management40tests pass; all231Reporting tests pass.
+Six production-asset browser fixture cases EN/AR x1213/780/390 prove six filter
+controls, title/status Apply/Clear, draft isolation, translated stable values,
+combined criteria/page reset and the Countries footer. Small Arabic and wide English
+filter screenshots were visually reviewed. These fixtures do not prove hosted queries.
+
+API solution restore and no-incremental Release build pass (473existing warnings,
+zero errors). Full solution tests:1269passed,1failed,3skipped. The unchanged Platform
+MessageLogTests.ActualSenderRecordsTruthfulOutcomeWithoutReplayOrLiveSecrets
+configuration case finds no recorded row under full-suite load; its isolated9case
+diagnostic passes. Root cause is not established and the full gate remains red.
+Architecture70 and Integration191passed/3skipped use the available local SQL Server
+with Windows integrated authentication and isolated test databases. Initial scratch
+root/LocalDB and transient Angular timeout issues are distinguished in the receipt;
+no production code or tests were weakened to hide them.
+
+Scope/preflight: COLUMN_FILTERS_2026-11-04.md, approved GCT-1. PrimeNG MCP was unavailable;
+official [Table](https://primeng.dev/table#filter) and [Select](https://primeng.dev/select)
+documentation and installed source were consulted; no MCP validation claimed.
+Publish Angular with ErpSystem.Api for the new query route and synchronized existing
+catalog fingerprint13210765d2afb878148664cdfe80c76fd187a4c66b2d8e4160baf9d24be1e219.
+No deployment/server start/restart or live report mutation occurred. Next runtime is
+unchanged; mobile management remains Excluded. Overall Phase06 remains Not Verified;
+FOLLOW-024/PROD-028 stay Open and DEF-027/028 Deferred; Phase07 is not started.
+
+## 37. Report search arrangement and button icons — 2026-11-04
+
+Requester authorizes improving the Report Search sidebar and adding button icons.
+GlobalReportView now composes the existing sidebar FormContainer in standalone and
+embedded modes without an extra form card/header. Order: optional entity, report
+selection, Arabic name, English name, full-width Search then Reset. This is an
+intentional requester-authorized presentation update from the previous reference
+order. Existing field16px spacing and shared errors/focus/pending controls remain.
+
+Shared FormContainer renders one submit TemplateRef before secondary actions for
+sidebar appearance, so keyboard DOM order matches the visible order. Card/plain/
+dialog keep their existing submit placement. CSS column-reverse is removed from
+sidebar footers; no new control or feature-local footer shell. ReportWorkspace owns
+document-action grid spacing. Feature uses wrapper-free reportActions projection.
+Authorized source RPT download moves to Options and retains pending/permission
+ownership; it remains available without a successful preview. Existing AppIcon
+projection supplies Search/Reset/Refresh/Language/source Download. Reusable download,
+openInNew and language SVG paths extend the shared icon catalog. Shared PdfViewer
+adds icons to its original safe anchors; original bytes, native iframe and new-tab
+behavior remain intact. No API/schema/localization/dependency change.
+
+Full Angular check passes531tests/92files,26architecture checks, zero-warning lint,
+format, strict types/templates and production build. An initial assertion pinned
+the previous field order; it now verifies the approved order and submit/reset icons
+and DOM order. Browser fixture proof:16cases, standalone/embedded x
+Chrome/Edge x EN/AR x1213/390. Checks cover order, matching full widths, icons, bounds,
+source placement, tabs/draft/iframe preservation, themes and original PDF download/
+new tab. Standalone uses the production build and also exercises live language
+switching; embedded geography uses a separate development build because the owning
+shell intentionally gates that navigation with isDevMode. Initial production-only
+embedded harness attempt timed out before reaching the report; corrected the build
+fixture after reviewing Angular isDevMode docs without changing runtime navigation.
+Native PDF toolbar is
+still browser-owned. Receipt and screenshots: verification/search-sidebar-layout/.
+
+Scope: SEARCH_SIDEBAR_LAYOUT_2026-11-04.md under approved GCT-1. PrimeNG MCP unavailable;
+official Button and Angular content-projection/NgTemplateOutlet docs plus installed
+sources were consulted, no MCP validation claim. No new application component,
+server startup, live data write or deployment. Next runtime unchanged; mobile
+manager Excluded. Current change needs the Angular UI build; prior API query rollout
+remains section36. Overall Phase06 Not Verified, FOLLOW-024/PROD-028 Open, DEF-027/028
+Deferred and Phase07 not started. The previous full API-suite failure is unchanged;
+no API retest was performed for this UI-only correction.
+
+## 38. Manager action hierarchy and saved metadata review — 2026-11-04
+
+Requester asks to arrange Global Report Manager buttons and review the additional
+information stored with a report. Reviewed current Next CrystalReportCreateDialog,
+CrystalReportDetailDialog and types: create accepts entity, description (500) and
+RPT file; Summary Information supplies name and subject; detail includes entity,
+key, description, versions and role rights Run/Download/Upload/Publish. Those
+contracts already exist in Angular. Designer drafts separately accept source/View,
+display name, key and description. No author/keywords/new manual metadata field is
+invented, and Summary data is not overwritten with the description.
+
+Main MyDataGrid uses existing toolbarContent for Create from RPT (primary), Register
+existing reports, New empty template and Download schema (outlined secondary).
+Entity/status stay in toolbarFilters. The existing shared action wrapper owns gap
+and wrapping. Version upload uses the version grid toolbar; Inspect uses formTools,
+with Cancel and Save in the shared dialog footer. Existing AppIcon projection adds
+icons to manager/designer/access actions and saves, extending reusable upload/save
+paths. No feature-local button group, new component or dependency.
+
+Overview displays labeled saved entity/key/description/status/update time, plus
+version, Summary title/subject, original file, size/create time and optional SQL
+View. Metadata selects currentVersionNumber when present, otherwise the highest
+version number (including drafts). It never mixes a newer draft's name into a
+current version's overview. Missing values use an em dash. Existing RecordSummary
+and SurfaceCard render the content; SurfaceCard contentLayout=details owns an
+opt-in responsive grid and wrapping footer for its existing footerTemplate API.
+Permission-controlled download/package actions move into that footer. The default
+SurfaceCard presentation remains unchanged. Existing permissions, archive/publish,
+replacement and pending/dirty state rules remain authoritative.
+
+Verification: full Angular531tests/92files,26architecture checks, zero-warning lint,
+format, strict types/templates and production build pass (495.63kB initial). A
+regression checks saved description/subject and current-version selection against a
+newer draft. Its initial fixture inferred null-only fields; annotated the fixture
+with GlobalTemplateDetail, without a type suppression. Six production-fixture
+Chrome cases (EN/AR x1213/780/390) verify button order/icons/bounds, filter separation,
+Overview metadata and footer icons, upload description and save/inspect icons, and
+retain paging and six column-filter Apply/Clear checks. Visually reviewed English
+compact manager/upload and Arabic wide Overview screenshots. Evidence:
+verification/manager-actions-metadata/verification.json. Report viewer sidebar
+section37 adds16cases:8production standalone and8development embedded; no server.
+
+Bounded scope: MANAGER_ACTIONS_METADATA_2026-11-04.md under GCT-1. PrimeNG MCP
+unavailable; official Button and Angular projection docs consulted. No API/schema,
+localization or dependency change, live writes, server startup or deployment. Next
+runtime unchanged; mobile manager Excluded. Publish the Angular UI for this change;
+section36 separately owns the earlier API rollout/failing inherited suite case.
+Overall Phase06 stays Not Verified; FOLLOW-024/PROD-028 Open, DEF-027/028 Deferred,
+Phase07 not started. No API retest for a UI-only correction.
+
+## 39. Shared PrimeNG action groups — 2026-11-04
+
+Requester follow-up explicitly asks for Button Group composition. The shared
+buttons library had no group. Generated ActionButtonGroup in a matching component
+folder with external HTML/SCSS and exported it through curated shared public APIs.
+It wraps installed PrimeNG ButtonGroup and accepts a required accessible label;
+feature-owned translated labels and existing ActionButton children retain events,
+keyboard behavior, pending and permissions. No button cloning or new business state.
+
+Main upload/register/designer actions form one labelled group, while schema remains
+a separate download action. Overview package/report downloads share another group.
+Installed PrimeNG styling expects direct buttons/p-button, so shared SCSS adapts the
+erp-button wrapper using logical corner/border rules. Groups are joined horizontally
+in desktop EN/AR and stack with full-width buttons under 600px; single-action groups
+retain all corners. Component styling is generic; no feature-only grouping CSS.
+PrimeNG MCP is unavailable; official Button Group documentation and installed 22.1.4
+component/style sources substantiate that wrapper gap.
+
+Final full Angular gate passes 532 tests / 93 files, 26 architecture checks,
+zero-warning lint, formatting, strict types/templates and production build
+(495.63 kB initial). Group regression retains the original control while its group
+label and another permitted action change, and verifies the pending activation
+guard. Six fresh production-fixture Chrome cases (EN/AR x 1213/780/390) assert
+labelled grouping, joined horizontal/vertical edges, RTL, bounds/icons, saved
+metadata, upload description/actions, paging and six column filters Apply/Clear.
+Evidence: verification/manager-button-group/verification.json. Section38 documents
+the Next metadata parity review and section37 the completed report search/sidebar
+work. No API/schema/localization/dependency change, live write, server or deployment.
+Next runtime unchanged; mobile manager Excluded.
+
+Canonical documentation generation encountered Windows user-mapped output locks.
+The same generator/templates/books were used with a temporary output manifest;
+generator-produced bytes were atomically placed at the canonical packet paths and
+checked with the unchanged canonical generator. No generated content was authored
+manually and no repository generator behavior was changed. Final receipts are
+registered alongside this verification after the canonical checks complete.
+Overall Phase06 remains Not Verified, FOLLOW-024/PROD-028 Open, DEF-027/028 Deferred;
+prior section36 API-suite finding remains recorded. Phase07 not started.

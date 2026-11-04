@@ -10,11 +10,13 @@ import { AppIcon, type AppIconName } from '../../icons/app-icon/app-icon';
     '[class.compact-card]': 'compact()',
     '[class.fill-card]': 'fill()',
     '[class.entity-card]': 'entity()',
+    '[class.details-card]': "contentLayout() === 'details'",
   },
   templateUrl: './surface-card.html',
   styleUrls: ['./surface-card.scss', './surface-card.component.scss'],
 })
 export class SurfaceCard<T = unknown> {
+  readonly contentLayout = input<'default' | 'details'>('default');
   readonly appearance = input<'default' | 'chart'>('default');
   readonly subtitle = input('');
   readonly entity = input(false, { transform: booleanAttribute });

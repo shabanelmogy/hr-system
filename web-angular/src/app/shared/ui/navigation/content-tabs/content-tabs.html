@@ -1,4 +1,4 @@
-<p-tabs [value]="active()" (valueChange)="select($event)">
+<p-tabs [value]="active()" [dt]="tokens" (valueChange)="select($event)">
   <p-tablist>
     @for (tab of tabs(); track tab.id) {
       <p-tab [value]="tab.id">{{ tab.label }}</p-tab>
@@ -7,7 +7,7 @@
   <p-tabpanels>
     @for (tab of tabs(); track tab.id) {
       <p-tabpanel [value]="tab.id">
-        @if (active() === tab.id) {
+        @if (keepAlive() || active() === tab.id) {
           <ng-container
             [ngTemplateOutlet]="content()"
             [ngTemplateOutletContext]="{ $implicit: tab.id }"

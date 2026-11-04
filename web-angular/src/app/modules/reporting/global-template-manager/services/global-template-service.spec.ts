@@ -77,6 +77,33 @@ describe('global manager HTTP boundary', () => {
     request.flush({ items: [], totalCount: 0 });
     expect(await result).toEqual({ items: [], totalCount: 0 });
   });
+  it('queries column rules with CSRF and credentials before server paging', async () => {
+    const filters = [
+      {
+        field: 'displayName',
+        operator: 'and',
+        constraints: [{ matchMode: 'contains', value: 'Directory' }],
+      },
+    ] as const;
+    const result = firstValueFrom(service.list('countries', '', 2, 10, 'draft', filters));
+    http.expectOne(origin + '/api/v1/browser-auth/csrf').flush({ requestToken: 'fixture-csrf' });
+    const request = await vi.waitFor(() =>
+      http.expectOne(origin + '/api/v1/global-crystal-reports/manage/query'),
+    );
+    expect(request.request.method).toBe('POST');
+    expect(request.request.withCredentials).toBe(true);
+    expect(request.request.headers.get('X-ERP-XSRF')).toBe('fixture-csrf');
+    expect(request.request.body).toEqual({
+      entityKey: 'countries',
+      search: '',
+      page: 3,
+      pageSize: 10,
+      status: 'draft',
+      filters,
+    });
+    request.flush({ items: [], totalCount: 0 });
+    expect(await result).toEqual({ items: [], totalCount: 0 });
+  });
   it('reads database View metadata with credentials, source-scoped search and bounded paging', async () => {
     const result = firstValueFrom(service.databaseViews('countries', 'dbo.', 2));
     const request = http.expectOne((entry) => entry.url.endsWith('/database-views'));

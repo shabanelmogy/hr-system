@@ -1,5 +1,14 @@
 # Accounting Core GL — Pre-Plan Specification
 
+> **Historical specification under reopened review — 2026-11-04.** This is not
+> the revised launch specification or current implementation authority. The
+> requester now requires multiple activities, B2B/B2C and Egyptian electronic
+> invoice/receipt channels at first operation, with Egypt/Saudi initial design.
+> D-028–D-033 and `DISCOVERY.md` section 15 govern the active review. The Core GL
+> foundation below can inform a bounded slice; its former exclusions/deferrals
+> do not remove required launch capabilities. Reconcile DEC-007/032/033/034 and
+> review the revised specification before master-plan/runtime authorization.
+
 ## Product and outcome
 
 بناء أول vertical slice محاسبي تشغيلي بعد Fiscal Years، بحيث يصبح لدى ERPSYSTEM

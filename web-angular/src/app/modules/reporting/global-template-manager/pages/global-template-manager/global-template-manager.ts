@@ -4,6 +4,7 @@ import { formatByteSize } from '../../../../../shared/data/public-api';
 import { LocalizationRuntime, UiTextPipe } from '../../../../../platform/localization/public-api';
 import {
   ActionButton,
+  ActionButtonGroup,
   AppIcon,
   CollectionCell,
   CollectionColumnPipe,
@@ -29,6 +30,7 @@ import { GlobalTemplateState } from '../../state/global-template-state';
 import { GlobalTemplateAccessState } from '../../state/global-template-access-state';
 import { GlobalTemplatePermissions } from '../../components/global-template-permissions/global-template-permissions';
 import { GlobalTemplateDesigner } from '../../components/global-template-designer/global-template-designer';
+import { globalTemplateColumnFilters } from '../../types/global-template-filters';
 import type {
   GlobalTemplateCandidate,
   GlobalTemplateRow,
@@ -39,6 +41,7 @@ import type {
   imports: [
     ReactiveFormsModule,
     ActionButton,
+    ActionButtonGroup,
     AppIcon,
     CollectionCell,
     CollectionColumnPipe,
@@ -78,6 +81,49 @@ export class GlobalTemplateManager {
       label: this.text('crystalReports.' + id),
     })),
   );
+  readonly overviewMetadata = computed(() => {
+    const detail = this.state.detail();
+    if (!detail) return [];
+    const version =
+      detail.versions.find((item) => item.versionNumber === detail.currentVersionNumber) ??
+      detail.versions.reduce<GlobalTemplateVersion | undefined>(
+        (latest, item) => (!latest || item.versionNumber > latest.versionNumber ? item : latest),
+        undefined,
+      );
+    const items = [
+      {
+        key: 'crystalReports.entity',
+        value: this.text('globalTemplates.entities.' + detail.entityKey),
+      },
+      { key: 'crystalReports.reportKey', value: detail.reportKey },
+      { key: 'crystalReports.description', value: detail.description || '—' },
+      {
+        key: 'crystalReports.status',
+        value: this.text(
+          detail.isArchived
+            ? 'crystalReports.archived'
+            : detail.isPublished
+              ? 'crystalReports.published'
+              : 'globalTemplates.draft',
+        ),
+      },
+      { key: 'crystalReports.updatedOn', value: this.dateTime(detail.updatedOn) },
+    ];
+    if (version) {
+      items.push(
+        { key: 'crystalReports.version', value: 'v' + version.versionNumber },
+        { key: 'crystalReports.displayName', value: version.summaryTitle || '—' },
+        { key: 'globalTemplates.subject', value: version.summarySubject || '—' },
+        { key: 'crystalReports.reportFile', value: version.originalFileName },
+        {
+          key: 'globalTemplates.fileSize',
+          value: formatByteSize(version.size, this.locale.language()),
+        },
+        { key: 'globalTemplates.createdOn', value: this.dateTime(version.createdOn) },
+      );
+    }
+    return items.map((item) => ({ ...item, label: this.text(item.key) }));
+  });
   readonly entityOptions = computed(() =>
     this.state.contracts().map((contract) => ({
       value: contract.entityKey,
@@ -112,36 +158,45 @@ export class GlobalTemplateManager {
   readonly columns = computed<readonly CollectionColumn<GlobalTemplateRow>[]>(() => [
     {
       key: 'title',
+      filter: globalTemplateColumnFilters.title,
       header: this.text('crystalReports.displayName'),
       value: (row) => row.displayName,
       minWidth: 190,
     },
     {
       key: 'entity',
+      filter: { ...globalTemplateColumnFilters.entity, choices: this.entityOptions() },
       header: this.text('crystalReports.entity'),
       value: (row) => this.text('globalTemplates.entities.' + row.entityKey),
       minWidth: 150,
     },
     {
       key: 'name',
+      filter: globalTemplateColumnFilters.name,
       header: this.text('crystalReports.reportKey'),
       value: (row) => row.reportKey,
       minWidth: 180,
     },
     {
       key: 'version',
+      filter: globalTemplateColumnFilters.version,
       header: this.text('crystalReports.version'),
       value: (row) => (row.currentVersionNumber === null ? '—' : 'v' + row.currentVersionNumber),
       width: 100,
     },
     {
       key: 'updated',
+      filter: globalTemplateColumnFilters.updated,
       header: this.text('crystalReports.updatedOn'),
       value: (row) => this.dateTime(row.updatedOn),
       minWidth: 185,
     },
     {
       key: 'status',
+      filter: {
+        ...globalTemplateColumnFilters.status,
+        choices: this.statusOptions().filter((option) => option.value !== ''),
+      },
       header: this.text('globalTemplates.status'),
       value: (row) =>
         this.text(

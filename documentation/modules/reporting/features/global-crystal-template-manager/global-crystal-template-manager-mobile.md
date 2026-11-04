@@ -503,3 +503,100 @@ Upload and Publish. Official source references and exact test names are in the
 receipt. No dev server, deployment, live report writes or native changes occurred.
 Phase06 remains Not Verified for overall hosted/native acceptance under FOLLOW-024/
 PROD-028; this bounded implementation passed its technical gates.
+
+## 33. Vertical-line mirroring correction — 2026-11-04
+
+The requester requires vertical lines to mirror instead of disappearing. This
+supersedes the English vertical suppression rule in section30 and the historical
+RESTORE_DIRECTION_2026-11-03.md receipt. Current corrective scope/preflight:
+VERTICAL_LINES_2026-11-04.md, existing plan global-crystal-template-management/GCT-1.
+
+CrystalReportDirection now snapshots RAS line objects, deep-clones each axis-aligned
+line, changes both X endpoints on the detached clone, and commits through
+ReportObjectController.Modify. It retains Y endpoints, start/end sections,
+extend-to-bottom, original suppression and formatting. Arabic design coordinates,
+English field/text/picture/chart mirroring, centered text and diagonal-line policy
+are retained. Horizontal lines use the same atomic path. No original RPT save,
+database query, schema, permission, publication or request-contract change.
+
+The actual SAP13.0.4000 Release/x64 build and complete .NET Framework4.8 contract/
+HTTP harness pass.14 language/geometry cases and pre-export wiring pass; the new
+regression first failed against the previous suppression policy. Native Windows
+PowerShell64-bit execution is now available. The optional native verification
+script loads Countries.tests.rpt by temporary copy, binds two synthetic API rows,
+adds four in-memory fixture lines, and invokes the real compiled Apply method.
+Both languages pass endpoint/style/visibility/section assertions and export PDFs.
+Visible red vertical, blue horizontal and green cross-section lines are present
+and mirrored in the actual PDF vectors; the design-suppressed yellow line remains
+absent. Both PDF images were visually reviewed. The source RPT contains no lines;
+fixture lines are deliberately injected only in memory and its SHA256 is unchanged.
+This proves the shared native correction with fixtures, not every hosted template.
+
+Portable current evidence: verification/vertical-lines/verification.json,
+native-direction.json, pdf-lines.json and the two synthetic PDFs. The native
+script is Verify-CrystalReportDirection.ps1 in the existing ContractTests project.
+Earlier environment-limited receipts remain historical. Publish only
+CrystalReportGeneratorApi for this correction, then verify the intended hosted
+RPT in AR/EN. No agent deployment or server restart occurred.
+
+Angular and Next consumers inherit the renderer fix through the existing language
+request. Their screens are unchanged; no client gate rerun is claimed. Mobile
+management remains Excluded; existing viewers inherit the same renderer. The ERP
+modular API and database are unchanged. FOLLOW-024/PROD-028 remain Open for the
+broader integrated/hosted acceptance, Phase06 remains Not Verified overall and
+DEF-027/028 remain Deferred. No Phase07 closure is claimed.
+
+Official research: [SAP clone/modify report objects](https://help.sap.com/doc/1eb6ed2630b940d49d85e22ba94c35bc/4.3.2/en-US/Tomodifyareportobject.html).
+
+## 34. Native PDF viewer theme and new-tab printing — 2026-11-04
+
+Angular-only shared presentation correction. Mobile management remains Excluded and mobile viewer behavior is unchanged; no mobile verification is claimed. Next.js runtime is unchanged.
+
+The requester retained the native iframe and original PDF colors. Open PDF uses
+a new browser tab for native printing; Edge toolbar theming remains browser-owned.
+Shared viewer evidence and the accepted limitation are in section34 of the web
+profile and verification/pdf-viewer-theme/verification.json. FOLLOW-024/PROD-028
+remain Open for broader integrated acceptance. No backend deployment is needed for
+this Angular styling correction.
+
+
+## 35. Shared sidebar tabs, RTL indicator and manager pagination — 2026-11-04
+
+Mobile management remains Excluded under the approved contract. These changes
+correct Angular shared layout only; no mobile endpoint, screen, dependency or
+runtime behavior changes. No mobile verification is claimed. Existing report
+viewers and shared renderer behavior are unchanged. See web section35 and
+verification/sidebar-actions/ for bounded Angular proof; FOLLOW-024/PROD-028
+remain Open and overall Phase06 is Not Verified.
+
+## 36. Countries column filters in the main manager — 2026-11-04
+
+Mobile report management remains Excluded by the approved contract. This bounded
+change adds main Angular manager column filters and the existing Reporting
+management read query; no mobile screen/consumer/runtime changes or mobile proof
+is claimed. Next runtime is unchanged. See API/web section36 and
+verification/column-filters/verification.json for exact source and gate results.
+Overall Phase06 remains Not Verified, including the unrelated full API test failure;
+FOLLOW-024/PROD-028 Open and DEF-027/028 Deferred. No Phase07 closure.
+
+## 37. Report search arrangement and button icons — 2026-11-04
+
+Mobile manager remains Excluded; no mobile screen/control/runtime change or mobile
+verification is claimed. Angular sidebar presentation is verified in web section37
+and verification/search-sidebar-layout/. Next runtime unchanged. Overall Phase06
+Not Verified; FOLLOW-024/PROD-028 Open and DEF-027/028 Deferred.
+
+## 38. Manager action hierarchy and saved metadata review — 2026-11-04
+
+Mobile manager remains Excluded; no mobile runtime or screen verification claimed.
+Next current create/detail source was reviewed for field parity; Next runtime
+unchanged. Angular action/metadata presentation is documented in web section38.
+Phase06 Not Verified; FOLLOW-024/PROD-028 Open; DEF-027/028 Deferred.
+
+## 39. Shared PrimeNG action groups — 2026-11-04
+
+Angular-only shared Button Group follow-up; see web section39 and
+verification/manager-button-group/. No API/schema/Crystal change; mobile manager
+Excluded and Next runtime unchanged. Final Angular532test and6case browser proof
+retains existing permissions and metadata. Prior API suite finding stays section36;
+no API retest. Phase06 Not Verified, FOLLOW-024/PROD-028 Open, DEF-027/028 Deferred.

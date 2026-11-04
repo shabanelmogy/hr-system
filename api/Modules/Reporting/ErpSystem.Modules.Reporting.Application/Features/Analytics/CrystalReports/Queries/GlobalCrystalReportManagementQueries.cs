@@ -5,7 +5,10 @@ namespace ErpSystem.Modules.Reporting.Application.Features.Analytics.CrystalRepo
 public sealed record GetGlobalCrystalReportEntitiesQuery : IQuery<IReadOnlyList<SupportedCrystalReportEntityResponse>>;
 public sealed record DownloadGlobalCrystalReportSchemaQuery(string EntityKey) : IQuery<Result<CrystalReportDownload>>;
 public sealed record GetGlobalCrystalReportManagementQuery(string? EntityKey, string? Search, int Page, int PageSize, string? Status = null)
-    : IQuery<Result<CrystalReportPageResponse>>;
+    : IQuery<Result<CrystalReportPageResponse>>
+{
+    public IReadOnlyList<GlobalCrystalReportFilterGroup>? Filters { get; init; }
+}
 public sealed record GetGlobalCrystalReportDetailQuery(Guid ReportId) : IQuery<Result<CrystalReportDetailResponse>>;
 public sealed record DownloadGlobalCrystalReportVersionQuery(Guid ReportId, Guid VersionId) : IQuery<Result<CrystalReportDownload>>;
 public sealed record GetGlobalCrystalReportCandidatesQuery(string EntityKey, string? Search = null, int Page = 1, int PageSize = 10)
@@ -26,6 +29,7 @@ public sealed class GetGlobalCrystalReportManagementQueryValidator : AbstractVal
 {
     public GetGlobalCrystalReportManagementQueryValidator()
     {
+        RuleFor(x => x.Filters).Must(GlobalCrystalReportFilters.IsValid);
         RuleFor(x => x.Status).Must(status => string.IsNullOrEmpty(status) || status is "published" or "draft" or "archived");
         RuleFor(x => x.EntityKey).Must(key => string.IsNullOrEmpty(key) || key is "countries" or "states" or "districts");
         RuleFor(x => x.Search).MaximumLength(200);

@@ -1,5 +1,20 @@
 # Accounting Core GL — Master Build Plan
 
+> **Review reopened — 2026-11-04.** The requester has restarted business review
+> with zero accepted implementation of this plan and Angular as the target Web
+> client. Historical source, approval, readiness and closure claims below are
+> review inputs; they do not authorize runtime work in this review cycle. See
+> `DISCOVERY.md` section 15 and the comparison sources in `RESEARCH.md`. Reconcile
+> the business decisions and Angular contracts before re-evaluating the gates.
+> **Review order corrected:** fiscal localization/DEC-007 comes before freezing
+> country-dependent COA/setup details. Earlier release-only descriptions of
+> DEC-007 are historical. Subsequent discovery requires multiple activities,
+> B2B/B2C and Egyptian eInvoice/eReceipt for the first operational release, with
+> Egypt and Saudi Arabia as initial design targets (D-030–D-033). The historical
+> Core GL scope below is a foundation input; it does not defer required launch
+> channels. Exact coverage/rollout/decomposition remains DEC-032. See
+> `FISCAL_LOCALIZATION_REVIEW.md`; proposals there await discussion.
+
 ## 0. Plan metadata
 
 | Field | Value |
@@ -8,12 +23,13 @@
 | Planning method version | 2.0 |
 | Business capability | Accounting Core General Ledger |
 | Owning module | Accounting |
-| Status | Slice 1 planning/UI gates ready — Fiscal Years is the sole active feature; later children/slices/release remain gated |
+| Status | Draft |
 | Target milestone | Accounting Core V1 |
 | Primary owner | Accounting Product + Accounting Engineering |
 | Reference feature(s) | Existing Accounting Fiscal Years + current Web/Mobile shared component systems |
 | Related plans | `accounting-delivery`, future AP/AR/Tax/Treasury/Assets/Reporting plans |
 | Last reviewed | 2026-09-25 |
+| Review reopened | 2026-11-04 — business comparison and simplification; no runtime authorization |
 
 ### Planning evidence
 
@@ -22,6 +38,7 @@
 - Approved pre-plan specification: [`SPEC_SUMMARY.md`](SPEC_SUMMARY.md)
 - Decision log: [`DECISIONS.md`](DECISIONS.md)
 - Research notes: [`RESEARCH.md`](RESEARCH.md)
+- Fiscal localization research: [`FISCAL_LOCALIZATION_REVIEW.md`](FISCAL_LOCALIZATION_REVIEW.md)
 - Slice 1 execution decomposition: [`SLICE-01-LEDGER-SETUP-EXECUTION.md`](SLICE-01-LEDGER-SETUP-EXECUTION.md)
 
 Current behavior is proved only by `EVIDENCE.md`. This plan defines target behavior.
@@ -87,7 +104,7 @@ Future Accounting capabilities must reuse the same posting contract.
 | Capability | Reason | Owner | Reopen trigger |
 | --- | --- | --- | --- |
 | AP/AR and Accounting Party Profile | Separate source lifecycle; prove GL first | Accounting | Core GL exit gate passes |
-| Tax/e-invoicing | Country/provider lifecycle not needed to prove GL | Accounting + Compliance | Jurisdiction/tax plan Required |
+| Tax/e-invoicing beyond the isolated GL foundation | D-032 makes Egyptian eInvoice/eReceipt Required for the first operational release; earlier GL-only deferral is superseded for that release | Accounting + Compliance | Revised release specification and bounded country/document contracts under DEC-007/032/033/034 |
 | Treasury/banks/payment proposals | Separate settlement lifecycle | Accounting | Treasury plan approved |
 | Expenses/advances/checks | Separate documents/subledgers | Accounting | Owning plan approved |
 | Fixed assets | Separate asset/depreciation lifecycle | Accounting | Asset plan approved |
@@ -620,14 +637,16 @@ remains Platform-owned. Jurisdiction-specific financial obligations remain DEC-0
 
 ## 21. Decision log
 
-See `DECISIONS.md`. DEC-008/009/010 are resolved. DEC-007 remains open only for a
-jurisdiction-dependent production launch and does not block Slice 1 execution.
+See `DECISIONS.md`. Earlier DEC-008/009/010 outcomes remain comparison inputs.
+The reopened review starts with fiscal localization under DEC-007, which blocks
+country-dependent COA/setup design and jurisdiction-dependent release. Earlier
+Slice 1 execution authorization is on hold. DEC-029/030/031 remain queued.
 
 ## 22. Open questions
 
 | Question | Owner | Blocking? | Due | Resolution |
 | --- | --- | --- | --- | --- |
-| DEC-007 jurisdiction/retention | Product + Finance + Compliance | Country-dependent release | Before such launch | Open |
+| DEC-007 jurisdiction/localization/retention | Product + Finance + Compliance | Country-dependent COA/setup design and release | First reopened-review topic; before dependent contracts are frozen | Open |
 | DEC-008 book/currency model | Product + Architecture | No | Reopen only for parallel/stored-reporting requirement | Resolved |
 | DEC-009 branch/intercompany | Product + Architecture | No; capability Deferred | Before enabling | Resolved/Deferred |
 | DEC-010 SoD/override/reopen | Product + Security + Finance | No for baseline | Reopen only for stricter policy | Resolved |
@@ -735,7 +754,7 @@ is evidence only until its current contract and live journey are revalidated.
 - [x] DEC-008 resolved for Book/Currency V1 schema.
 - [x] DEC-009 branch balancing/intercompany explicitly Deferred.
 - [x] DEC-010 baseline resolved before approval/posting implementation.
-- [ ] DEC-007 resolved before jurisdiction-dependent production launch.
+- [ ] DEC-007 localization design impact resolved before country-dependent COA/setup contracts are frozen; statutory/retention release requirements verified before launch.
 - [ ] RISK-007 closed before production G4.
 
 ### G0–G4 status

@@ -28,17 +28,21 @@
   <section class="form-content"><ng-content /></section>
   <footer>
     <div class="form-tools"><ng-content select="[formTools]" /></div>
+    <ng-container [ngTemplateOutlet]="appearance() === 'sidebar' ? submitAction : null" />
     <ng-content select="[formActions]" />
-    @if (showSubmit()) {
-      <erp-button
-        [label]="submitLabel()"
-        type="submit"
-        [fullWidth]="submitFullWidth()"
-        [disabled]="readOnly()"
-        [busy]="pending() || checking()"
-        ><ng-content select="[formSubmitIcon]" ngProjectAs="[buttonIcon]"
-      /></erp-button>
-    }
+    <ng-container [ngTemplateOutlet]="appearance() !== 'sidebar' ? submitAction : null" />
   </footer>
   <ng-content select="[afterSubmit]" />
 </form>
+<ng-template #submitAction>
+  @if (showSubmit()) {
+    <erp-button
+      [label]="submitLabel()"
+      type="submit"
+      [fullWidth]="submitFullWidth()"
+      [disabled]="readOnly()"
+      [busy]="pending() || checking()"
+      ><ng-content select="[formSubmitIcon]" ngProjectAs="[buttonIcon]"
+    /></erp-button>
+  }
+</ng-template>

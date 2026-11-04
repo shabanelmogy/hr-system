@@ -25,6 +25,7 @@ export interface GridColumnFilter {
   readonly numberMode?: 'decimal' | 'integer';
   readonly minimum?: number;
   readonly maximum?: number;
+  readonly choices?: readonly { readonly value: string; readonly label: string }[];
 }
 export interface GridFilterConstraint {
   readonly matchMode: GridFilterMode;
@@ -69,6 +70,18 @@ export function filterDefinitionValid(definition: GridColumnFilter): boolean {
       (definition.type === 'number' && Number.isFinite(definition.minimum))) &&
     (definition.maximum === undefined ||
       (definition.type === 'number' && Number.isFinite(definition.maximum))) &&
+    (definition.choices === undefined ||
+      (definition.type === 'text' &&
+        definition.choices.length > 0 &&
+        definition.choices.length <= 100 &&
+        new Set(definition.choices.map((choice) => choice.value)).size ===
+          definition.choices.length &&
+        definition.choices.every(
+          (choice) =>
+            choice.value.trim().length > 0 && choice.value.length <= (definition.maxLength ?? 200),
+        ) &&
+        definition.modes !== undefined &&
+        definition.modes.every((mode) => mode === 'equals' || mode === 'notEquals'))) &&
     (definition.minimum === undefined ||
       definition.maximum === undefined ||
       definition.minimum <= definition.maximum)
@@ -89,7 +102,12 @@ export function filterValueValid(
   if (definition.type === 'boolean') return typeof value === 'boolean';
   if (typeof value !== 'string') return false;
   if (definition.type === 'text')
-    return value.length <= (definition.maxLength ?? 200) && value.trim().length > 0;
+    return (
+      value.length <= (definition.maxLength ?? 200) &&
+      value.trim().length > 0 &&
+      (definition.choices === undefined ||
+        definition.choices.some((choice) => choice.value === value))
+    );
   if (!/^\d{4}-\d{2}-\d{2}$/.test(value) || value.startsWith('0000-')) return false;
   const date = new Date(value + 'T12:00:00Z');
   return Number.isFinite(date.getTime()) && date.toISOString().slice(0, 10) === value;

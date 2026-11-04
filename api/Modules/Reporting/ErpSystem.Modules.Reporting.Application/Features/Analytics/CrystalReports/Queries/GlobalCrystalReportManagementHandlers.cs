@@ -41,7 +41,7 @@ public sealed class GetGlobalCrystalReportManagementQueryHandler(IGlobalCrystalR
         var entities = policy.EditableEntities().Where(entity => string.IsNullOrEmpty(request.EntityKey) || entity == request.EntityKey).ToArray();
         return entities.Length == 0 ? Result.Failure<CrystalReportPageResponse>(errors.GlobalCrystalReportForbidden)
             : Result.Success(await store.ListAsync(entities, request.Search,
-                Math.Clamp(request.Page, 1, 100000), Math.Clamp(request.PageSize, 1, 100), cancellationToken, request.Status));
+                Math.Clamp(request.Page, 1, 100000), Math.Clamp(request.PageSize, 1, 100), cancellationToken, request.Status, request.Filters));
     }
 }
 

@@ -635,6 +635,7 @@
   "reports": {
     "reportForms": "Report Forms",
     "searchOptions": "Search options",
+    "viewerOptions": "Options",
     "searchUpper": "Search",
     "reportViewer": "Report viewer",
     "noResultsFound": "No results found",

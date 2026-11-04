@@ -1,0 +1,87 @@
+{
+  "date": "2026-11-04",
+  "planId": "global-crystal-template-management",
+  "sliceId": "GCT-1",
+  "scope": "Existing manager action arrangement, shared icons and saved report metadata presentation",
+  "angular": "22.2.3",
+  "primeng": "22.1.4",
+  "newApplicationComponents": 0,
+  "referenceReview": {
+    "create": "web-next/src/modules/reporting/crystal-report-manager/CrystalReportCreateDialog.tsx",
+    "detail": "web-next/src/modules/reporting/crystal-report-manager/CrystalReportDetailDialog.tsx",
+    "result": "Entity, 500-character description and RPT upload already supported; title/subject extracted from Summary Information; versions and role rights retained. Designer source/View/key/display name supported separately. No missing manual field added to API."
+  },
+  "changes": [
+    "Upload/register/designer/schema in existing toolbarContent, entity/status only in toolbarFilters",
+    "Upload primary, secondary outlined actions, shared SVG icons",
+    "Overview labeled description, entity/key, status/update, version, Summary title/subject, original file, size/create date and optional View",
+    "Current-version metadata preferred; latest version fallback for an unpublished report",
+    "Existing SurfaceCard opt-in details grid and footer template; no feature layout copy",
+    "Upload-version action in version grid toolbar; Inspect uses formTools and Cancel/Save use form footer"
+  ],
+  "fullAngularCheck": {
+    "passed": 531,
+    "failed": 0,
+    "testFiles": 92,
+    "architectureTests": 26,
+    "format": "passed",
+    "lint": "zero warnings",
+    "strictTypesTemplates": "passed",
+    "productionBuild": "passed",
+    "initialBundleKB": 495.63,
+    "log": "../search-sidebar-layout/angular-check.log"
+  },
+  "browser": {
+    "passed": 6,
+    "channel": "chrome",
+    "languages": [
+      "en",
+      "ar"
+    ],
+    "widths": [
+      1213,
+      780,
+      390
+    ],
+    "productionBuild": true,
+    "syntheticApi": true,
+    "checks": [
+      "action order and icon count",
+      "filter-only region",
+      "button bounds/no overlap",
+      "Overview persisted metadata and download action icons",
+      "create description field and save/inspect icons",
+      "Countries record navigation and server page-size changes",
+      "six column filters Apply/Clear"
+    ],
+    "receipt": "browser-results.json",
+    "screenshotsVisuallyReviewed": [
+      "manager-en-390.png",
+      "metadata-ar-1213.png",
+      "upload-en-390.png"
+    ]
+  },
+  "relatedReportViewer": {
+    "passed": 16,
+    "standalone": "production, Chrome/Edge EN/AR 1213/390",
+    "embedded": "development build, Chrome/Edge EN/AR 1213/390 (owning geography navigation gated by isDevMode)",
+    "receipt": "../search-sidebar-layout/verification.json"
+  },
+  "tooling": {
+    "primeNgMcpAvailable": false,
+    "primaryReferences": [
+      "https://primeng.dev/button",
+      "https://angular.dev/guide/components/content-projection",
+      "https://angular.dev/api/core/isDevMode"
+    ]
+  },
+  "apiChanged": false,
+  "schemaChanged": false,
+  "localizationChanged": false,
+  "dependenciesChanged": false,
+  "serverStarted": false,
+  "liveReportWrites": false,
+  "deploymentPerformed": false,
+  "overallPhase06": "Not Verified",
+  "followUp": "FOLLOW-024 / PROD-028 Open; DEF-027 / DEF-028 Deferred. Previous section36 API-suite failure unchanged; UI-only change, API tests not repeated."
+}

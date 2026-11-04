@@ -1,0 +1,122 @@
+[
+  {
+    "scenario": {
+      "language": "en",
+      "width": 1213,
+      "mode": "light",
+      "palette": "green"
+    },
+    "layout": {
+      "fits": true,
+      "noOverlap": true,
+      "documentOverflow": false
+    },
+    "countriesRecordNavigation": true,
+    "samePageNavigationWithoutRequest": true,
+    "lastRecordLoadsServerPage": true,
+    "sizeChangeResetsPage": true,
+    "columnFiltersAppliedAndCleared": true,
+    "managerActionsAndMetadata": true,
+    "errors": []
+  },
+  {
+    "scenario": {
+      "language": "en",
+      "width": 780,
+      "mode": "light",
+      "palette": "green"
+    },
+    "layout": {
+      "fits": true,
+      "noOverlap": true,
+      "documentOverflow": false
+    },
+    "countriesRecordNavigation": true,
+    "samePageNavigationWithoutRequest": true,
+    "lastRecordLoadsServerPage": true,
+    "sizeChangeResetsPage": true,
+    "columnFiltersAppliedAndCleared": true,
+    "managerActionsAndMetadata": true,
+    "errors": []
+  },
+  {
+    "scenario": {
+      "language": "en",
+      "width": 390,
+      "mode": "light",
+      "palette": "green"
+    },
+    "layout": {
+      "fits": true,
+      "noOverlap": true,
+      "documentOverflow": false
+    },
+    "countriesRecordNavigation": true,
+    "samePageNavigationWithoutRequest": true,
+    "lastRecordLoadsServerPage": true,
+    "sizeChangeResetsPage": true,
+    "columnFiltersAppliedAndCleared": true,
+    "managerActionsAndMetadata": true,
+    "errors": []
+  },
+  {
+    "scenario": {
+      "language": "ar",
+      "width": 1213,
+      "mode": "light",
+      "palette": "green"
+    },
+    "layout": {
+      "fits": true,
+      "noOverlap": true,
+      "documentOverflow": false
+    },
+    "countriesRecordNavigation": true,
+    "samePageNavigationWithoutRequest": true,
+    "lastRecordLoadsServerPage": true,
+    "sizeChangeResetsPage": true,
+    "columnFiltersAppliedAndCleared": true,
+    "managerActionsAndMetadata": true,
+    "errors": []
+  },
+  {
+    "scenario": {
+      "language": "ar",
+      "width": 780,
+      "mode": "light",
+      "palette": "green"
+    },
+    "layout": {
+      "fits": true,
+      "noOverlap": true,
+      "documentOverflow": false
+    },
+    "countriesRecordNavigation": true,
+    "samePageNavigationWithoutRequest": true,
+    "lastRecordLoadsServerPage": true,
+    "sizeChangeResetsPage": true,
+    "columnFiltersAppliedAndCleared": true,
+    "managerActionsAndMetadata": true,
+    "errors": []
+  },
+  {
+    "scenario": {
+      "language": "ar",
+      "width": 390,
+      "mode": "light",
+      "palette": "green"
+    },
+    "layout": {
+      "fits": true,
+      "noOverlap": true,
+      "documentOverflow": false
+    },
+    "countriesRecordNavigation": true,
+    "samePageNavigationWithoutRequest": true,
+    "lastRecordLoadsServerPage": true,
+    "sizeChangeResetsPage": true,
+    "columnFiltersAppliedAndCleared": true,
+    "managerActionsAndMetadata": true,
+    "errors": []
+  }
+]

@@ -1,5 +1,10 @@
 # Accounting Core GL — Evidence Ledger
 
+> **Review reopened — 2026-11-04.** Earlier delivery/acceptance conclusions below
+> are historical evidence. The requester sets zero accepted implementation for
+> the restarted review and Angular as the target Web client. Current fiscal
+> source observations are recorded separately below; none proves live behavior.
+
 ## Scope of investigation
 
 Inspected the Accounting module bootstrap, DbContext and DI, current Fiscal Years
@@ -75,7 +80,7 @@ No external product documentation proves current runtime behavior. Historical
 Odoo/Dynamics/NetSuite links remain capability-comparison material only.
 Jurisdiction-specific requirements must be researched after DEC-007.
 
-## Audit conclusion
+## Historical audit conclusion — retained for traceability
 
 Current foundations, Fiscal Years, Currency ownership and the broad Slice 1
 Domain/API are proven. Currency has historical typed client/closure evidence but is
@@ -86,4 +91,27 @@ children; their reachability is not completion. Later posting/ledger slices rema
 target work. Named domain entities already establish `NameAr`/`NameEn` as the data
 shape, and the v2 child contracts now make end-to-end bilingual create/edit/view/list
 verification an explicit closure gate. DEC-008/009/010 are requester-resolved;
-DEC-007 remains a jurisdiction-dependent production-launch decision.
+DEC-007 was then treated as a jurisdiction-dependent production-launch decision;
+the reopened review corrects it to a country-dependent design and release
+dependency. See current discovery and the fiscal research companion.
+
+## Fiscal-localization source review — 2026-11-04
+
+These are current read-only **source observations**, not accepted runtime delivery.
+Graphify provided initial navigation; direct source established the facts below.
+No live database or authority account was inspected.
+
+| Evidence ID | Classification | Finding | Source | Planning consequence |
+| --- | --- | --- | --- | --- |
+| E-038 | VERIFIED CURRENT | Platform Company already contains LegalName, RegistrationNumber, TaxNumber, RegistrationCountryId, DefaultCurrencyCode and TimeZoneId. | `api/Modules/Platform/ErpSystem.Modules.Platform.Domain/Companies/Entities/Company.cs` | Reuse owner facts/contracts; none establishes complete fiscal readiness. |
+| E-039 | VERIFIED CURRENT | HR Branch is an organizational entity with its own code/lifecycle/timezone; the inspected entity has no ETA/ZATCA registration/device fields. | `api/Modules/HR/ErpSystem.Modules.HR.Domain/OrganizationalStructure/Entities/Branch.cs` | Design legal fiscal-site mappings under DEC-034 without changing branch ownership by assumption. |
+| E-040 | VERIFIED CURRENT | Contacts Party exposes scoped identity, display name, email/phone and revision, not complete buyer fiscal identity in this entity. | `api/Modules/Contacts/ErpSystem.Modules.Contacts.Domain/Party.cs` | Verify/extend owning contracts and freeze document snapshots; manual GL's optional Party dependency does not settle invoicing. |
+| E-041 | VERIFIED CURRENT | AccountingCompanySettings source holds functional currency and primary book; ExchangeRates.cs holds dated/versioned FX source. | `api/Modules/Accounting/ErpSystem.Modules.Accounting.Domain/Finance/LedgerSetup/Entities/AccountingCompanySettings.cs`; `ExchangeRates.cs` in the same directory | Fiscal profiles/regime/channel readiness and fiscal FX applicability remain design work. |
+| E-042 | VERIFIED CURRENT | InvoiceQrCodeService.cs uses GenerateZatcaQrCode with five TLV fields. | `api/Modules/Accounting/ErpSystem.Modules.Accounting.Infrastructure/Features/Finance/Invoicing/Services/InvoiceQrCodeService.cs` | Saudi-oriented helper; no proof of Egyptian eReceipt QR, signed invoices or ZATCA Phase 2. |
+| E-043 | VERIFIED CURRENT | Inspected Inventory Domain/Contracts contain catalog category/subcategory work; PointOfSale Domain contains AssemblyReference only. | `api/Modules/Inventory/ErpSystem.Modules.Inventory.Domain/`; `api/Modules/Inventory/ErpSystem.Modules.Inventory.Contracts/`; `api/Modules/PointOfSale/ErpSystem.Modules.PointOfSale.Domain/` | Product/service/UOM and sales/device contracts cannot be presumed implemented from module names; DEC-034 owns the boundary. |
+| E-044 | REQUESTED CHANGE | Requester requires multiple activities, B2B/B2C and electronic invoices/receipts; initial design now covers Egypt/Saudi while Egypt remains first explicitly selected launch. | `DISCOVERY.md` section 15; D-030–D-033 | Broaden the operational-release specification while preserving a bounded GL foundation and the planning hold. |
+
+Official external sources, their versions/limitations and unapproved design
+recommendations are recorded in
+[`FISCAL_LOCALIZATION_REVIEW.md`](FISCAL_LOCALIZATION_REVIEW.md), not presented
+as existing ERPSYSTEM capabilities. DEC-007/032/033/034 remain open.

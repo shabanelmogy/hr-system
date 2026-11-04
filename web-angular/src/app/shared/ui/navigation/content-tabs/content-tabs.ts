@@ -1,5 +1,12 @@
 import { NgTemplateOutlet } from '@angular/common';
-import { Component, computed, input, model, type TemplateRef } from '@angular/core';
+import {
+  booleanAttribute,
+  Component,
+  computed,
+  input,
+  model,
+  type TemplateRef,
+} from '@angular/core';
 import { TabsModule } from 'primeng/tabs';
 
 export interface ContentTab {
@@ -17,6 +24,14 @@ export class ContentTabs {
   readonly tabs = input.required<readonly ContentTab[]>();
   readonly content = input.required<TemplateRef<{ $implicit: string }>>();
   readonly selected = model('');
+  /** Preserve mounted forms and controls while another panel is selected. */
+  readonly keepAlive = input(false, { transform: booleanAttribute });
+  // A tab-owned border follows RTL, translated labels and late font loading
+  // without depending on PrimeNG's cached physical ink-bar measurements.
+  readonly tokens = {
+    activeBar: { height: '0px' },
+    tab: { borderWidth: '0 0 2px 0', activeBorderColor: '{primary.color}' },
+  };
   readonly active = computed(
     () => this.tabs().find((tab) => tab.id === this.selected())?.id ?? this.tabs()[0]?.id ?? '',
   );

@@ -1,13 +1,14 @@
 using ErpSystem.Modules.Reporting.Application.Features.Analytics.CrystalReports.Abstractions;
 using ErpSystem.Modules.Reporting.Application.Features.Analytics.CrystalReports.Contracts;
 using ErpSystem.Modules.Reporting.Domain.Analytics.CrystalReports.Entities;
+using ErpSystem.Modules.Reporting.Application.Features.Analytics.CrystalReports.Queries;
 
 namespace ErpSystem.Modules.Reporting.Infrastructure.Features.Analytics.CrystalReports.Persistence;
 
 public sealed class GlobalCrystalReportStore(ReportingDbContext context) : IGlobalCrystalReportStore
 {
     public async Task<CrystalReportPageResponse> ListAsync(IReadOnlyCollection<string> entityKeys, string? search, int page, int pageSize,
-        CancellationToken cancellationToken, string? status = null)
+        CancellationToken cancellationToken, string? status = null, IReadOnlyList<GlobalCrystalReportFilterGroup>? filters = null)
     {
         var query = context.GlobalCrystalReports.AsNoTracking().Where(x => entityKeys.Contains(x.EntityKey));
         query = status == "archived" ? query.Where(x => x.IsDeleted) : query.Where(x => !x.IsDeleted);
@@ -18,6 +19,7 @@ public sealed class GlobalCrystalReportStore(ReportingDbContext context) : IGlob
             var term = search.Trim();
             query = query.Where(x => x.ReportKey.Contains(term) || x.DisplayName.Contains(term));
         }
+        query = GlobalCrystalReportFilterExpressions.Apply(query, filters);
         var count = await query.CountAsync(cancellationToken);
         var reports = await query.Include(x => x.Versions).OrderBy(x => x.DisplayName).ThenBy(x => x.Id)
             .Skip((page - 1) * pageSize).Take(pageSize).ToListAsync(cancellationToken);

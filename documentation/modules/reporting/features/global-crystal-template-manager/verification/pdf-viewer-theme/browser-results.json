@@ -1,0 +1,218 @@
+[
+  {
+    "channel": "chrome",
+    "language": "en",
+    "width": 1213,
+    "light": {
+      "nav": "rgb(255, 255, 255)",
+      "frame": "rgb(234, 244, 241)",
+      "scheme": "light",
+      "surface": "rgb(255, 255, 255)",
+      "muted": "rgb(234, 244, 241)",
+      "filtered": "none",
+      "horizontalOverflow": false
+    },
+    "dark": {
+      "nav": "rgb(24, 32, 30)",
+      "frame": "rgb(33, 48, 44)",
+      "scheme": "dark",
+      "surface": "rgb(24, 32, 30)",
+      "muted": "rgb(33, 48, 44)",
+      "filtered": "none",
+      "horizontalOverflow": false
+    },
+    "noRerenderOnTheme": true,
+    "originalDownloadBytes": true,
+    "newPdfTab": true,
+    "errors": []
+  },
+  {
+    "channel": "chrome",
+    "language": "en",
+    "width": 390,
+    "light": {
+      "nav": "rgb(255, 255, 255)",
+      "frame": "rgb(234, 244, 241)",
+      "scheme": "light",
+      "surface": "rgb(255, 255, 255)",
+      "muted": "rgb(234, 244, 241)",
+      "filtered": "none",
+      "horizontalOverflow": false
+    },
+    "dark": {
+      "nav": "rgb(24, 32, 30)",
+      "frame": "rgb(33, 48, 44)",
+      "scheme": "dark",
+      "surface": "rgb(24, 32, 30)",
+      "muted": "rgb(33, 48, 44)",
+      "filtered": "none",
+      "horizontalOverflow": false
+    },
+    "noRerenderOnTheme": true,
+    "originalDownloadBytes": true,
+    "newPdfTab": true,
+    "errors": []
+  },
+  {
+    "channel": "chrome",
+    "language": "ar",
+    "width": 1213,
+    "light": {
+      "nav": "rgb(255, 255, 255)",
+      "frame": "rgb(234, 244, 241)",
+      "scheme": "light",
+      "surface": "rgb(255, 255, 255)",
+      "muted": "rgb(234, 244, 241)",
+      "filtered": "none",
+      "horizontalOverflow": false
+    },
+    "dark": {
+      "nav": "rgb(24, 32, 30)",
+      "frame": "rgb(33, 48, 44)",
+      "scheme": "dark",
+      "surface": "rgb(24, 32, 30)",
+      "muted": "rgb(33, 48, 44)",
+      "filtered": "none",
+      "horizontalOverflow": false
+    },
+    "noRerenderOnTheme": true,
+    "originalDownloadBytes": true,
+    "newPdfTab": true,
+    "errors": []
+  },
+  {
+    "channel": "chrome",
+    "language": "ar",
+    "width": 390,
+    "light": {
+      "nav": "rgb(255, 255, 255)",
+      "frame": "rgb(234, 244, 241)",
+      "scheme": "light",
+      "surface": "rgb(255, 255, 255)",
+      "muted": "rgb(234, 244, 241)",
+      "filtered": "none",
+      "horizontalOverflow": false
+    },
+    "dark": {
+      "nav": "rgb(24, 32, 30)",
+      "frame": "rgb(33, 48, 44)",
+      "scheme": "dark",
+      "surface": "rgb(24, 32, 30)",
+      "muted": "rgb(33, 48, 44)",
+      "filtered": "none",
+      "horizontalOverflow": false
+    },
+    "noRerenderOnTheme": true,
+    "originalDownloadBytes": true,
+    "newPdfTab": true,
+    "errors": []
+  },
+  {
+    "channel": "msedge",
+    "language": "en",
+    "width": 1213,
+    "light": {
+      "nav": "rgb(255, 255, 255)",
+      "frame": "rgb(234, 244, 241)",
+      "scheme": "light",
+      "surface": "rgb(255, 255, 255)",
+      "muted": "rgb(234, 244, 241)",
+      "filtered": "none",
+      "horizontalOverflow": false
+    },
+    "dark": {
+      "nav": "rgb(24, 32, 30)",
+      "frame": "rgb(33, 48, 44)",
+      "scheme": "dark",
+      "surface": "rgb(24, 32, 30)",
+      "muted": "rgb(33, 48, 44)",
+      "filtered": "none",
+      "horizontalOverflow": false
+    },
+    "noRerenderOnTheme": true,
+    "originalDownloadBytes": true,
+    "newPdfTab": true,
+    "errors": []
+  },
+  {
+    "channel": "msedge",
+    "language": "en",
+    "width": 390,
+    "light": {
+      "nav": "rgb(255, 255, 255)",
+      "frame": "rgb(234, 244, 241)",
+      "scheme": "light",
+      "surface": "rgb(255, 255, 255)",
+      "muted": "rgb(234, 244, 241)",
+      "filtered": "none",
+      "horizontalOverflow": false
+    },
+    "dark": {
+      "nav": "rgb(24, 32, 30)",
+      "frame": "rgb(33, 48, 44)",
+      "scheme": "dark",
+      "surface": "rgb(24, 32, 30)",
+      "muted": "rgb(33, 48, 44)",
+      "filtered": "none",
+      "horizontalOverflow": false
+    },
+    "noRerenderOnTheme": true,
+    "originalDownloadBytes": true,
+    "newPdfTab": true,
+    "errors": []
+  },
+  {
+    "channel": "msedge",
+    "language": "ar",
+    "width": 1213,
+    "light": {
+      "nav": "rgb(255, 255, 255)",
+      "frame": "rgb(234, 244, 241)",
+      "scheme": "light",
+      "surface": "rgb(255, 255, 255)",
+      "muted": "rgb(234, 244, 241)",
+      "filtered": "none",
+      "horizontalOverflow": false
+    },
+    "dark": {
+      "nav": "rgb(24, 32, 30)",
+      "frame": "rgb(33, 48, 44)",
+      "scheme": "dark",
+      "surface": "rgb(24, 32, 30)",
+      "muted": "rgb(33, 48, 44)",
+      "filtered": "none",
+      "horizontalOverflow": false
+    },
+    "noRerenderOnTheme": true,
+    "originalDownloadBytes": true,
+    "newPdfTab": true,
+    "errors": []
+  },
+  {
+    "channel": "msedge",
+    "language": "ar",
+    "width": 390,
+    "light": {
+      "nav": "rgb(255, 255, 255)",
+      "frame": "rgb(234, 244, 241)",
+      "scheme": "light",
+      "surface": "rgb(255, 255, 255)",
+      "muted": "rgb(234, 244, 241)",
+      "filtered": "none",
+      "horizontalOverflow": false
+    },
+    "dark": {
+      "nav": "rgb(24, 32, 30)",
+      "frame": "rgb(33, 48, 44)",
+      "scheme": "dark",
+      "surface": "rgb(24, 32, 30)",
+      "muted": "rgb(33, 48, 44)",
+      "filtered": "none",
+      "horizontalOverflow": false
+    },
+    "noRerenderOnTheme": true,
+    "originalDownloadBytes": true,
+    "newPdfTab": true,
+    "errors": []
+  }
+]

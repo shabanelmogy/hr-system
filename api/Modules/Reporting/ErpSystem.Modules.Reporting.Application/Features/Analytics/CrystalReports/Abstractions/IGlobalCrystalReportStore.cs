@@ -1,12 +1,13 @@
 using ErpSystem.Modules.Reporting.Application.Features.Analytics.CrystalReports.Contracts;
 using ErpSystem.Modules.Reporting.Domain.Analytics.CrystalReports.Entities;
+using ErpSystem.Modules.Reporting.Application.Features.Analytics.CrystalReports.Queries;
 
 namespace ErpSystem.Modules.Reporting.Application.Features.Analytics.CrystalReports.Abstractions;
 
 public interface IGlobalCrystalReportStore
 {
     Task<CrystalReportPageResponse> ListAsync(IReadOnlyCollection<string> entityKeys, string? search, int page, int pageSize,
-        CancellationToken cancellationToken, string? status = null);
+        CancellationToken cancellationToken, string? status = null, IReadOnlyList<GlobalCrystalReportFilterGroup>? filters = null);
     Task<CrystalReportDetailResponse?> DetailAsync(Guid id, CancellationToken cancellationToken);
     Task<GlobalCrystalReport?> FindAsync(Guid id, CancellationToken cancellationToken);
     Task<GlobalCrystalReport?> FindByKeyAsync(string entityKey, string reportKey, CancellationToken cancellationToken);

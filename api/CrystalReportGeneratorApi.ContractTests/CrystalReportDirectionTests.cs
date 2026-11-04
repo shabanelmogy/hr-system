@@ -22,8 +22,8 @@ namespace CrystalReportGeneratorApi.ContractTests
 
             var geometry = runtime.GetType("CrystalReportGeneratorApi.Runtime.Rendering.CrystalReportDirectionGeometry", true);
             var position = geometry.GetMethod("LeftForLanguage", BindingFlags.Public | BindingFlags.Static);
-            var suppress = geometry.GetMethod("SuppressVerticalLine", BindingFlags.Public | BindingFlags.Static);
-            Require(position != null && suppress != null, "Direction geometry contract is missing.");
+            var mirrorLine = geometry.GetMethod("ShouldMirrorLine", BindingFlags.Public | BindingFlags.Static);
+            Require(position != null && mirrorLine != null, "Axis-aligned lines must mirror without suppressing them.");
 
             // Coordinates are manually calculated in SDK twips for a 10000-twip canvas.
             // The first/last fixtures represent matching column headers and detail fields.
@@ -36,15 +36,21 @@ namespace CrystalReportGeneratorApi.ContractTests
             VerifyPosition(position, "en", 600, 0, 9400);
             VerifyPosition(position, "en", 8600, 1000, 400);
 
-            Require((bool)suppress.Invoke(null, new object[] { "en", 700, 700, 100, 900 }),
-                "Historical English vertical-line suppression must be preserved.");
-            Require(!(bool)suppress.Invoke(null, new object[] { "ar", 700, 700, 100, 900 }),
-                "Arabic vertical lines must preserve their design visibility.");
-            Require(!(bool)suppress.Invoke(null, new object[] { "en", 700, 1700, 100, 100 }),
-                "Horizontal lines must remain visible.");
-            Require(!(bool)suppress.Invoke(null, new object[] { "en", 700, 1700, 100, 900 }),
-                "Diagonal lines must preserve their design visibility.");
-            Console.WriteLine("Direction regression passed: pre-export wiring and 12 language/geometry cases; native PDF verification remains separate.");
+            VerifyLine(mirrorLine, "en", 700, 700, 100, 900, true);
+            VerifyLine(mirrorLine, "EN", 700, 700, 100, 900, true);
+            VerifyLine(mirrorLine, "ar", 700, 700, 100, 900, false);
+            VerifyLine(mirrorLine, "en", 700, 1700, 100, 100, true);
+            VerifyLine(mirrorLine, "en", 700, 1700, 100, 900, false);
+            // A vertical line can end at the same Y in a different section.
+            VerifyLine(mirrorLine, "en", 700, 700, 100, 100, true);
+            Console.WriteLine("Direction regression passed: pre-export wiring and 14 language/geometry cases; native verification is a separate SDK gate.");
+        }
+
+        private static void VerifyLine(MethodInfo method, string language,
+            int left, int right, int top, int bottom, bool expected)
+        {
+            var actual = (bool)method.Invoke(null, new object[] { language, left, right, top, bottom });
+            Require(actual == expected, "Unexpected " + language + " line-mirroring policy.");
         }
 
         private static void VerifyPosition(MethodInfo method, string language, int left, int width, int expected)

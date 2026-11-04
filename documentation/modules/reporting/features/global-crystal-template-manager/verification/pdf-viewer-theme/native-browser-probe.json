@@ -1,0 +1,56 @@
+[
+  {
+    "channel": "chrome",
+    "mode": "light",
+    "style": {
+      "scheme": "light",
+      "outerScheme": "light"
+    },
+    "frames": [
+      "https://pdf-theme.test/",
+      "https://pdf-theme.test/report.pdf",
+      "chrome-extension://mhjfbmdgcfjbbpaeojofohoefgiehjai/index.html",
+      "https://pdf-theme.test/report.pdf"
+    ]
+  },
+  {
+    "channel": "chrome",
+    "mode": "dark",
+    "style": {
+      "scheme": "dark",
+      "outerScheme": "dark"
+    },
+    "frames": [
+      "https://pdf-theme.test/",
+      "https://pdf-theme.test/report.pdf",
+      "chrome-extension://mhjfbmdgcfjbbpaeojofohoefgiehjai/index.html",
+      "https://pdf-theme.test/report.pdf"
+    ]
+  },
+  {
+    "channel": "msedge",
+    "mode": "light",
+    "style": {
+      "scheme": "light",
+      "outerScheme": "light"
+    },
+    "frames": [
+      "https://pdf-theme.test/",
+      "https://pdf-theme.test/report.pdf",
+      "about:blank"
+    ]
+  },
+  {
+    "channel": "msedge",
+    "mode": "dark",
+    "style": {
+      "scheme": "dark",
+      "outerScheme": "dark"
+    },
+    "frames": [
+      "https://pdf-theme.test/",
+      "https://pdf-theme.test/report.pdf",
+      "about:blank"
+    ]
+  }
+]

@@ -650,3 +650,37 @@ actual hosted/native acceptance remains FOLLOW-024/PROD-028.
 
 Official references reviewed: [PrimeNG Button severity](https://primeng.dev/button#severity)
 and [ASP.NET Core combined authorization policies](https://learn.microsoft.com/en-us/aspnet/core/security/authorization/policies?view=aspnetcore-10.0).
+
+## Vertical lines remain visible when mirroring — 2026-11-04
+
+Current GCT-1 section33 supersedes the old English vertical-line suppression.
+Arabic keeps design coordinates. English mirrors both X endpoints of vertical
+and horizontal lines through an atomic RAS clone/modify, retaining Y, cross-section
+attachments, style and the template's own suppression. Existing language requests
+are sufficient. No formula, RPT re-upload or publication change is required for
+this renderer correction. Publish CrystalReportGeneratorApi.
+
+Actual local native AR/EN fixture PDFs and SDK geometry/HTTP gates pass; broader
+hosted acceptance remains FOLLOW-024/PROD-028. Current evidence is the feature's
+verification/vertical-lines/verification.json. Stored RPT sources are unchanged.
+
+
+### Shared Angular sidebar and pagination — 2026-11-04
+
+Report Search and Options now share horizontal sidebar tabs. Open/Download use the
+original PdfViewer actions template; the iframe retains its preview area. Shared
+ContentTabs corrects RTL with active-border tokens. All manager grids now enable
+the same existing recordNavigation input as Countries; CollectionFooter is unchanged. Canonical web profile section35
+and verification/sidebar-actions/ own current evidence. Deploy Angular together
+with ErpSystem.Api generated UI catalog for reports.viewerOptions; Crystal service
+unchanged. FOLLOW-024/PROD-028 retain remaining hosted acceptance.
+
+## Global manager column-filter integration — 2026-11-04
+
+Angular main catalog now uses the Countries MyDataGrid column-filter API. Six
+server fields, bounded authenticated POST /manage/query and unchanged GET/scope
+are documented in global-crystal-template-manager API/web section36. Publish
+Angular and ErpSystem.Api together; Crystal runtime unchanged. Technical receipt:
+features/global-crystal-template-manager/verification/column-filters/verification.json.
+Full API solution gate has one unchanged Platform message-log failure, with a
+passing isolated diagnostic; overall hosted acceptance remains FOLLOW-024/PROD-028.

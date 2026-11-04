@@ -74,9 +74,9 @@ erp-validation-summary,
   gap: 16px;
 }
 .sidebar-form footer {
-  display: flex;
-  flex-direction: column-reverse;
-  gap: 16px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
   padding: 8px 16px 16px;
   border: 0;
 }

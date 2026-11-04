@@ -16,6 +16,14 @@ aside,
 .document {
   min-width: 0;
 }
+.document-actions:not(:empty) {
+  display: grid;
+  gap: 12px;
+  padding: 16px;
+}
+erp-content-tabs {
+  --p-tabs-tabpanel-padding: 0;
+}
 @media (max-width: 899px) {
   .workspace {
     grid-template-columns: minmax(0, 1fr);

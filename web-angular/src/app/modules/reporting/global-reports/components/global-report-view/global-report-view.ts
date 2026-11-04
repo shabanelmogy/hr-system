@@ -1,10 +1,21 @@
-import { Component, computed, effect, inject, input, model, viewChild } from '@angular/core';
+import {
+  Component,
+  computed,
+  effect,
+  inject,
+  input,
+  model,
+  signal,
+  viewChild,
+} from '@angular/core';
+import { NgTemplateOutlet } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { LocalizationRuntime, UiTextPipe } from '../../../../../platform/localization/public-api';
 import { AuthSession, type Session } from '../../../../../platform/auth/session.public-api';
 import {
   ActionButton,
+  AppIcon,
   FeedbackState,
   FormContainer,
   PageHeader,
@@ -31,7 +42,9 @@ import {
   providers: [GlobalReportState],
   imports: [
     ReactiveFormsModule,
+    NgTemplateOutlet,
     ActionButton,
+    AppIcon,
     FeedbackState,
     FormContainer,
     PageHeader,
@@ -53,6 +66,14 @@ export class GlobalReportView {
   readonly catalogErrorMessage = input('');
   readonly unavailableMessage = input('');
   readonly state = inject(GlobalReportState);
+  readonly pdfViewer = viewChild(PdfViewer);
+  readonly sidebarTab = signal('criteria');
+  readonly criteriaVisible = computed(
+    () =>
+      this.showFilterBar() &&
+      (this.chooseEntity() ||
+        (this.state.catalog().kind === 'ready' && this.state.selected() !== null)),
+  );
   readonly locale = inject(LocalizationRuntime);
   private readonly auth = inject(AuthSession);
   readonly entityOptions = computed(() =>
@@ -139,6 +160,7 @@ export class GlobalReportView {
       const view = this.state.view();
       if (view.kind === 'error' && view.failure.kind === 'validation') {
         applyServerFieldErrors(this.form, view.failure.fields);
+        this.sidebarTab.set('criteria');
         this.criteriaForm()?.revealErrors();
       }
     });

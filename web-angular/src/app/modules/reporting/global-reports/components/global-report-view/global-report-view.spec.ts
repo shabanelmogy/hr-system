@@ -1,6 +1,6 @@
 import { signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { of, throwError } from 'rxjs';
+import { NEVER, of, throwError } from 'rxjs';
 import { provideAppTheme } from '../../../../../../theme/public-api';
 import { AuthSession } from '../../../../../platform/auth/session.public-api';
 import { sessionFixture } from '../../../../../platform/auth/auth.fixture';
@@ -12,7 +12,11 @@ import { GlobalReportFailure } from '../../types/global-report';
 import { GlobalReportView } from './global-report-view';
 
 describe('Managed report shared-form composition', () => {
-  async function setup() {
+  async function setup(inlineSupported = false) {
+    vi.stubGlobal('navigator', {
+      pdfViewerEnabled: inlineSupported,
+      userAgent: navigator.userAgent,
+    });
     vi.stubGlobal(
       'ResizeObserver',
       class {
@@ -124,6 +128,8 @@ describe('Managed report shared-form composition', () => {
   });
   it('renders owned server field errors beneath shared inputs and clears the old PDF', async () => {
     const { fixture, owner, service, root } = await setup();
+    owner.sidebarTab.set('options');
+    await fixture.whenStable();
     service.render.mockReturnValue(
       throwError(() => new GlobalReportFailure('validation', { nameEn: 'Server fixture' })),
     );
@@ -133,6 +139,70 @@ describe('Managed report shared-form composition', () => {
       'Server fixture',
     );
     expect(root.querySelector('erp-pdf-viewer')).toBeNull();
+    expect(root.querySelector('aside a[target="_blank"]')).toBeNull();
+    expect(owner.sidebarTab()).toBe('criteria');
+  });
+  it.each([false, true])(
+    'moves the shared actions between sidebar and preview without replacing the iframe (embedded=%s)',
+    async (embedded) => {
+      const { fixture, service, root } = await setup(true);
+      fixture.componentRef.setInput('embedded', embedded);
+      await fixture.whenStable();
+      const frame = root.querySelector('iframe');
+      const source = frame?.src;
+      const calls = service.render.mock.calls.length;
+      expect(frame).not.toBeNull();
+      expect(root.querySelectorAll('aside nav a')).toHaveLength(2);
+      expect(root.querySelector('erp-pdf-viewer nav')).toBeNull();
+      const open = root.querySelector('aside a[target="_blank"]');
+      expect(open?.getAttribute('href')).toBe(source);
+      expect(open?.getAttribute('rel')).toBe('noopener noreferrer');
+      expect(root.querySelector('aside a[download]')?.getAttribute('download')).toMatch(/\.pdf$/);
+      fixture.componentRef.setInput('showFilterBar', false);
+      await fixture.whenStable();
+      expect(root.querySelector('aside')).toBeNull();
+      expect(root.querySelectorAll('erp-pdf-viewer nav a')).toHaveLength(2);
+      expect(root.querySelector('iframe')).toBe(frame);
+      fixture.componentRef.setInput('showFilterBar', true);
+      await fixture.whenStable();
+      expect(root.querySelectorAll('aside nav a')).toHaveLength(2);
+      expect(root.querySelector('erp-pdf-viewer nav')).toBeNull();
+      expect(root.querySelector('iframe')).toBe(frame);
+      expect(service.render.mock.calls.length).toBe(calls);
+      expect(URL.createObjectURL).toHaveBeenCalledTimes(1);
+      expect(URL.revokeObjectURL).not.toHaveBeenCalled();
+    },
+  );
+  it('removes sidebar document links while a replacement report is loading', async () => {
+    const { fixture, owner, service, root } = await setup();
+    expect(root.querySelectorAll('aside nav a')).toHaveLength(2);
+    service.render.mockReturnValue(NEVER);
+    owner.search();
+    await fixture.whenStable();
+    expect(root.querySelector('erp-pdf-viewer')).toBeNull();
+    expect(root.querySelector('aside nav')).toBeNull();
+    expect(URL.revokeObjectURL).toHaveBeenCalledTimes(1);
+  });
+  it('keeps draft fields and the original document mounted while switching sidebar tabs', async () => {
+    const { fixture, owner, service, root } = await setup(true);
+    const input = root.querySelector<HTMLInputElement>('[data-testid=nameEn] input');
+    const frame = root.querySelector('iframe');
+    const renders = service.render.mock.calls.length;
+    owner.form.controls.nameEn.setValue('Draft country');
+    owner.sidebarTab.set('options');
+    await fixture.whenStable();
+    expect(root.querySelector('[data-testid=nameEn] input')).toBe(input);
+    expect(input?.closest<HTMLElement>('[role=tabpanel]')?.hidden).toBe(true);
+    expect(
+      root.querySelector('aside a[download]')?.closest<HTMLElement>('[role=tabpanel]')?.hidden,
+    ).toBe(false);
+    owner.sidebarTab.set('criteria');
+    await fixture.whenStable();
+    expect(input?.value).toBe('Draft country');
+    expect(input?.closest<HTMLElement>('[role=tabpanel]')?.hidden).toBe(false);
+    expect(root.querySelector('iframe')).toBe(frame);
+    expect(service.render.mock.calls.length).toBe(renders);
+    expect(URL.createObjectURL).toHaveBeenCalledTimes(1);
   });
   it('embeds without a second header and preserves draft/selection when the controlled criteria panel is hidden', async () => {
     const { fixture, owner, root, service } = await setup();
@@ -143,7 +213,12 @@ describe('Managed report shared-form composition', () => {
     const order = Array.from(root.querySelectorAll('.form-content > [data-testid]')).map(
       (element) => element.getAttribute('data-testid'),
     );
-    expect(order).toEqual(['nameAr', 'nameEn', 'report']);
+    expect(order).toEqual(['report', 'nameAr', 'nameEn']);
+    const actions = root.querySelectorAll<HTMLButtonElement>('form footer button');
+    expect(actions).toHaveLength(2);
+    expect(actions[0]?.type).toBe('submit');
+    expect(actions[1]?.closest('[data-testid=reset]')).not.toBeNull();
+    expect(Array.from(actions).every((button) => button.querySelector('erp-icon svg'))).toBe(true);
     owner.form.controls.nameEn.setValue('Draft');
     const calls = service.render.mock.calls.length;
     fixture.componentRef.setInput('showFilterBar', false);

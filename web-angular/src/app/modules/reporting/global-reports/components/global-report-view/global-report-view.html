@@ -6,12 +6,14 @@
           data-testid="language"
           [label]="(locale.language() === 'en' ? 'common.arabic' : 'common.english') | uiText"
           (activated)="locale.setLanguage(locale.language() === 'en' ? 'ar' : 'en')"
-        />
+          ><erp-icon buttonIcon name="language"
+        /></erp-button>
         <erp-button
           data-testid="reload"
           [label]="'actions.refresh' | uiText"
           (activated)="state.reload()"
-        /></div
+          ><erp-icon buttonIcon name="refresh"
+        /></erp-button></div
     ></erp-page-header>
   }
   @if (state.view().kind === 'forbidden') {
@@ -22,12 +24,11 @@
     }
     <erp-report-workspace
       [label]="'reports.reportViewer' | uiText"
-      [criteriaLabel]="'reports.searchOptions' | uiText"
+      [criteriaLabel]="'general.search' | uiText"
+      [optionsLabel]="'reports.viewerOptions' | uiText"
+      [(selectedTab)]="sidebarTab"
       [appearance]="embedded() ? 'reference' : 'default'"
-      [criteriaVisible]="
-        showFilterBar() &&
-        (chooseEntity() || (state.catalog().kind === 'ready' && state.selected() !== null))
-      "
+      [criteriaVisible]="criteriaVisible()"
     >
       <div reportCriteria>
         <erp-form
@@ -36,9 +37,9 @@
           [form]="form"
           [title]="'reports.searchOptions' | uiText"
           [submitLabel]="'reports.searchUpper' | uiText"
-          [appearance]="embedded() ? 'sidebar' : 'card'"
-          [hideHeader]="embedded()"
-          [submitFullWidth]="embedded()"
+          appearance="sidebar"
+          [hideHeader]="true"
+          [submitFullWidth]="true"
           [pending]="state.pending()"
           [readOnly]="state.conflict()"
           [showSubmit]="state.selected() !== null"
@@ -53,6 +54,14 @@
             />
           }
           @if (state.selected()) {
+            <erp-reference-field
+              data-testid="report"
+              [formControl]="report"
+              [source]="source()"
+              [label]="'reports.reportForms' | uiText"
+              [searchable]="false"
+              [clearable]="false"
+            />
             <erp-text-field
               data-testid="nameAr"
               [formControl]="form.controls.nameAr"
@@ -67,37 +76,49 @@
               [maxLength]="limit"
               [messages]="messages()"
             />
-            <erp-reference-field
-              data-testid="report"
-              [formControl]="report"
-              [source]="source()"
-              [label]="'reports.reportForms' | uiText"
-              [searchable]="false"
-              [clearable]="false"
-            />
           }
+          <erp-icon formSubmitIcon name="search" />
           <div formActions>
             @if (state.selected()) {
               <erp-button
                 data-testid="reset"
                 [label]="'reports.clearFilters' | uiText"
                 variant="outlined"
-                [fullWidth]="embedded()"
+                [fullWidth]="true"
                 [disabled]="state.pending() || state.conflict()"
                 (activated)="reset()"
-              />
-              @if (state.selected()?.canDownloadSource) {
-                <erp-button
-                  [label]="'globalTemplates.download' | uiText: 'reporting'"
-                  variant="outlined"
-                  [disabled]="state.sourcePending()"
-                  (activated)="state.downloadSource()"
-                />
-              }
+                ><erp-icon buttonIcon name="reset"
+              /></erp-button>
             }
           </div>
         </erp-form>
       </div>
+      <ng-container reportActions>
+        @if (document()) {
+          <ng-container
+            [ngTemplateOutlet]="criteriaVisible() ? (pdfViewer()?.actionsTemplate() ?? null) : null"
+          />
+        } @else {
+          <erp-feedback-state
+            [kind]="state.view().kind === 'loading' ? 'loading' : 'empty'"
+            [title]="
+              (state.view().kind === 'loading' ? 'common.loading' : 'reports.noResultsFound')
+                | uiText
+            "
+          />
+        }
+        @if (state.selected()?.canDownloadSource) {
+          <erp-button
+            data-testid="download-source"
+            [label]="'globalTemplates.download' | uiText: 'reporting'"
+            variant="outlined"
+            [fullWidth]="true"
+            [busy]="state.sourcePending()"
+            (activated)="state.downloadSource()"
+            ><erp-icon buttonIcon name="download"
+          /></erp-button>
+        }
+      </ng-container>
       <div reportDocument data-testid="document" [class.contained-document]="embedded()">
         @switch (state.view().kind) {
           @case ('loading') {
@@ -134,6 +155,8 @@
                 [title]="'reports.reportViewer' | uiText"
                 [downloadName]="fileName()"
                 [fill]="embedded()"
+                [showActions]="!criteriaVisible()"
+                [actionsLayout]="criteriaVisible() ? 'stacked' : 'inline'"
               />
             }
           }

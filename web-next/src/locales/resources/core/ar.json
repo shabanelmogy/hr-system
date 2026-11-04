@@ -643,6 +643,7 @@
   "reports": {
     "reportForms": "اشكال التقارير",
     "searchOptions": "البحث في الخيارات",
+    "viewerOptions": "الخيارات",
     "searchUpper": "بحث",
     "reportViewer": "عارض التقارير",
     "noResultsFound": "لا توجد نتائج",

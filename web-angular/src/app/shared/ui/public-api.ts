@@ -1,4 +1,4 @@
-export { ActionButton } from './buttons/public-api';
+export { ActionButton, ActionButtonGroup } from './buttons/public-api';
 export { ReferenceField } from './forms/public-api';
 export { FileField } from './forms/public-api';
 export {

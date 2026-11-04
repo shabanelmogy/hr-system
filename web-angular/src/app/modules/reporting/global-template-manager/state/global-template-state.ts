@@ -14,6 +14,8 @@ import {
 } from 'rxjs';
 import { AuthSession } from '../../../../platform/auth/session.public-api';
 import { createScopedRead, downloadBlob, UnsavedChanges } from '../../../../shared/data/public-api';
+import type { GridFilters } from '../../../../shared/data/public-api';
+import { parseGlobalTemplateFilters } from '../types/global-template-filters';
 import {
   applyServerFieldErrors,
   FeedbackNotifications,
@@ -64,6 +66,7 @@ export class GlobalTemplateState {
   private readonly requestedEntity = signal<GlobalTemplateEntity | ''>('countries');
   private readonly candidateEntity = signal<GlobalTemplateEntity>('countries');
   readonly criteria = signal({ search: '', status: '', pageIndex: 0, pageSize: 10 });
+  readonly columnFilters = signal<GridFilters>([]);
   private readonly refresh = signal(0);
   private readonly entitiesRead = createScopedRead(
     this.identity,
@@ -97,14 +100,27 @@ export class GlobalTemplateState {
     const actor = this.identity(),
       entity = this.filterEntity();
     return actor && entity !== null && this.contracts().length
-      ? { actor, entity, ...this.criteria(), revision: this.refresh() }
+      ? {
+          actor,
+          entity,
+          ...this.criteria(),
+          filters: this.columnFilters(),
+          revision: this.refresh(),
+        }
       : null;
   });
   private readonly listRead = createScopedRead(
     this.spec,
     () => true,
     (spec) =>
-      this.service.list(spec.entity, spec.search, spec.pageIndex, spec.pageSize, spec.status),
+      this.service.list(
+        spec.entity,
+        spec.search,
+        spec.pageIndex,
+        spec.pageSize,
+        spec.status,
+        spec.filters,
+      ),
   );
   readonly listing = this.listRead.state;
   readonly source = computed<CollectionSource<GlobalTemplateRow>>(() => {
@@ -113,7 +129,7 @@ export class GlobalTemplateState {
       scopeKey: spec
         ? JSON.stringify([spec.actor.userId, spec.entity])
         : 'global-template-unavailable',
-      criteriaKey: JSON.stringify([spec?.search ?? '', spec?.status ?? '']),
+      criteriaKey: JSON.stringify([spec?.search ?? '', spec?.status ?? '', spec?.filters ?? []]),
       pageIndex: spec?.pageIndex ?? 0,
       pageSize: spec?.pageSize ?? 10,
     };
@@ -249,6 +265,7 @@ export class GlobalTemplateState {
     });
     effect(() => {
       this.identity();
+      this.columnFilters.set([]);
       this.editor.set(null);
       this.selected.set(null);
       this.candidatesOpen.set(false);
@@ -310,6 +327,10 @@ export class GlobalTemplateState {
   }
   page(pageIndex: number, pageSize: number): void {
     this.criteria.set({ ...this.criteria(), pageIndex, pageSize });
+  }
+  changeColumnFilters(value: unknown): void {
+    this.columnFilters.set(parseGlobalTemplateFilters(value));
+    this.criteria.update((criteria) => ({ ...criteria, pageIndex: 0 }));
   }
   reload(): void {
     this.feedback.set(null);

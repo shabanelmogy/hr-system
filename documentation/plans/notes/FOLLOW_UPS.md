@@ -278,3 +278,92 @@ then verify a real duplicate/cancel/replacement, updated Summary Info selector,
 old source download and native AR/EN PDFs with the intended authorized roles.
 These hosted writes were not performed by the agent. Status remains Open; Phase06
 Not Verified, Phase07 not started and DEF-027/028 remain Deferred.
+
+### FOLLOW-024 — vertical-line correction2026-11-04
+
+The requester's current GCT-1 correction supersedes English vertical suppression
+with atomic RAS line mirroring. Actual local native AR/EN fixture PDFs, endpoint/
+cross-section/style/visibility assertions and the complete classic contract/HTTP
+harness now pass. Original RPT SHA256 is unchanged; no source save or deployment.
+Current scope: VERTICAL_LINES_2026-11-04.md; feature section33 and
+verification/vertical-lines/verification.json. Publish CrystalReportGeneratorApi
+and check the intended hosted RPT in both languages. Local fixture proof does not
+close broader integrated/hosted acceptance. Status remains Open; overall Phase06
+Not Verified, DEF-027/028 remain Deferred and Phase07 is not started.
+
+### FOLLOW-024 — native PDF viewer theme2026-11-04
+
+Requester explicitly retains native iframe after discussing PDF.js and confirms
+preview plus Open PDF in a new tab for printing. Shared application toolbar/frame
+colors now follow tokens; iframe inherits color-scheme without changing report
+bytes. Edge's browser-owned PDF toolbar can remain light; this is an accepted
+browser limitation, not a guarantee of full native dark controls. No renderer SDK
+or dependency change delivered. Canonical technical proof:
+`documentation/modules/reporting/features/global-crystal-template-manager/verification/pdf-viewer-theme/verification.json`.
+Angular-only rollout uses the normal Angular build; no API/Crystal publication is
+required for this styling correction. Broader integrated/hosted acceptance remains
+Open. No deployment, server start/restart or live writes occurred.
+
+
+### FOLLOW-024 — shared report sidebar/pagination2026-11-04
+
+Bounded Angular correction: shared document actions in sidebar Search/Options tabs,
+active-border RTL policy and Countries' existing record-navigation configuration
+in all manager grids. The proposed footer redesign was withdrawn; shared footer
+source is unchanged. Technical
+proof is global-crystal-template-manager/verification/sidebar-actions/; overall
+hosted/integrated acceptance remains Open. Rollout owner Operations/Reporting must
+synchronize Angular with ErpSystem.Api embedded UI catalog fingerprint
+13210765d2afb878148664cdfe80c76fd187a4c66b2d8e4160baf9d24be1e219.
+Verify actual hosted embedded/standalone reports and manager pagination after
+publication. No agent deployment, server restart, live writes or Crystal service
+change. Accepted native PDF toolbar theme limit remains.
+
+### FOLLOW-024 — main manager column filters2026-11-04
+
+Existing Countries shared controls now cover all six main Angular report catalog
+columns with server-side bounded POST /manage/query. Deploy Angular with
+ErpSystem.Api and synchronized localization catalog; Crystal service unchanged by
+this query change. Operations/Reporting must verify real hosted query responses,
+permissions, total counts, paging and Apply/Clear EN/AR before hosted acceptance.
+Technical proof: global-crystal-template-manager section36 and
+verification/column-filters/verification.json. Full Angular530tests and Reporting231
+pass; full API solution1269passed/1failed/3skipped. Unchanged Platform
+MessageLogTests.ActualSenderRecordsTruthfulOutcomeWithoutReplayOrLiveSecrets
+configuration case fails under suite load (missing recorded row); isolated9case
+diagnostic passes. Platform/QA owns investigation before claiming a green solution
+gate; root cause not established, no unrelated code changes. Status stays Open,
+Phase06 Not Verified, DEF-027/028 Deferred; no Phase07 or deployment.
+
+### FOLLOW-024 — report search sidebar/icons2026-11-04
+
+Bounded Angular correction verified in global-crystal-template-manager section37
+and verification/search-sidebar-layout/: consistent sidebar form/order, matching
+keyboard/visual Search-Reset order, source action in Options and shared icons.
+Full Angular531tests and16production-fixture browser cases pass. No API/schema/
+Crystal change or deployment; publish Angular UI for this correction. Prior API
+query rollout and full-suite finding remain section36. Operations/Reporting owns
+hosted visual/permission acceptance; status Open, Phase06 Not Verified,
+DEF-027/028 Deferred. No Phase07 closure.
+
+### FOLLOW-024 — manager action/metadata review2026-11-04
+
+Bounded Angular presentation under GCT-1 verified in global-crystal-template-manager
+section38 / verification/manager-actions-metadata/: toolbar action hierarchy, shared
+icons and labeled persisted metadata. Next field parity reviewed; no new API/schema
+contract. Angular531tests and6production-fixture browser cases pass, alongside the
+section37 report sidebar16cases (8production standalone,8development embedded).
+Operations/Reporting owns hosted EN/AR permissions and visual acceptance after UI
+publication. No deployment, live report write or server startup. Section36 API
+rollout and inherited full-suite finding stay separate. Status Open, Phase06 Not
+Verified, DEF-027/028 Deferred; Phase07 not started.
+
+### FOLLOW-024 — shared manager Button Group 2026-11-04
+
+Requester follow-up verified in global-crystal-template-manager section39 and
+verification/manager-button-group/: shared PrimeNG groups for create and downloads,
+logical RTL edges and compact stacking. Angular 532 tests and six fresh production-
+fixture browser cases pass. Operations/Reporting owns hosted visual/permission
+acceptance after Angular publication. No API/schema/Crystal change or deployment;
+section36 prior API rollout/full-suite finding remains separate. Status Open,
+Phase06 Not Verified, DEF-027/028 Deferred, Phase07 not started.

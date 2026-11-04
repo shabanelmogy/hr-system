@@ -20,6 +20,11 @@ export class GridFilterInput {
   readonly changed = output<unknown>();
   readonly text = new FormControl('', { nonNullable: true });
   readonly booleanChoice = signal('all');
+  readonly textChoice = signal('');
+  readonly textChoices = computed(() => [
+    { value: '', label: this.locale.translate('common.all') },
+    ...(this.definition().choices ?? []),
+  ]);
   private synchronizing = false;
   private readonly locale = inject(LocalizationRuntime);
   readonly booleanOptions = computed(() => [
@@ -55,6 +60,7 @@ export class GridFilterInput {
           day ?? (typeof value === 'string' || typeof value === 'number' ? String(value) : ''),
         );
         this.booleanChoice.set(value === true ? 'true' : value === false ? 'false' : 'all');
+        this.textChoice.set(typeof value === 'string' ? value : '');
       } finally {
         this.synchronizing = false;
       }
@@ -76,5 +82,10 @@ export class GridFilterInput {
     if (value !== 'true' && value !== 'false' && value !== 'all') return;
     this.booleanChoice.set(value);
     this.changed.emit(value === 'all' ? null : value === 'true');
+  }
+  chooseText(value: string): void {
+    if (value !== '' && !filterValueValid(value, this.definition())) return;
+    this.textChoice.set(value);
+    this.changed.emit(value === '' ? null : value);
   }
 }

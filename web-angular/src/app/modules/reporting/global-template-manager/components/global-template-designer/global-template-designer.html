@@ -52,6 +52,7 @@
             : '')
         "
       >
+        <erp-icon formSubmitIcon name="save" />
         <erp-reference-field
           [formControl]="state.form.controls.moduleKey"
           [source]="moduleOptions()"
@@ -90,7 +91,8 @@
             [label]="'globalTemplates.design.refreshViews' | uiText: 'reporting'"
             [disabled]="state.pending()"
             (activated)="state.refreshViews()"
-          />
+            ><erp-icon buttonIcon name="refresh"
+          /></erp-button>
           @if (state.views.state().kind === 'ready' && !state.views.items().length) {
             <erp-feedback-state
               layout="inline"
@@ -166,7 +168,8 @@
                 [label]="'globalTemplates.design.downloadPackage' | uiText: 'reporting'"
                 [disabled]="state.pending()"
                 (activated)="state.downloadPackage()"
-              />
+                ><erp-icon buttonIcon name="download"
+              /></erp-button>
             }
           </erp-surface-card>
         }
@@ -177,7 +180,8 @@
             [label]="'actions.cancel' | uiText"
             [disabled]="state.pending()"
             (activated)="closeGuard.requestClose()"
-          />
+            ><erp-icon buttonIcon name="close"
+          /></erp-button>
         </div>
       </erp-form>
     }

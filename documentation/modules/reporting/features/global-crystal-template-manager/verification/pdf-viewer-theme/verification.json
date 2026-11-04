@@ -1,0 +1,74 @@
+{
+  "date": "2026-11-04",
+  "scope": "Shared native Angular PdfViewer theme; retained iframe, original Blob Open/Download and new-tab printing",
+  "planId": "global-crystal-template-management",
+  "sliceId": "GCT-1",
+  "technicalVerification": "Passed for bounded application-owned styling and unchanged document/new-tab behavior",
+  "angular": {
+    "version": "22.2.3",
+    "primeNG": "22.1.4",
+    "fullCheck": "Passed",
+    "unitTests": 522,
+    "unitFiles": 91,
+    "architectureTests": 26,
+    "initialBundleRawKB": 495.63,
+    "log": "angular-check.log"
+  },
+  "browser": {
+    "cases": 8,
+    "channels": [
+      "Chrome",
+      "Edge"
+    ],
+    "languages": [
+      "en",
+      "ar"
+    ],
+    "widths": [
+      1213,
+      390
+    ],
+    "modes": [
+      "light",
+      "dark via live switch"
+    ],
+    "results": "browser-results.json",
+    "assertions": [
+      "application toolbar/frame use shared tokens",
+      "iframe inherits light/dark color-scheme",
+      "theme change keeps original iframe, Blob and report request count",
+      "download bytes equal original synthetic PDF",
+      "Open PDF actually opens original Blob in a new tab",
+      "no application page errors or horizontal page overflow"
+    ]
+  },
+  "visualReview": {
+    "nativeProbe": "native-browser-probe.json",
+    "nativeScreens": [
+      "native-chrome-dark.png",
+      "native-edge-dark.png"
+    ],
+    "applicationScreens": [
+      "app-chrome-dark.png",
+      "app-edge-ar-compact-dark.png"
+    ],
+    "limits": "Application screenshot capture did not reliably capture native PDF plugin content/toolbar. It proves the application shell only. Separate direct-PDF native probes display white original paper and colored fixture lines. No iframe load event is treated as render proof."
+  },
+  "acceptedBrowserLimitation": "Native PDF internal toolbar/backdrop belongs to browser. Edge stays light despite inherited dark color-scheme; no guaranteed full native dark controls. User retained iframe after reviewing PDF.js alternative.",
+  "printing": "Existing Open PDF target=_blank opens original document in a new tab. User prints using native PDF toolbar or Ctrl+P. Automatic print dialogs are not implemented or claimed.",
+  "dependencyChanges": "None; experimental PDF.js runtime/config/dependency/translation changes withdrawn",
+  "primeNGMcp": "No available PrimeNG MCP tool; existing PrimeNG-backed anchors reused; no MCP validation claimed",
+  "sourceReferences": [
+    "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/color-scheme",
+    "https://developer.mozilla.org/en-US/docs/Web/API/Navigator/pdfViewerEnabled",
+    "https://developer.chrome.com/docs/modern-web-guidance/guides/ui-atoms/component-specific-light-dark-theme"
+  ],
+  "environment": {
+    "apiChanges": false,
+    "databaseChanges": false,
+    "appServersStarted": false,
+    "liveWrites": false,
+    "deployment": false
+  },
+  "overallAcceptance": "Phase06 remains Not Verified; broader integrated/hosted acceptance stays FOLLOW-024/PROD-028; DEF-027/028 Deferred"
+}

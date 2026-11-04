@@ -2212,6 +2212,1374 @@
       "layer": "documentation",
       "path": "documentation/modules/reporting/CRYSTAL_REPORT_MANAGER_INTEGRATION_GUIDE.md",
       "purpose": "Current publication exception and deployment guidance"
+    },
+    {
+      "id": "vertical-lines-scope",
+      "layer": "documentation",
+      "path": "documentation/plans/business/global-crystal-template-management/VERTICAL_LINES_2026-11-04.md",
+      "purpose": "GCT-1 vertical-line correction: atomic native mirroring and AR/EN fixture PDF evidence"
+    },
+    {
+      "id": "vertical-lines-native-test",
+      "layer": "api",
+      "path": "api/CrystalReportGeneratorApi.ContractTests/Verify-CrystalReportDirection.ps1",
+      "purpose": "GCT-1 vertical-line correction: atomic native mirroring and AR/EN fixture PDF evidence"
+    },
+    {
+      "id": "vertical-lines-verification-json",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/vertical-lines/verification.json",
+      "purpose": "GCT-1 vertical-line correction: atomic native mirroring and AR/EN fixture PDF evidence"
+    },
+    {
+      "id": "vertical-lines-native-direction-json",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/vertical-lines/native-direction.json",
+      "purpose": "GCT-1 vertical-line correction: atomic native mirroring and AR/EN fixture PDF evidence"
+    },
+    {
+      "id": "vertical-lines-pdf-lines-json",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/vertical-lines/pdf-lines.json",
+      "purpose": "GCT-1 vertical-line correction: atomic native mirroring and AR/EN fixture PDF evidence"
+    },
+    {
+      "id": "vertical-lines-direction-ar-pdf",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/vertical-lines/direction-ar.pdf",
+      "purpose": "GCT-1 vertical-line correction: atomic native mirroring and AR/EN fixture PDF evidence"
+    },
+    {
+      "id": "vertical-lines-direction-en-pdf",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/vertical-lines/direction-en.pdf",
+      "purpose": "GCT-1 vertical-line correction: atomic native mirroring and AR/EN fixture PDF evidence"
+    },
+    {
+      "id": "vertical-lines-crystal-build-log",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/vertical-lines/crystal-build.log",
+      "purpose": "GCT-1 vertical-line correction: atomic native mirroring and AR/EN fixture PDF evidence"
+    },
+    {
+      "id": "vertical-lines-harness-build-log",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/vertical-lines/harness-build.log",
+      "purpose": "GCT-1 vertical-line correction: atomic native mirroring and AR/EN fixture PDF evidence"
+    },
+    {
+      "id": "vertical-lines-harness-green-log",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/vertical-lines/harness-green.log",
+      "purpose": "GCT-1 vertical-line correction: atomic native mirroring and AR/EN fixture PDF evidence"
+    },
+    {
+      "id": "pdf-viewer-theme-scope",
+      "layer": "documentation",
+      "path": "documentation/plans/business/global-crystal-template-management/PDF_VIEWER_THEME_2026-11-04.md",
+      "purpose": "Shared native PDF theme correction and bounded verification evidence"
+    },
+    {
+      "id": "pdf-viewer-theme-styles",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/documents/pdf-viewer/pdf-viewer.scss",
+      "purpose": "Shared native PDF theme correction and bounded verification evidence"
+    },
+    {
+      "id": "pdf-viewer-theme-tests",
+      "layer": "test",
+      "path": "web-angular/src/app/shared/ui/documents/pdf-viewer/pdf-viewer.spec.ts",
+      "purpose": "Shared native PDF theme correction and bounded verification evidence"
+    },
+    {
+      "id": "pdf-viewer-theme-browser-script",
+      "layer": "test",
+      "path": "web-angular/scripts/verify-pdf-viewer-browser.mjs",
+      "purpose": "Shared native PDF theme correction and bounded verification evidence"
+    },
+    {
+      "id": "pdf-viewer-theme-angular-check",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/pdf-viewer-theme/angular-check.log",
+      "purpose": "Shared native PDF theme correction and bounded verification evidence"
+    },
+    {
+      "id": "pdf-viewer-theme-app-chrome-dark",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/pdf-viewer-theme/app-chrome-dark.png",
+      "purpose": "Shared native PDF theme correction and bounded verification evidence"
+    },
+    {
+      "id": "pdf-viewer-theme-app-edge-ar-compact-dark",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/pdf-viewer-theme/app-edge-ar-compact-dark.png",
+      "purpose": "Shared native PDF theme correction and bounded verification evidence"
+    },
+    {
+      "id": "pdf-viewer-theme-browser-results",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/pdf-viewer-theme/browser-results.json",
+      "purpose": "Shared native PDF theme correction and bounded verification evidence"
+    },
+    {
+      "id": "pdf-viewer-theme-native-browser-probe",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/pdf-viewer-theme/native-browser-probe.json",
+      "purpose": "Shared native PDF theme correction and bounded verification evidence"
+    },
+    {
+      "id": "pdf-viewer-theme-native-chrome-dark",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/pdf-viewer-theme/native-chrome-dark.png",
+      "purpose": "Shared native PDF theme correction and bounded verification evidence"
+    },
+    {
+      "id": "pdf-viewer-theme-native-edge-dark",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/pdf-viewer-theme/native-edge-dark.png",
+      "purpose": "Shared native PDF theme correction and bounded verification evidence"
+    },
+    {
+      "id": "pdf-viewer-theme-verification",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/pdf-viewer-theme/verification.json",
+      "purpose": "Shared native PDF theme correction and bounded verification evidence"
+    },
+    {
+      "id": "sidebar-PDF_SIDEBAR_ACTIONS_2026-11-04-md",
+      "layer": "documentation",
+      "path": "documentation/plans/business/global-crystal-template-management/PDF_SIDEBAR_ACTIONS_2026-11-04.md",
+      "purpose": "Shared report sidebar tabs/actions and Countries pagination reuse evidence"
+    },
+    {
+      "id": "sidebar-verify-manager-pagination-browser-mjs",
+      "layer": "test",
+      "path": "web-angular/scripts/verify-manager-pagination-browser.mjs",
+      "purpose": "Shared report sidebar tabs/actions and Countries pagination reuse evidence"
+    },
+    {
+      "id": "sidebar-pdf-viewer-ts",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/documents/pdf-viewer/pdf-viewer.ts",
+      "purpose": "Shared report sidebar tabs/actions and Countries pagination reuse evidence"
+    },
+    {
+      "id": "sidebar-pdf-viewer-html",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/documents/pdf-viewer/pdf-viewer.html",
+      "purpose": "Shared report sidebar tabs/actions and Countries pagination reuse evidence"
+    },
+    {
+      "id": "sidebar-report-workspace-ts",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/layout/report-workspace/report-workspace.ts",
+      "purpose": "Shared report sidebar tabs/actions and Countries pagination reuse evidence"
+    },
+    {
+      "id": "sidebar-report-workspace-html",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/layout/report-workspace/report-workspace.html",
+      "purpose": "Shared report sidebar tabs/actions and Countries pagination reuse evidence"
+    },
+    {
+      "id": "sidebar-report-workspace-scss",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/layout/report-workspace/report-workspace.scss",
+      "purpose": "Shared report sidebar tabs/actions and Countries pagination reuse evidence"
+    },
+    {
+      "id": "sidebar-angular-check-log",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/sidebar-actions/angular-check.log",
+      "purpose": "Shared report sidebar tabs/actions and Countries pagination reuse evidence"
+    },
+    {
+      "id": "sidebar-chrome-ar-1213-dark-png",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/sidebar-actions/chrome-ar-1213-dark.png",
+      "purpose": "Shared report sidebar tabs/actions and Countries pagination reuse evidence"
+    },
+    {
+      "id": "sidebar-chrome-ar-1213-light-png",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/sidebar-actions/chrome-ar-1213-light.png",
+      "purpose": "Shared report sidebar tabs/actions and Countries pagination reuse evidence"
+    },
+    {
+      "id": "sidebar-chrome-ar-390-dark-png",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/sidebar-actions/chrome-ar-390-dark.png",
+      "purpose": "Shared report sidebar tabs/actions and Countries pagination reuse evidence"
+    },
+    {
+      "id": "sidebar-chrome-ar-390-light-png",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/sidebar-actions/chrome-ar-390-light.png",
+      "purpose": "Shared report sidebar tabs/actions and Countries pagination reuse evidence"
+    },
+    {
+      "id": "sidebar-chrome-en-1213-dark-png",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/sidebar-actions/chrome-en-1213-dark.png",
+      "purpose": "Shared report sidebar tabs/actions and Countries pagination reuse evidence"
+    },
+    {
+      "id": "sidebar-chrome-en-1213-light-png",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/sidebar-actions/chrome-en-1213-light.png",
+      "purpose": "Shared report sidebar tabs/actions and Countries pagination reuse evidence"
+    },
+    {
+      "id": "sidebar-chrome-en-390-dark-png",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/sidebar-actions/chrome-en-390-dark.png",
+      "purpose": "Shared report sidebar tabs/actions and Countries pagination reuse evidence"
+    },
+    {
+      "id": "sidebar-chrome-en-390-light-png",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/sidebar-actions/chrome-en-390-light.png",
+      "purpose": "Shared report sidebar tabs/actions and Countries pagination reuse evidence"
+    },
+    {
+      "id": "sidebar-manager-ar-1213-png",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/sidebar-actions/manager-ar-1213.png",
+      "purpose": "Shared report sidebar tabs/actions and Countries pagination reuse evidence"
+    },
+    {
+      "id": "sidebar-manager-ar-390-png",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/sidebar-actions/manager-ar-390.png",
+      "purpose": "Shared report sidebar tabs/actions and Countries pagination reuse evidence"
+    },
+    {
+      "id": "sidebar-manager-ar-780-png",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/sidebar-actions/manager-ar-780.png",
+      "purpose": "Shared report sidebar tabs/actions and Countries pagination reuse evidence"
+    },
+    {
+      "id": "sidebar-manager-browser-results-json",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/sidebar-actions/manager-browser-results.json",
+      "purpose": "Shared report sidebar tabs/actions and Countries pagination reuse evidence"
+    },
+    {
+      "id": "sidebar-manager-en-1213-png",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/sidebar-actions/manager-en-1213.png",
+      "purpose": "Shared report sidebar tabs/actions and Countries pagination reuse evidence"
+    },
+    {
+      "id": "sidebar-manager-en-390-png",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/sidebar-actions/manager-en-390.png",
+      "purpose": "Shared report sidebar tabs/actions and Countries pagination reuse evidence"
+    },
+    {
+      "id": "sidebar-manager-en-780-png",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/sidebar-actions/manager-en-780.png",
+      "purpose": "Shared report sidebar tabs/actions and Countries pagination reuse evidence"
+    },
+    {
+      "id": "sidebar-msedge-ar-1213-dark-png",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/sidebar-actions/msedge-ar-1213-dark.png",
+      "purpose": "Shared report sidebar tabs/actions and Countries pagination reuse evidence"
+    },
+    {
+      "id": "sidebar-msedge-ar-1213-light-png",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/sidebar-actions/msedge-ar-1213-light.png",
+      "purpose": "Shared report sidebar tabs/actions and Countries pagination reuse evidence"
+    },
+    {
+      "id": "sidebar-msedge-ar-390-dark-png",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/sidebar-actions/msedge-ar-390-dark.png",
+      "purpose": "Shared report sidebar tabs/actions and Countries pagination reuse evidence"
+    },
+    {
+      "id": "sidebar-msedge-ar-390-light-png",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/sidebar-actions/msedge-ar-390-light.png",
+      "purpose": "Shared report sidebar tabs/actions and Countries pagination reuse evidence"
+    },
+    {
+      "id": "sidebar-msedge-en-1213-dark-png",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/sidebar-actions/msedge-en-1213-dark.png",
+      "purpose": "Shared report sidebar tabs/actions and Countries pagination reuse evidence"
+    },
+    {
+      "id": "sidebar-msedge-en-1213-light-png",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/sidebar-actions/msedge-en-1213-light.png",
+      "purpose": "Shared report sidebar tabs/actions and Countries pagination reuse evidence"
+    },
+    {
+      "id": "sidebar-msedge-en-390-dark-png",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/sidebar-actions/msedge-en-390-dark.png",
+      "purpose": "Shared report sidebar tabs/actions and Countries pagination reuse evidence"
+    },
+    {
+      "id": "sidebar-msedge-en-390-light-png",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/sidebar-actions/msedge-en-390-light.png",
+      "purpose": "Shared report sidebar tabs/actions and Countries pagination reuse evidence"
+    },
+    {
+      "id": "sidebar-sidebar-browser-results-json",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/sidebar-actions/sidebar-browser-results.json",
+      "purpose": "Shared report sidebar tabs/actions and Countries pagination reuse evidence"
+    },
+    {
+      "id": "sidebar-verification-json",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/sidebar-actions/verification.json",
+      "purpose": "Shared report sidebar tabs/actions and Countries pagination reuse evidence"
+    },
+    {
+      "id": "column-filters-1",
+      "layer": "documentation",
+      "path": "documentation/plans/business/global-crystal-template-management/COLUMN_FILTERS_2026-11-04.md",
+      "purpose": "Section36 main manager shared column-filter implementation or verification evidence"
+    },
+    {
+      "id": "column-filters-2",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/types/global-template-filters.ts",
+      "purpose": "Section36 main manager shared column-filter implementation or verification evidence"
+    },
+    {
+      "id": "column-filters-3",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/data/grid-filter.ts",
+      "purpose": "Section36 main manager shared column-filter implementation or verification evidence"
+    },
+    {
+      "id": "column-filters-4",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/grid-filter-input/grid-filter-input.ts",
+      "purpose": "Section36 main manager shared column-filter implementation or verification evidence"
+    },
+    {
+      "id": "column-filters-5",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/grid-filter-input/grid-filter-input.html",
+      "purpose": "Section36 main manager shared column-filter implementation or verification evidence"
+    },
+    {
+      "id": "column-filters-6",
+      "layer": "test",
+      "path": "web-angular/src/app/shared/ui/collections/grid-filter-input/grid-filter-input.spec.ts",
+      "purpose": "Section36 main manager shared column-filter implementation or verification evidence"
+    },
+    {
+      "id": "column-filters-7",
+      "layer": "test",
+      "path": "web-angular/src/app/shared/ui/collections/grid-filter.types.spec.ts",
+      "purpose": "Section36 main manager shared column-filter implementation or verification evidence"
+    },
+    {
+      "id": "column-filters-8",
+      "layer": "api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/CrystalReports/Queries/GlobalCrystalReportFilters.cs",
+      "purpose": "Section36 main manager shared column-filter implementation or verification evidence"
+    },
+    {
+      "id": "column-filters-9",
+      "layer": "api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/CrystalReports/Persistence/GlobalCrystalReportFilterExpressions.cs",
+      "purpose": "Section36 main manager shared column-filter implementation or verification evidence"
+    },
+    {
+      "id": "column-filters-10",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/column-filters/angular-check.log",
+      "purpose": "Section36 main manager shared column-filter implementation or verification evidence"
+    },
+    {
+      "id": "column-filters-11",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/column-filters/api-build.log",
+      "purpose": "Section36 main manager shared column-filter implementation or verification evidence"
+    },
+    {
+      "id": "column-filters-12",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/column-filters/api-restore.log",
+      "purpose": "Section36 main manager shared column-filter implementation or verification evidence"
+    },
+    {
+      "id": "column-filters-13",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/column-filters/api-test.log",
+      "purpose": "Section36 main manager shared column-filter implementation or verification evidence"
+    },
+    {
+      "id": "column-filters-14",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/column-filters/ar-1213.png",
+      "purpose": "Section36 main manager shared column-filter implementation or verification evidence"
+    },
+    {
+      "id": "column-filters-15",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/column-filters/ar-390.png",
+      "purpose": "Section36 main manager shared column-filter implementation or verification evidence"
+    },
+    {
+      "id": "column-filters-16",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/column-filters/ar-780.png",
+      "purpose": "Section36 main manager shared column-filter implementation or verification evidence"
+    },
+    {
+      "id": "column-filters-17",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/column-filters/browser-results.json",
+      "purpose": "Section36 main manager shared column-filter implementation or verification evidence"
+    },
+    {
+      "id": "column-filters-18",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/column-filters/browser.log",
+      "purpose": "Section36 main manager shared column-filter implementation or verification evidence"
+    },
+    {
+      "id": "column-filters-19",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/column-filters/en-1213.png",
+      "purpose": "Section36 main manager shared column-filter implementation or verification evidence"
+    },
+    {
+      "id": "column-filters-20",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/column-filters/en-390.png",
+      "purpose": "Section36 main manager shared column-filter implementation or verification evidence"
+    },
+    {
+      "id": "column-filters-21",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/column-filters/en-780.png",
+      "purpose": "Section36 main manager shared column-filter implementation or verification evidence"
+    },
+    {
+      "id": "column-filters-22",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/column-filters/filter-ar-1213.png",
+      "purpose": "Section36 main manager shared column-filter implementation or verification evidence"
+    },
+    {
+      "id": "column-filters-23",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/column-filters/filter-ar-390.png",
+      "purpose": "Section36 main manager shared column-filter implementation or verification evidence"
+    },
+    {
+      "id": "column-filters-24",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/column-filters/filter-ar-780.png",
+      "purpose": "Section36 main manager shared column-filter implementation or verification evidence"
+    },
+    {
+      "id": "column-filters-25",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/column-filters/filter-en-1213.png",
+      "purpose": "Section36 main manager shared column-filter implementation or verification evidence"
+    },
+    {
+      "id": "column-filters-26",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/column-filters/filter-en-390.png",
+      "purpose": "Section36 main manager shared column-filter implementation or verification evidence"
+    },
+    {
+      "id": "column-filters-27",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/column-filters/filter-en-780.png",
+      "purpose": "Section36 main manager shared column-filter implementation or verification evidence"
+    },
+    {
+      "id": "column-filters-28",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/column-filters/platform-diagnostic.log",
+      "purpose": "Section36 main manager shared column-filter implementation or verification evidence"
+    },
+    {
+      "id": "column-filters-29",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/column-filters/verification.json",
+      "purpose": "Section36 main manager shared column-filter implementation or verification evidence"
+    },
+    {
+      "id": "column-filters-final-format-check.log",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/column-filters/format-check.log",
+      "purpose": "Final section36 formatting/documentation/planning quality gate receipt"
+    },
+    {
+      "id": "column-filters-final-documentation-check.log",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/column-filters/documentation-check.log",
+      "purpose": "Final section36 formatting/documentation/planning quality gate receipt"
+    },
+    {
+      "id": "column-filters-final-planning-check.log",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/column-filters/planning-check.log",
+      "purpose": "Final section36 formatting/documentation/planning quality gate receipt"
+    },
+    {
+      "id": "search-layout-1",
+      "layer": "documentation",
+      "path": "documentation/plans/business/global-crystal-template-management/SEARCH_SIDEBAR_LAYOUT_2026-11-04.md",
+      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
+    },
+    {
+      "id": "search-layout-2",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/form-container/form-container.html",
+      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
+    },
+    {
+      "id": "search-layout-3",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/icons/app-icon/app-icon.ts",
+      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
+    },
+    {
+      "id": "search-layout-4",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/icons/app-icon/app-icon.html",
+      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
+    },
+    {
+      "id": "search-layout-5",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/icons/app-icon/app-icon.scss",
+      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
+    },
+    {
+      "id": "search-layout-6",
+      "layer": "test",
+      "path": "web-angular/scripts/verify-country-report-browser.mjs",
+      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
+    },
+    {
+      "id": "search-layout-7",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/angular-check.log",
+      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
+    },
+    {
+      "id": "search-layout-8",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/embedded-browser.log",
+      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
+    },
+    {
+      "id": "search-layout-9",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/standalone-browser.log",
+      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
+    },
+    {
+      "id": "search-layout-10",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/verification.json",
+      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
+    },
+    {
+      "id": "search-layout-11",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/embedded/browser-results.json",
+      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
+    },
+    {
+      "id": "search-layout-12",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/embedded/chrome-ar-1213-dark.png",
+      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
+    },
+    {
+      "id": "search-layout-13",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/embedded/chrome-ar-1213-light.png",
+      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
+    },
+    {
+      "id": "search-layout-14",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/embedded/chrome-ar-1213-search.png",
+      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
+    },
+    {
+      "id": "search-layout-15",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/embedded/chrome-ar-390-dark.png",
+      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
+    },
+    {
+      "id": "search-layout-16",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/embedded/chrome-ar-390-light.png",
+      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
+    },
+    {
+      "id": "search-layout-17",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/embedded/chrome-ar-390-search.png",
+      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
+    },
+    {
+      "id": "search-layout-18",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/embedded/chrome-en-1213-dark.png",
+      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
+    },
+    {
+      "id": "search-layout-19",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/embedded/chrome-en-1213-light.png",
+      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
+    },
+    {
+      "id": "search-layout-20",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/embedded/chrome-en-1213-search.png",
+      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
+    },
+    {
+      "id": "search-layout-21",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/embedded/chrome-en-390-dark.png",
+      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
+    },
+    {
+      "id": "search-layout-22",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/embedded/chrome-en-390-light.png",
+      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
+    },
+    {
+      "id": "search-layout-23",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/embedded/chrome-en-390-search.png",
+      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
+    },
+    {
+      "id": "search-layout-24",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/embedded/msedge-ar-1213-dark.png",
+      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
+    },
+    {
+      "id": "search-layout-25",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/embedded/msedge-ar-1213-light.png",
+      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
+    },
+    {
+      "id": "search-layout-26",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/embedded/msedge-ar-1213-search.png",
+      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
+    },
+    {
+      "id": "search-layout-27",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/embedded/msedge-ar-390-dark.png",
+      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
+    },
+    {
+      "id": "search-layout-28",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/embedded/msedge-ar-390-light.png",
+      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
+    },
+    {
+      "id": "search-layout-29",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/embedded/msedge-ar-390-search.png",
+      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
+    },
+    {
+      "id": "search-layout-30",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/embedded/msedge-en-1213-dark.png",
+      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
+    },
+    {
+      "id": "search-layout-31",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/embedded/msedge-en-1213-light.png",
+      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
+    },
+    {
+      "id": "search-layout-32",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/embedded/msedge-en-1213-search.png",
+      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
+    },
+    {
+      "id": "search-layout-33",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/embedded/msedge-en-390-dark.png",
+      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
+    },
+    {
+      "id": "search-layout-34",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/embedded/msedge-en-390-light.png",
+      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
+    },
+    {
+      "id": "search-layout-35",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/embedded/msedge-en-390-search.png",
+      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
+    },
+    {
+      "id": "search-layout-36",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/standalone/browser-results.json",
+      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
+    },
+    {
+      "id": "search-layout-37",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/standalone/chrome-ar-1213-dark.png",
+      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
+    },
+    {
+      "id": "search-layout-38",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/standalone/chrome-ar-1213-light.png",
+      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
+    },
+    {
+      "id": "search-layout-39",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/standalone/chrome-ar-1213-search.png",
+      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
+    },
+    {
+      "id": "search-layout-40",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/standalone/chrome-ar-390-dark.png",
+      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
+    },
+    {
+      "id": "search-layout-41",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/standalone/chrome-ar-390-light.png",
+      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
+    },
+    {
+      "id": "search-layout-42",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/standalone/chrome-ar-390-search.png",
+      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
+    },
+    {
+      "id": "search-layout-43",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/standalone/chrome-en-1213-dark.png",
+      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
+    },
+    {
+      "id": "search-layout-44",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/standalone/chrome-en-1213-light.png",
+      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
+    },
+    {
+      "id": "search-layout-45",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/standalone/chrome-en-1213-search.png",
+      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
+    },
+    {
+      "id": "search-layout-46",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/standalone/chrome-en-390-dark.png",
+      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
+    },
+    {
+      "id": "search-layout-47",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/standalone/chrome-en-390-light.png",
+      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
+    },
+    {
+      "id": "search-layout-48",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/standalone/chrome-en-390-search.png",
+      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
+    },
+    {
+      "id": "search-layout-49",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/standalone/msedge-ar-1213-dark.png",
+      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
+    },
+    {
+      "id": "search-layout-50",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/standalone/msedge-ar-1213-light.png",
+      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
+    },
+    {
+      "id": "search-layout-51",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/standalone/msedge-ar-1213-search.png",
+      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
+    },
+    {
+      "id": "search-layout-52",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/standalone/msedge-ar-390-dark.png",
+      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
+    },
+    {
+      "id": "search-layout-53",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/standalone/msedge-ar-390-light.png",
+      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
+    },
+    {
+      "id": "search-layout-54",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/standalone/msedge-ar-390-search.png",
+      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
+    },
+    {
+      "id": "search-layout-55",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/standalone/msedge-en-1213-dark.png",
+      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
+    },
+    {
+      "id": "search-layout-56",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/standalone/msedge-en-1213-light.png",
+      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
+    },
+    {
+      "id": "search-layout-57",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/standalone/msedge-en-1213-search.png",
+      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
+    },
+    {
+      "id": "search-layout-58",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/standalone/msedge-en-390-dark.png",
+      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
+    },
+    {
+      "id": "search-layout-59",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/standalone/msedge-en-390-light.png",
+      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
+    },
+    {
+      "id": "search-layout-60",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/standalone/msedge-en-390-search.png",
+      "purpose": "Section37 report search arrangement/icons implementation or verification evidence"
+    },
+    {
+      "id": "manager-actions-1",
+      "layer": "documentation",
+      "path": "documentation/plans/business/global-crystal-template-management/MANAGER_ACTIONS_METADATA_2026-11-04.md",
+      "purpose": "Section38 manager action/metadata implementation and verification evidence"
+    },
+    {
+      "id": "manager-actions-2",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/layout/surface-card/surface-card.ts",
+      "purpose": "Section38 manager action/metadata implementation and verification evidence"
+    },
+    {
+      "id": "manager-actions-3",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/layout/surface-card/surface-card.scss",
+      "purpose": "Section38 manager action/metadata implementation and verification evidence"
+    },
+    {
+      "id": "manager-actions-4",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/embedded-development-build.log",
+      "purpose": "Section38 manager action/metadata implementation and verification evidence"
+    },
+    {
+      "id": "manager-actions-5",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-actions-metadata/ar-1213.png",
+      "purpose": "Section38 manager action/metadata implementation and verification evidence"
+    },
+    {
+      "id": "manager-actions-6",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-actions-metadata/ar-390.png",
+      "purpose": "Section38 manager action/metadata implementation and verification evidence"
+    },
+    {
+      "id": "manager-actions-7",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-actions-metadata/ar-780.png",
+      "purpose": "Section38 manager action/metadata implementation and verification evidence"
+    },
+    {
+      "id": "manager-actions-8",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-actions-metadata/browser-results.json",
+      "purpose": "Section38 manager action/metadata implementation and verification evidence"
+    },
+    {
+      "id": "manager-actions-9",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-actions-metadata/browser.log",
+      "purpose": "Section38 manager action/metadata implementation and verification evidence"
+    },
+    {
+      "id": "manager-actions-10",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-actions-metadata/en-1213.png",
+      "purpose": "Section38 manager action/metadata implementation and verification evidence"
+    },
+    {
+      "id": "manager-actions-11",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-actions-metadata/en-390.png",
+      "purpose": "Section38 manager action/metadata implementation and verification evidence"
+    },
+    {
+      "id": "manager-actions-12",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-actions-metadata/en-780.png",
+      "purpose": "Section38 manager action/metadata implementation and verification evidence"
+    },
+    {
+      "id": "manager-actions-13",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-actions-metadata/filter-ar-1213.png",
+      "purpose": "Section38 manager action/metadata implementation and verification evidence"
+    },
+    {
+      "id": "manager-actions-14",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-actions-metadata/filter-ar-390.png",
+      "purpose": "Section38 manager action/metadata implementation and verification evidence"
+    },
+    {
+      "id": "manager-actions-15",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-actions-metadata/filter-ar-780.png",
+      "purpose": "Section38 manager action/metadata implementation and verification evidence"
+    },
+    {
+      "id": "manager-actions-16",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-actions-metadata/filter-en-1213.png",
+      "purpose": "Section38 manager action/metadata implementation and verification evidence"
+    },
+    {
+      "id": "manager-actions-17",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-actions-metadata/filter-en-390.png",
+      "purpose": "Section38 manager action/metadata implementation and verification evidence"
+    },
+    {
+      "id": "manager-actions-18",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-actions-metadata/filter-en-780.png",
+      "purpose": "Section38 manager action/metadata implementation and verification evidence"
+    },
+    {
+      "id": "manager-actions-19",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-actions-metadata/manager-ar-1213.png",
+      "purpose": "Section38 manager action/metadata implementation and verification evidence"
+    },
+    {
+      "id": "manager-actions-20",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-actions-metadata/manager-ar-390.png",
+      "purpose": "Section38 manager action/metadata implementation and verification evidence"
+    },
+    {
+      "id": "manager-actions-21",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-actions-metadata/manager-ar-780.png",
+      "purpose": "Section38 manager action/metadata implementation and verification evidence"
+    },
+    {
+      "id": "manager-actions-22",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-actions-metadata/manager-en-1213.png",
+      "purpose": "Section38 manager action/metadata implementation and verification evidence"
+    },
+    {
+      "id": "manager-actions-23",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-actions-metadata/manager-en-390.png",
+      "purpose": "Section38 manager action/metadata implementation and verification evidence"
+    },
+    {
+      "id": "manager-actions-24",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-actions-metadata/manager-en-780.png",
+      "purpose": "Section38 manager action/metadata implementation and verification evidence"
+    },
+    {
+      "id": "manager-actions-25",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-actions-metadata/metadata-ar-1213.png",
+      "purpose": "Section38 manager action/metadata implementation and verification evidence"
+    },
+    {
+      "id": "manager-actions-26",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-actions-metadata/metadata-ar-390.png",
+      "purpose": "Section38 manager action/metadata implementation and verification evidence"
+    },
+    {
+      "id": "manager-actions-27",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-actions-metadata/metadata-ar-780.png",
+      "purpose": "Section38 manager action/metadata implementation and verification evidence"
+    },
+    {
+      "id": "manager-actions-28",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-actions-metadata/metadata-en-1213.png",
+      "purpose": "Section38 manager action/metadata implementation and verification evidence"
+    },
+    {
+      "id": "manager-actions-29",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-actions-metadata/metadata-en-390.png",
+      "purpose": "Section38 manager action/metadata implementation and verification evidence"
+    },
+    {
+      "id": "manager-actions-30",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-actions-metadata/metadata-en-780.png",
+      "purpose": "Section38 manager action/metadata implementation and verification evidence"
+    },
+    {
+      "id": "manager-actions-31",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-actions-metadata/upload-ar-1213.png",
+      "purpose": "Section38 manager action/metadata implementation and verification evidence"
+    },
+    {
+      "id": "manager-actions-32",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-actions-metadata/upload-ar-390.png",
+      "purpose": "Section38 manager action/metadata implementation and verification evidence"
+    },
+    {
+      "id": "manager-actions-33",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-actions-metadata/upload-ar-780.png",
+      "purpose": "Section38 manager action/metadata implementation and verification evidence"
+    },
+    {
+      "id": "manager-actions-34",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-actions-metadata/upload-en-1213.png",
+      "purpose": "Section38 manager action/metadata implementation and verification evidence"
+    },
+    {
+      "id": "manager-actions-35",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-actions-metadata/upload-en-390.png",
+      "purpose": "Section38 manager action/metadata implementation and verification evidence"
+    },
+    {
+      "id": "manager-actions-36",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-actions-metadata/upload-en-780.png",
+      "purpose": "Section38 manager action/metadata implementation and verification evidence"
+    },
+    {
+      "id": "manager-actions-37",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-actions-metadata/verification.json",
+      "purpose": "Section38 manager action/metadata implementation and verification evidence"
+    },
+    {
+      "id": "button-group-1",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/buttons/action-button-group/action-button-group.ts",
+      "purpose": "Section39 shared PrimeNG grouping implementation or verification evidence"
+    },
+    {
+      "id": "button-group-2",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/buttons/action-button-group/action-button-group.html",
+      "purpose": "Section39 shared PrimeNG grouping implementation or verification evidence"
+    },
+    {
+      "id": "button-group-3",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/buttons/action-button-group/action-button-group.scss",
+      "purpose": "Section39 shared PrimeNG grouping implementation or verification evidence"
+    },
+    {
+      "id": "button-group-4",
+      "layer": "test",
+      "path": "web-angular/src/app/shared/ui/buttons/action-button-group/action-button-group.spec.ts",
+      "purpose": "Section39 shared PrimeNG grouping implementation or verification evidence"
+    },
+    {
+      "id": "button-group-5",
+      "layer": "test",
+      "path": "web-angular/src/app/shared/ui/buttons/action-button-group/action-button-group.spec.host.html",
+      "purpose": "Section39 shared PrimeNG grouping implementation or verification evidence"
+    },
+    {
+      "id": "button-group-6",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/buttons/public-api.ts",
+      "purpose": "Section39 shared PrimeNG grouping implementation or verification evidence"
+    },
+    {
+      "id": "button-group-7",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-button-group/angular-check.log",
+      "purpose": "Section39 shared PrimeNG grouping implementation or verification evidence"
+    },
+    {
+      "id": "button-group-8",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-button-group/ar-1213.png",
+      "purpose": "Section39 shared PrimeNG grouping implementation or verification evidence"
+    },
+    {
+      "id": "button-group-9",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-button-group/ar-390.png",
+      "purpose": "Section39 shared PrimeNG grouping implementation or verification evidence"
+    },
+    {
+      "id": "button-group-10",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-button-group/ar-780.png",
+      "purpose": "Section39 shared PrimeNG grouping implementation or verification evidence"
+    },
+    {
+      "id": "button-group-11",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-button-group/browser-results.json",
+      "purpose": "Section39 shared PrimeNG grouping implementation or verification evidence"
+    },
+    {
+      "id": "button-group-12",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-button-group/browser.log",
+      "purpose": "Section39 shared PrimeNG grouping implementation or verification evidence"
+    },
+    {
+      "id": "button-group-13",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-button-group/en-1213.png",
+      "purpose": "Section39 shared PrimeNG grouping implementation or verification evidence"
+    },
+    {
+      "id": "button-group-14",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-button-group/en-390.png",
+      "purpose": "Section39 shared PrimeNG grouping implementation or verification evidence"
+    },
+    {
+      "id": "button-group-15",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-button-group/en-780.png",
+      "purpose": "Section39 shared PrimeNG grouping implementation or verification evidence"
+    },
+    {
+      "id": "button-group-16",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-button-group/filter-ar-1213.png",
+      "purpose": "Section39 shared PrimeNG grouping implementation or verification evidence"
+    },
+    {
+      "id": "button-group-17",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-button-group/filter-ar-390.png",
+      "purpose": "Section39 shared PrimeNG grouping implementation or verification evidence"
+    },
+    {
+      "id": "button-group-18",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-button-group/filter-ar-780.png",
+      "purpose": "Section39 shared PrimeNG grouping implementation or verification evidence"
+    },
+    {
+      "id": "button-group-19",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-button-group/filter-en-1213.png",
+      "purpose": "Section39 shared PrimeNG grouping implementation or verification evidence"
+    },
+    {
+      "id": "button-group-20",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-button-group/filter-en-390.png",
+      "purpose": "Section39 shared PrimeNG grouping implementation or verification evidence"
+    },
+    {
+      "id": "button-group-21",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-button-group/filter-en-780.png",
+      "purpose": "Section39 shared PrimeNG grouping implementation or verification evidence"
+    },
+    {
+      "id": "button-group-22",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-button-group/manager-ar-1213.png",
+      "purpose": "Section39 shared PrimeNG grouping implementation or verification evidence"
+    },
+    {
+      "id": "button-group-23",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-button-group/manager-ar-390.png",
+      "purpose": "Section39 shared PrimeNG grouping implementation or verification evidence"
+    },
+    {
+      "id": "button-group-24",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-button-group/manager-ar-780.png",
+      "purpose": "Section39 shared PrimeNG grouping implementation or verification evidence"
+    },
+    {
+      "id": "button-group-25",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-button-group/manager-en-1213.png",
+      "purpose": "Section39 shared PrimeNG grouping implementation or verification evidence"
+    },
+    {
+      "id": "button-group-26",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-button-group/manager-en-390.png",
+      "purpose": "Section39 shared PrimeNG grouping implementation or verification evidence"
+    },
+    {
+      "id": "button-group-27",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-button-group/manager-en-780.png",
+      "purpose": "Section39 shared PrimeNG grouping implementation or verification evidence"
+    },
+    {
+      "id": "button-group-28",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-button-group/metadata-ar-1213.png",
+      "purpose": "Section39 shared PrimeNG grouping implementation or verification evidence"
+    },
+    {
+      "id": "button-group-29",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-button-group/metadata-ar-390.png",
+      "purpose": "Section39 shared PrimeNG grouping implementation or verification evidence"
+    },
+    {
+      "id": "button-group-30",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-button-group/metadata-ar-780.png",
+      "purpose": "Section39 shared PrimeNG grouping implementation or verification evidence"
+    },
+    {
+      "id": "button-group-31",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-button-group/metadata-en-1213.png",
+      "purpose": "Section39 shared PrimeNG grouping implementation or verification evidence"
+    },
+    {
+      "id": "button-group-32",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-button-group/metadata-en-390.png",
+      "purpose": "Section39 shared PrimeNG grouping implementation or verification evidence"
+    },
+    {
+      "id": "button-group-33",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-button-group/metadata-en-780.png",
+      "purpose": "Section39 shared PrimeNG grouping implementation or verification evidence"
+    },
+    {
+      "id": "button-group-34",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-button-group/upload-ar-1213.png",
+      "purpose": "Section39 shared PrimeNG grouping implementation or verification evidence"
+    },
+    {
+      "id": "button-group-35",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-button-group/upload-ar-390.png",
+      "purpose": "Section39 shared PrimeNG grouping implementation or verification evidence"
+    },
+    {
+      "id": "button-group-36",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-button-group/upload-ar-780.png",
+      "purpose": "Section39 shared PrimeNG grouping implementation or verification evidence"
+    },
+    {
+      "id": "button-group-37",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-button-group/upload-en-1213.png",
+      "purpose": "Section39 shared PrimeNG grouping implementation or verification evidence"
+    },
+    {
+      "id": "button-group-38",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-button-group/upload-en-390.png",
+      "purpose": "Section39 shared PrimeNG grouping implementation or verification evidence"
+    },
+    {
+      "id": "button-group-39",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-button-group/upload-en-780.png",
+      "purpose": "Section39 shared PrimeNG grouping implementation or verification evidence"
+    },
+    {
+      "id": "button-group-40",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-button-group/verification.json",
+      "purpose": "Section39 shared PrimeNG grouping implementation or verification evidence"
+    },
+    {
+      "id": "button-group-final-gate-0",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-button-group/documentation-check.log",
+      "purpose": "Final canonical documentation/planning/format receipts for section39"
+    },
+    {
+      "id": "button-group-final-gate-1",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-button-group/planning-check.log",
+      "purpose": "Final canonical documentation/planning/format receipts for section39"
+    },
+    {
+      "id": "button-group-final-gate-2",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-button-group/format-check.log",
+      "purpose": "Final canonical documentation/planning/format receipts for section39"
+    },
+    {
+      "id": "button-group-final-gate-3",
+      "layer": "verification",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-button-group/documentation-staged-generation.log",
+      "purpose": "Final canonical documentation/planning/format receipts for section39"
     }
   ],
   "finalizationChecklist": [

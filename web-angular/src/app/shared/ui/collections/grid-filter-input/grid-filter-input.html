@@ -25,11 +25,22 @@
     />
   }
   @default {
-    <erp-text-field
-      labelVisibility="sr-only"
-      [label]="label()"
-      [formControl]="text"
-      [maxLength]="definition().maxLength ?? 200"
-    />
+    @if (definition().choices) {
+      <erp-option-select
+        [label]="label()"
+        [value]="textChoice()"
+        [options]="textChoices()"
+        [controlHeight]="36"
+        overlayTarget="self"
+        (valueChange)="chooseText($event)"
+      />
+    } @else {
+      <erp-text-field
+        labelVisibility="sr-only"
+        [label]="label()"
+        [formControl]="text"
+        [maxLength]="definition().maxLength ?? 200"
+      />
+    }
   }
 }

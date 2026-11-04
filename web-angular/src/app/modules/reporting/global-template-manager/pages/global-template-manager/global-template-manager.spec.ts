@@ -8,6 +8,7 @@ import { AuthSession } from '../../../../../platform/auth/session.public-api';
 import { sessionFixture } from '../../../../../platform/auth/auth.fixture';
 import { LocalizationRuntime } from '../../../../../platform/localization/public-api';
 import { GlobalTemplateService } from '../../services/global-template-service';
+import type { GlobalTemplateDetail } from '../../types/global-template';
 import { GlobalTemplateManager } from './global-template-manager';
 
 describe('global versioned manager', () => {
@@ -39,7 +40,7 @@ describe('global versioned manager', () => {
     isPublished: true,
     createdOn: '2026-11-01T00:00:00Z',
   };
-  const detail = { ...row, versions: [version] };
+  const detail: GlobalTemplateDetail = { ...row, versions: [version] };
   const replacementDetail = {
     ...detail,
     currentVersionNumber: 2,
@@ -71,6 +72,39 @@ describe('global versioned manager', () => {
     isImported: false,
     validationReason: null,
   };
+  it('shows saved report metadata for the current version without mixing newer draft summaries', async () => {
+    const { fixture, state, service } = await setup();
+    const saved = {
+      ...detail,
+      description: 'Shared directory description',
+      versions: [
+        { ...version, summarySubject: 'دليل الدول' },
+        {
+          ...version,
+          id: 'draft',
+          versionNumber: 2,
+          summaryTitle: 'Draft title',
+          isPublished: false,
+        },
+      ],
+    };
+    service.detail.mockReturnValue(of(saved));
+    state.openDetail(row);
+    await fixture.whenStable();
+    const metadata = fixture.componentInstance.overviewMetadata();
+    expect(metadata.find((item) => item.key === 'crystalReports.description')?.value).toBe(
+      'Shared directory description',
+    );
+    expect(metadata.find((item) => item.key === 'globalTemplates.subject')?.value).toBe(
+      'دليل الدول',
+    );
+    expect(metadata.find((item) => item.key === 'crystalReports.displayName')?.value).toBe(
+      'Directory',
+    );
+    expect(document.body.textContent).toContain('Shared directory description');
+    expect(document.body.textContent).not.toContain('Draft title');
+    expect(service.upload).not.toHaveBeenCalled();
+  });
   it('resolves a duplicate before uploading and waits for explicit replacement confirmation', async () => {
     const { fixture, state, service } = await setup();
     service.uploadTarget.mockReturnValue(of(uploadTarget(detail)));
@@ -320,7 +354,7 @@ describe('global versioned manager', () => {
     const { fixture, state, service } = await setup();
     await state.selectEntity('');
     await fixture.whenStable();
-    expect(service.list).toHaveBeenLastCalledWith('', '', 0, 10, '');
+    expect(service.list).toHaveBeenLastCalledWith('', '', 0, 10, '', []);
     state.openDetail(row);
     await fixture.whenStable();
     expect(state.filterEntity()).toBe('');
@@ -330,6 +364,28 @@ describe('global versioned manager', () => {
     await fixture.whenStable();
     expect(state.filterEntity()).toBe('');
     expect(service.candidates).toHaveBeenCalledWith('countries', '', 0, 10);
+  });
+  it('applies and clears controlled column rules at the first server page', async () => {
+    const { fixture, state, service, root } = await setup();
+    expect(root.querySelectorAll('p-column-filter')).toHaveLength(6);
+    state.page(2, 10);
+    await fixture.whenStable();
+    const filters = [
+      {
+        field: 'displayName',
+        operator: 'and',
+        constraints: [{ matchMode: 'contains', value: 'Directory' }],
+      },
+    ] as const;
+    state.changeColumnFilters(filters);
+    await fixture.whenStable();
+    expect(state.criteria().pageIndex).toBe(0);
+    expect(service.list).toHaveBeenLastCalledWith('countries', '', 0, 10, '', filters);
+    expect(() => state.changeColumnFilters([{ field: 'unknown' }])).toThrow();
+    expect(state.columnFilters()).toEqual(filters);
+    state.changeColumnFilters([]);
+    await fixture.whenStable();
+    expect(service.list).toHaveBeenLastCalledWith('countries', '', 0, 10, '', []);
   });
   it('shows a failed discovery response and allows retry instead of presenting an empty catalog', async () => {
     const { fixture, state, service } = await setup();

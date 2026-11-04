@@ -1,0 +1,47 @@
+{
+  "date": "2026-11-04",
+  "planId": "global-crystal-template-management",
+  "sliceId": "GCT-1",
+  "scope": "Existing shared report sidebar/actions, tabs RTL and reuse of Countries record navigation in manager grids",
+  "angular": "22.2.3",
+  "primeng": "22.1.4",
+  "newApplicationComponents": 0,
+  "pagination": "Existing MyDataGrid recordNavigation=true in main/candidate/version grids; no CollectionFooter source changes",
+  "fullAngularCheck": {
+    "exitCode": 0,
+    "tests": 526,
+    "testFiles": 91,
+    "architectureTests": 26,
+    "lint": "passed, zero warnings",
+    "format": "passed",
+    "strictTypesTemplates": "passed",
+    "catalog": "7358 keys",
+    "build": "passed",
+    "initialBundleKB": 495.63,
+    "log": "angular-check.log"
+  },
+  "browser": {
+    "sidebarCases": 8,
+    "managerCases": 6,
+    "sidebarReceipt": "sidebar-browser-results.json",
+    "managerReceipt": "manager-browser-results.json",
+    "productionAssets": true,
+    "syntheticFixtures": true,
+    "serverStarted": false,
+    "liveWrites": false
+  },
+  "nativePdfLimit": "Screenshots verify application-owned shell only; native PDF pixels may be absent. No PDF.js or native toolbar override.",
+  "localization": {
+    "newKey": "reports.viewerOptions",
+    "catalogVersion": "13210765d2afb878148664cdfe80c76fd187a4c66b2d8e4160baf9d24be1e219",
+    "deployment": "Synchronize Angular and ErpSystem.Api embedded catalog; Crystal service unchanged"
+  },
+  "remaining": {
+    "overallPhase06": "Not Verified",
+    "FOLLOW_024": "Open",
+    "PROD_028": "Open",
+    "DEF_027": "Deferred",
+    "DEF_028": "Deferred"
+  },
+  "deploymentPerformed": false
+}

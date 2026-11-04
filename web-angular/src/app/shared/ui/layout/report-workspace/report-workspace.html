@@ -8,13 +8,32 @@
     <aside [attr.aria-label]="criteriaLabel()">
       @if (appearance() === 'reference') {
         <erp-scroll-viewport [label]="criteriaLabel()"
-          ><ng-container [ngTemplateOutlet]="criteria"
+          ><ng-container [ngTemplateOutlet]="sidebar"
         /></erp-scroll-viewport>
       } @else {
-        <ng-container [ngTemplateOutlet]="criteria" />
+        <ng-container [ngTemplateOutlet]="sidebar" />
       }
     </aside>
   }
   <div class="document"><ng-content select="[reportDocument]" /></div>
 </section>
+<ng-template #sidebar>
+  @if (optionsLabel()) {
+    <erp-content-tabs
+      [tabs]="tabs()"
+      [(selected)]="selectedTab"
+      [keepAlive]="true"
+      [content]="sidebarPanel"
+    />
+  } @else {
+    <ng-container [ngTemplateOutlet]="criteria" />
+    <ng-container [ngTemplateOutlet]="actions" />
+  }
+</ng-template>
+<ng-template #sidebarPanel let-panel>
+  <ng-container [ngTemplateOutlet]="panel === 'criteria' ? criteria : actions" />
+</ng-template>
 <ng-template #criteria><ng-content select="[reportCriteria]" /></ng-template>
+<ng-template #actions>
+  <div class="document-actions"><ng-content select="[reportActions]" /></div>
+</ng-template>

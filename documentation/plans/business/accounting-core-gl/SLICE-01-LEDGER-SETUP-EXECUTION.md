@@ -1,5 +1,13 @@
 # Accounting Core GL — Slice 1 Ledger Setup Execution Decomposition
 
+> **Planning review hold — 2026-11-04.** The requester is reviewing the plan from
+> zero accepted implementation, targeting Angular. The existing active marker is
+> retained as the single preparation owner, not permission to implement Fiscal
+> Years or to continue the historical execution ledger. Existing child statuses,
+> Next references and previous verification are historical review inputs. Runtime
+> work remains blocked until the reopened discovery, exact child contract and
+> applicable gates are reconciled. See `DISCOVERY.md` section 15.
+
 ## 0. Authority and purpose
 
 This document is the canonical execution decomposition for `accounting-core-gl`

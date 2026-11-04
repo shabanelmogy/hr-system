@@ -1,0 +1,402 @@
+[
+  {
+    "channel": "chrome",
+    "language": "en",
+    "width": 1213,
+    "embedded": true,
+    "arrangement": {
+      "fields": [
+        "report",
+        "nameAr",
+        "nameEn"
+      ],
+      "primaryFirst": true,
+      "icons": true,
+      "aligned": true,
+      "fits": true,
+      "sourceDownloadsInForm": 0
+    },
+    "light": {
+      "nav": "rgba(0, 0, 0, 0)",
+      "navColor": "rgb(23, 32, 38)",
+      "foreground": "rgb(23, 32, 38)",
+      "frame": "rgb(234, 244, 241)",
+      "scheme": "light",
+      "surface": "rgb(255, 255, 255)",
+      "muted": "rgb(234, 244, 241)",
+      "filtered": "none",
+      "horizontalOverflow": false
+    },
+    "dark": {
+      "nav": "rgba(0, 0, 0, 0)",
+      "navColor": "rgb(245, 247, 248)",
+      "foreground": "rgb(245, 247, 248)",
+      "frame": "rgb(33, 48, 44)",
+      "scheme": "dark",
+      "surface": "rgb(24, 32, 30)",
+      "muted": "rgb(33, 48, 44)",
+      "filtered": "none",
+      "horizontalOverflow": false
+    },
+    "noRerenderOnTheme": true,
+    "originalDownloadBytes": true,
+    "sidebarActions": true,
+    "horizontalSidebarTabs": true,
+    "activeIndicatorAligned": true,
+    "activeIndicatorAlignedAfterLiveLanguageChange": false,
+    "draftAndDocumentPreservedOnTabChange": true,
+    "noToolbarAboveDocument": true,
+    "newPdfTab": true,
+    "errors": []
+  },
+  {
+    "channel": "chrome",
+    "language": "en",
+    "width": 390,
+    "embedded": true,
+    "arrangement": {
+      "fields": [
+        "report",
+        "nameAr",
+        "nameEn"
+      ],
+      "primaryFirst": true,
+      "icons": true,
+      "aligned": true,
+      "fits": true,
+      "sourceDownloadsInForm": 0
+    },
+    "light": {
+      "nav": "rgba(0, 0, 0, 0)",
+      "navColor": "rgb(23, 32, 38)",
+      "foreground": "rgb(23, 32, 38)",
+      "frame": "rgb(234, 244, 241)",
+      "scheme": "light",
+      "surface": "rgb(255, 255, 255)",
+      "muted": "rgb(234, 244, 241)",
+      "filtered": "none",
+      "horizontalOverflow": false
+    },
+    "dark": {
+      "nav": "rgba(0, 0, 0, 0)",
+      "navColor": "rgb(245, 247, 248)",
+      "foreground": "rgb(245, 247, 248)",
+      "frame": "rgb(33, 48, 44)",
+      "scheme": "dark",
+      "surface": "rgb(24, 32, 30)",
+      "muted": "rgb(33, 48, 44)",
+      "filtered": "none",
+      "horizontalOverflow": false
+    },
+    "noRerenderOnTheme": true,
+    "originalDownloadBytes": true,
+    "sidebarActions": true,
+    "horizontalSidebarTabs": true,
+    "activeIndicatorAligned": true,
+    "activeIndicatorAlignedAfterLiveLanguageChange": false,
+    "draftAndDocumentPreservedOnTabChange": true,
+    "noToolbarAboveDocument": true,
+    "newPdfTab": true,
+    "errors": []
+  },
+  {
+    "channel": "chrome",
+    "language": "ar",
+    "width": 1213,
+    "embedded": true,
+    "arrangement": {
+      "fields": [
+        "report",
+        "nameAr",
+        "nameEn"
+      ],
+      "primaryFirst": true,
+      "icons": true,
+      "aligned": true,
+      "fits": true,
+      "sourceDownloadsInForm": 0
+    },
+    "light": {
+      "nav": "rgba(0, 0, 0, 0)",
+      "navColor": "rgb(23, 32, 38)",
+      "foreground": "rgb(23, 32, 38)",
+      "frame": "rgb(234, 244, 241)",
+      "scheme": "light",
+      "surface": "rgb(255, 255, 255)",
+      "muted": "rgb(234, 244, 241)",
+      "filtered": "none",
+      "horizontalOverflow": false
+    },
+    "dark": {
+      "nav": "rgba(0, 0, 0, 0)",
+      "navColor": "rgb(245, 247, 248)",
+      "foreground": "rgb(245, 247, 248)",
+      "frame": "rgb(33, 48, 44)",
+      "scheme": "dark",
+      "surface": "rgb(24, 32, 30)",
+      "muted": "rgb(33, 48, 44)",
+      "filtered": "none",
+      "horizontalOverflow": false
+    },
+    "noRerenderOnTheme": true,
+    "originalDownloadBytes": true,
+    "sidebarActions": true,
+    "horizontalSidebarTabs": true,
+    "activeIndicatorAligned": true,
+    "activeIndicatorAlignedAfterLiveLanguageChange": false,
+    "draftAndDocumentPreservedOnTabChange": true,
+    "noToolbarAboveDocument": true,
+    "newPdfTab": true,
+    "errors": []
+  },
+  {
+    "channel": "chrome",
+    "language": "ar",
+    "width": 390,
+    "embedded": true,
+    "arrangement": {
+      "fields": [
+        "report",
+        "nameAr",
+        "nameEn"
+      ],
+      "primaryFirst": true,
+      "icons": true,
+      "aligned": true,
+      "fits": true,
+      "sourceDownloadsInForm": 0
+    },
+    "light": {
+      "nav": "rgba(0, 0, 0, 0)",
+      "navColor": "rgb(23, 32, 38)",
+      "foreground": "rgb(23, 32, 38)",
+      "frame": "rgb(234, 244, 241)",
+      "scheme": "light",
+      "surface": "rgb(255, 255, 255)",
+      "muted": "rgb(234, 244, 241)",
+      "filtered": "none",
+      "horizontalOverflow": false
+    },
+    "dark": {
+      "nav": "rgba(0, 0, 0, 0)",
+      "navColor": "rgb(245, 247, 248)",
+      "foreground": "rgb(245, 247, 248)",
+      "frame": "rgb(33, 48, 44)",
+      "scheme": "dark",
+      "surface": "rgb(24, 32, 30)",
+      "muted": "rgb(33, 48, 44)",
+      "filtered": "none",
+      "horizontalOverflow": false
+    },
+    "noRerenderOnTheme": true,
+    "originalDownloadBytes": true,
+    "sidebarActions": true,
+    "horizontalSidebarTabs": true,
+    "activeIndicatorAligned": true,
+    "activeIndicatorAlignedAfterLiveLanguageChange": false,
+    "draftAndDocumentPreservedOnTabChange": true,
+    "noToolbarAboveDocument": true,
+    "newPdfTab": true,
+    "errors": []
+  },
+  {
+    "channel": "msedge",
+    "language": "en",
+    "width": 1213,
+    "embedded": true,
+    "arrangement": {
+      "fields": [
+        "report",
+        "nameAr",
+        "nameEn"
+      ],
+      "primaryFirst": true,
+      "icons": true,
+      "aligned": true,
+      "fits": true,
+      "sourceDownloadsInForm": 0
+    },
+    "light": {
+      "nav": "rgba(0, 0, 0, 0)",
+      "navColor": "rgb(23, 32, 38)",
+      "foreground": "rgb(23, 32, 38)",
+      "frame": "rgb(234, 244, 241)",
+      "scheme": "light",
+      "surface": "rgb(255, 255, 255)",
+      "muted": "rgb(234, 244, 241)",
+      "filtered": "none",
+      "horizontalOverflow": false
+    },
+    "dark": {
+      "nav": "rgba(0, 0, 0, 0)",
+      "navColor": "rgb(245, 247, 248)",
+      "foreground": "rgb(245, 247, 248)",
+      "frame": "rgb(33, 48, 44)",
+      "scheme": "dark",
+      "surface": "rgb(24, 32, 30)",
+      "muted": "rgb(33, 48, 44)",
+      "filtered": "none",
+      "horizontalOverflow": false
+    },
+    "noRerenderOnTheme": true,
+    "originalDownloadBytes": true,
+    "sidebarActions": true,
+    "horizontalSidebarTabs": true,
+    "activeIndicatorAligned": true,
+    "activeIndicatorAlignedAfterLiveLanguageChange": false,
+    "draftAndDocumentPreservedOnTabChange": true,
+    "noToolbarAboveDocument": true,
+    "newPdfTab": true,
+    "errors": []
+  },
+  {
+    "channel": "msedge",
+    "language": "en",
+    "width": 390,
+    "embedded": true,
+    "arrangement": {
+      "fields": [
+        "report",
+        "nameAr",
+        "nameEn"
+      ],
+      "primaryFirst": true,
+      "icons": true,
+      "aligned": true,
+      "fits": true,
+      "sourceDownloadsInForm": 0
+    },
+    "light": {
+      "nav": "rgba(0, 0, 0, 0)",
+      "navColor": "rgb(23, 32, 38)",
+      "foreground": "rgb(23, 32, 38)",
+      "frame": "rgb(234, 244, 241)",
+      "scheme": "light",
+      "surface": "rgb(255, 255, 255)",
+      "muted": "rgb(234, 244, 241)",
+      "filtered": "none",
+      "horizontalOverflow": false
+    },
+    "dark": {
+      "nav": "rgba(0, 0, 0, 0)",
+      "navColor": "rgb(245, 247, 248)",
+      "foreground": "rgb(245, 247, 248)",
+      "frame": "rgb(33, 48, 44)",
+      "scheme": "dark",
+      "surface": "rgb(24, 32, 30)",
+      "muted": "rgb(33, 48, 44)",
+      "filtered": "none",
+      "horizontalOverflow": false
+    },
+    "noRerenderOnTheme": true,
+    "originalDownloadBytes": true,
+    "sidebarActions": true,
+    "horizontalSidebarTabs": true,
+    "activeIndicatorAligned": true,
+    "activeIndicatorAlignedAfterLiveLanguageChange": false,
+    "draftAndDocumentPreservedOnTabChange": true,
+    "noToolbarAboveDocument": true,
+    "newPdfTab": true,
+    "errors": []
+  },
+  {
+    "channel": "msedge",
+    "language": "ar",
+    "width": 1213,
+    "embedded": true,
+    "arrangement": {
+      "fields": [
+        "report",
+        "nameAr",
+        "nameEn"
+      ],
+      "primaryFirst": true,
+      "icons": true,
+      "aligned": true,
+      "fits": true,
+      "sourceDownloadsInForm": 0
+    },
+    "light": {
+      "nav": "rgba(0, 0, 0, 0)",
+      "navColor": "rgb(23, 32, 38)",
+      "foreground": "rgb(23, 32, 38)",
+      "frame": "rgb(234, 244, 241)",
+      "scheme": "light",
+      "surface": "rgb(255, 255, 255)",
+      "muted": "rgb(234, 244, 241)",
+      "filtered": "none",
+      "horizontalOverflow": false
+    },
+    "dark": {
+      "nav": "rgba(0, 0, 0, 0)",
+      "navColor": "rgb(245, 247, 248)",
+      "foreground": "rgb(245, 247, 248)",
+      "frame": "rgb(33, 48, 44)",
+      "scheme": "dark",
+      "surface": "rgb(24, 32, 30)",
+      "muted": "rgb(33, 48, 44)",
+      "filtered": "none",
+      "horizontalOverflow": false
+    },
+    "noRerenderOnTheme": true,
+    "originalDownloadBytes": true,
+    "sidebarActions": true,
+    "horizontalSidebarTabs": true,
+    "activeIndicatorAligned": true,
+    "activeIndicatorAlignedAfterLiveLanguageChange": false,
+    "draftAndDocumentPreservedOnTabChange": true,
+    "noToolbarAboveDocument": true,
+    "newPdfTab": true,
+    "errors": []
+  },
+  {
+    "channel": "msedge",
+    "language": "ar",
+    "width": 390,
+    "embedded": true,
+    "arrangement": {
+      "fields": [
+        "report",
+        "nameAr",
+        "nameEn"
+      ],
+      "primaryFirst": true,
+      "icons": true,
+      "aligned": true,
+      "fits": true,
+      "sourceDownloadsInForm": 0
+    },
+    "light": {
+      "nav": "rgba(0, 0, 0, 0)",
+      "navColor": "rgb(23, 32, 38)",
+      "foreground": "rgb(23, 32, 38)",
+      "frame": "rgb(234, 244, 241)",
+      "scheme": "light",
+      "surface": "rgb(255, 255, 255)",
+      "muted": "rgb(234, 244, 241)",
+      "filtered": "none",
+      "horizontalOverflow": false
+    },
+    "dark": {
+      "nav": "rgba(0, 0, 0, 0)",
+      "navColor": "rgb(245, 247, 248)",
+      "foreground": "rgb(245, 247, 248)",
+      "frame": "rgb(33, 48, 44)",
+      "scheme": "dark",
+      "surface": "rgb(24, 32, 30)",
+      "muted": "rgb(33, 48, 44)",
+      "filtered": "none",
+      "horizontalOverflow": false
+    },
+    "noRerenderOnTheme": true,
+    "originalDownloadBytes": true,
+    "sidebarActions": true,
+    "horizontalSidebarTabs": true,
+    "activeIndicatorAligned": true,
+    "activeIndicatorAlignedAfterLiveLanguageChange": false,
+    "draftAndDocumentPreservedOnTabChange": true,
+    "noToolbarAboveDocument": true,
+    "newPdfTab": true,
+    "errors": []
+  }
+]

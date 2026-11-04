@@ -7,7 +7,8 @@
       [label]="'actions.refresh' | uiText"
       [disabled]="state.pending()"
       (activated)="state.reload()"
-    />
+      ><erp-icon buttonIcon name="refresh"
+    /></erp-button>
   </erp-page-header>
   @if (!state.allowed()) {
     <erp-feedback-state kind="forbidden" [title]="'authorization.forbidden.title' | uiText" />
@@ -35,6 +36,10 @@
     }
     <erp-data-table
       [source]="state.source()"
+      [recordNavigation]="true"
+      [advancedFilters]="true"
+      [filters]="state.columnFilters()"
+      (filtersChange)="state.changeColumnFilters($event)"
       [label]="'globalTemplates.title' | uiText: 'reporting'"
       [columns]="columns()"
       [rowId]="rowId"
@@ -70,6 +75,41 @@
           "
         />
       </ng-template>
+      <ng-container toolbarContent>
+        @if (state.filterEntity() ? state.can('Create') : state.canAny('Create')) {
+          <erp-button-group [label]="'crystalReports.create' | uiText: 'reporting'">
+            <erp-button
+              [label]="'globalTemplates.design.uploadExisting' | uiText: 'reporting'"
+              [disabled]="state.pending()"
+              (activated)="state.openEditor(null)"
+              ><erp-icon buttonIcon name="upload"
+            /></erp-button>
+            <erp-button
+              variant="outlined"
+              [label]="'globalTemplates.registerExisting' | uiText: 'reporting'"
+              [disabled]="state.pending()"
+              (activated)="state.loadCandidates()"
+              ><erp-icon buttonIcon name="add"
+            /></erp-button>
+            <erp-button
+              variant="outlined"
+              [label]="'globalTemplates.design.title' | uiText: 'reporting'"
+              [disabled]="state.pending()"
+              (activated)="designer.open()"
+              ><erp-icon buttonIcon name="edit"
+            /></erp-button>
+          </erp-button-group>
+        }
+        @if (state.canAny('Download')) {
+          <erp-button
+            [label]="'globalTemplates.downloadSchema' | uiText: 'reporting'"
+            variant="outlined"
+            [disabled]="state.pending() || !state.filterEntity()"
+            (activated)="state.schema()"
+            ><erp-icon buttonIcon name="download"
+          /></erp-button>
+        }
+      </ng-container>
       <div toolbarFilters>
         <erp-option-select
           [label]="'crystalReports.entity' | uiText: 'reporting'"
@@ -78,37 +118,12 @@
           [busy]="state.pending()"
           (valueChange)="state.selectEntity($event)"
         />
-        @if (state.filterEntity() ? state.can('Create') : state.canAny('Create')) {
-          <erp-button
-            [label]="'globalTemplates.design.title' | uiText: 'reporting'"
-            [disabled]="state.pending()"
-            (activated)="designer.open()"
-          />
-          <erp-button
-            [label]="'globalTemplates.design.uploadExisting' | uiText: 'reporting'"
-            [disabled]="state.pending()"
-            (activated)="state.openEditor(null)"
-          />
-          <erp-button
-            [label]="'globalTemplates.registerExisting' | uiText: 'reporting'"
-            [disabled]="state.pending()"
-            (activated)="state.loadCandidates()"
-          />
-        }
         <erp-option-select
           [label]="'crystalReports.status' | uiText: 'reporting'"
           [value]="state.criteria().status"
           [options]="statusOptions()"
           (valueChange)="state.filterStatus($event)"
         />
-        @if (state.canAny('Download')) {
-          <erp-button
-            [label]="'globalTemplates.downloadSchema' | uiText: 'reporting'"
-            variant="outlined"
-            [disabled]="state.pending() || !state.filterEntity()"
-            (activated)="state.schema()"
-          />
-        }
       </div>
     </erp-data-table>
     @if (state.candidatesOpen()) {
@@ -150,6 +165,7 @@
         }
         <erp-data-table
           [source]="state.candidateSource()"
+          [recordNavigation]="true"
           [label]="'globalTemplates.registerExisting' | uiText: 'reporting'"
           [columns]="candidateColumns()"
           [display]="{ frozenColumns: { register: 'end' } }"
@@ -266,6 +282,7 @@
       (validSubmit)="state.save()"
       [feedback]="state.feedback()?.message || (state.feedback() ? ('common.error' | uiText) : '')"
     >
+      <erp-icon formSubmitIcon name="save" />
       <erp-option-select
         [label]="'crystalReports.entity' | uiText: 'reporting'"
         [value]="state.entity() || ''"
@@ -307,22 +324,25 @@
           "
         />
       }
-      <div formActions>
+      <ng-container formTools>
         @if (state.can('Upload')) {
           <erp-button
             [label]="'globalTemplates.inspect' | uiText: 'reporting'"
             variant="outlined"
             [disabled]="state.pending()"
             (activated)="inspect()"
-          />
+            ><erp-icon buttonIcon name="search"
+          /></erp-button>
         }
-        <erp-button
-          [label]="'actions.cancel' | uiText"
-          variant="text"
-          [disabled]="state.pending()"
-          (activated)="closeGuard.requestClose()"
-        />
-      </div>
+      </ng-container>
+      <erp-button
+        formActions
+        [label]="'actions.cancel' | uiText"
+        variant="text"
+        [disabled]="state.pending()"
+        (activated)="closeGuard.requestClose()"
+        ><erp-icon buttonIcon name="close"
+      /></erp-button>
     </erp-form>
   }
 </erp-dialog-panel>
@@ -340,6 +360,28 @@
     <ng-template #detailContent let-tab>
       @switch (tab) {
         @case ('overview') {
+          <ng-template #overviewActions>
+            @if (state.can('Download')) {
+              <erp-button-group [label]="'crystalReports.download' | uiText: 'reporting'">
+                <erp-button
+                  variant="outlined"
+                  [label]="'globalTemplates.design.downloadPackage' | uiText: 'reporting'"
+                  [disabled]="state.pending()"
+                  (activated)="state.designerPackage()"
+                  ><erp-icon buttonIcon name="download"
+                /></erp-button>
+                @if (detail.isPublished && !detail.isArchived) {
+                  <erp-button
+                    [label]="'crystalReports.download' | uiText: 'reporting'"
+                    variant="outlined"
+                    [disabled]="state.pending()"
+                    (activated)="state.downloadPublished(detail)"
+                    ><erp-icon buttonIcon name="download"
+                  /></erp-button>
+                }
+              </erp-button-group>
+            }
+          </ng-template>
           <erp-surface-card
             [title]="'crystalReports.overview' | uiText: 'reporting'"
             [subtitle]="
@@ -348,8 +390,12 @@
               detail.reportKey
             "
             [compact]="true"
+            contentLayout="details"
+            [footerTemplate]="overviewActions"
           >
-            <p>{{ detail.description || '—' }}</p>
+            @for (item of overviewMetadata(); track item.key) {
+              <erp-record-summary [title]="item.label" [description]="item.value" />
+            }
             @if (detail.viewName) {
               <erp-record-summary
                 [title]="'globalTemplates.design.viewName' | uiText: 'reporting'"
@@ -366,30 +412,16 @@
                   [label]="'crystalReports.selectNewVersion' | uiText: 'reporting'"
                   [disabled]="state.pending()"
                   (activated)="state.openEditor(detail)"
-                />
+                  ><erp-icon buttonIcon name="upload"
+                /></erp-button>
               }
-            }
-            @if (state.can('Download')) {
-              <erp-button
-                variant="outlined"
-                [label]="'globalTemplates.design.downloadPackage' | uiText: 'reporting'"
-                [disabled]="state.pending()"
-                (activated)="state.designerPackage()"
-              />
-            }
-            @if (detail.isPublished && !detail.isArchived && state.can('Download')) {
-              <erp-button
-                [label]="'crystalReports.download' | uiText: 'reporting'"
-                variant="outlined"
-                [disabled]="state.pending()"
-                (activated)="state.downloadPublished(detail)"
-              />
             }
           </erp-surface-card>
         }
         @case ('versions') {
           <erp-data-table
             [source]="versionSource()"
+            [recordNavigation]="true"
             [label]="'crystalReports.versions' | uiText: 'reporting'"
             [columns]="versionsColumns()"
             [rowId]="versionId"
@@ -398,6 +430,16 @@
             [pageSizes]="[versionSource().query.pageSize]"
             (rowAction)="versionAction($event)"
           >
+            <ng-container toolbarContent>
+              @if (state.canVersion('Upload')) {
+                <erp-button
+                  [label]="'crystalReports.selectNewVersion' | uiText: 'reporting'"
+                  [disabled]="state.pending() || state.access.dirty()"
+                  (activated)="state.openEditor(detail)"
+                  ><erp-icon buttonIcon name="upload"
+                /></erp-button>
+              }
+            </ng-container>
             <ng-template
               [erpCollectionCell]="versionsColumns() | collectionColumn: 'validation'"
               let-version
@@ -417,13 +459,6 @@
               />
             </ng-template>
           </erp-data-table>
-          @if (state.canVersion('Upload')) {
-            <erp-button
-              [label]="'crystalReports.selectNewVersion' | uiText: 'reporting'"
-              [disabled]="state.pending() || state.access.dirty()"
-              (activated)="state.openEditor(detail)"
-            />
-          }
           <p>{{ 'globalTemplates.publishHint' | uiText: 'reporting' }}</p>
         }
         @case ('permissions') {

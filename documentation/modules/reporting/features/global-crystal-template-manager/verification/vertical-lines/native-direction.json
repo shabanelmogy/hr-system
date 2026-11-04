@@ -1,0 +1,236 @@
+﻿{
+    "status":  "Passed",
+    "sourceSha256":  "E9505470CFEB41D6C1DC7F05EB04AD94870435A0387C6C8F1345D10829FA84D7",
+    "sourceSaved":  false,
+    "runtimeSha256":  "F4146FAC4D1C2B5C7650E7B4F532DDBF96981DD842CB353033A947CDCA506B2A",
+    "languages":  [
+                      {
+                          "language":  "ar",
+                          "pageContentWidth":  11520,
+                          "before":  {
+                                         "DirectionSpanning":  {
+                                                                   "left":  2200,
+                                                                   "right":  2200,
+                                                                   "top":  100,
+                                                                   "bottom":  100,
+                                                                   "section":  "PageHeaderSection1",
+                                                                   "endSection":  "ReportFooterSection1",
+                                                                   "extend":  true,
+                                                                   "suppressed":  false,
+                                                                   "thickness":  20,
+                                                                   "color":  -16744448,
+                                                                   "style":  "SingleLine"
+                                                               },
+                                         "DirectionVisible":  {
+                                                                  "left":  700,
+                                                                  "right":  700,
+                                                                  "top":  0,
+                                                                  "bottom":  480,
+                                                                  "section":  "PageHeaderSection1",
+                                                                  "endSection":  "PageHeaderSection1",
+                                                                  "extend":  false,
+                                                                  "suppressed":  false,
+                                                                  "thickness":  20,
+                                                                  "color":  -65536,
+                                                                  "style":  "SingleLine"
+                                                              },
+                                         "DirectionSuppressed":  {
+                                                                     "left":  3600,
+                                                                     "right":  3600,
+                                                                     "top":  0,
+                                                                     "bottom":  480,
+                                                                     "section":  "PageHeaderSection1",
+                                                                     "endSection":  "PageHeaderSection1",
+                                                                     "extend":  false,
+                                                                     "suppressed":  true,
+                                                                     "thickness":  20,
+                                                                     "color":  -256,
+                                                                     "style":  "SingleLine"
+                                                                 },
+                                         "DirectionHorizontal":  {
+                                                                     "left":  1800,
+                                                                     "right":  4500,
+                                                                     "top":  480,
+                                                                     "bottom":  480,
+                                                                     "section":  "PageHeaderSection1",
+                                                                     "endSection":  "PageHeaderSection1",
+                                                                     "extend":  false,
+                                                                     "suppressed":  false,
+                                                                     "thickness":  20,
+                                                                     "color":  -16776961,
+                                                                     "style":  "SingleLine"
+                                                                 }
+                                     },
+                          "after":  {
+                                        "DirectionSpanning":  {
+                                                                  "left":  2200,
+                                                                  "right":  2200,
+                                                                  "top":  100,
+                                                                  "bottom":  100,
+                                                                  "section":  "PageHeaderSection1",
+                                                                  "endSection":  "ReportFooterSection1",
+                                                                  "extend":  true,
+                                                                  "suppressed":  false,
+                                                                  "thickness":  20,
+                                                                  "color":  -16744448,
+                                                                  "style":  "SingleLine"
+                                                              },
+                                        "DirectionVisible":  {
+                                                                 "left":  700,
+                                                                 "right":  700,
+                                                                 "top":  0,
+                                                                 "bottom":  480,
+                                                                 "section":  "PageHeaderSection1",
+                                                                 "endSection":  "PageHeaderSection1",
+                                                                 "extend":  false,
+                                                                 "suppressed":  false,
+                                                                 "thickness":  20,
+                                                                 "color":  -65536,
+                                                                 "style":  "SingleLine"
+                                                             },
+                                        "DirectionSuppressed":  {
+                                                                    "left":  3600,
+                                                                    "right":  3600,
+                                                                    "top":  0,
+                                                                    "bottom":  480,
+                                                                    "section":  "PageHeaderSection1",
+                                                                    "endSection":  "PageHeaderSection1",
+                                                                    "extend":  false,
+                                                                    "suppressed":  true,
+                                                                    "thickness":  20,
+                                                                    "color":  -256,
+                                                                    "style":  "SingleLine"
+                                                                },
+                                        "DirectionHorizontal":  {
+                                                                    "left":  1800,
+                                                                    "right":  4500,
+                                                                    "top":  480,
+                                                                    "bottom":  480,
+                                                                    "section":  "PageHeaderSection1",
+                                                                    "endSection":  "PageHeaderSection1",
+                                                                    "extend":  false,
+                                                                    "suppressed":  false,
+                                                                    "thickness":  20,
+                                                                    "color":  -16776961,
+                                                                    "style":  "SingleLine"
+                                                                }
+                                    },
+                          "pdfFile":  "direction-ar.pdf",
+                          "pdfBytes":  16296
+                      },
+                      {
+                          "language":  "en",
+                          "pageContentWidth":  11520,
+                          "before":  {
+                                         "DirectionSpanning":  {
+                                                                   "left":  2200,
+                                                                   "right":  2200,
+                                                                   "top":  100,
+                                                                   "bottom":  100,
+                                                                   "section":  "PageHeaderSection1",
+                                                                   "endSection":  "ReportFooterSection1",
+                                                                   "extend":  true,
+                                                                   "suppressed":  false,
+                                                                   "thickness":  20,
+                                                                   "color":  -16744448,
+                                                                   "style":  "SingleLine"
+                                                               },
+                                         "DirectionVisible":  {
+                                                                  "left":  700,
+                                                                  "right":  700,
+                                                                  "top":  0,
+                                                                  "bottom":  480,
+                                                                  "section":  "PageHeaderSection1",
+                                                                  "endSection":  "PageHeaderSection1",
+                                                                  "extend":  false,
+                                                                  "suppressed":  false,
+                                                                  "thickness":  20,
+                                                                  "color":  -65536,
+                                                                  "style":  "SingleLine"
+                                                              },
+                                         "DirectionSuppressed":  {
+                                                                     "left":  3600,
+                                                                     "right":  3600,
+                                                                     "top":  0,
+                                                                     "bottom":  480,
+                                                                     "section":  "PageHeaderSection1",
+                                                                     "endSection":  "PageHeaderSection1",
+                                                                     "extend":  false,
+                                                                     "suppressed":  true,
+                                                                     "thickness":  20,
+                                                                     "color":  -256,
+                                                                     "style":  "SingleLine"
+                                                                 },
+                                         "DirectionHorizontal":  {
+                                                                     "left":  1800,
+                                                                     "right":  4500,
+                                                                     "top":  480,
+                                                                     "bottom":  480,
+                                                                     "section":  "PageHeaderSection1",
+                                                                     "endSection":  "PageHeaderSection1",
+                                                                     "extend":  false,
+                                                                     "suppressed":  false,
+                                                                     "thickness":  20,
+                                                                     "color":  -16776961,
+                                                                     "style":  "SingleLine"
+                                                                 }
+                                     },
+                          "after":  {
+                                        "DirectionSpanning":  {
+                                                                  "left":  9320,
+                                                                  "right":  9320,
+                                                                  "top":  100,
+                                                                  "bottom":  100,
+                                                                  "section":  "PageHeaderSection1",
+                                                                  "endSection":  "ReportFooterSection1",
+                                                                  "extend":  true,
+                                                                  "suppressed":  false,
+                                                                  "thickness":  20,
+                                                                  "color":  -16744448,
+                                                                  "style":  "SingleLine"
+                                                              },
+                                        "DirectionVisible":  {
+                                                                 "left":  10820,
+                                                                 "right":  10820,
+                                                                 "top":  0,
+                                                                 "bottom":  480,
+                                                                 "section":  "PageHeaderSection1",
+                                                                 "endSection":  "PageHeaderSection1",
+                                                                 "extend":  false,
+                                                                 "suppressed":  false,
+                                                                 "thickness":  20,
+                                                                 "color":  -65536,
+                                                                 "style":  "SingleLine"
+                                                             },
+                                        "DirectionSuppressed":  {
+                                                                    "left":  7920,
+                                                                    "right":  7920,
+                                                                    "top":  0,
+                                                                    "bottom":  480,
+                                                                    "section":  "PageHeaderSection1",
+                                                                    "endSection":  "PageHeaderSection1",
+                                                                    "extend":  false,
+                                                                    "suppressed":  true,
+                                                                    "thickness":  20,
+                                                                    "color":  -256,
+                                                                    "style":  "SingleLine"
+                                                                },
+                                        "DirectionHorizontal":  {
+                                                                    "left":  7020,
+                                                                    "right":  9720,
+                                                                    "top":  480,
+                                                                    "bottom":  480,
+                                                                    "section":  "PageHeaderSection1",
+                                                                    "endSection":  "PageHeaderSection1",
+                                                                    "extend":  false,
+                                                                    "suppressed":  false,
+                                                                    "thickness":  20,
+                                                                    "color":  -16776961,
+                                                                    "style":  "SingleLine"
+                                                                }
+                                    },
+                          "pdfFile":  "direction-en.pdf",
+                          "pdfBytes":  16294
+                      }
+                  ]
+}

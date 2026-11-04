@@ -3,6 +3,8 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { defer, from, map, switchMap, timeout, type Observable } from 'rxjs';
 import { z } from 'zod';
 import { ERP_API_ORIGIN } from '../../../../config/api-origin';
+import type { GridFilters } from '../../../../shared/data/public-api';
+import { parseGlobalTemplateFilters } from '../types/global-template-filters';
 import { BrowserMutationSecurity } from '../../../../platform/auth/session.public-api';
 import {
   parseGlobalTemplateCandidates,
@@ -68,7 +70,19 @@ export class GlobalTemplateService {
     pageIndex: number,
     pageSize: number,
     status = '',
+    filters: GridFilters = [],
   ) {
+    const rules = parseGlobalTemplateFilters(filters);
+    if (rules.length) {
+      return this.mutate('/query', {
+        entityKey,
+        search,
+        page: pageIndex + 1,
+        pageSize,
+        status,
+        filters: rules,
+      }).pipe(map((body) => globalTemplatePageSchema.parse(body)));
+    }
     return this.http
       .get<unknown>(this.base, {
         withCredentials: true,

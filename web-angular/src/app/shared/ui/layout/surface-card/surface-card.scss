@@ -30,6 +30,17 @@
 .surface-heading {
   min-width: 0;
 }
+:host(.details-card) .surface-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: 12px 24px;
+}
+:host(.details-card) .surface-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
 .surface-subtitle {
   margin: 4px 0 0;
   color: var(--muted-foreground);

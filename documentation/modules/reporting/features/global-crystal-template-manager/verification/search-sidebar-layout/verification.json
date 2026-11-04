@@ -1,0 +1,80 @@
+{
+  "date": "2026-11-04",
+  "planId": "global-crystal-template-management",
+  "sliceId": "GCT-1",
+  "scope": "Report search sidebar arrangement and icons using existing shared controls",
+  "angular": "22.2.3",
+  "primeng": "22.1.4",
+  "newApplicationComponents": 0,
+  "changes": [
+    "Entity when enabled, report selection, Arabic name, English name, Search, Reset",
+    "Shared sidebar form primary action first in DOM and visually; full-width actions and existing16px field spacing",
+    "Authorized source download in Options",
+    "Shared SVG icons in search/reset/refresh/language and original PDF open/download anchors"
+  ],
+  "fullAngularCheck": {
+    "exitCode": 0,
+    "passed": 531,
+    "failed": 0,
+    "testFiles": 92,
+    "architectureTests": 26,
+    "format": "passed",
+    "lint": "zero warnings",
+    "strictTypesTemplates": "passed",
+    "build": "passed",
+    "initialBundleKB": 495.63,
+    "log": "angular-check.log",
+    "updatedRegression": "embeds without a second header and preserves draft/selection when the controlled criteria panel is hidden"
+  },
+  "browser": {
+    "passed": 16,
+    "channels": [
+      "chrome",
+      "msedge"
+    ],
+    "languages": [
+      "en",
+      "ar"
+    ],
+    "widths": [
+      1213,
+      390
+    ],
+    "standalone": "standalone/browser-results.json",
+    "embedded": "embedded/browser-results.json",
+    "checks": [
+      "field order",
+      "Search then Reset DOM order",
+      "full-width aligned actions",
+      "icon SVGs",
+      "source action outside form and in Options",
+      "form/iframe lifetime across tabs",
+      "theme with no report generation",
+      "original PDF bytes and actual new tab"
+    ],
+    "liveLanguageChange": "Standalone eight cases; embedded initial EN/AR cases only",
+    "standaloneBuild": "production",
+    "embeddedBuild": "development (geography navigation is gated by isDevMode)",
+    "syntheticSessionApiPdf": true,
+    "serverStarted": false,
+    "liveWrites": false
+  },
+  "tooling": {
+    "primeNgMcpAvailable": false,
+    "references": [
+      "https://primeng.dev/button",
+      "https://angular.dev/guide/components/content-projection",
+      "https://angular.dev/api/common/NgTemplateOutlet",
+      "https://angular.dev/api/core/isDevMode"
+    ]
+  },
+  "apiChanged": false,
+  "schemaChanged": false,
+  "localizationChanged": false,
+  "dependenciesChanged": false,
+  "priorAttempt": "The initial sidebar full check failed one assertion that required the old field order. Updated the expected order and asserted the primary/secondary DOM order and icons; final full check passes. Manager metadata fixture initially inferred null-only description/subject; annotated the fixture with GlobalTemplateDetail rather than suppressing strict typing.",
+  "release": "Angular UI build only for this corrective change. Previous column-query API rollout remains separately documented in section36.",
+  "overallPhase06": "Not Verified",
+  "followUp": "FOLLOW-024 / PROD-028 Open; DEF-027 / DEF-028 Deferred. Previous full API failure in section36 unchanged, not rerun for a UI-only change.",
+  "deploymentPerformed": false
+}

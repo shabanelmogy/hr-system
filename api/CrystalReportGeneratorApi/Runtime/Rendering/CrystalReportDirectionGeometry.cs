@@ -14,9 +14,9 @@ namespace CrystalReportGeneratorApi.Runtime.Rendering
             return Mirrors(language) ? (int)(pageContentWidth - left - width) : left;
         }
 
-        public static bool SuppressVerticalLine(string language, int left, int right, int top, int bottom)
+        public static bool ShouldMirrorLine(string language, int left, int right, int top, int bottom)
         {
-            return Mirrors(language) && left == right && top != bottom;
+            return Mirrors(language) && (left == right || top == bottom);
         }
     }
 }

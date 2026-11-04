@@ -1,6 +1,8 @@
 using CrystalDecisions.CrystalReports.Engine;
 using CrystalDecisions.Shared;
 using System;
+using System.Linq;
+using Ras = CrystalDecisions.ReportAppServer.ReportDefModel;
 
 namespace CrystalReportGeneratorApi.Runtime.Rendering
 {
@@ -17,6 +19,9 @@ namespace CrystalReportGeneratorApi.Runtime.Rendering
                 foreach (ReportObject item in section.ReportObjects)
                     ApplyObject(item, language, pageContentWidth);
             }
+
+            if (CrystalReportDirectionGeometry.Mirrors(language))
+                MirrorLines(report, language, pageContentWidth);
         }
 
         private static void ApplyObject(ReportObject item, string language, float pageContentWidth)
@@ -34,24 +39,9 @@ namespace CrystalReportGeneratorApi.Runtime.Rendering
                 return;
             }
 
-            if (item is LineObject line)
-            {
-                if (line.Top == line.Bottom)
-                {
-                    var width = line.Right - line.Left;
-                    var left = CrystalReportDirectionGeometry.LeftForLanguage(
-                        language, pageContentWidth, line.Left, width);
-                    line.Left = left;
-                    line.Right = left + width;
-                }
-                else if (CrystalReportDirectionGeometry.SuppressVerticalLine(
-                    language, line.Left, line.Right, line.Top, line.Bottom))
-                {
-                    // Preserve the original English-layout policy for vertical rules.
-                    line.ObjectFormat.EnableSuppress = true;
-                }
+            // Lines are updated atomically through RAS after Engine object traversal.
+            if (item is LineObject)
                 return;
-            }
 
             if (item is DrawingObject drawing)
             {
@@ -61,6 +51,32 @@ namespace CrystalReportGeneratorApi.Runtime.Rendering
                     language, pageContentWidth, drawing.Left, width);
                 drawing.Left = left;
                 drawing.Right = left + width;
+            }
+        }
+
+        private static void MirrorLines(ReportDocument report, string language, float pageContentWidth)
+        {
+            var controller = report.ReportClientDocument.ReportDefController.ReportObjectController;
+            var lines = controller.GetReportObjectsByKind(Ras.CrReportObjectKindEnum.crReportObjectKindLine)
+                .Cast<Ras.ISCRLineObject>().ToArray();
+
+            foreach (var line in lines)
+            {
+                if (!CrystalReportDirectionGeometry.ShouldMirrorLine(
+                    language, line.Left, line.Right, line.Top, line.Bottom))
+                    continue;
+
+                var width = line.Right - line.Left;
+                var left = CrystalReportDirectionGeometry.LeftForLanguage(
+                    language, pageContentWidth, line.Left, width);
+                var mirrored = (Ras.ISCRLineObject)line.Clone(true);
+
+                // A live endpoint setter can temporarily make a vertical line diagonal.
+                // Modify a detached clone so both X endpoints change together, retaining
+                // Y endpoints, section attachments, formatting and suppression formulas.
+                mirrored.Left = left;
+                mirrored.Right = left + width;
+                controller.Modify(line, mirrored);
             }
         }
     }

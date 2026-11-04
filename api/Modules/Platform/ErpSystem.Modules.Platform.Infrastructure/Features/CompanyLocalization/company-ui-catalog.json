@@ -1,7 +1,7 @@
 {
   "schemaVersion": 3,
   "versions": {
-    "web": "937b6b59e46b61fde756f1ec296eb6dd69b605a9f191d47eb3fd5beee80db74c",
+    "web": "13210765d2afb878148664cdfe80c76fd187a4c66b2d8e4160baf9d24be1e219",
     "mobile": "509b1f3679ad0290fbffe08a8a971e06718fd568016abb7057817fa3617a357f"
   },
   "sources": [
@@ -31487,6 +31487,13 @@
           "key": "reports.sourceChanged",
           "en": "The report source has changed. Reload the report list before trying again.",
           "ar": "تغيّر مصدر التقرير. أعد تحميل قائمة التقارير قبل المحاولة مرة أخرى.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "reports.viewerOptions",
+          "en": "Options",
+          "ar": "الخيارات",
           "scope": "shared",
           "systemPermissions": null
         },

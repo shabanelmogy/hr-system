@@ -1,0 +1,126 @@
+{
+  "date": "2026-11-04",
+  "planId": "global-crystal-template-management",
+  "sliceId": "GCT-1",
+  "scope": "Six server-side column filters in main Angular Global Report Manager using the existing Countries MyDataGrid controls",
+  "angular": "22.2.3",
+  "primeng": "22.1.4",
+  "newApplicationComponents": 0,
+  "fields": [
+    "displayName",
+    "entityKey",
+    "reportKey",
+    "currentVersionNumber",
+    "updatedOn",
+    "status"
+  ],
+  "query": {
+    "method": "POST",
+    "route": "/api/v1/global-crystal-reports/manage/query",
+    "maxBodyBytes": 32768,
+    "maxGroups": 6,
+    "maxConstraints": 4,
+    "maxTextLength": 200,
+    "oldGetPreserved": true,
+    "permissionsUnchanged": true,
+    "schemaChanged": false
+  },
+  "angularCheck": {
+    "exitCode": 0,
+    "passed": 530,
+    "failed": 0,
+    "files": 92,
+    "architectureTests": 26,
+    "lint": "zero warnings",
+    "format": "passed",
+    "strictTypesTemplates": "passed",
+    "productionBuild": "passed",
+    "initialBundleKB": 495.63,
+    "log": "angular-check.log"
+  },
+  "focused": {
+    "angular": {
+      "passed": 29,
+      "failed": 0,
+      "files": 4
+    },
+    "apiManagement": {
+      "passed": 40,
+      "failed": 0
+    },
+    "reportingFull": {
+      "passed": 231,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "apiSolution": {
+    "restoreExitCode": 0,
+    "releaseBuildExitCode": 0,
+    "noIncremental": true,
+    "buildWarnings": 473,
+    "buildErrors": 0,
+    "testsExitCode": 1,
+    "passed": 1269,
+    "failed": 1,
+    "skipped": 3,
+    "total": 1273,
+    "log": "api-test.log",
+    "failure": "MessageLogTests.ActualSenderRecordsTruthfulOutcomeWithoutReplayOrLiveSecrets(configuration, failed, disabled): Assert.Single found no recorded row",
+    "diagnostic": {
+      "log": "platform-diagnostic.log",
+      "passed": 9,
+      "failed": 0,
+      "conclusion": "Unchanged Platform test fails under full-suite load and passes isolated; root cause not established. Full gate remains red."
+    },
+    "sql": "Explicit local SQL Server using Windows integrated authentication; isolated test databases, no application schema mutation"
+  },
+  "browser": {
+    "passed": 6,
+    "languages": [
+      "en",
+      "ar"
+    ],
+    "widths": [
+      1213,
+      780,
+      390
+    ],
+    "receipt": "browser-results.json",
+    "productionAssets": true,
+    "syntheticFixtures": true,
+    "filters": "Six controls; draft does not request; title/status Apply and Clear; stable status wire value; combined rules; page reset and restored unfiltered rows",
+    "pagination": "Countries record navigation, no within-page HTTP, crossing page and size reset",
+    "visualReview": [
+      "filter-ar-390.png",
+      "filter-en-1213.png"
+    ],
+    "errors": []
+  },
+  "priorAttempts": [
+    "Outside-api artifacts caused API solution-root discovery errors; corrected by placing isolated artifacts under api/.codex-tmp.",
+    "First full run lacked LocalDB; final run used available local SQL Server with integrated authentication.",
+    "An Angular hook timeout during simultaneous builds cleared in the final full check without a source change.",
+    "Browser Clear selector matched both field and filter clear buttons; scoped to the existing PrimeNG button bar, then all six scenarios passed."
+  ],
+  "tooling": {
+    "primeNgMcpAvailable": false,
+    "sources": [
+      "https://primeng.dev/table#filter",
+      "https://primeng.dev/select"
+    ],
+    "graphQuery": "Existing graph query used for navigation; graph unchanged"
+  },
+  "rollout": "Publish Angular and ErpSystem.Api together for /manage/query and synchronized embedded localization catalog. Crystal service unchanged by column filtering.",
+  "overallPhase06": "Not Verified",
+  "followUp": "FOLLOW-024 Open; PROD-028 Open; DEF-027/028 Deferred",
+  "deploymentPerformed": false,
+  "serverStartedOrRestarted": false,
+  "liveReportWrites": false,
+  "finalChecks": {
+    "format": "passed after browser selector correction",
+    "documentation": "460 recipes passed",
+    "planning": "passed with pre-existing education-module/erp-platform-template feature-contract migration warnings",
+    "gitDiffCheck": "passed"
+  }
+}

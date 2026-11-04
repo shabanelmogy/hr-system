@@ -11,6 +11,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { LocalizationRuntime, UiTextPipe } from '../../../../../platform/localization/public-api';
 import {
   ActionButton,
+  AppIcon,
   DialogPanel,
   FeedbackState,
   FormCloseGuard,
@@ -35,6 +36,7 @@ type DesignColumn = GlobalTemplateDesignSource['columns'][number];
   imports: [
     ReactiveFormsModule,
     ActionButton,
+    AppIcon,
     DialogPanel,
     FeedbackState,
     FormCloseGuard,

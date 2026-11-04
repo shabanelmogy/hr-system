@@ -1,0 +1,74 @@
+:host {
+  display: inline-flex;
+  max-inline-size: 100%;
+  min-inline-size: 0;
+}
+
+// PrimeNG groups direct buttons/p-button. Our adapter adds an erp-button host,
+// so joined edges select that host while keeping the original button intact.
+:host ::ng-deep .p-buttongroup {
+  align-items: stretch;
+  max-inline-size: 100%;
+}
+
+:host ::ng-deep .p-buttongroup > erp-button {
+  display: inline-flex;
+  min-inline-size: 0;
+}
+
+:host ::ng-deep .p-buttongroup > erp-button > button {
+  border-radius: 0;
+}
+
+:host ::ng-deep .p-buttongroup > erp-button:first-child > button {
+  border-start-start-radius: var(--p-button-border-radius);
+  border-end-start-radius: var(--p-button-border-radius);
+}
+
+:host ::ng-deep .p-buttongroup > erp-button:last-child > button {
+  border-start-end-radius: var(--p-button-border-radius);
+  border-end-end-radius: var(--p-button-border-radius);
+}
+
+:host ::ng-deep .p-buttongroup > erp-button + erp-button > button {
+  border-inline-start-width: 0;
+}
+
+@media (max-width: 599px) {
+  :host,
+  :host p-buttongroup {
+    inline-size: 100%;
+  }
+
+  :host ::ng-deep .p-buttongroup {
+    display: flex;
+    flex-direction: column;
+    inline-size: 100%;
+  }
+
+  :host ::ng-deep .p-buttongroup > erp-button > button {
+    inline-size: 100%;
+    border-radius: 0;
+    border-inline-start-width: 1px;
+  }
+
+  :host ::ng-deep .p-buttongroup > erp-button + erp-button > button {
+    border-block-start-width: 0;
+  }
+
+  :host ::ng-deep .p-buttongroup > erp-button:first-child > button {
+    border-start-start-radius: var(--p-button-border-radius);
+    border-start-end-radius: var(--p-button-border-radius);
+    border-end-start-radius: 0;
+  }
+
+  :host ::ng-deep .p-buttongroup > erp-button:last-child > button {
+    border-start-end-radius: 0;
+    border-end-start-radius: var(--p-button-border-radius);
+    border-end-end-radius: var(--p-button-border-radius);
+  }
+
+  :host ::ng-deep .p-buttongroup > erp-button:only-child > button {
+    border-radius: var(--p-button-border-radius);
+  }
+}

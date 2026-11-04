@@ -307,7 +307,7 @@ try {
           const fields = await view
             .locator('.form-content > [data-testid]')
             .evaluateAll((elements) => elements.map((element) => element.dataset.testid));
-          assert.deepEqual(fields, ['nameAr', 'nameEn', 'report']);
+          assert.deepEqual(fields, ['report', 'nameAr', 'nameEn']);
           const url = await viewer.locator('a[download]').getAttribute('href');
           assert.ok(url.startsWith('blob:' + origin + '/'));
           await expect(viewer.locator('a[target=_blank]')).toHaveAttribute(

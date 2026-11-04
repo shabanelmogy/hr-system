@@ -693,14 +693,14 @@ Reporting keeps existing catalog/service/PDF validation/cancellation. Applied fi
 and selected report now belong to the immutable actor; replacement clears them and
 draft fields. Explicit reload regenerates even if source/hash is unchanged. Shared
 ReportWorkspace reference appearance uses280px sidebar/gap64 and contained scrolling;
-FormContainer sidebar appearance keeps Search/Reset full width; PdfViewer fill mode
+FormContainer sidebar appearance keeps Search/Reset full width in DOM order; PdfViewer fill mode
 retains safe open/download, capability fallback, lease cleanup and finite inline area.
 Existing standalone report defaults remain compatible; no new package or translation key.
 
 ReportWorkspace appearance=reference is opt-in, maintains finite height/min-height0,
 280px desktop criteria and compact stacked rows, using existing ScrollViewport.
-FormContainer appearance=sidebar provides field gaps16 and full-width reversed DOM
-footer layout (Search visually before Reset), keeping shared errors/summary/focus.
+FormContainer appearance=sidebar provides field gaps16 and full-width footer
+layout (Search before Reset in DOM and visually), keeping shared errors/summary/focus.
 PdfViewer fill=true uses remaining flex space; safe native Open/Download are always
 available even without navigator.pdfViewerEnabled. Default layouts remain unchanged.
 No feature-local form/PDF/scroll shell. Use Reporting public API for owner integration;
@@ -713,3 +713,77 @@ MyDataGrid uses PrimeNG rowTrackBy with its existing typed row key to preserve s
 ## Shared improvements apply generally
 
 Requester2026-10-31: reusable presentation/behavior must apply to every applicable current and future consumer. Extend the global theme/owning shared component, never a Countries-only workaround. Application scrolling now follows ANGULAR_SCROLLING.md: one SCSS token policy, automatic root/overflow styling, existing PrimeNG ScrollViewport consumes the same values. All five palettes, EN/AR/RTL, horizontal/vertical, dialogs/lists/fields use it without per-feature opt-in. Domain-specific exceptions require a domain reason; generic improvements remain shared.
+
+## Native PDF theme policy — 2026-11-04
+
+Shared PdfViewer retains its native iframe and original Blob Open/Download. Its
+application toolbar uses shared surface/foreground/border/radius tokens in both
+standalone and fill modes. The frame background uses muted and inherits root
+color-scheme. Native PDF chrome remains browser-owned: Edge may remain light,
+Chrome may show dark chrome; no CSS filters or PDF inversion are permitted.
+Open PDF opens the original document in a new tab for browser printing; no automatic
+print dialog is promised. No renderer dependency or theme-triggered iframe reload.
+Native capability fallback and URL cleanup remain intact.8isolated production
+browser cases and the522test full Angular gate pass. Registered evidence lives at
+reporting/global-crystal-template-manager/verification/pdf-viewer-theme/.
+
+
+## Shared document actions, tabs and pagination — 2026-11-04
+
+PdfViewer.actionsTemplate exposes its existing safe Open/Download links using the
+single owned resource; showActions defaults true and actionsLayout defaults inline.
+ReportWorkspace optionally projects reportActions into its sidebar and uses labelled
+Search/Options tabs when optionsLabel is supplied. ContentTabs.keepAlive defaults
+false; opt in for forms that must remain mounted. Validation can select the relevant
+panel before focus. ContentTabs uses PrimeNG active tab border tokens instead of
+the separately measured bar, covering RTL, translated labels and font loading.
+
+Global Report Manager reuses Countries' existing MyDataGrid.recordNavigation=true
+in all three grids. CollectionFooter is unchanged; no new pagination styling or
+component was added. Existing record count/navigation, page count, size selection,
+RTL and compact layout are inherited directly from the shared implementation.
+Evidence and exact APIs: global-crystal-template-manager web section35 and
+verification/sidebar-actions/. PrimeNG22.1.4; no vendor patch or extra dependency.
+
+## Shared column-filter choices — 2026-11-04
+
+GridColumnFilter.choices optionally supplies translated labels with stable string
+wire values for text filters restricted to equals/notEquals. Shared GridFilterInput
+uses the existing OptionSelect, All emits null, and typed contract validation
+rejects duplicate/blank/oversized/unlisted choices. Other fields retain their
+existing inputs and menus. Owners provide choices and server predicates; shared UI
+never filters a single remote page locally. Main Global Report Manager is the
+verified consumer: section36 and verification/column-filters/. No new component.
+
+## Report search sidebar and icons — 2026-11-04
+
+FormContainer sidebar renders its single submit fragment before secondary actions,
+matching DOM/keyboard and visual order. Other appearances retain their placement.
+ReportWorkspace document-actions owns generic12px grid spacing; use wrapper-free
+reportActions projection for multiple actions. GlobalReportView uses the same
+sidebar form in both modes and places report selection before criteria. Shared
+AppIcon adds download/openInNew/language; PdfViewer consumes icons inside its
+original anchors. ActionButton/formSubmitIcon stay the only button projection API.
+No new components. Verified sources,16browser cases and full531test Angular gate:
+global-crystal-template-manager section37/verification/search-sidebar-layout/.
+
+## Manager action and metadata composition — 2026-11-04
+
+MyDataGrid toolbarContent owns actions; toolbarFilters owns criteria. Use wrapper-free
+ng-container projection so existing collection-actions gap/wrapping reaches buttons.
+SurfaceCard contentLayout=details opts into a responsive RecordSummary grid and a
+wrapping footer through the existing footerTemplate API. Default cards retain their
+layout. Existing formTools is for auxiliary Inspect; formActions and formSubmitIcon
+provide Cancel/Save. AppIcon adds reusable upload/save SVGs. Manager531test and6case
+production-fixture browser proof lives in global-crystal-template-manager section38.
+
+## Shared ActionButtonGroup — 2026-11-04
+
+ActionButtonGroup (erp-button-group) wraps PrimeNG ButtonGroup for existing shared
+ActionButton children. Supply a translated label; features retain callbacks,
+authority and pending state. The adapter owns logical joined edges across
+erp-button wrapper hosts and vertical full-width grouping under 600px. Reuse it
+for related actions; keep unrelated actions outside. No custom interaction or
+button replacement. Existing MyDataGrid toolbarContent and SurfaceCard footerTemplate
+own placement. Verified in global-crystal-template-manager section39: 532 Angular
+tests and six EN/AR production-fixture browser cases including RTL joined edges.

@@ -12,6 +12,39 @@ const definitions: readonly GridColumnFilter[] = [
   { field: 'enabled', type: 'boolean' },
 ];
 describe('Typed shared Grid advanced criteria boundary', () => {
+  it('keeps translated choices separate from bounded wire values and rejects unsupported choices', () => {
+    const choice: GridColumnFilter = {
+      field: 'status',
+      type: 'text',
+      modes: ['equals', 'notEquals'],
+      choices: [
+        { value: 'draft', label: 'مسودة' },
+        { value: 'published', label: 'Published' },
+      ],
+    };
+    const group = (value: string) => [
+      { field: 'status', operator: 'and', constraints: [{ matchMode: 'equals', value }] },
+    ];
+    expect(parseGridFilters(group('draft'), [choice])).toEqual(group('draft'));
+    expect(() => parseGridFilters(group('مسودة'), [choice])).toThrow();
+    expect(() => parseGridFilters(group('unknown'), [choice])).toThrow();
+    expect(() => parseGridFilters([], [{ ...choice, modes: ['contains'] }])).toThrow();
+    expect(() => parseGridFilters([], [{ ...choice, choices: [] }])).toThrow();
+    expect(() =>
+      parseGridFilters(
+        [],
+        [
+          {
+            ...choice,
+            choices: [
+              { value: 'x', label: 'A' },
+              { value: 'x', label: 'B' },
+            ],
+          },
+        ],
+      ),
+    ).toThrow();
+  });
   it('enforces owner-defined integer bounds and valid calendar years without changing zero', () => {
     const integer: GridColumnFilter = {
       field: 'id',

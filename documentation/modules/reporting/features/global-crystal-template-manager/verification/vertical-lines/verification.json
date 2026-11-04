@@ -1,0 +1,85 @@
+{
+  "date": "2026-11-04",
+  "feature": "global-crystal-template-manager",
+  "slice": "GCT-1",
+  "technicalStatus": "Passed",
+  "integratedHostedStatus": "Not Verified",
+  "request": "Mirror vertical lines, retaining design visibility instead of the historical English suppression",
+  "research": [
+    "https://help.sap.com/doc/1eb6ed2630b940d49d85e22ba94c35bc/4.3.2/en-US/Tomodifyareportobject.html"
+  ],
+  "implementation": "RAS deep clone plus atomic ReportObjectController.Modify; existing references only",
+  "regressionRed": "Observed before runtime correction: Axis-aligned lines must mirror without suppressing them.",
+  "build": "Actual SAP13.0.4000 .NET Framework4.8 Release/x64 build passed",
+  "contractHarness": {
+    "status": "Passed",
+    "geometryLanguageCases": 14,
+    "preExportWiring": "Passed",
+    "httpAuthorizationCases": 15,
+    "scope": "Complete existing metadata and HTTP boundary harness"
+  },
+  "native": {
+    "status": "Passed",
+    "engine": "Actual installed SAP runtime under 64-bit Windows PowerShell",
+    "sourceSha256": "E9505470CFEB41D6C1DC7F05EB04AD94870435A0387C6C8F1345D10829FA84D7",
+    "runtimeSha256": "F4146FAC4D1C2B5C7650E7B4F532DDBF96981DD842CB353033A947CDCA506B2A",
+    "fixture": "Countries.tests.rpt temporary copy with two synthetic DataTable rows and four in-memory lines",
+    "originalSourceContainsLines": false,
+    "originalSourceSaved": false,
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "lineFixtures": [
+      "DirectionVisible",
+      "DirectionHorizontal",
+      "DirectionSpanning",
+      "DirectionSuppressed"
+    ],
+    "assertions": [
+      "X endpoints",
+      "Y endpoints",
+      "start/end sections",
+      "extend-to-bottom",
+      "original suppression",
+      "color/style/thickness",
+      "PDF signature",
+      "source hash unchanged"
+    ],
+    "pdfVectors": "Three colored lines in each PDF; mirrored X positions, unchanged Y/width; suppressed yellow absent",
+    "pdfVisualReview": "Both first-page PNGs inspected; red vertical and green spanning line move from left to right with English columns",
+    "limits": "Fixture proof does not claim all hosted templates, charts, pictures or production visual acceptance"
+  },
+  "unchangedPlatforms": [
+    "ERP API",
+    "Angular",
+    "Next",
+    "mobile"
+  ],
+  "clientGatesRerun": false,
+  "schemaChange": false,
+  "serverRestart": false,
+  "deployedByAgent": false,
+  "publishTarget": "CrystalReportGeneratorApi only",
+  "phase06": "Not Verified overall",
+  "openAcceptance": [
+    "FOLLOW-024",
+    "PROD-028"
+  ],
+  "deferredNotResumed": [
+    "DEF-027",
+    "DEF-028"
+  ],
+  "sourceSha256": {
+    "api/CrystalReportGeneratorApi/Runtime/Rendering/CrystalReportDirection.cs": "fba31d482605071309a555177ce76d812fda1efbad373a4bbeb9071f7a237357",
+    "api/CrystalReportGeneratorApi/Runtime/Rendering/CrystalReportDirectionGeometry.cs": "121c333d12b83601f46f0b9c466e48924e7abff05643dca1274fa0df1d24f07b",
+    "api/CrystalReportGeneratorApi.ContractTests/CrystalReportDirectionTests.cs": "5a16ca687cf34bacf807cd1739ea9803fb0578487f3c692311f1695545c265cb",
+    "api/CrystalReportGeneratorApi.ContractTests/Verify-CrystalReportDirection.ps1": "19c0ae0bc2bdd6b47b1ce5a8e202bd3da175031336ea6d011ef78b1747ebb630"
+  },
+  "documentation": {
+    "generation": "Passed",
+    "check": "Passed, 460 recipes",
+    "planning": "Passed with two inherited migration warnings in education-module and erp-platform-template",
+    "diffWhitespace": "Passed"
+  }
+}

@@ -12,6 +12,7 @@ import {
   signal,
 } from '@angular/core';
 import { type AbstractControl } from '@angular/forms';
+import { NgTemplateOutlet } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { filter, firstValueFrom } from 'rxjs';
 import { ActionButton } from '../../buttons/public-api';
@@ -20,7 +21,7 @@ import { ValidationSummary } from '../validation-summary/validation-summary';
 
 @Component({
   selector: 'erp-form',
-  imports: [ActionButton, ValidationSummary],
+  imports: [ActionButton, NgTemplateOutlet, ValidationSummary],
   templateUrl: './form-container.html',
   styleUrl: './form-container.scss',
 })

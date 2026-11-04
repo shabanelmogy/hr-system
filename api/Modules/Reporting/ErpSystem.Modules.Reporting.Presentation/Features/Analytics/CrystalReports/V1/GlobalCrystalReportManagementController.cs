@@ -25,6 +25,15 @@ public sealed class GlobalCrystalReportManagementController(ISender sender) : Co
         return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
     }
 
+    // Keep the existing GET contract; native column rules use a bounded read body.
+    [HttpPost("query")]
+    [RequestSizeLimit(32768)]
+    public async Task<IActionResult> Query([FromBody] GetGlobalCrystalReportManagementQuery request, CancellationToken token)
+    {
+        var result = await sender.Send(request, token);
+        return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
+    }
+
     [HttpGet("design-sources")]
     public async Task<IActionResult> DesignSources(CancellationToken token) =>
         Ok(await sender.Send(new GetGlobalCrystalReportDesignSourcesQuery(), token));

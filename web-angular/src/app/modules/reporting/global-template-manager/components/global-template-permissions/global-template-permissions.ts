@@ -3,6 +3,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { LocalizationRuntime, UiTextPipe } from '../../../../../platform/localization/public-api';
 import {
   ActionButton,
+  AppIcon,
   BooleanField,
   CollectionCell,
   CollectionColumnPipe,
@@ -18,6 +19,7 @@ import { globalTemplateRights, type GlobalTemplateRole } from '../../types/globa
   imports: [
     ReactiveFormsModule,
     ActionButton,
+    AppIcon,
     BooleanField,
     CollectionCell,
     CollectionColumnPipe,

@@ -13,16 +13,35 @@ nav {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+  padding: 8px;
+  color: var(--foreground);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
 }
 nav a {
   text-decoration: none;
 }
+nav.stacked {
+  flex-direction: column;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+nav.stacked a {
+  white-space: normal;
+  text-align: center;
+}
 iframe {
+  display: block;
+  box-sizing: border-box;
   width: 100%;
   height: max(540px, 70dvh);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  background: var(--surface);
+  background: var(--muted);
+  // Native PDF chrome may use the inherited scheme; its support varies by browser.
+  color-scheme: inherit;
 }
 p {
   padding: 24px;
@@ -45,10 +64,6 @@ section.fill {
 }
 section.fill nav {
   flex-shrink: 0;
-  padding: 8px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
 }
 section.fill iframe {
   flex: 1;

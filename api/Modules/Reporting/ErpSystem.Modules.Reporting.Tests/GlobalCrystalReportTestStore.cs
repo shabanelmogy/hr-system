@@ -1,6 +1,7 @@
 using ErpSystem.Modules.Reporting.Application.Features.Analytics.CrystalReports.Abstractions;
 using ErpSystem.Modules.Reporting.Application.Features.Analytics.CrystalReports.Contracts;
 using ErpSystem.Modules.Reporting.Domain.Analytics.CrystalReports.Entities;
+using ErpSystem.Modules.Reporting.Application.Features.Analytics.CrystalReports.Queries;
 
 namespace ErpSystem.Modules.Reporting.Tests;
 
@@ -13,7 +14,7 @@ internal sealed class GlobalCrystalReportTestStore : IGlobalCrystalReportStore
         CatalogReads++;
         return Task.FromResult<IReadOnlyList<GlobalCrystalManagedCatalogEntry>>(Catalog.Where(item => item.EntityKey == entityKey).ToArray());
     }
-    public Task<CrystalReportPageResponse> ListAsync(IReadOnlyCollection<string> entityKeys, string? search, int page, int pageSize, CancellationToken cancellationToken, string? status = null) => throw new NotSupportedException();
+    public Task<CrystalReportPageResponse> ListAsync(IReadOnlyCollection<string> entityKeys, string? search, int page, int pageSize, CancellationToken cancellationToken, string? status = null, IReadOnlyList<GlobalCrystalReportFilterGroup>? filters = null) => throw new NotSupportedException();
     public Task<CrystalReportDetailResponse?> DetailAsync(Guid id, CancellationToken cancellationToken) => throw new NotSupportedException();
     public Task<GlobalCrystalReport?> FindAsync(Guid id, CancellationToken cancellationToken) => throw new NotSupportedException();
     public Task<GlobalCrystalReport?> FindByKeyAsync(string entityKey, string reportKey, CancellationToken cancellationToken) => throw new NotSupportedException();

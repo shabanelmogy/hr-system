@@ -1,18 +1,8 @@
 @if (current(); as resource) {
   <section [attr.aria-label]="title()" [class.fill]="fill()">
-    <nav [attr.aria-label]="title()">
-      <a
-        pButton
-        [href]="resource.url"
-        target="_blank"
-        rel="noopener noreferrer"
-        referrerpolicy="no-referrer"
-        >{{ 'reports.openPdf' | uiText }}</a
-      >
-      <a pButton variant="outlined" [href]="resource.url" [download]="downloadName()">{{
-        'common.downloadFile' | uiText
-      }}</a>
-    </nav>
+    @if (showActions()) {
+      <ng-container [ngTemplateOutlet]="actions" />
+    }
     @if (inlineSupported) {
       <iframe [src]="resource.safe" [title]="title()" referrerpolicy="no-referrer"></iframe>
     } @else {
@@ -20,3 +10,20 @@
     }
   </section>
 }
+<ng-template #actions>
+  @if (current(); as resource) {
+    <nav [attr.aria-label]="title()" [class.stacked]="actionsLayout() === 'stacked'">
+      <a
+        pButton
+        [href]="resource.url"
+        target="_blank"
+        rel="noopener noreferrer"
+        referrerpolicy="no-referrer"
+        ><erp-icon name="openInNew" /><span>{{ 'reports.openPdf' | uiText }}</span></a
+      >
+      <a pButton variant="outlined" [href]="resource.url" [download]="downloadName()"
+        ><erp-icon name="download" /><span>{{ 'common.downloadFile' | uiText }}</span></a
+      >
+    </nav>
+  }
+</ng-template>

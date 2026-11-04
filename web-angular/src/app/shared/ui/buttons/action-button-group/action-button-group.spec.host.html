@@ -1,0 +1,6 @@
+<erp-button-group [label]="label()">
+  <erp-button label="Upload" [busy]="busy()" (activated)="uploads = uploads + 1" />
+  @if (canRegister()) {
+    <erp-button label="Register" variant="outlined" />
+  }
+</erp-button-group>

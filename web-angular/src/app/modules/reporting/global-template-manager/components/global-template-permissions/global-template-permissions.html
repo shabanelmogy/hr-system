@@ -31,6 +31,7 @@
   [showSubmit]="state().canEdit()"
   (validSubmit)="state().save()"
 >
+  <erp-icon formSubmitIcon name="save" />
   <erp-data-table
     [source]="state().source()"
     [columns]="columns()"
@@ -65,7 +66,8 @@
           variant="text"
           [disabled]="state().pending()"
           (activated)="state().removeGrant(grant.roleId)"
-        />
+          ><erp-icon buttonIcon name="close"
+        /></erp-button>
       }
     </div>
   }
