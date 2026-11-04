@@ -1,0 +1,185 @@
+<erp-form-close-guard
+  #closeGuard
+  identity="global-template-design"
+  [revision]="state.revision()"
+  [active]="state.opened()"
+  [unsaved]="state.form.dirty"
+  [pending]="state.pending()"
+  (closed)="state.close()"
+/>
+<erp-dialog-panel
+  size="wide"
+  [open]="state.opened()"
+  [title]="'globalTemplates.design.title' | uiText: 'reporting'"
+  [description]="'globalTemplates.design.hint' | uiText: 'reporting'"
+  [closeLabel]="'actions.close' | uiText"
+  [showFooter]="false"
+  [pending]="state.pending()"
+  (closeRequested)="closeGuard.requestClose()"
+>
+  @if (state.opened()) {
+    @if (state.catalogState().kind === 'loading') {
+      <erp-feedback-state kind="loading" [title]="'common.loading' | uiText" />
+    } @else if (state.catalogState().kind === 'error') {
+      <erp-feedback-state
+        kind="error"
+        [title]="'common.error' | uiText"
+        [actionLabel]="'actions.retry' | uiText"
+        (action)="state.reload()"
+      />
+    } @else if (!state.sources().length) {
+      <erp-feedback-state
+        kind="empty"
+        [title]="'globalTemplates.design.noSources' | uiText: 'reporting'"
+      />
+    } @else {
+      <erp-form
+        #entryForm
+        [form]="state.form"
+        [title]="'globalTemplates.design.title' | uiText: 'reporting'"
+        appearance="dialog"
+        [hideHeader]="true"
+        [submitLabel]="'globalTemplates.design.saveDraft' | uiText: 'reporting'"
+        [pending]="state.pending()"
+        (validSubmit)="save()"
+        [feedback]="
+          state.feedback()?.message ||
+          (state.feedback()
+            ? locale.translate(
+                state.feedback()?.key || 'common.error',
+                state.feedback()?.key?.startsWith('globalTemplates.') ? 'reporting' : 'core'
+              )
+            : '')
+        "
+      >
+        <erp-reference-field
+          [formControl]="state.form.controls.moduleKey"
+          [source]="moduleOptions()"
+          [label]="'globalTemplates.design.module' | uiText: 'reporting'"
+          [searchable]="false"
+          [messages]="messages()"
+          [readOnly]="state.pending()"
+          (retry)="state.reload()"
+        />
+        <erp-reference-field
+          [formControl]="state.form.controls.sourceKey"
+          [source]="sourceOptions()"
+          [label]="'globalTemplates.design.source' | uiText: 'reporting'"
+          [searchable]="false"
+          [messages]="messages()"
+          [help]="'globalTemplates.design.sourceHint' | uiText: 'reporting'"
+          [readOnly]="state.pending() || !state.moduleKey()"
+          (retry)="state.reload()"
+        />
+        <erp-reference-field
+          [formControl]="state.form.controls.viewName"
+          [label]="'globalTemplates.design.viewName' | uiText: 'reporting'"
+          [help]="'globalTemplates.design.viewCatalogHint' | uiText: 'reporting'"
+          [source]="viewOptions()"
+          [selection]="viewSelection()"
+          [searchText]="state.views.criteria().search"
+          [messages]="messages()"
+          [readOnly]="state.pending() || !state.selectedSource()"
+          (searchChange)="state.views.search($event)"
+          (loadMore)="state.views.loadMore()"
+          (retry)="state.refreshViews()"
+        />
+        @if (state.selectedSource()) {
+          <erp-button
+            variant="text"
+            [label]="'globalTemplates.design.refreshViews' | uiText: 'reporting'"
+            [disabled]="state.pending()"
+            (activated)="state.refreshViews()"
+          />
+          @if (state.views.state().kind === 'ready' && !state.views.items().length) {
+            <erp-feedback-state
+              layout="inline"
+              kind="empty"
+              tone="warning"
+              [title]="'globalTemplates.design.noViews' | uiText: 'reporting'"
+            />
+          } @else if (state.views.state().kind === 'error') {
+            <erp-feedback-state
+              layout="inline"
+              kind="error"
+              [title]="'globalTemplates.design.viewLoadError' | uiText: 'reporting'"
+              [actionLabel]="'actions.retry' | uiText"
+              (action)="state.refreshViews()"
+            />
+          }
+        }
+        <erp-text-field
+          [formControl]="state.form.controls.displayName"
+          [label]="'crystalReports.displayName' | uiText: 'reporting'"
+          [maxLength]="200"
+          [messages]="messages()"
+          [readOnly]="state.pending()"
+        />
+        <erp-text-field
+          [formControl]="state.form.controls.reportKey"
+          [label]="'crystalReports.reportKey' | uiText: 'reporting'"
+          [help]="'globalTemplates.design.keyHint' | uiText: 'reporting'"
+          [maxLength]="128"
+          [messages]="messages()"
+          [readOnly]="state.pending()"
+        />
+        <erp-text-field
+          [formControl]="state.form.controls.description"
+          [label]="'crystalReports.description' | uiText: 'reporting'"
+          [maxLength]="500"
+          [multiline]="true"
+          [rows]="2"
+          [messages]="messages()"
+          [readOnly]="state.pending()"
+        />
+        @if (state.selectedSource(); as source) {
+          <erp-surface-card
+            [title]="'globalTemplates.design.fields' | uiText: 'reporting'"
+            [compact]="true"
+            [subtitle]="source.tableName + ' · v' + source.contractSchemaVersion"
+          >
+            <erp-data-table
+              [source]="fieldSource()"
+              [label]="'globalTemplates.design.fields' | uiText: 'reporting'"
+              [columns]="fieldColumns()"
+              [rowId]="fieldId"
+              [toolbarVisible]="false"
+              [pageSizes]="[fieldSource().query.pageSize]"
+            />
+            <h3>{{ 'globalTemplates.design.parameters' | uiText: 'reporting' }}</h3>
+            @for (parameter of source.parameters; track parameter.name) {
+              <erp-record-summary
+                [title]="parameter.name"
+                [description]="parameter.type + ' · ' + parameter.allowedValues.join(' / ')"
+                [metadata]="
+                  (parameter.required
+                    ? 'globalTemplates.design.requiredParameter'
+                    : 'globalTemplates.design.optionalParameter'
+                  ) | uiText: 'reporting'
+                "
+              />
+            }
+            <p>{{ 'globalTemplates.design.instructions' | uiText: 'reporting' }}</p>
+            @if (state.canDownload()) {
+              <erp-button
+                variant="outlined"
+                [label]="'globalTemplates.design.downloadPackage' | uiText: 'reporting'"
+                [disabled]="state.pending()"
+                (activated)="state.downloadPackage()"
+              />
+            }
+          </erp-surface-card>
+        }
+        <erp-record-summary [title]="'globalTemplates.design.draftHint' | uiText: 'reporting'" />
+        <div formActions>
+          <erp-button
+            variant="text"
+            [label]="'actions.cancel' | uiText"
+            [disabled]="state.pending()"
+            (activated)="closeGuard.requestClose()"
+          />
+        </div>
+      </erp-form>
+    }
+  }
+</erp-dialog-panel>

@@ -91,7 +91,7 @@
     },
     {
       "id": "phase00-11",
-      "path": "web-angular/src/app/shared/ui/forms/fields/text-field.ts",
+      "path": "web-angular/src/app/shared/ui/forms/fields/text-field/text-field.ts",
       "layer": "web",
       "purpose": "Actual inspected evidence or frozen contract"
     },
@@ -103,7 +103,7 @@
     },
     {
       "id": "phase00-13",
-      "path": "web-angular/src/app/shared/ui/forms/form-container.ts",
+      "path": "web-angular/src/app/shared/ui/forms/form-container/form-container.ts",
       "layer": "web",
       "purpose": "Actual inspected evidence or frozen contract"
     },
@@ -145,7 +145,7 @@
     },
     {
       "id": "runtime-0",
-      "path": "web-angular/src/app/shared/ui/forms/fields/text-field.html",
+      "path": "web-angular/src/app/shared/ui/forms/fields/text-field/text-field.html",
       "layer": "web",
       "purpose": "Actual numeric runtime or synchronized source evidence"
     },
@@ -163,19 +163,19 @@
     },
     {
       "id": "runtime-3",
-      "path": "web-angular/src/app/shared/ui/forms/fields/numeric-field.ts",
+      "path": "web-angular/src/app/shared/ui/forms/fields/numeric-field/numeric-field.ts",
       "layer": "web",
       "purpose": "Actual numeric runtime or synchronized source evidence"
     },
     {
       "id": "runtime-4",
-      "path": "web-angular/src/app/shared/ui/forms/fields/numeric-field.spec.ts",
+      "path": "web-angular/src/app/shared/ui/forms/fields/numeric-field/numeric-field.spec.ts",
       "layer": "web",
       "purpose": "Actual numeric runtime or synchronized source evidence"
     },
     {
       "id": "runtime-5",
-      "path": "web-angular/src/app/dev/numeric-preview.ts",
+      "path": "web-angular/src/app/dev/numeric-preview/numeric-preview.ts",
       "layer": "web",
       "purpose": "Actual numeric runtime or synchronized source evidence"
     },
@@ -361,9 +361,57 @@
     },
     {
       "id": "shared-multiline-regression",
-      "path": "web-angular/src/app/shared/ui/forms/fields/text-field.spec.ts",
+      "path": "web-angular/src/app/shared/ui/forms/fields/text-field/text-field.spec.ts",
       "layer": "web",
       "purpose": "Current inherited TextField mode/locks/template regression"
+    },
+    {
+      "id": "component-resource-311f299a2a50",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/form-container/form-container.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-64f59bf36711",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/fields/numeric-field/numeric-field.spec.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-83ea80917070",
+      "layer": "web",
+      "path": "web-angular/src/app/dev/numeric-preview/numeric-preview.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-61166d649819",
+      "layer": "web",
+      "path": "web-angular/src/app/dev/numeric-preview/numeric-preview.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-d286e19eb5e2",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/fields/text-field/text-field.spec.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "quality-b48e367c4706",
+      "layer": "configuration",
+      "path": "web-angular/eslint.config.mjs",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-18187b5430c6",
+      "layer": "configuration",
+      "path": "web-angular/scripts/dependency-rules.mjs",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-056ed62f225e",
+      "layer": "configuration",
+      "path": "web-angular/scripts/dependency-rules.test.mjs",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
     }
   ],
   "finalizationChecklist": [

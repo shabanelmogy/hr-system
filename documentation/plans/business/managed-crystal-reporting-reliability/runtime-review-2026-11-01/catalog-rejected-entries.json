@@ -1,0 +1,28 @@
+﻿[
+    {
+        "SourceId":  "1ce9eb21cb800728815c38288cfb6e63c0f88a4af85e4c92792b3a0655580bd6",
+        "EntityKey":  "countries",
+        "ReportKey":  "countries-too-large",
+        "FileName":  "countries-too-large.rpt",
+        "Title":  "countries-too-large",
+        "Subject":  null,
+        "Size":  11534336,
+        "Sha256":  null,
+        "LastModifiedUtc":  "\/Date(1793523421491)\/",
+        "IsImportable":  false,
+        "ValidationReason":  "The report exceeds the configured import limit."
+    },
+    {
+        "SourceId":  null,
+        "EntityKey":  "countries",
+        "ReportKey":  null,
+        "FileName":  "م.rpt",
+        "Title":  "م",
+        "Subject":  null,
+        "Size":  8,
+        "Sha256":  null,
+        "LastModifiedUtc":  "\/Date(1793523421501)\/",
+        "IsImportable":  false,
+        "ValidationReason":  "The report filename cannot be normalized to a report key."
+    }
+]

@@ -1,9 +1,13 @@
-import { computed, inject, Injectable, signal } from '@angular/core';
-import { toObservable, toSignal } from '@angular/core/rxjs-interop';
-import { catchError, map, of, startWith, switchMap } from 'rxjs';
+import { computed, DestroyRef, effect, inject, Injectable, signal } from '@angular/core';
+import { takeUntilDestroyed, toObservable, toSignal } from '@angular/core/rxjs-interop';
+import { catchError, filter, finalize, map, of, startWith, switchMap, takeUntil } from 'rxjs';
 import { AuthSession, type Session } from '../../../../platform/auth/session.public-api';
 import { LocalizationRuntime } from '../../../../platform/localization/public-api';
-import { createScopedRead, type PdfDocument } from '../../../../shared/data/public-api';
+import {
+  createScopedRead,
+  downloadBlob,
+  type PdfDocument,
+} from '../../../../shared/data/public-api';
 import { GlobalReportService } from '../services/global-report-service';
 import {
   emptyReportFilters,
@@ -12,6 +16,7 @@ import {
   reportFiltersSchema,
   type GlobalReport,
   type ReportFilters,
+  type GlobalReportEntity,
 } from '../types/global-report';
 interface RenderSpec {
   readonly actor: Session;
@@ -31,29 +36,46 @@ export type GlobalReportView =
   | { kind: 'ready'; document: PdfDocument; report: GlobalReport };
 @Injectable()
 export class GlobalReportState {
+  private readonly destroyRef = inject(DestroyRef);
+  readonly sourcePending = signal(false);
+  readonly sourceFailure = signal<GlobalReportFailure | null>(null);
+  readonly entity = signal<GlobalReportEntity>('countries');
   private readonly auth = inject(AuthSession);
   private readonly service = inject(GlobalReportService);
   private readonly locale = inject(LocalizationRuntime);
   private readonly deniedActor = signal<Session | null>(null);
   private readonly staleActor = signal<Session | null>(null);
-  private readonly selection = signal<{actor:Session;id:string} | null>(null);
+  private readonly selection = signal<{ actor: Session; id: string } | null>(null);
   private readonly revision = signal(0);
-  private readonly criteria = signal<{actor:Session;filters:ReportFilters} | null>(null);
-  readonly applied = computed<ReportFilters>(()=>{
-    const criteria=this.criteria();return criteria?.actor===this.identity()?criteria.filters:emptyReportFilters;
+  private readonly criteria = signal<{ actor: Session; filters: ReportFilters } | null>(null);
+  readonly applied = computed<ReportFilters>(() => {
+    const criteria = this.criteria();
+    return criteria?.actor === this.identity() ? criteria.filters : emptyReportFilters;
   });
   private readonly identity = computed(() => {
     const actor = this.auth.readIdentity();
     return actor && actor !== this.deniedActor() ? actor : null;
   });
-  private readonly catalogRead = createScopedRead(this.identity, globalReportAllowed, () =>
-    this.service.catalog(),
+  private readonly catalogSpec = computed(() => {
+    const actor = this.identity();
+    return actor ? { actor, entity: this.entity() } : null;
+  });
+  private readonly scopeChanges = toObservable(this.catalogSpec);
+  private readonly catalogRead = createScopedRead(
+    this.catalogSpec,
+    (spec) => globalReportAllowed(spec.actor, spec.entity),
+    (spec) => this.service.catalog(spec.entity),
   );
   readonly catalog = this.catalogRead.state;
   readonly selected = computed(() => {
     const state = this.catalog();
     return state.kind === 'ready'
-      ? (state.data.find((report) => this.selection()?.actor===this.identity()&&report.id===this.selection()?.id) ?? state.data[0] ?? null)
+      ? (state.data.find(
+          (report) =>
+            this.selection()?.actor === this.identity() && report.id === this.selection()?.id,
+        ) ??
+          state.data[0] ??
+          null)
       : null;
   });
   readonly conflict = computed(() => {
@@ -63,7 +85,8 @@ export class GlobalReportState {
   private readonly spec = computed<RenderSpec | null>(() => {
     const actor = this.identity(),
       report = this.selected();
-    if (!actor || !globalReportAllowed(actor) || !report || this.conflict()) return null;
+    if (!actor || !globalReportAllowed(actor, this.entity()) || !report || this.conflict())
+      return null;
     return {
       actor,
       report,
@@ -91,12 +114,13 @@ export class GlobalReportState {
         );
       }),
     ),
-    { initialValue: { kind: 'idle', spec: null } as RenderResult },
+    { initialValue: { kind: 'idle', spec: null } },
   );
   readonly view = computed<GlobalReportView>(() => {
     const actor = this.auth.readIdentity();
     if (!actor) return { kind: 'loading' };
-    if (!globalReportAllowed(actor) || actor === this.deniedActor()) return { kind: 'forbidden' };
+    if (!globalReportAllowed(actor, this.entity()) || actor === this.deniedActor())
+      return { kind: 'forbidden' };
     const catalog = this.catalog();
     if (catalog.kind === 'forbidden') return { kind: 'forbidden' };
     if (catalog.kind === 'error')
@@ -113,6 +137,54 @@ export class GlobalReportState {
       : { kind: 'error', failure: result.failure };
   });
   readonly pending = computed(() => this.view().kind === 'loading');
+  constructor() {
+    effect(() => {
+      this.identity();
+      this.entity();
+      this.sourceFailure.set(null);
+      this.sourcePending.set(false);
+    });
+  }
+  downloadSource(): void {
+    const report = this.selected(),
+      scope = this.catalogSpec();
+    if (
+      !report?.canDownloadSource ||
+      !scope ||
+      this.sourcePending() ||
+      !globalReportAllowed(scope.actor, scope.entity)
+    )
+      return;
+    this.sourcePending.set(true);
+    this.sourceFailure.set(null);
+    this.service
+      .source(report)
+      .pipe(
+        takeUntil(this.scopeChanges.pipe(filter((current) => current !== scope))),
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => {
+          if (this.catalogSpec() === scope) this.sourcePending.set(false);
+        }),
+      )
+      .subscribe({
+        next: (blob) => {
+          if (this.catalogSpec() === scope) downloadBlob(blob, report.reportKey + '.rpt');
+        },
+        error: (error: unknown) => {
+          if (this.catalogSpec() === scope)
+            this.sourceFailure.set(
+              error instanceof GlobalReportFailure ? error : new GlobalReportFailure('error'),
+            );
+        },
+      });
+  }
+  setEntity(entity: GlobalReportEntity): void {
+    if (this.entity() === entity) return;
+    this.selection.set(null);
+    this.staleActor.set(null);
+    this.criteria.set(null);
+    this.entity.set(entity);
+  }
   select(id: unknown) {
     const state = this.catalog();
     if (
@@ -122,13 +194,15 @@ export class GlobalReportState {
       this.selected()?.id === id
     )
       return;
-    const actor=this.identity();if(actor)this.selection.set({actor,id});
+    const actor = this.identity();
+    if (actor) this.selection.set({ actor, id });
   }
   search(input: unknown) {
     const parsed = reportFiltersSchema.safeParse(input);
     if (!parsed.success || this.conflict() || !this.spec() || this.pending()) return false;
-    const actor=this.identity();if(!actor)return false;
-    this.criteria.set({actor,filters:{ ...parsed.data }});
+    const actor = this.identity();
+    if (!actor) return false;
+    this.criteria.set({ actor, filters: { ...parsed.data } });
     this.revision.update((n) => n + 1);
     return true;
   }
@@ -138,13 +212,13 @@ export class GlobalReportState {
   reload() {
     const actor = this.auth.readIdentity();
     if (
-      !globalReportAllowed(actor) ||
+      !globalReportAllowed(actor, this.entity()) ||
       actor === this.deniedActor() ||
       this.catalog().kind === 'forbidden'
     )
       return;
     this.staleActor.set(null);
-    this.revision.update(value=>value+1);
+    this.revision.update((value) => value + 1);
     this.catalogRead.refresh();
   }
 }

@@ -1,0 +1,37 @@
+@if (moduleCode()) {
+  <div class="browser-navigation">
+    <erp-button variant="text" [label]="backLabel()" (activated)="back()" />
+  </div>
+}
+@let state = catalog.state();
+@if (state.kind === 'loading') {
+  <erp-feedback-state kind="loading" [title]="'common.loading' | uiText" />
+} @else if (state.kind === 'error') {
+  <erp-feedback-state
+    kind="error"
+    [title]="'common.error' | uiText"
+    [message]="'globalError.description' | uiText"
+    [actionLabel]="'actions.retry' | uiText"
+    (action)="catalog.retry()"
+  />
+} @else if (state.kind === 'forbidden' || denied()) {
+  <erp-feedback-state
+    kind="forbidden"
+    [title]="'authorization.forbidden.title' | uiText"
+    [message]="'authorization.forbidden.message' | uiText"
+  />
+} @else if (areaCode()) {
+  <erp-feedback-state [title]="title()" [message]="'modules.noAvailableFeatures' | uiText" />
+} @else {
+  <erp-launcher-grid
+    [title]="title()"
+    [description]="(moduleCode() ? 'modules.submoduleDescription' : 'modules.description') | uiText"
+    [items]="items()"
+    [icon]="moduleCode() ? (definition()?.icon ?? 'apps') : 'apps'"
+    [variant]="moduleCode() ? 'area' : 'module'"
+  >
+    @if (!items().length) {
+      <erp-feedback-state [title]="'modules.empty' | uiText" />
+    }
+  </erp-launcher-grid>
+}

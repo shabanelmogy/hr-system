@@ -14,6 +14,8 @@ viewport or available toolbar is at most1199px. See the current
 | Document | Use it for |
 | --- | --- |
 | [ANGULAR_ENVIRONMENT.md](ANGULAR_ENVIRONMENT.md) | Angular `.env` API selection: local or hosted test API |
+| [architecture/ANGULAR_CODE_STYLE.md](architecture/ANGULAR_CODE_STYLE.md) | Mandatory Angular Clean Code, external HTML/SCSS, formatting and checks |
+| [ANGULAR_AGENT_SKILLS.md](ANGULAR_AGENT_SKILLS.md) | Official Angular developer skill: usage, ERP integration, pinned source and updates |
 | [architecture/frontend-architecture-reference.md](architecture/frontend-architecture-reference.md) | Layering, ownership, shared components |
 | [architecture/frontend-architecture-manifest.md](architecture/frontend-architecture-manifest.md) | Generated module/route ownership inventory |
 | [architecture/business-feature-template.md](architecture/business-feature-template.md) | Shape of a new business feature |

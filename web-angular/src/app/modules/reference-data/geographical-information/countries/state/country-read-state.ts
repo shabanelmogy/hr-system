@@ -1,21 +1,43 @@
-import { computed, effect, inject, Injectable, signal } from '@angular/core';
+import { computed, effect, inject, Injectable, signal, untracked } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { debounceTime, Subject, tap } from 'rxjs';
+import { auditTime, debounceTime, filter, Subject, tap } from 'rxjs';
 import { AuthSession, type Session } from '../../../../../platform/auth/session.public-api';
+import { RealtimeEvents } from '../../../../../platform/realtime/public-api';
 import { createScopedRead, type ReadState } from '../../../../../shared/data/public-api';
-import type { CollectionPageRequest, CollectionSearchChange, CollectionSort, CollectionSource } from '../../../../../shared/ui/public-api';
+import type {
+  CollectionPageRequest,
+  CollectionSearchChange,
+  CollectionSort,
+  CollectionSource,
+} from '../../../../../shared/ui/public-api';
 import { CountryService } from '../services/country-service';
-import { countryColumnFilters,countryColumnFilterPatch } from './country-column-filters';
-import { countryQuerySchema, countryReadAllowed, defaultCountryQuery, parseCountryId, type CountryPage, type CountryQuery, type CountryListItem, type CountryDetail } from '../types/country';
+import { countryColumnFilters, countryColumnFilterPatch } from './country-column-filters';
+import {
+  countryQuerySchema,
+  countryReadAllowed,
+  defaultCountryQuery,
+  parseCountryId,
+  type CountryPage,
+  type CountryQuery,
+  type CountryListItem,
+  type CountryDetail,
+} from '../types/country';
 
-interface PageSpec { readonly actor: Session; readonly query: CountryQuery; }
-interface DetailSpec { readonly actor: Session; readonly id: number; }
+interface PageSpec {
+  readonly actor: Session;
+  readonly query: CountryQuery;
+}
+interface DetailSpec {
+  readonly actor: Session;
+  readonly id: number;
+}
 
 @Injectable()
 export class CountryReadState {
   private readonly auth = inject(AuthSession);
   private readonly service = inject(CountryService);
+  private readonly realtime = inject(RealtimeEvents);
   private readonly denied = signal<Session | null>(null);
   private readonly criteria = signal<CountryQuery>(defaultCountryQuery);
   private readonly draft = signal('');
@@ -25,7 +47,7 @@ export class CountryReadState {
   private identitySequence = 0;
   readonly query = this.criteria.asReadonly();
   readonly searchDraft = this.draft.asReadonly();
-  readonly columnFilters=computed(()=>countryColumnFilters(this.criteria()));
+  readonly columnFilters = computed(() => countryColumnFilters(this.criteria()));
   private readonly allowed = computed(() => {
     const actor = this.auth.readIdentity();
     return countryReadAllowed(actor) && actor !== this.denied();
@@ -35,10 +57,22 @@ export class CountryReadState {
     const actor = this.auth.readIdentity();
     return actor && this.allowed() ? { actor, query: this.criteria() } : null;
   });
-  private readonly pageRead = createScopedRead(this.pageSpec, spec => countryReadAllowed(spec.actor), spec =>
-    this.service.page(spec.query).pipe(tap({ error: (error: unknown) => {
-      if (error instanceof HttpErrorResponse && error.status === 403 && this.pageSpec() === spec) this.denied.set(spec.actor);
-    } })),
+  private readonly pageRead = createScopedRead(
+    this.pageSpec,
+    (spec) => countryReadAllowed(spec.actor),
+    (spec) =>
+      this.service.page(spec.query).pipe(
+        tap({
+          error: (error: unknown) => {
+            if (
+              error instanceof HttpErrorResponse &&
+              error.status === 403 &&
+              this.pageSpec() === spec
+            )
+              this.denied.set(spec.actor);
+          },
+        }),
+      ),
   );
   readonly view = computed<ReadState<CountryPage>>(() => {
     if (!this.auth.readIdentity()) return { kind: 'loading' };
@@ -46,33 +80,151 @@ export class CountryReadState {
   });
   private readonly detailSpec = computed(() => {
     const selected = this.selected();
-    return selected && this.allowed() && selected.actor === this.auth.readIdentity() ? selected : null;
+    return selected && this.allowed() && selected.actor === this.auth.readIdentity()
+      ? selected
+      : null;
   });
-  private readonly detailRead = createScopedRead(this.detailSpec, spec => countryReadAllowed(spec.actor), spec =>
-    this.service.detail(spec.id).pipe(tap({ error: (error: unknown) => {
-      if (error instanceof HttpErrorResponse && error.status === 403 && this.detailSpec() === spec) this.denied.set(spec.actor);
-    } })),
+  private readonly detailRead = createScopedRead(
+    this.detailSpec,
+    (spec) => countryReadAllowed(spec.actor),
+    (spec) =>
+      this.service.detail(spec.id).pipe(
+        tap({
+          error: (error: unknown) => {
+            if (
+              error instanceof HttpErrorResponse &&
+              error.status === 403 &&
+              this.detailSpec() === spec
+            )
+              this.denied.set(spec.actor);
+          },
+        }),
+      ),
   );
   readonly detailOpen = computed(() => this.detailSpec() !== null);
-  readonly detail = computed<ReadState<CountryDetail>>(() => this.detailSpec() ? this.detailRead.state() : { kind: 'loading' });
+  readonly detail = computed<ReadState<CountryDetail>>(() =>
+    this.detailSpec() ? this.detailRead.state() : { kind: 'loading' },
+  );
   readonly source = computed<CollectionSource<CountryListItem>>(() => {
-    const actor = this.auth.readIdentity(), criteria = this.criteria();
-    if (actor && !this.identityKeys.has(actor)) this.identityKeys.set(actor, ++this.identitySequence);
+    const actor = this.auth.readIdentity(),
+      criteria = this.criteria();
+    if (actor && !this.identityKeys.has(actor))
+      this.identityKeys.set(actor, ++this.identitySequence);
     const { pageNumber, pageSize, ...filters } = criteria;
-    const query = { scopeKey: actor ? 'countries:' + this.identityKeys.get(actor) : 'countries:anonymous', criteriaKey: JSON.stringify(filters), pageIndex: pageNumber - 1, pageSize };
+    const query = {
+      scopeKey: actor ? 'countries:' + this.identityKeys.get(actor) : 'countries:anonymous',
+      criteriaKey: JSON.stringify(filters),
+      pageIndex: pageNumber - 1,
+      pageSize,
+    };
     const view = this.view();
     if (view.kind !== 'ready') return { query, kind: view.kind };
     // Do not briefly paint an out-of-range empty page before the owner clamps it.
     if (pageNumber > Math.max(1, view.data.metaData.totalPages)) return { query, kind: 'loading' };
-    return { query, kind: 'ready', result: { query, rows: view.data.items, total: view.data.metaData.totalCount, hasNextPage: view.data.metaData.hasNext } };
+    return {
+      query,
+      kind: 'ready',
+      result: {
+        query,
+        rows: view.data.items,
+        total: view.data.metaData.totalCount,
+        hasNextPage: view.data.metaData.hasNext,
+      },
+    };
   });
-  readonly total = computed(() => { const view = this.view(); return view.kind === 'ready' ? view.data.metaData.totalCount : 0; });
+  readonly total = computed(() => {
+    const view = this.view();
+    return view.kind === 'ready' ? view.data.metaData.totalCount : 0;
+  });
+  private readonly pageHint = signal<{ spec: PageSpec; version: number } | null>(null);
+  private readonly detailHint = signal<{ spec: DetailSpec; version: number } | null>(null);
+  private hintVersion = 0;
+  private pageReconciled = 0;
+  private detailReconciled = 0;
+  private readonly connection = signal<{
+    actor: Session;
+    status: 'connecting' | 'connected' | 'disconnected' | 'denied';
+  } | null>(null);
+  readonly liveStatus = computed(() => {
+    const connection = this.connection();
+    return this.allowed() && connection?.actor === this.auth.readIdentity()
+      ? connection.status
+      : null;
+  });
 
   constructor() {
-    this.searchEvents.pipe(debounceTime(300), takeUntilDestroyed()).subscribe(search => this.patch({ search: search.trim(), pageNumber: 1 }));
+    this.searchEvents
+      .pipe(debounceTime(300), takeUntilDestroyed())
+      .subscribe((search) => this.patch({ search: search.trim(), pageNumber: 1 }));
     effect(() => {
-      const view = this.view(), current = this.criteria();
-      if (view.kind === 'ready' && current.pageNumber > Math.max(1, view.data.metaData.totalPages)) this.patch({ pageNumber: Math.max(1, view.data.metaData.totalPages) });
+      const view = this.view(),
+        current = this.criteria();
+      if (view.kind === 'ready' && current.pageNumber > Math.max(1, view.data.metaData.totalPages))
+        this.patch({ pageNumber: Math.max(1, view.data.metaData.totalPages) });
+    });
+    effect((onCleanup) => {
+      const actor = this.auth.readIdentity();
+      if (!actor || !this.allowed()) return;
+      const current = () => actor === this.auth.readIdentity() && this.allowed();
+      const hints = new Subject<void>();
+      const pending = hints.pipe(auditTime(250)).subscribe(() => {
+        if (!current()) return;
+        const version = ++this.hintVersion,
+          page = this.pageSpec(),
+          detail = this.detailSpec();
+        if (page) this.pageHint.set({ spec: page, version });
+        if (detail) this.detailHint.set({ spec: detail, version });
+      });
+      const lease = untracked(() =>
+        this.realtime
+          .watch(current)
+          .pipe(
+            filter((event) => {
+              if (!current()) return false;
+              if (event.kind === 'status') this.connection.set({ actor, status: event.status });
+              return (
+                event.kind === 'reconcile' ||
+                (event.kind === 'change' && event.change.resource === 'countries')
+              );
+            }),
+          )
+          .subscribe(() => hints.next()),
+      );
+      onCleanup(() => {
+        lease.unsubscribe();
+        pending.unsubscribe();
+        hints.complete();
+      });
+    });
+    effect(() => {
+      const hint = this.pageHint(),
+        spec = this.pageSpec(),
+        view = this.pageRead.state();
+      if (
+        !hint ||
+        hint.spec !== spec ||
+        hint.version <= this.pageReconciled ||
+        this.pageRead.pending() ||
+        (view.kind !== 'ready' && view.kind !== 'error')
+      )
+        return;
+      this.pageReconciled = hint.version;
+      untracked(() => this.pageRead.refreshInBackground());
+    });
+    effect(() => {
+      const hint = this.detailHint(),
+        spec = this.detailSpec(),
+        view = this.detailRead.state();
+      if (
+        !hint ||
+        hint.spec !== spec ||
+        hint.version <= this.detailReconciled ||
+        this.detailRead.pending() ||
+        (view.kind !== 'ready' && view.kind !== 'error')
+      )
+        return;
+      this.detailReconciled = hint.version;
+      untracked(() => this.detailRead.refreshInBackground());
     });
   }
   private patch(change: Readonly<Record<string, unknown>>): boolean {
@@ -80,39 +232,67 @@ export class CountryReadState {
     const parsed = countryQuerySchema.safeParse({ ...this.criteria(), ...change });
     if (!parsed.success) return false;
     if (JSON.stringify(this.criteria()) === JSON.stringify(parsed.data)) return true;
-    this.criteria.set(Object.freeze(parsed.data)); return true;
+    this.criteria.set(Object.freeze(parsed.data));
+    return true;
   }
   changeSearch(change: CollectionSearchChange): void {
     if (!this.allowed()) return;
     if ('value' in change) {
       if (typeof change.value !== 'string' || change.value.length > 200) return;
-      this.draft.set(change.value); this.searchEvents.next(change.value); return;
+      this.draft.set(change.value);
+      this.searchEvents.next(change.value);
+      return;
     }
     if ('field' in change) this.patch({ searchField: change.field, pageNumber: 1 });
     if ('operator' in change) this.patch({ searchOperator: change.operator, pageNumber: 1 });
   }
-  changeStatus(status: string): void { this.patch({ status, pageNumber: 1 }); }
-  changeColumnFilters(value:unknown):void{
-    if(!this.allowed())return;const change=countryColumnFilterPatch(value);if(!change)return;
-    this.patch({...change,pageNumber:1});
+  changeStatus(status: string): void {
+    this.patch({ status, pageNumber: 1 });
   }
-  changeSort(sort: CollectionSort): void { this.patch({ sortBy: sort.field, sortDirection: sort.direction, pageNumber: 1 }); }
+  changeColumnFilters(value: unknown): void {
+    if (!this.allowed()) return;
+    const change = countryColumnFilterPatch(value);
+    if (!change) return;
+    this.patch({ ...change, pageNumber: 1 });
+  }
+  changeSort(sort: CollectionSort): void {
+    this.patch({ sortBy: sort.field, sortDirection: sort.direction, pageNumber: 1 });
+  }
   changePage(page: CollectionPageRequest): void {
-    if (![5, 10, 25, 50].includes(page.pageSize) || !Number.isSafeInteger(page.pageIndex) || page.pageIndex < 0) return;
+    if (
+      ![5, 10, 25, 50].includes(page.pageSize) ||
+      !Number.isSafeInteger(page.pageIndex) ||
+      page.pageIndex < 0
+    )
+      return;
     this.patch({ pageNumber: page.pageIndex + 1, pageSize: page.pageSize });
   }
   reset(): void {
     if (!this.allowed()) return;
-    this.draft.set(''); this.searchEvents.next(''); this.criteria.set(defaultCountryQuery);
+    this.draft.set('');
+    this.searchEvents.next('');
+    this.criteria.set(defaultCountryQuery);
   }
-  refresh(): void { if (this.allowed()) this.pageRead.refresh(); }
+  refresh(): void {
+    if (this.allowed()) this.pageRead.refresh();
+  }
   open(id: unknown): void {
-    const actor = this.auth.readIdentity(), view = this.view();
+    const actor = this.auth.readIdentity(),
+      view = this.view();
     if (!actor || !this.allowed() || view.kind !== 'ready') return;
-    let valid: number; try { valid = parseCountryId(id); } catch { return; }
-    if (!view.data.items.some(row => row.id === valid)) return;
+    let valid: number;
+    try {
+      valid = parseCountryId(id);
+    } catch {
+      return;
+    }
+    if (!view.data.items.some((row) => row.id === valid)) return;
     this.selected.set({ actor, id: valid });
   }
-  close(): void { this.selected.set(null); }
-  retryDetail(): void { if (this.detailSpec()) this.detailRead.retry(); }
+  close(): void {
+    this.selected.set(null);
+  }
+  retryDetail(): void {
+    if (this.detailSpec()) this.detailRead.retry();
+  }
 }

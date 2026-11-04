@@ -53,8 +53,8 @@ realtime, notification, localization, report, or Import integration is reachable
 | angular-module-context-navigation-api | 10 | `dddfcf4db65993beab3a319f9abebb699878f3620d64ea3cab5d74456652b3e5` |
 | angular-module-context-navigation-web | 8 | `8fe455f912589c8225049720348791a1b3f36a0bbb64fd18640fe27e425f1726` |
 | angular-module-context-navigation-web | 10 | `dddfcf4db65993beab3a319f9abebb699878f3620d64ea3cab5d74456652b3e5` |
-| angular-module-context-navigation-web | 13 | `056ee58455fb971a375392b39fb541869ce38b807f5b937eb3c8353ed316a30b` |
+| angular-module-context-navigation-web | 13 | `89fdfea23fa06beab5c8c2c86473e98279b5f49c8a30b570cdeaaf0b35f21e4c` |
 | angular-module-context-navigation-mobile | 2 | `cd0441cf47d901383bbcd3f66cd55e25b22eca84f14b433a4c4e5a4136a775b5` |
 | angular-module-context-navigation-mobile | 11 | `1fbb9765392d357a650913625dc67d4591b4d163b68b5ee40e753d1d5e1b6168` |
 | angular-module-context-navigation-mobile | 12 | `4b8a857346e8e30ca6d40ceb3ec49deba68787019ea091c95ba451bc002452fe` |
-| angular-module-context-navigation-mobile | 15 | `323b611e52e573c8ef93e22bf36d9791e49bb95dcc9470fc3678b072b0d8b13e` |
+| angular-module-context-navigation-mobile | 15 | `8ddcf45a323580ba1522f3ff88598e66645ad96b06a1579d274659c284405365` |

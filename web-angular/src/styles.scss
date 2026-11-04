@@ -2,7 +2,18 @@
 @use './theme/fonts';
 @use './app/shared/ui/layout/scrollbar' as scrolling;
 
-html { font-size: 16px; }
+html {
+  font-size: 16px;
+}
+:root {
+  @include scrolling.tokens;
+}
+// Zero specificity lets PrimeNG retain its hidden native viewport scrollbar.
+// Every current/future overflow container inherits the shared application style,
+// including document, dialogs, tables, textareas and overlays appended to body.
+:where(*) {
+  @include scrolling.native-scrollbar;
+}
 body {
   margin: 0;
   background: var(--background);
@@ -11,10 +22,22 @@ body {
   font-size: 1rem;
   line-height: 1.5;
 }
-*, *::before, *::after { box-sizing: border-box; }
-button, input, select, textarea { font: inherit; }
-.erp-native-scrollbar,.p-select-list-container { @include scrolling.native-scrollbar; }
-.p-select-list-container { overscroll-behavior: contain; }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+.p-select-list-container {
+  overscroll-behavior: contain;
+}
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
+  html {
+    scroll-behavior: auto;
+  }
 }

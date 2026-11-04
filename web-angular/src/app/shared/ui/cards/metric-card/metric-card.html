@@ -1,0 +1,7 @@
+<section [attr.aria-label]="label() + ': ' + value()" [style.--accent]="accent()">
+  <header>
+    <span>{{ label() }}</span
+    ><span class="metric-icon"><erp-icon [name]="icon()" /></span>
+  </header>
+  <strong>{{ value() }}</strong>
+</section>

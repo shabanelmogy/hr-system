@@ -1,0 +1,32 @@
+{
+  "date": "2026-10-31T14:42:54.483Z",
+  "checks": [
+    {
+      "name": "CriteriaPreviewEditor",
+      "file": "web-angular/src/app/dev/criteria-preview-editor/criteria-preview-editor.ts",
+      "sameClass": true
+    },
+    {
+      "name": "ReadPreviewAway",
+      "file": "web-angular/src/app/dev/read-preview-away/read-preview-away.ts",
+      "sameClass": true
+    },
+    {
+      "name": "UnsavedPreviewFrame",
+      "file": "web-angular/src/app/dev/unsaved-preview-frame/unsaved-preview-frame.ts",
+      "sameClass": true
+    },
+    {
+      "name": "UnsavedDestination",
+      "file": "web-angular/src/app/dev/unsaved-destination/unsaved-destination.ts",
+      "sameClass": true
+    },
+    {
+      "name": "UnsavedFixtureState",
+      "file": "web-angular/src/app/dev/unsaved-fixture-state.ts",
+      "sameClass": true
+    }
+  ],
+  "passed": true,
+  "limit": "Class AST comparison ignores external resource path values and formatting; imports/routing are verified by compiler and browser journeys."
+}

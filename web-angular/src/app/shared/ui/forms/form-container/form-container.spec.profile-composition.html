@@ -1,0 +1,14 @@
+<erp-form
+  [form]="form"
+  title="Profile fixture"
+  submitLabel="Save fixture"
+  (validSubmit)="count = count + 1"
+>
+  <div>
+    <erp-text-field
+      [formControl]="form.controls.profile.controls.name"
+      label="Name fixture"
+      [messages]="messages"
+    />
+  </div>
+</erp-form>

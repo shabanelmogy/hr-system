@@ -43,9 +43,17 @@ public static class DependencyInjection
         services.AddScoped<IReportingUnitOfWork>(provider => provider.GetRequiredService<ReportingDbContext>());
 
         services.AddScoped<ICrystalReportStore, CrystalReportStore>();
+        services.AddScoped<IGlobalCrystalReportStore, GlobalCrystalReportStore>();
+        services.AddScoped<IGlobalCrystalReportAccessStore, GlobalCrystalReportAccessStore>();
+        services.AddScoped<IGlobalCrystalReportConsumptionStore, GlobalCrystalReportConsumptionStore>();
+        services.AddSingleton<IGlobalCrystalReportIdentity, GlobalCrystalReportIdentity>();
         var managedCrystalContracts = ManagedCrystalReportContractRegistry.LoadEmbedded();
         services.AddSingleton(managedCrystalContracts);
         services.AddSingleton<IManagedCrystalReportContractSource>(managedCrystalContracts);
+        services.AddSingleton<IManagedCrystalReportSchemaSource>(managedCrystalContracts);
+        services.AddSingleton<ICrystalReportDesignSourceCatalog, CrystalReportDesignSourceCatalog>();
+        services.AddScoped<IGlobalCrystalReportViewSource, GlobalCrystalReportViewSource>();
+        services.AddScoped<IGlobalCrystalReportViewCatalog, GlobalCrystalReportViewCatalog>();
         services.AddScoped<ICrystalReportDataProvider, CountriesCrystalReportDataProvider>();
         services.AddScoped<ICrystalReportDataProvider, StatesCrystalReportDataProvider>();
         services.AddScoped<ICrystalReportDataProvider, DistrictsCrystalReportDataProvider>();

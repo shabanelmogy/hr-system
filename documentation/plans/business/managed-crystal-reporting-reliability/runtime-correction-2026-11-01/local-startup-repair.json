@@ -1,0 +1,13 @@
+{
+  "InitialLocalStatus": 500,
+  "ExceptionType": "FileLoadException",
+  "RequestedAssembly": "Microsoft.Web.Infrastructure, Version=1.0.0.0",
+  "OldAssemblyVersion": "2.0.0.0",
+  "QuarantinedOldOutputs": true,
+  "SourceRebuildPassed": true,
+  "Swagger200AfterRepair": true,
+  "IndependentSourceIis20Passed": true,
+  "LegacyMvcAbsent": true,
+  "LocalErrorsMode": "RemoteOnly",
+  "ReleaseErrorsMode": "On"
+}

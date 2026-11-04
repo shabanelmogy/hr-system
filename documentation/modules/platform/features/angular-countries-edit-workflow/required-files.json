@@ -139,13 +139,13 @@
     },
     {
       "id": "preflight-source-16",
-      "path": "web-angular/src/app/shared/ui/forms/form-container.ts",
+      "path": "web-angular/src/app/shared/ui/forms/form-container/form-container.ts",
       "layer": "web",
       "purpose": "Verified current source or canonical preflight contract"
     },
     {
       "id": "preflight-source-17",
-      "path": "web-angular/src/app/shared/ui/forms/form-close-guard.ts",
+      "path": "web-angular/src/app/shared/ui/forms/form-close-guard/form-close-guard.ts",
       "layer": "web",
       "purpose": "Verified current source or canonical preflight contract"
     },
@@ -157,7 +157,7 @@
     },
     {
       "id": "preflight-source-19",
-      "path": "web-angular/src/app/shared/ui/dialogs/dialog-panel.ts",
+      "path": "web-angular/src/app/shared/ui/dialogs/dialog-panel/dialog-panel.ts",
       "layer": "web",
       "purpose": "Verified current source or canonical preflight contract"
     },
@@ -169,7 +169,7 @@
     },
     {
       "id": "preflight-source-21",
-      "path": "web-angular/src/app/shared/ui/collections/row-actions.ts",
+      "path": "web-angular/src/app/shared/ui/collections/row-actions/row-actions.ts",
       "layer": "web",
       "purpose": "Verified current source or canonical preflight contract"
     },
@@ -205,7 +205,7 @@
     },
     {
       "id": "implemented-0",
-      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-editor.ts",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-editor/country-editor.ts",
       "layer": "web",
       "purpose": "Actual bounded implementation or verification evidence"
     },
@@ -247,13 +247,13 @@
     },
     {
       "id": "implemented-8",
-      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page.ts",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page/countries-read-page.ts",
       "layer": "web",
       "purpose": "Actual bounded implementation or verification evidence"
     },
     {
       "id": "implemented-9",
-      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page.html",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page/countries-read-page.html",
       "layer": "web",
       "purpose": "Actual bounded implementation or verification evidence"
     },
@@ -289,13 +289,13 @@
     },
     {
       "id": "implemented-15",
-      "path": "web-angular/src/app/shared/ui/feedback/notification-toast.ts",
+      "path": "web-angular/src/app/shared/ui/feedback/notification-toast/notification-toast.ts",
       "layer": "web",
       "purpose": "Actual bounded implementation or verification evidence"
     },
     {
       "id": "implemented-16",
-      "path": "web-angular/src/app/shared/ui/dialogs/error-modal-host.ts",
+      "path": "web-angular/src/app/shared/ui/dialogs/error-modal-host/error-modal-host.ts",
       "layer": "web",
       "purpose": "Actual bounded implementation or verification evidence"
     },
@@ -379,49 +379,49 @@
     },
     {
       "id": "form-record-6",
-      "path": "web-angular/src/app/shared/ui/forms/fields/character-count-badge.ts",
+      "path": "web-angular/src/app/shared/ui/forms/fields/character-count-badge/character-count-badge.ts",
       "layer": "web",
       "purpose": "Actual shared form/record implementation or executed acceptance"
     },
     {
       "id": "form-record-7",
-      "path": "web-angular/src/app/shared/ui/forms/fields/text-field.ts",
+      "path": "web-angular/src/app/shared/ui/forms/fields/text-field/text-field.ts",
       "layer": "web",
       "purpose": "Actual shared form/record implementation or executed acceptance"
     },
     {
       "id": "form-record-8",
-      "path": "web-angular/src/app/shared/ui/forms/fields/text-field.html",
+      "path": "web-angular/src/app/shared/ui/forms/fields/text-field/text-field.html",
       "layer": "web",
       "purpose": "Actual shared form/record implementation or executed acceptance"
     },
     {
       "id": "form-record-9",
-      "path": "web-angular/src/app/shared/ui/forms/fields/text-field.scss",
+      "path": "web-angular/src/app/shared/ui/forms/fields/text-field/text-field.scss",
       "layer": "web",
       "purpose": "Actual shared form/record implementation or executed acceptance"
     },
     {
       "id": "form-record-10",
-      "path": "web-angular/src/app/shared/ui/forms/fields/text-field.spec.ts",
+      "path": "web-angular/src/app/shared/ui/forms/fields/text-field/text-field.spec.ts",
       "layer": "web",
       "purpose": "Actual shared form/record implementation or executed acceptance"
     },
     {
       "id": "form-record-11",
-      "path": "web-angular/src/app/shared/ui/forms/fields/numeric-field.ts",
+      "path": "web-angular/src/app/shared/ui/forms/fields/numeric-field/numeric-field.ts",
       "layer": "web",
       "purpose": "Actual shared form/record implementation or executed acceptance"
     },
     {
       "id": "form-record-13",
-      "path": "web-angular/src/app/shared/ui/forms/form-container.scss",
+      "path": "web-angular/src/app/shared/ui/forms/form-container/form-container.scss",
       "layer": "web",
       "purpose": "Actual shared form/record implementation or executed acceptance"
     },
     {
       "id": "form-record-14",
-      "path": "web-angular/src/app/shared/ui/forms/form-container.spec.ts",
+      "path": "web-angular/src/app/shared/ui/forms/form-container/form-container.spec.ts",
       "layer": "web",
       "purpose": "Actual shared form/record implementation or executed acceptance"
     },
@@ -469,19 +469,19 @@
     },
     {
       "id": "form-record-22",
-      "path": "web-angular/src/app/shared/ui/collections/my-data-grid.ts",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid/my-data-grid.ts",
       "layer": "web",
       "purpose": "Actual shared form/record implementation or executed acceptance"
     },
     {
       "id": "form-record-23",
-      "path": "web-angular/src/app/shared/ui/collections/my-data-grid.html",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid/my-data-grid.html",
       "layer": "web",
       "purpose": "Actual shared form/record implementation or executed acceptance"
     },
     {
       "id": "form-record-24",
-      "path": "web-angular/src/app/shared/ui/collections/card-list.ts",
+      "path": "web-angular/src/app/shared/ui/collections/card-list/card-list.ts",
       "layer": "web",
       "purpose": "Actual shared form/record implementation or executed acceptance"
     },
@@ -493,13 +493,13 @@
     },
     {
       "id": "form-record-27",
-      "path": "web-angular/src/app/shared/ui/dialogs/dialog-panel.spec.ts",
+      "path": "web-angular/src/app/shared/ui/dialogs/dialog-panel/dialog-panel.spec.ts",
       "layer": "web",
       "purpose": "Actual shared form/record implementation or executed acceptance"
     },
     {
       "id": "form-record-28",
-      "path": "web-angular/src/app/shared/ui/collections/my-data-grid.scss",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid/my-data-grid.scss",
       "layer": "web",
       "purpose": "Actual shared form/record implementation or executed acceptance"
     },
@@ -532,6 +532,168 @@
       "path": "web-next/src/locales/resources/core/ar.json",
       "layer": "web",
       "purpose": "Actual shared form/record implementation or executed acceptance"
+    },
+    {
+      "id": "component-resource-311f299a2a50",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/form-container/form-container.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-31cda6c1c182",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/form-close-guard/form-close-guard.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-b6d0e80169d9",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/dialogs/dialog-panel/dialog-panel.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-801f86eeae4a",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/dialogs/dialog-panel/dialog-panel.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-8c0ea47b89b7",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/row-actions/row-actions.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-78056b5a8421",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/row-actions/row-actions.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-89dc361d224d",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-editor/country-editor.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-983f0e349d10",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/feedback/notification-toast/notification-toast.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-07eeccbe692d",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/dialogs/error-modal-host/error-modal-host.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-87879e6e62c8",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/dialogs/error-modal-host/error-modal-host.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-77457989e4cb",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/fields/character-count-badge/character-count-badge.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-2d95ba444c1e",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/fields/character-count-badge/character-count-badge.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-d286e19eb5e2",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/fields/text-field/text-field.spec.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-d48078893077",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/form-container/form-container.spec.access-composition.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-67ebb7f690a7",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/form-container/form-container.spec.profile-composition.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-5b5d22d33fdd",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/card-list/card-list.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-0ffcf25c452b",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/card-list/card-list.component.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "quality-ff96e53d3ee7",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid/grid-column-presentation.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-5356e0ff9c90",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid/grid-column-presentation.spec.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-519b867de1ce",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid/grid-viewport.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-6fe0129a75d1",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/collection-column-pipe.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-97ddb61c625b",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/collection-column-pipe.spec.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-a66f038e1ddc",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/collection-record-decision.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-85f452486fd4",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/collection-record-decision.spec.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-c8f3282bb980",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/utils/country-list-presentation.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-4653687b92ac",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/utils/country-list-presentation.spec.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-16f555949438",
+      "layer": "web",
+      "path": "web-angular/src/testing/fixture-item.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
     }
   ],
   "finalizationChecklist": [

@@ -1,0 +1,34 @@
+:host {
+  display: block;
+  min-width: 0;
+}
+.navigation-search {
+  padding: 16px 8px 8px;
+  --touch-target: 36px;
+}
+.navigation-search erp-text-field {
+  font-size: 13px;
+}
+nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px;
+}
+.navigation-search + nav {
+  padding-top: 4px;
+}
+erp-button {
+  --action-radius: 8px;
+  --action-font-size: 14px;
+  --action-min-height: 44px;
+  --action-quiet-background: transparent;
+  --action-border-width: 0px;
+  --action-padding-x: 12px;
+  color: var(--foreground);
+}
+.navigation-children {
+  margin-inline-start: 8px;
+  border-inline-start: 1px solid var(--border);
+  min-width: 0;
+}

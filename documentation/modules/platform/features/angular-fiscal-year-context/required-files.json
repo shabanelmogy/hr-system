@@ -199,13 +199,13 @@
     },
     {
       "id": "preflight-29",
-      "path": "web-angular/src/app/shared/ui/controls/option-select.ts",
+      "path": "web-angular/src/app/shared/ui/controls/option-select/option-select.ts",
       "layer": "web",
       "purpose": "Existing inspected source or current preflight evidence"
     },
     {
       "id": "preflight-30",
-      "path": "web-angular/src/app/shared/ui/layout/context-badge.ts",
+      "path": "web-angular/src/app/shared/ui/layout/context-badge/context-badge.ts",
       "layer": "web",
       "purpose": "Existing inspected source or current preflight evidence"
     },
@@ -253,7 +253,7 @@
     },
     {
       "id": "runtime-38",
-      "path": "web-angular/src/app/modules/accounting/fiscal-year-context/components/fiscal-context-control.ts",
+      "path": "web-angular/src/app/modules/accounting/fiscal-year-context/components/fiscal-context-control/fiscal-context-control.ts",
       "layer": "web",
       "purpose": "Actual implementation or acceptance"
     },
@@ -289,7 +289,7 @@
     },
     {
       "id": "runtime-44",
-      "path": "web-angular/src/app/composition/authenticated-routes.ts",
+      "path": "web-angular/src/app/composition/authenticated-routes/authenticated-routes.ts",
       "layer": "web",
       "purpose": "Actual implementation or acceptance"
     },
@@ -301,13 +301,13 @@
     },
     {
       "id": "runtime-46",
-      "path": "web-angular/src/app/shell/layout/main-shell.html",
+      "path": "web-angular/src/app/shell/layout/main-shell/main-shell.html",
       "layer": "web",
       "purpose": "Actual implementation or acceptance"
     },
     {
       "id": "runtime-47",
-      "path": "web-angular/src/app/shell/layout/main-shell.ts",
+      "path": "web-angular/src/app/shell/layout/main-shell/main-shell.ts",
       "layer": "web",
       "purpose": "Actual implementation or acceptance"
     },
@@ -382,6 +382,60 @@
       "path": "web-angular/src/app/shared/data/scoped-read.spec.ts",
       "layer": "web",
       "purpose": "Current shared finite snapshot/lifetime regression"
+    },
+    {
+      "id": "component-resource-cf6c9fe09ba0",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/controls/option-select/option-select.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-a36b777f66d7",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/controls/option-select/option-select.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-01bd1b9c3593",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/layout/context-badge/context-badge.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-e00c03607a16",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/layout/context-badge/context-badge.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-f34f9bb4cce0",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/accounting/fiscal-year-context/components/fiscal-context-control/fiscal-context-control.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-0b544c5fae05",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/accounting/fiscal-year-context/components/fiscal-context-control/fiscal-context-control.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-e81913a00ef4",
+      "layer": "web",
+      "path": "web-angular/src/app/composition/authenticated-routes/authenticated-routes.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "quality-a89f1fae079d",
+      "layer": "web",
+      "path": "web-angular/src/app/shell/context.public-api.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-16f555949438",
+      "layer": "web",
+      "path": "web-angular/src/testing/fixture-item.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
     }
   ],
   "finalizationChecklist": [

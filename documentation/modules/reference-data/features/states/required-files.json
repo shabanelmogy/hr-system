@@ -632,6 +632,36 @@
       "layer": "mobile-react-shared",
       "path": "mobile-react/src/shared/components/forms/AppForm.tsx",
       "purpose": "Shared localized non-submitting mock-data action"
+    },
+    {
+      "id": "prepared-report-view-dd842972865d",
+      "layer": "api",
+      "path": "api/Tests/ErpSystem.IntegrationTests/GlobalCrystalReportViewTests.cs",
+      "purpose": "ReferenceData-owned schema-bound navigation reporting View and verification"
+    },
+    {
+      "id": "prepared-report-view-7b8ccbe05e70",
+      "layer": "api",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Contracts/Reporting/ReferenceDataPublicViewContracts.cs",
+      "purpose": "ReferenceData-owned schema-bound navigation reporting View and verification"
+    },
+    {
+      "id": "prepared-report-view-80dc19e75be1",
+      "layer": "api",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Infrastructure/Features/Reporting/ReferenceDataPublicViewSource.cs",
+      "purpose": "ReferenceData-owned schema-bound navigation reporting View and verification"
+    },
+    {
+      "id": "prepared-report-view-42be45cac5e8",
+      "layer": "api",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Infrastructure/Migrations/20261102143015_AddGlobalReferenceReportViews.cs",
+      "purpose": "ReferenceData-owned schema-bound navigation reporting View and verification"
+    },
+    {
+      "id": "prepared-report-view-ce254177b181",
+      "layer": "api",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Infrastructure/Migrations/20261102143015_AddGlobalReferenceReportViews.Designer.cs",
+      "purpose": "ReferenceData-owned schema-bound navigation reporting View and verification"
     }
   ]
 }

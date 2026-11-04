@@ -1,4 +1,3 @@
-using CrystalReportGeneratorApi.Filters;
 using CrystalReportGeneratorApi.Runtime;
 using CrystalReportGeneratorApi.Runtime.Inspection;
 using CrystalReportGeneratorApi.Runtime.Rendering;
@@ -13,7 +12,6 @@ using System.Text.RegularExpressions;
 
 namespace CrystalReportGeneratorApi.Controllers
 {
-    [InternalApiKey]
     public sealed class InternalReportInspectorController : ApiController
     {
         private static readonly Regex SafeEntityKey = new Regex(

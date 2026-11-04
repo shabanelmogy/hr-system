@@ -1,0 +1,24 @@
+[
+  {
+    "fileName": "Countries.rpt",
+    "size": 8704,
+    "sha256": "7dd5f88671932e61c979985f3bcced41876c7a4dffe7bf8f8098472a53997762",
+    "oleSignatureValid": true,
+    "downloadHashVerified": true,
+    "inspectionStatus": 400,
+    "code": "crystal_runtime_invalid_report",
+    "message": "Crystal Report files containing database connection metadata are not accepted.",
+    "businessRowsWritten": false
+  },
+  {
+    "fileName": "Countries.WithStates.rpt",
+    "size": 9728,
+    "sha256": "ce62df2c6d97c69ec803d62d7d17ca8636c810c966573f321d279a44d3d916e6",
+    "oleSignatureValid": true,
+    "downloadHashVerified": true,
+    "inspectionStatus": 400,
+    "code": "crystal_runtime_invalid_report",
+    "message": "Crystal Report files containing database connection metadata are not accepted.",
+    "businessRowsWritten": false
+  }
+]

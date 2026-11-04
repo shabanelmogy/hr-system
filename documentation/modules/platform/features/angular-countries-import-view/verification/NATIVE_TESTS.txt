@@ -1,0 +1,8 @@
+PASS src/shared/importing/native-spreadsheet.test.ts (15.727 s)
+PASS src/modules/reference-data/geography/countries/presentation/components/import-data/country-import.test.ts
+
+Test Suites: 2 passed, 2 total
+Tests:       7 passed, 7 total
+Snapshots:   0 total
+Time:        37.964 s
+Ran all test suites matching /src\\shared\\importing\\native-spreadsheet.test.ts|src\\modules\\reference-data\\geography\\countries\\presentation\\components\\import-data\\country-import.test.ts/i.

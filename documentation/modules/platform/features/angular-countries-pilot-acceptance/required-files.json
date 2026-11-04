@@ -1,0 +1,729 @@
+{
+  "schemaVersion": 1,
+  "status": "final",
+  "executionMode": "bounded-runtime",
+  "runtimeAuthorized": true,
+  "feature": "angular-countries-pilot-acceptance",
+  "featureName": "Countries complete Angular pilot acceptance",
+  "referenceFeature": "N/A",
+  "planId": "web-angular-migration",
+  "sliceId": "S3-A8 — Countries complete pilot acceptance",
+  "canonicalPlan": "documentation/plans/business/web-angular-migration/PLAN.md",
+  "featureDecompositionDecision": "Single feature",
+  "screenWorkflowContract": "documentation/plans/business/web-angular-migration/decomposition/angular-countries-pilot-acceptance.md",
+  "plannedCustomerEducation": "documentation/plans/business/web-angular-migration/education/angular-countries-pilot-acceptance.md",
+  "purpose": "Current-only Phase00 evidence; exact frozen contract authorizes bounded pilot implementation, not release.",
+  "reviewArtifact": "documentation/modules/platform/features/angular-countries-pilot-acceptance/angular-countries-pilot-acceptance-evidence.md",
+  "implementationRequest": "documentation/modules/platform/features/angular-countries-pilot-acceptance/angular-countries-pilot-acceptance-request.md",
+  "plannedCanonicalBooks": {
+    "master": "documentation/modules/platform/features/angular-countries-pilot-acceptance/angular-countries-pilot-acceptance-review.md",
+    "api": "documentation/modules/platform/features/angular-countries-pilot-acceptance/angular-countries-pilot-acceptance-api.md",
+    "web": "documentation/modules/platform/features/angular-countries-pilot-acceptance/angular-countries-pilot-acceptance-web.md",
+    "mobile": "documentation/modules/platform/features/angular-countries-pilot-acceptance/angular-countries-pilot-acceptance-mobile.md"
+  },
+  "sourceCollections": [],
+  "requiredFiles": [
+    {
+      "id": "root-agent-guidance",
+      "layer": "configuration",
+      "path": "AGENTS.md",
+      "purpose": "Repository-wide feature and documentation rules"
+    },
+    {
+      "id": "review-artifact",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-acceptance/angular-countries-pilot-acceptance-evidence.md",
+      "purpose": "Feature requirement, evidence, finding, and verification ledger"
+    },
+    {
+      "id": "implementation-request",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-acceptance/angular-countries-pilot-acceptance-request.md",
+      "purpose": "Copy-ready feature scope, platform decisions, contracts, and quality gates"
+    },
+    {
+      "id": "preflight-0",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-acceptance/angular-countries-pilot-acceptance-review.md",
+      "purpose": "Current source or frozen contract verified at entry"
+    },
+    {
+      "id": "preflight-1",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-acceptance/angular-countries-pilot-acceptance-api.md",
+      "purpose": "Current source or frozen contract verified at entry"
+    },
+    {
+      "id": "preflight-2",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-acceptance/angular-countries-pilot-acceptance-web.md",
+      "purpose": "Current source or frozen contract verified at entry"
+    },
+    {
+      "id": "preflight-3",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-acceptance/angular-countries-pilot-acceptance-mobile.md",
+      "purpose": "Current source or frozen contract verified at entry"
+    },
+    {
+      "id": "preflight-4",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-acceptance/PILOT_CONTRACT.md",
+      "purpose": "Current source or frozen contract verified at entry"
+    },
+    {
+      "id": "preflight-5",
+      "layer": "documentation",
+      "path": "documentation/plans/business/web-angular-migration/decomposition/angular-countries-pilot-acceptance.md",
+      "purpose": "Current source or frozen contract verified at entry"
+    },
+    {
+      "id": "preflight-6",
+      "layer": "documentation",
+      "path": "documentation/plans/business/web-angular-migration/PLAN.md",
+      "purpose": "Current source or frozen contract verified at entry"
+    },
+    {
+      "id": "preflight-7",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/state/country-read-state.ts",
+      "purpose": "Current source or frozen contract verified at entry"
+    },
+    {
+      "id": "preflight-8",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page/countries-read-page.ts",
+      "purpose": "Current source or frozen contract verified at entry"
+    },
+    {
+      "id": "preflight-9",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/auth/services/browser-auth-service.ts",
+      "purpose": "Current source or frozen contract verified at entry"
+    },
+    {
+      "id": "preflight-10",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/auth/state/auth-session.ts",
+      "purpose": "Current source or frozen contract verified at entry"
+    },
+    {
+      "id": "preflight-11",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/data/scoped-read.ts",
+      "purpose": "Current source or frozen contract verified at entry"
+    },
+    {
+      "id": "preflight-12",
+      "layer": "api",
+      "path": "api/BuildingBlocks/ErpSystem.BuildingBlocks.Application/Common/Realtime/RealtimeEntityChanged.cs",
+      "purpose": "Current source or frozen contract verified at entry"
+    },
+    {
+      "id": "preflight-13",
+      "layer": "api",
+      "path": "api/BuildingBlocks/ErpSystem.BuildingBlocks.Application/Common/Realtime/RealtimeResource.cs",
+      "purpose": "Current source or frozen contract verified at entry"
+    },
+    {
+      "id": "preflight-14",
+      "layer": "api",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Infrastructure/Features/GeographicalInformation/Countries/Jobs/CountryChangedJob.cs",
+      "purpose": "Current source or frozen contract verified at entry"
+    },
+    {
+      "id": "runtime-0",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/realtime/realtime-events.ts",
+      "purpose": "Current bounded implementation, verification receipt or explicit remaining gate"
+    },
+    {
+      "id": "runtime-1",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/realtime/realtime-events.spec.ts",
+      "purpose": "Current bounded implementation, verification receipt or explicit remaining gate"
+    },
+    {
+      "id": "runtime-2",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/realtime/public-api.ts",
+      "purpose": "Current bounded implementation, verification receipt or explicit remaining gate"
+    },
+    {
+      "id": "runtime-3",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/auth/session.public-api.ts",
+      "purpose": "Current bounded implementation, verification receipt or explicit remaining gate"
+    },
+    {
+      "id": "runtime-4",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/auth/types/auth-contracts.ts",
+      "purpose": "Current bounded implementation, verification receipt or explicit remaining gate"
+    },
+    {
+      "id": "runtime-5",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/auth/services/browser-auth-service.spec.ts",
+      "purpose": "Current bounded implementation, verification receipt or explicit remaining gate"
+    },
+    {
+      "id": "runtime-6",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/data/scoped-read.spec.ts",
+      "purpose": "Current bounded implementation, verification receipt or explicit remaining gate"
+    },
+    {
+      "id": "runtime-7",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/state/country-read-state.spec.ts",
+      "purpose": "Current bounded implementation, verification receipt or explicit remaining gate"
+    },
+    {
+      "id": "runtime-8",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page/countries-read-page.spec.ts",
+      "purpose": "Current bounded implementation, verification receipt or explicit remaining gate"
+    },
+    {
+      "id": "runtime-9",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid/my-data-grid.ts",
+      "purpose": "Current bounded implementation, verification receipt or explicit remaining gate"
+    },
+    {
+      "id": "runtime-10",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid/my-data-grid.html",
+      "purpose": "Current bounded implementation, verification receipt or explicit remaining gate"
+    },
+    {
+      "id": "runtime-11",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid/my-data-grid.scss",
+      "purpose": "Current bounded implementation, verification receipt or explicit remaining gate"
+    },
+    {
+      "id": "runtime-12",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/grid-capabilities.spec.ts",
+      "purpose": "Current bounded implementation, verification receipt or explicit remaining gate"
+    },
+    {
+      "id": "runtime-13",
+      "layer": "web",
+      "path": "web-angular/scripts/verify-country-realtime-browser.mjs",
+      "purpose": "Current bounded implementation, verification receipt or explicit remaining gate"
+    },
+    {
+      "id": "runtime-14",
+      "layer": "web",
+      "path": "web-angular/scripts/verify-country-import-browser.mjs",
+      "purpose": "Current bounded implementation, verification receipt or explicit remaining gate"
+    },
+    {
+      "id": "runtime-15",
+      "layer": "web",
+      "path": "web-angular/scripts/verify-countries-browser.mjs",
+      "purpose": "Current bounded implementation, verification receipt or explicit remaining gate"
+    },
+    {
+      "id": "runtime-16",
+      "layer": "web",
+      "path": "web-angular/package.json",
+      "purpose": "Current bounded implementation, verification receipt or explicit remaining gate"
+    },
+    {
+      "id": "runtime-17",
+      "layer": "web",
+      "path": "web-angular/package-lock.json",
+      "purpose": "Current bounded implementation, verification receipt or explicit remaining gate"
+    },
+    {
+      "id": "runtime-18",
+      "layer": "documentation",
+      "path": "documentation/guides/web/architecture/ANGULAR_REALTIME.md",
+      "purpose": "Current bounded implementation, verification receipt or explicit remaining gate"
+    },
+    {
+      "id": "runtime-19",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-acceptance/verification/ANGULAR_CHECK.txt",
+      "purpose": "Current bounded implementation, verification receipt or explicit remaining gate"
+    },
+    {
+      "id": "runtime-20",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-acceptance/verification/ar-1440.png",
+      "purpose": "Current bounded implementation, verification receipt or explicit remaining gate"
+    },
+    {
+      "id": "runtime-21",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-acceptance/verification/ar-390.png",
+      "purpose": "Current bounded implementation, verification receipt or explicit remaining gate"
+    },
+    {
+      "id": "runtime-22",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-acceptance/verification/CURRENT_ACCEPTANCE.md",
+      "purpose": "Current bounded implementation, verification receipt or explicit remaining gate"
+    },
+    {
+      "id": "runtime-23",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-acceptance/verification/en-1440.png",
+      "purpose": "Current bounded implementation, verification receipt or explicit remaining gate"
+    },
+    {
+      "id": "runtime-24",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-acceptance/verification/en-390.png",
+      "purpose": "Current bounded implementation, verification receipt or explicit remaining gate"
+    },
+    {
+      "id": "runtime-25",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-acceptance/verification/import-journey-results.json",
+      "purpose": "Current bounded implementation, verification receipt or explicit remaining gate"
+    },
+    {
+      "id": "runtime-26",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-acceptance/verification/IMPORT_JOURNEYS.txt",
+      "purpose": "Current bounded implementation, verification receipt or explicit remaining gate"
+    },
+    {
+      "id": "runtime-27",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-acceptance/verification/IMPORT_SMOKE.txt",
+      "purpose": "Current bounded implementation, verification receipt or explicit remaining gate"
+    },
+    {
+      "id": "runtime-28",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-acceptance/verification/LEGACY_READ_HARNESS_FAILURE.txt",
+      "purpose": "Current bounded implementation, verification receipt or explicit remaining gate"
+    },
+    {
+      "id": "runtime-29",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-acceptance/verification/PRIMENG_TABLE_VALIDATION.json",
+      "purpose": "Current bounded implementation, verification receipt or explicit remaining gate"
+    },
+    {
+      "id": "runtime-30",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-acceptance/verification/realtime-results.json",
+      "purpose": "Current bounded implementation, verification receipt or explicit remaining gate"
+    },
+    {
+      "id": "runtime-31",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-acceptance/verification/REALTIME_BROWSER.txt",
+      "purpose": "Current bounded implementation, verification receipt or explicit remaining gate"
+    },
+    {
+      "id": "component-resource-f239b2ccf3f4",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/grid-capabilities.spec.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "clean-code-9cf68ce50f2a",
+      "layer": "documentation",
+      "path": "documentation/guides/web/architecture/ANGULAR_CODE_STYLE.md",
+      "purpose": "Current D37 maintenance policy/source and verification evidence"
+    },
+    {
+      "id": "clean-code-68413f3c15b9",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-acceptance/verification/component-resources.json",
+      "purpose": "Current D37 maintenance policy/source and verification evidence"
+    },
+    {
+      "id": "clean-code-e766ad642018",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-acceptance/verification/hosted-read-security.json",
+      "purpose": "Current D37 maintenance policy/source and verification evidence"
+    },
+    {
+      "id": "clean-code-34aafbc15cf4",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-acceptance/verification/CODE_STYLE_ACCEPTANCE.md",
+      "purpose": "Current D37 maintenance policy/source and verification evidence"
+    },
+    {
+      "id": "clean-code-71d3d1d7d170",
+      "layer": "configuration",
+      "path": "web-angular/.prettierrc",
+      "purpose": "Current D37 maintenance policy/source and verification evidence"
+    },
+    {
+      "id": "clean-code-a82c4d38c63a",
+      "layer": "configuration",
+      "path": "web-angular/.prettierignore",
+      "purpose": "Current D37 maintenance policy/source and verification evidence"
+    },
+    {
+      "id": "clean-code-f4560526473f",
+      "layer": "configuration",
+      "path": "web-angular/.vscode/settings.json",
+      "purpose": "Current D37 maintenance policy/source and verification evidence"
+    },
+    {
+      "id": "clean-code-8e9107d79346",
+      "layer": "configuration",
+      "path": "web-angular/.vscode/extensions.json",
+      "purpose": "Current D37 maintenance policy/source and verification evidence"
+    },
+    {
+      "id": "clean-code-a235bdaa50e4",
+      "layer": "configuration",
+      "path": "web-angular/angular.json",
+      "purpose": "Current D37 maintenance policy/source and verification evidence"
+    },
+    {
+      "id": "clean-code-97fcbd78947e",
+      "layer": "web",
+      "path": "web-angular/scripts/architecture-rules.mjs",
+      "purpose": "Current D37 maintenance policy/source and verification evidence"
+    },
+    {
+      "id": "clean-code-287bb13f168d",
+      "layer": "web",
+      "path": "web-angular/scripts/architecture-rules.test.mjs",
+      "purpose": "Current D37 maintenance policy/source and verification evidence"
+    },
+    {
+      "id": "clean-code-d8f23f60d127",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/data/unsaved-public-api.ts",
+      "purpose": "Current D37 maintenance policy/source and verification evidence"
+    },
+    {
+      "id": "clean-code-fe06d0168f79",
+      "layer": "web",
+      "path": "web-angular/scripts/verify-country-live.mjs",
+      "purpose": "Current D37 maintenance policy/source and verification evidence"
+    },
+    {
+      "id": "clean-code-ea5a748ea659",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-acceptance/verification/component-folders.json",
+      "layer": "documentation",
+      "purpose": "Current D37 component organization and verification evidence"
+    },
+    {
+      "id": "clean-code-299bdbba9ae0",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-acceptance/verification/component-folders-audit.json",
+      "layer": "documentation",
+      "purpose": "Current D37 component organization and verification evidence"
+    },
+    {
+      "id": "clean-code-c75aa1ea854d",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-acceptance/verification/CLEAN_CODE_FULL_CHECK.txt",
+      "layer": "documentation",
+      "purpose": "Current D37 component organization and verification evidence"
+    },
+    {
+      "id": "clean-code-ba3c0a12a6d3",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-acceptance/verification/dev-component-folders.json",
+      "layer": "documentation",
+      "purpose": "D37 final folder organization and verification evidence"
+    },
+    {
+      "id": "clean-code-4eba2eeea155",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-acceptance/verification/dev-component-audit.json",
+      "layer": "documentation",
+      "purpose": "D37 final folder organization and verification evidence"
+    },
+    {
+      "id": "clean-code-5cbf91ad4274",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-acceptance/verification/component-folders-final-inventory.json",
+      "layer": "documentation",
+      "purpose": "D37 final folder organization and verification evidence"
+    },
+    {
+      "id": "clean-code-1c92c4e790d1",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-acceptance/verification/COMPONENT_SCHEMATIC.txt",
+      "layer": "documentation",
+      "purpose": "D37 final folder organization and verification evidence"
+    },
+    {
+      "id": "clean-code-browser-ed86fa71ad23",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-acceptance/verification/component-folder-browser-results.json",
+      "purpose": "Bounded final folder/browser regression evidence"
+    },
+    {
+      "id": "quality-ff96e53d3ee7",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid/grid-column-presentation.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-5356e0ff9c90",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid/grid-column-presentation.spec.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-519b867de1ce",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid/grid-viewport.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-6fe0129a75d1",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/collection-column-pipe.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-97ddb61c625b",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/collection-column-pipe.spec.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-c8f3282bb980",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/utils/country-list-presentation.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-4653687b92ac",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/utils/country-list-presentation.spec.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-b48e367c4706",
+      "layer": "configuration",
+      "path": "web-angular/eslint.config.mjs",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-18187b5430c6",
+      "layer": "configuration",
+      "path": "web-angular/scripts/dependency-rules.mjs",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-056ed62f225e",
+      "layer": "configuration",
+      "path": "web-angular/scripts/dependency-rules.test.mjs",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-16f555949438",
+      "layer": "web",
+      "path": "web-angular/src/testing/fixture-item.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-1463de719913",
+      "layer": "documentation",
+      "path": "documentation/plans/business/web-angular-migration/CLEAN_CODE_HARDENING.md",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-ff2c2bcee370",
+      "layer": "documentation",
+      "path": "documentation/plans/business/web-angular-migration/CLEAN_CODE_IMPLEMENTATION.md",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-7418bab5a4d6",
+      "layer": "documentation",
+      "path": "documentation/plans/business/web-angular-migration/CLEAN_CODE_AUDIT.json",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-2ed7b22e68f0",
+      "layer": "documentation",
+      "path": "documentation/plans/business/web-angular-migration/CLEAN_CODE_CURRENT.json",
+      "purpose": "FOLLOW-022 verified current source hardening acceptance"
+    },
+    {
+      "id": "quality-a5a7bdc853dc",
+      "layer": "documentation",
+      "path": "documentation/plans/business/web-angular-migration/CLEAN_CODE_CHECK.txt",
+      "purpose": "FOLLOW-022 verified current source hardening acceptance"
+    },
+    {
+      "id": "quality-9b1b008706f4",
+      "layer": "documentation",
+      "path": "documentation/plans/business/web-angular-migration/CLEAN_CODE_TOOLING.json",
+      "purpose": "FOLLOW-022 verified current source hardening acceptance"
+    },
+    {
+      "id": "quality-7a012f000507",
+      "layer": "documentation",
+      "path": "documentation/plans/business/web-angular-migration/CLEAN_CODE_PRIMENG.json",
+      "purpose": "FOLLOW-022 verified current source hardening acceptance"
+    },
+    {
+      "id": "quality-1b36b7903dc0",
+      "layer": "documentation",
+      "path": "documentation/plans/business/web-angular-migration/CLEAN_CODE_BROWSER_RESULTS.json",
+      "purpose": "FOLLOW-022 verified current source hardening acceptance"
+    },
+    {
+      "id": "final-pilot-verify-country-pilot-live-mjs",
+      "layer": "web",
+      "path": "web-angular/scripts/verify-country-pilot-live.mjs",
+      "purpose": "2026-11-01 actual final acceptance evidence; hosted managed report remains PROD-028"
+    },
+    {
+      "id": "final-pilot-final-acceptance-md",
+      "layer": "verification",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-acceptance/verification/FINAL_ACCEPTANCE.md",
+      "purpose": "2026-11-01 actual final acceptance evidence; hosted managed report remains PROD-028"
+    },
+    {
+      "id": "final-pilot-actions-json",
+      "layer": "verification",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-acceptance/verification/final/actions.json",
+      "purpose": "2026-11-01 actual final acceptance evidence; hosted managed report remains PROD-028"
+    },
+    {
+      "id": "final-pilot-angular-check-txt",
+      "layer": "verification",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-acceptance/verification/final/ANGULAR_CHECK.txt",
+      "purpose": "2026-11-01 actual final acceptance evidence; hosted managed report remains PROD-028"
+    },
+    {
+      "id": "final-pilot-cards-en-1440-png",
+      "layer": "verification",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-acceptance/verification/final/cards-en-1440.png",
+      "purpose": "2026-11-01 actual final acceptance evidence; hosted managed report remains PROD-028"
+    },
+    {
+      "id": "final-pilot-chart-ar-390-png",
+      "layer": "verification",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-acceptance/verification/final/chart-ar-390.png",
+      "purpose": "2026-11-01 actual final acceptance evidence; hosted managed report remains PROD-028"
+    },
+    {
+      "id": "final-pilot-chart-visual-and-behavior-json",
+      "layer": "verification",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-acceptance/verification/final/chart-visual-and-behavior.json",
+      "purpose": "2026-11-01 actual final acceptance evidence; hosted managed report remains PROD-028"
+    },
+    {
+      "id": "final-pilot-controls-interactions-json",
+      "layer": "verification",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-acceptance/verification/final/controls-interactions.json",
+      "purpose": "2026-11-01 actual final acceptance evidence; hosted managed report remains PROD-028"
+    },
+    {
+      "id": "final-pilot-controls-visual-json",
+      "layer": "verification",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-acceptance/verification/final/controls-visual.json",
+      "purpose": "2026-11-01 actual final acceptance evidence; hosted managed report remains PROD-028"
+    },
+    {
+      "id": "final-pilot-dialog-scope-failure-json",
+      "layer": "verification",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-acceptance/verification/final/dialog-scope-failure.json",
+      "purpose": "2026-11-01 actual final acceptance evidence; hosted managed report remains PROD-028"
+    },
+    {
+      "id": "final-pilot-grid-ar-390-png",
+      "layer": "verification",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-acceptance/verification/final/grid-ar-390.png",
+      "purpose": "2026-11-01 actual final acceptance evidence; hosted managed report remains PROD-028"
+    },
+    {
+      "id": "final-pilot-hosted-isolated-writes-json",
+      "layer": "verification",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-acceptance/verification/final/hosted-isolated-writes.json",
+      "purpose": "2026-11-01 actual final acceptance evidence; hosted managed report remains PROD-028"
+    },
+    {
+      "id": "final-pilot-hosted-read-security-json",
+      "layer": "verification",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-acceptance/verification/final/hosted-read-security.json",
+      "purpose": "2026-11-01 actual final acceptance evidence; hosted managed report remains PROD-028"
+    },
+    {
+      "id": "final-pilot-import-ar-390-png",
+      "layer": "verification",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-acceptance/verification/final/import-ar-390.png",
+      "purpose": "2026-11-01 actual final acceptance evidence; hosted managed report remains PROD-028"
+    },
+    {
+      "id": "final-pilot-import-failures-json",
+      "layer": "verification",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-acceptance/verification/final/import-failures.json",
+      "purpose": "2026-11-01 actual final acceptance evidence; hosted managed report remains PROD-028"
+    },
+    {
+      "id": "final-pilot-import-journeys-json",
+      "layer": "verification",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-acceptance/verification/final/import-journeys.json",
+      "purpose": "2026-11-01 actual final acceptance evidence; hosted managed report remains PROD-028"
+    },
+    {
+      "id": "final-pilot-import-visual-and-success-json",
+      "layer": "verification",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-acceptance/verification/final/import-visual-and-success.json",
+      "purpose": "2026-11-01 actual final acceptance evidence; hosted managed report remains PROD-028"
+    },
+    {
+      "id": "final-pilot-options-ar-390-png",
+      "layer": "verification",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-acceptance/verification/final/options-ar-390.png",
+      "purpose": "2026-11-01 actual final acceptance evidence; hosted managed report remains PROD-028"
+    },
+    {
+      "id": "final-pilot-origin-4220-failure-json",
+      "layer": "verification",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-acceptance/verification/final/origin-4220-failure.json",
+      "purpose": "2026-11-01 actual final acceptance evidence; hosted managed report remains PROD-028"
+    },
+    {
+      "id": "final-pilot-read-lifecycle-json",
+      "layer": "verification",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-acceptance/verification/final/read-lifecycle.json",
+      "purpose": "2026-11-01 actual final acceptance evidence; hosted managed report remains PROD-028"
+    },
+    {
+      "id": "final-pilot-read-visual-json",
+      "layer": "verification",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-acceptance/verification/final/read-visual.json",
+      "purpose": "2026-11-01 actual final acceptance evidence; hosted managed report remains PROD-028"
+    },
+    {
+      "id": "final-pilot-realtime-json",
+      "layer": "verification",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-acceptance/verification/final/realtime.json",
+      "purpose": "2026-11-01 actual final acceptance evidence; hosted managed report remains PROD-028"
+    },
+    {
+      "id": "final-pilot-report-fixture-ar-390-png",
+      "layer": "verification",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-acceptance/verification/final/report-fixture-ar-390.png",
+      "purpose": "2026-11-01 actual final acceptance evidence; hosted managed report remains PROD-028"
+    },
+    {
+      "id": "final-pilot-report-fixture-ui-json",
+      "layer": "verification",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-acceptance/verification/final/report-fixture-ui.json",
+      "purpose": "2026-11-01 actual final acceptance evidence; hosted managed report remains PROD-028"
+    },
+    {
+      "id": "final-pilot-source-fingerprint-json",
+      "layer": "verification",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-acceptance/verification/final/source-fingerprint.json",
+      "purpose": "2026-11-01 actual final acceptance evidence; hosted managed report remains PROD-028"
+    },
+    {
+      "id": "final-pilot-summary-json",
+      "layer": "verification",
+      "path": "documentation/modules/platform/features/angular-countries-pilot-acceptance/verification/final/SUMMARY.json",
+      "purpose": "2026-11-01 actual final acceptance evidence; hosted managed report remains PROD-028"
+    }
+  ]
+}

@@ -39,6 +39,8 @@ public sealed class ReportingDashboardCqrsTests
 
     private sealed class StubAuthorizationSource(int count) : IPlatformAuthorizationSource
     {
+        public Task<PlatformRoleScopePage> GetRoleScopesPageAsync(string? search, int page, int pageSize, CancellationToken cancellationToken = default) => Task.FromResult(new PlatformRoleScopePage([], 0));
+        public Task<IReadOnlyList<PlatformRoleScopeOption>> GetRoleScopesAsync(IReadOnlyCollection<string> roleIds, CancellationToken cancellationToken = default) => Task.FromResult<IReadOnlyList<PlatformRoleScopeOption>>([]);
         public int UserCountCalls { get; private set; }
 
         public Task<int> GetUserCountAsync(CancellationToken cancellationToken = default)

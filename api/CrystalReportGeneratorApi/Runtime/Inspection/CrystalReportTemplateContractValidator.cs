@@ -111,8 +111,8 @@ namespace CrystalReportGeneratorApi.Runtime.Inspection
                 return Schema("The Crystal report must contain exactly one managed data table.");
 
             var table = metadata.Tables[0];
-            if (!string.Equals(table.Name, profile.TableName, StringComparison.Ordinal))
-                return Schema("The Crystal report table name does not match the approved entity contract.");
+            if (string.IsNullOrWhiteSpace(table.Name))
+                return Schema("The Crystal report table or Command must have a name.");
             if (table.Fields.Count != profile.Columns.Count)
                 return Schema("The Crystal report field count does not match the approved entity contract.");
 
@@ -129,26 +129,20 @@ namespace CrystalReportGeneratorApi.Runtime.Inspection
                 }
             }
 
-            if (metadata.Parameters.Count != profile.Parameters.Count)
-                return Parameter("The Crystal report managed parameter set is not exact.");
+            if (metadata.Parameters.Count > profile.Parameters.Count)
+                return Parameter("The report contains parameters that are not supplied by the API.");
 
-            for (var index = 0; index < profile.Parameters.Count; index++)
+            foreach (var actual in metadata.Parameters)
             {
-                var expected = profile.Parameters[index];
-                var actual = metadata.Parameters[index];
-                if (!string.Equals(actual.Name, expected.Name, StringComparison.Ordinal) ||
+                var expected = profile.Parameters.FirstOrDefault(parameter =>
+                    string.Equals(parameter.Name, actual.Name, StringComparison.OrdinalIgnoreCase));
+                if (expected == null ||
                     !string.Equals(actual.Type, expected.Type, StringComparison.Ordinal) ||
-                    actual.Required != expected.Required ||
                     actual.AllowMultipleValues != expected.AllowMultipleValues ||
-                    actual.DiscreteOnly != expected.DiscreteOnly ||
-                    actual.AllowCustomValues ||
-                    actual.AllowedValues.Count != expected.AllowedValues.Count ||
-                    !new HashSet<string>(actual.AllowedValues, StringComparer.Ordinal)
-                        .SetEquals(expected.AllowedValues))
+                    actual.DiscreteOnly != expected.DiscreteOnly)
                 {
                     return Parameter(
-                        "The Crystal report parameter '" + expected.Name +
-                        "' does not match the approved managed parameter contract.");
+                        "The report parameter is not compatible with the value supplied by the API.");
                 }
             }
 

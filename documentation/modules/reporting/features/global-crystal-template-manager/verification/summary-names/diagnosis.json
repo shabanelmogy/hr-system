@@ -1,0 +1,54 @@
+{
+  "date": "2026-11-03",
+  "timezone": "Africa/Cairo",
+  "featureId": "global-crystal-template-manager",
+  "sliceId": "GCT-1",
+  "requesterConfirmation": {
+    "directionChanged": true,
+    "reportNameMissing": "Selector, not PDF title",
+    "independentlyObservedPdf": false
+  },
+  "localCandidate": {
+    "path": "G:/Countries.tests.rpt",
+    "size": 44544,
+    "sha256": "e9505470cfeb41d6c1dc7f05eb04ad94870435a0387c6c8f1345d10829fa84d7",
+    "oleSummaryTitle": "",
+    "oleSummarySubject": "",
+    "codepage": 1256
+  },
+  "hostedNativeInspection": {
+    "status": 200,
+    "isValid": true,
+    "title": null,
+    "subject": null,
+    "businessRowsWritten": false,
+    "originalFileModified": false
+  },
+  "diagnosis": "Both local candidate inspection and actual published version1 metadata have empty Title/Subject. The selector correctly displays its Countries.tests fallback. Byte-identical source match remains unverified.",
+  "existingCode": "Inspection reads SummaryInfo.Title/Subject; upload persists immutable version metadata; public catalog uses published metadata; Angular localizes Title(ar)/Subject(en) with displayName fallback.",
+  "neededFromRequester": "No Network copy needed: actual authenticated catalog read directly in the existing Edge session.",
+  "correctionIfSameSource": "Save Title(ar) and Subject(en) in Crystal Designer, upload as a new version, inspect and explicitly publish, then refresh catalog. Revalidate does not rewrite immutable source metadata.",
+  "runtimeChanged": false,
+  "testsRerun": false,
+  "priorAngular512Tests": "Historical verification, not a new run",
+  "deployedByAgent": false,
+  "phase06": "Not Verified",
+  "openAcceptance": [
+    "FOLLOW-024",
+    "PROD-028"
+  ],
+  "deferredNotResumed": [
+    "DEF-027",
+    "DEF-028"
+  ],
+  "publishedCatalogObserved": {
+    "reportKey": "countries-tests",
+    "displayName": "Countries.tests",
+    "summaryTitle": null,
+    "summarySubject": null,
+    "currentVersionNumber": 1,
+    "isPublished": true,
+    "isArchived": false
+  },
+  "browserActions": "Read-only diagnostic tab opened; original ERP tab restored. No browser credentials were read/copied and no preference changed."
+}

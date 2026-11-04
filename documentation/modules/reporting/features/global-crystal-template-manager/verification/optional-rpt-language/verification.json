@@ -1,0 +1,28 @@
+{
+  "verifiedAtUtc": "2026-11-03T10:37:23.549299+00:00",
+  "featureId": "global-crystal-template-manager",
+  "sliceId": "GCT-1",
+  "independentCrystalBuildAndHarnessPassed": true,
+  "noLanguageProfilesCovered": 5,
+  "rptLanguageMandatory": false,
+  "renderRequestLanguageStillRequired": true,
+  "canonicalArtifactChanged": false,
+  "erpOrClientSourceChanged": false,
+  "erpOrClientSuitesRerun": false,
+  "nativePositiveReportOrPdfVerified": false,
+  "remoteDeploymentPerformed": false,
+  "phase06": "Not Verified",
+  "remaining": [
+    "FOLLOW-024",
+    "PROD-028"
+  ],
+  "deferred": [
+    "DEF-028",
+    "DEF-027"
+  ],
+  "sourceHashes": {
+    "api/CrystalReportGeneratorApi/Runtime/Rendering/CrystalReportManagedParameters.cs": "9d1655ffbbf8283bef218453108692055c7b8db00f633702624ddaa595379e31",
+    "api/CrystalReportGeneratorApi/Runtime/Inspection/CrystalReportTemplateContractValidator.cs": "6ed7e07f7eee6bd9c6315ce77acc12574b51002e4b63459703a9d3399d9699bc",
+    "api/CrystalReportGeneratorApi.ContractTests/Program.cs": "0f0e034bbc086ede283feeb5ec301b3d03ee03c9cecdc34a81d152b30228141a"
+  }
+}

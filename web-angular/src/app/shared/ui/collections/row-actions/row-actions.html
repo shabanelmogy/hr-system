@@ -1,0 +1,16 @@
+<div class="row-actions" role="group" [attr.aria-label]="'collections.rowActions' | uiText">
+  @for (action of actions(); track action.id) {
+    <erp-button
+      [attr.data-row-action]="action.id"
+      [attr.data-action-row]="rowKey()"
+      [label]="action.label"
+      [title]="action.label"
+      [disabled]="action.disabled ?? false"
+      [style.color]="color(action)"
+      appearance="icon"
+      variant="text"
+      (activated)="activate(action.id)"
+      ><erp-icon buttonIcon [name]="action.icon ?? 'more'"
+    /></erp-button>
+  }
+</div>

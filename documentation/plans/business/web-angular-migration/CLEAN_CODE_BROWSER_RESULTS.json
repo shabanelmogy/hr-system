@@ -1,0 +1,1612 @@
+{
+  "date": "2026-10-31T15:44:33.389Z",
+  "cases": 122,
+  "scope": "Chrome fixture/intercepted business journeys; no new hosted write/render or release acceptance.",
+  "receipts": [
+    {
+      "name": "Countries read",
+      "count": 8,
+      "passed": true,
+      "results": [
+        {
+          "palette": "green",
+          "mode": "light",
+          "language": "en",
+          "width": 390,
+          "geometry": {
+            "documentWidth": 390,
+            "viewport": 390,
+            "rowHeight": 52,
+            "footerHeight": 96,
+            "cardColumns": 1
+          },
+          "pageGets": 29,
+          "detailGets": 4,
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "light",
+          "language": "en",
+          "width": 1440,
+          "geometry": {
+            "documentWidth": 1440,
+            "viewport": 1440,
+            "rowHeight": 52,
+            "footerHeight": 52,
+            "cardColumns": 4
+          },
+          "pageGets": 29,
+          "detailGets": 4,
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "light",
+          "language": "ar",
+          "width": 390,
+          "geometry": {
+            "documentWidth": 390,
+            "viewport": 390,
+            "rowHeight": 52,
+            "footerHeight": 96,
+            "cardColumns": 1
+          },
+          "pageGets": 29,
+          "detailGets": 4,
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "light",
+          "language": "ar",
+          "width": 1440,
+          "geometry": {
+            "documentWidth": 1440,
+            "viewport": 1440,
+            "rowHeight": 52,
+            "footerHeight": 52,
+            "cardColumns": 4
+          },
+          "pageGets": 29,
+          "detailGets": 4,
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "dark",
+          "language": "en",
+          "width": 390,
+          "geometry": {
+            "documentWidth": 390,
+            "viewport": 390,
+            "rowHeight": 52,
+            "footerHeight": 96,
+            "cardColumns": 1
+          },
+          "pageGets": 29,
+          "detailGets": 4,
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "dark",
+          "language": "en",
+          "width": 1440,
+          "geometry": {
+            "documentWidth": 1440,
+            "viewport": 1440,
+            "rowHeight": 52,
+            "footerHeight": 52,
+            "cardColumns": 4
+          },
+          "pageGets": 29,
+          "detailGets": 4,
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "dark",
+          "language": "ar",
+          "width": 390,
+          "geometry": {
+            "documentWidth": 390,
+            "viewport": 390,
+            "rowHeight": 52,
+            "footerHeight": 96,
+            "cardColumns": 1
+          },
+          "pageGets": 29,
+          "detailGets": 4,
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "dark",
+          "language": "ar",
+          "width": 1440,
+          "geometry": {
+            "documentWidth": 1440,
+            "viewport": 1440,
+            "rowHeight": 52,
+            "footerHeight": 52,
+            "cardColumns": 4
+          },
+          "pageGets": 29,
+          "detailGets": 4,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "name": "Countries actions",
+      "count": 8,
+      "passed": true,
+      "results": [
+        {
+          "mode": "light",
+          "language": "en",
+          "width": 390,
+          "reducedMotion": false,
+          "writes": 17,
+          "toastStyle": {
+            "background": "rgb(255, 255, 255)",
+            "color": "rgb(21, 128, 61)"
+          },
+          "formSingleColumn": true,
+          "nativeCounterBadges": true,
+          "keyboard": true,
+          "inputKeyboardIsolation": true,
+          "editedActiveFlash": true,
+          "flashExpiresWithoutReplay": true,
+          "cardsRepeatedEditFlash": true,
+          "oldFlashClearedOnMove": true,
+          "stationaryHoverCleared": true,
+          "singleActiveFocus": true,
+          "archivePreviousRow": true,
+          "archivePageBoundary": true,
+          "create": true,
+          "edit": true,
+          "cards": true,
+          "inlineFieldErrors": true,
+          "generalErrorModal": true,
+          "uncertainNoReplay": true,
+          "archive": true,
+          "restore": true,
+          "bulk": true,
+          "atomicDependencyRejection": true,
+          "lifecycleNoReplay": true,
+          "readOnlyGuard": true,
+          "passed": true
+        },
+        {
+          "mode": "light",
+          "language": "en",
+          "width": 1440,
+          "reducedMotion": false,
+          "writes": 17,
+          "toastStyle": {
+            "background": "rgb(255, 255, 255)",
+            "color": "rgb(21, 128, 61)"
+          },
+          "formSingleColumn": true,
+          "nativeCounterBadges": true,
+          "keyboard": true,
+          "inputKeyboardIsolation": true,
+          "editedActiveFlash": true,
+          "flashExpiresWithoutReplay": true,
+          "cardsRepeatedEditFlash": true,
+          "oldFlashClearedOnMove": true,
+          "stationaryHoverCleared": true,
+          "singleActiveFocus": true,
+          "archivePreviousRow": true,
+          "archivePageBoundary": true,
+          "create": true,
+          "edit": true,
+          "cards": true,
+          "inlineFieldErrors": true,
+          "generalErrorModal": true,
+          "uncertainNoReplay": true,
+          "archive": true,
+          "restore": true,
+          "bulk": true,
+          "atomicDependencyRejection": true,
+          "lifecycleNoReplay": true,
+          "readOnlyGuard": true,
+          "passed": true
+        },
+        {
+          "mode": "light",
+          "language": "ar",
+          "width": 390,
+          "reducedMotion": false,
+          "writes": 17,
+          "toastStyle": {
+            "background": "rgb(255, 255, 255)",
+            "color": "rgb(21, 128, 61)"
+          },
+          "formSingleColumn": true,
+          "nativeCounterBadges": true,
+          "keyboard": true,
+          "inputKeyboardIsolation": true,
+          "editedActiveFlash": true,
+          "flashExpiresWithoutReplay": true,
+          "cardsRepeatedEditFlash": true,
+          "oldFlashClearedOnMove": true,
+          "stationaryHoverCleared": true,
+          "singleActiveFocus": true,
+          "archivePreviousRow": true,
+          "archivePageBoundary": true,
+          "create": true,
+          "edit": true,
+          "cards": true,
+          "inlineFieldErrors": true,
+          "generalErrorModal": true,
+          "uncertainNoReplay": true,
+          "archive": true,
+          "restore": true,
+          "bulk": true,
+          "atomicDependencyRejection": true,
+          "lifecycleNoReplay": true,
+          "readOnlyGuard": true,
+          "passed": true
+        },
+        {
+          "mode": "light",
+          "language": "ar",
+          "width": 1440,
+          "reducedMotion": false,
+          "writes": 17,
+          "toastStyle": {
+            "background": "rgb(255, 255, 255)",
+            "color": "rgb(21, 128, 61)"
+          },
+          "formSingleColumn": true,
+          "nativeCounterBadges": true,
+          "keyboard": true,
+          "inputKeyboardIsolation": true,
+          "editedActiveFlash": true,
+          "flashExpiresWithoutReplay": true,
+          "cardsRepeatedEditFlash": true,
+          "oldFlashClearedOnMove": true,
+          "stationaryHoverCleared": true,
+          "singleActiveFocus": true,
+          "archivePreviousRow": true,
+          "archivePageBoundary": true,
+          "create": true,
+          "edit": true,
+          "cards": true,
+          "inlineFieldErrors": true,
+          "generalErrorModal": true,
+          "uncertainNoReplay": true,
+          "archive": true,
+          "restore": true,
+          "bulk": true,
+          "atomicDependencyRejection": true,
+          "lifecycleNoReplay": true,
+          "readOnlyGuard": true,
+          "passed": true
+        },
+        {
+          "mode": "dark",
+          "language": "en",
+          "width": 390,
+          "reducedMotion": true,
+          "writes": 17,
+          "toastStyle": {
+            "background": "rgb(24, 32, 30)",
+            "color": "rgb(74, 222, 128)"
+          },
+          "formSingleColumn": true,
+          "nativeCounterBadges": true,
+          "keyboard": true,
+          "inputKeyboardIsolation": true,
+          "editedActiveFlash": true,
+          "flashExpiresWithoutReplay": true,
+          "cardsRepeatedEditFlash": true,
+          "oldFlashClearedOnMove": true,
+          "stationaryHoverCleared": true,
+          "singleActiveFocus": true,
+          "archivePreviousRow": true,
+          "archivePageBoundary": true,
+          "create": true,
+          "edit": true,
+          "cards": true,
+          "inlineFieldErrors": true,
+          "generalErrorModal": true,
+          "uncertainNoReplay": true,
+          "archive": true,
+          "restore": true,
+          "bulk": true,
+          "atomicDependencyRejection": true,
+          "lifecycleNoReplay": true,
+          "readOnlyGuard": true,
+          "passed": true
+        },
+        {
+          "mode": "dark",
+          "language": "en",
+          "width": 1440,
+          "reducedMotion": true,
+          "writes": 17,
+          "toastStyle": {
+            "background": "rgb(24, 32, 30)",
+            "color": "rgb(74, 222, 128)"
+          },
+          "formSingleColumn": true,
+          "nativeCounterBadges": true,
+          "keyboard": true,
+          "inputKeyboardIsolation": true,
+          "editedActiveFlash": true,
+          "flashExpiresWithoutReplay": true,
+          "cardsRepeatedEditFlash": true,
+          "oldFlashClearedOnMove": true,
+          "stationaryHoverCleared": true,
+          "singleActiveFocus": true,
+          "archivePreviousRow": true,
+          "archivePageBoundary": true,
+          "create": true,
+          "edit": true,
+          "cards": true,
+          "inlineFieldErrors": true,
+          "generalErrorModal": true,
+          "uncertainNoReplay": true,
+          "archive": true,
+          "restore": true,
+          "bulk": true,
+          "atomicDependencyRejection": true,
+          "lifecycleNoReplay": true,
+          "readOnlyGuard": true,
+          "passed": true
+        },
+        {
+          "mode": "dark",
+          "language": "ar",
+          "width": 390,
+          "reducedMotion": true,
+          "writes": 17,
+          "toastStyle": {
+            "background": "rgb(24, 32, 30)",
+            "color": "rgb(74, 222, 128)"
+          },
+          "formSingleColumn": true,
+          "nativeCounterBadges": true,
+          "keyboard": true,
+          "inputKeyboardIsolation": true,
+          "editedActiveFlash": true,
+          "flashExpiresWithoutReplay": true,
+          "cardsRepeatedEditFlash": true,
+          "oldFlashClearedOnMove": true,
+          "stationaryHoverCleared": true,
+          "singleActiveFocus": true,
+          "archivePreviousRow": true,
+          "archivePageBoundary": true,
+          "create": true,
+          "edit": true,
+          "cards": true,
+          "inlineFieldErrors": true,
+          "generalErrorModal": true,
+          "uncertainNoReplay": true,
+          "archive": true,
+          "restore": true,
+          "bulk": true,
+          "atomicDependencyRejection": true,
+          "lifecycleNoReplay": true,
+          "readOnlyGuard": true,
+          "passed": true
+        },
+        {
+          "mode": "dark",
+          "language": "ar",
+          "width": 1440,
+          "reducedMotion": true,
+          "writes": 17,
+          "toastStyle": {
+            "background": "rgb(24, 32, 30)",
+            "color": "rgb(74, 222, 128)"
+          },
+          "formSingleColumn": true,
+          "nativeCounterBadges": true,
+          "keyboard": true,
+          "inputKeyboardIsolation": true,
+          "editedActiveFlash": true,
+          "flashExpiresWithoutReplay": true,
+          "cardsRepeatedEditFlash": true,
+          "oldFlashClearedOnMove": true,
+          "stationaryHoverCleared": true,
+          "singleActiveFocus": true,
+          "archivePreviousRow": true,
+          "archivePageBoundary": true,
+          "create": true,
+          "edit": true,
+          "cards": true,
+          "inlineFieldErrors": true,
+          "generalErrorModal": true,
+          "uncertainNoReplay": true,
+          "archive": true,
+          "restore": true,
+          "bulk": true,
+          "atomicDependencyRejection": true,
+          "lifecycleNoReplay": true,
+          "readOnlyGuard": true,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "name": "Shared Grid capabilities",
+      "count": 8,
+      "passed": true,
+      "results": [
+        {
+          "palette": "green",
+          "mode": "light",
+          "language": "en",
+          "width": 390,
+          "sourceFingerprint": "2ed2a15f486ea5be9cc193e9c835bc20fd76d5013f5ae24e8a11a200c6bf7005",
+          "bootstrapReloads": 0,
+          "interactions": true,
+          "geometry": {
+            "headerHeight": 91,
+            "titleFontSize": "16px",
+            "titleWeight": "600",
+            "columnHeight": 56,
+            "badgesTop": 60,
+            "controlsBottom": 56,
+            "documentWidth": 390,
+            "viewport": 390
+          },
+          "starts": 16,
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "light",
+          "language": "en",
+          "width": 1440,
+          "sourceFingerprint": "2ed2a15f486ea5be9cc193e9c835bc20fd76d5013f5ae24e8a11a200c6bf7005",
+          "bootstrapReloads": 0,
+          "interactions": true,
+          "geometry": {
+            "headerHeight": 72,
+            "titleFontSize": "18px",
+            "titleWeight": "600",
+            "columnHeight": 56,
+            "badgesTop": 60.984375,
+            "controlsBottom": 78,
+            "documentWidth": 1440,
+            "viewport": 1440
+          },
+          "starts": 16,
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "light",
+          "language": "ar",
+          "width": 390,
+          "sourceFingerprint": "2ed2a15f486ea5be9cc193e9c835bc20fd76d5013f5ae24e8a11a200c6bf7005",
+          "bootstrapReloads": 0,
+          "interactions": true,
+          "geometry": {
+            "headerHeight": 91,
+            "titleFontSize": "16px",
+            "titleWeight": "600",
+            "columnHeight": 56,
+            "badgesTop": 60,
+            "controlsBottom": 56,
+            "documentWidth": 390,
+            "viewport": 390
+          },
+          "starts": 16,
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "light",
+          "language": "ar",
+          "width": 1440,
+          "sourceFingerprint": "2ed2a15f486ea5be9cc193e9c835bc20fd76d5013f5ae24e8a11a200c6bf7005",
+          "bootstrapReloads": 0,
+          "interactions": true,
+          "geometry": {
+            "headerHeight": 72,
+            "titleFontSize": "18px",
+            "titleWeight": "600",
+            "columnHeight": 56,
+            "badgesTop": 60.984375,
+            "controlsBottom": 78,
+            "documentWidth": 1440,
+            "viewport": 1440
+          },
+          "starts": 16,
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "dark",
+          "language": "en",
+          "width": 390,
+          "sourceFingerprint": "2ed2a15f486ea5be9cc193e9c835bc20fd76d5013f5ae24e8a11a200c6bf7005",
+          "bootstrapReloads": 0,
+          "interactions": true,
+          "geometry": {
+            "headerHeight": 91,
+            "titleFontSize": "16px",
+            "titleWeight": "600",
+            "columnHeight": 56,
+            "badgesTop": 60,
+            "controlsBottom": 56,
+            "documentWidth": 390,
+            "viewport": 390
+          },
+          "starts": 16,
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "dark",
+          "language": "en",
+          "width": 1440,
+          "sourceFingerprint": "2ed2a15f486ea5be9cc193e9c835bc20fd76d5013f5ae24e8a11a200c6bf7005",
+          "bootstrapReloads": 0,
+          "interactions": true,
+          "geometry": {
+            "headerHeight": 72,
+            "titleFontSize": "18px",
+            "titleWeight": "600",
+            "columnHeight": 56,
+            "badgesTop": 60.984375,
+            "controlsBottom": 78,
+            "documentWidth": 1440,
+            "viewport": 1440
+          },
+          "starts": 16,
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "dark",
+          "language": "ar",
+          "width": 390,
+          "sourceFingerprint": "2ed2a15f486ea5be9cc193e9c835bc20fd76d5013f5ae24e8a11a200c6bf7005",
+          "bootstrapReloads": 0,
+          "interactions": true,
+          "geometry": {
+            "headerHeight": 91,
+            "titleFontSize": "16px",
+            "titleWeight": "600",
+            "columnHeight": 56,
+            "badgesTop": 60,
+            "controlsBottom": 56,
+            "documentWidth": 390,
+            "viewport": 390
+          },
+          "starts": 16,
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "dark",
+          "language": "ar",
+          "width": 1440,
+          "sourceFingerprint": "2ed2a15f486ea5be9cc193e9c835bc20fd76d5013f5ae24e8a11a200c6bf7005",
+          "bootstrapReloads": 0,
+          "interactions": true,
+          "geometry": {
+            "headerHeight": 72,
+            "titleFontSize": "18px",
+            "titleWeight": "600",
+            "columnHeight": 56,
+            "badgesTop": 60.984375,
+            "controlsBottom": 78,
+            "documentWidth": 1440,
+            "viewport": 1440
+          },
+          "starts": 16,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "name": "Table/Cards collections",
+      "count": 8,
+      "passed": true,
+      "results": [
+        {
+          "palette": "green",
+          "mode": "light",
+          "language": "en",
+          "width": 390,
+          "geometry": {
+            "pageWidth": 390,
+            "viewport": 390,
+            "row": 52,
+            "header": 56,
+            "internalX": true,
+            "internalY": true,
+            "footerHeight": 96,
+            "border": "rgb(212, 225, 222)",
+            "expectedBorder": "#D4E1DE"
+          },
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "light",
+          "language": "en",
+          "width": 1440,
+          "geometry": {
+            "pageWidth": 1440,
+            "viewport": 1440,
+            "row": 52,
+            "header": 56,
+            "internalX": false,
+            "internalY": true,
+            "footerHeight": 52,
+            "border": "rgb(212, 225, 222)",
+            "expectedBorder": "#D4E1DE"
+          },
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "light",
+          "language": "ar",
+          "width": 390,
+          "geometry": {
+            "pageWidth": 390,
+            "viewport": 390,
+            "row": 52,
+            "header": 56,
+            "internalX": true,
+            "internalY": true,
+            "footerHeight": 96,
+            "border": "rgb(212, 225, 222)",
+            "expectedBorder": "#D4E1DE"
+          },
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "light",
+          "language": "ar",
+          "width": 1440,
+          "geometry": {
+            "pageWidth": 1440,
+            "viewport": 1440,
+            "row": 52,
+            "header": 56,
+            "internalX": false,
+            "internalY": true,
+            "footerHeight": 52,
+            "border": "rgb(212, 225, 222)",
+            "expectedBorder": "#D4E1DE"
+          },
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "dark",
+          "language": "en",
+          "width": 390,
+          "geometry": {
+            "pageWidth": 390,
+            "viewport": 390,
+            "row": 52,
+            "header": 56,
+            "internalX": true,
+            "internalY": true,
+            "footerHeight": 96,
+            "border": "rgb(51, 69, 64)",
+            "expectedBorder": "#334540"
+          },
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "dark",
+          "language": "en",
+          "width": 1440,
+          "geometry": {
+            "pageWidth": 1440,
+            "viewport": 1440,
+            "row": 52,
+            "header": 56,
+            "internalX": false,
+            "internalY": true,
+            "footerHeight": 52,
+            "border": "rgb(51, 69, 64)",
+            "expectedBorder": "#334540"
+          },
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "dark",
+          "language": "ar",
+          "width": 390,
+          "geometry": {
+            "pageWidth": 390,
+            "viewport": 390,
+            "row": 52,
+            "header": 56,
+            "internalX": true,
+            "internalY": true,
+            "footerHeight": 96,
+            "border": "rgb(51, 69, 64)",
+            "expectedBorder": "#334540"
+          },
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "dark",
+          "language": "ar",
+          "width": 1440,
+          "geometry": {
+            "pageWidth": 1440,
+            "viewport": 1440,
+            "row": 52,
+            "header": 56,
+            "internalX": false,
+            "internalY": true,
+            "footerHeight": 52,
+            "border": "rgb(51, 69, 64)",
+            "expectedBorder": "#334540"
+          },
+          "passed": true
+        }
+      ]
+    },
+    {
+      "name": "Module/context navigation",
+      "count": 24,
+      "passed": true,
+      "results": [
+        {
+          "kind": "navigation",
+          "language": "en",
+          "mode": "light",
+          "width": 390,
+          "singleCatalogPerLoad": true,
+          "passed": true
+        },
+        {
+          "kind": "navigation",
+          "language": "en",
+          "mode": "light",
+          "width": 1440,
+          "singleCatalogPerLoad": true,
+          "passed": true
+        },
+        {
+          "kind": "navigation",
+          "language": "en",
+          "mode": "dark",
+          "width": 390,
+          "singleCatalogPerLoad": true,
+          "passed": true
+        },
+        {
+          "kind": "navigation",
+          "language": "en",
+          "mode": "dark",
+          "width": 1440,
+          "singleCatalogPerLoad": true,
+          "passed": true
+        },
+        {
+          "kind": "navigation",
+          "language": "ar",
+          "mode": "light",
+          "width": 390,
+          "singleCatalogPerLoad": true,
+          "passed": true
+        },
+        {
+          "kind": "navigation",
+          "language": "ar",
+          "mode": "light",
+          "width": 1440,
+          "singleCatalogPerLoad": true,
+          "passed": true
+        },
+        {
+          "kind": "navigation",
+          "language": "ar",
+          "mode": "dark",
+          "width": 390,
+          "singleCatalogPerLoad": true,
+          "passed": true
+        },
+        {
+          "kind": "navigation",
+          "language": "ar",
+          "mode": "dark",
+          "width": 1440,
+          "singleCatalogPerLoad": true,
+          "passed": true
+        },
+        {
+          "kind": "state",
+          "action": "empty",
+          "passed": true
+        },
+        {
+          "kind": "state",
+          "action": "error",
+          "passed": true
+        },
+        {
+          "kind": "state",
+          "action": "malformed",
+          "passed": true
+        },
+        {
+          "kind": "state",
+          "action": "forbidden",
+          "passed": true
+        },
+        {
+          "kind": "state",
+          "action": "global",
+          "passed": true
+        },
+        {
+          "kind": "state",
+          "action": "no-tenant",
+          "passed": true
+        },
+        {
+          "kind": "state",
+          "action": "delay",
+          "passed": true
+        },
+        {
+          "kind": "unknown-route-company-transition",
+          "reads": 3,
+          "passed": true
+        },
+        {
+          "kind": "four-contexts-responsive",
+          "language": "en",
+          "width": 390,
+          "passed": true
+        },
+        {
+          "kind": "four-contexts-responsive",
+          "language": "en",
+          "width": 1440,
+          "passed": true
+        },
+        {
+          "kind": "four-contexts-responsive",
+          "language": "ar",
+          "width": 390,
+          "passed": true
+        },
+        {
+          "kind": "four-contexts-responsive",
+          "language": "ar",
+          "width": 1440,
+          "passed": true
+        },
+        {
+          "kind": "prime-scroll-and-menu",
+          "language": "en",
+          "width": 390,
+          "wheel": true,
+          "keyboard": true,
+          "drag": true,
+          "resize": true,
+          "appearance": {
+            "radius": "999px",
+            "color": "color(srgb 0.276235 0.426039 0.43702)",
+            "width": 10
+          },
+          "passed": true
+        },
+        {
+          "kind": "prime-scroll-and-menu",
+          "language": "en",
+          "width": 1440,
+          "wheel": true,
+          "keyboard": true,
+          "drag": true,
+          "resize": true,
+          "appearance": {
+            "radius": "999px",
+            "color": "color(srgb 0.276235 0.426039 0.43702)",
+            "width": 10
+          },
+          "passed": true
+        },
+        {
+          "kind": "prime-scroll-and-menu",
+          "language": "ar",
+          "width": 390,
+          "wheel": true,
+          "keyboard": true,
+          "drag": true,
+          "resize": true,
+          "appearance": {
+            "radius": "999px",
+            "color": "color(srgb 0.577569 0.776471 0.74102)",
+            "width": 10
+          },
+          "passed": true
+        },
+        {
+          "kind": "prime-scroll-and-menu",
+          "language": "ar",
+          "width": 1440,
+          "wheel": true,
+          "keyboard": true,
+          "drag": true,
+          "resize": true,
+          "appearance": {
+            "radius": "999px",
+            "color": "color(srgb 0.577569 0.776471 0.74102)",
+            "width": 10
+          },
+          "passed": true
+        }
+      ]
+    },
+    {
+      "name": "Unsaved navigation",
+      "count": 8,
+      "passed": true,
+      "results": [
+        {
+          "palette": "green",
+          "mode": "light",
+          "language": "en",
+          "width": 390,
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "light",
+          "language": "en",
+          "width": 1440,
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "light",
+          "language": "ar",
+          "width": 390,
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "light",
+          "language": "ar",
+          "width": 1440,
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "dark",
+          "language": "en",
+          "width": 390,
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "dark",
+          "language": "en",
+          "width": 1440,
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "dark",
+          "language": "ar",
+          "width": 390,
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "dark",
+          "language": "ar",
+          "width": 1440,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "name": "URL/history criteria",
+      "count": 8,
+      "passed": true,
+      "results": [
+        {
+          "palette": "green",
+          "mode": "light",
+          "language": "en",
+          "width": 390,
+          "geometry": {
+            "page": 390,
+            "width": 390,
+            "footer": 80
+          },
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "light",
+          "language": "en",
+          "width": 1440,
+          "geometry": {
+            "page": 1440,
+            "width": 1440,
+            "footer": 53
+          },
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "light",
+          "language": "ar",
+          "width": 390,
+          "geometry": {
+            "page": 390,
+            "width": 390,
+            "footer": 80
+          },
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "light",
+          "language": "ar",
+          "width": 1440,
+          "geometry": {
+            "page": 1440,
+            "width": 1440,
+            "footer": 53
+          },
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "dark",
+          "language": "en",
+          "width": 390,
+          "geometry": {
+            "page": 390,
+            "width": 390,
+            "footer": 80
+          },
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "dark",
+          "language": "en",
+          "width": 1440,
+          "geometry": {
+            "page": 1440,
+            "width": 1440,
+            "footer": 53
+          },
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "dark",
+          "language": "ar",
+          "width": 390,
+          "geometry": {
+            "page": 390,
+            "width": 390,
+            "footer": 80
+          },
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "dark",
+          "language": "ar",
+          "width": 1440,
+          "geometry": {
+            "page": 1440,
+            "width": 1440,
+            "footer": 53
+          },
+          "passed": true
+        }
+      ]
+    },
+    {
+      "name": "Boolean fields",
+      "count": 8,
+      "passed": true,
+      "results": [
+        {
+          "palette": "green",
+          "mode": "light",
+          "language": "en",
+          "width": 390,
+          "geometry": {
+            "height": 46,
+            "page": 390
+          },
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "light",
+          "language": "en",
+          "width": 1440,
+          "geometry": {
+            "height": 46,
+            "page": 1440
+          },
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "light",
+          "language": "ar",
+          "width": 390,
+          "geometry": {
+            "height": 46,
+            "page": 390
+          },
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "light",
+          "language": "ar",
+          "width": 1440,
+          "geometry": {
+            "height": 46,
+            "page": 1440
+          },
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "dark",
+          "language": "en",
+          "width": 390,
+          "geometry": {
+            "height": 46,
+            "page": 390
+          },
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "dark",
+          "language": "en",
+          "width": 1440,
+          "geometry": {
+            "height": 46,
+            "page": 1440
+          },
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "dark",
+          "language": "ar",
+          "width": 390,
+          "geometry": {
+            "height": 46,
+            "page": 390
+          },
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "dark",
+          "language": "ar",
+          "width": 1440,
+          "geometry": {
+            "height": 46,
+            "page": 1440
+          },
+          "passed": true
+        }
+      ]
+    },
+    {
+      "name": "Date fields and timezones",
+      "count": 18,
+      "passed": true,
+      "results": {
+        "cases": [
+          {
+            "palette": "green",
+            "mode": "light",
+            "language": "en",
+            "width": 390,
+            "geometry": {
+              "width": 238,
+              "height": 44,
+              "page": 390
+            },
+            "bounds": {
+              "x": 16,
+              "y": 518.015625,
+              "width": 340,
+              "height": 339
+            },
+            "passed": true
+          },
+          {
+            "palette": "green",
+            "mode": "light",
+            "language": "en",
+            "width": 1440,
+            "geometry": {
+              "width": 866,
+              "height": 44,
+              "page": 1440
+            },
+            "bounds": {
+              "x": 855,
+              "y": 378.015625,
+              "width": 340,
+              "height": 339
+            },
+            "passed": true
+          },
+          {
+            "palette": "green",
+            "mode": "light",
+            "language": "ar",
+            "width": 390,
+            "geometry": {
+              "width": 238,
+              "height": 44,
+              "page": 390
+            },
+            "bounds": {
+              "x": 34,
+              "y": 518.015625,
+              "width": 340,
+              "height": 339
+            },
+            "passed": true
+          },
+          {
+            "palette": "green",
+            "mode": "light",
+            "language": "ar",
+            "width": 1440,
+            "geometry": {
+              "width": 866,
+              "height": 44,
+              "page": 1440
+            },
+            "bounds": {
+              "x": 245,
+              "y": 378.015625,
+              "width": 340,
+              "height": 339
+            },
+            "passed": true
+          },
+          {
+            "palette": "green",
+            "mode": "dark",
+            "language": "en",
+            "width": 390,
+            "geometry": {
+              "width": 238,
+              "height": 44,
+              "page": 390
+            },
+            "bounds": {
+              "x": 16,
+              "y": 518.015625,
+              "width": 340,
+              "height": 339
+            },
+            "passed": true
+          },
+          {
+            "palette": "green",
+            "mode": "dark",
+            "language": "en",
+            "width": 1440,
+            "geometry": {
+              "width": 866,
+              "height": 44,
+              "page": 1440
+            },
+            "bounds": {
+              "x": 855,
+              "y": 378.015625,
+              "width": 340,
+              "height": 339
+            },
+            "passed": true
+          },
+          {
+            "palette": "green",
+            "mode": "dark",
+            "language": "ar",
+            "width": 390,
+            "geometry": {
+              "width": 238,
+              "height": 44,
+              "page": 390
+            },
+            "bounds": {
+              "x": 34,
+              "y": 518.015625,
+              "width": 340,
+              "height": 339
+            },
+            "passed": true
+          },
+          {
+            "palette": "green",
+            "mode": "dark",
+            "language": "ar",
+            "width": 1440,
+            "geometry": {
+              "width": 866,
+              "height": 44,
+              "page": 1440
+            },
+            "bounds": {
+              "x": 245,
+              "y": 378.015625,
+              "width": 340,
+              "height": 339
+            },
+            "passed": true
+          }
+        ],
+        "timezones": [
+          {
+            "timezoneId": "UTC",
+            "language": "en",
+            "passed": true
+          },
+          {
+            "timezoneId": "UTC",
+            "language": "ar",
+            "passed": true
+          },
+          {
+            "timezoneId": "Africa/Cairo",
+            "language": "en",
+            "passed": true
+          },
+          {
+            "timezoneId": "Africa/Cairo",
+            "language": "ar",
+            "passed": true
+          },
+          {
+            "timezoneId": "America/Los_Angeles",
+            "language": "en",
+            "passed": true
+          },
+          {
+            "timezoneId": "America/Los_Angeles",
+            "language": "ar",
+            "passed": true
+          },
+          {
+            "timezoneId": "Pacific/Kiritimati",
+            "language": "en",
+            "passed": true
+          },
+          {
+            "timezoneId": "Pacific/Kiritimati",
+            "language": "ar",
+            "passed": true
+          },
+          {
+            "timezoneId": "America/Adak",
+            "language": "en",
+            "passed": true
+          },
+          {
+            "timezoneId": "America/Adak",
+            "language": "ar",
+            "passed": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "Countries import",
+      "count": 15,
+      "passed": true,
+      "results": {
+        "date": "2026-10-31T15:40:09.385Z",
+        "results": [
+          {
+            "action": "duplicate",
+            "passed": true
+          },
+          {
+            "action": "denied",
+            "passed": true
+          },
+          {
+            "action": "server",
+            "passed": true
+          },
+          {
+            "action": "network",
+            "passed": true
+          },
+          {
+            "action": "malformed",
+            "passed": true
+          },
+          {
+            "action": "delay",
+            "passed": true
+          },
+          {
+            "scenario": "extension",
+            "passed": true
+          },
+          {
+            "scenario": "headers",
+            "passed": true
+          },
+          {
+            "scenario": "formula",
+            "passed": true
+          },
+          {
+            "scenario": "limit",
+            "passed": true
+          },
+          {
+            "scenario": "empty",
+            "passed": true
+          },
+          {
+            "scenario": "zip",
+            "passed": true
+          },
+          {
+            "scenario": "no-create",
+            "passed": true
+          },
+          {
+            "scenario": "read-only",
+            "passed": true
+          },
+          {
+            "scenario": "discard",
+            "passed": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "Countries realtime",
+      "count": 9,
+      "passed": true,
+      "results": {
+        "date": "2026-10-31T15:41:14.800Z",
+        "results": [
+          {
+            "language": "en",
+            "width": 390,
+            "opening": [
+              {
+                "kind": "loading",
+                "at": 1940.4000000059605
+              },
+              {
+                "kind": "ready",
+                "at": 2120.7999999821186
+              }
+            ],
+            "oneOpeningLoader": true,
+            "remoteBurst": true,
+            "pendingTrailingRead": true,
+            "reconnect": true,
+            "editorDraft": true,
+            "importDraft": true,
+            "revocation": true,
+            "passed": true
+          },
+          {
+            "language": "en",
+            "width": 1440,
+            "opening": [
+              {
+                "kind": "loading",
+                "at": 2555.199999988079
+              },
+              {
+                "kind": "ready",
+                "at": 3089.2999999821186
+              }
+            ],
+            "oneOpeningLoader": true,
+            "remoteBurst": true,
+            "pendingTrailingRead": true,
+            "reconnect": true,
+            "editorDraft": true,
+            "importDraft": true,
+            "revocation": true,
+            "passed": true
+          },
+          {
+            "language": "ar",
+            "width": 390,
+            "opening": [
+              {
+                "kind": "loading",
+                "at": 2219.9000000059605
+              },
+              {
+                "kind": "ready",
+                "at": 2532.4000000059605
+              }
+            ],
+            "oneOpeningLoader": true,
+            "remoteBurst": true,
+            "pendingTrailingRead": true,
+            "reconnect": true,
+            "editorDraft": true,
+            "importDraft": true,
+            "revocation": true,
+            "passed": true
+          },
+          {
+            "language": "ar",
+            "width": 1440,
+            "opening": [
+              {
+                "kind": "loading",
+                "at": 1783.199999988079
+              },
+              {
+                "kind": "ready",
+                "at": 1957.7999999821186
+              }
+            ],
+            "oneOpeningLoader": true,
+            "remoteBurst": true,
+            "pendingTrailingRead": true,
+            "reconnect": true,
+            "editorDraft": true,
+            "importDraft": true,
+            "revocation": true,
+            "passed": true
+          },
+          {
+            "scenario": "forbidden",
+            "passed": true
+          },
+          {
+            "scenario": "token-denied",
+            "passed": true
+          },
+          {
+            "scenario": "initial-retry",
+            "passed": true
+          },
+          {
+            "scenario": "hub401",
+            "passed": true
+          },
+          {
+            "scenario": "hub403",
+            "passed": true
+          }
+        ]
+      }
+    }
+  ]
+}

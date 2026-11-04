@@ -1,0 +1,9 @@
+<erp-button
+  [label]="shortKey() | uiText"
+  [accessibleLabel]="fullKey() | uiText"
+  [title]="fullKey() | uiText"
+  variant="text"
+  [disabled]="disabled()"
+  (activated)="toggle()"
+  ><erp-icon buttonIcon [name]="direction() === 'asc' ? 'arrowUp' : 'arrowDown'"
+/></erp-button>

@@ -1,0 +1,17 @@
+<main>
+  <erp-page-header [title]="'common.back' | uiText" /><erp-button
+    data-testid="return"
+    [label]="'general.backToHome' | uiText"
+    (activated)="back()"
+  /><erp-button
+    data-testid="hint-away"
+    [label]="'notifications.title' | uiText"
+    (activated)="probe.hint('a')"
+  /><output
+    data-testid="away-state"
+    [attr.data-starts]="probe.starts()"
+    [attr.data-active]="probe.active()"
+    [attr.data-watchers]="probe.watchers()"
+    [attr.data-cancelled]="probe.cancelled()"
+  ></output>
+</main>

@@ -1,0 +1,109 @@
+{
+  "verifiedAtUtc": "2026-11-03T09:34:48.7035578Z",
+  "server": "SHABANELMOGY\\SQL2017",
+  "database": "ERPSYSTEM_Local",
+  "schemas": [
+    {
+      "schema": "acc",
+      "tables": 21
+    },
+    {
+      "schema": "contacts",
+      "tables": 4
+    },
+    {
+      "schema": "crm",
+      "tables": 3
+    },
+    {
+      "schema": "hr",
+      "tables": 44
+    },
+    {
+      "schema": "inv",
+      "tables": 5
+    },
+    {
+      "schema": "platform",
+      "tables": 37
+    },
+    {
+      "schema": "pos",
+      "tables": 2
+    },
+    {
+      "schema": "ref",
+      "tables": 9
+    },
+    {
+      "schema": "rpt",
+      "tables": 13
+    }
+  ],
+  "migrationHistories": [
+    {
+      "schema": "acc",
+      "applied": 4
+    },
+    {
+      "schema": "contacts",
+      "applied": 2
+    },
+    {
+      "schema": "crm",
+      "applied": 2
+    },
+    {
+      "schema": "hr",
+      "applied": 2
+    },
+    {
+      "schema": "inv",
+      "applied": 2
+    },
+    {
+      "schema": "platform",
+      "applied": 8
+    },
+    {
+      "schema": "pos",
+      "applied": 2
+    },
+    {
+      "schema": "ref",
+      "applied": 3
+    },
+    {
+      "schema": "rpt",
+      "applied": 6
+    }
+  ],
+  "views": [
+    {
+      "name": "ref.vw_Countries",
+      "schemaBound": true,
+      "columns": 40,
+      "missingRootColumns": 0
+    },
+    {
+      "name": "ref.vw_Districts",
+      "schemaBound": true,
+      "columns": 56,
+      "missingRootColumns": 0
+    },
+    {
+      "name": "ref.vw_States",
+      "schemaBound": true,
+      "columns": 40,
+      "missingRootColumns": 0
+    }
+  ],
+  "referenceRows": {
+    "countries": 0,
+    "states": 0,
+    "districts": 0
+  },
+  "allNineModulesVerified": true,
+  "existingApplicationPublishConfigurationChanged": false,
+  "credentialsIncluded": false
+}

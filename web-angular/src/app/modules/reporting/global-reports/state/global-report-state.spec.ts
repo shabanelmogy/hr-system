@@ -1,3 +1,4 @@
+import { fixtureItem } from '../../../../../testing/fixture-item';
 import { signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { Observable, of, Subject } from 'rxjs';
@@ -61,31 +62,31 @@ describe('Global report lifetime and authorization', () => {
   it('selects the first report once and cancels old rendering on selection or destruction', () => {
     const { state, service, subscriptions } = setup();
     expect(service.render).toHaveBeenCalledOnce();
-    subscriptions[0].subject.next(document);
+    fixtureItem(subscriptions, 0).subject.next(document);
     expect(state.view().kind).toBe('ready');
     state.select(second.id);
     expect(state.view().kind).toBe('loading');
     TestBed.tick();
-    expect(subscriptions[0].cancelled).toBe(true);
+    expect(fixtureItem(subscriptions, 0).cancelled).toBe(true);
     expect(service.render).toHaveBeenCalledTimes(2);
-    subscriptions[0].subject.next(document);
+    fixtureItem(subscriptions, 0).subject.next(document);
     expect(state.view().kind).toBe('loading');
     TestBed.resetTestingModule();
-    expect(subscriptions[1].cancelled).toBe(true);
+    expect(fixtureItem(subscriptions, 1).cancelled).toBe(true);
   });
   it('uses applied filters on language changes and rejects oversized or pending searches', () => {
     const { state, service, subscriptions, language } = setup();
     expect(state.search({ nameAr: 'مصر', nameEn: '' })).toBe(false);
-    subscriptions[0].subject.next(document);
+    fixtureItem(subscriptions, 0).subject.next(document);
     expect(state.search({ nameAr: 'مصر', nameEn: '' })).toBe(true);
     TestBed.tick();
     expect(service.render).toHaveBeenLastCalledWith(report, { nameAr: 'مصر', nameEn: '' }, 'en');
     language.set('ar');
     expect(state.view().kind).toBe('loading');
     TestBed.tick();
-    expect(subscriptions[1].cancelled).toBe(true);
+    expect(fixtureItem(subscriptions, 1).cancelled).toBe(true);
     expect(service.render).toHaveBeenLastCalledWith(report, { nameAr: 'مصر', nameEn: '' }, 'ar');
-    subscriptions[2].subject.next(document);
+    fixtureItem(subscriptions, 2).subject.next(document);
     expect(state.search({ nameAr: 'ع'.repeat(201), nameEn: '' })).toBe(false);
     expect(state.reset()).toBe(true);
     TestBed.tick();
@@ -93,12 +94,12 @@ describe('Global report lifetime and authorization', () => {
   });
   it('masks the old document synchronously on identity replacement and permission loss', () => {
     const { state, service, subscriptions, identity } = setup();
-    subscriptions[0].subject.next(document);
+    fixtureItem(subscriptions, 0).subject.next(document);
     expect(state.view().kind).toBe('ready');
     identity.set({ ...permitted, companyId: 2 });
     expect(state.view().kind).toBe('loading');
     TestBed.tick();
-    expect(subscriptions[0].cancelled).toBe(true);
+    expect(fixtureItem(subscriptions, 0).cancelled).toBe(true);
     identity.set({ ...permitted, permissions: [] });
     expect(state.view().kind).toBe('forbidden');
     TestBed.tick();
@@ -111,7 +112,7 @@ describe('Global report lifetime and authorization', () => {
   });
   it('latches 403 for the current identity without repeating requests', () => {
     const { state, service, subscriptions, language } = setup();
-    subscriptions[0].subject.error(new GlobalReportFailure('forbidden'));
+    fixtureItem(subscriptions, 0).subject.error(new GlobalReportFailure('forbidden'));
     TestBed.tick();
     expect(state.view().kind).toBe('forbidden');
     state.reload();
@@ -121,7 +122,7 @@ describe('Global report lifetime and authorization', () => {
   });
   it('requires a source reload after 409 and renders only the refreshed hash', () => {
     const { state, service, subscriptions, language } = setup();
-    subscriptions[0].subject.error(new GlobalReportFailure('stale'));
+    fixtureItem(subscriptions, 0).subject.error(new GlobalReportFailure('stale'));
     TestBed.tick();
     expect(state.view().kind).toBe('conflict');
     language.set('ar');
@@ -133,12 +134,12 @@ describe('Global report lifetime and authorization', () => {
     state.reload();
     TestBed.tick();
     expect(service.render).toHaveBeenLastCalledWith(changed, { nameAr: '', nameEn: '' }, 'ar');
-    subscriptions[1].subject.next(document);
+    fixtureItem(subscriptions, 1).subject.next(document);
     expect(state.view().kind).toBe('ready');
   });
   it('keeps a field rejection actionable without marking the source forbidden', () => {
     const { state, subscriptions } = setup();
-    subscriptions[0].subject.error(
+    fixtureItem(subscriptions, 0).subject.error(
       new GlobalReportFailure('validation', { nameAr: 'Fixture error' }),
     );
     TestBed.tick();
@@ -148,18 +149,29 @@ describe('Global report lifetime and authorization', () => {
     });
     expect(state.search({ nameAr: 'مصر', nameEn: '' })).toBe(true);
   });
-  it('never carries applied criteria or report selection to a replacement actor',()=>{
-    const{state,identity,service,subscriptions}=setup();subscriptions[0].subject.next(document);
-    state.select(second.id);TestBed.tick();subscriptions[1].subject.next(document);
-    expect(state.search({nameAr:'Actor-owned',nameEn:''})).toBe(true);TestBed.tick();subscriptions[2].subject.next(document);
-    identity.set({...permitted,companyId:42});
-    expect(state.applied()).toEqual({nameAr:'',nameEn:''});expect(state.view().kind).toBe('loading');
-    TestBed.tick();expect(service.render).toHaveBeenLastCalledWith(report,{nameAr:'',nameEn:''},'en');
-    expect(subscriptions[2].cancelled).toBe(true);
+  it('never carries applied criteria or report selection to a replacement actor', () => {
+    const { state, identity, service, subscriptions } = setup();
+    fixtureItem(subscriptions, 0).subject.next(document);
+    state.select(second.id);
+    TestBed.tick();
+    fixtureItem(subscriptions, 1).subject.next(document);
+    expect(state.search({ nameAr: 'Actor-owned', nameEn: '' })).toBe(true);
+    TestBed.tick();
+    fixtureItem(subscriptions, 2).subject.next(document);
+    identity.set({ ...permitted, companyId: 42 });
+    expect(state.applied()).toEqual({ nameAr: '', nameEn: '' });
+    expect(state.view().kind).toBe('loading');
+    TestBed.tick();
+    expect(service.render).toHaveBeenLastCalledWith(report, { nameAr: '', nameEn: '' }, 'en');
+    expect(fixtureItem(subscriptions, 2).cancelled).toBe(true);
   });
-  it('explicit refresh regenerates once even when the eligible source hash is unchanged',()=>{
-    const{state,service,subscriptions}=setup();subscriptions[0].subject.next(document);state.reload();TestBed.tick();
-    expect(service.catalog).toHaveBeenCalledTimes(2);expect(service.render).toHaveBeenCalledTimes(2);
-    expect(service.render).toHaveBeenLastCalledWith(report,{nameAr:'',nameEn:''},'en');
+  it('explicit refresh regenerates once even when the eligible source hash is unchanged', () => {
+    const { state, service, subscriptions } = setup();
+    fixtureItem(subscriptions, 0).subject.next(document);
+    state.reload();
+    TestBed.tick();
+    expect(service.catalog).toHaveBeenCalledTimes(2);
+    expect(service.render).toHaveBeenCalledTimes(2);
+    expect(service.render).toHaveBeenLastCalledWith(report, { nameAr: '', nameEn: '' }, 'en');
   });
 });

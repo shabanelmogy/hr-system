@@ -1,0 +1,72 @@
+<p>{{ 'globalTemplates.accessHint' | uiText: 'reporting' }}</p>
+@if (state().readFailure() || state().feedback(); as failure) {
+  <erp-feedback-state
+    kind="error"
+    layout="inline"
+    [title]="
+      failure.message ||
+      locale.translate(
+        failure.key,
+        failure.key.startsWith('globalTemplates.') ? 'reporting' : 'core'
+      )
+    "
+    [actionLabel]="'actions.retry' | uiText"
+    (action)="state().reload()"
+  />
+}
+@if (state().snapshot()?.canView && !state().canEdit()) {
+  <erp-feedback-state
+    kind="empty"
+    layout="inline"
+    [title]="'crystalReports.accessReadOnly' | uiText: 'reporting'"
+  />
+}
+<erp-form
+  [form]="state().form"
+  [title]="'crystalReports.permissions' | uiText: 'reporting'"
+  [submitLabel]="'actions.save' | uiText"
+  appearance="plain"
+  [hideHeader]="true"
+  [pending]="state().pending()"
+  [showSubmit]="state().canEdit()"
+  (validSubmit)="state().save()"
+>
+  <erp-data-table
+    [source]="state().source()"
+    [columns]="columns()"
+    [rowId]="rowId"
+    [label]="'crystalReports.permissions' | uiText: 'reporting'"
+    [search]="{
+      value: state().criteria().search,
+      placeholder: ('general.search' | uiText),
+      maxLength: 200,
+    }"
+    (searchChange)="'value' in $event && state().search($event.value)"
+    (pageChange)="state().page($event.pageIndex, $event.pageSize)"
+    (retry)="state().reload()"
+  >
+    @for (right of rights; track right) {
+      <ng-template [erpCollectionCell]="columns() | collectionColumn: right" let-role>
+        @if (state().controls(role.id); as controls) {
+          <erp-boolean-field
+            [formControl]="controls[right]"
+            [label]="'crystalReports.rights.' + right | uiText: 'reporting'"
+            [readOnly]="!state().canEdit() || state().pending()"
+          />
+        }
+      </ng-template>
+    }
+  </erp-data-table>
+  @if (state().canEdit() && state().draft().length) {
+    <div formActions>
+      @for (grant of state().draft(); track grant.roleId) {
+        <erp-button
+          [label]="removeLabel(grant.roleName)"
+          variant="text"
+          [disabled]="state().pending()"
+          (activated)="state().removeGrant(grant.roleId)"
+        />
+      }
+    </div>
+  }
+</erp-form>

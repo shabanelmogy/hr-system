@@ -1,0 +1,70 @@
+<erp-collection-frame
+  [controller]="controller"
+  [label]="label()"
+  [search]="search()"
+  [searchMaxWidth]="searchMaxWidth()"
+  [pageSizes]="pageSizes()"
+  [recordNavigation]="recordNavigation()"
+  [selectionEnabled]="selectionEnabled()"
+  [toolbarVisible]="toolbarVisible()"
+  [toolbarLayout]="toolbarLayout()"
+  (searchChange)="searchChange.emit($event)"
+>
+  <div toolbarContent class="collection-actions"><ng-content select="[toolbarContent]" /></div>
+  <div toolbarFilters class="collection-filters"><ng-content select="[toolbarFilters]" /></div>
+  <div collectionBody class="cards-body">
+    <erp-scroll-viewport [label]="label()">
+      @if (controller.view().kind === 'ready' && controller.view().rows.length) {
+        <div class="cards" [class.responsive]="layout() === 'responsive'" role="list">
+          @for (row of controller.view().rows; track controller.rowKey(row)) {
+            <article
+              role="listitem"
+              [attr.data-collection-row]="controller.rowKey(row)"
+              [attr.tabindex]="controller.activeId() === rowId()(row) ? 0 : -1"
+              [class.edited-row]="controller.flashedId() === rowId()(row)"
+              [class.active]="controller.activeId() === rowId()(row)"
+              [class.selected]="controller.selectedIds().includes(rowId()(row))"
+              (click)="clickRow(row, $event)"
+              (keydown)="keyRow(row, $event)"
+              (focus)="controller.activate(rowId()(row))"
+            >
+              <erp-surface-card
+                [title]="rowLabel()(row)"
+                compact
+                fill
+                [entity]="appearance() === 'entity'"
+                [headerTemplate]="header()?.template ?? null"
+                [footerTemplate]="footer()?.template ?? null"
+                [templateContext]="{ $implicit: row }"
+              >
+                @if (selectionEnabled()) {
+                  <p-checkbox
+                    [binary]="true"
+                    [ngModelOptions]="{ standalone: true }"
+                    [ngModel]="controller.selectedIds().includes(rowId()(row))"
+                    [disabled]="!selectable()(row)"
+                    [ariaLabel]="
+                      'collections.selectRecord' | uiText: 'core' : { record: rowLabel()(row) }
+                    "
+                    (ngModelChange)="controller.toggle(rowId()(row), $event === true)"
+                  />
+                }
+                @if (card(); as template) {
+                  <ng-container
+                    *ngTemplateOutlet="template.template; context: { $implicit: row }"
+                  />
+                }
+              </erp-surface-card>
+            </article>
+          }
+        </div>
+      } @else {
+        <erp-collection-feedback
+          [kind]="controller.view().kind"
+          [emptyTemplate]="empty()?.template"
+          (retry)="retry.emit()"
+        />
+      }
+    </erp-scroll-viewport>
+  </div>
+</erp-collection-frame>

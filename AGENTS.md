@@ -11,6 +11,23 @@ Rules:
 - Read graphify-out/GRAPH_REPORT.md only for broad architecture review or when query/path/explain do not surface enough context.
 - Do not modify or update `graphify-out/` unless the user explicitly requests it.
 
+## Official Angular development skill
+
+- For analysis, implementation, review, debugging, or testing under `web-angular/`,
+  read [angular-developer](.codex/skills/angular-developer/SKILL.md) and only the
+  references relevant to the task. This is the official skill from `angular/skills`.
+- Apply it alongside the ERP planning and documentation workflow. Repository
+  contracts take precedence over generic upstream examples: reuse shared PrimeNG
+  adapters and `MyDataGrid`, preserve service/state ownership, use the established
+  Reactive Forms system, external HTML/SCSS resources and component folders, and
+  run the required Angular quality gates for runtime changes.
+- Check the installed Angular version before selecting an API. Upstream examples
+  do not authorize dependency upgrades, new applications, form migrations, direct
+  HTTP in UI components, or bypassing shared controls. Consult the PrimeNG MCP as
+  required by the shared-component policy.
+- Installation provenance, usage, and update instructions are in
+  [Angular agent skills](documentation/guides/web/ANGULAR_AGENT_SKILLS.md).
+
 ## Economical subagent policy
 
 - Do not spawn subagents for small or single-file tasks.
@@ -104,6 +121,11 @@ Rules:
   or presentation rule belongs in the target application's shared library. Feature
   pages own business data, permissions and callbacks only. Extend the existing
   shared component first; do not create another feature-local copy.
+- Apply reusable improvements generally to all applicable consumers. Scrolling,
+  colors, spacing, feedback and other shared presentation policies belong in the
+  application theme/global styles or the owning shared component, never in a
+  Countries-only or other feature-only override. Future consumers inherit the
+  shared policy by default; feature-specific exceptions need a domain reason.
 - For Angular, consult the PrimeNG MCP before implementing or changing a shared
   control. Prefer the installed version's built-in properties, components and
   templates, then documented tokens/Pass Through. Add shared custom behavior only
@@ -112,6 +134,44 @@ Rules:
 - Angular collection screens consume the shared `MyDataGrid` public API. Grid
   options, modal layout, spacing, filters, column controls and feedback must remain
   generic shared capabilities; feature pages supply the domain contracts.
+- Keep hand-authored Angular source and scripts readable with the project's
+  Prettier configuration. Run `npm run format` after edits and `npm run
+  check:format` before handoff; the full Angular check includes this gate. Do not
+  compress imports, methods, templates or styles onto dense single lines. Generated
+  files stay owned by their generators and are excluded from manual formatting.
+- Clean Code is a mandatory Angular implementation rule. Keep each component's
+  template in a colocated `.html` file through `templateUrl`, and its component
+  styles in colocated `.scss` files through `styleUrl`/`styleUrls`. Do not embed
+  `template` or `styles` in `@Component`, including shared, dev and test-host
+  components. Do not create empty style files for components without styles.
+  Use meaningful names, small cohesive methods, explicit typed contracts and
+  focused responsibilities. Keep business rules and HTTP access out of visual
+  components; reuse the owning service/state and shared public APIs. Prefer
+  simple readable code over compression, duplication or speculative abstractions.
+  Shared presentation rules belong in the theme or shared component, not local
+  copies. Follow `documentation/guides/web/architecture/ANGULAR_CODE_STYLE.md`;
+  `npm run check:architecture` enforces external component resources and ownership.
+- Give each Angular application component a matching folder that contains its
+  `.ts`, `.html`, optional `.scss`, `.spec.ts` and test-host resources. Preserve
+  feature/shared ownership and curated public APIs when moving files. Keep the
+  root App in `src/app/`; colocated test-only hosts stay with the tested owner.
+  Shared Sass partials, types, services and pure utilities stay with their proper
+  owner rather than receiving an unnecessary folder per file. CLI components
+  use `flat: false`; the architecture check rejects flat application components.
+  Keep one application component per implementation file, including dev previews;
+  related test-only hosts may share the owning spec file.
+- Angular quality gates are mandatory: run `npm run lint` (typed TypeScript and
+  Angular template rules), `npm run check:architecture`, and the full `npm run
+  check` before handoff. Keep indexed access, exact optional properties, unused
+  declarations and selected Angular extended diagnostics enabled; fix contracts
+  rather than suppressing errors or adding unchecked non-null assertions.
+  Preserve intentional service initialization when removing unused properties.
+  Imports across owners use curated public APIs; resolved ownership checks and
+  static runtime-cycle checks must pass. Type-only and lazy edges are classified
+  separately. Application UI never calls HttpClient/fetch directly. Projected
+  collection templates select columns by stable key through the shared
+  `collectionColumn` pipe, never an array position. Test mocks follow service
+  contracts and require their fixture entries explicitly.
 
 - This is a mandatory implementation rule, not visual guidance: use the existing
   shared component; extend it generically when close; create a reusable shared

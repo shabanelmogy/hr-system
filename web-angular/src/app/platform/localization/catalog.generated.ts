@@ -1,5 +1,5 @@
 // Generated from the existing schema-3 API web catalog. Do not edit.
-export const uiCatalogVersion = "6c3bd907be5bbfdf9245a9a3c84d1cc813d4fbab6fb0f2d74173ff14024c8041";
+export const uiCatalogVersion = "937b6b59e46b61fde756f1ec296eb6dd69b605a9f191d47eb3fd5beee80db74c";
 export const namespaceLoaders = {
   "accounting": () => import('../../../locales/generated/accounting.json').then(module => module.default),
   "core": () => import('../../../locales/generated/core.json').then(module => module.default),

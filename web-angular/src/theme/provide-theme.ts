@@ -8,12 +8,18 @@ import { ThemeService } from './theme-service';
 export function provideAppTheme() {
   return [
     providePrimeNG({
-      license: primeUiLicenseKey,
+      ...(primeUiLicenseKey === undefined ? {} : { license: primeUiLicenseKey }),
       theme: { preset: createPrimePreset(defaultPalette), options: { darkModeSelector: '.dark' } },
       ripple: false,
-      zIndex: { modal: 1300 + zIndex.modal, overlay: 1200 + zIndex.overlay,
-        menu: 1200 + zIndex.overlay, tooltip: 1500 + zIndex.tooltip },
+      zIndex: {
+        modal: 1300 + zIndex.modal,
+        overlay: 1200 + zIndex.overlay,
+        menu: 1200 + zIndex.overlay,
+        tooltip: 1500 + zIndex.tooltip,
+      },
     }),
-    provideAppInitializer(() => { inject(ThemeService); }),
+    provideAppInitializer(() => {
+      inject(ThemeService);
+    }),
   ];
 }

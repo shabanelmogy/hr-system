@@ -1,0 +1,25 @@
+{
+  "date": "2026-10-31T11:50:25.765Z",
+  "results": [
+    {
+      "scenario": "file-replacement",
+      "passed": true
+    },
+    {
+      "scenario": "view-discard",
+      "passed": true
+    },
+    {
+      "scenario": "permission-revocation",
+      "passed": true
+    },
+    {
+      "scenario": "pending-permission-revocation",
+      "passed": true
+    },
+    {
+      "scenario": "keyboard-paging",
+      "passed": true
+    }
+  ]
+}

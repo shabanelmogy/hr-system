@@ -157,25 +157,25 @@
     },
     {
       "id": "preflight-22",
-      "path": "web-angular/src/app/shared/ui/layout/context-badge.ts",
+      "path": "web-angular/src/app/shared/ui/layout/context-badge/context-badge.ts",
       "layer": "web",
       "purpose": "Existing inspected source or current authorization"
     },
     {
       "id": "preflight-23",
-      "path": "web-angular/src/app/shared/ui/controls/option-select.ts",
+      "path": "web-angular/src/app/shared/ui/controls/option-select/option-select.ts",
       "layer": "web",
       "purpose": "Existing inspected source or current authorization"
     },
     {
       "id": "preflight-24",
-      "path": "web-angular/src/app/shared/ui/overlays/popover-panel.ts",
+      "path": "web-angular/src/app/shared/ui/overlays/popover-panel/popover-panel.ts",
       "layer": "web",
       "purpose": "Existing inspected source or current authorization"
     },
     {
       "id": "preflight-25",
-      "path": "web-angular/src/app/shared/ui/dialogs/choice-dialog.ts",
+      "path": "web-angular/src/app/shared/ui/dialogs/choice-dialog/choice-dialog.ts",
       "layer": "web",
       "purpose": "Existing inspected source or current authorization"
     },
@@ -223,25 +223,25 @@
     },
     {
       "id": "runtime-33",
-      "path": "web-angular/src/app/shared/ui/controls/option-select.spec.ts",
+      "path": "web-angular/src/app/shared/ui/controls/option-select/option-select.spec.ts",
       "layer": "web",
       "purpose": "Actual implementation or acceptance evidence"
     },
     {
       "id": "runtime-34",
-      "path": "web-angular/src/app/shared/ui/feedback/feedback-state.ts",
+      "path": "web-angular/src/app/shared/ui/feedback/feedback-state/feedback-state.ts",
       "layer": "web",
       "purpose": "Actual implementation or acceptance evidence"
     },
     {
       "id": "runtime-35",
-      "path": "web-angular/src/app/shell/layout/main-shell.html",
+      "path": "web-angular/src/app/shell/layout/main-shell/main-shell.html",
       "layer": "web",
       "purpose": "Actual implementation or acceptance evidence"
     },
     {
       "id": "runtime-36",
-      "path": "web-angular/src/app/shell/layout/main-shell.scss",
+      "path": "web-angular/src/app/shell/layout/main-shell/main-shell.scss",
       "layer": "web",
       "purpose": "Actual implementation or acceptance evidence"
     },
@@ -271,7 +271,7 @@
     },
     {
       "id": "runtime-41",
-      "path": "web-angular/src/app/platform/auth/pages/login-page.ts",
+      "path": "web-angular/src/app/platform/auth/pages/login-page/login-page.ts",
       "layer": "web",
       "purpose": "Actual implementation or acceptance evidence"
     },
@@ -376,6 +376,66 @@
       "path": "documentation/modules/platform/features/angular-company-context/verification/VISIBILITY_COMPANY_BROWSER_RESULTS.json",
       "layer": "documentation",
       "purpose": "Fourteen existing company/cross-tab scenarios rerun after focus correction"
+    },
+    {
+      "id": "component-resource-01bd1b9c3593",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/layout/context-badge/context-badge.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-e00c03607a16",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/layout/context-badge/context-badge.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-cf6c9fe09ba0",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/controls/option-select/option-select.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-a36b777f66d7",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/controls/option-select/option-select.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-2f099ca0f3c9",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/overlays/popover-panel/popover-panel.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-a3a284dc5c4d",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/dialogs/choice-dialog/choice-dialog.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-eb1b0afcff45",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/dialogs/choice-dialog/choice-dialog.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-8d60ad3720b1",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/feedback/feedback-state/feedback-state.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-d24cba69c11c",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/feedback/feedback-state/feedback-state.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "quality-16f555949438",
+      "layer": "web",
+      "path": "web-angular/src/testing/fixture-item.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
     }
   ],
   "finalizationChecklist": [

@@ -1,5 +1,5 @@
-using CrystalReportGeneratorApi.Filters;
 using CrystalReportGeneratorApi.Runtime;
+using CrystalReportGeneratorApi.Runtime.Inspection;
 using CrystalReportGeneratorApi.Runtime.Rendering;
 using System;
 using System.IO;
@@ -14,7 +14,6 @@ using System.Web.Http;
 
 namespace CrystalReportGeneratorApi.Controllers
 {
-    [InternalApiKey]
     public sealed class InternalReportRenderController : ApiController
     {
         private static readonly Regex SafeKey = new Regex(
@@ -105,6 +104,12 @@ namespace CrystalReportGeneratorApi.Controllers
                         CrystalRuntimeDiagnostics.Information(Request, "render", "success");
                         return response;
                     }
+                }
+                catch (CrystalReportRejectedException exception)
+                {
+                    CrystalRuntimeDiagnostics.Warning(Request, "render", exception.Code, exception);
+                    return InternalReportResponseFactory.Create(
+                        Request, HttpStatusCode.BadRequest, exception.Code, exception.Message);
                 }
                 catch (UnsupportedCrystalReportProfileException exception)
                 {

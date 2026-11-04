@@ -1,0 +1,9 @@
+{
+  "fileName": "Countries.test.rpt",
+  "length": 44032,
+  "sha256": "98a06e844a1fcdc3d9118b6914fa7e80f196782d505dd75e790eef42faa4d744",
+  "statusCode": 400,
+  "code": "crystal_runtime_source_rejected",
+  "reason": "Crystal Report files containing saved data are not accepted.",
+  "originalUnchanged": true
+}

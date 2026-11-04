@@ -1,0 +1,9 @@
+@use '../field-chrome';
+
+:host {
+  display: block;
+}
+.field-label {
+  display: block;
+  margin-block-end: 0.5rem;
+}

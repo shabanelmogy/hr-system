@@ -1,0 +1,6 @@
+{
+  "RuntimeSavedCredentialDecryptable": false,
+  "ErpSavedCredentialDecryptable": false,
+  "Reason": "DPAPI CryptographicException in current user context",
+  "RemotePublished": false
+}

@@ -1,0 +1,121 @@
+{
+  "verifiedAtUtc": "2026-11-01T12:12:06.613Z",
+  "scope": "Render rejection taxonomy, actionable Angular error feedback and canonical designer schema. Global versioned manager is preflight only.",
+  "erp": {
+    "releaseBuildPassed": true,
+    "initialParallelRun": {
+      "passed": false,
+      "sqlTimeouts": 9,
+      "platformAssertionFailures": 1
+    },
+    "completeSequentialRun": {
+      "projects": 12,
+      "failed": 0,
+      "passed": 1175,
+      "skipped": 3
+    },
+    "reportingTests": 142
+  },
+  "angular": {
+    "fullCheckPassed": true,
+    "unitTests": 479,
+    "architectureDependencyCases": 26,
+    "initialBundleKb": 495.64,
+    "devServerStarted": false,
+    "browserVerificationPerformed": false
+  },
+  "runtime": {
+    "releaseX64BuildPassed": true,
+    "inMemoryAuthorizationCases": 15,
+    "distinctRenderPreNativeFailureCases": 2,
+    "nativeValidTemplateRenderVerified": false,
+    "remotePublicationPerformed": false
+  },
+  "schema": {
+    "entity": "countries",
+    "table": "ReportData",
+    "orderedColumns": 6,
+    "typesAndNullabilityRoundtripPassed": true
+  },
+  "globalManager": {
+    "plan": "global-crystal-template-management",
+    "phase": "Phase00 only",
+    "lifecycle": "Immutable versions and explicit publication; requester-confirmed",
+    "runtimeImplemented": false,
+    "migrationApplied": false
+  },
+  "sourceHashes": [
+    {
+      "path": "api/CrystalReportGeneratorApi/Runtime/InternalReportError.cs",
+      "sha256": "d786323977af5e174cbcd271ea976aa1ae7ec99615fe2f96dc45eacad03c5c7e"
+    },
+    {
+      "path": "api/CrystalReportGeneratorApi/Runtime/Rendering/CrystalReportRenderService.cs",
+      "sha256": "6f73f27d1f4c1458615923dcf79370ffcbb3df062559fc66f0459a7d8b83f20d"
+    },
+    {
+      "path": "api/CrystalReportGeneratorApi/Controllers/InternalReportRenderController.cs",
+      "sha256": "a011eb0a393602a5507ea21daa7d349a91090381b929640a563b894c61561af4"
+    },
+    {
+      "path": "api/CrystalReportGeneratorApi.ContractTests/RuntimeBoundaryTests.cs",
+      "sha256": "af1b2e1de875b9529be563f29d8b4a83aa8d52b2147fb3ce7256edc89dc8a678"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/CrystalReports/Contracts/CrystalReportContracts.cs",
+      "sha256": "22320d7a602335e5c2e27eb801022afd707e2c4c8fda8e28fd8cff00e45f0b5b"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/CrystalReports/Errors/CrystalReportErrors.cs",
+      "sha256": "5cda942c215049c64d524025bea81ed4e1c3b3d3c37087307d655e07c826308e"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/CrystalReports/Queries/CrystalReportQueryHandlers.cs",
+      "sha256": "3e30e699886738149bd36e3a49b8cb0d2f452f8bde7a117ece15285c9a5d8ed7"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/CrystalReports/Storage/CrystalReportRendererClient.cs",
+      "sha256": "392f5368439e3f05292760a5459d400821698d196fb832e0a9559bac3e2de153"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/CrystalReportRendererClientTests.cs",
+      "sha256": "b92fb65787411d1b4174701608b7e7b0ef8894443f267a6f7e005496c7451325"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/GlobalCrystalReportQueryTests.cs",
+      "sha256": "e871b49a9f0d197a991f78ea489fff3fa0d09bcedfc8ceabef02ee025dc92e12"
+    },
+    {
+      "path": "api/ErpSystem.Api/Localization/Resources/en-US.json",
+      "sha256": "4a6e0f392221baa418b981fc94bd1690836891dd1d76c01dad2e965e0d2f95ae"
+    },
+    {
+      "path": "api/ErpSystem.Api/Localization/Resources/ar-EG.json",
+      "sha256": "0053a0b642c8d8e1dd2a1be86e1f462c6671b435162d61132bdd98b38a1ae079"
+    },
+    {
+      "path": "api/scripts/Export-ManagedCrystalReportSchema.ps1",
+      "sha256": "17dea144ede8200781647af42159f28012efb1b2e49bdd6b820cb3e6f776e16d"
+    },
+    {
+      "path": "web-angular/src/app/modules/reporting/global-reports/types/global-report.ts",
+      "sha256": "74ae48183963c22a9af08b30c5854361a9286f30e29022c3829e20b3c768ec79"
+    },
+    {
+      "path": "web-angular/src/app/modules/reporting/global-reports/services/global-report-service.ts",
+      "sha256": "2393a5131426c264be71d5aba76a7c3414474f5dcdd9d4b26686f305708ba64d"
+    },
+    {
+      "path": "web-angular/src/app/modules/reporting/global-reports/services/global-report-service.spec.ts",
+      "sha256": "fbf8abc68bd58d1a5a320d84584ef383409fd2df85fd13db4745ac8fd3981a44"
+    },
+    {
+      "path": "web-angular/src/app/modules/reporting/global-reports/components/global-report-view/global-report-view.ts",
+      "sha256": "ef382f15f3d217ff8c9dbfec3881ddc9df2883364cf0502a4107b53627130961"
+    },
+    {
+      "path": "web-angular/src/app/modules/reporting/global-reports/components/global-report-view/global-report-view.spec.ts",
+      "sha256": "801fe7988a7a08ecc8b0e9878a7a99245aa17f0e32305166944abc17ff4e23ba"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "VerifiedAtUtc": "2026-11-02T09:11:46.6027263Z",
+  "ConfiguredDatabaseVerified": true,
+  "BusinessRowsWritten": false,
+  "MigrationApplied": 1,
+  "GlobalTables": 3,
+  "GrantColumns": 7,
+  "FilteredUniqueIndexes": 1,
+  "GrantForeignKeys": 1
+}

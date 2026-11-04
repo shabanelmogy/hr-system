@@ -1,0 +1,102 @@
+<footer [class.with-record-navigation]="recordNavigation()">
+  <ng-template #recordControls>
+    <div
+      class="record-controls"
+      role="group"
+      [attr.aria-label]="'collections.recordNavigation' | uiText"
+    >
+      @for (action of recordActions; track action.value) {
+        <erp-button
+          appearance="icon"
+          variant="text"
+          [label]="action.label | uiText"
+          [disabled]="!controller().canNavigate(action.value)"
+          (activated)="controller().navigate(action.value)"
+          ><span buttonIcon aria-hidden="true" [class.rtl]="locale.direction() === 'rtl'">{{
+            action.icon
+          }}</span></erp-button
+        >
+      }
+      <span class="record-count" aria-live="polite"
+        >{{ number(controller().activeIndex() < 0 ? 0 : controller().activeIndex() + 1) }} /
+        {{ total() }}</span
+      >
+    </div>
+  </ng-template>
+  <ng-template #recordBalance><span aria-hidden="true"></span></ng-template>
+  <ng-template #recordPageSize
+    ><div class="size-settings">
+      @if (controller().view().total !== null) {
+        <span class="page-count">{{ 'pagination.pages' | uiText }}: {{ pageCount() }}</span>
+      }
+      <erp-option-select
+        labelVisibility="sr-only"
+        valueAlign="center"
+        [title]="'pagination.rowsPerPage' | uiText"
+        [controlHeight]="32"
+        [label]="'pagination.rowsPerPage' | uiText"
+        [value]="'' + controller().view().query.pageSize"
+        [options]="sizeOptions()"
+        [disabled]="blocked()"
+        (valueChange)="resize(+$event)"
+      /></div
+  ></ng-template>
+  <div class="page-controls">
+    @if (controller().view().total !== null) {
+      <div
+        class="native-page-controls"
+        [attr.inert]="blocked() ? '' : null"
+        [class.blocked]="blocked()"
+      >
+        <p-paginator
+          [templateLeft]="recordNavigation() ? recordBalance : undefined"
+          [templateRight]="recordNavigation() ? recordPageSize : undefined"
+          [first]="
+            recordNavigation()
+              ? Math.max(0, controller().activeIndex())
+              : controller().view().query.pageIndex * controller().view().query.pageSize
+          "
+          [rows]="recordNavigation() ? 1 : controller().view().query.pageSize"
+          [totalRecords]="controller().view().total ?? 0"
+          [showPageLinks]="!recordNavigation()"
+          [pageLinkSize]="3"
+          [rowsPerPageOptions]="recordNavigation() ? undefined : nativePageSizes()"
+          [showCurrentPageReport]="true"
+          [currentPageReportTemplate]="pageReport()"
+          appendTo="body"
+          [locale]="locale.language()"
+          [pt]="paginatorLabels()"
+          [dt]="tokens"
+          (onPageChange)="paginate($event)"
+        />
+      </div>
+    } @else {
+      @if (recordNavigation()) {
+        <ng-container [ngTemplateOutlet]="recordControls" />
+      } @else {
+        <span class="page-summary"
+          >{{ 'pagination.page' | uiText }} {{ number(controller().view().query.pageIndex + 1) }}
+          {{ 'pagination.of' | uiText }} {{ pageCount() }}</span
+        >
+        @for (action of pageActions; track action.value) {
+          <erp-button
+            appearance="icon"
+            variant="text"
+            [label]="action.label | uiText"
+            [disabled]="
+              blocked() ||
+              (action.value === 'next'
+                ? !controller().view().hasNextPage
+                : controller().view().query.pageIndex === 0)
+            "
+            (activated)="unknownPage(action.value)"
+            ><span buttonIcon aria-hidden="true" [class.rtl]="locale.direction() === 'rtl'">{{
+              action.icon
+            }}</span></erp-button
+          >
+        }
+      }
+      <ng-container [ngTemplateOutlet]="recordPageSize" />
+    }
+  </div>
+</footer>

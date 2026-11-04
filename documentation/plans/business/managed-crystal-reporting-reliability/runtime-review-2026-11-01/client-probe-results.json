@@ -1,0 +1,19 @@
+[
+  {
+    "scenario": "real-current-client-to-hosted-runtime",
+    "accepted": true,
+    "count": 2
+  },
+  {
+    "scenario": "good-catalog-plus-runtime-rejected-entry",
+    "filename": "countries-too-large.rpt",
+    "runtimeMarkedImportable": false,
+    "entireCatalogUnavailable": true
+  },
+  {
+    "scenario": "good-catalog-plus-runtime-rejected-entry",
+    "filename": "\u0645.rpt",
+    "runtimeMarkedImportable": false,
+    "entireCatalogUnavailable": true
+  }
+]

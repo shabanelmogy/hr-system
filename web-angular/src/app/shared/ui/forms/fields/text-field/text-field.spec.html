@@ -1,0 +1,16 @@
+<erp-form [form]="form" title="Fixture" submitLabel="Save fixture"
+  ><erp-text-field
+    [formControl]="form.controls.value"
+    label="Text fixture"
+    help="Help fixture"
+    [multiline]="multiline()"
+    [rows]="rows()"
+    [type]="type()"
+    [readOnly]="readonly()"
+    [maxLength]="20"
+    [showCounter]="true"
+    [messages]="messages" /><erp-numeric-field
+    [formControl]="form.controls.number"
+    label="Number fixture"
+    multiline
+/></erp-form>

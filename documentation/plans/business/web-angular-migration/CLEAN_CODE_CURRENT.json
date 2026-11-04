@@ -1,0 +1,38 @@
+{
+  "date": "2026-10-31T15:43:03.006Z",
+  "scope": "Current hand-authored app TS excluding generated/spec sources; line counts are descriptive, not a quality score.",
+  "files": 209,
+  "components": 84,
+  "flatComponents": 0,
+  "edges": {
+    "static": 516,
+    "type": 100,
+    "dynamic": 34
+  },
+  "staticCycles": [],
+  "mixedCandidates": [],
+  "compilerFlags": {
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true
+  },
+  "sourceLines": [
+    {
+      "file": "src/app/shared/ui/collections/my-data-grid/my-data-grid.ts",
+      "lines": 826
+    },
+    {
+      "file": "src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page/countries-read-page.ts",
+      "lines": 331
+    },
+    {
+      "file": "src/app/shared/data/collection-criteria.ts",
+      "lines": 155
+    },
+    {
+      "file": "src/app/shared/ui/collections/collection-controller.ts",
+      "lines": 294
+    }
+  ]
+}

@@ -369,6 +369,269 @@ namespace ErpSystem.Modules.Reporting.Infrastructure.Migrations
                         });
                 });
 
+            modelBuilder.Entity("ErpSystem.Modules.Reporting.Domain.Analytics.CrystalReports.Entities.GlobalCrystalReport", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedById")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedByPc")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("CurrentPublishedVersionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("DeletedById")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DeletedByPc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("DisplayName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("EntityKey")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ReportKey")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<string>("UpdatedById")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdatedByPc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ViewFingerprint")
+                        .HasMaxLength(64)
+                        .HasColumnType("nchar(64)")
+                        .IsFixedLength();
+
+                    b.Property<string>("ViewName")
+                        .HasMaxLength(257)
+                        .HasColumnType("nvarchar(257)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EntityKey", "ReportKey")
+                        .IsUnique();
+
+                    b.HasIndex("Id", "CurrentPublishedVersionId");
+
+                    b.ToTable("GlobalCrystalReports", "rpt", t =>
+                        {
+                            t.HasCheckConstraint("CK_GlobalCrystalReports_Entity", "[EntityKey] IN ('countries','states','districts')");
+
+                            t.HasCheckConstraint("CK_GlobalCrystalReports_ViewBinding", "([ViewName] IS NULL AND [ViewFingerprint] IS NULL) OR ([ViewName] IS NOT NULL AND [ViewFingerprint] IS NOT NULL AND LEN([ViewFingerprint]) = 64)");
+                        });
+                });
+
+            modelBuilder.Entity("ErpSystem.Modules.Reporting.Domain.Analytics.CrystalReports.Entities.GlobalCrystalReportRoleGrant", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedById")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedByPc")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedById")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DeletedByPc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("GlobalCrystalReportId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Rights")
+                        .HasColumnType("int");
+
+                    b.Property<string>("RoleId")
+                        .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<string>("UpdatedById")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdatedByPc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GlobalCrystalReportId", "RoleId")
+                        .IsUnique()
+                        .HasFilter("[IsDeleted] = 0");
+
+                    b.ToTable("GlobalCrystalReportRoleGrants", "rpt", t =>
+                        {
+                            t.HasCheckConstraint("CK_GlobalCrystalReportRoleGrants_Rights", "[Rights] > 0 AND [Rights] <= 15");
+                        });
+                });
+
+            modelBuilder.Entity("ErpSystem.Modules.Reporting.Domain.Analytics.CrystalReports.Entities.GlobalCrystalReportVersion", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedById")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedByPc")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedById")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DeletedByPc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("GlobalCrystalReportId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("OriginalFileName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<string>("Sha256")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("nchar(64)")
+                        .IsFixedLength();
+
+                    b.Property<long>("Size")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("StorageKey")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("SummarySubject")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("SummaryTitle")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("UpdatedById")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdatedByPc")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ValidationContractFingerprint")
+                        .HasMaxLength(64)
+                        .HasColumnType("nchar(64)")
+                        .IsFixedLength();
+
+                    b.Property<int?>("ValidationContractSchemaVersion")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ValidationReason")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("ValidationStatus")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<int>("VersionNumber")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GlobalCrystalReportId", "VersionNumber")
+                        .IsUnique();
+
+                    b.ToTable("GlobalCrystalReportVersions", "rpt", t =>
+                        {
+                            t.HasCheckConstraint("CK_GlobalCrystalReportVersions_Number", "[VersionNumber] > 0 AND [Size] > 0");
+
+                            t.HasCheckConstraint("CK_GlobalCrystalReportVersions_Validation", "([ValidationStatus] = 'Valid' AND [ValidationContractSchemaVersion] > 0 AND LEN([ValidationContractFingerprint]) = 64) OR ([ValidationStatus] = 'Invalid' AND [ValidationContractSchemaVersion] IS NULL AND [ValidationContractFingerprint] IS NULL)");
+                        });
+                });
+
             modelBuilder.Entity("ErpSystem.Modules.Reporting.Domain.Analytics.ReportTemplates.Entities.ReportTemplate", b =>
                 {
                     b.Property<Guid>("Id")
@@ -830,6 +1093,37 @@ namespace ErpSystem.Modules.Reporting.Infrastructure.Migrations
                     b.Navigation("CrystalReport");
                 });
 
+            modelBuilder.Entity("ErpSystem.Modules.Reporting.Domain.Analytics.CrystalReports.Entities.GlobalCrystalReport", b =>
+                {
+                    b.HasOne("ErpSystem.Modules.Reporting.Domain.Analytics.CrystalReports.Entities.GlobalCrystalReportVersion", null)
+                        .WithMany()
+                        .HasForeignKey("Id", "CurrentPublishedVersionId")
+                        .HasPrincipalKey("GlobalCrystalReportId", "Id")
+                        .OnDelete(DeleteBehavior.NoAction);
+                });
+
+            modelBuilder.Entity("ErpSystem.Modules.Reporting.Domain.Analytics.CrystalReports.Entities.GlobalCrystalReportRoleGrant", b =>
+                {
+                    b.HasOne("ErpSystem.Modules.Reporting.Domain.Analytics.CrystalReports.Entities.GlobalCrystalReport", "Report")
+                        .WithMany("RoleGrants")
+                        .HasForeignKey("GlobalCrystalReportId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Report");
+                });
+
+            modelBuilder.Entity("ErpSystem.Modules.Reporting.Domain.Analytics.CrystalReports.Entities.GlobalCrystalReportVersion", b =>
+                {
+                    b.HasOne("ErpSystem.Modules.Reporting.Domain.Analytics.CrystalReports.Entities.GlobalCrystalReport", "Report")
+                        .WithMany("Versions")
+                        .HasForeignKey("GlobalCrystalReportId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Report");
+                });
+
             modelBuilder.Entity("ErpSystem.Modules.Reporting.Domain.Analytics.ReportTemplates.Entities.ReportTemplateRevision", b =>
                 {
                     b.HasOne("ErpSystem.Modules.Reporting.Domain.Analytics.ReportTemplates.Entities.ReportTemplate", "ReportTemplate")
@@ -864,6 +1158,13 @@ namespace ErpSystem.Modules.Reporting.Infrastructure.Migrations
                 });
 
             modelBuilder.Entity("ErpSystem.Modules.Reporting.Domain.Analytics.CrystalReports.Entities.CrystalReport", b =>
+                {
+                    b.Navigation("RoleGrants");
+
+                    b.Navigation("Versions");
+                });
+
+            modelBuilder.Entity("ErpSystem.Modules.Reporting.Domain.Analytics.CrystalReports.Entities.GlobalCrystalReport", b =>
                 {
                     b.Navigation("RoleGrants");
 

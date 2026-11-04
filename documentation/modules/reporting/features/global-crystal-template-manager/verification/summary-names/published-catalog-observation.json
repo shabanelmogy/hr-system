@@ -1,0 +1,29 @@
+{
+  "observedDate": "2026-11-03",
+  "timezone": "Africa/Cairo",
+  "evidenceKind": "Read-only Windows browser UI observation of the actual authenticated API response",
+  "url": "https://shabanhrms.runasp.net/api/v1/global-crystal-reports?entityKey=countries",
+  "publishedReports": [
+    {
+      "reportKey": "countries-tests",
+      "displayName": "Countries.tests",
+      "summaryTitle": null,
+      "summarySubject": null,
+      "currentVersionNumber": 1,
+      "isPublished": true,
+      "isArchived": false
+    }
+  ],
+  "currentSelector": {
+    "page": "https://localhost:4210/dev/countries",
+    "language": "en",
+    "visibleLabel": "Countries.tests"
+  },
+  "credentialsReadOrCopied": false,
+  "businessRecordsChanged": false,
+  "runtimeChanged": false,
+  "uiActions": "Activated minimized Edge, opened a separate read-only catalog tab, read JSON, returned to original ERP tab; left catalog tab available for requester.",
+  "devtoolsWindowObserved": "DevTools - extension://mhjfbmdgcfjbbpaeojofohoefgiehjai/edge_pdf/index.html",
+  "devtoolsExplanation": "Observed target is the embedded PDF viewer. Closing/reopening when PDF is replaced is an inference; no DevTools preference was changed.",
+  "localFileEqualsStoredPublishedFile": "Not verified by source hash; published metadata emptiness itself is directly verified."
+}

@@ -1,0 +1,22 @@
+{
+  "verifiedAtUtc": "2026-11-02T13:44:21.063984+00:00",
+  "reportedSourceHttpStatus": 200,
+  "reproducedWithValidMockSourceData": true,
+  "runtimeError": "TypeError: ctx_r3.viewMessages is not a function",
+  "servedTemplateReferencedMember": true,
+  "servedClassInitiallyMissingMember": true,
+  "currentTypeScriptContainedMember": true,
+  "componentSourceContentChanged": false,
+  "correction": "Refresh component modification timestamp to trigger existing watcher",
+  "developmentServerRestarted": false,
+  "additionalServerStarted": false,
+  "apiRequestsMockedInBrowserChecks": true,
+  "existingDevelopmentAssetCases": 8,
+  "productionAssetCases": 8,
+  "consoleAndPageErrorsCaptured": true,
+  "angularFullGatePassed": true,
+  "angularTests": 504,
+  "angularTestFiles": 90,
+  "apiCodeOrSchemaChanged": false,
+  "nativeAcceptanceClosed": false
+}

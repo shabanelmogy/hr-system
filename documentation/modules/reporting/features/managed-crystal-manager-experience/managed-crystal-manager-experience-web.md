@@ -85,3 +85,7 @@ the manager route at 2.31 MiB, below its 2.55 MiB business-route budget. The glo
 measurement gate remains red because unrelated shared protected-shell routes exceed
 their 2.25 MiB class budget; this inherited integrated-worktree finding is owned by
 `RISK-009` and is not presented as a feature pass.
+
+### Additive global Angular manager2026-11-01
+
+The requester separately authorized global-crystal-template-management/GCT-1. Its additive global audited tables, exact role/action/entity Edit policy and Angular manager reuse existing native ports/private storage/lifecycle discipline. This existing tenant manager/ACL lifecycle stays unchanged. Global consumption keeps the current opaque envelope with explicit managed shadowing. See the new feature current books and FOLLOW-024; this addition does not close this plan’s pending native/integrated acceptance.

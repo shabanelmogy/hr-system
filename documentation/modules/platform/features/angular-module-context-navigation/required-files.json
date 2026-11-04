@@ -104,13 +104,13 @@
     {
       "id": "preflight-10",
       "layer": "web",
-      "path": "web-angular/src/app/platform/modules/pages/module-workspace.ts",
+      "path": "web-angular/src/app/platform/modules/pages/module-workspace/module-workspace.ts",
       "purpose": "Reviewed current source/preflight evidence for exact S2-A6"
     },
     {
       "id": "preflight-11",
       "layer": "web",
-      "path": "web-angular/src/app/platform/modules/pages/module-browser.ts",
+      "path": "web-angular/src/app/platform/modules/pages/module-browser/module-browser.ts",
       "purpose": "Reviewed current source/preflight evidence for exact S2-A6"
     },
     {
@@ -146,7 +146,7 @@
     {
       "id": "preflight-17",
       "layer": "web",
-      "path": "web-angular/src/app/composition/authenticated-routes.ts",
+      "path": "web-angular/src/app/composition/authenticated-routes/authenticated-routes.ts",
       "purpose": "Reviewed current source/preflight evidence for exact S2-A6"
     },
     {
@@ -164,19 +164,19 @@
     {
       "id": "preflight-20",
       "layer": "web",
-      "path": "web-angular/src/app/shell/layout/main-shell.ts",
+      "path": "web-angular/src/app/shell/layout/main-shell/main-shell.ts",
       "purpose": "Reviewed current source/preflight evidence for exact S2-A6"
     },
     {
       "id": "preflight-21",
       "layer": "web",
-      "path": "web-angular/src/app/shell/layout/main-shell.html",
+      "path": "web-angular/src/app/shell/layout/main-shell/main-shell.html",
       "purpose": "Reviewed current source/preflight evidence for exact S2-A6"
     },
     {
       "id": "preflight-22",
       "layer": "web",
-      "path": "web-angular/src/app/shared/ui/controls/option-select.ts",
+      "path": "web-angular/src/app/shared/ui/controls/option-select/option-select.ts",
       "purpose": "Reviewed current source/preflight evidence for exact S2-A6"
     },
     {
@@ -272,13 +272,13 @@
     {
       "id": "runtime-8",
       "layer": "web",
-      "path": "web-angular/src/app/platform/modules/components/module-context-control.ts",
+      "path": "web-angular/src/app/platform/modules/components/module-context-control/module-context-control.ts",
       "purpose": "Actual S2-A6 implementation, verification or education evidence"
     },
     {
       "id": "runtime-9",
       "layer": "web",
-      "path": "web-angular/src/app/shell/layout/main-shell.scss",
+      "path": "web-angular/src/app/shell/layout/main-shell/main-shell.scss",
       "purpose": "Actual S2-A6 implementation, verification or education evidence"
     },
     {
@@ -326,55 +326,55 @@
     {
       "id": "prime-ui-0",
       "layer": "web",
-      "path": "web-angular/src/app/shared/ui/layout/scroll-viewport.ts",
+      "path": "web-angular/src/app/shared/ui/layout/scroll-viewport/scroll-viewport.ts",
       "purpose": "Shared PrimeNG-only widget, responsive context or scrolling policy evidence"
     },
     {
       "id": "prime-ui-1",
       "layer": "web",
-      "path": "web-angular/src/app/shared/ui/layout/context-badge.ts",
+      "path": "web-angular/src/app/shared/ui/layout/context-badge/context-badge.ts",
       "purpose": "Shared PrimeNG-only widget, responsive context or scrolling policy evidence"
     },
     {
       "id": "prime-ui-2",
       "layer": "web",
-      "path": "web-angular/src/app/shared/ui/layout/application-frame.ts",
+      "path": "web-angular/src/app/shared/ui/layout/application-frame/application-frame.ts",
       "purpose": "Shared PrimeNG-only widget, responsive context or scrolling policy evidence"
     },
     {
       "id": "prime-ui-3",
       "layer": "web",
-      "path": "web-angular/src/app/shared/ui/layout/application-frame.html",
+      "path": "web-angular/src/app/shared/ui/layout/application-frame/application-frame.html",
       "purpose": "Shared PrimeNG-only widget, responsive context or scrolling policy evidence"
     },
     {
       "id": "prime-ui-4",
       "layer": "web",
-      "path": "web-angular/src/app/shared/ui/layout/application-frame.scss",
+      "path": "web-angular/src/app/shared/ui/layout/application-frame/application-frame.scss",
       "purpose": "Shared PrimeNG-only widget, responsive context or scrolling policy evidence"
     },
     {
       "id": "prime-ui-5",
       "layer": "web",
-      "path": "web-angular/src/app/shared/ui/layout/application-frame.spec.ts",
+      "path": "web-angular/src/app/shared/ui/layout/application-frame/application-frame.spec.ts",
       "purpose": "Shared PrimeNG-only widget, responsive context or scrolling policy evidence"
     },
     {
       "id": "prime-ui-6",
       "layer": "web",
-      "path": "web-angular/src/app/shared/ui/controls/palette-picker.ts",
+      "path": "web-angular/src/app/shared/ui/controls/palette-picker/palette-picker.ts",
       "purpose": "Shared PrimeNG-only widget, responsive context or scrolling policy evidence"
     },
     {
       "id": "prime-ui-7",
       "layer": "web",
-      "path": "web-angular/src/app/shared/ui/controls/palette-picker.spec.ts",
+      "path": "web-angular/src/app/shared/ui/controls/palette-picker/palette-picker.spec.ts",
       "purpose": "Shared PrimeNG-only widget, responsive context or scrolling policy evidence"
     },
     {
       "id": "prime-ui-8",
       "layer": "web",
-      "path": "web-angular/src/app/shared/ui/forms/fields/text-field.ts",
+      "path": "web-angular/src/app/shared/ui/forms/fields/text-field/text-field.ts",
       "purpose": "Shared PrimeNG-only widget, responsive context or scrolling policy evidence"
     },
     {
@@ -418,6 +418,234 @@
       "layer": "documentation",
       "path": "documentation/modules/platform/features/angular-module-context-navigation/verification/shared-form-results.json",
       "purpose": "40 browser combinations verify shared PrimeNG field actions and preserved form behavior"
+    },
+    {
+      "id": "global-scroll-1",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/layout/_scrollbar.scss",
+      "purpose": "Current application-wide shared scrollbar source or maintenance acceptance"
+    },
+    {
+      "id": "global-scroll-4",
+      "layer": "web",
+      "path": "web-angular/scripts/verify-scroll-browser.mjs",
+      "purpose": "Current application-wide shared scrollbar source or maintenance acceptance"
+    },
+    {
+      "id": "global-scroll-6",
+      "layer": "documentation",
+      "path": "documentation/guides/web/architecture/ANGULAR_SCROLLING.md",
+      "purpose": "Current application-wide shared scrollbar source or maintenance acceptance"
+    },
+    {
+      "id": "global-scroll-7",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-module-context-navigation/verification/global-scroll/ACCEPTANCE.md",
+      "purpose": "Current application-wide shared scrollbar source or maintenance acceptance"
+    },
+    {
+      "id": "global-scroll-8",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-module-context-navigation/verification/global-scroll/ARCHITECTURE.txt",
+      "purpose": "Current application-wide shared scrollbar source or maintenance acceptance"
+    },
+    {
+      "id": "global-scroll-9",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-module-context-navigation/verification/global-scroll/browser-results.json",
+      "purpose": "Current application-wide shared scrollbar source or maintenance acceptance"
+    },
+    {
+      "id": "global-scroll-10",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-module-context-navigation/verification/global-scroll/BROWSER_FOCUSED.txt",
+      "purpose": "Current application-wide shared scrollbar source or maintenance acceptance"
+    },
+    {
+      "id": "global-scroll-11",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-module-context-navigation/verification/global-scroll/BROWSER_MATRIX.txt",
+      "purpose": "Current application-wide shared scrollbar source or maintenance acceptance"
+    },
+    {
+      "id": "global-scroll-12",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-module-context-navigation/verification/global-scroll/BUILD.txt",
+      "purpose": "Current application-wide shared scrollbar source or maintenance acceptance"
+    },
+    {
+      "id": "global-scroll-13",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-module-context-navigation/verification/global-scroll/dark-ar-390.png",
+      "purpose": "Current application-wide shared scrollbar source or maintenance acceptance"
+    },
+    {
+      "id": "global-scroll-14",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-module-context-navigation/verification/global-scroll/dialog-ar-390.png",
+      "purpose": "Current application-wide shared scrollbar source or maintenance acceptance"
+    },
+    {
+      "id": "global-scroll-15",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-module-context-navigation/verification/global-scroll/dialog-en-1440.png",
+      "purpose": "Current application-wide shared scrollbar source or maintenance acceptance"
+    },
+    {
+      "id": "global-scroll-16",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-module-context-navigation/verification/global-scroll/focused-results.json",
+      "purpose": "Current application-wide shared scrollbar source or maintenance acceptance"
+    },
+    {
+      "id": "global-scroll-17",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-module-context-navigation/verification/global-scroll/light-en-1440.png",
+      "purpose": "Current application-wide shared scrollbar source or maintenance acceptance"
+    },
+    {
+      "id": "global-scroll-18",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-module-context-navigation/verification/global-scroll/PRIMENG_SCROLLAREA_VALIDATION.json",
+      "purpose": "Current application-wide shared scrollbar source or maintenance acceptance"
+    },
+    {
+      "id": "global-scroll-19",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-module-context-navigation/verification/global-scroll/TYPES.txt",
+      "purpose": "Current application-wide shared scrollbar source or maintenance acceptance"
+    },
+    {
+      "id": "component-resource-9173ae3f290c",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/modules/pages/module-workspace/module-workspace.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-50c5a16edc1e",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/modules/pages/module-browser/module-browser.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-19d0c86c3dcc",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/modules/pages/module-browser/module-browser.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-e81913a00ef4",
+      "layer": "web",
+      "path": "web-angular/src/app/composition/authenticated-routes/authenticated-routes.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-cf6c9fe09ba0",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/controls/option-select/option-select.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-a36b777f66d7",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/controls/option-select/option-select.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-a964198efd04",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/modules/state/module-context-state.spec.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-af1de4ae1a44",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/modules/components/module-context-control/module-context-control.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-7df8f65ddab4",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/modules/components/module-context-control/module-context-control.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-6010b175ad49",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/layout/scroll-viewport/scroll-viewport.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-75c6a9c039af",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/layout/scroll-viewport/scroll-viewport.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-01bd1b9c3593",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/layout/context-badge/context-badge.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-e00c03607a16",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/layout/context-badge/context-badge.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-2e567006974a",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/controls/palette-picker/palette-picker.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-6889a907fb0a",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/controls/palette-picker/palette-picker.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "quality-ddeb5e53ca94",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/modules/controls.public-api.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-41e5cab67fdb",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/modules/routes.public-api.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-a89f1fae079d",
+      "layer": "web",
+      "path": "web-angular/src/app/shell/context.public-api.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-b48e367c4706",
+      "layer": "configuration",
+      "path": "web-angular/eslint.config.mjs",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-18187b5430c6",
+      "layer": "configuration",
+      "path": "web-angular/scripts/dependency-rules.mjs",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-056ed62f225e",
+      "layer": "configuration",
+      "path": "web-angular/scripts/dependency-rules.test.mjs",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-16f555949438",
+      "layer": "web",
+      "path": "web-angular/src/testing/fixture-item.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
     }
   ]
 }

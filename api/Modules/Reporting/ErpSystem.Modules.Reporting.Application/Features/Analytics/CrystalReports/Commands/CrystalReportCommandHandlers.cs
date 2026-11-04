@@ -94,6 +94,7 @@ public sealed class CreateCrystalReportCommandHandler(
             CrystalReportFileFailure.UnsupportedEntity => errors.CrystalReportUnsupportedEntity,
             CrystalReportFileFailure.SchemaMismatch => errors.CrystalReportSchemaMismatch,
             CrystalReportFileFailure.ParameterMismatch => errors.CrystalReportParameterMismatch,
+            CrystalReportFileFailure.SourceRejected => errors.CrystalReportSourceRejected,
             _ => errors.CrystalReportInvalidFile
         };
 }

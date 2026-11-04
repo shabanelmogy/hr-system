@@ -1,0 +1,39 @@
+@if (expanded() && searchable()) {
+  <div class="navigation-search">
+    <erp-text-field
+      [formControl]="search"
+      [label]="searchLabel()"
+      labelVisibility="sr-only"
+      [placeholder]="searchLabel()"
+    />
+  </div>
+}
+<nav [attr.aria-label]="label()">
+  @for (item of filtered(); track item.id) {
+    <erp-button
+      [label]="item.label"
+      [appearance]="expanded() ? 'quiet' : 'icon'"
+      variant="text"
+      [fullWidth]="expanded()"
+      [title]="item.label"
+      [pressed]="item.selected ?? false"
+      [expanded]="item.children?.length ? branchOpen(item.id) : null"
+      [controls]="item.children?.length ? branchId(item.id) : null"
+      (activated)="activate(item)"
+      ><erp-icon buttonIcon [name]="item.icon"
+    /></erp-button>
+    @if (item.children?.length && expanded() && branchOpen(item.id)) {
+      <div class="navigation-children" [id]="branchId(item.id)">
+        <erp-navigation-list
+          [entries]="item.children!"
+          [expanded]="true"
+          [searchable]="false"
+          [expandedEntries]="childExpandedEntries()"
+          [label]="item.label"
+          [searchLabel]="searchLabel()"
+          (selected)="selected.emit($event)"
+        />
+      </div>
+    }
+  }
+</nav>

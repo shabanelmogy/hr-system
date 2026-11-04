@@ -1,6 +1,6 @@
 using CrystalDecisions.CrystalReports.Engine;
-using CrystalReportGeneratorApi.Filters;
 using CrystalReportGeneratorApi.Runtime;
+using CrystalReportGeneratorApi.Runtime.Catalog;
 using CrystalReportGeneratorApi.Runtime.Rendering;
 using System;
 using System.IO;
@@ -9,7 +9,6 @@ using System.Web.Http;
 
 namespace CrystalReportGeneratorApi.Controllers
 {
-    [InternalApiKey]
     public sealed class InternalReportHealthController : ApiController
     {
         [HttpGet]
@@ -24,6 +23,7 @@ namespace CrystalReportGeneratorApi.Controllers
             {
                 CrystalReportRuntimeSettings.Validate();
                 CrystalReportExecutionGate.ValidateConfiguration();
+                CrystalReportCatalogService.ValidateCatalogRoot();
 
                 // Do not construct ReportDocument here. SAP Crystal initialization can block
                 // inside native code; a readiness endpoint must remain bounded and deterministic.
@@ -42,6 +42,7 @@ namespace CrystalReportGeneratorApi.Controllers
                 return Ok(new
                 {
                     status = "Healthy",
+                    runtimeBuildId = typeof(InternalReportHealthController).Assembly.ManifestModule.ModuleVersionId.ToString("D"),
                     engineAssemblyVersion = engineAssembly.GetName().Version.ToString(),
                     profileCount = profiles.Count,
                     contractSchemaVersion = profiles.SchemaVersion,

@@ -16,15 +16,16 @@ namespace CrystalReportGeneratorApi.Filters
     /// Unlike the browser API-key filter, this filter intentionally does not
     /// depend on an Origin or Referrer header.
     /// </summary>
-    public sealed class InternalApiKeyAttribute : ActionFilterAttribute
+    public sealed class InternalApiKeyAttribute : AuthorizationFilterAttribute
     {
         private const string HeaderName = "X-Internal-Api-Key";
         private const string SettingName = "InternalApiKey";
 
-        public override void OnActionExecuting(HttpActionContext actionContext)
+        public override void OnAuthorization(HttpActionContext actionContext)
         {
-            var expected = Environment.GetEnvironmentVariable("CRYSTAL_REPORT_INTERNAL_API_KEY")
-                ?? ConfigurationManager.AppSettings[SettingName];
+            var expected = Environment.GetEnvironmentVariable("CRYSTAL_REPORT_INTERNAL_API_KEY");
+            if (string.IsNullOrWhiteSpace(expected))
+                expected = ConfigurationManager.AppSettings[SettingName];
 
             if (string.IsNullOrWhiteSpace(expected))
             {
@@ -62,7 +63,7 @@ namespace CrystalReportGeneratorApi.Filters
                 return;
             }
 
-            base.OnActionExecuting(actionContext);
+            base.OnAuthorization(actionContext);
         }
 
         private static bool FixedTimeEquals(string expected, string supplied)

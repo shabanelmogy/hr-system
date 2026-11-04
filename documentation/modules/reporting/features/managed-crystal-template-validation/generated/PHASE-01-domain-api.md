@@ -71,8 +71,8 @@ existing-system review, implementation order, and Definition of Done.
 
 ## Approved references
 
-- **Managed Crystal Template Validation cross-platform master review:** `../modules/reporting/features/managed-crystal-template-validation/managed-crystal-template-validation-review.md` sections 3, 4, 6
-- **Managed Crystal Template Validation API implementation profile:** `../modules/reporting/features/managed-crystal-template-validation/managed-crystal-template-validation-api.md` sections 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+- **Managed Crystal Template Validation cross-platform master review:** `../modules/reporting/features/managed-crystal-template-validation/managed-crystal-template-validation-review.md` sections 3, 4, 6, 11, 12, 13, 14
+- **Managed Crystal Template Validation API implementation profile:** `../modules/reporting/features/managed-crystal-template-validation/managed-crystal-template-validation-api.md` sections 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15
 
 ## Source fingerprints
 
@@ -81,6 +81,10 @@ existing-system review, implementation order, and Definition of Done.
 | managed-crystal-template-validation-master | 3 | `d5750ec782337abb998b935688fe28befe372bebda9f0fc1bdf298453539f145` |
 | managed-crystal-template-validation-master | 4 | `ad565be28727a67b728477a4afa8f58cf6868f6ecd2f9bf5f7b59400f43d8141` |
 | managed-crystal-template-validation-master | 6 | `fa456baddc6f73079e396b08f3b2fa608267e66d8d1d2f71036708a8182094ee` |
+| managed-crystal-template-validation-master | 11 | `3f41bb5a4d3db8359baeb00d8f408d1a627398ed0bb65686eb5289ae3806d272` |
+| managed-crystal-template-validation-master | 12 | `f82b7aff75cf17c21b7c81eb688638474e323eb05c2bb728734c4264fba1f712` |
+| managed-crystal-template-validation-master | 13 | `0fd76edfc5407361816949b20ba8a0fbfa30fcea04c0b92bb23ab9bf543e5d96` |
+| managed-crystal-template-validation-master | 14 | `65d5e3778b817b758e6462edcfef72ca7d15c7ec943e3049fff328a15e7f025b` |
 | managed-crystal-template-validation-api | 1 | `f328b7348ab2e8af52b3c6089a8044dcb00bf12b87e1956d906e8d11170c7af8` |
 | managed-crystal-template-validation-api | 2 | `7e6a34cf64b17596059552588b7bf9a9f658fd9346eecb0170855b8fb3b1dd8d` |
 | managed-crystal-template-validation-api | 3 | `a5f326ad1628c4dcd974c8f7458badfecdfe2478146c0c8624837a24fd7c0c89` |
@@ -91,3 +95,7 @@ existing-system review, implementation order, and Definition of Done.
 | managed-crystal-template-validation-api | 8 | `d6a3c1c59c1b9eeaf3bc531392ef5f1b7044e855ee5825037e34c4ec110f705c` |
 | managed-crystal-template-validation-api | 9 | `0b7d25abfe95224d05a59bc890b6e52afe7d0277e27fbbaf993b8c5c79bdec51` |
 | managed-crystal-template-validation-api | 10 | `16b287f37a94892dd07d906d9770665db062dbf49be1da57f5104f5f5aec38a1` |
+| managed-crystal-template-validation-api | 12 | `d8b71662b09abda042effb5b5979aa6a29e6bba2fcc9f92a1998958188d44ecd` |
+| managed-crystal-template-validation-api | 13 | `905afaf4256b7e50b2ff7323ae416832ae26d685997a63d32c5b67e4a13e7912` |
+| managed-crystal-template-validation-api | 14 | `74e23a0061a413d4bcb719fe916892cde052ba634870c0905a5b547c9de29a32` |
+| managed-crystal-template-validation-api | 15 | `970f562ea88dc0ff462fa6bd28307c47c3980cb5524d74d2f4ad7db187dbb6bf` |

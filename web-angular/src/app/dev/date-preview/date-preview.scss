@@ -1,0 +1,26 @@
+main {
+  padding: 24px;
+  max-width: 1050px;
+  margin: auto;
+}
+.tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-block: 16px;
+}
+erp-date-field {
+  margin-block-end: 20px;
+}
+output {
+  display: block;
+  direction: ltr;
+  overflow-wrap: anywhere;
+  margin-block: 16px;
+  color: var(--muted-foreground);
+}
+@media (max-width: 600px) {
+  main {
+    padding: 16px;
+  }
+}

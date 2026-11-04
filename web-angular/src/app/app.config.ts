@@ -1,4 +1,4 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
+import { type ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter, withRouterConfig } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
 import { routes } from './app.routes';
@@ -9,6 +9,6 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideHttpClient(),
     provideAppTheme(),
-    provideRouter(routes, withRouterConfig({ canceledNavigationResolution: 'computed' }))
-  ]
+    provideRouter(routes, withRouterConfig({ canceledNavigationResolution: 'computed' })),
+  ],
 };

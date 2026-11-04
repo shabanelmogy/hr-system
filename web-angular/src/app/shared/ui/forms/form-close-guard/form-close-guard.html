@@ -1,0 +1,11 @@
+@for (consent of prompts(); track consent.token) {
+  <erp-confirmation-dialog
+    [open]="true"
+    [title]="'messages.unsavedChangesTitle' | uiText"
+    [description]="'messages.unsavedChangesConfirm' | uiText"
+    [cancelLabel]="'actions.cancel' | uiText"
+    [confirmLabel]="'messages.discardChanges' | uiText"
+    (cancelled)="keep(consent)"
+    (confirmed)="discard(consent)"
+  />
+}

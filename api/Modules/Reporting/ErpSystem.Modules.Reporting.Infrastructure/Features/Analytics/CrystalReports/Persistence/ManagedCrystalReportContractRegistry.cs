@@ -11,7 +11,7 @@ using ErpSystem.Modules.Reporting.Application.Features.Analytics.CrystalReports.
 
 namespace ErpSystem.Modules.Reporting.Infrastructure.Features.Analytics.CrystalReports.Persistence;
 
-public sealed class ManagedCrystalReportContractRegistry : IManagedCrystalReportContractSource
+public sealed class ManagedCrystalReportContractRegistry : IManagedCrystalReportContractSource, IManagedCrystalReportSchemaSource
 {
     public const int SupportedSchemaVersion = 1;
 
@@ -118,6 +118,26 @@ public sealed class ManagedCrystalReportContractRegistry : IManagedCrystalReport
 
     public bool Supports(string entityKey) =>
         !string.IsNullOrWhiteSpace(entityKey) && _entities.ContainsKey(entityKey.Trim());
+
+    public byte[] ExportSchema(string entityKey)
+    {
+        var profile = GetRequired(entityKey);
+        using var dataSet = new DataSet("CrystalReportData");
+        var table = new DataTable(profile.TableName) { Locale = CultureInfo.InvariantCulture };
+        foreach (var column in profile.Columns)
+        {
+            var type = column.Type switch
+            {
+                "int32" => typeof(int), "string" => typeof(string), "datetime" => typeof(DateTime),
+                _ => throw new InvalidDataException("Unsupported managed schema type.")
+            };
+            table.Columns.Add(new DataColumn(column.Name, type) { AllowDBNull = column.Nullable });
+        }
+        dataSet.Tables.Add(table);
+        using var output = new MemoryStream();
+        dataSet.WriteXmlSchema(output);
+        return output.ToArray();
+    }
 
     public void ValidateDataSetXml(string entityKey, string xml)
     {

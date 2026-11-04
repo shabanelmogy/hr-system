@@ -1,0 +1,54 @@
+<main>
+  <div class="contexts">
+    <erp-option-select
+      [label]="'auth.currentCompany' | uiText: 'platform-auth'"
+      [value]="'' + (auth.user()?.companyId ?? '')"
+      [options]="companies()"
+      [disabled]="auth.pending()"
+      commitMode="external"
+      (valueChange)="auth.switchCompany(+$event)"
+      data-testid="company"
+    />
+    <erp-fiscal-context />
+    <erp-button
+      [label]="'auth.logout' | uiText: 'platform-auth'"
+      [busy]="auth.pending()"
+      (activated)="auth.logout()"
+      data-testid="logout"
+    />
+    <erp-button
+      [label]="'common.loading' | uiText"
+      [pressed]="busy()"
+      (activated)="busy.set(!busy())"
+      data-testid="busy"
+    />
+    <erp-button [label]="'actions.add' | uiText" (activated)="reopen()" data-testid="reopen" />
+  </div>
+  @if (active()) {
+    <erp-form
+      [form]="form"
+      [title]="'general.profile' | uiText"
+      [submitLabel]="'common.save' | uiText"
+      [pending]="busy()"
+      (validSubmit)="baseline.set(value())"
+    >
+      <erp-text-field
+        [formControl]="form.controls.name"
+        [label]="'general.nameEn' | uiText"
+        [messages]="messages()"
+        [readOnly]="busy() || auth.pending()"
+        required
+        data-testid="name"
+      />
+    </erp-form>
+  }
+  <output
+    data-testid="context-state"
+    [attr.data-active]="active()"
+    [attr.data-company]="auth.user()?.companyId ?? ''"
+    [attr.data-year]="year.context()?.selectedFiscalYear?.id ?? ''"
+    [attr.data-pending]="auth.pending()"
+    [attr.data-quarantined]="quarantined()"
+    [attr.data-dirty]="drafts.dirty()"
+  ></output>
+</main>

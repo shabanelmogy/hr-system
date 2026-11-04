@@ -1,0 +1,45 @@
+{
+  "verifiedAtUtc": "2026-11-03T10:04:40.334636+00:00",
+  "featureId": "global-crystal-template-manager",
+  "sliceId": "GCT-1",
+  "api": {
+    "passed": 1250,
+    "failed": 0,
+    "skipped": 3,
+    "reporting": 213,
+    "architecture": 70,
+    "integration": 189,
+    "fullSuiteRunSettings": "xUnit.ParallelizeTestCollections=false",
+    "defaultParallelRun": "unrelated bounded MessageLog Snapshot timeout; preserved"
+  },
+  "crystalBuildAndHarnessPassed": true,
+  "connectionOrSavedDataAdmissionChecks": false,
+  "obsoleteReceiptFlags": "omitted and ignored",
+  "apiTableBoundUnconditionallyIncludingEmpty": true,
+  "originalRptBytesPreserved": true,
+  "sourceContentsRisk": "RISK-019",
+  "nativePdfVerified": false,
+  "nativeEmptyCachedDataIsolationVerified": false,
+  "zeroDesignSqlCallsVerifiedNatively": false,
+  "deployedByThisWork": false,
+  "remaining": [
+    "FOLLOW-024",
+    "PROD-028"
+  ],
+  "phase06": "Not Verified",
+  "deferred": [
+    "DEF-028",
+    "DEF-027"
+  ],
+  "sourceHashes": {
+    "api/CrystalReportGeneratorApi/Runtime/CrystalReportManagedSourcePolicy.cs": "3f299017d40687d98cd7066af782d447d666d9d4f76866c16fdf21a950df2892",
+    "api/CrystalReportGeneratorApi/Runtime/CrystalReportSourceMetadata.cs": "33e7a19ac071b1a6c11e5b945d0cc08b33e8793b8eeb3e1d91357e181da0484d",
+    "api/CrystalReportGeneratorApi/Runtime/Inspection/CrystalReportInspectionService.cs": "8d0d080d02bcd02576740ba9425a5a707c5336250e653f84a225217af8b45411",
+    "api/CrystalReportGeneratorApi/Runtime/Rendering/CrystalReportRenderService.cs": "19ddab0e01c9ee0b3f8b53d1b84e6b160b082449ad34961f9d124cee681b1f64",
+    "api/CrystalReportGeneratorApi.ContractTests/Program.cs": "060d7f38bdab538d47c92d7fc611ea5cd998e5aafa3d3600b0e8b62889b54ba5",
+    "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/CrystalReports/Storage/CrystalReportInspectorClient.cs": "745b47d7a1e46efc425bd614e7d0e00d7f03568044b7e58a7265f79bb6059ae9",
+    "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/CrystalReportInspectorClientTests.cs": "c59248f956f17f250f0ba3cdd81d072cd91841dc229415e92d94f4fdfb18183e",
+    "api/ErpSystem.Api/Localization/Resources/en-US.json": "4a03b26be089655a7aed682145f5d5fd0f91a985c6aaa60206254aed35bd3cbf",
+    "api/ErpSystem.Api/Localization/Resources/ar-EG.json": "69370152402cfc3cc15f961085115ad8f4c3f85bbd936ceaebce075e7310790a"
+  }
+}

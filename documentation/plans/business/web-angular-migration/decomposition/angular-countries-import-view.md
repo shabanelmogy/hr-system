@@ -13,8 +13,8 @@ Execution order marker: API → Web → Mobile → integrated live verification 
 | Child feature name | Countries XLSX import |
 | Owner | ReferenceData business; Platform migration evidence |
 | Depends on | angular-countries-report-view Verified/Closed |
-| Execution status | Active |
-| Runtime authorization | Blocked — preflight-only until this child is Active and its exact G0-G3/frozen contract/Phase00 pass; no blanket sibling runtime |
+| Execution status | Closed |
+| Runtime authorization | Bounded S3-A7 runtime authorized after current G0-G3 and focused initial Phase00 pass; inherited log-transfer gate FOLLOW-018 recorded separately |
 
 ## 1. Child boundary and outcome
 
@@ -85,11 +85,11 @@ scroll verified at compact/wide and RTL before declaring feature parity.
 
 | Order | Stage | Status | Entry gate | Exit gate | Evidence path |
 | ---: | --- | --- | --- | --- | --- |
-| 1 | API | Active | Prior child Closed and current source | Exact API/permission/error/read-or-write semantics | This contract |
-| 2 | Web | Queued | API evidence and exact Phase00 | Shared runtime and complete bounded UI | This contract |
-| 3 | Mobile | Queued | Web evidence | Retained native/browser compact classification | This contract |
-| 4 | Integrated live verification | Queued | Prior stages | Bounded tests/browser/source comparisons; separate release/live limits | This contract |
-| 5 | Documentation and closure | Queued | Phase06 Verified | Applied books/manifest/education/recipes/handoff | This contract |
+| 1 | API | Verified | Prior child Closed and current source | Exact API/permission/error/read-or-write semantics | This contract |
+| 2 | Web | Verified | API evidence and exact Phase00 | Shared runtime and complete bounded UI | This contract |
+| 3 | Mobile | Verified | Web evidence | Retained native/browser compact classification | This contract |
+| 4 | Integrated live verification | Verified | Prior stages | Bounded tests/browser/source comparisons; separate release/live limits | This contract |
+| 5 | Documentation and closure | Verified | Phase06 Verified | Applied books/manifest/education/recipes/handoff | This contract |
 
 Next-step rule: no runtime while Queued. Only the active child's exact frozen
 scope may begin after Phase00; never start a sibling because a shared SDK exists.
@@ -97,17 +97,30 @@ scope may begin after Phase00; never start a sibling because a shared SDK exists
 ## 12. Verification contract
 
 Focused meaningful type/parser/service/state/shared UI tests and full Angular check;
-actual shared controls/paging browser proof and same-viewport source comparison.
+actual Angular shared controls/paging browser proof at EN/AR and compact/wide viewports. Next execution/reference comparison is optional under D35.
 API/Next/native checks only for affected owners; inherited dependency/release
 findings remain explicit. Snapshot/test output is not live engine/SQL/device proof.
 
 ## 13. Child exit gate
 
-- [ ] Dependency Closed; active exact source/frozen/Phase00 entry verified.
-- [ ] All bounded runtime, direct authority and failure paths implemented.
-- [ ] Required browser/shared controls/paging/reference comparisons verified.
-- [ ] Phase06 Verified with current-source-only manifest and explicit limitations.
-- [ ] Phase07 education after verification and canonical closure checks.
+- [x] Dependency Closed; active exact source/frozen/Phase00 entry verified.
+- [x] All bounded runtime, direct authority and failure paths implemented.
+- [x] Required Angular browser/shared controls/paging/authority/keyboard journeys verified under D35.
+- [x] Phase06 Verified with current-source-only manifest and explicit limitations.
+- [x] Phase07 education after verification and canonical closure checks.
 
 
-Next sole Active preflight2026-10-31 after S3-A6 Verified/Closed. Source/API/Phase00 only; no Import runtime until its own frozen contract/books/current-only manifest and entry gates pass.
+S3-A7 Verified/Closed under D35. Angular60 browser cases and full443-test check satisfy the revised acceptance gate; Next review is not a prerequisite.
+
+## 14. Frozen entry2026-10-31
+
+The15 numbered applied sections freeze the exact existing bulk/6fields/5MiB/100rows/parser/draft/identity/uncertain contract. G0-G3 passed for S3-A7 only. User requests continued implementation. Remaining G4 is release/host/full-pilot only. New focused Phase00 packets/manifest check before runtime; inherited missing23 logs are FOLLOW-018, not a verified full gate.
+
+## 15. Executed status2026-10-31
+
+Phase06 Verified2026-10-31 under requester decision D35 for bounded Angular Countries Import. Fresh full Angular check78files/443tests,4configuration/12architecture, types/templates/catalog/tokens/fonts and production build passed. Angular browser40 palette/mode/EN-AR/390/1440 cases,15 failure/authority cases and5 additional user journeys passed. The new journeys cover file replacement/cancel, view discard/cancel, permission loss, permission loss during a pending command and keyboard page-size/paging. Final build500.38kB/131.48kB estimated transfer warns385bytes above the unchanged500kB warning budget (FOLLOW-019). No live hosted import, production release or full Countries/Table/realtime acceptance. Phase07 education completed afterward; next sole Active S3-A8 preflight.
+
+
+## 16. Requester amendment D35
+
+Next runtime review/debug/rendered comparison is not a Required current gate. This supersedes earlier source-comparison clauses in this contract. Actual Angular shared controls, behavior, error/authority/identity/keyboard/RTL/responsive evidence remains Required and passed.

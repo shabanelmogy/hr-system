@@ -390,7 +390,7 @@
       "id": "implemented-61"
     },
     {
-      "path": "web-angular/src/app/dev/theme-preview.ts",
+      "path": "web-angular/src/app/dev/theme-preview/theme-preview.ts",
       "purpose": "Current implemented source/config/test/font or canonical verification evidence",
       "layer": "web",
       "id": "implemented-62"
@@ -456,19 +456,19 @@
       "id": "implemented-72"
     },
     {
-      "path": "web-angular/src/app/shared/ui/buttons/action-button.scss",
+      "path": "web-angular/src/app/shared/ui/buttons/action-button/action-button.scss",
       "purpose": "Current implemented source/config/test/font or canonical verification evidence",
       "layer": "web",
       "id": "implemented-73"
     },
     {
-      "path": "web-angular/src/app/shared/ui/buttons/action-button.spec.ts",
+      "path": "web-angular/src/app/shared/ui/buttons/action-button/action-button.spec.ts",
       "purpose": "Current implemented source/config/test/font or canonical verification evidence",
       "layer": "web",
       "id": "implemented-74"
     },
     {
-      "path": "web-angular/src/app/shared/ui/buttons/action-button.ts",
+      "path": "web-angular/src/app/shared/ui/buttons/action-button/action-button.ts",
       "purpose": "Current implemented source/config/test/font or canonical verification evidence",
       "layer": "web",
       "id": "implemented-75"
@@ -700,6 +700,60 @@
       "purpose": "Current implemented source/config/test/font or canonical verification evidence",
       "layer": "web",
       "id": "implemented-113"
+    },
+    {
+      "id": "component-resource-d4d95fd97ca2",
+      "layer": "web",
+      "path": "web-angular/src/app/app.spec.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-3f0e0ad2fb5d",
+      "layer": "web",
+      "path": "web-angular/src/app/dev/theme-preview/theme-preview.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-c03428439398",
+      "layer": "web",
+      "path": "web-angular/src/app/dev/theme-preview/theme-preview.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-ccd9a49e7669",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/buttons/action-button/action-button.spec.toolbar-composition.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-22b35dca3c00",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/buttons/action-button/action-button.spec.submit-composition.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-eb086582836d",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/buttons/action-button/action-button.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "quality-b48e367c4706",
+      "layer": "configuration",
+      "path": "web-angular/eslint.config.mjs",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-18187b5430c6",
+      "layer": "configuration",
+      "path": "web-angular/scripts/dependency-rules.mjs",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-056ed62f225e",
+      "layer": "configuration",
+      "path": "web-angular/scripts/dependency-rules.test.mjs",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
     }
   ]
 }

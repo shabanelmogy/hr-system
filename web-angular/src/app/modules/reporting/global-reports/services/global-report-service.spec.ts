@@ -134,4 +134,35 @@ describe('Global PDF HTTP transport', () => {
       );
     }
   });
+  it.each([
+    'CrystalReport.SourceRejected',
+    'CrystalReport.SchemaMismatch',
+    'CrystalReport.ParameterMismatch',
+    'CrystalReport.RenderUnsupported',
+  ])('preserves the localized public message for %s from PDF error blobs', async (code) => {
+    const failure = await reportFailure(
+      new HttpErrorResponse({
+        status: 400,
+        error: new Blob([JSON.stringify({ errors: { [code]: ['Localized template guidance'] } })]),
+      }),
+    );
+    expect(failure).toMatchObject({
+      kind: 'template',
+      fields: {},
+      publicMessage: 'Localized template guidance',
+    });
+  });
+  it.each(['<html>internal details</html>', 'x'.repeat(501)])(
+    'does not display HTML or oversized template messages',
+    async (message) => {
+      const failure = await reportFailure(
+        new HttpErrorResponse({
+          status: 400,
+          error: { errors: { 'CrystalReport.SourceRejected': [message] } },
+        }),
+      );
+      expect(failure.kind).toBe('validation');
+      expect(failure.publicMessage).toBe('');
+    },
+  );
 });

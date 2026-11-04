@@ -43,47 +43,725 @@
     }
   ],
   "requiredFiles": [
-    { "id": "root-guidance", "layer": "configuration", "path": "AGENTS.md", "purpose": "Repository planning and documentation rules" },
-    { "id": "api-guidance", "layer": "configuration", "path": "api/AGENTS.md", "purpose": "API and independent runtime rules" },
-    { "id": "api-workflow", "layer": "configuration", "path": "documentation/guides/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md", "purpose": "Required business/API workflow" },
-    { "id": "api-constitution", "layer": "configuration", "path": "documentation/guides/api/ERP_ARCHITECTURE_CONSTITUTION.md", "purpose": "Architecture authority" },
-    { "id": "canonical-plan", "layer": "planning", "path": "documentation/plans/business/managed-crystal-reporting-reliability/PLAN.md", "purpose": "Approved business intent and decisions" },
-    { "id": "roadmap", "layer": "planning", "path": "documentation/plans/business/managed-crystal-reporting-reliability/IMPLEMENTATION-ROADMAP.md", "purpose": "Single active-child status" },
-    { "id": "child-contract", "layer": "planning", "path": "documentation/plans/business/managed-crystal-reporting-reliability/decomposition/managed-crystal-template-validation.md", "purpose": "Authorized boundary and exit gate" },
-    { "id": "implementation-request", "layer": "documentation", "path": "documentation/modules/reporting/features/managed-crystal-template-validation/managed-crystal-template-validation-request.md", "purpose": "Business rules, edge cases and impact matrix" },
-    { "id": "review-artifact", "layer": "documentation", "path": "documentation/modules/reporting/features/managed-crystal-template-validation/managed-crystal-template-validation-evidence.md", "purpose": "Evidence and verification ledger" },
-    { "id": "master-book", "layer": "documentation", "path": "documentation/modules/reporting/features/managed-crystal-template-validation/managed-crystal-template-validation-review.md", "purpose": "Cross-platform applied review" },
-    { "id": "api-book", "layer": "documentation", "path": "documentation/modules/reporting/features/managed-crystal-template-validation/managed-crystal-template-validation-api.md", "purpose": "API/runtime implementation profile" },
-    { "id": "web-book", "layer": "documentation", "path": "documentation/modules/reporting/features/managed-crystal-template-validation/managed-crystal-template-validation-web.md", "purpose": "Deferred Web disposition" },
-    { "id": "mobile-book", "layer": "documentation", "path": "documentation/modules/reporting/features/managed-crystal-template-validation/managed-crystal-template-validation-mobile.md", "purpose": "Deferred/Excluded Mobile disposition" },
-    { "id": "canonical-registry", "layer": "api", "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Contracts/Features/Analytics/CrystalReports/managed-crystal-report-contracts.v1.json", "purpose": "Exact entity/table/field/parameter contract" },
-    { "id": "modern-registry", "layer": "api", "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/CrystalReports/Persistence/ManagedCrystalReportContractRegistry.cs", "purpose": "Current fingerprint and entity lookup" },
-    { "id": "report-aggregate", "layer": "api", "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Domain/Analytics/CrystalReports/Entities/CrystalReport.cs", "purpose": "Publication invariant owner" },
-    { "id": "report-version", "layer": "api", "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Domain/Analytics/CrystalReports/Entities/CrystalReportVersion.cs", "purpose": "Version identity and validation lifecycle owner" },
-    { "id": "commands", "layer": "api", "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/CrystalReports/Commands/CrystalReportCommandHandlers.cs", "purpose": "Create, version, import and publish orchestration" },
-    { "id": "contracts", "layer": "api", "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/CrystalReports/Contracts/CrystalReportContracts.cs", "purpose": "Typed storage/inspection/public response contracts" },
-    { "id": "queries", "layer": "api", "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/CrystalReports/Queries/CrystalReportQueryHandlers.cs", "purpose": "Render and download gates" },
-    { "id": "file-storage", "layer": "api", "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/CrystalReports/Storage/PrivateCrystalReportFileStorage.cs", "purpose": "Bounded inspect/hash/private-store boundary" },
-    { "id": "inspector-client", "layer": "api", "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/CrystalReports/Storage/CrystalReportInspectorClient.cs", "purpose": "API-to-runtime typed inspection adapter" },
-    { "id": "persistence-config", "layer": "api", "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/CrystalReports/Persistence/CrystalReportConfigurations.cs", "purpose": "Version persistence shape" },
-    { "id": "db-context", "layer": "api", "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/ReportingDbContext.cs", "purpose": "Append-only and scope enforcement" },
-    { "id": "runtime-inspector", "layer": "runtime", "path": "api/CrystalReportGeneratorApi/Runtime/Inspection/CrystalReportInspectionService.cs", "purpose": "Crystal SDK inspection implementation" },
-    { "id": "runtime-template-validator", "layer": "runtime", "path": "api/CrystalReportGeneratorApi/Runtime/Inspection/CrystalReportTemplateContractValidator.cs", "purpose": "Pure exact table, field and parameter contract validator" },
-    { "id": "runtime-source-policy", "layer": "runtime", "path": "api/CrystalReportGeneratorApi/Runtime/CrystalReportManagedSourcePolicy.cs", "purpose": "Saved-data/source/subreport rules" },
-    { "id": "runtime-parameters", "layer": "runtime", "path": "api/CrystalReportGeneratorApi/Runtime/Rendering/CrystalReportManagedParameters.cs", "purpose": "Current Language parameter behavior" },
-    { "id": "runtime-registry", "layer": "runtime", "path": "api/CrystalReportGeneratorApi/Runtime/Rendering/CrystalReportProfileRegistry.cs", "purpose": "Exact legacy entity contracts and fingerprint" },
-    { "id": "runtime-renderer", "layer": "runtime", "path": "api/CrystalReportGeneratorApi/Runtime/Rendering/CrystalReportRenderService.cs", "purpose": "Defense-in-depth contract validation before render" },
-    { "id": "runtime-controller", "layer": "runtime", "path": "api/CrystalReportGeneratorApi/Controllers/InternalReportInspectorController.cs", "purpose": "Internal multipart inspection route" },
-    { "id": "validation-migration", "layer": "data", "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Migrations/20260927154405_AddManagedCrystalTemplateValidation.cs", "purpose": "Validation evidence columns, constraints and development revalidation backfill" },
-    { "id": "domain-tests", "layer": "tests", "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/CrystalReportDomainTests.cs", "purpose": "Current aggregate/version behavior" },
-    { "id": "validation-tests", "layer": "tests", "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/CrystalReportValidationTests.cs", "purpose": "Current command validation and error behavior" },
-    { "id": "inspector-tests", "layer": "tests", "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/CrystalReportInspectorClientTests.cs", "purpose": "Current runtime client boundary tests" },
-    { "id": "storage-tests", "layer": "tests", "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/CrystalReportFileStorageTests.cs", "purpose": "Current file acceptance and cleanup tests" },
-    { "id": "handler-gate-tests", "layer": "tests", "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/ManagedCrystalTemplateValidationHandlerTests.cs", "purpose": "Unsupported entity, inherited entity and stale publish/render gate tests" },
-    { "id": "persistence-invariant-tests", "layer": "tests", "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/ManagedCrystalTemplateValidationPersistenceTests.cs", "purpose": "Validation-transition allowance and append-only source rejection tests" },
-    { "id": "runtime-contract-harness", "layer": "tests", "path": "api/CrystalReportGeneratorApi.ContractTests/Program.cs", "purpose": "Legacy runtime fingerprint and positive/negative semantic metadata harness" },
-    { "id": "controller-tests", "layer": "tests", "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/CrystalReportsControllerContractTests.cs", "purpose": "Public route and permission regression" },
-    { "id": "web-manager", "layer": "web-next", "path": "web-next/src/modules/reporting/crystal-report-manager/CrystalReportManagerPage.tsx", "purpose": "Downstream manager impact evidence only" },
-    { "id": "mobile-fiscal-consumer", "layer": "mobile-react", "path": "mobile-react/src/modules/accounting/fiscal-years/presentation/components/FiscalYearReportView.tsx", "purpose": "Downstream report consumer evidence only" }
+    {
+      "id": "root-guidance",
+      "layer": "configuration",
+      "path": "AGENTS.md",
+      "purpose": "Repository planning and documentation rules"
+    },
+    {
+      "id": "api-guidance",
+      "layer": "configuration",
+      "path": "api/AGENTS.md",
+      "purpose": "API and independent runtime rules"
+    },
+    {
+      "id": "api-workflow",
+      "layer": "configuration",
+      "path": "documentation/guides/api/API_FEATURE_DEVELOPMENT_WORKFLOW.md",
+      "purpose": "Required business/API workflow"
+    },
+    {
+      "id": "api-constitution",
+      "layer": "configuration",
+      "path": "documentation/guides/api/ERP_ARCHITECTURE_CONSTITUTION.md",
+      "purpose": "Architecture authority"
+    },
+    {
+      "id": "canonical-plan",
+      "layer": "planning",
+      "path": "documentation/plans/business/managed-crystal-reporting-reliability/PLAN.md",
+      "purpose": "Approved business intent and decisions"
+    },
+    {
+      "id": "roadmap",
+      "layer": "planning",
+      "path": "documentation/plans/business/managed-crystal-reporting-reliability/IMPLEMENTATION-ROADMAP.md",
+      "purpose": "Single active-child status"
+    },
+    {
+      "id": "child-contract",
+      "layer": "planning",
+      "path": "documentation/plans/business/managed-crystal-reporting-reliability/decomposition/managed-crystal-template-validation.md",
+      "purpose": "Authorized boundary and exit gate"
+    },
+    {
+      "id": "implementation-request",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/managed-crystal-template-validation/managed-crystal-template-validation-request.md",
+      "purpose": "Business rules, edge cases and impact matrix"
+    },
+    {
+      "id": "review-artifact",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/managed-crystal-template-validation/managed-crystal-template-validation-evidence.md",
+      "purpose": "Evidence and verification ledger"
+    },
+    {
+      "id": "master-book",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/managed-crystal-template-validation/managed-crystal-template-validation-review.md",
+      "purpose": "Cross-platform applied review"
+    },
+    {
+      "id": "api-book",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/managed-crystal-template-validation/managed-crystal-template-validation-api.md",
+      "purpose": "API/runtime implementation profile"
+    },
+    {
+      "id": "web-book",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/managed-crystal-template-validation/managed-crystal-template-validation-web.md",
+      "purpose": "Deferred Web disposition"
+    },
+    {
+      "id": "mobile-book",
+      "layer": "documentation",
+      "path": "documentation/modules/reporting/features/managed-crystal-template-validation/managed-crystal-template-validation-mobile.md",
+      "purpose": "Deferred/Excluded Mobile disposition"
+    },
+    {
+      "id": "canonical-registry",
+      "layer": "api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Contracts/Features/Analytics/CrystalReports/managed-crystal-report-contracts.v1.json",
+      "purpose": "Exact entity/table/field/parameter contract"
+    },
+    {
+      "id": "modern-registry",
+      "layer": "api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/CrystalReports/Persistence/ManagedCrystalReportContractRegistry.cs",
+      "purpose": "Current fingerprint and entity lookup"
+    },
+    {
+      "id": "report-aggregate",
+      "layer": "api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Domain/Analytics/CrystalReports/Entities/CrystalReport.cs",
+      "purpose": "Publication invariant owner"
+    },
+    {
+      "id": "report-version",
+      "layer": "api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Domain/Analytics/CrystalReports/Entities/CrystalReportVersion.cs",
+      "purpose": "Version identity and validation lifecycle owner"
+    },
+    {
+      "id": "commands",
+      "layer": "api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/CrystalReports/Commands/CrystalReportCommandHandlers.cs",
+      "purpose": "Create, version, import and publish orchestration"
+    },
+    {
+      "id": "contracts",
+      "layer": "api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/CrystalReports/Contracts/CrystalReportContracts.cs",
+      "purpose": "Typed storage/inspection/public response contracts"
+    },
+    {
+      "id": "queries",
+      "layer": "api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/CrystalReports/Queries/CrystalReportQueryHandlers.cs",
+      "purpose": "Render and download gates"
+    },
+    {
+      "id": "file-storage",
+      "layer": "api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/CrystalReports/Storage/PrivateCrystalReportFileStorage.cs",
+      "purpose": "Bounded inspect/hash/private-store boundary"
+    },
+    {
+      "id": "inspector-client",
+      "layer": "api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/CrystalReports/Storage/CrystalReportInspectorClient.cs",
+      "purpose": "API-to-runtime typed inspection adapter"
+    },
+    {
+      "id": "persistence-config",
+      "layer": "api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/CrystalReports/Persistence/CrystalReportConfigurations.cs",
+      "purpose": "Version persistence shape"
+    },
+    {
+      "id": "db-context",
+      "layer": "api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/ReportingDbContext.cs",
+      "purpose": "Append-only and scope enforcement"
+    },
+    {
+      "id": "runtime-inspector",
+      "layer": "runtime",
+      "path": "api/CrystalReportGeneratorApi/Runtime/Inspection/CrystalReportInspectionService.cs",
+      "purpose": "Crystal SDK inspection implementation"
+    },
+    {
+      "id": "runtime-template-validator",
+      "layer": "runtime",
+      "path": "api/CrystalReportGeneratorApi/Runtime/Inspection/CrystalReportTemplateContractValidator.cs",
+      "purpose": "Pure exact table, field and parameter contract validator"
+    },
+    {
+      "id": "runtime-source-policy",
+      "layer": "runtime",
+      "path": "api/CrystalReportGeneratorApi/Runtime/CrystalReportManagedSourcePolicy.cs",
+      "purpose": "Saved-data/source/subreport rules"
+    },
+    {
+      "id": "runtime-parameters",
+      "layer": "runtime",
+      "path": "api/CrystalReportGeneratorApi/Runtime/Rendering/CrystalReportManagedParameters.cs",
+      "purpose": "Current Language parameter behavior"
+    },
+    {
+      "id": "runtime-registry",
+      "layer": "runtime",
+      "path": "api/CrystalReportGeneratorApi/Runtime/Rendering/CrystalReportProfileRegistry.cs",
+      "purpose": "Exact legacy entity contracts and fingerprint"
+    },
+    {
+      "id": "runtime-renderer",
+      "layer": "runtime",
+      "path": "api/CrystalReportGeneratorApi/Runtime/Rendering/CrystalReportRenderService.cs",
+      "purpose": "Defense-in-depth contract validation before render"
+    },
+    {
+      "id": "runtime-controller",
+      "layer": "runtime",
+      "path": "api/CrystalReportGeneratorApi/Controllers/InternalReportInspectorController.cs",
+      "purpose": "Internal multipart inspection route"
+    },
+    {
+      "id": "validation-migration",
+      "layer": "data",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Migrations/20260927154405_AddManagedCrystalTemplateValidation.cs",
+      "purpose": "Validation evidence columns, constraints and development revalidation backfill"
+    },
+    {
+      "id": "domain-tests",
+      "layer": "tests",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/CrystalReportDomainTests.cs",
+      "purpose": "Current aggregate/version behavior"
+    },
+    {
+      "id": "validation-tests",
+      "layer": "tests",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/CrystalReportValidationTests.cs",
+      "purpose": "Current command validation and error behavior"
+    },
+    {
+      "id": "inspector-tests",
+      "layer": "tests",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/CrystalReportInspectorClientTests.cs",
+      "purpose": "Current runtime client boundary tests"
+    },
+    {
+      "id": "storage-tests",
+      "layer": "tests",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/CrystalReportFileStorageTests.cs",
+      "purpose": "Current file acceptance and cleanup tests"
+    },
+    {
+      "id": "handler-gate-tests",
+      "layer": "tests",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/ManagedCrystalTemplateValidationHandlerTests.cs",
+      "purpose": "Unsupported entity, inherited entity and stale publish/render gate tests"
+    },
+    {
+      "id": "persistence-invariant-tests",
+      "layer": "tests",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/ManagedCrystalTemplateValidationPersistenceTests.cs",
+      "purpose": "Validation-transition allowance and append-only source rejection tests"
+    },
+    {
+      "id": "runtime-contract-harness",
+      "layer": "tests",
+      "path": "api/CrystalReportGeneratorApi.ContractTests/Program.cs",
+      "purpose": "Legacy runtime fingerprint and positive/negative semantic metadata harness"
+    },
+    {
+      "id": "controller-tests",
+      "layer": "tests",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/CrystalReportsControllerContractTests.cs",
+      "purpose": "Public route and permission regression"
+    },
+    {
+      "id": "web-manager",
+      "layer": "web-next",
+      "path": "web-next/src/modules/reporting/crystal-report-manager/CrystalReportManagerPage.tsx",
+      "purpose": "Downstream manager impact evidence only"
+    },
+    {
+      "id": "mobile-fiscal-consumer",
+      "layer": "mobile-react",
+      "path": "mobile-react/src/modules/accounting/fiscal-years/presentation/components/FiscalYearReportView.tsx",
+      "purpose": "Downstream report consumer evidence only"
+    },
+    {
+      "id": "runtime-correction-42-runtime-correction-2026-11-01-md",
+      "layer": "verification",
+      "path": "documentation/plans/business/managed-crystal-reporting-reliability/RUNTIME_CORRECTION_2026-11-01.md",
+      "purpose": "Authorized2026-11-01 corrective runtime/client/source or sanitized acceptance evidence; actual hosted publication remains gated"
+    },
+    {
+      "id": "runtime-correction-43-runtime-correction-result-2026-11-01-md",
+      "layer": "verification",
+      "path": "documentation/plans/business/managed-crystal-reporting-reliability/RUNTIME_CORRECTION_RESULT_2026-11-01.md",
+      "purpose": "Authorized2026-11-01 corrective runtime/client/source or sanitized acceptance evidence; actual hosted publication remains gated"
+    },
+    {
+      "id": "runtime-correction-44-runtimecontrollerassemblyresolver-cs",
+      "layer": "api",
+      "path": "api/CrystalReportGeneratorApi/App_Start/RuntimeControllerAssemblyResolver.cs",
+      "purpose": "Authorized2026-11-01 corrective runtime/client/source or sanitized acceptance evidence; actual hosted publication remains gated"
+    },
+    {
+      "id": "runtime-correction-45-webapiconfig-cs",
+      "layer": "api",
+      "path": "api/CrystalReportGeneratorApi/App_Start/WebApiConfig.cs",
+      "purpose": "Authorized2026-11-01 corrective runtime/client/source or sanitized acceptance evidence; actual hosted publication remains gated"
+    },
+    {
+      "id": "runtime-correction-46-swaggerconfig-cs",
+      "layer": "api",
+      "path": "api/CrystalReportGeneratorApi/App_Start/SwaggerConfig.cs",
+      "purpose": "Authorized2026-11-01 corrective runtime/client/source or sanitized acceptance evidence; actual hosted publication remains gated"
+    },
+    {
+      "id": "runtime-correction-47-internalapikeyattribute-cs",
+      "layer": "api",
+      "path": "api/CrystalReportGeneratorApi/Filters/InternalApiKeyAttribute.cs",
+      "purpose": "Authorized2026-11-01 corrective runtime/client/source or sanitized acceptance evidence; actual hosted publication remains gated"
+    },
+    {
+      "id": "runtime-correction-48-internalreporthealthcontroller-cs",
+      "layer": "api",
+      "path": "api/CrystalReportGeneratorApi/Controllers/InternalReportHealthController.cs",
+      "purpose": "Authorized2026-11-01 corrective runtime/client/source or sanitized acceptance evidence; actual hosted publication remains gated"
+    },
+    {
+      "id": "runtime-correction-49-crystalreportcatalogservice-cs",
+      "layer": "api",
+      "path": "api/CrystalReportGeneratorApi/Runtime/Catalog/CrystalReportCatalogService.cs",
+      "purpose": "Authorized2026-11-01 corrective runtime/client/source or sanitized acceptance evidence; actual hosted publication remains gated"
+    },
+    {
+      "id": "runtime-correction-50-web-config",
+      "layer": "api",
+      "path": "api/CrystalReportGeneratorApi/Web.config",
+      "purpose": "Authorized2026-11-01 corrective runtime/client/source or sanitized acceptance evidence; actual hosted publication remains gated"
+    },
+    {
+      "id": "runtime-correction-51--gitkeep",
+      "layer": "api",
+      "path": "api/CrystalReportGeneratorApi/Reports/Countries/.gitkeep",
+      "purpose": "Authorized2026-11-01 corrective runtime/client/source or sanitized acceptance evidence; actual hosted publication remains gated"
+    },
+    {
+      "id": "runtime-correction-52--gitkeep",
+      "layer": "api",
+      "path": "api/CrystalReportGeneratorApi/Reports/States/.gitkeep",
+      "purpose": "Authorized2026-11-01 corrective runtime/client/source or sanitized acceptance evidence; actual hosted publication remains gated"
+    },
+    {
+      "id": "runtime-correction-53-app-config",
+      "layer": "api",
+      "path": "api/CrystalReportGeneratorApi.ContractTests/App.config",
+      "purpose": "Authorized2026-11-01 corrective runtime/client/source or sanitized acceptance evidence; actual hosted publication remains gated"
+    },
+    {
+      "id": "runtime-correction-54-runtimeboundarytests-cs",
+      "layer": "api",
+      "path": "api/CrystalReportGeneratorApi.ContractTests/RuntimeBoundaryTests.cs",
+      "purpose": "Authorized2026-11-01 corrective runtime/client/source or sanitized acceptance evidence; actual hosted publication remains gated"
+    },
+    {
+      "id": "runtime-correction-55-program-cs",
+      "layer": "api",
+      "path": "api/CrystalReportGeneratorApi.ContractTests/InteropTests/Program.cs",
+      "purpose": "Authorized2026-11-01 corrective runtime/client/source or sanitized acceptance evidence; actual hosted publication remains gated"
+    },
+    {
+      "id": "runtime-correction-56-crystalreportgeneratorapi-interoptests-csproj",
+      "layer": "api",
+      "path": "api/CrystalReportGeneratorApi.ContractTests/InteropTests/CrystalReportGeneratorApi.InteropTests.csproj",
+      "purpose": "Authorized2026-11-01 corrective runtime/client/source or sanitized acceptance evidence; actual hosted publication remains gated"
+    },
+    {
+      "id": "runtime-correction-57-crystalreportdeploymentsourceclient-cs",
+      "layer": "api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/CrystalReports/Storage/CrystalReportDeploymentSourceClient.cs",
+      "purpose": "Authorized2026-11-01 corrective runtime/client/source or sanitized acceptance evidence; actual hosted publication remains gated"
+    },
+    {
+      "id": "runtime-correction-58-crystalreportdeploymentsourceclienttests-cs",
+      "layer": "api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/CrystalReportDeploymentSourceClientTests.cs",
+      "purpose": "Authorized2026-11-01 corrective runtime/client/source or sanitized acceptance evidence; actual hosted publication remains gated"
+    },
+    {
+      "id": "runtime-correction-59-prepare-crystalreportdeployment-ps1",
+      "layer": "api",
+      "path": "api/scripts/Prepare-CrystalReportDeployment.ps1",
+      "purpose": "Authorized2026-11-01 corrective runtime/client/source or sanitized acceptance evidence; actual hosted publication remains gated"
+    },
+    {
+      "id": "runtime-correction-60-test-crystalreportruntime-ps1",
+      "layer": "api",
+      "path": "api/scripts/Test-CrystalReportRuntime.ps1",
+      "purpose": "Authorized2026-11-01 corrective runtime/client/source or sanitized acceptance evidence; actual hosted publication remains gated"
+    },
+    {
+      "id": "runtime-correction-61-client-fix-tests-log",
+      "layer": "verification",
+      "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/client-fix-tests.log",
+      "purpose": "Authorized2026-11-01 corrective runtime/client/source or sanitized acceptance evidence; actual hosted publication remains gated"
+    },
+    {
+      "id": "runtime-correction-62-corrected-interoperability-json",
+      "layer": "verification",
+      "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/corrected-interoperability.json",
+      "purpose": "Authorized2026-11-01 corrective runtime/client/source or sanitized acceptance evidence; actual hosted publication remains gated"
+    },
+    {
+      "id": "runtime-correction-63-current-swagger-routes-json",
+      "layer": "verification",
+      "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/current-swagger-routes.json",
+      "purpose": "Authorized2026-11-01 corrective runtime/client/source or sanitized acceptance evidence; actual hosted publication remains gated"
+    },
+    {
+      "id": "runtime-correction-64-deployment-access-json",
+      "layer": "verification",
+      "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/deployment-access.json",
+      "purpose": "Authorized2026-11-01 corrective runtime/client/source or sanitized acceptance evidence; actual hosted publication remains gated"
+    },
+    {
+      "id": "runtime-correction-65-deployment-manifest-json",
+      "layer": "verification",
+      "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/deployment-manifest.json",
+      "purpose": "Authorized2026-11-01 corrective runtime/client/source or sanitized acceptance evidence; actual hosted publication remains gated"
+    },
+    {
+      "id": "runtime-correction-66-final-boundary-tests-log",
+      "layer": "verification",
+      "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/final-boundary-tests.log",
+      "purpose": "Authorized2026-11-01 corrective runtime/client/source or sanitized acceptance evidence; actual hosted publication remains gated"
+    },
+    {
+      "id": "runtime-correction-67-full-build-log",
+      "layer": "verification",
+      "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/full-build.log",
+      "purpose": "Authorized2026-11-01 corrective runtime/client/source or sanitized acceptance evidence; actual hosted publication remains gated"
+    },
+    {
+      "id": "runtime-correction-68-full-restore-log",
+      "layer": "verification",
+      "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/full-restore.log",
+      "purpose": "Authorized2026-11-01 corrective runtime/client/source or sanitized acceptance evidence; actual hosted publication remains gated"
+    },
+    {
+      "id": "runtime-correction-69-full-test-sqlserver-log",
+      "layer": "verification",
+      "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/full-test-sqlserver.log",
+      "purpose": "Authorized2026-11-01 corrective runtime/client/source or sanitized acceptance evidence; actual hosted publication remains gated"
+    },
+    {
+      "id": "runtime-correction-70-package-validation-json",
+      "layer": "verification",
+      "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/package-validation.json",
+      "purpose": "Authorized2026-11-01 corrective runtime/client/source or sanitized acceptance evidence; actual hosted publication remains gated"
+    },
+    {
+      "id": "runtime-correction-71-portable-interoperability-json",
+      "layer": "verification",
+      "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/portable-interoperability.json",
+      "purpose": "Authorized2026-11-01 corrective runtime/client/source or sanitized acceptance evidence; actual hosted publication remains gated"
+    },
+    {
+      "id": "runtime-correction-72-portable-interoperability-log",
+      "layer": "verification",
+      "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/portable-interoperability.log",
+      "purpose": "Authorized2026-11-01 corrective runtime/client/source or sanitized acceptance evidence; actual hosted publication remains gated"
+    },
+    {
+      "id": "runtime-correction-73-prepare-ready-log",
+      "layer": "verification",
+      "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/prepare-ready.log",
+      "purpose": "Authorized2026-11-01 corrective runtime/client/source or sanitized acceptance evidence; actual hosted publication remains gated"
+    },
+    {
+      "id": "runtime-correction-74-ready-iis-boundaries-json",
+      "layer": "verification",
+      "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/ready-iis-boundaries.json",
+      "purpose": "Authorized2026-11-01 corrective runtime/client/source or sanitized acceptance evidence; actual hosted publication remains gated"
+    },
+    {
+      "id": "publish-final-75",
+      "layer": "verification",
+      "path": "documentation/plans/business/managed-crystal-reporting-reliability/PUBLISH_READY_2026-11-01.md",
+      "purpose": "Current publish/source/local or sanitized actual hosted evidence; no private key/config registered"
+    },
+    {
+      "id": "publish-final-76",
+      "layer": "verification",
+      "path": ".gitignore",
+      "purpose": "Current publish/source/local or sanitized actual hosted evidence; no private key/config registered"
+    },
+    {
+      "id": "publish-final-77",
+      "layer": "api",
+      "path": "api/ErpSystem.Api/ErpSystem.Api.csproj",
+      "purpose": "Current publish/source/local or sanitized actual hosted evidence; no private key/config registered"
+    },
+    {
+      "id": "publish-final-78",
+      "layer": "api",
+      "path": "api/scripts/Configure-CrystalReportPublish.ps1",
+      "purpose": "Current publish/source/local or sanitized actual hosted evidence; no private key/config registered"
+    },
+    {
+      "id": "publish-final-79",
+      "layer": "api",
+      "path": "api/scripts/Merge-CrystalReportHostSettings.ps1",
+      "purpose": "Current publish/source/local or sanitized actual hosted evidence; no private key/config registered"
+    },
+    {
+      "id": "publish-final-80",
+      "layer": "verification",
+      "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/actual-publish-profile-checks.json",
+      "purpose": "Current publish/source/local or sanitized actual hosted evidence; no private key/config registered"
+    },
+    {
+      "id": "publish-final-81",
+      "layer": "verification",
+      "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/config-merge-check.json",
+      "purpose": "Current publish/source/local or sanitized actual hosted evidence; no private key/config registered"
+    },
+    {
+      "id": "publish-final-82",
+      "layer": "verification",
+      "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/hosted-after-user-publish.json",
+      "purpose": "Current publish/source/local or sanitized actual hosted evidence; no private key/config registered"
+    },
+    {
+      "id": "publish-final-83",
+      "layer": "verification",
+      "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/hosted-current-routes.json",
+      "purpose": "Current publish/source/local or sanitized actual hosted evidence; no private key/config registered"
+    },
+    {
+      "id": "publish-final-84",
+      "layer": "verification",
+      "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/hosted-runtime-publication-verified.json",
+      "purpose": "Current publish/source/local or sanitized actual hosted evidence; no private key/config registered"
+    },
+    {
+      "id": "publish-final-85",
+      "layer": "verification",
+      "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/local-debug-rebuild.log",
+      "purpose": "Current publish/source/local or sanitized actual hosted evidence; no private key/config registered"
+    },
+    {
+      "id": "publish-final-86",
+      "layer": "verification",
+      "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/local-startup-repair.json",
+      "purpose": "Current publish/source/local or sanitized actual hosted evidence; no private key/config registered"
+    },
+    {
+      "id": "publish-final-87",
+      "layer": "verification",
+      "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/msbuild-publish-task.json",
+      "purpose": "Current publish/source/local or sanitized actual hosted evidence; no private key/config registered"
+    },
+    {
+      "id": "publish-final-88",
+      "layer": "verification",
+      "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/profile-preservation-final.json",
+      "purpose": "Current publish/source/local or sanitized actual hosted evidence; no private key/config registered"
+    },
+    {
+      "id": "publish-final-89",
+      "layer": "verification",
+      "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/publish-profile-validation.json",
+      "purpose": "Current publish/source/local or sanitized actual hosted evidence; no private key/config registered"
+    },
+    {
+      "id": "publish-final-90",
+      "layer": "verification",
+      "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/source-local-verified.json",
+      "purpose": "Current publish/source/local or sanitized actual hosted evidence; no private key/config registered"
+    },
+    {
+      "id": "render-rejection-analysis",
+      "layer": "documentation",
+      "path": "documentation/plans/business/managed-crystal-reporting-reliability/RENDER_REJECTION_2026-11-01.md",
+      "purpose": "Verified render-rejection cause, stable failure contract or schema recovery evidence"
+    },
+    {
+      "id": "hosted-template-rejection-proof",
+      "layer": "verification",
+      "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/hosted-template-rejections.json",
+      "purpose": "Verified render-rejection cause, stable failure contract or schema recovery evidence"
+    },
+    {
+      "id": "canonical-schema-exporter",
+      "layer": "configuration",
+      "path": "api/scripts/Export-ManagedCrystalReportSchema.ps1",
+      "purpose": "Verified render-rejection cause, stable failure contract or schema recovery evidence"
+    },
+    {
+      "id": "countries-designer-xsd",
+      "layer": "verification",
+      "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/countries.xsd",
+      "purpose": "Verified render-rejection cause, stable failure contract or schema recovery evidence"
+    },
+    {
+      "id": "render-runtime-http",
+      "layer": "runtime",
+      "path": "api/CrystalReportGeneratorApi/Controllers/InternalReportRenderController.cs",
+      "purpose": "Verified render-rejection cause, stable failure contract or schema recovery evidence"
+    },
+    {
+      "id": "render-erp-client",
+      "layer": "api",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/CrystalReports/Storage/CrystalReportRendererClient.cs",
+      "purpose": "Verified render-rejection cause, stable failure contract or schema recovery evidence"
+    },
+    {
+      "id": "render-error-tests",
+      "layer": "verification",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/CrystalReportRendererClientTests.cs",
+      "purpose": "Verified render-rejection cause, stable failure contract or schema recovery evidence"
+    },
+    {
+      "id": "render-global-handler-tests",
+      "layer": "verification",
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/GlobalCrystalReportQueryTests.cs",
+      "purpose": "Verified render-rejection cause, stable failure contract or schema recovery evidence"
+    },
+    {
+      "id": "render-verification-0",
+      "layer": "verification",
+      "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/render-correction-verification.json",
+      "purpose": "Actual local render-correction technical verification; native PDF remains unverified"
+    },
+    {
+      "id": "render-verification-1",
+      "layer": "verification",
+      "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/render-full-api-tests-serial.log",
+      "purpose": "Actual local render-correction technical verification; native PDF remains unverified"
+    },
+    {
+      "id": "render-verification-2",
+      "layer": "verification",
+      "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/render-full-api-tests.log",
+      "purpose": "Actual local render-correction technical verification; native PDF remains unverified"
+    },
+    {
+      "id": "render-verification-3",
+      "layer": "verification",
+      "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/render-full-reporting-tests.log",
+      "purpose": "Actual local render-correction technical verification; native PDF remains unverified"
+    },
+    {
+      "id": "render-verification-4",
+      "layer": "verification",
+      "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/render-boundary-tests.log",
+      "purpose": "Actual local render-correction technical verification; native PDF remains unverified"
+    },
+    {
+      "id": "render-verification-5",
+      "layer": "verification",
+      "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/render-angular-check.log",
+      "purpose": "Actual local render-correction technical verification; native PDF remains unverified"
+    },
+    {
+      "id": "render-angular-105",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reporting/global-reports/types/global-report.ts",
+      "purpose": "Existing Angular shared error-state consumer and known-code transport mapping"
+    },
+    {
+      "id": "render-angular-106",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reporting/global-reports/services/global-report-service.ts",
+      "purpose": "Existing Angular shared error-state consumer and known-code transport mapping"
+    },
+    {
+      "id": "render-angular-107",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reporting/global-reports/services/global-report-service.spec.ts",
+      "purpose": "Existing Angular shared error-state consumer and known-code transport mapping"
+    },
+    {
+      "id": "render-angular-108",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reporting/global-reports/components/global-report-view/global-report-view.ts",
+      "purpose": "Existing Angular shared error-state consumer and known-code transport mapping"
+    },
+    {
+      "id": "render-angular-109",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reporting/global-reports/components/global-report-view/global-report-view.spec.ts",
+      "purpose": "Existing Angular shared error-state consumer and known-code transport mapping"
+    },
+    {
+      "id": "command-push-49a1b4c89773",
+      "layer": "documentation",
+      "path": "documentation/plans/business/global-crystal-template-management/COMMAND_PUSH_DATA_2026-11-03.md",
+      "purpose": "GCT-1 Command design-connection/pushed-data policy and bounded verification"
+    },
+    {
+      "id": "command-push-479e5fc7f6ac",
+      "layer": "api",
+      "path": "api/CrystalReportGeneratorApi/Runtime/CrystalReportSourceMetadata.cs",
+      "purpose": "GCT-1 Command design-connection/pushed-data policy and bounded verification"
+    },
+    {
+      "id": "command-push-18ba44197fba",
+      "layer": "api",
+      "path": "api/CrystalReportGeneratorApi/CrystalReportGeneratorApi.csproj",
+      "purpose": "GCT-1 Command design-connection/pushed-data policy and bounded verification"
+    },
+    {
+      "id": "command-push-7b3e30bf3356",
+      "layer": "api",
+      "path": "api/CrystalReportGeneratorApi.ContractTests/CrystalReportGeneratorApi.ContractTests.csproj",
+      "purpose": "GCT-1 Command design-connection/pushed-data policy and bounded verification"
+    },
+    {
+      "id": "command-push-9c1bc381c4db",
+      "layer": "api",
+      "path": "api/ErpSystem.Api/Localization/Resources/en-US.json",
+      "purpose": "GCT-1 Command design-connection/pushed-data policy and bounded verification"
+    },
+    {
+      "id": "command-push-356cbe652985",
+      "layer": "api",
+      "path": "api/ErpSystem.Api/Localization/Resources/ar-EG.json",
+      "purpose": "GCT-1 Command design-connection/pushed-data policy and bounded verification"
+    },
+    {
+      "id": "connection-ignore-b0653b448dc1",
+      "layer": "documentation",
+      "path": "documentation/plans/business/global-crystal-template-management/CONNECTION_IGNORE_2026-11-03.md",
+      "purpose": "Explicit no-connection-inspection policy and exact user-report diagnostic evidence"
+    },
+    {
+      "id": "container-data-f8e97523b6dd",
+      "layer": "documentation",
+      "path": "documentation/plans/business/global-crystal-template-management/CONTAINER_DATA_2026-11-03.md",
+      "purpose": "Requester-approved RPT container data policy and bounded verification"
+    },
+    {
+      "id": "container-data-1af522e7efca",
+      "layer": "documentation",
+      "path": "documentation/plans/notes/KNOWN_RISKS.md",
+      "purpose": "Requester-approved RPT container data policy and bounded verification"
+    },
+    {
+      "id": "optional-language-f30fccd7aad2",
+      "layer": "documentation",
+      "path": "documentation/plans/business/global-crystal-template-management/OPTIONAL_RPT_LANGUAGE_2026-11-03.md",
+      "purpose": "Optional report Language binding and independent native verification"
+    }
   ]
 }

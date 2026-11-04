@@ -1,6 +1,12 @@
 import { DOCUMENT } from '@angular/common';
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { defaultPalette, getTheme, themePaletteOrder, type ResolvedThemeMode, type ThemePalette } from '@app/tokens';
+import {
+  defaultPalette,
+  getTheme,
+  themePaletteOrder,
+  type ResolvedThemeMode,
+  type ThemePalette,
+} from '@app/tokens';
 import { PrimeNG } from 'primeng/config';
 import { createPrimePreset } from './prime-preset';
 
@@ -15,20 +21,29 @@ export class ThemeService {
   readonly theme = computed(() => getTheme(this.palette(), this.mode()));
 
   constructor() {
-    const cookies = new Map(this.document.cookie.split(';').map(value => {
-      const index = value.indexOf('=');
-      return [value.slice(0, index).trim(), value.slice(index + 1)] as const;
-    }));
-    this.setPalette(themePaletteOrder.find(palette => palette === cookies.get('themePalette')) ?? defaultPalette, false);
+    const cookies = new Map(
+      this.document.cookie.split(';').map((value) => {
+        const index = value.indexOf('=');
+        return [value.slice(0, index).trim(), value.slice(index + 1)] as const;
+      }),
+    );
+    this.setPalette(
+      themePaletteOrder.find((palette) => palette === cookies.get('themePalette')) ??
+        defaultPalette,
+      false,
+    );
     this.setMode(cookies.get('currentMode') === 'dark' ? 'dark' : 'light', false);
   }
 
   setPalette(value: string, persist = true): boolean {
-    const palette = themePaletteOrder.find(candidate => candidate === value);
+    const palette = themePaletteOrder.find((candidate) => candidate === value);
     if (!palette) return false;
     this.selectedPalette.set(palette);
     this.document.documentElement.dataset['palette'] = palette;
-    this.prime.theme.set({ preset: createPrimePreset(palette), options: { darkModeSelector: '.dark' } });
+    this.prime.theme.set({
+      preset: createPrimePreset(palette),
+      options: { darkModeSelector: '.dark' },
+    });
     if (persist) this.writePreference('themePalette', palette);
     return true;
   }

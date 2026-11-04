@@ -3,6 +3,7 @@ using ErpSystem.Modules.Reporting.Application.Features.Analytics.CrystalReports.
 using ErpSystem.Modules.Reporting.Application.Features.Analytics.CrystalReports.Contracts;
 using ErpSystem.Modules.Reporting.Application.Features.Analytics.CrystalReports.Errors;
 using ErpSystem.Modules.Reporting.Domain.Analytics.CrystalReports.Entities;
+using ErpSystem.Modules.Reporting.Application.Features.Analytics.CrystalReports.Validation;
 
 namespace ErpSystem.Modules.Reporting.Application.Features.Analytics.CrystalReports.Queries;
 
@@ -39,8 +40,11 @@ public sealed class GetSupportedCrystalReportEntitiesQueryHandler(
 }
 
 public sealed class GetGlobalCrystalReportsQueryHandler(
-    ICrystalReportDeploymentSource deploymentSource,
-    CrystalReportErrors errors)
+    IGlobalCrystalReportStore managedStore,
+    IManagedCrystalReportContractSource contracts,
+    IGlobalCrystalReportIdentity identities,
+    CrystalReportErrors errors, GlobalCrystalReportConsumerPolicy consumerPolicy,
+    IGlobalCrystalReportConsumptionStore consumers)
     : IQueryHandler<GetGlobalCrystalReportsQuery,
         Result<IReadOnlyList<GlobalCrystalReportListItemResponse>>>
 {
@@ -53,40 +57,39 @@ public sealed class GetGlobalCrystalReportsQueryHandler(
             return Result.Failure<IReadOnlyList<GlobalCrystalReportListItemResponse>>(
                 errors.CrystalReportRenderUnsupported);
 
-        var catalog = await deploymentSource.ListAsync(entityKey, cancellationToken);
-        if (catalog is null)
-            return Result.Failure<IReadOnlyList<GlobalCrystalReportListItemResponse>>(
-                errors.CrystalReportCatalogUnavailable);
-
-        var result = catalog
-            .Where(item => item.IsImportable &&
-                           string.Equals(item.EntityKey, entityKey, StringComparison.OrdinalIgnoreCase))
-            .OrderBy(item => item.DisplayName, StringComparer.OrdinalIgnoreCase)
-            .ThenBy(item => item.ReportKey, StringComparer.OrdinalIgnoreCase)
-            .Select(item => new GlobalCrystalReportListItemResponse(
-                item.SourceId,
-                entityKey,
-                item.ReportKey,
-                item.DisplayName,
-                item.DisplayName,
-                item.Subject,
-                null,
-                1,
-                true,
-                false,
-                item.Sha256,
-                item.LastModifiedUtc))
-            .ToArray();
-
-        return Result.Success<IReadOnlyList<GlobalCrystalReportListItemResponse>>(result);
+        if (!consumerPolicy.Allows(entityKey))
+            return Result.Failure<IReadOnlyList<GlobalCrystalReportListItemResponse>>(errors.GlobalCrystalReportForbidden);
+        var managed = consumerPolicy.PlatformReader ? await managedStore.CatalogAsync(entityKey, cancellationToken)
+            : await consumers.CatalogAsync(entityKey, CrystalReportRight.Run, cancellationToken);
+        var downloadable = consumerPolicy.Allows(entityKey, download: true)
+            ? (consumerPolicy.PlatformReader ? managed : await consumers.CatalogAsync(entityKey, CrystalReportRight.Download, cancellationToken))
+                .Select(item => item.ReportId).ToHashSet()
+            : [];
+        var managedReports = managed.Where(item => item.PublishedVersion?.IsValidFor(contracts.Fingerprint) == true)
+            .Select(item =>
+            {
+                var version = item.PublishedVersion!;
+                return new GlobalCrystalReportListItemResponse(identities.SourceId(item.ReportId),
+                    item.EntityKey, item.ReportKey, item.DisplayName, version.SummaryTitle, version.SummarySubject,
+                    item.Description, version.VersionNumber, true, false,
+                    identities.Token(version.Id, contracts.Fingerprint, version.Sha256), item.UpdatedOn)
+                    { CanDownloadSource = downloadable.Contains(item.ReportId) };
+            });
+        return Result.Success<IReadOnlyList<GlobalCrystalReportListItemResponse>>(
+            managedReports.OrderBy(item => item.DisplayName, StringComparer.OrdinalIgnoreCase)
+                .ThenBy(item => item.ReportKey, StringComparer.OrdinalIgnoreCase).ToArray());
     }
 }
 
 public sealed class RenderGlobalCrystalReportQueryHandler(
-    ICrystalReportDeploymentSource deploymentSource,
     ICrystalReportDataSource dataSource,
     ICrystalReportRenderer renderer,
-    CrystalReportErrors errors)
+    IGlobalCrystalReportStore managedStore,
+    ICrystalReportFileStorage storage,
+    IManagedCrystalReportContractSource contracts,
+    IGlobalCrystalReportIdentity identities,
+    CrystalReportErrors errors, GlobalCrystalReportConsumerPolicy consumerPolicy,
+    IGlobalCrystalReportConsumptionStore consumers, IGlobalCrystalReportViewSource? views = null)
     : IQueryHandler<RenderGlobalCrystalReportQuery, Result<CrystalReportDownload>>
 {
     public async Task<Result<CrystalReportDownload>> Handle(
@@ -97,58 +100,41 @@ public sealed class RenderGlobalCrystalReportQueryHandler(
         if (!GlobalCrystalReportScope.Contains(entityKey))
             return Result.Failure<CrystalReportDownload>(errors.CrystalReportRenderUnsupported);
 
-        var catalog = await deploymentSource.ListAsync(entityKey, cancellationToken);
-        if (catalog is null)
-            return Result.Failure<CrystalReportDownload>(errors.CrystalReportCatalogUnavailable);
+        if (!consumerPolicy.Allows(entityKey)) return Result.Failure<CrystalReportDownload>(errors.GlobalCrystalReportForbidden);
+        var managed = consumerPolicy.PlatformReader ? await managedStore.CatalogAsync(entityKey, cancellationToken)
+            : await consumers.CatalogAsync(entityKey, CrystalReportRight.Run, cancellationToken);
+        var template = managed.FirstOrDefault(item => identities.SourceId(item.ReportId) == request.SourceId);
+        if (template is not null)
+            return await RenderManagedAsync(template, request, cancellationToken);
+        return Result.Failure<CrystalReportDownload>(errors.CrystalReportNotFound);
+    }
 
-        var matches = catalog.Where(item =>
-                item.IsImportable &&
-                string.Equals(item.EntityKey, entityKey, StringComparison.OrdinalIgnoreCase) &&
-                string.Equals(item.SourceId, request.SourceId, StringComparison.Ordinal) &&
-                string.Equals(item.Sha256, request.ExpectedSha256, StringComparison.Ordinal))
-            .ToArray();
-        if (matches.Length != 1)
+    private async Task<Result<CrystalReportDownload>> RenderManagedAsync(GlobalCrystalManagedCatalogEntry template,
+        RenderGlobalCrystalReportQuery request, CancellationToken cancellationToken)
+    {
+        var version = template.PublishedVersion;
+        if (version is null || !version.IsValidFor(contracts.Fingerprint) ||
+            request.ExpectedSha256 != identities.Token(version.Id, contracts.Fingerprint, version.Sha256))
             return Result.Failure<CrystalReportDownload>(errors.CrystalReportDeploymentSourceChanged);
-
-        var candidate = matches[0];
-        var download = await deploymentSource.DownloadAsync(
-            candidate.SourceId,
-            candidate.Sha256,
-            cancellationToken);
-        if (download.Failure == CrystalReportDeploymentDownloadFailure.SourceChanged)
-            return Result.Failure<CrystalReportDownload>(errors.CrystalReportDeploymentSourceChanged);
-        if (!download.IsSuccess)
-            return Result.Failure<CrystalReportDownload>(errors.CrystalReportSourceUnavailable);
-
-        var dataResult = await dataSource.BuildAsync(
-            entityKey,
-            request.Filters ?? new Dictionary<string, string?>(),
-            cancellationToken);
-        if (!dataResult.IsSuccess)
+        await using var source = await storage.OpenVerifiedReadAsync(version.StorageKey, version.Size, version.Sha256, cancellationToken);
+        if (source is null) return Result.Failure<CrystalReportDownload>(errors.CrystalReportSourceUnavailable);
+        var filters = request.Filters ?? new Dictionary<string, string?>();
+        var data = template.ViewName is null
+            ? await dataSource.BuildAsync(template.EntityKey, filters, cancellationToken)
+            : views is null || template.ViewFingerprint is null
+                ? new CrystalReportDataBuildResult(null, CrystalReportDataFailure.Unsupported)
+                : await views.BuildAsync(template.EntityKey, template.ViewName, template.ViewFingerprint, filters, cancellationToken);
+        if (!data.IsSuccess) return Result.Failure<CrystalReportDownload>(data.Failure == CrystalReportDataFailure.TooLarge
+            ? errors.CrystalReportDataTooLarge : template.ViewName is null ? errors.CrystalReportRenderUnsupported : errors.CrystalReportInvalidView);
+        var result = await renderer.RenderAsync(new CrystalReportRuntimeRequest(template.EntityKey,
+            template.ReportKey, version.OriginalFileName, version.Size, source, request.Language, data.Data!.Xml), cancellationToken);
+        return result.IsSuccess ? Result.Success(result.Report!) : Result.Failure<CrystalReportDownload>(result.Failure switch
         {
-            return Result.Failure<CrystalReportDownload>(
-                dataResult.Failure == CrystalReportDataFailure.TooLarge
-                    ? errors.CrystalReportDataTooLarge
-                    : errors.CrystalReportRenderUnsupported);
-        }
-
-        await using var source = download.File!.OpenReadStream();
-        var rendered = await renderer.RenderAsync(new CrystalReportRuntimeRequest(
-            entityKey,
-            candidate.ReportKey,
-            candidate.FileName,
-            download.File.Length,
-            source,
-            request.Language,
-            dataResult.Data!.Xml), cancellationToken);
-
-        if (rendered.IsSuccess)
-            return Result.Success(rendered.Report!);
-
-        return Result.Failure<CrystalReportDownload>(rendered.Failure switch
-        {
-            CrystalReportRenderFailure.UnsupportedEntity => errors.CrystalReportRenderUnsupported,
+            CrystalReportRenderFailure.SourceRejected => errors.CrystalReportSourceRejected,
+            CrystalReportRenderFailure.SchemaMismatch => errors.CrystalReportSchemaMismatch,
+            CrystalReportRenderFailure.ParameterMismatch => errors.CrystalReportParameterMismatch,
             CrystalReportRenderFailure.InvalidReport => errors.CrystalReportInvalidFile,
+            CrystalReportRenderFailure.UnsupportedEntity => errors.CrystalReportRenderUnsupported,
             _ => errors.CrystalReportRuntimeUnavailable
         });
     }
@@ -328,6 +314,9 @@ public sealed class RenderCrystalReportQueryHandler(
         {
             CrystalReportRenderFailure.UnsupportedEntity => errors.CrystalReportRenderUnsupported,
             CrystalReportRenderFailure.InvalidReport => errors.CrystalReportInvalidFile,
+            CrystalReportRenderFailure.SourceRejected => errors.CrystalReportSourceRejected,
+            CrystalReportRenderFailure.SchemaMismatch => errors.CrystalReportSchemaMismatch,
+            CrystalReportRenderFailure.ParameterMismatch => errors.CrystalReportParameterMismatch,
             _ => errors.CrystalReportRuntimeUnavailable
         });
     }

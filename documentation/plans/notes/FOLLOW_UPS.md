@@ -5,6 +5,12 @@ business scope.
 
 | ID | Surface | Area | Follow-up | Owner | Priority | Status | Trigger / due condition | Related source |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| FOLLOW-023 | API | Crystal rejected catalog descriptors | Corrected2026-11-01: runtime omits unaddressable identities, ERP preserves rejected oversize metadata without allowing import/download, and null/malformed/importable oversize cases fail closed.5new Reporting cases and real .NET10-client to .NET48-IIS mixed catalog/hash download proof pass. | Reporting API + Crystal Runtime + QA | High | Verified | Reopen on descriptor-contract or source-download regression; hosted publication remains PROD-028/029 | `documentation/plans/business/managed-crystal-reporting-reliability/RUNTIME_CORRECTION_RESULT_2026-11-01.md` |
+| FOLLOW-022 | Web | Angular professional Clean Code hardening | CC-01..07 implemented and Verified: semantic lint, four stronger TS flags, selected Angular diagnostics, resolved owner/HTTP/stable-column guards, narrower public APIs, focused shared/feature extraction and typed test contracts. Final472unit tests/26architecture cases/122browser cases pass;84component folders;zero static or mixed cycles. | Angular Architecture + QA | High | Verified | Reopen on new quality-gate violations or a new owner/contract requirement; full pilot/release remains independently gated | `documentation/plans/business/web-angular-migration/CLEAN_CODE_IMPLEMENTATION.md` |
+| FOLLOW-021 | Web | Countries current browser harness acceptance | Current PageHeader/settings/toolbar/row/record selectors and full40palette read matrix plus8lifecycle and8actual-controls interaction cases passed2026-11-01. Current253case fixture acceptance has portable receipts; prior failures remain attributed. | Angular QA | Medium | Verified | Reopen on source/control/selector regression; hosted Crystal remains PROD-028 | `documentation/modules/platform/features/angular-countries-pilot-acceptance/verification/FINAL_ACCEPTANCE.md` |
+| FOLLOW-020 | Web | Retained Next preview bootstrap | Historical source preview stalled before hydration. Requester D35 stops Next review as an Angular prerequisite; temporary Next config/E2E experiments reverted. No Next repair claimed. Preserve old diagnostics; revisit only in a separately requested Next task. | Next Web rendering + QA | Medium | Deferred | Explicit Next work or its separately owned release investigation; not an Angular acceptance gate under D35 | `documentation/modules/platform/features/angular-countries-import-view/SCOPE_CHANGE.md` |
+| FOLLOW-019 | Web | Angular initial bundle warning | Narrow shared unsaved public entry removes unnecessary eager data graph. Final post-D37 production build496.26kB/130.28kB transfer passes unchanged500kB warning and1MB error budgets, without warning. Historical larger measurements remain below as history. | Web Architecture | Medium | Verified | Reopen if initial bundle exceeds unchanged budget or eager shared graph regresses | `documentation/modules/platform/features/angular-countries-pilot-acceptance/verification/CLEAN_CODE_FULL_CHECK.txt` |
+| FOLLOW-018 | Web | Historical verification-log portability | Checkout885753c1 references23 historical .log files absent from Git. Record exact unavailable paths in S3-A7 preflight evidence; remove nonexistent paths from current required-file manifests while retaining existing JSON/screenshots/reports. Historical result claims remain attributed to their reports, not rerun proof. | Web Architecture + QA | Medium | Open | Restore original logs from source workstation or replace with fresh owner-scoped runs before relying on raw historical logs/full release evidence | `documentation/modules/platform/features/angular-countries-import-view/verification/ENTRY_PORTABILITY.md` |
 | FOLLOW-017 | Web | Angular scoped lookup/live consumer acceptance | Existing scoped read foundation does not complete a real business lookup or SignalR subscription. Before actual consumer acceptance, register typed immutable scope identity, finite validated service snapshot/timeout, separate authorized watcher and teardown, hint coalescing/reconnect/missed-event reconciliation, old-response masking, selected-label retention and explicit local/page loading/retry. S1-A12 generic helper technically Verified264unit/read40+8/current context24/home14/company14/fiscal15/login10/language20; actual business acceptance remains separate. | Angular Shared + feature service owner + QA | High | Open | First actual S3 lookup/live consumer and each relevant route/session/context boundary; before SIG-01/02/03 consumer Verified | `documentation/plans/business/web-angular-migration/SIGMA_ACCEPTANCE.md`; `documentation/modules/platform/features/angular-scoped-read-lifetime-foundation/SCOPED_READ_CONTRACT.md` |
 | FOLLOW-016 | Web | Advanced Angular collection capabilities | S1-A3 baseline is shared Table/Cards, controlled single-sort/paging/search, selection, density/visibility and feedback. S1-A11 opt-in typed public criteria/URL bridge technically Verified252unit/40+8browser; actual per-list privacy approval/API wire mapping/editor-return/export scope remains required in S3. User resize/reorder/pin, multi-sort/constraints/grouping, virtual/range/frozen/detail, context menu and server-wide selection remain owned opt-ins, not implied by PrimeNG availability. Editing also requires FOLLOW-014. | Angular Shared + consumer/API owner | Medium | Open | First actual consumer and supported API/selection/height/RTL/performance contract before enabling each option | `documentation/modules/platform/features/angular-collection-foundation/SHARED_COLLECTION_CONTRACT.md` |
 | FOLLOW-015 | Web | Remaining Angular authenticated workspace parity | S2-A1 responsive frame/preferences, S2-A2 permitted module/area discovery and S2-A3 role home/read-only tenant summary and S2-A4 secure company transition with cross-tab coordination and S2-A5 personal working-year context and S2-A6 shared application context navigation are Verified. Full business navigation/actual child screens, management/drill-down, profile/photo and search/notifications remain Required under exact subsequent contracts and real API/browser acceptance. No fake metrics or dead routes. S1-A4 regression observed unchanged development NG0912 wrapper identity collision (AuthenticatedApplication/ModuleWorkspace); inspect before adding wrapper styling/hydration or closing full workspace parity. | Angular Web + Platform owners | High | Open | Next matching S2 contract and before declaring full S2 parity | `documentation/plans/business/web-angular-migration/ROADMAP.md`; `decomposition/angular-application-shell.md` |
@@ -77,3 +83,198 @@ compatibility, mixed typed IDs that coerce to the same vendor key, and typed gro
 values used as expansion keys. S3-A2 consumer API/host/sidebar proof remains separate.
 
 FOLLOW-016 requester priority2026-10-30: remaining S1-A14 extras are Queued; actual Countries full-screen reference takes priority through existing S3 children. Preserve current generic proof and extend shared controls as needed by the actual screen. Do not gate visible Country header/menus on unrelated virtual/editor powers.
+
+FOLLOW-017 progress2026-10-31: actual Countries immutable-actor SignalR watcher/reconnect/coalesced finite background reads and disposal verified in S3-A8 bounded tests/browser. Other business lookup/selected-label consumers remain independently required; no blanket closure.
+
+FOLLOW-019 current measurement2026-10-31: S3-A8 initial502.19kB/132.13kB transfer,2.19kB over unchanged500kB warning (1MB error unchanged). Background read/typed row tracking fixes repeated visible loading; no hosted latency or clean size gate claim. Production-size optimization remains required before full pilot.
+
+FOLLOW-019 current measurement2026-10-31 after shared scrollbar maintenance: initial502.95kB; exact transfer is in angular-module-context-navigation/verification/global-scroll/BUILD.txt.2.95kB above unchanged500kB warning,1MB error unchanged. This visual maintenance does not close production-size acceptance.
+
+## FOLLOW-022 — Execution ownership and closure
+
+- Source/context: requester2026-10-31 asks for substantial professional Clean Code work after D37 resource/folder cleanup. Current source audit and primary documentation research are recorded in web-angular-migration/CLEAN_CODE_HARDENING.md.
+- Owner: Angular Architecture + QA. Status: Verified. Priority: High.
+- Impact: semantic linting, stricter data contracts, narrower dependencies and focused responsibilities improve maintainability as ERP modules grow. This is not evidence that current normal checks fail or that all probe diagnostics are runtime defects.
+- Historical review boundary: the first review recorded the proposal only. The requester subsequently explicitly authorized all findings to be implemented. That implementation and its verification now supersede the earlier review-only status.
+- Reopening trigger/target milestone: the next Angular technical-hardening delivery starts with Batch A, then follows the documented dependencies within the existing migration. Preserve S3-A8 as sole active business feature and its outstanding hosted-report gate.
+- Closure evidence: CLEAN_CODE_IMPLEMENTATION.md, CLEAN_CODE_CHECK.txt, CLEAN_CODE_CURRENT.json, CLEAN_CODE_BROWSER_RESULTS.json and CLEAN_CODE_TOOLING.json record the actual zero-warning lint, strict types/templates,26architecture/dependency cases,472unit tests,122browser cases,84component folders and495.64kB production build. All CC-01..07 findings are Verified for this maintenance. No new hosted report or full-pilot/release claim; PROD-028 remains independently open.
+
+FOLLOW-017 Countries consumer update2026-11-01: actual hosted create/edit/import
+post-commit changes reach an independent authenticated session. Offline missed
+change/reconnect and archive/restore/bulk reconcile correctly. Seven real cases
+pass; test records archived and both sessions logged out. Consumer-specific proof:
+angular-countries-pilot-acceptance/verification/final/hosted-isolated-writes.json.
+Other lookup/selected-label consumers remain Open. FOLLOW-018 historical missing
+logs are not restored; new current acceptance has its own portable raw receipts.
+
+## FOLLOW-024 — Angular versioned global Crystal manager
+
+- Surface: Reporting/Angular. Owner: Reporting + Angular Architecture + QA.
+- Status: Open — implementation/technical gates Verified; actual hosted browser/native acceptance pending.
+- Requester confirmed Angular, super_admin within editable modules, upload/replace/
+  inspect/download, immutable versions and explicit publication. Direct-file overwrite rejected.
+- Current evidence: archive, role ACLs, company consumer, discovery compatibility and
+  shared presentation corrections are implemented. 1223 API tests passed, 0 failed, 3 existing opt-in browser skips across 12 projects; Reporting 188; architecture 70. Angular full check: 499 tests/89 files, 26 architecture cases, format/lint/strict types/templates/catalog and production build passed. Next reporting: 30 tests plus permission-catalog parity, type-check and architecture passed. Mobile full check: 601 tests/195 suites passed; repository-wide coverage remains limited (28.34% lines), not feature-specific acceptance.
+  Both additive migrations applied; configured grant schema inspected. Registration dialog layout now passes40production-build fixture cases across EN/AR, five palettes, light/dark and desktop/mobile, including actual RTL/LTR horizontal scroll. Remaining manager/host/native acceptance stays open; REGISTRATION_LAYOUT_2026-11-02.md records this bounded proof.
+- Canonical plan: documentation/plans/business/global-crystal-template-management/PLAN.md.
+  Current report: PARITY_IMPLEMENTATION_2026-11-02.md; portable receipts under the owning feature verification/.
+- Next exact action: requester publishes ErpSystem.Api with existing profile; publish
+  Crystal too for the earlier specific error taxonomy. Refresh authenticated session
+  for new exact global permissions, then run actual EN/AR/RTL/responsive/grid/file/
+  create/import/version/revalidate/publish/download, archive, role ACL and company journeys;
+  inspect the actual authenticated hosted deployment-candidates response body, with a real
+  compatible RPT. Angular dev server was not started by this work; prior stop persists.
+- PROD-028/025/RISK-008 retain independent report/native acceptance; current deployed
+  Countries files still reject source metadata. Mocks cannot close this requirement.
+- Closure: integrated actual journeys Verified and canonical Phase06/07 completed;
+  source/menu/migration existence alone is insufficient. No queued sibling activated.
+
+### FOLLOW-024 — registration source correction2026-11-02
+
+Existing-file rejection correction2026-11-02: the current hosted RPTs have valid OLE signatures and matching hashes, but native inspection rejects database connection metadata. Read-only Crystal10 RDC metadata confirms Command tables/crdb_ado.dll and no Language parameter; the first report also lacks State schema fields. Inspection/storage now preserve SourceRejected, including exact legacy-message compatibility, with no private-file/report/version side effects. Full ERP1223tests pass (188Reporting,70architecture),3existing browser skips; independent Crystal build/contract harness pass. No schema, permission or source-policy change. Original RPTs unchanged; requester installs Crystal2013 before further designer work. FOLLOW-024/native acceptance remains Open.
+
+
+### FOLLOW-024 — manual View binding revision2026-11-02
+
+The active GCT-1 now includes manually entered global SQL View binding, metadata-only drafts and designer preparation. Reporting migration20261102120604 was applied and its actual configured schema inspected; full ERP1239passed/3existing skips, Reporting203/architecture70, Angular504tests/90files and8production-build fixture browser cases pass. Source: documentation/plans/business/global-crystal-template-management/MANUAL_VIEW_IMPLEMENTATION_2026-11-02.md. Existing real hosted/native acceptance remains open; requester publishes API/Angular. View Builder is DEF-027. No actual native-valid RPT/PDF or production View creation is claimed.
+
+
+### FOLLOW-024 — development dialog display2026-11-02
+
+The empty-form screenshot was reproduced with valid mock source responses on the existing development server; Angular console.error identified an outdated class missing viewMessages while its external template referenced it. The watcher was retriggered without source-content changes or process restart. Existing-dev and production fixture journeys each pass8cases; this does not prove authenticated hosted/native acceptance. Canonical correction: documentation/plans/business/global-crystal-template-management/DESIGNER_DEV_DISPLAY_2026-11-02.md.
+
+
+### FOLLOW-024 — database Views2026-11-02
+
+Database selection and three all-column LEFT JOIN ReferenceData Views are implemented
+and applied to configured Development storage. ERP1244/Reporting207/Architecture70/
+Integration189, Angular509/91 and16 fixture browser cases pass; native/host acceptance
+remains Open. Current receipt: Reporting feature verification/database-view-discovery/.
+Requester publishes API/Angular; any distinct Host database needs the committed
+ReferenceData migration. Existing source binding and native policy remain enforced.
+SCHEMABINDING requires explicit future View migrations; extra SQL fields do not expand
+the current native contract. DEF-027 owns future Builder/contract expansion. The
+earlier401 has not been diagnosed by the subsequent400 InvalidView response.
+
+
+### FOLLOW-024 — ready-made RPT priority2026-11-03
+
+Requester selected ready-made RPT upload/inspection/publication/real PDF display as
+the next active check. Further empty-template preparation and the proposed base-design
+library are DEF-028; see its canonical scope/reopening trigger in DEFERRED_ITEMS.md.
+No new native proof is recorded; FOLLOW-024 and PROD-028 remain Open.
+
+
+### FOLLOW-024 — Command push-data2026-11-03
+
+Requester retains the RPT Command; GCT-1 now accepts design connection metadata and
+binds one named table explicitly to API-supplied rows, retaining exact fields and
+parameters. Current scope/build/harness/ERP evidence is COMMAND_PUSH_DATA_2026-11-03.md
+in the global-crystal-template-management plan. Status remains Open: local native
+ReportDocument initialization fails, and no real current RPT/PDF or zero-database-call
+proof was obtained. After requester publication, verify known/filtered/empty API
+rows with the design database unavailable. A successful upload alone is insufficient.
+DEF-028 and DEF-027 stay Deferred; no remote deployment or RPT conversion performed.
+
+
+### FOLLOW-024 — complete connection-ignore2026-11-03
+
+Requester explicitly supersedes the retained password check. GCT-1 ignores all
+connection properties; its current technical evidence/user-file diagnosis is
+CONNECTION_IGNORE_2026-11-03.md in global-crystal-template-management. The deployed
+previous Command-support build is confirmed, but the complete-ignore revision has
+not been deployed by this work. Exact Countries.1.rpt has no table in read-only
+Crystal10 metadata and fails native single-source validation; Countries.test.rpt
+fails native saved-data validation. Known Command fixture passes source/schema but
+lacks Language. Original files unchanged; no actual PDF acceptance. Status remains
+Open pending requester publication and valid designed-report rendering. DEF-028/
+DEF-027 remain Deferred. Runtime code and framework tests cannot close native proof.
+
+
+### FOLLOW-024 — API-data container2026-11-03
+
+Requester removes connection and saved-data admission gates; earlier instructions
+to clear cached rows or rebind XSD are superseded. Current GCT-1 scope,1250-test
+serial full-suite proof and native limits are CONTAINER_DATA_2026-11-03.md and
+verification/container-data/. User publishes Crystal/ERP, then verifies original
+Countries.tests.rpt with known/filtered/empty API rows and unavailable design DB.
+No native PDF/cache/zero-SQL claim or remote deploy. Status remains Open; RISK-019
+records that original source downloads retain original cached contents. DEF-028/
+DEF-027 remain Deferred.
+
+
+### FOLLOW-024 — optional RPT Language2026-11-03
+
+GCT-1 now allows zero RPT parameters and conditionally sets Language if present.
+Render input ar/en, fields and canonical fingerprint stay unchanged. Native build/
+harness covers all5 no-Language profiles and parameter compatibility. No ERP/client
+rerun or successful new native inspection/PDF is claimed. Requester publishes only
+Crystal for this revision. Current scope/evidence: OPTIONAL_RPT_LANGUAGE_2026-11-03.md
+and verification/optional-rpt-language/. Status remains Open, Phase06 Not Verified.
+
+
+### FOLLOW-024 — first user-confirmed display2026-11-03
+
+Requester confirmed successful report display with data. Canonical evidence and
+limits: FIRST_REPORT_DISPLAY_2026-11-03.md / feature section28. This positive outcome
+is user-reported; no independent PDF/cache/empty/filter/ACL/locale acceptance or exact
+version/hash was captured in the confirmation turn. Basic display is no longer an
+unachieved user outcome. Overall status remains Open and Phase06 Not Verified for
+the broader acceptance. DEF-028/DEF-027 remain Deferred, not automatically resumed.
+
+
+### FOLLOW-024 — explicit viewer publication2026-11-03
+
+GCT-1 removes implicit publication/rendering of unmanaged deployment files for
+Super Admin. Viewer consumption now requires a valid active managed published
+version; company grants remain separate. Draft/archived manager visibility and
+existing-file registration are preserved. Canonical scope and current technical
+evidence: global-crystal-template-management/PUBLISHED_VIEWER_CATALOG_2026-11-03.md
+and feature section29 / verification/published-viewer-catalog/. Requester publishes
+ErpSystem.Api and verifies the hosted selector; no remote deployment performed.
+Status remains Open for the broader acceptance matrix and Phase06 Not Verified.
+
+FOLLOW-024: requester now confirms the selector displays published reports only.
+Full ERP1251tests passed with3existing opt-in browser skips;34existing Angular
+report tests passed for the language follow-up. No independent hosted/native
+acceptance expansion. Current receipt: verification/published-viewer-catalog/.
+
+
+### FOLLOW-024 — restored native direction2026-11-03
+
+Requester-authorized restoration of the historical API direction stage: Arabic
+basis retained, English coordinates mirrored, centered field/text alignment,
+legacy horizontal/vertical/diagonal line policy and drawing bounds. Summary Info
+Title(ar)/Subject(en) labels already work and are verified separately in Angular.
+Canonical scope/evidence: RESTORE_DIRECTION_2026-11-03.md / feature section30 /
+verification/restore-direction/. Publish CrystalReportGeneratorApi; compare actual
+AR/EN PDFs with fields, images, charts and rules. Automated geometry/call-order
+checks are not native visual proof. Status remains Open and Phase06 Not Verified.
+
+
+### FOLLOW-024 — selector Summary Info diagnosis2026-11-03
+
+Requester confirms direction changed; selector name remains the reported issue.
+Hosted native inspection and independent OLE properties agree the local
+Countries.tests.rpt candidate has no Title/Subject. The current published-source
+match is unconfirmed. Exact evidence and non-destructive upload/publish workflow:
+SUMMARY_NAMES_2026-11-03.md / feature section31 / verification/summary-names/.
+No runtime change, test rerun or full native shape acceptance claim. Remains Open.
+
+FOLLOW-024 update: actual authenticated published catalog is now observed directly;
+countries-tests version1 has null summaryTitle/summarySubject and the English
+selector shows the Countries.tests fallback. The requester no longer needs to
+copy Network. No runtime/data/preference change. Source byte equality remains
+unverified; persisted-name emptiness is verified. See current section31 receipt.
+
+
+### FOLLOW-024 — confirmed duplicate replacement2026-11-04
+
+GCT-1 now implements the approved filename/entity duplicate warning and one atomic
+replacement/publication, retaining original versions/ACLs/View. SQL rollback and
+fixture-based EN/AR browser evidence are recorded under feature section32 and
+verification/duplicate-replacement/. Publish ErpSystem.Api and Angular assets;
+then verify a real duplicate/cancel/replacement, updated Summary Info selector,
+old source download and native AR/EN PDFs with the intended authorized roles.
+These hosted writes were not performed by the agent. Status remains Open; Phase06
+Not Verified, Phase07 not started and DEF-027/028 remain Deferred.

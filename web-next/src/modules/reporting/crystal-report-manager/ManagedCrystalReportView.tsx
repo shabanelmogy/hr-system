@@ -46,15 +46,15 @@ export default function ManagedCrystalReportView({
   showFilterBar = true,
 }: ManagedCrystalReportViewProps) {
   const { t, i18n } = useTranslation();
-  const availability = useManagedReportAvailability(scope);
+  const availability = useManagedReportAvailability(scope, entityKey);
   const direction = i18n.dir();
   const [selectedReportId, setSelectedReportId] = useState<string | null>(null);
   const reportsQuery = useQuery({
-    queryKey: ["crystal-reports", scope, entityKey],
+    queryKey: ["crystal-reports", availability.scopeKey, scope, entityKey],
     queryFn: () => scope === "global"
       ? crystalReportService.listGlobal(entityKey)
       : crystalReportService.listPublished(entityKey),
-    staleTime: 5 * 60_000,
+    staleTime: availability.companyConsumer ? 0 : 5 * 60_000,
     enabled: availability.allowed,
   });
   const reports = useMemo(() => reportsQuery.data ?? [], [reportsQuery.data]);

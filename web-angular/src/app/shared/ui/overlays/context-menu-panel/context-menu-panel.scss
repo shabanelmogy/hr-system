@@ -1,0 +1,14 @@
+.p-contextmenu-item-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+erp-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+.p-contextmenu-item-label {
+  overflow-wrap: anywhere;
+}

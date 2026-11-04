@@ -1135,7 +1135,7 @@
     },
     {
       "id": "evidence-185",
-      "path": "web-angular/src/app/composition/authenticated-routes.ts",
+      "path": "web-angular/src/app/composition/authenticated-routes/authenticated-routes.ts",
       "layer": "source",
       "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
     },
@@ -1147,19 +1147,19 @@
     },
     {
       "id": "evidence-187",
-      "path": "web-angular/src/app/shared/ui/collections/card-list.ts",
+      "path": "web-angular/src/app/shared/ui/collections/card-list/card-list.ts",
       "layer": "source",
       "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
     },
     {
       "id": "evidence-188",
-      "path": "web-angular/src/app/shared/ui/collections/my-data-grid.ts",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid/my-data-grid.ts",
       "layer": "source",
       "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
     },
     {
       "id": "evidence-189",
-      "path": "web-angular/src/app/shared/ui/dialogs/dialog-panel.ts",
+      "path": "web-angular/src/app/shared/ui/dialogs/dialog-panel/dialog-panel.ts",
       "layer": "source",
       "purpose": "Current source/audit evidence; AR paths retained-client source only, not Angular capability"
     },
@@ -1924,6 +1924,66 @@
       "path": "documentation/plans/business/web-angular-migration/decomposition/angular-countries-report-view.md",
       "layer": "documentation",
       "purpose": "Existing child contract or verified technical handoff"
+    },
+    {
+      "id": "component-resource-e81913a00ef4",
+      "layer": "source",
+      "path": "web-angular/src/app/composition/authenticated-routes/authenticated-routes.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-5b5d22d33fdd",
+      "layer": "source",
+      "path": "web-angular/src/app/shared/ui/collections/card-list/card-list.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-0ffcf25c452b",
+      "layer": "source",
+      "path": "web-angular/src/app/shared/ui/collections/card-list/card-list.component.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-b6d0e80169d9",
+      "layer": "source",
+      "path": "web-angular/src/app/shared/ui/dialogs/dialog-panel/dialog-panel.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-801f86eeae4a",
+      "layer": "source",
+      "path": "web-angular/src/app/shared/ui/dialogs/dialog-panel/dialog-panel.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "quality-ff96e53d3ee7",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid/grid-column-presentation.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-5356e0ff9c90",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid/grid-column-presentation.spec.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-519b867de1ce",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid/grid-viewport.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-6fe0129a75d1",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/collection-column-pipe.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-97ddb61c625b",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/collection-column-pipe.spec.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
     }
   ],
   "finalizationChecklist": [

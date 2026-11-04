@@ -1,0 +1,20 @@
+<erp-data-table
+  #grid
+  [source]="source()"
+  label="Fixture"
+  [columns]="columns"
+  [rowId]="id"
+  [advancedFilters]="true"
+  [filters]="filters()"
+  [grouping]="grouping()"
+  [frozenIds]="frozen()"
+  [selectionMode]="selectionMode()"
+  [display]="{ columnManagement: true, reorderableColumns: true }"
+  (filtersChange)="filterChanged($event)"
+>
+  @if (detailsEnabled()) {
+    <ng-template [erpCollectionRowDetails]="source()" let-row
+      ><div class="details">{{ row.name }}</div></ng-template
+    >
+  }
+</erp-data-table>

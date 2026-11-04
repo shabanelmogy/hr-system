@@ -1,5 +1,6 @@
 using CrystalReportGeneratorApi.Runtime.Rendering;
 using CrystalReportGeneratorApi.Runtime.Inspection;
+using CrystalReportGeneratorApi.Runtime;
 using System;
 using System.IO;
 using System.Linq;
@@ -27,6 +28,7 @@ namespace CrystalReportGeneratorApi.ContractTests
                     "Harness resource bytes differ from the canonical artifact.");
 
                 var runtimeAssembly = Assembly.LoadFrom(args[1]);
+                CrystalReportDirectionTests.Run(runtimeAssembly);
                 byte[] runtimeBytes;
                 using (var resource = runtimeAssembly.GetManifestResourceStream(
                     ManagedCrystalReportContractArtifact.ResourceName))
@@ -40,6 +42,8 @@ namespace CrystalReportGeneratorApi.ContractTests
                 }
                 Assert(sourceBytes.SequenceEqual(runtimeBytes),
                     "Runtime assembly resource bytes differ from the canonical artifact.");
+
+                RuntimeBoundaryTests.Run(runtimeAssembly);
 
                 var registry = CrystalReportProfileRegistry.CreateDefault();
                 Assert(registry.SchemaVersion == 1, "Schema version must be 1.");
@@ -79,6 +83,51 @@ namespace CrystalReportGeneratorApi.ContractTests
                 var validTemplate = CreateMetadata(countries);
                 Assert(CrystalReportTemplateContractValidator.Validate(validTemplate, countries).IsValid,
                     "Exact template metadata must pass validation.");
+
+                foreach (var key in new[] { "countries", "states", "districts", "addresstypes", "fiscalyears" })
+                {
+                    var contract = registry.GetRequired(key);
+                    var template = CreateMetadata(contract);
+                    Assert(CrystalReportTemplateContractValidator.Validate(
+                        new CrystalReportTemplateMetadata(template.Tables, Array.Empty<CrystalReportTemplateParameter>()),
+                        contract).IsValid, "Reports without Language must remain valid for every data source.");
+                }
+
+                foreach (var alias in new[] { "Command", "CountryViewCommand", "dbo.vw_Countries" })
+                {
+                    Assert(CrystalReportTemplateContractValidator.Validate(
+                        new CrystalReportTemplateMetadata(
+                            new[] { new CrystalReportTemplateTable(alias, validTemplate.Tables[0].Fields) },
+                            validTemplate.Parameters), countries).IsValid,
+                        "A single Command or table alias must accept the exact pushed-data contract.");
+                }
+                Assert(CrystalReportTemplateContractValidator.Validate(
+                    new CrystalReportTemplateMetadata(
+                        new[] { new CrystalReportTemplateTable(" ", validTemplate.Tables[0].Fields) },
+                        validTemplate.Parameters), countries).Failure == CrystalReportTemplateValidationFailure.SchemaMismatch,
+                    "An unnamed source must remain invalid.");
+                Assert(CrystalReportTemplateContractValidator.Validate(
+                    new CrystalReportTemplateMetadata(
+                        new[] { validTemplate.Tables[0], validTemplate.Tables[0] }, validTemplate.Parameters),
+                    countries).Failure == CrystalReportTemplateValidationFailure.SchemaMismatch,
+                    "Multiple data tables must remain invalid.");
+                Assert(CrystalReportTemplateContractValidator.Validate(
+                    new CrystalReportTemplateMetadata(
+                        new[] { new CrystalReportTemplateTable("Command", validTemplate.Tables[0].Fields.Take(3).ToArray()) },
+                        validTemplate.Parameters), countries).Failure == CrystalReportTemplateValidationFailure.SchemaMismatch,
+                    "A Command must not bypass missing-field validation.");
+
+                Assert(CrystalReportPushedDataPolicy.GetRejectionReason(
+                    new CrystalReportSourceMetadata { TableCount = 1 }) == null,
+                    "A single source must allow API-pushed data without a design-connection allowlist.");
+                foreach (var metadata in new[] {
+                    new CrystalReportSourceMetadata { TableCount = 0 },
+                    new CrystalReportSourceMetadata { TableCount = 2 },
+                    new CrystalReportSourceMetadata { TableCount = 1, SubreportCount = 1 },
+                    new CrystalReportSourceMetadata { TableCount = 1, SqlExpressionCount = 1 }
+                })
+                    Assert(CrystalReportPushedDataPolicy.GetRejectionReason(metadata) != null,
+                        "Sources requiring data beyond the supplied table must remain rejected.");
 
                 var reorderedFields = validTemplate.Tables[0].Fields.Reverse().ToArray();
                 Assert(
@@ -129,8 +178,20 @@ namespace CrystalReportGeneratorApi.ContractTests
                         new CrystalReportTemplateMetadata(
                             validTemplate.Tables,
                             new[] { editableLanguage }),
-                        countries).Failure == CrystalReportTemplateValidationFailure.ParameterMismatch,
-                    "Language parameters that allow custom values must fail validation.");
+                        countries).IsValid,
+                    "A supplied string Language must not require a fixed designer default-value list.");
+
+                var optionalLanguage = new CrystalReportTemplateParameter(
+                    "language", "string", false, false, true, true, Array.Empty<string>());
+                Assert(CrystalReportTemplateContractValidator.Validate(
+                    new CrystalReportTemplateMetadata(validTemplate.Tables, new[] { optionalLanguage }), countries).IsValid,
+                    "Language casing, optional prompt and designer defaults do not prevent runtime binding.");
+                var numericLanguage = new CrystalReportTemplateParameter(
+                    "Language", "int32", true, false, true, true, Array.Empty<string>());
+                Assert(CrystalReportTemplateContractValidator.Validate(
+                    new CrystalReportTemplateMetadata(validTemplate.Tables, new[] { numericLanguage }), countries)
+                    .Failure == CrystalReportTemplateValidationFailure.ParameterMismatch,
+                    "An incompatible parameter type must still fail instead of receiving an invalid value.");
 
                 Console.WriteLine(
                     "Managed Crystal runtime contract harness passed. fingerprint=" +

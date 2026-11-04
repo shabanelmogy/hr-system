@@ -1,0 +1,11 @@
+@if (drafts.prompt(); as consent) {
+  <erp-confirmation-dialog
+    [open]="true"
+    [title]="'messages.unsavedChangesTitle' | uiText"
+    [description]="'messages.unsavedChangesConfirm' | uiText"
+    [cancelLabel]="'actions.cancel' | uiText"
+    [confirmLabel]="'messages.discardChanges' | uiText"
+    (cancelled)="drafts.answer(consent, false)"
+    (confirmed)="drafts.answer(consent, true)"
+  />
+}

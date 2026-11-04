@@ -1,0 +1,100 @@
+<header>
+  <div class="title-block">
+    <h1>{{ title() }}</h1>
+    @if (variant() !== 'collection' && subtitle()) {
+      <p>{{ subtitle() }}</p>
+    }
+  </div>
+  @if (variant() === 'collection') {
+    <div class="header-badges">
+      <erp-status-badge
+        class="total-badge"
+        appearance="outline"
+        accent="var(--primary)"
+        [pill]="true"
+        size="medium"
+        [strong]="false"
+        [label]="countLabel()"
+      /><erp-status-badge
+        class="view-badge"
+        [softOpacity]="theme.mode() === 'dark' ? 18 : 8"
+        [pill]="true"
+        size="medium"
+        [strong]="false"
+        [label]="selectedLabel()"
+        accent="var(--primary)"
+      />
+    </div>
+  }
+  <div class="header-controls">
+    <div class="header-actions">
+      @if (primaryAction(); as action) {
+        <erp-button
+          class="primary-action"
+          [label]="action.label"
+          [title]="action.label"
+          [disabled]="action.disabled ?? false"
+          [appearance]="compactAction() ? 'icon' : 'default'"
+          (activated)="primaryActivated.emit()"
+          ><erp-icon buttonIcon [name]="action.icon"
+        /></erp-button>
+      }
+      <ng-content />
+      @if (variant() === 'collection') {
+        @if (refreshable()) {
+          <erp-button
+            class="refresh"
+            [label]="'navigation.refresh' | uiText"
+            appearance="icon"
+            variant="text"
+            (activated)="refresh.emit()"
+            ><erp-icon buttonIcon name="refresh"
+          /></erp-button>
+        }
+        @if (filterable()) {
+          <erp-button
+            class="filter"
+            [label]="'navigation.filter' | uiText"
+            appearance="icon"
+            variant="text"
+            [pressed]="filterVisible()"
+            (activated)="filterToggle.emit()"
+            ><erp-icon buttonIcon name="filter"
+          /></erp-button>
+        }
+      }
+    </div>
+    @if (variant() === 'collection') {
+      <span class="header-divider" aria-hidden="true"></span>
+      <div class="view-toggles" role="group" [attr.aria-label]="'navigation.viewType' | uiText">
+        @for (option of viewOptions().visible; track option.id) {
+          <erp-button
+            [attr.data-view]="option.id"
+            [label]="option.label"
+            [title]="option.label"
+            [pressed]="view() === option.id"
+            appearance="toggle"
+            variant="outlined"
+            (activated)="selectView(option.id)"
+            ><erp-icon buttonIcon [name]="option.icon"
+          /></erp-button>
+        }
+        @if (viewOptions().overflow.length) {
+          <erp-popover-panel #moreViews [label]="'navigation.moreViews' | uiText"
+            ><erp-icon popoverTrigger name="more" />
+            <div class="overflow-views">
+              @for (option of viewOptions().overflow; track option.id) {
+                <erp-button
+                  [label]="option.label"
+                  appearance="quiet"
+                  variant="text"
+                  (activated)="selectView(option.id)"
+                  ><erp-icon buttonIcon [name]="option.icon"
+                /></erp-button>
+              }</div
+          ></erp-popover-panel>
+        }
+      </div>
+    }
+  </div>
+</header>

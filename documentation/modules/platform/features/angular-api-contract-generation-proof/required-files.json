@@ -226,6 +226,24 @@
       "path": "documentation/plans/business/web-angular-migration/ANGULAR_ARCHITECTURE.md",
       "layer": "documentation",
       "purpose": "Canonical fallback decision or outstanding scope"
+    },
+    {
+      "id": "quality-b48e367c4706",
+      "layer": "configuration",
+      "path": "web-angular/eslint.config.mjs",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-18187b5430c6",
+      "layer": "configuration",
+      "path": "web-angular/scripts/dependency-rules.mjs",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-056ed62f225e",
+      "layer": "configuration",
+      "path": "web-angular/scripts/dependency-rules.test.mjs",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
     }
   ],
   "finalizationChecklist": [

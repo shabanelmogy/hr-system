@@ -1,0 +1,32 @@
+{
+  "Date": "2026-11-01T09:04:54.3801318Z",
+  "Runtime": "https://crystalreport-generator.runasp.net",
+  "InvalidKeyCatalogStatus": 200,
+  "Entries": [
+    {
+      "EntityKey": "countries",
+      "ReportKey": "countries-withstates",
+      "FileName": "Countries.WithStates.rpt",
+      "Size": 9728,
+      "Importable": true
+    },
+    {
+      "EntityKey": "countries",
+      "ReportKey": "countries",
+      "FileName": "Countries.rpt",
+      "Size": 8704,
+      "Importable": true
+    }
+  ],
+  "SwaggerStatus": 200,
+  "AdvertisedPaths": [
+    "/internal/reports/catalog",
+    "/internal/reports/catalog/{sourceId}/source",
+    "/internal/reports/inspect",
+    "/internal/reports/render",
+    "/api/invoice/generate-qr",
+    "/report/generate",
+    "/report/states/generate",
+    "/report/info"
+  ]
+}

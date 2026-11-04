@@ -1,0 +1,756 @@
+{
+  "date": "2026-10-31T14:47:15.114Z",
+  "cases": 44,
+  "receipts": [
+    {
+      "name": "Countries read",
+      "count": 8,
+      "passed": true,
+      "results": [
+        {
+          "palette": "green",
+          "mode": "light",
+          "language": "en",
+          "width": 390,
+          "geometry": {
+            "documentWidth": 390,
+            "viewport": 390,
+            "rowHeight": 52,
+            "footerHeight": 96,
+            "cardColumns": 1
+          },
+          "pageGets": 29,
+          "detailGets": 4,
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "light",
+          "language": "en",
+          "width": 1440,
+          "geometry": {
+            "documentWidth": 1440,
+            "viewport": 1440,
+            "rowHeight": 52,
+            "footerHeight": 52,
+            "cardColumns": 4
+          },
+          "pageGets": 29,
+          "detailGets": 4,
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "light",
+          "language": "ar",
+          "width": 390,
+          "geometry": {
+            "documentWidth": 390,
+            "viewport": 390,
+            "rowHeight": 52,
+            "footerHeight": 96,
+            "cardColumns": 1
+          },
+          "pageGets": 29,
+          "detailGets": 4,
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "light",
+          "language": "ar",
+          "width": 1440,
+          "geometry": {
+            "documentWidth": 1440,
+            "viewport": 1440,
+            "rowHeight": 52,
+            "footerHeight": 52,
+            "cardColumns": 4
+          },
+          "pageGets": 29,
+          "detailGets": 4,
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "dark",
+          "language": "en",
+          "width": 390,
+          "geometry": {
+            "documentWidth": 390,
+            "viewport": 390,
+            "rowHeight": 52,
+            "footerHeight": 96,
+            "cardColumns": 1
+          },
+          "pageGets": 29,
+          "detailGets": 4,
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "dark",
+          "language": "en",
+          "width": 1440,
+          "geometry": {
+            "documentWidth": 1440,
+            "viewport": 1440,
+            "rowHeight": 52,
+            "footerHeight": 52,
+            "cardColumns": 4
+          },
+          "pageGets": 29,
+          "detailGets": 4,
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "dark",
+          "language": "ar",
+          "width": 390,
+          "geometry": {
+            "documentWidth": 390,
+            "viewport": 390,
+            "rowHeight": 52,
+            "footerHeight": 96,
+            "cardColumns": 1
+          },
+          "pageGets": 29,
+          "detailGets": 4,
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "dark",
+          "language": "ar",
+          "width": 1440,
+          "geometry": {
+            "documentWidth": 1440,
+            "viewport": 1440,
+            "rowHeight": 52,
+            "footerHeight": 52,
+            "cardColumns": 4
+          },
+          "pageGets": 29,
+          "detailGets": 4,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "name": "Countries actions",
+      "count": 8,
+      "passed": true,
+      "results": [
+        {
+          "mode": "light",
+          "language": "en",
+          "width": 390,
+          "reducedMotion": false,
+          "writes": 17,
+          "toastStyle": {
+            "background": "rgb(255, 255, 255)",
+            "color": "rgb(21, 128, 61)"
+          },
+          "formSingleColumn": true,
+          "nativeCounterBadges": true,
+          "keyboard": true,
+          "inputKeyboardIsolation": true,
+          "editedActiveFlash": true,
+          "flashExpiresWithoutReplay": true,
+          "cardsRepeatedEditFlash": true,
+          "oldFlashClearedOnMove": true,
+          "stationaryHoverCleared": true,
+          "singleActiveFocus": true,
+          "archivePreviousRow": true,
+          "archivePageBoundary": true,
+          "create": true,
+          "edit": true,
+          "cards": true,
+          "inlineFieldErrors": true,
+          "generalErrorModal": true,
+          "uncertainNoReplay": true,
+          "archive": true,
+          "restore": true,
+          "bulk": true,
+          "atomicDependencyRejection": true,
+          "lifecycleNoReplay": true,
+          "readOnlyGuard": true,
+          "passed": true
+        },
+        {
+          "mode": "light",
+          "language": "en",
+          "width": 1440,
+          "reducedMotion": false,
+          "writes": 17,
+          "toastStyle": {
+            "background": "rgb(255, 255, 255)",
+            "color": "rgb(21, 128, 61)"
+          },
+          "formSingleColumn": true,
+          "nativeCounterBadges": true,
+          "keyboard": true,
+          "inputKeyboardIsolation": true,
+          "editedActiveFlash": true,
+          "flashExpiresWithoutReplay": true,
+          "cardsRepeatedEditFlash": true,
+          "oldFlashClearedOnMove": true,
+          "stationaryHoverCleared": true,
+          "singleActiveFocus": true,
+          "archivePreviousRow": true,
+          "archivePageBoundary": true,
+          "create": true,
+          "edit": true,
+          "cards": true,
+          "inlineFieldErrors": true,
+          "generalErrorModal": true,
+          "uncertainNoReplay": true,
+          "archive": true,
+          "restore": true,
+          "bulk": true,
+          "atomicDependencyRejection": true,
+          "lifecycleNoReplay": true,
+          "readOnlyGuard": true,
+          "passed": true
+        },
+        {
+          "mode": "light",
+          "language": "ar",
+          "width": 390,
+          "reducedMotion": false,
+          "writes": 17,
+          "toastStyle": {
+            "background": "rgb(255, 255, 255)",
+            "color": "rgb(21, 128, 61)"
+          },
+          "formSingleColumn": true,
+          "nativeCounterBadges": true,
+          "keyboard": true,
+          "inputKeyboardIsolation": true,
+          "editedActiveFlash": true,
+          "flashExpiresWithoutReplay": true,
+          "cardsRepeatedEditFlash": true,
+          "oldFlashClearedOnMove": true,
+          "stationaryHoverCleared": true,
+          "singleActiveFocus": true,
+          "archivePreviousRow": true,
+          "archivePageBoundary": true,
+          "create": true,
+          "edit": true,
+          "cards": true,
+          "inlineFieldErrors": true,
+          "generalErrorModal": true,
+          "uncertainNoReplay": true,
+          "archive": true,
+          "restore": true,
+          "bulk": true,
+          "atomicDependencyRejection": true,
+          "lifecycleNoReplay": true,
+          "readOnlyGuard": true,
+          "passed": true
+        },
+        {
+          "mode": "light",
+          "language": "ar",
+          "width": 1440,
+          "reducedMotion": false,
+          "writes": 17,
+          "toastStyle": {
+            "background": "rgb(255, 255, 255)",
+            "color": "rgb(21, 128, 61)"
+          },
+          "formSingleColumn": true,
+          "nativeCounterBadges": true,
+          "keyboard": true,
+          "inputKeyboardIsolation": true,
+          "editedActiveFlash": true,
+          "flashExpiresWithoutReplay": true,
+          "cardsRepeatedEditFlash": true,
+          "oldFlashClearedOnMove": true,
+          "stationaryHoverCleared": true,
+          "singleActiveFocus": true,
+          "archivePreviousRow": true,
+          "archivePageBoundary": true,
+          "create": true,
+          "edit": true,
+          "cards": true,
+          "inlineFieldErrors": true,
+          "generalErrorModal": true,
+          "uncertainNoReplay": true,
+          "archive": true,
+          "restore": true,
+          "bulk": true,
+          "atomicDependencyRejection": true,
+          "lifecycleNoReplay": true,
+          "readOnlyGuard": true,
+          "passed": true
+        },
+        {
+          "mode": "dark",
+          "language": "en",
+          "width": 390,
+          "reducedMotion": true,
+          "writes": 17,
+          "toastStyle": {
+            "background": "rgb(24, 32, 30)",
+            "color": "rgb(74, 222, 128)"
+          },
+          "formSingleColumn": true,
+          "nativeCounterBadges": true,
+          "keyboard": true,
+          "inputKeyboardIsolation": true,
+          "editedActiveFlash": true,
+          "flashExpiresWithoutReplay": true,
+          "cardsRepeatedEditFlash": true,
+          "oldFlashClearedOnMove": true,
+          "stationaryHoverCleared": true,
+          "singleActiveFocus": true,
+          "archivePreviousRow": true,
+          "archivePageBoundary": true,
+          "create": true,
+          "edit": true,
+          "cards": true,
+          "inlineFieldErrors": true,
+          "generalErrorModal": true,
+          "uncertainNoReplay": true,
+          "archive": true,
+          "restore": true,
+          "bulk": true,
+          "atomicDependencyRejection": true,
+          "lifecycleNoReplay": true,
+          "readOnlyGuard": true,
+          "passed": true
+        },
+        {
+          "mode": "dark",
+          "language": "en",
+          "width": 1440,
+          "reducedMotion": true,
+          "writes": 17,
+          "toastStyle": {
+            "background": "rgb(24, 32, 30)",
+            "color": "rgb(74, 222, 128)"
+          },
+          "formSingleColumn": true,
+          "nativeCounterBadges": true,
+          "keyboard": true,
+          "inputKeyboardIsolation": true,
+          "editedActiveFlash": true,
+          "flashExpiresWithoutReplay": true,
+          "cardsRepeatedEditFlash": true,
+          "oldFlashClearedOnMove": true,
+          "stationaryHoverCleared": true,
+          "singleActiveFocus": true,
+          "archivePreviousRow": true,
+          "archivePageBoundary": true,
+          "create": true,
+          "edit": true,
+          "cards": true,
+          "inlineFieldErrors": true,
+          "generalErrorModal": true,
+          "uncertainNoReplay": true,
+          "archive": true,
+          "restore": true,
+          "bulk": true,
+          "atomicDependencyRejection": true,
+          "lifecycleNoReplay": true,
+          "readOnlyGuard": true,
+          "passed": true
+        },
+        {
+          "mode": "dark",
+          "language": "ar",
+          "width": 390,
+          "reducedMotion": true,
+          "writes": 17,
+          "toastStyle": {
+            "background": "rgb(24, 32, 30)",
+            "color": "rgb(74, 222, 128)"
+          },
+          "formSingleColumn": true,
+          "nativeCounterBadges": true,
+          "keyboard": true,
+          "inputKeyboardIsolation": true,
+          "editedActiveFlash": true,
+          "flashExpiresWithoutReplay": true,
+          "cardsRepeatedEditFlash": true,
+          "oldFlashClearedOnMove": true,
+          "stationaryHoverCleared": true,
+          "singleActiveFocus": true,
+          "archivePreviousRow": true,
+          "archivePageBoundary": true,
+          "create": true,
+          "edit": true,
+          "cards": true,
+          "inlineFieldErrors": true,
+          "generalErrorModal": true,
+          "uncertainNoReplay": true,
+          "archive": true,
+          "restore": true,
+          "bulk": true,
+          "atomicDependencyRejection": true,
+          "lifecycleNoReplay": true,
+          "readOnlyGuard": true,
+          "passed": true
+        },
+        {
+          "mode": "dark",
+          "language": "ar",
+          "width": 1440,
+          "reducedMotion": true,
+          "writes": 17,
+          "toastStyle": {
+            "background": "rgb(24, 32, 30)",
+            "color": "rgb(74, 222, 128)"
+          },
+          "formSingleColumn": true,
+          "nativeCounterBadges": true,
+          "keyboard": true,
+          "inputKeyboardIsolation": true,
+          "editedActiveFlash": true,
+          "flashExpiresWithoutReplay": true,
+          "cardsRepeatedEditFlash": true,
+          "oldFlashClearedOnMove": true,
+          "stationaryHoverCleared": true,
+          "singleActiveFocus": true,
+          "archivePreviousRow": true,
+          "archivePageBoundary": true,
+          "create": true,
+          "edit": true,
+          "cards": true,
+          "inlineFieldErrors": true,
+          "generalErrorModal": true,
+          "uncertainNoReplay": true,
+          "archive": true,
+          "restore": true,
+          "bulk": true,
+          "atomicDependencyRejection": true,
+          "lifecycleNoReplay": true,
+          "readOnlyGuard": true,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "name": "Shared scroll",
+      "count": 4,
+      "passed": true,
+      "results": {
+        "date": "2026-10-31T14:38:56.964Z",
+        "results": [
+          {
+            "language": "en",
+            "width": 390,
+            "grid": true,
+            "horizontal": true,
+            "keyboardPaging": true,
+            "dialog": true,
+            "sharedTextarea": true,
+            "passed": true
+          },
+          {
+            "language": "en",
+            "width": 1440,
+            "grid": true,
+            "horizontal": true,
+            "keyboardPaging": true,
+            "dialog": true,
+            "sharedTextarea": true,
+            "passed": true
+          },
+          {
+            "language": "ar",
+            "width": 390,
+            "grid": true,
+            "horizontal": true,
+            "keyboardPaging": true,
+            "dialog": true,
+            "sharedTextarea": true,
+            "passed": true
+          },
+          {
+            "language": "ar",
+            "width": 1440,
+            "grid": true,
+            "horizontal": true,
+            "keyboardPaging": true,
+            "dialog": true,
+            "sharedTextarea": true,
+            "passed": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "Scoped read",
+      "count": 8,
+      "passed": true,
+      "results": [
+        {
+          "palette": "green",
+          "mode": "light",
+          "language": "en",
+          "width": 390,
+          "geometry": {
+            "width": 358,
+            "page": 390,
+            "viewport": 390
+          },
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "light",
+          "language": "en",
+          "width": 1440,
+          "geometry": {
+            "width": 1052,
+            "page": 1440,
+            "viewport": 1440
+          },
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "light",
+          "language": "ar",
+          "width": 390,
+          "geometry": {
+            "width": 358,
+            "page": 390,
+            "viewport": 390
+          },
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "light",
+          "language": "ar",
+          "width": 1440,
+          "geometry": {
+            "width": 1052,
+            "page": 1440,
+            "viewport": 1440
+          },
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "dark",
+          "language": "en",
+          "width": 390,
+          "geometry": {
+            "width": 358,
+            "page": 390,
+            "viewport": 390
+          },
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "dark",
+          "language": "en",
+          "width": 1440,
+          "geometry": {
+            "width": 1052,
+            "page": 1440,
+            "viewport": 1440
+          },
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "dark",
+          "language": "ar",
+          "width": 390,
+          "geometry": {
+            "width": 358,
+            "page": 390,
+            "viewport": 390
+          },
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "dark",
+          "language": "ar",
+          "width": 1440,
+          "geometry": {
+            "width": 1052,
+            "page": 1440,
+            "viewport": 1440
+          },
+          "passed": true
+        }
+      ]
+    },
+    {
+      "name": "Route criteria",
+      "count": 8,
+      "passed": true,
+      "results": [
+        {
+          "palette": "green",
+          "mode": "light",
+          "language": "en",
+          "width": 390,
+          "geometry": {
+            "page": 390,
+            "width": 390,
+            "footer": 80
+          },
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "light",
+          "language": "en",
+          "width": 1440,
+          "geometry": {
+            "page": 1440,
+            "width": 1440,
+            "footer": 53
+          },
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "light",
+          "language": "ar",
+          "width": 390,
+          "geometry": {
+            "page": 390,
+            "width": 390,
+            "footer": 80
+          },
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "light",
+          "language": "ar",
+          "width": 1440,
+          "geometry": {
+            "page": 1440,
+            "width": 1440,
+            "footer": 53
+          },
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "dark",
+          "language": "en",
+          "width": 390,
+          "geometry": {
+            "page": 390,
+            "width": 390,
+            "footer": 80
+          },
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "dark",
+          "language": "en",
+          "width": 1440,
+          "geometry": {
+            "page": 1440,
+            "width": 1440,
+            "footer": 53
+          },
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "dark",
+          "language": "ar",
+          "width": 390,
+          "geometry": {
+            "page": 390,
+            "width": 390,
+            "footer": 80
+          },
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "dark",
+          "language": "ar",
+          "width": 1440,
+          "geometry": {
+            "page": 1440,
+            "width": 1440,
+            "footer": 53
+          },
+          "passed": true
+        }
+      ]
+    },
+    {
+      "name": "Unsaved navigation",
+      "count": 8,
+      "passed": true,
+      "results": [
+        {
+          "palette": "green",
+          "mode": "light",
+          "language": "en",
+          "width": 390,
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "light",
+          "language": "en",
+          "width": 1440,
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "light",
+          "language": "ar",
+          "width": 390,
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "light",
+          "language": "ar",
+          "width": 1440,
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "dark",
+          "language": "en",
+          "width": 390,
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "dark",
+          "language": "en",
+          "width": 1440,
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "dark",
+          "language": "ar",
+          "width": 390,
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "dark",
+          "language": "ar",
+          "width": 1440,
+          "passed": true
+        }
+      ]
+    }
+  ],
+  "scope": "Chrome intercepted/development fixture journeys; no host business writes or full-pilot/live-report acceptance"
+}

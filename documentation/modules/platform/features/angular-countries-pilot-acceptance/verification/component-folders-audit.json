@@ -1,0 +1,7 @@
+{
+  "date": "2026-10-31T14:36:49.258Z",
+  "checked": 278,
+  "relocated": 261,
+  "findings": [],
+  "limit": "AST comparison ignores module/resource path strings and formatting; Angular compilation and browser checks establish resolved behavior."
+}

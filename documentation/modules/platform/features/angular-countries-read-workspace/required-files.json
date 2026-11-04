@@ -1141,7 +1141,7 @@
     },
     {
       "id": "phase00-186",
-      "path": "web-angular/src/app/composition/authenticated-routes.ts",
+      "path": "web-angular/src/app/composition/authenticated-routes/authenticated-routes.ts",
       "layer": "source",
       "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
     },
@@ -1153,19 +1153,19 @@
     },
     {
       "id": "phase00-188",
-      "path": "web-angular/src/app/shared/ui/collections/card-list.ts",
+      "path": "web-angular/src/app/shared/ui/collections/card-list/card-list.ts",
       "layer": "source",
       "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
     },
     {
       "id": "phase00-189",
-      "path": "web-angular/src/app/shared/ui/collections/my-data-grid.ts",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid/my-data-grid.ts",
       "layer": "source",
       "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
     },
     {
       "id": "phase00-190",
-      "path": "web-angular/src/app/shared/ui/dialogs/dialog-panel.ts",
+      "path": "web-angular/src/app/shared/ui/dialogs/dialog-panel/dialog-panel.ts",
       "layer": "source",
       "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
     },
@@ -1885,13 +1885,13 @@
     },
     {
       "id": "phase00-310",
-      "path": "web-angular/src/app/shared/ui/forms/form-container.ts",
+      "path": "web-angular/src/app/shared/ui/forms/form-container/form-container.ts",
       "layer": "source",
       "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
     },
     {
       "id": "phase00-311",
-      "path": "web-angular/src/app/shared/ui/collections/collection-frame.ts",
+      "path": "web-angular/src/app/shared/ui/collections/collection-frame/collection-frame.ts",
       "layer": "source",
       "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
     },
@@ -1903,7 +1903,7 @@
     },
     {
       "id": "phase00-313",
-      "path": "web-angular/src/app/shared/ui/layout/surface-card.ts",
+      "path": "web-angular/src/app/shared/ui/layout/surface-card/surface-card.ts",
       "layer": "source",
       "purpose": "Current evidence only; AR retained-client paths are not Angular requirements"
     },
@@ -1921,31 +1921,31 @@
     },
     {
       "id": "runtime-316",
-      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-read-details.ts",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-read-details/country-read-details.ts",
       "layer": "source",
       "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
     },
     {
       "id": "runtime-317",
-      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page.html",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page/countries-read-page.html",
       "layer": "source",
       "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
     },
     {
       "id": "runtime-318",
-      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page.scss",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page/countries-read-page.scss",
       "layer": "source",
       "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
     },
     {
       "id": "runtime-319",
-      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page.spec.ts",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page/countries-read-page.spec.ts",
       "layer": "source",
       "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
     },
     {
       "id": "runtime-320",
-      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page.ts",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page/countries-read-page.ts",
       "layer": "source",
       "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
     },
@@ -1999,13 +1999,13 @@
     },
     {
       "id": "runtime-329",
-      "path": "web-angular/src/app/shared/ui/collections/card-list.scss",
+      "path": "web-angular/src/app/shared/ui/collections/card-list/card-list.scss",
       "layer": "source",
       "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
     },
     {
       "id": "runtime-330",
-      "path": "web-angular/src/app/shared/ui/collections/my-data-grid.html",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid/my-data-grid.html",
       "layer": "source",
       "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
     },
@@ -2023,25 +2023,25 @@
     },
     {
       "id": "runtime-333",
-      "path": "web-angular/src/app/shared/ui/layout/surface-card.scss",
+      "path": "web-angular/src/app/shared/ui/layout/surface-card/surface-card.scss",
       "layer": "source",
       "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
     },
     {
       "id": "runtime-334",
-      "path": "web-angular/src/app/shared/ui/controls/progress-meter.ts",
+      "path": "web-angular/src/app/shared/ui/controls/progress-meter/progress-meter.ts",
       "layer": "source",
       "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
     },
     {
       "id": "runtime-335",
-      "path": "web-angular/src/app/shared/ui/feedback/status-badge.ts",
+      "path": "web-angular/src/app/shared/ui/feedback/status-badge/status-badge.ts",
       "layer": "source",
       "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
     },
     {
       "id": "runtime-336",
-      "path": "web-angular/src/app/shared/ui/icons/app-icon.ts",
+      "path": "web-angular/src/app/shared/ui/icons/app-icon/app-icon.ts",
       "layer": "source",
       "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
     },
@@ -2078,66 +2078,6 @@
     {
       "id": "runtime-342",
       "path": "documentation/plans/business/web-angular-migration/education/angular-countries-read-workspace.md",
-      "layer": "documentation",
-      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
-    },
-    {
-      "id": "runtime-343",
-      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/countries-read-browser-focused.log",
-      "layer": "documentation",
-      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
-    },
-    {
-      "id": "runtime-344",
-      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/countries-read-browser-full.log",
-      "layer": "documentation",
-      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
-    },
-    {
-      "id": "runtime-345",
-      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/countries-read-full-check.log",
-      "layer": "documentation",
-      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
-    },
-    {
-      "id": "runtime-346",
-      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/countries-read-reference.log",
-      "layer": "documentation",
-      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
-    },
-    {
-      "id": "runtime-347",
-      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/countries-regression-collections.log",
-      "layer": "documentation",
-      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
-    },
-    {
-      "id": "runtime-348",
-      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/countries-regression-context.log",
-      "layer": "documentation",
-      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
-    },
-    {
-      "id": "runtime-349",
-      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/countries-regression-home.log",
-      "layer": "documentation",
-      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
-    },
-    {
-      "id": "runtime-350",
-      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/countries-regression-language.log",
-      "layer": "documentation",
-      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
-    },
-    {
-      "id": "runtime-351",
-      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/countries-regression-login.log",
-      "layer": "documentation",
-      "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
-    },
-    {
-      "id": "runtime-352",
-      "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/countries-regression-reporting.log",
       "layer": "documentation",
       "purpose": "Actual bounded Countries read implementation or executed verification; no AR requirement"
     },
@@ -2563,13 +2503,13 @@
     },
     {
       "id": "current-correction-evidence-0",
-      "path": "web-angular/src/app/shared/ui/collections/collection-footer.ts",
+      "path": "web-angular/src/app/shared/ui/collections/collection-footer/collection-footer.ts",
       "layer": "web",
       "purpose": "Actual current shared component source or executed bounded correction evidence"
     },
     {
       "id": "current-correction-evidence-4",
-      "path": "web-angular/src/app/shared/ui/collections/row-actions.ts",
+      "path": "web-angular/src/app/shared/ui/collections/row-actions/row-actions.ts",
       "layer": "web",
       "purpose": "Actual current shared component source or executed bounded correction evidence"
     },
@@ -2623,7 +2563,7 @@
     },
     {
       "id": "footer-focus-current-2",
-      "path": "web-angular/src/app/shared/ui/controls/option-select.ts",
+      "path": "web-angular/src/app/shared/ui/controls/option-select/option-select.ts",
       "layer": "web",
       "purpose": "Current focus/centered shared control source or visually inspected executed browser evidence"
     },
@@ -2644,6 +2584,210 @@
       "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/CURRENT_READ_CLOSURE.md",
       "layer": "documentation",
       "purpose": "Current bounded read verification and explicit remaining children/release boundary"
+    },
+    {
+      "id": "component-resource-e81913a00ef4",
+      "layer": "source",
+      "path": "web-angular/src/app/composition/authenticated-routes/authenticated-routes.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-5b5d22d33fdd",
+      "layer": "source",
+      "path": "web-angular/src/app/shared/ui/collections/card-list/card-list.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-0ffcf25c452b",
+      "layer": "source",
+      "path": "web-angular/src/app/shared/ui/collections/card-list/card-list.component.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-b6d0e80169d9",
+      "layer": "source",
+      "path": "web-angular/src/app/shared/ui/dialogs/dialog-panel/dialog-panel.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-801f86eeae4a",
+      "layer": "source",
+      "path": "web-angular/src/app/shared/ui/dialogs/dialog-panel/dialog-panel.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-311f299a2a50",
+      "layer": "source",
+      "path": "web-angular/src/app/shared/ui/forms/form-container/form-container.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-b0c97d71b7a5",
+      "layer": "source",
+      "path": "web-angular/src/app/shared/ui/collections/collection-frame/collection-frame.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-e56de07ea51c",
+      "layer": "source",
+      "path": "web-angular/src/app/shared/ui/collections/collection-frame/collection-frame.component.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-10ec52f540b1",
+      "layer": "source",
+      "path": "web-angular/src/app/shared/ui/layout/surface-card/surface-card.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-283604de5521",
+      "layer": "source",
+      "path": "web-angular/src/app/shared/ui/layout/surface-card/surface-card.component.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-b975096bc849",
+      "layer": "source",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-read-details/country-read-details.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-0fbd06c2f211",
+      "layer": "source",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-read-details/country-read-details.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-cfbaa0f7f517",
+      "layer": "source",
+      "path": "web-angular/src/app/shared/ui/collections/collection-read-compatibility.spec.search-fixture.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-4123a8d7b962",
+      "layer": "source",
+      "path": "web-angular/src/app/shared/ui/collections/collection-read-compatibility.spec.card-fixture.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-ebd465a60183",
+      "layer": "source",
+      "path": "web-angular/src/app/shared/ui/forms/form-read-compatibility.spec.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-dac0f4116134",
+      "layer": "source",
+      "path": "web-angular/src/app/shared/ui/controls/progress-meter/progress-meter.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-7c408f6f8cf5",
+      "layer": "source",
+      "path": "web-angular/src/app/shared/ui/controls/progress-meter/progress-meter.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-5b1299a142cd",
+      "layer": "source",
+      "path": "web-angular/src/app/shared/ui/feedback/status-badge/status-badge.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-34efa13303b5",
+      "layer": "source",
+      "path": "web-angular/src/app/shared/ui/icons/app-icon/app-icon.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-5a45ead9f07e",
+      "layer": "source",
+      "path": "web-angular/src/app/shared/ui/icons/app-icon/app-icon.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-e64e78f8ab1d",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/collection-footer/collection-footer.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-1edfbeca7388",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/collection-footer/collection-footer.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-8c0ea47b89b7",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/row-actions/row-actions.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-78056b5a8421",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/row-actions/row-actions.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-cf6c9fe09ba0",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/controls/option-select/option-select.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-a36b777f66d7",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/controls/option-select/option-select.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "quality-ff96e53d3ee7",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid/grid-column-presentation.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-5356e0ff9c90",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid/grid-column-presentation.spec.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-519b867de1ce",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid/grid-viewport.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-6fe0129a75d1",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/collection-column-pipe.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-97ddb61c625b",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/collection-column-pipe.spec.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-c8f3282bb980",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/utils/country-list-presentation.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-4653687b92ac",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/utils/country-list-presentation.spec.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-16f555949438",
+      "layer": "web",
+      "path": "web-angular/src/testing/fixture-item.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
     }
   ],
   "finalizationChecklist": [

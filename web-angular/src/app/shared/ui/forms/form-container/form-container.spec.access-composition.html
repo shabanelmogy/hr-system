@@ -1,0 +1,24 @@
+<erp-form
+  [form]="form"
+  title="Access fixture"
+  submitLabel="Continue fixture"
+  [pending]="pending()"
+  [readOnly]="readonly()"
+  (validSubmit)="submit()"
+>
+  <erp-text-field
+    [formControl]="emailControl()"
+    label="Email fixture"
+    type="email"
+    required
+    [messages]="messages"
+  />
+  <erp-text-field
+    [formControl]="form.controls.secret"
+    label="Password fixture"
+    type="password"
+    [readOnly]="readonly()"
+    required
+    [messages]="messages"
+  />
+</erp-form>

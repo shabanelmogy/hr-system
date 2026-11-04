@@ -11,6 +11,78 @@ namespace ErpSystem.Modules.Reporting.Tests;
 
 public sealed class CrystalReportInspectorClientTests
 {
+    [Theory]
+    [InlineData("")]
+    [InlineData(",\"hasEmbeddedCredentials\":true")]
+    [InlineData(",\"hasEmbeddedCredentials\":false")]
+    public async Task InspectAsync_IgnoresObsoleteDesignConnectionFlags(string connectionFlag)
+    {
+        using var httpClient = CreateHttpClient(new CallbackHandler(_ => Task.FromResult(
+            new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(
+                    "{\"isValid\":true,\"title\":\"Countries\",\"hasSavedData\":false," +
+                    "\"subreportCount\":0,\"contractSchemaVersion\":1,\"contractFingerprint\":\"" +
+                    new string('a', 64) + "\",\"connectionInfo\":{\"server\":\"design-only\"}" +
+                    connectionFlag + "}", Encoding.UTF8, "application/json")
+            })));
+
+        var result = await CreateClient(httpClient).InspectAsync("countries", CreateUpload(), default);
+
+        Assert.NotNull(result);
+        Assert.True(result.IsValid);
+        Assert.Equal(new string('a', 64), result.ContractFingerprint);
+        Assert.DoesNotContain("design-only", System.Text.Json.JsonSerializer.Serialize(result), StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("")]
+    [InlineData(",\"hasSavedData\":true")]
+    [InlineData(",\"hasSavedData\":false")]
+    public async Task InspectAsync_IgnoresObsoleteSavedDataFlagsForApiSuppliedRows(string savedDataFlag)
+    {
+        using var httpClient = CreateHttpClient(new CallbackHandler(_ => Task.FromResult(
+            new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(
+                    "{\"isValid\":true,\"hasEmbeddedCredentials\":true," +
+                    "\"subreportCount\":0,\"contractSchemaVersion\":1,\"contractFingerprint\":\"" +
+                    new string('a', 64) + "\"" + savedDataFlag + "}", Encoding.UTF8, "application/json")
+            })));
+
+        var result = await CreateClient(httpClient).InspectAsync("countries", CreateUpload(), default);
+
+        Assert.NotNull(result);
+        Assert.True(result.IsValid);
+        Assert.Equal(new string('a', 64), result.ContractFingerprint);
+        Assert.Null(result.ValidationReason);
+    }
+
+    [Theory]
+    [InlineData("crystal_runtime_source_rejected", "secret connection string", CrystalReportInspectionFailure.SourceRejected)]
+    [InlineData("crystal_runtime_invalid_report", "Crystal Report files containing database connection metadata are not accepted.", CrystalReportInspectionFailure.SourceRejected)]
+    [InlineData("crystal_runtime_invalid_report", "Crystal Report files containing saved data are not accepted.", CrystalReportInspectionFailure.SourceRejected)]
+    [InlineData("crystal_runtime_invalid_report", "Crystal Report subreports are not supported by the managed runtime.", CrystalReportInspectionFailure.SourceRejected)]
+    [InlineData("crystal_runtime_invalid_report", "Crystal Report files must use the approved pushed-data source.", CrystalReportInspectionFailure.SourceRejected)]
+    [InlineData("crystal_runtime_invalid_report", "Crystal Report files must use the approved ADO.NET pushed-data source.", CrystalReportInspectionFailure.SourceRejected)]
+    [InlineData("crystal_runtime_invalid_report", "Crystal Report datasource metadata could not be verified safely.", CrystalReportInspectionFailure.SourceRejected)]
+    [InlineData("crystal_runtime_invalid_report", "secret connection string", CrystalReportInspectionFailure.InvalidReport)]
+    [InlineData("unrecognized_code", "Crystal Report files containing database connection metadata are not accepted.", CrystalReportInspectionFailure.InvalidReport)]
+    public async Task InspectAsync_ClassifiesSourcePolicyRejectionWithoutReturningRuntimeDetails(string code, string message, CrystalReportInspectionFailure failure)
+    {
+        using var httpClient = CreateHttpClient(new CallbackHandler(_ => Task.FromResult(
+            new HttpResponseMessage(HttpStatusCode.BadRequest)
+            {
+                Content = new StringContent(System.Text.Json.JsonSerializer.Serialize(new { code, message }), Encoding.UTF8, "application/json")
+            })));
+        var result = await CreateClient(httpClient).InspectAsync("countries", CreateUpload(), default);
+        Assert.NotNull(result);
+        Assert.False(result.IsValid);
+        Assert.Equal(failure, result.Failure);
+        Assert.Equal("Crystal runtime rejected the report.", result.ValidationReason);
+        Assert.DoesNotContain(message, result.ValidationReason, StringComparison.Ordinal);
+    }
+
     [Fact]
     public async Task InspectAsync_SendsEntityKey_AndReturnsCurrentContractEvidence()
     {

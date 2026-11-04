@@ -1,0 +1,28 @@
+<div #field [attr.aria-labelledby]="id + '-label'" [attr.aria-describedby]="describedBy()">
+  <span [id]="id + '-label'" class="field-label">{{ label() }}</span>
+  <p-fileupload
+    mode="basic"
+    [customUpload]="true"
+    [auto]="false"
+    [multiple]="false"
+    [accept]="acceptTypes()"
+    [chooseLabel]="chooseLabel()"
+    [disabled]="disabled() || readOnly()"
+    (onSelect)="select($event)"
+  />
+  @if (value(); as file) {
+    <p>{{ file.name }} · {{ file.size }}</p>
+    <erp-button
+      [label]="clearLabel()"
+      variant="text"
+      [disabled]="disabled() || readOnly()"
+      (activated)="clear()"
+    />
+  }
+  @if (help()) {
+    <small [id]="id + '-help'">{{ help() }}</small>
+  }
+  @if (error(); as message) {
+    <small [id]="id + '-error'" class="error" role="alert">{{ message }}</small>
+  }
+</div>

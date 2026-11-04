@@ -1,0 +1,16 @@
+# Dependencies, caches and build output
+node_modules/
+.angular/
+dist/
+coverage/
+
+# Generated sources are owned by their generators.
+**/*.generated.*
+src/locales/generated/
+src/theme/_fonts.scss
+tooling/api-contract-proof/generated/
+
+# Runtime inputs and third-party/static assets are not formatting targets.
+.env*
+public/
+package-lock.json

@@ -1,0 +1,11 @@
+{
+  "Status": 200,
+  "Paths": [
+    "/internal/reports/catalog",
+    "/internal/reports/catalog/{sourceId}/source",
+    "/internal/reports/health",
+    "/internal/reports/inspect",
+    "/internal/reports/render"
+  ],
+  "OnlyCurrentInternalRoutes": true
+}

@@ -1,0 +1,96 @@
+<main>
+  <erp-page-header [title]="'general.value' | uiText" />
+  <div class="tools">
+    @for (palette of palettes; track palette) {
+      <erp-button
+        [label]="'menu.palettes.' + palette | uiText"
+        [attr.data-palette]="palette"
+        (activated)="theme.setPalette(palette)"
+      />
+    }
+    <erp-button
+      data-testid="language"
+      [label]="(runtime.language() === 'en' ? 'common.arabic' : 'common.english') | uiText"
+      (activated)="runtime.setLanguage(runtime.language() === 'en' ? 'ar' : 'en')"
+    />
+    <erp-button
+      data-testid="refresh"
+      [label]="'actions.refresh' | uiText"
+      (activated)="read.refresh()"
+    />
+    <erp-button data-testid="hint" [label]="'notifications.title' | uiText" (activated)="hint()" />
+    <erp-button
+      data-testid="foreign-hint"
+      [label]="'common.warning' | uiText"
+      (activated)="hint(true)"
+    />
+    <erp-button
+      data-testid="scope"
+      [label]="'general.company' | uiText"
+      (activated)="switchScope()"
+    />
+    <erp-button
+      data-testid="permission"
+      [label]="'authorization.forbidden.title' | uiText"
+      (activated)="togglePermission()"
+    />
+    <erp-button
+      data-testid="session"
+      [label]="'common.cancel' | uiText"
+      (activated)="toggleSession()"
+    />
+    <erp-button data-testid="identity" [label]="'general.profile' | uiText" (activated)="renew()" />
+    <erp-button
+      data-testid="wait"
+      [label]="'common.loading' | uiText"
+      [pressed]="slow()"
+      (activated)="toggleWait()"
+    />
+    <erp-button data-testid="leave" [label]="'common.back' | uiText" (activated)="leave()" />
+  </div>
+  <erp-option-select
+    data-testid="scenario"
+    [label]="'common.actual' | uiText"
+    [value]="scenario()"
+    [options]="scenarios()"
+    (valueChange)="chooseScenario($event)"
+  />
+  <div class="read-panel" data-testid="panel">
+    @if (read.state(); as state) {
+      @switch (state.kind) {
+        @case ('ready') {
+          <erp-surface-card [title]="'general.value' | uiText"
+            ><erp-status-badge
+              data-testid="snapshot"
+              [label]="state.data.scope + ' · ' + state.data.revision"
+          /></erp-surface-card>
+        }
+        @case ('error') {
+          <erp-feedback-state
+            kind="error"
+            [title]="'common.error' | uiText"
+            [actionLabel]="'actions.retry' | uiText"
+            (action)="read.retry()"
+          />
+        }
+        @case ('forbidden') {
+          <erp-feedback-state kind="forbidden" [title]="'authorization.forbidden.title' | uiText" />
+        }
+        @case ('loading') {
+          <erp-feedback-state kind="loading" [title]="'common.loading' | uiText" />
+        }
+      }
+    }
+  </div>
+  <output
+    data-testid="state"
+    [attr.data-kind]="read.state().kind"
+    [attr.data-scope]="identity()?.scope ?? ''"
+    [attr.data-value]="snapshot()"
+    [attr.data-starts]="probe.starts()"
+    [attr.data-active]="probe.active()"
+    [attr.data-closed]="probe.closed()"
+    [attr.data-cancelled]="probe.cancelled()"
+    [attr.data-watchers]="probe.watchers()"
+  ></output>
+</main>

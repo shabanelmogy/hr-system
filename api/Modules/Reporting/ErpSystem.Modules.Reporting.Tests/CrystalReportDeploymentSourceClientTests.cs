@@ -2,6 +2,7 @@ using System.Net;
 using System.Net.Http.Headers;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
 using ErpSystem.BuildingBlocks.Context;
 using ErpSystem.Modules.Reporting.Application.Features.Analytics.CrystalReports.Contracts;
 using ErpSystem.Modules.Reporting.Infrastructure.Features.Analytics.CrystalReports.Storage;
@@ -81,6 +82,67 @@ public sealed class CrystalReportDeploymentSourceClientTests
 
         Assert.Null(result);
     }
+
+    [Fact]
+    public async Task ListAsync_RetainsRejectedOversizeMetadataWithoutHidingValidReports()
+    {
+        var json = JsonSerializer.Serialize(new[]
+        {
+            CatalogDescriptor("states", true, 8),
+            CatalogDescriptor("states-too-large", false, 2048)
+        });
+        using var http = CreateHttpClient(new CallbackHandler(_ => Task.FromResult(
+            new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(json, Encoding.UTF8, "application/json")
+            })));
+
+        var result = await CreateClient(http).ListAsync("states", CancellationToken.None);
+
+        Assert.NotNull(result);
+        Assert.Equal(2, result.Count);
+        Assert.Single(result, item => item.IsImportable);
+        var rejected = Assert.Single(result, item => !item.IsImportable);
+        Assert.Equal(2048, rejected.Size);
+        Assert.Equal("The report exceeds the configured import limit.", rejected.ValidationReason);
+    }
+
+    [Theory]
+    [InlineData(true, 2048)]
+    [InlineData(true, 0)]
+    [InlineData(false, -1)]
+    public async Task ListAsync_StillRejectsInvalidImportableOrNegativeSize(bool importable, long size)
+    {
+        var json = JsonSerializer.Serialize(new[] { CatalogDescriptor("states", importable, size) });
+        using var http = CreateHttpClient(new CallbackHandler(_ => Task.FromResult(
+            new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(json, Encoding.UTF8, "application/json")
+            })));
+
+        Assert.Null(await CreateClient(http).ListAsync("states", CancellationToken.None));
+    }
+
+    [Fact]
+    public async Task ListAsync_NullDescriptorFailsClosedWithoutThrowing()
+    {
+        using var http = CreateHttpClient(new CallbackHandler(_ => Task.FromResult(
+            new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent("[null]", Encoding.UTF8, "application/json")
+            })));
+
+        Assert.Null(await CreateClient(http).ListAsync("states", CancellationToken.None));
+    }
+
+    private static object CatalogDescriptor(string reportKey, bool importable, long size) => new
+    {
+        sourceId = new string('a', 64), entityKey = "states", reportKey,
+        fileName = reportKey + ".rpt", title = reportKey, size,
+        sha256 = importable ? new string('b', 64) : null,
+        lastModifiedUtc = "2026-11-01T00:00:00Z", isImportable = importable,
+        validationReason = importable ? null : "The report exceeds the configured import limit."
+    };
 
     [Fact]
     public async Task DownloadAsync_VerifiesHashAndReturnsBoundedUpload()

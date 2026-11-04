@@ -1,0 +1,78 @@
+node:internal/modules/run_main:111
+    triggerUncaughtException(
+    ^
+
+ExpectError: expect(locator).toHaveAttribute(expected) failed
+
+Locator:  locator('html')
+Expected: "true"
+Received: ""
+Timeout:  120000ms
+
+Call log:
+  - Expect "toHaveAttribute" locator('html') with timeout 120000ms
+  - waiting for locator('html')
+    236 × locator resolved to <html lang="ar" dir="rtl" data-theme="light" data-palette="green">…</html>
+        - unexpected value "null"
+
+    at captureRawStack (G:\test\ERPSYSTEM\ERPSYSTEM\web-angular\node_modules\playwright-core\lib\coreBundle.js:8588:17)
+    at callMatcherAsStep (G:\test\ERPSYSTEM\ERPSYSTEM\web-angular\node_modules\playwright\lib\matchers\expect.js:13310:57)
+    at Object.toHaveAttribute (G:\test\ERPSYSTEM\ERPSYSTEM\web-angular\node_modules\playwright\lib\matchers\expect.js:13302:23)
+    at G:\test\ERPSYSTEM\ERPSYSTEM\web-angular\scripts\verify-country-import-reference.mjs:16:145 {
+  matcherResult: {
+    name: 'toHaveAttribute',
+    expected: 'true',
+    message: 'expect(locator).toHaveAttribute(expected) failed\n' +
+      '\n' +
+      "Locator:  locator('html')\n" +
+      'Expected: "true"\n' +
+      'Received: ""\n' +
+      'Timeout:  120000ms\n' +
+      '\n' +
+      'Call log:\n' +
+      `  - Expect "toHaveAttribute" locator('html') with timeout 120000ms\n` +
+      "  - waiting for locator('html')\n" +
+      '    236 × locator resolved to <html lang="ar" dir="rtl" data-theme="light" data-palette="green">…</html>\n' +
+      '        - unexpected value "null"\n',
+    pass: false,
+    actual: null,
+    log: [
+      `  - Expect "toHaveAttribute" locator('html') with timeout 120000ms`,
+      "  - waiting for locator('html')",
+      '    236 × locator resolved to <html lang="ar" dir="rtl" data-theme="light" data-palette="green">…</html>',
+      '        - unexpected value "null"'
+    ],
+    timeout: 120000,
+    ariaSnapshot: '- document:\n' +
+      '  - img\n' +
+      '  - banner\n' +
+      '  - heading "Welcome Back" [level=4]\n' +
+      '  - paragraph: Login to access your account\n' +
+      '  - text: 🔒\n' +
+      '  - heading "Secure Access" [level=6]\n' +
+      '  - paragraph: Secure access description\n' +
+      '  - text: 🔐\n' +
+      '  - heading "Data Privacy" [level=6]\n' +
+      '  - paragraph: Data privacy policy description\n' +
+      '  - text: 📊\n' +
+      '  - heading "Analytics" [level=6]\n' +
+      '  - paragraph: Analytics description\n' +
+      '  - text: © Company 🌐 📧 📱\n' +
+      '  - heading "Sign In" [level=5]\n' +
+      '  - text: Username\n' +
+      '  - textbox "Username"\n' +
+      '  - text: 0/50 Password\n' +
+      '  - textbox "Password"\n' +
+      '  - paragraph\n' +
+      '  - button "Login"\n' +
+      '  - paragraph: Quick demo access\n' +
+      '  - text: Demo\n' +
+      '  - button "User"\n' +
+      '  - button "Admin"\n' +
+      '  - button "Super Admin"\n' +
+      '  - separator\n' +
+      '  - button "Google Login"'
+  }
+}
+
+Node.js v26.13.0

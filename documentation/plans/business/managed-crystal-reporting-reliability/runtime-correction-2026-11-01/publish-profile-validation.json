@@ -1,0 +1,12 @@
+{
+  "RuntimeKeyConfigured": true,
+  "LocalConfigReferenceRemoved": true,
+  "ReleaseCustomErrorsOn": true,
+  "KeyMatchesErpEnvironment": true,
+  "RuntimeEnabled": true,
+  "RuntimeUrlCorrect": true,
+  "LocalPrivateFileExcluded": true,
+  "PrivateTransformExcludedFromErp": true,
+  "HostedAppSettingsPreserved": true,
+  "CompilerPackaged": true
+}

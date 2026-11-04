@@ -36,7 +36,7 @@ namespace CrystalReportGeneratorApi.Runtime.Inspection
                     if (rejectionReason != null)
                     {
                         throw new CrystalReportRejectedException(
-                            InternalReportErrorCodes.InvalidReport,
+                            InternalReportErrorCodes.SourceRejected,
                             rejectionReason);
                     }
 
@@ -50,8 +50,6 @@ namespace CrystalReportGeneratorApi.Runtime.Inspection
                         Subject = NormalizeSummary(report.SummaryInfo == null
                             ? null
                             : report.SummaryInfo.ReportSubject),
-                        HasSavedData = false,
-                        HasEmbeddedCredentials = false,
                         SubreportCount = 0,
                         ContractSchemaVersion = _profiles.SchemaVersion,
                         ContractFingerprint = _profiles.Fingerprint,
@@ -149,8 +147,6 @@ namespace CrystalReportGeneratorApi.Runtime.Inspection
         public bool IsValid { get; set; }
         public string Title { get; set; }
         public string Subject { get; set; }
-        public bool HasSavedData { get; set; }
-        public bool HasEmbeddedCredentials { get; set; }
         public int SubreportCount { get; set; }
         public int ContractSchemaVersion { get; set; }
         public string ContractFingerprint { get; set; }

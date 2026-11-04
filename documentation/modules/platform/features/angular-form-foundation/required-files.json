@@ -67,7 +67,7 @@
     },
     {
       "id": "preflight-7",
-      "path": "web-angular/src/app/shared/ui/buttons/action-button.ts",
+      "path": "web-angular/src/app/shared/ui/buttons/action-button/action-button.ts",
       "layer": "documentation",
       "purpose": "Current reviewed source/exact contract"
     },
@@ -126,13 +126,13 @@
       "purpose": "Current source/config/test/guide/evidence"
     },
     {
-      "path": "web-angular/src/app/shared/ui/buttons/action-button.scss",
+      "path": "web-angular/src/app/shared/ui/buttons/action-button/action-button.scss",
       "layer": "web",
       "id": "implemented-17",
       "purpose": "Current source/config/test/guide/evidence"
     },
     {
-      "path": "web-angular/src/app/shared/ui/buttons/action-button.spec.ts",
+      "path": "web-angular/src/app/shared/ui/buttons/action-button/action-button.spec.ts",
       "layer": "web",
       "id": "implemented-18",
       "purpose": "Current source/config/test/guide/evidence"
@@ -144,19 +144,19 @@
       "purpose": "Current source/config/test/guide/evidence"
     },
     {
-      "path": "web-angular/src/app/shared/ui/forms/form-container.scss",
+      "path": "web-angular/src/app/shared/ui/forms/form-container/form-container.scss",
       "layer": "web",
       "id": "implemented-20",
       "purpose": "Current source/config/test/guide/evidence"
     },
     {
-      "path": "web-angular/src/app/shared/ui/forms/form-container.spec.ts",
+      "path": "web-angular/src/app/shared/ui/forms/form-container/form-container.spec.ts",
       "layer": "web",
       "id": "implemented-21",
       "purpose": "Current source/config/test/guide/evidence"
     },
     {
-      "path": "web-angular/src/app/shared/ui/forms/form-container.ts",
+      "path": "web-angular/src/app/shared/ui/forms/form-container/form-container.ts",
       "layer": "web",
       "id": "implemented-22",
       "purpose": "Current source/config/test/guide/evidence"
@@ -174,19 +174,19 @@
       "purpose": "Current source/config/test/guide/evidence"
     },
     {
-      "path": "web-angular/src/app/shared/ui/forms/fields/text-field.scss",
+      "path": "web-angular/src/app/shared/ui/forms/fields/text-field/text-field.scss",
       "layer": "web",
       "id": "implemented-25",
       "purpose": "Current source/config/test/guide/evidence"
     },
     {
-      "path": "web-angular/src/app/shared/ui/forms/fields/text-field.ts",
+      "path": "web-angular/src/app/shared/ui/forms/fields/text-field/text-field.ts",
       "layer": "web",
       "id": "implemented-26",
       "purpose": "Current source/config/test/guide/evidence"
     },
     {
-      "path": "web-angular/src/app/dev/form-preview.ts",
+      "path": "web-angular/src/app/dev/form-preview/form-preview.ts",
       "layer": "web",
       "id": "implemented-27",
       "purpose": "Current source/config/test/guide/evidence"
@@ -277,15 +277,93 @@
     },
     {
       "id": "shared-text-template",
-      "path": "web-angular/src/app/shared/ui/forms/fields/text-field.html",
+      "path": "web-angular/src/app/shared/ui/forms/fields/text-field/text-field.html",
       "layer": "web",
       "purpose": "Current shared TextField template extracted unchanged and reused by numeric input"
     },
     {
       "id": "shared-multiline-regression",
-      "path": "web-angular/src/app/shared/ui/forms/fields/text-field.spec.ts",
+      "path": "web-angular/src/app/shared/ui/forms/fields/text-field/text-field.spec.ts",
       "layer": "web",
       "purpose": "Current inherited TextField mode/locks/template regression"
+    },
+    {
+      "id": "component-resource-eb086582836d",
+      "layer": "documentation",
+      "path": "web-angular/src/app/shared/ui/buttons/action-button/action-button.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-ccd9a49e7669",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/buttons/action-button/action-button.spec.toolbar-composition.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-22b35dca3c00",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/buttons/action-button/action-button.spec.submit-composition.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-d48078893077",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/form-container/form-container.spec.access-composition.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-67ebb7f690a7",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/form-container/form-container.spec.profile-composition.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-311f299a2a50",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/form-container/form-container.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-9e15fd3f4031",
+      "layer": "web",
+      "path": "web-angular/src/app/dev/form-preview/form-preview.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-29391219ce8c",
+      "layer": "web",
+      "path": "web-angular/src/app/dev/form-preview/form-preview.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-d286e19eb5e2",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/fields/text-field/text-field.spec.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "quality-b48e367c4706",
+      "layer": "configuration",
+      "path": "web-angular/eslint.config.mjs",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-18187b5430c6",
+      "layer": "configuration",
+      "path": "web-angular/scripts/dependency-rules.mjs",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-056ed62f225e",
+      "layer": "configuration",
+      "path": "web-angular/scripts/dependency-rules.test.mjs",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-16f555949438",
+      "layer": "web",
+      "path": "web-angular/src/testing/fixture-item.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
     }
   ]
 }

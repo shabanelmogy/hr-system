@@ -1,0 +1,108 @@
+﻿[
+    {
+        "File":  "Countries.rpt",
+        "NativeMetadataRead":  true,
+        "Tables":  [
+                       {
+                           "TableName":  "Command",
+                           "Driver":  "crdb_ado.dll",
+                           "ConnectionPropertyNames":  [
+                                                           "Provider",
+                                                           "Data Source",
+                                                           "Initial Catalog",
+                                                           "User ID",
+                                                           "Password",
+                                                           "Integrated Security",
+                                                           "Use DSN Default Properties",
+                                                           "Locale Identifier",
+                                                           "Connect Timeout",
+                                                           "General Timeout",
+                                                           "OLE DB Services",
+                                                           "Current Language",
+                                                           "Auto Translate",
+                                                           "Application Name",
+                                                           "Initial File Name",
+                                                           "Use Encryption for Data",
+                                                           "Replication server name connect option",
+                                                           "Tag with column collation when possible"
+                                                       ],
+                           "Fields":  [
+                                          {
+                                              "Name":  "{Command.CountryId}",
+                                              "Type":  5
+                                          },
+                                          {
+                                              "Name":  "{Command.CountryAr}",
+                                              "Type":  12
+                                          },
+                                          {
+                                              "Name":  "{Command.CountryEn}",
+                                              "Type":  12
+                                          }
+                                      ]
+                       }
+                   ],
+        "Parameters":  [
+
+                       ]
+    },
+    {
+        "File":  "Countries.WithStates.rpt",
+        "NativeMetadataRead":  true,
+        "Tables":  [
+                       {
+                           "TableName":  "Command",
+                           "Driver":  "crdb_ado.dll",
+                           "ConnectionPropertyNames":  [
+                                                           "Provider",
+                                                           "Data Source",
+                                                           "Initial Catalog",
+                                                           "Integrated Security",
+                                                           "Use DSN Default Properties",
+                                                           "Locale Identifier",
+                                                           "Connect Timeout",
+                                                           "General Timeout",
+                                                           "OLE DB Services",
+                                                           "Current Language",
+                                                           "Auto Translate",
+                                                           "Application Name",
+                                                           "Initial File Name",
+                                                           "Use Encryption for Data",
+                                                           "Replication server name connect option",
+                                                           "Tag with column collation when possible",
+                                                           "Password",
+                                                           "User ID"
+                                                       ],
+                           "Fields":  [
+                                          {
+                                              "Name":  "{Command.CountryId}",
+                                              "Type":  5
+                                          },
+                                          {
+                                              "Name":  "{Command.CountryAr}",
+                                              "Type":  12
+                                          },
+                                          {
+                                              "Name":  "{Command.CountryEn}",
+                                              "Type":  12
+                                          },
+                                          {
+                                              "Name":  "{Command.StateId}",
+                                              "Type":  5
+                                          },
+                                          {
+                                              "Name":  "{Command.StateAr}",
+                                              "Type":  12
+                                          },
+                                          {
+                                              "Name":  "{Command.StateEn}",
+                                              "Type":  12
+                                          }
+                                      ]
+                       }
+                   ],
+        "Parameters":  [
+
+                       ]
+    }
+]

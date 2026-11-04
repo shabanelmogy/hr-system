@@ -1,0 +1,63 @@
+<erp-surface-card [title]="'imports.selectSpreadsheet' | uiText">
+  <div class="policy">
+    <p>
+      {{ 'imports.filePolicy' | uiText: 'core' : { maxSizeMb: maxSizeMb(), maxRows: maxRows() } }}
+    </p>
+    <p dir="ltr">{{ 'imports.expectedHeaders' | uiText: 'core' : { headers: headers() } }}</p>
+  </div>
+  <div class="actions">
+    <p-fileupload
+      #picker
+      mode="basic"
+      [customUpload]="true"
+      [auto]="false"
+      [chooseButtonProps]="{ variant: 'outlined', severity: 'secondary' }"
+      [disabled]="busy() || locked() || disabled()"
+      [chooseLabel]="'imports.selectSpreadsheet' | uiText"
+      (onSelect)="select($event); picker.clear()"
+      ><ng-template #filelabel><span></span></ng-template
+    ></p-fileupload>
+    <erp-button
+      data-testid="import-template"
+      [label]="'imports.downloadTemplate' | uiText"
+      variant="outlined"
+      [disabled]="busy() || disabled()"
+      (activated)="downloadTemplate.emit()"
+    />
+    <erp-button
+      data-testid="import-submit"
+      [label]="'imports.uploadData' | uiText"
+      [busy]="busy()"
+      [disabled]="disabled() || locked() || !rowCount() || !canSubmit()"
+      (activated)="submitted.emit()"
+    />
+    <erp-button
+      data-testid="import-clear"
+      [label]="'imports.clearData' | uiText"
+      variant="text"
+      [disabled]="busy() || !fileName()"
+      (activated)="cleared.emit()"
+    />
+  </div>
+  @if (fileName()) {
+    <p class="file" dir="auto">
+      {{ 'imports.selectedFile' | uiText }} {{ fileName() }} ·
+      {{ 'pagination.totalRows' | uiText }}: {{ rowCount() }}
+    </p>
+  }
+  @if (busy()) {
+    <erp-feedback-state kind="loading" [compact]="true" [title]="'common.loading' | uiText" />
+  }
+  @if (message()) {
+    <erp-feedback-state
+      layout="inline"
+      [tone]="locked() ? 'warning' : failed() ? 'danger' : 'success'"
+      [icon]="failed() ? 'close' : 'check'"
+      [kind]="failed() ? 'error' : 'empty'"
+      [title]="message()"
+      [actionLabel]="locked() ? ('imports.reviewRecords' | uiText) : ''"
+      (action)="reviewed.emit()"
+    />
+  }
+  <ng-content />
+</erp-surface-card>

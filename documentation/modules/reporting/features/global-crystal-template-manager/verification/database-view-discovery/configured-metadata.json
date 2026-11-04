@@ -1,0 +1,45 @@
+{
+  "VerifiedAtUtc": "2026-11-02T14:41:34.8177558Z",
+  "ConfiguredReferenceDataMetadataVerified": true,
+  "BusinessRowsRead": false,
+  "ViewsChanged": false,
+  "OwnedGlobalViewCount": 3,
+  "Views": [
+    {
+      "ViewName": "ref.vw_Countries",
+      "IsSchemaBound": true
+    },
+    {
+      "ViewName": "ref.vw_Districts",
+      "IsSchemaBound": true
+    },
+    {
+      "ViewName": "ref.vw_States",
+      "IsSchemaBound": true
+    }
+  ],
+  "MigrationApplied": 1,
+  "ColumnCoverage": [
+    {
+      "ViewName": "ref.vw_Countries",
+      "RootColumns": 18,
+      "ViewColumns": 40,
+      "MissingRootColumns": 0,
+      "ContainsLeftJoin": true
+    },
+    {
+      "ViewName": "ref.vw_Districts",
+      "RootColumns": 16,
+      "ViewColumns": 56,
+      "MissingRootColumns": 0,
+      "ContainsLeftJoin": true
+    },
+    {
+      "ViewName": "ref.vw_States",
+      "RootColumns": 16,
+      "ViewColumns": 40,
+      "MissingRootColumns": 0,
+      "ContainsLeftJoin": true
+    }
+  ]
+}

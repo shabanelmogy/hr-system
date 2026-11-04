@@ -13,24 +13,24 @@ Execution order marker: API → Web → Mobile → integrated live verification 
 | Child feature name | Countries complete pilot acceptance |
 | Owner | ReferenceData business; Platform migration evidence |
 | Depends on | angular-countries-import-view Verified/Closed |
-| Execution status | Queued |
-| Runtime authorization | Blocked — preflight-only until this child is Active and its exact G0-G3/frozen contract/Phase00 pass; no blanket sibling runtime |
+| Execution status | Active |
+| Runtime authorization | Bounded runtime after exact registered Phase00 generation/check; PILOT_CONTRACT.md fixes G0-G3; remaining G4 release-only, no sibling runtime |
 
 ## 1. Child boundary and outcome
 
-Complete current-source comparison across all five views and actions, realtime invalidation/reconnect, source/layout/paging/focus/full lifecycle/host/production-size acceptance. Enable business route only after complete coverage.
+Verify the actual Angular five views and actions, API contracts/realtime invalidation/reconnect, shared layout/paging/focus/full lifecycle/host/production-size acceptance under D35. Enable business route only after complete coverage.
 Current-source rationale and complete pilot sequence: angular-countries-pilot-preparation/AUDIT_REPORT.md.
 
 ## 2. UI Pattern Gate (mandatory before implementation)
 
 | Screen ID | Platform | Route / entry | User job | Data / interaction shape | Primary Pattern ID | Sub-pattern / form decision | Exact reviewed reference source path | Platform status | Views | States | Offline policy | Mock-data policy | Permission / scope | Responsive / RTL / accessibility | Deviation |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| reference-data.countries.s3a8 | Web | Authenticated /dev/countries until complete pilot business-route acceptance | Countries complete pilot acceptance | Complete current-source comparison across all five views and actions, realtime invalidation/reconnect, source/layout/paging/focus/full lifecycle/host/production-size acceptance. Enable business route only after complete coverage. | P-001 | C-01 shared form/dialog; C-02 shared grid/cards; full-screen mobile browser adaptation | web-next/src/modules/reference-data/geographical-information/countries/components/CountriesMultiView.tsx | Adapted | Grid Required; Cards Required; Chart Required; Report Required; Import Required | Loading/empty/error/forbidden; pending/conflict/dirty where action applies | Online only; no new store | Realistic synthetic data; dev generator only in edit child | Exact current global role/action permission; server authoritative | Same-viewport EN/AR;5palettes;390/1440; shared keyboard/focus/scroll | Only this bounded child is current-release; other Required pilot children remain queued, without placeholders |
+| reference-data.countries.s3a8 | Web | Authenticated /dev/countries until complete pilot business-route acceptance | Countries complete pilot acceptance | Verify the actual Angular five views and actions, API contracts/realtime invalidation/reconnect, shared layout/paging/focus/full lifecycle/host/production-size acceptance under D35. Enable business route only after complete coverage. | P-001 | C-01 shared form/dialog; C-02 shared grid/cards; full-screen mobile browser adaptation | web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page/countries-read-page.ts | Adapted | Grid Required; Cards Required; Chart Required; Report Required; Import Required | Loading/empty/error/forbidden; pending/conflict/dirty where action applies | Online only; no new store | Realistic synthetic data; dev generator only in edit child | Exact current global role/action permission; server authoritative | Same-viewport EN/AR;5palettes;390/1440; shared keyboard/focus/scroll | Only this bounded child is current-release; other Required pilot children remain queued, without placeholders |
 | reference-data.countries.s3a8 | Mobile | No new native route | Retain current native Countries | Source-only boundary | N/A — no UI | Existing native client retained | mobile-react/src/modules/reference-data/geography/countries/presentation/screens/CountriesScreen.tsx | Excluded | New native UI Excluded | No UI change | Existing optional scoped offline-read policy retained | No new generator | No grants/schema | Browser compact acceptance belongs to Web | No native rewrite in Angular migration |
 
 ## 3. Closest existing reference
 
-Review actual source web-next/src/modules/reference-data/geographical-information/countries/components/CountriesMultiView.tsx and its owning Countries controller/query/service/
+Review actual source web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page/countries-read-page.ts and its owning Countries controller/query/service/
 shared composition. Use required-files.json, not historical profile claims, for
 navigation. DEC-028 excludes AR even if retained source paths mention it.
 
@@ -42,7 +42,7 @@ close; feature owns data/rules/permissions/callbacks. No raw vendor or native sh
 
 ## 5. Screen and workspace contract
 
-Complete current-source comparison across all five views and actions, realtime invalidation/reconnect, source/layout/paging/focus/full lifecycle/host/production-size acceptance. Enable business route only after complete coverage.
+Verify the actual Angular five views and actions, API contracts/realtime invalidation/reconnect, shared layout/paging/focus/full lifecycle/host/production-size acceptance under D35. Enable business route only after complete coverage.
 Full Countries target is Grid/Cards/Chart/managed Report/Import with complete
 create/edit/archive/restore/bulk journeys. Other children remain Required by their
 own slices; absence in this bounded view never establishes full pilot parity.
@@ -85,8 +85,8 @@ scroll verified at compact/wide and RTL before declaring feature parity.
 
 | Order | Stage | Status | Entry gate | Exit gate | Evidence path |
 | ---: | --- | --- | --- | --- | --- |
-| 1 | API | Queued | Prior child Closed and current source | Exact API/permission/error/read-or-write semantics | This contract |
-| 2 | Web | Queued | API evidence and exact Phase00 | Shared runtime and complete bounded UI | This contract |
+| 1 | API | Verified | Prior child Closed and current source | Exact API/permission/error/read-or-write semantics | This contract |
+| 2 | Web | Active | API evidence and exact Phase00 | Shared runtime and complete bounded UI | This contract |
 | 3 | Mobile | Queued | Web evidence | Retained native/browser compact classification | This contract |
 | 4 | Integrated live verification | Queued | Prior stages | Bounded tests/browser/source comparisons; separate release/live limits | This contract |
 | 5 | Documentation and closure | Queued | Phase06 Verified | Applied books/manifest/education/recipes/handoff | This contract |
@@ -97,14 +97,34 @@ scope may begin after Phase00; never start a sibling because a shared SDK exists
 ## 12. Verification contract
 
 Focused meaningful type/parser/service/state/shared UI tests and full Angular check;
-actual shared controls/paging browser proof and same-viewport source comparison.
+actual Angular shared controls/paging browser proof at EN/AR and compact/wide viewports. Next execution/reference comparison is optional under D35.
 API/Next/native checks only for affected owners; inherited dependency/release
 findings remain explicit. Snapshot/test output is not live engine/SQL/device proof.
 
 ## 13. Child exit gate
 
-- [ ] Dependency Closed; active exact source/frozen/Phase00 entry verified.
-- [ ] All bounded runtime, direct authority and failure paths implemented.
-- [ ] Required browser/shared controls/paging/reference comparisons verified.
+- [x] Dependency Closed; active exact source/frozen/Phase00 entry verified.
+- [x] All bounded runtime, direct authority and failure paths implemented; actual hosted report engine acceptance remains PROD-028.
+- [x] Required Angular browser/shared controls/paging/authority/keyboard journeys verified under D35;253fresh fixture and7real hosted cases. Actual managed-report catalog/render is still required for full Phase06.
 - [ ] Phase06 Verified with current-source-only manifest and explicit limitations.
 - [ ] Phase07 education after verification and canonical closure checks.
+
+## 14. Current scope under D35
+
+Next execution/debugging/review and rendered/pixel comparison are not prerequisites. Review current Angular S3-A2..S3-A7 books/source and existing API owner contracts; verify all Required Angular journeys, shared PrimeNG controls/tokens, keyboard/responsive/RTL and accurate errors. Historical source remains optional context. Exact frozen contract/Phase00 passed before bounded runtime. Realtime/loading increment verified; no production business route before complete exit. FOLLOW-019 production size and all actual host/Table release boundaries remain.
+
+## 15. Frozen execution contract
+
+See documentation/modules/platform/features/angular-countries-pilot-acceptance/PILOT_CONTRACT.md. API source audit complete; Web may start only after Phase00 checks. Current realtime increment does not enable a business route or complete the pilot.
+
+Current increment evidence: documentation/modules/platform/features/angular-countries-pilot-acceptance/verification/CURRENT_ACCEPTANCE.md. Complete pilot still Not Verified; FOLLOW-021 covers the historical read-browser harness selectors before complete acceptance.
+
+## 16. Final non-report acceptance — 2026-11-01
+
+Verified by angular-countries-pilot-acceptance/verification/FINAL_ACCEPTANCE.md.
+Full Angular gate and five-view fixture UI/40-case palette matrices pass; real
+UI create/edit/import and real remote/missed-event/lifecycle delivery pass. Current
+Web acceptance remains Active for actual hosted managed-report503 only (PROD-028).
+Native is Excluded by the approved contract. Live evidence is recorded within Web
+verification; final integrated closure/Phase07 waits for the remaining report gate.
+No business route enabled and no blanket production release acceptance.

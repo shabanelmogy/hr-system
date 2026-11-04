@@ -1,0 +1,1881 @@
+{
+  "date": "2026-11-01T08:19:48.694Z",
+  "files": [
+    {
+      "path": "web-angular/src/app/app.config.ts",
+      "sha256": "7c61d6be2b829c65e1247d388e984c65a99a01018796023eef1ad9d9fd5a92f8"
+    },
+    {
+      "path": "web-angular/src/app/app.html",
+      "sha256": "da81ac55e8d97dfe044de5859bc5b474c2cbe0a6ab5bb29aaa58ee671792f36f"
+    },
+    {
+      "path": "web-angular/src/app/app.routes.production.ts",
+      "sha256": "7a7921f43146c0735aa1cb9f63d9c0e3dfbf3657128a2e3aec3ca8b3d4e97b56"
+    },
+    {
+      "path": "web-angular/src/app/app.routes.shared.ts",
+      "sha256": "5b292d0a1f5072863fecd227d147bd5a4f301cfd29b7549cd7c188d061f46fe8"
+    },
+    {
+      "path": "web-angular/src/app/app.routes.ts",
+      "sha256": "dd33dbc12aa88d8032063e15e085fb6590e4f071e872b6eb08420dd17d2824f3"
+    },
+    {
+      "path": "web-angular/src/app/app.scss",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "web-angular/src/app/app.spec.html",
+      "sha256": "f91d84cd86da22e7d04510d991368527bc1a42e40d639989219fe0af713c97ca"
+    },
+    {
+      "path": "web-angular/src/app/app.spec.ts",
+      "sha256": "e94ffdecccf291b1450d92ac4fcf44d42e0609ba82523e28c165902a13495621"
+    },
+    {
+      "path": "web-angular/src/app/app.ts",
+      "sha256": "25fb2eeca254b567ab9ab5c63c5708c1c32f5c0727fee8fe2f3cbb53524f4a98"
+    },
+    {
+      "path": "web-angular/src/app/composition/authenticated-routes/authenticated-routes.html",
+      "sha256": "e49ed22c5950dea51898393ce00c3caa9e0de07e9d179ff62b963e0977909a1c"
+    },
+    {
+      "path": "web-angular/src/app/composition/authenticated-routes/authenticated-routes.ts",
+      "sha256": "33fc7c8725e3549a74caa835ec055bcde96431c49fec09a6b396c5189fc2f9ad"
+    },
+    {
+      "path": "web-angular/src/app/config/api-origin.ts",
+      "sha256": "e7e58d0607997fdad77f33dd5841ed552e7956b82e20ea8907d2c1d7b870e15c"
+    },
+    {
+      "path": "web-angular/src/app/dev/boolean-preview/boolean-preview.html",
+      "sha256": "cbb2258b5acbef426367a12fc91c409f29870304028cd834a913e32e29981fb3"
+    },
+    {
+      "path": "web-angular/src/app/dev/boolean-preview/boolean-preview.scss",
+      "sha256": "2037e53a0d716bdcc5cfb9b1caeedb96133b06e4219708d05802347e8ad8cb70"
+    },
+    {
+      "path": "web-angular/src/app/dev/boolean-preview/boolean-preview.ts",
+      "sha256": "10179af5741aef6e3d454cf12d8d079b799806721a4fd254a1767934817a1173"
+    },
+    {
+      "path": "web-angular/src/app/dev/collection-preview/collection-preview.html",
+      "sha256": "8a1dd7aae3c7f0cd36a9bf74becf621b6accb958169e862def9311c06fa0dc0d"
+    },
+    {
+      "path": "web-angular/src/app/dev/collection-preview/collection-preview.scss",
+      "sha256": "f6d9f0700fabd8b5925eb421b8cc3a5957ba9961516c97b338011d6884593dd0"
+    },
+    {
+      "path": "web-angular/src/app/dev/collection-preview/collection-preview.ts",
+      "sha256": "f092ba7f2162f018a7f706923bc18e4c8eba0b43fbb720da91916eaf7e0464be"
+    },
+    {
+      "path": "web-angular/src/app/dev/criteria-preview-editor/criteria-preview-editor.html",
+      "sha256": "982804a1d0001e6dfa4005af199e938e0cbdcdf4f6a295be574bc70041cd3d20"
+    },
+    {
+      "path": "web-angular/src/app/dev/criteria-preview-editor/criteria-preview-editor.ts",
+      "sha256": "9d56d527c400d108affff15ad79f2c7583c696b74b1d4b1b168c8adea45bbe24"
+    },
+    {
+      "path": "web-angular/src/app/dev/criteria-preview-gate.ts",
+      "sha256": "839234e13546db4193b677d36253963061e13b947f68e3b7bbe151910b134a94"
+    },
+    {
+      "path": "web-angular/src/app/dev/criteria-preview/criteria-preview.html",
+      "sha256": "7d1092f5679ed931ce40399326e87965420109b377955829ce22f0d9bf898efa"
+    },
+    {
+      "path": "web-angular/src/app/dev/criteria-preview/criteria-preview.scss",
+      "sha256": "650fc5bac1d54ebb4093dcaa0fc164df13fdcf4b6e12fbd80ff3273e24336542"
+    },
+    {
+      "path": "web-angular/src/app/dev/criteria-preview/criteria-preview.ts",
+      "sha256": "171e3005cf531db02ef271daa982631e777e0e00d8750c5e48f4bbcbd00ceebc"
+    },
+    {
+      "path": "web-angular/src/app/dev/date-preview/date-preview.html",
+      "sha256": "9977e04f1a33e326daf209b04c07ce20129c6abb1d3aab320a00f79300192a83"
+    },
+    {
+      "path": "web-angular/src/app/dev/date-preview/date-preview.scss",
+      "sha256": "0fe35ebdb6565dc0446961ee234623a3e69a4074496bb776689bb7db767eabdc"
+    },
+    {
+      "path": "web-angular/src/app/dev/date-preview/date-preview.ts",
+      "sha256": "d054a52386703f73d5c8b80abdfc648827de8cf24a4724d56f6862ea374c3117"
+    },
+    {
+      "path": "web-angular/src/app/dev/form-close-preview/form-close-preview.html",
+      "sha256": "6dbb099a26dcf195840fccfb871b68f463377429e7560ec2d2bd5f3f854602e5"
+    },
+    {
+      "path": "web-angular/src/app/dev/form-close-preview/form-close-preview.scss",
+      "sha256": "5003bab8a82e3bf023972ae954fa84d83e06a41160099fba495f6c4f9a7a98a9"
+    },
+    {
+      "path": "web-angular/src/app/dev/form-close-preview/form-close-preview.ts",
+      "sha256": "898b48e7d6cb75083449e970c4e85ebdb4e00cb3b39cb92a27e18b6aeeb3d5a7"
+    },
+    {
+      "path": "web-angular/src/app/dev/form-fixture-validation.ts",
+      "sha256": "76423796e49cb76aae3840cf02006c9b92193b8502f84dacde35ce1a24ac7b4c"
+    },
+    {
+      "path": "web-angular/src/app/dev/form-preview/form-preview.html",
+      "sha256": "d868deb170def17820eeaf03e3ed2d0b138c5a95460c24b991ae95fe86e6325d"
+    },
+    {
+      "path": "web-angular/src/app/dev/form-preview/form-preview.scss",
+      "sha256": "b26a7596b26391c1f01592c32e7beb02a7e88a16a7c23d90c9307c2f278af8e4"
+    },
+    {
+      "path": "web-angular/src/app/dev/form-preview/form-preview.ts",
+      "sha256": "193b74d635d091d1f095fcb2a9e64542d4cc74e3536d1ad252bd039e0bf58807"
+    },
+    {
+      "path": "web-angular/src/app/dev/grid-capabilities-preview/grid-capabilities-preview.html",
+      "sha256": "169b05a79a2154a7502d774d56a08f7e1a1a55874f1d9584b5356f647778113a"
+    },
+    {
+      "path": "web-angular/src/app/dev/grid-capabilities-preview/grid-capabilities-preview.scss",
+      "sha256": "72e135c21628adb71b419e8a2dc03c19de37a99c2e48d64d6434a12a7a1ea735"
+    },
+    {
+      "path": "web-angular/src/app/dev/grid-capabilities-preview/grid-capabilities-preview.ts",
+      "sha256": "6acb2250b1e36f189d28707fec43f5fe94eebb41e7c2463df2d8ad028b80332a"
+    },
+    {
+      "path": "web-angular/src/app/dev/multiline-preview/multiline-preview.html",
+      "sha256": "47f1ab93220d5ca8e68c96d1b034271e748ddf30207301d9c7a051b74c6974d9"
+    },
+    {
+      "path": "web-angular/src/app/dev/multiline-preview/multiline-preview.scss",
+      "sha256": "681043a5c8d589a09b7d88dd7f7b78271d57167b6d3cae1b2ed4a65cef86b1c1"
+    },
+    {
+      "path": "web-angular/src/app/dev/multiline-preview/multiline-preview.ts",
+      "sha256": "92136161d8222d20873f66faff0d7609de9ccd72a683f6bdadbd24d69f2cbf23"
+    },
+    {
+      "path": "web-angular/src/app/dev/numeric-preview/numeric-preview.html",
+      "sha256": "545de9a7c943f4e812fbf3cff1644ef5fcabeae0f930bdfb6629ee789c27c9fa"
+    },
+    {
+      "path": "web-angular/src/app/dev/numeric-preview/numeric-preview.scss",
+      "sha256": "2037e53a0d716bdcc5cfb9b1caeedb96133b06e4219708d05802347e8ad8cb70"
+    },
+    {
+      "path": "web-angular/src/app/dev/numeric-preview/numeric-preview.ts",
+      "sha256": "a4567ffcf652cb85e988a9e2ac8f70280361a8acd3f188ee60c95a5757f741a0"
+    },
+    {
+      "path": "web-angular/src/app/dev/read-preview-away/read-preview-away.html",
+      "sha256": "36328335535ce4ef793438dec9015c5eaf3f4458a2f6d41892417cb97cc8e357"
+    },
+    {
+      "path": "web-angular/src/app/dev/read-preview-away/read-preview-away.scss",
+      "sha256": "f554fe275d539cc9acb3cc4d2197330ff8800eb77d395a650952b3e7e8c56979"
+    },
+    {
+      "path": "web-angular/src/app/dev/read-preview-away/read-preview-away.ts",
+      "sha256": "1da27c39f4aff329623f34063cbbf0969f99dd543ab7cbbfd8d5d6916834fdc9"
+    },
+    {
+      "path": "web-angular/src/app/dev/read-preview-probe.ts",
+      "sha256": "f5cfaa3edfe1d056f58bad38ff0a28908e66284525e5fc6b51f0cf82fcd613e0"
+    },
+    {
+      "path": "web-angular/src/app/dev/read-preview/read-preview.html",
+      "sha256": "aa896f40777c08a49e7b232cf0a7b23baeea60d7ecc1620e85894afefe08c8ac"
+    },
+    {
+      "path": "web-angular/src/app/dev/read-preview/read-preview.scss",
+      "sha256": "c7aeb9fb9a4b3455826f28c2453a8841e3c97a6f8af5a36db31d5e0d39b12d4e"
+    },
+    {
+      "path": "web-angular/src/app/dev/read-preview/read-preview.ts",
+      "sha256": "8e1d2ca3949ca3d04aceb10332b2e8f5c5025b72b73d810996a7b31e2dced9ee"
+    },
+    {
+      "path": "web-angular/src/app/dev/reference-preview/reference-preview.html",
+      "sha256": "3e0b6d12721856b03426c446e1b90af0f05f7bb4a1137685cac476c5ddb8461a"
+    },
+    {
+      "path": "web-angular/src/app/dev/reference-preview/reference-preview.scss",
+      "sha256": "9678e4fc784c5c7eeb4364414aa389014b8e24621b6d0a231fc087352192debc"
+    },
+    {
+      "path": "web-angular/src/app/dev/reference-preview/reference-preview.ts",
+      "sha256": "6c2c5b5f58c731b6e5b229f3892bcf8ab8f1c159caaa0ca2739afa431df8a7ec"
+    },
+    {
+      "path": "web-angular/src/app/dev/theme-preview/theme-preview.html",
+      "sha256": "9ddac813732f51a0a3de60ec7c75b337fd8b0b87feb565881842202477e59d0b"
+    },
+    {
+      "path": "web-angular/src/app/dev/theme-preview/theme-preview.scss",
+      "sha256": "d4083ba32d1a81e41430f50fcf8a70abec1f8733d59d84097bfcacf3679aa52a"
+    },
+    {
+      "path": "web-angular/src/app/dev/theme-preview/theme-preview.ts",
+      "sha256": "7bb799356ac0b457d9acbda0103002b15b6e86ae6a8e0e44328812719803e49b"
+    },
+    {
+      "path": "web-angular/src/app/dev/unsaved-context-preview/unsaved-context-preview.html",
+      "sha256": "67125e21f4990076bb12cb3aa2aedf038ab24eaf528d1ee007a230a6c56aa60b"
+    },
+    {
+      "path": "web-angular/src/app/dev/unsaved-context-preview/unsaved-context-preview.scss",
+      "sha256": "353ac4478cdeb82d53e63846e2e33a041b3ad1000b7a57018651c212e31f18a6"
+    },
+    {
+      "path": "web-angular/src/app/dev/unsaved-context-preview/unsaved-context-preview.ts",
+      "sha256": "af09678fb397f415fe0feff60741227080ac27f79ff032e71e0339d73fb5d309"
+    },
+    {
+      "path": "web-angular/src/app/dev/unsaved-destination/unsaved-destination.html",
+      "sha256": "6128286b4422c9755aa832a541dab11c7000b0cdba071bfdbc4c6d537f1cb8e0"
+    },
+    {
+      "path": "web-angular/src/app/dev/unsaved-destination/unsaved-destination.ts",
+      "sha256": "f44b7ff09aa5bf43319f827f6876806204ee2b1156b77e92bfb36d1e61058ca6"
+    },
+    {
+      "path": "web-angular/src/app/dev/unsaved-fixture-state.ts",
+      "sha256": "411dbf4b4748de02ead261e067811f4f0a4ec2fa75fb1718beb9af6a3509838c"
+    },
+    {
+      "path": "web-angular/src/app/dev/unsaved-preview-frame/unsaved-preview-frame.html",
+      "sha256": "e49ed22c5950dea51898393ce00c3caa9e0de07e9d179ff62b963e0977909a1c"
+    },
+    {
+      "path": "web-angular/src/app/dev/unsaved-preview-frame/unsaved-preview-frame.ts",
+      "sha256": "b74852eddfc83380afae033ecc337a80fa9ba779f2bb62643127b6cf30e8f5df"
+    },
+    {
+      "path": "web-angular/src/app/dev/unsaved-preview/unsaved-preview.html",
+      "sha256": "2a20a54d5348c77aad48dbc22bc9c6a289dcf071fd61e842f916a7a14ed08a93"
+    },
+    {
+      "path": "web-angular/src/app/dev/unsaved-preview/unsaved-preview.scss",
+      "sha256": "d93be15961c7cca715d66c55acff1a2fb83b51d26888a54899396e0a53833996"
+    },
+    {
+      "path": "web-angular/src/app/dev/unsaved-preview/unsaved-preview.ts",
+      "sha256": "021cc15038a999b16e4e51e70564c05222f792cecbe9a3bb68c55c321d171db8"
+    },
+    {
+      "path": "web-angular/src/app/modules/accounting/fiscal-year-context/components/fiscal-context-control/fiscal-context-control.html",
+      "sha256": "d2b73f20eb820d043e659821735a93b7cf2616c34b98b9300184d7349bc54a77"
+    },
+    {
+      "path": "web-angular/src/app/modules/accounting/fiscal-year-context/components/fiscal-context-control/fiscal-context-control.scss",
+      "sha256": "bd392e98332817ed1ceb6a575927e50312c0e3ca5c5a16d1e72f1ac1dd1ba996"
+    },
+    {
+      "path": "web-angular/src/app/modules/accounting/fiscal-year-context/components/fiscal-context-control/fiscal-context-control.ts",
+      "sha256": "8d7a368e6b6715c37e194fa6a4d1c76321e761da137162d32323a2409862093d"
+    },
+    {
+      "path": "web-angular/src/app/modules/accounting/fiscal-year-context/fiscal-context.fixture.ts",
+      "sha256": "1649ce6300e2cc4a3cf9bfede3642fd5c17bd68229cd082255579add8b72e64c"
+    },
+    {
+      "path": "web-angular/src/app/modules/accounting/fiscal-year-context/public-api.ts",
+      "sha256": "56f139aad00009d8d173153e3b1b13eba758329c8f81a11dfd555b45b7625c0b"
+    },
+    {
+      "path": "web-angular/src/app/modules/accounting/fiscal-year-context/services/fiscal-context-service.ts",
+      "sha256": "ce360ef103ac4a76a0d746e8e6c2b001cec83b6afb520f6844ada80259269c47"
+    },
+    {
+      "path": "web-angular/src/app/modules/accounting/fiscal-year-context/state/fiscal-context-state.spec.ts",
+      "sha256": "54927fc7c2143566b033fe66e8d26f22bce8391fafd7213f4a23c61fba99697d"
+    },
+    {
+      "path": "web-angular/src/app/modules/accounting/fiscal-year-context/state/fiscal-context-state.ts",
+      "sha256": "3c1dd757ff21c5632abc01a6a0dff3c6284d8820856ae50d9316ef0fd85b2d56"
+    },
+    {
+      "path": "web-angular/src/app/modules/accounting/fiscal-year-context/types/fiscal-context.spec.ts",
+      "sha256": "c126f1eb119e8e274400f4e3707a270b4b1976909eae9fd115d3ad35101d7fa1"
+    },
+    {
+      "path": "web-angular/src/app/modules/accounting/fiscal-year-context/types/fiscal-context.ts",
+      "sha256": "7d9607e628d3d4edc9b62a445ac76c9ea3d3e76e5a6fef18cc9b61171ff7038a"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-editor/country-editor.html",
+      "sha256": "91d971891ea179353ea4da95d62e2d22932fa3f938e4a52e3d9dbdab2a384fd8"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-editor/country-editor.ts",
+      "sha256": "ab880fc97a58ea9ecb60a18257a409f0c94b11896b5d04bd76aa86c2f9d721f2"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-import-view/country-import-view.html",
+      "sha256": "59e0e2d29b1ff87b52e11f87cd865f02baf55142bfb99762fbd0d2b8ddced9a1"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-import-view/country-import-view.ts",
+      "sha256": "5a75f38fa54fafd0be89105e9b6bc38594100aeb9696f81b4f350165d6f7417e"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-read-details/country-read-details.html",
+      "sha256": "a7c873fb017499589cb21284adf0c363ba77b25f18c8e115105514db9b4a9c06"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-read-details/country-read-details.scss",
+      "sha256": "cdb7bfdd454e528dc9cbce48542e81ded7dbf30aa0c2dbb23da193d0c78b21c0"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-read-details/country-read-details.ts",
+      "sha256": "af0fb128d8bf3f75f0b2c770ac70110994237d776913e5ada1964ca800bc6b1c"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/country.fixture.ts",
+      "sha256": "b770734b15589164d25a8a7cfb8441c3bae4925ddf9eedd51b3ca7b468ca5d1f"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page/countries-read-page.html",
+      "sha256": "05d0f0fef8fc8f7aac3852169acd28a8a461283e6fb1506116bad1995c43418e"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page/countries-read-page.scss",
+      "sha256": "f21fd9a2c83c28d5a5342dc89a791fffa80af4507f37d01b3285236a46a71bbf"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page/countries-read-page.spec.ts",
+      "sha256": "bdc4acac4ce3052a805aaaf3ee6b7514fa1b4731a16734e457c45baa43d33e70"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page/countries-read-page.ts",
+      "sha256": "03730af3d4089b3bff566fabbe0ffbf58deb965a15da736e39585974e8c961f7"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/services/country-service.spec.ts",
+      "sha256": "bbe363a73a91bf5f9f8b5f8816ac4ec28a810afccd3a60cf6dd660ef88efa738"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/services/country-service.ts",
+      "sha256": "805b5af0f75a992308430978b0f86b627a78f9732cf9f52b994321020d30279b"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/state/country-column-filters.spec.ts",
+      "sha256": "8f586e535a92c9f6bef43fa71778694307ddefd9e5838498d40124a6d2802164"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/state/country-column-filters.ts",
+      "sha256": "c106763998d689f708352c1e93839220c7df8e0d9ed29f8ea9838ee6766fd19f"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/state/country-editor-state.spec.ts",
+      "sha256": "c83532b80c9604535a19549b844fa0b87fdfa4230339a364138ee66e2da53cac"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/state/country-editor-state.ts",
+      "sha256": "c0cecc6bafdcd43d1e6b15a41cd264becd7d1fc6f3547dfdf1a0c70c1b306817"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/state/country-import-state.spec.ts",
+      "sha256": "bb110aacd0eda296aa91071665c053b7f798691b716a03584271a8ba64aa31c5"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/state/country-import-state.ts",
+      "sha256": "c434a98ebd0d17ea17e1b57dbce184419ad476ac70605576d3cfc96dbb9c71c6"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/state/country-lifecycle-state.spec.ts",
+      "sha256": "669587e3c09958edce48a360a8b492c08906759a30d40085e2c3457ecb50d8ac"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/state/country-lifecycle-state.ts",
+      "sha256": "0d3d4704909542d06fa5bae44eac9d15155c81011be451f6bd58613d5d5fe1f3"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/state/country-read-state.spec.ts",
+      "sha256": "0bba2264eaeddc5e9a41f9df0eee4a15ad32a6da630f99fd3a69400050633eb3"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/state/country-read-state.ts",
+      "sha256": "da3ee24dd8fb2d9d3be7194864717278c59fd4b99570adaa07dfbdb0c6b40e51"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/types/country-actions.ts",
+      "sha256": "ecf12c283687d91918b8654b5bca1ae9e78d0f8162a518cdfbe140624bd3d94f"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/types/country-filters.ts",
+      "sha256": "d9b395194d397f4f90070d82af78087347f165bd499bb1491541584b29780996"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/types/country-lifecycle.ts",
+      "sha256": "7b19b75524f75a64a50deba3bf439eff805f5093d3232ba8c3cf19928a71a04e"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/types/country.spec.ts",
+      "sha256": "88aff831c7f34b33bd7bd52bc989cdf25330f8fff55d4280a995c25d944759ea"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/types/country.ts",
+      "sha256": "5040ecdc211fee1c96bd50420b3d4325feef04fdcc71f523e01ec4855e2efb57"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/utils/country-chart-data.spec.ts",
+      "sha256": "bb35cd1a97caae87b4446350a68dc1b00f0e62b30bb5a92661698f6a502497d5"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/utils/country-chart-data.ts",
+      "sha256": "76a850f01029f45d1208727b46df0323c55b09461b63ee444d52b3990afd51f0"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/utils/country-list-presentation.spec.ts",
+      "sha256": "a66d82d3a3a4d2eb2173aa33786fbf46897b26efc2640c8e2840be46af1d1dcc"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/utils/country-list-presentation.ts",
+      "sha256": "823bcca0323cd236f0542338f14a816dba2734c67d58d8ad4f7f920f56f6f10f"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/validation/country-import.spec.ts",
+      "sha256": "c47a5bb2f8a1feeef02c4349fca22a704bbe04edfc27303630e8b9d4d4c11617"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/validation/country-import.ts",
+      "sha256": "a78b0d71513909e088835b9a6b697fcd3c04040d431063ccd073054dee009564"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/validation/country-mutation.spec.ts",
+      "sha256": "5596660eb3ec2718828be380f3eb500497c145d579ae9646ab6dfd8a28bd93f0"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/validation/country-mutation.ts",
+      "sha256": "f129558227778b78b22638e7d27553618464f322045e319bffd28a085bbced96"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/public-api.ts",
+      "sha256": "1e51286c2adc57162652997b8fa95cfe111efc73d622c33796eee9b9b9e88339"
+    },
+    {
+      "path": "web-angular/src/app/modules/reporting/global-reports/components/global-report-view/global-report-view.html",
+      "sha256": "0cd60787175e368c268edaedfed18366b953db0c919b98ac15f2cec7f886e9e3"
+    },
+    {
+      "path": "web-angular/src/app/modules/reporting/global-reports/components/global-report-view/global-report-view.scss",
+      "sha256": "ef925cdf1ef3cdd30c36cbd4dc6281f85ccb9c445201c04ea050e6d5195abb72"
+    },
+    {
+      "path": "web-angular/src/app/modules/reporting/global-reports/components/global-report-view/global-report-view.spec.ts",
+      "sha256": "7d862e4ab229eabea54138d51e25b4f9c75ef71287d3b3349777d6fcdcc03da3"
+    },
+    {
+      "path": "web-angular/src/app/modules/reporting/global-reports/components/global-report-view/global-report-view.ts",
+      "sha256": "4bdd24ac7285e91cc961dac5f9b41a4f6e41b1fcbd8cf5b4a3f4590e9c0e780b"
+    },
+    {
+      "path": "web-angular/src/app/modules/reporting/global-reports/report.fixture.ts",
+      "sha256": "9b8f7342a41acab7176072209aee639a86fdfc11fb5bbe5ef19dc5add7753fe9"
+    },
+    {
+      "path": "web-angular/src/app/modules/reporting/global-reports/services/global-report-service.spec.ts",
+      "sha256": "2eab2a9176294c20cb1f46969f128e3e03d0dd9f6c592f54f145d4e7fbfb50a5"
+    },
+    {
+      "path": "web-angular/src/app/modules/reporting/global-reports/services/global-report-service.ts",
+      "sha256": "d6e6b01dcc62439659d658deb7ee59962daba830b346f6c55fd17cd0b6efd1be"
+    },
+    {
+      "path": "web-angular/src/app/modules/reporting/global-reports/state/global-report-state.spec.ts",
+      "sha256": "2f058a227dbe51afd05ba1cf190111634a9de2a3ee65618c3cda2bd510de32d9"
+    },
+    {
+      "path": "web-angular/src/app/modules/reporting/global-reports/state/global-report-state.ts",
+      "sha256": "2a4dfbdb084722060fa8b2999864cf12ee1cddd5f391eb24d360ca8e7334639e"
+    },
+    {
+      "path": "web-angular/src/app/modules/reporting/global-reports/types/global-report.spec.ts",
+      "sha256": "e8d3ba8e02b9aed5be1e24a9bc45761dbbc5a93dd557097c9391f56d50504276"
+    },
+    {
+      "path": "web-angular/src/app/modules/reporting/global-reports/types/global-report.ts",
+      "sha256": "1b6094d49ac498da0c33a925466a55d9c9aa89a661eec5321a81e2443b6d8594"
+    },
+    {
+      "path": "web-angular/src/app/modules/reporting/global-reports/validation/report-filter-validator.ts",
+      "sha256": "b994d97d0ca33e4744c417c61886bdf051890c2f941ef181ddfd81879d9f632f"
+    },
+    {
+      "path": "web-angular/src/app/modules/reporting/public-api.ts",
+      "sha256": "22998862eadd469f5935036e9b877aa505baa44db8e953722042dc90bcb7c2d6"
+    },
+    {
+      "path": "web-angular/src/app/platform/auth/auth.fixture.ts",
+      "sha256": "3ada26749ef25cbca7ecc9515eded7d942032043d269875650ed64df9a824fba"
+    },
+    {
+      "path": "web-angular/src/app/platform/auth/pages/login-page/login-page.html",
+      "sha256": "167ed9f8134b9fa102ebe70397f438611bdcbce00aa15d4ad6794ecdd15e8b9d"
+    },
+    {
+      "path": "web-angular/src/app/platform/auth/pages/login-page/login-page.scss",
+      "sha256": "3024cc6b57fe6c2ce1844b9325dda371d2c2f1aee27cfe947851ba09b5887211"
+    },
+    {
+      "path": "web-angular/src/app/platform/auth/pages/login-page/login-page.ts",
+      "sha256": "ae2807b50f3be14c2c742655e0f34db7eba484165494d7a4cc163baa735f6637"
+    },
+    {
+      "path": "web-angular/src/app/platform/auth/pages/password-request-page/password-request-page.html",
+      "sha256": "9512f5269e2367641133348ba1d6767bf1f335a31f370fc213872014225825e6"
+    },
+    {
+      "path": "web-angular/src/app/platform/auth/pages/password-request-page/password-request-page.scss",
+      "sha256": "08269f1acdf7f2e871b4a74829dfb70673ce9d1e3e4fd3c7c3b391c327ef0720"
+    },
+    {
+      "path": "web-angular/src/app/platform/auth/pages/password-request-page/password-request-page.ts",
+      "sha256": "f9f656d642c68b1548a060417610e1e5db071180b8bbbb53bef434bf41669032"
+    },
+    {
+      "path": "web-angular/src/app/platform/auth/pages/session-page/session-page.html",
+      "sha256": "2e80274d6ec4569b77e2ee53c1be11f10ec045633818fda758066fa73068ed23"
+    },
+    {
+      "path": "web-angular/src/app/platform/auth/pages/session-page/session-page.scss",
+      "sha256": "4986990efc9bb12060beb4d0703913bc87533615ee1fbe95afbdc96728bde5be"
+    },
+    {
+      "path": "web-angular/src/app/platform/auth/pages/session-page/session-page.spec.ts",
+      "sha256": "a2e7f24f04fb4fa92b13964ce8e83aa4b30343c974ecb6acaa5fb5f2dee5a45c"
+    },
+    {
+      "path": "web-angular/src/app/platform/auth/pages/session-page/session-page.ts",
+      "sha256": "3c1601fd98756be926b3d70e2aece6b0a55b27684c59da2af49bbb8bc5e07d52"
+    },
+    {
+      "path": "web-angular/src/app/platform/auth/public-api.ts",
+      "sha256": "2bcfbe46f9de798bab707ac7e810d8baf864f4711c59bc22b3baa651aaba7436"
+    },
+    {
+      "path": "web-angular/src/app/platform/auth/services/browser-auth-service.spec.ts",
+      "sha256": "5078afca90bb250dd9406cf2e7a7b67f377e238f31998324f98edf5251b2e89b"
+    },
+    {
+      "path": "web-angular/src/app/platform/auth/services/browser-auth-service.ts",
+      "sha256": "dd5dc432e5a6687bc270625894dfa92dc43f69d9c16414937d11984aee197103"
+    },
+    {
+      "path": "web-angular/src/app/platform/auth/services/browser-mutation-security.ts",
+      "sha256": "1ffe1f31e70450cfb5053e850a4cfa31bdcad7162f55ff563e28f7c596aa1079"
+    },
+    {
+      "path": "web-angular/src/app/platform/auth/services/session-context-events.spec.ts",
+      "sha256": "8174a9c59d901c64f0ea713925f3f3319f1e551de9d7ef2993f5de59a7324d1d"
+    },
+    {
+      "path": "web-angular/src/app/platform/auth/services/session-context-events.ts",
+      "sha256": "6973aa331b5734a76479064a2d47124b362afb07bb1f9432d07d1bf89e4286cf"
+    },
+    {
+      "path": "web-angular/src/app/platform/auth/session.public-api.ts",
+      "sha256": "69d94a6e82b58bc042145b9ef3b117724917d79ca3b6a060e975cbff4be0a5e7"
+    },
+    {
+      "path": "web-angular/src/app/platform/auth/state/auth-session.spec.ts",
+      "sha256": "29bdfa5fc216753b1f840d6d513bbb1e442a1fb13d08a033f7e7bcfde0fb7ff1"
+    },
+    {
+      "path": "web-angular/src/app/platform/auth/state/auth-session.ts",
+      "sha256": "fd9c3349844d8d628fe0b9f2e711ce88bf8212390fb104c69abcdf2dec826c5c"
+    },
+    {
+      "path": "web-angular/src/app/platform/auth/types/auth-contracts.ts",
+      "sha256": "6d9bfdef9eacc18f2907e16e22732eccf85570756f50d4f2f5ee88cb3463130d"
+    },
+    {
+      "path": "web-angular/src/app/platform/auth/validation/login-validation.ts",
+      "sha256": "07ca33168ba3d51543df655cf1fe36b546eadcb2c6d377746be9503f517ad1a9"
+    },
+    {
+      "path": "web-angular/src/app/platform/localization/localization-runtime.spec.ts",
+      "sha256": "f15411d9bd00d51f52cd82bd4b60be9b013c071312155471cdc796280dd206fb"
+    },
+    {
+      "path": "web-angular/src/app/platform/localization/localization-runtime.ts",
+      "sha256": "4d9313e51477039aae789a326085a819ec61b1ba56ff721fce621054bb7aae07"
+    },
+    {
+      "path": "web-angular/src/app/platform/localization/localization-service.spec.ts",
+      "sha256": "6bcb9a358c0faa6b2504a062738d5cd98f450d491351de902ef01c4c1313e3a1"
+    },
+    {
+      "path": "web-angular/src/app/platform/localization/localization-service.ts",
+      "sha256": "71e9f6b0bae378850d3e983e18bcadf6f531f584da0d9c16334c7f865d8fc1d2"
+    },
+    {
+      "path": "web-angular/src/app/platform/localization/localization.types.ts",
+      "sha256": "06925d60c69d42d0db6fa46357862b07e943de2523d531293c4d7a10df84513b"
+    },
+    {
+      "path": "web-angular/src/app/platform/localization/public-api.ts",
+      "sha256": "0cb1953f6fddb1f80ffa431bf3a55af36f8b760c6ccb0836c7dd6716da42b8fe"
+    },
+    {
+      "path": "web-angular/src/app/platform/localization/ui-text.pipe.ts",
+      "sha256": "7e026333a013181d6513016c1514ab74f7faa3bcf4eb4b498960654a2e2156ac"
+    },
+    {
+      "path": "web-angular/src/app/platform/modules/components/module-context-control/module-context-control.html",
+      "sha256": "dc2edbe4d015921c1290274d728bb86c34ae073ec518e51dda5f09a2c9898487"
+    },
+    {
+      "path": "web-angular/src/app/platform/modules/components/module-context-control/module-context-control.scss",
+      "sha256": "0e76879896157c08527c2a9437c84954467fce2d51255d21adb54dfbfba15a49"
+    },
+    {
+      "path": "web-angular/src/app/platform/modules/components/module-context-control/module-context-control.ts",
+      "sha256": "5d1e690feb15bbd845abe04b1f092e6d8954223777513a784efc907b303cb480"
+    },
+    {
+      "path": "web-angular/src/app/platform/modules/controls.public-api.ts",
+      "sha256": "80ce8b9d7f1a7559e77acbe4bd6b970344f1df1a875f281ccbbddc61dd29e903"
+    },
+    {
+      "path": "web-angular/src/app/platform/modules/module.fixture.ts",
+      "sha256": "b9c11ef8fd6031bfb6f48631bdfc1434b800fa3ea38a2369a529bd6098e1d977"
+    },
+    {
+      "path": "web-angular/src/app/platform/modules/pages/module-browser/module-browser.html",
+      "sha256": "dd1cfeb6b97b87eca1fa7ec088276dc9a3ab0e2224b8ce58877b604c6d229a0c"
+    },
+    {
+      "path": "web-angular/src/app/platform/modules/pages/module-browser/module-browser.scss",
+      "sha256": "ec0856d68abc122fee475300d4639a991acfb88bb2e1351fbf457cf0718f4b0f"
+    },
+    {
+      "path": "web-angular/src/app/platform/modules/pages/module-browser/module-browser.ts",
+      "sha256": "3054256e9a7554e1d971960bea2e8810e8fff78a900dfda82aad7675486e7c76"
+    },
+    {
+      "path": "web-angular/src/app/platform/modules/pages/module-workspace/module-workspace.html",
+      "sha256": "e49ed22c5950dea51898393ce00c3caa9e0de07e9d179ff62b963e0977909a1c"
+    },
+    {
+      "path": "web-angular/src/app/platform/modules/pages/module-workspace/module-workspace.ts",
+      "sha256": "6111a93b2ca86e84ccf6dea58cb55ed3d8b948e27d691794319f3a71a862c6a8"
+    },
+    {
+      "path": "web-angular/src/app/platform/modules/presentation/module-access.ts",
+      "sha256": "ad04625fbe638797f17e17cf84e9e3b6c1a2b8bf79d9535dfcacec0f72a48043"
+    },
+    {
+      "path": "web-angular/src/app/platform/modules/presentation/module-registry.ts",
+      "sha256": "516e4fa5d173cbcc0fe96e48fa73042f958afbab114df810124f5aa81094421a"
+    },
+    {
+      "path": "web-angular/src/app/platform/modules/public-api.ts",
+      "sha256": "f0eca5a579e2a737ff25c9b3021e47c9bd42e158cdc34d8fb1dcee91adadcc3b"
+    },
+    {
+      "path": "web-angular/src/app/platform/modules/routes.public-api.ts",
+      "sha256": "3bfa092254afab526b46dc70a49102d84f0595e2af2e5b59f84860e877502d6c"
+    },
+    {
+      "path": "web-angular/src/app/platform/modules/services/module-catalog-service.ts",
+      "sha256": "041f30970886996662c16dc1a8ef9f3ae4a7c26038a4adc6a8115453f40286e1"
+    },
+    {
+      "path": "web-angular/src/app/platform/modules/state/module-catalog-state.spec.ts",
+      "sha256": "00dd98e2c61314ead0fce473712e7ae034a5d75effdce98b808565024627744e"
+    },
+    {
+      "path": "web-angular/src/app/platform/modules/state/module-catalog-state.ts",
+      "sha256": "977e5907574fee6448dbfd62ce579bd6b778262f8badac34c02a2e6929af0577"
+    },
+    {
+      "path": "web-angular/src/app/platform/modules/state/module-context-state.spec.html",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "web-angular/src/app/platform/modules/state/module-context-state.spec.ts",
+      "sha256": "f0d8664e2c309fb3b13d16b3b7e81e307076192472cf0788270007eafa52500a"
+    },
+    {
+      "path": "web-angular/src/app/platform/modules/state/module-context-state.ts",
+      "sha256": "5f5c706edcee30b82cccd1f4a7f153eccdf5ced4850786ca18ed3dfc8946f16e"
+    },
+    {
+      "path": "web-angular/src/app/platform/modules/types/module-contracts.spec.ts",
+      "sha256": "40b45c6f03900d6a91fffc1799ead376bf7fe759c106215fc5377605704e4400"
+    },
+    {
+      "path": "web-angular/src/app/platform/modules/types/module-contracts.ts",
+      "sha256": "84c8faec53e4c327dc349f084cec3336182567dc2b1a5bf8581d58ff67e28835"
+    },
+    {
+      "path": "web-angular/src/app/platform/realtime/public-api.ts",
+      "sha256": "de4f3259750486e3679113e62abda6dc17cb58c288ff4d9773e46d18b3c32240"
+    },
+    {
+      "path": "web-angular/src/app/platform/realtime/realtime-events.spec.ts",
+      "sha256": "cab02a700cae449f002ce47e201bbd6e34f62228a14667defd1214704579344b"
+    },
+    {
+      "path": "web-angular/src/app/platform/realtime/realtime-events.ts",
+      "sha256": "e5c61cf83c9bf6adc4e639726133f813ad9c62a4368186f6b9405ab0aa182e08"
+    },
+    {
+      "path": "web-angular/src/app/platform/tenants/dashboard.fixture.ts",
+      "sha256": "0d535d4dd8ad61cd086c4c2c9fccbfed4c8b0df546d3b8fca01044516d2ae155"
+    },
+    {
+      "path": "web-angular/src/app/platform/tenants/pages/dashboard-page/dashboard-page.html",
+      "sha256": "d5238ebe1e9fc84f108854a97170768ef3d29b1ed8115e475036ae89beb3b29a"
+    },
+    {
+      "path": "web-angular/src/app/platform/tenants/pages/dashboard-page/dashboard-page.scss",
+      "sha256": "70a5a4091737bce16d4f323f16c8619d5472a18a728030084ca014f72ea11e18"
+    },
+    {
+      "path": "web-angular/src/app/platform/tenants/pages/dashboard-page/dashboard-page.spec.ts",
+      "sha256": "29842320125ddc59d766a5f0541ab121b8b8a1d71da5d4d0a4443a44cbd9ad45"
+    },
+    {
+      "path": "web-angular/src/app/platform/tenants/pages/dashboard-page/dashboard-page.ts",
+      "sha256": "ffd6fc2e7ef5b33a55cf29c3432888627b562ee8d73066dc16d197e891fef69c"
+    },
+    {
+      "path": "web-angular/src/app/platform/tenants/presentation/dashboard-utils.ts",
+      "sha256": "f0b4876463fd1094d3b3aa929f335f05bb0150a42b365aac7180d5979bfee71c"
+    },
+    {
+      "path": "web-angular/src/app/platform/tenants/public-api.ts",
+      "sha256": "315cc08d95518de4e8df37cd14461dec33bea4fa6a8ee36fde2aa1833a3598bb"
+    },
+    {
+      "path": "web-angular/src/app/platform/tenants/services/dashboard-service.ts",
+      "sha256": "6a61fcb841969a087eeb4f6cf2adc98980fea37c8139e94da4c09aed49944dab"
+    },
+    {
+      "path": "web-angular/src/app/platform/tenants/state/dashboard-state.spec.ts",
+      "sha256": "dbffac7a53ef0e301f16915b9a4e92a6dbfe9d66011bd600e7f922aeb0eb7056"
+    },
+    {
+      "path": "web-angular/src/app/platform/tenants/state/dashboard-state.ts",
+      "sha256": "1801e8e21f021f8e4b3678e43930df69aff9f95215ac305feed7232589b190d6"
+    },
+    {
+      "path": "web-angular/src/app/platform/tenants/types/dashboard-contracts.spec.ts",
+      "sha256": "5afddc5f3f8aa331a7bae3fe5f5b571a47b5c85fdf95a843b23ccffffdf5c106"
+    },
+    {
+      "path": "web-angular/src/app/platform/tenants/types/dashboard-contracts.ts",
+      "sha256": "d0454d05a9a9f1194b05641ac63ba72ccbc2b0a3c11e0aa4b0d76d1b2ae9bcd1"
+    },
+    {
+      "path": "web-angular/src/app/shared/data/collection-criteria-normalizer.ts",
+      "sha256": "76b508c5c5736a47ed30931bc59bf26c4e965898de0df122eb05048c2dacb6ee"
+    },
+    {
+      "path": "web-angular/src/app/shared/data/collection-criteria-values.ts",
+      "sha256": "6fd220c2bb642eb74dab8ce88367488a7b2120d998d37b1b18e6e44185b6f5c0"
+    },
+    {
+      "path": "web-angular/src/app/shared/data/collection-criteria.spec.ts",
+      "sha256": "51428402e41e748454fe519d90895cc0a609b1034764aef19faa4bfdabeb92c2"
+    },
+    {
+      "path": "web-angular/src/app/shared/data/collection-criteria.ts",
+      "sha256": "f09e6dc6c922063d67624e2c7df55e0bb31adedbe8e4ca03a843ce8b006f9e17"
+    },
+    {
+      "path": "web-angular/src/app/shared/data/collection-criteria.types.ts",
+      "sha256": "f2c88d075c8f1921a815032cb61b20f0befe7c8553c629185583d290bfeccb47"
+    },
+    {
+      "path": "web-angular/src/app/shared/data/command-failure.spec.ts",
+      "sha256": "683ec8977715ba2112efa8dd1bedaa6b896e995151099de1da1bc759d9759352"
+    },
+    {
+      "path": "web-angular/src/app/shared/data/command-failure.ts",
+      "sha256": "74ecb0382b9fc28003c00d0f983e8631982c26459bba3bcf91f7dd1e1d7de459"
+    },
+    {
+      "path": "web-angular/src/app/shared/data/grid-filter.ts",
+      "sha256": "0190fb800e60563089dec829362b24a6863c5e594ca8959ecd9022bd7470337e"
+    },
+    {
+      "path": "web-angular/src/app/shared/data/pdf-document.spec.ts",
+      "sha256": "11219910a8303fe12e865c543383044c509dd2756b8b69a2828deabafc9455ac"
+    },
+    {
+      "path": "web-angular/src/app/shared/data/pdf-document.ts",
+      "sha256": "bc75d9f700b9bcbcc59a7121b0fee7a92c985cb7b0a7144b95ba3e8821d71a03"
+    },
+    {
+      "path": "web-angular/src/app/shared/data/public-api.ts",
+      "sha256": "fb322c20ac13ff99341fa852e49e3361f0e71f03461f4b90b8c0ca7783fed024"
+    },
+    {
+      "path": "web-angular/src/app/shared/data/route-collection-criteria.spec.listing.html",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "web-angular/src/app/shared/data/route-collection-criteria.spec.other.html",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "web-angular/src/app/shared/data/route-collection-criteria.spec.ts",
+      "sha256": "447c8eb368a3baa54e4e5b4e1e9ad3382c867648e1c571b39e8c3150f89a7e76"
+    },
+    {
+      "path": "web-angular/src/app/shared/data/route-collection-criteria.ts",
+      "sha256": "64b9244b549e16f847db74a60ac7a787004a8af0163f20cc2bdab03fb2d8f7ad"
+    },
+    {
+      "path": "web-angular/src/app/shared/data/scoped-read.spec.ts",
+      "sha256": "541381dada9c0dd2d5c8c08ec064e1bd90aba9726904112e36d868effbc126af"
+    },
+    {
+      "path": "web-angular/src/app/shared/data/scoped-read.ts",
+      "sha256": "904516e05806f36dce9367de408b63898af4c8b0f240c84fd5404c2a093c458d"
+    },
+    {
+      "path": "web-angular/src/app/shared/data/spreadsheet-contracts.ts",
+      "sha256": "2d46e59f3ad6725f2b880ec6215c76e61ca22db547888d330fda7e28ea0230a7"
+    },
+    {
+      "path": "web-angular/src/app/shared/data/spreadsheet-import.spec.ts",
+      "sha256": "e45018f97f72bfb24f5c3b5079a418649ed2897b35caa8c4207d3d2f3275163f"
+    },
+    {
+      "path": "web-angular/src/app/shared/data/spreadsheet-import.ts",
+      "sha256": "4c22ea5a77f5a2757b752b22d95ca7ec11fe5a2f1aa7a529f63a41323bbdabc2"
+    },
+    {
+      "path": "web-angular/src/app/shared/data/spreadsheet-parser.ts",
+      "sha256": "adecbd5db2b24db1661247f3b6564233561fe6ef63ad4b8c95adb22abfbcba44"
+    },
+    {
+      "path": "web-angular/src/app/shared/data/spreadsheet-public-api.ts",
+      "sha256": "a3b0c8e6252fb2db8b3f78b6b17520a815f0f1b7fa9e2d722a09554960f9a185"
+    },
+    {
+      "path": "web-angular/src/app/shared/data/unsaved-changes.spec.ts",
+      "sha256": "b12ce12c0a99ed78730e4d49fddbb7c44deefc05d706fdcb0568ddbce74bc0df"
+    },
+    {
+      "path": "web-angular/src/app/shared/data/unsaved-changes.ts",
+      "sha256": "8c7bbc27b2f1a1adc9af640c4df0ae55d9c6b7c274f4840c3281b67ef98014f9"
+    },
+    {
+      "path": "web-angular/src/app/shared/data/unsaved-navigation.spec.editor.html",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "web-angular/src/app/shared/data/unsaved-navigation.spec.frame.html",
+      "sha256": "e49ed22c5950dea51898393ce00c3caa9e0de07e9d179ff62b963e0977909a1c"
+    },
+    {
+      "path": "web-angular/src/app/shared/data/unsaved-navigation.spec.ts",
+      "sha256": "38ce9f3408d9390294dc5a42c038992e8575e76c749e09eb81cb4c633ec7d560"
+    },
+    {
+      "path": "web-angular/src/app/shared/data/unsaved-navigation.ts",
+      "sha256": "04d1de8d5f4bb2f61af8db96da95b81569e79e3253e520dab73512bd845e96d1"
+    },
+    {
+      "path": "web-angular/src/app/shared/data/unsaved-public-api.ts",
+      "sha256": "6f3359e289d15b409a7be526035e04950e05b9d3bd886486cf4ea4df556e52cb"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/buttons/action-button/action-button.html",
+      "sha256": "75dfceb395d70f1f8b19f7702c965c1fe2554d2af4c55519f77e2a07cfb5febd"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/buttons/action-button/action-button.scss",
+      "sha256": "13efabde0c93430736daf06017ca7406662e0b5221739fc08d0d032fd934ef75"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/buttons/action-button/action-button.spec.submit-composition.html",
+      "sha256": "638f64e0e458816d16c56d05b274b5d62d47a940773c59e0d3420d0f57fcae0e"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/buttons/action-button/action-button.spec.toolbar-composition.html",
+      "sha256": "51a3df043c7cc4a599edebfb2faaece20ed0895f91399535868b71dc091789a6"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/buttons/action-button/action-button.spec.ts",
+      "sha256": "e62e05125981bdd3773f4b0c8c82a055a01e95b2a314173bc4c83ddde0132306"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/buttons/action-button/action-button.ts",
+      "sha256": "3ba1e67f387bee7731260f0d9e9ebf7b7548bc05f9142c51eaa3c5f849e0a750"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/buttons/public-api.ts",
+      "sha256": "2846db3970190c9fed3a637201b2374f733e1f2c2faefe5a2f34a2c7ae07de27"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/cards/metric-card/metric-card.html",
+      "sha256": "bd8ef7bc05fb93303235c40e94c913a6ef0ccac4fb6d4cc9d7827332942e2227"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/cards/metric-card/metric-card.scss",
+      "sha256": "e364096e884973089839f47c0ac4479a50bd92b1b09de13d98526879885c5a98"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/cards/metric-card/metric-card.ts",
+      "sha256": "309c6d1d3d687eecc58df701a4354db5c5d052881310ebd6535f1bc7e0cc6fb9"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/charts/chart-panel/chart-panel.html",
+      "sha256": "2ea82cc2fe4de943944fae68954a16e693b6673e307462dc3e2e0eee1dc4de8b"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/charts/chart-panel/chart-panel.scss",
+      "sha256": "0aee3cfad171d4ebeb956d9c33c259c21e24540c500c9b675dbe738f574ed6b7"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/charts/chart-panel/chart-panel.ts",
+      "sha256": "eb4e0afa99a701b210201055bf0932417ecde1821d3d475872b534baa0813374"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/charts/chart-presentation.spec.ts",
+      "sha256": "cf30fdfc9c244aa5d75d6ecb311a55c875eaa0a302622f48bcae434b50aada26"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/charts/chart-presentation.ts",
+      "sha256": "efc6c1cb51786c1757c4f506632c0aa9f1fa8c8f046d6198d8425ecaf8ebe973"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/charts/chart-renderer/chart-renderer.html",
+      "sha256": "e70b370fb17eb4fd9fd146f85a04ce85e2a98759699eac8ecad3db7fb3daacfa"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/charts/chart-renderer/chart-renderer.scss",
+      "sha256": "5a6fe5ee3ec991995f30dfc147fa003e7bb4b40793638b0923c603967095f7ff"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/charts/chart-renderer/chart-renderer.ts",
+      "sha256": "30c7378d17d6a90e40ef52c6c2faa841f463f6091d645a646f6b65a8e32a34c4"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/charts/chart-slice-labels.ts",
+      "sha256": "4a644001445d3d3bcaf402683db8abc41f3806ddd694280e57d52101bbcfeebb"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/charts/chart.types.ts",
+      "sha256": "5e2474bad4371a75c92acb7c9baca15ec7d1328789d35db6b780f9219be62453"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/charts/collection-chart-view/collection-chart-view.html",
+      "sha256": "8eea38fa442cccc5c956e4dd96c9b652eaac1f99142d615dc5d2a695d01f2875"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/charts/collection-chart-view/collection-chart-view.scss",
+      "sha256": "a84f329749cf320921bae54775a394b424240ce6ae57a62b411f9715087793c3"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/charts/collection-chart-view/collection-chart-view.spec.ts",
+      "sha256": "7198f0401682ddc60ab6f4d811afaa53ea4f499864ae9823d47c76c88fc12c87"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/charts/collection-chart-view/collection-chart-view.ts",
+      "sha256": "d2697a750aadcabcf8b613a6f72b34665a97b9efd5404b463424f7048e2249d0"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/charts/public-api.ts",
+      "sha256": "f4c9adb8d72d656bd4dd1eac33298db5ad04eea8fe3cd7b2a27fac23b76aff47"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/card-list/card-list.component.scss",
+      "sha256": "983bda92631fc7b38e315b60eeb76c623981726ce93b6b7c85c48be6edb93c60"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/card-list/card-list.html",
+      "sha256": "f06a20e50b602c3228d044b772872d865eb3ca2694dc7967bc036d4df7971b3e"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/card-list/card-list.scss",
+      "sha256": "5954d633782492a27b2f5b08c9e27436f5db46ccf34cf90d715051db19d74102"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/card-list/card-list.ts",
+      "sha256": "ad5fd487921d982c806e877eb3b3c3404e49aec79d4242b3106e2666263c0fe6"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/collection-column-pipe.spec.ts",
+      "sha256": "20c9cc135ef5fc391c77594704ddc54b872c350e6bcf0becb3e39b22b350d6dd"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/collection-column-pipe.ts",
+      "sha256": "baa3393849c664b6cf8180bdfb45746c00d800e6d8ec11bc7a24f6f475e96ae8"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/collection-controller.spec.ts",
+      "sha256": "0280a2c9f945600342fb0de4382dcbe387c8fcb49e08aad18645504064fd6605"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/collection-controller.ts",
+      "sha256": "c6064dff4be19f00a25a12739a3844c88982c2a812beec985c2cb5d04e468047"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/collection-feedback/collection-feedback.html",
+      "sha256": "fb01d34c31a85fba31a29f58a57a0d9843a1a15e6c6c4668c66a2dee5ee70bff"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/collection-feedback/collection-feedback.ts",
+      "sha256": "fb90d8d6008e4dc846fce3d2769f7fe64a76eeeb422d35fb1bd277f7c825edbf"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/collection-focus.ts",
+      "sha256": "692d6dc17f3652571d692c55f551b838382ce84ee69ff019ef3dbb9c8ffac60b"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/collection-footer/collection-footer.html",
+      "sha256": "6a31e39a87fce4e4cd2364ca5d9869be26f3ae6daeec649a91a29e182936f4c8"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/collection-footer/collection-footer.scss",
+      "sha256": "af0ae4ba2508ed67c5810f6dc7aad5899f0c629b050997da0b27aad9716c53c9"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/collection-footer/collection-footer.ts",
+      "sha256": "b167db9da978a291545c18dee5dd3effff8ef51127130d2fa13dfbcb1e61bfbe"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/collection-frame/collection-frame.component.scss",
+      "sha256": "f2cde0bf936b8894d07286ec630dc9d8f531d02729d5ff8ef01b7969065da535"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/collection-frame/collection-frame.html",
+      "sha256": "aa1279420d80115b10bb71da1de46d0ac5b969fee6c6c81f66e3c7b3cb5aecb4"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/collection-frame/collection-frame.scss",
+      "sha256": "baa378bea4f4ea19bd774246f3ec525cf439af9a5f3a6a280d378a9d8a0ba80f"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/collection-frame/collection-frame.ts",
+      "sha256": "997e5b485e3c720ecde5531075a1a0815a36aa3f75499be012e0463aff013349"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/collection-keyboard.spec.ts",
+      "sha256": "2bcc2d37396c620d13b4fb16b8225c9e203e1b7325aca75e778e260dad169dd5"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/collection-keyboard.ts",
+      "sha256": "6c3b35e11eb27d2f6ab08cd69461ffa56bb20dcb0237873014f1c219a9038520"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/collection-logic.spec.ts",
+      "sha256": "594e1688da38c034ee4ed3b7a9883e7da2e619cc5eaa2db3b65af3275a4c5262"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/collection-logic.ts",
+      "sha256": "4d57a4b2c25500583b5a6996358ab7310f3cddb89e12a1745791e5e18bf2c86d"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/collection-options.scss",
+      "sha256": "beced1efa46395fc44575d7e984dbfb23c570efd570ed969fddd2cac73a364b8"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/collection-read-compatibility.spec.card-fixture.html",
+      "sha256": "55bbe45d2ebfe3102691416c1738dba431de6d66d53e2869efb76dc9fb1485e7"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/collection-read-compatibility.spec.search-fixture.html",
+      "sha256": "1fe290eb79ff0b61f1a43f242e5008c00d16cd8ec0fd5b42e97093c088568080"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/collection-read-compatibility.spec.ts",
+      "sha256": "05f57eef464725c2ddee3a40b6188ebf40aba87391f85d1eedf9a691291bee9d"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/collection-record-decision.spec.ts",
+      "sha256": "3a386bbc4c83b6e606980a4f8fb816c451124222686e6c08b3503c022ff3c9af"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/collection-record-decision.ts",
+      "sha256": "9fb754d3314530d70016233007db2c58a5b3eec129cc44cc9fe0dea726e80a85"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/collection-record-feedback.spec.ts",
+      "sha256": "0fc282869afe327dbd7b3d46ccfb2aef57600572dfab232c20a0104a1f33e738"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/collection-record-feedback.ts",
+      "sha256": "ad63f51fdd2d786f38c7d1261010ac335f7c4c5b688a00f7499353a8e5035bf5"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/collection-row-flash.scss",
+      "sha256": "747bd013ebd5d1f599e68ad560eb9f69d145890fa7c3be7efb8fe21c75f05f02"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/collection-slots.scss",
+      "sha256": "a223c046ebb89b91e9f075aab48beabd24f30f084cedc688e0f6fd7afe9cb295"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/collection-templates.ts",
+      "sha256": "e5bd53056a395f5b0e1a9ab6a4145c61b3ab8079a13e8ac9fac2dbd0f44d3ebc"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/collection.types.ts",
+      "sha256": "17a27deffc06a25d635f7d6b5eb334fc4494b872f2e6e9f1c30f1e1923561250"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/grid-capabilities.spec.html",
+      "sha256": "dfabef4d23a80976d7e7fd0ffc2e37f947b616603f759f7ed3d6483181567407"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/grid-capabilities.spec.ts",
+      "sha256": "c2c9beb655a69e0ffc34efd79f5d556f7d0fb99242b9894c0ca0d87d28907ba0"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/grid-cell-filter.spec.ts",
+      "sha256": "eb218543bc8b31e6ba526552ac12774af5629e8d8fd68e9c1c0c35647fb9799a"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/grid-cell-filter.ts",
+      "sha256": "70a5eac777ca798f5bb14efea6459c505fa266d56e8fedae88e3b971eda1b66c"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/grid-column-widths.ts",
+      "sha256": "43d25f92369c341caf1b6742acb5b47a034aa6f27e991957b45f34c92cdcbc2b"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/grid-export.ts",
+      "sha256": "48e871699d264706edc090daf392830643ae6ec2b6b55c9c9b1f80f82c80976d"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/grid-filter-adapter.ts",
+      "sha256": "47e2f16187340d2b5a18532950acf273dcdfbb4f29d958d248549d1765d563de"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/grid-filter-input/grid-filter-input.html",
+      "sha256": "d41c22aac31b23a17332cffad1c1e9b96cf0e392edc3812dee3643953426f8d9"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/grid-filter-input/grid-filter-input.scss",
+      "sha256": "f37f43eabca639108cd6c5e5f8c926eacc972251539de155ce6502647d04d18a"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/grid-filter-input/grid-filter-input.ts",
+      "sha256": "187778049c9011c0b22bb9744870ae5cd7ab043708234c9b542737a2a3705e98"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/grid-filter.types.spec.ts",
+      "sha256": "627a10b88fa5dfe24c49ef574657b7da87d267a3965f1e2ba0527072120ee3b2"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/grid-filter.types.ts",
+      "sha256": "33e079d159cf89228f58d5a5ad0773d31fc86fdf7a07d5ca6508b85a6d20c379"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/grid-header-groups.ts",
+      "sha256": "174fea77d173fa9432e1ed5a204938f332b3075dcf996cf4bfa190df53d605de"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/grid-headers.spec.html",
+      "sha256": "5a0ec104d910b0f8a88b30e44772581f0f5d81363267b88b53d480233f50c6e1"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/grid-headers.spec.ts",
+      "sha256": "55e057956950dc3156f0b8c5f56b58bb257af0353472c3f455f23c98d32b064d"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/grid-options.spec.ts",
+      "sha256": "2959b17c4f5ed51d8065215080e94b22ee6c0c0300c268919417d0be3d27b878"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/grid-options.types.ts",
+      "sha256": "e077b7e8009a437f44d77d88f31decb8876eacb97ad54fc61ca406b2f1e31d4b"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/grid-presentation.ts",
+      "sha256": "85f702e8d87cacdf6f6b4af34e59a2466477f2225451e4a76716bedebeb37392"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid/grid-column-presentation.spec.ts",
+      "sha256": "02d808dee81f1fe47db6b27c577173c1adfb37363ee68338473d4f78c85c6f4f"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid/grid-column-presentation.ts",
+      "sha256": "e33a801a15e7b378f77fce73eacfc14712dea3d215df6b9a0b79f33d50711796"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid/grid-viewport.ts",
+      "sha256": "d3ffd062b2e8a7dc78ddffaacb587f0ecf248b096b53d5e7ecb841fea0deb113"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid/my-data-grid.html",
+      "sha256": "277efed7f66918a93202f7ccf10704b42b61c65d7be732caf4c54222afcb59f6"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid/my-data-grid.scss",
+      "sha256": "2d1dbfbe6563eb891ecc0b342ef484a24ed3e896a88bca0891398eecd40a6e34"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid/my-data-grid.ts",
+      "sha256": "10e4975d94eaf73a70d710a7cf2a2d9ff58ec787903fad473bd73d5211615273"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/row-actions/row-actions.html",
+      "sha256": "29f6370f5fd2b8a411b8d17d0b066d1aca7a977bb5fafd4b3c3df1da5b808d78"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/row-actions/row-actions.scss",
+      "sha256": "5564a79cfcb8890114842c2192bf19885d3813b120ac7c7100aad9e739d1f475"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/row-actions/row-actions.ts",
+      "sha256": "c597d28e58a775ad1b3dd0c39b46d82868f8cbeb8dc90890225b7207f0727cac"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/controls/option-select/option-select.html",
+      "sha256": "5a6858aa8ab3e2638f5305b9b2d5d9436aa0806e20e0d2b178a6d81cd6bb6bb6"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/controls/option-select/option-select.scss",
+      "sha256": "bc8b452254b0cc982036b5ed046e065557af54ea3511955618c2f3e33000e049"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/controls/option-select/option-select.spec.ts",
+      "sha256": "6ce5e01c28b8cfc13a8224474b77bd8982932e7ff7453cbbfc08872672098cf4"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/controls/option-select/option-select.ts",
+      "sha256": "e2d04fb4e5e1592c28d537fafee88c9583d885fac05c06488ddd33171f8ccfef"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/controls/palette-picker/palette-picker.html",
+      "sha256": "4956f94376e6582cf5e85d3a50ef70731eea54040b40a6a124eb9198eb526100"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/controls/palette-picker/palette-picker.scss",
+      "sha256": "857dd4d7a0272ca8744a78eb80b711b5ede72becf33743a5cf108a44feae925f"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/controls/palette-picker/palette-picker.spec.ts",
+      "sha256": "79e43f728cdac4fc5ed8a00c06a9898f61aa8c5333bac1edf048c3d43ce8e822"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/controls/palette-picker/palette-picker.ts",
+      "sha256": "608bbb862b5c6468e0e71430bd3bc40665fbd278e0ab68effdea41f7943fba46"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/controls/progress-meter/progress-meter.html",
+      "sha256": "b03e7bd5e29b95d9725c049325d756cde7a3a0629ea9e34fbd813fdf0b5b0a16"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/controls/progress-meter/progress-meter.scss",
+      "sha256": "09dc0ed399f80452912956da4fa69c11dacf3804d0cecc00d2fdb122413d57f0"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/controls/progress-meter/progress-meter.spec.ts",
+      "sha256": "518d0a40d7d46779bfaec14d93c89752a09a087b7bee5e382c365f053d91f8a9"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/controls/progress-meter/progress-meter.ts",
+      "sha256": "dd095e2cc1920be6bb68c6735ca32fffc0f348f8cf9584e66ceeec98cad3765f"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/controls/sort-direction-button/sort-direction-button.html",
+      "sha256": "6ca1012f504821bd4e3c63e027429784dfdd67ffe1a469f371a116fc3e527d2a"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/controls/sort-direction-button/sort-direction-button.scss",
+      "sha256": "01c64798a1cc2473c422cea62bcb145b112100c21683dd944c589a517df84a83"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/controls/sort-direction-button/sort-direction-button.spec.ts",
+      "sha256": "74c7a107096f3b092c6147d7c34789bd566e32f605a33ec4e2e437a34494d6c9"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/controls/sort-direction-button/sort-direction-button.ts",
+      "sha256": "0569baf1c03403f10e423e12455bdbda56ece34cfa1673f733d2ed0b2795c415"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/dialogs/choice-dialog/choice-dialog.html",
+      "sha256": "5d7a4c321de60b3016712e114e9b4d6a4ca5b98c246cb931a2d3de60fbcf81cd"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/dialogs/choice-dialog/choice-dialog.scss",
+      "sha256": "8e09a7a77e17dfa337c9487bfe32dd71eb16b85fe4bdb6fec945e46004fe5b87"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/dialogs/choice-dialog/choice-dialog.ts",
+      "sha256": "947626543490eec73ebccd4350b22d3e8d7258c7ff8ccb28022f958159c44a4c"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/dialogs/confirmation-dialog/confirmation-dialog.html",
+      "sha256": "1644a4163a96b24dfcb98031374d341a385d92293c76b4e9eee9c13e56c94b53"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/dialogs/confirmation-dialog/confirmation-dialog.ts",
+      "sha256": "1367a8c599ea4d427cfaaf77f0461f7508ad8790403466b13320e0a03abf276a"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/dialogs/dialog-panel/dialog-panel.html",
+      "sha256": "028d4a27d9daa882ed9eb95aec144dd8171c636f350c45a3953ffa58eaadb839"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/dialogs/dialog-panel/dialog-panel.scss",
+      "sha256": "b0b86ce8a67b4084d803285dd4143695a8e2e69e65f140fae4e0e886949d9bb9"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/dialogs/dialog-panel/dialog-panel.spec.ts",
+      "sha256": "de11f59e5918fbbd4aac8d954e8396b819ab58f4ca486d6cf22e4b41da6d3555"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/dialogs/dialog-panel/dialog-panel.ts",
+      "sha256": "73d7e9e5d677d4d4e492bddb7f331a57141d9575cd103dbc4c4c75a4cc219066"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/dialogs/error-modal-host/error-modal-host.html",
+      "sha256": "f801bb90694a09608445baea89bf45a33ee58f9c15a42fd8e56e16243d31776a"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/dialogs/error-modal-host/error-modal-host.scss",
+      "sha256": "4c20d972f48b30babb38eca98e2fa0304df839c62c185ed312387b3379e99ab3"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/dialogs/error-modal-host/error-modal-host.ts",
+      "sha256": "a3b6915fa5d91c381cfa6a8432a0b0b91a3caf2701c74f0bac1fb2ae82f023e1"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/dialogs/unsaved-confirmation-host/unsaved-confirmation-host.html",
+      "sha256": "c6e31942ae2ace66b101115b80432fd9bf97d7f8887de657fb834b3062b2767e"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/dialogs/unsaved-confirmation-host/unsaved-confirmation-host.ts",
+      "sha256": "241009a590f42a92d70076ff411ba24222a4668d0958a6a56dd7e701486c5ee2"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/documents/pdf-viewer/pdf-viewer.html",
+      "sha256": "2041d8fff480385d53f1b73567cad6992342109aa4e4b73f039a50de28d01c33"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/documents/pdf-viewer/pdf-viewer.scss",
+      "sha256": "9fc01fed75f43bbef6047c1f42b577303697b693f73a343162dc2ee23ab456ae"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/documents/pdf-viewer/pdf-viewer.spec.ts",
+      "sha256": "55244aaeaad3d7bf60228f5e0aaee8bbbfb5e9f03342aba2e3ab755cc6ac1e4b"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/documents/pdf-viewer/pdf-viewer.ts",
+      "sha256": "9ffa65af9fbbbca0b75950783f494d57e031266e0ec3703d2f1eb8af993c1b1b"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/feedback/feedback-notifications.spec.ts",
+      "sha256": "f511f280adb9d4d02f22b78bf25a0c4fa85ea0cdc005bd8b2f2cac42584b5e50"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/feedback/feedback-notifications.ts",
+      "sha256": "ce1d68c52234caf39f8881d2793b73848fbea4dca5af5835f9ab79d1014dfb25"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/feedback/feedback-state/feedback-state.html",
+      "sha256": "9850e8ff1912645be69570dad4dd5efd944013636ff3305322e2e93571a7b478"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/feedback/feedback-state/feedback-state.scss",
+      "sha256": "4f0cadf6dc8f14f6635141c561cdd954e44b7e3ce6a96c2545dd5e919e60b714"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/feedback/feedback-state/feedback-state.ts",
+      "sha256": "8acb1486f3104b5e3ae73c25a03268546b791d0e69ecddfd6cae6856b8d6cdfc"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/feedback/notification-toast/notification-toast.html",
+      "sha256": "46f4370f71b6c9ab04fe9baa4bbb4176be6e3c125aa9044b5b18fa5970fa0e94"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/feedback/notification-toast/notification-toast.ts",
+      "sha256": "fc883544a20071bd6263daff0acc7ce4a4338aa6ff0cea00c6bb5eae6f89d051"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/feedback/notifications.public-api.ts",
+      "sha256": "b4859849cfca995a5dd7151097493a15cffae811a44d9fc111787b3bc84cb4ae"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/feedback/status-badge/status-badge.html",
+      "sha256": "9bc7fc5b12c9156fa06fd038e62391d61fde43603d9cce2227849dca516a6728"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/feedback/status-badge/status-badge.ts",
+      "sha256": "9d158630d2c96f42451879bf118f8284d7eafb070712813e2765038b0e16fa3b"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/fields/boolean-field/boolean-field.html",
+      "sha256": "10c08ba25d594f5ba289014086110fdd2253004cbe1f61d93bb9666e10d1ecc0"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/fields/boolean-field/boolean-field.scss",
+      "sha256": "54fee8392ce6b55057c473ced6db9902066278bb3bdeb080105c4bb06c5c20a9"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/fields/boolean-field/boolean-field.spec.html",
+      "sha256": "bb3972ef12919a9760fbe1053addd8a9ac95ba3476ca62a072a0aa8b2636299b"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/fields/boolean-field/boolean-field.spec.ts",
+      "sha256": "e23b67c965cfb117e93210b22fa3a311391e4df3e54527a48dd2a73a0b8b3b1f"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/fields/boolean-field/boolean-field.ts",
+      "sha256": "9a162afdf36dbe99c3cc8df86d40476790e222509a5efdeaccfe8f765cc7b4b0"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/fields/character-count-badge/character-count-badge.html",
+      "sha256": "7e34abdac4129adf4d09c01e345fdffb5e0b3266fe2887980b557f04ad6abf48"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/fields/character-count-badge/character-count-badge.scss",
+      "sha256": "053515fb7780729345bcc4c126bbb6532557997b0263424b05ced974428abee0"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/fields/character-count-badge/character-count-badge.ts",
+      "sha256": "bb655563c44ec8c0b267a67b07951ad7e0c5018fd9fc619d5b9cad290b2b2049"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/fields/date-field/date-field.html",
+      "sha256": "9b8b60abad6a73a482a2308532c9cfa3dc47bee5753d9aea375d143a5333cc65"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/fields/date-field/date-field.spec.html",
+      "sha256": "c3b4c8c9ee4d33d30238e46b1422704dfd1c58ea86774930dd57686046e8b953"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/fields/date-field/date-field.spec.ts",
+      "sha256": "10e16923d5e1916e253df5b457b66da93f3296e66d1e03fd200d763f4bc62a77"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/fields/date-field/date-field.ts",
+      "sha256": "f4318df3f17c1591ac30229b68f9087672f7639ce6981c2f537b8cd56c650df0"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/fields/date-only.spec.ts",
+      "sha256": "911144c6b111457d04d9e327987d21385438fae2c22143ce7f7d781d1a8cb8b5"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/fields/date-only.ts",
+      "sha256": "40d7bc9b42d8ea24af26f65537fd499e2d2ba69211b24eeb42386c411573358d"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/fields/field-chrome.scss",
+      "sha256": "93d3134fbc6c041b6ece9ad813f02db86ce7b2fa61b5b3cc660a5da8a0355c7c"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/fields/numeric-field/numeric-field.spec.html",
+      "sha256": "bc40100c08519938502320d2840043ddca5e1208f9c2a0773855663b13e84df2"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/fields/numeric-field/numeric-field.spec.ts",
+      "sha256": "690b01a1d6c4b251a7356a2746c3d229ea21aaaf6359b005ddeaf38897e56e4d"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/fields/numeric-field/numeric-field.ts",
+      "sha256": "b4ce13822b9e64d9a633ff3f2da19f8ee61ef9c9c0a482be8ae7c8bc21fbbf55"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/fields/numeric-text.spec.ts",
+      "sha256": "7e55c76aa6cdb5a00d5f23dffc86f96bc420b72116f108256bab1bc9d3a2a6d9"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/fields/numeric-text.ts",
+      "sha256": "a6ad15374ac51fabd3f319f18f380f8ff9796b1fd685ca23fc533fb1ee820351"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/fields/reference-field/reference-field.html",
+      "sha256": "14c30cef1b7a22f3a5dc9813af34183aa640bcb8860f48d4dea129e623355cd0"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/fields/reference-field/reference-field.scss",
+      "sha256": "e3000797ee7d96eb73162f7a549a4a21e05831098c51d285468d076c5f6be47e"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/fields/reference-field/reference-field.spec.html",
+      "sha256": "c42506b06217f87d9e79d1ee8e51d11f4a04e1119237c3a47e85b19ed909bbbc"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/fields/reference-field/reference-field.spec.ts",
+      "sha256": "426308a56066a15be9d3e25338f59726bf82978021caf0a569aa78d889a47489"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/fields/reference-field/reference-field.ts",
+      "sha256": "9673578c97dbd8557bdf56e1198dd4d7686f90fef5ceb525800615ff84ebe385"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/fields/reference.types.spec.ts",
+      "sha256": "8d825400f55cd47720b838f94f1044aa6530b33746a7e327516b2afa166bf063"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/fields/reference.types.ts",
+      "sha256": "74174b975722705623be227165da8183d13e64bfcf64c004c3a0dbc8ad62fa28"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/fields/text-field/text-field.html",
+      "sha256": "f85d93ba490adf7e82afc5932c24b9c7562ae0ce15593b1c5c0298cf5ab40dc8"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/fields/text-field/text-field.scss",
+      "sha256": "5006b734d0f4a4d29d8466f138b94e871b63b0680e6a1bf0c1cab31b302ef705"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/fields/text-field/text-field.spec.html",
+      "sha256": "a0c0497ac13ee1b70fe9d8c74b7efd13adf2fc06787bc6bbf53be6c1c1a75c06"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/fields/text-field/text-field.spec.ts",
+      "sha256": "5745308222a11bb0d39c4d44a00de0da080bf58013a0977778fc6aaf7561b2dd"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/fields/text-field/text-field.ts",
+      "sha256": "621849c295c81cf1bfc4d0ee2e71a6b6afec98087b7f1762ea443ead93aad58c"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/form-close-guard/form-close-guard.html",
+      "sha256": "732acd86fe8d7e84eae5468cdac3c5ffec487d41e162222d479f59b85651cf79"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/form-close-guard/form-close-guard.spec.ts",
+      "sha256": "4a4731138609b2574e018e26422a53643e0e5c5d4edbf43fbed17f88dd1ad309"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/form-close-guard/form-close-guard.ts",
+      "sha256": "cfcdb36755613a73ff748f18f5632a185768267e07889f584ffd1f42bec0c600"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/form-container/form-container.html",
+      "sha256": "b96c4298637debf671269ea326bb49ceaa8763627bbb9a3844563aca2f3d3f93"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/form-container/form-container.scss",
+      "sha256": "85514e6469377dbd25f0afd54f98391516b5968c3b89a790e29e484d84ca0b0c"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/form-container/form-container.spec.access-composition.html",
+      "sha256": "3ed71ea70235f5ba8106dad4fbe204d660413369d75a7df694c2326fd234ce47"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/form-container/form-container.spec.profile-composition.html",
+      "sha256": "5767a35dd5a0b4c30c0e1db82fe7a97e2101e1e21adecbe9cfb17697a7d5cc8a"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/form-container/form-container.spec.ts",
+      "sha256": "81d075632d13243c0cfe4eb610ecf907616f615742cf2c3b07ee54fedca98e34"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/form-container/form-container.ts",
+      "sha256": "ab89bba3748313f2a1e6212f40702c0d9408479386bc49bd6c3d631016c7b4d4"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/form-errors.ts",
+      "sha256": "aa66ccbe3fa663f0566e07bc6aedac993acae24e56d4f9b7c024852b7387607d"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/form-field-control.ts",
+      "sha256": "46afc40b46b6247b9e03b2e3aff9db5f355df94582af5015b57632aa17a6a484"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/form-read-compatibility.spec.html",
+      "sha256": "1aed9430f6eb3c34ba95c4a86c424a2d3df3d1d5ba3318a2188625fb447cfe4b"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/form-read-compatibility.spec.ts",
+      "sha256": "a22b564e844a2e488b6a1f826ab372da10f92456fd365d5204176a0ac052d644"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/local-close-controller.spec.ts",
+      "sha256": "9cab43501b6040fc9279f5f99d2d3db989e6c2af528c60fba2257702b59e5e62"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/local-close-controller.ts",
+      "sha256": "8ff64fe1687b54500559fff3d51a59efdd188e315d4b237762c5ffc624e54790"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/public-api.ts",
+      "sha256": "34a24c90ce4910dc094566b6f094aba3994b6555b3db84c0366f96c68616854e"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/validation-summary/validation-summary.html",
+      "sha256": "6bd2e2bd367e6056520a5f3083f5050522e025dcc01f44afe9f0d2a96662e7d0"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/validation-summary/validation-summary.scss",
+      "sha256": "3440da71009f7484d1e1965788809df7edf691f17ac18b6c9782b2e018d071fd"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/validation-summary/validation-summary.spec.ts",
+      "sha256": "459d66950a090317509edfd4f64f897a4496d1dfd4ca4708bc372de96511b0e4"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/validation-summary/validation-summary.ts",
+      "sha256": "1f6b4020e2e9183efc58132603f980c29bb798fdcc1f8cddb45a9545c8af109d"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/icons/app-icon/app-icon.html",
+      "sha256": "c0f2543157a0d175b3e4fea530fac238a4b4d32ee1b48c5fd91dbc7deae162ab"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/icons/app-icon/app-icon.scss",
+      "sha256": "cc6f6e80f249ddf45d2c73e74957fdc25c7fa9b59461c372d6a8bfd2df104657"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/icons/app-icon/app-icon.ts",
+      "sha256": "e5879d9ffcba20af80bab4aaa659ac7862d3ea4e1c1c562d01ef6877a16e87cc"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/imports/spreadsheet-import-panel/spreadsheet-import-panel.html",
+      "sha256": "b634be9d0ca531b710ddeb6b8dd52a33014275f7257dc30ad513fa16b63b02bc"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/imports/spreadsheet-import-panel/spreadsheet-import-panel.scss",
+      "sha256": "4178d4575118024710f4558d23921378a376ad94e007de0214f386ff9888f268"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/imports/spreadsheet-import-panel/spreadsheet-import-panel.ts",
+      "sha256": "a08ce49e78a419b44c7f1015de30a5f26b3afbe8a9a729ac767e0eeabf87eb82"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/layout/_scrollbar.scss",
+      "sha256": "79025e26838ff09ef0c70b4b965e870399dbc649fd811ea56e5e989ac52c11d2"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/layout/application-frame/application-frame.html",
+      "sha256": "9d0d396afb923879d054bad7bd786ece57c6bafd41a72e36010cdb11827340fd"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/layout/application-frame/application-frame.scss",
+      "sha256": "5359a83dcadf30f3cf1d9a002361c9554698277c96bd226903e7ea5319a260fe"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/layout/application-frame/application-frame.spec.ts",
+      "sha256": "a2e22062f08dc329f25f028471855a0088643e43a4b634c8844037aca62d8b8d"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/layout/application-frame/application-frame.ts",
+      "sha256": "ac93b6819e25401e4c392ebc56068d4a1b2e8ef7ad58686b5b51cb9fb274abb7"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/layout/context-badge/context-badge.html",
+      "sha256": "275b5d9f952bf69c3962a5e7032b91af48bd004b766be3bcdfe908c00b31514b"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/layout/context-badge/context-badge.scss",
+      "sha256": "2d6726f45adbfc7edb5368e50ab6ed4a8a39119c8345b2536376ab7c4c44d813"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/layout/context-badge/context-badge.ts",
+      "sha256": "bbf2bb0ec063879fa06396e083fc26bd8a2f306f3c2e2ee8f4df9de01aca77bb"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/layout/identity-avatar/identity-avatar.html",
+      "sha256": "ad7b9427461621297f662731cf6184cf70830344178d6efdc99fadc175f62107"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/layout/identity-avatar/identity-avatar.scss",
+      "sha256": "dc881364d7adfce134e9ed65bb3f446c4a177622ece4ea558545dcc87adf92f2"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/layout/identity-avatar/identity-avatar.ts",
+      "sha256": "f162d9c61b4852c76901799fafb71d4f8c749c6ac667699efdc5f90808e0e96d"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/layout/launcher-grid/launcher-grid.html",
+      "sha256": "4be0e8e97edccbed85524faa97fc5481bdf88dbe7ba7b16c30740971f3d2a777"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/layout/launcher-grid/launcher-grid.scss",
+      "sha256": "81c445f1399e0f8d341de0818e22965be43727fc492de3e89c82e76ba0db6c3a"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/layout/launcher-grid/launcher-grid.ts",
+      "sha256": "e175077c58ad8154bbd8baef6c10eba10b3b26e7c7c1c241c1fc228cfdee510b"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/layout/launcher-tile/launcher-tile.html",
+      "sha256": "186b604a1f9ede4a3f0ad850811278e4afdfc094bb6063b2f1bab1ba1062e0f1"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/layout/launcher-tile/launcher-tile.scss",
+      "sha256": "ff14d6edcf18ecbdcfd75a8c08ded97998f8bff18f596685bbb69217b24bfa3f"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/layout/launcher-tile/launcher-tile.ts",
+      "sha256": "681f9b100d3685d77af988d2c5a7c9f3518f981323a3072bd4a065efedc93326"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/layout/launcher.types.ts",
+      "sha256": "c8c30c5214045373a9a7ead69f2fc1dfa418c2e3f83422f56f2590fe9a0b2066"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/layout/navigation-list/navigation-list.html",
+      "sha256": "42fafb72ce48428e257b3e58e184395fb8d7d8d38ffbc60f50d273aa5574d85b"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/layout/navigation-list/navigation-list.scss",
+      "sha256": "37981d2930a9554b4b8df32222ee924b0b1505969259ef9f8728c39246315431"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/layout/navigation-list/navigation-list.spec.ts",
+      "sha256": "ce817becdded92bd8f973ca23e67fe45952e4d996692b1f5df69b2d4710f28b5"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/layout/navigation-list/navigation-list.ts",
+      "sha256": "648b339a3517433a10123a600cf0be2914a3dfa8b62a1fd90f531fef66229e16"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/layout/page-header/page-header.html",
+      "sha256": "5d1d617ca575401676dd9258e7d6b052a695889e89bed5461640bb7ff6b035bb"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/layout/page-header/page-header.scss",
+      "sha256": "26bc5e875f8ba35c76bd93ce82c1ec7eef020743142f0ac5095e6cab36e7c69e"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/layout/page-header/page-header.spec.ts",
+      "sha256": "1124ebf676e80c41890f1a1f691582d976fcde5874b92c3ad036865253c69392"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/layout/page-header/page-header.ts",
+      "sha256": "bc3270760486f730c576774c08d0fc5305989ea4744211098b9dda943b499f4c"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/layout/report-workspace/report-workspace.html",
+      "sha256": "e70fe47b45c5e28d66d537edd630774dedb5c64bdb9b786036f151e5cf1edca7"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/layout/report-workspace/report-workspace.scss",
+      "sha256": "03772955e8bca977576492157da4d3f784694386658a60ac85d9694ae9d1f797"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/layout/report-workspace/report-workspace.ts",
+      "sha256": "6e355963f85a50fb386e3cfa6aac0e47c8da1ef9c6a9231d9aa8f5be661aee12"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/layout/scroll-viewport/scroll-viewport.html",
+      "sha256": "4517a274c4bc122a2e37544374e904987aa2378bc6edf236ef30a745973a6a19"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/layout/scroll-viewport/scroll-viewport.scss",
+      "sha256": "c9db20c23802a9185cc4ae57b9e38c380572ea20af8e1256d23b540a5bddb5af"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/layout/scroll-viewport/scroll-viewport.ts",
+      "sha256": "f743755f41f31771321cb8450ce161ac784d7e468fe4f87c36a47210cb7fe5cb"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/layout/surface-card/surface-card.component.scss",
+      "sha256": "080f4dcc69597d6e9bdb6b8fcdc1790ed30891065c4c6caf0d2804d05f6c98c0"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/layout/surface-card/surface-card.html",
+      "sha256": "9dbb43bb34efad758ffcbf1da3376e8f1226141c94484055e73d7156a19bbf1c"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/layout/surface-card/surface-card.scss",
+      "sha256": "423e776e970c5bd80e3f01ad446bc38390d198c65a2bccbc939cdd134c357f00"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/layout/surface-card/surface-card.ts",
+      "sha256": "f111e544fe292c2f7ffa12747df887eb9236b6778311b6860694773c8c14cc6a"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/overlays/context-menu-panel/context-menu-panel.html",
+      "sha256": "c08d4becf8e3034916539e03a70968f09829167bbe5b1de12f72f0fe603e3a88"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/overlays/context-menu-panel/context-menu-panel.scss",
+      "sha256": "00023473327b46539a49c6654f9558322c6c98b3b4d2f3f4e90bf3bbd4a9b104"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/overlays/context-menu-panel/context-menu-panel.spec.ts",
+      "sha256": "e2387ae76d3b221868a4a317155bb207d90cc897293cefd5aa2f69d17b74e407"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/overlays/context-menu-panel/context-menu-panel.ts",
+      "sha256": "e3f3c5b41028cfd3597d965a8bc0294d9b2d0537b125c808f4e5ad2fc93e3b36"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/overlays/popover-panel/popover-panel.html",
+      "sha256": "2322e54e8946dd0ff2695cf42ae872a2157e1a5859099df3eb9b5a4525c3ad73"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/overlays/popover-panel/popover-panel.ts",
+      "sha256": "7f02b953af0e0bddd09c73461582c3d7223b5dac0096cdcb1312ab71912b87ae"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/public-api.ts",
+      "sha256": "4db26575416b5c70198ed359f7644ec5745921a4ec84fbfefa4175211ff0f5a9"
+    },
+    {
+      "path": "web-angular/src/app/shared/utils/scalar-text.spec.ts",
+      "sha256": "a7aedc0cb83e5290f68909300e1511ec3bb75ce54e04ead79d8a89253afe367c"
+    },
+    {
+      "path": "web-angular/src/app/shared/utils/scalar-text.ts",
+      "sha256": "6f0a43b0665d241421bb84c90805d2a3b44c7102fba2156429c762fd554f6abc"
+    },
+    {
+      "path": "web-angular/src/app/shell/auth-layout/auth-branding/auth-branding.html",
+      "sha256": "c3414a89c9d52d3bd1b9f31813419a683125b76995f85a4699a45f9166907bd8"
+    },
+    {
+      "path": "web-angular/src/app/shell/auth-layout/auth-branding/auth-branding.scss",
+      "sha256": "005c871794f18625fefa02aac8c032a8cd64a4e412c4a47169e656405932dd8c"
+    },
+    {
+      "path": "web-angular/src/app/shell/auth-layout/auth-branding/auth-branding.ts",
+      "sha256": "98f8d5f1eceb12bbcca33dd3679292451b60cc979ef975bc6d76b3002752724b"
+    },
+    {
+      "path": "web-angular/src/app/shell/auth-layout/auth-layout.html",
+      "sha256": "0496c514a75b4413bdefc30ce716e13bdc0ba9b00daa4dcc5feeeb582f3368e7"
+    },
+    {
+      "path": "web-angular/src/app/shell/auth-layout/auth-layout.scss",
+      "sha256": "92c5bbe0b5ceee430d5f14b48fc210f83f8ef4522a44b9705cf3c482385a351a"
+    },
+    {
+      "path": "web-angular/src/app/shell/auth-layout/auth-layout.ts",
+      "sha256": "c4e70eff33de84af438f1c8a693d74a3862d8ccdc59f522854ab2082533505be"
+    },
+    {
+      "path": "web-angular/src/app/shell/context-slot.ts",
+      "sha256": "7ad2401244f815df02fe898f2dc250d8c827755ac45e18f73bd16f29e73685c3"
+    },
+    {
+      "path": "web-angular/src/app/shell/context.public-api.ts",
+      "sha256": "87cb92ab1613f52fe70295cbebe1a52eeae7e018ac7ba9e5ee62721ac3f037c1"
+    },
+    {
+      "path": "web-angular/src/app/shell/home-landing-guard.ts",
+      "sha256": "590b0ea0449b918e441c23c7627656adc23bd466225258f8d643eebc8de51df9"
+    },
+    {
+      "path": "web-angular/src/app/shell/layout/main-shell/main-shell.html",
+      "sha256": "428543688f2e2ee9a10da5a0028991e23abe9bd1f61265a35bedf6293daa74e5"
+    },
+    {
+      "path": "web-angular/src/app/shell/layout/main-shell/main-shell.scss",
+      "sha256": "9e5d45c448312664f839324b2eef7ba84c34051b5e250de63da28a2dea772bc7"
+    },
+    {
+      "path": "web-angular/src/app/shell/layout/main-shell/main-shell.ts",
+      "sha256": "1604a1140bb3714a4edad85b820e5ef087dae095c2418cede0df419a913aac51"
+    },
+    {
+      "path": "web-angular/src/app/shell/public-api.ts",
+      "sha256": "e1d7ed729c026ac7c636626eb4e3a22c20da80b41ed7d5ec6519fee9e40694ae"
+    }
+  ]
+}

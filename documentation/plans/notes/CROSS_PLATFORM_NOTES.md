@@ -60,3 +60,26 @@ Typical examples:
 `PROD-027` — Company account email provider/client acceptance; canonical ownership, trigger and production gate are in PRODUCTION_NOTES.md.
 
 `DEC-024` — Company message logs scope; canonical decision in DECISION_BACKLOG.md. `RISK-011` — Observational capture availability/uncertain SMTP outcome; canonical risk in KNOWN_RISKS.md.
+
+### PROD-028 — Hosted Countries managed-report acceptance
+
+See canonical PROD-028 in [PRODUCTION_NOTES.md](PRODUCTION_NOTES.md#prod-028--hosted-countries-report-catalog-unavailable); hosted catalog503 blocks complete report/pilot acceptance.
+
+FOLLOW-024 — Versioned global Angular Crystal manager. Canonical ownership,
+requester decision, current preflight gate and trigger are in FOLLOW_UPS.md.
+PROD-028 current render400/template rejection supersedes the earlier catalog-only
+diagnosis; see the canonical latest entry in PRODUCTION_NOTES.md.
+
+FOLLOW-024 current implementation/technical acceptance and remaining hosted/native/browser owner are canonical in FOLLOW_UPS.md; global-crystal-template-management/IMPLEMENTATION_2026-11-01.md is the current receipt index.
+
+
+### DEF-028 — Crystal empty-template preparation and base designs
+
+Canonical deferral, current priority and reopening trigger:
+[DEF-028](DEFERRED_ITEMS.md#def-028--empty-template-preparation-and-reusable-base-designs).
+
+
+### RISK-019 — Original RPT source contents
+
+Canonical risk, owner and reassessment trigger:
+[RISK-019](KNOWN_RISKS.md#risk-019--original-rpt-source-contents).

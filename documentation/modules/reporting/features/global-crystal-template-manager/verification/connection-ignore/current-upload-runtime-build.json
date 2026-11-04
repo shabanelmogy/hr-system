@@ -1,0 +1,11 @@
+{
+  "verifiedAtUtc": "2026-11-03T09:12:30.1934296Z",
+  "runtimeHost": "crystalreport-generator.runasp.net",
+  "keyConfigured": true,
+  "localRuntimeBuildId": "9d3340c0-da53-48c3-aad1-5965106b6b1c",
+  "statusCode": 200,
+  "runtimeStatus": "Healthy",
+  "hostRuntimeBuildId": "9d3340c0-da53-48c3-aad1-5965106b6b1c",
+  "matchesLocalRuntimeBuild": true,
+  "engineAssemblyVersion": "13.0.4000.0"
+}

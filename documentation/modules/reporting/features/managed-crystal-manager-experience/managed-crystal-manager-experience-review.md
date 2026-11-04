@@ -66,3 +66,7 @@ EN/AR and RTL/LTR browser/API workflow remains the active integrated stage.
 Close only after API → Web → Mobile disposition → integrated verification →
 documentation/education complete in order. Phase 4 cannot start before this child
 is Verified/Closed.
+
+### Additive global Angular manager2026-11-01
+
+The requester separately authorized global-crystal-template-management/GCT-1. Its additive global audited tables, exact role/action/entity Edit policy and Angular manager reuse existing native ports/private storage/lifecycle discipline. This existing tenant manager/ACL lifecycle stays unchanged. Global consumption keeps the current opaque envelope with explicit managed shadowing. See the new feature current books and FOLLOW-024; this addition does not close this plan’s pending native/integrated acceptance.

@@ -97,19 +97,19 @@
     },
     {
       "id": "phase00-12",
-      "path": "web-angular/src/app/shared/ui/collections/collection-frame.ts",
+      "path": "web-angular/src/app/shared/ui/collections/collection-frame/collection-frame.ts",
       "layer": "web",
       "purpose": "Actual source or frozen contract"
     },
     {
       "id": "phase00-13",
-      "path": "web-angular/src/app/shared/ui/collections/my-data-grid.ts",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid/my-data-grid.ts",
       "layer": "web",
       "purpose": "Actual source or frozen contract"
     },
     {
       "id": "phase00-14",
-      "path": "web-angular/src/app/shared/ui/collections/card-list.ts",
+      "path": "web-angular/src/app/shared/ui/collections/card-list/card-list.ts",
       "layer": "web",
       "purpose": "Actual source or frozen contract"
     },
@@ -121,7 +121,7 @@
     },
     {
       "id": "phase00-16",
-      "path": "web-angular/src/app/dev/collection-preview.ts",
+      "path": "web-angular/src/app/dev/collection-preview/collection-preview.ts",
       "layer": "web",
       "purpose": "Actual source or frozen contract"
     },
@@ -193,7 +193,7 @@
     },
     {
       "id": "runtime-5",
-      "path": "web-angular/src/app/dev/criteria-preview.ts",
+      "path": "web-angular/src/app/dev/criteria-preview/criteria-preview.ts",
       "layer": "web",
       "purpose": "Current bounded criteria runtime/test source; acceptance pending"
     },
@@ -229,7 +229,7 @@
     },
     {
       "id": "verified-1",
-      "path": "web-angular/src/app/shared/ui/collections/my-data-grid.html",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid/my-data-grid.html",
       "layer": "web",
       "purpose": "Current acceptance or consumer evidence"
     },
@@ -316,6 +316,150 @@
       "path": "documentation/modules/platform/features/angular-collection-criteria-foundation/verification/README.md",
       "layer": "documentation",
       "purpose": "Current acceptance or consumer evidence"
+    },
+    {
+      "id": "component-resource-b0c97d71b7a5",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/collection-frame/collection-frame.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-e56de07ea51c",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/collection-frame/collection-frame.component.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-5b5d22d33fdd",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/card-list/card-list.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-0ffcf25c452b",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/card-list/card-list.component.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-ecf5bf6c800b",
+      "layer": "web",
+      "path": "web-angular/src/app/dev/collection-preview/collection-preview.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-0c9560317151",
+      "layer": "web",
+      "path": "web-angular/src/app/dev/collection-preview/collection-preview.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-4f58fd5a2641",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/data/route-collection-criteria.spec.listing.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-408d7c5c8a89",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/data/route-collection-criteria.spec.other.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-613adc7d71f5",
+      "layer": "web",
+      "path": "web-angular/src/app/dev/criteria-preview/criteria-preview.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-1c3e6897b6c2",
+      "layer": "web",
+      "path": "web-angular/src/app/dev/criteria-preview/criteria-preview.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-ab2f0dd426ad",
+      "layer": "web",
+      "path": "web-angular/src/app/dev/criteria-preview-editor/criteria-preview-editor.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "dev-component-criteria-preview-editor",
+      "layer": "web",
+      "path": "web-angular/src/app/dev/criteria-preview-editor/criteria-preview-editor.ts",
+      "purpose": "Separated development fixture component/state; D37 folder ownership"
+    },
+    {
+      "id": "quality-ff96e53d3ee7",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid/grid-column-presentation.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-5356e0ff9c90",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid/grid-column-presentation.spec.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-519b867de1ce",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid/grid-viewport.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-6fe0129a75d1",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/collection-column-pipe.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-97ddb61c625b",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/collection-column-pipe.spec.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-00675b4aab21",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/data/collection-criteria.types.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-f37c37b56180",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/data/collection-criteria-values.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-b85643189746",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/data/collection-criteria-normalizer.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-b48e367c4706",
+      "layer": "configuration",
+      "path": "web-angular/eslint.config.mjs",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-18187b5430c6",
+      "layer": "configuration",
+      "path": "web-angular/scripts/dependency-rules.mjs",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-056ed62f225e",
+      "layer": "configuration",
+      "path": "web-angular/scripts/dependency-rules.test.mjs",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-16f555949438",
+      "layer": "web",
+      "path": "web-angular/src/testing/fixture-item.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
     }
   ],
   "finalizationChecklist": [

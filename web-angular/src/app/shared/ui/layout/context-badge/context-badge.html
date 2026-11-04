@@ -1,0 +1,10 @@
+<span
+  class="context-badge"
+  [pTooltip]="label() + ': ' + value()"
+  tooltipPosition="bottom"
+  role="img"
+  [attr.aria-label]="label() + ': ' + value()"
+>
+  <span class="context-icon"><erp-icon [name]="icon()" /></span
+  ><span class="context-value">{{ value() }}</span>
+</span>

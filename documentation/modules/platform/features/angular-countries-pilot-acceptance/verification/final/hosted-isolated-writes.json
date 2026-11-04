@@ -1,0 +1,86 @@
+{
+  "date": "2026-11-01T08:10:33.101Z",
+  "origin": "https://localhost:4210",
+  "api": "https://shabanhrms.runasp.net",
+  "actualApi": true,
+  "normalTlsValidation": true,
+  "marker": "ERPQA1793520581322",
+  "cases": [
+    {
+      "name": "two-real-cookie-sessions-and-authorized-hubs",
+      "passed": true
+    },
+    {
+      "name": "ui-create-real-postcommit-delivery-to-second-session",
+      "passed": true
+    },
+    {
+      "name": "ui-edit-load-save-and-remote-reconciliation",
+      "passed": true
+    },
+    {
+      "name": "real-offline-missed-change-reconnect-retains-criteria",
+      "passed": true
+    },
+    {
+      "name": "real-archive-restore-and-remote-list-reconciliation",
+      "passed": true
+    },
+    {
+      "name": "real-xlsx-ui-bulk-import-and-remote-delivery",
+      "passed": true
+    },
+    {
+      "name": "real-bulk-archive-owned-records-and-remote-delivery",
+      "passed": true
+    }
+  ],
+  "writes": [
+    {
+      "method": "POST",
+      "path": "/api/v1/countries"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/countries/8"
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/countries/8"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/countries/8"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/countries/8/restore"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/countries/bulk"
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/countries/bulk-archive"
+    }
+  ],
+  "cleanup": [
+    {
+      "allOwnedArchived": true,
+      "ids": [
+        8,
+        9
+      ]
+    },
+    {
+      "logoutStatus": 204
+    },
+    {
+      "logoutStatus": 204
+    }
+  ],
+  "archivedRecordsRetained": true,
+  "failure": null,
+  "passed": true
+}

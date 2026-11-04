@@ -1,0 +1,43 @@
+:host {
+  display: block;
+  height: 100dvh;
+  min-width: 0;
+}
+main {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  min-width: 0;
+  padding: 24px;
+  box-sizing: border-box;
+}
+.panel {
+  flex: 1;
+  min-height: 0;
+}
+.fixture-controls {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  padding-top: 8px;
+}
+.fixture-options {
+  display: flex;
+  flex-direction: column;
+}
+.actions {
+  display: flex;
+  --action-min-height: 36px;
+  --action-font-size: 11.2px;
+}
+@media (max-width: 599px) {
+  main {
+    padding: 12px;
+  }
+  .fixture-controls {
+    --action-min-height: 32px;
+    gap: 4px;
+  }
+}

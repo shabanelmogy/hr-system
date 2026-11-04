@@ -1,0 +1,79 @@
+{
+  "date": "2026-10-31T14:40:56.479Z",
+  "moves": [
+    {
+      "from": "web-angular/src/app/dev/criteria-preview/criteria-preview.criteria-preview-editor.html",
+      "to": "web-angular/src/app/dev/criteria-preview-editor/criteria-preview-editor.html"
+    },
+    {
+      "from": "web-angular/src/app/dev/criteria-preview/criteria-preview.criteria-preview.html",
+      "to": "web-angular/src/app/dev/criteria-preview/criteria-preview.html"
+    },
+    {
+      "from": "web-angular/src/app/dev/criteria-preview/criteria-preview.criteria-preview.scss",
+      "to": "web-angular/src/app/dev/criteria-preview/criteria-preview.scss"
+    },
+    {
+      "from": "web-angular/src/app/dev/read-preview/read-preview.read-preview-away.html",
+      "to": "web-angular/src/app/dev/read-preview-away/read-preview-away.html"
+    },
+    {
+      "from": "web-angular/src/app/dev/read-preview/read-preview.read-preview-away.scss",
+      "to": "web-angular/src/app/dev/read-preview-away/read-preview-away.scss"
+    },
+    {
+      "from": "web-angular/src/app/dev/read-preview/read-preview.read-preview.html",
+      "to": "web-angular/src/app/dev/read-preview/read-preview.html"
+    },
+    {
+      "from": "web-angular/src/app/dev/read-preview/read-preview.read-preview.scss",
+      "to": "web-angular/src/app/dev/read-preview/read-preview.scss"
+    },
+    {
+      "from": "web-angular/src/app/dev/unsaved-preview/unsaved-preview.unsaved-preview-frame.html",
+      "to": "web-angular/src/app/dev/unsaved-preview-frame/unsaved-preview-frame.html"
+    },
+    {
+      "from": "web-angular/src/app/dev/unsaved-preview/unsaved-preview.unsaved-destination.html",
+      "to": "web-angular/src/app/dev/unsaved-destination/unsaved-destination.html"
+    },
+    {
+      "from": "web-angular/src/app/dev/unsaved-preview/unsaved-preview.unsaved-preview.html",
+      "to": "web-angular/src/app/dev/unsaved-preview/unsaved-preview.html"
+    },
+    {
+      "from": "web-angular/src/app/dev/unsaved-preview/unsaved-preview.unsaved-preview.scss",
+      "to": "web-angular/src/app/dev/unsaved-preview/unsaved-preview.scss"
+    }
+  ],
+  "created": [
+    "web-angular/src/app/dev/criteria-preview-editor/criteria-preview-editor.ts",
+    "web-angular/src/app/dev/read-preview-away/read-preview-away.ts",
+    "web-angular/src/app/dev/unsaved-preview-frame/unsaved-preview-frame.ts",
+    "web-angular/src/app/dev/unsaved-destination/unsaved-destination.ts",
+    "web-angular/src/app/dev/unsaved-fixture-state.ts"
+  ],
+  "components": [
+    {
+      "owner": "criteria-preview",
+      "name": "CriteriaPreviewEditor",
+      "file": "criteria-preview-editor"
+    },
+    {
+      "owner": "read-preview",
+      "name": "ReadPreviewAway",
+      "file": "read-preview-away"
+    },
+    {
+      "owner": "unsaved-preview",
+      "name": "UnsavedPreviewFrame",
+      "file": "unsaved-preview-frame"
+    },
+    {
+      "owner": "unsaved-preview",
+      "name": "UnsavedDestination",
+      "file": "unsaved-destination"
+    }
+  ],
+  "note": "Separated four remaining secondary dev components and their single shared fixture-state service; class bodies and bindings preserved."
+}

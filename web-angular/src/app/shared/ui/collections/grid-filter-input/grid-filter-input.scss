@@ -1,0 +1,9 @@
+:host {
+  display: block;
+  min-width: 0;
+}
+erp-text-field,
+erp-numeric-field,
+erp-date-field {
+  --touch-target: 36px;
+}

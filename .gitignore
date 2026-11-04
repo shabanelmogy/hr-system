@@ -23,3 +23,8 @@ obj/
 *.7z
 
 foundation.bundle
+
+# Private Crystal runtime/local and Visual Studio publish configuration.
+api/CrystalReportGeneratorApi/Web.Crystal.publish-private.config
+api/CrystalReportGeneratorApi/App_Data/CrystalRuntime.local.config
+api/ErpSystem.Api/web.Crystal.publish-private.config

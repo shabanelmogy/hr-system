@@ -1,0 +1,651 @@
+{
+  "schemaVersion": 1,
+  "status": "final",
+  "executionMode": "bounded-runtime",
+  "runtimeAuthorized": true,
+  "feature": "angular-countries-import-view",
+  "featureName": "Countries XLSX import",
+  "referenceFeature": "N/A",
+  "planId": "web-angular-migration",
+  "sliceId": "S3-A7 — Countries XLSX import",
+  "canonicalPlan": "documentation/plans/business/web-angular-migration/PLAN.md",
+  "featureDecompositionDecision": "Single feature",
+  "screenWorkflowContract": "documentation/plans/business/web-angular-migration/decomposition/angular-countries-import-view.md",
+  "plannedCustomerEducation": "documentation/plans/business/web-angular-migration/education/angular-countries-import-view.md",
+  "purpose": "Verified bounded Angular S3-A7 evidence under requester D35; Next execution is not a prerequisite.",
+  "reviewArtifact": "documentation/modules/platform/features/angular-countries-import-view/angular-countries-import-view-evidence.md",
+  "implementationRequest": "documentation/modules/platform/features/angular-countries-import-view/angular-countries-import-view-request.md",
+  "plannedCanonicalBooks": {
+    "master": "documentation/modules/platform/features/angular-countries-import-view/angular-countries-import-view-review.md",
+    "api": "documentation/modules/platform/features/angular-countries-import-view/angular-countries-import-view-api.md",
+    "web": "documentation/modules/platform/features/angular-countries-import-view/angular-countries-import-view-web.md",
+    "mobile": "documentation/modules/platform/features/angular-countries-import-view/angular-countries-import-view-mobile.md"
+  },
+  "sourceCollections": [],
+  "requiredFiles": [
+    {
+      "id": "root-agent-guidance",
+      "layer": "configuration",
+      "path": "AGENTS.md",
+      "purpose": "Repository-wide feature and documentation rules"
+    },
+    {
+      "id": "review-artifact",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/angular-countries-import-view-evidence.md",
+      "purpose": "Feature requirement, evidence, finding, and verification ledger"
+    },
+    {
+      "id": "implementation-request",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/angular-countries-import-view-request.md",
+      "purpose": "Copy-ready feature scope, platform decisions, contracts, and quality gates"
+    },
+    {
+      "id": "preflight-0",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/angular-countries-import-view-review.md",
+      "purpose": "Reviewed existing source or frozen applied contract"
+    },
+    {
+      "id": "preflight-1",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/angular-countries-import-view-api.md",
+      "purpose": "Reviewed existing source or frozen applied contract"
+    },
+    {
+      "id": "preflight-2",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/angular-countries-import-view-web.md",
+      "purpose": "Reviewed existing source or frozen applied contract"
+    },
+    {
+      "id": "preflight-3",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/angular-countries-import-view-mobile.md",
+      "purpose": "Reviewed existing source or frozen applied contract"
+    },
+    {
+      "id": "preflight-4",
+      "layer": "documentation",
+      "path": "documentation/plans/business/web-angular-migration/PLAN.md",
+      "purpose": "Reviewed existing source or frozen applied contract"
+    },
+    {
+      "id": "preflight-5",
+      "layer": "documentation",
+      "path": "documentation/plans/business/web-angular-migration/decomposition/angular-countries-import-view.md",
+      "purpose": "Reviewed existing source or frozen applied contract"
+    },
+    {
+      "id": "preflight-6",
+      "layer": "web",
+      "path": "web-next/src/shared/services/excelService.ts",
+      "purpose": "Reviewed existing source or frozen applied contract"
+    },
+    {
+      "id": "preflight-7",
+      "layer": "web",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/import-data/ImportCountries.tsx",
+      "purpose": "Reviewed existing source or frozen applied contract"
+    },
+    {
+      "id": "preflight-8",
+      "layer": "web",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/import-data/useCountryImport.ts",
+      "purpose": "Reviewed existing source or frozen applied contract"
+    },
+    {
+      "id": "preflight-9",
+      "layer": "web",
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/import-data/countryImport.ts",
+      "purpose": "Reviewed existing source or frozen applied contract"
+    },
+    {
+      "id": "preflight-10",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid/my-data-grid.ts",
+      "purpose": "Reviewed existing source or frozen applied contract"
+    },
+    {
+      "id": "preflight-11",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/data/command-failure.ts",
+      "purpose": "Reviewed existing source or frozen applied contract"
+    },
+    {
+      "id": "preflight-12",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/data/unsaved-changes.ts",
+      "purpose": "Reviewed existing source or frozen applied contract"
+    },
+    {
+      "id": "preflight-13",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/services/country-service.ts",
+      "purpose": "Reviewed existing source or frozen applied contract"
+    },
+    {
+      "id": "preflight-14",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/validation/country-mutation.ts",
+      "purpose": "Reviewed existing source or frozen applied contract"
+    },
+    {
+      "id": "preflight-15",
+      "layer": "mobile",
+      "path": "mobile-react/src/modules/reference-data/geography/countries/presentation/components/import-data/CountryImportView.tsx",
+      "purpose": "Reviewed existing source or frozen applied contract"
+    },
+    {
+      "id": "preflight-16",
+      "layer": "api",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Presentation/Features/GeographicalInformation/Countries/V1/CountriesController.cs",
+      "purpose": "Reviewed existing source or frozen applied contract"
+    },
+    {
+      "id": "preflight-17",
+      "layer": "api",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/CreateCountries/CreateCountriesCommandHandler.cs",
+      "purpose": "Reviewed existing source or frozen applied contract"
+    },
+    {
+      "id": "preflight-18",
+      "layer": "api",
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/CreateCountries/CreateCountriesCommandValidator.cs",
+      "purpose": "Reviewed existing source or frozen applied contract"
+    },
+    {
+      "id": "runtime-0",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/data/spreadsheet-import.ts",
+      "purpose": "Actual S3-A7 runtime/current evidence; no future path"
+    },
+    {
+      "id": "runtime-1",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/data/spreadsheet-parser.ts",
+      "purpose": "Actual S3-A7 runtime/current evidence; no future path"
+    },
+    {
+      "id": "runtime-2",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/data/spreadsheet-public-api.ts",
+      "purpose": "Actual S3-A7 runtime/current evidence; no future path"
+    },
+    {
+      "id": "runtime-3",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/data/spreadsheet-import.spec.ts",
+      "purpose": "Actual S3-A7 runtime/current evidence; no future path"
+    },
+    {
+      "id": "runtime-4",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/imports/spreadsheet-import-panel/spreadsheet-import-panel.ts",
+      "purpose": "Actual S3-A7 runtime/current evidence; no future path"
+    },
+    {
+      "id": "runtime-5",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/feedback/feedback-state/feedback-state.ts",
+      "purpose": "Actual S3-A7 runtime/current evidence; no future path"
+    },
+    {
+      "id": "runtime-6",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/public-api.ts",
+      "purpose": "Actual S3-A7 runtime/current evidence; no future path"
+    },
+    {
+      "id": "runtime-7",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-import-view/country-import-view.ts",
+      "purpose": "Actual S3-A7 runtime/current evidence; no future path"
+    },
+    {
+      "id": "runtime-8",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/state/country-import-state.ts",
+      "purpose": "Actual S3-A7 runtime/current evidence; no future path"
+    },
+    {
+      "id": "runtime-9",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/state/country-import-state.spec.ts",
+      "purpose": "Actual S3-A7 runtime/current evidence; no future path"
+    },
+    {
+      "id": "runtime-10",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/validation/country-import.ts",
+      "purpose": "Actual S3-A7 runtime/current evidence; no future path"
+    },
+    {
+      "id": "runtime-11",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/validation/country-import.spec.ts",
+      "purpose": "Actual S3-A7 runtime/current evidence; no future path"
+    },
+    {
+      "id": "runtime-12",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/services/country-service.spec.ts",
+      "purpose": "Actual S3-A7 runtime/current evidence; no future path"
+    },
+    {
+      "id": "runtime-13",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page/countries-read-page.ts",
+      "purpose": "Actual S3-A7 runtime/current evidence; no future path"
+    },
+    {
+      "id": "runtime-14",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page/countries-read-page.html",
+      "purpose": "Actual S3-A7 runtime/current evidence; no future path"
+    },
+    {
+      "id": "runtime-15",
+      "layer": "web",
+      "path": "web-angular/scripts/verify-country-import-browser.mjs",
+      "purpose": "Actual S3-A7 runtime/current evidence; no future path"
+    },
+    {
+      "id": "runtime-16",
+      "layer": "web",
+      "path": "web-angular/scripts/verify-country-import-reference.mjs",
+      "purpose": "Actual S3-A7 runtime/current evidence; no future path"
+    },
+    {
+      "id": "runtime-17",
+      "layer": "web",
+      "path": "web-angular/package.json",
+      "purpose": "Actual S3-A7 runtime/current evidence; no future path"
+    },
+    {
+      "id": "runtime-18",
+      "layer": "web",
+      "path": "web-angular/package-lock.json",
+      "purpose": "Actual S3-A7 runtime/current evidence; no future path"
+    },
+    {
+      "id": "runtime-19",
+      "layer": "documentation",
+      "path": "documentation/guides/web/architecture/ANGULAR_SHARED_COMPONENTS.md",
+      "purpose": "Actual S3-A7 runtime/current evidence; no future path"
+    },
+    {
+      "id": "runtime-20",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/verification/ANGULAR_CHECK.txt",
+      "purpose": "Actual S3-A7 runtime/current evidence; no future path"
+    },
+    {
+      "id": "runtime-21",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/verification/API_TESTS.txt",
+      "purpose": "Actual S3-A7 runtime/current evidence; no future path"
+    },
+    {
+      "id": "runtime-22",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/verification/ar-dark-1440-result.png",
+      "purpose": "Actual S3-A7 runtime/current evidence; no future path"
+    },
+    {
+      "id": "runtime-23",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/verification/ar-dark-390-result.png",
+      "purpose": "Actual S3-A7 runtime/current evidence; no future path"
+    },
+    {
+      "id": "runtime-24",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/verification/ar-light-1440-result.png",
+      "purpose": "Actual S3-A7 runtime/current evidence; no future path"
+    },
+    {
+      "id": "runtime-25",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/verification/ar-light-390-result.png",
+      "purpose": "Actual S3-A7 runtime/current evidence; no future path"
+    },
+    {
+      "id": "runtime-26",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/verification/browser-results.json",
+      "purpose": "Actual S3-A7 runtime/current evidence; no future path"
+    },
+    {
+      "id": "runtime-27",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/verification/BROWSER_FOCUSED.txt",
+      "purpose": "Actual S3-A7 runtime/current evidence; no future path"
+    },
+    {
+      "id": "runtime-28",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/verification/BROWSER_MATRIX.txt",
+      "purpose": "Actual S3-A7 runtime/current evidence; no future path"
+    },
+    {
+      "id": "runtime-29",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/verification/CURRENT_IMPORT_ACCEPTANCE.md",
+      "purpose": "Actual S3-A7 runtime/current evidence; no future path"
+    },
+    {
+      "id": "runtime-30",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/verification/en-dark-1440-result.png",
+      "purpose": "Actual S3-A7 runtime/current evidence; no future path"
+    },
+    {
+      "id": "runtime-31",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/verification/en-dark-390-result.png",
+      "purpose": "Actual S3-A7 runtime/current evidence; no future path"
+    },
+    {
+      "id": "runtime-32",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/verification/en-light-1440-result.png",
+      "purpose": "Actual S3-A7 runtime/current evidence; no future path"
+    },
+    {
+      "id": "runtime-33",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/verification/en-light-390-result.png",
+      "purpose": "Actual S3-A7 runtime/current evidence; no future path"
+    },
+    {
+      "id": "runtime-34",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/verification/ENTRY_PORTABILITY.md",
+      "purpose": "Actual S3-A7 runtime/current evidence; no future path"
+    },
+    {
+      "id": "runtime-35",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/verification/focused-results.json",
+      "purpose": "Actual S3-A7 runtime/current evidence; no future path"
+    },
+    {
+      "id": "runtime-36",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/verification/mcp-validation.json",
+      "purpose": "Actual S3-A7 runtime/current evidence; no future path"
+    },
+    {
+      "id": "runtime-37",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/verification/NATIVE_TESTS.txt",
+      "purpose": "Actual S3-A7 runtime/current evidence; no future path"
+    },
+    {
+      "id": "runtime-38",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/verification/NEXT_TESTS.txt",
+      "purpose": "Actual S3-A7 runtime/current evidence; no future path"
+    },
+    {
+      "id": "runtime-39",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/verification/REGRESSION_ACTIONS.txt",
+      "purpose": "Actual S3-A7 runtime/current evidence; no future path"
+    },
+    {
+      "id": "runtime-40",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/verification/REGRESSION_CHART.txt",
+      "purpose": "Actual S3-A7 runtime/current evidence; no future path"
+    },
+    {
+      "id": "runtime-41",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/verification/REGRESSION_REPORT.txt",
+      "purpose": "Actual S3-A7 runtime/current evidence; no future path"
+    },
+    {
+      "id": "current-import-0",
+      "layer": "documentation",
+      "path": "documentation/plans/notes/FOLLOW_UPS.md",
+      "purpose": "Actual current source/verification evidence; incomplete source acceptance explicit"
+    },
+    {
+      "id": "current-import-1",
+      "layer": "documentation",
+      "path": "documentation/plans/notes/WEB_NOTES.md",
+      "purpose": "Actual current source/verification evidence; incomplete source acceptance explicit"
+    },
+    {
+      "id": "current-import-2",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/verification/FINAL_BUILD.txt",
+      "purpose": "Actual current source/verification evidence; incomplete source acceptance explicit"
+    },
+    {
+      "id": "current-import-3",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/verification/FINAL_TYPES.txt",
+      "purpose": "Actual current source/verification evidence; incomplete source acceptance explicit"
+    },
+    {
+      "id": "current-import-4",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/verification/SOURCE_BOOTSTRAP_FAILURE.txt",
+      "purpose": "Actual current source/verification evidence; incomplete source acceptance explicit"
+    },
+    {
+      "id": "current-import-5",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/verification/SOURCE_PARTIAL_RESULTS.json",
+      "purpose": "Actual current source/verification evidence; incomplete source acceptance explicit"
+    },
+    {
+      "id": "current-import-6",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/verification/reference-screenshots/light-ar-1440.png",
+      "purpose": "Actual current source/verification evidence; incomplete source acceptance explicit"
+    },
+    {
+      "id": "current-import-7",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/verification/reference-screenshots/light-en-1440.png",
+      "purpose": "Actual current source/verification evidence; incomplete source acceptance explicit"
+    },
+    {
+      "id": "current-import-8",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/verification/reference-screenshots/light-en-390.png",
+      "purpose": "Actual current source/verification evidence; incomplete source acceptance explicit"
+    },
+    {
+      "id": "current-import-9",
+      "layer": "documentation",
+      "path": "documentation/modules/reference-data/features/countries/countries-review.md",
+      "purpose": "Actual current source/verification evidence; incomplete source acceptance explicit"
+    },
+    {
+      "id": "current-import-10",
+      "layer": "documentation",
+      "path": "documentation/modules/reference-data/features/countries/countries-api.md",
+      "purpose": "Actual current source/verification evidence; incomplete source acceptance explicit"
+    },
+    {
+      "id": "current-import-11",
+      "layer": "documentation",
+      "path": "documentation/modules/reference-data/features/countries/countries-web.md",
+      "purpose": "Actual current source/verification evidence; incomplete source acceptance explicit"
+    },
+    {
+      "id": "current-import-12",
+      "layer": "documentation",
+      "path": "documentation/modules/reference-data/features/countries/countries-mobile.md",
+      "purpose": "Actual current source/verification evidence; incomplete source acceptance explicit"
+    },
+    {
+      "id": "current-import-source-snapshot",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/verification/SOURCE_SNAPSHOT.json",
+      "purpose": "Current base/source hashes; incomplete acceptance explicit"
+    },
+    {
+      "id": "handoff-documentation_check-txt",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/verification/DOCUMENTATION_CHECK.txt",
+      "purpose": "Executed current documentation/planning gate; known warnings explicit"
+    },
+    {
+      "id": "handoff-planning_check-txt",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/verification/PLANNING_CHECK.txt",
+      "purpose": "Executed current documentation/planning gate; known warnings explicit"
+    },
+    {
+      "id": "angular-closure-0",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/SCOPE_CHANGE.md",
+      "purpose": "Current D35 authority, actual Angular proof or verified education"
+    },
+    {
+      "id": "angular-closure-1",
+      "layer": "documentation",
+      "path": "documentation/plans/business/web-angular-migration/DECISIONS.md",
+      "purpose": "Current D35 authority, actual Angular proof or verified education"
+    },
+    {
+      "id": "angular-closure-2",
+      "layer": "documentation",
+      "path": "documentation/plans/business/web-angular-migration/RESUME.md",
+      "purpose": "Current D35 authority, actual Angular proof or verified education"
+    },
+    {
+      "id": "angular-closure-3",
+      "layer": "documentation",
+      "path": "documentation/plans/business/web-angular-migration/education/angular-countries-import-view.md",
+      "purpose": "Current D35 authority, actual Angular proof or verified education"
+    },
+    {
+      "id": "angular-closure-4",
+      "layer": "documentation",
+      "path": "documentation/plans/notes/KNOWN_RISKS.md",
+      "purpose": "Current D35 authority, actual Angular proof or verified education"
+    },
+    {
+      "id": "angular-closure-5",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/verification/JOURNEYS.txt",
+      "purpose": "Current D35 authority, actual Angular proof or verified education"
+    },
+    {
+      "id": "angular-closure-6",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-countries-import-view/verification/journey-results.json",
+      "purpose": "Current D35 authority, actual Angular proof or verified education"
+    },
+    {
+      "id": "component-resource-ebc55cadd04d",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/imports/spreadsheet-import-panel/spreadsheet-import-panel.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-3a12f58990b6",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/imports/spreadsheet-import-panel/spreadsheet-import-panel.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-8d60ad3720b1",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/feedback/feedback-state/feedback-state.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-d24cba69c11c",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/feedback/feedback-state/feedback-state.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-f8dfbd58d23a",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-import-view/country-import-view.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "quality-ff96e53d3ee7",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid/grid-column-presentation.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-5356e0ff9c90",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid/grid-column-presentation.spec.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-519b867de1ce",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid/grid-viewport.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-6fe0129a75d1",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/collection-column-pipe.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-97ddb61c625b",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/collection-column-pipe.spec.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-c8f3282bb980",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/utils/country-list-presentation.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-4653687b92ac",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/utils/country-list-presentation.spec.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-ee6cafb607b4",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/data/spreadsheet-contracts.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-b48e367c4706",
+      "layer": "configuration",
+      "path": "web-angular/eslint.config.mjs",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-18187b5430c6",
+      "layer": "configuration",
+      "path": "web-angular/scripts/dependency-rules.mjs",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-056ed62f225e",
+      "layer": "configuration",
+      "path": "web-angular/scripts/dependency-rules.test.mjs",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-16f555949438",
+      "layer": "web",
+      "path": "web-angular/src/testing/fixture-item.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    }
+  ]
+}

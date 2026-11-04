@@ -57,4 +57,4 @@ realtime, notification, localization, report, or Import integration is reachable
 | districts-mobile | 2 | `18881b6d1d70c7f055fc22edb5d5f998d3c3b2bbdb15dbc4393d5b5266205b41` |
 | districts-mobile | 11 | `2168087827d6275ad0b45dc263ca1d342db0be761e705bdd276c7283ee141b88` |
 | districts-mobile | 12 | `039c5d354f80749eb57e527c45efaddbbbdd34394cfe57da84a3a4e05eb5366f` |
-| districts-mobile | 15 | `659b10d4561775eeb6d72d7acce06a4515644958840ec7820f9097e7a1826050` |
+| districts-mobile | 15 | `255f11283ad39ed11eb6449dd578602d06f18b4da8421ec812d6b0331c4f53c1` |

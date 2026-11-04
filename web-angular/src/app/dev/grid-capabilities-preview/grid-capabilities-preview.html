@@ -1,0 +1,144 @@
+<main>
+  <erp-page-header
+    variant="collection"
+    [title]="'pagination.dataTable' | uiText"
+    [views]="views()"
+    view="grid"
+    [total]="total()"
+    [totalLabel]="'pagination.items' | uiText"
+    [filterVisible]="toolbar()"
+    (refresh)="request()"
+    (filterToggle)="toolbar.set(!toolbar())"
+  />
+  <div class="panel">
+    <erp-data-table
+      #grid
+      appearance="reference"
+      [label]="'pagination.dataTable' | uiText"
+      [source]="source()"
+      [columns]="columns()"
+      [rowId]="id"
+      [rowLabel]="name"
+      [search]="search()"
+      [toolbarVisible]="toolbar()"
+      [selectionEnabled]="true"
+      [selectionMode]="selectionMode()"
+      [advancedFilters]="true"
+      [filters]="filters()"
+      sortMode="multiple"
+      [sorts]="sorts()"
+      [display]="display()"
+      [csv]="{ filename: 'grid-fixture' }"
+      [frozenIds]="frozenIds()"
+      [grouping]="grouping()"
+      [contextActions]="rowActions"
+      [headerGroups]="headerGroups()"
+      (pageChange)="page($event)"
+      (searchChange)="searchChanged($event)"
+      (filtersChange)="filterChanged($event)"
+      (sortsChange)="sortChanged($event)"
+      (retry)="request()"
+      (detailToggle)="details.set($event.expanded ? $event.row.id : null)"
+      (rowAction)="lastAction.set($event.action + ':' + $event.row.id)"
+    >
+      <div toolbarContent class="actions">
+        <erp-button
+          data-testid="reset"
+          [label]="'general.reset' | uiText"
+          variant="text"
+          (activated)="reset()"
+          ><erp-icon buttonIcon name="reset"
+        /></erp-button>
+      </div>
+      <div gridOptions class="fixture-options">
+        <erp-button
+          data-testid="pin"
+          [label]="'collections.pinStart' | uiText"
+          variant="text"
+          (activated)="pin()"
+        /><erp-button
+          data-testid="save"
+          [label]="'actions.save' | uiText"
+          variant="text"
+          (activated)="save()"
+        /><erp-button
+          data-testid="restore"
+          [label]="'actions.restore' | uiText"
+          variant="text"
+          (activated)="restore()"
+        />
+      </div>
+      <ng-template [erpCollectionCell]="columns() | collectionColumn: 'enabled'" let-row
+        ><erp-status-badge [label]="(row.enabled ? 'common.active' : 'common.inactive') | uiText"
+      /></ng-template>
+      @if (headerGroups().length) {
+        <ng-template [erpCollectionColumnHeader]="columns() | collectionColumn: 'id'" let-column
+          ><span data-testid="projected-header">{{ column.header }}</span></ng-template
+        ><ng-template
+          [erpCollectionColumnFooter]="columns() | collectionColumn: 'amount'"
+          let-page
+          let-total="total"
+          ><output data-testid="projected-footer"
+            >{{ page.length }} / {{ total }}</output
+          ></ng-template
+        >
+      }
+      @if (!grouping()) {
+        <ng-template [erpCollectionRowDetails]="source()" let-row
+          ><div data-testid="row-detail">
+            {{ row.name }} · {{ row.day }} · {{ row.amount }}
+          </div></ng-template
+        >
+      }
+    </erp-data-table>
+  </div>
+  <div class="fixture-controls">
+    <erp-button
+      data-testid="scope"
+      [label]="'general.reset' | uiText"
+      variant="text"
+      (activated)="replaceScope()"
+    /><erp-button
+      data-testid="language"
+      [label]="(locale.language() === 'en' ? 'common.arabic' : 'common.english') | uiText"
+      variant="text"
+      (activated)="locale.setLanguage(locale.language() === 'en' ? 'ar' : 'en')"
+    /><erp-button
+      data-testid="mode"
+      [label]="'general.darkMode' | uiText"
+      variant="text"
+      (activated)="theme.setMode(theme.mode() === 'light' ? 'dark' : 'light')"
+    /><erp-button
+      data-testid="freeze-row"
+      [label]="'collections.pinStart' | uiText"
+      variant="text"
+      (activated)="freezeRow()"
+    /><erp-button
+      data-testid="group"
+      [label]="'collections.columns' | uiText"
+      variant="text"
+      (activated)="group()"
+    /><erp-button
+      data-testid="header-groups"
+      [label]="'collections.columns' | uiText"
+      variant="text"
+      (activated)="toggleHeaderGroups()"
+    /><erp-option-select
+      data-testid="selection-mode"
+      [label]="'collections.selectionMode' | uiText"
+      [value]="selectionMode()"
+      [options]="selectionOptions()"
+      (valueChange)="selectMode($event)"
+    />
+  </div>
+  <output
+    data-testid="grid-state"
+    [attr.data-starts]="starts()"
+    [attr.data-kind]="source().kind"
+    [attr.data-filters]="filterJson()"
+    [attr.data-sorts]="sortJson()"
+    [attr.data-detail]="details()"
+    [attr.data-scope]="scope()"
+    [attr.data-action]="lastAction()"
+  ></output>
+</main>

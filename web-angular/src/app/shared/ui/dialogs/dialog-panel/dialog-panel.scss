@@ -1,0 +1,53 @@
+.dialog-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+.heading-copy {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+h2 {
+  font-size: 20px;
+  line-height: 1.6;
+  margin: 0;
+  font-weight: 600;
+}
+p {
+  color: var(--muted-foreground);
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.43;
+}
+.heading-icon {
+  flex: 0 0 40px;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  border-radius: 50%;
+}
+.heading-icon.danger {
+  background: var(--destructive);
+  color: var(--destructive-foreground);
+}
+.dialog-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-block-start: 8px;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-width: 0;
+  width: 100%;
+}

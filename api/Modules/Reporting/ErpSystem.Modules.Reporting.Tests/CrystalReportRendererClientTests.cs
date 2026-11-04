@@ -75,14 +75,25 @@ public sealed class CrystalReportRendererClientTests
         Assert.Equal(CrystalReportRenderFailure.UnsupportedEntity, result.Failure);
     }
 
-    [Fact]
-    public async Task RenderAsync_DoesNotCollapseEveryBadRequest_ToUnsupportedEntity()
+    [Theory]
+    [InlineData("crystal_runtime_invalid_report", CrystalReportRenderFailure.InvalidReport)]
+    [InlineData("crystal_runtime_source_rejected", CrystalReportRenderFailure.SourceRejected)]
+    [InlineData("crystal_runtime_schema_mismatch", CrystalReportRenderFailure.SchemaMismatch)]
+    [InlineData("crystal_runtime_parameter_mismatch", CrystalReportRenderFailure.ParameterMismatch)]
+    [InlineData("unrecognized_runtime_code", CrystalReportRenderFailure.InvalidReport)]
+    public async Task RenderAsync_PreservesKnownTemplateFailures_WithoutForwardingRuntimeMessages(
+        string runtimeCode,
+        CrystalReportRenderFailure expectedFailure)
     {
         using var httpClient = new HttpClient(new CallbackHandler(_ => Task.FromResult(
             new HttpResponseMessage(HttpStatusCode.BadRequest)
             {
                 Content = new StringContent(
-                    "{\"code\":\"crystal_runtime_invalid_report\",\"message\":\"Invalid report.\"}",
+                    System.Text.Json.JsonSerializer.Serialize(new
+                    {
+                        code = runtimeCode,
+                        message = "Internal details must not become a public error message."
+                    }),
                     Encoding.UTF8,
                     "application/json")
             })))
@@ -97,7 +108,7 @@ public sealed class CrystalReportRendererClientTests
             "<ReportData />"), CancellationToken.None);
 
         Assert.False(result.IsSuccess);
-        Assert.Equal(CrystalReportRenderFailure.InvalidReport, result.Failure);
+        Assert.Equal(expectedFailure, result.Failure);
     }
 
     [Fact]

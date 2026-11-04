@@ -1,0 +1,77 @@
+<label [for]="id" [class.invalid]="!!error()"
+  >{{ label() }}
+  @if (required()) {
+    <span aria-hidden="true"> *</span>
+  }
+</label>
+<div class="input-row" [class.invalid]="!!error()">
+  <input
+    #input
+    pInputText
+    [id]="id"
+    type="text"
+    dir="ltr"
+    [value]="value()"
+    [placeholder]="'YYYY-MM-DD'"
+    [disabled]="disabled()"
+    [readOnly]="readOnly()"
+    autocomplete="off"
+    [attr.name]="name() || id"
+    [attr.aria-required]="required() ? 'true' : null"
+    [invalid]="!!error()"
+    [attr.aria-invalid]="error() ? 'true' : null"
+    [attr.aria-describedby]="describedBy()"
+    (input)="onInput($event)"
+    (blur)="blur()"
+    (compositionstart)="composing = true"
+    (compositionend)="compositionEnd($event)"
+  />
+  @if (showClear() && value() && !readOnly() && !disabled()) {
+    <button
+      pButton
+      [iconOnly]="true"
+      variant="text"
+      type="button"
+      class="field-action"
+      [attr.aria-label]="'general.clear' | uiText"
+      (click)="clear()"
+    >
+      <svg data-p-icon="times" class="clear-icon" aria-hidden="true"></svg>
+    </button>
+  }
+  <erp-popover-panel
+    #calendar
+    [label]="('dateField.chooseDate' | uiText) + ' · ' + label()"
+    [disabled]="readOnly() || disabled() || boundsInvalid() || manualOnly()"
+  >
+    <svg popoverTrigger aria-hidden="true" viewBox="0 0 24 24">
+      <path d="M5 4h14v16H5zM8 2v4m8-4v4M5 9h14m-10 4h2m2 0h2m-6 3h2" />
+    </svg>
+    <div tabindex="-1" (keydown.escape)="dismiss($event)">
+      @defer (when calendar.opened()) {
+        <p-datepicker
+          [formControl]="calendarControl"
+          [inline]="true"
+          [minDate]="calendarMin()"
+          [maxDate]="calendarMax()"
+          [ariaLabel]="label()"
+          [pt]="calendarAttributes"
+          [dt]="calendarTokens"
+        />
+      } @loading {
+        <p role="status">{{ 'common.loading' | uiText }}</p>
+      } @error {
+        <p role="alert">{{ 'common.error' | uiText }}</p>
+      }
+    </div>
+  </erp-popover-panel>
+</div>
+@if (help()) {
+  <p class="help" [id]="id + '-help'">{{ help() }}</p>
+}
+@if (manualOnly()) {
+  <p class="help" [id]="id + '-calendar-help'">{{ 'dateField.earlyYearsHelp' | uiText }}</p>
+}
+@if (error(); as message) {
+  <p class="error" [id]="id + '-error'">{{ message }}</p>
+}

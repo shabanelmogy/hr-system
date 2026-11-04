@@ -11,6 +11,11 @@ that contract owns the added scenarios, evidence and adaptation limits.
 
 ## 1. Ownership before folders
 
+Requester-approved D37 makes [Angular Clean Code](../../../guides/web/architecture/ANGULAR_CODE_STYLE.md)
+mandatory: colocated external HTML/SCSS component resources, focused typed TS logic,
+shared-first composition, readable formatting and automated boundary checks. This
+applies to current and future components, including shared/dev/test hosts.
+
 Use one Angular application with explicit modules and lazy routes. Begin with
 ordinary Angular CLI tooling plus enforceable boundaries; introducing Nx or a
 multi-package runtime is not required to establish modularity. A later workspace

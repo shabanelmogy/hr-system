@@ -1,0 +1,113 @@
+{
+  "date": "2026-11-01T08:16:52.808Z",
+  "results": [
+    {
+      "language": "en",
+      "width": 390,
+      "opening": [
+        {
+          "kind": "loading",
+          "at": 1972.5999999940395
+        },
+        {
+          "kind": "ready",
+          "at": 2128.300000011921
+        }
+      ],
+      "oneOpeningLoader": true,
+      "remoteBurst": true,
+      "pendingTrailingRead": true,
+      "reconnect": true,
+      "editorDraft": true,
+      "importDraft": true,
+      "revocation": true,
+      "passed": true
+    },
+    {
+      "language": "en",
+      "width": 1440,
+      "opening": [
+        {
+          "kind": "loading",
+          "at": 1485.5999999940395
+        },
+        {
+          "kind": "ready",
+          "at": 1582.4000000059605
+        }
+      ],
+      "oneOpeningLoader": true,
+      "remoteBurst": true,
+      "pendingTrailingRead": true,
+      "reconnect": true,
+      "editorDraft": true,
+      "importDraft": true,
+      "revocation": true,
+      "passed": true
+    },
+    {
+      "language": "ar",
+      "width": 390,
+      "opening": [
+        {
+          "kind": "loading",
+          "at": 1230.0999999940395
+        },
+        {
+          "kind": "ready",
+          "at": 1369
+        }
+      ],
+      "oneOpeningLoader": true,
+      "remoteBurst": true,
+      "pendingTrailingRead": true,
+      "reconnect": true,
+      "editorDraft": true,
+      "importDraft": true,
+      "revocation": true,
+      "passed": true
+    },
+    {
+      "language": "ar",
+      "width": 1440,
+      "opening": [
+        {
+          "kind": "loading",
+          "at": 1290.7999999821186
+        },
+        {
+          "kind": "ready",
+          "at": 1432.3999999761581
+        }
+      ],
+      "oneOpeningLoader": true,
+      "remoteBurst": true,
+      "pendingTrailingRead": true,
+      "reconnect": true,
+      "editorDraft": true,
+      "importDraft": true,
+      "revocation": true,
+      "passed": true
+    },
+    {
+      "scenario": "forbidden",
+      "passed": true
+    },
+    {
+      "scenario": "token-denied",
+      "passed": true
+    },
+    {
+      "scenario": "initial-retry",
+      "passed": true
+    },
+    {
+      "scenario": "hub401",
+      "passed": true
+    },
+    {
+      "scenario": "hub403",
+      "passed": true
+    }
+  ]
+}

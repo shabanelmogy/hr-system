@@ -1,0 +1,25 @@
+:host {
+  display: block;
+  min-width: 0;
+}
+.policy {
+  color: var(--muted-foreground);
+  overflow-wrap: anywhere;
+}
+.policy p {
+  margin: 0 0 10px;
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+.file {
+  overflow-wrap: anywhere;
+}
+@media (max-width: 599px) {
+  .actions > * {
+    flex: 1 1 100%;
+  }
+}

@@ -1,0 +1,11 @@
+:host {
+  display: block;
+}
+.browser-navigation {
+  margin-bottom: 12px;
+}
+@media (min-width: 900px) {
+  :host {
+    padding: 16px;
+  }
+}

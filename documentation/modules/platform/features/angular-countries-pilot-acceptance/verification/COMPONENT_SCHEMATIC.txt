@@ -1,0 +1,11 @@
+
+> erp-angular@0.0.0 ng
+> node scripts/run-angular.mjs generate component component-structure-proof --dry-run --skip-import
+
+API target: host (https://shabanhrms.runasp.net)
+CREATE src/app/component-structure-proof/component-structure-proof.spec.ts (675 bytes)
+CREATE src/app/component-structure-proof/component-structure-proof.ts (270 bytes)
+CREATE src/app/component-structure-proof/component-structure-proof.scss (0 bytes)
+CREATE src/app/component-structure-proof/component-structure-proof.html (41 bytes)
+
+NOTE: The "--dry-run" option means no changes were made.

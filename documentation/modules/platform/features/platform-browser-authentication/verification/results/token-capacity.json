@@ -3,28 +3,28 @@
   "measurements": [
     {
       "roles": 1,
-      "permissionCount": 258,
-      "jwtBytes": 10468,
+      "permissionCount": 265,
+      "jwtBytes": 10761,
       "accessCookieParts": 5,
-      "cookieHeaderBytes": 11026,
+      "cookieHeaderBytes": 11319,
       "fits16KiBTotalBeforeOtherHeaders": true,
       "fits32KiBTotalBeforeOtherHeaders": true
     },
     {
       "roles": 10,
-      "permissionCount": 258,
-      "jwtBytes": 11793,
+      "permissionCount": 265,
+      "jwtBytes": 12087,
       "accessCookieParts": 6,
-      "cookieHeaderBytes": 12381,
+      "cookieHeaderBytes": 12675,
       "fits16KiBTotalBeforeOtherHeaders": true,
       "fits32KiBTotalBeforeOtherHeaders": true
     },
     {
       "roles": 25,
-      "permissionCount": 258,
-      "jwtBytes": 13993,
+      "permissionCount": 265,
+      "jwtBytes": 14287,
       "accessCookieParts": 6,
-      "cookieHeaderBytes": 14581,
+      "cookieHeaderBytes": 14875,
       "fits16KiBTotalBeforeOtherHeaders": true,
       "fits32KiBTotalBeforeOtherHeaders": true
     }

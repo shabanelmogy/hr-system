@@ -80,7 +80,7 @@ public sealed class CrystalReportInspectorClient(
                         "Crystal runtime rejected the report.",
                         null,
                         null,
-                        ToInspectionFailure(error?.Code));
+                        ToInspectionFailure(error));
                 }
                 catch (JsonException exception)
                 {
@@ -101,18 +101,13 @@ public sealed class CrystalReportInspectorClient(
             }
             if (result is null)
                 return null;
-            if (!result.IsValid || result.HasSavedData || result.HasEmbeddedCredentials)
+            if (!result.IsValid)
             {
-                var reason = result.HasEmbeddedCredentials
-                    ? "Embedded report credentials are not allowed."
-                    : result.HasSavedData
-                        ? "Saved report data is not allowed."
-                        : "Crystal runtime rejected the report.";
                 return new CrystalReportInspection(
                     false,
                     result.Title,
                     result.Subject,
-                    reason,
+                    "Crystal runtime rejected the report.",
                     null,
                     null,
                     result.Failure);
@@ -147,8 +142,6 @@ public sealed class CrystalReportInspectorClient(
         bool IsValid,
         string? Title,
         string? Subject,
-        bool HasSavedData,
-        bool HasEmbeddedCredentials,
         int SubreportCount,
         int? ContractSchemaVersion,
         string? ContractFingerprint,
@@ -156,13 +149,25 @@ public sealed class CrystalReportInspectorClient(
 
     private sealed record InspectionErrorResponse(string? Code, string? Message);
 
-    private static CrystalReportInspectionFailure ToInspectionFailure(string? code) => code switch
+    private static CrystalReportInspectionFailure ToInspectionFailure(InspectionErrorResponse? error) => error?.Code switch
     {
         "crystal_runtime_unsupported_profile" => CrystalReportInspectionFailure.UnsupportedEntity,
         "crystal_runtime_schema_mismatch" => CrystalReportInspectionFailure.SchemaMismatch,
         "crystal_runtime_parameter_mismatch" => CrystalReportInspectionFailure.ParameterMismatch,
+        "crystal_runtime_source_rejected" => CrystalReportInspectionFailure.SourceRejected,
+        // The deployed inspection endpoint predates the source-rejected code.
+        // Recognize only its exact fixed policy messages; never expose raw details.
+        "crystal_runtime_invalid_report" when IsLegacySourceRejection(error.Message) => CrystalReportInspectionFailure.SourceRejected,
         _ => CrystalReportInspectionFailure.InvalidReport
     };
+
+    private static bool IsLegacySourceRejection(string? message) => message is
+        "Crystal Report subreports are not supported by the managed runtime." or
+        "Crystal Report files containing saved data are not accepted." or
+        "Crystal Report files must use the approved pushed-data source." or
+        "Crystal Report files containing database connection metadata are not accepted." or
+        "Crystal Report files must use the approved ADO.NET pushed-data source." or
+        "Crystal Report datasource metadata could not be verified safely.";
 
     private static readonly JsonSerializerOptions InspectionJsonOptions =
         new(JsonSerializerDefaults.Web);

@@ -1,0 +1,22 @@
+{
+  "verifiedAtUtc": "2026-11-01T11:44:23.3427349Z",
+  "environment": "https://crystalreport-generator.runasp.net/",
+  "operation": "Authenticated download and entity-aware inspect; no publication or source modification",
+  "findings": [
+    {
+      "fileName": "Countries.rpt",
+      "sha256": "7dd5f88671932e61c979985f3bcced41876c7a4dffe7bf8f8098472a53997762",
+      "status": 400,
+      "code": "crystal_runtime_invalid_report",
+      "reason": "Crystal Report files containing database connection metadata are not accepted."
+    },
+    {
+      "fileName": "Countries.WithStates.rpt",
+      "sha256": "ce62df2c6d97c69ec803d62d7d17ca8636c810c966573f321d279a44d3d916e6",
+      "status": 400,
+      "code": "crystal_runtime_invalid_report",
+      "reason": "Crystal Report files containing database connection metadata are not accepted."
+    }
+  ],
+  "nativePdfVerified": false
+}

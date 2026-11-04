@@ -1,0 +1,46 @@
+main {
+  padding: 24px;
+  max-width: 1450px;
+  margin: auto;
+  min-width: 0;
+}
+.tools,
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-block: 16px;
+}
+.filters {
+  margin: 0;
+  padding: 4px 8px;
+  --option-label-background: var(--surface);
+}
+.filters erp-option-select {
+  min-width: 140px;
+}
+.collection {
+  height: 650px;
+  min-height: 0;
+}
+output {
+  display: block;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  direction: ltr;
+  color: var(--muted-foreground);
+  font-size: 12px;
+  margin-block: 16px;
+}
+@media (max-width: 600px) {
+  main {
+    padding: 12px;
+  }
+  .collection {
+    height: 800px;
+  }
+  .filters erp-option-select {
+    flex: 1;
+    min-width: 100px;
+  }
+}

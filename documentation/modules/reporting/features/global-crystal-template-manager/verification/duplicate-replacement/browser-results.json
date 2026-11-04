@@ -1,0 +1,38 @@
+[
+  {
+    "language": "en",
+    "width": 1213,
+    "warningBeforeMutation": true,
+    "cancelPreservesSource": true,
+    "atomicRequests": 1,
+    "historicalVersionDate": true,
+    "errors": []
+  },
+  {
+    "language": "en",
+    "width": 390,
+    "warningBeforeMutation": true,
+    "cancelPreservesSource": true,
+    "atomicRequests": 1,
+    "historicalVersionDate": true,
+    "errors": []
+  },
+  {
+    "language": "ar",
+    "width": 1213,
+    "warningBeforeMutation": true,
+    "cancelPreservesSource": true,
+    "atomicRequests": 1,
+    "historicalVersionDate": true,
+    "errors": []
+  },
+  {
+    "language": "ar",
+    "width": 390,
+    "warningBeforeMutation": true,
+    "cancelPreservesSource": true,
+    "atomicRequests": 1,
+    "historicalVersionDate": true,
+    "errors": []
+  }
+]

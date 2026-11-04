@@ -1,0 +1,39 @@
+:host {
+  display: block;
+}
+.meter {
+  padding: 8px 10px;
+  background: color-mix(in srgb, var(--foreground) 4%, transparent);
+  border-radius: 8px;
+}
+.meter-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 6.4px;
+  flex-wrap: wrap;
+}
+strong {
+  font-weight: 700;
+}
+span {
+  font-size: 14px;
+  color: var(--muted-foreground);
+}
+.inline {
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
+}
+.inline .meter-label {
+  gap: 8px;
+  margin-bottom: 4px;
+  font-size: 12px;
+  color: var(--muted-foreground);
+}
+.inline span {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--meter-accent);
+}

@@ -1,0 +1,24 @@
+<section
+  [attr.role]="kind() === 'error' || kind() === 'forbidden' ? 'alert' : 'status'"
+  [attr.aria-busy]="kind() === 'loading'"
+  [attr.aria-label]="title()"
+>
+  @if (kind() === 'loading') {
+    <span class="spinner" aria-hidden="true"></span>
+  } @else {
+    <erp-icon
+      [name]="icon() ?? (kind() === 'forbidden' ? 'lock' : kind() === 'error' ? 'close' : 'apps')"
+    />
+  }
+  @if (layout() === 'inline') {
+    <strong>{{ title() }}</strong>
+  } @else {
+    <h1>{{ title() }}</h1>
+  }
+  @if (message()) {
+    <p>{{ message() }}</p>
+  }
+  @if (actionLabel()) {
+    <erp-button [label]="actionLabel()" variant="outlined" (activated)="action.emit()" />
+  }
+</section>

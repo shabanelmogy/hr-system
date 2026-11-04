@@ -163,7 +163,7 @@
     },
     {
       "id": "phase00-23",
-      "path": "web-angular/src/app/shared/ui/feedback/feedback-state.ts",
+      "path": "web-angular/src/app/shared/ui/feedback/feedback-state/feedback-state.ts",
       "layer": "web",
       "purpose": "Actual source or frozen contract"
     },
@@ -187,7 +187,7 @@
     },
     {
       "id": "runtime-1",
-      "path": "web-angular/src/app/dev/read-preview.ts",
+      "path": "web-angular/src/app/dev/read-preview/read-preview.ts",
       "layer": "web",
       "purpose": "Current neutral scoped read lifetime runtime/test; acceptance ongoing"
     },
@@ -310,6 +310,72 @@
       "path": "documentation/modules/platform/features/angular-scoped-read-lifetime-foundation/verification/README.md",
       "layer": "documentation",
       "purpose": "Current acceptance or consumer evidence"
+    },
+    {
+      "id": "component-resource-8d60ad3720b1",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/feedback/feedback-state/feedback-state.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-d24cba69c11c",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/feedback/feedback-state/feedback-state.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-e728aa3b1a76",
+      "layer": "web",
+      "path": "web-angular/src/app/dev/read-preview/read-preview.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-38b36eb6452a",
+      "layer": "web",
+      "path": "web-angular/src/app/dev/read-preview/read-preview.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-d1fc7787b258",
+      "layer": "web",
+      "path": "web-angular/src/app/dev/read-preview-away/read-preview-away.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-803bde2cdce7",
+      "layer": "web",
+      "path": "web-angular/src/app/dev/read-preview-away/read-preview-away.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "dev-component-read-preview-away",
+      "layer": "web",
+      "path": "web-angular/src/app/dev/read-preview-away/read-preview-away.ts",
+      "purpose": "Separated development fixture component/state; D37 folder ownership"
+    },
+    {
+      "id": "quality-b48e367c4706",
+      "layer": "configuration",
+      "path": "web-angular/eslint.config.mjs",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-18187b5430c6",
+      "layer": "configuration",
+      "path": "web-angular/scripts/dependency-rules.mjs",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-056ed62f225e",
+      "layer": "configuration",
+      "path": "web-angular/scripts/dependency-rules.test.mjs",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-16f555949438",
+      "layer": "web",
+      "path": "web-angular/src/testing/fixture-item.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
     }
   ],
   "finalizationChecklist": [

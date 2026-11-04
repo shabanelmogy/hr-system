@@ -1,4 +1,3 @@
-using CrystalReportGeneratorApi.Filters;
 using CrystalReportGeneratorApi.Runtime;
 using CrystalReportGeneratorApi.Runtime.Catalog;
 using System;
@@ -13,7 +12,6 @@ namespace CrystalReportGeneratorApi.Controllers
     /// Internal discovery and source-download boundary for deployment-owned reports.
     /// Client-provided filesystem paths are deliberately unsupported.
     /// </summary>
-    [InternalApiKey]
     public sealed class InternalReportCatalogController : ApiController
     {
         private readonly CrystalReportCatalogService _catalogService =

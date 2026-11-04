@@ -286,6 +286,24 @@
       "path": "documentation/plans/notes/PRODUCTION_NOTES.md",
       "layer": "documentation",
       "purpose": "Current read-only source or assessment evidence"
+    },
+    {
+      "id": "quality-00675b4aab21",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/data/collection-criteria.types.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-f37c37b56180",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/data/collection-criteria-values.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-b85643189746",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/data/collection-criteria-normalizer.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
     }
   ],
   "finalizationChecklist": [

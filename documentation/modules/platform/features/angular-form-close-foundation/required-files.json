@@ -85,37 +85,37 @@
     },
     {
       "id": "phase00-10",
-      "path": "web-angular/src/app/shared/ui/dialogs/choice-dialog.ts",
+      "path": "web-angular/src/app/shared/ui/dialogs/choice-dialog/choice-dialog.ts",
       "layer": "web",
       "purpose": "Current inspected source or frozen exact target, not future implementation"
     },
     {
       "id": "phase00-11",
-      "path": "web-angular/src/app/shared/ui/forms/form-container.ts",
+      "path": "web-angular/src/app/shared/ui/forms/form-container/form-container.ts",
       "layer": "web",
       "purpose": "Current inspected source or frozen exact target, not future implementation"
     },
     {
       "id": "phase00-12",
-      "path": "web-angular/src/app/shared/ui/forms/form-container.spec.ts",
+      "path": "web-angular/src/app/shared/ui/forms/form-container/form-container.spec.ts",
       "layer": "web",
       "purpose": "Current inspected source or frozen exact target, not future implementation"
     },
     {
       "id": "phase00-13",
-      "path": "web-angular/src/app/shared/ui/forms/fields/text-field.ts",
+      "path": "web-angular/src/app/shared/ui/forms/fields/text-field/text-field.ts",
       "layer": "web",
       "purpose": "Current inspected source or frozen exact target, not future implementation"
     },
     {
       "id": "phase00-14",
-      "path": "web-angular/src/app/shared/ui/forms/fields/reference-field.ts",
+      "path": "web-angular/src/app/shared/ui/forms/fields/reference-field/reference-field.ts",
       "layer": "web",
       "purpose": "Current inspected source or frozen exact target, not future implementation"
     },
     {
       "id": "phase00-15",
-      "path": "web-angular/src/app/shared/ui/buttons/action-button.ts",
+      "path": "web-angular/src/app/shared/ui/buttons/action-button/action-button.ts",
       "layer": "web",
       "purpose": "Current inspected source or frozen exact target, not future implementation"
     },
@@ -235,13 +235,13 @@
     },
     {
       "id": "final-35",
-      "path": "web-angular/src/app/shared/ui/dialogs/dialog-panel.ts",
+      "path": "web-angular/src/app/shared/ui/dialogs/dialog-panel/dialog-panel.ts",
       "layer": "web",
       "purpose": "Actual verified source, reproducible check or portable evidence"
     },
     {
       "id": "final-36",
-      "path": "web-angular/src/app/shared/ui/dialogs/confirmation-dialog.ts",
+      "path": "web-angular/src/app/shared/ui/dialogs/confirmation-dialog/confirmation-dialog.ts",
       "layer": "web",
       "purpose": "Actual verified source, reproducible check or portable evidence"
     },
@@ -259,13 +259,13 @@
     },
     {
       "id": "final-39",
-      "path": "web-angular/src/app/shared/ui/forms/form-close-guard.ts",
+      "path": "web-angular/src/app/shared/ui/forms/form-close-guard/form-close-guard.ts",
       "layer": "web",
       "purpose": "Actual verified source, reproducible check or portable evidence"
     },
     {
       "id": "final-40",
-      "path": "web-angular/src/app/shared/ui/forms/form-close-guard.spec.ts",
+      "path": "web-angular/src/app/shared/ui/forms/form-close-guard/form-close-guard.spec.ts",
       "layer": "web",
       "purpose": "Actual verified source, reproducible check or portable evidence"
     },
@@ -277,7 +277,7 @@
     },
     {
       "id": "final-42",
-      "path": "web-angular/src/app/dev/form-close-preview.ts",
+      "path": "web-angular/src/app/dev/form-close-preview/form-close-preview.ts",
       "layer": "web",
       "purpose": "Actual verified source, reproducible check or portable evidence"
     },
@@ -322,6 +322,108 @@
       "path": "documentation/guides/web/architecture/ANGULAR_SHARED_COMPONENTS.md",
       "layer": "documentation",
       "purpose": "Canonical Shared local-close integration and limitations"
+    },
+    {
+      "id": "component-resource-a3a284dc5c4d",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/dialogs/choice-dialog/choice-dialog.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-eb1b0afcff45",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/dialogs/choice-dialog/choice-dialog.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-311f299a2a50",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/form-container/form-container.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-d48078893077",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/form-container/form-container.spec.access-composition.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-67ebb7f690a7",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/form-container/form-container.spec.profile-composition.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-59d44a4c6c29",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/fields/reference-field/reference-field.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-eb086582836d",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/buttons/action-button/action-button.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-b6d0e80169d9",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/dialogs/dialog-panel/dialog-panel.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-801f86eeae4a",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/dialogs/dialog-panel/dialog-panel.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-3ca95ae545db",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/dialogs/confirmation-dialog/confirmation-dialog.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-31cda6c1c182",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/form-close-guard/form-close-guard.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-3f774729d67e",
+      "layer": "web",
+      "path": "web-angular/src/app/dev/form-close-preview/form-close-preview.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-329fb16daa56",
+      "layer": "web",
+      "path": "web-angular/src/app/dev/form-close-preview/form-close-preview.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "quality-b48e367c4706",
+      "layer": "configuration",
+      "path": "web-angular/eslint.config.mjs",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-18187b5430c6",
+      "layer": "configuration",
+      "path": "web-angular/scripts/dependency-rules.mjs",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-056ed62f225e",
+      "layer": "configuration",
+      "path": "web-angular/scripts/dependency-rules.test.mjs",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-16f555949438",
+      "layer": "web",
+      "path": "web-angular/src/testing/fixture-item.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
     }
   ],
   "finalizationChecklist": [

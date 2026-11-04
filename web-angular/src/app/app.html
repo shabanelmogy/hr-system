@@ -1,4 +1,10 @@
 <router-outlet />
-@defer (when drafts.prompt()) { <erp-unsaved-confirmation-host /> }
-@defer (when notifications.toasts().length) { <erp-notification-toast /> }
-@defer (when notifications.error()) { <erp-error-modal-host /> }
+@defer (when drafts.prompt()) {
+  <erp-unsaved-confirmation-host />
+}
+@defer (when notifications.toasts().length) {
+  <erp-notification-toast />
+}
+@defer (when notifications.error()) {
+  <erp-error-modal-host />
+}

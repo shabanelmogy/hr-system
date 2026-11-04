@@ -7,6 +7,19 @@ import {
 import { globalReportFixture as report } from '../report.fixture';
 
 describe('Global managed Crystal contract', () => {
+  it('permits company consumers only with trusted scope, reporting and owning entity permissions', () => {
+    const user = {
+      roles: ['user'],
+      tenantId: 'tenant-a',
+      companyId: 1,
+      permissions: ['CrystalReports:View', 'Countries:View'],
+    };
+    expect(globalReportAllowed(user)).toBe(true);
+    expect(globalReportAllowed({ ...user, tenantId: null })).toBe(false);
+    expect(globalReportAllowed({ ...user, companyId: 0 })).toBe(false);
+    expect(globalReportAllowed(user, 'states')).toBe(false);
+    expect(globalReportAllowed({ ...user, roles: ['super_admin'] })).toBe(false);
+  });
   it('requires both the exact global permission and the SuperAdmin role', () => {
     expect(globalReportAllowed(null)).toBe(false);
     expect(globalReportAllowed({ roles: ['super_admin'], permissions: [] })).toBe(false);

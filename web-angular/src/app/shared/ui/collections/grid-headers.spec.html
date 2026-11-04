@@ -1,0 +1,23 @@
+<erp-data-table
+  #grid
+  label="Fixture"
+  [source]="source()"
+  [columns]="columns"
+  [rowId]="id"
+  [headerGroups]="groups"
+  [advancedFilters]="true"
+  (sortChange)="sorted($event)"
+>
+  <ng-template [erpCollectionColumnHeader]="columns | collectionColumn: 'id'" let-column
+    ><span data-testid="custom-header">{{ column.header }} custom</span></ng-template
+  >
+  <ng-template
+    [erpCollectionColumnFooter]="columns | collectionColumn: 'amount'"
+    let-page
+    let-total="total"
+    let-currentQuery="query"
+    ><output data-testid="custom-footer"
+      >{{ sum(page) }} / {{ total }} / {{ currentQuery.scopeKey }}</output
+    ></ng-template
+  >
+</erp-data-table>

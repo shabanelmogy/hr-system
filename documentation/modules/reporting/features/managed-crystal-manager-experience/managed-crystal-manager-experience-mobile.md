@@ -70,3 +70,7 @@ passed 8/8, and the compatibility matrix passed 83 routes, 30 endpoint files and
 
 Verified as explicitly Excluded for this feature. Phase 4 reopens only the required Fiscal
 Years report-consumption journey, not general Report Manager administration.
+
+### Additive global Angular manager2026-11-01
+
+The requester separately authorized global-crystal-template-management/GCT-1. Its additive global audited tables, exact role/action/entity Edit policy and Angular manager reuse existing native ports/private storage/lifecycle discipline. This existing tenant manager/ACL lifecycle stays unchanged. Global consumption keeps the current opaque envelope with explicit managed shadowing. See the new feature current books and FOLLOW-024; this addition does not close this plan’s pending native/integrated acceptance.

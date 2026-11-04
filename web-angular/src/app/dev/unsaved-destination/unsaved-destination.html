@@ -1,0 +1,8 @@
+<main>
+  <a routerLink="/dev/unsaved/1" data-testid="return">{{ 'actions.edit' | uiText }}</a
+  ><output
+    data-testid="destination"
+    [attr.data-alive]="state.alive()"
+    [attr.data-stopped]="state.stopped()"
+  ></output>
+</main>

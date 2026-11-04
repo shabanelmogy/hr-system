@@ -1,4 +1,3 @@
-using ErpSystem.Modules.Platform.Contracts.Authorization;
 using ErpSystem.Modules.Reporting.Application.Features.Analytics.CrystalReports.Contracts;
 using ErpSystem.Modules.Reporting.Application.Features.Analytics.CrystalReports.Queries;
 
@@ -6,17 +5,26 @@ namespace ErpSystem.Modules.Reporting.Presentation.Features.Analytics.CrystalRep
 
 /// <summary>
 /// Read-only Crystal execution boundary for global geographical Reference Data.
-/// It consumes deployment-owned RPT files directly and never enters a tenant or
-/// company report store.
+/// All readers consume explicitly published global versions; company readers also
+/// require grants. Deployment discovery belongs to management. Tenant stores are separate.
 /// </summary>
 [ApiVersion("1.0")]
 [Route("api/v{version:apiVersion}/global-crystal-reports")]
 [ApiController]
-[Authorize(Roles = PlatformRoleNames.SuperAdmin)]
-[HasPermission(ReportingPermissions.ViewGlobalCrystalReports)]
+[Authorize]
 public sealed class GlobalCrystalReportsController(ISender sender) : ControllerBase
 {
+    [HttpGet("{sourceId}/source")]
+    [GlobalCrystalReportAuthorize(download: true)]
+    public async Task<IActionResult> Source(string sourceId, [FromQuery] string entityKey,
+        [FromQuery] string expectedSha256, CancellationToken cancellationToken)
+    {
+        var result = await sender.Send(new DownloadPublishedGlobalCrystalReportQuery(sourceId, entityKey, expectedSha256), cancellationToken);
+        return result.IsSuccess ? File(result.Value.Content, result.Value.ContentType, result.Value.FileName)
+            : result.ToProblem();
+    }
     [HttpGet]
+    [GlobalCrystalReportAuthorize]
     [ProducesResponseType(typeof(IReadOnlyList<GlobalCrystalReportListItemResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -32,6 +40,7 @@ public sealed class GlobalCrystalReportsController(ISender sender) : ControllerB
     }
 
     [HttpPost("{sourceId}/render")]
+    [GlobalCrystalReportAuthorize]
     [Produces("application/pdf")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]

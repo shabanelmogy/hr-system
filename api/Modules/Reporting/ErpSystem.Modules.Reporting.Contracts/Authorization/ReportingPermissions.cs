@@ -3,6 +3,13 @@ namespace ErpSystem.Modules.Reporting.Contracts.Authorization;
 public static class ReportingPermissions
 {
     public const string ViewGlobalCrystalReports = "GlobalCrystalReports:View";
+    public const string CreateGlobalCrystalReports = "GlobalCrystalReports:Create";
+    public const string UploadGlobalCrystalReports = "GlobalCrystalReports:Upload";
+    public const string PublishGlobalCrystalReports = "GlobalCrystalReports:Publish";
+    public const string DownloadGlobalCrystalReports = "GlobalCrystalReports:Download";
+    public const string ArchiveGlobalCrystalReports = "GlobalCrystalReports:Archive";
+    public const string ViewGlobalCrystalReportAccess = "GlobalCrystalReportAccess:View";
+    public const string EditGlobalCrystalReportAccess = "GlobalCrystalReportAccess:Edit";
     public const string ViewDashboard = "Analytics:ViewDashboard";
     public const string ExportData = "Analytics:Export";
 
@@ -45,7 +52,9 @@ public static class ReportingPermissions
 
     public static IReadOnlyList<string> GlobalReports { get; } =
     [
-        ViewGlobalCrystalReports
+        ViewGlobalCrystalReports, CreateGlobalCrystalReports, UploadGlobalCrystalReports,
+        PublishGlobalCrystalReports, DownloadGlobalCrystalReports, ArchiveGlobalCrystalReports,
+        ViewGlobalCrystalReportAccess, EditGlobalCrystalReportAccess
     ];
 
     public static IReadOnlyList<string> All { get; } = [.. Reports, .. GlobalReports];

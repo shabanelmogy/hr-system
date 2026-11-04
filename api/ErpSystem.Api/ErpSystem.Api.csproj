@@ -63,6 +63,7 @@
     <Content Update="appsettings.json" CopyToPublishDirectory="PreserveNewest" Condition="'$(PublishAppSettings)' == 'true'" />
     <Content Update="appsettings.json" CopyToPublishDirectory="Never" Condition="'$(PublishAppSettings)' != 'true'" />
     <Content Update="appsettings.Development.json" CopyToPublishDirectory="Never" />
+    <Content Update="web.Crystal.publish-private.config" CopyToOutputDirectory="Never" CopyToPublishDirectory="Never" />
     <!-- Large installer artifacts are copied after publish so they are not fingerprinted during every IDE build. -->
     <Content Remove="wwwroot\downloads\attendance-agent\**\*" />
     <Content Update="Localization\Resources\*.json">

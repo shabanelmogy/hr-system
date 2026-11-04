@@ -28,31 +28,44 @@ describe('Shared token theme integration', () => {
         expect(colors.help?.background).toBe(theme.colors.brand3);
         expect(colors.danger?.color).toBe(theme.colors.destructiveForeground);
         expect(colors.primary?.background).toContain(theme.colors.primary);
-        expect(contrastRatio(theme.colors.primaryForeground, actionHover(theme))).toBeGreaterThanOrEqual(4.5);
+        expect(
+          contrastRatio(theme.colors.primaryForeground, actionHover(theme)),
+        ).toBeGreaterThanOrEqual(4.5);
         expect(createPrimePreset(palette).components?.button).toBeDefined();
       });
     }
   }
 
   it('restores current Cookie identities and rejects unknown values without changing the current theme', () => {
-    document.cookie = 'currentMode=dark; Path=/'; document.cookie = 'themePalette=navy; Path=/';
+    document.cookie = 'currentMode=dark; Path=/';
+    document.cookie = 'themePalette=navy; Path=/';
     const service = TestBed.inject(ThemeService);
-    expect(service.palette()).toBe('navy'); expect(service.mode()).toBe('dark');
+    expect(service.palette()).toBe('navy');
+    expect(service.mode()).toBe('dark');
     expect(document.documentElement.classList.contains('dark')).toBe(true);
-    expect(service.setPalette('unknown')).toBe(false); expect(service.setMode('unknown')).toBe(false);
-    expect(service.palette()).toBe('navy'); expect(service.mode()).toBe('dark');
-    service.setPalette('orange'); service.setMode('light');
-    expect(document.cookie).toContain('themePalette=orange'); expect(document.cookie).toContain('currentMode=light');
+    expect(service.setPalette('unknown')).toBe(false);
+    expect(service.setMode('unknown')).toBe(false);
+    expect(service.palette()).toBe('navy');
+    expect(service.mode()).toBe('dark');
+    service.setPalette('orange');
+    service.setMode('light');
+    expect(document.cookie).toContain('themePalette=orange');
+    expect(document.cookie).toContain('currentMode=light');
     expect(document.documentElement.classList.contains('dark')).toBe(false);
   });
 
   it('falls back from invalid preferences and preserves the localization owner and RTL through theme changes', () => {
-    document.cookie = 'currentMode=invalid; Path=/'; document.cookie = 'themePalette=invalid; Path=/';
+    document.cookie = 'currentMode=invalid; Path=/';
+    document.cookie = 'themePalette=invalid; Path=/';
     const service = TestBed.inject(ThemeService);
-    expect(service.palette()).toBe('green'); expect(service.mode()).toBe('light');
-    const localization = TestBed.inject(LocalizationRuntime); localization.setLanguage('ar');
-    service.setPalette('blue'); service.setMode('dark');
-    expect(document.documentElement.dir).toBe('rtl'); expect(localization.language()).toBe('ar');
+    expect(service.palette()).toBe('green');
+    expect(service.mode()).toBe('light');
+    const localization = TestBed.inject(LocalizationRuntime);
+    localization.setLanguage('ar');
+    service.setPalette('blue');
+    service.setMode('dark');
+    expect(document.documentElement.dir).toBe('rtl');
+    expect(localization.language()).toBe('ar');
     expect(document.documentElement.dataset['palette']).toBe('blue');
   });
 });

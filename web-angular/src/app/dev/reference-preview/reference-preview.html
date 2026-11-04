@@ -1,0 +1,111 @@
+<main>
+  <erp-page-header [title]="'reference.currentSelection' | uiText"
+    ><div class="preferences">
+      <erp-button
+        [label]="(runtime.language() === 'en' ? 'common.arabic' : 'common.english') | uiText"
+        data-testid="language"
+        (activated)="runtime.setLanguage(runtime.language() === 'en' ? 'ar' : 'en')"
+      />
+      <erp-button
+        [label]="(theme.mode() === 'light' ? 'general.darkMode' : 'general.lightMode') | uiText"
+        (activated)="theme.setMode(theme.mode() === 'light' ? 'dark' : 'light')"
+      />
+      @for (palette of palettes; track palette) {
+        <erp-button
+          [label]="'menu.palettes.' + palette | uiText"
+          [attr.data-palette]="palette"
+          (activated)="theme.setPalette(palette)"
+        />
+      }</div
+  ></erp-page-header>
+  <div class="tools">
+    <erp-option-select
+      [label]="'collections.filters' | uiText"
+      [options]="parents"
+      [value]="parent()"
+      (valueChange)="changeParent($event)"
+      data-testid="parent"
+    />
+    @for (item of scenarios; track item.value) {
+      <erp-button
+        [label]="item.label | uiText"
+        [attr.data-scenario]="item.value"
+        (activated)="changeScenario(item.value)"
+      />
+    }
+    <erp-button
+      [label]="'actions.viewOnly' | uiText"
+      data-testid="readonly"
+      [pressed]="readonly()"
+      (activated)="readonly.set(!readonly())"
+    />
+    <erp-button
+      [label]="'common.loading' | uiText"
+      data-testid="disable"
+      [pressed]="form.controls.reference.disabled"
+      (activated)="toggleDisabled()"
+    />
+    <erp-button [label]="'general.reset' | uiText" data-testid="reset" (activated)="reset()" />
+    <erp-button
+      [label]="'actions.editInformation' | uiText"
+      data-testid="patch"
+      (activated)="patch()"
+    />
+    <erp-button
+      [label]="'common.validationErrors' | uiText"
+      data-testid="server-error"
+      (activated)="serverError()"
+    />
+  </div>
+  <erp-form
+    [form]="form"
+    [title]="'reference.currentSelection' | uiText"
+    [submitLabel]="'common.save' | uiText"
+    (validSubmit)="saved.update(increment)"
+    data-testid="form"
+  >
+    <div class="fields">
+      <erp-reference-field
+        [formControl]="form.controls.reference"
+        [label]="('reference.currentSelection' | uiText) + ' A'"
+        [source]="source()"
+        [selection]="selection()"
+        [searchText]="search()"
+        [readOnly]="readonly()"
+        [messages]="messages()"
+        required
+        (searchChange)="searchFor($event)"
+        (loadMore)="request(true)"
+        (retry)="retry()"
+        data-testid="remote"
+      />
+      <erp-reference-field
+        [formControl]="form.controls.finite"
+        [label]="('reference.currentSelection' | uiText) + ' B'"
+        [source]="finite()"
+        [searchable]="false"
+        [messages]="messages()"
+        required
+        data-testid="finite"
+      />
+      <erp-text-field
+        [formControl]="form.controls.name"
+        [label]="'general.nameEn' | uiText"
+        [messages]="messages()"
+        required
+        data-testid="name"
+      />
+    </div>
+  </erp-form>
+  <output
+    data-testid="state"
+    [attr.data-kind]="source().kind"
+    [attr.data-reference]="form.controls.reference.value"
+    [attr.data-type]="typeofId()"
+    [attr.data-count]="source().result?.options?.length ?? 0"
+    [attr.data-search]="search()"
+    [attr.data-parent]="parent()"
+    [attr.data-requests]="requests()"
+    [attr.data-saved]="saved()"
+  ></output>
+</main>

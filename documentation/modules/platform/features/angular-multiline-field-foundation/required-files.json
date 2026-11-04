@@ -91,31 +91,31 @@
     },
     {
       "id": "phase00-11",
-      "path": "web-angular/src/app/shared/ui/forms/form-container.ts",
+      "path": "web-angular/src/app/shared/ui/forms/form-container/form-container.ts",
       "layer": "web",
       "purpose": "Actual source or frozen contract"
     },
     {
       "id": "phase00-12",
-      "path": "web-angular/src/app/shared/ui/forms/fields/text-field.ts",
+      "path": "web-angular/src/app/shared/ui/forms/fields/text-field/text-field.ts",
       "layer": "web",
       "purpose": "Actual source or frozen contract"
     },
     {
       "id": "phase00-13",
-      "path": "web-angular/src/app/shared/ui/forms/fields/text-field.html",
+      "path": "web-angular/src/app/shared/ui/forms/fields/text-field/text-field.html",
       "layer": "web",
       "purpose": "Actual source or frozen contract"
     },
     {
       "id": "phase00-14",
-      "path": "web-angular/src/app/shared/ui/forms/fields/text-field.scss",
+      "path": "web-angular/src/app/shared/ui/forms/fields/text-field/text-field.scss",
       "layer": "web",
       "purpose": "Actual source or frozen contract"
     },
     {
       "id": "phase00-15",
-      "path": "web-angular/src/app/shared/ui/forms/fields/numeric-field.ts",
+      "path": "web-angular/src/app/shared/ui/forms/fields/numeric-field/numeric-field.ts",
       "layer": "web",
       "purpose": "Actual source or frozen contract"
     },
@@ -163,13 +163,13 @@
     },
     {
       "id": "verified-3",
-      "path": "web-angular/src/app/shared/ui/forms/fields/text-field.spec.ts",
+      "path": "web-angular/src/app/shared/ui/forms/fields/text-field/text-field.spec.ts",
       "layer": "web",
       "purpose": "Current runtime or acceptance evidence"
     },
     {
       "id": "verified-4",
-      "path": "web-angular/src/app/dev/multiline-preview.ts",
+      "path": "web-angular/src/app/dev/multiline-preview/multiline-preview.ts",
       "layer": "web",
       "purpose": "Current runtime or acceptance evidence"
     },
@@ -286,6 +286,48 @@
       "path": "documentation/modules/platform/features/angular-multiline-field-foundation/verification/reference-results8.json",
       "layer": "documentation",
       "purpose": "Current runtime or acceptance evidence"
+    },
+    {
+      "id": "component-resource-311f299a2a50",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/form-container/form-container.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-d286e19eb5e2",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/fields/text-field/text-field.spec.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-21fd80bc4a30",
+      "layer": "web",
+      "path": "web-angular/src/app/dev/multiline-preview/multiline-preview.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-73d776775d1c",
+      "layer": "web",
+      "path": "web-angular/src/app/dev/multiline-preview/multiline-preview.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "quality-b48e367c4706",
+      "layer": "configuration",
+      "path": "web-angular/eslint.config.mjs",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-18187b5430c6",
+      "layer": "configuration",
+      "path": "web-angular/scripts/dependency-rules.mjs",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-056ed62f225e",
+      "layer": "configuration",
+      "path": "web-angular/scripts/dependency-rules.test.mjs",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
     }
   ],
   "finalizationChecklist": [

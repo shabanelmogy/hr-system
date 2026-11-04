@@ -1,0 +1,22 @@
+{
+  "date": "2026-11-01T08:05:14.200Z",
+  "origin": "https://localhost:4220",
+  "api": "https://shabanhrms.runasp.net",
+  "actualApi": true,
+  "normalTlsValidation": true,
+  "marker": "ERPQA1793520266086",
+  "cases": [],
+  "writes": [],
+  "cleanup": [
+    {
+      "logoutStatus": null
+    }
+  ],
+  "archivedRecordsRetained": true,
+  "failure": {
+    "stage": "login",
+    "type": "Error",
+    "message": "expect(page).toHaveURL(expected) failed\n\nExpected: \"https://localhost:4220/home\"\nReceived: \"https://localhost:4220/login\"\nTimeout:  45000ms\n\nCall log:\n  - Expect \"toHaveURL\" with timeout 45000ms\n    91 × locator resolved to <html lang=\"en\" dir=\"ltr\" data-theme=\"light\" data-palette=\"green\">…</html>\n       - unexpected value \"https://localhost:4220/login\"\n"
+  },
+  "passed": false
+}

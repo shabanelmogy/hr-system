@@ -35,7 +35,7 @@ Frozen runtime target is SHARED_REFERENCE_CONTRACT: dev-only shared form/field h
 
 | Screen ID | Platform | Route / entry | User job | Data / interaction shape | Primary Pattern ID | Sub-pattern / form decision | Exact reviewed reference source path | Platform status | Views | States | Offline policy | Mock-data policy | Permission / scope | Responsive / RTL / accessibility | Deviation |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| platform.foundation.reference-preflight | Web | dev/references only; production Excluded | Verify generic field in shared form | Single scalar reference/CVA | P-001 | C-01 embedded form; CRUD Excluded | web-angular/src/app/shared/ui/forms/form-container.ts | Adapted | Field/form harness Required; collection/tree/report/import/export/chart Excluded | Frozen loading/empty/error/forbidden/stale/readonly/validation | No store | Neutral technical fixtures only | Caller grants/scope; no HTTP | EN/AR/modes/390/1440, keyboard/focus/IME | New shared reference adapter; no actual States acceptance |
+| platform.foundation.reference-preflight | Web | dev/references only; production Excluded | Verify generic field in shared form | Single scalar reference/CVA | P-001 | C-01 embedded form; CRUD Excluded | web-angular/src/app/shared/ui/forms/form-container/form-container.ts | Adapted | Field/form harness Required; collection/tree/report/import/export/chart Excluded | Frozen loading/empty/error/forbidden/stale/readonly/validation | No store | Neutral technical fixtures only | Caller grants/scope; no HTTP | EN/AR/modes/390/1440, keyboard/focus/IME | New shared reference adapter; no actual States acceptance |
 | platform.foundation.reference-preflight | Mobile | No runtime route | Retain source | Read-only source audit | N/A — no new UI | Existing control retained | mobile-react/src/shared/components/controls/AppSelectField.tsx | Excluded | All new views Excluded | Existing behavior retained | Existing policy | No new mocks | No grant/schema change | Retain existing behavior | No new native acceptance claim |
 
 ## 3. Closest existing reference
@@ -43,7 +43,7 @@ Frozen runtime target is SHARED_REFERENCE_CONTRACT: dev-only shared form/field h
 Initial inspected reference surfaces: web-next/src/shared/components/forms/selects/MySelect.tsx
 (typed options and RHF controlled/form variants); mobile-react/src/shared/components/controls/AppSelectField.tsx
 (controlled identity, search/load-more/finite feedback and form field integration);
-web-angular/src/app/shared/ui/controls/option-select.ts (actual PrimeNG preference/context
+web-angular/src/app/shared/ui/controls/option-select/option-select.ts (actual PrimeNG preference/context
 selection, not a business CVA); web-angular/src/app/shared/ui/forms/public-api.ts;
 web-angular/src/app/shared/ui/public-api.ts. Source review must trace full behavior
 and actual current owner APIs before freezing the adapter; file existence is not proof.

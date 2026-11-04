@@ -1,0 +1,53 @@
+{
+  "date": "2026-11-01T08:07:51.827Z",
+  "origin": "https://localhost:4210",
+  "api": "https://shabanhrms.runasp.net",
+  "actualApi": true,
+  "normalTlsValidation": true,
+  "marker": "ERPQA1793520448744",
+  "cases": [
+    {
+      "name": "two-real-cookie-sessions-and-authorized-hubs",
+      "passed": true
+    },
+    {
+      "name": "ui-create-real-postcommit-delivery-to-second-session",
+      "passed": true
+    }
+  ],
+  "writes": [
+    {
+      "method": "POST",
+      "path": "/api/v1/countries"
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/countries/7"
+    }
+  ],
+  "cleanup": [
+    {
+      "id": 7,
+      "status": 204
+    },
+    {
+      "allOwnedArchived": true,
+      "ids": [
+        7
+      ]
+    },
+    {
+      "logoutStatus": 204
+    },
+    {
+      "logoutStatus": 204
+    }
+  ],
+  "archivedRecordsRetained": true,
+  "failure": {
+    "stage": "edit",
+    "type": "Error",
+    "message": "expect(locator).toHaveValue(expected) failed\n\nLocator: locator('erp-country-editor').locator('input[name=nameEn]')\nExpected: \"ERPQA1793520448744 Created\"\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n  - Expect \"toHaveValue\" locator('erp-country-editor').locator('input[name=nameEn]') with timeout 5000ms\n  - waiting for locator('erp-country-editor').locator('input[name=nameEn]')\n"
+  },
+  "passed": false
+}

@@ -450,6 +450,8 @@ PDF-disabled cases prove fallback/download bytes; valid synthetic PDF is not rea
 
 Canonical proof: documentation/modules/platform/features/angular-countries-report-view/verification/CURRENT_REPORT_ACCEPTANCE.md. New native UI Excluded; current native retained.
 
+Angular S3-A7 Import2026-10-31: Verified/Closed within Angular acceptance under D35. Existing six-field Countries bulk/authority/atomic valid-subset contract reused; no business/API/schema/Next/native runtime change. Angular uses shared PrimeNG FileUpload/SpreadsheetImportPanel and MyDataGrid, bounded local XLSX parsing, field/duplicate feedback, Cookie/CSRF bulk command and uncertain no-replay/identity/draft guards. New native UI Excluded; compact browser Required. Canonical result: documentation/modules/platform/features/angular-countries-import-view/verification/CURRENT_IMPORT_ACCEPTANCE.md. Fresh Angular443tests/browser40+15+5 pass; D35 removes Next review as a prerequisite. FOLLOW-020 is outside Angular scope. No overall pilot/host/Table acceptance inferred.
+
 ## 10. Final Reconciliation Checklist
 
 ### Shared API contract
@@ -513,3 +515,23 @@ from Angular migration. Angular menu uses real AND/OR criteria before count/pagi
 no current-page emulation. Source implementation/verification is in progress, not
 hosted publication or complete Countries acceptance. FOLLOW-016/PROD-019 own the
 remaining combined-query and deployed catalog integration.
+
+
+## Manual global reporting View adapter — 2026-11-02
+
+Reporting GCT-1 now consumes IReferenceDataPublicViewSource through public Contracts. ReferenceData owns schema-bound SQL View metadata/dependency checks and bounded parameterized reads; direct dependencies are restricted to approved global Countries/States/Districts tables. Tenant/company tables and raw arbitrary SQL are excluded. Existing geographical CRUD/list/client forms are unchanged. Angular report administration is Required in Reporting; Next/Mobile administration remains Excluded. The actual SQL integration test validates filtering, injection rejection, unsupported dependencies, immutable binding and definition changes. Owning workflow/evidence: `documentation/plans/business/global-crystal-template-management/MANUAL_VIEW_IMPLEMENTATION_2026-11-02.md`; FOLLOW-024/PROD-028 remain open and Builder work is DEF-027.
+
+
+## Prepared global reporting Views — 2026-11-02
+
+GCT-1 now discovers eligible metadata and creates three reviewed all-column,
+schema-bound ref.vw_Countries/ref.vw_States/ref.vw_Districts Views through the
+ReferenceData-owned migration20261102143015. LEFT JOIN follows Countries→States,
+States→Country and Districts→State→Country; related fields are prefixed and deleted
+rows excluded without turning the join into an inner join. No company Address
+table enters global SQL. ReferenceData computes the district address count using
+trusted company/tenant filters during report execution. Reporting projects only
+approved native fields. Existing geographical CRUD and Next/Mobile forms remain
+unchanged. Future physical column changes need an explicit View migration because
+of SCHEMABINDING. Current evidence and 5-point platform audit are in Reporting GCT-1
+section22 and DATABASE_VIEW_IMPLEMENTATION_2026-11-02.md; FOLLOW-024 remains Open.

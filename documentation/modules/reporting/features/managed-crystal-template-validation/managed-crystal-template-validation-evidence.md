@@ -146,3 +146,11 @@ Implementation Ready for the bounded API/runtime child. Ownership, lifecycle,
 migration policy, exact inspection surface, client dispositions and required tests
 are resolved. Manager UI, live Fiscal Years PDF, operations and security remain
 outside this execution authority.
+
+## Corrective source/local verification — 2026-11-01
+
+Requester ordered all reviewed integration/runtime observations corrected.
+Current authority/result: `documentation/plans/business/managed-crystal-reporting-reliability/RUNTIME_CORRECTION_RESULT_2026-11-01.md` and RUNTIME_CORRECTION_2026-11-01.md in
+the same plan. FOLLOW-023 Verified; PROD-028/029 publication remains Open. Applied
+API/Web/Mobile/review profiles record exact unchanged domain/UI boundaries. Private
+deployment configurations never enter this manifest; sanitized receipts do.

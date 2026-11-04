@@ -25,7 +25,7 @@ No parallel textarea field, rich text, domain/API/schema/native rewrite.
 
 | Screen ID | Platform | Route / entry | User job | Data / interaction shape | Primary Pattern ID | Sub-pattern / form decision | Exact reviewed reference source path | Platform status | Views | States | Offline policy | Mock-data policy | Permission / scope | Responsive / RTL / accessibility | Deviation |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| platform.foundation.multiline-preflight | Web | dev/multiline target | Verify multiline text entry | Existing shared form | P-001 | C-01 technical form | web-angular/src/app/shared/ui/forms/fields/text-field.ts | Adapted | Technical form Required; business views Excluded | Newlines/IME/reset/errors/locks | No store | No business mocks | No grants | No UI change | No runtime acceptance from source |
+| platform.foundation.multiline-preflight | Web | dev/multiline target | Verify multiline text entry | Existing shared form | P-001 | C-01 technical form | web-angular/src/app/shared/ui/forms/fields/text-field/text-field.ts | Adapted | Technical form Required; business views Excluded | Newlines/IME/reset/errors/locks | No store | No business mocks | No grants | No UI change | No runtime acceptance from source |
 | platform.foundation.multiline-preflight | Mobile | No route | Retain native multiline | Source review | N/A — no UI | Existing AppTextField retained | mobile-react/src/shared/components/controls/AppTextField.tsx | Excluded | New UI Excluded | Existing behavior | Existing policy | No mocks | No grants/schema | No UI change | No native implementation claim |
 
 ## 3. Closest existing reference

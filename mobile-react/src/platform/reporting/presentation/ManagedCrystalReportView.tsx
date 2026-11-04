@@ -49,16 +49,16 @@ export function ManagedCrystalReportView({
   translationPrefix,
 }: ManagedCrystalReportViewProps) {
   const { t } = useTranslation();
-  const availability = useManagedReportAvailability(scope);
+  const availability = useManagedReportAvailability(scope, entityKey);
   const { isRTL } = useLocalization();
   const language = isRTL ? 'ar' : 'en';
   const catalogQuery = useQuery({
     enabled: ENV.isApiConfigured && availability.allowed,
-    queryKey: ['crystal-reports', scope, entityKey],
+    queryKey: ['crystal-reports', availability.scopeKey, scope, entityKey],
     queryFn: () => scope === 'global'
       ? crystalReportsApi.listGlobal(entityKey)
       : crystalReportsApi.listPublished(entityKey),
-    staleTime: 5 * 60_000,
+    staleTime: availability.companyConsumer ? 0 : 5 * 60_000,
   });
   const reports = useMemo(() => catalogQuery.data ?? [], [catalogQuery.data]);
   const [selectedReportId, setSelectedReportId] = useState<string | null>(null);

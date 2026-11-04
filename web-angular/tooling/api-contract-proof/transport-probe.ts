@@ -1,5 +1,12 @@
 import { strict as assert } from 'node:assert';
-import { HttpBackend, HttpClient, HttpErrorResponse, HttpEvent, HttpRequest, HttpResponse } from '@angular/common/http';
+import {
+  HttpBackend,
+  HttpClient,
+  HttpErrorResponse,
+  HttpEvent,
+  HttpRequest,
+  HttpResponse,
+} from '@angular/common/http';
 import { Observable, firstValueFrom, of, throwError } from 'rxjs';
 import { apiV1CountriesGet$Json } from './generated/fn/countries/api-v-1-countries-get-json';
 import { apiV1CountriesIdGet$Json } from './generated/fn/countries/api-v-1-countries-id-get-json';
@@ -32,7 +39,10 @@ class RecordingBackend implements HttpBackend {
   cancelled = false;
   handle(request: HttpRequest<unknown>): Observable<HttpEvent<unknown>> {
     this.last = request;
-    if (this.pending) return new Observable(() => () => { this.cancelled = true; });
+    if (this.pending)
+      return new Observable(() => () => {
+        this.cancelled = true;
+      });
     if (this.failure) return throwError(() => this.failure);
     return of(new HttpResponse({ status: 200, body: this.response }));
   }
@@ -43,11 +53,21 @@ export async function runProbe() {
   const http = new HttpClient(backend);
   const root = 'https://api.invalid'; // RecordingBackend never accesses the network.
   const checks: string[] = [];
-  const check = (name: string, test: () => void) => { test(); checks.push(name); };
+  const check = (name: string, test: () => void) => {
+    test();
+    checks.push(name);
+  };
 
-  await firstValueFrom(apiV1CountriesGet$Json(http, root, {
-    PageNumber: 2, PageSize: 25, Search: 'مصر & Egypt', HasStates: false, SortBy: 'nameEn', SortDirection: 'desc',
-  }));
+  await firstValueFrom(
+    apiV1CountriesGet$Json(http, root, {
+      PageNumber: 2,
+      PageSize: 25,
+      Search: 'مصر & Egypt',
+      HasStates: false,
+      SortBy: 'nameEn',
+      SortDirection: 'desc',
+    }),
+  );
   check('Actual query names, paging, Unicode and false preserved', () => {
     assert.equal(backend.last.params.get('PageNumber'), '2');
     assert.equal(backend.last.params.get('PageSize'), '25');
@@ -64,8 +84,13 @@ export async function runProbe() {
     assert.equal(backend.last.url, root + '/api/v1/Countries/0');
   });
   const body: UpdateFiscalYearRequest = {
-    code: 'FY-TEST', nameAr: 'اختبار', nameEn: 'Test', startDate: '2026-01-01', endDate: '2026-12-31',
-    periodFrequency: numericEnum, rowVersion: 'AQIDBA==',
+    code: 'FY-TEST',
+    nameAr: 'اختبار',
+    nameEn: 'Test',
+    startDate: '2026-01-01',
+    endDate: '2026-12-31',
+    periodFrequency: numericEnum,
+    rowVersion: 'AQIDBA==',
   };
   await firstValueFrom(apiV1FiscalYearsIdPut$Json(http, root, { id: 7, body }));
   check('Opaque concurrency token, date-only and numeric enum survive unchanged', () => {
@@ -81,26 +106,41 @@ export async function runProbe() {
   backend.pending = true;
   const subscription = apiV1CountriesGet$Json(http, root).subscribe();
   subscription.unsubscribe();
-  check('Observable unsubscribe reaches backend teardown', () => assert.equal(backend.cancelled, true));
+  check('Observable unsubscribe reaches backend teardown', () =>
+    assert.equal(backend.cancelled, true),
+  );
   backend.pending = false;
 
-  const problem = { status: 400, errors: { 'items[1].nameEn': ['Required'] }, traceId: 'fixture-trace', correlationId: 'fixture-correlation' };
+  const problem = {
+    status: 400,
+    errors: { 'items[1].nameEn': ['Required'] },
+    traceId: 'fixture-trace',
+    correlationId: 'fixture-correlation',
+  };
   backend.failure = new HttpErrorResponse({ status: 400, error: problem });
   await assert.rejects(firstValueFrom(apiV1CountriesGet$Json(http, root)), (error: unknown) => {
     assert.ok(error instanceof HttpErrorResponse);
     assert.equal(error.error, problem);
     return true;
   });
-  checks.push('ProblemDetails extensions/nested validation are raw unknown transport, not generated validation');
+  checks.push(
+    'ProblemDetails extensions/nested validation are raw unknown transport, not generated validation',
+  );
   backend.failure = undefined;
 
-  await firstValueFrom(apiV1FilesUploadPost(http, root, { body: { File: new Blob(['fixture'], { type: 'text/plain' }) } }));
+  await firstValueFrom(
+    apiV1FilesUploadPost(http, root, {
+      body: { File: new Blob(['fixture'], { type: 'text/plain' }) },
+    }),
+  );
   check('Multipart Blob uses FormData without setting its boundary header', () => {
     assert.ok(backend.last.body instanceof FormData);
     assert.ok(backend.last.body.get('File') instanceof Blob);
     assert.equal(backend.last.headers.has('Content-Type'), false);
   });
-  await firstValueFrom(apiV1FilesDownloadStoredFilenameGet(http, root, { storedFilename: 'fixture.pdf' }));
+  await firstValueFrom(
+    apiV1FilesDownloadStoredFilenameGet(http, root, { storedFilename: 'fixture.pdf' }),
+  );
   check('Missing binary response metadata produces text request instead of Blob', () => {
     assert.equal(backend.last.responseType, 'text');
   });

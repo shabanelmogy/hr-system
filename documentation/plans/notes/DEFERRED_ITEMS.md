@@ -29,3 +29,48 @@ untracked TODO.
 | DEF-023 | Cross-platform | Attendance geofence radius | Add `GeofenceRadiusMeters` to the branch work-location address for mobile check-in. | No mobile attendance capture exists yet. | HR + ReferenceData | Deferred | Mobile attendance capture enters scope | Feature-driven | `documentation/modules/hr/DELIVERY-ROADMAP.md` |
 | DEF-024 | Cross-platform | Employee management | Complete the Employee feature: direct manager on `EmployeeAssignment`, web and mobile management screens on the shared patterns, and Excel import / ID-card export. Employee addresses are DEF-020. | `Employee`, `EmployeeAssignment` and `EmployeeContract` exist in the HR domain; no client surface is Required yet. | HR | Deferred | Employee management becomes the current HR slice | Feature-driven | `documentation/modules/hr/DELIVERY-ROADMAP.md` |
 | DEF-026 | Web | Partial Prefetching adoption | Review existing full-prefetch links, capture production navigation baselines and adopt Next.js Partial Prefetching with authenticated navigation regression coverage. | The 2026-10-27 security update uses the documented `partialPrefetching: false` compatibility setting to preserve current behavior; changing prefetched UI is a separate navigation migration. | Web Architecture | Deferred | A navigation-performance migration is authorized, or before a Next.js major removes the compatibility option | Before the framework requires the new behavior | `web-next/next.config.ts`; `documentation/guides/web/architecture/frontend-architecture-reference.md`; https://nextjs.org/docs/app/guides/adopting-partial-prefetching |
+
+| DEF-027 | Cross-platform | Reporting View Builder | Build the visual query/source builder and approve additional module/company data contracts, integrating the existing manual View/template workflow. | Requester chose manual SQL View names and initial shared global data until the Builder is separately implemented. | Reporting + source-module owners | Deferred | Requester authorizes the Builder or another scoped source contract | Separate approved feature; no date promised | `documentation/plans/business/global-crystal-template-management/DESIGN_SOURCE_WORKFLOW_2026-11-02.md` |
+
+| DEF-028 | Cross-platform | Crystal empty-template preparation and base-design library | Resume the empty-template preparation journey and introduce a folder/library of reusable base RPT designs with Designer packages and template selection. | Requester explicitly deferred this step on 2026-11-03 to test a ready-made RPT and actual rendering first. | Reporting + Angular Architecture + QA | Deferred | A ready-made RPT passes inspection, explicit publication and actual PDF display; then the requester explicitly resumes this work | After ready-made report rendering acceptance; no date scheduled | `documentation/plans/business/global-crystal-template-management/PLAN.md`; `documentation/modules/reporting/features/global-crystal-template-manager/global-crystal-template-manager-review.md` |
+
+## DEF-028 — Empty-template preparation and reusable base designs
+
+- Source/context: requester decision2026-11-03: postpone the empty-file step, upload
+  a ready-made RPT and verify display first; explicitly requested central deferral.
+- Surface: API, Web, Data, Cross-platform. Owner: Reporting + Angular Architecture + QA.
+- Status: Deferred. Target: after ready-made report rendering acceptance; no date set.
+- Deferred scope: further empty-template preparation work and its acceptance journey;
+  collecting/reviewing multiple blank/base RPT files, their central Templates folder,
+  selectable layout library and inclusion in Designer packages. The base-design
+  library was discussed only; it is not claimed implemented or delivered.
+- Verified baseline/impact: existing metadata-only drafts, SQL Views, XSD packages
+  and source bindings remain implemented. This documentation decision does not
+  remove controls, delete drafts/files/Views, roll back migrations or change runtime.
+  None of the deferred work blocks testing an existing ready-made report.
+- Current priority: upload a ready-made RPT using the existing file-first path or
+  add a version to an existing draft, inspect it, correct any actual validation
+  failure, explicitly publish a valid version and verify real PDF rendering/display.
+  Retain native validation, approved source contracts and company/role authorization.
+- Reopen trigger: record successful inspection, publication and real PDF display
+  of a ready-made RPT, then receive an explicit requester instruction to resume the
+  deferred preparation/library work. Passing this check alone does not auto-start it.
+- Related IDs: FOLLOW-024/PROD-028 retain real hosted/native acceptance. DEF-027 is
+  the separately deferred View Builder; this item does not merge with or reopen it.
+- Closure evidence: none; this item is not Verified or Closed. On resumption,
+  scope/validate the supplied base RPT files and record their own acceptance evidence.
+
+
+### DEF-028 — optional RPT Language guidance2026-11-03
+
+On explicit resumption of designer preparation, reconcile package/UI guidance so
+render-input ar/en requirements are distinguished from optional RPT Language binding.
+The current ready-made-report correction is native-only and does not resume DEF-028.
+Canonical active evidence: OPTIONAL_RPT_LANGUAGE_2026-11-03.md in the current plan.
+
+
+### DEF-028 — first display prerequisite2026-11-03
+
+Requester confirmed report display with data. This advances the display prerequisite
+only; no explicit resumption instruction was given. DEF-028 stays Deferred. Exact
+evidence boundaries are FIRST_REPORT_DISPLAY_2026-11-03.md in the current plan.

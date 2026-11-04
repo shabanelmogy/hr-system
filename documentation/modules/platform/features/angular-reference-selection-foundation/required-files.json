@@ -123,25 +123,25 @@
     },
     {
       "id": "phase00-15",
-      "path": "web-angular/src/app/shared/ui/controls/option-select.ts",
+      "path": "web-angular/src/app/shared/ui/controls/option-select/option-select.ts",
       "layer": "web",
       "purpose": "Current inspected source or frozen exact contract"
     },
     {
       "id": "phase00-16",
-      "path": "web-angular/src/app/shared/ui/forms/fields/text-field.ts",
+      "path": "web-angular/src/app/shared/ui/forms/fields/text-field/text-field.ts",
       "layer": "web",
       "purpose": "Current inspected source or frozen exact contract"
     },
     {
       "id": "phase00-17",
-      "path": "web-angular/src/app/shared/ui/forms/fields/text-field.scss",
+      "path": "web-angular/src/app/shared/ui/forms/fields/text-field/text-field.scss",
       "layer": "web",
       "purpose": "Current inspected source or frozen exact contract"
     },
     {
       "id": "phase00-18",
-      "path": "web-angular/src/app/shared/ui/forms/form-container.ts",
+      "path": "web-angular/src/app/shared/ui/forms/form-container/form-container.ts",
       "layer": "web",
       "purpose": "Current inspected source or frozen exact contract"
     },
@@ -153,7 +153,7 @@
     },
     {
       "id": "phase00-20",
-      "path": "web-angular/src/app/shared/ui/forms/form-container.spec.ts",
+      "path": "web-angular/src/app/shared/ui/forms/form-container/form-container.spec.ts",
       "layer": "web",
       "purpose": "Current inspected source or frozen exact contract"
     },
@@ -177,19 +177,19 @@
     },
     {
       "id": "actual-24",
-      "path": "web-angular/src/app/shared/ui/forms/fields/reference-field.scss",
+      "path": "web-angular/src/app/shared/ui/forms/fields/reference-field/reference-field.scss",
       "layer": "web",
       "purpose": "Actual shared implementation or portable reference-selection evidence"
     },
     {
       "id": "actual-25",
-      "path": "web-angular/src/app/shared/ui/forms/fields/reference-field.spec.ts",
+      "path": "web-angular/src/app/shared/ui/forms/fields/reference-field/reference-field.spec.ts",
       "layer": "web",
       "purpose": "Actual shared implementation or portable reference-selection evidence"
     },
     {
       "id": "actual-26",
-      "path": "web-angular/src/app/shared/ui/forms/fields/reference-field.ts",
+      "path": "web-angular/src/app/shared/ui/forms/fields/reference-field/reference-field.ts",
       "layer": "web",
       "purpose": "Actual shared implementation or portable reference-selection evidence"
     },
@@ -219,7 +219,7 @@
     },
     {
       "id": "actual-31",
-      "path": "web-angular/src/app/dev/reference-preview.ts",
+      "path": "web-angular/src/app/dev/reference-preview/reference-preview.ts",
       "layer": "web",
       "purpose": "Actual shared implementation or portable reference-selection evidence"
     },
@@ -330,6 +330,66 @@
       "path": "documentation/plans/business/web-angular-migration/education/angular-reference-selection-foundation.md",
       "layer": "documentation",
       "purpose": "Actual shared implementation or portable reference-selection evidence"
+    },
+    {
+      "id": "component-resource-cf6c9fe09ba0",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/controls/option-select/option-select.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-a36b777f66d7",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/controls/option-select/option-select.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-311f299a2a50",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/form-container/form-container.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-d48078893077",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/form-container/form-container.spec.access-composition.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-67ebb7f690a7",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/form-container/form-container.spec.profile-composition.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-2a65a8ace802",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/fields/reference-field/reference-field.spec.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-59d44a4c6c29",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/fields/reference-field/reference-field.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-7b500d595a43",
+      "layer": "web",
+      "path": "web-angular/src/app/dev/reference-preview/reference-preview.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-1d2af360c508",
+      "layer": "web",
+      "path": "web-angular/src/app/dev/reference-preview/reference-preview.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "quality-16f555949438",
+      "layer": "web",
+      "path": "web-angular/src/testing/fixture-item.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
     }
   ],
   "finalizationChecklist": [

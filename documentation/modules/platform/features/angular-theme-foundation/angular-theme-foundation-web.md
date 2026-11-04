@@ -44,3 +44,5 @@ Phase 00 current books/manifest and 213 recipes passed before runtime; exact G0-
 
 ## 15. Evidence and closure
 Current final manifest contains actual runtime/config/test/font/report evidence. Generated packets derive from numbered books. Phase 06 Verified with actual licensed browser acceptance; FOLLOW-013 Verified. Education N/A for technical unit. Documentation/handoff is Closed before registering the next feature; no broader S1 completion claim.
+
+Application-wide scrollbar maintenance2026-10-31: shared palette-derived root variables supply existing ScrollViewport and all browser overflow containers. No duplicated palette values or new token package are introduced. Canonical guide ANGULAR_SCROLLING.md and angular-module-context-navigation/verification/global-scroll own current browser/type/build evidence; initial502.95kB warning stays FOLLOW-019.

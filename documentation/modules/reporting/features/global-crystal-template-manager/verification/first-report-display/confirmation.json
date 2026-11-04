@@ -1,0 +1,24 @@
+{
+  "reportedDate": "2026-11-03",
+  "timezone": "Africa/Cairo",
+  "featureId": "global-crystal-template-manager",
+  "sliceId": "GCT-1",
+  "evidenceKind": "requester-confirmation",
+  "requesterStatement": "كده تمام والتقرير عرض البيانات",
+  "reportDisplayedWithData": true,
+  "independentlyObservedByAgent": false,
+  "newPdfArtifactCaptured": false,
+  "exactReportIdVersionAndHashResampled": false,
+  "nativeCacheEmptyFilterIsolationVerified": false,
+  "runtimeChanged": false,
+  "testsRerun": false,
+  "phase06": "Not Verified",
+  "overallFollowupsStillOpen": [
+    "FOLLOW-024",
+    "PROD-028"
+  ],
+  "deferredNotResumed": [
+    "DEF-028",
+    "DEF-027"
+  ]
+}

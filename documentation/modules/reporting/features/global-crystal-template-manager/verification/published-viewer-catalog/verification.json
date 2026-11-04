@@ -1,0 +1,76 @@
+{
+  "featureId": "global-crystal-template-manager",
+  "sliceId": "GCT-1",
+  "date": "2026-11-03",
+  "runtimeChange": "Viewer list/render require explicit managed publication; deployment discovery remains management-only",
+  "restore": "Passed",
+  "releaseBuild": "Passed with repository analyzer warnings; zero errors",
+  "fullApiTests": {
+    "passed": 1251,
+    "failed": 0,
+    "skipped": 3,
+    "projects": 12,
+    "reportingPassed": 214,
+    "architecturePassed": 70,
+    "integrationPassed": 189,
+    "sqlServer": "Executed in isolated SQLEXPRESS03 databases",
+    "serialCollections": true,
+    "skipReason": "Existing opt-in browser authentication probes"
+  },
+  "focusedQueryAndManagementTests": {
+    "passed": 55,
+    "failed": 0
+  },
+  "planning": "Passed with existing education-module and erp-platform-template migration warnings",
+  "requesterConfirmation": {
+    "statement": "تمام ظهر المنشور فقط",
+    "publishedOnlySelectorConfirmed": true,
+    "environmentNotIndependentlyObserved": true
+  },
+  "languageFollowup": {
+    "runtimeChangeNeeded": false,
+    "jsonField": "language",
+    "values": [
+      "ar",
+      "en"
+    ],
+    "selectedFrom": "Angular LocalizationRuntime current language",
+    "erpToCrystal": "Multipart field language",
+    "rptParameter": "Language (optional; bound when present)",
+    "nativeParameterAssignment": "Code verified; no new native runtime export captured",
+    "angularFocusedTests": {
+      "testFiles": 4,
+      "passed": 34,
+      "failed": 0,
+      "command": "npm test -- --include=src/app/modules/reporting/global-reports/**/*.spec.ts",
+      "scope": "Existing global report contract, HTTP transport, state and view tests; no source edits or full Angular gate claim"
+    }
+  },
+  "angularRuntimeChanged": false,
+  "nativeCrystalChanged": false,
+  "databaseMigrationNeeded": false,
+  "deployedByAgent": false,
+  "startedOrStoppedServers": false,
+  "phase06": "Not Verified",
+  "openAcceptance": [
+    "FOLLOW-024",
+    "PROD-028"
+  ],
+  "deferredNotResumed": [
+    "DEF-027",
+    "DEF-028"
+  ],
+  "sourceSha256": {
+    "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/CrystalReports/Queries/CrystalReportQueryHandlers.cs": "0fba72eefad2eb311f45ce5ba5aefc39c2cf6dfd1efa11a0bdb1f7c3e74d0d7c",
+    "api/Modules/Reporting/ErpSystem.Modules.Reporting.Presentation/Features/Analytics/CrystalReports/V1/GlobalCrystalReportsController.cs": "67c9ca3ba2b1d7f7a2abc89af19a02bcd2ca33eddea104b89fc0c2c617621aea",
+    "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/GlobalCrystalReportQueryTests.cs": "caae5fe4a49f6680dd671568a60cfb3370d43c61b853d76eac2da64dccef7182",
+    "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/GlobalCrystalReportTestStore.cs": "81d14a3e76994a7b63e451e3a39035b37a1bd070ab15d2a587d3d30fd365b383",
+    "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/GlobalCrystalReportManagementTests.cs": "7c14c76e24290e63d2d46eeae4c7d3a057805d6148d0b8adb171db0c2f1cadaa",
+    "api/Tests/ErpSystem.IntegrationTests/GlobalCrystalReportPersistenceTests.cs": "a2c73a1507f1c7ae83496c20e4dd5b2f5cdc5004abfb4e287fedc48d0e676137",
+    "web-angular/src/app/modules/reporting/global-reports/types/global-report.ts": "03c87380afde3eedb9cd7fd5e937a9c4b106decdb49b01ac5f919fd5f6e6f7aa",
+    "web-angular/src/app/modules/reporting/global-reports/state/global-report-state.ts": "2396aa83b718d07f13572b34a5c0ce851ee8b2e80916b2f89c1c854864c13458",
+    "web-angular/src/app/modules/reporting/global-reports/services/global-report-service.ts": "895df1d590c5757d25ae704eddbcf2d9c9193463b929e00e67cd32bd4e1c52e5",
+    "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/CrystalReports/Storage/CrystalReportRendererClient.cs": "392f5368439e3f05292760a5459d400821698d196fb832e0a9559bac3e2de153",
+    "api/CrystalReportGeneratorApi/Runtime/Rendering/CrystalReportManagedParameters.cs": "9d1655ffbbf8283bef218453108692055c7b8db00f633702624ddaa595379e31"
+  }
+}

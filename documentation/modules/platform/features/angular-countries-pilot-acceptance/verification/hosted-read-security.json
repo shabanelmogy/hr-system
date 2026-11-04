@@ -1,0 +1,199 @@
+{
+  "date": "2026-10-31T13:39:05.824Z",
+  "frontend": "https://localhost:4210",
+  "api": "https://shabanhrms.runasp.net",
+  "actualApi": true,
+  "normalTlsValidation": true,
+  "read200": true,
+  "initialReadyMs": 1965,
+  "developmentServerTiming": true,
+  "initialReadCount": 1,
+  "realtimeConnected": true,
+  "reload": true,
+  "reports": {
+    "authorized": true,
+    "catalogStatus": 503,
+    "catalogCount": null,
+    "pdfRendered": false,
+    "errorVisible": true,
+    "errorCodes": [
+      "CrystalReport.CatalogUnavailable"
+    ]
+  },
+  "logout204": true,
+  "anonymous401": true,
+  "normalActor403": true,
+  "normalActorNoPageRequest": true,
+  "businessWrites": false,
+  "missedEventJobDeliveryVerified": false,
+  "statuses": [
+    {
+      "method": "GET",
+      "path": "/api/v1/browser-auth/session",
+      "status": 401
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/browser-auth/csrf",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/browser-auth/refresh",
+      "status": 401
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/browser-auth/login",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/browser-auth/csrf",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/browser-auth/session",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/browser-auth/csrf",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/countries",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/browser-auth/realtime-token",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/hubs/company/negotiate",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/browser-auth/realtime-token",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/countries",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/browser-auth/session",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/browser-auth/csrf",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/countries",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/browser-auth/realtime-token",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/hubs/company/negotiate",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/browser-auth/realtime-token",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/countries",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/global-crystal-reports",
+      "status": 503
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/browser-auth/csrf",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/browser-auth/logout",
+      "status": 204
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/countries",
+      "status": 401
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/browser-auth/session",
+      "status": 401
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/browser-auth/csrf",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/browser-auth/refresh",
+      "status": 401
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/browser-auth/login",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/browser-auth/csrf",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/browser-auth/session",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/browser-auth/csrf",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/countries",
+      "status": 403
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/browser-auth/csrf",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/browser-auth/logout",
+      "status": 204
+    }
+  ],
+  "readSecurityPassed": true,
+  "passed": false,
+  "blocked": true
+}

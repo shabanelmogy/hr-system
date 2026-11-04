@@ -20,8 +20,19 @@ export function resolveApiOrigin(values, targetOverride) {
   const key = target === 'local' ? 'ERP_API_LOCAL_URL' : 'ERP_API_HOST_URL';
   const value = values[key]?.trim();
   let url;
-  try { url = new URL(value); } catch { throw new Error(`${key} must be an absolute HTTPS origin.`); }
-  if (url.protocol !== 'https:' || url.username || url.password || url.search || url.hash || url.pathname !== '/') {
+  try {
+    url = new URL(value);
+  } catch {
+    throw new Error(`${key} must be an absolute HTTPS origin.`);
+  }
+  if (
+    url.protocol !== 'https:' ||
+    url.username ||
+    url.password ||
+    url.search ||
+    url.hash ||
+    url.pathname !== '/'
+  ) {
     throw new Error(`${key} must be an HTTPS origin without credentials, path, query or fragment.`);
   }
   return { target, origin: url.origin };
@@ -30,10 +41,12 @@ export function resolveApiOrigin(values, targetOverride) {
 export function configureApi(targetOverride, root = appRoot, environment = process.env) {
   const config = resolveApiOrigin(readApiEnvironment(root, environment), targetOverride);
   const output = path.join(root, 'src/config/api.generated.ts');
-  const content = '// Generated from public .env configuration. Do not edit.\n' +
+  const content =
+    '// Generated from public .env configuration. Do not edit.\n' +
     `export const apiOrigin: string = ${JSON.stringify(config.origin)};\n`;
   fs.mkdirSync(path.dirname(output), { recursive: true });
-  if (!fs.existsSync(output) || fs.readFileSync(output, 'utf8') !== content) fs.writeFileSync(output, content);
+  if (!fs.existsSync(output) || fs.readFileSync(output, 'utf8') !== content)
+    fs.writeFileSync(output, content);
   process.stdout.write(`API target: ${config.target} (${config.origin})\n`);
   return config;
 }

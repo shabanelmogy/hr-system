@@ -1,0 +1,12 @@
+<erp-form [form]="form" title="Numeric fixture" submitLabel="Save fixture"
+  ><erp-numeric-field
+    [formControl]="form.controls.value"
+    label="Value fixture"
+    help="Decimal fixture"
+    [mode]="mode()"
+    [readOnly]="readonly()"
+    [min]="min()"
+    [max]="max()"
+    [maxFractionDigits]="scale()"
+    [messages]="messages"
+/></erp-form>

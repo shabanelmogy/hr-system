@@ -2,6 +2,12 @@
 
 This is the API-focused index into the central note registries.
 
+Current Crystal review references: **PROD-029** (published runtime auth/version
+mismatch) in `PRODUCTION_NOTES.md`, **FOLLOW-023** (rejected catalog descriptor
+interoperability) in `FOLLOW_UPS.md`, and existing **PROD-028** (hosted ERP report503).
+Canonical details stay in those registries; review evidence is
+`documentation/plans/business/managed-crystal-reporting-reliability/RUNTIME_REVIEW_2026-11-01.md`.
+
 Do not duplicate full note details here. Add the canonical note to one of:
 - `PRODUCTION_NOTES.md`
 - `DEFERRED_ITEMS.md`
@@ -62,3 +68,30 @@ decision is recorded only as an unresolved note.
 `PROD-027` — Company account email provider/client acceptance; canonical ownership, trigger and production gate are in PRODUCTION_NOTES.md.
 
 `DEC-024` — Company message logs scope; canonical decision in DECISION_BACKLOG.md. `RISK-011` — Observational capture availability/uncertain SMTP outcome; canonical risk in KNOWN_RISKS.md.
+
+### PROD-028 — Hosted Countries managed-report acceptance
+
+See canonical PROD-028 in [PRODUCTION_NOTES.md](PRODUCTION_NOTES.md#prod-028--hosted-countries-report-catalog-unavailable); hosted catalog503 blocks complete report/pilot acceptance.
+
+Crystal correction2026-11-01: FOLLOW-023 is Verified in FOLLOW_UPS.md. PROD-029 and
+PROD-028 retain publication/access/native-render gates in PRODUCTION_NOTES.md.
+Source/local acceptance and private package instructions: `documentation/plans/business/managed-crystal-reporting-reliability/RUNTIME_CORRECTION_RESULT_2026-11-01.md`.
+
+FOLLOW-024 — Versioned global Angular Crystal manager. Canonical ownership,
+requester decision, current preflight gate and trigger are in FOLLOW_UPS.md.
+PROD-028 current render400/template rejection supersedes the earlier catalog-only
+diagnosis; see the canonical latest entry in PRODUCTION_NOTES.md.
+
+FOLLOW-024 current implementation/technical acceptance and remaining hosted/native/browser owner are canonical in FOLLOW_UPS.md; global-crystal-template-management/IMPLEMENTATION_2026-11-01.md is the current receipt index.
+
+
+### DEF-028 — Crystal empty-template preparation and base designs
+
+Canonical deferral, current priority and reopening trigger:
+[DEF-028](DEFERRED_ITEMS.md#def-028--empty-template-preparation-and-reusable-base-designs).
+
+
+### RISK-019 — Original RPT source contents
+
+Canonical risk, owner and reassessment trigger:
+[RISK-019](KNOWN_RISKS.md#risk-019--original-rpt-source-contents).

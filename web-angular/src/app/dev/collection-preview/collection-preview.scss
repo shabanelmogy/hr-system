@@ -1,0 +1,47 @@
+main {
+  max-width: 1600px;
+  margin-inline: auto;
+  padding: 24px;
+  min-width: 0;
+}
+.preferences,
+.tools {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.tools {
+  margin-bottom: 16px;
+  --action-min-height: 36px;
+}
+.preview {
+  height: 620px;
+  min-height: 0;
+  min-width: 0;
+}
+.card-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 8px;
+}
+erp-option-select[toolbarFilters] {
+  display: block;
+  max-width: 260px;
+  padding: 4px 8px 8px;
+  --touch-target: 36px;
+  --option-label-background: var(--surface);
+}
+@media (max-width: 599px) {
+  main {
+    padding: 12px;
+  }
+  .preview {
+    height: 750px;
+  }
+  .preferences {
+    gap: 4px;
+  }
+}

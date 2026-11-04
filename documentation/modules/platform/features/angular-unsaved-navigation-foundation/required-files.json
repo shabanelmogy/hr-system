@@ -97,7 +97,7 @@
     },
     {
       "id": "phase00-12",
-      "path": "web-angular/src/app/composition/authenticated-routes.ts",
+      "path": "web-angular/src/app/composition/authenticated-routes/authenticated-routes.ts",
       "layer": "web",
       "purpose": "Actual current inspected evidence or frozen target"
     },
@@ -115,7 +115,7 @@
     },
     {
       "id": "phase00-15",
-      "path": "web-angular/src/app/shell/layout/main-shell.ts",
+      "path": "web-angular/src/app/shell/layout/main-shell/main-shell.ts",
       "layer": "web",
       "purpose": "Actual current inspected evidence or frozen target"
     },
@@ -133,13 +133,13 @@
     },
     {
       "id": "phase00-18",
-      "path": "web-angular/src/app/shared/ui/forms/form-close-guard.ts",
+      "path": "web-angular/src/app/shared/ui/forms/form-close-guard/form-close-guard.ts",
       "layer": "web",
       "purpose": "Actual current inspected evidence or frozen target"
     },
     {
       "id": "phase00-19",
-      "path": "web-angular/src/app/shared/ui/dialogs/confirmation-dialog.ts",
+      "path": "web-angular/src/app/shared/ui/dialogs/confirmation-dialog/confirmation-dialog.ts",
       "layer": "web",
       "purpose": "Actual current inspected evidence or frozen target"
     },
@@ -283,19 +283,19 @@
     },
     {
       "id": "final-43",
-      "path": "web-angular/src/app/shared/ui/dialogs/unsaved-confirmation-host.ts",
+      "path": "web-angular/src/app/shared/ui/dialogs/unsaved-confirmation-host/unsaved-confirmation-host.ts",
       "layer": "web",
       "purpose": "Actual final source/reproducible verification or portable evidence"
     },
     {
       "id": "final-44",
-      "path": "web-angular/src/app/shared/ui/controls/option-select.ts",
+      "path": "web-angular/src/app/shared/ui/controls/option-select/option-select.ts",
       "layer": "web",
       "purpose": "Actual final source/reproducible verification or portable evidence"
     },
     {
       "id": "final-45",
-      "path": "web-angular/src/app/shared/ui/controls/option-select.spec.ts",
+      "path": "web-angular/src/app/shared/ui/controls/option-select/option-select.spec.ts",
       "layer": "web",
       "purpose": "Actual final source/reproducible verification or portable evidence"
     },
@@ -319,13 +319,13 @@
     },
     {
       "id": "final-49",
-      "path": "web-angular/src/app/dev/unsaved-preview.ts",
+      "path": "web-angular/src/app/dev/unsaved-preview/unsaved-preview.ts",
       "layer": "web",
       "purpose": "Actual final source/reproducible verification or portable evidence"
     },
     {
       "id": "final-50",
-      "path": "web-angular/src/app/dev/unsaved-context-preview.ts",
+      "path": "web-angular/src/app/dev/unsaved-context-preview/unsaved-context-preview.ts",
       "layer": "web",
       "purpose": "Actual final source/reproducible verification or portable evidence"
     },
@@ -370,6 +370,132 @@
       "path": "documentation/guides/web/architecture/ANGULAR_SHARED_COMPONENTS.md",
       "layer": "documentation",
       "purpose": "Shared public API consumer discipline and registered-draft limitations"
+    },
+    {
+      "id": "component-resource-e81913a00ef4",
+      "layer": "web",
+      "path": "web-angular/src/app/composition/authenticated-routes/authenticated-routes.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-31cda6c1c182",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/form-close-guard/form-close-guard.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-3ca95ae545db",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/dialogs/confirmation-dialog/confirmation-dialog.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-6d7bec79978f",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/data/unsaved-navigation.spec.frame.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-9c2112c3bae4",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/data/unsaved-navigation.spec.editor.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-5db472c5e01b",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/dialogs/unsaved-confirmation-host/unsaved-confirmation-host.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-cf6c9fe09ba0",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/controls/option-select/option-select.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-a36b777f66d7",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/controls/option-select/option-select.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-9897a64c0901",
+      "layer": "web",
+      "path": "web-angular/src/app/dev/unsaved-preview-frame/unsaved-preview-frame.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-3b2d517b7dc6",
+      "layer": "web",
+      "path": "web-angular/src/app/dev/unsaved-preview/unsaved-preview.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-ec0a8e778302",
+      "layer": "web",
+      "path": "web-angular/src/app/dev/unsaved-preview/unsaved-preview.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-6b4a6fada04b",
+      "layer": "web",
+      "path": "web-angular/src/app/dev/unsaved-destination/unsaved-destination.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-bbe7222af180",
+      "layer": "web",
+      "path": "web-angular/src/app/dev/unsaved-context-preview/unsaved-context-preview.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-784817bb1965",
+      "layer": "web",
+      "path": "web-angular/src/app/dev/unsaved-context-preview/unsaved-context-preview.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "dev-component-unsaved-preview-frame",
+      "layer": "web",
+      "path": "web-angular/src/app/dev/unsaved-preview-frame/unsaved-preview-frame.ts",
+      "purpose": "Separated development fixture component/state; D37 folder ownership"
+    },
+    {
+      "id": "dev-component-unsaved-destination",
+      "layer": "web",
+      "path": "web-angular/src/app/dev/unsaved-destination/unsaved-destination.ts",
+      "purpose": "Separated development fixture component/state; D37 folder ownership"
+    },
+    {
+      "id": "dev-component-unsaved-fixture-state",
+      "layer": "web",
+      "path": "web-angular/src/app/dev/unsaved-fixture-state.ts",
+      "purpose": "Separated development fixture component/state; D37 folder ownership"
+    },
+    {
+      "id": "quality-b48e367c4706",
+      "layer": "configuration",
+      "path": "web-angular/eslint.config.mjs",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-18187b5430c6",
+      "layer": "configuration",
+      "path": "web-angular/scripts/dependency-rules.mjs",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-056ed62f225e",
+      "layer": "configuration",
+      "path": "web-angular/scripts/dependency-rules.test.mjs",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-16f555949438",
+      "layer": "web",
+      "path": "web-angular/src/testing/fixture-item.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
     }
   ],
   "finalizationChecklist": [

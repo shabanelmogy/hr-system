@@ -1,0 +1,13 @@
+{
+  "DateUtc": "2026-11-01T10:00:25.9179817Z",
+  "CurrentNet10ClientToActualNet48Iis": true,
+  "MixedCatalogCount": 2,
+  "ImportableCount": 1,
+  "RejectedOversizeMetadataPreserved": true,
+  "UnaddressableFilenameOmitted": true,
+  "RejectedSourceDownloadDenied": true,
+  "ValidSourceHashDownloadPassed": true,
+  "SyntheticMetadataFixturesOnly": true,
+  "NativeRenderAttempted": false,
+  "Passed": true
+}

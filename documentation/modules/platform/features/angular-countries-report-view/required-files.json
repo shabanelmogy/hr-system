@@ -79,31 +79,31 @@
     },
     {
       "id": "report-entry-9",
-      "path": "web-angular/src/app/shared/ui/layout/report-workspace.ts",
+      "path": "web-angular/src/app/shared/ui/layout/report-workspace/report-workspace.ts",
       "layer": "web",
       "purpose": "Current implementation/source or frozen bounded entry evidence"
     },
     {
       "id": "report-entry-10",
-      "path": "web-angular/src/app/shared/ui/documents/pdf-viewer.ts",
+      "path": "web-angular/src/app/shared/ui/documents/pdf-viewer/pdf-viewer.ts",
       "layer": "web",
       "purpose": "Current implementation/source or frozen bounded entry evidence"
     },
     {
       "id": "report-entry-11",
-      "path": "web-angular/src/app/shared/ui/forms/form-container.ts",
+      "path": "web-angular/src/app/shared/ui/forms/form-container/form-container.ts",
       "layer": "web",
       "purpose": "Current implementation/source or frozen bounded entry evidence"
     },
     {
       "id": "report-entry-12",
-      "path": "web-angular/src/app/shared/ui/forms/form-container.scss",
+      "path": "web-angular/src/app/shared/ui/forms/form-container/form-container.scss",
       "layer": "web",
       "purpose": "Current implementation/source or frozen bounded entry evidence"
     },
     {
       "id": "report-entry-13",
-      "path": "web-angular/src/app/shared/ui/layout/scroll-viewport.ts",
+      "path": "web-angular/src/app/shared/ui/layout/scroll-viewport/scroll-viewport.ts",
       "layer": "web",
       "purpose": "Current implementation/source or frozen bounded entry evidence"
     },
@@ -115,13 +115,13 @@
     },
     {
       "id": "report-entry-15",
-      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page.ts",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page/countries-read-page.ts",
       "layer": "web",
       "purpose": "Current implementation/source or frozen bounded entry evidence"
     },
     {
       "id": "report-entry-16",
-      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page.html",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page/countries-read-page.html",
       "layer": "web",
       "purpose": "Current implementation/source or frozen bounded entry evidence"
     },
@@ -181,13 +181,13 @@
     },
     {
       "id": "report-entry-26",
-      "path": "web-angular/src/app/modules/reporting/global-reports/components/global-report-view.spec.ts",
+      "path": "web-angular/src/app/modules/reporting/global-reports/components/global-report-view/global-report-view.spec.ts",
       "layer": "web",
       "purpose": "Current implementation/source or frozen bounded entry evidence"
     },
     {
       "id": "report-entry-27",
-      "path": "web-angular/src/app/modules/reporting/global-reports/components/global-report-view.ts",
+      "path": "web-angular/src/app/modules/reporting/global-reports/components/global-report-view/global-report-view.ts",
       "layer": "web",
       "purpose": "Current implementation/source or frozen bounded entry evidence"
     },
@@ -277,13 +277,13 @@
     },
     {
       "id": "report-implemented-42",
-      "path": "web-angular/src/app/shared/ui/icons/app-icon.ts",
+      "path": "web-angular/src/app/shared/ui/icons/app-icon/app-icon.ts",
       "layer": "web",
       "purpose": "Actual implemented consumer/shared verification source"
     },
     {
       "id": "report-implemented-43",
-      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page.spec.ts",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page/countries-read-page.spec.ts",
       "layer": "web",
       "purpose": "Actual implemented consumer/shared verification source"
     },
@@ -330,12 +330,6 @@
       "purpose": "Actual bounded implementation or verified acceptance"
     },
     {
-      "id": "report-final-51",
-      "path": "documentation/modules/platform/features/angular-countries-report-view/verification/ANGULAR_CHECK.log",
-      "layer": "documentation",
-      "purpose": "Actual bounded implementation or verified acceptance"
-    },
-    {
       "id": "report-final-52",
       "path": "documentation/modules/platform/features/angular-countries-report-view/verification/CHART_REGRESSION_RESULTS.json",
       "layer": "documentation",
@@ -350,24 +344,6 @@
     {
       "id": "report-final-54",
       "path": "documentation/modules/platform/features/angular-countries-report-view/verification/CURRENT_REPORT_ACCEPTANCE.md",
-      "layer": "documentation",
-      "purpose": "Actual bounded implementation or verified acceptance"
-    },
-    {
-      "id": "report-final-55",
-      "path": "documentation/modules/platform/features/angular-countries-report-view/verification/ENTRY_DOCUMENTATION_CHECK.log",
-      "layer": "documentation",
-      "purpose": "Actual bounded implementation or verified acceptance"
-    },
-    {
-      "id": "report-final-56",
-      "path": "documentation/modules/platform/features/angular-countries-report-view/verification/ENTRY_GENERATION.log",
-      "layer": "documentation",
-      "purpose": "Actual bounded implementation or verified acceptance"
-    },
-    {
-      "id": "report-final-57",
-      "path": "documentation/modules/platform/features/angular-countries-report-view/verification/ENTRY_PLANNING_CHECK.log",
       "layer": "documentation",
       "purpose": "Actual bounded implementation or verified acceptance"
     },
@@ -438,24 +414,6 @@
       "purpose": "Exact current source hashes/base commit for review"
     },
     {
-      "id": "report-final-final_documentation_check",
-      "path": "documentation/modules/platform/features/angular-countries-report-view/verification/FINAL_DOCUMENTATION_CHECK.log",
-      "layer": "documentation",
-      "purpose": "Executed canonical closure gates"
-    },
-    {
-      "id": "report-final-final_planning_check",
-      "path": "documentation/modules/platform/features/angular-countries-report-view/verification/FINAL_PLANNING_CHECK.log",
-      "layer": "documentation",
-      "purpose": "Executed canonical closure gates"
-    },
-    {
-      "id": "report-final-extra-71",
-      "path": "documentation/modules/platform/features/angular-countries-report-view/verification/FINAL_BUILD.log",
-      "layer": "documentation",
-      "purpose": "Final current layout/build/controls or central source-fidelity boundary evidence"
-    },
-    {
       "id": "report-final-extra-72",
       "path": "documentation/modules/platform/features/angular-countries-report-view/verification/REPORT_COMPACT_CONTROLS_RESULTS.json",
       "layer": "documentation",
@@ -472,6 +430,108 @@
       "path": "documentation/plans/notes/KNOWN_RISKS.md",
       "layer": "documentation",
       "purpose": "Final current layout/build/controls or central source-fidelity boundary evidence"
+    },
+    {
+      "id": "component-resource-c556d44ef2ec",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/layout/report-workspace/report-workspace.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-213dc6964a52",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/layout/report-workspace/report-workspace.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-eacac74d3c43",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/documents/pdf-viewer/pdf-viewer.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-e827f3c584e5",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/documents/pdf-viewer/pdf-viewer.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-311f299a2a50",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/form-container/form-container.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-6010b175ad49",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/layout/scroll-viewport/scroll-viewport.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-75c6a9c039af",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/layout/scroll-viewport/scroll-viewport.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-0fea20961918",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reporting/global-reports/components/global-report-view/global-report-view.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-d0e461abaa21",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reporting/global-reports/components/global-report-view/global-report-view.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-34efa13303b5",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/icons/app-icon/app-icon.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-5a45ead9f07e",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/icons/app-icon/app-icon.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "quality-c8f3282bb980",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/utils/country-list-presentation.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-4653687b92ac",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/utils/country-list-presentation.spec.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-b48e367c4706",
+      "layer": "configuration",
+      "path": "web-angular/eslint.config.mjs",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-18187b5430c6",
+      "layer": "configuration",
+      "path": "web-angular/scripts/dependency-rules.mjs",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-056ed62f225e",
+      "layer": "configuration",
+      "path": "web-angular/scripts/dependency-rules.test.mjs",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-16f555949438",
+      "layer": "web",
+      "path": "web-angular/src/testing/fixture-item.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
     }
   ],
   "finalizationChecklist": [

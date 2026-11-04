@@ -1,0 +1,17 @@
+{
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Angular Table Component usage is valid against generated API metadata."
+      }
+    ],
+    "structuredContent": {
+      "component": "Angular Table Component",
+      "valid": true,
+      "issues": []
+    }
+  },
+  "jsonrpc": "2.0",
+  "id": 3
+}

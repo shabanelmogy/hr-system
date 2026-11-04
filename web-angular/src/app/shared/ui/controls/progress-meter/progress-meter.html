@@ -1,0 +1,11 @@
+<div
+  class="meter"
+  [class.inline]="appearance() === 'inline'"
+  [style.--meter-accent]="accent() ?? 'var(--primary)'"
+>
+  <div class="meter-label">
+    <strong>{{ label() }}</strong
+    ><span>{{ description() }}</span>
+  </div>
+  <p-progressbar [value]="percentage()" [showValue]="false" [ariaLabel]="label()" [dt]="tokens()" />
+</div>

@@ -1,0 +1,110 @@
+<erp-dialog-panel
+  [open]="state.active()"
+  [title]="
+    (state.mode() === 'create' ? 'countries.add' : 'countries.edit') | uiText: 'reference-countries'
+  "
+  [description]="
+    (state.mode() === 'create' ? 'countries.addSubtitle' : 'countries.editSubtitle')
+      | uiText: 'reference-countries'
+  "
+  [closeLabel]="'actions.close' | uiText"
+  [icon]="state.mode() === 'create' ? 'add' : 'edit'"
+  [pending]="state.pending()"
+  [showFooter]="false"
+  (closeRequested)="closeGuard().requestClose()"
+>
+  @if (state.active()) {
+    @switch (state.phase()) {
+      @case ('loading') {
+        <erp-feedback-state kind="loading" [title]="'common.loading' | uiText" />
+      }
+      @case ('error') {
+        <erp-feedback-state
+          kind="error"
+          [title]="'countries.detailLoadError' | uiText: 'reference-countries'"
+          [actionLabel]="'actions.retry' | uiText"
+          (action)="state.retry()"
+        />
+        <erp-button
+          [label]="'actions.close' | uiText"
+          variant="text"
+          (activated)="closeGuard().requestClose()"
+        />
+      }
+      @case ('forbidden') {
+        <erp-feedback-state kind="forbidden" [title]="'authorization.forbidden.title' | uiText" />
+        <erp-button
+          [label]="'actions.close' | uiText"
+          variant="text"
+          (activated)="closeGuard().requestClose()"
+        />
+      }
+      @case ('ready') {
+        <erp-form
+          #entryForm
+          [form]="state.form"
+          appearance="dialog"
+          [hideHeader]="true"
+          [title]="
+            (state.mode() === 'create' ? 'countries.add' : 'countries.edit')
+              | uiText: 'reference-countries'
+          "
+          [submitLabel]="
+            (state.mode() === 'create' ? 'countries.add' : 'actions.save')
+              | uiText: (state.mode() === 'create' ? 'reference-countries' : 'core')
+          "
+          [pending]="state.pending()"
+          [readOnly]="state.uncertain()"
+          [feedback]="
+            state.feedback() ? locale.translate(state.feedback(), 'reference-countries') : ''
+          "
+          [feedbackKind]="state.feedbackKind()"
+          (validSubmit)="state.save()"
+        >
+          @for (field of fields; track field) {
+            <erp-text-field
+              [maxLength]="limits[field]"
+              [showCounter]="true"
+              counterAppearance="badge"
+              [name]="field"
+              [formControl]="state.form.controls[field]"
+              [label]="label(field)"
+              [required]="field === 'nameAr' || field === 'nameEn'"
+              [readOnly]="state.locked()"
+              [messages]="messages()[field]"
+              [textDirection]="field === 'nameAr' || field === 'nameEn' ? 'auto' : 'ltr'"
+              [inputMode]="field === 'phoneCode' ? 'tel' : 'text'"
+            />
+          }
+          @if (state.development) {
+            <erp-button
+              formTools
+              [label]="'countries.generateMockData' | uiText: 'reference-countries'"
+              variant="text"
+              [disabled]="state.locked()"
+              (activated)="state.generate()"
+            >
+              <erp-icon buttonIcon name="refresh" />
+            </erp-button>
+          }
+          <erp-icon formSubmitIcon [name]="state.mode() === 'create' ? 'add' : 'check'" />
+          <erp-button
+            formActions
+            [label]="'actions.cancel' | uiText"
+            variant="outlined"
+            [disabled]="state.pending()"
+            (activated)="closeGuard().requestClose()"
+          />
+        </erp-form>
+      }
+    }
+  }
+</erp-dialog-panel>
+<erp-form-close-guard
+  [identity]="state.identity()"
+  [revision]="state.revision()"
+  [active]="state.active()"
+  [unsaved]="state.unsaved()"
+  [pending]="state.pending()"
+  (closed)="state.close($event)"
+/>

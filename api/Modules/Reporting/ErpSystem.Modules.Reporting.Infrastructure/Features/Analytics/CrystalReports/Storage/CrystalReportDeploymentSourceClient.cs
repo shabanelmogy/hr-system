@@ -171,19 +171,22 @@ public sealed class CrystalReportDeploymentSourceClient(
     private static CrystalReportDeploymentDownloadResult Failure(
         CrystalReportDeploymentDownloadFailure failure) => new(null, failure);
 
-    private static bool IsValidCatalogItem(CatalogItem item, long maximumFileSizeBytes)
+    private static bool IsValidCatalogItem(CatalogItem? item, long maximumFileSizeBytes)
     {
-        if (!IsLowerHexSha256(item.SourceId) ||
+        if (item is null || !IsLowerHexSha256(item.SourceId) ||
             string.IsNullOrWhiteSpace(item.EntityKey) || item.EntityKey.Length > 128 ||
             string.IsNullOrWhiteSpace(item.ReportKey) || item.ReportKey.Length > 128 ||
             string.IsNullOrWhiteSpace(item.FileName) ||
             !string.Equals(Path.GetFileName(item.FileName), item.FileName, StringComparison.Ordinal) ||
             !string.Equals(Path.GetExtension(item.FileName), ".rpt", StringComparison.OrdinalIgnoreCase) ||
-            item.Size < 0 || item.Size > maximumFileSizeBytes)
+            item.Size < 0)
             return false;
 
+        // Rejected sources retain their real size so the manager can explain why
+        // they cannot be imported. They must not hide unrelated valid reports.
         return !item.IsImportable ||
-               (item.Size > 0 && IsLowerHexSha256(item.Sha256));
+               (item.Size is > 0 && item.Size <= maximumFileSizeBytes &&
+                IsLowerHexSha256(item.Sha256));
     }
 
     private static bool IsLowerHexSha256(string? value) =>

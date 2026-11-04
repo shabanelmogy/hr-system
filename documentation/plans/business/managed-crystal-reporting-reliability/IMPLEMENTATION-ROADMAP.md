@@ -44,3 +44,10 @@ children still record Web and Mobile as explicit `Excluded` or `Deferred` rows; 
 manager and Fiscal Years children record their real screens/routes and platform
 decisions. This prevents a generic “Crystal hardening” umbrella from claiming that
 all business journeys are complete.
+
+## Corrective maintenance supplement — 2026-11-01
+
+Requester explicitly authorized the bounded RUNTIME_CORRECTION_2026-11-01.md fixes.
+Source/local/private-package acceptance is in RUNTIME_CORRECTION_RESULT_2026-11-01.md.
+This does not activate the queued runtime/security business children or change
+ACTIVE_FEATURE_STEP. Hosted release notes remain gated by actual publication.

@@ -20,6 +20,8 @@ public static class DependencyInjection
         services.AddScoped<ReportCategoryErrors>();
         services.AddScoped<ReportTemplateErrors>();
         services.AddScoped<CrystalReportErrors>();
+        services.AddScoped<Features.Analytics.CrystalReports.Validation.GlobalCrystalReportPolicy>();
+        services.AddScoped<Features.Analytics.CrystalReports.Validation.GlobalCrystalReportConsumerPolicy>();
 
         return services;
     }

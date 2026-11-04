@@ -2,6 +2,8 @@ using ErpSystem.Modules.Platform.Contracts.Files.Models;
 
 namespace ErpSystem.Modules.Reporting.Application.Features.Analytics.CrystalReports.Contracts;
 
+public sealed record CrystalReportUploadTargetResponse(CrystalReportDetailResponse? Report, bool CanReplace);
+
 public sealed record CrystalReportListItemResponse(
     Guid Id,
     string EntityKey,
@@ -67,7 +69,11 @@ public sealed record CrystalReportDetailResponse(
     DateTime CreatedOn,
     DateTime? UpdatedOn,
     IReadOnlyList<CrystalReportVersionResponse> Versions,
-    IReadOnlyList<CrystalReportRoleGrantResponse> Access);
+    IReadOnlyList<CrystalReportRoleGrantResponse> Access)
+{
+    public string? ViewName { get; init; }
+    public string? ViewFingerprint { get; init; }
+}
 
 public sealed record CrystalReportGrantRequest(
     string RoleId,
@@ -106,7 +112,10 @@ public sealed record GlobalCrystalReportListItemResponse(
     bool IsPublished,
     bool IsArchived,
     string RowVersion,
-    DateTime? UpdatedOn);
+    DateTime? UpdatedOn)
+{
+    public bool CanDownloadSource { get; init; }
+}
 
 public sealed record GlobalCrystalReportRenderRequest(
     string EntityKey,
@@ -144,7 +153,10 @@ public enum CrystalReportRenderFailure
     None,
     UnsupportedEntity,
     InvalidReport,
-    RuntimeUnavailable
+    RuntimeUnavailable,
+    SourceRejected,
+    SchemaMismatch,
+    ParameterMismatch
 }
 
 public sealed record CrystalReportRenderResult(
@@ -174,7 +186,8 @@ public enum CrystalReportFileFailure
     InspectionRejected,
     UnsupportedEntity,
     SchemaMismatch,
-    ParameterMismatch
+    ParameterMismatch,
+    SourceRejected
 }
 
 public sealed record StoreCrystalReportFileResult(
@@ -200,7 +213,8 @@ public enum CrystalReportInspectionFailure
     InvalidReport = 1,
     UnsupportedEntity = 2,
     SchemaMismatch = 3,
-    ParameterMismatch = 4
+    ParameterMismatch = 4,
+    SourceRejected = 5
 }
 
 public sealed record CrystalReportIdentity(string EntityKey, string ReportKey);
@@ -245,6 +259,10 @@ public sealed record DiscoveredCrystalReportResponse(
     bool IsImportable,
     string? ValidationReason,
     bool IsImported);
+
+public sealed record GlobalCrystalReportCandidatePage(
+    IReadOnlyList<DiscoveredCrystalReportResponse> Items,
+    int TotalCount);
 
 public sealed record ImportDiscoveredCrystalReportRequest(
     string SourceId,

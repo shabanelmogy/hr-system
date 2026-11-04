@@ -865,7 +865,7 @@
       "classification": "current-source"
     },
     {
-      "path": "web-angular/src/app/composition/authenticated-routes.ts",
+      "path": "web-angular/src/app/composition/authenticated-routes/authenticated-routes.ts",
       "sha256": "274d1a1e023c47644048f7486995ab0c428017c2f46d1d5bdbb3e9d8deb2b291",
       "classification": "current-source"
     },
@@ -875,17 +875,17 @@
       "classification": "current-source"
     },
     {
-      "path": "web-angular/src/app/shared/ui/collections/card-list.ts",
+      "path": "web-angular/src/app/shared/ui/collections/card-list/card-list.ts",
       "sha256": "ffd7b43e60b68effa7266e2145e6d9aa28c28c8642ff611acc50c5cc88a826ac",
       "classification": "current-source"
     },
     {
-      "path": "web-angular/src/app/shared/ui/collections/my-data-grid.ts",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid/my-data-grid.ts",
       "sha256": "052384bde78fe9778b9547d62db8310c913de3860042a6b8de6bf99bbf346697",
       "classification": "current-source"
     },
     {
-      "path": "web-angular/src/app/shared/ui/dialogs/dialog-panel.ts",
+      "path": "web-angular/src/app/shared/ui/dialogs/dialog-panel/dialog-panel.ts",
       "sha256": "a2e486d712b1759d2cd702d28dae4c64cf5a23d34c00f278c27c284b116e0334",
       "classification": "current-source"
     },

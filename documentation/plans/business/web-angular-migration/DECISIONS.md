@@ -245,3 +245,66 @@ Header Refresh explicitly regenerates unchanged sources; immutable actor replace
 clears applied/draft/selection. Shared form/workspace/PDF extensions preserve defaults.
 Bounded behavior Verified; full five-view pixel/source/host acceptance remains S3-A8.
 No ActiveReports, API/schema/native runtime, package or translation key addition.
+
+## D35 — Angular quality owns acceptance; Next review is not a prerequisite
+
+Requester2026-10-31: «المهم الوقتى التركيز على بناء الانجولار بشكل دقيق مش ضرورى نراجع مشروع Next».
+
+Build and verify Angular against the existing business/API contracts, exact
+authorization, shared-component-first/PrimeNG policy, shared color tokens and
+actual Angular journeys. Running, debugging or reviewing the retained Next client
+and an automated/pixel comparison against its development server are not
+prerequisites for Angular implementation or bounded acceptance. Existing source
+may remain a read-only reference when useful; this does not authorize additional
+Next work. Experimental Next configuration and E2E edits made during diagnosis
+were reverted; no Next runtime change is delivered.
+
+This explicitly supersedes the S3-A7 required eight-case rendered-Next gate and
+the mandatory rendered-Next prerequisite of S3-A8. Historical source results stay
+historical; they are not relabeled as new Angular proof. Preserve ERP functionality,
+API/RBAC/scope/atomicity and current platform decisions. Angular visual consistency,
+EN/AR/RTL, keyboard/responsive controls and all five required Countries views remain
+Required. Full host/realtime/production-size/Table capability gates remain owned
+by their exact slices. No new business scope, BFF/global store or native rewrite.
+
+## D36 — Reusable improvements apply application-wide by default
+
+Requester2026-10-31: «حسن الستايل الخاص بيالسكرول فى كل التطبيق مش countries فقط ... كل حاجة تنفع تكون مشتركة تتطبق بشكل عام». General presentation and interaction improvements belong in the global theme or their owning shared component and reach all applicable current/future consumers automatically. Domain-only composition remains with its owner. Global scrollbar maintenance uses current ScrollViewport/SCSS, not Countries styles or new business scope. AGENTS.md and ANGULAR_SCROLLING.md encode the policy.
+
+## D37 — Clean Code and external Angular component resources are mandatory
+
+Requester2026-10-31: «انا عايز فى المشروع بشكل عام عشان اقدر اقرأ الكود»،
+«ليه بتكتب كود html فى ملفات ts»، «انا عايز clean code ثبت القاعدة ديه».
+Adopt the canonical ANGULAR_CODE_STYLE.md policy for all current/future Angular
+work: colocated HTML templates, SCSS styles where needed, focused typed TS logic,
+meaningful names, small cohesive methods, shared-first composition and no
+speculative architecture. This project convention is stricter than Angular's
+valid inline-resource syntax. AGENTS.md, CLI schematic defaults, formatter and
+AST architecture checks encode it. Includes shared/dev/test-host components;
+ordinary fixture strings and TestBed metadata overrides remain test inputs.
+This is technical maintenance under the current migration, with no business/API
+or platform-scope expansion. Formatting alone is not sufficient Clean Code proof.
+
+2026-10-31 continuation: requester asked about a folder per component, then
+authorized continuation. Application components use matching folders containing
+TS/HTML/optional SCSS/tests; root App already has src/app. Test-only hosts stay
+with the tested owner and shared Sass/types/services remain at their proper
+boundary. Preserve curated public APIs and ownership; no barrel per component.
+CLI flat:false and the architecture gate enforce the layout for future components.
+The same rule covers secondary development preview components: each has its own
+implementation file/folder. Related test-only hosts can share a spec; shared
+fixture state remains one injectable service rather than being copied.
+
+## D38 — Enforceable Angular Clean Code hardening
+
+Requester2026-10-31 explicitly orders all review findings corrected and repeats
+component folders/high quality. FOLLOW-022 CC-01..07 implementation is authorized
+as technical maintenance within the existing migration. Semantic lint, stronger
+compiler/template diagnostics, resolved owner/static-cycle checks and generic
+shared fixes are mandatory. Narrow public entries retain lazy boundaries; MyDataGrid
+remains the public Grid and feature pages own business contracts only. Preserve
+intentional DI startup, typed mocks, actual error/authority/draft behavior and
+current build budgets. Verification is472unit tests,26architecture/dependency cases
+and122bounded browser cases. See CLEAN_CODE_IMPLEMENTATION.md for exact evidence,
+limits and separate full-pilot/hosted report gates. No additional business feature
+activation, global store, API/schema or platform rewrite.

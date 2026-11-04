@@ -1,0 +1,41 @@
+<erp-collection-frame
+  appearance="plain"
+  [controller]="controller"
+  [label]="label()"
+  [search]="search()"
+  [toolbarVisible]="toolbarVisible()"
+  [toolbarLayout]="toolbarLayout()"
+  [showFooter]="false"
+  (searchChange)="searchChange.emit($event)"
+>
+  <div toolbarFilters><ng-content select="[toolbarFilters]" /></div>
+  <div collectionBody class="analytics">
+    @if (controller.view().kind === 'ready' && controller.view().rows.length) {
+      <div class="metrics">
+        @for (metric of metrics(); track metric.id) {
+          <erp-metric-card
+            appearance="raised"
+            [label]="metric.label"
+            [value]="metric.value"
+            [icon]="metric.icon"
+            [accent]="metric.accent"
+          />
+        }
+      </div>
+      <div class="chart-scroll">
+        <erp-scroll-viewport [label]="label()" [fillContent]="true"
+          ><div class="plots">
+            @for (plot of plots(); track plot.id) {
+              <erp-chart-panel [attr.data-chart-id]="plot.id" [definition]="plot" />
+            }</div
+        ></erp-scroll-viewport>
+      </div>
+    } @else {
+      <erp-collection-feedback
+        [kind]="controller.view().kind"
+        [emptyTemplate]="empty()?.template"
+        (retry)="retry.emit()"
+      />
+    }
+  </div>
+</erp-collection-frame>

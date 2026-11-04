@@ -1,0 +1,219 @@
+{
+  "baseCommit": "885753c1",
+  "date": "2026-10-31",
+  "decision": "S3-A7 Angular Verified/Closed under D35; overall pilot/release not verified",
+  "files": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "969375d5fb83176dec84d0d884ab6ec33025b20505773e2664c50471c5a784d0"
+    },
+    {
+      "path": "documentation/modules/platform/features/angular-countries-import-view/angular-countries-import-view-evidence.md",
+      "sha256": "a9f192df2653f8f1158843aec5efb8e4b2d320690f775b91840405de434e25f6"
+    },
+    {
+      "path": "documentation/modules/platform/features/angular-countries-import-view/angular-countries-import-view-request.md",
+      "sha256": "f133e82e21ef0bd2b0f11ba2195e8b6989fd68d3308eb492b2852ba6f4df716b"
+    },
+    {
+      "path": "documentation/modules/platform/features/angular-countries-import-view/angular-countries-import-view-review.md",
+      "sha256": "023f3fdb6d308affbc95c94441e7079c7afb442ebfe55fc6b91a63b873776db5"
+    },
+    {
+      "path": "documentation/modules/platform/features/angular-countries-import-view/angular-countries-import-view-api.md",
+      "sha256": "0f6e0acbe9fd406ce642a71d63d8d0c2f5328007b892ae8094cd6c9ff583b886"
+    },
+    {
+      "path": "documentation/modules/platform/features/angular-countries-import-view/angular-countries-import-view-web.md",
+      "sha256": "5e03dad3a6f7a5c3ca6e137a0f145eb871ffec819714e02345863a14cc789eaf"
+    },
+    {
+      "path": "documentation/modules/platform/features/angular-countries-import-view/angular-countries-import-view-mobile.md",
+      "sha256": "529de856ea66dfc524e19484906846e12f50d593f378b1eb1bc59e344636bd65"
+    },
+    {
+      "path": "documentation/plans/business/web-angular-migration/PLAN.md",
+      "sha256": "4a853305aae08e33ad7714b208201c8a94f2d496daec8140b119161ad8ab3a33"
+    },
+    {
+      "path": "documentation/plans/business/web-angular-migration/decomposition/angular-countries-import-view.md",
+      "sha256": "ab1108183f65185a3dde16964a0826c36dba85b64130f4b8e0bace0409bd55a8"
+    },
+    {
+      "path": "web-next/src/shared/services/excelService.ts",
+      "sha256": "26147a14a34aee9e642fcd236b222b3e67b7fc5dfd5ffeefec57b42ae2c5a054"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/import-data/ImportCountries.tsx",
+      "sha256": "ded333471bf432b878b20391b858b460a5cd67b50aa300b0f93e52a89d7ea140"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/import-data/useCountryImport.ts",
+      "sha256": "334936fa6eff1e4c7e729c99912b673a59eb24ba64e23b1a9b32f2e94b9f7151"
+    },
+    {
+      "path": "web-next/src/modules/reference-data/geographical-information/countries/components/import-data/countryImport.ts",
+      "sha256": "9dbb79d100d4f55ef33e98efd89a4ca7f6ffe4aa7dceb92b4ec20744fcde73fd"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid.ts",
+      "sha256": "78c3347185846da63dd0c50ccd4bda593ea06c3f726a6da6dc51bf5fe81d2eb4"
+    },
+    {
+      "path": "web-angular/src/app/shared/data/command-failure.ts",
+      "sha256": "6a3268019ef0f767d049a3726bfd4da096c4e33641ff4a7c98729bcb8b542967"
+    },
+    {
+      "path": "web-angular/src/app/shared/data/unsaved-changes.ts",
+      "sha256": "937e14af3ff5073c5286b5d2a8ecd45dfc96e74c33b0ad488048377ee60ca360"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/services/country-service.ts",
+      "sha256": "5eb0f0855abfdcad215f57aa912d1b041c6661886ac0d14740fb9087de914eae"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/validation/country-mutation.ts",
+      "sha256": "ba2637873f8494b2580a1c6aeaaa1cd03f5cf5278a983462582af25c5b950aed"
+    },
+    {
+      "path": "mobile-react/src/modules/reference-data/geography/countries/presentation/components/import-data/CountryImportView.tsx",
+      "sha256": "1203587a8389e04e221e08fb0ce1c6a809baf37496bf319a11d1674907e1a725"
+    },
+    {
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Presentation/Features/GeographicalInformation/Countries/V1/CountriesController.cs",
+      "sha256": "b2e31eb272ecf7a727367d5c41cde09447a9c9720f9070b0fe041196eb58cf4c"
+    },
+    {
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/CreateCountries/CreateCountriesCommandHandler.cs",
+      "sha256": "ee10fdd13b2cb0d43efabfdd93c8f4433949aab4dd5d0a165e7fe319a907abdf"
+    },
+    {
+      "path": "api/Modules/ReferenceData/ErpSystem.Modules.ReferenceData.Application/Features/GeographicalInformation/Countries/Commands/CreateCountries/CreateCountriesCommandValidator.cs",
+      "sha256": "e827532758c1fd4cc9f3f9c64405263d998a3f227447ccb38391dc5bd17e4ab5"
+    },
+    {
+      "path": "web-angular/src/app/shared/data/spreadsheet-import.ts",
+      "sha256": "fda2ec97567b25e0815fa73732dd2d16a68564dedc8461a8f01d8059524f7232"
+    },
+    {
+      "path": "web-angular/src/app/shared/data/spreadsheet-parser.ts",
+      "sha256": "e1b957a86eabf142e73d5b403c1b50efca48b537ad1a04befc2955a3752a7aa4"
+    },
+    {
+      "path": "web-angular/src/app/shared/data/spreadsheet-public-api.ts",
+      "sha256": "591a56fbd424c7cab1f761a61bf0cd7c7799acb7d33f3a3dcf40038991a48fbf"
+    },
+    {
+      "path": "web-angular/src/app/shared/data/spreadsheet-import.spec.ts",
+      "sha256": "49b570ee687966bd2f533e08c5a79da936b00f737562186d8200fb80cf1dcad8"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/imports/spreadsheet-import-panel.ts",
+      "sha256": "eb07f843a7f716c2281f6e372555704ad49161d57aefe27557c198ac02ad8c2c"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/feedback/feedback-state.ts",
+      "sha256": "b50f5f12bf314cca1296c0c914f2e77bf1ae8ed7da00d352b982982ef989cd6b"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/public-api.ts",
+      "sha256": "a829695ae0bb0e0287d92c5a52b6ece0318cc86396bbdfa3e6ae3b185dbc7f1d"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-import-view.ts",
+      "sha256": "440bcd4ae843f5c0c3b7004cc5ec20176b02355d8da6fbafa6b11ce07dfe753d"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/state/country-import-state.ts",
+      "sha256": "d5f339d07c6ecd7cd140db71274913526b30593fd1d7ce38ff6ee0349b7e7ae4"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/state/country-import-state.spec.ts",
+      "sha256": "7ad684b3eaa8c307aed0c39732567e7cbe55ba0f0c6892216b812193fb98f3bf"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/validation/country-import.ts",
+      "sha256": "1701b0ec66bd23d30504f5006c0c685e1932167da209fbee45736335e7de8f40"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/validation/country-import.spec.ts",
+      "sha256": "0aa3506f7a9c8fa34d652c95f7d529f42b3305ac7e8bf05bb3cd8ac3457c7e79"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/services/country-service.spec.ts",
+      "sha256": "b730a3d98c878b60c90e2c7a2199032647211abe89adf9f1ac33c788978e19c5"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page.ts",
+      "sha256": "4868ae02f8a3c509c0e52d1d5810fc94c1fbaaac5210f9cfcc9b6df164b11b12"
+    },
+    {
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page.html",
+      "sha256": "2e29aa495f461b603a5d6628265f4108c410ebb6a01c999ccb185348805e41a4"
+    },
+    {
+      "path": "web-angular/scripts/verify-country-import-browser.mjs",
+      "sha256": "9156c653c8b6fb5c80216c938eaa49dff2c3931f164d0e139fca684462af60e6"
+    },
+    {
+      "path": "web-angular/scripts/verify-country-import-reference.mjs",
+      "sha256": "c1d07f5cdde17c5f42a4f4c38347e34791305f35e4bf2fc41acc7a1018477fb9"
+    },
+    {
+      "path": "web-angular/package.json",
+      "sha256": "791694a00121139307016cd461bfa5b592d390092256ca1457183174c76ad461"
+    },
+    {
+      "path": "web-angular/package-lock.json",
+      "sha256": "16c603ac9dce6aff6181b0429dc85f86453a30d169f90b33d7d50ec5498c184b"
+    },
+    {
+      "path": "documentation/guides/web/architecture/ANGULAR_SHARED_COMPONENTS.md",
+      "sha256": "292b6efb4ef90c086d0d6bc47e048149c0ca9dbbc313c7bad5bf520f47c52421"
+    },
+    {
+      "path": "documentation/plans/notes/FOLLOW_UPS.md",
+      "sha256": "496be68013ebd034e2fa0e1225716887ceadd71abcb50d2a860f9bda99bc4924"
+    },
+    {
+      "path": "documentation/plans/notes/WEB_NOTES.md",
+      "sha256": "ef12963a6f0f2df2f0927b6a787beeb7fed58d15b609a3003a0754f5a933d750"
+    },
+    {
+      "path": "documentation/modules/reference-data/features/countries/countries-review.md",
+      "sha256": "f9b1c52ce671e5baf8270d818a2e443f716fa151cda6217d4a0458617e0ec273"
+    },
+    {
+      "path": "documentation/modules/reference-data/features/countries/countries-api.md",
+      "sha256": "d58dca637e4bf23fd5bb3fe2e17937211238f1b26254f4779aa2684471290b90"
+    },
+    {
+      "path": "documentation/modules/reference-data/features/countries/countries-web.md",
+      "sha256": "b6a79a0a8f8977c7a9b6b932205e01a79a044bea0493464bd83ed5c61da0eeae"
+    },
+    {
+      "path": "documentation/modules/reference-data/features/countries/countries-mobile.md",
+      "sha256": "854814a31ccc9e3cba19c3bc62f431bd19e14e2389e481101b0eea023a0b049e"
+    },
+    {
+      "path": "documentation/modules/platform/features/angular-countries-import-view/SCOPE_CHANGE.md",
+      "sha256": "9a827535473fedab99925c68d732f04baa40dfb98caaf450cef01cf51683bf25"
+    },
+    {
+      "path": "documentation/plans/business/web-angular-migration/DECISIONS.md",
+      "sha256": "6da960f1e1d8d5b3995b0a2e08a18762487b66589988ce03b67c41870803ca7f"
+    },
+    {
+      "path": "documentation/plans/business/web-angular-migration/RESUME.md",
+      "sha256": "d4b4330b233c757262816a0790994b266b51504ac6b55dc0cb4d9bd089e5a09f"
+    },
+    {
+      "path": "documentation/plans/business/web-angular-migration/education/angular-countries-import-view.md",
+      "sha256": "e2f35f741c6341835030288fd377bf6d5976d78762f4d1f35b49c9051707bfec"
+    },
+    {
+      "path": "documentation/plans/notes/KNOWN_RISKS.md",
+      "sha256": "b92b5ce3663d58bcc714ed8489daf52803d84f03933c8fa73cec73d10fda3ca0"
+    }
+  ]
+}

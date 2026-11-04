@@ -1,0 +1,42 @@
+<erp-dialog-panel
+  [open]="open()"
+  [title]="title()"
+  [description]="description()"
+  [icon]="icon()"
+  [pending]="pending()"
+  [closeLabel]="closeLabel()"
+  (closeRequested)="cancel()"
+>
+  <div class="choices">
+    @for (option of options(); track option.value) {
+      <erp-button
+        [label]="option.label"
+        [description]="option.description ?? ''"
+        appearance="quiet"
+        severity="secondary"
+        [pressed]="selected() === option.value"
+        [disabled]="pending()"
+        fullWidth
+        (activated)="select(option.value)"
+      >
+        @if (icon(); as name) {
+          <span buttonIcon class="option-icon"><erp-icon [name]="name" /></span>
+        }
+      </erp-button>
+    }
+  </div>
+  <erp-button
+    dialogActions
+    [label]="cancelLabel()"
+    variant="text"
+    [disabled]="pending()"
+    (activated)="cancel()"
+  />
+  <erp-button
+    dialogActions
+    [label]="continueLabel()"
+    [disabled]="!selected()"
+    [busy]="pending()"
+    (activated)="choose()"
+  />
+</erp-dialog-panel>

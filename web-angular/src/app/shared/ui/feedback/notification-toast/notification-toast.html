@@ -1,0 +1,10 @@
+<p-toast
+  key="erp-notifications"
+  [position]="locale.direction() === 'rtl' ? 'top-left' : 'top-right'"
+  [baseZIndex]="10000"
+  [preventOpenDuplicates]="true"
+  [life]="5000"
+  [breakpoints]="{ '599px': { width: 'calc(100vw - 24px)', left: '12px', right: '12px' } }"
+  [pt]="attributes()"
+  [dt]="tokens"
+/>

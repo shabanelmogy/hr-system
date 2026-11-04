@@ -13,6 +13,19 @@ namespace ErpSystem.Modules.Reporting.Tests;
 public sealed class ReportingAuthorizationTests
 {
     [Fact]
+    public void GlobalManagement_UsesSeparateGlobalActionsWithoutTenantMembership()
+    {
+        var controller = typeof(GlobalCrystalReportManagementController);
+        Assert.Contains(controller.GetCustomAttributes<AuthorizeAttribute>(), attribute => attribute.Roles == PlatformRoleNames.SuperAdmin);
+        AssertPermission(controller, nameof(GlobalCrystalReportManagementController.Create), ReportingPermissions.CreateGlobalCrystalReports);
+        AssertPermission(controller, nameof(GlobalCrystalReportManagementController.UploadVersion), ReportingPermissions.UploadGlobalCrystalReports);
+        AssertPermission(controller, nameof(GlobalCrystalReportManagementController.Publish), ReportingPermissions.PublishGlobalCrystalReports);
+        AssertPermission(controller, nameof(GlobalCrystalReportManagementController.Download), ReportingPermissions.DownloadGlobalCrystalReports);
+        AssertPermission(controller, nameof(GlobalCrystalReportManagementController.Archive), ReportingPermissions.ArchiveGlobalCrystalReports);
+        AssertPermission(controller, nameof(GlobalCrystalReportManagementController.SaveAccess), ReportingPermissions.EditGlobalCrystalReportAccess);
+        Assert.All(ReportingPermissions.GlobalReports, permission => Assert.True(permission.StartsWith("GlobalCrystalReports:", StringComparison.Ordinal) || permission.StartsWith("GlobalCrystalReportAccess:", StringComparison.Ordinal)));
+    }
+    [Fact]
     public void DashboardAction_RequiresDedicatedReportingPermission()
     {
         AssertPermission(
@@ -42,7 +55,7 @@ public sealed class ReportingAuthorizationTests
     }
 
     [Fact]
-    public void GlobalGeographyReports_AreGlobalAndRestrictedToSuperAdmin()
+    public void GlobalGeographyReports_RequireAuthenticationAndApplicationScopePolicy()
     {
         var definition = new ReportingModule().Definition;
         var globalReports = Assert.Single(
@@ -54,15 +67,9 @@ public sealed class ReportingAuthorizationTests
         Assert.Contains(ReportingPermissions.ViewGlobalCrystalReports, ReportingPermissions.All);
 
         var controller = typeof(GlobalCrystalReportsController);
-        var authorization = Assert.Single(
-            controller.GetCustomAttributes<AuthorizeAttribute>(inherit: true),
-            attribute => attribute.Roles == PlatformRoleNames.SuperAdmin);
-        var permission = Assert.Single(
-            controller.GetCustomAttributes<HasPermissionAttribute>(inherit: true),
-            attribute => attribute.Policy == ReportingPermissions.ViewGlobalCrystalReports);
-
-        Assert.Equal(PlatformRoleNames.SuperAdmin, authorization.Roles);
-        Assert.Equal(ReportingPermissions.ViewGlobalCrystalReports, permission.Policy);
+        var authorization = Assert.Single(controller.GetCustomAttributes<AuthorizeAttribute>(inherit: true));
+        Assert.Null(authorization.Roles);
+        Assert.Empty(controller.GetCustomAttributes<HasPermissionAttribute>(inherit: true));
     }
 
     private static void AssertPermission(Type controller, string actionName, string expectedPermission)

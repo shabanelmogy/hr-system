@@ -1,0 +1,15 @@
+main {
+  padding: 20px;
+  max-width: 1000px;
+  margin-inline: auto;
+}
+.contexts {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.contexts erp-option-select {
+  min-width: 180px;
+}

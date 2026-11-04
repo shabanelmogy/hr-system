@@ -1,0 +1,1481 @@
+{
+  "date": "2026-10-31T14:33:50.997Z",
+  "write": true,
+  "components": 80,
+  "movedComponents": 78,
+  "movedFiles": 261,
+  "importsUpdated": 645,
+  "sassUpdated": 3,
+  "componentFiles": [
+    {
+      "source": "src/app/app.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/composition/authenticated-routes.ts",
+      "target": "src/app/composition/authenticated-routes/authenticated-routes.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/dev/boolean-preview.ts",
+      "target": "src/app/dev/boolean-preview/boolean-preview.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/dev/collection-preview.ts",
+      "target": "src/app/dev/collection-preview/collection-preview.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/dev/criteria-preview.ts",
+      "target": "src/app/dev/criteria-preview/criteria-preview.ts",
+      "count": 2
+    },
+    {
+      "source": "src/app/dev/date-preview.ts",
+      "target": "src/app/dev/date-preview/date-preview.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/dev/form-close-preview.ts",
+      "target": "src/app/dev/form-close-preview/form-close-preview.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/dev/form-preview.ts",
+      "target": "src/app/dev/form-preview/form-preview.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/dev/grid-capabilities-preview.ts",
+      "target": "src/app/dev/grid-capabilities-preview/grid-capabilities-preview.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/dev/multiline-preview.ts",
+      "target": "src/app/dev/multiline-preview/multiline-preview.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/dev/numeric-preview.ts",
+      "target": "src/app/dev/numeric-preview/numeric-preview.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/dev/read-preview.ts",
+      "target": "src/app/dev/read-preview/read-preview.ts",
+      "count": 2
+    },
+    {
+      "source": "src/app/dev/reference-preview.ts",
+      "target": "src/app/dev/reference-preview/reference-preview.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/dev/theme-preview.ts",
+      "target": "src/app/dev/theme-preview/theme-preview.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/dev/unsaved-context-preview.ts",
+      "target": "src/app/dev/unsaved-context-preview/unsaved-context-preview.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/dev/unsaved-preview.ts",
+      "target": "src/app/dev/unsaved-preview/unsaved-preview.ts",
+      "count": 3
+    },
+    {
+      "source": "src/app/modules/accounting/fiscal-year-context/components/fiscal-context-control.ts",
+      "target": "src/app/modules/accounting/fiscal-year-context/components/fiscal-context-control/fiscal-context-control.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/modules/reference-data/geographical-information/countries/components/country-editor.ts",
+      "target": "src/app/modules/reference-data/geographical-information/countries/components/country-editor/country-editor.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/modules/reference-data/geographical-information/countries/components/country-import-view.ts",
+      "target": "src/app/modules/reference-data/geographical-information/countries/components/country-import-view/country-import-view.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/modules/reference-data/geographical-information/countries/components/country-read-details.ts",
+      "target": "src/app/modules/reference-data/geographical-information/countries/components/country-read-details/country-read-details.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page.ts",
+      "target": "src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page/countries-read-page.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/modules/reporting/global-reports/components/global-report-view.ts",
+      "target": "src/app/modules/reporting/global-reports/components/global-report-view/global-report-view.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/platform/auth/pages/login-page.ts",
+      "target": "src/app/platform/auth/pages/login-page/login-page.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/platform/auth/pages/password-request-page.ts",
+      "target": "src/app/platform/auth/pages/password-request-page/password-request-page.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/platform/auth/pages/session-page.ts",
+      "target": "src/app/platform/auth/pages/session-page/session-page.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/platform/modules/components/module-context-control.ts",
+      "target": "src/app/platform/modules/components/module-context-control/module-context-control.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/platform/modules/pages/module-browser.ts",
+      "target": "src/app/platform/modules/pages/module-browser/module-browser.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/platform/modules/pages/module-workspace.ts",
+      "target": "src/app/platform/modules/pages/module-workspace/module-workspace.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/platform/tenants/pages/dashboard-page.ts",
+      "target": "src/app/platform/tenants/pages/dashboard-page/dashboard-page.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/buttons/action-button.ts",
+      "target": "src/app/shared/ui/buttons/action-button/action-button.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/cards/metric-card.ts",
+      "target": "src/app/shared/ui/cards/metric-card/metric-card.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/charts/chart-panel.ts",
+      "target": "src/app/shared/ui/charts/chart-panel/chart-panel.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/charts/chart-renderer.ts",
+      "target": "src/app/shared/ui/charts/chart-renderer/chart-renderer.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/charts/collection-chart-view.ts",
+      "target": "src/app/shared/ui/charts/collection-chart-view/collection-chart-view.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/collections/card-list.ts",
+      "target": "src/app/shared/ui/collections/card-list/card-list.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/collections/collection-feedback.ts",
+      "target": "src/app/shared/ui/collections/collection-feedback/collection-feedback.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/collections/collection-footer.ts",
+      "target": "src/app/shared/ui/collections/collection-footer/collection-footer.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/collections/collection-frame.ts",
+      "target": "src/app/shared/ui/collections/collection-frame/collection-frame.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/collections/grid-filter-input.ts",
+      "target": "src/app/shared/ui/collections/grid-filter-input/grid-filter-input.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/collections/my-data-grid.ts",
+      "target": "src/app/shared/ui/collections/my-data-grid/my-data-grid.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/collections/row-actions.ts",
+      "target": "src/app/shared/ui/collections/row-actions/row-actions.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/controls/option-select.ts",
+      "target": "src/app/shared/ui/controls/option-select/option-select.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/controls/palette-picker.ts",
+      "target": "src/app/shared/ui/controls/palette-picker/palette-picker.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/controls/progress-meter.ts",
+      "target": "src/app/shared/ui/controls/progress-meter/progress-meter.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/controls/sort-direction-button.ts",
+      "target": "src/app/shared/ui/controls/sort-direction-button/sort-direction-button.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/dialogs/choice-dialog.ts",
+      "target": "src/app/shared/ui/dialogs/choice-dialog/choice-dialog.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/dialogs/confirmation-dialog.ts",
+      "target": "src/app/shared/ui/dialogs/confirmation-dialog/confirmation-dialog.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/dialogs/dialog-panel.ts",
+      "target": "src/app/shared/ui/dialogs/dialog-panel/dialog-panel.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/dialogs/error-modal-host.ts",
+      "target": "src/app/shared/ui/dialogs/error-modal-host/error-modal-host.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/dialogs/unsaved-confirmation-host.ts",
+      "target": "src/app/shared/ui/dialogs/unsaved-confirmation-host/unsaved-confirmation-host.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/documents/pdf-viewer.ts",
+      "target": "src/app/shared/ui/documents/pdf-viewer/pdf-viewer.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/feedback/feedback-state.ts",
+      "target": "src/app/shared/ui/feedback/feedback-state/feedback-state.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/feedback/notification-toast.ts",
+      "target": "src/app/shared/ui/feedback/notification-toast/notification-toast.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/feedback/status-badge.ts",
+      "target": "src/app/shared/ui/feedback/status-badge/status-badge.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/forms/fields/boolean-field.ts",
+      "target": "src/app/shared/ui/forms/fields/boolean-field/boolean-field.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/forms/fields/character-count-badge.ts",
+      "target": "src/app/shared/ui/forms/fields/character-count-badge/character-count-badge.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/forms/fields/date-field.ts",
+      "target": "src/app/shared/ui/forms/fields/date-field/date-field.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/forms/fields/numeric-field.ts",
+      "target": "src/app/shared/ui/forms/fields/numeric-field/numeric-field.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/forms/fields/reference-field.ts",
+      "target": "src/app/shared/ui/forms/fields/reference-field/reference-field.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/forms/fields/text-field.ts",
+      "target": "src/app/shared/ui/forms/fields/text-field/text-field.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/forms/form-close-guard.ts",
+      "target": "src/app/shared/ui/forms/form-close-guard/form-close-guard.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/forms/form-container.ts",
+      "target": "src/app/shared/ui/forms/form-container/form-container.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/forms/validation-summary.ts",
+      "target": "src/app/shared/ui/forms/validation-summary/validation-summary.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/icons/app-icon.ts",
+      "target": "src/app/shared/ui/icons/app-icon/app-icon.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/imports/spreadsheet-import-panel.ts",
+      "target": "src/app/shared/ui/imports/spreadsheet-import-panel/spreadsheet-import-panel.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/layout/application-frame.ts",
+      "target": "src/app/shared/ui/layout/application-frame/application-frame.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/layout/context-badge.ts",
+      "target": "src/app/shared/ui/layout/context-badge/context-badge.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/layout/identity-avatar.ts",
+      "target": "src/app/shared/ui/layout/identity-avatar/identity-avatar.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/layout/launcher-grid.ts",
+      "target": "src/app/shared/ui/layout/launcher-grid/launcher-grid.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/layout/launcher-tile.ts",
+      "target": "src/app/shared/ui/layout/launcher-tile/launcher-tile.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/layout/navigation-list.ts",
+      "target": "src/app/shared/ui/layout/navigation-list/navigation-list.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/layout/page-header.ts",
+      "target": "src/app/shared/ui/layout/page-header/page-header.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/layout/report-workspace.ts",
+      "target": "src/app/shared/ui/layout/report-workspace/report-workspace.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/layout/scroll-viewport.ts",
+      "target": "src/app/shared/ui/layout/scroll-viewport/scroll-viewport.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/layout/surface-card.ts",
+      "target": "src/app/shared/ui/layout/surface-card/surface-card.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/overlays/context-menu-panel.ts",
+      "target": "src/app/shared/ui/overlays/context-menu-panel/context-menu-panel.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/overlays/popover-panel.ts",
+      "target": "src/app/shared/ui/overlays/popover-panel/popover-panel.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/shell/auth-layout/auth-branding.ts",
+      "target": "src/app/shell/auth-layout/auth-branding/auth-branding.ts",
+      "count": 1
+    },
+    {
+      "source": "src/app/shell/auth-layout/auth-layout.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/shell/layout/main-shell.ts",
+      "target": "src/app/shell/layout/main-shell/main-shell.ts",
+      "count": 1
+    }
+  ],
+  "moves": [
+    {
+      "from": "web-angular/src/app/composition/authenticated-routes.html",
+      "to": "web-angular/src/app/composition/authenticated-routes/authenticated-routes.html"
+    },
+    {
+      "from": "web-angular/src/app/composition/authenticated-routes.ts",
+      "to": "web-angular/src/app/composition/authenticated-routes/authenticated-routes.ts"
+    },
+    {
+      "from": "web-angular/src/app/dev/boolean-preview.html",
+      "to": "web-angular/src/app/dev/boolean-preview/boolean-preview.html"
+    },
+    {
+      "from": "web-angular/src/app/dev/boolean-preview.scss",
+      "to": "web-angular/src/app/dev/boolean-preview/boolean-preview.scss"
+    },
+    {
+      "from": "web-angular/src/app/dev/boolean-preview.ts",
+      "to": "web-angular/src/app/dev/boolean-preview/boolean-preview.ts"
+    },
+    {
+      "from": "web-angular/src/app/dev/collection-preview.html",
+      "to": "web-angular/src/app/dev/collection-preview/collection-preview.html"
+    },
+    {
+      "from": "web-angular/src/app/dev/collection-preview.scss",
+      "to": "web-angular/src/app/dev/collection-preview/collection-preview.scss"
+    },
+    {
+      "from": "web-angular/src/app/dev/collection-preview.ts",
+      "to": "web-angular/src/app/dev/collection-preview/collection-preview.ts"
+    },
+    {
+      "from": "web-angular/src/app/dev/criteria-preview.criteria-preview-editor.html",
+      "to": "web-angular/src/app/dev/criteria-preview/criteria-preview.criteria-preview-editor.html"
+    },
+    {
+      "from": "web-angular/src/app/dev/criteria-preview.criteria-preview.html",
+      "to": "web-angular/src/app/dev/criteria-preview/criteria-preview.criteria-preview.html"
+    },
+    {
+      "from": "web-angular/src/app/dev/criteria-preview.criteria-preview.scss",
+      "to": "web-angular/src/app/dev/criteria-preview/criteria-preview.criteria-preview.scss"
+    },
+    {
+      "from": "web-angular/src/app/dev/criteria-preview.ts",
+      "to": "web-angular/src/app/dev/criteria-preview/criteria-preview.ts"
+    },
+    {
+      "from": "web-angular/src/app/dev/date-preview.html",
+      "to": "web-angular/src/app/dev/date-preview/date-preview.html"
+    },
+    {
+      "from": "web-angular/src/app/dev/date-preview.scss",
+      "to": "web-angular/src/app/dev/date-preview/date-preview.scss"
+    },
+    {
+      "from": "web-angular/src/app/dev/date-preview.ts",
+      "to": "web-angular/src/app/dev/date-preview/date-preview.ts"
+    },
+    {
+      "from": "web-angular/src/app/dev/form-close-preview.html",
+      "to": "web-angular/src/app/dev/form-close-preview/form-close-preview.html"
+    },
+    {
+      "from": "web-angular/src/app/dev/form-close-preview.scss",
+      "to": "web-angular/src/app/dev/form-close-preview/form-close-preview.scss"
+    },
+    {
+      "from": "web-angular/src/app/dev/form-close-preview.ts",
+      "to": "web-angular/src/app/dev/form-close-preview/form-close-preview.ts"
+    },
+    {
+      "from": "web-angular/src/app/dev/form-preview.html",
+      "to": "web-angular/src/app/dev/form-preview/form-preview.html"
+    },
+    {
+      "from": "web-angular/src/app/dev/form-preview.scss",
+      "to": "web-angular/src/app/dev/form-preview/form-preview.scss"
+    },
+    {
+      "from": "web-angular/src/app/dev/form-preview.ts",
+      "to": "web-angular/src/app/dev/form-preview/form-preview.ts"
+    },
+    {
+      "from": "web-angular/src/app/dev/grid-capabilities-preview.html",
+      "to": "web-angular/src/app/dev/grid-capabilities-preview/grid-capabilities-preview.html"
+    },
+    {
+      "from": "web-angular/src/app/dev/grid-capabilities-preview.scss",
+      "to": "web-angular/src/app/dev/grid-capabilities-preview/grid-capabilities-preview.scss"
+    },
+    {
+      "from": "web-angular/src/app/dev/grid-capabilities-preview.ts",
+      "to": "web-angular/src/app/dev/grid-capabilities-preview/grid-capabilities-preview.ts"
+    },
+    {
+      "from": "web-angular/src/app/dev/multiline-preview.html",
+      "to": "web-angular/src/app/dev/multiline-preview/multiline-preview.html"
+    },
+    {
+      "from": "web-angular/src/app/dev/multiline-preview.scss",
+      "to": "web-angular/src/app/dev/multiline-preview/multiline-preview.scss"
+    },
+    {
+      "from": "web-angular/src/app/dev/multiline-preview.ts",
+      "to": "web-angular/src/app/dev/multiline-preview/multiline-preview.ts"
+    },
+    {
+      "from": "web-angular/src/app/dev/numeric-preview.html",
+      "to": "web-angular/src/app/dev/numeric-preview/numeric-preview.html"
+    },
+    {
+      "from": "web-angular/src/app/dev/numeric-preview.scss",
+      "to": "web-angular/src/app/dev/numeric-preview/numeric-preview.scss"
+    },
+    {
+      "from": "web-angular/src/app/dev/numeric-preview.ts",
+      "to": "web-angular/src/app/dev/numeric-preview/numeric-preview.ts"
+    },
+    {
+      "from": "web-angular/src/app/dev/read-preview.read-preview-away.html",
+      "to": "web-angular/src/app/dev/read-preview/read-preview.read-preview-away.html"
+    },
+    {
+      "from": "web-angular/src/app/dev/read-preview.read-preview-away.scss",
+      "to": "web-angular/src/app/dev/read-preview/read-preview.read-preview-away.scss"
+    },
+    {
+      "from": "web-angular/src/app/dev/read-preview.read-preview.html",
+      "to": "web-angular/src/app/dev/read-preview/read-preview.read-preview.html"
+    },
+    {
+      "from": "web-angular/src/app/dev/read-preview.read-preview.scss",
+      "to": "web-angular/src/app/dev/read-preview/read-preview.read-preview.scss"
+    },
+    {
+      "from": "web-angular/src/app/dev/read-preview.ts",
+      "to": "web-angular/src/app/dev/read-preview/read-preview.ts"
+    },
+    {
+      "from": "web-angular/src/app/dev/reference-preview.html",
+      "to": "web-angular/src/app/dev/reference-preview/reference-preview.html"
+    },
+    {
+      "from": "web-angular/src/app/dev/reference-preview.scss",
+      "to": "web-angular/src/app/dev/reference-preview/reference-preview.scss"
+    },
+    {
+      "from": "web-angular/src/app/dev/reference-preview.ts",
+      "to": "web-angular/src/app/dev/reference-preview/reference-preview.ts"
+    },
+    {
+      "from": "web-angular/src/app/dev/theme-preview.html",
+      "to": "web-angular/src/app/dev/theme-preview/theme-preview.html"
+    },
+    {
+      "from": "web-angular/src/app/dev/theme-preview.scss",
+      "to": "web-angular/src/app/dev/theme-preview/theme-preview.scss"
+    },
+    {
+      "from": "web-angular/src/app/dev/theme-preview.ts",
+      "to": "web-angular/src/app/dev/theme-preview/theme-preview.ts"
+    },
+    {
+      "from": "web-angular/src/app/dev/unsaved-context-preview.html",
+      "to": "web-angular/src/app/dev/unsaved-context-preview/unsaved-context-preview.html"
+    },
+    {
+      "from": "web-angular/src/app/dev/unsaved-context-preview.scss",
+      "to": "web-angular/src/app/dev/unsaved-context-preview/unsaved-context-preview.scss"
+    },
+    {
+      "from": "web-angular/src/app/dev/unsaved-context-preview.ts",
+      "to": "web-angular/src/app/dev/unsaved-context-preview/unsaved-context-preview.ts"
+    },
+    {
+      "from": "web-angular/src/app/dev/unsaved-preview.ts",
+      "to": "web-angular/src/app/dev/unsaved-preview/unsaved-preview.ts"
+    },
+    {
+      "from": "web-angular/src/app/dev/unsaved-preview.unsaved-destination.html",
+      "to": "web-angular/src/app/dev/unsaved-preview/unsaved-preview.unsaved-destination.html"
+    },
+    {
+      "from": "web-angular/src/app/dev/unsaved-preview.unsaved-preview-frame.html",
+      "to": "web-angular/src/app/dev/unsaved-preview/unsaved-preview.unsaved-preview-frame.html"
+    },
+    {
+      "from": "web-angular/src/app/dev/unsaved-preview.unsaved-preview.html",
+      "to": "web-angular/src/app/dev/unsaved-preview/unsaved-preview.unsaved-preview.html"
+    },
+    {
+      "from": "web-angular/src/app/dev/unsaved-preview.unsaved-preview.scss",
+      "to": "web-angular/src/app/dev/unsaved-preview/unsaved-preview.unsaved-preview.scss"
+    },
+    {
+      "from": "web-angular/src/app/modules/accounting/fiscal-year-context/components/fiscal-context-control.html",
+      "to": "web-angular/src/app/modules/accounting/fiscal-year-context/components/fiscal-context-control/fiscal-context-control.html"
+    },
+    {
+      "from": "web-angular/src/app/modules/accounting/fiscal-year-context/components/fiscal-context-control.scss",
+      "to": "web-angular/src/app/modules/accounting/fiscal-year-context/components/fiscal-context-control/fiscal-context-control.scss"
+    },
+    {
+      "from": "web-angular/src/app/modules/accounting/fiscal-year-context/components/fiscal-context-control.ts",
+      "to": "web-angular/src/app/modules/accounting/fiscal-year-context/components/fiscal-context-control/fiscal-context-control.ts"
+    },
+    {
+      "from": "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-editor.html",
+      "to": "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-editor/country-editor.html"
+    },
+    {
+      "from": "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-editor.ts",
+      "to": "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-editor/country-editor.ts"
+    },
+    {
+      "from": "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-import-view.html",
+      "to": "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-import-view/country-import-view.html"
+    },
+    {
+      "from": "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-import-view.ts",
+      "to": "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-import-view/country-import-view.ts"
+    },
+    {
+      "from": "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-read-details.html",
+      "to": "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-read-details/country-read-details.html"
+    },
+    {
+      "from": "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-read-details.scss",
+      "to": "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-read-details/country-read-details.scss"
+    },
+    {
+      "from": "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-read-details.ts",
+      "to": "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-read-details/country-read-details.ts"
+    },
+    {
+      "from": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page.html",
+      "to": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page/countries-read-page.html"
+    },
+    {
+      "from": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page.scss",
+      "to": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page/countries-read-page.scss"
+    },
+    {
+      "from": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page.spec.ts",
+      "to": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page/countries-read-page.spec.ts"
+    },
+    {
+      "from": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page.ts",
+      "to": "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page/countries-read-page.ts"
+    },
+    {
+      "from": "web-angular/src/app/modules/reporting/global-reports/components/global-report-view.html",
+      "to": "web-angular/src/app/modules/reporting/global-reports/components/global-report-view/global-report-view.html"
+    },
+    {
+      "from": "web-angular/src/app/modules/reporting/global-reports/components/global-report-view.scss",
+      "to": "web-angular/src/app/modules/reporting/global-reports/components/global-report-view/global-report-view.scss"
+    },
+    {
+      "from": "web-angular/src/app/modules/reporting/global-reports/components/global-report-view.spec.ts",
+      "to": "web-angular/src/app/modules/reporting/global-reports/components/global-report-view/global-report-view.spec.ts"
+    },
+    {
+      "from": "web-angular/src/app/modules/reporting/global-reports/components/global-report-view.ts",
+      "to": "web-angular/src/app/modules/reporting/global-reports/components/global-report-view/global-report-view.ts"
+    },
+    {
+      "from": "web-angular/src/app/platform/auth/pages/login-page.html",
+      "to": "web-angular/src/app/platform/auth/pages/login-page/login-page.html"
+    },
+    {
+      "from": "web-angular/src/app/platform/auth/pages/login-page.scss",
+      "to": "web-angular/src/app/platform/auth/pages/login-page/login-page.scss"
+    },
+    {
+      "from": "web-angular/src/app/platform/auth/pages/login-page.ts",
+      "to": "web-angular/src/app/platform/auth/pages/login-page/login-page.ts"
+    },
+    {
+      "from": "web-angular/src/app/platform/auth/pages/password-request-page.html",
+      "to": "web-angular/src/app/platform/auth/pages/password-request-page/password-request-page.html"
+    },
+    {
+      "from": "web-angular/src/app/platform/auth/pages/password-request-page.scss",
+      "to": "web-angular/src/app/platform/auth/pages/password-request-page/password-request-page.scss"
+    },
+    {
+      "from": "web-angular/src/app/platform/auth/pages/password-request-page.ts",
+      "to": "web-angular/src/app/platform/auth/pages/password-request-page/password-request-page.ts"
+    },
+    {
+      "from": "web-angular/src/app/platform/auth/pages/session-page.html",
+      "to": "web-angular/src/app/platform/auth/pages/session-page/session-page.html"
+    },
+    {
+      "from": "web-angular/src/app/platform/auth/pages/session-page.scss",
+      "to": "web-angular/src/app/platform/auth/pages/session-page/session-page.scss"
+    },
+    {
+      "from": "web-angular/src/app/platform/auth/pages/session-page.spec.ts",
+      "to": "web-angular/src/app/platform/auth/pages/session-page/session-page.spec.ts"
+    },
+    {
+      "from": "web-angular/src/app/platform/auth/pages/session-page.ts",
+      "to": "web-angular/src/app/platform/auth/pages/session-page/session-page.ts"
+    },
+    {
+      "from": "web-angular/src/app/platform/modules/components/module-context-control.html",
+      "to": "web-angular/src/app/platform/modules/components/module-context-control/module-context-control.html"
+    },
+    {
+      "from": "web-angular/src/app/platform/modules/components/module-context-control.scss",
+      "to": "web-angular/src/app/platform/modules/components/module-context-control/module-context-control.scss"
+    },
+    {
+      "from": "web-angular/src/app/platform/modules/components/module-context-control.ts",
+      "to": "web-angular/src/app/platform/modules/components/module-context-control/module-context-control.ts"
+    },
+    {
+      "from": "web-angular/src/app/platform/modules/pages/module-browser.html",
+      "to": "web-angular/src/app/platform/modules/pages/module-browser/module-browser.html"
+    },
+    {
+      "from": "web-angular/src/app/platform/modules/pages/module-browser.scss",
+      "to": "web-angular/src/app/platform/modules/pages/module-browser/module-browser.scss"
+    },
+    {
+      "from": "web-angular/src/app/platform/modules/pages/module-browser.ts",
+      "to": "web-angular/src/app/platform/modules/pages/module-browser/module-browser.ts"
+    },
+    {
+      "from": "web-angular/src/app/platform/modules/pages/module-workspace.html",
+      "to": "web-angular/src/app/platform/modules/pages/module-workspace/module-workspace.html"
+    },
+    {
+      "from": "web-angular/src/app/platform/modules/pages/module-workspace.ts",
+      "to": "web-angular/src/app/platform/modules/pages/module-workspace/module-workspace.ts"
+    },
+    {
+      "from": "web-angular/src/app/platform/tenants/pages/dashboard-page.html",
+      "to": "web-angular/src/app/platform/tenants/pages/dashboard-page/dashboard-page.html"
+    },
+    {
+      "from": "web-angular/src/app/platform/tenants/pages/dashboard-page.scss",
+      "to": "web-angular/src/app/platform/tenants/pages/dashboard-page/dashboard-page.scss"
+    },
+    {
+      "from": "web-angular/src/app/platform/tenants/pages/dashboard-page.spec.ts",
+      "to": "web-angular/src/app/platform/tenants/pages/dashboard-page/dashboard-page.spec.ts"
+    },
+    {
+      "from": "web-angular/src/app/platform/tenants/pages/dashboard-page.ts",
+      "to": "web-angular/src/app/platform/tenants/pages/dashboard-page/dashboard-page.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/buttons/action-button.html",
+      "to": "web-angular/src/app/shared/ui/buttons/action-button/action-button.html"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/buttons/action-button.scss",
+      "to": "web-angular/src/app/shared/ui/buttons/action-button/action-button.scss"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/buttons/action-button.spec.submit-composition.html",
+      "to": "web-angular/src/app/shared/ui/buttons/action-button/action-button.spec.submit-composition.html"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/buttons/action-button.spec.toolbar-composition.html",
+      "to": "web-angular/src/app/shared/ui/buttons/action-button/action-button.spec.toolbar-composition.html"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/buttons/action-button.spec.ts",
+      "to": "web-angular/src/app/shared/ui/buttons/action-button/action-button.spec.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/buttons/action-button.ts",
+      "to": "web-angular/src/app/shared/ui/buttons/action-button/action-button.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/cards/metric-card.html",
+      "to": "web-angular/src/app/shared/ui/cards/metric-card/metric-card.html"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/cards/metric-card.scss",
+      "to": "web-angular/src/app/shared/ui/cards/metric-card/metric-card.scss"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/cards/metric-card.ts",
+      "to": "web-angular/src/app/shared/ui/cards/metric-card/metric-card.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/charts/chart-panel.html",
+      "to": "web-angular/src/app/shared/ui/charts/chart-panel/chart-panel.html"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/charts/chart-panel.scss",
+      "to": "web-angular/src/app/shared/ui/charts/chart-panel/chart-panel.scss"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/charts/chart-panel.ts",
+      "to": "web-angular/src/app/shared/ui/charts/chart-panel/chart-panel.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/charts/chart-renderer.html",
+      "to": "web-angular/src/app/shared/ui/charts/chart-renderer/chart-renderer.html"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/charts/chart-renderer.scss",
+      "to": "web-angular/src/app/shared/ui/charts/chart-renderer/chart-renderer.scss"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/charts/chart-renderer.ts",
+      "to": "web-angular/src/app/shared/ui/charts/chart-renderer/chart-renderer.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/charts/collection-chart-view.html",
+      "to": "web-angular/src/app/shared/ui/charts/collection-chart-view/collection-chart-view.html"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/charts/collection-chart-view.scss",
+      "to": "web-angular/src/app/shared/ui/charts/collection-chart-view/collection-chart-view.scss"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/charts/collection-chart-view.spec.ts",
+      "to": "web-angular/src/app/shared/ui/charts/collection-chart-view/collection-chart-view.spec.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/charts/collection-chart-view.ts",
+      "to": "web-angular/src/app/shared/ui/charts/collection-chart-view/collection-chart-view.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/collections/card-list.component.scss",
+      "to": "web-angular/src/app/shared/ui/collections/card-list/card-list.component.scss"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/collections/card-list.html",
+      "to": "web-angular/src/app/shared/ui/collections/card-list/card-list.html"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/collections/card-list.scss",
+      "to": "web-angular/src/app/shared/ui/collections/card-list/card-list.scss"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/collections/card-list.ts",
+      "to": "web-angular/src/app/shared/ui/collections/card-list/card-list.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/collections/collection-feedback.html",
+      "to": "web-angular/src/app/shared/ui/collections/collection-feedback/collection-feedback.html"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/collections/collection-feedback.ts",
+      "to": "web-angular/src/app/shared/ui/collections/collection-feedback/collection-feedback.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/collections/collection-footer.html",
+      "to": "web-angular/src/app/shared/ui/collections/collection-footer/collection-footer.html"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/collections/collection-footer.scss",
+      "to": "web-angular/src/app/shared/ui/collections/collection-footer/collection-footer.scss"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/collections/collection-footer.ts",
+      "to": "web-angular/src/app/shared/ui/collections/collection-footer/collection-footer.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/collections/collection-frame.component.scss",
+      "to": "web-angular/src/app/shared/ui/collections/collection-frame/collection-frame.component.scss"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/collections/collection-frame.html",
+      "to": "web-angular/src/app/shared/ui/collections/collection-frame/collection-frame.html"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/collections/collection-frame.scss",
+      "to": "web-angular/src/app/shared/ui/collections/collection-frame/collection-frame.scss"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/collections/collection-frame.ts",
+      "to": "web-angular/src/app/shared/ui/collections/collection-frame/collection-frame.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/collections/grid-filter-input.html",
+      "to": "web-angular/src/app/shared/ui/collections/grid-filter-input/grid-filter-input.html"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/collections/grid-filter-input.scss",
+      "to": "web-angular/src/app/shared/ui/collections/grid-filter-input/grid-filter-input.scss"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/collections/grid-filter-input.ts",
+      "to": "web-angular/src/app/shared/ui/collections/grid-filter-input/grid-filter-input.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/collections/my-data-grid.html",
+      "to": "web-angular/src/app/shared/ui/collections/my-data-grid/my-data-grid.html"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/collections/my-data-grid.scss",
+      "to": "web-angular/src/app/shared/ui/collections/my-data-grid/my-data-grid.scss"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/collections/my-data-grid.ts",
+      "to": "web-angular/src/app/shared/ui/collections/my-data-grid/my-data-grid.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/collections/row-actions.html",
+      "to": "web-angular/src/app/shared/ui/collections/row-actions/row-actions.html"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/collections/row-actions.scss",
+      "to": "web-angular/src/app/shared/ui/collections/row-actions/row-actions.scss"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/collections/row-actions.ts",
+      "to": "web-angular/src/app/shared/ui/collections/row-actions/row-actions.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/controls/option-select.html",
+      "to": "web-angular/src/app/shared/ui/controls/option-select/option-select.html"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/controls/option-select.scss",
+      "to": "web-angular/src/app/shared/ui/controls/option-select/option-select.scss"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/controls/option-select.spec.ts",
+      "to": "web-angular/src/app/shared/ui/controls/option-select/option-select.spec.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/controls/option-select.ts",
+      "to": "web-angular/src/app/shared/ui/controls/option-select/option-select.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/controls/palette-picker.html",
+      "to": "web-angular/src/app/shared/ui/controls/palette-picker/palette-picker.html"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/controls/palette-picker.scss",
+      "to": "web-angular/src/app/shared/ui/controls/palette-picker/palette-picker.scss"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/controls/palette-picker.spec.ts",
+      "to": "web-angular/src/app/shared/ui/controls/palette-picker/palette-picker.spec.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/controls/palette-picker.ts",
+      "to": "web-angular/src/app/shared/ui/controls/palette-picker/palette-picker.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/controls/progress-meter.html",
+      "to": "web-angular/src/app/shared/ui/controls/progress-meter/progress-meter.html"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/controls/progress-meter.scss",
+      "to": "web-angular/src/app/shared/ui/controls/progress-meter/progress-meter.scss"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/controls/progress-meter.spec.ts",
+      "to": "web-angular/src/app/shared/ui/controls/progress-meter/progress-meter.spec.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/controls/progress-meter.ts",
+      "to": "web-angular/src/app/shared/ui/controls/progress-meter/progress-meter.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/controls/sort-direction-button.html",
+      "to": "web-angular/src/app/shared/ui/controls/sort-direction-button/sort-direction-button.html"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/controls/sort-direction-button.scss",
+      "to": "web-angular/src/app/shared/ui/controls/sort-direction-button/sort-direction-button.scss"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/controls/sort-direction-button.spec.ts",
+      "to": "web-angular/src/app/shared/ui/controls/sort-direction-button/sort-direction-button.spec.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/controls/sort-direction-button.ts",
+      "to": "web-angular/src/app/shared/ui/controls/sort-direction-button/sort-direction-button.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/dialogs/choice-dialog.html",
+      "to": "web-angular/src/app/shared/ui/dialogs/choice-dialog/choice-dialog.html"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/dialogs/choice-dialog.scss",
+      "to": "web-angular/src/app/shared/ui/dialogs/choice-dialog/choice-dialog.scss"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/dialogs/choice-dialog.ts",
+      "to": "web-angular/src/app/shared/ui/dialogs/choice-dialog/choice-dialog.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/dialogs/confirmation-dialog.html",
+      "to": "web-angular/src/app/shared/ui/dialogs/confirmation-dialog/confirmation-dialog.html"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/dialogs/confirmation-dialog.ts",
+      "to": "web-angular/src/app/shared/ui/dialogs/confirmation-dialog/confirmation-dialog.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/dialogs/dialog-panel.html",
+      "to": "web-angular/src/app/shared/ui/dialogs/dialog-panel/dialog-panel.html"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/dialogs/dialog-panel.scss",
+      "to": "web-angular/src/app/shared/ui/dialogs/dialog-panel/dialog-panel.scss"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/dialogs/dialog-panel.spec.ts",
+      "to": "web-angular/src/app/shared/ui/dialogs/dialog-panel/dialog-panel.spec.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/dialogs/dialog-panel.ts",
+      "to": "web-angular/src/app/shared/ui/dialogs/dialog-panel/dialog-panel.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/dialogs/error-modal-host.html",
+      "to": "web-angular/src/app/shared/ui/dialogs/error-modal-host/error-modal-host.html"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/dialogs/error-modal-host.scss",
+      "to": "web-angular/src/app/shared/ui/dialogs/error-modal-host/error-modal-host.scss"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/dialogs/error-modal-host.ts",
+      "to": "web-angular/src/app/shared/ui/dialogs/error-modal-host/error-modal-host.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/dialogs/unsaved-confirmation-host.html",
+      "to": "web-angular/src/app/shared/ui/dialogs/unsaved-confirmation-host/unsaved-confirmation-host.html"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/dialogs/unsaved-confirmation-host.ts",
+      "to": "web-angular/src/app/shared/ui/dialogs/unsaved-confirmation-host/unsaved-confirmation-host.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/documents/pdf-viewer.html",
+      "to": "web-angular/src/app/shared/ui/documents/pdf-viewer/pdf-viewer.html"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/documents/pdf-viewer.scss",
+      "to": "web-angular/src/app/shared/ui/documents/pdf-viewer/pdf-viewer.scss"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/documents/pdf-viewer.spec.ts",
+      "to": "web-angular/src/app/shared/ui/documents/pdf-viewer/pdf-viewer.spec.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/documents/pdf-viewer.ts",
+      "to": "web-angular/src/app/shared/ui/documents/pdf-viewer/pdf-viewer.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/feedback/feedback-state.html",
+      "to": "web-angular/src/app/shared/ui/feedback/feedback-state/feedback-state.html"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/feedback/feedback-state.scss",
+      "to": "web-angular/src/app/shared/ui/feedback/feedback-state/feedback-state.scss"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/feedback/feedback-state.ts",
+      "to": "web-angular/src/app/shared/ui/feedback/feedback-state/feedback-state.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/feedback/notification-toast.html",
+      "to": "web-angular/src/app/shared/ui/feedback/notification-toast/notification-toast.html"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/feedback/notification-toast.ts",
+      "to": "web-angular/src/app/shared/ui/feedback/notification-toast/notification-toast.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/feedback/status-badge.html",
+      "to": "web-angular/src/app/shared/ui/feedback/status-badge/status-badge.html"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/feedback/status-badge.ts",
+      "to": "web-angular/src/app/shared/ui/feedback/status-badge/status-badge.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/forms/fields/boolean-field.html",
+      "to": "web-angular/src/app/shared/ui/forms/fields/boolean-field/boolean-field.html"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/forms/fields/boolean-field.scss",
+      "to": "web-angular/src/app/shared/ui/forms/fields/boolean-field/boolean-field.scss"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/forms/fields/boolean-field.spec.html",
+      "to": "web-angular/src/app/shared/ui/forms/fields/boolean-field/boolean-field.spec.html"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/forms/fields/boolean-field.spec.ts",
+      "to": "web-angular/src/app/shared/ui/forms/fields/boolean-field/boolean-field.spec.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/forms/fields/boolean-field.ts",
+      "to": "web-angular/src/app/shared/ui/forms/fields/boolean-field/boolean-field.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/forms/fields/character-count-badge.html",
+      "to": "web-angular/src/app/shared/ui/forms/fields/character-count-badge/character-count-badge.html"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/forms/fields/character-count-badge.scss",
+      "to": "web-angular/src/app/shared/ui/forms/fields/character-count-badge/character-count-badge.scss"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/forms/fields/character-count-badge.ts",
+      "to": "web-angular/src/app/shared/ui/forms/fields/character-count-badge/character-count-badge.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/forms/fields/date-field.html",
+      "to": "web-angular/src/app/shared/ui/forms/fields/date-field/date-field.html"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/forms/fields/date-field.spec.html",
+      "to": "web-angular/src/app/shared/ui/forms/fields/date-field/date-field.spec.html"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/forms/fields/date-field.spec.ts",
+      "to": "web-angular/src/app/shared/ui/forms/fields/date-field/date-field.spec.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/forms/fields/date-field.ts",
+      "to": "web-angular/src/app/shared/ui/forms/fields/date-field/date-field.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/forms/fields/numeric-field.spec.html",
+      "to": "web-angular/src/app/shared/ui/forms/fields/numeric-field/numeric-field.spec.html"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/forms/fields/numeric-field.spec.ts",
+      "to": "web-angular/src/app/shared/ui/forms/fields/numeric-field/numeric-field.spec.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/forms/fields/numeric-field.ts",
+      "to": "web-angular/src/app/shared/ui/forms/fields/numeric-field/numeric-field.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/forms/fields/reference-field.html",
+      "to": "web-angular/src/app/shared/ui/forms/fields/reference-field/reference-field.html"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/forms/fields/reference-field.scss",
+      "to": "web-angular/src/app/shared/ui/forms/fields/reference-field/reference-field.scss"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/forms/fields/reference-field.spec.html",
+      "to": "web-angular/src/app/shared/ui/forms/fields/reference-field/reference-field.spec.html"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/forms/fields/reference-field.spec.ts",
+      "to": "web-angular/src/app/shared/ui/forms/fields/reference-field/reference-field.spec.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/forms/fields/reference-field.ts",
+      "to": "web-angular/src/app/shared/ui/forms/fields/reference-field/reference-field.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/forms/fields/text-field.html",
+      "to": "web-angular/src/app/shared/ui/forms/fields/text-field/text-field.html"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/forms/fields/text-field.scss",
+      "to": "web-angular/src/app/shared/ui/forms/fields/text-field/text-field.scss"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/forms/fields/text-field.spec.html",
+      "to": "web-angular/src/app/shared/ui/forms/fields/text-field/text-field.spec.html"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/forms/fields/text-field.spec.ts",
+      "to": "web-angular/src/app/shared/ui/forms/fields/text-field/text-field.spec.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/forms/fields/text-field.ts",
+      "to": "web-angular/src/app/shared/ui/forms/fields/text-field/text-field.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/forms/form-close-guard.html",
+      "to": "web-angular/src/app/shared/ui/forms/form-close-guard/form-close-guard.html"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/forms/form-close-guard.spec.ts",
+      "to": "web-angular/src/app/shared/ui/forms/form-close-guard/form-close-guard.spec.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/forms/form-close-guard.ts",
+      "to": "web-angular/src/app/shared/ui/forms/form-close-guard/form-close-guard.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/forms/form-container.html",
+      "to": "web-angular/src/app/shared/ui/forms/form-container/form-container.html"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/forms/form-container.scss",
+      "to": "web-angular/src/app/shared/ui/forms/form-container/form-container.scss"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/forms/form-container.spec.access-composition.html",
+      "to": "web-angular/src/app/shared/ui/forms/form-container/form-container.spec.access-composition.html"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/forms/form-container.spec.profile-composition.html",
+      "to": "web-angular/src/app/shared/ui/forms/form-container/form-container.spec.profile-composition.html"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/forms/form-container.spec.ts",
+      "to": "web-angular/src/app/shared/ui/forms/form-container/form-container.spec.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/forms/form-container.ts",
+      "to": "web-angular/src/app/shared/ui/forms/form-container/form-container.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/forms/validation-summary.html",
+      "to": "web-angular/src/app/shared/ui/forms/validation-summary/validation-summary.html"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/forms/validation-summary.scss",
+      "to": "web-angular/src/app/shared/ui/forms/validation-summary/validation-summary.scss"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/forms/validation-summary.spec.ts",
+      "to": "web-angular/src/app/shared/ui/forms/validation-summary/validation-summary.spec.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/forms/validation-summary.ts",
+      "to": "web-angular/src/app/shared/ui/forms/validation-summary/validation-summary.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/icons/app-icon.html",
+      "to": "web-angular/src/app/shared/ui/icons/app-icon/app-icon.html"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/icons/app-icon.scss",
+      "to": "web-angular/src/app/shared/ui/icons/app-icon/app-icon.scss"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/icons/app-icon.ts",
+      "to": "web-angular/src/app/shared/ui/icons/app-icon/app-icon.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/imports/spreadsheet-import-panel.html",
+      "to": "web-angular/src/app/shared/ui/imports/spreadsheet-import-panel/spreadsheet-import-panel.html"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/imports/spreadsheet-import-panel.scss",
+      "to": "web-angular/src/app/shared/ui/imports/spreadsheet-import-panel/spreadsheet-import-panel.scss"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/imports/spreadsheet-import-panel.ts",
+      "to": "web-angular/src/app/shared/ui/imports/spreadsheet-import-panel/spreadsheet-import-panel.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/layout/application-frame.html",
+      "to": "web-angular/src/app/shared/ui/layout/application-frame/application-frame.html"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/layout/application-frame.scss",
+      "to": "web-angular/src/app/shared/ui/layout/application-frame/application-frame.scss"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/layout/application-frame.spec.ts",
+      "to": "web-angular/src/app/shared/ui/layout/application-frame/application-frame.spec.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/layout/application-frame.ts",
+      "to": "web-angular/src/app/shared/ui/layout/application-frame/application-frame.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/layout/context-badge.html",
+      "to": "web-angular/src/app/shared/ui/layout/context-badge/context-badge.html"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/layout/context-badge.scss",
+      "to": "web-angular/src/app/shared/ui/layout/context-badge/context-badge.scss"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/layout/context-badge.ts",
+      "to": "web-angular/src/app/shared/ui/layout/context-badge/context-badge.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/layout/identity-avatar.html",
+      "to": "web-angular/src/app/shared/ui/layout/identity-avatar/identity-avatar.html"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/layout/identity-avatar.scss",
+      "to": "web-angular/src/app/shared/ui/layout/identity-avatar/identity-avatar.scss"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/layout/identity-avatar.ts",
+      "to": "web-angular/src/app/shared/ui/layout/identity-avatar/identity-avatar.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/layout/launcher-grid.html",
+      "to": "web-angular/src/app/shared/ui/layout/launcher-grid/launcher-grid.html"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/layout/launcher-grid.scss",
+      "to": "web-angular/src/app/shared/ui/layout/launcher-grid/launcher-grid.scss"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/layout/launcher-grid.ts",
+      "to": "web-angular/src/app/shared/ui/layout/launcher-grid/launcher-grid.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/layout/launcher-tile.html",
+      "to": "web-angular/src/app/shared/ui/layout/launcher-tile/launcher-tile.html"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/layout/launcher-tile.scss",
+      "to": "web-angular/src/app/shared/ui/layout/launcher-tile/launcher-tile.scss"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/layout/launcher-tile.ts",
+      "to": "web-angular/src/app/shared/ui/layout/launcher-tile/launcher-tile.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/layout/navigation-list.html",
+      "to": "web-angular/src/app/shared/ui/layout/navigation-list/navigation-list.html"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/layout/navigation-list.scss",
+      "to": "web-angular/src/app/shared/ui/layout/navigation-list/navigation-list.scss"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/layout/navigation-list.spec.ts",
+      "to": "web-angular/src/app/shared/ui/layout/navigation-list/navigation-list.spec.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/layout/navigation-list.ts",
+      "to": "web-angular/src/app/shared/ui/layout/navigation-list/navigation-list.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/layout/page-header.html",
+      "to": "web-angular/src/app/shared/ui/layout/page-header/page-header.html"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/layout/page-header.scss",
+      "to": "web-angular/src/app/shared/ui/layout/page-header/page-header.scss"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/layout/page-header.spec.ts",
+      "to": "web-angular/src/app/shared/ui/layout/page-header/page-header.spec.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/layout/page-header.ts",
+      "to": "web-angular/src/app/shared/ui/layout/page-header/page-header.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/layout/report-workspace.html",
+      "to": "web-angular/src/app/shared/ui/layout/report-workspace/report-workspace.html"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/layout/report-workspace.scss",
+      "to": "web-angular/src/app/shared/ui/layout/report-workspace/report-workspace.scss"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/layout/report-workspace.ts",
+      "to": "web-angular/src/app/shared/ui/layout/report-workspace/report-workspace.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/layout/scroll-viewport.html",
+      "to": "web-angular/src/app/shared/ui/layout/scroll-viewport/scroll-viewport.html"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/layout/scroll-viewport.scss",
+      "to": "web-angular/src/app/shared/ui/layout/scroll-viewport/scroll-viewport.scss"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/layout/scroll-viewport.ts",
+      "to": "web-angular/src/app/shared/ui/layout/scroll-viewport/scroll-viewport.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/layout/surface-card.component.scss",
+      "to": "web-angular/src/app/shared/ui/layout/surface-card/surface-card.component.scss"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/layout/surface-card.html",
+      "to": "web-angular/src/app/shared/ui/layout/surface-card/surface-card.html"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/layout/surface-card.scss",
+      "to": "web-angular/src/app/shared/ui/layout/surface-card/surface-card.scss"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/layout/surface-card.ts",
+      "to": "web-angular/src/app/shared/ui/layout/surface-card/surface-card.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/overlays/context-menu-panel.html",
+      "to": "web-angular/src/app/shared/ui/overlays/context-menu-panel/context-menu-panel.html"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/overlays/context-menu-panel.scss",
+      "to": "web-angular/src/app/shared/ui/overlays/context-menu-panel/context-menu-panel.scss"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/overlays/context-menu-panel.spec.ts",
+      "to": "web-angular/src/app/shared/ui/overlays/context-menu-panel/context-menu-panel.spec.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/overlays/context-menu-panel.ts",
+      "to": "web-angular/src/app/shared/ui/overlays/context-menu-panel/context-menu-panel.ts"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/overlays/popover-panel.html",
+      "to": "web-angular/src/app/shared/ui/overlays/popover-panel/popover-panel.html"
+    },
+    {
+      "from": "web-angular/src/app/shared/ui/overlays/popover-panel.ts",
+      "to": "web-angular/src/app/shared/ui/overlays/popover-panel/popover-panel.ts"
+    },
+    {
+      "from": "web-angular/src/app/shell/auth-layout/auth-branding.html",
+      "to": "web-angular/src/app/shell/auth-layout/auth-branding/auth-branding.html"
+    },
+    {
+      "from": "web-angular/src/app/shell/auth-layout/auth-branding.scss",
+      "to": "web-angular/src/app/shell/auth-layout/auth-branding/auth-branding.scss"
+    },
+    {
+      "from": "web-angular/src/app/shell/auth-layout/auth-branding.ts",
+      "to": "web-angular/src/app/shell/auth-layout/auth-branding/auth-branding.ts"
+    },
+    {
+      "from": "web-angular/src/app/shell/layout/main-shell.html",
+      "to": "web-angular/src/app/shell/layout/main-shell/main-shell.html"
+    },
+    {
+      "from": "web-angular/src/app/shell/layout/main-shell.scss",
+      "to": "web-angular/src/app/shell/layout/main-shell/main-shell.scss"
+    },
+    {
+      "from": "web-angular/src/app/shell/layout/main-shell.ts",
+      "to": "web-angular/src/app/shell/layout/main-shell/main-shell.ts"
+    }
+  ],
+  "referenceFilesUpdatedAfterInterruptedWrite": [
+    "documentation/modules/platform/features/angular-fiscal-year-context/required-files.json",
+    "documentation/modules/platform/features/angular-form-close-foundation/required-files.json",
+    "documentation/modules/platform/features/angular-form-foundation/required-files.json",
+    "documentation/modules/platform/features/angular-grid-capabilities/required-files.json",
+    "documentation/modules/platform/features/angular-managed-reporting-adapter/required-files.json",
+    "documentation/modules/platform/features/angular-module-context-navigation/required-files.json",
+    "documentation/modules/platform/features/angular-module-navigation/required-files.json",
+    "documentation/modules/platform/features/angular-multiline-field-foundation/required-files.json",
+    "documentation/modules/platform/features/angular-numeric-field-foundation/required-files.json",
+    "documentation/modules/platform/features/angular-password-sign-in/required-files.json",
+    "documentation/modules/platform/features/angular-reference-selection-foundation/required-files.json",
+    "documentation/modules/platform/features/angular-role-home/required-files.json",
+    "documentation/modules/platform/features/angular-scoped-read-lifetime-foundation/required-files.json",
+    "documentation/modules/platform/features/angular-theme-foundation/required-files.json",
+    "documentation/modules/platform/features/angular-unsaved-navigation-foundation/required-files.json",
+    "documentation/modules/reference-data/features/countries/required-files.json",
+    "documentation/plans/business/web-angular-migration/decomposition/angular-collection-criteria-foundation.md",
+    "documentation/plans/business/web-angular-migration/decomposition/angular-countries-pilot-acceptance.md",
+    "documentation/plans/business/web-angular-migration/decomposition/angular-form-close-foundation.md",
+    "documentation/plans/business/web-angular-migration/decomposition/angular-multiline-field-foundation.md",
+    "documentation/plans/business/web-angular-migration/decomposition/angular-reference-selection-foundation.md",
+    "documentation/plans/business/web-angular-migration/decomposition/angular-unsaved-navigation-foundation.md"
+  ]
+}

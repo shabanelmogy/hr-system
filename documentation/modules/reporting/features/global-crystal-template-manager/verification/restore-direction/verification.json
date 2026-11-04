@@ -1,0 +1,77 @@
+{
+  "featureId": "global-crystal-template-manager",
+  "sliceId": "GCT-1",
+  "date": "2026-11-03",
+  "timezone": "Africa/Cairo",
+  "authorization": "Requester explicitly asked to restore historical API layout behavior and retain bilingual Summary Info names",
+  "historicalEvidence": {
+    "priorSource": "37b91c6c^",
+    "removalCommit": "37b91c6c",
+    "method": "CrystalReportDirection.AdjustReportDirection"
+  },
+  "behavior": {
+    "arabic": "Design coordinates unchanged",
+    "english": "Mirror supported object positions against printable width in twips",
+    "textAlignment": "Historical centered fields/text in both languages",
+    "lines": "Mirror horizontal; suppress English vertical; preserve diagonal",
+    "rptLanguageParameter": "Optional; request language sufficient for direction",
+    "names": "SummaryInfo.Title Arabic; Subject English; displayName fallback; existing production behavior"
+  },
+  "verification": {
+    "nativeReleaseBuild": "Passed against actual Crystal13.0.4000 SDK, x64",
+    "harnessBuild": "Passed .NET Framework4.8 x64",
+    "regressionRed": "Expected failure: render pipeline missing historical direction stage",
+    "harnessGreen": "Passed: 12 geometry/language cases, pre-export direction call, full metadata/HTTP harness",
+    "initialHarnessEnvironment": "An AnyCPU red harness hit BadImageFormat against x64 runtime; rebuilt with existing x64 configuration before recording expected regression",
+    "angularFullCheck": {
+      "status": "Passed",
+      "testFiles": 91,
+      "unitTests": 512,
+      "initialBundleKB": 495.63,
+      "includes": [
+        "check:format",
+        "lint",
+        "test:config",
+        "check:tokens",
+        "check:fonts",
+        "check:catalog",
+        "check:architecture",
+        "type-check",
+        "test",
+        "build"
+      ]
+    },
+    "summaryInfoTests": "Actual shared selector DOM title/subject after locale changes plus en/ar empty-metadata fallback passed",
+    "erpSolution": "Unchanged; earlier1251-test receipt remains historical and is not a rerun"
+  },
+  "newNativePdfCaptured": false,
+  "nativeSdkObjectSettersExecuted": false,
+  "nativeSourceSaved": false,
+  "newNativeVisualAcceptanceClaimed": false,
+  "startedOrStoppedServers": false,
+  "deployedByAgent": false,
+  "publishTarget": "CrystalReportGeneratorApi only, existing profile",
+  "review": "Inline source/history comparison: original Arabic basis, center/line rules, captured drawing endpoints, call order, optional Language, source preservation, current metadata labels. No independent subagent/native-PDF review claimed.",
+  "phase06": "Not Verified",
+  "openAcceptance": [
+    "FOLLOW-024",
+    "PROD-028"
+  ],
+  "deferredNotResumed": [
+    "DEF-027",
+    "DEF-028"
+  ],
+  "sourceSha256": {
+    "api/CrystalReportGeneratorApi/Runtime/Rendering/CrystalReportDirection.cs": "932f0ee807730c553cf186ecafebf532f81a792f723e6896b9b28749cb7ad041",
+    "api/CrystalReportGeneratorApi/Runtime/Rendering/CrystalReportDirectionGeometry.cs": "8afb7fa82b1ea2a98d27a9cdd1892a495a68cd1ee22c3e5477c6d66e3595f2d4",
+    "api/CrystalReportGeneratorApi/Runtime/Rendering/CrystalReportRenderService.cs": "206427709f12e14d4765e6143731c74e5263a97a1335937ecc8d04575b0ffecb",
+    "api/CrystalReportGeneratorApi/CrystalReportGeneratorApi.csproj": "023cd331db8f925a3ec290d5a38a1bf29443f228524594537ab8edf40e882f24",
+    "api/CrystalReportGeneratorApi.ContractTests/CrystalReportDirectionTests.cs": "e035e271284ed0d76bf07c79fa773ac21cba056c376e403b572ccebb74446528",
+    "api/CrystalReportGeneratorApi.ContractTests/Program.cs": "69e11c14cf887297d84ac44feb7ab64ec1332e5b22e2f4cd8ad83961794f06bf",
+    "api/CrystalReportGeneratorApi.ContractTests/CrystalReportGeneratorApi.ContractTests.csproj": "b710c07833b30020c96ff5ddfacabad5e4d5a4a78b34cdb9c6825b6ea32f8ede",
+    "api/CrystalReportGeneratorApi/Runtime/Inspection/CrystalReportInspectionService.cs": "8d0d080d02bcd02576740ba9425a5a707c5336250e653f84a225217af8b45411",
+    "web-angular/src/app/modules/reporting/global-reports/components/global-report-view/global-report-view.ts": "a41c1731ac833df57c6a40ffcb62ddc27d64639888154ecdcd984fd6cb1f26ed",
+    "web-angular/src/app/modules/reporting/global-reports/components/global-report-view/global-report-view.spec.ts": "bda1be0befb17ec315eabe31b9d25f088ddac32493990cd4b82b63a6c501975b"
+  },
+  "runtimeDllSha256": "d02760274bb4f2b51a00ea2365ed0e13d335c1c3597dcd990a772fb1abab503d"
+}

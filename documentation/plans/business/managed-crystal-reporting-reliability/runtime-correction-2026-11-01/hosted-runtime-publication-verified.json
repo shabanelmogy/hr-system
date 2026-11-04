@@ -1,0 +1,15 @@
+{
+  "DateUtc": "2026-11-01T11:02:09.0576188Z",
+  "CatalogStatus": 200,
+  "PreservedReportCount": 2,
+  "Reports": [
+    "Countries.rpt",
+    "Countries.WithStates.rpt"
+  ],
+  "RuntimeBuildId": "836a727e-c5a0-42ba-aa25-3bc91686d953",
+  "ExpectedFingerprint": "0fe8d65f181bef35dcd8e97d4e453014cdc9c7f8d795d0923a04bfe12e7a3015",
+  "ContractMatches": true,
+  "UserPerformedPublication": true,
+  "AgentPerformedPublication": false,
+  "NativeRenderAttempted": false
+}

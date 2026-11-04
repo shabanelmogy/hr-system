@@ -27,7 +27,7 @@ export async function validatePdfDocument(input: unknown): Promise<PdfDocument> 
     !(input instanceof Blob) ||
     input.size < 5 ||
     input.size > pdfMaximumBytes ||
-    input.type.split(';')[0].trim().toLowerCase() !== 'application/pdf'
+    (input.type.split(';')[0] ?? '').trim().toLowerCase() !== 'application/pdf'
   )
     throw new InvalidPdfError();
   const head = await new Promise<ArrayBuffer>((resolve, reject) => {

@@ -1,0 +1,35 @@
+@switch (definition().type) {
+  @case ('number') {
+    <erp-numeric-field
+      labelVisibility="sr-only"
+      [label]="label()"
+      [formControl]="text"
+      [mode]="numericOptions().mode"
+      [min]="numericOptions().min"
+      [max]="numericOptions().max"
+      [maxFractionDigits]="numericOptions().maxFractionDigits"
+      [showClear]="true"
+    />
+  }
+  @case ('date') {
+    <erp-date-field [label]="label()" [formControl]="text" />
+  }
+  @case ('boolean') {
+    <erp-option-select
+      [label]="label()"
+      [value]="booleanChoice()"
+      [options]="booleanOptions()"
+      [controlHeight]="36"
+      overlayTarget="self"
+      (valueChange)="chooseBoolean($event)"
+    />
+  }
+  @default {
+    <erp-text-field
+      labelVisibility="sr-only"
+      [label]="label()"
+      [formControl]="text"
+      [maxLength]="definition().maxLength ?? 200"
+    />
+  }
+}

@@ -13,9 +13,20 @@ namespace CrystalReportGeneratorApi.Runtime.Catalog
     {
         private static readonly byte[] OleSignature =
             { 0xD0, 0xCF, 0x11, 0xE0, 0xA1, 0xB1, 0x1A, 0xE1 };
+        private readonly Func<string> _resolveReportsRoot;
+
+        public CrystalReportCatalogService() : this(ResolveReportsRoot)
+        {
+        }
+
+        internal CrystalReportCatalogService(Func<string> resolveReportsRoot)
+        {
+            _resolveReportsRoot = resolveReportsRoot ?? throw new ArgumentNullException(nameof(resolveReportsRoot));
+        }
+
         public IReadOnlyList<CrystalReportCatalogEntry> List(string entityKey)
         {
-            var reportsRoot = ResolveReportsRoot();
+            var reportsRoot = _resolveReportsRoot();
             var requestedEntityKey = string.IsNullOrWhiteSpace(entityKey)
                 ? null
                 : NormalizeKey(entityKey);
@@ -40,6 +51,7 @@ namespace CrystalReportGeneratorApi.Runtime.Catalog
                 throw new CrystalReportCatalogNotFoundException();
 
             var entries = new List<CrystalReportCatalogEntry>();
+            var candidateCount = 0;
             foreach (var folder in entityFolders)
             {
                 foreach (var filePath in Directory.EnumerateFiles(
@@ -48,10 +60,15 @@ namespace CrystalReportGeneratorApi.Runtime.Catalog
                              SearchOption.TopDirectoryOnly)
                          .Where(path => IsApprovedReportFile(folder.FullPath, reportsRoot, path)))
                 {
-                    if (entries.Count >= CrystalReportRuntimeSettings.MaximumCatalogEntries)
+                    if (++candidateCount > CrystalReportRuntimeSettings.MaximumCatalogEntries)
                         throw new CrystalReportCatalogUnavailableException(
                             "The report catalog exceeds the configured entry limit.");
-                    entries.Add(ReadCatalogFile(folder.Key, filePath));
+                    var entry = ReadCatalogFile(folder.Key, filePath);
+                    // There is no safe source URL for an identity that cannot be
+                    // normalized. Never emit a malformed descriptor on the wire.
+                    if (!string.IsNullOrWhiteSpace(entry.ReportKey) &&
+                        !string.IsNullOrWhiteSpace(entry.SourceId))
+                        entries.Add(entry);
                 }
             }
 
@@ -79,7 +96,7 @@ namespace CrystalReportGeneratorApi.Runtime.Catalog
                 throw new CrystalReportCatalogValidationException(
                     "A valid source id and expected SHA-256 are required.");
 
-            var reportsRoot = ResolveReportsRoot();
+            var reportsRoot = _resolveReportsRoot();
             var matches = GetApprovedEntityFolders(reportsRoot)
                 .SelectMany(folder => Directory.EnumerateFiles(
                         folder.FullPath,
@@ -219,6 +236,13 @@ namespace CrystalReportGeneratorApi.Runtime.Catalog
                    string.Equals(Path.GetDirectoryName(fullPath), entityFolder, StringComparison.OrdinalIgnoreCase) &&
                    IsContainedBy(reportsRoot, fullPath) &&
                    !IsReparsePoint(fullPath);
+        }
+
+        public static void ValidateCatalogRoot()
+        {
+            var reportsRoot = ResolveReportsRoot();
+            using (var directories = Directory.EnumerateDirectories(reportsRoot).GetEnumerator())
+                directories.MoveNext();
         }
 
         private static string ResolveReportsRoot()

@@ -1,5 +1,11 @@
 # Web Notes Index
 
+Angular Clean Code hardening: FOLLOW-022 in [FOLLOW_UPS.md](FOLLOW_UPS.md).
+Canonical audit and execution proposal: web-angular-migration/CLEAN_CODE_HARDENING.md.
+
+Historical verification-log transfer: FOLLOW-018 in FOLLOW_UPS.md.
+Angular initial bundle warning: FOLLOW-019 in FOLLOW_UPS.md.
+
 This is the Web-focused index into the central note registries.
 
 Do not duplicate full note details here. Add the canonical note to one of:
@@ -15,6 +21,8 @@ Then reference its stable ID here.
 
 | Note ID | Type | Area | Summary | Canonical registry |
 | --- | --- | --- | --- | --- |
+| FOLLOW-021 | Follow-up | Historical Countries browser harness | Refresh current shared-control selectors before full S3-A8 acceptance. | `FOLLOW_UPS.md` |
+| FOLLOW-020 | Follow-up | Retained Next preview bootstrap | Deferred outside Angular under D35; separate Next scope only. | `FOLLOW_UPS.md` |
 | DEC-028 | Decision | Angular reporting scope | ActiveReports viewer/designer/SDK canceled by requester; managed Crystal/PDF retained. | `DECISION_BACKLOG.md` |
 | FOLLOW-017 | Follow-up | Angular scoped lookup/live consumers | Actual owner snapshot/watch/lifetime/loading acceptance remains canonical. | `FOLLOW_UPS.md` |
 | FOLLOW-016 | Follow-up | Advanced Angular collections | Baseline S1-A3 verified; each advanced option requires actual consumer/API/RTL/performance evidence. | `FOLLOW_UPS.md` |
@@ -66,3 +74,26 @@ shared UI, forms, accessibility, CSP, browser integrations, performance, and Web
 release evidence.
 
 `DEC-024` — Company message logs scope; canonical decision in DECISION_BACKLOG.md. `RISK-011` — Observational capture availability/uncertain SMTP outcome; canonical risk in KNOWN_RISKS.md.
+
+### PROD-028 — Hosted Countries managed-report acceptance
+
+See canonical PROD-028 in [PRODUCTION_NOTES.md](PRODUCTION_NOTES.md#prod-028--hosted-countries-report-catalog-unavailable); hosted catalog503 blocks complete report/pilot acceptance.
+
+FOLLOW-024 — Versioned global Angular Crystal manager. Canonical ownership,
+requester decision, current preflight gate and trigger are in FOLLOW_UPS.md.
+PROD-028 current render400/template rejection supersedes the earlier catalog-only
+diagnosis; see the canonical latest entry in PRODUCTION_NOTES.md.
+
+FOLLOW-024 current implementation/technical acceptance and remaining hosted/native/browser owner are canonical in FOLLOW_UPS.md; global-crystal-template-management/IMPLEMENTATION_2026-11-01.md is the current receipt index.
+
+
+### DEF-028 — Crystal empty-template preparation and base designs
+
+Canonical deferral, current priority and reopening trigger:
+[DEF-028](DEFERRED_ITEMS.md#def-028--empty-template-preparation-and-reusable-base-designs).
+
+
+### RISK-019 — Original RPT source contents
+
+Canonical risk, owner and reassessment trigger:
+[RISK-019](KNOWN_RISKS.md#risk-019--original-rpt-source-contents).

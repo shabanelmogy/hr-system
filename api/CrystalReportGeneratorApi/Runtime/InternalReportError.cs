@@ -21,6 +21,7 @@ namespace CrystalReportGeneratorApi.Runtime
         public const string Unauthorized = "crystal_runtime_unauthorized";
         public const string InvalidRequest = "crystal_runtime_invalid_request";
         public const string InvalidReport = "crystal_runtime_invalid_report";
+        public const string SourceRejected = "crystal_runtime_source_rejected";
         public const string SchemaMismatch = "crystal_runtime_schema_mismatch";
         public const string ParameterMismatch = "crystal_runtime_parameter_mismatch";
         public const string Busy = "crystal_runtime_busy";

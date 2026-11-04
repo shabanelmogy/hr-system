@@ -1,0 +1,46 @@
+<div
+  class="boolean-control"
+  [class.invalid]="!!error()"
+  [class.locked]="readOnly()"
+  [class.disabled]="disabled()"
+  (focusout)="blur()"
+  (click)="protectActivation($event)"
+  (keydown)="protectActivation($event)"
+  tabindex="-1"
+>
+  @if (kind() === 'switch') {
+    <p-toggleswitch
+      [formControl]="control"
+      [inputId]="id"
+      [name]="name() || id"
+      [readonly]="readOnly()"
+      [invalid]="!!error()"
+      [ariaLabelledBy]="id + '-label'"
+      [pt]="attributes()"
+      [dt]="switchTokens"
+    />
+  } @else {
+    <p-checkbox
+      [formControl]="control"
+      [inputId]="id"
+      [name]="name() || id"
+      [binary]="true"
+      [readonly]="readOnly()"
+      [invalid]="!!error()"
+      [ariaLabelledBy]="id + '-label'"
+      [pt]="attributes()"
+    />
+  }
+  <label [id]="id + '-label'" [for]="id"
+    >{{ label() }}
+    @if (required()) {
+      <span aria-hidden="true"> *</span>
+    }
+  </label>
+</div>
+@if (help()) {
+  <p class="help" [id]="id + '-help'">{{ help() }}</p>
+}
+@if (error(); as message) {
+  <p class="error" [id]="id + '-error'">{{ message }}</p>
+}

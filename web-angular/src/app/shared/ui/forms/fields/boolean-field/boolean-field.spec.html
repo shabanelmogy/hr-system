@@ -1,0 +1,16 @@
+<erp-form [form]="form" title="Boolean fixture" submitLabel="Save fixture"
+  ><erp-text-field
+    [formControl]="form.controls.name"
+    label="Name fixture"
+    [messages]="messages" /><erp-boolean-field
+    [formControl]="form.controls.value"
+    label="Option fixture"
+    help="Boolean help"
+    [kind]="kind()"
+    [readOnly]="readonly()"
+    required
+    [messages]="messages" /><erp-boolean-field
+    [formControl]="form.controls.consent"
+    label="Consent fixture"
+    [messages]="messages"
+/></erp-form>

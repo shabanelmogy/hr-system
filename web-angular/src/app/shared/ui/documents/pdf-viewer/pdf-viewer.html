@@ -1,0 +1,22 @@
+@if (current(); as resource) {
+  <section [attr.aria-label]="title()" [class.fill]="fill()">
+    <nav [attr.aria-label]="title()">
+      <a
+        pButton
+        [href]="resource.url"
+        target="_blank"
+        rel="noopener noreferrer"
+        referrerpolicy="no-referrer"
+        >{{ 'reports.openPdf' | uiText }}</a
+      >
+      <a pButton variant="outlined" [href]="resource.url" [download]="downloadName()">{{
+        'common.downloadFile' | uiText
+      }}</a>
+    </nav>
+    @if (inlineSupported) {
+      <iframe [src]="resource.safe" [title]="title()" referrerpolicy="no-referrer"></iframe>
+    } @else {
+      <p role="status">{{ 'reports.previewUnavailable' | uiText }}</p>
+    }
+  </section>
+}

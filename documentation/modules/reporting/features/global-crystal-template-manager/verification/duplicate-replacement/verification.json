@@ -1,0 +1,231 @@
+{
+  "date": "2026-11-04",
+  "feature": "global-crystal-template-manager",
+  "slice": "GCT-1",
+  "technicalStatus": "Passed",
+  "integratedHostedNativeStatus": "Not Verified",
+  "approvedIdentity": "Existing normalized RPT filename key within the same entity",
+  "publication": "Confirmed single server operation; new immutable version; same report identity and grants",
+  "api": {
+    "restore": "Passed",
+    "releaseBuild": "Passed",
+    "buildWarnings": 44,
+    "buildWarningScope": "Inherited analyzer warnings in unchanged integration sources; no warnings in new replacement sources",
+    "passed": 1266,
+    "failed": 0,
+    "skipped": 3,
+    "projects": [
+      {
+        "assembly": "ErpSystem.Modules.Accounting.Tests.dll",
+        "passed": 73,
+        "failed": 0,
+        "skipped": 0
+      },
+      {
+        "assembly": "ErpSystem.Modules.Contacts.Tests.dll",
+        "passed": 12,
+        "failed": 0,
+        "skipped": 0
+      },
+      {
+        "assembly": "ErpSystem.Modules.CRM.Tests.dll",
+        "passed": 10,
+        "failed": 0,
+        "skipped": 0
+      },
+      {
+        "assembly": "ErpSystem.Modules.HR.Tests.dll",
+        "passed": 150,
+        "failed": 0,
+        "skipped": 0
+      },
+      {
+        "assembly": "ErpSystem.Modules.Inventory.Tests.dll",
+        "passed": 10,
+        "failed": 0,
+        "skipped": 0
+      },
+      {
+        "assembly": "ErpSystem.Modules.Platform.Tests.dll",
+        "passed": 356,
+        "failed": 0,
+        "skipped": 0
+      },
+      {
+        "assembly": "ErpSystem.Modules.PointOfSale.Tests.dll",
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0
+      },
+      {
+        "assembly": "ErpSystem.Modules.ReferenceData.Tests.dll",
+        "passed": 134,
+        "failed": 0,
+        "skipped": 0
+      },
+      {
+        "assembly": "ErpSystem.Modules.Reporting.Tests.dll",
+        "passed": 227,
+        "failed": 0,
+        "skipped": 0
+      },
+      {
+        "assembly": "ErpSystem.ArchitectureTests.dll",
+        "passed": 70,
+        "failed": 0,
+        "skipped": 0
+      },
+      {
+        "assembly": "ErpSystem.IntegrationTests.dll",
+        "passed": 191,
+        "failed": 0,
+        "skipped": 3
+      },
+      {
+        "assembly": "ErpSystem.BuildingBlocks.Tests.dll",
+        "passed": 32,
+        "failed": 0,
+        "skipped": 0
+      }
+    ],
+    "skips": "Three existing opt-in real-browser authentication probes",
+    "sql": "Actual isolated SQL Server migration/schema and replacement rollback/commit test passed; temporary database removed by helper"
+  },
+  "angular": {
+    "fullCheck": "Passed",
+    "tests": 521,
+    "files": 91,
+    "focusedTests": 35,
+    "focusedFiles": 6,
+    "format": "Passed",
+    "lint": "Passed",
+    "architecture": "Passed",
+    "typeCheck": "Passed",
+    "productionBuild": "Passed",
+    "catalogCheck": "Passed"
+  },
+  "browser": {
+    "source": "Current production build with fixture-only APIs; no application server or live writes",
+    "cases": [
+      {
+        "language": "en",
+        "width": 1213,
+        "warningBeforeMutation": true,
+        "cancelPreservesSource": true,
+        "atomicRequests": 1,
+        "historicalVersionDate": true,
+        "errors": []
+      },
+      {
+        "language": "en",
+        "width": 390,
+        "warningBeforeMutation": true,
+        "cancelPreservesSource": true,
+        "atomicRequests": 1,
+        "historicalVersionDate": true,
+        "errors": []
+      },
+      {
+        "language": "ar",
+        "width": 1213,
+        "warningBeforeMutation": true,
+        "cancelPreservesSource": true,
+        "atomicRequests": 1,
+        "historicalVersionDate": true,
+        "errors": []
+      },
+      {
+        "language": "ar",
+        "width": 390,
+        "warningBeforeMutation": true,
+        "cancelPreservesSource": true,
+        "atomicRequests": 1,
+        "historicalVersionDate": true,
+        "errors": []
+      }
+    ],
+    "visualReview": [
+      "ar-390-confirmation.png",
+      "en-1213-versions.png"
+    ]
+  },
+  "requirements": [
+    {
+      "requirement": "Filename and entity determine duplicate identity",
+      "test": "Lookup_MatchesOnlyTheNormalizedFilenameWithinItsEntity"
+    },
+    {
+      "requirement": "Retain identity, source history, View and grants; publish only new version",
+      "test": "Replacement_PublishesTheNewVersionAndRetainsIdentityBindingGrantsAndOriginalSource"
+    },
+    {
+      "requirement": "Invalid/stale/denied/archive preserve old source and publication",
+      "tests": [
+        "InvalidSource_PreservesTheCurrentPublication",
+        "ForbiddenOrArchivedTarget_IsRejectedBeforeInspection",
+        "StaleConfirmation_PreservesPublicationAndCleansOnlyAnUncommittedNewSource",
+        "Replacement_RequiresBothReportRightsWithoutAccessAdministration"
+      ]
+    },
+    {
+      "requirement": "Rollback after SQL SaveChanges and then successful commit",
+      "test": "Replacement_RollsBackPublicationAndVersionOnCommitFailureThenPublishesAtomically"
+    },
+    {
+      "requirement": "Both endpoint policies required",
+      "test": "GlobalReportReplacement_RequiresUploadAndPublishPoliciesTogether"
+    },
+    {
+      "requirement": "Warning before write, cancel retains file, one confirmed mutation",
+      "tests": [
+        "resolves a duplicate before uploading and waits for explicit replacement confirmation",
+        "cancels replacement without changing the selected source or calling a mutation",
+        "uses one atomic replacement request with the confirmed target and concurrency token"
+      ]
+    },
+    {
+      "requirement": "Pinned editor/file/actor and stale response safety",
+      "tests": [
+        "invalidates confirmation when the file changes",
+        "does not upload a stale file when an earlier identity lookup completes"
+      ]
+    },
+    {
+      "requirement": "Credentialed GET and CSRF multipart POST",
+      "tests": [
+        "resolves filename identity within the entity using an authenticated non-null response",
+        "sends the confirmed source and row version in one CSRF-protected replacement request"
+      ]
+    }
+  ],
+  "research": [
+    {
+      "url": "https://primeng.dev/button#severity",
+      "finding": "Shared ButtonSeverity uses warn, not warning; installed22.1.4 declaration also verified. PrimeNG MCP unavailable."
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/aspnet/core/security/authorization/policies?view=aspnetcore-10.0",
+      "finding": "Multiple authorization policies are combined and must all pass; generic metadata test now enumerates attributes."
+    }
+  ],
+  "resolvedEnvironmentIssue": "Initial Angular gate stopped on C drive ENOSPC. Repeated with npm cache/TEMP/TMP scoped to ignored G workspace scratch; no user files deleted or persistent environment changes.",
+  "release": {
+    "publish": [
+      "ErpSystem.Api",
+      "Angular static assets"
+    ],
+    "nativeRuntimeChange": false,
+    "schemaMigrationRequired": false,
+    "serverStarted": false,
+    "deployed": false,
+    "liveReportRecordsMutated": false,
+    "notes": [
+      "FOLLOW-024",
+      "PROD-028"
+    ],
+    "deferred": [
+      "DEF-027",
+      "DEF-028"
+    ]
+  }
+}

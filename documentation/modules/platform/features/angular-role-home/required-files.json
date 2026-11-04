@@ -133,7 +133,7 @@
     },
     {
       "id": "preflight-18",
-      "path": "web-angular/src/app/shared/ui/layout/surface-card.ts",
+      "path": "web-angular/src/app/shared/ui/layout/surface-card/surface-card.ts",
       "layer": "web",
       "purpose": "Current inspected source/authority"
     },
@@ -163,25 +163,25 @@
     },
     {
       "id": "runtime-23",
-      "path": "web-angular/src/app/platform/tenants/pages/dashboard-page.html",
+      "path": "web-angular/src/app/platform/tenants/pages/dashboard-page/dashboard-page.html",
       "layer": "web",
       "purpose": "Actual implementation or acceptance evidence"
     },
     {
       "id": "runtime-24",
-      "path": "web-angular/src/app/platform/tenants/pages/dashboard-page.scss",
+      "path": "web-angular/src/app/platform/tenants/pages/dashboard-page/dashboard-page.scss",
       "layer": "web",
       "purpose": "Actual implementation or acceptance evidence"
     },
     {
       "id": "runtime-25",
-      "path": "web-angular/src/app/platform/tenants/pages/dashboard-page.spec.ts",
+      "path": "web-angular/src/app/platform/tenants/pages/dashboard-page/dashboard-page.spec.ts",
       "layer": "web",
       "purpose": "Actual implementation or acceptance evidence"
     },
     {
       "id": "runtime-26",
-      "path": "web-angular/src/app/platform/tenants/pages/dashboard-page.ts",
+      "path": "web-angular/src/app/platform/tenants/pages/dashboard-page/dashboard-page.ts",
       "layer": "web",
       "purpose": "Actual implementation or acceptance evidence"
     },
@@ -253,49 +253,49 @@
     },
     {
       "id": "runtime-38",
-      "path": "web-angular/src/app/shell/layout/main-shell.html",
+      "path": "web-angular/src/app/shell/layout/main-shell/main-shell.html",
       "layer": "web",
       "purpose": "Actual implementation or acceptance evidence"
     },
     {
       "id": "runtime-39",
-      "path": "web-angular/src/app/shared/ui/cards/metric-card.ts",
+      "path": "web-angular/src/app/shared/ui/cards/metric-card/metric-card.ts",
       "layer": "web",
       "purpose": "Actual implementation or acceptance evidence"
     },
     {
       "id": "runtime-40",
-      "path": "web-angular/src/app/shared/ui/controls/progress-meter.ts",
+      "path": "web-angular/src/app/shared/ui/controls/progress-meter/progress-meter.ts",
       "layer": "web",
       "purpose": "Actual implementation or acceptance evidence"
     },
     {
       "id": "runtime-41",
-      "path": "web-angular/src/app/shared/ui/controls/progress-meter.spec.ts",
+      "path": "web-angular/src/app/shared/ui/controls/progress-meter/progress-meter.spec.ts",
       "layer": "web",
       "purpose": "Actual implementation or acceptance evidence"
     },
     {
       "id": "runtime-42",
-      "path": "web-angular/src/app/shared/ui/feedback/status-badge.ts",
+      "path": "web-angular/src/app/shared/ui/feedback/status-badge/status-badge.ts",
       "layer": "web",
       "purpose": "Actual implementation or acceptance evidence"
     },
     {
       "id": "runtime-43",
-      "path": "web-angular/src/app/shared/ui/layout/application-frame.ts",
+      "path": "web-angular/src/app/shared/ui/layout/application-frame/application-frame.ts",
       "layer": "web",
       "purpose": "Actual implementation or acceptance evidence"
     },
     {
       "id": "runtime-44",
-      "path": "web-angular/src/app/shared/ui/layout/application-frame.scss",
+      "path": "web-angular/src/app/shared/ui/layout/application-frame/application-frame.scss",
       "layer": "web",
       "purpose": "Actual implementation or acceptance evidence"
     },
     {
       "id": "runtime-45",
-      "path": "web-angular/src/app/platform/modules/pages/module-browser.ts",
+      "path": "web-angular/src/app/platform/modules/pages/module-browser/module-browser.ts",
       "layer": "web",
       "purpose": "Actual implementation or acceptance evidence"
     },
@@ -340,6 +340,72 @@
       "path": "documentation/plans/business/web-angular-migration/education/angular-role-home.md",
       "layer": "documentation",
       "purpose": "Actual implementation or acceptance evidence"
+    },
+    {
+      "id": "component-resource-10ec52f540b1",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/layout/surface-card/surface-card.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-283604de5521",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/layout/surface-card/surface-card.component.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-073b387772be",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/cards/metric-card/metric-card.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-97779f35b1e8",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/cards/metric-card/metric-card.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-dac0f4116134",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/controls/progress-meter/progress-meter.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-7c408f6f8cf5",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/controls/progress-meter/progress-meter.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-5b1299a142cd",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/feedback/status-badge/status-badge.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-50c5a16edc1e",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/modules/pages/module-browser/module-browser.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-19d0c86c3dcc",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/modules/pages/module-browser/module-browser.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "quality-a89f1fae079d",
+      "layer": "web",
+      "path": "web-angular/src/app/shell/context.public-api.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-16f555949438",
+      "layer": "web",
+      "path": "web-angular/src/testing/fixture-item.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
     }
   ],
   "finalizationChecklist": [

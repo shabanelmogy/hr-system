@@ -1,0 +1,36 @@
+{
+  "decision": "Not Verified: required full source matrix incomplete",
+  "provenance": "Three completed local-fixture API-bootstrap comparisons from an earlier harness revision; not a final eight-case pass",
+  "results": [
+    {
+      "mode": "light",
+      "language": "en",
+      "width": 390,
+      "template": true,
+      "valid": 1,
+      "invalid": 2,
+      "oneBatch": true,
+      "passed": true
+    },
+    {
+      "mode": "light",
+      "language": "en",
+      "width": 1440,
+      "template": true,
+      "valid": 1,
+      "invalid": 2,
+      "oneBatch": true,
+      "passed": true
+    },
+    {
+      "mode": "light",
+      "language": "ar",
+      "width": 1440,
+      "template": true,
+      "valid": 1,
+      "invalid": 2,
+      "oneBatch": true,
+      "passed": true
+    }
+  ]
+}

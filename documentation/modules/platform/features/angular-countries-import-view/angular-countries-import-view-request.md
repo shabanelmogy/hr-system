@@ -1,0 +1,7 @@
+# S3-A7 bounded request — completed
+
+Shared PrimeNG local file/template/parser/preview; existing six-field atomic valid-subset API and exact super_admin/Countries:View/Create/writable authority.5MiB/100rows/first worksheet/ordered headers/no formulas/extra data columns. Invalid and duplicate rows stay local. Pending/uncertain/identity/draft barriers; no retry/replay. Shared MyDataGrid/@app/tokens, EN/AR/RTL/compact and keyboard Required. New API/schema/native UI/BFF/offline writes/standalone export/ActiveReports Excluded.
+
+D35 removes Next runtime review/comparison as a prerequisite; business/API/shared quality rules remain. Phase06 Verified2026-10-31 under requester decision D35 for bounded Angular Countries Import. Fresh full Angular check78files/443tests,4configuration/12architecture, types/templates/catalog/tokens/fonts and production build passed. Angular browser40 palette/mode/EN-AR/390/1440 cases,15 failure/authority cases and5 additional user journeys passed. The new journeys cover file replacement/cancel, view discard/cancel, permission loss, permission loss during a pending command and keyboard page-size/paging. Final build500.38kB/131.48kB estimated transfer warns385bytes above the unchanged500kB warning budget (FOLLOW-019). No live hosted import, production release or full Countries/Table/realtime acceptance.
+
+Phase06 Verified then education/Phase07 completed. S3-A8 starts only its own Angular/API preflight.

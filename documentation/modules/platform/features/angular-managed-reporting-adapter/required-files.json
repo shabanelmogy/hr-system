@@ -199,13 +199,13 @@
     },
     {
       "id": "runtime-29",
-      "path": "web-angular/src/app/modules/reporting/global-reports/components/global-report-view.spec.ts",
+      "path": "web-angular/src/app/modules/reporting/global-reports/components/global-report-view/global-report-view.spec.ts",
       "layer": "web",
       "purpose": "Current managed Crystal/PDF runtime, verification or SQL-backed resource evidence"
     },
     {
       "id": "runtime-30",
-      "path": "web-angular/src/app/modules/reporting/global-reports/components/global-report-view.ts",
+      "path": "web-angular/src/app/modules/reporting/global-reports/components/global-report-view/global-report-view.ts",
       "layer": "web",
       "purpose": "Current managed Crystal/PDF runtime, verification or SQL-backed resource evidence"
     },
@@ -253,13 +253,13 @@
     },
     {
       "id": "runtime-38",
-      "path": "web-angular/src/app/shared/ui/documents/pdf-viewer.spec.ts",
+      "path": "web-angular/src/app/shared/ui/documents/pdf-viewer/pdf-viewer.spec.ts",
       "layer": "web",
       "purpose": "Current managed Crystal/PDF runtime, verification or SQL-backed resource evidence"
     },
     {
       "id": "runtime-39",
-      "path": "web-angular/src/app/shared/ui/documents/pdf-viewer.ts",
+      "path": "web-angular/src/app/shared/ui/documents/pdf-viewer/pdf-viewer.ts",
       "layer": "web",
       "purpose": "Current managed Crystal/PDF runtime, verification or SQL-backed resource evidence"
     },
@@ -283,7 +283,7 @@
     },
     {
       "id": "runtime-43",
-      "path": "web-angular/src/app/shared/ui/layout/report-workspace.ts",
+      "path": "web-angular/src/app/shared/ui/layout/report-workspace/report-workspace.ts",
       "layer": "web",
       "purpose": "Current managed Crystal/PDF runtime, verification or SQL-backed resource evidence"
     },
@@ -430,6 +430,48 @@
       "path": "documentation/modules/platform/features/angular-managed-reporting-adapter/verification/CHECK_RESULTS.md",
       "layer": "documentation",
       "purpose": "Final gates and exact verification/release limits"
+    },
+    {
+      "id": "component-resource-0fea20961918",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reporting/global-reports/components/global-report-view/global-report-view.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-d0e461abaa21",
+      "layer": "web",
+      "path": "web-angular/src/app/modules/reporting/global-reports/components/global-report-view/global-report-view.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-eacac74d3c43",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/documents/pdf-viewer/pdf-viewer.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-e827f3c584e5",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/documents/pdf-viewer/pdf-viewer.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-c556d44ef2ec",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/layout/report-workspace/report-workspace.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-213dc6964a52",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/layout/report-workspace/report-workspace.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "quality-16f555949438",
+      "layer": "web",
+      "path": "web-angular/src/testing/fixture-item.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
     }
   ],
   "finalizationChecklist": [

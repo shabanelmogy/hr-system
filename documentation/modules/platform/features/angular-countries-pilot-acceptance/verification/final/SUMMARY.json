@@ -1,0 +1,97 @@
+{
+  "date": "2026-11-01T08:19:48.695Z",
+  "fixtureBrowserCases": 253,
+  "suites": [
+    {
+      "name": "read-visual",
+      "count": 40,
+      "passed": true,
+      "evidence": "verification/final/read-visual.json",
+      "actualBusinessApi": false
+    },
+    {
+      "name": "controls-visual",
+      "count": 40,
+      "passed": true,
+      "evidence": "verification/final/controls-visual.json",
+      "actualBusinessApi": false
+    },
+    {
+      "name": "chart-visual-and-behavior",
+      "count": 40,
+      "passed": true,
+      "evidence": "verification/final/chart-visual-and-behavior.json",
+      "actualBusinessApi": false
+    },
+    {
+      "name": "report-fixture-ui",
+      "count": 40,
+      "passed": true,
+      "evidence": "verification/final/report-fixture-ui.json",
+      "actualBusinessApi": false
+    },
+    {
+      "name": "import-visual-and-success",
+      "count": 40,
+      "passed": true,
+      "evidence": "verification/final/import-visual-and-success.json",
+      "actualBusinessApi": false
+    },
+    {
+      "name": "read-lifecycle",
+      "count": 8,
+      "passed": true,
+      "evidence": "verification/final/read-lifecycle.json",
+      "actualBusinessApi": false
+    },
+    {
+      "name": "controls-interactions",
+      "count": 8,
+      "passed": true,
+      "evidence": "verification/final/controls-interactions.json",
+      "actualBusinessApi": false
+    },
+    {
+      "name": "actions",
+      "count": 8,
+      "passed": true,
+      "evidence": "verification/final/actions.json",
+      "actualBusinessApi": false
+    },
+    {
+      "name": "import-failures",
+      "count": 15,
+      "passed": true,
+      "evidence": "verification/final/import-failures.json",
+      "actualBusinessApi": false
+    },
+    {
+      "name": "import-journeys",
+      "count": 5,
+      "passed": true,
+      "evidence": "verification/final/import-journeys.json",
+      "actualBusinessApi": false
+    },
+    {
+      "name": "realtime",
+      "count": 9,
+      "passed": true,
+      "evidence": "verification/final/realtime.json",
+      "actualBusinessApi": false
+    }
+  ],
+  "hostedIsolatedCases": 7,
+  "hostedReadSecurityPassed": true,
+  "nonReportPilotAcceptance": "Verified",
+  "completePhase06": "Not Verified",
+  "remainingCurrentPilotBlocker": "PROD-028",
+  "productionBusinessRouteEnabled": false,
+  "hostedReportCatalogStatus": 503,
+  "actualReportRenderVerified": false,
+  "archivedTestIds": [
+    7,
+    8,
+    9
+  ],
+  "priorRecordsModified": false
+}

@@ -1,0 +1,13 @@
+<erp-card-list [source]="source" label="Cards fixture" [rowId]="id" [rowLabel]="label">
+  @if (custom()) {
+    <ng-template [erpCollectionCardHeader]="source" let-row
+      ><h3>Header {{ row.name }}</h3></ng-template
+    >
+    <ng-template [erpCollectionCardFooter]="source" let-row
+      ><erp-button [label]="row.name" (activated)="opened.set(row.id)"
+    /></ng-template>
+  }
+  <ng-template [erpCollectionCard]="source" let-row
+    ><span>Body {{ row.id }}</span></ng-template
+  >
+</erp-card-list>

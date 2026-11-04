@@ -1,0 +1,37 @@
+// PrimeNG 22.1.4 assigns its frozen class to both bodies when frozenValue exists.
+// Only the first body contains frozen records; the ordinary body must scroll.
+:host
+  ::ng-deep
+  .p-datatable-table
+  > tbody.p-datatable-frozen-tbody
+  + tbody.p-datatable-frozen-tbody {
+  position: static;
+}
+// FrozenColumn 22.1.4 leaves inline offsets behind on unpin/side changes.
+// Preserve native positioning while neutralizing the inactive physical edge.
+:host ::ng-deep [pFrozenColumn]:not(.p-datatable-frozen-column) {
+  left: auto !important;
+  right: auto !important;
+}
+:host ::ng-deep .p-datatable-frozen-column.p-datatable-frozen-column-left {
+  right: auto !important;
+}
+:host ::ng-deep .p-datatable-frozen-column:not(.p-datatable-frozen-column-left) {
+  left: auto !important;
+}
+// FrozenColumn 22.1.4 calculates left offsets from previous DOM siblings even
+// in RTL. The shared trailing action cell is the last DOM cell: its physical
+// left offset must be zero, or it covers the leading selection checkbox.
+.rtl-grid ::ng-deep .action-cell.p-datatable-frozen-column-left {
+  left: 0 !important;
+}
+// PrimeNG 22.1.4 totals physical DOM siblings rather than logical pinned siblings.
+// Shared logical offsets preserve one or several frozen columns during RTL scrolling.
+.rtl-grid ::ng-deep .p-datatable-frozen-column-left:not(.action-cell) {
+  left: var(--collection-frozen-offset, 0px) !important;
+}
+.rtl-grid
+  ::ng-deep
+  .p-datatable-frozen-column:not(.p-datatable-frozen-column-left):not(.action-cell) {
+  right: var(--collection-frozen-offset, 0px) !important;
+}

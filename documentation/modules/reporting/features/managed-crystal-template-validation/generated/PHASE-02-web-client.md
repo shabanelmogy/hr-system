@@ -99,8 +99,8 @@ failure into partial success.
 
 ## Approved references
 
-- **Managed Crystal Template Validation cross-platform master review:** `../modules/reporting/features/managed-crystal-template-validation/managed-crystal-template-validation-review.md` sections 3, 4, 6, 7
-- **Managed Crystal Template Validation Next.js implementation profile:** `../modules/reporting/features/managed-crystal-template-validation/managed-crystal-template-validation-web.md` sections 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14
+- **Managed Crystal Template Validation cross-platform master review:** `../modules/reporting/features/managed-crystal-template-validation/managed-crystal-template-validation-review.md` sections 3, 4, 6, 7, 11, 12, 13, 14
+- **Managed Crystal Template Validation Next.js implementation profile:** `../modules/reporting/features/managed-crystal-template-validation/managed-crystal-template-validation-web.md` sections 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18
 
 ## Source fingerprints
 
@@ -110,6 +110,10 @@ failure into partial success.
 | managed-crystal-template-validation-master | 4 | `ad565be28727a67b728477a4afa8f58cf6868f6ecd2f9bf5f7b59400f43d8141` |
 | managed-crystal-template-validation-master | 6 | `fa456baddc6f73079e396b08f3b2fa608267e66d8d1d2f71036708a8182094ee` |
 | managed-crystal-template-validation-master | 7 | `b512f756c88e034603039e7120d247c983a4b43461804df33719930033bff007` |
+| managed-crystal-template-validation-master | 11 | `3f41bb5a4d3db8359baeb00d8f408d1a627398ed0bb65686eb5289ae3806d272` |
+| managed-crystal-template-validation-master | 12 | `f82b7aff75cf17c21b7c81eb688638474e323eb05c2bb728734c4264fba1f712` |
+| managed-crystal-template-validation-master | 13 | `0fd76edfc5407361816949b20ba8a0fbfa30fcea04c0b92bb23ab9bf543e5d96` |
+| managed-crystal-template-validation-master | 14 | `65d5e3778b817b758e6462edcfef72ca7d15c7ec943e3049fff328a15e7f025b` |
 | managed-crystal-template-validation-web | 1 | `b56af293926a4ed3714472a168135ced791c1fce4b46dd18f503aa5e9efebf04` |
 | managed-crystal-template-validation-web | 2 | `767d7333c5fd11ffaedbbc0098cf926ca102cf47dfc2b217945eaa7c22215ed2` |
 | managed-crystal-template-validation-web | 3 | `a0916addbbc2e39454a8f6cf771962491b3a4d0c5647d4494b94aead220f72ee` |
@@ -123,4 +127,8 @@ failure into partial success.
 | managed-crystal-template-validation-web | 11 | `1abcdaa9606de2772ff9ab1ef3a04caa1ab2583046e79d82909b73a3639fc504` |
 | managed-crystal-template-validation-web | 12 | `dc65a94add10277ddb6acabace07b9db83aac4139dad84febab203b740c60194` |
 | managed-crystal-template-validation-web | 13 | `91afdb997f851ddb7a519cdd64592cfb4c27c28bf535af6389ea3896d06d37da` |
-| managed-crystal-template-validation-web | 14 | `13f507514fb9a3074d483cd9ace60f0c39a4f48b13e0ace20a182c9fa33c8a26` |
+| managed-crystal-template-validation-web | 14 | `1f13c77bfc6130886d505462c03365b1a5f5d9d50957a36b239d547b950a5009` |
+| managed-crystal-template-validation-web | 15 | `71ffd06889cb60c076af3477beeb2cbd52eb6d79637070b86260a6c6a3a5b5a9` |
+| managed-crystal-template-validation-web | 16 | `92f766b38be7067a49e3e4ec14ee504f576e615feca8933e6343bff2dc76222e` |
+| managed-crystal-template-validation-web | 17 | `f725d9892667343198dda4470b74910f0fb9c8bf9585ca1d8f34b4e9973f7b19` |
+| managed-crystal-template-validation-web | 18 | `5491240deb33af6bad5272dd5c39e038f87e09ab9cd06ec50853701da767a388` |

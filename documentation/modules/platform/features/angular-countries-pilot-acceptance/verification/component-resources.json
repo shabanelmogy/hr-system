@@ -1,0 +1,817 @@
+[
+  {
+    "file": "src/app/app.spec.ts",
+    "components": [
+      "RoutedTitle"
+    ],
+    "assets": [
+      "src/app/app.spec.html"
+    ]
+  },
+  {
+    "file": "src/app/composition/authenticated-routes.ts",
+    "components": [
+      "AuthenticatedApplication"
+    ],
+    "assets": [
+      "src/app/composition/authenticated-routes.html"
+    ]
+  },
+  {
+    "file": "src/app/dev/boolean-preview.ts",
+    "components": [
+      "BooleanPreview"
+    ],
+    "assets": [
+      "src/app/dev/boolean-preview.html",
+      "src/app/dev/boolean-preview.scss"
+    ]
+  },
+  {
+    "file": "src/app/dev/collection-preview.ts",
+    "components": [
+      "CollectionPreview"
+    ],
+    "assets": [
+      "src/app/dev/collection-preview.html",
+      "src/app/dev/collection-preview.scss"
+    ]
+  },
+  {
+    "file": "src/app/dev/criteria-preview.ts",
+    "components": [
+      "CriteriaPreview",
+      "CriteriaPreviewEditor"
+    ],
+    "assets": [
+      "src/app/dev/criteria-preview.criteria-preview.html",
+      "src/app/dev/criteria-preview.criteria-preview.scss",
+      "src/app/dev/criteria-preview.criteria-preview-editor.html"
+    ]
+  },
+  {
+    "file": "src/app/dev/date-preview.ts",
+    "components": [
+      "DatePreview"
+    ],
+    "assets": [
+      "src/app/dev/date-preview.html",
+      "src/app/dev/date-preview.scss"
+    ]
+  },
+  {
+    "file": "src/app/dev/form-close-preview.ts",
+    "components": [
+      "FormClosePreview"
+    ],
+    "assets": [
+      "src/app/dev/form-close-preview.html",
+      "src/app/dev/form-close-preview.scss"
+    ]
+  },
+  {
+    "file": "src/app/dev/form-preview.ts",
+    "components": [
+      "FormPreview"
+    ],
+    "assets": [
+      "src/app/dev/form-preview.html",
+      "src/app/dev/form-preview.scss"
+    ]
+  },
+  {
+    "file": "src/app/dev/grid-capabilities-preview.ts",
+    "components": [
+      "GridCapabilitiesPreview"
+    ],
+    "assets": [
+      "src/app/dev/grid-capabilities-preview.html",
+      "src/app/dev/grid-capabilities-preview.scss"
+    ]
+  },
+  {
+    "file": "src/app/dev/multiline-preview.ts",
+    "components": [
+      "MultilinePreview"
+    ],
+    "assets": [
+      "src/app/dev/multiline-preview.html",
+      "src/app/dev/multiline-preview.scss"
+    ]
+  },
+  {
+    "file": "src/app/dev/numeric-preview.ts",
+    "components": [
+      "NumericPreview"
+    ],
+    "assets": [
+      "src/app/dev/numeric-preview.html",
+      "src/app/dev/numeric-preview.scss"
+    ]
+  },
+  {
+    "file": "src/app/dev/read-preview.ts",
+    "components": [
+      "ReadPreview",
+      "ReadPreviewAway"
+    ],
+    "assets": [
+      "src/app/dev/read-preview.read-preview.html",
+      "src/app/dev/read-preview.read-preview.scss",
+      "src/app/dev/read-preview.read-preview-away.html",
+      "src/app/dev/read-preview.read-preview-away.scss"
+    ]
+  },
+  {
+    "file": "src/app/dev/reference-preview.ts",
+    "components": [
+      "ReferencePreview"
+    ],
+    "assets": [
+      "src/app/dev/reference-preview.html",
+      "src/app/dev/reference-preview.scss"
+    ]
+  },
+  {
+    "file": "src/app/dev/theme-preview.ts",
+    "components": [
+      "ThemePreview"
+    ],
+    "assets": [
+      "src/app/dev/theme-preview.html",
+      "src/app/dev/theme-preview.scss"
+    ]
+  },
+  {
+    "file": "src/app/dev/unsaved-context-preview.ts",
+    "components": [
+      "UnsavedContextPreview"
+    ],
+    "assets": [
+      "src/app/dev/unsaved-context-preview.html",
+      "src/app/dev/unsaved-context-preview.scss"
+    ]
+  },
+  {
+    "file": "src/app/dev/unsaved-preview.ts",
+    "components": [
+      "UnsavedPreviewFrame",
+      "UnsavedPreview",
+      "UnsavedDestination"
+    ],
+    "assets": [
+      "src/app/dev/unsaved-preview.unsaved-preview-frame.html",
+      "src/app/dev/unsaved-preview.unsaved-preview.html",
+      "src/app/dev/unsaved-preview.unsaved-preview.scss",
+      "src/app/dev/unsaved-preview.unsaved-destination.html"
+    ]
+  },
+  {
+    "file": "src/app/modules/accounting/fiscal-year-context/components/fiscal-context-control.ts",
+    "components": [
+      "FiscalContextControl"
+    ],
+    "assets": [
+      "src/app/modules/accounting/fiscal-year-context/components/fiscal-context-control.html",
+      "src/app/modules/accounting/fiscal-year-context/components/fiscal-context-control.scss"
+    ]
+  },
+  {
+    "file": "src/app/modules/reference-data/geographical-information/countries/components/country-import-view.ts",
+    "components": [
+      "CountryImportView"
+    ],
+    "assets": [
+      "src/app/modules/reference-data/geographical-information/countries/components/country-import-view.html"
+    ]
+  },
+  {
+    "file": "src/app/modules/reference-data/geographical-information/countries/components/country-read-details.ts",
+    "components": [
+      "CountryReadDetails"
+    ],
+    "assets": [
+      "src/app/modules/reference-data/geographical-information/countries/components/country-read-details.html",
+      "src/app/modules/reference-data/geographical-information/countries/components/country-read-details.scss"
+    ]
+  },
+  {
+    "file": "src/app/modules/reporting/global-reports/components/global-report-view.ts",
+    "components": [
+      "GlobalReportView"
+    ],
+    "assets": [
+      "src/app/modules/reporting/global-reports/components/global-report-view.html",
+      "src/app/modules/reporting/global-reports/components/global-report-view.scss"
+    ]
+  },
+  {
+    "file": "src/app/platform/auth/pages/password-request-page.ts",
+    "components": [
+      "PasswordRequestPage"
+    ],
+    "assets": [
+      "src/app/platform/auth/pages/password-request-page.html",
+      "src/app/platform/auth/pages/password-request-page.scss"
+    ]
+  },
+  {
+    "file": "src/app/platform/auth/pages/session-page.ts",
+    "components": [
+      "SessionPage"
+    ],
+    "assets": [
+      "src/app/platform/auth/pages/session-page.html",
+      "src/app/platform/auth/pages/session-page.scss"
+    ]
+  },
+  {
+    "file": "src/app/platform/modules/components/module-context-control.ts",
+    "components": [
+      "ModuleContextControl"
+    ],
+    "assets": [
+      "src/app/platform/modules/components/module-context-control.html",
+      "src/app/platform/modules/components/module-context-control.scss"
+    ]
+  },
+  {
+    "file": "src/app/platform/modules/pages/module-browser.ts",
+    "components": [
+      "ModuleBrowser"
+    ],
+    "assets": [
+      "src/app/platform/modules/pages/module-browser.html",
+      "src/app/platform/modules/pages/module-browser.scss"
+    ]
+  },
+  {
+    "file": "src/app/platform/modules/pages/module-workspace.ts",
+    "components": [
+      "ModuleWorkspace"
+    ],
+    "assets": [
+      "src/app/platform/modules/pages/module-workspace.html"
+    ]
+  },
+  {
+    "file": "src/app/platform/modules/state/module-context-state.spec.ts",
+    "components": [
+      "Destination"
+    ],
+    "assets": [
+      "src/app/platform/modules/state/module-context-state.spec.html"
+    ]
+  },
+  {
+    "file": "src/app/shared/data/route-collection-criteria.spec.ts",
+    "components": [
+      "Listing",
+      "Other"
+    ],
+    "assets": [
+      "src/app/shared/data/route-collection-criteria.spec.listing.html",
+      "src/app/shared/data/route-collection-criteria.spec.other.html"
+    ]
+  },
+  {
+    "file": "src/app/shared/data/unsaved-navigation.spec.ts",
+    "components": [
+      "Frame",
+      "Editor"
+    ],
+    "assets": [
+      "src/app/shared/data/unsaved-navigation.spec.frame.html",
+      "src/app/shared/data/unsaved-navigation.spec.editor.html"
+    ]
+  },
+  {
+    "file": "src/app/shared/ui/buttons/action-button.spec.ts",
+    "components": [
+      "ToolbarComposition",
+      "SubmitComposition"
+    ],
+    "assets": [
+      "src/app/shared/ui/buttons/action-button.spec.toolbar-composition.html",
+      "src/app/shared/ui/buttons/action-button.spec.submit-composition.html"
+    ]
+  },
+  {
+    "file": "src/app/shared/ui/buttons/action-button.ts",
+    "components": [
+      "ActionButton"
+    ],
+    "assets": [
+      "src/app/shared/ui/buttons/action-button.html"
+    ]
+  },
+  {
+    "file": "src/app/shared/ui/cards/metric-card.ts",
+    "components": [
+      "MetricCard"
+    ],
+    "assets": [
+      "src/app/shared/ui/cards/metric-card.html",
+      "src/app/shared/ui/cards/metric-card.scss"
+    ]
+  },
+  {
+    "file": "src/app/shared/ui/charts/chart-panel.ts",
+    "components": [
+      "ChartPanel"
+    ],
+    "assets": [
+      "src/app/shared/ui/charts/chart-panel.html",
+      "src/app/shared/ui/charts/chart-panel.scss"
+    ]
+  },
+  {
+    "file": "src/app/shared/ui/charts/chart-renderer.ts",
+    "components": [
+      "ChartRenderer"
+    ],
+    "assets": [
+      "src/app/shared/ui/charts/chart-renderer.html",
+      "src/app/shared/ui/charts/chart-renderer.scss"
+    ]
+  },
+  {
+    "file": "src/app/shared/ui/charts/collection-chart-view.ts",
+    "components": [
+      "CollectionChartView"
+    ],
+    "assets": [
+      "src/app/shared/ui/charts/collection-chart-view.html",
+      "src/app/shared/ui/charts/collection-chart-view.scss"
+    ]
+  },
+  {
+    "file": "src/app/shared/ui/collections/card-list.ts",
+    "components": [
+      "CardList"
+    ],
+    "assets": [
+      "src/app/shared/ui/collections/card-list.html",
+      "src/app/shared/ui/collections/card-list.component.scss"
+    ]
+  },
+  {
+    "file": "src/app/shared/ui/collections/collection-feedback.ts",
+    "components": [
+      "CollectionFeedback"
+    ],
+    "assets": [
+      "src/app/shared/ui/collections/collection-feedback.html"
+    ]
+  },
+  {
+    "file": "src/app/shared/ui/collections/collection-footer.ts",
+    "components": [
+      "CollectionFooter"
+    ],
+    "assets": [
+      "src/app/shared/ui/collections/collection-footer.html",
+      "src/app/shared/ui/collections/collection-footer.scss"
+    ]
+  },
+  {
+    "file": "src/app/shared/ui/collections/collection-frame.ts",
+    "components": [
+      "CollectionFrame"
+    ],
+    "assets": [
+      "src/app/shared/ui/collections/collection-frame.html",
+      "src/app/shared/ui/collections/collection-frame.component.scss"
+    ]
+  },
+  {
+    "file": "src/app/shared/ui/collections/collection-read-compatibility.spec.ts",
+    "components": [
+      "SearchFixture",
+      "CardFixture"
+    ],
+    "assets": [
+      "src/app/shared/ui/collections/collection-read-compatibility.spec.search-fixture.html",
+      "src/app/shared/ui/collections/collection-read-compatibility.spec.card-fixture.html"
+    ]
+  },
+  {
+    "file": "src/app/shared/ui/collections/grid-capabilities.spec.ts",
+    "components": [
+      "Fixture"
+    ],
+    "assets": [
+      "src/app/shared/ui/collections/grid-capabilities.spec.html"
+    ]
+  },
+  {
+    "file": "src/app/shared/ui/collections/grid-filter-input.ts",
+    "components": [
+      "GridFilterInput"
+    ],
+    "assets": [
+      "src/app/shared/ui/collections/grid-filter-input.html",
+      "src/app/shared/ui/collections/grid-filter-input.scss"
+    ]
+  },
+  {
+    "file": "src/app/shared/ui/collections/grid-headers.spec.ts",
+    "components": [
+      "Fixture"
+    ],
+    "assets": [
+      "src/app/shared/ui/collections/grid-headers.spec.html"
+    ]
+  },
+  {
+    "file": "src/app/shared/ui/collections/row-actions.ts",
+    "components": [
+      "RowActions"
+    ],
+    "assets": [
+      "src/app/shared/ui/collections/row-actions.html",
+      "src/app/shared/ui/collections/row-actions.scss"
+    ]
+  },
+  {
+    "file": "src/app/shared/ui/controls/option-select.ts",
+    "components": [
+      "OptionSelect"
+    ],
+    "assets": [
+      "src/app/shared/ui/controls/option-select.html",
+      "src/app/shared/ui/controls/option-select.scss"
+    ]
+  },
+  {
+    "file": "src/app/shared/ui/controls/palette-picker.ts",
+    "components": [
+      "PalettePicker"
+    ],
+    "assets": [
+      "src/app/shared/ui/controls/palette-picker.html",
+      "src/app/shared/ui/controls/palette-picker.scss"
+    ]
+  },
+  {
+    "file": "src/app/shared/ui/controls/progress-meter.ts",
+    "components": [
+      "ProgressMeter"
+    ],
+    "assets": [
+      "src/app/shared/ui/controls/progress-meter.html",
+      "src/app/shared/ui/controls/progress-meter.scss"
+    ]
+  },
+  {
+    "file": "src/app/shared/ui/controls/sort-direction-button.ts",
+    "components": [
+      "SortDirectionButton"
+    ],
+    "assets": [
+      "src/app/shared/ui/controls/sort-direction-button.html",
+      "src/app/shared/ui/controls/sort-direction-button.scss"
+    ]
+  },
+  {
+    "file": "src/app/shared/ui/dialogs/choice-dialog.ts",
+    "components": [
+      "ChoiceDialog"
+    ],
+    "assets": [
+      "src/app/shared/ui/dialogs/choice-dialog.html",
+      "src/app/shared/ui/dialogs/choice-dialog.scss"
+    ]
+  },
+  {
+    "file": "src/app/shared/ui/dialogs/confirmation-dialog.ts",
+    "components": [
+      "ConfirmationDialog"
+    ],
+    "assets": [
+      "src/app/shared/ui/dialogs/confirmation-dialog.html"
+    ]
+  },
+  {
+    "file": "src/app/shared/ui/dialogs/dialog-panel.ts",
+    "components": [
+      "DialogPanel"
+    ],
+    "assets": [
+      "src/app/shared/ui/dialogs/dialog-panel.html",
+      "src/app/shared/ui/dialogs/dialog-panel.scss"
+    ]
+  },
+  {
+    "file": "src/app/shared/ui/dialogs/error-modal-host.ts",
+    "components": [
+      "ErrorModalHost"
+    ],
+    "assets": [
+      "src/app/shared/ui/dialogs/error-modal-host.html",
+      "src/app/shared/ui/dialogs/error-modal-host.scss"
+    ]
+  },
+  {
+    "file": "src/app/shared/ui/dialogs/unsaved-confirmation-host.ts",
+    "components": [
+      "UnsavedConfirmationHost"
+    ],
+    "assets": [
+      "src/app/shared/ui/dialogs/unsaved-confirmation-host.html"
+    ]
+  },
+  {
+    "file": "src/app/shared/ui/documents/pdf-viewer.ts",
+    "components": [
+      "PdfViewer"
+    ],
+    "assets": [
+      "src/app/shared/ui/documents/pdf-viewer.html",
+      "src/app/shared/ui/documents/pdf-viewer.scss"
+    ]
+  },
+  {
+    "file": "src/app/shared/ui/feedback/feedback-state.ts",
+    "components": [
+      "FeedbackState"
+    ],
+    "assets": [
+      "src/app/shared/ui/feedback/feedback-state.html",
+      "src/app/shared/ui/feedback/feedback-state.scss"
+    ]
+  },
+  {
+    "file": "src/app/shared/ui/feedback/notification-toast.ts",
+    "components": [
+      "NotificationToast"
+    ],
+    "assets": [
+      "src/app/shared/ui/feedback/notification-toast.html"
+    ]
+  },
+  {
+    "file": "src/app/shared/ui/feedback/status-badge.ts",
+    "components": [
+      "StatusBadge"
+    ],
+    "assets": [
+      "src/app/shared/ui/feedback/status-badge.html"
+    ]
+  },
+  {
+    "file": "src/app/shared/ui/forms/fields/boolean-field.spec.ts",
+    "components": [
+      "Composition"
+    ],
+    "assets": [
+      "src/app/shared/ui/forms/fields/boolean-field.spec.html"
+    ]
+  },
+  {
+    "file": "src/app/shared/ui/forms/fields/boolean-field.ts",
+    "components": [
+      "BooleanField"
+    ],
+    "assets": [
+      "src/app/shared/ui/forms/fields/boolean-field.html"
+    ]
+  },
+  {
+    "file": "src/app/shared/ui/forms/fields/character-count-badge.ts",
+    "components": [
+      "CharacterCountBadge"
+    ],
+    "assets": [
+      "src/app/shared/ui/forms/fields/character-count-badge.html",
+      "src/app/shared/ui/forms/fields/character-count-badge.scss"
+    ]
+  },
+  {
+    "file": "src/app/shared/ui/forms/fields/date-field.spec.ts",
+    "components": [
+      "Composition"
+    ],
+    "assets": [
+      "src/app/shared/ui/forms/fields/date-field.spec.html"
+    ]
+  },
+  {
+    "file": "src/app/shared/ui/forms/fields/date-field.ts",
+    "components": [
+      "DateField"
+    ],
+    "assets": [
+      "src/app/shared/ui/forms/fields/date-field.html"
+    ]
+  },
+  {
+    "file": "src/app/shared/ui/forms/fields/numeric-field.spec.ts",
+    "components": [
+      "Composition"
+    ],
+    "assets": [
+      "src/app/shared/ui/forms/fields/numeric-field.spec.html"
+    ]
+  },
+  {
+    "file": "src/app/shared/ui/forms/fields/reference-field.spec.ts",
+    "components": [
+      "Composition"
+    ],
+    "assets": [
+      "src/app/shared/ui/forms/fields/reference-field.spec.html"
+    ]
+  },
+  {
+    "file": "src/app/shared/ui/forms/fields/reference-field.ts",
+    "components": [
+      "ReferenceField"
+    ],
+    "assets": [
+      "src/app/shared/ui/forms/fields/reference-field.html"
+    ]
+  },
+  {
+    "file": "src/app/shared/ui/forms/fields/text-field.spec.ts",
+    "components": [
+      "Composition"
+    ],
+    "assets": [
+      "src/app/shared/ui/forms/fields/text-field.spec.html"
+    ]
+  },
+  {
+    "file": "src/app/shared/ui/forms/form-close-guard.ts",
+    "components": [
+      "FormCloseGuard"
+    ],
+    "assets": [
+      "src/app/shared/ui/forms/form-close-guard.html"
+    ]
+  },
+  {
+    "file": "src/app/shared/ui/forms/form-container.spec.ts",
+    "components": [
+      "AccessComposition",
+      "ProfileComposition"
+    ],
+    "assets": [
+      "src/app/shared/ui/forms/form-container.spec.access-composition.html",
+      "src/app/shared/ui/forms/form-container.spec.profile-composition.html"
+    ]
+  },
+  {
+    "file": "src/app/shared/ui/forms/form-container.ts",
+    "components": [
+      "FormContainer"
+    ],
+    "assets": [
+      "src/app/shared/ui/forms/form-container.html"
+    ]
+  },
+  {
+    "file": "src/app/shared/ui/forms/form-read-compatibility.spec.ts",
+    "components": [
+      "ReadFormFixture"
+    ],
+    "assets": [
+      "src/app/shared/ui/forms/form-read-compatibility.spec.html"
+    ]
+  },
+  {
+    "file": "src/app/shared/ui/forms/validation-summary.ts",
+    "components": [
+      "ValidationSummary"
+    ],
+    "assets": [
+      "src/app/shared/ui/forms/validation-summary.html"
+    ]
+  },
+  {
+    "file": "src/app/shared/ui/icons/app-icon.ts",
+    "components": [
+      "AppIcon"
+    ],
+    "assets": [
+      "src/app/shared/ui/icons/app-icon.html",
+      "src/app/shared/ui/icons/app-icon.scss"
+    ]
+  },
+  {
+    "file": "src/app/shared/ui/imports/spreadsheet-import-panel.ts",
+    "components": [
+      "SpreadsheetImportPanel"
+    ],
+    "assets": [
+      "src/app/shared/ui/imports/spreadsheet-import-panel.html",
+      "src/app/shared/ui/imports/spreadsheet-import-panel.scss"
+    ]
+  },
+  {
+    "file": "src/app/shared/ui/layout/context-badge.ts",
+    "components": [
+      "ContextBadge"
+    ],
+    "assets": [
+      "src/app/shared/ui/layout/context-badge.html",
+      "src/app/shared/ui/layout/context-badge.scss"
+    ]
+  },
+  {
+    "file": "src/app/shared/ui/layout/identity-avatar.ts",
+    "components": [
+      "IdentityAvatar"
+    ],
+    "assets": [
+      "src/app/shared/ui/layout/identity-avatar.html",
+      "src/app/shared/ui/layout/identity-avatar.scss"
+    ]
+  },
+  {
+    "file": "src/app/shared/ui/layout/launcher-grid.ts",
+    "components": [
+      "LauncherGrid"
+    ],
+    "assets": [
+      "src/app/shared/ui/layout/launcher-grid.html"
+    ]
+  },
+  {
+    "file": "src/app/shared/ui/layout/launcher-tile.ts",
+    "components": [
+      "LauncherTile"
+    ],
+    "assets": [
+      "src/app/shared/ui/layout/launcher-tile.html"
+    ]
+  },
+  {
+    "file": "src/app/shared/ui/layout/navigation-list.ts",
+    "components": [
+      "NavigationList"
+    ],
+    "assets": [
+      "src/app/shared/ui/layout/navigation-list.html",
+      "src/app/shared/ui/layout/navigation-list.scss"
+    ]
+  },
+  {
+    "file": "src/app/shared/ui/layout/page-header.ts",
+    "components": [
+      "PageHeader"
+    ],
+    "assets": [
+      "src/app/shared/ui/layout/page-header.html"
+    ]
+  },
+  {
+    "file": "src/app/shared/ui/layout/report-workspace.ts",
+    "components": [
+      "ReportWorkspace"
+    ],
+    "assets": [
+      "src/app/shared/ui/layout/report-workspace.html",
+      "src/app/shared/ui/layout/report-workspace.scss"
+    ]
+  },
+  {
+    "file": "src/app/shared/ui/layout/scroll-viewport.ts",
+    "components": [
+      "ScrollViewport"
+    ],
+    "assets": [
+      "src/app/shared/ui/layout/scroll-viewport.html",
+      "src/app/shared/ui/layout/scroll-viewport.scss"
+    ]
+  },
+  {
+    "file": "src/app/shared/ui/layout/surface-card.ts",
+    "components": [
+      "SurfaceCard"
+    ],
+    "assets": [
+      "src/app/shared/ui/layout/surface-card.html",
+      "src/app/shared/ui/layout/surface-card.component.scss"
+    ]
+  },
+  {
+    "file": "src/app/shared/ui/overlays/context-menu-panel.ts",
+    "components": [
+      "ContextMenuPanel"
+    ],
+    "assets": [
+      "src/app/shared/ui/overlays/context-menu-panel.html",
+      "src/app/shared/ui/overlays/context-menu-panel.scss"
+    ]
+  },
+  {
+    "file": "src/app/shared/ui/overlays/popover-panel.ts",
+    "components": [
+      "PopoverPanel"
+    ],
+    "assets": [
+      "src/app/shared/ui/overlays/popover-panel.html"
+    ]
+  }
+]

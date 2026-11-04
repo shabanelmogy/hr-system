@@ -1,0 +1,57 @@
+<erp-surface-card
+  appearance="chart"
+  [title]="definition().title"
+  [subtitle]="definition().subtitle ?? ''"
+  icon="trend"
+  fill
+>
+  @if (!valid()) {
+    <erp-feedback-state
+      [compact]="true"
+      kind="error"
+      [title]="'chartCommon.errorTitle' | uiText"
+      [message]="'chartCommon.errorMessage' | uiText"
+    />
+  } @else if (!hasData()) {
+    <erp-feedback-state
+      [compact]="true"
+      kind="empty"
+      icon="chart"
+      [title]="'chartCommon.emptyTitle' | uiText"
+      [message]="'chartCommon.emptyMessage' | uiText"
+    />
+  } @else {
+    <div class="plot">
+      @defer (on immediate) {
+        <erp-chart-renderer [definition]="definition()" />
+      } @placeholder {
+        <erp-feedback-state [compact]="true" kind="loading" [title]="'common.loading' | uiText" />
+      }
+    </div>
+    <table class="sr-only">
+      <caption>
+        {{
+          definition().title
+        }}
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col">{{ 'chartCommon.category' | uiText }}</th>
+          @for (series of definition().series; track $index) {
+            <th scope="col">{{ series.name }}</th>
+          }
+        </tr>
+      </thead>
+      <tbody>
+        @for (label of definition().labels; track $index; let row = $index) {
+          <tr>
+            <th scope="row">{{ label }}</th>
+            @for (series of definition().series; track $index) {
+              <td>{{ number(series.values[row]) }}</td>
+            }
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</erp-surface-card>

@@ -188,31 +188,31 @@
     },
     {
       "id": "preflight-25",
-      "path": "web-angular/src/app/shared/ui/controls/option-select.ts",
+      "path": "web-angular/src/app/shared/ui/controls/option-select/option-select.ts",
       "layer": "web",
       "purpose": "Existing inspected source or frozen scope"
     },
     {
       "id": "preflight-26",
-      "path": "web-angular/src/app/shared/ui/layout/scroll-viewport.ts",
+      "path": "web-angular/src/app/shared/ui/layout/scroll-viewport/scroll-viewport.ts",
       "layer": "web",
       "purpose": "Existing inspected source or frozen scope"
     },
     {
       "id": "preflight-27",
-      "path": "web-angular/src/app/shared/ui/forms/fields/text-field.ts",
+      "path": "web-angular/src/app/shared/ui/forms/fields/text-field/text-field.ts",
       "layer": "web",
       "purpose": "Existing inspected source or frozen scope"
     },
     {
       "id": "preflight-28",
-      "path": "web-angular/src/app/shared/ui/overlays/popover-panel.ts",
+      "path": "web-angular/src/app/shared/ui/overlays/popover-panel/popover-panel.ts",
       "layer": "web",
       "purpose": "Existing inspected source or frozen scope"
     },
     {
       "id": "preflight-29",
-      "path": "web-angular/src/app/shared/ui/feedback/feedback-state.ts",
+      "path": "web-angular/src/app/shared/ui/feedback/feedback-state/feedback-state.ts",
       "layer": "web",
       "purpose": "Existing inspected source or frozen scope"
     },
@@ -248,7 +248,7 @@
     },
     {
       "id": "actual-35",
-      "path": "web-angular/src/app/shared/ui/collections/card-list.ts",
+      "path": "web-angular/src/app/shared/ui/collections/card-list/card-list.ts",
       "layer": "web",
       "purpose": "Actual implementation or portable S1-A3 verification evidence"
     },
@@ -266,7 +266,7 @@
     },
     {
       "id": "actual-38",
-      "path": "web-angular/src/app/shared/ui/collections/collection-feedback.ts",
+      "path": "web-angular/src/app/shared/ui/collections/collection-feedback/collection-feedback.ts",
       "layer": "web",
       "purpose": "Actual implementation or portable S1-A3 verification evidence"
     },
@@ -278,13 +278,13 @@
     },
     {
       "id": "actual-40",
-      "path": "web-angular/src/app/shared/ui/collections/collection-footer.ts",
+      "path": "web-angular/src/app/shared/ui/collections/collection-footer/collection-footer.ts",
       "layer": "web",
       "purpose": "Actual implementation or portable S1-A3 verification evidence"
     },
     {
       "id": "actual-41",
-      "path": "web-angular/src/app/shared/ui/collections/collection-frame.ts",
+      "path": "web-angular/src/app/shared/ui/collections/collection-frame/collection-frame.ts",
       "layer": "web",
       "purpose": "Actual implementation or portable S1-A3 verification evidence"
     },
@@ -314,25 +314,25 @@
     },
     {
       "id": "actual-46",
-      "path": "web-angular/src/app/shared/ui/collections/my-data-grid.html",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid/my-data-grid.html",
       "layer": "web",
       "purpose": "Actual implementation or portable S1-A3 verification evidence"
     },
     {
       "id": "actual-47",
-      "path": "web-angular/src/app/shared/ui/collections/my-data-grid.scss",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid/my-data-grid.scss",
       "layer": "web",
       "purpose": "Actual implementation or portable S1-A3 verification evidence"
     },
     {
       "id": "actual-48",
-      "path": "web-angular/src/app/shared/ui/collections/my-data-grid.ts",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid/my-data-grid.ts",
       "layer": "web",
       "purpose": "Actual implementation or portable S1-A3 verification evidence"
     },
     {
       "id": "actual-49",
-      "path": "web-angular/src/app/dev/collection-preview.ts",
+      "path": "web-angular/src/app/dev/collection-preview/collection-preview.ts",
       "layer": "web",
       "purpose": "Actual implementation or portable S1-A3 verification evidence"
     },
@@ -527,6 +527,198 @@
       "path": "web-angular/src/app/shared/data/public-api.ts",
       "layer": "web",
       "purpose": "Current optional criteria/type alias evolution"
+    },
+    {
+      "id": "component-resource-cf6c9fe09ba0",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/controls/option-select/option-select.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-a36b777f66d7",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/controls/option-select/option-select.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-6010b175ad49",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/layout/scroll-viewport/scroll-viewport.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-75c6a9c039af",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/layout/scroll-viewport/scroll-viewport.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-2f099ca0f3c9",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/overlays/popover-panel/popover-panel.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-8d60ad3720b1",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/feedback/feedback-state/feedback-state.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-d24cba69c11c",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/feedback/feedback-state/feedback-state.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-5b5d22d33fdd",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/card-list/card-list.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-0ffcf25c452b",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/card-list/card-list.component.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-c665370feca6",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/collection-feedback/collection-feedback.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-e64e78f8ab1d",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/collection-footer/collection-footer.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-1edfbeca7388",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/collection-footer/collection-footer.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-b0c97d71b7a5",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/collection-frame/collection-frame.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-e56de07ea51c",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/collection-frame/collection-frame.component.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-ecf5bf6c800b",
+      "layer": "web",
+      "path": "web-angular/src/app/dev/collection-preview/collection-preview.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-0c9560317151",
+      "layer": "web",
+      "path": "web-angular/src/app/dev/collection-preview/collection-preview.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-4f58fd5a2641",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/data/route-collection-criteria.spec.listing.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-408d7c5c8a89",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/data/route-collection-criteria.spec.other.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "quality-ff96e53d3ee7",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid/grid-column-presentation.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-5356e0ff9c90",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid/grid-column-presentation.spec.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-519b867de1ce",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/my-data-grid/grid-viewport.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-6fe0129a75d1",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/collection-column-pipe.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-97ddb61c625b",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/collection-column-pipe.spec.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-00675b4aab21",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/data/collection-criteria.types.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-f37c37b56180",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/data/collection-criteria-values.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-b85643189746",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/data/collection-criteria-normalizer.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-a66f038e1ddc",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/collection-record-decision.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-85f452486fd4",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/collection-record-decision.spec.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-b48e367c4706",
+      "layer": "configuration",
+      "path": "web-angular/eslint.config.mjs",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-18187b5430c6",
+      "layer": "configuration",
+      "path": "web-angular/scripts/dependency-rules.mjs",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-056ed62f225e",
+      "layer": "configuration",
+      "path": "web-angular/scripts/dependency-rules.test.mjs",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-16f555949438",
+      "layer": "web",
+      "path": "web-angular/src/testing/fixture-item.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
     }
   ],
   "finalizationChecklist": [

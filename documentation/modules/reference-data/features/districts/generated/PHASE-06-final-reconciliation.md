@@ -53,11 +53,11 @@ decision. A focused test pass alone is never a `Ready` decision.
 | --- | ---: | --- |
 | districts-master | 8 | `8b2d2dd81761ee08dc4f372a5fed20353b60d2020d2680d5d0138459389b7bbd` |
 | districts-master | 9 | `3dd2e014a594cdc18b53c569085039d44f98e6b4716284436f897e7e3366b897` |
-| districts-master | 10 | `c573fda5482d21087c51b39beff83bab6bf6faeaa8410f4957b5c5e21a8372d5` |
+| districts-master | 10 | `73ff447660f497f5407de121820a46469b8e621c57bedc6d13380fb2af37d3ce` |
 | districts-api | 10 | `36d563363a7c0b878ef54b12ab23dc6eb7e77e583b14c5199eeed69540539ee0` |
-| districts-api | 11 | `94630d0b417ed5537a5071fe59e19f7e36b325b45b543acd0a067dffb45e4bbc` |
+| districts-api | 11 | `fb6ea43761f6459580c37e19bbaaebcc74111c4591715369f53cec3d3206b10d` |
 | districts-web | 12 | `cf9b0888ef0144a75decf29a461edb753e1d68c5b8c12089d5d107157f157fe7` |
 | districts-web | 13 | `0fbf57fe068b3bf7f395d05dbae5002f3c975ac356b56f9c02552831491f3349` |
 | districts-web | 14 | `6aaa77920c1f3cbbcaba26cc22bad78a15d29b0c931087e80b59d758dd557cdf` |
 | districts-mobile | 14 | `83ccfe748948608ad402e5d7101a2964d72b9e609c1ce1dbdc66bdb35b089b99` |
-| districts-mobile | 15 | `659b10d4561775eeb6d72d7acce06a4515644958840ec7820f9097e7a1826050` |
+| districts-mobile | 15 | `255f11283ad39ed11eb6449dd578602d06f18b4da8421ec812d6b0331c4f53c1` |

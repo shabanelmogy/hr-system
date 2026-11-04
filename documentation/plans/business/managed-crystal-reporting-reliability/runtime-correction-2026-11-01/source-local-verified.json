@@ -1,0 +1,189 @@
+{
+  "DateUtc": "2026-11-01T10:41:15.5544203Z",
+  "Passed": true,
+  "NativeRenderAttempted": false,
+  "FailureType": null,
+  "BaseUrl": "http://localhost:44343/",
+  "Cases": [
+    {
+      "Route": "catalog?entityKey=countries",
+      "KeyMode": "missing",
+      "Status": 401,
+      "Expected": 401,
+      "BuildId": null,
+      "Fingerprint": null,
+      "Passed": true
+    },
+    {
+      "Route": "catalog?entityKey=countries",
+      "KeyMode": "wrong",
+      "Status": 401,
+      "Expected": 401,
+      "BuildId": null,
+      "Fingerprint": null,
+      "Passed": true
+    },
+    {
+      "Route": "catalog?entityKey=countries",
+      "KeyMode": "duplicate",
+      "Status": 401,
+      "Expected": 401,
+      "BuildId": null,
+      "Fingerprint": null,
+      "Passed": true
+    },
+    {
+      "Route": "catalog?entityKey=countries",
+      "KeyMode": "valid",
+      "Status": 200,
+      "Expected": 200,
+      "BuildId": null,
+      "Fingerprint": null,
+      "Passed": true
+    },
+    {
+      "Route": "health",
+      "KeyMode": "missing",
+      "Status": 401,
+      "Expected": 401,
+      "BuildId": null,
+      "Fingerprint": null,
+      "Passed": true
+    },
+    {
+      "Route": "health",
+      "KeyMode": "wrong",
+      "Status": 401,
+      "Expected": 401,
+      "BuildId": null,
+      "Fingerprint": null,
+      "Passed": true
+    },
+    {
+      "Route": "health",
+      "KeyMode": "duplicate",
+      "Status": 401,
+      "Expected": 401,
+      "BuildId": null,
+      "Fingerprint": null,
+      "Passed": true
+    },
+    {
+      "Route": "health",
+      "KeyMode": "valid",
+      "Status": 200,
+      "Expected": 200,
+      "BuildId": "ebb35e23-804b-4e7a-b8ba-269602fc7411",
+      "Fingerprint": "0fe8d65f181bef35dcd8e97d4e453014cdc9c7f8d795d0923a04bfe12e7a3015",
+      "Passed": true
+    },
+    {
+      "Route": "catalog/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/source?expectedSha256=bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "KeyMode": "missing",
+      "Status": 401,
+      "Expected": 401,
+      "BuildId": null,
+      "Fingerprint": null,
+      "Passed": true
+    },
+    {
+      "Route": "catalog/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/source?expectedSha256=bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "KeyMode": "wrong",
+      "Status": 401,
+      "Expected": 401,
+      "BuildId": null,
+      "Fingerprint": null,
+      "Passed": true
+    },
+    {
+      "Route": "catalog/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/source?expectedSha256=bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "KeyMode": "duplicate",
+      "Status": 401,
+      "Expected": 401,
+      "BuildId": null,
+      "Fingerprint": null,
+      "Passed": true
+    },
+    {
+      "Route": "catalog/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/source?expectedSha256=bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "KeyMode": "valid",
+      "Status": 404,
+      "Expected": 404,
+      "BuildId": null,
+      "Fingerprint": null,
+      "Passed": true
+    },
+    {
+      "Route": "inspect",
+      "KeyMode": "missing",
+      "Status": 401,
+      "Expected": 401,
+      "BuildId": null,
+      "Fingerprint": null,
+      "Passed": true
+    },
+    {
+      "Route": "inspect",
+      "KeyMode": "wrong",
+      "Status": 401,
+      "Expected": 401,
+      "BuildId": null,
+      "Fingerprint": null,
+      "Passed": true
+    },
+    {
+      "Route": "inspect",
+      "KeyMode": "duplicate",
+      "Status": 401,
+      "Expected": 401,
+      "BuildId": null,
+      "Fingerprint": null,
+      "Passed": true
+    },
+    {
+      "Route": "inspect",
+      "KeyMode": "valid",
+      "Status": 415,
+      "Expected": 415,
+      "BuildId": null,
+      "Fingerprint": null,
+      "Passed": true
+    },
+    {
+      "Route": "render",
+      "KeyMode": "missing",
+      "Status": 401,
+      "Expected": 401,
+      "BuildId": null,
+      "Fingerprint": null,
+      "Passed": true
+    },
+    {
+      "Route": "render",
+      "KeyMode": "wrong",
+      "Status": 401,
+      "Expected": 401,
+      "BuildId": null,
+      "Fingerprint": null,
+      "Passed": true
+    },
+    {
+      "Route": "render",
+      "KeyMode": "duplicate",
+      "Status": 401,
+      "Expected": 401,
+      "BuildId": null,
+      "Fingerprint": null,
+      "Passed": true
+    },
+    {
+      "Route": "render",
+      "KeyMode": "valid",
+      "Status": 415,
+      "Expected": 415,
+      "BuildId": null,
+      "Fingerprint": null,
+      "Passed": true
+    }
+  ]
+}

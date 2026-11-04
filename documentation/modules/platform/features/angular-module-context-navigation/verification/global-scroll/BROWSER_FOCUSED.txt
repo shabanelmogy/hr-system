@@ -1,0 +1,13 @@
+
+> erp-angular@0.0.0 verify:scroll-browser
+> node scripts/verify-scroll-browser.mjs --focused
+
+(node:28972) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///G:/test/ERPSYSTEM/ERPSYSTEM/web-angular/src/app/platform/auth/auth.fixture.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\G:\test\ERPSYSTEM\ERPSYSTEM\web-angular\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Global scroll focused passed en/390
+Global scroll focused passed en/1440
+Global scroll focused passed ar/390
+Global scroll focused passed ar/1440
+Global scrollbar 4 browser cases passed.

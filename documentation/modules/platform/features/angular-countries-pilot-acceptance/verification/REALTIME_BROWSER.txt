@@ -1,0 +1,18 @@
+
+> erp-angular@0.0.0 verify:country-realtime-browser
+> node scripts/verify-country-realtime-browser.mjs
+
+(node:23200) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///G:/test/ERPSYSTEM/ERPSYSTEM/web-angular/src/app/platform/auth/auth.fixture.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to \\?\G:\test\ERPSYSTEM\ERPSYSTEM\web-angular\package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Realtime browser passed en/390
+Realtime browser passed en/1440
+Realtime browser passed ar/390
+Realtime browser passed ar/1440
+Realtime browser passed forbidden
+Realtime browser passed token-denied
+Realtime browser passed initial-retry
+Realtime browser passed hub401
+Realtime browser passed hub403
+Countries realtime 9 browser cases passed.

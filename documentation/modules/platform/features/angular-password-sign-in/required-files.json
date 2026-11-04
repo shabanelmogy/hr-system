@@ -158,37 +158,37 @@
     {
       "id": "runtime-22",
       "layer": "web",
-      "path": "web-angular/src/app/platform/auth/pages/login-page.html",
+      "path": "web-angular/src/app/platform/auth/pages/login-page/login-page.html",
       "purpose": "Current implemented sign-in/shared feedback evidence"
     },
     {
       "id": "runtime-23",
       "layer": "web",
-      "path": "web-angular/src/app/platform/auth/pages/login-page.scss",
+      "path": "web-angular/src/app/platform/auth/pages/login-page/login-page.scss",
       "purpose": "Current implemented sign-in/shared feedback evidence"
     },
     {
       "id": "runtime-24",
       "layer": "web",
-      "path": "web-angular/src/app/platform/auth/pages/login-page.ts",
+      "path": "web-angular/src/app/platform/auth/pages/login-page/login-page.ts",
       "purpose": "Current implemented sign-in/shared feedback evidence"
     },
     {
       "id": "runtime-25",
       "layer": "web",
-      "path": "web-angular/src/app/platform/auth/pages/password-request-page.ts",
+      "path": "web-angular/src/app/platform/auth/pages/password-request-page/password-request-page.ts",
       "purpose": "Current implemented sign-in/shared feedback evidence"
     },
     {
       "id": "runtime-26",
       "layer": "verification",
-      "path": "web-angular/src/app/platform/auth/pages/session-page.spec.ts",
+      "path": "web-angular/src/app/platform/auth/pages/session-page/session-page.spec.ts",
       "purpose": "Current implemented sign-in/shared feedback evidence"
     },
     {
       "id": "runtime-27",
       "layer": "web",
-      "path": "web-angular/src/app/platform/auth/pages/session-page.ts",
+      "path": "web-angular/src/app/platform/auth/pages/session-page/session-page.ts",
       "purpose": "Current implemented sign-in/shared feedback evidence"
     },
     {
@@ -236,19 +236,19 @@
     {
       "id": "runtime-35",
       "layer": "web",
-      "path": "web-angular/src/app/shell/auth-layout/auth-branding.html",
+      "path": "web-angular/src/app/shell/auth-layout/auth-branding/auth-branding.html",
       "purpose": "Current implemented sign-in/shared feedback evidence"
     },
     {
       "id": "runtime-36",
       "layer": "web",
-      "path": "web-angular/src/app/shell/auth-layout/auth-branding.scss",
+      "path": "web-angular/src/app/shell/auth-layout/auth-branding/auth-branding.scss",
       "purpose": "Current implemented sign-in/shared feedback evidence"
     },
     {
       "id": "runtime-37",
       "layer": "web",
-      "path": "web-angular/src/app/shell/auth-layout/auth-branding.ts",
+      "path": "web-angular/src/app/shell/auth-layout/auth-branding/auth-branding.ts",
       "purpose": "Current implemented sign-in/shared feedback evidence"
     },
     {
@@ -272,19 +272,19 @@
     {
       "id": "runtime-41",
       "layer": "web",
-      "path": "web-angular/src/app/shared/ui/buttons/action-button.scss",
+      "path": "web-angular/src/app/shared/ui/buttons/action-button/action-button.scss",
       "purpose": "Current implemented sign-in/shared feedback evidence"
     },
     {
       "id": "runtime-42",
       "layer": "verification",
-      "path": "web-angular/src/app/shared/ui/buttons/action-button.spec.ts",
+      "path": "web-angular/src/app/shared/ui/buttons/action-button/action-button.spec.ts",
       "purpose": "Current implemented sign-in/shared feedback evidence"
     },
     {
       "id": "runtime-43",
       "layer": "web",
-      "path": "web-angular/src/app/shared/ui/buttons/action-button.ts",
+      "path": "web-angular/src/app/shared/ui/buttons/action-button/action-button.ts",
       "purpose": "Current implemented sign-in/shared feedback evidence"
     },
     {
@@ -296,49 +296,49 @@
     {
       "id": "runtime-45",
       "layer": "verification",
-      "path": "web-angular/src/app/shared/ui/controls/option-select.spec.ts",
+      "path": "web-angular/src/app/shared/ui/controls/option-select/option-select.spec.ts",
       "purpose": "Current implemented sign-in/shared feedback evidence"
     },
     {
       "id": "runtime-46",
       "layer": "web",
-      "path": "web-angular/src/app/shared/ui/controls/option-select.ts",
+      "path": "web-angular/src/app/shared/ui/controls/option-select/option-select.ts",
       "purpose": "Current implemented sign-in/shared feedback evidence"
     },
     {
       "id": "runtime-47",
       "layer": "web",
-      "path": "web-angular/src/app/shared/ui/dialogs/choice-dialog.ts",
+      "path": "web-angular/src/app/shared/ui/dialogs/choice-dialog/choice-dialog.ts",
       "purpose": "Current implemented sign-in/shared feedback evidence"
     },
     {
       "id": "runtime-48",
       "layer": "web",
-      "path": "web-angular/src/app/shared/ui/forms/fields/text-field.scss",
+      "path": "web-angular/src/app/shared/ui/forms/fields/text-field/text-field.scss",
       "purpose": "Current implemented sign-in/shared feedback evidence"
     },
     {
       "id": "runtime-49",
       "layer": "web",
-      "path": "web-angular/src/app/shared/ui/forms/fields/text-field.ts",
+      "path": "web-angular/src/app/shared/ui/forms/fields/text-field/text-field.ts",
       "purpose": "Current implemented sign-in/shared feedback evidence"
     },
     {
       "id": "runtime-50",
       "layer": "web",
-      "path": "web-angular/src/app/shared/ui/forms/form-container.scss",
+      "path": "web-angular/src/app/shared/ui/forms/form-container/form-container.scss",
       "purpose": "Current implemented sign-in/shared feedback evidence"
     },
     {
       "id": "runtime-51",
       "layer": "verification",
-      "path": "web-angular/src/app/shared/ui/forms/form-container.spec.ts",
+      "path": "web-angular/src/app/shared/ui/forms/form-container/form-container.spec.ts",
       "purpose": "Current implemented sign-in/shared feedback evidence"
     },
     {
       "id": "runtime-52",
       "layer": "web",
-      "path": "web-angular/src/app/shared/ui/forms/form-container.ts",
+      "path": "web-angular/src/app/shared/ui/forms/form-container/form-container.ts",
       "purpose": "Current implemented sign-in/shared feedback evidence"
     },
     {
@@ -356,25 +356,25 @@
     {
       "id": "runtime-55",
       "layer": "web",
-      "path": "web-angular/src/app/shared/ui/forms/validation-summary.scss",
+      "path": "web-angular/src/app/shared/ui/forms/validation-summary/validation-summary.scss",
       "purpose": "Current implemented sign-in/shared feedback evidence"
     },
     {
       "id": "runtime-56",
       "layer": "verification",
-      "path": "web-angular/src/app/shared/ui/forms/validation-summary.spec.ts",
+      "path": "web-angular/src/app/shared/ui/forms/validation-summary/validation-summary.spec.ts",
       "purpose": "Current implemented sign-in/shared feedback evidence"
     },
     {
       "id": "runtime-57",
       "layer": "web",
-      "path": "web-angular/src/app/shared/ui/forms/validation-summary.ts",
+      "path": "web-angular/src/app/shared/ui/forms/validation-summary/validation-summary.ts",
       "purpose": "Current implemented sign-in/shared feedback evidence"
     },
     {
       "id": "runtime-58",
       "layer": "web",
-      "path": "web-angular/src/app/shared/ui/icons/app-icon.ts",
+      "path": "web-angular/src/app/shared/ui/icons/app-icon/app-icon.ts",
       "purpose": "Current implemented sign-in/shared feedback evidence"
     },
     {
@@ -508,6 +508,138 @@
       "layer": "documentation",
       "path": "documentation/modules/platform/features/angular-localization-foundation/required-files.json",
       "purpose": "Current shared feedback bootstrap and inherited localization ownership"
+    },
+    {
+      "id": "component-resource-dc54cbe192f8",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/auth/pages/password-request-page/password-request-page.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-ce5fc1fa6410",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/auth/pages/password-request-page/password-request-page.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-1dfa531caa7d",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/auth/pages/session-page/session-page.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-241e0f30822a",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/auth/pages/session-page/session-page.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-ccd9a49e7669",
+      "layer": "verification",
+      "path": "web-angular/src/app/shared/ui/buttons/action-button/action-button.spec.toolbar-composition.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-22b35dca3c00",
+      "layer": "verification",
+      "path": "web-angular/src/app/shared/ui/buttons/action-button/action-button.spec.submit-composition.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-eb086582836d",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/buttons/action-button/action-button.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-cf6c9fe09ba0",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/controls/option-select/option-select.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-a36b777f66d7",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/controls/option-select/option-select.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-a3a284dc5c4d",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/dialogs/choice-dialog/choice-dialog.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-eb1b0afcff45",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/dialogs/choice-dialog/choice-dialog.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-d48078893077",
+      "layer": "verification",
+      "path": "web-angular/src/app/shared/ui/forms/form-container/form-container.spec.access-composition.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-67ebb7f690a7",
+      "layer": "verification",
+      "path": "web-angular/src/app/shared/ui/forms/form-container/form-container.spec.profile-composition.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-311f299a2a50",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/form-container/form-container.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-c872cf4696c4",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/validation-summary/validation-summary.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-34efa13303b5",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/icons/app-icon/app-icon.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-5a45ead9f07e",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/icons/app-icon/app-icon.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-d4d95fd97ca2",
+      "layer": "verification",
+      "path": "web-angular/src/app/app.spec.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "quality-b48e367c4706",
+      "layer": "configuration",
+      "path": "web-angular/eslint.config.mjs",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-18187b5430c6",
+      "layer": "configuration",
+      "path": "web-angular/scripts/dependency-rules.mjs",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-056ed62f225e",
+      "layer": "configuration",
+      "path": "web-angular/scripts/dependency-rules.test.mjs",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-16f555949438",
+      "layer": "web",
+      "path": "web-angular/src/testing/fixture-item.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
     }
   ]
 }

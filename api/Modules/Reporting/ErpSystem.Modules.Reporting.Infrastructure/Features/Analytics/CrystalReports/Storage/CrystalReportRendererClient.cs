@@ -70,12 +70,14 @@ public sealed class CrystalReportRendererClient(
                     (int)response.StatusCode, runtimeErrorCode, request.EntityKey);
                 if (response.StatusCode == HttpStatusCode.BadRequest)
                 {
-                    return Failure(string.Equals(
-                        runtimeErrorCode,
-                        "crystal_runtime_unsupported_profile",
-                        StringComparison.Ordinal)
-                            ? CrystalReportRenderFailure.UnsupportedEntity
-                            : CrystalReportRenderFailure.InvalidReport);
+                    return Failure(runtimeErrorCode switch
+                    {
+                        "crystal_runtime_unsupported_profile" => CrystalReportRenderFailure.UnsupportedEntity,
+                        "crystal_runtime_source_rejected" => CrystalReportRenderFailure.SourceRejected,
+                        "crystal_runtime_schema_mismatch" => CrystalReportRenderFailure.SchemaMismatch,
+                        "crystal_runtime_parameter_mismatch" => CrystalReportRenderFailure.ParameterMismatch,
+                        _ => CrystalReportRenderFailure.InvalidReport
+                    });
                 }
                 return Failure(CrystalReportRenderFailure.RuntimeUnavailable);
             }

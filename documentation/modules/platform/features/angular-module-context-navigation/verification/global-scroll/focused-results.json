@@ -1,0 +1,45 @@
+{
+  "date": "2026-10-31T12:48:44.947Z",
+  "results": [
+    {
+      "language": "en",
+      "width": 390,
+      "grid": true,
+      "horizontal": true,
+      "keyboardPaging": true,
+      "dialog": true,
+      "sharedTextarea": true,
+      "passed": true
+    },
+    {
+      "language": "en",
+      "width": 1440,
+      "grid": true,
+      "horizontal": true,
+      "keyboardPaging": true,
+      "dialog": true,
+      "sharedTextarea": true,
+      "passed": true
+    },
+    {
+      "language": "ar",
+      "width": 390,
+      "grid": true,
+      "horizontal": true,
+      "keyboardPaging": true,
+      "dialog": true,
+      "sharedTextarea": true,
+      "passed": true
+    },
+    {
+      "language": "ar",
+      "width": 1440,
+      "grid": true,
+      "horizontal": true,
+      "keyboardPaging": true,
+      "dialog": true,
+      "sharedTextarea": true,
+      "passed": true
+    }
+  ]
+}

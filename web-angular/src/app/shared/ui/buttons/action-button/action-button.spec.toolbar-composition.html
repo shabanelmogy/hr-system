@@ -1,0 +1,8 @@
+<nav>
+  <erp-button
+    [label]="'general.mainTitle' | uiText"
+    [busy]="busy()"
+    [disabled]="disabled()"
+    (activated)="count = count + 1"
+  />
+</nav>

@@ -1,0 +1,21 @@
+.choices {
+  display: grid;
+  gap: 0.25rem;
+}
+.choices erp-button {
+  --action-min-height: 64px;
+  --action-radius: 8px;
+  --action-quiet-background: transparent;
+  --action-padding-x: 16px;
+}
+.option-icon {
+  flex: 0 0 40px;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  background: var(--accent);
+  color: var(--primary);
+  border-radius: 8px;
+  margin-inline-end: 8px;
+}

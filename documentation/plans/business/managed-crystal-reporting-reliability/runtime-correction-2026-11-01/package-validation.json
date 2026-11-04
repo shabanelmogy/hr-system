@@ -1,0 +1,12 @@
+{
+  "PrivateKeysMatch": true,
+  "PrivateKeyNonEmpty": true,
+  "ApiPatchEnabled": true,
+  "ApiPatchUrl": "https://crystalreport-generator.runasp.net/",
+  "CommittedRuntimeKeyEmpty": true,
+  "PrivateErrorsEnabled": true,
+  "CompilerPackaged": true,
+  "HostedAppSettingsPreserved": true,
+  "SyntheticReportsRemaining": 0,
+  "Published": false
+}

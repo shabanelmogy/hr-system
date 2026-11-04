@@ -1,0 +1,9 @@
+{
+  "fileName": "Countries.1.rpt",
+  "length": 5120,
+  "sha256": "5bbc369aa1b83e08ebb8e161e50e49ab41c14bbb4c3d057f4da483945f014a4f",
+  "statusCode": 400,
+  "code": "crystal_runtime_source_rejected",
+  "reason": "Crystal Report files must contain exactly one table or Command for API-supplied data.",
+  "originalUnchanged": true
+}

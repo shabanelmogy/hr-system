@@ -1,0 +1,23 @@
+main {
+  max-inline-size: var(--wide-content-max-width);
+  margin-inline: auto;
+  padding: 1.5rem;
+}
+h2 {
+  margin-block: 0 1rem;
+  font-size: 1.5rem;
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-block-end: 1rem;
+}
+.surface {
+  background: var(--surface);
+  color: var(--surface-foreground);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin-block-start: 1.5rem;
+}

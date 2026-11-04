@@ -26,8 +26,6 @@ namespace CrystalReportGeneratorApi
 
     internal sealed class InternalApiKeyHeaderOperationFilter : IOperationFilter
     {
-        private const string DevelopmentApiKey = "dev-crystal-report-key";
-
         public void Apply(Operation operation, SchemaRegistry schemaRegistry, ApiDescription apiDescription)
         {
             if (operation.parameters == null)
@@ -39,8 +37,7 @@ namespace CrystalReportGeneratorApi
                 @in = "header",
                 type = "string",
                 required = true,
-                @default = DevelopmentApiKey,
-                description = "Development internal API key"
+                description = "Deployment-owned internal API key; never stored in Swagger"
             });
         }
     }

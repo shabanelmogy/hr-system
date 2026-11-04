@@ -1,0 +1,252 @@
+{
+  "verifiedAtUtc": "2026-11-01T13:24:03.177Z",
+  "api": {
+    "projects": 12,
+    "failed": 0,
+    "passed": 1193,
+    "skipped": 3
+  },
+  "reportingTests": 159,
+  "architectureTests": 70,
+  "angular": {
+    "unitTests": 487,
+    "architectureCases": 26,
+    "fullGatePassed": true,
+    "initialBundleKb": 495.63
+  },
+  "actualConfiguredSchema": {
+    "ConfiguredDatabaseVerified": true,
+    "GlobalTables": 2,
+    "Migration": "20261101123802_AddGlobalCrystalReportVersions",
+    "ExistingTenantTablesChanged": false,
+    "BusinessRowsWritten": false
+  },
+  "realSqlLifecyclePassed": true,
+  "remoteApplicationPublicationPerformed": false,
+  "angularDevServerStarted": false,
+  "browserNativeAcceptanceVerified": false,
+  "phase06": "Not Verified",
+  "followUp": "FOLLOW-024",
+  "sourceHashes": [
+    {
+      "path": "api/ErpSystem.Api/Localization/Resources/ar-EG.json",
+      "sha256": "312d48608b7ddbd313ef0ee8d37c1c1489687c4b30340fb680ad3e8ef231d40f"
+    },
+    {
+      "path": "api/ErpSystem.Api/Localization/Resources/en-US.json",
+      "sha256": "5436a0880f9e6d500d6d4486fa3b6c33a2562a35e8c434ed0445169cf46ea1a8"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/DependencyInjection.cs",
+      "sha256": "9643d0e2b5b17c9b42c54a382d4f64d1215e4982eefe622f0113611160cabd0e"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/CrystalReports/Abstractions/IGlobalCrystalReportIdentity.cs",
+      "sha256": "cefab9357053451461e12051bb37bbf15560b7547f26b9a9b148c290666a9e69"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/CrystalReports/Abstractions/IGlobalCrystalReportStore.cs",
+      "sha256": "a77c740a5e31a059a2eb69cfe922618f1c7170d16b156046eb73bd6a2b115820"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/CrystalReports/Abstractions/IManagedCrystalReportSchemaSource.cs",
+      "sha256": "894e9844d97f03194c75b1b0d18ac1a1c05dfa88a18c383678ba9dc914c27996"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/CrystalReports/Commands/GlobalCrystalReportLifecycleHandlers.cs",
+      "sha256": "63bf71b67349c482c99c850425facd6c9cc96b42a351d05faf5e5b9304f8b399"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/CrystalReports/Commands/GlobalCrystalReportMessages.cs",
+      "sha256": "d4a7b1b561fdc76cfdcae77f248e73d50e1389e1646098ddf48a43f8d496dda8"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/CrystalReports/Commands/GlobalCrystalReportUploadHandlers.cs",
+      "sha256": "d8694b94b04fc27ec88759b5202989043f86d113ce6c5b0bd97c1816a3b8a881"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/CrystalReports/Queries/CrystalReportQueryHandlers.cs",
+      "sha256": "b5568b48d6f3acf7213df7806bf5d5acf92400292107d742be92aed1d600b550"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/CrystalReports/Queries/GlobalCrystalReportManagementHandlers.cs",
+      "sha256": "05857fe7ec33a006671888328205840ae0bcc5e99d6aa5ada406bc3290c9543d"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/CrystalReports/Queries/GlobalCrystalReportManagementQueries.cs",
+      "sha256": "d28712fd619c8cd72fef882dd254eeb7a8d5cdfdb6a422c13df5cfa1896e334c"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Application/Features/Analytics/CrystalReports/Validation/GlobalCrystalReportPolicy.cs",
+      "sha256": "3bc8f86dab91e3588f1a8ae85286986aa58c421ae668363ff3b61faa5f35ebcf"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Contracts/Authorization/ReportingPermissions.cs",
+      "sha256": "aab4f1495bdf0c64cdaa2e532d73ff3523a30fb72b10e8240aa3fabf9aa3757c"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Domain/Analytics/CrystalReports/Entities/GlobalCrystalReport.cs",
+      "sha256": "3ffebd0bfe81a47dc8ca8db6a00054ab3edc5b2af4b22e5c5acaaa3ba769a9cb"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Domain/Analytics/CrystalReports/Entities/GlobalCrystalReportVersion.cs",
+      "sha256": "92266ab98ab86b7b33b5f46169078b1685aabcdefdbe979ff901036fad259fc4"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/DependencyInjection.cs",
+      "sha256": "0f3606b0c119706134402cbd94ae6f1438506f3c9f5513183d1f4a39b36181fd"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/CrystalReports/Persistence/GlobalCrystalReportConfigurations.cs",
+      "sha256": "5d51c4db452915e5ec2563faa0e7f722759744525a4402e6e9f62c8f9aa4ca3b"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/CrystalReports/Persistence/GlobalCrystalReportStore.cs",
+      "sha256": "1673dfcefea90badd4c4ece2420f4cec0fb0248f905e0f7f536fcafe6c509891"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/CrystalReports/Persistence/ManagedCrystalReportContractRegistry.cs",
+      "sha256": "364b2aea231f7dad2102e8cfc7ea4dfaa03b3cc4bb167afb192f67cc86b17bc0"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Features/Analytics/CrystalReports/Security/GlobalCrystalReportIdentity.cs",
+      "sha256": "622360adb07571ebc8eb8d1257e208c2e9feee9a293566c5b4f21dddbd1c58fc"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Migrations/20261101123802_AddGlobalCrystalReportVersions.Designer.cs",
+      "sha256": "3d9cec6f9c4c0da76967740563396d06a177438b71210d1fae68c64c295566e7"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Migrations/20261101123802_AddGlobalCrystalReportVersions.cs",
+      "sha256": "b44717001a1c6c319a93b58cebab2d42f7b957fe00d77431adc7d3e3e8ac5378"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/Migrations/ReportingDbContextModelSnapshot.cs",
+      "sha256": "6c36f2773803a4c40de139cbd6d1b3bbf10cc33efeed26a8f7937833e74abd60"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Infrastructure/ReportingDbContext.cs",
+      "sha256": "628d80c0b2eed4a19fce679810f57fd7012a7fd252d318d2beacdd6779456d6c"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Presentation/Features/Analytics/CrystalReports/V1/CrystalReportsController.cs",
+      "sha256": "13789c3ff6004549675c489e121c7b3011b61311ff91163fa1d626d97c56b5d6"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Presentation/Features/Analytics/CrystalReports/V1/GlobalCrystalReportManagementController.cs",
+      "sha256": "75f4d0425552a1bc780176cebd859038c9b493c5130d9d5d05c1a90f87a24655"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/GlobalCrystalReportManagementTests.cs",
+      "sha256": "113ba72911d6246d97917c2e4d1b7763a7b228e68836bb36b72d8c33d3de52fa"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/GlobalCrystalReportQueryTests.cs",
+      "sha256": "9ed5f414de2ec5fcf66cd5b99aa85163f3be0e7be055a36cacc58d2313e7a1dc"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/GlobalCrystalReportTestFiles.cs",
+      "sha256": "8ee04b7eecb56942f47fdbc05e9f0752b32d84a6ce261d6afde5bbe5a804a109"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/GlobalCrystalReportTestStore.cs",
+      "sha256": "9f35ee6e0b1e7e7b2ca2241624a98fab5234f0fb30724b2fa23e7a3ee16ffef7"
+    },
+    {
+      "path": "api/Modules/Reporting/ErpSystem.Modules.Reporting.Tests/ReportingAuthorizationTests.cs",
+      "sha256": "9ea8386ea41fc0505d5111dae8f0dd4e7de339ea7fccc7336aba310810a2b473"
+    },
+    {
+      "path": "api/Tests/ErpSystem.IntegrationTests/GlobalCrystalReportPersistenceTests.cs",
+      "sha256": "b8e79be596fd3097a2c2463bc91d32cd412f6e682dcfb0a15c5e437f1f22dbbc"
+    },
+    {
+      "path": "web-angular/src/app/composition/authenticated-routes/authenticated-routes.ts",
+      "sha256": "2c341889b914d2027b1683e95739a84c31f891528593723f938c725509545514"
+    },
+    {
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/global-template-guard.ts",
+      "sha256": "2f348cbaa748d22d1cdf494fc209eb568f4c101dcc08eb9d8d4e51cadb3ed3f0"
+    },
+    {
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/pages/global-template-manager/global-template-manager.html",
+      "sha256": "04425e4418977c677a0cc3cafb346f2bc410217dbd791f61eb9ece13c4f78912"
+    },
+    {
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/pages/global-template-manager/global-template-manager.scss",
+      "sha256": "5d516918b5d5fa80c643f5536e0efa5442d985e0772fc58237d8adff81a94f31"
+    },
+    {
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/pages/global-template-manager/global-template-manager.spec.ts",
+      "sha256": "6e59cec88c83bce8ed53f35b4cecde8e28a18b64ec4de4511e3bf462690c8969"
+    },
+    {
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/pages/global-template-manager/global-template-manager.ts",
+      "sha256": "3b0859d42975ed83b649494cff1c65a22b90cdf2f419155fe690a9387858e661"
+    },
+    {
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/services/global-template-service.spec.ts",
+      "sha256": "f18a39c75d192f9d09eff96351d0195e6f99205e7e6de67eeaa4bb56a8d60d71"
+    },
+    {
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/services/global-template-service.ts",
+      "sha256": "53c7510a7b5a5546d8d0c2de2447438a630cf1c069817ded5769a091b0e731af"
+    },
+    {
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/state/global-template-state.ts",
+      "sha256": "2d9d0775a1c2f45abd1c3165449076b8f942d2bc9284ff42fb938f7334e40115"
+    },
+    {
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/types/global-template.spec.ts",
+      "sha256": "7e6b42657aa088e44bc889bd04cf73736474dc17292387fdcbc99f68cfe571e9"
+    },
+    {
+      "path": "web-angular/src/app/modules/reporting/global-template-manager/types/global-template.ts",
+      "sha256": "41629fab6400598bc4914acb42dd32299ad6462a570c1c076b91c9872a32b7e7"
+    },
+    {
+      "path": "web-angular/src/app/modules/reporting/public-api.ts",
+      "sha256": "a59a95b090a118b7783326cc33dea50246c968ffaa213ab6df1d2faa224a7d7a"
+    },
+    {
+      "path": "web-angular/src/app/shared/data/blob-download.ts",
+      "sha256": "12c234d62aa42af66fd8a75e9ea5a376e356e1295b5e29f34ceb69bff546800e"
+    },
+    {
+      "path": "web-angular/src/app/shared/data/spreadsheet-import.ts",
+      "sha256": "0fd2aac751d7aa8a17b27c0572ff2851df1ed9219c44482e4192da5235d25fbc"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/fields/file-field/file-field.html",
+      "sha256": "efbb8b61163118710bfc685fab71b91f358a265ef585517e5ce0cdfb1734b156"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/fields/file-field/file-field.scss",
+      "sha256": "7f7061a5c04c5d4831a684e7415e40b8230bac6b85fb42529b2ea2008b32cd3e"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/fields/file-field/file-field.spec.ts",
+      "sha256": "4fb965b35912be41c2f01c45df4afa1fa173e26180f4a74c4edd72cec5e96bf2"
+    },
+    {
+      "path": "web-angular/src/app/shared/ui/forms/fields/file-field/file-field.ts",
+      "sha256": "e087cdc72471914ae77f0d9ab687b9ad42e5c0673427e175c667cf7f321f5df1"
+    },
+    {
+      "path": "web-angular/src/app/shell/context-slot.ts",
+      "sha256": "bf973ad85fb5c88072e80db0cf75d61d0ecb2e87cb697e3fa324d131a27bf40d"
+    },
+    {
+      "path": "web-angular/src/app/shell/layout/main-shell/main-shell.ts",
+      "sha256": "8f42451910e704f1a5a767d8ad2f2efa1a7cace63ba698bbe48ffb56fb7d108c"
+    },
+    {
+      "path": "web-next/src/locales/resources/reporting/ar.json",
+      "sha256": "2fc2e3f99c512c2535370993be512bda65d501abeea19442854972a5f4d035dd"
+    },
+    {
+      "path": "web-next/src/locales/resources/reporting/en.json",
+      "sha256": "2601db2a94de57c7473031588b87bffb984eae5200e38359631569102a5de081"
+    }
+  ]
+}

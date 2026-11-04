@@ -8,36 +8,21 @@ namespace CrystalReportGeneratorApi.Runtime.Rendering
     {
         private const string LanguageParameterName = "Language";
 
-        public static string GetRejectionReason(ReportDocument report)
+        public static void Apply(ReportDocument report, string language)
         {
             if (report == null)
                 throw new ArgumentNullException(nameof(report));
 
-            var language = report.DataDefinition.ParameterFields
+            var languageParameter = report.DataDefinition.ParameterFields
                 .Cast<ParameterFieldDefinition>()
                 .FirstOrDefault(parameter => string.Equals(
                     parameter.Name,
                     LanguageParameterName,
                     StringComparison.OrdinalIgnoreCase));
-            return language == null
-                ? "Managed Crystal Report files must declare the Language parameter."
-                : null;
-        }
-
-        public static void Apply(ReportDocument report, string language)
-        {
-            var rejectionReason = GetRejectionReason(report);
-            if (rejectionReason != null)
-                throw new UnsupportedCrystalReportProfileException(rejectionReason);
-
-            var parameterName = report.DataDefinition.ParameterFields
-                .Cast<ParameterFieldDefinition>()
-                .First(parameter => string.Equals(
-                    parameter.Name,
-                    LanguageParameterName,
-                    StringComparison.OrdinalIgnoreCase))
-                .Name;
-            report.SetParameterValue(parameterName, language);
+            // Render requests still select ar/en. A report only needs this field
+            // when its own formulas or layout use that language value.
+            if (languageParameter != null)
+                report.SetParameterValue(languageParameter.Name, language);
         }
     }
 }

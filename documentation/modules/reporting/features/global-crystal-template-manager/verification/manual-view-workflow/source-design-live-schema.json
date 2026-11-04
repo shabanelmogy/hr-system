@@ -1,0 +1,8 @@
+{
+  "VerifiedAtUtc": "2026-11-02T12:15:08.7675277Z",
+  "ConfiguredDatabaseVerified": true,
+  "BusinessRowsWritten": false,
+  "MigrationApplied": 1,
+  "BindingColumns": 2,
+  "BindingConstraint": 1
+}

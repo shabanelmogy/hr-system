@@ -1,0 +1,432 @@
+{
+  "date": "2026-10-31T14:42:57.649Z",
+  "write": false,
+  "components": 84,
+  "movedComponents": 0,
+  "movedFiles": 0,
+  "importsUpdated": 0,
+  "sassUpdated": 0,
+  "componentFiles": [
+    {
+      "source": "src/app/app.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/composition/authenticated-routes/authenticated-routes.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/dev/boolean-preview/boolean-preview.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/dev/collection-preview/collection-preview.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/dev/criteria-preview/criteria-preview.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/dev/criteria-preview-editor/criteria-preview-editor.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/dev/date-preview/date-preview.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/dev/form-close-preview/form-close-preview.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/dev/form-preview/form-preview.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/dev/grid-capabilities-preview/grid-capabilities-preview.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/dev/multiline-preview/multiline-preview.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/dev/numeric-preview/numeric-preview.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/dev/read-preview/read-preview.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/dev/read-preview-away/read-preview-away.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/dev/reference-preview/reference-preview.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/dev/theme-preview/theme-preview.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/dev/unsaved-context-preview/unsaved-context-preview.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/dev/unsaved-destination/unsaved-destination.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/dev/unsaved-preview/unsaved-preview.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/dev/unsaved-preview-frame/unsaved-preview-frame.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/modules/accounting/fiscal-year-context/components/fiscal-context-control/fiscal-context-control.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/modules/reference-data/geographical-information/countries/components/country-editor/country-editor.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/modules/reference-data/geographical-information/countries/components/country-import-view/country-import-view.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/modules/reference-data/geographical-information/countries/components/country-read-details/country-read-details.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page/countries-read-page.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/modules/reporting/global-reports/components/global-report-view/global-report-view.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/platform/auth/pages/login-page/login-page.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/platform/auth/pages/password-request-page/password-request-page.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/platform/auth/pages/session-page/session-page.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/platform/modules/components/module-context-control/module-context-control.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/platform/modules/pages/module-browser/module-browser.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/platform/modules/pages/module-workspace/module-workspace.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/platform/tenants/pages/dashboard-page/dashboard-page.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/buttons/action-button/action-button.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/cards/metric-card/metric-card.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/charts/chart-panel/chart-panel.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/charts/chart-renderer/chart-renderer.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/charts/collection-chart-view/collection-chart-view.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/collections/card-list/card-list.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/collections/collection-feedback/collection-feedback.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/collections/collection-footer/collection-footer.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/collections/collection-frame/collection-frame.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/collections/grid-filter-input/grid-filter-input.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/collections/my-data-grid/my-data-grid.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/collections/row-actions/row-actions.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/controls/option-select/option-select.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/controls/palette-picker/palette-picker.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/controls/progress-meter/progress-meter.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/controls/sort-direction-button/sort-direction-button.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/dialogs/choice-dialog/choice-dialog.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/dialogs/confirmation-dialog/confirmation-dialog.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/dialogs/dialog-panel/dialog-panel.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/dialogs/error-modal-host/error-modal-host.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/dialogs/unsaved-confirmation-host/unsaved-confirmation-host.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/documents/pdf-viewer/pdf-viewer.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/feedback/feedback-state/feedback-state.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/feedback/notification-toast/notification-toast.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/feedback/status-badge/status-badge.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/forms/fields/boolean-field/boolean-field.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/forms/fields/character-count-badge/character-count-badge.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/forms/fields/date-field/date-field.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/forms/fields/numeric-field/numeric-field.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/forms/fields/reference-field/reference-field.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/forms/fields/text-field/text-field.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/forms/form-close-guard/form-close-guard.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/forms/form-container/form-container.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/forms/validation-summary/validation-summary.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/icons/app-icon/app-icon.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/imports/spreadsheet-import-panel/spreadsheet-import-panel.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/layout/application-frame/application-frame.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/layout/context-badge/context-badge.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/layout/identity-avatar/identity-avatar.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/layout/launcher-grid/launcher-grid.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/layout/launcher-tile/launcher-tile.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/layout/navigation-list/navigation-list.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/layout/page-header/page-header.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/layout/report-workspace/report-workspace.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/layout/scroll-viewport/scroll-viewport.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/layout/surface-card/surface-card.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/overlays/context-menu-panel/context-menu-panel.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/shared/ui/overlays/popover-panel/popover-panel.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/shell/auth-layout/auth-branding/auth-branding.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/shell/auth-layout/auth-layout.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    },
+    {
+      "source": "src/app/shell/layout/main-shell/main-shell.ts",
+      "alreadyOrganized": true,
+      "count": 1
+    }
+  ],
+  "moves": []
+}

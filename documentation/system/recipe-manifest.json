@@ -1122,6 +1122,66 @@
       "id": "angular-countries-report-view-mobile",
       "path": "../modules/platform/features/angular-countries-report-view/angular-countries-report-view-mobile.md",
       "title": "Countries managed report integration Expo implementation profile"
+    },
+    {
+      "id": "angular-countries-import-view-master",
+      "path": "../modules/platform/features/angular-countries-import-view/angular-countries-import-view-review.md",
+      "title": "Countries XLSX import cross-platform master review"
+    },
+    {
+      "id": "angular-countries-import-view-api",
+      "path": "../modules/platform/features/angular-countries-import-view/angular-countries-import-view-api.md",
+      "title": "Countries XLSX import API implementation profile"
+    },
+    {
+      "id": "angular-countries-import-view-web",
+      "path": "../modules/platform/features/angular-countries-import-view/angular-countries-import-view-web.md",
+      "title": "Countries XLSX import Angular implementation profile"
+    },
+    {
+      "id": "angular-countries-import-view-mobile",
+      "path": "../modules/platform/features/angular-countries-import-view/angular-countries-import-view-mobile.md",
+      "title": "Countries XLSX import Expo implementation profile"
+    },
+    {
+      "id": "angular-countries-pilot-acceptance-master",
+      "path": "../modules/platform/features/angular-countries-pilot-acceptance/angular-countries-pilot-acceptance-review.md",
+      "title": "Countries complete Angular pilot acceptance cross-platform master review"
+    },
+    {
+      "id": "angular-countries-pilot-acceptance-api",
+      "path": "../modules/platform/features/angular-countries-pilot-acceptance/angular-countries-pilot-acceptance-api.md",
+      "title": "Countries complete Angular pilot acceptance API implementation profile"
+    },
+    {
+      "id": "angular-countries-pilot-acceptance-web",
+      "path": "../modules/platform/features/angular-countries-pilot-acceptance/angular-countries-pilot-acceptance-web.md",
+      "title": "Countries complete Angular pilot acceptance Angular implementation profile"
+    },
+    {
+      "id": "angular-countries-pilot-acceptance-mobile",
+      "path": "../modules/platform/features/angular-countries-pilot-acceptance/angular-countries-pilot-acceptance-mobile.md",
+      "title": "Countries complete Angular pilot acceptance Expo implementation profile"
+    },
+    {
+      "id": "global-crystal-template-manager-master",
+      "path": "../modules/reporting/features/global-crystal-template-manager/global-crystal-template-manager-review.md",
+      "title": "Global Crystal Template Manager cross-platform master review"
+    },
+    {
+      "id": "global-crystal-template-manager-api",
+      "path": "../modules/reporting/features/global-crystal-template-manager/global-crystal-template-manager-api.md",
+      "title": "Global Crystal Template Manager API implementation profile"
+    },
+    {
+      "id": "global-crystal-template-manager-web",
+      "path": "../modules/reporting/features/global-crystal-template-manager/global-crystal-template-manager-web.md",
+      "title": "Global Crystal Template Manager Angular implementation profile"
+    },
+    {
+      "id": "global-crystal-template-manager-mobile",
+      "path": "../modules/reporting/features/global-crystal-template-manager/global-crystal-template-manager-mobile.md",
+      "title": "Global Crystal Template Manager Expo implementation profile"
     }
   ],
   "requiredFileManifests": [
@@ -1179,7 +1239,9 @@
     "../modules/platform/features/angular-countries-edit-workflow/required-files.json",
     "../modules/platform/features/angular-countries-lifecycle/required-files.json",
     "../modules/platform/features/angular-countries-chart-view/required-files.json",
-    "../modules/platform/features/angular-countries-report-view/required-files.json"
+    "../modules/platform/features/angular-countries-report-view/required-files.json",
+    "../modules/platform/features/angular-countries-import-view/required-files.json",
+    "../modules/reporting/features/global-crystal-template-manager/required-files.json"
   ],
   "recipes": [
     {
@@ -5340,7 +5402,11 @@
             2,
             5,
             8,
-            9
+            9,
+            11,
+            12,
+            13,
+            14
           ]
         },
         {
@@ -5348,7 +5414,11 @@
           "sections": [
             1,
             10,
-            11
+            11,
+            12,
+            13,
+            14,
+            15
           ]
         },
         {
@@ -5357,7 +5427,11 @@
             1,
             2,
             12,
-            13
+            13,
+            15,
+            16,
+            17,
+            18
           ]
         },
         {
@@ -5365,7 +5439,11 @@
           "sections": [
             1,
             14,
-            15
+            15,
+            16,
+            17,
+            18,
+            19
           ]
         }
       ]
@@ -5381,7 +5459,11 @@
           "sections": [
             3,
             4,
-            6
+            6,
+            11,
+            12,
+            13,
+            14
           ]
         },
         {
@@ -5396,7 +5478,11 @@
             7,
             8,
             9,
-            10
+            10,
+            12,
+            13,
+            14,
+            15
           ]
         }
       ]
@@ -5413,7 +5499,11 @@
             3,
             4,
             6,
-            7
+            7,
+            11,
+            12,
+            13,
+            14
           ]
         },
         {
@@ -5432,7 +5522,11 @@
             11,
             12,
             13,
-            14
+            14,
+            15,
+            16,
+            17,
+            18
           ]
         }
       ]
@@ -5449,7 +5543,11 @@
             3,
             4,
             6,
-            7
+            7,
+            11,
+            12,
+            13,
+            14
           ]
         },
         {
@@ -5469,7 +5567,11 @@
             12,
             13,
             14,
-            15
+            15,
+            16,
+            17,
+            18,
+            19
           ]
         }
       ]
@@ -5487,7 +5589,11 @@
             4,
             6,
             7,
-            8
+            8,
+            11,
+            12,
+            13,
+            14
           ]
         },
         {
@@ -5495,7 +5601,11 @@
           "sections": [
             6,
             7,
-            8
+            8,
+            12,
+            13,
+            14,
+            15
           ]
         },
         {
@@ -5504,7 +5614,11 @@
             6,
             7,
             8,
-            9
+            9,
+            15,
+            16,
+            17,
+            18
           ]
         },
         {
@@ -5512,7 +5626,11 @@
           "sections": [
             9,
             10,
-            11
+            11,
+            16,
+            17,
+            18,
+            19
           ]
         }
       ]
@@ -5530,7 +5648,11 @@
             5,
             6,
             7,
-            9
+            9,
+            11,
+            12,
+            13,
+            14
           ]
         },
         {
@@ -5538,7 +5660,11 @@
           "sections": [
             8,
             9,
-            10
+            10,
+            12,
+            13,
+            14,
+            15
           ]
         },
         {
@@ -5546,7 +5672,11 @@
           "sections": [
             8,
             10,
-            13
+            13,
+            15,
+            16,
+            17,
+            18
           ]
         },
         {
@@ -5555,7 +5685,11 @@
             2,
             11,
             12,
-            15
+            15,
+            16,
+            17,
+            18,
+            19
           ]
         }
       ]
@@ -5571,14 +5705,22 @@
           "sections": [
             8,
             9,
-            10
+            10,
+            11,
+            12,
+            13,
+            14
           ]
         },
         {
           "book": "managed-crystal-template-validation-api",
           "sections": [
             10,
-            11
+            11,
+            12,
+            13,
+            14,
+            15
           ]
         },
         {
@@ -5586,14 +5728,22 @@
           "sections": [
             12,
             13,
-            14
+            14,
+            15,
+            16,
+            17,
+            18
           ]
         },
         {
           "book": "managed-crystal-template-validation-mobile",
           "sections": [
             14,
-            15
+            15,
+            16,
+            17,
+            18,
+            19
           ]
         }
       ]
@@ -5609,7 +5759,11 @@
           "sections": [
             8,
             9,
-            10
+            10,
+            11,
+            12,
+            13,
+            14
           ]
         },
         {
@@ -5617,14 +5771,22 @@
           "sections": [
             12,
             13,
-            14
+            14,
+            15,
+            16,
+            17,
+            18
           ]
         },
         {
           "book": "managed-crystal-template-validation-mobile",
           "sections": [
             14,
-            15
+            15,
+            16,
+            17,
+            18,
+            19
           ]
         }
       ]
@@ -17716,6 +17878,1157 @@
           "sections": [
             14,
             15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-import-view-phase-00-implementation-preflight",
+      "title": "Countries XLSX import Phase 00 - Implementation Preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "../modules/platform/features/angular-countries-import-view/generated/PHASE-00-implementation-preflight.md",
+      "sources": [
+        {
+          "book": "angular-countries-import-view-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-countries-import-view-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-countries-import-view-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "angular-countries-import-view-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-import-view-phase-01-domain-api",
+      "title": "Countries XLSX import Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "../modules/platform/features/angular-countries-import-view/generated/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "angular-countries-import-view-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "angular-countries-import-view-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-import-view-phase-02-web-client",
+      "title": "Countries XLSX import Phase 02 - Next.js Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "../modules/platform/features/angular-countries-import-view/generated/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "angular-countries-import-view-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-countries-import-view-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-import-view-phase-03-mobile-client",
+      "title": "Countries XLSX import Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "../modules/platform/features/angular-countries-import-view/generated/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "angular-countries-import-view-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-countries-import-view-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-import-view-phase-04-domain-actions",
+      "title": "Countries XLSX import Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "../modules/platform/features/angular-countries-import-view/generated/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "angular-countries-import-view-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-countries-import-view-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-countries-import-view-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-countries-import-view-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-import-view-phase-05-integration-runtime",
+      "title": "Countries XLSX import Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "../modules/platform/features/angular-countries-import-view/generated/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "angular-countries-import-view-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "angular-countries-import-view-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-countries-import-view-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "angular-countries-import-view-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-import-view-phase-06-verification-acceptance",
+      "title": "Countries XLSX import Phase 06 - Verification and Acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "../modules/platform/features/angular-countries-import-view/generated/PHASE-06-verification-acceptance.md",
+      "sources": [
+        {
+          "book": "angular-countries-import-view-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-countries-import-view-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-countries-import-view-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-countries-import-view-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-import-view-phase-07-customer-education-closure",
+      "title": "Countries XLSX import Phase 07 - Customer Education and Closure",
+      "template": "templates/PHASE-07-customer-education-closure.template.md",
+      "output": "../modules/platform/features/angular-countries-import-view/generated/PHASE-07-customer-education-closure.md",
+      "sources": [
+        {
+          "book": "angular-countries-import-view-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-countries-import-view-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-countries-import-view-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-pilot-acceptance-phase-00-implementation-preflight",
+      "title": "Countries complete Angular pilot acceptance Phase 00 - Implementation Preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "../modules/platform/features/angular-countries-pilot-acceptance/generated/PHASE-00-implementation-preflight.md",
+      "sources": [
+        {
+          "book": "angular-countries-pilot-acceptance-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-countries-pilot-acceptance-api",
+          "sections": [
+            1,
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-countries-pilot-acceptance-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13
+          ]
+        },
+        {
+          "book": "angular-countries-pilot-acceptance-mobile",
+          "sections": [
+            1,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-pilot-acceptance-phase-01-domain-api",
+      "title": "Countries complete Angular pilot acceptance Phase 01 - Domain and API",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "../modules/platform/features/angular-countries-pilot-acceptance/generated/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "angular-countries-pilot-acceptance-master",
+          "sections": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "book": "angular-countries-pilot-acceptance-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-pilot-acceptance-phase-02-web-client",
+      "title": "Countries complete Angular pilot acceptance Phase 02 - Angular Client",
+      "template": "templates/PHASE-02-web-client.template.md",
+      "output": "../modules/platform/features/angular-countries-pilot-acceptance/generated/PHASE-02-web-client.md",
+      "sources": [
+        {
+          "book": "angular-countries-pilot-acceptance-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-countries-pilot-acceptance-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-pilot-acceptance-phase-03-mobile-client",
+      "title": "Countries complete Angular pilot acceptance Phase 03 - Expo Mobile Client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "../modules/platform/features/angular-countries-pilot-acceptance/generated/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "angular-countries-pilot-acceptance-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7
+          ]
+        },
+        {
+          "book": "angular-countries-pilot-acceptance-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-pilot-acceptance-phase-04-domain-actions",
+      "title": "Countries complete Angular pilot acceptance Phase 04 - Domain Actions and Lifecycle",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "../modules/platform/features/angular-countries-pilot-acceptance/generated/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "angular-countries-pilot-acceptance-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-countries-pilot-acceptance-api",
+          "sections": [
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "book": "angular-countries-pilot-acceptance-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "book": "angular-countries-pilot-acceptance-mobile",
+          "sections": [
+            9,
+            10,
+            11
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-pilot-acceptance-phase-05-integration-runtime",
+      "title": "Countries complete Angular pilot acceptance Phase 05 - Integration and Runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "../modules/platform/features/angular-countries-pilot-acceptance/generated/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "angular-countries-pilot-acceptance-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        {
+          "book": "angular-countries-pilot-acceptance-api",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-countries-pilot-acceptance-web",
+          "sections": [
+            8,
+            10,
+            13
+          ]
+        },
+        {
+          "book": "angular-countries-pilot-acceptance-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-pilot-acceptance-phase-06-verification-acceptance",
+      "title": "Countries complete Angular pilot acceptance Phase 06 - Verification and Acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "../modules/platform/features/angular-countries-pilot-acceptance/generated/PHASE-06-verification-acceptance.md",
+      "sources": [
+        {
+          "book": "angular-countries-pilot-acceptance-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-countries-pilot-acceptance-api",
+          "sections": [
+            10,
+            11
+          ]
+        },
+        {
+          "book": "angular-countries-pilot-acceptance-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-countries-pilot-acceptance-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "angular-countries-pilot-acceptance-phase-07-customer-education-closure",
+      "title": "Countries complete Angular pilot acceptance Phase 07 - Customer Education and Closure",
+      "template": "templates/PHASE-07-customer-education-closure.template.md",
+      "output": "../modules/platform/features/angular-countries-pilot-acceptance/generated/PHASE-07-customer-education-closure.md",
+      "sources": [
+        {
+          "book": "angular-countries-pilot-acceptance-master",
+          "sections": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "book": "angular-countries-pilot-acceptance-web",
+          "sections": [
+            12,
+            13,
+            14
+          ]
+        },
+        {
+          "book": "angular-countries-pilot-acceptance-mobile",
+          "sections": [
+            14,
+            15
+          ]
+        }
+      ]
+    },
+    {
+      "id": "global-crystal-template-manager-phase-00-implementation-preflight",
+      "title": "Global Crystal Template Manager phase 00 implementation preflight",
+      "template": "templates/PHASE-00-implementation-preflight.template.md",
+      "output": "../modules/reporting/features/global-crystal-template-manager/generated/PHASE-00-implementation-preflight.md",
+      "sources": [
+        {
+          "book": "global-crystal-template-manager-master",
+          "sections": [
+            1,
+            2,
+            5,
+            8,
+            9,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32
+          ]
+        },
+        {
+          "book": "global-crystal-template-manager-api",
+          "sections": [
+            1,
+            10,
+            11,
+            20,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32
+          ]
+        },
+        {
+          "book": "global-crystal-template-manager-web",
+          "sections": [
+            1,
+            2,
+            12,
+            13,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32
+          ]
+        },
+        {
+          "book": "global-crystal-template-manager-mobile",
+          "sections": [
+            1,
+            14,
+            15,
+            20,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32
+          ]
+        }
+      ]
+    },
+    {
+      "id": "global-crystal-template-manager-phase-01-domain-api",
+      "title": "Global Crystal Template Manager phase 01 domain api",
+      "template": "templates/PHASE-01-domain-api.template.md",
+      "output": "../modules/reporting/features/global-crystal-template-manager/generated/PHASE-01-domain-api.md",
+      "sources": [
+        {
+          "book": "global-crystal-template-manager-master",
+          "sections": [
+            3,
+            4,
+            6,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32
+          ]
+        },
+        {
+          "book": "global-crystal-template-manager-api",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            20,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32
+          ]
+        }
+      ]
+    },
+    {
+      "id": "global-crystal-template-manager-phase-02-angular-client",
+      "title": "Global Crystal Template Manager phase 02 angular client",
+      "template": "templates/PHASE-02-angular-client.template.md",
+      "output": "../modules/reporting/features/global-crystal-template-manager/generated/PHASE-02-angular-client.md",
+      "sources": [
+        {
+          "book": "global-crystal-template-manager-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32
+          ]
+        },
+        {
+          "book": "global-crystal-template-manager-web",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32
+          ]
+        }
+      ]
+    },
+    {
+      "id": "global-crystal-template-manager-phase-03-mobile-client",
+      "title": "Global Crystal Template Manager phase 03 mobile client",
+      "template": "templates/PHASE-03-mobile-client.template.md",
+      "output": "../modules/reporting/features/global-crystal-template-manager/generated/PHASE-03-mobile-client.md",
+      "sources": [
+        {
+          "book": "global-crystal-template-manager-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32
+          ]
+        },
+        {
+          "book": "global-crystal-template-manager-mobile",
+          "sections": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            20,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32
+          ]
+        }
+      ]
+    },
+    {
+      "id": "global-crystal-template-manager-phase-04-domain-actions",
+      "title": "Global Crystal Template Manager phase 04 domain actions",
+      "template": "templates/PHASE-04-domain-actions.template.md",
+      "output": "../modules/reporting/features/global-crystal-template-manager/generated/PHASE-04-domain-actions.md",
+      "sources": [
+        {
+          "book": "global-crystal-template-manager-master",
+          "sections": [
+            3,
+            4,
+            6,
+            7,
+            8,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32
+          ]
+        },
+        {
+          "book": "global-crystal-template-manager-api",
+          "sections": [
+            6,
+            7,
+            8,
+            20,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32
+          ]
+        },
+        {
+          "book": "global-crystal-template-manager-web",
+          "sections": [
+            6,
+            7,
+            8,
+            9,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32
+          ]
+        },
+        {
+          "book": "global-crystal-template-manager-mobile",
+          "sections": [
+            9,
+            10,
+            11,
+            20,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32
+          ]
+        }
+      ]
+    },
+    {
+      "id": "global-crystal-template-manager-phase-05-integration-runtime",
+      "title": "Global Crystal Template Manager phase 05 integration runtime",
+      "template": "templates/PHASE-05-integration-runtime.template.md",
+      "output": "../modules/reporting/features/global-crystal-template-manager/generated/PHASE-05-integration-runtime.md",
+      "sources": [
+        {
+          "book": "global-crystal-template-manager-master",
+          "sections": [
+            4,
+            5,
+            6,
+            7,
+            9,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32
+          ]
+        },
+        {
+          "book": "global-crystal-template-manager-api",
+          "sections": [
+            8,
+            9,
+            10,
+            20,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32
+          ]
+        },
+        {
+          "book": "global-crystal-template-manager-web",
+          "sections": [
+            8,
+            10,
+            13,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32
+          ]
+        },
+        {
+          "book": "global-crystal-template-manager-mobile",
+          "sections": [
+            2,
+            11,
+            12,
+            15,
+            20,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32
+          ]
+        }
+      ]
+    },
+    {
+      "id": "global-crystal-template-manager-phase-06-verification-acceptance",
+      "title": "Global Crystal Template Manager phase 06 verification acceptance",
+      "template": "templates/PHASE-06-verification-acceptance.template.md",
+      "output": "../modules/reporting/features/global-crystal-template-manager/generated/PHASE-06-verification-acceptance.md",
+      "sources": [
+        {
+          "book": "global-crystal-template-manager-master",
+          "sections": [
+            8,
+            9,
+            10,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32
+          ]
+        },
+        {
+          "book": "global-crystal-template-manager-api",
+          "sections": [
+            10,
+            11,
+            20,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32
+          ]
+        },
+        {
+          "book": "global-crystal-template-manager-web",
+          "sections": [
+            12,
+            13,
+            14,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32
+          ]
+        },
+        {
+          "book": "global-crystal-template-manager-mobile",
+          "sections": [
+            14,
+            15,
+            20,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32
           ]
         }
       ]

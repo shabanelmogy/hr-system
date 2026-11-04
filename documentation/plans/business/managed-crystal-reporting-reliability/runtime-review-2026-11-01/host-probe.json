@@ -1,0 +1,64 @@
+[
+  {
+    "Path": "/internal/reports/health",
+    "AuthenticatedProbe": false,
+    "Status": 404,
+    "ContentType": "text/html",
+    "BodyCode": null,
+    "BodyStatus": null,
+    "ContractFingerprint": null,
+    "EntryCount": null,
+    "ErrorType": null
+  },
+  {
+    "Path": "/internal/reports/health",
+    "AuthenticatedProbe": true,
+    "Status": 404,
+    "ContentType": "text/html",
+    "BodyCode": null,
+    "BodyStatus": null,
+    "ContractFingerprint": null,
+    "EntryCount": null,
+    "ErrorType": null
+  },
+  {
+    "Path": "/internal/reports/catalog?entityKey=countries",
+    "AuthenticatedProbe": false,
+    "Status": 200,
+    "ContentType": "application/json; charset=utf-8",
+    "BodyCode": [
+      null,
+      null
+    ],
+    "BodyStatus": [
+      null,
+      null
+    ],
+    "ContractFingerprint": [
+      null,
+      null
+    ],
+    "EntryCount": 2,
+    "ErrorType": null
+  },
+  {
+    "Path": "/internal/reports/catalog?entityKey=countries",
+    "AuthenticatedProbe": true,
+    "Status": 200,
+    "ContentType": "application/json; charset=utf-8",
+    "BodyCode": [
+      null,
+      null
+    ],
+    "BodyStatus": [
+      null,
+      null
+    ],
+    "ContractFingerprint": [
+      null,
+      null
+    ],
+    "EntryCount": 2,
+    "ErrorType": null
+  }
+]

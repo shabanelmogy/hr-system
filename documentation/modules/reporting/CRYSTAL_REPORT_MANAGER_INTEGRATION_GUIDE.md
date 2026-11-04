@@ -268,21 +268,22 @@ The Crystal runtime receives a private source stream and explicit-schema data fr
 the Reporting API. It does not decide tenant/company scope and does not connect to
 the ERP database.
 
-Every managed `.rpt` must also declare a Crystal parameter named `Language`.
-Inspection rejects templates that omit it, and render sets it to the already
-validated `ar` or `en` request value. The template may use that parameter in
-formulas, labels, visibility rules, or section formatting. The runtime does not
-rewrite report objects, mirror coordinates, inject generic formulas, or save
-layout changes during rendering; visual behavior remains owned by the `.rpt`
-created in SAP Crystal Reports Designer.
+A managed `.rpt` may declare a String/single-discrete parameter named `Language`.
+Render sets it to the validated `ar` or `en` request value when present. Content
+formulas may use it to select names, labels or visibility; it is not required for
+API-owned direction. The shared runtime direction stage preserves Arabic design
+coordinates and mirrors supported object coordinates for English before export,
+with the historical center alignment and line policy. It never saves the RPT or
+injects generic formulas. See current GCT-1 section30 and
+RESTORE_DIRECTION_2026-11-03.md for the restored behavior and native proof limits.
 
 ### 6.4 Prepare and publish report files
 
 1. Create the entity folder under the deployed Crystal `Reports` root.
 2. Name every `.rpt` with the entity prefix.
 3. Bind the report to the approved `ReportData` schema.
-4. Add the required string parameter `Language`; design the RPT itself to react to
-   `ar` / `en` when localized layout or labels are required.
+4. Add an optional string parameter `Language` when content formulas need the
+   `ar` / `en` value. Use an Arabic-basis layout for the restored API direction stage.
 5. Set SummaryInfo Title (Arabic) and Subject (English).
 6. Deploy the Crystal host changes needed for the new runtime profile.
 7. Import the candidate through Report Manager.
@@ -568,3 +569,84 @@ granted, and the shared contract artifact supports its `entityKey`.
   `FiscalYearReportView` (`mobile-react/src/modules/accounting/fiscal-years/presentation/components/`)
 - Manager administration page:
   `web-next/src/modules/reporting/crystal-report-manager/CrystalReportManagerPage.tsx`
+
+
+## Command design connection clarification — 2026-11-03
+
+Active GCT-1 accepts design-time database connection metadata for a single RPT
+table/Command and passes scoped API rows directly to that table at runtime. The
+RPT alias may differ from the transport ReportData table name; fields and managed
+parameters must still match. A design connection does not authorize database access
+from Crystal. See global-crystal-template-management/COMMAND_PUSH_DATA_2026-11-03.md
+for exact policy and unverified native acceptance. DEF-028 preparation stays Deferred.
+
+
+## Complete design-connection ignore — 2026-11-03
+
+GCT-1 now ignores all design connection properties, including password, during
+inspection/render admission. It binds API rows to one named table/Command; no
+connection is supplied by the rendering code. The obsolete credential receipt flag
+is omitted/ignored. Fields/parameters and other managed source checks still apply.
+An RPT with no table/fields needs an actual report design before it can display rows.
+See CONNECTION_IGNORE_2026-11-03.md under global-crystal-template-management and
+the feature section25 for exact user-file/host evidence and remaining native proof.
+
+
+## Saved data and connections are not upload gates — 2026-11-03
+
+Current GCT-1 accepts saved report data and design connections. They are not
+inspected/rejected, and the designer does not have to remove them before upload.
+The renderer binds the current API table even when empty, without design SQL
+fallback. Actual native empty/filter/cache behavior remains FOLLOW-024/PROD-028.
+Stored/downloaded source bytes remain original; RISK-019 records their contents.
+Current scope and technical receipt: CONTAINER_DATA_2026-11-03.md / feature section26.
+
+
+## Language binding clarification — 2026-11-03
+
+Language is optional in the RPT. The ERP render request still supplies ar/en;
+Crystal sets it only when the report defines a compatible String/single-discrete
+parameter. Reports without parameters do not need designer changes for this value.
+See active GCT-1 OPTIONAL_RPT_LANGUAGE_2026-11-03.md and section27 for exact rules
+and outstanding native acceptance. Prior mandatory RPT instructions are superseded.
+
+
+## Viewer publication policy — 2026-11-03
+
+The viewer lists and renders explicitly published, active managed global versions
+only, including for Super Admin. Merely placing an RPT in the Crystal deployment
+folder does not publish it. Use Register existing reports, inspect/register, then
+Publish in Report Manager. Drafts and archived templates remain management-only;
+uploading a new draft keeps the existing published version in use. Company grants
+and source-download permissions still apply. Publish ErpSystem.Api for this fix.
+Canonical evidence: current GCT-1 feature section29 and published-viewer-catalog receipt.
+
+
+## Restored layout and retained Summary Info names — 2026-11-03
+
+Current GCT-1 section30 restores English mirroring of an Arabic-basis RPT, centered
+field/text alignment and the legacy line/drawing policy before PDF export.
+Language is already in the render request; layout does not require an RPT formula
+or parameter. Content localization may still use optional Language formulas.
+SummaryInfo.ReportTitle is the Arabic selector name and ReportSubject the English
+name, with displayName fallback. No original RPT save or metadata rewrite occurs.
+Publish CrystalReportGeneratorApi and compare actual AR/EN PDFs; native visual
+acceptance remains FOLLOW-024/PROD-028, not inferred from contract tests.
+
+
+## Confirmed duplicate upload exception — 2026-11-04
+
+In Angular New report, the same normalized RPT filename within the same entity
+prompts before any write. Replace and publish inspects the new source and publishes
+its next immutable version atomically, removing the previous publication while
+retaining its history, identity, ACLs and View. Cancel changes nothing; failures
+preserve the previous publication. Requires Upload and Publish plus current entity
+and report authority. Unpublished version labels include version/date; original
+files are never renamed. Ordinary nonduplicate creation and explicit Versions
+uploads still create drafts. Publish ErpSystem.Api and updated Angular assets for
+this change; no additional Crystal runtime change or schema migration is needed.
+Current GCT-1 section32 and duplicate-replacement receipt own implementation proof;
+actual hosted/native acceptance remains FOLLOW-024/PROD-028.
+
+Official references reviewed: [PrimeNG Button severity](https://primeng.dev/button#severity)
+and [ASP.NET Core combined authorization policies](https://learn.microsoft.com/en-us/aspnet/core/security/authorization/policies?view=aspnetcore-10.0).

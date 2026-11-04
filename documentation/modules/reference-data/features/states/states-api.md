@@ -88,3 +88,23 @@ validated `.rpt` version is imported/uploaded and published through Report Manag
 ## 12. Tests and retired-path evidence
 
 `StateCqrsArchitectureTests` verifies controller routes, message contracts, handler ports, mapping, and validators. `StatesControllerCqrsTests` verifies dispatch, the bulk envelope, and success status. `StateBulkCreateHandlerTests` proves cross-field values are allowed, same-field case-insensitive request duplicates fail, persistence checks remain field-scoped and case-insensitive, scheduling follows commit, and create/archive/restore select the required Country or State lifecycle resource. `GeographicParentReassignmentHandlerTests` proves same-parent edits remain allowed and dependent State reassignment is blocked. `BackgroundNotificationJobTests` proves plural bulk notification keys. The retired `IStateService`/`StateService` path was removed after a repository-wide consumer audit, and the current runtime source contains no `StateChangedJob` compatibility executor. State business work therefore has one CQRS path.
+
+
+## Manual global reporting View adapter — 2026-11-02
+
+Reporting GCT-1 now consumes IReferenceDataPublicViewSource through public Contracts. ReferenceData owns schema-bound SQL View metadata/dependency checks and bounded parameterized reads; direct dependencies are restricted to approved global Countries/States/Districts tables. Tenant/company tables and raw arbitrary SQL are excluded. Existing geographical CRUD/list/client forms are unchanged. Angular report administration is Required in Reporting; Next/Mobile administration remains Excluded. The actual SQL integration test validates filtering, injection rejection, unsupported dependencies, immutable binding and definition changes. Owning workflow/evidence: `documentation/plans/business/global-crystal-template-management/MANUAL_VIEW_IMPLEMENTATION_2026-11-02.md`; FOLLOW-024/PROD-028 remain open and Builder work is DEF-027.
+
+
+## Prepared global reporting Views — 2026-11-02
+
+GCT-1 now discovers eligible metadata and creates three reviewed all-column,
+schema-bound ref.vw_Countries/ref.vw_States/ref.vw_Districts Views through the
+ReferenceData-owned migration20261102143015. LEFT JOIN follows Countries→States,
+States→Country and Districts→State→Country; related fields are prefixed and deleted
+rows excluded without turning the join into an inner join. No company Address
+table enters global SQL. ReferenceData computes the district address count using
+trusted company/tenant filters during report execution. Reporting projects only
+approved native fields. Existing geographical CRUD and Next/Mobile forms remain
+unchanged. Future physical column changes need an explicit View migration because
+of SCHEMABINDING. Current evidence and 5-point platform audit are in Reporting GCT-1
+section22 and DATABASE_VIEW_IMPLEMENTATION_2026-11-02.md; FOLLOW-024 remains Open.

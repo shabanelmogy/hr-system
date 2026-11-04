@@ -1,0 +1,111 @@
+<label [id]="id + '-label'" [for]="id"
+  >{{ label() }}
+  @if (required()) {
+    <span aria-hidden="true"> *</span>
+  }
+</label>
+<div class="reference-control" [class.invalid]="!!error()">
+  <p-select
+    [formControl]="control"
+    [options]="options()"
+    optionLabel="label"
+    optionValue="value"
+    optionDisabled="disabled"
+    [inputId]="id"
+    [ariaLabelledBy]="id + '-label'"
+    [readonly]="readOnly()"
+    [required]="required()"
+    [invalid]="!!error()"
+    [loading]="view().kind === 'loading'"
+    [placeholder]="placeholder()"
+    [autoOptionFocus]="false"
+    [selectOnFocus]="false"
+    [filter]="false"
+    [selectionMessage]="'reference.selectionMessage' | uiText"
+    [emptySelectionMessage]="'reference.emptySelection' | uiText"
+    [emptyMessage]="'common.noOptionsFound' | uiText"
+    [fluid]="true"
+    appendTo="body"
+    panelStyleClass="erp-reference-overlay"
+    scrollHeight="min(20rem,45dvh)"
+    [pt]="attributes()"
+    [dt]="tokens"
+    (onBlur)="blur()"
+    (onHide)="blur()"
+  >
+    <ng-template #selectedItem
+      ><span class="selected-copy" [title]="selectedCaption()">{{
+        selectedCaption()
+      }}</span></ng-template
+    >
+    <ng-template #item let-option
+      ><div class="option-copy">
+        <span>{{ option.label }}</span>
+        @if (option.description) {
+          <small>{{ option.description }}</small>
+        }
+      </div></ng-template
+    >
+    <ng-template #header
+      ><div class="reference-header">
+        @if (searchable()) {
+          <erp-text-field
+            [formControl]="searchControl"
+            [label]="'general.search' | uiText"
+            [placeholder]="'general.search' | uiText"
+            labelVisibility="sr-only"
+            (keydown)="searchKey($event)"
+          />
+        }
+        @if (view().kind !== 'ready') {
+          <erp-feedback-state
+            layout="inline"
+            [kind]="feedbackKind()"
+            [title]="feedbackTitle()"
+            [actionLabel]="view().kind === 'error' ? ('actions.retry' | uiText) : ''"
+            (action)="retry.emit()"
+          />
+        } @else if (!view().options.length) {
+          <erp-feedback-state
+            layout="inline"
+            kind="empty"
+            [title]="'common.noOptionsFound' | uiText"
+          />
+        }</div
+    ></ng-template>
+    <ng-template #empty><span aria-hidden="true"></span></ng-template>
+    <ng-template #footer>
+      @if (view().kind === 'ready' && view().hasMore) {
+        <div class="reference-footer">
+          <erp-button
+            [label]="'reference.loadMore' | uiText"
+            variant="text"
+            (activated)="requestMore()"
+          />
+        </div>
+      }
+    </ng-template>
+  </p-select>
+  @if (clearable() && value() !== null && !readOnly() && !disabled() && !blocked()) {
+    <erp-button
+      appearance="icon"
+      variant="text"
+      [label]="'general.clear' | uiText"
+      (activated)="clear()"
+      ><span buttonIcon aria-hidden="true">×</span></erp-button
+    >
+  }
+</div>
+@if (blocked()) {
+  <erp-feedback-state
+    layout="inline"
+    kind="forbidden"
+    [title]="'authorization.forbidden.title' | uiText"
+  />
+}
+@if (help()) {
+  <p class="help" [id]="id + '-help'">{{ help() }}</p>
+}
+@if (error(); as message) {
+  <p class="error" [id]="id + '-error'">{{ message }}</p>
+}

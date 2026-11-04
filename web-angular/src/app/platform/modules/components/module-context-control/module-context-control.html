@@ -1,0 +1,25 @@
+@if (context.visible()) {
+  <erp-option-select
+    appearance="context"
+    commitMode="external"
+    icon="apps"
+    [label]="'modules.currentApplication' | uiText"
+    [menuLabel]="'modules.switchApplication' | uiText"
+    [value]="context.value()"
+    [options]="options()"
+    [emptyLabel]="emptyLabel()"
+    [invalid]="failed()"
+    [busy]="context.busy() || context.catalog.state().kind === 'loading'"
+    [disabled]="context.busy() || context.catalog.state().kind !== 'ready'"
+    (valueChange)="context.select($event)"
+  />
+  @if (context.catalog.state().kind === 'error') {
+    <erp-button
+      appearance="icon"
+      variant="text"
+      [label]="'actions.retry' | uiText"
+      (activated)="context.catalog.retry()"
+      ><erp-icon buttonIcon name="history"
+    /></erp-button>
+  }
+}

@@ -47,6 +47,9 @@ public sealed class ReportingDbContext : DbContext, IReportingUnitOfWork
     public DbSet<CrystalReport> CrystalReports => Set<CrystalReport>();
     public DbSet<CrystalReportVersion> CrystalReportVersions => Set<CrystalReportVersion>();
     public DbSet<CrystalReportRoleGrant> CrystalReportRoleGrants => Set<CrystalReportRoleGrant>();
+    public DbSet<GlobalCrystalReport> GlobalCrystalReports => Set<GlobalCrystalReport>();
+    public DbSet<GlobalCrystalReportVersion> GlobalCrystalReportVersions => Set<GlobalCrystalReportVersion>();
+    public DbSet<GlobalCrystalReportRoleGrant> GlobalCrystalReportRoleGrants => Set<GlobalCrystalReportRoleGrant>();
     public DbSet<ReportCategory> ReportsCategories => Set<ReportCategory>();
     public DbSet<ReportMaster> ReportMasters => Set<ReportMaster>();
     public DbSet<ReportDetail> ReportsDetails => Set<ReportDetail>();
@@ -63,6 +66,12 @@ public sealed class ReportingDbContext : DbContext, IReportingUnitOfWork
 
         ConfigureRowVersion(modelBuilder);
         ConfigureScopeIsolation(modelBuilder);
+        modelBuilder.Entity<GlobalCrystalReport>().HasQueryFilter("GlobalActorFilter",
+            entity => _currentActor.IsInRole(PlatformRoleNames.SuperAdmin));
+        modelBuilder.Entity<GlobalCrystalReportVersion>().HasQueryFilter("GlobalActorFilter",
+            entity => _currentActor.IsInRole(PlatformRoleNames.SuperAdmin));
+        modelBuilder.Entity<GlobalCrystalReportRoleGrant>().HasQueryFilter("GlobalActorFilter",
+            entity => _currentActor.IsInRole(PlatformRoleNames.SuperAdmin));
         RestrictCascadeDelete(modelBuilder);
     }
 
@@ -203,6 +212,11 @@ public sealed class ReportingDbContext : DbContext, IReportingUnitOfWork
 
     private void PrepareChanges()
     {
+        if (!_currentActor.IsInRole(PlatformRoleNames.SuperAdmin) &&
+            ChangeTracker.Entries().Any(entry =>
+                entry.Entity is GlobalCrystalReport or GlobalCrystalReportVersion or GlobalCrystalReportRoleGrant &&
+                entry.State is EntityState.Added or EntityState.Modified or EntityState.Deleted))
+            throw new InvalidOperationException("Global Crystal data requires a platform super administrator.");
         EnforceAppendOnlyHistory();
         ApplyScopeIsolation();
 
@@ -228,6 +242,12 @@ public sealed class ReportingDbContext : DbContext, IReportingUnitOfWork
                     entry.Entity.UpdatedById = actorId;
                     entry.Entity.UpdatedByPc = machineName;
                     entry.Entity.UpdatedOn = now;
+                    if (entry.Entity.IsDeleted && !entry.OriginalValues.GetValue<bool>(nameof(AuditableEntity.IsDeleted)))
+                    {
+                        entry.Entity.DeletedById = actorId;
+                        entry.Entity.DeletedByPc = machineName;
+                        entry.Entity.DeletedOn = now;
+                    }
                     break;
                 case EntityState.Deleted:
                     if (entry.Entity is ReportTemplateRevision or CrystalReportVersion)
@@ -250,6 +270,19 @@ public sealed class ReportingDbContext : DbContext, IReportingUnitOfWork
 
     private void EnforceAppendOnlyHistory()
     {
+        if (ChangeTracker.Entries<GlobalCrystalReport>().Any(entry => entry.State == EntityState.Modified &&
+            entry.Properties.Any(property => property.IsModified && !Equals(property.OriginalValue, property.CurrentValue) &&
+                property.Metadata.Name is nameof(GlobalCrystalReport.EntityKey) or nameof(GlobalCrystalReport.ReportKey) or
+                    nameof(GlobalCrystalReport.ViewName) or nameof(GlobalCrystalReport.ViewFingerprint))))
+            throw new InvalidOperationException("A global Crystal report source binding is immutable.");
+        if (ChangeTracker.Entries<GlobalCrystalReportVersion>().Any(entry =>
+            entry.State == EntityState.Deleted || entry.State == EntityState.Modified &&
+            entry.Properties.Any(property => property.IsModified && property.Metadata.Name is not
+                nameof(GlobalCrystalReportVersion.ValidationStatus) and not
+                nameof(GlobalCrystalReportVersion.ValidationReason) and not
+                nameof(GlobalCrystalReportVersion.ValidationContractSchemaVersion) and not
+                nameof(GlobalCrystalReportVersion.ValidationContractFingerprint))))
+            throw new InvalidOperationException("Global Crystal report source history is append-only.");
         if (ChangeTracker.Entries<ReportTemplateRevision>()
             .Any(entry => entry.State is EntityState.Modified or EntityState.Deleted))
         {

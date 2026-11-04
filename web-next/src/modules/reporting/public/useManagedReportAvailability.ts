@@ -1,6 +1,7 @@
 "use client";
 
 import { useAuthorization } from "@/lib/auth/useAuthorization";
+import { useSession } from "@/lib/auth/SessionContext";
 import { permissions } from "@/lib/auth/permissions";
 import { useAccessibleModulesQuery } from "@/platform/modules";
 
@@ -44,24 +45,37 @@ export function resolveManagedReportAvailability(
  * not query tenant module entitlements. Tenant reports require the tenant
  * report permission and an accessible Reporting module.
  */
-export function useManagedReportAvailability(scope: ManagedReportScope = "tenant") {
+export function useManagedReportAvailability(scope: ManagedReportScope = "tenant", entityKey?: string) {
+  const { user } = useSession();
+  const entityPermission = entityKey === "countries" ? permissions.ViewCountries
+    : entityKey === "states" ? permissions.ViewStates : entityKey === "districts" ? permissions.ViewDistricts : null;
   const authorization = useAuthorization({
     ...getManagedReportAuthorization(scope),
   });
+  const companyAuthorization = useAuthorization({
+    requiredPermissions: entityPermission ? [permissions.ViewCrystalReports, entityPermission] : [permissions.ViewCrystalReports],
+    permissionMode: "all",
+  });
+  const companyConsumer = scope === "global" && !authorization.allowed && !!entityPermission &&
+    !!user?.tenantId && (user.companyId ?? 0) > 0 && !user.roles.some((role) => role.toLowerCase() === superAdminRole) && companyAuthorization.allowed;
+  const allowed = authorization.allowed || companyConsumer;
+  const needsModule = scope === "tenant" || companyConsumer;
   const modulesQuery = useAccessibleModulesQuery(
-    scope === "tenant" && authorization.allowed,
+    needsModule && allowed,
   );
   const reportingAccessible = (modulesQuery.data ?? []).some(
     (module) => module.code.trim().toLowerCase() === "reporting",
   );
 
   return {
-    ...resolveManagedReportAvailability(scope, {
-      authorizationAllowed: authorization.allowed,
-      authorizationLoading: authorization.isLoading,
+    ...resolveManagedReportAvailability(needsModule ? "tenant" : "global", {
+      authorizationAllowed: allowed,
+      authorizationLoading: authorization.isLoading || (scope === "global" && companyAuthorization.isLoading),
       reportingAccessible,
       modulesLoading: modulesQuery.isLoading,
     }),
     scope,
+    companyConsumer,
+    scopeKey: JSON.stringify([user?.userId, user?.tenantId, user?.companyId]),
   } as const;
 }

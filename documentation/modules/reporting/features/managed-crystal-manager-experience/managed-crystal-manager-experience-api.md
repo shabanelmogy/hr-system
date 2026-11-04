@@ -63,3 +63,7 @@ does not change the EF model, so no migration was generated.
 No deployment configuration or security change is required. API must deploy with
 the same canonical artifact already required by Phase 1/2. Actual designer `.rpt`
 positive evidence remains `RISK-008`/Phase 4.
+
+### Additive global Angular manager2026-11-01
+
+The requester separately authorized global-crystal-template-management/GCT-1. Its additive global audited tables, exact role/action/entity Edit policy and Angular manager reuse existing native ports/private storage/lifecycle discipline. This existing tenant manager/ACL lifecycle stays unchanged. Global consumption keeps the current opaque envelope with explicit managed shadowing. See the new feature current books and FOLLOW-024; this addition does not close this plan’s pending native/integrated acceptance.

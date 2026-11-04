@@ -1,5 +1,16 @@
 # Managed Crystal Reporting Reliability — Evidence Ledger
 
+## Supplemental requester review — 2026-11-01
+
+Current independent runtime/API review:
+[RUNTIME_REVIEW_2026-11-01.md](RUNTIME_REVIEW_2026-11-01.md).
+Verified Release x64 build/contract harness,17focused ERP client tests and actual
+current ERP client acceptance of the two published Countries catalog entries.
+Confirmed published auth/route behavior differs from current source (PROD-029).
+Reproduced rejected-descriptor whole-list incompatibility (FOLLOW-023). Hosted
+ERP effective integration configuration and real AR/EN PDF remain unverified
+under PROD-028/025/RISK-008. No runtime patch/deployment or roadmap-stage advance.
+
 ## Scope of investigation
 
 The audit covered the independent runtime under `api/CrystalReportGeneratorApi`,
@@ -65,3 +76,27 @@ and is currently blocked by profile drift. Exact template/data compatibility,
 entity-aware validation, deployment readiness and runtime tests are target work.
 Security and dependency upgrades remain required for release but are intentionally
 sequenced after the business and reliability corrections.
+
+## Authorized corrective delivery — 2026-11-01
+
+RUNTIME_CORRECTION_RESULT_2026-11-01.md supersedes the review's source findings:
+FOLLOW-023 fixed/Verified, runtime/global-auth/readiness/package corrections locally
+Verified. Full solution1167pass/3existing skips,134Reporting,15HTTP boundary/20IIS
+and real-client cross-runtime catalog/download pass. Runtime/ERP private artifacts
+have matching keys/configuration; no secret committed. Actual publication blocked
+by unusable saved credentials; PROD-028/029 and native rendering remain unverified.
+
+## Final publication/local verification
+
+documentation/plans/business/managed-crystal-reporting-reliability/PUBLISH_READY_2026-11-01.md owns latest user-directed Visual Studio workflow, stale local bin fix,
+WPP SkipAction executable correction and requester Crystal publication. PROD-029
+Verified after20real hosted cases/current assembly/routes/catalog2; ERP publication
+and native PDF remain pending. Angular explicitly stopped by requester.
+
+## Verified later render rejection2026-11-01
+
+See RENDER_REJECTION_2026-11-01.md and runtime-correction-2026-11-01/
+hosted-template-rejections.json. Actual400 is a datasource-policy rejection hidden
+by unsupported-profile wrapping. New specific error mappings are corrective scope;
+they do not claim a corrected RPT or native PDF. FOLLOW-024 owns the newly requested
+versioned global Angular manager; existing active business step remains unchanged.

@@ -12,6 +12,28 @@ namespace ErpSystem.Modules.Reporting.Tests;
 public sealed class CrystalReportFileStorageTests
 {
     [Fact]
+    public async Task StoreAsync_PreservesSourcePolicyFailure_AndDoesNotWritePrivateFiles()
+    {
+        var contentRoot = Path.Combine(Path.GetTempPath(), "hrms-crystal-storage-tests", Guid.NewGuid().ToString("N"));
+        var storage = new PrivateCrystalReportFileStorage(
+            Options.Create(new CrystalReportStorageOptions { StorageRoot = "App_Data/CrystalReports", MaxFileSizeBytes = 1024 }),
+            new SourceRejectedInspector(), new AcceptingUploadInspection(), new TestWebHostEnvironment(contentRoot));
+        byte[] source = [0xD0, 0xCF, 0x11, 0xE0, 0xA1, 0xB1, 0x1A, 0xE1];
+        var result = await storage.StoreAsync("countries", new FileUpload("Countries.rpt", "application/octet-stream",
+            source.Length, () => new MemoryStream(source, writable: false)), default);
+        Assert.False(result.IsSuccess);
+        Assert.Equal(CrystalReportFileFailure.SourceRejected, result.Failure);
+        Assert.False(Directory.Exists(contentRoot));
+    }
+
+    private sealed class SourceRejectedInspector : ICrystalReportInspector
+    {
+        public Task<CrystalReportInspection?> InspectAsync(string entityKey, FileUpload upload, CancellationToken cancellationToken) =>
+            Task.FromResult<CrystalReportInspection?>(new CrystalReportInspection(false, null, null,
+                "Crystal runtime rejected the report.", null, null, CrystalReportInspectionFailure.SourceRejected));
+    }
+
+    [Fact]
     public async Task RelativeStorageRoot_IsResolvedFromApplicationContentRoot()
     {
         var contentRoot = Path.Combine(

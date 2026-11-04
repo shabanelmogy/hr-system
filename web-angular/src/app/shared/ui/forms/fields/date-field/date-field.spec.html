@@ -1,0 +1,10 @@
+<erp-form [form]="form" title="Date fixture" submitLabel="Save fixture"
+  ><erp-date-field
+    [formControl]="form.controls.date"
+    label="Day fixture"
+    help="YYYY-MM-DD"
+    [readOnly]="readonly()"
+    [min]="min()"
+    [max]="max()"
+    [messages]="messages"
+/></erp-form>

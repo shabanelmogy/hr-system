@@ -1,0 +1,224 @@
+<ng-template #ownerFilters
+  ><div class="filter-region"><ng-content select="[toolbarFilters]" /></div
+></ng-template>
+<section
+  class="collection-shell"
+  [class.reference-shell]="appearance() === 'reference'"
+  [class.plain-shell]="appearance() === 'plain'"
+  [class.single-row-toolbar]="toolbarLayout() === 'single-row'"
+  [attr.aria-label]="label()"
+>
+  @if (toolbarVisible()) {
+    <header class="collection-toolbar erp-native-scrollbar">
+      @if (search(); as criteria) {
+        <div class="search-controls">
+          @if (criteria.field; as field) {
+            <erp-option-select
+              class="search-field"
+              [controlHeight]="appearance() === 'reference' ? 36 : 40"
+              [label]="field.label"
+              [value]="field.value"
+              [options]="field.options"
+              (valueChange)="searchChange.emit({ field: $event })"
+            />
+          }
+          @if (criteria.operator; as operator) {
+            <erp-option-select
+              class="search-operator"
+              [controlHeight]="appearance() === 'reference' ? 36 : 40"
+              [label]="operator.label"
+              [value]="operator.value"
+              [options]="operator.options"
+              (valueChange)="searchChange.emit({ operator: $event })"
+            />
+          }
+          <erp-text-field
+            labelVisibility="sr-only"
+            [style.max-width.px]="searchMaxWidth()"
+            [label]="'general.search' | uiText"
+            [placeholder]="criteria.placeholder"
+            [maxLength]="searchLimit()"
+            [messages]="searchMessages()"
+            [formControl]="searchControl"
+            [clearVisibility]="appearance() === 'reference' ? 'always' : 'value'"
+          >
+            @if (appearance() === 'reference') {
+              <erp-icon fieldIcon name="search" />
+            }
+          </erp-text-field>
+        </div>
+      }
+      @if (toolbarLayout() === 'single-row') {
+        <ng-container [ngTemplateOutlet]="ownerFilters" />
+      }
+      <div class="toolbar-content"><ng-content select="[toolbarContent]" /></div>
+      @if (columns().length) {
+        <erp-button
+          appearance="quiet"
+          variant="text"
+          [label]="'actions.gridOptions' | uiText"
+          [expanded]="optionsOpen()"
+          hasPopup="dialog"
+          (activated)="optionsOpen.set(true)"
+          ><erp-icon buttonIcon name="settings"
+        /></erp-button>
+      }
+    </header>
+    @if (toolbarLayout() === 'responsive') {
+      <ng-container [ngTemplateOutlet]="ownerFilters" />
+    }
+  }
+  @if (selectionEnabled()) {
+    <div class="selection-bar">
+      @if (pageSelection()) {
+        <p-checkbox
+          [binary]="true"
+          [ngModelOptions]="{ standalone: true }"
+          [ngModel]="controller().allSelected()"
+          [indeterminate]="controller().partlySelected()"
+          [ariaLabel]="'collections.selectPage' | uiText"
+          [disabled]="controller().view().kind !== 'ready' || !controller().eligibleIds().length"
+          (ngModelChange)="controller().selectPage($event === true)"
+        />
+      }
+      <span aria-live="polite">{{
+        'collections.selected' | uiText: 'core' : { count: controller().selectedIds().length }
+      }}</span>
+      <erp-button
+        [label]="'general.clear' | uiText"
+        variant="text"
+        [disabled]="!controller().selectedIds().length"
+        (activated)="controller().clearSelection()"
+      />
+    </div>
+  }
+  <ng-content select="[collectionBody]" />
+  @if (showFooter()) {
+    <erp-collection-footer
+      [controller]="controller()"
+      [pageSizes]="pageSizes()"
+      [recordNavigation]="recordNavigation()"
+    />
+  }
+</section>
+<erp-dialog-panel
+  [open]="optionsOpen()"
+  [title]="'actions.gridOptions' | uiText"
+  [description]="'collections.optionsDescription' | uiText"
+  [closeLabel]="'actions.close' | uiText"
+  icon="settings"
+  (closeRequested)="optionsOpen.set(false)"
+>
+  <div class="grid-options">
+    <p-tabs value="display">
+      <p-tablist
+        ><p-tab value="display">{{ 'collections.displayOptions' | uiText }}</p-tab
+        ><p-tab value="columns"
+          >{{ 'collections.columns' | uiText }}
+          <span class="column-count"
+            >{{ visibleColumns().length }} / {{ columns().length }}</span
+          ></p-tab
+        ></p-tablist
+      >
+      <p-tabpanels>
+        <p-tabpanel value="display">
+          <section class="option-section">
+            <h3 [id]="id + '-density'">{{ 'collections.density' | uiText }}</h3>
+            <p>{{ 'collections.densityDescription' | uiText }}</p>
+            <p-selectbutton
+              [options]="densities()"
+              [ngModel]="density()"
+              [ngModelOptions]="{ standalone: true }"
+              optionLabel="label"
+              optionValue="value"
+              [allowEmpty]="false"
+              [fluid]="true"
+              [attr.aria-labelledby]="id + '-density'"
+              (ngModelChange)="changeDensity($event)"
+            />
+            <div class="density-preview" [attr.data-density]="density()" aria-hidden="true">
+              <div><i></i><i></i><i></i></div>
+              <div><i></i><i></i><i></i></div>
+              <div><i></i><i></i><i></i></div>
+            </div>
+          </section>
+          <div class="owner-options"><ng-content select="[gridOptions]" /></div>
+        </p-tabpanel>
+        <p-tabpanel value="columns">
+          <p class="options-hint">{{ 'collections.columnsDescription' | uiText }}</p>
+          <erp-text-field
+            labelVisibility="sr-only"
+            [label]="'collections.searchColumns' | uiText"
+            [placeholder]="'collections.searchColumns' | uiText"
+            [ngModel]="columnSearch()"
+            [ngModelOptions]="{ standalone: true }"
+            (ngModelChange)="columnSearch.set($event)"
+            ><erp-icon fieldIcon name="search"
+          /></erp-text-field>
+          <div class="column-list erp-native-scrollbar">
+            @for (column of optionColumns(); track column.key) {
+              <div
+                class="column-option"
+                [class.column-hidden]="!visibleColumns().includes(column.key)"
+                [attr.data-option-column]="column.key"
+              >
+                <div class="column-visibility">
+                  <p-checkbox
+                    [binary]="true"
+                    [ngModelOptions]="{ standalone: true }"
+                    [ngModel]="visibleColumns().includes(column.key)"
+                    [inputId]="id + '-' + column.key"
+                    [disabled]="
+                      column.hideable === false ||
+                      (visibleColumns().length === 1 && visibleColumns().includes(column.key))
+                    "
+                    (ngModelChange)="toggleColumn(column.key, $event)"
+                  /><label [for]="id + '-' + column.key">{{ column.header }}</label>
+                </div>
+                @if (columnTools()) {
+                  <div class="column-controls">
+                    <div class="column-order">
+                      <erp-button
+                        appearance="icon"
+                        variant="text"
+                        [disabled]="columns()[0]?.key === column.key"
+                        [label]="('collections.movePrevious' | uiText) + ' ' + column.header"
+                        (activated)="columnMove.emit({ key: column.key, direction: -1 })"
+                        ><erp-icon buttonIcon name="arrowUp"
+                      /></erp-button>
+                      <erp-button
+                        appearance="icon"
+                        variant="text"
+                        [disabled]="columns()[columns().length - 1]?.key === column.key"
+                        [label]="('collections.moveNext' | uiText) + ' ' + column.header"
+                        (activated)="columnMove.emit({ key: column.key, direction: 1 })"
+                        ><erp-icon buttonIcon name="arrowDown"
+                      /></erp-button>
+                    </div>
+                    <erp-option-select
+                      overlayTarget="self"
+                      [controlHeight]="36"
+                      [label]="'collections.columnPosition' | uiText"
+                      [value]="pinnedColumns()[column.key] ?? 'none'"
+                      [options]="pinOptions()"
+                      (valueChange)="pin(column.key, $event)"
+                    />
+                  </div>
+                }
+              </div>
+            } @empty {
+              <p class="options-hint">{{ 'common.noOptionsFound' | uiText }}</p>
+            }
+          </div>
+        </p-tabpanel>
+      </p-tabpanels>
+    </p-tabs>
+  </div>
+  <div dialogActions class="options-actions">
+    <erp-button
+      [label]="'collections.resetDisplay' | uiText"
+      variant="text"
+      (activated)="resetOptions()"
+    /><erp-button [label]="'actions.close' | uiText" (activated)="optionsOpen.set(false)" />
+  </div>
+</erp-dialog-panel>

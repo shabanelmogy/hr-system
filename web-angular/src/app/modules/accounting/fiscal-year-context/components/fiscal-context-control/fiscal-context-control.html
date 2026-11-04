@@ -1,0 +1,37 @@
+@if (state.visible()) {
+  @if (captions()) {
+    <erp-option-select
+      appearance="context"
+      commitMode="external"
+      icon="eventNote"
+      [label]="'fiscalYears.context.label' | uiText: 'accounting'"
+      [value]="value()"
+      [options]="options()"
+      [emptyLabel]="
+        (failed() ? 'fiscalYears.context.loadError' : 'fiscalYears.context.noSelection')
+          | uiText: 'accounting'
+      "
+      [invalid]="failed()"
+      [busy]="auth.contextChanging() || state.state().kind === 'loading'"
+      [disabled]="auth.pending() || failed() || !options().length"
+      (valueChange)="state.select(+$event)"
+    />
+    @if (failed()) {
+      <erp-button
+        appearance="icon"
+        variant="text"
+        [label]="'actions.retry' | uiText"
+        (activated)="state.retry()"
+        ><erp-icon buttonIcon name="history"
+      /></erp-button>
+    }
+  } @else if (captionError()) {
+    <erp-button
+      appearance="icon"
+      variant="text"
+      [label]="'actions.retry' | uiText"
+      (activated)="loadCaptions()"
+      ><erp-icon buttonIcon name="history"
+    /></erp-button>
+  }
+}

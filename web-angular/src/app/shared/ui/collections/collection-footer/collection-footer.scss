@@ -1,0 +1,130 @@
+:host {
+  display: block;
+  flex-shrink: 0;
+}
+footer {
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 12px;
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+  font-size: 14px;
+  --option-label-background: var(--surface);
+}
+.record-controls,
+.page-controls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}
+.record-controls {
+  justify-content: center;
+}
+.record-count {
+  font-variant-numeric: tabular-nums;
+  direction: ltr;
+  white-space: nowrap;
+  min-width: 75px;
+  text-align: center;
+  background: var(--muted);
+  border-radius: 6px;
+  padding: 6px 8px;
+  order: 2;
+}
+.record-controls erp-button:nth-of-type(n + 3) {
+  order: 3;
+}
+.rtl {
+  display: inline-block;
+  transform: scaleX(-1);
+}
+erp-button {
+  --action-min-height: 32px;
+  --action-font-size: 22px;
+}
+.page-summary {
+  color: var(--muted-foreground);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+erp-option-select {
+  min-inline-size: 80px;
+  inline-size: 80px;
+  max-inline-size: 80px;
+}
+.blocked {
+  opacity: 0.55;
+  pointer-events: none;
+}
+.page-controls {
+  flex: 1;
+  justify-content: center;
+  max-width: 100%;
+}
+.native-page-controls {
+  flex: 1;
+  inline-size: 100%;
+  max-inline-size: 100%;
+  min-inline-size: 0;
+}
+p-paginator {
+  max-inline-size: 100%;
+}
+.size-settings {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  white-space: nowrap;
+}
+.page-count {
+  color: var(--muted-foreground);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+:host ::ng-deep .with-record-navigation .collection-nav-space,
+:host ::ng-deep .with-record-navigation .collection-size-slot {
+  flex: 1 1 0px;
+  min-inline-size: 0;
+  margin-inline: 0;
+}
+@media (max-width: 799px) {
+  :host ::ng-deep .with-record-navigation .collection-nav-space {
+    display: none;
+  }
+  :host ::ng-deep .with-record-navigation .collection-size-slot {
+    flex-basis: 100%;
+    margin-block-start: 8px;
+  }
+  footer {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .page-controls {
+    flex: 1 1 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+  }
+  .native-page-controls {
+    inline-size: 100%;
+  }
+}
+@media (max-width: 599px) {
+  footer {
+    padding: 10px 0;
+    gap: 8px;
+    font-size: 12px;
+  }
+  .page-controls {
+    width: 100%;
+  }
+  :host:not(:has(.with-record-navigation)) ::ng-deep .collection-page-report {
+    flex-basis: 100%;
+    text-align: center;
+  }
+}

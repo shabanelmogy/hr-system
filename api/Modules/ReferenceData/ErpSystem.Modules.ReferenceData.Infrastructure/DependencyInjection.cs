@@ -48,6 +48,7 @@ public static class DependencyInjection
         services.TryAddSingleton(TimeProvider.System);
         services.AddScoped<IReferenceDataCompanyGeographySource, ReferenceDataCompanyGeographySource>();
         services.AddScoped<IReferenceDataReportingSource, ReferenceDataReportingSource>();
+        services.AddScoped<IReferenceDataPublicViewSource, ReferenceDataPublicViewSource>();
         services.AddScoped<IReferenceDataUnitOfWork>(provider => provider.GetRequiredService<ReferenceDataDbContext>());
         services.AddScoped<IAddressReadStore, AddressReadStore>();
         services.AddScoped<IAddressWriteStore, AddressWriteStore>();

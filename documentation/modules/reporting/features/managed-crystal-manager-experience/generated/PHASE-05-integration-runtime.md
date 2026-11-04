@@ -57,4 +57,4 @@ realtime, notification, localization, report, or Import integration is reachable
 | managed-crystal-manager-experience-mobile | 2 | `aea443fe72612197e12c8c1c6457782bfbcab024ab6d1411f789a28ac54cef2e` |
 | managed-crystal-manager-experience-mobile | 11 | `a8228f8a355cef3bc39fa8cf713120e24ef90ac0b2c059ffaa5dede3f2d7bb03` |
 | managed-crystal-manager-experience-mobile | 12 | `dabaad871ebdc616ca5d5d6be95085971c684aa2576ca16e5d00feb72c892f5e` |
-| managed-crystal-manager-experience-mobile | 15 | `a1f8f3db22e9cf6685bf54c33da126706600e291aa6143fa27b8ad27941b1769` |
+| managed-crystal-manager-experience-mobile | 15 | `2d72e0522a8407860b67d4de94a3b510cdeeeedd0618cfd18b17a6d2e49d5120` |

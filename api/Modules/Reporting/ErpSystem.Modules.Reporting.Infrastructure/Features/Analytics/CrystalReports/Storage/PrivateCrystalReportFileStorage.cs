@@ -181,6 +181,7 @@ public sealed class PrivateCrystalReportFileStorage(
             CrystalReportInspectionFailure.UnsupportedEntity => CrystalReportFileFailure.UnsupportedEntity,
             CrystalReportInspectionFailure.SchemaMismatch => CrystalReportFileFailure.SchemaMismatch,
             CrystalReportInspectionFailure.ParameterMismatch => CrystalReportFileFailure.ParameterMismatch,
+            CrystalReportInspectionFailure.SourceRejected => CrystalReportFileFailure.SourceRejected,
             _ => CrystalReportFileFailure.InspectionRejected
         };
     private static Stream? DisposeAndReturnNull(Stream stream)

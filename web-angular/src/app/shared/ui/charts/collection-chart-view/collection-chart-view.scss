@@ -1,0 +1,54 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  min-width: 0;
+  height: 100%;
+}
+.analytics {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+  padding: 4px;
+}
+.metrics {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 6px;
+  margin-bottom: 6px;
+  flex-shrink: 0;
+}
+.chart-scroll {
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+  container-type: size;
+}
+.plots {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-auto-rows: minmax(280px, 1fr);
+  gap: 6px;
+  min-height: 100%;
+  padding: 0 2px 12px;
+}
+@media (min-width: 600px) {
+  .metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (min-width: 900px) {
+  .analytics {
+    padding: 4px 6px 6px;
+  }
+  .metrics {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .plots {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    height: 100%;
+    grid-auto-rows: max(280px, calc(100cqh - 12px));
+  }
+}

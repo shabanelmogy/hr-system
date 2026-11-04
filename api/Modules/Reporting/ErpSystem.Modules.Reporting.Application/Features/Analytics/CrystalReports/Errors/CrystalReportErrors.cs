@@ -4,6 +4,10 @@ namespace ErpSystem.Modules.Reporting.Application.Features.Analytics.CrystalRepo
 
 public sealed class CrystalReportErrors(IStringLocalizer<CrystalReportDetailResponse> localizer)
 {
+    public Error CrystalReportInvalidDraft => new("CrystalReport.InvalidDraft", localizer[nameof(CrystalReportInvalidDraft)], ErrorType.Validation);
+    public Error CrystalReportInvalidView => new("CrystalReport.InvalidView", localizer[nameof(CrystalReportInvalidView)], ErrorType.Validation);
+    public Error CrystalReportViewCatalogUnavailable => new("CrystalReport.ViewCatalogUnavailable", localizer[nameof(CrystalReportViewCatalogUnavailable)], ErrorType.ServiceUnavailable);
+    public Error GlobalCrystalReportForbidden => new("CrystalReport.Forbidden", localizer[nameof(GlobalCrystalReportForbidden)], ErrorType.Forbidden);
     public Error CrystalReportNotFound => new("CrystalReport.NotFound", localizer[nameof(CrystalReportNotFound)], ErrorType.NotFound);
     public Error CrystalReportDuplicateKey => new("CrystalReport.DuplicateKey", localizer[nameof(CrystalReportDuplicateKey)], ErrorType.Conflict);
     public Error CrystalReportInvalidFile => new("CrystalReport.InvalidFile", localizer[nameof(CrystalReportInvalidFile)], ErrorType.Validation);
@@ -22,6 +26,7 @@ public sealed class CrystalReportErrors(IStringLocalizer<CrystalReportDetailResp
     public Error CrystalReportVersionNotValidated => new("CrystalReport.VersionNotValidated", localizer[nameof(CrystalReportVersionNotValidated)], ErrorType.Validation);
     public Error CrystalReportUnsupportedEntity => new("CrystalReport.UnsupportedEntity", localizer[nameof(CrystalReportUnsupportedEntity)], ErrorType.Validation);
     public Error CrystalReportSchemaMismatch => new("CrystalReport.SchemaMismatch", localizer[nameof(CrystalReportSchemaMismatch)], ErrorType.Validation);
+    public Error CrystalReportSourceRejected => new("CrystalReport.SourceRejected", localizer[nameof(CrystalReportSourceRejected)], ErrorType.Validation);
     public Error CrystalReportParameterMismatch => new("CrystalReport.ParameterMismatch", localizer[nameof(CrystalReportParameterMismatch)], ErrorType.Validation);
     public Error CrystalReportContractStale => new("CrystalReport.ContractStale", localizer[nameof(CrystalReportContractStale)], ErrorType.Validation);
 }

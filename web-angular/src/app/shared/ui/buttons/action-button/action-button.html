@@ -1,0 +1,36 @@
+<button
+  #control
+  pButton
+  [iconOnly]="appearance() === 'icon'"
+  [type]="type()"
+  [severity]="severity()"
+  [variant]="primeVariant()"
+  [raised]="variant() === 'contained'"
+  [disabled]="disabled() || busy()"
+  [attr.aria-busy]="busy() ? 'true' : null"
+  [attr.aria-pressed]="pressed()"
+  [attr.aria-expanded]="expanded()"
+  [attr.aria-controls]="controls()"
+  [attr.aria-haspopup]="hasPopup()"
+  [class.erp-action-fluid]="fullWidth()"
+  [class.quiet]="appearance() === 'quiet'"
+  [class.icon-only]="appearance() === 'icon'"
+  [class.view-toggle]="appearance() === 'toggle'"
+  [class.compact-on-small]="compactOnSmallScreens()"
+  [attr.aria-label]="
+    accessibleLabel() ?? (appearance() === 'icon' || compactOnSmallScreens() ? label() : null)
+  "
+  [attr.title]="compactOnSmallScreens() ? label() : null"
+  (click)="activate($event)"
+>
+  @if (busy()) {
+    <span class="erp-action-spinner" aria-hidden="true"></span>
+  }
+  <ng-content select="[buttonIcon]" />
+  <span pButtonLabel
+    >{{ label() }}
+    @if (description()) {
+      <span class="erp-action-description">{{ description() }}</span>
+    }
+  </span>
+</button>

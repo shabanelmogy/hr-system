@@ -1,0 +1,492 @@
+{
+  "date": "2026-10-31T14:51:37.185Z",
+  "scope": "Read-only source/TypeScript audit; generated and spec source excluded from metrics; app tsconfig used for probes, no Angular template compilation or runtime verification.",
+  "files": 195,
+  "largestFiles": [
+    {
+      "file": "src/app/shared/ui/collections/my-data-grid/my-data-grid.ts",
+      "lines": 942,
+      "assertions": 2,
+      "subscriptions": 0,
+      "effects": 3,
+      "methods": 116
+    },
+    {
+      "file": "src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page/countries-read-page.ts",
+      "lines": 439,
+      "assertions": 0,
+      "subscriptions": 0,
+      "effects": 1,
+      "methods": 63
+    },
+    {
+      "file": "src/app/platform/auth/state/auth-session.ts",
+      "lines": 425,
+      "assertions": 0,
+      "subscriptions": 1,
+      "effects": 0,
+      "methods": 35
+    },
+    {
+      "file": "src/app/dev/grid-capabilities-preview/grid-capabilities-preview.ts",
+      "lines": 362,
+      "assertions": 0,
+      "subscriptions": 0,
+      "effects": 0,
+      "methods": 48
+    },
+    {
+      "file": "src/app/shared/data/collection-criteria.ts",
+      "lines": 319,
+      "assertions": 0,
+      "subscriptions": 0,
+      "effects": 0,
+      "methods": 21
+    },
+    {
+      "file": "src/app/shared/ui/collections/collection-controller.ts",
+      "lines": 313,
+      "assertions": 0,
+      "subscriptions": 0,
+      "effects": 3,
+      "methods": 38
+    },
+    {
+      "file": "src/app/modules/reference-data/geographical-information/countries/state/country-editor-state.ts",
+      "lines": 310,
+      "assertions": 2,
+      "subscriptions": 3,
+      "effects": 1,
+      "methods": 31
+    },
+    {
+      "file": "src/app/modules/reference-data/geographical-information/countries/state/country-read-state.ts",
+      "lines": 299,
+      "assertions": 0,
+      "subscriptions": 3,
+      "effects": 4,
+      "methods": 42
+    },
+    {
+      "file": "src/app/dev/criteria-preview/criteria-preview.ts",
+      "lines": 275,
+      "assertions": 1,
+      "subscriptions": 0,
+      "effects": 2,
+      "methods": 37
+    },
+    {
+      "file": "src/app/dev/collection-preview/collection-preview.ts",
+      "lines": 258,
+      "assertions": 0,
+      "subscriptions": 0,
+      "effects": 0,
+      "methods": 31
+    },
+    {
+      "file": "src/app/modules/reference-data/geographical-information/countries/state/country-lifecycle-state.ts",
+      "lines": 241,
+      "assertions": 3,
+      "subscriptions": 1,
+      "effects": 1,
+      "methods": 38
+    },
+    {
+      "file": "src/app/dev/reference-preview/reference-preview.ts",
+      "lines": 215,
+      "assertions": 1,
+      "subscriptions": 0,
+      "effects": 0,
+      "methods": 21
+    },
+    {
+      "file": "src/app/shell/layout/main-shell/main-shell.ts",
+      "lines": 210,
+      "assertions": 0,
+      "subscriptions": 0,
+      "effects": 2,
+      "methods": 24
+    },
+    {
+      "file": "src/app/modules/reference-data/geographical-information/countries/services/country-service.ts",
+      "lines": 209,
+      "assertions": 0,
+      "subscriptions": 0,
+      "effects": 0,
+      "methods": 35
+    },
+    {
+      "file": "src/app/shared/ui/forms/fields/reference-field/reference-field.ts",
+      "lines": 209,
+      "assertions": 0,
+      "subscriptions": 2,
+      "effects": 3,
+      "methods": 24
+    }
+  ],
+  "largestFunctions": [
+    {
+      "file": "src/app/shared/ui/collections/collection-controller.ts",
+      "name": "createCollectionController",
+      "start": 27,
+      "lines": 285
+    },
+    {
+      "file": "src/app/shared/data/collection-criteria.ts",
+      "name": "createCollectionCriteriaCodec",
+      "start": 94,
+      "lines": 225
+    },
+    {
+      "file": "src/app/modules/reference-data/geographical-information/countries/utils/country-chart-data.ts",
+      "name": "countryChartData",
+      "start": 5,
+      "lines": 114
+    },
+    {
+      "file": "src/app/shared/ui/collections/grid-header-groups.ts",
+      "name": "resolveGridHeaders",
+      "start": 35,
+      "lines": 105
+    },
+    {
+      "file": "src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page/countries-read-page.ts",
+      "name": "<callback>",
+      "start": 245,
+      "lines": 99
+    },
+    {
+      "file": "src/app/platform/realtime/realtime-events.ts",
+      "name": "watch",
+      "start": 80,
+      "lines": 95
+    },
+    {
+      "file": "src/app/shared/data/collection-criteria.ts",
+      "name": "normalize",
+      "start": 179,
+      "lines": 95
+    },
+    {
+      "file": "src/app/shared/ui/charts/chart-presentation.ts",
+      "name": "chartOptions",
+      "start": 84,
+      "lines": 94
+    },
+    {
+      "file": "src/app/platform/realtime/realtime-events.ts",
+      "name": "<callback>",
+      "start": 81,
+      "lines": 93
+    },
+    {
+      "file": "src/app/shared/ui/collections/my-data-grid/my-data-grid.ts",
+      "name": "constructor",
+      "start": 401,
+      "lines": 87
+    },
+    {
+      "file": "src/app/shared/ui/charts/chart-slice-labels.ts",
+      "name": "sliceLabelPlugin",
+      "start": 5,
+      "lines": 85
+    },
+    {
+      "file": "src/app/shared/data/scoped-read.ts",
+      "name": "createScopedRead",
+      "start": 21,
+      "lines": 76
+    },
+    {
+      "file": "src/app/modules/reference-data/geographical-information/countries/state/country-read-state.ts",
+      "name": "constructor",
+      "start": 155,
+      "lines": 75
+    },
+    {
+      "file": "src/app/shared/ui/charts/chart-slice-labels.ts",
+      "name": "afterDatasetsDraw",
+      "start": 13,
+      "lines": 75
+    },
+    {
+      "file": "src/app/shared/ui/collections/grid-presentation.ts",
+      "name": "parseGridPresentation",
+      "start": 13,
+      "lines": 73
+    },
+    {
+      "file": "src/app/modules/reference-data/geographical-information/countries/state/country-editor-state.ts",
+      "name": "save",
+      "start": 185,
+      "lines": 72
+    },
+    {
+      "file": "src/app/shared/data/route-collection-criteria.ts",
+      "name": "createRouteCollectionCriteria",
+      "start": 13,
+      "lines": 71
+    },
+    {
+      "file": "src/app/shared/ui/collections/my-data-grid/my-data-grid.ts",
+      "name": "changeSort",
+      "start": 811,
+      "lines": 65
+    }
+  ],
+  "cycles": [
+    [
+      "src/app/shared/ui/layout/launcher-tile/launcher-tile.ts",
+      "src/app/shared/ui/layout/launcher-grid/launcher-grid.ts"
+    ],
+    [
+      "src/app/platform/modules/pages/module-browser/module-browser.ts",
+      "src/app/platform/modules/pages/module-workspace/module-workspace.ts",
+      "src/app/platform/modules/components/module-context-control/module-context-control.ts",
+      "src/app/platform/modules/state/module-context-state.ts",
+      "src/app/platform/modules/state/module-catalog-state.ts",
+      "src/app/platform/modules/public-api.ts",
+      "src/app/platform/auth/pages/session-page/session-page.ts",
+      "src/app/platform/auth/session.public-api.ts"
+    ],
+    [
+      "src/app/platform/tenants/pages/dashboard-page/dashboard-page.ts",
+      "src/app/platform/tenants/public-api.ts",
+      "src/app/shell/public-api.ts"
+    ],
+    [
+      "src/app/shared/data/spreadsheet-parser.ts",
+      "src/app/shared/data/spreadsheet-import.ts"
+    ]
+  ],
+  "probes": [
+    {
+      "name": "unused",
+      "count": 11,
+      "diagnostics": [
+        {
+          "code": 6133,
+          "file": "src/app/app.ts",
+          "line": 14,
+          "message": "'navigationLifetime' is declared but its value is never read."
+        },
+        {
+          "code": 6133,
+          "file": "src/app/shared/ui/collections/collection-footer/collection-footer.ts",
+          "line": 17,
+          "message": "'nativeLocale' is declared but its value is never read."
+        },
+        {
+          "code": 6133,
+          "file": "src/app/shared/ui/collections/collection-templates.ts",
+          "line": 18,
+          "message": "'context' is declared but its value is never read."
+        },
+        {
+          "code": 6133,
+          "file": "src/app/shared/ui/collections/collection-templates.ts",
+          "line": 29,
+          "message": "'context' is declared but its value is never read."
+        },
+        {
+          "code": 6133,
+          "file": "src/app/shared/ui/collections/collection-templates.ts",
+          "line": 43,
+          "message": "'context' is declared but its value is never read."
+        },
+        {
+          "code": 6133,
+          "file": "src/app/shared/ui/collections/collection-templates.ts",
+          "line": 54,
+          "message": "'context' is declared but its value is never read."
+        },
+        {
+          "code": 6133,
+          "file": "src/app/shared/ui/collections/collection-templates.ts",
+          "line": 65,
+          "message": "'context' is declared but its value is never read."
+        },
+        {
+          "code": 6133,
+          "file": "src/app/shared/ui/collections/collection-templates.ts",
+          "line": 76,
+          "message": "'context' is declared but its value is never read."
+        },
+        {
+          "code": 6133,
+          "file": "src/app/shared/ui/collections/collection-templates.ts",
+          "line": 91,
+          "message": "'context' is declared but its value is never read."
+        },
+        {
+          "code": 6133,
+          "file": "src/app/shared/ui/collections/my-data-grid/my-data-grid.ts",
+          "line": 126,
+          "message": "'gridLocale' is declared but its value is never read."
+        },
+        {
+          "code": 6133,
+          "file": "src/app/shared/ui/forms/fields/date-field/date-field.ts",
+          "line": 55,
+          "message": "'localeAdapter' is declared but its value is never read."
+        }
+      ]
+    },
+    {
+      "name": "indexed-access",
+      "count": 40,
+      "diagnostics": [
+        {
+          "code": 2532,
+          "file": "src/app/dev/criteria-preview/criteria-preview.ts",
+          "line": 116,
+          "message": "Object is possibly 'undefined'."
+        },
+        {
+          "code": 2532,
+          "file": "src/app/dev/grid-capabilities-preview/grid-capabilities-preview.ts",
+          "line": 178,
+          "message": "Object is possibly 'undefined'."
+        },
+        {
+          "code": 18048,
+          "file": "src/app/modules/reference-data/geographical-information/countries/services/country-service.ts",
+          "line": 187,
+          "message": "'group' is possibly 'undefined'."
+        },
+        {
+          "code": 18048,
+          "file": "src/app/modules/reference-data/geographical-information/countries/services/country-service.ts",
+          "line": 189,
+          "message": "'group' is possibly 'undefined'."
+        },
+        {
+          "code": 18048,
+          "file": "src/app/modules/reference-data/geographical-information/countries/services/country-service.ts",
+          "line": 190,
+          "message": "'rule' is possibly 'undefined'."
+        },
+        {
+          "code": 18048,
+          "file": "src/app/modules/reference-data/geographical-information/countries/services/country-service.ts",
+          "line": 192,
+          "message": "'group' is possibly 'undefined'."
+        },
+        {
+          "code": 18048,
+          "file": "src/app/modules/reference-data/geographical-information/countries/services/country-service.ts",
+          "line": 204,
+          "message": "'rule' is possibly 'undefined'."
+        },
+        {
+          "code": 18048,
+          "file": "src/app/modules/reference-data/geographical-information/countries/services/country-service.ts",
+          "line": 206,
+          "message": "'rule' is possibly 'undefined'."
+        },
+        {
+          "code": 18048,
+          "file": "src/app/modules/reference-data/geographical-information/countries/services/country-service.ts",
+          "line": 206,
+          "message": "'group' is possibly 'undefined'."
+        },
+        {
+          "code": 2345,
+          "file": "src/app/modules/reference-data/geographical-information/countries/state/country-editor-state.ts",
+          "line": 306,
+          "message": "Argument of type '{ nameAr: string; nameEn: string; alpha2Code: string; alpha3Code: string; phoneCode: string; currencyCode: string; } | undefined' is not assignable to parameter of type '{ nameAr: string; nameEn: string; alpha2Code: string; alpha3Code: string; phoneCode: string; currencyCode: string; }'.   Type 'undefined' is not assignable to type '{ nameAr: string; nameEn: string; alpha2Code: string; alpha3Code: string; phoneCode: string; currencyCode: string; }'."
+        },
+        {
+          "code": 2345,
+          "file": "src/app/modules/reference-data/geographical-information/countries/state/country-lifecycle-state.ts",
+          "line": 182,
+          "message": "Argument of type 'number | undefined' is not assignable to parameter of type 'number'.   Type 'undefined' is not assignable to type 'number'."
+        },
+        {
+          "code": 2345,
+          "file": "src/app/modules/reference-data/geographical-information/countries/state/country-lifecycle-state.ts",
+          "line": 183,
+          "message": "Argument of type 'number | undefined' is not assignable to parameter of type 'number'.   Type 'undefined' is not assignable to type 'number'."
+        }
+      ]
+    },
+    {
+      "name": "exact-optionals",
+      "count": 17,
+      "diagnostics": [
+        {
+          "code": 2375,
+          "file": "src/app/dev/grid-capabilities-preview/grid-capabilities-preview.ts",
+          "line": 307,
+          "message": "Type '{ frozenColumns: { id: \"start\"; } | undefined; gridLines?: boolean; stripedRows?: boolean; resizableColumns?: \"fit\" | \"expand\"; reorderableColumns?: boolean; columnManagement?: boolean; }' is not assignable to type 'GridDisplayOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.   Types of property 'frozenColumns' are incompatible.     Type '{ id: \"start\"; } | undefined' is not assignable to type 'Readonly<Record<string, \"start\" | \"end\">>'.       Type 'undefined' is not assignable to type 'Readonly<Record<string, \"start\" | \"end\">>'."
+        },
+        {
+          "code": 2412,
+          "file": "src/app/dev/reference-preview/reference-preview.ts",
+          "line": 195,
+          "message": "Type '{ value: number; label: string; disabled: boolean; description: string | undefined; } | undefined' is not assignable to type 'ReferenceOption | undefined' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target."
+        },
+        {
+          "code": 2375,
+          "file": "src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page/countries-read-page.ts",
+          "line": 246,
+          "message": "Type '{ key: string; filter: GridColumnFilter | undefined; align: \"center\"; flex: number; header: string; value: (row: { statesCount: number; id: number; nameAr: string; nameEn: string; ... 6 more ...; isDeleted: boolean; }) => number; }' is not assignable to type 'CollectionColumn<{ statesCount: number; id: number; nameAr: string; nameEn: string; alpha2Code: string | null; alpha3Code: string | null; phoneCode: string | null; currencyCode: string | null; createdOn: string; updatedOn: string | null; isDeleted: boolean; }>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.   Types of property 'filter' are incompatible.     Type 'GridColumnFilter | undefined' is not assignable to type 'GridColumnFilter'.       Type 'undefined' is not assignable to type 'GridColumnFilter'."
+        },
+        {
+          "code": 2375,
+          "file": "src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page/countries-read-page.ts",
+          "line": 254,
+          "message": "Type '{ key: string; filter: GridColumnFilter | undefined; align: \"center\"; flex: number; header: string; value: (row: { statesCount: number; id: number; nameAr: string; nameEn: string; ... 6 more ...; isDeleted: boolean; }) => string; sortField: string; }' is not assignable to type 'CollectionColumn<{ statesCount: number; id: number; nameAr: string; nameEn: string; alpha2Code: string | null; alpha3Code: string | null; phoneCode: string | null; currencyCode: string | null; createdOn: string; updatedOn: string | null; isDeleted: boolean; }>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.   Types of property 'filter' are incompatible.     Type 'GridColumnFilter | undefined' is not assignable to type 'GridColumnFilter'.       Type 'undefined' is not assignable to type 'GridColumnFilter'."
+        },
+        {
+          "code": 2375,
+          "file": "src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page/countries-read-page.ts",
+          "line": 263,
+          "message": "Type '{ key: string; filter: GridColumnFilter | undefined; align: \"center\"; flex: number; header: string; value: (row: { statesCount: number; id: number; nameAr: string; nameEn: string; ... 6 more ...; isDeleted: boolean; }) => string; sortField: string; }' is not assignable to type 'CollectionColumn<{ statesCount: number; id: number; nameAr: string; nameEn: string; alpha2Code: string | null; alpha3Code: string | null; phoneCode: string | null; currencyCode: string | null; createdOn: string; updatedOn: string | null; isDeleted: boolean; }>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.   Types of property 'filter' are incompatible.     Type 'GridColumnFilter | undefined' is not assignable to type 'GridColumnFilter'.       Type 'undefined' is not assignable to type 'GridColumnFilter'."
+        },
+        {
+          "code": 2375,
+          "file": "src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page/countries-read-page.ts",
+          "line": 272,
+          "message": "Type '{ key: string; filter: GridColumnFilter | undefined; align: \"center\"; flex: number; header: string; value: (row: { statesCount: number; id: number; nameAr: string; nameEn: string; ... 6 more ...; isDeleted: boolean; }) => string | null; sortField: string; }' is not assignable to type 'CollectionColumn<{ statesCount: number; id: number; nameAr: string; nameEn: string; alpha2Code: string | null; alpha3Code: string | null; phoneCode: string | null; currencyCode: string | null; createdOn: string; updatedOn: string | null; isDeleted: boolean; }>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.   Types of property 'filter' are incompatible.     Type 'GridColumnFilter | undefined' is not assignable to type 'GridColumnFilter'.       Type 'undefined' is not assignable to type 'GridColumnFilter'."
+        },
+        {
+          "code": 2375,
+          "file": "src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page/countries-read-page.ts",
+          "line": 281,
+          "message": "Type '{ key: string; filter: GridColumnFilter | undefined; align: \"center\"; flex: number; header: string; value: (row: { statesCount: number; id: number; nameAr: string; nameEn: string; ... 6 more ...; isDeleted: boolean; }) => string | null; sortField: string; }' is not assignable to type 'CollectionColumn<{ statesCount: number; id: number; nameAr: string; nameEn: string; alpha2Code: string | null; alpha3Code: string | null; phoneCode: string | null; currencyCode: string | null; createdOn: string; updatedOn: string | null; isDeleted: boolean; }>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.   Types of property 'filter' are incompatible.     Type 'GridColumnFilter | undefined' is not assignable to type 'GridColumnFilter'.       Type 'undefined' is not assignable to type 'GridColumnFilter'."
+        },
+        {
+          "code": 2375,
+          "file": "src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page/countries-read-page.ts",
+          "line": 290,
+          "message": "Type '{ key: string; filter: GridColumnFilter | undefined; align: \"center\"; flex: number; header: string; value: (row: { statesCount: number; id: number; nameAr: string; nameEn: string; ... 6 more ...; isDeleted: boolean; }) => string | null; }' is not assignable to type 'CollectionColumn<{ statesCount: number; id: number; nameAr: string; nameEn: string; alpha2Code: string | null; alpha3Code: string | null; phoneCode: string | null; currencyCode: string | null; createdOn: string; updatedOn: string | null; isDeleted: boolean; }>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.   Types of property 'filter' are incompatible.     Type 'GridColumnFilter | undefined' is not assignable to type 'GridColumnFilter'.       Type 'undefined' is not assignable to type 'GridColumnFilter'."
+        },
+        {
+          "code": 2375,
+          "file": "src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page/countries-read-page.ts",
+          "line": 298,
+          "message": "Type '{ key: string; filter: GridColumnFilter | undefined; align: \"center\"; flex: number; header: string; value: (row: { statesCount: number; id: number; nameAr: string; nameEn: string; ... 6 more ...; isDeleted: boolean; }) => string | null; sortField: string; }' is not assignable to type 'CollectionColumn<{ statesCount: number; id: number; nameAr: string; nameEn: string; alpha2Code: string | null; alpha3Code: string | null; phoneCode: string | null; currencyCode: string | null; createdOn: string; updatedOn: string | null; isDeleted: boolean; }>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.   Types of property 'filter' are incompatible.     Type 'GridColumnFilter | undefined' is not assignable to type 'GridColumnFilter'.       Type 'undefined' is not assignable to type 'GridColumnFilter'."
+        },
+        {
+          "code": 2375,
+          "file": "src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page/countries-read-page.ts",
+          "line": 307,
+          "message": "Type '{ key: string; filter: GridColumnFilter | undefined; align: \"center\"; flex: number; header: string; value: (row: { statesCount: number; id: number; nameAr: string; nameEn: string; ... 6 more ...; isDeleted: boolean; }) => number; }' is not assignable to type 'CollectionColumn<{ statesCount: number; id: number; nameAr: string; nameEn: string; alpha2Code: string | null; alpha3Code: string | null; phoneCode: string | null; currencyCode: string | null; createdOn: string; updatedOn: string | null; isDeleted: boolean; }>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.   Types of property 'filter' are incompatible.     Type 'GridColumnFilter | undefined' is not assignable to type 'GridColumnFilter'.       Type 'undefined' is not assignable to type 'GridColumnFilter'."
+        },
+        {
+          "code": 2375,
+          "file": "src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page/countries-read-page.ts",
+          "line": 315,
+          "message": "Type '{ key: string; filterValue: (row: { statesCount: number; id: number; nameAr: string; nameEn: string; alpha2Code: string | null; alpha3Code: string | null; phoneCode: string | null; currencyCode: string | null; createdOn: string; updatedOn: string | null; isDeleted: boolean; }) => string; ... 5 more ...; sortField: s...' is not assignable to type 'CollectionColumn<{ statesCount: number; id: number; nameAr: string; nameEn: string; alpha2Code: string | null; alpha3Code: string | null; phoneCode: string | null; currencyCode: string | null; createdOn: string; updatedOn: string | null; isDeleted: boolean; }>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.   Types of property 'filter' are incompatible.     Type 'GridColumnFilter | undefined' is not assignable to type 'GridColumnFilter'.       Type 'undefined' is not assignable to type 'GridColumnFilter'."
+        },
+        {
+          "code": 2375,
+          "file": "src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page/countries-read-page.ts",
+          "line": 325,
+          "message": "Type '{ key: string; filterValue: (row: { statesCount: number; id: number; nameAr: string; nameEn: string; alpha2Code: string | null; alpha3Code: string | null; phoneCode: string | null; currencyCode: string | null; createdOn: string; updatedOn: string | null; isDeleted: boolean; }) => string | undefined; ... 4 more ...; ...' is not assignable to type 'CollectionColumn<{ statesCount: number; id: number; nameAr: string; nameEn: string; alpha2Code: string | null; alpha3Code: string | null; phoneCode: string | null; currencyCode: string | null; createdOn: string; updatedOn: string | null; isDeleted: boolean; }>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.   Types of property 'filter' are incompatible.     Type 'GridColumnFilter | undefined' is not assignable to type 'GridColumnFilter'.       Type 'undefined' is not assignable to type 'GridColumnFilter'."
+        }
+      ]
+    }
+  ]
+}

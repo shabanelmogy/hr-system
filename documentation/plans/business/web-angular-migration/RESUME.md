@@ -1,103 +1,111 @@
-# Current handoff — 2026-10-31 S3-A6 Countries Report
+# Current handoff — 2026-11-01 Countries acceptance except hosted reports
 
-S3-A6 Countries managed Report integration Verified/Closed. Prior S3-A5 Chart/D33,
-S3-A2 read, S3-A3 Create/Edit/D29–D32 and S3-A4 lifecycle retain bounded acceptance.
-Full Countries/source pixel/host/Table acceptance remains Not Verified.
+Requester approved completing the final Countries acceptance round while keeping
+the report problem separate. Sole Active business feature remains S3-A8. All
+current non-report pilot acceptance is Verified; complete Phase06 Not Verified,
+Phase07 not started and business route stays /dev/countries until PROD-028 passes.
 
-## Current review surface
+## Fresh verification
 
-Dashboard Data → sidebar → geographical information → Countries authenticated
-development preview. Grid/Cards/Chart/Report/View/Create/Edit/Archive/Restore/Bulk
-available under exact existing authority. Report button requires Countries:View
-and super_admin + GlobalCrystalReports:View. Header Filter controls independent
-report criteria; Header Refresh reloads catalog/hash and regenerates. Shared form
-NameAr/NameEn200 + native report selection + Search/Reset; draft remains until
-Search, language/selection uses applied values. Actor replacement clears draft/
-applied/selection; leaving destroys requests/PDF leases. Safe PDF open/download
-and mobile fallback retained. No nested header or feature-local report shell.
+Full npm run check passes with VITEST_MAX_WORKERS=2: zero enabled lint warnings/
+errors,4configuration,26architecture/dependency, strict app/spec/templates,
+84unit files/472tests, catalogs/tokens/fonts and production build495.64kB initial/
+128.92kB transfer, unchanged500kB warning/1MB error budgets. No app runtime source
+changed in this acceptance. FOLLOW-022 CC-01..07 remain Verified;84components stay
+in matching folders with external HTML/optional SCSS and shared public ownership.
 
-## Executed proof
+253fresh intercepted Chrome cases pass: read40, actual Grid controls40, Chart40,
+report fixture UI40, Import40, read lifecycle8, actual Grid interactions8, actions8,
+Import failures15, Import journeys5, realtime9. Full palettes/modes/EN-AR/390-1440
+matrices and meaningful keyboard/authority/draft/failure cases now recorded.
+FOLLOW-021 is Verified. Representative six screenshots visually inspected.
 
-Phase06 Verified2026-10-31 for exact S3-A6 Countries managed Crystal/PDF integration.
-Full npm run check:75files/422tests,4configuration/12architecture,types/catalog/
-tokens/fonts/build passed; initial499.84kB/130.19kB estimated transfer, unchanged
-500kB budget. Entry437recipes/planning passed before application edits.
-Actual authenticated Countries Report40 palette/mode/EN-AR/390×780/1440×1050 cases,
-focused failure/authority/mobile-PDF-fallback8, current Next source8, retained command8,
-Chart8 and standalone Reporting8 passed. Durable JSON/logs/screenshots are in verification/.
-No live hosted render/business write, actual Crystal engine/RPT output, native device,
-schema/migration, full five-view pixel acceptance or production release claim.
+Seven actual hosted cases pass: two Cookie sessions/hubs, shared UI create/edit,
+remote post-commit delivery, offline missed-change reconnect with retained query,
+archive/restore, real XLSX UI import and bulk archive. New repeatable command:
+npm run verify:country-pilot-live -- --test-writes. Default frontend4210 is allowed
+by host;4220 refused before any write. Script guards unique markers/owned IDs,
+archives in finally and logs out. Test IDs7,8,9 verified archived (audit rows remain),
+no pre-existing record modified. An initial dialog-host locator error is retained
+and corrected with the existing accessible edit-dialog scope; final7cases pass.
 
-Countries consumes GlobalReportView and globalReportAllowed through Reporting's
-public API, lazy inside the existing collection workspace. Exact Countries:View
-workspace authority and super_admin + GlobalCrystalReports:View gate visible/direct
-Report entry; current read-only actors may render. Losing authority destroys the
-embedded report and falls back to Grid. Header Refresh reloads report catalog/source
-and regenerates; other views keep existing refresh. Header Filter controls report
-criteria without discarding form/selection or rerendering. No nested PageHeader.
-Reporting keeps existing catalog/service/PDF validation/cancellation. Applied filters
-and selected report now belong to the immutable actor; replacement clears them and
-draft fields. Explicit reload regenerates even if source/hash is unchanged. Shared
-ReportWorkspace reference appearance uses280px sidebar/gap64 and contained scrolling;
-FormContainer sidebar appearance keeps Search/Reset full width; PdfViewer fill mode
-retains safe open/download, capability fallback, lease cleanup and finite inline area.
-Existing standalone report defaults remain compatible; no new package or translation key.
+Fresh separate host read/security passes read200, actual authorized hub/reload,
+logout204, normal403 without forbidden page request and anonymous401. Catalog
+remains503 CrystalReport.CatalogUnavailable; real AR/EN PDF not rendered. Overall
+hosted report command stays blocked; fixture PDFs do not close engine acceptance.
 
-Canonical proof: documentation/modules/platform/features/angular-countries-report-view/verification/CURRENT_REPORT_ACCEPTANCE.md. Durable results/screenshots/logs and current-source
-snapshot/manifest live beside it. Reproduce via verify-country-report-browser.mjs
-(40, --focused8), source verify-country-report-reference.mjs and retained command/
-Chart/standalone-report drivers. All business API calls intercepted fixtures.
+## Next exact action / closure
 
-## Remaining sequence
+Reporting/Operations resolves configured hosted Crystal runtime/catalog using
+secure service/configuration/log access (PROD-028/025), then rerun actual catalog
+and representative AR/EN renders. Only then complete S3-A8 Phase06, Phase07 and
+decide business-route enablement. Do not claim full pilot Closed or activate the
+next business feature while the Required report exit remains unsatisfied.
 
-1. Sole Active next S3-A7 angular-countries-import-view source/API/Phase00 only.
-   Shared bounded XLSX file/template/parser/preview/row validation, one valid batch,
-   duplicate feedback and uncertain-submission recovery. Own entry gate first.
-2. S3-A8 full pilot: five views/actions/current-source visuals/keyboard/paging,
-   realtime invalidation/reconnect, hosted session/RBAC/production size/release.
-3. S1-A14/FOLLOW-016 complete native Table matrix remains Required. Then reuse the
-   completed Countries template for States/Districts and subsequent screens.
-4. Managed Crystal manager/other specialist release scopes stay in their own units.
+Canonical current report: documentation/modules/platform/features/
+angular-countries-pilot-acceptance/verification/FINAL_ACCEPTANCE.md.
+Current receipts/source hashes: verification/final/; required-files.json registers
+actual evidence. CLEAN_CODE_IMPLEMENTATION.md is the preceding technical report.
 
-## Limits and continuation
+## Scope and inherited boundaries
 
-Current source CountryReportPage/ManagedCrystalReportView/ReportViewer was rendered
-at identical viewports/locales/modes with the same synthetic report catalog and PDF.
-Verified independent NameAr/NameEn criteria, report selector, first catalog report,
-source SHA256 request, desktop280px sidebar/gap64, compact stacked layout and global
-permission rule. Source fixture lacks the report grant, so browser interception adds
-GlobalCrystalReports:View to that fixture session only; no real permission is changed.
-Retain the approved S3-A0 draft/applied correction: language/selection uses applied
-values; Reset clears and applies once. Angular uses the existing shared labeled fields,
-validation/counters, native PrimeNG controls and explicit safe PDF Open/Download bar;
-Next uses its MUI field/iframe presentation. Label/input heights and button styling
-are not certified pixel-identical; remaining source visual reconciliation is S3-A8,
-not implicitly closed by bounded Report behavior acceptance. Native browser PDF
-internals are opaque: iframe assignment is not proof that an RPT engine rendered.
-PDF-disabled cases prove fallback/download bytes; valid synthetic PDF is not real RPT output.
+D35 Angular focus/no mandatory Next comparison, D36 global shared-first, D37
+external resources/component folders and D38 semantic/typed/ownership gates remain.
+No BFF/NgRx/new domain/API/schema/Next/native source or EF migration. Native UI is
+Excluded. FOLLOW-016 optional Table powers remain Queued; FOLLOW-017 is verified
+for actual Countries but other consumers remain Open. FOLLOW-018 historical raw
+logs are unavailable; current fresh receipts are portable. FOLLOW-020 Next task
+remains Deferred. FOLLOW-019 bundle and FOLLOW-021 harness are Verified.
+PROD-019 broader catalog/context/file/concurrency deployment and PROD-023 backups,
+RISK-016/017 and vendor/dev warnings retain exact production/other-owner scopes.
+These do not add another current non-report development pilot blocker.
 
-No new package/key/API/schema/native code or migration. Catalog remains21sources/
-7269keys/20namespaces/hash6c3bd907be5bbfdf9245a9a3c84d1cc813d4fbab6fb0f2d74173ff14024c8041.
-PROD-019 owns host publication/SQL overrides; PROD-023/RISK-008/017 actual engine/
-physical browser/full release. ActiveReports Excluded. Whole migration Draft.
-Two inherited planning warnings: education-module/erp-platform-template missing
-v2 contracts. No deploy/commit/push. Preserve any user-owned4210 process; it may
-have been stopped by the user/environment during the task. Agent preview4220/
-Next3100/backend3199 stop after verification. Regenerate packets from canonical
-numbered books/manifests; do not rerun temporary mutation helpers.
+No commit/push/publication performed. Regenerate/check all453 documentation recipes
+and run Check-Planning.ps1 after canonical edits. Two inherited planning warnings:
+education-module and erp-platform-template missingv2featurecontracts.
 
+## Reporting runtime correction — 2026-11-01
 
-Measured source spacing correction: current Next theme.spacing=8 converts the
-ReportViewer numeric MARGIN_BETWEEN=8 to64px, not8px. REFERENCE_RESULTS records
-a64px desktop and compact gap. Angular reference workspace now uses64px
-with finite contained height; the source gap mismatch is corrected. Shared field/
-button geometry remains under RISK-016/S3-A8 full-source visual acceptance. See
-https://mui.com/system/spacing/ for numeric spacing transformation.
+Requester separately authorized all runtime review findings fixed. FOLLOW-023
+Verified; global runtime auth/readiness/catalog/package fixes pass current full
+ERP1167tests/3existing skips,134Reporting,15HTTP-harness/20actual-IIS and real-client
+cross-runtime interoperability. Matched private runtime/ERP artifacts are at
+.codex-tmp/crystal-runtime-ready-20261101. Host publication cannot proceed with the
+saved DPAPI-encrypted credentials in current Windows context. PROD-028/029 and real
+native AR/EN rendering remain Open; no remote publication or Angular change.
+Concrete handoff: documentation/plans/business/managed-crystal-reporting-reliability/RUNTIME_CORRECTION_RESULT_2026-11-01.md.
 
+## Latest authoritative state — requester stopped Angular
 
-Final spacing/PDF layout correction: full422-test check repeated after64px spacing
-and link presentation changes. Final production build after the CSS-only fill
-minimum correction is recorded separately as FINAL_BUILD.log (499.84kB/130.19kB).
-The final40 browser matrix checks exact64px spacing and that the embedded iframe
-stays within the document area. Prior command/Chart/standalone regressions retain
-their unchanged functional coverage; report controls receive a compact final pass.
+Requester published CrystalReportGeneratorApi only. Real hosted20HTTP cases pass;
+MVID/current fingerprint/5internal routes/catalog200and2existing report files
+verified. PROD-029 now Verified, FOLLOW-023 Verified. ErpSystem.Api still needs
+requester publication with site84639-WebDeploy; profile wiring and actual WPP
+execution are verified. PUBLISH_READY_2026-11-01.md in the managed Crystal plan
+supersedes earlier ZIP/credential-block handoff. Source local Runtime Error fixed
+through quarantining stale bin/MVC infrastructure; no template/data deletion.
+
+Explicit requester instruction: stop Angular currently. Both running Angular
+servers were stopped and remaining count verified0. Do not start Angular again
+until the requester asks. Agent temporary IIS verification instances also stopped;
+user Visual Studio instances were not targeted. Full Countries Phase06/07 remains
+held for actual integrated ERP/native report acceptance (PROD-028/025/RISK-008).
+
+## Latest render diagnosis and requested manager — 2026-11-01
+
+Actual hosted global render reaches400. Direct native inspection rejects connection
+metadata in both existing RPT files; generic unsupported-profile wrapping is fixed
+in runtime/ERP source, with known-code bounded guidance in Angular's shared error
+state. RENDER_REJECTION_2026-11-01.md in the Crystal plan is current. No valid PDF or
+template correction claimed; PROD-028/025/RISK-008 remain open. No Angular server
+started. Any earlier browser receipt remains historical for this changed error path.
+
+Requester separately chose Angular global Report Manager with immutable versions
+and explicit publication like existing managed reports, scoped to editable modules.
+FOLLOW-024 and global-crystal-template-management/GCT-1 own that new preflight;
+no menu-only workaround, tenant bypass, file overwrite, manager runtime or migration
+has been implemented. Existing Countries pilot status remains unchanged.
+
+## Global versioned manager implementation2026-11-01
+
+FOLLOW-024/GCT-1 now has actual global schema/API/shared Angular manager at /administration/global-crystal-reports, with exact role/global action/entity Edit policy, immutable versions and publication.1193full ERP/159Reporting/70architecture and487Angular tests, plus real SQL lifecycle and actual configured migration/schema verification pass. Canonical report: global-crystal-template-management/IMPLEMENTATION_2026-11-01.md. No remote app publication, Angular dev-server launch or hosted/native/browser acceptance performed. Current RPT rejection/pilot closure remains PROD-028/025/RISK-008; no previous plan is closed by this additive feature.

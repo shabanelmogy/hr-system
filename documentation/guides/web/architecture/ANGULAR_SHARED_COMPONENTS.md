@@ -5,25 +5,49 @@ field/control integration and form behavior. Business rules, permissions, API
 services and feature validators stay with their feature. Platform localization and
 the single theme adapter remain their existing owners.
 
+All shared components follow the mandatory
+[Angular Clean Code policy](ANGULAR_CODE_STYLE.md): external colocated HTML/SCSS,
+typed focused logic, shared ownership and automatic formatting/architecture gates.
+
 ## Current structure
+
+S3-A7 adds `imports/spreadsheet-import-panel/spreadsheet-import-panel.ts`, the shared PrimeNG FileUpload
+selection/template/action shell. Its file bytes stay local; owner-supplied JSON
+commands remain in feature services. Reuse MyDataGrid for preview/paging and
+FeedbackState for statuses (generic success/warning/danger tone, backward-compatible
+default). Domain fields, validation, permissions, row statuses and batch outcomes
+remain with Countries. Do not add another local file/preview shell.
+
+`shared/data/spreadsheet-public-api.ts` is the import-only public entry for
+SpreadsheetFiles, typed file/row policies and safe template download. The XLSX
+parser and pinned SheetJS0.20.3 load dynamically; the core data entry does not
+eagerly export workbook parsing. File metadata, ZIP declared inflation bounds,
+headers, formulas, extra columns and nonblank-row count are validated before
+exposing rows. No session storage, offline queue or direct file-byte API upload.
 
 ```text
 shared/ui/
   public-api.ts
   buttons/
     public-api.ts
-    action-button.ts
-    action-button.scss
-    action-button.spec.ts
+    action-button/
+      action-button.ts
+      action-button.html
+      action-button.scss
+      action-button.spec.ts
   forms/
     public-api.ts
-    form-container.ts
-    form-container.scss
-    form-container.spec.ts
+    form-container/
+      form-container.ts
+      form-container.html
+      form-container.scss
+      form-container.spec.ts
     form-errors.ts
     fields/
-      text-field.ts
-      text-field.scss
+      text-field/
+        text-field.ts
+        text-field.html
+        text-field.scss
 ```
 
 Feature/dev consumers import from shared/ui/public-api. Internal shared owners can
@@ -34,6 +58,13 @@ dialogs/feedback/layout/collections get a folder only when an authorized reusabl
 implementation exists; do not scaffold empty trees.
 
 ## Existing components
+
+Clean Code hardening retains MyDataGrid as the public collection shell. Its
+colocated `grid-column-presentation.ts` owns generic preferences and
+`grid-viewport.ts` owns native size/font observation. Shared `CollectionColumnPipe`
+(`collectionColumn`) resolves projected cells/headers/footers by column key;
+consumers never bind a column template to a numeric array position. Pure shared
+record-feedback decisions and criteria normalizers retain their existing owners.
 
 | Public API | Generic responsibility | Caller responsibility |
 | --- | --- | --- |
@@ -674,3 +705,11 @@ PdfViewer fill=true uses remaining flex space; safe native Open/Download are alw
 available even without navigator.pdfViewerEnabled. Default layouts remain unchanged.
 No feature-local form/PDF/scroll shell. Use Reporting public API for owner integration;
 Shared has no report entity/auth/HTTP rules. Durable S3-A6 proof owns metadata limits.
+
+## S3-A8 live collection compatibility
+
+MyDataGrid uses PrimeNG rowTrackBy with its existing typed row key to preserve same-ID DOM/focus across fresh snapshots. Shared empty/loading/error/forbidden feedback stays inside the visible horizontal viewport using container width/logical sticky CSS; no feature wrapper. PrimeNG MCP accepts the Table binding; actual browser EN/AR390/1440 asserts feedback visibility and row/focus retention. createScopedRead adds explicit pending/refreshInBackground without changing initial/manual/identity-loading semantics; errors remain explicit. Full contract and consumer example: ANGULAR_REALTIME.md.
+
+## Shared improvements apply generally
+
+Requester2026-10-31: reusable presentation/behavior must apply to every applicable current and future consumer. Extend the global theme/owning shared component, never a Countries-only workaround. Application scrolling now follows ANGULAR_SCROLLING.md: one SCSS token policy, automatic root/overflow styling, existing PrimeNG ScrollViewport consumes the same values. All five palettes, EN/AR/RTL, horizontal/vertical, dialogs/lists/fields use it without per-feature opt-in. Domain-specific exceptions require a domain reason; generic improvements remain shared.

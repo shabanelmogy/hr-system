@@ -5,18 +5,19 @@ import { App } from './app';
 import { LocalizationRuntime, UiTextPipe } from './platform/localization/public-api';
 import { uiCatalogVersion } from './platform/localization/catalog.generated';
 
-@Component({ imports: [UiTextPipe], template: '<h1>{{ "general.mainTitle" | uiText }}</h1>' })
+@Component({ imports: [UiTextPipe], templateUrl: './app.spec.html' })
 class RoutedTitle {}
 
 describe('App router outlet', () => {
-  afterEach(() => { document.cookie = 'i18next=; Path=/; Max-Age=0'; });
+  afterEach(() => {
+    document.cookie = 'i18next=; Path=/; Max-Age=0';
+  });
   beforeEach(async () => {
     document.cookie = 'i18next=; Path=/; Max-Age=0';
     await TestBed.configureTestingModule({
       imports: [App],
       providers: [provideRouter([{ path: '', component: RoutedTitle }])],
-    })
-      .compileComponents();
+    }).compileComponents();
   });
 
   it('updates the rendered title after a language change in the zoneless app', async () => {
@@ -26,8 +27,9 @@ describe('App router outlet', () => {
     const runtime = TestBed.inject(LocalizationRuntime);
     runtime.setLanguage('ar');
     await fixture.whenStable();
-    expect((fixture.nativeElement as HTMLElement).querySelector('h1')?.textContent)
-      .toBe(runtime.translate('general.mainTitle'));
+    expect((fixture.nativeElement as HTMLElement).querySelector('h1')?.textContent).toBe(
+      runtime.translate('general.mainTitle'),
+    );
     expect(document.documentElement.dir).toBe('rtl');
   });
 
@@ -38,9 +40,31 @@ describe('App router outlet', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('h1')?.textContent).toContain('ERP System');
     const runtime = TestBed.inject(LocalizationRuntime);
-    const generation = runtime.transition({ userId: 'u', tenantId: 't', companyId: 1, roles: ['user'], permissions: [] });
-    runtime.applyCompany({ tenantId: 't', companyId: 1, defaultLanguage: 'en', revision: 1, catalogVersion: uiCatalogVersion,
-      overrides: [{ namespace: 'core', key: 'general.mainTitle', language: 'en', value: 'Company title from SQL' }] }, generation);
+    const generation = runtime.transition({
+      userId: 'u',
+      tenantId: 't',
+      companyId: 1,
+      roles: ['user'],
+      permissions: [],
+    });
+    runtime.applyCompany(
+      {
+        tenantId: 't',
+        companyId: 1,
+        defaultLanguage: 'en',
+        revision: 1,
+        catalogVersion: uiCatalogVersion,
+        overrides: [
+          {
+            namespace: 'core',
+            key: 'general.mainTitle',
+            language: 'en',
+            value: 'Company title from SQL',
+          },
+        ],
+      },
+      generation,
+    );
     await fixture.whenStable();
     expect(compiled.querySelector('h1')?.textContent).toBe('Company title from SQL');
     runtime.transition(null);

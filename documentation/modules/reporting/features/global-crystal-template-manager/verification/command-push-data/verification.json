@@ -1,0 +1,42 @@
+{
+  "verifiedAtUtc": "2026-11-03T08:46:06.336322+00:00",
+  "featureId": "global-crystal-template-manager",
+  "sliceId": "GCT-1",
+  "runtimeBuildAndContractHarnessPassed": true,
+  "erp": {
+    "passed": 1244,
+    "failed": 0,
+    "skipped": 3,
+    "reporting": 207,
+    "architecture": 70,
+    "integration": 189
+  },
+  "schemaOrClientRuntimeChanged": false,
+  "designConnectionMetadataAllowed": true,
+  "singleTableBoundExplicitly": true,
+  "rptOrCommandTextModified": false,
+  "nativePdfVerified": false,
+  "zeroDatabaseCallsVerifiedNatively": false,
+  "nativeEnvironmentBlocker": "ReportDocument type initializer fails before loading the report",
+  "deployed": false,
+  "phase06": "Not Verified",
+  "acceptance": [
+    "FOLLOW-024",
+    "PROD-028"
+  ],
+  "stillDeferred": [
+    "DEF-028",
+    "DEF-027"
+  ],
+  "sourceHashes": {
+    "api/CrystalReportGeneratorApi/Runtime/CrystalReportManagedSourcePolicy.cs": "75eec87db4cdc1bde76ab30c5a96d89dd3d006f591c6aa18e547daa24e39f00b",
+    "api/CrystalReportGeneratorApi/Runtime/CrystalReportSourceMetadata.cs": "8d1154a2d8837c4171ed96aeac42475bb1a08a6638963c3c95bf8cb889beacb3",
+    "api/CrystalReportGeneratorApi/Runtime/Rendering/CrystalReportRenderService.cs": "14be2f2bf602e0eff3d9353f2a3c4e65f4d1782015df69b0c6438acc62752646",
+    "api/CrystalReportGeneratorApi/Runtime/Inspection/CrystalReportTemplateContractValidator.cs": "2b1295828883cfe0a631246910a6b9c394e477fb2485e7255157f47498134861",
+    "api/CrystalReportGeneratorApi/CrystalReportGeneratorApi.csproj": "a9ffc7a9ddb0374181ea0ac3dcd3d8fabbf1e0932819ffd8273a2a292c85753c",
+    "api/CrystalReportGeneratorApi.ContractTests/Program.cs": "642c780cf8ff1bb94948d48cd17e984f3e722fd4677fb611727f9100f39fff33",
+    "api/CrystalReportGeneratorApi.ContractTests/CrystalReportGeneratorApi.ContractTests.csproj": "81b39fd44b11562a61aff8e7e9bf5c7fd7294e2cc2abd2885d655b2dc76bfb28",
+    "api/ErpSystem.Api/Localization/Resources/en-US.json": "dba2c28284cc1613d957246b99029a3568947c7fecdd641908d1b1287e1c54ed",
+    "api/ErpSystem.Api/Localization/Resources/ar-EG.json": "3219c6b3bc4d008fa85193aedc3cf1d9d2637d2d66918ca1ccc8aeb42fa10ba3"
+  }
+}

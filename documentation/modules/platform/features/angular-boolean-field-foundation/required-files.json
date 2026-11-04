@@ -91,13 +91,13 @@
     },
     {
       "id": "phase00-11",
-      "path": "web-angular/src/app/shared/ui/forms/form-container.ts",
+      "path": "web-angular/src/app/shared/ui/forms/form-container/form-container.ts",
       "layer": "web",
       "purpose": "Actual current source or frozen contract"
     },
     {
       "id": "phase00-12",
-      "path": "web-angular/src/app/shared/ui/collections/collection-frame.ts",
+      "path": "web-angular/src/app/shared/ui/collections/collection-frame/collection-frame.ts",
       "layer": "web",
       "purpose": "Actual current source or frozen contract"
     },
@@ -133,19 +133,19 @@
     },
     {
       "id": "runtime-0",
-      "path": "web-angular/src/app/shared/ui/forms/fields/boolean-field.ts",
+      "path": "web-angular/src/app/shared/ui/forms/fields/boolean-field/boolean-field.ts",
       "layer": "web",
       "purpose": "Actual strict boolean runtime or synchronized resource"
     },
     {
       "id": "runtime-1",
-      "path": "web-angular/src/app/shared/ui/forms/fields/boolean-field.scss",
+      "path": "web-angular/src/app/shared/ui/forms/fields/boolean-field/boolean-field.scss",
       "layer": "web",
       "purpose": "Actual strict boolean runtime or synchronized resource"
     },
     {
       "id": "runtime-2",
-      "path": "web-angular/src/app/shared/ui/forms/fields/boolean-field.spec.ts",
+      "path": "web-angular/src/app/shared/ui/forms/fields/boolean-field/boolean-field.spec.ts",
       "layer": "web",
       "purpose": "Actual strict boolean runtime or synchronized resource"
     },
@@ -163,7 +163,7 @@
     },
     {
       "id": "runtime-5",
-      "path": "web-angular/src/app/dev/boolean-preview.ts",
+      "path": "web-angular/src/app/dev/boolean-preview/boolean-preview.ts",
       "layer": "web",
       "purpose": "Actual strict boolean runtime or synchronized resource"
     },
@@ -328,6 +328,72 @@
       "path": "web-angular/package.json",
       "layer": "web",
       "purpose": "Actual final acceptance/source or technical consumer handoff"
+    },
+    {
+      "id": "component-resource-311f299a2a50",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/form-container/form-container.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-b0c97d71b7a5",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/collection-frame/collection-frame.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-e56de07ea51c",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/collections/collection-frame/collection-frame.component.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-7a71511f0aaf",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/fields/boolean-field/boolean-field.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-56b84996d49e",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/ui/forms/fields/boolean-field/boolean-field.spec.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-c5eb9c9d7ddf",
+      "layer": "web",
+      "path": "web-angular/src/app/dev/boolean-preview/boolean-preview.html",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "component-resource-6072180e78eb",
+      "layer": "web",
+      "path": "web-angular/src/app/dev/boolean-preview/boolean-preview.scss",
+      "purpose": "Colocated external Angular component template/style; D37 Clean Code policy"
+    },
+    {
+      "id": "quality-b48e367c4706",
+      "layer": "configuration",
+      "path": "web-angular/eslint.config.mjs",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-18187b5430c6",
+      "layer": "configuration",
+      "path": "web-angular/scripts/dependency-rules.mjs",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-056ed62f225e",
+      "layer": "configuration",
+      "path": "web-angular/scripts/dependency-rules.test.mjs",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "quality-16f555949438",
+      "layer": "web",
+      "path": "web-angular/src/testing/fixture-item.ts",
+      "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
     }
   ],
   "finalizationChecklist": [

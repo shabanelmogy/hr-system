@@ -42,19 +42,22 @@ namespace CrystalReportGeneratorApi.Runtime.Rendering
                     report.Load(reportFilePath, OpenReportMethod.OpenReportByTempCopy);
                     var rejectionReason = CrystalReportManagedSourcePolicy.GetRejectionReason(report);
                     if (rejectionReason != null)
-                        throw new UnsupportedCrystalReportProfileException(rejectionReason);
+                        throw new CrystalReportRejectedException(
+                            InternalReportErrorCodes.SourceRejected, rejectionReason);
 
-                    try
-                    {
-                        CrystalReportInspectionService.ValidateTemplateContract(report, profile);
-                    }
-                    catch (CrystalReportRejectedException exception)
-                    {
-                        throw new UnsupportedCrystalReportProfileException(exception.Message);
-                    }
+                    CrystalReportInspectionService.ValidateTemplateContract(report, profile);
                     CrystalReportManagedParameters.Apply(report, language);
-                    report.SetDataSource(data);
+                    // Bind the only inspected table explicitly, preserving its Command alias
+                    // and the source RPT. The design connection is never used for a query.
+                    var table = report.Database.Tables[0];
+                    data.TableName = table.Name;
+                    report.ReportOptions.EnableUseDummyData = false;
+                    report.ReportOptions.EnableSaveDataWithReport = false;
+                    report.ReportOptions.EnableSaveSummariesWithReport = false;
+                    // Bind unconditionally, including a schema-only table with zero rows.
+                    table.SetDataSource(data);
 
+                    CrystalReportDirection.Apply(report, language);
                     var pdf = ExportPdf(report);
                     return new CrystalReportRenderOutput(reportKey + ".pdf", pdf);
                 }
@@ -68,7 +71,8 @@ namespace CrystalReportGeneratorApi.Runtime.Rendering
         private static DataTable ReadData(string dataXml)
         {
             if (string.IsNullOrWhiteSpace(dataXml))
-                throw new UnsupportedCrystalReportProfileException("The report data is required.");
+                throw new CrystalReportRejectedException(
+                    InternalReportErrorCodes.InvalidRequest, "The report data is required.");
 
             var dataSet = new DataSet();
             var settings = new XmlReaderSettings
@@ -82,7 +86,7 @@ namespace CrystalReportGeneratorApi.Runtime.Rendering
                 dataSet.ReadXml(reader, XmlReadMode.ReadSchema);
 
             if (dataSet.Tables.Count != 1)
-                throw new UnsupportedCrystalReportProfileException(
+                throw new CrystalReportRejectedException(InternalReportErrorCodes.SchemaMismatch,
                     "The report data must contain exactly one table.");
 
             return dataSet.Tables[0];
@@ -94,7 +98,7 @@ namespace CrystalReportGeneratorApi.Runtime.Rendering
                 .Select(column => column.ColumnName)
                 .ToHashSet(StringComparer.OrdinalIgnoreCase);
             if (profile.RequiredColumns.Any(column => !columns.Contains(column)))
-                throw new UnsupportedCrystalReportProfileException(
+                throw new CrystalReportRejectedException(InternalReportErrorCodes.SchemaMismatch,
                     "The report data schema does not match the approved entity profile.");
         }
 

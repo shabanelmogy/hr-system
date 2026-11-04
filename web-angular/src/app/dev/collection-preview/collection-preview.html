@@ -1,0 +1,151 @@
+<main>
+  <erp-page-header [title]="'pagination.dataTable' | uiText"
+    ><div class="preferences">
+      <erp-button
+        [label]="(runtime.language() === 'en' ? 'common.arabic' : 'common.english') | uiText"
+        data-testid="language"
+        (activated)="runtime.setLanguage(runtime.language() === 'en' ? 'ar' : 'en')"
+      />
+      <erp-button
+        [label]="(theme.mode() === 'light' ? 'general.darkMode' : 'general.lightMode') | uiText"
+        data-testid="mode"
+        (activated)="theme.setMode(theme.mode() === 'light' ? 'dark' : 'light')"
+      />
+      @for (palette of palettes; track palette) {
+        <erp-button
+          [label]="'menu.palettes.' + palette | uiText"
+          [pressed]="theme.palette() === palette"
+          [attr.data-palette]="palette"
+          (activated)="theme.setPalette(palette)"
+        />
+      }</div
+  ></erp-page-header>
+  <div class="tools">
+    <erp-button
+      [label]="'views.grid' | uiText"
+      [pressed]="view() === 'grid'"
+      data-testid="grid-view"
+      (activated)="view.set('grid')"
+    />
+    <erp-button
+      [label]="'views.cards' | uiText"
+      [pressed]="view() === 'cards'"
+      data-testid="cards-view"
+      (activated)="view.set('cards')"
+    />
+    @for (item of scenarios; track item.value) {
+      <erp-button
+        [label]="item.label | uiText"
+        [pressed]="scenario() === item.value"
+        [attr.data-scenario]="item.value"
+        (activated)="changeScenario(item.value)"
+      />
+    }
+    <erp-button
+      [label]="'general.reset' | uiText"
+      data-testid="scope"
+      (activated)="replaceScope()"
+    />
+  </div>
+  <div class="preview" data-testid="collection">
+    @if (view() === 'grid') {
+      <erp-data-table
+        [recordNavigation]="true"
+        [source]="source()"
+        [label]="'pagination.dataTable' | uiText"
+        [columns]="columns()"
+        [rowId]="id"
+        [rowLabel]="name"
+        [selectable]="selectable"
+        [selectionEnabled]="true"
+        [sort]="sort()"
+        [search]="search()"
+        (pageChange)="page($event)"
+        (sortChange)="sortBy($event)"
+        (searchChange)="criteria($event)"
+        (retry)="retry()"
+        (activeChange)="active.set($event)"
+        (selectionChange)="selected.set($event)"
+        (rowActivated)="opened.set($event.id)"
+      >
+        <erp-button
+          toolbarContent
+          [label]="'actions.refresh' | uiText"
+          data-testid="refresh"
+          (activated)="request()"
+        />
+        <erp-option-select
+          toolbarFilters
+          [label]="'collections.filters' | uiText"
+          [options]="filterOptions()"
+          [value]="filter()"
+          (valueChange)="filterBy($event)"
+          data-testid="filter"
+        />
+        <ng-template [erpCollectionCell]="columns() | collectionColumn: 'active'" let-row
+          ><erp-status-badge
+            [label]="(row.active ? 'common.active' : 'common.inactive') | uiText"
+            [accent]="row.active ? 'var(--success)' : 'var(--muted-foreground)'"
+        /></ng-template>
+        <ng-template [erpCollectionCell]="columns() | collectionColumn: 'actions'" let-row
+          ><erp-button
+            [label]="'collections.rowActions' | uiText"
+            variant="text"
+            [attr.data-action-id]="row.id"
+            (activated)="opened.set(row.id)"
+        /></ng-template>
+        <ng-template erpCollectionEmpty
+          ><erp-feedback-state kind="empty" [title]="'pagination.noData' | uiText"
+        /></ng-template>
+      </erp-data-table>
+    } @else {
+      <erp-card-list
+        [recordNavigation]="true"
+        [source]="source()"
+        [label]="'views.cards' | uiText"
+        [rowId]="id"
+        [rowLabel]="name"
+        [selectable]="selectable"
+        [selectionEnabled]="true"
+        [search]="search()"
+        (pageChange)="page($event)"
+        (searchChange)="criteria($event)"
+        (retry)="retry()"
+        (activeChange)="active.set($event)"
+        (selectionChange)="selected.set($event)"
+        (rowActivated)="opened.set($event.id)"
+      >
+        <erp-button toolbarContent [label]="'actions.refresh' | uiText" (activated)="request()" />
+        <erp-option-select
+          toolbarFilters
+          [label]="'collections.filters' | uiText"
+          [options]="filterOptions()"
+          [value]="filter()"
+          (valueChange)="filterBy($event)"
+        />
+        <ng-template [erpCollectionCard]="source()" let-row
+          ><div class="card-content">
+            <erp-status-badge
+              [label]="(row.active ? 'common.active' : 'common.inactive') | uiText"
+              [accent]="row.active ? 'var(--success)' : 'var(--muted-foreground)'"
+            /><erp-button
+              [label]="'collections.rowActions' | uiText"
+              variant="text"
+              [attr.data-action-id]="row.id"
+              (activated)="opened.set(row.id)"
+            /></div
+        ></ng-template>
+      </erp-card-list>
+    }
+  </div>
+  <output
+    data-testid="state"
+    [attr.data-kind]="source().kind"
+    [attr.data-page]="source().query.pageIndex"
+    [attr.data-requests]="requests()"
+    [attr.data-active]="active()"
+    [attr.data-selected]="selected().join(',')"
+    [attr.data-opened]="opened()"
+    [attr.data-scope]="source().query.scopeKey"
+  ></output>
+</main>

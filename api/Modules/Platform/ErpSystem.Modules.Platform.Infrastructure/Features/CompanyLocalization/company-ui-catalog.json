@@ -1,7 +1,7 @@
 {
   "schemaVersion": 3,
   "versions": {
-    "web": "6c3bd907be5bbfdf9245a9a3c84d1cc813d4fbab6fb0f2d74173ff14024c8041",
+    "web": "937b6b59e46b61fde756f1ec296eb6dd69b605a9f191d47eb3fd5beee80db74c",
     "mobile": "509b1f3679ad0290fbffe08a8a971e06718fd568016abb7057817fa3617a357f"
   },
   "sources": [
@@ -53434,6 +53434,622 @@
           "key": "crystalReports.versions",
           "en": "Versions",
           "ar": "الإصدارات",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.accessHint",
+          "en": "Grant each role its explicit rights. Company users need their entity and reporting permissions too. Upload and Publish never grant global administration by themselves.",
+          "ar": "حدد صلاحيات كل دور صراحةً. مستخدم الشركة يحتاج أيضًا صلاحيات الكيان والتقارير. صلاحيات الرفع والنشر لا تمنح إدارة القوالب العامة بمفردها.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.allEntities",
+          "en": "All business entities",
+          "ar": "كل كيانات الأعمال",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.availableReports",
+          "en": "Global reports",
+          "ar": "التقارير العامة",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.clearFile",
+          "en": "Clear file",
+          "ar": "إزالة الملف",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.conflict",
+          "en": "This report changed. Its latest state has been loaded; review it before retrying.",
+          "ar": "تغيّر التقرير. تم تحميل أحدث حالة؛ راجعها قبل إعادة المحاولة.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.connectionError",
+          "en": "Unable to read the server response. Check connectivity and whether CORS allows this application origin.",
+          "ar": "تعذرت قراءة ردّ الخادم. تحقق من الاتصال والسماح بعنوان التطبيق في إعدادات CORS.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.createdOn",
+          "en": "Created",
+          "ar": "تاريخ الإنشاء",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.design.created",
+          "en": "The empty template was created. Upload the design as its first version.",
+          "ar": "تم إنشاء القالب الفارغ. ارفع التصميم كأول إصدار.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.design.downloadPackage",
+          "en": "Download designer package",
+          "ar": "تنزيل حزمة تجهيز المصمم",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.design.draftHint",
+          "en": "This creates an empty, unpublished template record. It contains no RPT until you upload the design. A matching deployed report key is reserved immediately.",
+          "ar": "سيتم إنشاء سجل قالب فارغ وغير منشور، بدون ملف RPT حتى ترفع التصميم. يُحجز المفتاح فورًا ويمنع الرجوع لتقرير منشور قديم بنفس المفتاح.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.design.emptyVersions",
+          "en": "No design uploaded yet. Prepare the report in Crystal Designer and upload version 1.",
+          "ar": "لم يتم رفع تصميم بعد. جهّز التقرير في Crystal Designer ثم ارفع الإصدار الأول.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.design.field",
+          "en": "Field",
+          "ar": "الحقل",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.design.fields",
+          "en": "Data source fields",
+          "ar": "حقول مصدر البيانات",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.design.hint",
+          "en": "Choose a module and approved data source, then design the report in Crystal Designer.",
+          "ar": "اختر الموديول ومصدر البيانات المعتمد، ثم صمم التقرير في Crystal Designer.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.design.instructions",
+          "en": "Download the designer package, extract it, create a Blank Report in Crystal Designer, and connect to the XSD using ADO.NET (XML). After designing, upload the RPT to this draft.",
+          "ar": "نزّل حزمة تجهيز المصمم وفك ضغطها، وأنشئ Blank Report في Crystal Designer واربط ملف XSD باستخدام ADO.NET (XML). بعد التصميم ارفع ملف RPT إلى المسودة.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.design.keyFormat",
+          "en": "Enter a non-empty value; report keys use lowercase English letters, digits and single hyphens.",
+          "ar": "أدخل قيمة صحيحة؛ مفتاح التقرير يقبل الحروف الإنجليزية الصغيرة والأرقام والشرطات المفردة.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.design.keyHint",
+          "en": "Example: countries-directory. A key already reserved by an active or archived report cannot be reused.",
+          "ar": "مثال: countries-directory. لا يمكن تكرار مفتاح تقرير موجود حتى لو كان مؤرشفًا.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.design.keyPrefix",
+          "en": "The report key must equal the source key or start with the source key followed by a hyphen.",
+          "ar": "مفتاح التقرير يجب أن يساوي مفتاح المصدر أو يبدأ به متبوعًا بشرطة.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.design.module",
+          "en": "Module",
+          "ar": "الموديول",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.design.no",
+          "en": "No",
+          "ar": "لا",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.design.noSources",
+          "en": "No approved data sources are available with your current permissions.",
+          "ar": "لا توجد مصادر بيانات معتمدة متاحة لصلاحياتك الحالية.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.design.noViews",
+          "en": "No database Views match this source or search. Create a compatible View in the source database, then refresh.",
+          "ar": "لا توجد Views لهذا المصدر أو البحث. أنشئ View متوافقة في قاعدة بيانات المصدر ثم حدّث القائمة.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.design.nullable",
+          "en": "Allows empty value",
+          "ar": "يقبل قيمة فارغة",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.design.optionalParameter",
+          "en": "Optional parameter",
+          "ar": "معامل اختياري",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.design.parameters",
+          "en": "Report parameters",
+          "ar": "معاملات التقرير",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.design.refreshViews",
+          "en": "Refresh database Views",
+          "ar": "تحديث قائمة الفيوهات",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.design.required",
+          "en": "This field is required.",
+          "ar": "هذا الحقل مطلوب.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.design.requiredParameter",
+          "en": "Required parameter; preserve the declared values and type.",
+          "ar": "معامل مطلوب؛ التزم بالقيم والنوع المحددين.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.design.saveDraft",
+          "en": "Create draft",
+          "ar": "إنشاء مسودة",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.design.source",
+          "en": "Approved data structure",
+          "ar": "بنية البيانات المعتمدة",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.design.sourceHint",
+          "en": "Choose the approved field structure, then select a matching database View below. The binding is fixed after creation.",
+          "ar": "اختر بنية الحقول المعتمدة، ثم اختر View مطابقة لها من قاعدة البيانات في الحقل التالي. الربط ثابت بعد إنشاء التقرير.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.design.title",
+          "en": "New empty template",
+          "ar": "قالب جديد فارغ",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.design.tooLong",
+          "en": "The value exceeds the allowed field length.",
+          "ar": "القيمة أطول من الحد المسموح للحقل.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.design.type",
+          "en": "Data type",
+          "ar": "نوع البيانات",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.design.uploadExisting",
+          "en": "Create from RPT file",
+          "ar": "إنشاء من ملف RPT",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.design.viewCatalogHint",
+          "en": "Choose a database View matching the selected structure. Unavailable choices show their validation reason.",
+          "ar": "اختر View من قاعدة البيانات تطابق البنية المحددة. يظهر سبب الرفض بجانب الخيارات غير المتوافقة.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.design.viewFormat",
+          "en": "Enter a two-part SQL View name, for example dbo.vw_Countries.",
+          "ar": "أدخل اسم الفيو من جزأين، مثل dbo.vw_Countries.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.design.viewHint",
+          "en": "Enter schema.ViewName manually. The View must use WITH SCHEMABINDING, approved global ReferenceData tables and the exact fields shown below.",
+          "ar": "اكتب schema.ViewName يدويًا. يجب أن تستخدم الفيو WITH SCHEMABINDING وجداول البيانات المرجعية العامة المعتمدة وتطابق الحقول الموضحة أدناه.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.design.viewLoadError",
+          "en": "Unable to read database Views. Try again.",
+          "ar": "تعذرت قراءة قائمة الفيوهات من قاعدة البيانات. أعد المحاولة.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.design.viewName",
+          "en": "SQL View",
+          "ar": "SQL View",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.design.viewReasons.Compatible",
+          "en": "Compatible with this report structure",
+          "ar": "متوافقة مع بنية التقرير",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.design.viewReasons.ContractMismatch",
+          "en": "The View does not match the approved fields or its metadata cannot be verified",
+          "ar": "لا تطابق الحقول المعتمدة أو تعذر التحقق من بياناتها الوصفية",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.design.viewReasons.SchemaBindingRequired",
+          "en": "Requires WITH SCHEMABINDING before use",
+          "ar": "تحتاج WITH SCHEMABINDING قبل الاستخدام",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.design.yes",
+          "en": "Yes",
+          "ar": "نعم",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.download",
+          "en": "Download source",
+          "ar": "تنزيل القالب",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.downloadSchema",
+          "en": "Download designer schema (XSD)",
+          "ar": "تنزيل مخطط التصميم (XSD)",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.draft",
+          "en": "Unpublished",
+          "ar": "غير منشور",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.entities.countries",
+          "en": "Countries",
+          "ar": "الدول",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.entities.districts",
+          "en": "Districts",
+          "ar": "المناطق",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.entities.states",
+          "en": "States",
+          "ar": "المحافظات",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.fileSize",
+          "en": "File size",
+          "ar": "حجم الملف",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.fingerprint",
+          "en": "Validated contract",
+          "ar": "عقد الفحص",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.inspect",
+          "en": "Inspect template",
+          "ar": "فحص القالب",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.invalidCatalogResponse",
+          "en": "The server returned an empty or incompatible report catalog. Refresh after publishing the matching ERP API.",
+          "ar": "الخادم أعاد قائمة تقارير فارغة المحتوى أو بتنسيق غير متوافق. أعد المحاولة بعد نشر إصدار API المتوافق.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.maximumRoleGrants",
+          "en": "A report can have at most 100 assigned roles.",
+          "ar": "يمكن تعيين 100 دور بحد أقصى لكل تقرير.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.modules.reference-data",
+          "en": "Reference data",
+          "ar": "البيانات المرجعية",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.noCandidates",
+          "en": "No deployment templates are available.",
+          "ar": "لا توجد قوالب متاحة للاستيراد من خدمة التقارير.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.notRegistered",
+          "en": "Not registered",
+          "ar": "غير مسجّل",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.platformRole",
+          "en": "Platform role — all eligible tenants",
+          "ar": "دور عام — كل المستأجرين المسموح لهم",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.publishHint",
+          "en": "Uploading adds an immutable version. The published version changes only when you publish a valid version.",
+          "ar": "الرفع يضيف إصدارًا محفوظًا. لا يتغير الإصدار المستخدم إلا عند نشر إصدار صالح صراحة.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.reason",
+          "en": "Validation reason",
+          "ar": "سبب نتيجة الفحص",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.registerExisting",
+          "en": "Register existing reports",
+          "ar": "تسجيل التقارير الموجودة",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.registerReport",
+          "en": "Register report",
+          "ar": "تسجيل التقرير",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.registered",
+          "en": "Registered",
+          "ar": "مسجّل",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.registrationHint",
+          "en": "Select a report already present on the Crystal service to register it as draft version 1. Registration does not publish it.",
+          "ar": "اختر تقريرًا موجودًا على خدمة Crystal لتسجيله كإصدار أول غير منشور. التسجيل لا ينشر التقرير تلقائيًا.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.registrationStatus",
+          "en": "Registration",
+          "ar": "حالة التسجيل",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.registrationUnknown",
+          "en": "Registration status unavailable from this server version",
+          "ar": "حالة التسجيل غير متاحة من إصدار الخادم الحالي",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.removeRole",
+          "en": "Remove access: {{name}}",
+          "ar": "إزالة الصلاحيات: {{name}}",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.replaceAndPublish",
+          "en": "Replace and publish",
+          "ar": "استبدال ونشر",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.replaceConfirm",
+          "en": "Report “{{name}}” already exists (published version: {{version}}). Replace and publish will inspect this file, save a new version and switch publication to it. Previous versions and report permissions will be preserved. The previous version remains published if replacement fails.",
+          "ar": "التقرير «{{name}}» موجود بالفعل (الإصدار المنشور: {{version}}). سيؤدي الاستبدال والنشر إلى فحص الملف وحفظ إصدار جديد وتحويل النشر إليه، مع الاحتفاظ بالإصدارات السابقة وصلاحيات التقرير. يظل الإصدار السابق منشورًا إذا فشل الاستبدال.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.replaceTitle",
+          "en": "Report already exists",
+          "ar": "التقرير موجود بالفعل",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.replacedAndPublished",
+          "en": "The new report version was saved and published. Previous versions are preserved.",
+          "ar": "تم حفظ إصدار التقرير الجديد ونشره مع الاحتفاظ بالإصدارات السابقة.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.replacementUnavailable",
+          "en": "This report already exists. Replacement requires an active report and both Upload and Publish access. Open its details to review the report.",
+          "ar": "هذا التقرير موجود بالفعل. يتطلب الاستبدال تقريرًا غير مؤرشف وصلاحيتي رفع الإصدارات ونشرها. افتح تفاصيل التقرير لمراجعته.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.revalidate",
+          "en": "Revalidate",
+          "ar": "إعادة الفحص",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.revalidationCompleted",
+          "en": "Stored version revalidation completed.",
+          "ar": "اكتملت إعادة فحص الإصدار المحفوظ.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.roleScope",
+          "en": "Tenant / role scope",
+          "ar": "المستأجر / نطاق الدور",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.schemaVersion",
+          "en": "Schema version",
+          "ar": "إصدار المخطط",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.sizeBytes",
+          "en": "Size (bytes)",
+          "ar": "الحجم (بايت)",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.status",
+          "en": "Status",
+          "ar": "الحالة",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.subject",
+          "en": "Subject",
+          "ar": "الموضوع",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.title",
+          "en": "Global Report Manager",
+          "ar": "مدير التقارير العامة",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.upload",
+          "en": "Upload report version",
+          "ar": "رفع إصدار تقرير",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.valid",
+          "en": "Template matches the current contract.",
+          "ar": "القالب مطابق للعقد الحالي.",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.validation.Invalid",
+          "en": "Invalid",
+          "ar": "غير صالح",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.validation.NeedsRevalidation",
+          "en": "Needs revalidation",
+          "ar": "يحتاج إعادة فحص",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.validation.Pending",
+          "en": "Pending",
+          "ar": "قيد الفحص",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.validation.Valid",
+          "en": "Valid",
+          "ar": "صالح",
+          "scope": "shared",
+          "systemPermissions": null
+        },
+        {
+          "key": "globalTemplates.versionedName",
+          "en": "{{name}} · v{{version}} · {{date}}",
+          "ar": "{{name}} · إصدار {{version}} · {{date}}",
           "scope": "shared",
           "systemPermissions": null
         }

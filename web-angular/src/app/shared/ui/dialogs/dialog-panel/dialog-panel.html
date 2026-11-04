@@ -1,0 +1,45 @@
+<p-dialog
+  [visible]="open()"
+  (visibleChange)="!$event && requestClose()"
+  [header]="title()"
+  [modal]="true"
+  [closable]="!pending()"
+  [closeOnEscape]="!pending()"
+  [dismissableMask]="false"
+  [draggable]="false"
+  [resizable]="false"
+  [blockScroll]="true"
+  [focusTrap]="true"
+  appendTo="body"
+  [closeAriaLabel]="closeLabel()"
+  [focusOnShow]="!manualInitialFocus()"
+  (onShow)="shown.emit()"
+  (onHide)="restoreFocus()"
+  [style]="{
+    width: panelWidth(),
+    maxWidth: 'calc(100vw - 2rem)',
+    maxHeight: 'calc(100dvh - 2rem)',
+  }"
+>
+  <ng-template #header let-titleId="ariaLabelledBy"
+    ><div class="dialog-heading">
+      @if (icon(); as name) {
+        <span class="heading-icon" [class.danger]="tone() === 'danger'"
+          ><erp-icon [name]="name"
+        /></span>
+      }
+      <div class="heading-copy">
+        <h2 [id]="titleId">{{ title() }}</h2>
+        @if (description()) {
+          <p>{{ description() }}</p>
+        }
+      </div>
+    </div></ng-template
+  >
+  <div class="dialog-body" [attr.aria-busy]="pending() ? 'true' : null"><ng-content /></div>
+  @if (showFooter()) {
+    <ng-template #footer
+      ><div class="dialog-actions"><ng-content select="[dialogActions]" /></div
+    ></ng-template>
+  }
+</p-dialog>

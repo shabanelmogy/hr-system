@@ -228,10 +228,12 @@ public sealed class CreateCrystalReportForm
 {
     public string EntityKey { get; init; } = string.Empty;
     public string? Description { get; init; }
+    [System.ComponentModel.DataAnnotations.Required]
     public IFormFile File { get; init; } = default!;
 }
 
 public sealed class CrystalReportFileForm
 {
+    [System.ComponentModel.DataAnnotations.Required]
     public IFormFile File { get; init; } = default!;
 }

@@ -43,6 +43,10 @@ public sealed class PlatformContractsArchitectureTests
         "ErpSystem.Modules.Platform.Contracts.Authorization.PlatformRoleNames",
         "ErpSystem.Modules.Platform.Contracts.Authorization.PlatformPermissions",
         "ErpSystem.Modules.Platform.Contracts.Authorization.PlatformRoleOption",
+        // Reporting resolves global grants through this tenant-labelled read contract;
+        // Platform persistence and role entities remain private to their owner.
+        "ErpSystem.Modules.Platform.Contracts.Authorization.PlatformRoleScopeOption",
+        "ErpSystem.Modules.Platform.Contracts.Authorization.PlatformRoleScopePage",
         "ErpSystem.Modules.Platform.Contracts.Authorization.IPlatformAuthorizationSource",
         "ErpSystem.Modules.Platform.Contracts.CompanyAccess.ICompanyGeographySource",
         "ErpSystem.Modules.Platform.Contracts.Communications.WhatsAppTextMessage",

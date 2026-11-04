@@ -1,0 +1,7 @@
+{
+  "ConfiguredDatabaseVerified": true,
+  "GlobalTables": 2,
+  "Migration": "20261101123802_AddGlobalCrystalReportVersions",
+  "ExistingTenantTablesChanged": false,
+  "BusinessRowsWritten": false
+}
