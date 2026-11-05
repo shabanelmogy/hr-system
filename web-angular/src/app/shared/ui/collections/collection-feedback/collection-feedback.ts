@@ -1,6 +1,6 @@
 import { Component, input, output, type TemplateRef } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
-import { UiTextPipe } from '../../../../platform/localization/public-api';
+import { UiTextPipe } from '../../../localization/public-api';
 import { FeedbackState } from '../../feedback/feedback-state/feedback-state';
 @Component({
   selector: 'erp-collection-feedback',

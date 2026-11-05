@@ -57,19 +57,13 @@
     </div>
     <div workspaceActions class="toolbar-actions" [attr.inert]="auth.contextChanging() ? '' : null">
       <div class="desktop-preferences">
-        <erp-option-select
-          [label]="'general.lang' | uiText"
-          [value]="locale.language()"
-          [options]="languages"
-          (valueChange)="language($event)"
-        />
-        <erp-button
+        <erp-appearance-preferences
           appearance="icon"
-          variant="text"
-          [label]="(theme.mode() === 'light' ? 'general.darkMode' : 'general.lightMode') | uiText"
-          (activated)="theme.setMode(theme.mode() === 'light' ? 'dark' : 'light')"
-          ><erp-icon buttonIcon [name]="theme.mode() === 'light' ? 'sun' : 'moon'"
-        /></erp-button>
+          [language]="locale.language()"
+          [mode]="theme.mode()"
+          (languageChange)="language($event)"
+          (modeChange)="theme.setMode($event)"
+        />
       </div>
       <erp-popover-panel #settings [label]="'menu.settings' | uiText"
         ><erp-icon popoverTrigger name="settings" />
@@ -90,21 +84,13 @@
             (valueChange)="theme.setPalette($event)"
           />
           <div class="settings-preferences">
-            <erp-option-select
-              [label]="'general.lang' | uiText"
-              [value]="locale.language()"
-              [options]="languages"
-              (valueChange)="language($event)"
-            />
-            <erp-button
+            <erp-appearance-preferences
               appearance="quiet"
-              variant="text"
-              [label]="
-                (theme.mode() === 'light' ? 'general.darkMode' : 'general.lightMode') | uiText
-              "
-              (activated)="theme.setMode(theme.mode() === 'light' ? 'dark' : 'light')"
-              ><erp-icon buttonIcon [name]="theme.mode() === 'light' ? 'sun' : 'moon'"
-            /></erp-button>
+              [language]="locale.language()"
+              [mode]="theme.mode()"
+              (languageChange)="language($event)"
+              (modeChange)="theme.setMode($event)"
+            />
           </div>
           <div class="settings-logout">
             <erp-button
@@ -134,7 +120,7 @@
         layout="inline"
         [title]="error | uiText: 'platform-auth'"
         [actionLabel]="'actions.close' | uiText"
-        (action)="auth.contextError.set(null)"
+        (action)="auth.dismissContextError()"
       />
     }
     @if (extraFeedback(); as feedback) {

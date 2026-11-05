@@ -13,7 +13,7 @@
     optionDisabled="disabled"
     [inputId]="id"
     [ariaLabelledBy]="id + '-label'"
-    [readonly]="readOnly()"
+    [readonly]="isReadOnly()"
     [required]="required()"
     [invalid]="!!error()"
     [loading]="view().kind === 'loading'"
@@ -86,7 +86,7 @@
       }
     </ng-template>
   </p-select>
-  @if (clearable() && value() !== null && !readOnly() && !disabled() && !blocked()) {
+  @if (clearable() && value() !== null && !isReadOnly() && !isDisabled() && !blocked()) {
     <erp-button
       appearance="icon"
       variant="text"

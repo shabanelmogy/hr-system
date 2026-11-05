@@ -454,6 +454,108 @@
       "layer": "web",
       "path": "web-angular/src/testing/fixture-item.ts",
       "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "signal-foundation-20261104-0",
+      "path": "web-angular/scripts/dependency-rules.mjs",
+      "layer": "web",
+      "purpose": "D07/D39 current native forms and foundation maintenance source/evidence"
+    },
+    {
+      "id": "signal-foundation-20261104-1",
+      "path": "web-angular/src/theme/toast-public-api.ts",
+      "layer": "web",
+      "purpose": "D07/D39 current native forms and foundation maintenance source/evidence"
+    },
+    {
+      "id": "maintenance-navigation-entry",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/data/navigation.public-api.ts",
+      "purpose": "Root navigation lifetime without read/collection dependencies"
+    },
+    {
+      "id": "maintenance-startup-report",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-localization-foundation/STRUCTURE_PERFORMANCE_REPORT.md",
+      "purpose": "D40 bootstrap public-entry and production verification evidence"
+    },
+    {
+      "id": "composition-d37-0",
+      "path": "web-angular/src/app/shared/ui/controls/appearance-preferences/appearance-preferences.ts",
+      "layer": "web",
+      "purpose": "D41 component ownership, recurring rules and current verification evidence"
+    },
+    {
+      "id": "composition-d37-1",
+      "path": "web-angular/src/app/shared/ui/controls/appearance-preferences/appearance-preferences.html",
+      "layer": "web",
+      "purpose": "D41 component ownership, recurring rules and current verification evidence"
+    },
+    {
+      "id": "composition-d37-2",
+      "path": "web-angular/src/app/shared/ui/controls/appearance-preferences/appearance-preferences.scss",
+      "layer": "web",
+      "purpose": "D41 component ownership, recurring rules and current verification evidence"
+    },
+    {
+      "id": "composition-d37-3",
+      "path": "web-angular/src/app/shared/ui/controls/appearance-preferences/appearance-preferences.spec.ts",
+      "layer": "web",
+      "purpose": "D41 component ownership, recurring rules and current verification evidence"
+    },
+    {
+      "id": "composition-d37-4",
+      "path": "documentation/guides/web/architecture/ANGULAR_COMPONENT_COMPOSITION.md",
+      "layer": "documentation",
+      "purpose": "D41 component ownership, recurring rules and current verification evidence"
+    },
+    {
+      "id": "composition-d37-5",
+      "path": "documentation/modules/platform/features/angular-collection-foundation/COMPONENT_COMPOSITION_REPORT.md",
+      "layer": "documentation",
+      "purpose": "D41 component ownership, recurring rules and current verification evidence"
+    },
+    {
+      "id": "composition-d37-verification",
+      "path": "documentation/modules/platform/features/angular-collection-foundation/verification/component-composition-summary.json",
+      "layer": "documentation",
+      "purpose": "D41 final source hashes, executed checks and portable measurements"
+    },
+    {
+      "id": "main-merge-20261105-report",
+      "path": "documentation/plans/business/web-angular-migration/MAIN_MERGE_VERIFICATION_2026-11-05.md",
+      "layer": "documentation",
+      "purpose": "Latest main integration evidence, current Angular acceptance and explicit inherited global documentation blocker"
+    },
+    {
+      "id": "main-merge-20261105-summary",
+      "path": "documentation/plans/business/web-angular-migration/verification/MAIN_MERGE_SUMMARY_2026-11-05.json",
+      "layer": "verification",
+      "purpose": "Latest main integration evidence, current Angular acceptance and explicit inherited global documentation blocker"
+    },
+    {
+      "id": "main-merge-20261105-check",
+      "path": "documentation/plans/business/web-angular-migration/verification/MAIN_MERGE_CHECK_2026-11-05.txt",
+      "layer": "verification",
+      "purpose": "Latest main integration evidence, current Angular acceptance and explicit inherited global documentation blocker"
+    },
+    {
+      "id": "main-merge-20261105-browser",
+      "path": "documentation/plans/business/web-angular-migration/verification/MAIN_MERGE_REPORT_BROWSER_2026-11-05.mjs",
+      "layer": "verification",
+      "purpose": "Latest main integration evidence, current Angular acceptance and explicit inherited global documentation blocker"
+    },
+    {
+      "id": "main-merge-20261105-docs-scope",
+      "path": "documentation/plans/business/web-angular-migration/verification/Generate-AngularMergeDocumentation.ps1",
+      "layer": "verification",
+      "purpose": "Latest main integration evidence, current Angular acceptance and explicit inherited global documentation blocker"
+    },
+    {
+      "id": "main-merge-20261105-missing-evidence",
+      "path": "documentation/plans/business/web-angular-migration/verification/MAIN_MERGE_MISSING_EVIDENCE_2026-11-05.json",
+      "layer": "verification",
+      "purpose": "Latest main integration evidence, current Angular acceptance and explicit inherited global documentation blocker"
     }
   ]
 }

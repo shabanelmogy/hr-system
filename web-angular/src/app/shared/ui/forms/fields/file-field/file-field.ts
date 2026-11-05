@@ -1,4 +1,4 @@
-import { Component, type ElementRef, forwardRef, input, signal, viewChild } from '@angular/core';
+import { Component, type ElementRef, forwardRef, input, model, viewChild } from '@angular/core';
 import { FileUpload, type FileSelectEvent } from 'primeng/fileupload';
 import { FormFieldControl } from '../../form-field-control';
 import { ActionButton } from '../../../buttons/public-api';
@@ -11,7 +11,7 @@ import { ActionButton } from '../../../buttons/public-api';
   templateUrl: './file-field.html',
 })
 export class FileField extends FormFieldControl<File | null> {
-  readonly value = signal<File | null>(null);
+  readonly value = model<File | null>(null);
   readonly acceptTypes = input('');
   readonly chooseLabel = input.required<string>();
   readonly clearLabel = input.required<string>();

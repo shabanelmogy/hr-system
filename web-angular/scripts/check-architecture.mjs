@@ -3,7 +3,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { inspectSource, inspectTemplate } from './architecture-rules.mjs';
 import ts from 'typescript';
-import { sourceImports, inspectDependency, staticDependencyCycles } from './dependency-rules.mjs';
+import { inspectProject } from './dependency-rules.mjs';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const walk = (directory) =>
   fs
@@ -14,7 +14,7 @@ const walk = (directory) =>
         : [path.join(directory, entry.name)],
     );
 const violations = [];
-const edges = [];
+const sources = new Map();
 const configPath = path.join(root, 'tsconfig.app.json');
 const config = ts.parseJsonConfigFileContent(
   ts.readConfigFile(configPath, ts.sys.readFile).config,
@@ -28,22 +28,8 @@ for (const file of walk(path.join(root, 'src')).filter((file) => /\.(?:ts|html)$
     ? inspectTemplate(source, relative)
     : inspectSource(relative, source);
   violations.push(...findings.map((reason) => `${relative}: ${reason}`));
-  if (file.endsWith('.ts') && !relative.endsWith('.spec.ts') && !relative.includes('.generated.')) {
-    for (const item of sourceImports(source, relative)) {
-      const resolved = ts.resolveModuleName(item.name, file, config.options, ts.sys).resolvedModule;
-      if (!resolved) continue;
-      const target = path.relative(root, resolved.resolvedFileName).replaceAll('\\', '/');
-      if (!target.startsWith('src/')) continue;
-      edges.push({ source: relative, target, kind: item.kind });
-      violations.push(
-        ...inspectDependency(relative, target).map(
-          (reason) => `${relative} -> ${target}: ${reason}`,
-        ),
-      );
-    }
-  }
+  if (file.endsWith('.ts')) sources.set(relative, source);
 }
-for (const cycle of staticDependencyCycles(edges))
-  violations.push(`Static runtime dependency cycle: ${cycle.join(' -> ')}`);
+violations.push(...inspectProject(sources, config.options, root));
 if (violations.length) throw new Error(violations.join('\n'));
 process.stdout.write('Angular foundation boundaries checked.\n');

@@ -1,8 +1,8 @@
 import { afterNextRender, Component, computed, effect, inject, Injector } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { Toast } from 'primeng/toast';
-import { LocalizationRuntime } from '../../../../platform/localization/public-api';
-import { toastPreset } from '../../../../../theme/prime-toast-preset';
+import { UI_LOCALIZATION } from '../../../localization/public-api';
+import { toastPreset } from '../../../../../theme/toast-public-api';
 import { FeedbackNotifications } from '../feedback-notifications';
 
 @Component({
@@ -12,7 +12,7 @@ import { FeedbackNotifications } from '../feedback-notifications';
   templateUrl: './notification-toast.html',
 })
 export class NotificationToast {
-  readonly locale = inject(LocalizationRuntime);
+  readonly locale = inject(UI_LOCALIZATION);
   readonly tokens = toastPreset;
   readonly attributes = computed(() => ({
     closeButton: { 'aria-label': this.locale.translate('actions.close') },

@@ -21,8 +21,10 @@ Then reference its stable ID here.
 
 | Note ID | Type | Area | Summary | Canonical registry |
 | --- | --- | --- | --- | --- |
+| FOLLOW-025 | Follow-up | Global documentation gate | Reporting historical receipts are missing in main; Angular-scoped proof is separate. | `FOLLOW_UPS.md` |
 | FOLLOW-021 | Follow-up | Historical Countries browser harness | Refresh current shared-control selectors before full S3-A8 acceptance. | `FOLLOW_UPS.md` |
 | FOLLOW-020 | Follow-up | Retained Next preview bootstrap | Deferred outside Angular under D35; separate Next scope only. | `FOLLOW_UPS.md` |
+| RISK-020 | Risk | Angular startup bundle | Measured startup localization cost exceeds unchanged warning budget; release review remains required. | `KNOWN_RISKS.md` |
 | DEC-028 | Decision | Angular reporting scope | ActiveReports viewer/designer/SDK canceled by requester; managed Crystal/PDF retained. | `DECISION_BACKLOG.md` |
 | FOLLOW-017 | Follow-up | Angular scoped lookup/live consumers | Actual owner snapshot/watch/lifetime/loading acceptance remains canonical. | `FOLLOW_UPS.md` |
 | FOLLOW-016 | Follow-up | Advanced Angular collections | Baseline S1-A3 verified; each advanced option requires actual consumer/API/RTL/performance evidence. | `FOLLOW_UPS.md` |

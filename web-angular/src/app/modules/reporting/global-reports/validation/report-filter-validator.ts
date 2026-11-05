@@ -1,6 +1,5 @@
-import type { ValidatorFn } from '@angular/forms';
 import { reportFilterText, reportFilterLimit } from '../types/global-report';
-export const reportFilterValidator: ValidatorFn = (control) =>
-  reportFilterText.safeParse(control.value).success
-    ? null
-    : { maxlength: { requiredLength: reportFilterLimit } };
+export const reportFilterErrors = (value: string) =>
+  reportFilterText.safeParse(value).success
+    ? undefined
+    : { kind: 'maxlength', requiredLength: reportFilterLimit };

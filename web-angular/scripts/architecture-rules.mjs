@@ -1,4 +1,56 @@
 import ts from 'typescript';
+import path from 'node:path';
+
+export function sourceOwner(file) {
+  const name = file.replaceAll('\\', '/');
+  const domain = /^src\/app\/(modules|platform)\/([^/]+)\//.exec(name);
+  return domain
+    ? domain[1] + '/' + domain[2]
+    : name.startsWith('src/app/shared/')
+      ? 'shared'
+      : name.startsWith('src/theme/')
+        ? 'theme'
+        : name.startsWith('src/app/shell/')
+          ? 'shell'
+          : name.startsWith('src/app/runtime/')
+            ? 'runtime'
+            : name.startsWith('src/app/config/') || name.startsWith('src/config/')
+              ? 'config'
+              : 'composition';
+}
+
+export function inspectDependency(file, specifier) {
+  if (!specifier.startsWith('.')) return [];
+  const target = path.posix
+    .normalize(path.posix.join(path.posix.dirname(file), specifier))
+    .replace(/\.ts$/, '');
+  const owner = sourceOwner(file),
+    dependency = sourceOwner(target);
+  if (owner === dependency) return [];
+  const violations = [];
+  if (
+    ['shared', 'theme', 'runtime', 'config'].includes(owner) &&
+    (dependency.startsWith('platform/') ||
+      dependency.startsWith('modules/') ||
+      dependency === 'shell' ||
+      dependency === 'composition')
+  )
+    violations.push('lower layer cannot depend on Platform, business or application composition');
+  if (owner.startsWith('platform/') && dependency.startsWith('modules/'))
+    violations.push('Platform cannot depend on a business module');
+  if (owner === 'shell' && dependency.startsWith('modules/'))
+    violations.push('business module composition belongs in the app root, not Shell');
+  if (
+    (dependency.startsWith('platform/') ||
+      dependency.startsWith('modules/') ||
+      dependency === 'shell' ||
+      dependency === 'theme' ||
+      dependency === 'shared') &&
+    !/(?:^|\/)(?:public-api|[\w-]+\.public-api|[\w-]+-public-api)$/.test(target)
+  )
+    violations.push('owner internals import; use the owner public API');
+  return violations;
+}
 
 export function inspectTemplate(template, relative = 'src/app/shared/ui/template.html') {
   // Test hosts deliberately exercise native inputs and projected fixture content.
@@ -56,6 +108,7 @@ export function inspectSource(relative, source) {
     }
   }
   function checkModule(name) {
+    if (!test) for (const violation of inspectDependency(relative, name)) violations.add(violation);
     if (!test && relative.startsWith('src/app/shell/') && /^(?:\.\.\/)+modules\//.test(name))
       violations.add('business module composition belongs in the app root, not Shell');
     if (/(?:web-next|mobile-react|react-i18next|next\/)/.test(name))

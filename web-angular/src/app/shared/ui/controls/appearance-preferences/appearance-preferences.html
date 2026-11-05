@@ -1,0 +1,16 @@
+<erp-option-select
+  [label]="locale.translate('general.lang')"
+  [value]="language()"
+  [options]="languages"
+  (valueChange)="chooseLanguage($event)"
+/>
+<erp-button
+  [appearance]="buttonAppearance()"
+  variant="text"
+  [label]="modeLabel()"
+  (activated)="toggleMode()"
+>
+  @if (appearance() !== 'text') {
+    <erp-icon buttonIcon [name]="mode() === 'light' ? 'sun' : 'moon'" />
+  }
+</erp-button>

@@ -13,8 +13,8 @@
     dir="ltr"
     [value]="value()"
     [placeholder]="'YYYY-MM-DD'"
-    [disabled]="disabled()"
-    [readOnly]="readOnly()"
+    [disabled]="isDisabled()"
+    [readOnly]="isReadOnly()"
     autocomplete="off"
     [attr.name]="name() || id"
     [attr.aria-required]="required() ? 'true' : null"
@@ -26,7 +26,7 @@
     (compositionstart)="composing = true"
     (compositionend)="compositionEnd($event)"
   />
-  @if (showClear() && value() && !readOnly() && !disabled()) {
+  @if (showClear() && value() && !isReadOnly() && !isDisabled()) {
     <button
       pButton
       [iconOnly]="true"
@@ -42,7 +42,7 @@
   <erp-popover-panel
     #calendar
     [label]="('dateField.chooseDate' | uiText) + ' · ' + label()"
-    [disabled]="readOnly() || disabled() || boundsInvalid() || manualOnly()"
+    [disabled]="isReadOnly() || isDisabled() || boundsInvalid() || manualOnly()"
   >
     <svg popoverTrigger aria-hidden="true" viewBox="0 0 24 24">
       <path d="M5 4h14v16H5zM8 2v4m8-4v4M5 9h14m-10 4h2m2 0h2m-6 3h2" />

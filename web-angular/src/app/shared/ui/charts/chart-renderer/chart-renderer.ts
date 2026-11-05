@@ -2,7 +2,7 @@ import { Component, computed, DestroyRef, inject, input, signal } from '@angular
 import { ChartModule } from 'primeng/chart';
 import { fontStack } from '@app/tokens';
 import { ThemeService } from '../../../../../theme/public-api';
-import { LocalizationRuntime } from '../../../../platform/localization/public-api';
+import { UI_LOCALIZATION } from '../../../localization/public-api';
 import type { ChartDefinition } from '../chart.types';
 import { chartData, chartOptions } from '../chart-presentation';
 import { sliceLabelPlugin } from '../chart-slice-labels';
@@ -16,7 +16,7 @@ import { sliceLabelPlugin } from '../chart-slice-labels';
 export class ChartRenderer {
   readonly definition = input.required<ChartDefinition>();
   private readonly theme = inject(ThemeService);
-  private readonly locale = inject(LocalizationRuntime);
+  private readonly locale = inject(UI_LOCALIZATION);
   private readonly reducedMotion = signal(false);
   readonly type = computed(() => {
     const kind = this.definition().kind;

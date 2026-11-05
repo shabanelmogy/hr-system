@@ -13,7 +13,7 @@ import { NgTemplateOutlet } from '@angular/common';
 import { DomSanitizer, type SafeResourceUrl } from '@angular/platform-browser';
 import { ButtonDirective } from 'primeng/button';
 import { AppIcon } from '../../icons/app-icon/app-icon';
-import { UiTextPipe } from '../../../../platform/localization/public-api';
+import { UiTextPipe } from '../../../localization/public-api';
 import type { PdfDocument } from '../../../data/public-api';
 @Component({
   selector: 'erp-pdf-viewer',

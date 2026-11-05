@@ -16,6 +16,7 @@ import { LocalizationRuntime, UiTextPipe } from '../../../platform/localization/
 import { tenantWorkspaceAllowed } from '../../../platform/modules/public-api';
 import {
   ActionButton,
+  AppearancePreferences,
   AppIcon,
   ApplicationFrame,
   ContextBadge,
@@ -35,6 +36,7 @@ import { ThemeService } from '../../../../theme/public-api';
     UiTextPipe,
     ApplicationFrame,
     ActionButton,
+    AppearancePreferences,
     AppIcon,
     ContextBadge,
     FeedbackState,
@@ -159,10 +161,6 @@ export class MainShell {
     ...(this.additionalNavigation?.entries() ?? []),
     { id: 'preferences', label: this.locale.translate('menu.settings'), icon: 'settings' },
   ]);
-  readonly languages = [
-    { value: 'en', label: 'English' },
-    { value: 'ar', label: 'العربية' },
-  ];
   readonly paletteLabels = computed(
     () =>
       Object.fromEntries(

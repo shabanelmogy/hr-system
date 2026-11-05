@@ -1,0 +1,863 @@
+{
+  "date": "2026-11-05",
+  "mainCommit": "bb70c916",
+  "note": "FOLLOW-025",
+  "scope": "Inherited global documentation gate failure; source history is not recreated and no test rerun is inferred.",
+  "count": 122,
+  "missing": [
+    {
+      "feature": "managed-crystal-template-validation",
+      "manifest": "documentation/modules/reporting/features/managed-crystal-template-validation/required-files.json",
+      "id": "runtime-correction-61-client-fix-tests-log",
+      "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/client-fix-tests.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "managed-crystal-template-validation",
+      "manifest": "documentation/modules/reporting/features/managed-crystal-template-validation/required-files.json",
+      "id": "runtime-correction-66-final-boundary-tests-log",
+      "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/final-boundary-tests.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "managed-crystal-template-validation",
+      "manifest": "documentation/modules/reporting/features/managed-crystal-template-validation/required-files.json",
+      "id": "runtime-correction-67-full-build-log",
+      "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/full-build.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "managed-crystal-template-validation",
+      "manifest": "documentation/modules/reporting/features/managed-crystal-template-validation/required-files.json",
+      "id": "runtime-correction-68-full-restore-log",
+      "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/full-restore.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "managed-crystal-template-validation",
+      "manifest": "documentation/modules/reporting/features/managed-crystal-template-validation/required-files.json",
+      "id": "runtime-correction-69-full-test-sqlserver-log",
+      "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/full-test-sqlserver.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "managed-crystal-template-validation",
+      "manifest": "documentation/modules/reporting/features/managed-crystal-template-validation/required-files.json",
+      "id": "runtime-correction-72-portable-interoperability-log",
+      "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/portable-interoperability.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "managed-crystal-template-validation",
+      "manifest": "documentation/modules/reporting/features/managed-crystal-template-validation/required-files.json",
+      "id": "runtime-correction-73-prepare-ready-log",
+      "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/prepare-ready.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "managed-crystal-template-validation",
+      "manifest": "documentation/modules/reporting/features/managed-crystal-template-validation/required-files.json",
+      "id": "publish-final-85",
+      "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/local-debug-rebuild.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "managed-crystal-template-validation",
+      "manifest": "documentation/modules/reporting/features/managed-crystal-template-validation/required-files.json",
+      "id": "render-verification-1",
+      "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/render-full-api-tests-serial.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "managed-crystal-template-validation",
+      "manifest": "documentation/modules/reporting/features/managed-crystal-template-validation/required-files.json",
+      "id": "render-verification-2",
+      "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/render-full-api-tests.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "managed-crystal-template-validation",
+      "manifest": "documentation/modules/reporting/features/managed-crystal-template-validation/required-files.json",
+      "id": "render-verification-3",
+      "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/render-full-reporting-tests.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "managed-crystal-template-validation",
+      "manifest": "documentation/modules/reporting/features/managed-crystal-template-validation/required-files.json",
+      "id": "render-verification-4",
+      "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/render-boundary-tests.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "managed-crystal-template-validation",
+      "manifest": "documentation/modules/reporting/features/managed-crystal-template-validation/required-files.json",
+      "id": "render-verification-5",
+      "path": "documentation/plans/business/managed-crystal-reporting-reliability/runtime-correction-2026-11-01/render-angular-check.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "global-current-78",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/global-manager-angular-check.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "global-current-79",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/global-manager-angular-focused.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "global-current-80",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/global-manager-full-api-tests.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "global-current-81",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/global-manager-full-build.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "global-current-83",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/global-manager-migrations-applied.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "global-current-84",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/global-manager-migrations-created.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "global-current-85",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/global-manager-sql-tests.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "global-current-86",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/global-manager-tests.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "parity-20261102-20",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/parity-angular-final.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "parity-20261102-21",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/parity-api-clean-build.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "parity-20261102-22",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/parity-api-final-build.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "parity-20261102-23",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/parity-api-final-tests.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "parity-20261102-25",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/parity-migration-apply.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "parity-20261102-26",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/parity-mobile-check.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "parity-20261102-27",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/parity-next-final-architecture.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "parity-20261102-28",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/parity-next-final-tests.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "parity-20261102-29",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/parity-next-final-types.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "parity-20261102-30",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/parity-next-permissions.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "parity-20261102-31",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/parity-reporting-final.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "parity-20261102-32",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/parity-sql-access-tests.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "parity-final-6",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/parity-doc-check.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "parity-final-7",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/parity-planning-check.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "registration-layout-20261102-19",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/registration-layout/registration-layout-angular.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "registration-layout-20261102-20",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/registration-layout/registration-layout-browser.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "source-rejection-20261102-8",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/import-rejection/import-rejection-api-build.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "source-rejection-20261102-9",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/import-rejection/import-rejection-api-tests.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "source-rejection-20261102-10",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/import-rejection/import-rejection-crystal-build.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "source-rejection-20261102-11",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/import-rejection/import-rejection-harness-build.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "source-rejection-20261102-12",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/import-rejection/import-rejection-harness-tests.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "manual-view-verification-5",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manual-view-workflow/source-design-angular-check.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "manual-view-verification-6",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manual-view-workflow/source-design-api-build.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "manual-view-verification-7",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manual-view-workflow/source-design-api-restore.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "manual-view-verification-8",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manual-view-workflow/source-design-api-tests.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "manual-view-verification-9",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manual-view-workflow/source-design-browser.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "manual-view-verification-11",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manual-view-workflow/source-design-migrations.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "manual-view-verification-12",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manual-view-workflow/source-design-model-drift.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "manual-view-verification-13",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manual-view-workflow/source-design-registration-browser.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "manual-view-verification-14",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manual-view-workflow/source-design-sql-focused.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "designer-display-3",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/designer-display-correction/angular-check.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "designer-display-5",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/designer-display-correction/existing-dev-browser.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "designer-display-7",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/designer-display-correction/production-browser.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "database-view-6972945f2d48",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/database-view-discovery/angular-check.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "database-view-200fac6c032d",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/database-view-discovery/api-build.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "database-view-13a781bffdca",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/database-view-discovery/api-tests.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "database-view-0038738e43e4",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/database-view-discovery/development-browser.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "database-view-ad14e15bae14",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/database-view-discovery/migration-apply.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "database-view-b91fc0afd89f",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/database-view-discovery/model-drift.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "database-view-ce7529994f57",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/database-view-discovery/production-browser.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "database-view-1574ef08644a",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/database-view-discovery/sql-focused.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "command-push-0e88ca7def3c",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/command-push-data/command-push-api-build.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "command-push-36b39522bf99",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/command-push-data/command-push-api-restore.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "command-push-7e107941aaa6",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/command-push-data/command-push-api-tests.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "command-push-d84f05a3d670",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/command-push-data/command-push-crystal-build.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "command-push-1416818cc326",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/command-push-data/command-push-harness-build.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "command-push-574d4e39b9af",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/command-push-data/command-push-harness-tests.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "command-push-e50de2533407",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/command-push-data/command-push-native-baseline.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "connection-ignore-eed3f69806a3",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/connection-ignore/connection-ignore-api-build.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "connection-ignore-2a3a56765cca",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/connection-ignore/connection-ignore-api-restore.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "connection-ignore-a7dfda2110d4",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/connection-ignore/connection-ignore-api-tests.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "connection-ignore-afb404c41c68",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/connection-ignore/connection-ignore-crystal-build.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "connection-ignore-507c379197d7",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/connection-ignore/connection-ignore-harness-build.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "connection-ignore-c709bea17e9f",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/connection-ignore/connection-ignore-harness-tests.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "local-sql-local-database-migrations",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/local-sql-database/local-database-migrations.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "container-data-e393afc66e23",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/container-data/container-data-api-build.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "container-data-32588f268c5c",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/container-data/container-data-api-restore.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "container-data-b537fb96bb6c",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/container-data/container-data-api-tests-parallel-attempt.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "container-data-da9dd6250ccf",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/container-data/container-data-api-tests.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "container-data-fc08b4ed9a1c",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/container-data/container-data-crystal-build.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "container-data-b65b74ecd0d2",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/container-data/container-data-harness-build.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "container-data-15bbce6d0c80",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/container-data/container-data-harness-tests.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "optional-language-f86d4361981b",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/optional-rpt-language/optional-language-crystal-build.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "optional-language-dd14867e3e70",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/optional-rpt-language/optional-language-harness-build.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "optional-language-9bc3e4a9200e",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/optional-rpt-language/optional-language-harness-tests.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "published-viewer-evidence-build",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/published-viewer-catalog/build.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "published-viewer-evidence-focused",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/published-viewer-catalog/focused.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "published-viewer-evidence-planning",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/published-viewer-catalog/planning.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "published-viewer-evidence-restore",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/published-viewer-catalog/restore.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "published-viewer-evidence-tests",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/published-viewer-catalog/tests.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "published-viewer-evidence-language-tests",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/published-viewer-catalog/language-tests.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "restore-direction-evidence-angular-check",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/restore-direction/angular-check.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "restore-direction-evidence-crystal-build",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/restore-direction/crystal-build.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "restore-direction-evidence-harness-build",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/restore-direction/harness-build.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "restore-direction-evidence-harness-green",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/restore-direction/harness-green.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "restore-direction-evidence-regression-red",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/restore-direction/regression-red.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "vertical-lines-crystal-build-log",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/vertical-lines/crystal-build.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "vertical-lines-harness-build-log",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/vertical-lines/harness-build.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "vertical-lines-harness-green-log",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/vertical-lines/harness-green.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "pdf-viewer-theme-angular-check",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/pdf-viewer-theme/angular-check.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "sidebar-angular-check-log",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/sidebar-actions/angular-check.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "column-filters-10",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/column-filters/angular-check.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "column-filters-11",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/column-filters/api-build.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "column-filters-12",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/column-filters/api-restore.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "column-filters-13",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/column-filters/api-test.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "column-filters-18",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/column-filters/browser.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "column-filters-28",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/column-filters/platform-diagnostic.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "column-filters-final-format-check.log",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/column-filters/format-check.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "column-filters-final-documentation-check.log",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/column-filters/documentation-check.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "column-filters-final-planning-check.log",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/column-filters/planning-check.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "search-layout-7",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/angular-check.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "search-layout-8",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/embedded-browser.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "search-layout-9",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/standalone-browser.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "manager-actions-4",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/search-sidebar-layout/embedded-development-build.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "manager-actions-9",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-actions-metadata/browser.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "button-group-7",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-button-group/angular-check.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "button-group-12",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-button-group/browser.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "button-group-final-gate-0",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-button-group/documentation-check.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "button-group-final-gate-1",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-button-group/planning-check.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "button-group-final-gate-2",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-button-group/format-check.log",
+      "absentInMainCommit": true
+    },
+    {
+      "feature": "global-crystal-template-manager",
+      "manifest": "documentation/modules/reporting/features/global-crystal-template-manager/required-files.json",
+      "id": "button-group-final-gate-3",
+      "path": "documentation/modules/reporting/features/global-crystal-template-manager/verification/manager-button-group/documentation-staged-generation.log",
+      "absentInMainCommit": true
+    }
+  ]
+}

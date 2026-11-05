@@ -115,13 +115,13 @@ describe('Countries read composition', () => {
     expect(service.page.mock.calls.length).toBe(reads);
     const report = fixture.debugElement.query(By.directive(GlobalReportView))
       .componentInstance as GlobalReportView;
-    report.form.controls.nameEn.setValue('Draft');
+    report.form.nameEn().value.set('Draft');
     owner.toolbarVisible.set(false);
     await fixture.whenStable();
     expect(root.querySelector('erp-report-workspace aside')).toBeNull();
     owner.toolbarVisible.set(true);
     await fixture.whenStable();
-    expect(report.form.controls.nameEn.value).toBe('Draft');
+    expect(report.form.nameEn().value()).toBe('Draft');
     expect(reports.render).toHaveBeenCalledOnce();
     owner.refreshCurrent();
     await fixture.whenStable();

@@ -3,33 +3,22 @@
     ><erp-icon name="team" /><strong>{{ 'general.mainTitle' | uiText }}</strong></a
   >
   <div class="desktop-preferences">
-    <erp-option-select
-      [label]="'general.lang' | uiText"
-      [value]="locale.language()"
-      [options]="languageOptions"
-      (valueChange)="changeLanguage($event)"
+    <erp-appearance-preferences
+      [language]="locale.language()"
+      [mode]="theme.mode()"
+      (languageChange)="changeLanguage($event)"
+      (modeChange)="theme.setMode($event)"
     />
-    <erp-button
-      appearance="icon"
-      variant="text"
-      [label]="(theme.mode() === 'light' ? 'general.darkMode' : 'general.lightMode') | uiText"
-      (activated)="theme.setMode(theme.mode() === 'light' ? 'dark' : 'light')"
-      ><erp-icon buttonIcon [name]="theme.mode() === 'light' ? 'sun' : 'moon'"
-    /></erp-button>
   </div>
   <details class="mobile-preferences">
     <summary [attr.aria-label]="'common.showMore' | uiText"><erp-icon name="more" /></summary>
     <div>
-      <erp-option-select
-        [label]="'general.lang' | uiText"
-        [value]="locale.language()"
-        [options]="languageOptions"
-        (valueChange)="changeLanguage($event)"
-      />
-      <erp-button
-        [label]="(theme.mode() === 'light' ? 'general.darkMode' : 'general.lightMode') | uiText"
-        variant="text"
-        (activated)="theme.setMode(theme.mode() === 'light' ? 'dark' : 'light')"
+      <erp-appearance-preferences
+        appearance="text"
+        [language]="locale.language()"
+        [mode]="theme.mode()"
+        (languageChange)="changeLanguage($event)"
+        (modeChange)="theme.setMode($event)"
       />
     </div>
   </details>

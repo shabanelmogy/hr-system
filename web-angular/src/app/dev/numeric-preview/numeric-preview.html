@@ -48,37 +48,31 @@
     [form]="form"
     [title]="'numericField.title' | uiText"
     [submitLabel]="'actions.save' | uiText"
-    (validSubmit)="save()"
   >
     <erp-numeric-field
       data-testid="decimal"
-      [formControl]="form.controls.decimal"
+      [formField]="form.decimal"
       [label]="'numericField.decimal' | uiText"
       [help]="'numericField.help' | uiText"
-      [readOnly]="readonly()"
       [maxFractionDigits]="limited() ? 2 : null"
-      required
       [messages]="messages()"
     />
     <erp-numeric-field
       data-testid="integer"
-      [formControl]="form.controls.integer"
+      [formField]="form.integer"
       mode="integer"
       [label]="'numericField.integerLabel' | uiText"
       [help]="'numericField.help' | uiText"
-      [min]="'0'"
-      [max]="'9007199254740993'"
-      [readOnly]="readonly()"
       [messages]="messages()"
     />
   </erp-form>
   <output
     data-testid="state"
-    [attr.data-decimal]="form.controls.decimal.value"
-    [attr.data-integer]="form.controls.integer.value"
-    [attr.data-valid]="form.valid"
+    [attr.data-decimal]="form.decimal().value()"
+    [attr.data-integer]="form.integer().value()"
+    [attr.data-valid]="form().valid()"
     [attr.data-saved]="saved()"
     [attr.data-snapshot]="snapshot()"
-    >{{ form.controls.decimal.value }} · {{ form.controls.integer.value }}</output
+    >{{ form.decimal().value() }} · {{ form.integer().value() }}</output
   >
 </main>

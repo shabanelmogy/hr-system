@@ -43,7 +43,6 @@
           [pending]="state.pending()"
           [readOnly]="state.conflict()"
           [showSubmit]="state.selected() !== null"
-          (validSubmit)="search()"
         >
           @if (chooseEntity()) {
             <erp-option-select
@@ -56,7 +55,8 @@
           @if (state.selected()) {
             <erp-reference-field
               data-testid="report"
-              [formControl]="report"
+              [value]="state.selected()?.id ?? null"
+              (valueChange)="state.select($event)"
               [source]="source()"
               [label]="'reports.reportForms' | uiText"
               [searchable]="false"
@@ -64,16 +64,14 @@
             />
             <erp-text-field
               data-testid="nameAr"
-              [formControl]="form.controls.nameAr"
+              [formField]="form.nameAr"
               [label]="'general.nameAr' | uiText"
-              [maxLength]="limit"
               [messages]="messages()"
             />
             <erp-text-field
               data-testid="nameEn"
-              [formControl]="form.controls.nameEn"
+              [formField]="form.nameEn"
               [label]="'general.nameEn' | uiText"
-              [maxLength]="limit"
               [messages]="messages()"
             />
           }

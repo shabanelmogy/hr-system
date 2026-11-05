@@ -1,8 +1,9 @@
 import type { Mock } from 'vitest';
 import { HttpErrorResponse } from '@angular/common/http';
-import { signal } from '@angular/core';
+import { signal, type Signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { LocalizationService } from '../../localization/public-api';
+import type { Session } from '../types/auth-contracts';
 import { sessionFixture } from '../auth.fixture';
 import { BrowserAuthService } from '../services/browser-auth-service';
 import { SessionContextEvents, type ContextHint } from '../services/session-context-events';
@@ -34,6 +35,15 @@ describe('Verified authentication session owner', () => {
       { id: 2, companyCode: 'TWO', nameAr: 'الثانية', nameEn: 'Second' },
     ],
   };
+  async function verifySession(user: Session) {
+    transport.session.mockResolvedValueOnce(user);
+    await state.synchronizeContext();
+    transport.session.mockClear();
+    transport.csrf.mockClear();
+    transport.resetCsrf.mockClear();
+    localization.connect.mockClear();
+    publish.mockClear();
+  }
   const second = {
     ...first,
     companyId: 2,
@@ -72,6 +82,13 @@ describe('Verified authentication session owner', () => {
       ],
     });
     state = TestBed.inject(AuthSession);
+  });
+
+  it('exposes readonly identity and transition signals', () => {
+    expect('set' in state.user).toBe(false);
+    expect('set' in state.pending).toBe(false);
+    expectTypeOf(state.user).toEqualTypeOf<Signal<Session | null>>();
+    expectTypeOf(state.pending).toEqualTypeOf<Signal<boolean>>();
   });
 
   it('deduplicates bootstrap and treats an absent session as normal anonymous state', async () => {
@@ -162,7 +179,7 @@ describe('Verified authentication session owner', () => {
   });
 
   it('masks read identity immediately and keeps the last verified header until CSRF and localization commit', async () => {
-    state.user.set(first);
+    await verifySession(first);
     let complete: (value: boolean) => void = () => {};
     localization.connect.mockImplementation((identity: unknown) =>
       identity ? new Promise<boolean>((resolve) => (complete = resolve)) : Promise.resolve(true),
@@ -185,17 +202,17 @@ describe('Verified authentication session owner', () => {
   });
 
   it('rejects current, unknown, nonpositive, fractional and global choices without a request', async () => {
-    state.user.set(first);
+    await verifySession(first);
     for (const id of [1, 3, 0, -1, 1.5, Number.NaN])
       expect(await state.switchCompany(id)).toBe(false);
-    state.user.set({ ...first, roles: ['super_admin'] });
+    await verifySession({ ...first, roles: ['super_admin'] });
     expect(await state.switchCompany(2)).toBe(false);
     expect(transport.switchCompany).not.toHaveBeenCalled();
     expect(localization.connect).not.toHaveBeenCalled();
   });
 
   it('recovers an uncertain mutation through session verification without repeating the write', async () => {
-    state.user.set(first);
+    await verifySession(first);
     transport.switchCompany.mockRejectedValue(new Error('response lost'));
     transport.session.mockRejectedValue(unauthorized());
     transport.refresh.mockResolvedValue(second);
@@ -207,7 +224,7 @@ describe('Verified authentication session owner', () => {
   });
 
   it('restores authoritative old scope with actionable feedback after a rejected mutation', async () => {
-    state.user.set(first);
+    await verifySession(first);
     transport.switchCompany.mockRejectedValue(new Error('denied'));
     transport.session.mockResolvedValue(first);
     expect(await state.switchCompany(2)).toBe(false);
@@ -217,7 +234,7 @@ describe('Verified authentication session owner', () => {
   });
 
   it('clears protected identity and overrides when mutation outcome cannot be verified', async () => {
-    state.user.set(first);
+    await verifySession(first);
     transport.switchCompany.mockRejectedValue(new Error('offline'));
     transport.session.mockRejectedValue(new Error('offline'));
     expect(await state.switchCompany(2)).toBe(false);
@@ -228,7 +245,7 @@ describe('Verified authentication session owner', () => {
   });
 
   it('accepts server truth without reporting success for a different actor', async () => {
-    state.user.set(first);
+    await verifySession(first);
     transport.switchCompany.mockRejectedValue(new Error('raced'));
     transport.session.mockResolvedValue({ ...second, userId: 'other-verified-actor' });
     expect(await state.switchCompany(2)).toBe(false);
@@ -237,7 +254,7 @@ describe('Verified authentication session owner', () => {
   });
 
   it('coalesces visibility checks without masking or replacing an unchanged verified identity', async () => {
-    state.user.set(first);
+    await verifySession(first);
     let complete: (value: typeof first) => void = () => {};
     transport.session.mockImplementationOnce(
       () => new Promise<typeof first>((resolve) => (complete = resolve)),
@@ -262,7 +279,7 @@ describe('Verified authentication session owner', () => {
     expect(publish).not.toHaveBeenCalled();
   });
   it('does not cancel dirty form consent on an unchanged visibility check', async () => {
-    state.user.set(first);
+    await verifySession(first);
     transport.session.mockResolvedValue({ ...first });
     const drafts = TestBed.inject(UnsavedChanges),
       invalidate = vi.fn();
@@ -287,7 +304,7 @@ describe('Verified authentication session owner', () => {
   });
   it('masks and commits changed authority discovered by visibility through the existing coordinator', async () => {
     const allowed = { ...first, permissions: ['Countries:View'] };
-    state.user.set(allowed);
+    await verifySession(allowed);
     const changed = { ...allowed, permissions: [] };
     transport.session.mockResolvedValue(changed);
     let complete: (value: string) => void = () => {};
@@ -304,7 +321,7 @@ describe('Verified authentication session owner', () => {
     expect(publish).not.toHaveBeenCalled();
   });
   it('ignores a late visibility response after an external scope invalidation', async () => {
-    state.user.set(first);
+    await verifySession(first);
     let complete: (value: typeof first) => void = () => {};
     transport.session
       .mockImplementationOnce(() => new Promise<typeof first>((resolve) => (complete = resolve)))
@@ -319,7 +336,7 @@ describe('Verified authentication session owner', () => {
     expect(state.readIdentity()).toEqual(second);
   });
   it('keeps fail-closed recovery when visibility cannot verify the session', async () => {
-    state.user.set(first);
+    await verifySession(first);
     transport.session.mockRejectedValue(Error('offline'));
     await state.revalidateVisibleContext();
     expect(state.readIdentity()).toBeNull();
@@ -327,7 +344,7 @@ describe('Verified authentication session owner', () => {
     expect(state.error()).toBe('angularAuth.unavailable');
   });
   it('coalesces external hints during a transition and verifies afterward without rebroadcasting', async () => {
-    state.user.set(first);
+    await verifySession(first);
     let resolve: (value: typeof second) => void = () => {};
     transport.switchCompany.mockImplementation(
       () => new Promise<typeof second>((done) => (resolve = done)),
@@ -360,7 +377,7 @@ describe('Verified authentication session owner', () => {
   });
 
   it('serializes a module context update with company/logout and independently revalidates identity', async () => {
-    state.user.set(first);
+    await verifySession(first);
     transport.session.mockResolvedValue(first);
     let release: (value: boolean) => void = () => {};
     const action = vi.fn(() => new Promise<boolean>((done) => (release = done)));
@@ -377,7 +394,7 @@ describe('Verified authentication session owner', () => {
     expect(publish).toHaveBeenCalledOnce();
   });
   it('restores a verified rejected domain outcome but clears an unverified context', async () => {
-    state.user.set(first);
+    await verifySession(first);
     transport.session.mockResolvedValue(first);
     expect(await state.runScopedContextUpdate(async () => false)).toBe(false);
     expect(state.user()).toEqual(first);
@@ -390,13 +407,13 @@ describe('Verified authentication session owner', () => {
     expect(state.error()).toBe('angularAuth.unavailable');
   });
   it('uses server truth after another actor/company wins instead of accepting a stale domain success', async () => {
-    state.user.set(first);
+    await verifySession(first);
     transport.session.mockResolvedValue(second);
     expect(await state.runScopedContextUpdate(async () => true)).toBe(false);
     expect(state.user()).toEqual(second);
   });
   it('keeps company identity, translations and requests intact when dirty departure is canceled or busy', async () => {
-    state.user.set(first);
+    await verifySession(first);
     const drafts = TestBed.inject(UnsavedChanges);
     const dirty = signal({
       identity: 'editor',
@@ -419,7 +436,7 @@ describe('Verified authentication session owner', () => {
     expect(state.pending()).toBe(false);
   });
   it('performs one accepted company change and quarantines old owners only after verified identity', async () => {
-    state.user.set(first);
+    await verifySession(first);
     const drafts = TestBed.inject(UnsavedChanges),
       invalidate = vi.fn();
     drafts.register({
@@ -442,7 +459,7 @@ describe('Verified authentication session owner', () => {
     expect(state.user()).toEqual(second);
   });
   it('does not run a module context write or logout after canceled consent', async () => {
-    state.user.set(first);
+    await verifySession(first);
     const drafts = TestBed.inject(UnsavedChanges);
     drafts.register({
       read: () => ({
@@ -467,7 +484,7 @@ describe('Verified authentication session owner', () => {
     expect(localization.connect).not.toHaveBeenCalled();
   });
   it('rejects changed authority after consent and forced external scope bypasses stale draft veto', async () => {
-    state.user.set(first);
+    await verifySession(first);
     const drafts = TestBed.inject(UnsavedChanges),
       invalidate = vi.fn();
     drafts.register({
@@ -482,7 +499,7 @@ describe('Verified authentication session owner', () => {
     });
     const company = state.switchCompany(2);
     const consent = drafts.prompt()!;
-    state.user.set({ ...first });
+    await verifySession({ ...first });
     drafts.answer(consent, true);
     expect(await company).toBe(false);
     expect(transport.switchCompany).not.toHaveBeenCalled();
@@ -495,7 +512,7 @@ describe('Verified authentication session owner', () => {
     expect(drafts.requiresDecision()).toBe(false);
   });
   it('retains dirty data after verified same-scope failed change and accepts successful module context', async () => {
-    state.user.set(first);
+    await verifySession(first);
     const drafts = TestBed.inject(UnsavedChanges),
       invalidate = vi.fn();
     drafts.register({
@@ -521,7 +538,7 @@ describe('Verified authentication session owner', () => {
     expect(invalidate).toHaveBeenCalledOnce();
   });
   it('same-scope external notification cancels stale consent but preserves the editor after server verification', async () => {
-    state.user.set(first);
+    await verifySession(first);
     const drafts = TestBed.inject(UnsavedChanges),
       invalidate = vi.fn();
     drafts.register({
@@ -544,7 +561,7 @@ describe('Verified authentication session owner', () => {
     expect(transport.switchCompany).not.toHaveBeenCalled();
   });
   it('quarantines registered edits after verified permission loss in the same company', async () => {
-    state.user.set(first);
+    await verifySession(first);
     const drafts = TestBed.inject(UnsavedChanges),
       invalidate = vi.fn();
     drafts.register({

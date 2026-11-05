@@ -6,14 +6,14 @@ import {
   forwardRef,
   input,
   output,
-  signal,
   untracked,
   viewChild,
+  model,
 } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Select } from 'primeng/select';
-import { UiTextPipe } from '../../../../../platform/localization/public-api';
+import { UiTextPipe } from '../../../../localization/public-api';
 import { ActionButton } from '../../../buttons/public-api';
 import { FeedbackState } from '../../../feedback/feedback-state/feedback-state';
 import { FormFieldControl } from '../../form-field-control';
@@ -37,7 +37,7 @@ import {
   styleUrl: './reference-field.scss',
 })
 export class ReferenceField extends FormFieldControl<ReferenceId | null> {
-  readonly value = signal<ReferenceId | null>(null);
+  readonly value = model<ReferenceId | null>(null);
   readonly source = input.required<ReferenceSource>();
   readonly selection = input<ReferenceSelection | null>(null);
   readonly searchText = input('');
@@ -121,13 +121,13 @@ export class ReferenceField extends FormFieldControl<ReferenceId | null> {
     super();
     effect(() => {
       this.control.setValue(this.value(), { emitEvent: false });
-      if (this.disabled() || this.blocked()) this.control.disable({ emitEvent: false });
+      if (this.isDisabled() || this.blocked()) this.control.disable({ emitEvent: false });
       else this.control.enable({ emitEvent: false });
     });
     effect(() => this.searchControl.setValue(this.searchText(), { emitEvent: false }));
     effect(() => {
       const scope = this.source().query.scopeKey,
-        locked = this.disabled() || this.readOnly() || this.blocked();
+        locked = this.isDisabled() || this.isReadOnly() || this.blocked();
       untracked(() => {
         if ((this.previousScope !== undefined && scope !== this.previousScope) || locked)
           this.select()?.hide(true);
@@ -136,11 +136,15 @@ export class ReferenceField extends FormFieldControl<ReferenceId | null> {
     });
     this.control.valueChanges.pipe(takeUntilDestroyed()).subscribe((value) => this.choose(value));
     this.searchControl.valueChanges.pipe(takeUntilDestroyed()).subscribe((value) => {
-      if (!this.disabled() && !this.readOnly() && !this.blocked()) this.searchChange.emit(value);
+      if (!this.isDisabled() && !this.isReadOnly() && !this.blocked())
+        this.searchChange.emit(value);
     });
   }
   writeValue(value: unknown) {
     this.value.set(validReferenceId(value) ? value : null);
+  }
+  reset() {
+    this.select()?.hide(true);
   }
   focus() {
     this.select()?.focus();
@@ -150,8 +154,8 @@ export class ReferenceField extends FormFieldControl<ReferenceId | null> {
       this.view().kind === 'ready' &&
       validReferenceId(value) &&
       this.view().options.some((option) => option.value === value && !option.disabled) &&
-      !this.disabled() &&
-      !this.readOnly() &&
+      !this.isDisabled() &&
+      !this.isReadOnly() &&
       !this.blocked()
     )
       this.accept(value);
@@ -168,8 +172,8 @@ export class ReferenceField extends FormFieldControl<ReferenceId | null> {
     if (
       this.view().kind === 'ready' &&
       this.view().hasMore &&
-      !this.disabled() &&
-      !this.readOnly() &&
+      !this.isDisabled() &&
+      !this.isReadOnly() &&
       !this.blocked()
     )
       this.loadMore.emit();

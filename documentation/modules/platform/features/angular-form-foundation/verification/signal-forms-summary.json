@@ -1,0 +1,1091 @@
+{
+  "date": "2026-11-04",
+  "branch": "codex/angular-foundation-hardening",
+  "angular": "22.2.3",
+  "primeng": "22.1.4",
+  "transport": "local harness or intercepted API; no live business writes",
+  "unit": {
+    "files": 78,
+    "tests": 438,
+    "passed": 438
+  },
+  "architecture": {
+    "tests": 16,
+    "passed": 16
+  },
+  "apiConfiguration": {
+    "tests": 4,
+    "passed": 4
+  },
+  "browser": {
+    "numeric": {
+      "source": ".codex-tmp/angular-numeric/focused-results.json",
+      "sha256": "7d6d178aeeaf809661d2c034fe99f76d4285338337dedbbc8e689fa5bbbc6805",
+      "result": [
+        {
+          "palette": "green",
+          "mode": "light",
+          "language": "en",
+          "width": 390,
+          "geometry": {
+            "width": 324,
+            "height": 46,
+            "page": 390
+          },
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "light",
+          "language": "en",
+          "width": 1440,
+          "geometry": {
+            "width": 952,
+            "height": 46,
+            "page": 1440
+          },
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "light",
+          "language": "ar",
+          "width": 390,
+          "geometry": {
+            "width": 324,
+            "height": 46,
+            "page": 390
+          },
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "light",
+          "language": "ar",
+          "width": 1440,
+          "geometry": {
+            "width": 952,
+            "height": 46,
+            "page": 1440
+          },
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "dark",
+          "language": "en",
+          "width": 390,
+          "geometry": {
+            "width": 324,
+            "height": 46,
+            "page": 390
+          },
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "dark",
+          "language": "en",
+          "width": 1440,
+          "geometry": {
+            "width": 952,
+            "height": 46,
+            "page": 1440
+          },
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "dark",
+          "language": "ar",
+          "width": 390,
+          "geometry": {
+            "width": 324,
+            "height": 46,
+            "page": 390
+          },
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "dark",
+          "language": "ar",
+          "width": 1440,
+          "geometry": {
+            "width": 952,
+            "height": 46,
+            "page": 1440
+          },
+          "passed": true
+        }
+      ]
+    },
+    "date": {
+      "source": ".codex-tmp/angular-dates/focused-results.json",
+      "sha256": "eb1dbad8b3162116d40df77a25b1e9a753ee67a63bd6fa5c46325a2d7c91a9d0",
+      "result": {
+        "cases": [
+          {
+            "palette": "green",
+            "mode": "light",
+            "language": "en",
+            "width": 390,
+            "geometry": {
+              "width": 238,
+              "height": 44,
+              "page": 390
+            },
+            "bounds": {
+              "x": 16,
+              "y": 518.015625,
+              "width": 340,
+              "height": 339
+            },
+            "passed": true
+          },
+          {
+            "palette": "green",
+            "mode": "light",
+            "language": "en",
+            "width": 1440,
+            "geometry": {
+              "width": 866,
+              "height": 44,
+              "page": 1440
+            },
+            "bounds": {
+              "x": 855,
+              "y": 378.015625,
+              "width": 340,
+              "height": 339
+            },
+            "passed": true
+          },
+          {
+            "palette": "green",
+            "mode": "light",
+            "language": "ar",
+            "width": 390,
+            "geometry": {
+              "width": 238,
+              "height": 44,
+              "page": 390
+            },
+            "bounds": {
+              "x": 34,
+              "y": 518.015625,
+              "width": 340,
+              "height": 339
+            },
+            "passed": true
+          },
+          {
+            "palette": "green",
+            "mode": "light",
+            "language": "ar",
+            "width": 1440,
+            "geometry": {
+              "width": 866,
+              "height": 44,
+              "page": 1440
+            },
+            "bounds": {
+              "x": 245,
+              "y": 378.015625,
+              "width": 340,
+              "height": 339
+            },
+            "passed": true
+          },
+          {
+            "palette": "green",
+            "mode": "dark",
+            "language": "en",
+            "width": 390,
+            "geometry": {
+              "width": 238,
+              "height": 44,
+              "page": 390
+            },
+            "bounds": {
+              "x": 16,
+              "y": 518.015625,
+              "width": 340,
+              "height": 339
+            },
+            "passed": true
+          },
+          {
+            "palette": "green",
+            "mode": "dark",
+            "language": "en",
+            "width": 1440,
+            "geometry": {
+              "width": 866,
+              "height": 44,
+              "page": 1440
+            },
+            "bounds": {
+              "x": 855,
+              "y": 378.015625,
+              "width": 340,
+              "height": 339
+            },
+            "passed": true
+          },
+          {
+            "palette": "green",
+            "mode": "dark",
+            "language": "ar",
+            "width": 390,
+            "geometry": {
+              "width": 238,
+              "height": 44,
+              "page": 390
+            },
+            "bounds": {
+              "x": 34,
+              "y": 518.015625,
+              "width": 340,
+              "height": 339
+            },
+            "passed": true
+          },
+          {
+            "palette": "green",
+            "mode": "dark",
+            "language": "ar",
+            "width": 1440,
+            "geometry": {
+              "width": 866,
+              "height": 44,
+              "page": 1440
+            },
+            "bounds": {
+              "x": 245,
+              "y": 378.015625,
+              "width": 340,
+              "height": 339
+            },
+            "passed": true
+          }
+        ],
+        "timezones": [
+          {
+            "timezoneId": "UTC",
+            "language": "en",
+            "passed": true
+          },
+          {
+            "timezoneId": "UTC",
+            "language": "ar",
+            "passed": true
+          },
+          {
+            "timezoneId": "Africa/Cairo",
+            "language": "en",
+            "passed": true
+          },
+          {
+            "timezoneId": "Africa/Cairo",
+            "language": "ar",
+            "passed": true
+          },
+          {
+            "timezoneId": "America/Los_Angeles",
+            "language": "en",
+            "passed": true
+          },
+          {
+            "timezoneId": "America/Los_Angeles",
+            "language": "ar",
+            "passed": true
+          },
+          {
+            "timezoneId": "Pacific/Kiritimati",
+            "language": "en",
+            "passed": true
+          },
+          {
+            "timezoneId": "Pacific/Kiritimati",
+            "language": "ar",
+            "passed": true
+          },
+          {
+            "timezoneId": "America/Adak",
+            "language": "en",
+            "passed": true
+          },
+          {
+            "timezoneId": "America/Adak",
+            "language": "ar",
+            "passed": true
+          }
+        ]
+      }
+    },
+    "boolean": {
+      "source": ".codex-tmp/angular-boolean/focused-results.json",
+      "sha256": "3c5fdc7aa24e7222a100fef3e736d6684f600cb98fd40186e57846fdbff02684",
+      "result": [
+        {
+          "palette": "green",
+          "mode": "light",
+          "language": "en",
+          "width": 390,
+          "geometry": {
+            "height": 46,
+            "page": 390
+          },
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "light",
+          "language": "en",
+          "width": 1440,
+          "geometry": {
+            "height": 46,
+            "page": 1440
+          },
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "light",
+          "language": "ar",
+          "width": 390,
+          "geometry": {
+            "height": 46,
+            "page": 390
+          },
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "light",
+          "language": "ar",
+          "width": 1440,
+          "geometry": {
+            "height": 46,
+            "page": 1440
+          },
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "dark",
+          "language": "en",
+          "width": 390,
+          "geometry": {
+            "height": 46,
+            "page": 390
+          },
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "dark",
+          "language": "en",
+          "width": 1440,
+          "geometry": {
+            "height": 46,
+            "page": 1440
+          },
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "dark",
+          "language": "ar",
+          "width": 390,
+          "geometry": {
+            "height": 46,
+            "page": 390
+          },
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "dark",
+          "language": "ar",
+          "width": 1440,
+          "geometry": {
+            "height": 46,
+            "page": 1440
+          },
+          "passed": true
+        }
+      ]
+    },
+    "login": {
+      "source": ".codex-tmp/login-parity/login-results.json",
+      "sha256": "d3e5da344a3139f8774235f18b98479659670deacd9366ab7b68b7c0980a7799",
+      "result": [
+        {
+          "kind": "visual",
+          "language": "en",
+          "width": 390,
+          "mode": "light",
+          "card": {
+            "x": 56,
+            "y": 132.40625,
+            "width": 278,
+            "height": 735.171875
+          },
+          "submit": {
+            "x": 76,
+            "y": 480.40625,
+            "width": 238,
+            "height": 42.046875
+          }
+        },
+        {
+          "kind": "visual",
+          "language": "en",
+          "width": 1440,
+          "mode": "light",
+          "card": {
+            "x": 318,
+            "y": 186.21875,
+            "width": 804,
+            "height": 667.546875
+          },
+          "submit": {
+            "x": 671.59375,
+            "y": 546.21875,
+            "width": 418.40625,
+            "height": 42.046875
+          }
+        },
+        {
+          "kind": "visual",
+          "language": "ar",
+          "width": 390,
+          "mode": "light",
+          "card": {
+            "x": 56,
+            "y": 139.40625,
+            "width": 278,
+            "height": 721.171875
+          },
+          "submit": {
+            "x": 76,
+            "y": 487.40625,
+            "width": 238,
+            "height": 42.046875
+          }
+        },
+        {
+          "kind": "visual",
+          "language": "ar",
+          "width": 1440,
+          "mode": "light",
+          "card": {
+            "x": 318,
+            "y": 191.78125,
+            "width": 804,
+            "height": 656.421875
+          },
+          "submit": {
+            "x": 350,
+            "y": 551.78125,
+            "width": 418.40625,
+            "height": 42.046875
+          }
+        },
+        {
+          "kind": "visual",
+          "language": "en",
+          "width": 390,
+          "mode": "dark",
+          "card": {
+            "x": 56,
+            "y": 132.40625,
+            "width": 278,
+            "height": 735.171875
+          },
+          "submit": {
+            "x": 76,
+            "y": 480.40625,
+            "width": 238,
+            "height": 42.046875
+          }
+        },
+        {
+          "kind": "visual",
+          "language": "en",
+          "width": 1440,
+          "mode": "dark",
+          "card": {
+            "x": 318,
+            "y": 186.21875,
+            "width": 804,
+            "height": 667.546875
+          },
+          "submit": {
+            "x": 671.59375,
+            "y": 546.21875,
+            "width": 418.40625,
+            "height": 42.046875
+          }
+        },
+        {
+          "kind": "visual",
+          "language": "ar",
+          "width": 390,
+          "mode": "dark",
+          "card": {
+            "x": 56,
+            "y": 139.40625,
+            "width": 278,
+            "height": 721.171875
+          },
+          "submit": {
+            "x": 76,
+            "y": 487.40625,
+            "width": 238,
+            "height": 42.046875
+          }
+        },
+        {
+          "kind": "visual",
+          "language": "ar",
+          "width": 1440,
+          "mode": "dark",
+          "card": {
+            "x": 318,
+            "y": 191.78125,
+            "width": 804,
+            "height": 656.421875
+          },
+          "submit": {
+            "x": 350,
+            "y": 551.78125,
+            "width": 418.40625,
+            "height": 42.046875
+          }
+        },
+        {
+          "kind": "workflow",
+          "language": "en",
+          "passed": true
+        },
+        {
+          "kind": "workflow",
+          "language": "ar",
+          "passed": true
+        }
+      ]
+    },
+    "reporting": {
+      "source": ".codex-tmp/angular-reporting/focused-results.json",
+      "sha256": "14843d6349235641ab49f451275156f4447f06a80f081f642e24ef63612970ab",
+      "result": [
+        {
+          "palette": "green",
+          "mode": "light",
+          "language": "en",
+          "width": 390,
+          "geometry": {
+            "width": 366,
+            "viewport": 390,
+            "page": 390
+          },
+          "focused": true,
+          "renders": 27,
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "light",
+          "language": "en",
+          "width": 1440,
+          "geometry": {
+            "width": 1392,
+            "viewport": 1440,
+            "page": 1440
+          },
+          "focused": true,
+          "renders": 27,
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "light",
+          "language": "ar",
+          "width": 390,
+          "geometry": {
+            "width": 366,
+            "viewport": 390,
+            "page": 390
+          },
+          "focused": true,
+          "renders": 27,
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "light",
+          "language": "ar",
+          "width": 1440,
+          "geometry": {
+            "width": 1392,
+            "viewport": 1440,
+            "page": 1440
+          },
+          "focused": true,
+          "renders": 27,
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "dark",
+          "language": "en",
+          "width": 390,
+          "geometry": {
+            "width": 366,
+            "viewport": 390,
+            "page": 390
+          },
+          "focused": true,
+          "renders": 27,
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "dark",
+          "language": "en",
+          "width": 1440,
+          "geometry": {
+            "width": 1392,
+            "viewport": 1440,
+            "page": 1440
+          },
+          "focused": true,
+          "renders": 27,
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "dark",
+          "language": "ar",
+          "width": 390,
+          "geometry": {
+            "width": 366,
+            "viewport": 390,
+            "page": 390
+          },
+          "focused": true,
+          "renders": 27,
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "dark",
+          "language": "ar",
+          "width": 1440,
+          "geometry": {
+            "width": 1392,
+            "viewport": 1440,
+            "page": 1440
+          },
+          "focused": true,
+          "renders": 27,
+          "passed": true
+        }
+      ]
+    },
+    "countries": {
+      "source": ".codex-tmp/angular-country-actions/edit-results.json",
+      "sha256": "2010928bfaa62bd4d9461c1a446f2a9af7d990c5299fdc9e6fd96d9607c7c299",
+      "result": [
+        {
+          "mode": "light",
+          "language": "en",
+          "width": 390,
+          "reducedMotion": false,
+          "writes": 17,
+          "toastStyle": {
+            "background": "rgb(255, 255, 255)",
+            "color": "rgb(21, 128, 61)"
+          },
+          "formSingleColumn": true,
+          "nativeCounterBadges": true,
+          "keyboard": true,
+          "inputKeyboardIsolation": true,
+          "editedActiveFlash": true,
+          "flashExpiresWithoutReplay": true,
+          "cardsRepeatedEditFlash": true,
+          "oldFlashClearedOnMove": true,
+          "stationaryHoverCleared": true,
+          "singleActiveFocus": true,
+          "archivePreviousRow": true,
+          "archivePageBoundary": true,
+          "create": true,
+          "edit": true,
+          "cards": true,
+          "inlineFieldErrors": true,
+          "generalErrorModal": true,
+          "uncertainNoReplay": true,
+          "archive": true,
+          "restore": true,
+          "bulk": true,
+          "atomicDependencyRejection": true,
+          "lifecycleNoReplay": true,
+          "readOnlyGuard": true,
+          "passed": true
+        },
+        {
+          "mode": "light",
+          "language": "en",
+          "width": 1440,
+          "reducedMotion": false,
+          "writes": 17,
+          "toastStyle": {
+            "background": "rgb(255, 255, 255)",
+            "color": "rgb(21, 128, 61)"
+          },
+          "formSingleColumn": true,
+          "nativeCounterBadges": true,
+          "keyboard": true,
+          "inputKeyboardIsolation": true,
+          "editedActiveFlash": true,
+          "flashExpiresWithoutReplay": true,
+          "cardsRepeatedEditFlash": true,
+          "oldFlashClearedOnMove": true,
+          "stationaryHoverCleared": true,
+          "singleActiveFocus": true,
+          "archivePreviousRow": true,
+          "archivePageBoundary": true,
+          "create": true,
+          "edit": true,
+          "cards": true,
+          "inlineFieldErrors": true,
+          "generalErrorModal": true,
+          "uncertainNoReplay": true,
+          "archive": true,
+          "restore": true,
+          "bulk": true,
+          "atomicDependencyRejection": true,
+          "lifecycleNoReplay": true,
+          "readOnlyGuard": true,
+          "passed": true
+        },
+        {
+          "mode": "light",
+          "language": "ar",
+          "width": 390,
+          "reducedMotion": false,
+          "writes": 17,
+          "toastStyle": {
+            "background": "rgb(255, 255, 255)",
+            "color": "rgb(21, 128, 61)"
+          },
+          "formSingleColumn": true,
+          "nativeCounterBadges": true,
+          "keyboard": true,
+          "inputKeyboardIsolation": true,
+          "editedActiveFlash": true,
+          "flashExpiresWithoutReplay": true,
+          "cardsRepeatedEditFlash": true,
+          "oldFlashClearedOnMove": true,
+          "stationaryHoverCleared": true,
+          "singleActiveFocus": true,
+          "archivePreviousRow": true,
+          "archivePageBoundary": true,
+          "create": true,
+          "edit": true,
+          "cards": true,
+          "inlineFieldErrors": true,
+          "generalErrorModal": true,
+          "uncertainNoReplay": true,
+          "archive": true,
+          "restore": true,
+          "bulk": true,
+          "atomicDependencyRejection": true,
+          "lifecycleNoReplay": true,
+          "readOnlyGuard": true,
+          "passed": true
+        },
+        {
+          "mode": "light",
+          "language": "ar",
+          "width": 1440,
+          "reducedMotion": false,
+          "writes": 17,
+          "toastStyle": {
+            "background": "rgb(255, 255, 255)",
+            "color": "rgb(21, 128, 61)"
+          },
+          "formSingleColumn": true,
+          "nativeCounterBadges": true,
+          "keyboard": true,
+          "inputKeyboardIsolation": true,
+          "editedActiveFlash": true,
+          "flashExpiresWithoutReplay": true,
+          "cardsRepeatedEditFlash": true,
+          "oldFlashClearedOnMove": true,
+          "stationaryHoverCleared": true,
+          "singleActiveFocus": true,
+          "archivePreviousRow": true,
+          "archivePageBoundary": true,
+          "create": true,
+          "edit": true,
+          "cards": true,
+          "inlineFieldErrors": true,
+          "generalErrorModal": true,
+          "uncertainNoReplay": true,
+          "archive": true,
+          "restore": true,
+          "bulk": true,
+          "atomicDependencyRejection": true,
+          "lifecycleNoReplay": true,
+          "readOnlyGuard": true,
+          "passed": true
+        },
+        {
+          "mode": "dark",
+          "language": "en",
+          "width": 390,
+          "reducedMotion": true,
+          "writes": 17,
+          "toastStyle": {
+            "background": "rgb(24, 32, 30)",
+            "color": "rgb(74, 222, 128)"
+          },
+          "formSingleColumn": true,
+          "nativeCounterBadges": true,
+          "keyboard": true,
+          "inputKeyboardIsolation": true,
+          "editedActiveFlash": true,
+          "flashExpiresWithoutReplay": true,
+          "cardsRepeatedEditFlash": true,
+          "oldFlashClearedOnMove": true,
+          "stationaryHoverCleared": true,
+          "singleActiveFocus": true,
+          "archivePreviousRow": true,
+          "archivePageBoundary": true,
+          "create": true,
+          "edit": true,
+          "cards": true,
+          "inlineFieldErrors": true,
+          "generalErrorModal": true,
+          "uncertainNoReplay": true,
+          "archive": true,
+          "restore": true,
+          "bulk": true,
+          "atomicDependencyRejection": true,
+          "lifecycleNoReplay": true,
+          "readOnlyGuard": true,
+          "passed": true
+        },
+        {
+          "mode": "dark",
+          "language": "en",
+          "width": 1440,
+          "reducedMotion": true,
+          "writes": 17,
+          "toastStyle": {
+            "background": "rgb(24, 32, 30)",
+            "color": "rgb(74, 222, 128)"
+          },
+          "formSingleColumn": true,
+          "nativeCounterBadges": true,
+          "keyboard": true,
+          "inputKeyboardIsolation": true,
+          "editedActiveFlash": true,
+          "flashExpiresWithoutReplay": true,
+          "cardsRepeatedEditFlash": true,
+          "oldFlashClearedOnMove": true,
+          "stationaryHoverCleared": true,
+          "singleActiveFocus": true,
+          "archivePreviousRow": true,
+          "archivePageBoundary": true,
+          "create": true,
+          "edit": true,
+          "cards": true,
+          "inlineFieldErrors": true,
+          "generalErrorModal": true,
+          "uncertainNoReplay": true,
+          "archive": true,
+          "restore": true,
+          "bulk": true,
+          "atomicDependencyRejection": true,
+          "lifecycleNoReplay": true,
+          "readOnlyGuard": true,
+          "passed": true
+        },
+        {
+          "mode": "dark",
+          "language": "ar",
+          "width": 390,
+          "reducedMotion": true,
+          "writes": 17,
+          "toastStyle": {
+            "background": "rgb(24, 32, 30)",
+            "color": "rgb(74, 222, 128)"
+          },
+          "formSingleColumn": true,
+          "nativeCounterBadges": true,
+          "keyboard": true,
+          "inputKeyboardIsolation": true,
+          "editedActiveFlash": true,
+          "flashExpiresWithoutReplay": true,
+          "cardsRepeatedEditFlash": true,
+          "oldFlashClearedOnMove": true,
+          "stationaryHoverCleared": true,
+          "singleActiveFocus": true,
+          "archivePreviousRow": true,
+          "archivePageBoundary": true,
+          "create": true,
+          "edit": true,
+          "cards": true,
+          "inlineFieldErrors": true,
+          "generalErrorModal": true,
+          "uncertainNoReplay": true,
+          "archive": true,
+          "restore": true,
+          "bulk": true,
+          "atomicDependencyRejection": true,
+          "lifecycleNoReplay": true,
+          "readOnlyGuard": true,
+          "passed": true
+        },
+        {
+          "mode": "dark",
+          "language": "ar",
+          "width": 1440,
+          "reducedMotion": true,
+          "writes": 17,
+          "toastStyle": {
+            "background": "rgb(24, 32, 30)",
+            "color": "rgb(74, 222, 128)"
+          },
+          "formSingleColumn": true,
+          "nativeCounterBadges": true,
+          "keyboard": true,
+          "inputKeyboardIsolation": true,
+          "editedActiveFlash": true,
+          "flashExpiresWithoutReplay": true,
+          "cardsRepeatedEditFlash": true,
+          "oldFlashClearedOnMove": true,
+          "stationaryHoverCleared": true,
+          "singleActiveFocus": true,
+          "archivePreviousRow": true,
+          "archivePageBoundary": true,
+          "create": true,
+          "edit": true,
+          "cards": true,
+          "inlineFieldErrors": true,
+          "generalErrorModal": true,
+          "uncertainNoReplay": true,
+          "archive": true,
+          "restore": true,
+          "bulk": true,
+          "atomicDependencyRejection": true,
+          "lifecycleNoReplay": true,
+          "readOnlyGuard": true,
+          "passed": true
+        }
+      ]
+    }
+  },
+  "finalAffectedUnit": {
+    "files": 18,
+    "tests": 98,
+    "passed": 98,
+    "scope": "all Shared forms and Country/report/password composition after native summary ordering change"
+  },
+  "sourceSha256": {
+    "web-angular/angular.json": "d1d471823e315d803288a4ad42a44ea1bdf1a52e7f843e53ad91e301eab535cb",
+    "web-angular/scripts/architecture-rules.mjs": "22140dc37041c1ff7000349575f128e85c4a4f547501cf3673a86f40727b60d9",
+    "web-angular/scripts/architecture-rules.test.mjs": "b72a35ba607d4a2e08a3e62c65e5d798f68a25e24b36b8f73768f1a57a4c9cb1",
+    "web-angular/scripts/check-architecture.mjs": "bb0b1eadd2bd55fee3cfa3b090169d394fa17c2913b2a09a6bfd28626e57b96c",
+    "web-angular/scripts/dependency-graph.mjs": "b0eb7459790a35d0d688548075a2985b1a0e80db06d793f0611b5ed92b2cb556",
+    "web-angular/scripts/verify-country-actions-browser.mjs": "9d1977bc8b4afa62f3ba6b9fee71e99b9249a376a0164146b5e98b7a40b80043",
+    "web-angular/src/app/app.config.ts": "a792809b627d8d92bd8534b75d6eb12cf6741576ad454bd8bc4975ed59e03544",
+    "web-angular/src/app/app.routes.shared.ts": "b08309a389adee51d8efde570324a6ab0c6a440c28531dd16087874c35649b68",
+    "web-angular/src/app/dev/boolean-preview.ts": "2b1df70c9e904f6fe52bb6acd1733a7650e59e1d2278ac53b0967bed5f6c15bb",
+    "web-angular/src/app/dev/date-preview.ts": "19b87dfe08027fd9f4d00866a81c90c3f26bff70686be612dcdac20f1e44b4fb",
+    "web-angular/src/app/dev/numeric-preview.ts": "baa19531ca84e625b045dd5b2038daf826483ddccea697a576bd67e6e2a180b8",
+    "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-editor.ts": "5a2770e1fc74066674b6b7d22c28f7736f460cff9f8be9ce2c21235b891614f7",
+    "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-read-details.ts": "90a1ef3368299b18b1397aaa92cfb643770086a7b8913ad1e5ed7b42d7177ec2",
+    "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page.spec.ts": "e07f0ea088ce4420902d1432b6b8b5526448a5d62b5dc52ec1bb9782652030f8",
+    "web-angular/src/app/modules/reference-data/geographical-information/countries/state/country-editor-state.spec.ts": "310f62e09c1e1f19d7372fdf9260ad10fcdb14ac365df1f350c59bf04915776e",
+    "web-angular/src/app/modules/reference-data/geographical-information/countries/state/country-editor-state.ts": "0944406f9e8e68200c47da008eea242b881bff2176646a5a8e03554b91692265",
+    "web-angular/src/app/modules/reference-data/geographical-information/countries/validation/country-mutation.spec.ts": "cf0a7688b6989a35386865b3563bb85be4f3512b3af4f910b3d30fbf9e3f9d20",
+    "web-angular/src/app/modules/reference-data/geographical-information/countries/validation/country-mutation.ts": "9c86ba6b04df3bda1fb110366bc7f32b66446312cc0cbf05aa6480243823a164",
+    "web-angular/src/app/modules/reporting/global-reports/components/global-report-view.spec.ts": "66f7537aee3b00ce36fae4f216ca968483e4cd99a10e17bd79a6eac83446d886",
+    "web-angular/src/app/modules/reporting/global-reports/components/global-report-view.ts": "fee2e4a07da76d3851ff387a90ef482527d50e3997f1a5d253b087ede15da6ee",
+    "web-angular/src/app/modules/reporting/global-reports/state/global-report-state.spec.ts": "399c632e23847f741fdaae6ad349193199e6a259a6b71bab898b96bd38639006",
+    "web-angular/src/app/modules/reporting/global-reports/state/global-report-state.ts": "f49513db82b14142fb67a96f028923b2c9ebf168f909694ab70e45a1cdfdaf5b",
+    "web-angular/src/app/modules/reporting/global-reports/validation/report-filter-validator.ts": "62e5c348dbe5f588d66c6808e0420f1ad432e3a53734a84541b3585ee8001882",
+    "web-angular/src/app/platform/auth/pages/login-page.html": "3c7ba306a47d95d304407643401e5d1fd7d4a5254736fa730614f9c9b7949700",
+    "web-angular/src/app/platform/auth/pages/login-page.ts": "418d9572d43948a9725e1fea171cf6486b027ef2448a3af18812d2a20fd0dfc8",
+    "web-angular/src/app/platform/auth/pages/password-request-page.spec.ts": "9b4ae22898a44dd37c165b21691bf17b65852f760bdd91fb20d3dd4cbbd4576c",
+    "web-angular/src/app/platform/auth/pages/password-request-page.ts": "dd70d14b58b5dd699a1de01cde5a135e51d23cd4d2a866e94b738bd4d4fd2b35",
+    "web-angular/src/app/platform/auth/routes.public-api.ts": "b2d4cabb666864825e6753853e6641a6284827c23752d74213b6ed20a8f860d2",
+    "web-angular/src/app/platform/auth/session.public-api.ts": "c2e23a027ceb974c14e9467b1db96522453f44d0f1cf28920c707f3c62da2170",
+    "web-angular/src/app/platform/auth/state/auth-session.spec.ts": "fa9f120314cae784775eda2c13dd704a8547ad71b80ef5ab0b276698cbc31de6",
+    "web-angular/src/app/platform/auth/state/auth-session.ts": "13f4405651c6214f807ff3d972ca30b9a329ed60ebbefdd97233bd88774cd26a",
+    "web-angular/src/app/platform/auth/validation/login-validation.ts": "1ca20812690866cf89676a1224d786b9ae78429549c4a31850f8dfee6cda6b9f",
+    "web-angular/src/app/platform/localization/provide-localization.ts": "fc7b1c0de39a1400f7b2221e9aa4d1e1900f7389f91fbd90b25b8e5ce2d6721f",
+    "web-angular/src/app/platform/localization/public-api.ts": "6ed73d018fedd538be756e3e3c1c07f0bbebd7700e83bbdfafae6071a12a11fb",
+    "web-angular/src/app/platform/localization/ui-text.pipe.ts": "3231e938ad7b32676284ed7d9adecdb581ab4a5287d21b6f6da18785bc6d1a16",
+    "web-angular/src/app/shared/localization/localization.ts": "767639002ddcfb3f287385a73d52905ddb14cf3a4b09e56928f1cba9c32373b6",
+    "web-angular/src/app/shared/localization/public-api.ts": "0a12b3404a074ebf59c095c7b4ed9bce18b9e1b630b13e972eec10721d160b8f",
+    "web-angular/src/app/shared/localization/ui-text.pipe.ts": "8192f26bbb8854672d31b93a97aa5a2d0668328871187076e7c86aa171adc565",
+    "web-angular/src/app/shared/ui/charts/chart-panel.ts": "b4a94899d143630f6a06aa5f918056661d6f36a881af9c9a51aae8dc30ec5ffb",
+    "web-angular/src/app/shared/ui/charts/chart-renderer.ts": "c90836ff37f270cb73529571d69bb22da8567238d341a1663a9014dd834ed0d4",
+    "web-angular/src/app/shared/ui/collections/card-list.ts": "fee7b2b37caca60c96f8a2a9660e691c8020fb8d21a1b4419d0488de1649b6d4",
+    "web-angular/src/app/shared/ui/collections/collection-feedback.ts": "1d2acaaa5d3d3d1fbf4540c6b738f1909bce17c6803aef82c814089592612a16",
+    "web-angular/src/app/shared/ui/collections/collection-footer.ts": "0f989cec7205a9bc28858ee3ce8104a70243ba9dff64042cdcd4ddd0749ec762",
+    "web-angular/src/app/shared/ui/collections/collection-frame.ts": "fafd5dbff904b69e6bac61dfd86b8e46e8559936708aeb54d0c83563c4faf93d",
+    "web-angular/src/app/shared/ui/collections/grid-filter-input.ts": "093655778329bacc83025a9823b2603c93d20d8bc9d1074d22b0e9e487b53909",
+    "web-angular/src/app/shared/ui/collections/my-data-grid.ts": "3777b824094180cdd9366b240027741295ba84046bd359b5c0d8ee2dca5a2f81",
+    "web-angular/src/app/shared/ui/collections/row-actions.ts": "d8fa30c8082f88f81fb04d6fc992e86f7b89dd278e5373087a0a55c0c33c2c05",
+    "web-angular/src/app/shared/ui/controls/sort-direction-button.ts": "2ede142d36c185ace78e2f0eb176e1cd99dfe580b7b24ef4d9575b19a1ca035f",
+    "web-angular/src/app/shared/ui/dialogs/error-modal-host.ts": "df84d76d59d4fc12feddb99331871df7ea008e0f005c500a0408959861cf3c89",
+    "web-angular/src/app/shared/ui/dialogs/unsaved-confirmation-host.ts": "b5a1695877fe7c857f482584979b9df3143d5a9932781e0d53fd1faa41087159",
+    "web-angular/src/app/shared/ui/documents/pdf-viewer.ts": "a000151593a0a030e71f16fb97611cd9af13daccce3900dc36664533bf6b2227",
+    "web-angular/src/app/shared/ui/feedback/notification-toast.ts": "4cb9188ef885f7246b198a58535404b06b7b77f93e8097c6dcc41435d669a6be",
+    "web-angular/src/app/shared/ui/forms/field-rules.ts": "8daf91c5bdea50745880e3acc3a530a6e4b13a85650bacd78a9599f92e1a02a9",
+    "web-angular/src/app/shared/ui/forms/fields/boolean-field.ts": "31b2f2884c49fec4f8d8102495939b5a5564aed3e83e05409c03f81e31d10e59",
+    "web-angular/src/app/shared/ui/forms/fields/date-field.ts": "7953fe831e4e4beb0f4e07da76edb48acaa23f0acfbae4062f96376898fc1e71",
+    "web-angular/src/app/shared/ui/forms/fields/numeric-field.ts": "b4cf5cb51a67ce57ed402629fc05d71187ca13d8214289db0ecc1e790365a369",
+    "web-angular/src/app/shared/ui/forms/fields/reference-field.ts": "0a31b3f2aaa070d1409581eb472c13f6535b9f0e49bd6e338b14f5817e7cb6fc",
+    "web-angular/src/app/shared/ui/forms/fields/text-field.html": "f50e56dd00ccf7c84646e15b5bb740b1201607890109ce48389172e9d984cc89",
+    "web-angular/src/app/shared/ui/forms/fields/text-field.ts": "5cd7ce124e9e8eb653096582c5997f9177511da7903ca33bdc1b70b69bca8157",
+    "web-angular/src/app/shared/ui/forms/form-close-guard.ts": "1b54de902c55535841dc88bbd8756c43ef1d6e14281bd23527dabf03d92e9ac6",
+    "web-angular/src/app/shared/ui/forms/form-container.ts": "73c9bfbb5f9d3f0add1a7dbec6df37b16bd5ddca3cb79da65466c96153608f83",
+    "web-angular/src/app/shared/ui/forms/form-field-control.ts": "702489dbdc545a3f3eee290747981693395d8460dc3710e66ec09cb665680757",
+    "web-angular/src/app/shared/ui/forms/public-api.ts": "58ce616019ef9d995d2ad06e63386dd06f1c8808a584c78824e696059153cb4a",
+    "web-angular/src/app/shared/ui/forms/signal-form.spec.ts": "f9391d66adea8e92559a72e8af3ad56383c9749c9b254df79a664cdd5588844b",
+    "web-angular/src/app/shared/ui/forms/submission-errors.spec.ts": "69fa4d6df25031e90e1544caf8c0b1fef6305a253822d89b69b2b06e11cfc16e",
+    "web-angular/src/app/shared/ui/forms/submission-errors.ts": "10c810ce0d16e0305f8a7afa3ca5a7bed3a19f2f1e6e26cc1d408ec2af6712a1",
+    "web-angular/src/app/shared/ui/forms/validation-summary.ts": "c299ed2caa3651559c65696040466f42595555be84784939120260ca51a02056",
+    "web-angular/src/app/shared/ui/layout/page-header.ts": "0cf773182c83617b12bcebc36ea84bb4b4c33d6bcd8492e6b2b08e4978b0ed7f",
+    "web-angular/src/app/shared/ui/public-api.ts": "e4469e29604e0df46e8a3775660cb53fca508695b3cb581709fd07cedb8dc83f",
+    "web-angular/src/app/shell/auth-layout.public-api.ts": "d377adb4f7b40e63d296e4da7413c5ca98bf6ff2ec02625bcf67ea4f850b73eb",
+    "web-angular/src/app/shell/layout/main-shell.html": "fd123e3081076095a67af84d5c47b65590589038c5224c85b0f0e148e9b1b721",
+    "web-angular/src/test-setup.ts": "30f7162ea9ba85df5268206d04e87166f81c8c521e4fb7d0fcc064b34dded8d0",
+    "web-angular/src/theme/calendar-locale.ts": "9a4e06d76a30e2f7bd68cd7ac56c0afa1d29a09c9ab848956cd2f8be2a17d435",
+    "web-angular/src/theme/grid-locale.ts": "295498a2b86bf3dcb82ad6ea96be7e22e757b38292eead9bfcbbf54b9f901f46",
+    "web-angular/src/theme/toast-public-api.ts": "b8c47ccdcd59ffd2adbb060c078edcf990613be8c5beadc59c58006ceec7d12b"
+  },
+  "checks": {
+    "typeScriptAppAndSpec": "passed",
+    "productionBuild": "passed with unchanged initial-size warning",
+    "initialRawKB": 608.36,
+    "initialEstimatedTransferKB": 156.67,
+    "planning": "passed with inherited education-module and erp-platform-template migration warnings",
+    "documentationRecipes": 437,
+    "primeNgMetadata": {
+      "component": "DatePicker",
+      "valid": true,
+      "issues": []
+    }
+  },
+  "browserCaseCount": 60
+}

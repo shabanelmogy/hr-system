@@ -42,34 +42,28 @@
     [form]="form"
     [title]="'dateField.chooseDate' | uiText"
     [submitLabel]="'actions.save' | uiText"
-    (validSubmit)="saved.update(increment)"
   >
     <erp-date-field
       data-testid="start"
-      [formControl]="form.controls.start"
+      [formField]="form.start"
       [label]="'auditLog.fields.StartDate' | uiText"
       [help]="'dateField.formatHelp' | uiText"
-      [readOnly]="readonly()"
-      required
       [messages]="messages()"
     />
     <erp-date-field
       data-testid="end"
-      [formControl]="form.controls.end"
+      [formField]="form.end"
       [label]="'auditLog.fields.EndDate' | uiText"
       [help]="'dateField.formatHelp' | uiText"
-      [min]="'2024-02-01'"
-      [max]="'2024-03-31'"
-      [readOnly]="readonly()"
       [messages]="messages()"
     />
   </erp-form>
   <output
     data-testid="state"
-    [attr.data-start]="form.controls.start.value"
-    [attr.data-end]="form.controls.end.value"
-    [attr.data-valid]="form.valid"
+    [attr.data-start]="form.start().value()"
+    [attr.data-end]="form.end().value()"
+    [attr.data-valid]="form().valid()"
     [attr.data-saved]="saved()"
-    >{{ form.controls.start.value }} · {{ form.controls.end.value }}</output
+    >{{ form.start().value() }} · {{ form.end().value() }}</output
   >
 </main>

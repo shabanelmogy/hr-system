@@ -42,51 +42,45 @@
     [form]="form"
     [title]="'booleanField.title' | uiText"
     [submitLabel]="'actions.save' | uiText"
-    (validSubmit)="save()"
   >
     <erp-text-field
       data-testid="name"
-      [formControl]="form.controls.name"
+      [formField]="form.name"
       [label]="'general.nameEn' | uiText"
-      required
       [messages]="messages()"
     />
     <erp-boolean-field
       data-testid="checkbox"
-      [formControl]="form.controls.checkbox"
+      [formField]="form.checkbox"
       [kind]="swapped() ? 'switch' : 'checkbox'"
       [label]="'booleanField.checkbox' | uiText"
       [help]="'booleanField.help' | uiText"
-      [readOnly]="readonly()"
       [messages]="messages()"
     />
     <erp-boolean-field
       data-testid="switch"
-      [formControl]="form.controls.switch"
+      [formField]="form.switch"
       [kind]="swapped() ? 'checkbox' : 'switch'"
       [label]="'booleanField.switch' | uiText"
       [help]="'booleanField.help' | uiText"
-      [readOnly]="readonly()"
       [messages]="messages()"
     />
     <erp-boolean-field
       data-testid="consent"
-      [formControl]="form.controls.consent"
+      [formField]="form.consent"
       [label]="'booleanField.requiredLabel' | uiText"
       [help]="'booleanField.requiredHelp' | uiText"
-      [readOnly]="readonly()"
-      required
       [messages]="messages()"
     />
   </erp-form>
   <output
     data-testid="state"
-    [attr.data-checkbox]="form.controls.checkbox.value"
-    [attr.data-switch]="form.controls.switch.value"
-    [attr.data-consent]="form.controls.consent.value"
+    [attr.data-checkbox]="form.checkbox().value()"
+    [attr.data-switch]="form.switch().value()"
+    [attr.data-consent]="form.consent().value()"
     [attr.data-saved]="saved()"
     [attr.data-changes]="changes()"
     [attr.data-snapshot]="snapshot()"
-    >{{ form.getRawValue() | json }}</output
+    >{{ form().value() | json }}</output
   >
 </main>

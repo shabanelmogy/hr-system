@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { UnsavedChanges } from '../../../data/unsaved-public-api';
-import { UiTextPipe } from '../../../../platform/localization/public-api';
+import { UiTextPipe } from '../../../localization/public-api';
 import { ConfirmationDialog } from '../confirmation-dialog/confirmation-dialog';
 
 @Component({

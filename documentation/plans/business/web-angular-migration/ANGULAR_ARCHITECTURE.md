@@ -186,8 +186,13 @@ FOLLOW-003 after the observed metadata/media/security gaps are reconciled.
 The [assessment report](../../../modules/platform/features/angular-api-contract-generation-proof/IMPLEMENTATION_REPORT.md)
 owns the actual hosted snapshot/provenance, dimension matrix and reproducible proof.
 
-- One authoritative typed Reactive Form per editor; child sections receive typed
-  controls or documented nested groups. Do not mirror every value into Signals.
+- One authoritative native Signal Forms model/FieldTree per editor (D07, approved
+  2026-11-04). Child sections receive typed subtrees. Features own schemas and
+  business submission; do not mirror the tree into FormGroup or another store.
+- Option B supplies shared controls, exact-value schema helpers, accessible
+  summaries/focus and server-field error translation. No centralized Form Engine
+  or JSON renderer. Retained technical Reactive Forms fixtures/internal vendor
+  FormControls are compatibility adapters, not the new feature form strategy.
 - Feature validators are reusable and live in validation; generic primitives may
   be shared. Preserve server-authoritative rules and exact field-error paths.
 - Keep Save/Create available for validation; pending duplicates/read-only/denied
@@ -199,9 +204,9 @@ owns the actual hosted snapshot/provenance, dimension matrix and reproducible pr
   registry and asynchronous decision flow, including pending saves.
 - Repeaters use dedicated add/edit/remove/reorder controls and stable child identity;
   edit loading/view mode/mock generation preserve structured data.
-- Asynchronous load, server errors, nested arrays and status display are explicitly
-  verified under Zoneless; Angular documentation notes model APIs alone do not
-  schedule a component check.
+- Native signals notify zoneless consumers. Retained Reactive Forms compatibility
+  controls must bridge their events explicitly. Verify asynchronous load, server
+  errors, nested arrays and status display for the actual owner.
 
 SIG-05 adds isolated child-draft commit/cancel and asynchronous confirmation race
 acceptance. SIG-04 applies at the first attachment consumer: file ownership and
@@ -350,3 +355,8 @@ existing Next/native/API implementations are source evidence only and do not
 reinstate that target. Current Angular reporting uses managed Crystal/PDF. Other
 reporting manager, permissions, binary transport and PDF lifecycle requirements
 remain governed by their owning contracts. No ActiveReports runtime placeholder.
+
+
+## Component composition maintenance — D41
+
+Use the approved shared/internal/domain split in [ANGULAR_COMPONENT_COMPOSITION](../../../guides/web/architecture/ANGULAR_COMPONENT_COMPOSITION.md). Repeated generic interactions belong in Shared; internal dialog/state helpers are not new root public exports. Domain card/dialog composition stays within its feature and consumes existing shared shells. Preserve owner-scoped providers, typed controlled events, projection slots and lazy entry boundaries. Moving templates/styles does not imply a runtime performance gain. No feature/form engine or new business capability is introduced.

@@ -9,7 +9,7 @@ import {
   signal,
   untracked,
 } from '@angular/core';
-import { UiTextPipe } from '../../../../platform/localization/public-api';
+import { UiTextPipe } from '../../../localization/public-api';
 import { ConfirmationDialog } from '../../dialogs/confirmation-dialog/confirmation-dialog';
 import { LocalCloseController, type CloseConsent } from '../local-close-controller';
 

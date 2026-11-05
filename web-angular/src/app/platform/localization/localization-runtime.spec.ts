@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { uiCatalogVersion } from './catalog.generated';
 import { LocalizationRuntime } from './localization-runtime';
-import type { LocalizationIdentity } from './localization.types';
+import type { CompanyRuntime, LocalizationIdentity, UiOverride } from './localization.types';
 
 const identity: LocalizationIdentity = {
   userId: 'u',
@@ -10,7 +10,7 @@ const identity: LocalizationIdentity = {
   roles: ['user'],
   permissions: [],
 };
-const bundle = (overrides: unknown[] = []) => ({
+const bundle = (overrides: UiOverride[] = []): CompanyRuntime => ({
   tenantId: 't',
   companyId: 1,
   defaultLanguage: 'ar',
@@ -18,7 +18,7 @@ const bundle = (overrides: unknown[] = []) => ({
   catalogVersion: uiCatalogVersion,
   overrides,
 });
-const entry = (value: string, key = 'general.mainTitle', namespace = 'core') => ({
+const entry = (value: string, key = 'general.mainTitle', namespace = 'core'): UiOverride => ({
   namespace,
   key,
   language: 'en',
@@ -56,13 +56,12 @@ describe('SQL-backed UI translation runtime adapter', () => {
     expect(runtime.language()).toBe('ar');
   });
 
-  it('rejects wrong company/catalog and malformed responses', () => {
+  it('rejects validated bundles for the wrong company or catalog', () => {
     const generation = runtime.transition(identity);
     expect(runtime.applyCompany({ ...bundle(), companyId: 2 }, generation)).toBe(false);
     expect(runtime.applyCompany({ ...bundle(), catalogVersion: 'different' }, generation)).toBe(
       false,
     );
-    expect(() => runtime.applyCompany({ overrides: [] }, generation)).toThrow();
   });
 
   it('retains compatible overrides when their lazy namespace is registered later', async () => {

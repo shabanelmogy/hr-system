@@ -20,7 +20,7 @@ import { DatePicker } from 'primeng/datepicker';
 import { InputText } from 'primeng/inputtext';
 import { ButtonDirective } from 'primeng/button';
 import { Times } from '@primeicons/angular/times';
-import { UiTextPipe } from '../../../../../platform/localization/public-api';
+import { UiTextPipe } from '../../../../localization/public-api';
 import { CalendarLocale } from '../../../../../../theme/calendar-public-api';
 import { PopoverPanel } from '../../../overlays/popover-panel/popover-panel';
 import { FormFieldControl } from '../../form-field-control';
@@ -50,8 +50,12 @@ import {
   styleUrl: '../text-field/text-field.scss',
 })
 export class DateField extends TextField implements OnDestroy {
-  readonly min = input(firstDateOnly);
-  readonly max = input(lastDateOnly);
+  readonly min = input(firstDateOnly, {
+    transform: (value: string | undefined) => value ?? firstDateOnly,
+  });
+  readonly max = input(lastDateOnly, {
+    transform: (value: string | undefined) => value ?? lastDateOnly,
+  });
   private readonly calendar = viewChild<PopoverPanel>('calendar');
   private owner: AbstractControl | null = null;
   private readonly validator: ValidatorFn = (control) =>
@@ -103,11 +107,11 @@ export class DateField extends TextField implements OnDestroy {
       });
     });
     effect(() => {
-      if (this.disabled() || this.readOnly()) untracked(() => this.calendar()?.close());
+      if (this.isDisabled() || this.isReadOnly()) untracked(() => this.calendar()?.close());
     });
     effect(() => {
       this.calendarControl.setValue(dateOnlyToLocal(this.value()), { emitEvent: false });
-      if (this.disabled() || this.readOnly() || this.boundsInvalid())
+      if (this.isDisabled() || this.isReadOnly() || this.boundsInvalid())
         this.calendarControl.disable({ emitEvent: false });
       else this.calendarControl.enable({ emitEvent: false });
     });
@@ -117,7 +121,7 @@ export class DateField extends TextField implements OnDestroy {
   }
   override ngDoCheck() {
     super.ngDoCheck();
-    const control = this.ngControl?.control ?? null;
+    const control = this.legacyControl();
     if (control === this.owner) return;
     this.detach();
     this.owner = control;
@@ -128,6 +132,10 @@ export class DateField extends TextField implements OnDestroy {
   }
   override writeValue(value: unknown) {
     super.writeValue(value);
+    this.calendar()?.close();
+  }
+  override reset() {
+    super.reset();
     this.calendar()?.close();
   }
   override describedBy() {
@@ -147,16 +155,17 @@ export class DateField extends TextField implements OnDestroy {
     super.onInput(event);
   }
   override clear() {
-    if (this.disabled() || this.readOnly()) return;
+    if (this.isDisabled() || this.isReadOnly()) return;
     super.clear();
     this.calendar()?.close();
   }
   override error(): string | null {
     const error = super.error(),
-      control = this.ngControl?.control;
-    if (!error || !control) return error;
-    if (control.errors?.['server']) return error;
-    const key = Object.keys(control.errors ?? {})[0];
+      control = this.legacyControl();
+    if (!error) return error;
+    if (control?.errors?.['server'] || this.errors().some((error) => error.kind === 'server'))
+      return error;
+    const key = control ? Object.keys(control.errors ?? {})[0] : this.errors()[0]?.kind;
     if (!key || this.messages()[key]) return error;
     if (key === 'dateOnly') return this.runtime.translate('validation.invalidDate');
     if (key === 'dateBounds') return this.runtime.translate('dateField.invalidBounds');
@@ -171,8 +180,8 @@ export class DateField extends TextField implements OnDestroy {
     const date = localToDateOnly(value);
     if (
       date === null ||
-      this.disabled() ||
-      this.readOnly() ||
+      this.isDisabled() ||
+      this.isReadOnly() ||
       this.manualOnly() ||
       date < '0100-01-01' ||
       dateOnlyErrors(date, this.min(), this.max())

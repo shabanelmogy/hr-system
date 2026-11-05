@@ -23,8 +23,8 @@
       [attr.dir]="direction()"
       [attr.maxlength]="maxLength()"
       [placeholder]="placeholder()"
-      [disabled]="disabled()"
-      [readOnly]="readOnly()"
+      [disabled]="isDisabled()"
+      [readOnly]="isReadOnly()"
       [attr.autocomplete]="autocomplete()"
       [attr.name]="name() || id"
       [attr.aria-required]="required() ? 'true' : null"
@@ -47,8 +47,8 @@
       [attr.dir]="direction()"
       [attr.maxlength]="maxLength()"
       [placeholder]="placeholder()"
-      [disabled]="disabled()"
-      [readOnly]="readOnly()"
+      [disabled]="isDisabled()"
+      [readOnly]="isReadOnly()"
       [attr.autocomplete]="autocomplete()"
       [attr.name]="name() || id"
       [attr.aria-required]="required() ? 'true' : null"
@@ -83,7 +83,9 @@
       }
     </span>
   }
-  @if (showClear() && (value() || clearVisibility() === 'always') && !readOnly() && !disabled()) {
+  @if (
+    showClear() && (value() || clearVisibility() === 'always') && !isReadOnly() && !isDisabled()
+  ) {
     <button
       pButton
       [iconOnly]="true"
@@ -104,7 +106,7 @@
       variant="text"
       type="button"
       class="field-action reveal"
-      [disabled]="disabled()"
+      [disabled]="isDisabled()"
       [attr.aria-pressed]="revealed()"
       [attr.aria-label]="(revealed() ? 'hidePassword' : 'showPassword') | uiText"
       (click)="revealed.set(!revealed())"

@@ -1,7 +1,7 @@
 import { Component, computed, inject, input } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 import { Paginator } from 'primeng/paginator';
-import { LocalizationRuntime, UiTextPipe } from '../../../../platform/localization/public-api';
+import { UI_LOCALIZATION, UiTextPipe } from '../../../localization/public-api';
 import { GridLocale } from '../../../../../theme/grid-public-api';
 import { ActionButton } from '../../buttons/public-api';
 import { OptionSelect } from '../../controls/option-select/option-select';
@@ -21,7 +21,7 @@ export class CollectionFooter<T> {
   readonly Math = Math;
   readonly controller = input.required<CollectionController<T>>();
   readonly pageSizes = input<readonly number[]>(collectionPageSizes);
-  readonly locale = inject(LocalizationRuntime);
+  readonly locale = inject(UI_LOCALIZATION);
   readonly recordActions: readonly { value: RecordAction; label: string; icon: string }[] = [
     { value: 'first', label: 'pagination.goToFirstRecord', icon: '«' },
     { value: 'previous', label: 'pagination.goToPreviousRecord', icon: '‹' },

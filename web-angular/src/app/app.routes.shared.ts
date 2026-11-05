@@ -1,21 +1,10 @@
 import type { Routes } from '@angular/router';
 import { sessionGuard } from './platform/auth/public-api';
+import { publicAuthRoutes } from './platform/auth/routes.public-api';
 
 export const applicationRoutes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
-  {
-    path: 'login',
-    title: 'Login | ERP System',
-    loadComponent: () =>
-      import('./platform/auth/pages/login-page/login-page').then((module) => module.LoginPage),
-  },
-  {
-    path: 'forgetPassword',
-    loadComponent: () =>
-      import('./platform/auth/pages/password-request-page/password-request-page').then(
-        (module) => module.PasswordRequestPage,
-      ),
-  },
+  ...publicAuthRoutes,
   {
     path: '',
     canActivate: [sessionGuard],

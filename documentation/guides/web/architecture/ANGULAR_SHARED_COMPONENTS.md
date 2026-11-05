@@ -57,6 +57,14 @@ responsibilities, not a generic components/services/utils collection. Future
 dialogs/feedback/layout/collections get a folder only when an authorized reusable
 implementation exists; do not scaffold empty trees.
 
+Bootstrap consumers use `shared/data/navigation.public-api.ts` for unsaved state,
+navigation lifetime and guards; unrelated read/collection utilities remain lazy.
+Platform text/bootstrap uses `platform/localization/presentation.public-api.ts`.
+The existing `public-api.ts` entries remain compatible for feature consumers.
+Wire schemas live separately from type-only contracts; unknown responses are
+validated by their HTTP owner before presentation receives typed data. D40 source
+and build evidence: angular-localization-foundation/STRUCTURE_PERFORMANCE_REPORT.md.
+
 ## Existing components
 
 Clean Code hardening retains MyDataGrid as the public collection shell. Its
@@ -74,40 +82,46 @@ record-feedback decisions and criteria normalizers retain their existing owners.
 | applyServerFieldErrors | Exact nested dot/index field matching, preserve client errors, return unknown paths | API-specific error parsing and unmatched form feedback |
 | clearServerFieldError | Remove only server error without discarding other validator errors | No business conflict/forced replay decision |
 
-All data-entry validation belongs to typed Angular Reactive Forms, as decided in
-ANGULAR_ARCHITECTURE section 5. React-specific react-hook-form/zodResolver rules
-describe the retained Next client. Do not add a second validation engine to the
-Angular field. required is an accessible visual marker, not an implicit validator.
-For numeric/date/select/structured data, wait for the proper shared adapter;
-TextField deliberately accepts text/email/password only.
+## Current form contract — D07/D39, 2026-11-04
 
-## Form composition contract
+Use Angular 22 Signal Forms for feature models, typed validation schemas, nested
+objects, arrays, conditional/cross-field rules and submission. Bind shared fields
+with `[formField]`. Angular owns value, touched/dirty/errors and submitting state;
+do not create another validation/dependency engine. Exact decimal strings and
+invariant date-only strings use shared `validateNumericText` / `validateDateOnly`
+inside the native schema. Their native MIN/MAX metadata drives shared UI bounds.
 
-Bind the feature's typed control using [formControl] on erp-text-field. The caller
-supplies translated label/help/messages and keeps the primary submit available
-while invalid. FormContainer marks touched, shows field messages and error-summary
-links and focuses the first rendered invalid field on submit. Inputs carry
-aria-required/invalid/describedby; native constraint validation is disabled.
+Shared `FormContainer` delegates to the form's configured native submission action.
+The action awaits the actual API operation, uses `ignoreValidators: 'none'` to
+block pending validation, and maps owned backend field errors with
+`mapServerFieldErrors(form, fields, submittedSnapshot)`. Angular clears those
+submission errors when their field changes. General network/command failures use
+owner feedback, preserving unchanged retry and explicit uncertain-write recovery.
+The native submit boolean describes validation/action completion; domain success
+comes from the owner's success result/event. It is not persistence proof.
 
-Content is projected into the shared form. Optional formHeader and formActions
-slots add genuinely feature-specific content. FormContainer owns the primary
-submit ActionButton. It does not own a Dialog, navigate away, call a business API,
-inspect permissions or make a discard decision. readOnly blocks submission;
-readOnly must also be passed to fields where text must be inspectable without edit.
-The caller owns actual pending-save state and supplies it immediately on validSubmit.
-The shared form guards the render interval before that input arrives.
+Save stays available when invalid. The shared shell owns novalidate, inline
+messages, summary links and invalid focus. Native focus bindings also reach fields
+inside child components. For such nested fields, schemas must provide translated,
+self-contained messages because a parent content query cannot read their labels.
+Root submission rejections appear in the summary; use them for real form-level
+validation, never a transient network failure that must allow unchanged retry.
 
-Server messages identified by a field path go through applyServerFieldErrors.
-Unknown paths return to the caller for visible feedback; do not silently swallow
-them or turn a domain conflict into a field validator. A local edit removes that
-control's server message only. Successful save/reset remains caller-owned.
+Text/email/password/multiline, numeric, date, boolean and reference controls expose
+native FormValueControl models/state/touch/focus/reset. PrimeNG adaptation and its
+internal FormControl, where needed, stay inside Shared. Null remains valid for
+an absent reference ID; exact-number and date-only contracts remain strings.
+Readonly/disabled/required/maxLength/min/max are supplied by the native schema;
+do not bind reserved inputs alongside `[formField]`.
 
-Angular Reactive Form mutations do not automatically notify zoneless views.
-TextField observes its bound control events and notifies Angular; FormContainer
-observes form events for summary/state. A caller replacing a FormControl or dynamic
-control tree must notify its own template (signal/observable/markForCheck), so the
-new control binding reaches the shared field. This is not a duplicate value store.
-Tests verify natural scheduled rendering without fixture.detectChanges.
+Compatibility: existing technical Reactive Forms harnesses can still use CVA,
+`validSubmit`, applyServerFieldErrors/clearServerFieldError, and event bridges.
+That retained interface does not authorize new feature FormGroups. Native bindings
+must not register the legacy CVA on Angular's compatibility NgControl: doing so
+would lose native metadata, focus and reset behavior. No second model is created.
+
+See [the implementation and CRUD pattern](ANGULAR_SIGNAL_FORMS.md). The historical
+component/acceptance sections below retain their original technical scope.
 
 ## Boundaries and remaining acceptance
 
@@ -117,9 +131,10 @@ slots needed by the actual consumer; the login page never recreates their lifecy
 
 check:architecture uses the TypeScript AST to reject raw PrimeNG imports,
 aliases/dynamic/re-export bypasses, inline raw form/input templates and imports of
-shared internal files from feature code. It has six focused regression cases.
-Inline template tag checks are a bounded policy scan, not a full external-template
-architecture proof. Extend it with tests as real feature templates are introduced.
+shared internal files from feature code. It now has 16 regression cases and resolves configured TypeScript aliases, checks
+owner public APIs, external templates and eager value cycles (type-only/lazy
+edges are treated separately). This is static dependency/policy evidence, not
+a runtime integration proof.
 
 Current two technical fixtures at /dev/forms verify composition without business
 data or auth. They are absent from the production route file and bundle. Shared
@@ -787,3 +802,10 @@ for related actions; keep unrelated actions outside. No custom interaction or
 button replacement. Existing MyDataGrid toolbarContent and SurfaceCard footerTemplate
 own placement. Verified in global-crystal-template-manager section39: 532 Angular
 tests and six EN/AR production-fixture browser cases including RTL joined edges.
+
+
+## Component composition maintenance — D41
+
+Shared AppearancePreferences composes existing OptionSelect/ActionButton with controlled typed language/mode inputs and events. AuthLayout/MainShell retain preference writes. CollectionOptionsDialog is internal to CollectionFrame; createGridPresentation is internal per-grid state. MyDataGrid public API remains stable. Countries card header/content, read-detail dialog and lifecycle confirmation remain feature-owned; page-scoped providers remain at the page. GlobalReportView uses external template/styles.
+
+The reusable policy, extraction decisions, CSS/projection/provider boundaries, source examples and regression requirements are in [Angular component composition](ANGULAR_COMPONENT_COMPOSITION.md). Current evidence: [D41 report](../../../modules/platform/features/angular-collection-foundation/COMPONENT_COMPOSITION_REPORT.md).

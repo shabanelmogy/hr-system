@@ -1,4 +1,13 @@
-import { FormControl, FormGroup, type ValidationErrors, type ValidatorFn } from '@angular/forms';
+import { signal } from '@angular/core';
+import {
+  form,
+  validate,
+  metadata,
+  MAX_LENGTH,
+  REQUIRED,
+  schema,
+  type FormOptions,
+} from '@angular/forms/signals';
 import * as z from 'zod/mini';
 
 export const countryMutationFields = [
@@ -47,7 +56,7 @@ const printable = /[\p{Cc}\p{Cf}\p{Zl}\p{Zp}]/u;
 export function countryFieldError(
   field: CountryMutationField,
   input: unknown,
-): ValidationErrors | null {
+): Readonly<Record<string, unknown>> | null {
   if (typeof input !== 'string') return { pattern: true };
   const value = input.trim().normalize('NFC');
   if (field === 'nameAr' || field === 'nameEn') {
@@ -69,21 +78,24 @@ export function countryFieldError(
         : /^[a-z]{3}$/i.test(value);
   return valid ? null : { pattern: true };
 }
-export const countryFieldValidator =
-  (field: CountryMutationField): ValidatorFn =>
-  (control) =>
-    countryFieldError(field, control.value);
-export function createCountryForm() {
-  const control = (field: CountryMutationField) =>
-    new FormControl('', { nonNullable: true, validators: [countryFieldValidator(field)] });
-  return new FormGroup({
-    nameAr: control('nameAr'),
-    nameEn: control('nameEn'),
-    alpha2Code: control('alpha2Code'),
-    alpha3Code: control('alpha3Code'),
-    phoneCode: control('phoneCode'),
-    currencyCode: control('currencyCode'),
-  });
+export const countrySchema = schema<CountryDraft>((path) => {
+  for (const field of countryMutationFields) {
+    metadata(path[field], MAX_LENGTH, () => countryFieldLimits[field]);
+    metadata(path[field], REQUIRED, () => field === 'nameAr' || field === 'nameEn');
+  }
+  for (const field of countryMutationFields)
+    validate(path[field], ({ value }) => {
+      const errors = countryFieldError(field, value());
+      return errors
+        ? Object.entries(errors).map(([kind, details]) => ({
+            kind,
+            ...(typeof details === 'object' && details !== null ? details : {}),
+          }))
+        : undefined;
+    });
+});
+export function createCountryForm(options: FormOptions<CountryDraft> = {}) {
+  return form(signal({ ...emptyCountryDraft }), countrySchema, options);
 }
 export function normalizeCountryDraft(input: CountryDraft): CountryMutation {
   const name = (value: string) => value.trim().normalize('NFC'),

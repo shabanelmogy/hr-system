@@ -1,6 +1,70 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { inspectSource, inspectTemplate } from './architecture-rules.mjs';
+import { inspectProject } from './dependency-rules.mjs';
+
+test('barrel cycles are rejected, while type-only and lazy edges are independent', () => {
+  const source = new Map([
+    ['src/app/platform/auth/session.public-api.ts', 'export { Page } from "./pages/page";'],
+    [
+      'src/app/platform/auth/pages/page.ts',
+      'import { State } from "../session.public-api"; export class Page {}',
+    ],
+  ]);
+  assert.ok(inspectProject(source).some((reason) => reason.includes('circular value dependency')));
+  source.set(
+    'src/app/platform/auth/pages/page.ts',
+    'import type { State } from "../session.public-api"; export class Page {}',
+  );
+  assert.deepEqual(inspectProject(source), []);
+  source.set(
+    'src/app/platform/auth/pages/page.ts',
+    'const load = () => import("../session.public-api"); export class Page {}',
+  );
+  assert.deepEqual(inspectProject(source), []);
+});
+
+test('configured aliases cannot bypass ownership rules', () => {
+  const sources = new Map([
+    ['src/app/shared/ui/example.ts', 'import { State } from "@auth/state";'],
+    ['src/app/platform/auth/state.ts', 'export class State {}'],
+  ]);
+  assert.ok(
+    inspectProject(sources, {
+      paths: { '@auth/*': ['./src/app/platform/auth/*'] },
+      pathsBasePath: process.cwd(),
+    }).some((reason) => reason.includes('lower layer')),
+  );
+});
+
+test('owner dependencies cannot enter another owner internals or reverse layers', () => {
+  for (const [file, source] of [
+    [
+      'src/app/shared/ui/example.ts',
+      'import { Country } from "../../../modules/reference-data/state/country";',
+    ],
+    [
+      'src/app/modules/accounting/example.ts',
+      'import { Country } from "../reference-data/services/country-service";',
+    ],
+    [
+      'src/app/platform/auth/example.ts',
+      'import { Country } from "../../modules/reference-data/services/country-service";',
+    ],
+    [
+      'src/theme/example.ts',
+      'import { AuthSession } from "../app/platform/auth/session.public-api";',
+    ],
+  ])
+    assert.ok(inspectSource(file, source).length, file);
+});
+
+test('external feature forms obey the same shared field policy as inline forms', () => {
+  assert.ok(
+    inspectTemplate('<form><input pInputText /><textarea /></form>', 'src/app/modules/example.html')
+      .length,
+  );
+});
 
 test('direct browser requests cannot bypass the service owner', () => {
   for (const source of [

@@ -3,6 +3,7 @@ import { Component, signal, viewChild } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { CollectionFrame } from './collection-frame/collection-frame';
+import { CollectionOptionsDialog } from './collection-options-dialog/collection-options-dialog';
 import { ContextMenuPanel } from '../overlays/context-menu-panel/context-menu-panel';
 import { CollectionFooter } from './collection-footer/collection-footer';
 import { createCollectionController } from './collection-controller';
@@ -246,20 +247,22 @@ describe('Real shared Table capability composition', () => {
       { field: 'name', operator: 'and', constraints: [{ matchMode: 'contains', value: 'First' }] },
     ];
     owner.filters.set(filters);
-    frame.changeDensity('compact');
-    frame.toggleColumn('name', false);
-    frame.pin('name', 'start');
+    const dialog = fixture.debugElement.query(By.directive(CollectionOptionsDialog))
+      .componentInstance as CollectionOptionsDialog<Row>;
+    dialog.changeDensity('compact');
+    dialog.toggleColumn('name', false);
+    dialog.pin('name', 'start');
     grid.moveColumn({ key: 'name', direction: -1 });
     await fixture.whenStable();
     expect(grid.rowHeight()).toBe(36);
     expect(grid.visibleKeys()).toEqual(['id']);
     expect(grid.pins()).toEqual({ name: 'start' });
     expect(frame.columns().map((column) => column.key)).toEqual(['name', 'id']);
-    frame.columnSearch.set('NAME');
-    expect(frame.optionColumns().map((column) => column.key)).toEqual(['name']);
-    frame.resetOptions();
+    dialog.columnSearch.set('NAME');
+    expect(dialog.optionColumns().map((column) => column.key)).toEqual(['name']);
+    dialog.resetOptions();
     await fixture.whenStable();
-    expect(frame.columnSearch()).toBe('');
+    expect(dialog.columnSearch()).toBe('');
     expect(grid.rowHeight()).toBe(52);
     expect(grid.visibleKeys()).toEqual(['id', 'name']);
     expect(grid.pins()).toEqual({});

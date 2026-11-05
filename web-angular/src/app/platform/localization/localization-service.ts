@@ -5,6 +5,7 @@ import { firstValueFrom, Subject, takeUntil, tap, timeout } from 'rxjs';
 import { ERP_API_ORIGIN } from '../../config/api-origin';
 import { uiCatalogVersion } from './catalog.generated';
 import { LocalizationRuntime } from './localization-runtime';
+import { companyRuntimeSchema, systemRuntimeSchema } from './localization.schemas';
 import type {
   LocalizationIdentity,
   LocalizationTarget,
@@ -77,8 +78,8 @@ export class LocalizationService {
         return false;
       const applied =
         target === 'system'
-          ? this.runtime.applySystem(value, generation)
-          : this.runtime.applyCompany(value, generation);
+          ? this.runtime.applySystem(systemRuntimeSchema.parse(value), generation)
+          : this.runtime.applyCompany(companyRuntimeSchema.parse(value), generation);
       if (generation === this.runtime.currentGeneration()) {
         this.failed.set(!applied);
         if (!applied) this.runtime.clearOverrides(generation);

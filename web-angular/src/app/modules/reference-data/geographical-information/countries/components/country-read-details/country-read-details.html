@@ -20,40 +20,28 @@
     />
   </div>
   <div class="names">
-    <erp-text-field
-      [formControl]="form.controls.nameAr"
-      [label]="'general.nameAr' | uiText"
-      [readOnly]="true"
-    />
-    <erp-text-field
-      [formControl]="form.controls.nameEn"
-      [label]="'general.nameEn' | uiText"
-      [readOnly]="true"
-    />
+    <erp-text-field [formField]="form.nameAr" [label]="'general.nameAr' | uiText" />
+    <erp-text-field [formField]="form.nameEn" [label]="'general.nameEn' | uiText" />
   </div>
   <div class="codes">
     <erp-text-field
-      [formControl]="form.controls.alpha2Code"
+      [formField]="form.alpha2Code"
       [label]="'countries.alpha2Code' | uiText: 'reference-countries'"
-      [readOnly]="true"
       textDirection="ltr"
     />
     <erp-text-field
-      [formControl]="form.controls.alpha3Code"
+      [formField]="form.alpha3Code"
       [label]="'countries.alpha3Code' | uiText: 'reference-countries'"
-      [readOnly]="true"
       textDirection="ltr"
     />
     <erp-text-field
-      [formControl]="form.controls.phoneCode"
+      [formField]="form.phoneCode"
       [label]="'countries.phoneCode' | uiText: 'reference-countries'"
-      [readOnly]="true"
       textDirection="ltr"
     />
     <erp-text-field
-      [formControl]="form.controls.currencyCode"
+      [formField]="form.currencyCode"
       [label]="'countries.currencyCode' | uiText: 'reference-countries'"
-      [readOnly]="true"
       textDirection="ltr"
     />
   </div>

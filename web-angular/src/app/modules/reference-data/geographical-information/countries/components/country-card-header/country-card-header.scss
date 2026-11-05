@@ -1,0 +1,40 @@
+:host {
+  display: contents;
+}
+.card-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+}
+.card-heading > erp-status-badge {
+  position: absolute;
+  inset-block-start: 12px;
+  inset-inline-end: 12px;
+}
+.card-heading div {
+  min-width: 0;
+}
+h2 {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--primary);
+}
+.card-heading p {
+  margin: 4px 0 16px;
+  color: var(--muted-foreground);
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.chips {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin-block-end: 12px;
+}

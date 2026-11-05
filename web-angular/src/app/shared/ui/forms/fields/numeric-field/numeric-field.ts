@@ -4,7 +4,7 @@ import { InputText } from 'primeng/inputtext';
 import { Textarea } from 'primeng/textarea';
 import { ButtonDirective } from 'primeng/button';
 import { Times } from '@primeicons/angular/times';
-import { UiTextPipe } from '../../../../../platform/localization/public-api';
+import { UiTextPipe } from '../../../../localization/public-api';
 import { FormFieldControl } from '../../form-field-control';
 import { TextField } from '../text-field/text-field';
 import { CharacterCountBadge } from '../character-count-badge/character-count-badge';
@@ -26,8 +26,8 @@ import {
 })
 export class NumericField extends TextField implements OnDestroy {
   readonly mode = input<'decimal' | 'integer'>('decimal');
-  readonly min = input<string | null>(null);
-  readonly max = input<string | null>(null);
+  readonly min = input<string | null | undefined>(null);
+  readonly max = input<string | null | undefined>(null);
   readonly maxIntegerDigits = input<number | null>(null);
   readonly maxFractionDigits = input<number | null>(null);
   private owner: AbstractControl | null = null;
@@ -45,8 +45,8 @@ export class NumericField extends TextField implements OnDestroy {
   private options(): NumericOptions {
     return {
       mode: this.mode(),
-      min: this.min(),
-      max: this.max(),
+      min: this.min() ?? null,
+      max: this.max() ?? null,
       maxIntegerDigits: this.maxIntegerDigits(),
       maxFractionDigits: this.maxFractionDigits(),
     };
@@ -62,7 +62,7 @@ export class NumericField extends TextField implements OnDestroy {
   }
   override ngDoCheck() {
     super.ngDoCheck();
-    const control = this.ngControl?.control ?? null;
+    const control = this.legacyControl();
     if (control === this.owner) return;
     this.detach();
     this.owner = control;
@@ -72,19 +72,24 @@ export class NumericField extends TextField implements OnDestroy {
     }
   }
   override onInput(event: Event) {
-    if (this.disabled() || this.readOnly()) return;
+    if (this.isDisabled() || this.isReadOnly()) return;
     if (!this.composing && event.target instanceof HTMLInputElement)
       event.target.value = normalizeNumericText(event.target.value);
     super.onInput(event);
   }
   override clear() {
-    if (!this.disabled() && !this.readOnly()) super.clear();
+    if (!this.isDisabled() && !this.isReadOnly()) super.clear();
   }
   override error(): string | null {
     const error = super.error(),
-      control = this.ngControl?.control;
-    if (!error || !control || control.errors?.['server']) return error;
-    const key = Object.keys(control.errors ?? {})[0];
+      control = this.legacyControl();
+    if (
+      !error ||
+      control?.errors?.['server'] ||
+      this.errors().some((error) => error.kind === 'server')
+    )
+      return error;
+    const key = control ? Object.keys(control.errors ?? {})[0] : this.errors()[0]?.kind;
     if (!key || this.messages()[key]) return error;
     const captions: Record<string, string> = {
       numericText: 'invalid',
@@ -95,11 +100,21 @@ export class NumericField extends TextField implements OnDestroy {
       numericConfig: 'configuration',
       numericCapacity: 'capacity',
     };
+    const candidate: unknown =
+      control?.errors?.[key] ?? this.errors().find((error) => error.kind === key);
+    const detail =
+      typeof candidate === 'object' && candidate !== null
+        ? (candidate as Record<string, unknown>)
+        : {};
     return captions[key]
       ? this.runtime.translate(`numericField.${captions[key]}`, 'core', {
-          digits: key === 'numericScale' ? this.maxFractionDigits() : this.maxIntegerDigits(),
-          min: this.min() ?? '−∞',
-          max: key === 'numericCapacity' ? numericTextCapacity : (this.max() ?? '∞'),
+          digits:
+            detail['digits'] ??
+            (key === 'numericScale' ? this.maxFractionDigits() : this.maxIntegerDigits()),
+          min: detail['min'] ?? this.min() ?? '−∞',
+          max:
+            detail['max'] ??
+            (key === 'numericCapacity' ? numericTextCapacity : (this.max() ?? '∞')),
         })
       : error;
   }

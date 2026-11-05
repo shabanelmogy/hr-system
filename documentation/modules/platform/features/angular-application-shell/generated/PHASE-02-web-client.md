@@ -56,14 +56,14 @@ Regenerate feature-scoped packets; Phase 06 must be Verified before education.
 | angular-application-shell-master | 3 | `f2aacdc73cc17945bc17eb5c69923fbdf857d48106aba97f6953101712ccc647` |
 | angular-application-shell-master | 4 | `caf058a22c30460e1e9b20a688f77f8ced402b30e75d5e7619a99c59618b66b4` |
 | angular-application-shell-master | 6 | `faabbbe88bf326eea9511bbf97bec39a1b42c35ce2230c655e71672291c3231c` |
-| angular-application-shell-master | 7 | `38103c6fc5fc366e8d4808935148f4982bc2ff7a1077bc6b47866a5a59341914` |
+| angular-application-shell-master | 7 | `6c5899c8cef8a516cde232413a35b2a1343e11c9de0000819acdba2e2e11a207` |
 | angular-application-shell-web | 1 | `8420f91086a38d7869bb125bbf216e4334ec46e04700b4dfe8662f2e77609f95` |
 | angular-application-shell-web | 2 | `832cb5332e6be88662481f48f16fdc3a2fa6b0c2b135e9ed874308ded3bf9051` |
 | angular-application-shell-web | 3 | `f2aacdc73cc17945bc17eb5c69923fbdf857d48106aba97f6953101712ccc647` |
 | angular-application-shell-web | 4 | `caf058a22c30460e1e9b20a688f77f8ced402b30e75d5e7619a99c59618b66b4` |
 | angular-application-shell-web | 5 | `37689c61ee256203558078245aefc583e90e595faf6b21072222d367bc563cdd` |
 | angular-application-shell-web | 6 | `faabbbe88bf326eea9511bbf97bec39a1b42c35ce2230c655e71672291c3231c` |
-| angular-application-shell-web | 7 | `38103c6fc5fc366e8d4808935148f4982bc2ff7a1077bc6b47866a5a59341914` |
+| angular-application-shell-web | 7 | `6c5899c8cef8a516cde232413a35b2a1343e11c9de0000819acdba2e2e11a207` |
 | angular-application-shell-web | 8 | `ca4ee16c814aceee76194125377f3bd6b8f2007d2ba647b8d7ddbdae5617834e` |
 | angular-application-shell-web | 9 | `171a213120b293cd32c3bb0e2ec90a86d4baff38de60c8ec38a72053fa61aced` |
 | angular-application-shell-web | 10 | `99e22673f4a63eb2aa922a85364d71c0c32f7b06bf02467ab629acd0288e8de1` |

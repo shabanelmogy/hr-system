@@ -5,15 +5,16 @@ import {
   inject,
   Injectable,
   isDevMode,
+  linkedSignal,
   signal,
   untracked,
 } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { Subject, type Subscription, take, throwIfEmpty } from 'rxjs';
+import { submit, type ValidationError } from '@angular/forms/signals';
+import { firstValueFrom, Subject, type Subscription, take, takeUntil, throwIfEmpty } from 'rxjs';
 import { AuthSession, type Session } from '../../../../../platform/auth/session.public-api';
 import { CommandFailure, UnsavedChanges } from '../../../../../shared/data/public-api';
 import {
-  applyServerFieldErrors,
+  mapServerFieldErrors,
   FeedbackNotifications,
   type CloseConsent,
 } from '../../../../../shared/ui/public-api';
@@ -51,15 +52,24 @@ export class CountryEditorState {
   private serial = 0;
   private operation: Subscription | null = null;
   private readonly deniedActor = signal<Session | null>(null);
-  private readonly values = signal({ ...emptyCountryDraft });
   private readonly baseline = signal(countryDraftKey(emptyCountryDraft));
   private readonly completed = new Subject<CountrySaved>();
   private readonly invalid = new Subject<void>();
   readonly saved = this.completed.asObservable();
   readonly errorsChanged = this.invalid.asObservable();
-  readonly form = createCountryForm();
-  readonly revision = signal(0);
-  readonly pending = signal(false);
+  private readonly cancelWrite = new Subject<void>();
+  readonly form = createCountryForm({
+    submission: {
+      ignoreValidators: 'none',
+      action: () => this.persist(),
+      onInvalid: () => this.invalid.next(),
+    },
+  });
+  readonly revision = linkedSignal<typeof emptyCountryDraft, number>({
+    source: () => this.form().value(),
+    computation: (_value, previous) => (previous?.value ?? 0) + 1,
+  });
+  readonly pending = computed(() => this.form().submitting());
   readonly uncertain = signal(false);
   readonly phase = signal<'loading' | 'ready' | 'error' | 'forbidden'>('ready');
   readonly feedback = signal('');
@@ -81,16 +91,12 @@ export class CountryEditorState {
   readonly identity = computed(() => 'country-editor:' + (this.context()?.serial ?? 0));
   readonly mode = computed(() => this.context()?.mode ?? 'create');
   readonly unsaved = computed(
-    () => this.active() && countryDraftKey(this.values()) !== this.baseline(),
+    () => this.active() && countryDraftKey(this.form().value()) !== this.baseline(),
   );
   readonly locked = computed(() => this.pending() || this.uncertain());
   readonly development = isDevMode();
   private mockIndex = 0;
   constructor() {
-    this.form.valueChanges.pipe(takeUntilDestroyed()).subscribe(() => {
-      this.values.set(this.form.getRawValue());
-      this.revision.update((value) => value + 1);
-    });
     const unregister = this.drafts.register({
       read: () => ({
         identity: this.identity(),
@@ -113,6 +119,8 @@ export class CountryEditorState {
     });
     this.destroy.onDestroy(() => {
       unregister();
+      this.cancelWrite.next();
+      this.cancelWrite.complete();
       this.operation?.unsubscribe();
       this.completed.complete();
       this.invalid.complete();
@@ -141,7 +149,6 @@ export class CountryEditorState {
     this.operation?.unsubscribe();
     const entry = { actor: this.auth.readIdentity()!, serial: ++this.serial, mode, id };
     this.context.set(entry);
-    this.pending.set(false);
     this.uncertain.set(false);
     this.feedback.set('');
     this.feedbackKind.set('error');
@@ -152,8 +159,7 @@ export class CountryEditorState {
     return this.context() === entry && this.active() && !this.destroy.destroyed;
   }
   private reset(value: typeof emptyCountryDraft): void {
-    this.form.reset(value);
-    this.values.set(this.form.getRawValue());
+    this.form().reset(value);
     this.baseline.set(countryDraftKey(value));
   }
   private load(entry: EditorContext): void {
@@ -182,77 +188,67 @@ export class CountryEditorState {
     const entry = this.context();
     if (entry && this.phase() === 'error' && !this.pending()) this.load(entry);
   }
-  save(): void {
+  async save(): Promise<boolean> {
     const entry = this.context();
-    if (
-      !entry ||
-      !this.current(entry) ||
-      this.pending() ||
-      this.uncertain() ||
-      this.phase() !== 'ready'
-    )
-      return;
-    this.form.markAllAsTouched();
-    if (this.form.invalid) {
-      this.invalid.next();
-      return;
-    }
-    const draft = this.form.getRawValue();
-    try {
-      parseCountryMutation(draft);
-    } catch {
-      this.invalid.next();
-      return;
-    }
+    if (!entry || !this.current(entry) || this.locked() || this.phase() !== 'ready') return false;
+    return submit(this.form);
+  }
+  private async persist(): Promise<ValidationError.WithFieldTree[] | undefined> {
+    const entry = this.context();
+    if (!entry || !this.current(entry) || this.uncertain() || this.phase() !== 'ready')
+      return [{ kind: 'unavailable', fieldTree: this.form }];
+    const draft = this.form().value();
+    parseCountryMutation(draft);
     const revision = this.revision();
-    this.pending.set(true);
     this.feedback.set('');
     this.feedbackKind.set('error');
-    const request =
-      entry.mode === 'create' ? this.service.create(draft) : this.service.update(entry.id!, draft);
-    this.operation = request.pipe(take(1), throwIfEmpty()).subscribe({
-      next: (country) => {
-        if (!this.current(entry)) return;
-        this.pending.set(false);
-        this.baseline.set(countryDraftKey(draft));
-        this.completed.next({ mode: entry.mode, country });
-        if (this.revision() === revision) this.invalidate();
-        else {
-          this.feedbackKind.set('success');
-          this.feedback.set(entry.mode === 'create' ? 'countries.created' : 'countries.updated');
-        }
-      },
-      error: (error: unknown) => {
-        if (!this.current(entry)) return;
-        this.pending.set(false);
-        const failure =
-          error instanceof CommandFailure ? error : new CommandFailure('uncertain', null);
-        this.uncertain.set(failure.outcome === 'uncertain');
-        const denied = failure.status === 401 || failure.status === 403;
-        const errorKey = denied
-          ? 'authorization.forbidden.title'
-          : this.uncertain()
-            ? 'countries.mutationUncertain'
-            : entry.mode === 'create'
-              ? 'countries.createError'
-              : 'countries.updateError';
-        this.feedback.set(this.uncertain() ? errorKey : '');
-        if (denied || !Object.keys(failure.fieldErrors).length)
-          this.notices.failure(
-            errorKey,
-            denied ? 'core' : 'reference-countries',
-            {},
-            this.uncertain() ? 'imports.submissionUncertainTitle' : 'errorDialog.title',
-          );
-        if (denied) {
-          this.deniedActor.set(entry.actor);
-          this.phase.set('forbidden');
-          return;
-        }
-        applyServerFieldErrors(this.form, failure.fieldErrors);
-        this.invalid.next();
-      },
-    });
+    try {
+      const request =
+        entry.mode === 'create'
+          ? this.service.create(draft)
+          : this.service.update(entry.id!, draft);
+      const country = await firstValueFrom(
+        request.pipe(take(1), takeUntil(this.cancelWrite), throwIfEmpty()),
+      );
+      if (!this.current(entry)) return;
+      this.baseline.set(countryDraftKey(draft));
+      this.completed.next({ mode: entry.mode, country });
+      if (this.revision() === revision) this.invalidate();
+      else {
+        this.feedbackKind.set('success');
+        this.feedback.set(entry.mode === 'create' ? 'countries.created' : 'countries.updated');
+      }
+      return;
+    } catch (error: unknown) {
+      if (!this.current(entry)) return;
+      const failure =
+        error instanceof CommandFailure ? error : new CommandFailure('uncertain', null);
+      this.uncertain.set(failure.outcome === 'uncertain');
+      const denied = failure.status === 401 || failure.status === 403;
+      const errorKey = denied
+        ? 'authorization.forbidden.title'
+        : this.uncertain()
+          ? 'countries.mutationUncertain'
+          : entry.mode === 'create'
+            ? 'countries.createError'
+            : 'countries.updateError';
+      this.feedback.set(this.uncertain() ? errorKey : '');
+      if (denied || !Object.keys(failure.fieldErrors).length)
+        this.notices.failure(
+          errorKey,
+          denied ? 'core' : 'reference-countries',
+          {},
+          this.uncertain() ? 'imports.submissionUncertainTitle' : 'errorDialog.title',
+        );
+      if (denied) {
+        this.deniedActor.set(entry.actor);
+        this.phase.set('forbidden');
+      }
+      const errors = mapServerFieldErrors(this.form, failure.fieldErrors, draft);
+      // Command feedback owns transport failures. Only field validation belongs in
+      // the form tree, otherwise an unchanged retry would be blocked as invalid.
+      return errors.length ? errors : undefined;
+    }
   }
   close(consent: CloseConsent): void {
     if (
@@ -268,9 +264,9 @@ export class CountryEditorState {
   }
   invalidate(): void {
     this.context.set(null);
+    this.cancelWrite.next();
     this.operation?.unsubscribe();
     this.operation = null;
-    this.pending.set(false);
     this.uncertain.set(false);
     this.feedback.set('');
     this.reset(emptyCountryDraft);
@@ -305,7 +301,7 @@ export class CountryEditorState {
     ];
     const sample = samples[this.mockIndex++ % samples.length];
     if (!sample) return;
-    this.form.setValue(sample);
-    this.form.markAsDirty();
+    this.form().value.set(sample);
+    this.form().markAsDirty();
   }
 }

@@ -30,7 +30,7 @@ import {
   type ContextMenuAction,
 } from '../../overlays/context-menu-panel/context-menu-panel';
 import { filterByCellValue } from '../grid-cell-filter';
-import { LocalizationRuntime, UiTextPipe } from '../../../../platform/localization/public-api';
+import { UI_LOCALIZATION, UiTextPipe } from '../../../localization/public-api';
 import { GridLocale } from '../../../../../theme/grid-public-api';
 import { GridFilterInput } from '../grid-filter-input/grid-filter-input';
 import { FeedbackState } from '../../feedback/feedback-state/feedback-state';
@@ -128,7 +128,7 @@ export class MyDataGrid<T> {
   readonly filterAttributes: ColumnFilterPassThrough = {
     filterButtonBar: { style: { gap: '12px', paddingTop: '8px' } },
   };
-  readonly locale = inject(LocalizationRuntime);
+  readonly locale = inject(UI_LOCALIZATION);
   private readonly destroyRef = inject(DestroyRef);
   private pendingSort: {
     readonly value: CollectionSort;

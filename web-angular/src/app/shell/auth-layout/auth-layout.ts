@@ -2,7 +2,7 @@ import { Component, computed, inject } from '@angular/core';
 import { AuthBranding } from './auth-branding/auth-branding';
 import { parseHex } from '@app/tokens';
 import { LocalizationRuntime, UiTextPipe } from '../../platform/localization/public-api';
-import { ActionButton, AppIcon, OptionSelect } from '../../shared/ui/public-api';
+import { AppearancePreferences, AppIcon } from '../../shared/ui/public-api';
 import { ThemeService } from '../../../theme/public-api';
 
 const shade = (color: string, lighten: boolean) =>
@@ -16,7 +16,7 @@ const shade = (color: string, lighten: boolean) =>
     .join('');
 @Component({
   selector: 'erp-auth-layout',
-  imports: [UiTextPipe, ActionButton, AppIcon, OptionSelect, AuthBranding],
+  imports: [UiTextPipe, AppearancePreferences, AppIcon, AuthBranding],
   templateUrl: './auth-layout.html',
   styleUrl: './auth-layout.scss',
   host: {
@@ -30,10 +30,6 @@ export class AuthLayout {
   readonly locale = inject(LocalizationRuntime);
   readonly theme = inject(ThemeService);
   readonly year = new Date().getFullYear();
-  readonly languageOptions = [
-    { value: 'en', label: 'English' },
-    { value: 'ar', label: 'العربية' },
-  ];
   readonly colors = computed(() => {
     const c = this.theme.theme().colors;
     return {

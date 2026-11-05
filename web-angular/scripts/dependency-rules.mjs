@@ -1,3 +1,5 @@
+import path from 'node:path';
+import { inspectDependency as inspectOwnerDependency } from './architecture-rules.mjs';
 import ts from 'typescript';
 
 export function sourceImports(source, file = 'source.ts') {
@@ -124,4 +126,45 @@ export function staticDependencyCycles(edges) {
   }
   for (const node of graph.keys()) if (!indices.has(node)) visit(node);
   return cycles;
+}
+
+export function inspectProject(sources, compilerOptions = {}, root = process.cwd()) {
+  const files = new Map([...sources].map(([file, source]) => [file.replaceAll('\\', '/'), source]));
+  const relative = (file) => path.relative(root, file).replaceAll('\\', '/');
+  const host = {
+    ...ts.sys,
+    fileExists: (file) => files.has(relative(file)) || ts.sys.fileExists(file),
+    readFile: (file) => files.get(relative(file)) ?? ts.sys.readFile(file),
+  };
+  const violations = [],
+    edges = [];
+  for (const [file, source] of files) {
+    if (file.endsWith('.spec.ts') || file.includes('.generated.')) continue;
+    for (const item of sourceImports(source, file)) {
+      const resolved = ts.resolveModuleName(
+        item.name,
+        path.resolve(root, file),
+        compilerOptions,
+        host,
+      ).resolvedModule;
+      if (!resolved) {
+        if (item.name.startsWith('.'))
+          violations.push(file + ': unresolved local import ' + item.name);
+        continue;
+      }
+      const target = relative(resolved.resolvedFileName);
+      if (!files.has(target)) continue;
+      edges.push({ source: file, target, kind: item.kind });
+      const local = path.posix.relative(path.posix.dirname(file), target);
+      const specifier = local.startsWith('.') ? local : './' + local;
+      const findings = [
+        ...inspectDependency(file, target),
+        ...inspectOwnerDependency(file, specifier),
+      ];
+      violations.push(...findings.map((reason) => file + ' -> ' + target + ': ' + reason));
+    }
+  }
+  for (const cycle of staticDependencyCycles(edges))
+    violations.push('circular value dependency: ' + cycle.join(' -> '));
+  return [...new Set(violations)];
 }

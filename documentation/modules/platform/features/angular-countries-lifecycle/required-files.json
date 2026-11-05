@@ -442,6 +442,36 @@
       "layer": "web",
       "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/utils/country-list-presentation.spec.ts",
       "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "composition-d37-0",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-lifecycle-confirmation/country-lifecycle-confirmation.ts",
+      "layer": "web",
+      "purpose": "D41 component ownership, recurring rules and current verification evidence"
+    },
+    {
+      "id": "composition-d37-1",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-lifecycle-confirmation/country-lifecycle-confirmation.html",
+      "layer": "web",
+      "purpose": "D41 component ownership, recurring rules and current verification evidence"
+    },
+    {
+      "id": "composition-d37-2",
+      "path": "documentation/guides/web/architecture/ANGULAR_COMPONENT_COMPOSITION.md",
+      "layer": "documentation",
+      "purpose": "D41 component ownership, recurring rules and current verification evidence"
+    },
+    {
+      "id": "composition-d37-3",
+      "path": "documentation/modules/platform/features/angular-collection-foundation/COMPONENT_COMPOSITION_REPORT.md",
+      "layer": "documentation",
+      "purpose": "D41 component ownership, recurring rules and current verification evidence"
+    },
+    {
+      "id": "composition-d37-verification",
+      "path": "documentation/modules/platform/features/angular-collection-foundation/verification/component-composition-summary.json",
+      "layer": "documentation",
+      "purpose": "D41 final source hashes, executed checks and portable measurements"
     }
   ]
 }

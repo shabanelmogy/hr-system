@@ -6,8 +6,8 @@ import {
   forwardRef,
   inject,
   input,
-  signal,
   type OnDestroy,
+  model,
 } from '@angular/core';
 import {
   type AbstractControl,
@@ -29,7 +29,7 @@ import { FormFieldControl } from '../../form-field-control';
 })
 export class BooleanField extends FormFieldControl<boolean> implements OnDestroy {
   readonly kind = input<'checkbox' | 'switch'>('checkbox');
-  readonly value = signal(false);
+  readonly value = model(false);
   readonly control = new FormControl(false, { nonNullable: true });
   private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
   private owner: AbstractControl | null = null;
@@ -39,7 +39,7 @@ export class BooleanField extends FormFieldControl<boolean> implements OnDestroy
     input: {
       'aria-describedby': this.describedBy(),
       'aria-invalid': this.error() ? 'true' : null,
-      'aria-readonly': this.readOnly() ? 'true' : null,
+      'aria-readonly': this.isReadOnly() ? 'true' : null,
       'aria-required': this.required() ? 'true' : null,
     },
   }));
@@ -65,14 +65,14 @@ export class BooleanField extends FormFieldControl<boolean> implements OnDestroy
     super();
     effect(() => {
       this.control.setValue(this.value(), { emitEvent: false });
-      if (this.disabled()) this.control.disable({ emitEvent: false });
+      if (this.isDisabled()) this.control.disable({ emitEvent: false });
       else this.control.enable({ emitEvent: false });
     });
     this.control.valueChanges.pipe(takeUntilDestroyed()).subscribe((value) => this.choose(value));
   }
   override ngDoCheck() {
     super.ngDoCheck();
-    const control = this.ngControl?.control ?? null;
+    const control = this.legacyControl();
     if (control === this.owner) return;
     this.detach();
     this.owner = control;
@@ -98,11 +98,11 @@ export class BooleanField extends FormFieldControl<boolean> implements OnDestroy
   /** Native checkbox activation ignores readonly; cancel its default while retaining focusability. */
   protectActivation(event: Event) {
     if (event instanceof KeyboardEvent && !['Enter', ' '].includes(event.key)) return;
-    if (this.readOnly() || this.disabled()) event.preventDefault();
+    if (this.isReadOnly() || this.isDisabled()) event.preventDefault();
   }
   override error() {
     const error = super.error(),
-      control = this.ngControl?.control;
+      control = this.legacyControl();
     return error &&
       control?.errors?.['booleanValue'] &&
       !control.errors['server'] &&

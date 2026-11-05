@@ -11,11 +11,17 @@ import {
   output,
   signal,
 } from '@angular/core';
-import { type AbstractControl } from '@angular/forms';
+import type { AbstractControl } from '@angular/forms';
+import {
+  submit as submitSignalForm,
+  type FieldTree,
+  type ReadonlyFieldTree,
+} from '@angular/forms/signals';
 import { NgTemplateOutlet } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { filter, firstValueFrom } from 'rxjs';
 import { ActionButton } from '../../buttons/public-api';
+import { UI_LOCALIZATION } from '../../../localization/public-api';
 import { FormFieldControl } from '../form-field-control';
 import { ValidationSummary } from '../validation-summary/validation-summary';
 
@@ -26,7 +32,7 @@ import { ValidationSummary } from '../validation-summary/validation-summary';
   styleUrl: './form-container.scss',
 })
 export class FormContainer {
-  readonly form = input.required<AbstractControl>();
+  readonly form = input.required<AbstractControl | FieldTree<unknown>>();
   readonly title = input.required<string>();
   readonly submitLabel = input.required<string>();
   readonly feedback = input('');
@@ -43,23 +49,44 @@ export class FormContainer {
   private readonly revision = signal(0);
   private readonly destroyRef = inject(DestroyRef);
   private readonly injector = inject(Injector);
+  private readonly locale = inject(UI_LOCALIZATION);
   private dispatching = false;
   readonly summary = computed(() => {
     this.revision();
     return this.fields().filter((field) => field.error());
   });
-  readonly validationIssues = computed(() =>
-    this.summary().flatMap((field) => {
+  readonly validationIssues = computed(() => {
+    const form = this.form();
+    if (typeof form === 'function') {
+      if (!form().touched()) return [];
+      const seen = new Set<ReadonlyFieldTree<unknown>>();
+      return form()
+        .errorSummary()
+        .flatMap((error, index) => {
+          if (seen.has(error.fieldTree)) return [];
+          seen.add(error.fieldTree);
+          const field = this.fields().find((field) => field.name() === error.fieldTree().name());
+          return [
+            {
+              id: field?.id ?? `native-error-${index}`,
+              label: field?.label() ?? this.title(),
+              message:
+                field?.error() ?? error.message ?? this.locale.translate('common.validationErrors'),
+            },
+          ];
+        });
+    }
+    return this.summary().flatMap((field) => {
       const message = field.error();
       return message === null ? [] : [{ id: field.id, label: field.label(), message }];
-    }),
-  );
+    });
+  });
 
   constructor() {
     effect((onCleanup) => {
-      const subscription = this.form().events.subscribe(() =>
-        this.revision.update((value) => value + 1),
-      );
+      const form = this.form();
+      if (typeof form === 'function') return;
+      const subscription = form.events.subscribe(() => this.revision.update((value) => value + 1));
       onCleanup(() => subscription.unsubscribe());
     });
   }
@@ -75,6 +102,16 @@ export class FormContainer {
     )
       return;
     const form = this.form();
+    if (typeof form === 'function') {
+      this.checking.set(true);
+      try {
+        const success = await submitSignalForm(form);
+        if (!success && this.form() === form && !this.destroyRef.destroyed) this.revealErrors();
+      } finally {
+        this.checking.set(false);
+      }
+      return;
+    }
     form.markAllAsTouched();
     this.revision.update((value) => value + 1);
     if (form.pending) {
@@ -118,18 +155,26 @@ export class FormContainer {
   }
 
   focusError(id: string): void {
-    this.fields()
-      .find((field) => field.id === id)
-      ?.focus();
+    const field = this.fields().find((field) => field.id === id);
+    if (field) {
+      field.focus();
+      return;
+    }
+    const form = this.form();
+    if (typeof form === 'function' && id.startsWith('native-error-'))
+      form().errorSummary()[Number(id.slice(13))]?.fieldTree().focusBoundControl();
   }
   /** Server field errors use the same summary and focus contract as client validation. */
   revealErrors(): void {
     const form = this.form();
-    form.markAllAsTouched();
+    if (typeof form === 'function') form().markAsTouched();
+    else form.markAllAsTouched();
     this.revision.update((value) => value + 1);
     afterNextRender(
       () => {
-        if (!this.destroyRef.destroyed && this.form() === form)
+        if (this.destroyRef.destroyed || this.form() !== form) return;
+        if (typeof form === 'function') form().errorSummary()[0]?.fieldTree().focusBoundControl();
+        else
           this.fields()
             .find((field) => field.error())
             ?.focus();

@@ -28,6 +28,12 @@ Caller query: scopeKey/criteriaKey/pageIndex/pageSize. Result repeats identity p
 
 Reuse existing ActionButton/TextField/OptionSelect/PopoverPanel/FeedbackState/ScrollViewport/public icons and @app/tokens. Internal PrimeNG Table/Paginator/Checkbox adapters live under Shared; feature bypasses rejected by architecture checks. Generic templates/slots supply row/card/actions/empty content, never a feature-local look-alike shell. No unnecessary wrapper duplicating an existing control.
 
+
+D41 composition maintenance2026-11-04: CollectionFrame now composes the internal CollectionOptionsDialog with the existing gridOptions slot and forwards the same controlled inputs/events. MyDataGrid delegates presentation signals/snapshot/reset/order/pin to createGridPresentation; DOM measurement, native events, owner criteria, rows and public API remain with their existing owners. Helpers remain internal; no root store or persistence.
+Reusable policy: documentation/guides/web/architecture/ANGULAR_COMPONENT_COMPOSITION.md. Current evidence: documentation/modules/platform/features/angular-collection-foundation/COMPONENT_COMPOSITION_REPORT.md. Earlier acceptance snapshots retain their original scope/date; no API/domain/schema/native behavior changes.
+
+D41 final acceptance: architecture16/full scan, strict app/spec,448 unit tests and production build passed;86 bounded fixture browser cases across Grid8/Countries8/actions8/Report8/login10/language20/Shell24. Production initial572.16kB; existing RISK-019500kB warning remains. Portable current evidence: angular-collection-foundation/verification/component-composition-summary.json. API/native/hosted/pixel acceptance retain their existing scope.
+
 ## 8. States and lifecycle
 
 Required initial loading/replacement, zero/empty, error/retry, forbidden, stale/invalid result, density/column reset, keyboard/focus and bounded scrolling. Active record and page-only bulk selection are distinct. Keep intended record target across only its matching page response; discard on scope/criteria/size/error/unrelated page. Unknown total disables Last and uses hasNextPage without fabricating totals.

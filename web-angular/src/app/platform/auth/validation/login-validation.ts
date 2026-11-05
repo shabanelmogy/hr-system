@@ -1,27 +1,45 @@
-import { FormControl, FormGroup, Validators, type ValidatorFn } from '@angular/forms';
+import { signal } from '@angular/core';
+import {
+  email,
+  form,
+  required,
+  validate,
+  metadata,
+  MAX_LENGTH,
+  REQUIRED,
+  type FormOptions,
+} from '@angular/forms/signals';
 
-const trimmedUsername: ValidatorFn = (control) => {
-  const value: unknown = control.value;
-  const username = typeof value === 'string' ? value.trim() : '';
-  return !username
-    ? { required: true }
-    : username.length < 3
-      ? { minlength: { requiredLength: 3 } }
-      : username.length > 50
-        ? { maxlength: { requiredLength: 50 } }
-        : null;
-};
-const trimmedRequired: ValidatorFn = (control) =>
-  typeof control.value === 'string' && control.value.trim() ? null : { required: true };
-export const createLoginForm = () =>
-  new FormGroup({
-    username: new FormControl('', { nonNullable: true, validators: trimmedUsername }),
-    password: new FormControl('', { nonNullable: true, validators: trimmedRequired }),
-  });
-export const createPasswordRequestForm = () =>
-  new FormGroup({
-    email: new FormControl('', {
-      nonNullable: true,
-      validators: [Validators.required, Validators.email],
-    }),
-  });
+export const emptyLogin = { username: '', password: '' };
+export function createLoginForm(options: FormOptions<typeof emptyLogin> = {}) {
+  return form(
+    signal({ ...emptyLogin }),
+    (path) => {
+      metadata(path.username, MAX_LENGTH, () => 50);
+      metadata(path.username, REQUIRED, () => true);
+      metadata(path.password, REQUIRED, () => true);
+      validate(path.username, ({ value }) => {
+        const username = value().trim();
+        return !username
+          ? { kind: 'required' }
+          : username.length < 3
+            ? { kind: 'minlength', requiredLength: 3 }
+            : username.length > 50
+              ? { kind: 'maxlength', requiredLength: 50 }
+              : undefined;
+      });
+      validate(path.password, ({ value }) => (value().trim() ? undefined : { kind: 'required' }));
+    },
+    options,
+  );
+}
+export function createPasswordRequestForm(options: FormOptions<{ email: string }> = {}) {
+  return form(
+    signal({ email: '' }),
+    (path) => {
+      required(path.email);
+      email(path.email);
+    },
+    options,
+  );
+}

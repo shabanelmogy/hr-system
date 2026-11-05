@@ -1,7 +1,7 @@
 import { Component, computed, input, output } from '@angular/core';
 import { ActionButton } from '../../buttons/public-api';
 import { AppIcon } from '../../icons/app-icon/app-icon';
-import { UiTextPipe } from '../../../../platform/localization/public-api';
+import { UiTextPipe } from '../../../localization/public-api';
 
 /** Controlled shared sort direction: compact visible label, full accessible name. */
 @Component({

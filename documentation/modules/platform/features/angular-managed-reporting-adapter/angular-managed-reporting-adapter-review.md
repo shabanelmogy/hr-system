@@ -28,6 +28,12 @@ Exact global GET/catalog and POST/render, super_admin+GlobalCrystalReports:View,
 
 Server auth/hash/filter/render authoritative; Reporting parser/controller/HTTP/identity/applied filters; Shared validated bytes/lease/layout. No permission from UI, auto replay or new API semantics.
 
+
+D41 composition maintenance2026-11-04: GlobalReportView now references external global-report-view.html and .scss. Its Signal Forms model, service/state ownership, submission/PDF lifetime, embedded/standalone contracts and lazy Reporting entry remain unchanged.
+Reusable policy: documentation/guides/web/architecture/ANGULAR_COMPONENT_COMPOSITION.md. Current evidence: documentation/modules/platform/features/angular-collection-foundation/COMPONENT_COMPOSITION_REPORT.md. Earlier acceptance snapshots retain their original scope/date; no API/domain/schema/native behavior changes.
+
+D41 final acceptance: architecture16/full scan, strict app/spec,448 unit tests and production build passed;86 bounded fixture browser cases across Grid8/Countries8/actions8/Report8/login10/language20/Shell24. Production initial572.16kB; existing RISK-019500kB warning remains. Portable current evidence: angular-collection-foundation/verification/component-composition-summary.json. API/native/hosted/pixel acceptance retain their existing scope.
+
 ## 8. Edge Cases & Validation Matrix
 
 Malformed/duplicate/empty catalog, permission0requests,200/201 Unicode filters, draft/apply/reset/selection/language/scope/CSRF/late bytes/revoke,400/401/403/409/413/503/MIME/signature/100MiB/fallback and destroy. Contract owns outcomes/tests.
@@ -92,3 +98,6 @@ G0-G3 frozen for global-only minimum; remaining production checks G4 release-onl
 S3-A0 bounded runtime Phase06 Verified/Closed; Phase07 technical education and handoff completed afterward. S3-A1 read-only Countries preparation follows. Technical education after Phase06 Verified, actual Countries/managed Crystal manager acceptance separate; ActiveReports is Excluded.
 
 Requester correction2026-10-30 DEC-028: Angular ActiveReports viewer/designer/SDK/authoring/license scope Excluded, with no placeholder. Managed Crystal/PDF remains the current bounded minimum; historical source/designer parity statements do not override this explicit cancellation. Existing other clients/API unchanged.
+
+
+Maintenance 2026-11-04 — D07/D39: Report criteria use native Signal Forms. submitSearch awaits the exact submitted RenderSpec in the existing scoped render pipeline; replayed prior results cannot end it. Context/language replacement cancels acceptance. Owned backend errors map to native fields; no second render request or parallel error store. API/Next/Mobile runtime and persistence are unchanged; migrations and cross-platform domain UI audit are N/A for this client-only maintenance. Current verification and limits: `documentation/modules/platform/features/angular-form-foundation/SIGNAL_FORMS_IMPLEMENTATION_REPORT.md`. Historical verification in section 11 refers to its dated increment.

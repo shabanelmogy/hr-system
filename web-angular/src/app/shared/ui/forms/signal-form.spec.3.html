@@ -1,0 +1,9 @@
+<erp-form [form]="form" title="Nested fixture" submitLabel="Save">
+  @if (!form.address().hidden()) {
+    <nested-fields [fields]="form.address" />
+  }
+  @for (row of form.rows; track row) {
+    <erp-text-field [formField]="row.name" label="Row name" />
+  }
+  <erp-text-field [formField]="form.confirmation" label="Confirmation" />
+</erp-form>

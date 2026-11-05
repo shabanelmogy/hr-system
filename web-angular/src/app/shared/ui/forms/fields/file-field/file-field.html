@@ -7,7 +7,7 @@
     [multiple]="false"
     [accept]="acceptTypes()"
     [chooseLabel]="chooseLabel()"
-    [disabled]="disabled() || readOnly()"
+    [disabled]="isDisabled() || isReadOnly()"
     (onSelect)="select($event)"
   />
   @if (value(); as file) {
@@ -15,7 +15,7 @@
     <erp-button
       [label]="clearLabel()"
       variant="text"
-      [disabled]="disabled() || readOnly()"
+      [disabled]="isDisabled() || isReadOnly()"
       (activated)="clear()"
     />
   }

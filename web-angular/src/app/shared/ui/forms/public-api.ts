@@ -25,6 +25,8 @@ export { FileField } from './fields/file-field/file-field';
 export { ValidationSummary } from './validation-summary/validation-summary';
 export type { ValidationIssue } from './validation-summary/validation-summary';
 export { applyServerFieldErrors, clearServerFieldError } from './form-errors';
+export { mapServerFieldErrors } from './submission-errors';
+export { validateDateOnly, validateNumericText } from './field-rules';
 export type { FieldMessages } from './form-errors';
 export { FormCloseGuard } from './form-close-guard/form-close-guard';
 export type { CloseConsent } from './local-close-controller';

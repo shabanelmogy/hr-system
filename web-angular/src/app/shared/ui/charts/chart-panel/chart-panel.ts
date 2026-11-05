@@ -1,5 +1,5 @@
 import { Component, computed, inject, input } from '@angular/core';
-import { LocalizationRuntime, UiTextPipe } from '../../../../platform/localization/public-api';
+import { UI_LOCALIZATION, UiTextPipe } from '../../../localization/public-api';
 import { SurfaceCard } from '../../layout/surface-card/surface-card';
 import { FeedbackState } from '../../feedback/feedback-state/feedback-state';
 import { ChartRenderer } from '../chart-renderer/chart-renderer';
@@ -14,7 +14,7 @@ import { chartNumber } from '../chart-presentation';
 })
 export class ChartPanel {
   readonly definition = input.required<ChartDefinition>();
-  private readonly locale = inject(LocalizationRuntime);
+  private readonly locale = inject(UI_LOCALIZATION);
   readonly valid = computed(() => validChartDefinition(this.definition()));
   readonly hasData = computed(() => chartHasData(this.definition()));
   number(value: number | undefined) {

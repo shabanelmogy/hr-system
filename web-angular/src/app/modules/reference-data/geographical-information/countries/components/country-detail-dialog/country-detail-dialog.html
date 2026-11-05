@@ -1,0 +1,32 @@
+<erp-dialog-panel
+  [open]="state.detailOpen()"
+  [title]="'countries.view' | uiText: 'reference-countries'"
+  [description]="'countries.viewSubtitle' | uiText: 'reference-countries'"
+  [closeLabel]="'actions.close' | uiText"
+  icon="globe"
+  [manualInitialFocus]="true"
+  [showFooter]="false"
+  (closeRequested)="state.close()"
+>
+  @switch (state.detail().kind) {
+    @case ('loading') {
+      <erp-feedback-state kind="loading" [title]="'common.loading' | uiText" />
+    }
+    @case ('error') {
+      <erp-feedback-state
+        kind="error"
+        [title]="'countries.fetchError' | uiText: 'reference-countries'"
+        [actionLabel]="'actions.retry' | uiText"
+        (action)="state.retryDetail()"
+      />
+    }
+    @case ('forbidden') {
+      <erp-feedback-state kind="forbidden" [title]="'authorization.forbidden.title' | uiText" />
+    }
+    @case ('ready') {
+      @if (country(); as country) {
+        <erp-country-read-details [country]="country" (closed)="state.close()" />
+      }
+    }
+  }
+</erp-dialog-panel>

@@ -1,7 +1,7 @@
 import { Component, input, output } from '@angular/core';
 import { FileUpload } from 'primeng/fileupload';
 import type { FileSelectEvent } from 'primeng/types/fileupload';
-import { UiTextPipe } from '../../../../platform/localization/public-api';
+import { UiTextPipe } from '../../../localization/public-api';
 import { SurfaceCard } from '../../layout/surface-card/surface-card';
 import { ActionButton } from '../../buttons/public-api';
 import { FeedbackState } from '../../feedback/feedback-state/feedback-state';

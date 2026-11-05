@@ -5,13 +5,13 @@ import core from '../../../locales/generated/bootstrap.json';
 import { namespaceLoaders, uiCatalogVersion } from './catalog.generated';
 import { isCompanyUiText } from './text-scope.generated';
 import { isAuthorizedSystemUiText } from './system-access.generated';
-import {
-  companyRuntimeSchema,
-  systemRuntimeSchema,
-  type LocalizationIdentity,
-  type NamespaceResources,
-  type UiLanguage,
-  type UiOverride,
+import type {
+  CompanyRuntime,
+  SystemRuntime,
+  LocalizationIdentity,
+  NamespaceResources,
+  UiLanguage,
+  UiOverride,
 } from './localization.types';
 
 const unsafe = new Set(['__proto__', 'constructor', 'prototype']);
@@ -91,14 +91,14 @@ export class LocalizationRuntime {
     return this.generation;
   }
 
-  applyCompany(value: unknown, generation: number): boolean {
+  /** The HTTP service validates the wire shape; this runtime enforces identity and text policy. */
+  applyCompany(bundle: CompanyRuntime, generation: number): boolean {
     if (
       generation !== this.generation ||
       !this.identity ||
       this.identity.roles.includes('super_admin')
     )
       return false;
-    const bundle = companyRuntimeSchema.parse(value);
     if (
       bundle.catalogVersion !== uiCatalogVersion ||
       bundle.tenantId !== this.identity.tenantId ||
@@ -112,10 +112,9 @@ export class LocalizationRuntime {
     return true;
   }
 
-  applySystem(value: unknown, generation: number): boolean {
+  applySystem(bundle: SystemRuntime, generation: number): boolean {
     if (generation !== this.generation || !this.identity?.roles.includes('super_admin'))
       return false;
-    const bundle = systemRuntimeSchema.parse(value);
     if (bundle.catalogVersion !== uiCatalogVersion) return false;
     this.system = bundle.overrides;
     this.refresh();

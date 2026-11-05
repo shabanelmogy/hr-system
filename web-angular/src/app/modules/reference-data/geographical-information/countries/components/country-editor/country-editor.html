@@ -59,17 +59,13 @@
             state.feedback() ? locale.translate(state.feedback(), 'reference-countries') : ''
           "
           [feedbackKind]="state.feedbackKind()"
-          (validSubmit)="state.save()"
         >
           @for (field of fields; track field) {
             <erp-text-field
-              [maxLength]="limits[field]"
               [showCounter]="true"
               counterAppearance="badge"
-              [name]="field"
-              [formControl]="state.form.controls[field]"
+              [formField]="state.form[field]"
               [label]="label(field)"
-              [required]="field === 'nameAr' || field === 'nameEn'"
               [readOnly]="state.locked()"
               [messages]="messages()[field]"
               [textDirection]="field === 'nameAr' || field === 'nameEn' ? 'auto' : 'ltr'"

@@ -3,7 +3,7 @@ import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TextField, NumericField, DateField } from '../../forms/public-api';
 import { OptionSelect } from '../../controls/option-select/option-select';
-import { LocalizationRuntime } from '../../../../platform/localization/public-api';
+import { UI_LOCALIZATION } from '../../../localization/public-api';
 import { filterValueValid, type GridColumnFilter } from '../grid-filter.types';
 
 /** Native ColumnFilter owns its menu/rules; our fields own value validation and accessibility. */
@@ -26,7 +26,7 @@ export class GridFilterInput {
     ...(this.definition().choices ?? []),
   ]);
   private synchronizing = false;
-  private readonly locale = inject(LocalizationRuntime);
+  private readonly locale = inject(UI_LOCALIZATION);
   readonly booleanOptions = computed(() => [
     { value: 'all', label: this.locale.translate('common.all') },
     { value: 'true', label: this.locale.translate('collections.trueValue') },

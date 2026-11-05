@@ -19,7 +19,8 @@ Rules:
 - Apply it alongside the ERP planning and documentation workflow. Repository
   contracts take precedence over generic upstream examples: reuse shared PrimeNG
   adapters and `MyDataGrid`, preserve service/state ownership, use the established
-  Reactive Forms system, external HTML/SCSS resources and component folders, and
+  lightweight Signal Forms architecture (Reactive Forms at explicit compatibility
+  boundaries), external HTML/SCSS resources and component folders, and
   run the required Angular quality gates for runtime changes.
 - Check the installed Angular version before selecting an API. Upstream examples
   do not authorize dependency upgrades, new applications, form migrations, direct

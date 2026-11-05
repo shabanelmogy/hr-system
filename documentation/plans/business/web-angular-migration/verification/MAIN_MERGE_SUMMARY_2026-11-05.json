@@ -1,0 +1,978 @@
+{
+  "date": "2026-11-05",
+  "mainCommit": "bb70c916",
+  "foundationCommit": "76871f22",
+  "status": "Angular source and checks verified on the resolved merge tree",
+  "checks": {
+    "aggregateAngular": {
+      "command": "npm run check",
+      "passed": true,
+      "unitFiles": 98,
+      "unitTests": 559,
+      "architectureTests": 30,
+      "configurationTests": 4,
+      "initialBundleKb": 574.45,
+      "estimatedTransferKb": 148.16,
+      "warningBudgetKb": 500
+    },
+    "afterUnusedDuplicateStyleRemoval": {
+      "format": true,
+      "architecture": true
+    },
+    "documentation": {
+      "angularScopedRecipes": 256,
+      "passed": true,
+      "globalPassed": false,
+      "followUp": "FOLLOW-025",
+      "missingReportingSources": 122
+    },
+    "planning": {
+      "passed": true,
+      "inheritedWarnings": [
+        "education-module v2 feature contract",
+        "erp-platform-template v2 feature contract"
+      ]
+    }
+  },
+  "browser": {
+    "scope": "Development build, real Chrome, intercepted/synthetic API writes only; no hosted business mutations",
+    "receipts": {
+      "grid": [
+        {
+          "palette": "green",
+          "mode": "light",
+          "language": "en",
+          "width": 390,
+          "sourceFingerprint": "c2fbd32d6b7efac9be1b1f170c367870aa989f67e0af120f7e393ba743730f22",
+          "bootstrapReloads": 0,
+          "interactions": true,
+          "geometry": {
+            "headerHeight": 91,
+            "titleFontSize": "16px",
+            "titleWeight": "600",
+            "columnHeight": 56,
+            "badgesTop": 60,
+            "controlsBottom": 56,
+            "documentWidth": 390,
+            "viewport": 390
+          },
+          "starts": 16,
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "light",
+          "language": "en",
+          "width": 1440,
+          "sourceFingerprint": "c2fbd32d6b7efac9be1b1f170c367870aa989f67e0af120f7e393ba743730f22",
+          "bootstrapReloads": 0,
+          "interactions": true,
+          "geometry": {
+            "headerHeight": 72,
+            "titleFontSize": "18px",
+            "titleWeight": "600",
+            "columnHeight": 56,
+            "badgesTop": 60.984375,
+            "controlsBottom": 78,
+            "documentWidth": 1440,
+            "viewport": 1440
+          },
+          "starts": 16,
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "light",
+          "language": "ar",
+          "width": 390,
+          "sourceFingerprint": "c2fbd32d6b7efac9be1b1f170c367870aa989f67e0af120f7e393ba743730f22",
+          "bootstrapReloads": 0,
+          "interactions": true,
+          "geometry": {
+            "headerHeight": 91,
+            "titleFontSize": "16px",
+            "titleWeight": "600",
+            "columnHeight": 56,
+            "badgesTop": 60,
+            "controlsBottom": 56,
+            "documentWidth": 390,
+            "viewport": 390
+          },
+          "starts": 16,
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "light",
+          "language": "ar",
+          "width": 1440,
+          "sourceFingerprint": "c2fbd32d6b7efac9be1b1f170c367870aa989f67e0af120f7e393ba743730f22",
+          "bootstrapReloads": 0,
+          "interactions": true,
+          "geometry": {
+            "headerHeight": 72,
+            "titleFontSize": "18px",
+            "titleWeight": "600",
+            "columnHeight": 56,
+            "badgesTop": 60.984375,
+            "controlsBottom": 78,
+            "documentWidth": 1440,
+            "viewport": 1440
+          },
+          "starts": 16,
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "dark",
+          "language": "en",
+          "width": 390,
+          "sourceFingerprint": "c2fbd32d6b7efac9be1b1f170c367870aa989f67e0af120f7e393ba743730f22",
+          "bootstrapReloads": 0,
+          "interactions": true,
+          "geometry": {
+            "headerHeight": 91,
+            "titleFontSize": "16px",
+            "titleWeight": "600",
+            "columnHeight": 56,
+            "badgesTop": 60,
+            "controlsBottom": 56,
+            "documentWidth": 390,
+            "viewport": 390
+          },
+          "starts": 16,
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "dark",
+          "language": "en",
+          "width": 1440,
+          "sourceFingerprint": "c2fbd32d6b7efac9be1b1f170c367870aa989f67e0af120f7e393ba743730f22",
+          "bootstrapReloads": 0,
+          "interactions": true,
+          "geometry": {
+            "headerHeight": 72,
+            "titleFontSize": "18px",
+            "titleWeight": "600",
+            "columnHeight": 56,
+            "badgesTop": 60.984375,
+            "controlsBottom": 78,
+            "documentWidth": 1440,
+            "viewport": 1440
+          },
+          "starts": 16,
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "dark",
+          "language": "ar",
+          "width": 390,
+          "sourceFingerprint": "c2fbd32d6b7efac9be1b1f170c367870aa989f67e0af120f7e393ba743730f22",
+          "bootstrapReloads": 0,
+          "interactions": true,
+          "geometry": {
+            "headerHeight": 91,
+            "titleFontSize": "16px",
+            "titleWeight": "600",
+            "columnHeight": 56,
+            "badgesTop": 60,
+            "controlsBottom": 56,
+            "documentWidth": 390,
+            "viewport": 390
+          },
+          "starts": 16,
+          "passed": true
+        },
+        {
+          "palette": "green",
+          "mode": "dark",
+          "language": "ar",
+          "width": 1440,
+          "sourceFingerprint": "c2fbd32d6b7efac9be1b1f170c367870aa989f67e0af120f7e393ba743730f22",
+          "bootstrapReloads": 0,
+          "interactions": true,
+          "geometry": {
+            "headerHeight": 72,
+            "titleFontSize": "18px",
+            "titleWeight": "600",
+            "columnHeight": 56,
+            "badgesTop": 60.984375,
+            "controlsBottom": 78,
+            "documentWidth": 1440,
+            "viewport": 1440
+          },
+          "starts": 16,
+          "passed": true
+        }
+      ],
+      "countries": [
+        {
+          "mode": "light",
+          "language": "en",
+          "width": 390,
+          "reducedMotion": false,
+          "writes": 17,
+          "toastStyle": {
+            "background": "rgb(255, 255, 255)",
+            "color": "rgb(21, 128, 61)"
+          },
+          "formSingleColumn": true,
+          "nativeCounterBadges": true,
+          "keyboard": true,
+          "inputKeyboardIsolation": true,
+          "editedActiveFlash": true,
+          "flashExpiresWithoutReplay": true,
+          "cardsRepeatedEditFlash": true,
+          "oldFlashClearedOnMove": true,
+          "stationaryHoverCleared": true,
+          "singleActiveFocus": true,
+          "archivePreviousRow": true,
+          "archivePageBoundary": true,
+          "create": true,
+          "edit": true,
+          "cards": true,
+          "inlineFieldErrors": true,
+          "generalErrorModal": true,
+          "uncertainNoReplay": true,
+          "archive": true,
+          "restore": true,
+          "bulk": true,
+          "atomicDependencyRejection": true,
+          "lifecycleNoReplay": true,
+          "readOnlyGuard": true,
+          "passed": true
+        },
+        {
+          "mode": "light",
+          "language": "en",
+          "width": 1440,
+          "reducedMotion": false,
+          "writes": 17,
+          "toastStyle": {
+            "background": "rgb(255, 255, 255)",
+            "color": "rgb(21, 128, 61)"
+          },
+          "formSingleColumn": true,
+          "nativeCounterBadges": true,
+          "keyboard": true,
+          "inputKeyboardIsolation": true,
+          "editedActiveFlash": true,
+          "flashExpiresWithoutReplay": true,
+          "cardsRepeatedEditFlash": true,
+          "oldFlashClearedOnMove": true,
+          "stationaryHoverCleared": true,
+          "singleActiveFocus": true,
+          "archivePreviousRow": true,
+          "archivePageBoundary": true,
+          "create": true,
+          "edit": true,
+          "cards": true,
+          "inlineFieldErrors": true,
+          "generalErrorModal": true,
+          "uncertainNoReplay": true,
+          "archive": true,
+          "restore": true,
+          "bulk": true,
+          "atomicDependencyRejection": true,
+          "lifecycleNoReplay": true,
+          "readOnlyGuard": true,
+          "passed": true
+        },
+        {
+          "mode": "light",
+          "language": "ar",
+          "width": 390,
+          "reducedMotion": false,
+          "writes": 17,
+          "toastStyle": {
+            "background": "rgb(255, 255, 255)",
+            "color": "rgb(21, 128, 61)"
+          },
+          "formSingleColumn": true,
+          "nativeCounterBadges": true,
+          "keyboard": true,
+          "inputKeyboardIsolation": true,
+          "editedActiveFlash": true,
+          "flashExpiresWithoutReplay": true,
+          "cardsRepeatedEditFlash": true,
+          "oldFlashClearedOnMove": true,
+          "stationaryHoverCleared": true,
+          "singleActiveFocus": true,
+          "archivePreviousRow": true,
+          "archivePageBoundary": true,
+          "create": true,
+          "edit": true,
+          "cards": true,
+          "inlineFieldErrors": true,
+          "generalErrorModal": true,
+          "uncertainNoReplay": true,
+          "archive": true,
+          "restore": true,
+          "bulk": true,
+          "atomicDependencyRejection": true,
+          "lifecycleNoReplay": true,
+          "readOnlyGuard": true,
+          "passed": true
+        },
+        {
+          "mode": "light",
+          "language": "ar",
+          "width": 1440,
+          "reducedMotion": false,
+          "writes": 17,
+          "toastStyle": {
+            "background": "rgb(255, 255, 255)",
+            "color": "rgb(21, 128, 61)"
+          },
+          "formSingleColumn": true,
+          "nativeCounterBadges": true,
+          "keyboard": true,
+          "inputKeyboardIsolation": true,
+          "editedActiveFlash": true,
+          "flashExpiresWithoutReplay": true,
+          "cardsRepeatedEditFlash": true,
+          "oldFlashClearedOnMove": true,
+          "stationaryHoverCleared": true,
+          "singleActiveFocus": true,
+          "archivePreviousRow": true,
+          "archivePageBoundary": true,
+          "create": true,
+          "edit": true,
+          "cards": true,
+          "inlineFieldErrors": true,
+          "generalErrorModal": true,
+          "uncertainNoReplay": true,
+          "archive": true,
+          "restore": true,
+          "bulk": true,
+          "atomicDependencyRejection": true,
+          "lifecycleNoReplay": true,
+          "readOnlyGuard": true,
+          "passed": true
+        },
+        {
+          "mode": "dark",
+          "language": "en",
+          "width": 390,
+          "reducedMotion": true,
+          "writes": 17,
+          "toastStyle": {
+            "background": "rgb(24, 32, 30)",
+            "color": "rgb(74, 222, 128)"
+          },
+          "formSingleColumn": true,
+          "nativeCounterBadges": true,
+          "keyboard": true,
+          "inputKeyboardIsolation": true,
+          "editedActiveFlash": true,
+          "flashExpiresWithoutReplay": true,
+          "cardsRepeatedEditFlash": true,
+          "oldFlashClearedOnMove": true,
+          "stationaryHoverCleared": true,
+          "singleActiveFocus": true,
+          "archivePreviousRow": true,
+          "archivePageBoundary": true,
+          "create": true,
+          "edit": true,
+          "cards": true,
+          "inlineFieldErrors": true,
+          "generalErrorModal": true,
+          "uncertainNoReplay": true,
+          "archive": true,
+          "restore": true,
+          "bulk": true,
+          "atomicDependencyRejection": true,
+          "lifecycleNoReplay": true,
+          "readOnlyGuard": true,
+          "passed": true
+        },
+        {
+          "mode": "dark",
+          "language": "en",
+          "width": 1440,
+          "reducedMotion": true,
+          "writes": 17,
+          "toastStyle": {
+            "background": "rgb(24, 32, 30)",
+            "color": "rgb(74, 222, 128)"
+          },
+          "formSingleColumn": true,
+          "nativeCounterBadges": true,
+          "keyboard": true,
+          "inputKeyboardIsolation": true,
+          "editedActiveFlash": true,
+          "flashExpiresWithoutReplay": true,
+          "cardsRepeatedEditFlash": true,
+          "oldFlashClearedOnMove": true,
+          "stationaryHoverCleared": true,
+          "singleActiveFocus": true,
+          "archivePreviousRow": true,
+          "archivePageBoundary": true,
+          "create": true,
+          "edit": true,
+          "cards": true,
+          "inlineFieldErrors": true,
+          "generalErrorModal": true,
+          "uncertainNoReplay": true,
+          "archive": true,
+          "restore": true,
+          "bulk": true,
+          "atomicDependencyRejection": true,
+          "lifecycleNoReplay": true,
+          "readOnlyGuard": true,
+          "passed": true
+        },
+        {
+          "mode": "dark",
+          "language": "ar",
+          "width": 390,
+          "reducedMotion": true,
+          "writes": 17,
+          "toastStyle": {
+            "background": "rgb(24, 32, 30)",
+            "color": "rgb(74, 222, 128)"
+          },
+          "formSingleColumn": true,
+          "nativeCounterBadges": true,
+          "keyboard": true,
+          "inputKeyboardIsolation": true,
+          "editedActiveFlash": true,
+          "flashExpiresWithoutReplay": true,
+          "cardsRepeatedEditFlash": true,
+          "oldFlashClearedOnMove": true,
+          "stationaryHoverCleared": true,
+          "singleActiveFocus": true,
+          "archivePreviousRow": true,
+          "archivePageBoundary": true,
+          "create": true,
+          "edit": true,
+          "cards": true,
+          "inlineFieldErrors": true,
+          "generalErrorModal": true,
+          "uncertainNoReplay": true,
+          "archive": true,
+          "restore": true,
+          "bulk": true,
+          "atomicDependencyRejection": true,
+          "lifecycleNoReplay": true,
+          "readOnlyGuard": true,
+          "passed": true
+        },
+        {
+          "mode": "dark",
+          "language": "ar",
+          "width": 1440,
+          "reducedMotion": true,
+          "writes": 17,
+          "toastStyle": {
+            "background": "rgb(24, 32, 30)",
+            "color": "rgb(74, 222, 128)"
+          },
+          "formSingleColumn": true,
+          "nativeCounterBadges": true,
+          "keyboard": true,
+          "inputKeyboardIsolation": true,
+          "editedActiveFlash": true,
+          "flashExpiresWithoutReplay": true,
+          "cardsRepeatedEditFlash": true,
+          "oldFlashClearedOnMove": true,
+          "stationaryHoverCleared": true,
+          "singleActiveFocus": true,
+          "archivePreviousRow": true,
+          "archivePageBoundary": true,
+          "create": true,
+          "edit": true,
+          "cards": true,
+          "inlineFieldErrors": true,
+          "generalErrorModal": true,
+          "uncertainNoReplay": true,
+          "archive": true,
+          "restore": true,
+          "bulk": true,
+          "atomicDependencyRejection": true,
+          "lifecycleNoReplay": true,
+          "readOnlyGuard": true,
+          "passed": true
+        }
+      ],
+      "shell": [
+        {
+          "role": "user",
+          "language": "en",
+          "mode": "light",
+          "width": 390,
+          "passed": true
+        },
+        {
+          "role": "user",
+          "language": "en",
+          "mode": "light",
+          "width": 900,
+          "passed": true
+        },
+        {
+          "role": "user",
+          "language": "en",
+          "mode": "light",
+          "width": 1440,
+          "passed": true
+        },
+        {
+          "role": "user",
+          "language": "en",
+          "mode": "dark",
+          "width": 390,
+          "passed": true
+        },
+        {
+          "role": "user",
+          "language": "en",
+          "mode": "dark",
+          "width": 900,
+          "passed": true
+        },
+        {
+          "role": "user",
+          "language": "en",
+          "mode": "dark",
+          "width": 1440,
+          "passed": true
+        },
+        {
+          "role": "user",
+          "language": "ar",
+          "mode": "light",
+          "width": 390,
+          "passed": true
+        },
+        {
+          "role": "user",
+          "language": "ar",
+          "mode": "light",
+          "width": 900,
+          "passed": true
+        },
+        {
+          "role": "user",
+          "language": "ar",
+          "mode": "light",
+          "width": 1440,
+          "passed": true
+        },
+        {
+          "role": "user",
+          "language": "ar",
+          "mode": "dark",
+          "width": 390,
+          "passed": true
+        },
+        {
+          "role": "user",
+          "language": "ar",
+          "mode": "dark",
+          "width": 900,
+          "passed": true
+        },
+        {
+          "role": "user",
+          "language": "ar",
+          "mode": "dark",
+          "width": 1440,
+          "passed": true
+        },
+        {
+          "role": "super_admin",
+          "language": "en",
+          "mode": "light",
+          "width": 390,
+          "passed": true
+        },
+        {
+          "role": "super_admin",
+          "language": "en",
+          "mode": "light",
+          "width": 900,
+          "passed": true
+        },
+        {
+          "role": "super_admin",
+          "language": "en",
+          "mode": "light",
+          "width": 1440,
+          "passed": true
+        },
+        {
+          "role": "super_admin",
+          "language": "en",
+          "mode": "dark",
+          "width": 390,
+          "passed": true
+        },
+        {
+          "role": "super_admin",
+          "language": "en",
+          "mode": "dark",
+          "width": 900,
+          "passed": true
+        },
+        {
+          "role": "super_admin",
+          "language": "en",
+          "mode": "dark",
+          "width": 1440,
+          "passed": true
+        },
+        {
+          "role": "super_admin",
+          "language": "ar",
+          "mode": "light",
+          "width": 390,
+          "passed": true
+        },
+        {
+          "role": "super_admin",
+          "language": "ar",
+          "mode": "light",
+          "width": 900,
+          "passed": true
+        },
+        {
+          "role": "super_admin",
+          "language": "ar",
+          "mode": "light",
+          "width": 1440,
+          "passed": true
+        },
+        {
+          "role": "super_admin",
+          "language": "ar",
+          "mode": "dark",
+          "width": 390,
+          "passed": true
+        },
+        {
+          "role": "super_admin",
+          "language": "ar",
+          "mode": "dark",
+          "width": 900,
+          "passed": true
+        },
+        {
+          "role": "super_admin",
+          "language": "ar",
+          "mode": "dark",
+          "width": 1440,
+          "passed": true
+        }
+      ],
+      "login": [
+        {
+          "kind": "visual",
+          "language": "en",
+          "width": 390,
+          "mode": "light",
+          "card": {
+            "x": 56,
+            "y": 132.40625,
+            "width": 278,
+            "height": 735.171875
+          },
+          "submit": {
+            "x": 76,
+            "y": 480.40625,
+            "width": 238,
+            "height": 42.046875
+          }
+        },
+        {
+          "kind": "visual",
+          "language": "en",
+          "width": 1440,
+          "mode": "light",
+          "card": {
+            "x": 318,
+            "y": 191.78125,
+            "width": 804,
+            "height": 656.421875
+          },
+          "submit": {
+            "x": 671.59375,
+            "y": 551.78125,
+            "width": 418.40625,
+            "height": 42.046875
+          }
+        },
+        {
+          "kind": "visual",
+          "language": "ar",
+          "width": 390,
+          "mode": "light",
+          "card": {
+            "x": 56,
+            "y": 139.40625,
+            "width": 278,
+            "height": 721.171875
+          },
+          "submit": {
+            "x": 76,
+            "y": 487.40625,
+            "width": 238,
+            "height": 42.046875
+          }
+        },
+        {
+          "kind": "visual",
+          "language": "ar",
+          "width": 1440,
+          "mode": "light",
+          "card": {
+            "x": 318,
+            "y": 191.78125,
+            "width": 804,
+            "height": 656.421875
+          },
+          "submit": {
+            "x": 350,
+            "y": 551.78125,
+            "width": 418.40625,
+            "height": 42.046875
+          }
+        },
+        {
+          "kind": "visual",
+          "language": "en",
+          "width": 390,
+          "mode": "dark",
+          "card": {
+            "x": 56,
+            "y": 132.40625,
+            "width": 278,
+            "height": 735.171875
+          },
+          "submit": {
+            "x": 76,
+            "y": 480.40625,
+            "width": 238,
+            "height": 42.046875
+          }
+        },
+        {
+          "kind": "visual",
+          "language": "en",
+          "width": 1440,
+          "mode": "dark",
+          "card": {
+            "x": 318,
+            "y": 191.78125,
+            "width": 804,
+            "height": 656.421875
+          },
+          "submit": {
+            "x": 671.59375,
+            "y": 551.78125,
+            "width": 418.40625,
+            "height": 42.046875
+          }
+        },
+        {
+          "kind": "visual",
+          "language": "ar",
+          "width": 390,
+          "mode": "dark",
+          "card": {
+            "x": 56,
+            "y": 139.40625,
+            "width": 278,
+            "height": 721.171875
+          },
+          "submit": {
+            "x": 76,
+            "y": 487.40625,
+            "width": 238,
+            "height": 42.046875
+          }
+        },
+        {
+          "kind": "visual",
+          "language": "ar",
+          "width": 1440,
+          "mode": "dark",
+          "card": {
+            "x": 318,
+            "y": 191.78125,
+            "width": 804,
+            "height": 656.421875
+          },
+          "submit": {
+            "x": 350,
+            "y": 551.78125,
+            "width": 418.40625,
+            "height": 42.046875
+          }
+        },
+        {
+          "kind": "workflow",
+          "language": "en",
+          "passed": true
+        },
+        {
+          "kind": "workflow",
+          "language": "ar",
+          "passed": true
+        }
+      ],
+      "reports": [
+        {
+          "mode": "light",
+          "language": "en",
+          "width": 390,
+          "passed": true,
+          "sidebarActions": true,
+          "nativeValidation": true,
+          "serverErrors": true,
+          "pdfDownload": true,
+          "recovery": true
+        },
+        {
+          "mode": "light",
+          "language": "en",
+          "width": 1440,
+          "passed": true,
+          "sidebarActions": true,
+          "nativeValidation": true,
+          "serverErrors": true,
+          "pdfDownload": true,
+          "recovery": true
+        },
+        {
+          "mode": "light",
+          "language": "ar",
+          "width": 390,
+          "passed": true,
+          "sidebarActions": true,
+          "nativeValidation": true,
+          "serverErrors": true,
+          "pdfDownload": true,
+          "recovery": true
+        },
+        {
+          "mode": "light",
+          "language": "ar",
+          "width": 1440,
+          "passed": true,
+          "sidebarActions": true,
+          "nativeValidation": true,
+          "serverErrors": true,
+          "pdfDownload": true,
+          "recovery": true
+        },
+        {
+          "mode": "dark",
+          "language": "en",
+          "width": 390,
+          "passed": true,
+          "sidebarActions": true,
+          "nativeValidation": true,
+          "serverErrors": true,
+          "pdfDownload": true,
+          "recovery": true
+        },
+        {
+          "mode": "dark",
+          "language": "en",
+          "width": 1440,
+          "passed": true,
+          "sidebarActions": true,
+          "nativeValidation": true,
+          "serverErrors": true,
+          "pdfDownload": true,
+          "recovery": true
+        },
+        {
+          "mode": "dark",
+          "language": "ar",
+          "width": 390,
+          "passed": true,
+          "sidebarActions": true,
+          "nativeValidation": true,
+          "serverErrors": true,
+          "pdfDownload": true,
+          "recovery": true
+        },
+        {
+          "mode": "dark",
+          "language": "ar",
+          "width": 1440,
+          "passed": true,
+          "sidebarActions": true,
+          "nativeValidation": true,
+          "serverErrors": true,
+          "pdfDownload": true,
+          "recovery": true
+        }
+      ]
+    },
+    "totalCases": 58
+  },
+  "sourceHashes": {
+    "normalization": "CRLF to LF before SHA256",
+    "files": [
+      {
+        "path": "web-angular/src/app/app.config.ts",
+        "sha256": "abd68de2735ecfe28efcd13d77e49aac73a3926dd27f372338e7991715481e2d"
+      },
+      {
+        "path": "web-angular/src/app/modules/reporting/global-reports/components/global-report-view/global-report-view.ts",
+        "sha256": "f4b8007b21f33c7557c75291e366b5f9e921072a3eb2f77404641c1d43d59342"
+      },
+      {
+        "path": "web-angular/src/app/modules/reporting/global-reports/components/global-report-view/global-report-view.html",
+        "sha256": "35fe4d3a9b7b90a4eed17ed691806b8f91775a687dc6b20d5506ab2092e1dbb9"
+      },
+      {
+        "path": "web-angular/src/app/modules/reporting/global-reports/state/global-report-state.ts",
+        "sha256": "83cce6291dd7fce5a8e776f4c8c83f6010778cd66cda65a7030d3a1e47bb27dc"
+      },
+      {
+        "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/state/country-editor-state.ts",
+        "sha256": "54de26c7bac4bd4bb2341b41c59e45c22a5ba9b0bf3d6f1aead1fde73f51788a"
+      },
+      {
+        "path": "web-angular/src/app/shared/ui/forms/form-field-control.ts",
+        "sha256": "586e908fa304c3e4963eee27ee8f75ea456e8411051aa0bdc1b1d80bcd920626"
+      },
+      {
+        "path": "web-angular/src/app/shared/ui/forms/form-container/form-container.ts",
+        "sha256": "71427867ee0e89acd7861d182100979cd3d42d2cc43eff46fd261d38fa407f55"
+      },
+      {
+        "path": "web-angular/src/app/shared/ui/forms/fields/file-field/file-field.ts",
+        "sha256": "820ce306358450ae8c3eda65135d5b26193ec320dea517640fee230689c84541"
+      },
+      {
+        "path": "web-angular/src/app/shared/ui/collections/my-data-grid/my-data-grid.ts",
+        "sha256": "2022c560dbbc093ff287b494538219a9b0b1b5f29df2708b3f2f5b73b5c158eb"
+      },
+      {
+        "path": "web-angular/src/app/shared/ui/collections/my-data-grid/grid-column-presentation.ts",
+        "sha256": "e33a801a15e7b378f77fce73eacfc14712dea3d215df6b9a0b79f33d50711796"
+      },
+      {
+        "path": "web-angular/scripts/dependency-rules.mjs",
+        "sha256": "9725a871be725d78a26a4c31a023c11dc7c6c092e252033ecd6e3084a28d4ff7"
+      },
+      {
+        "path": "web-angular/scripts/check-architecture.mjs",
+        "sha256": "05a4b21cb95d075a809fdb8d491dd4bdd6112720e41de855e5ed85b402fd2892"
+      }
+    ]
+  },
+  "limits": [
+    "The full documentation gate remains blocked by genuine historical evidence missing from main.",
+    "The earlier country-report harness expects PDF actions inside PdfViewer and is stale for the retained sidebar tabs; the archived merge harness validates the current presentation.",
+    "Production release, native Crystal execution, hosted API/SQL acceptance and complete pilot parity are independent gates.",
+    "Historical D35/D36/D37 foundation references were renumbered to D39/D40/D41; startup risk RISK-019 becomes RISK-020. Main owns existing IDs."
+  ]
+}

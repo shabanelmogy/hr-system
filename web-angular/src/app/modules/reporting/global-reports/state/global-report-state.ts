@@ -1,6 +1,17 @@
 import { computed, DestroyRef, effect, inject, Injectable, signal } from '@angular/core';
 import { takeUntilDestroyed, toObservable, toSignal } from '@angular/core/rxjs-interop';
-import { catchError, filter, finalize, map, of, startWith, switchMap, takeUntil } from 'rxjs';
+import {
+  catchError,
+  filter,
+  finalize,
+  firstValueFrom,
+  map,
+  of,
+  startWith,
+  switchMap,
+  take,
+  takeUntil,
+} from 'rxjs';
 import { AuthSession, type Session } from '../../../../platform/auth/session.public-api';
 import { LocalizationRuntime } from '../../../../platform/localization/public-api';
 import {
@@ -184,6 +195,35 @@ export class GlobalReportState {
     this.staleActor.set(null);
     this.criteria.set(null);
     this.entity.set(entity);
+  }
+  private readonly submissionResult = toObservable(
+    computed(() => ({ spec: this.spec(), result: this.result() })),
+  );
+  /** Await the existing scoped render pipeline; context loss or destruction cancels acceptance. */
+  async submitSearch(input: unknown): Promise<GlobalReportFailure | undefined> {
+    if (!this.search(input)) return;
+    const expected = this.spec();
+    const result = await firstValueFrom(
+      this.submissionResult.pipe(
+        // A replayed result can still belong to the preceding search. Only this
+        // generation may finish the submission; replacing its context cancels it.
+        filter(
+          ({ result }) =>
+            this.spec() !== expected ||
+            (result.spec === expected && (result.kind === 'ready' || result.kind === 'failure')),
+        ),
+        take(1),
+        takeUntilDestroyed(this.destroyRef),
+      ),
+      { defaultValue: undefined },
+    );
+    if (
+      this.spec() === expected &&
+      result?.result.spec === expected &&
+      result.result.kind === 'failure'
+    )
+      return result.result.failure;
+    return;
   }
   select(id: unknown) {
     const state = this.catalog();

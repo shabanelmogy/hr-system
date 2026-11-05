@@ -1,5 +1,5 @@
 import { Component, computed, inject, output, viewChild } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormField } from '@angular/forms/signals';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   LocalizationRuntime,
@@ -25,7 +25,7 @@ import {
 @Component({
   selector: 'erp-country-editor',
   imports: [
-    ReactiveFormsModule,
+    FormField,
     ActionButton,
     AppIcon,
     DialogPanel,

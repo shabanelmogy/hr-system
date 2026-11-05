@@ -9,8 +9,7 @@ import {
   viewChild,
 } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { form, FormField, submit, validate, metadata, MAX_LENGTH } from '@angular/forms/signals';
 import { LocalizationRuntime, UiTextPipe } from '../../../../../platform/localization/public-api';
 import { AuthSession, type Session } from '../../../../../platform/auth/session.public-api';
 import {
@@ -24,11 +23,11 @@ import {
   ReferenceField,
   ReportWorkspace,
   TextField,
-  applyServerFieldErrors,
+  mapServerFieldErrors,
   type ReferenceSource,
 } from '../../../../../shared/ui/public-api';
 import { GlobalReportState } from '../../state/global-report-state';
-import { reportFilterValidator } from '../../validation/report-filter-validator';
+import { reportFilterErrors } from '../../validation/report-filter-validator';
 import {
   emptyReportFilters,
   reportFilterLimit,
@@ -41,7 +40,7 @@ import {
   host: { '[class.embedded]': 'embedded()' },
   providers: [GlobalReportState],
   imports: [
-    ReactiveFormsModule,
+    FormField,
     NgTemplateOutlet,
     ActionButton,
     AppIcon,
@@ -85,12 +84,30 @@ export class GlobalReportView {
       })),
   );
   readonly limit = reportFilterLimit;
-  readonly form = new FormGroup({
-    nameAr: new FormControl('', { nonNullable: true, validators: reportFilterValidator }),
-    nameEn: new FormControl('', { nonNullable: true, validators: reportFilterValidator }),
-  });
-  readonly report = new FormControl<string | number | null>(null);
-  private readonly criteriaForm = viewChild<FormContainer>('criteriaForm');
+  readonly form = form(
+    signal({ ...emptyReportFilters }),
+    (path) => {
+      for (const field of ['nameAr', 'nameEn'] as const) {
+        metadata(path[field], MAX_LENGTH, () => reportFilterLimit);
+        validate(path[field], ({ value }) => reportFilterErrors(value()));
+      }
+    },
+    {
+      submission: {
+        ignoreValidators: 'none',
+        action: async (field) => {
+          const submitted = field().value(),
+            actor = this.auth.readIdentity();
+          const failure = await this.state.submitSearch(submitted);
+          if (actor === this.auth.readIdentity() && failure?.kind === 'validation') {
+            this.sidebarTab.set('criteria');
+            return mapServerFieldErrors(field, failure.fields, submitted);
+          }
+          return;
+        },
+      },
+    },
+  );
   private draftActor: Session | null | undefined;
   readonly source = computed<ReferenceSource>(() => {
     const actor = this.auth.readIdentity(),
@@ -126,7 +143,7 @@ export class GlobalReportView {
   });
   readonly fileName = computed(() => {
     const report = this.state.selected();
-    return 'countries-' + (report?.id.slice(0, 16) ?? 'report') + '.pdf';
+    return this.entity() + '-' + (report?.id.slice(0, 16) ?? 'report') + '.pdf';
   });
   readonly messages = computed(() => ({
     maxlength: this.locale.translate('validation.maxLength', 'core', { count: this.limit }),
@@ -141,28 +158,15 @@ export class GlobalReportView {
           ? (options[0]?.value ?? current)
           : current;
       if (selected !== current) this.entity.set(selected);
+      if (this.state.entity() !== selected) this.form().reset({ ...emptyReportFilters });
       this.state.setEntity(selected);
     });
     void this.locale.loadNamespace('core');
     effect(() => {
       const actor = this.auth.readIdentity();
       if (this.draftActor !== undefined && this.draftActor !== actor)
-        this.form.reset(emptyReportFilters);
+        this.form().reset({ ...emptyReportFilters });
       this.draftActor = actor;
-    });
-    effect(() => {
-      this.report.setValue(this.state.selected()?.id ?? null, { emitEvent: false });
-    });
-    this.report.valueChanges
-      .pipe(takeUntilDestroyed())
-      .subscribe((value) => this.state.select(value));
-    effect(() => {
-      const view = this.state.view();
-      if (view.kind === 'error' && view.failure.kind === 'validation') {
-        applyServerFieldErrors(this.form, view.failure.fields);
-        this.sidebarTab.set('criteria');
-        this.criteriaForm()?.revealErrors();
-      }
     });
   }
   selectEntity(value: string): void {
@@ -183,13 +187,13 @@ export class GlobalReportView {
     );
   }
   search() {
-    this.state.search(this.form.getRawValue());
+    return submit(this.form);
   }
   reload(): void {
     this.state.reload();
   }
   reset() {
-    this.form.reset(emptyReportFilters);
+    this.form().reset({ ...emptyReportFilters });
     this.state.reset();
   }
   retry() {

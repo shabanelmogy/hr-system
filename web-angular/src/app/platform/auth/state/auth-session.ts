@@ -12,13 +12,20 @@ export class AuthSession {
   private readonly localization = inject(LocalizationService);
   private readonly events = inject(SessionContextEvents);
   private readonly drafts = inject(UnsavedChanges);
-  readonly user = signal<Session | null>(null);
-  readonly challenge = signal<Challenge | null>(null);
-  readonly pending = signal(false);
-  readonly restoring = signal(false);
-  readonly error = signal<string | null>(null);
-  readonly contextChanging = signal(false);
-  readonly contextError = signal<string | null>(null);
+  private readonly userState = signal<Session | null>(null);
+  readonly user = this.userState.asReadonly();
+  private readonly challengeState = signal<Challenge | null>(null);
+  readonly challenge = this.challengeState.asReadonly();
+  private readonly pendingState = signal(false);
+  readonly pending = this.pendingState.asReadonly();
+  private readonly restoringState = signal(false);
+  readonly restoring = this.restoringState.asReadonly();
+  private readonly errorState = signal<string | null>(null);
+  readonly error = this.errorState.asReadonly();
+  private readonly contextChangingState = signal(false);
+  readonly contextChanging = this.contextChangingState.asReadonly();
+  private readonly contextErrorState = signal<string | null>(null);
+  readonly contextError = this.contextErrorState.asReadonly();
   readonly readIdentity = computed(() => (this.contextChanging() ? null : this.user()));
   private generation = 0;
   private restoreTask: Promise<void> | null = null;
@@ -47,21 +54,29 @@ export class AuthSession {
     });
   }
 
+  dismissContextError(): void {
+    this.contextErrorState.set(null);
+  }
+
+  showProviderUnavailable(): void {
+    this.errorState.set('angularAuth.providerUnavailable');
+  }
+
   restore(): Promise<void> {
     this.restoreTask ??= this.restoreSession();
     return this.restoreTask;
   }
 
   private async restoreSession(): Promise<void> {
-    this.restoring.set(true);
+    this.restoringState.set(true);
     const generation = this.generation;
     try {
       const user = await this.currentSession();
       if (user) await this.acceptUser(user, generation);
     } catch (error) {
-      if (generation === this.generation) this.error.set(this.message(error));
+      if (generation === this.generation) this.errorState.set(this.message(error));
     } finally {
-      this.restoring.set(false);
+      this.restoringState.set(false);
       this.drainContextCheck();
     }
   }
@@ -105,9 +120,9 @@ export class AuthSession {
       )
         return false;
     }
-    this.pending.set(true);
-    this.contextChanging.set(true);
-    this.contextError.set(null);
+    this.pendingState.set(true);
+    this.contextChangingState.set(true);
+    this.contextErrorState.set(null);
     const generation = ++this.generation;
     void this.localization.connect(null);
     try {
@@ -121,7 +136,7 @@ export class AuthSession {
       if (generation !== this.generation) return false;
       if (!verified) {
         this.clearContext();
-        this.error.set('angularAuth.unavailable');
+        this.errorState.set('angularAuth.unavailable');
         return false;
       }
       await this.acceptUser(verified, generation);
@@ -129,17 +144,17 @@ export class AuthSession {
         this.user()?.companyId === companyId &&
         this.user()?.userId === previous.userId &&
         this.user()?.tenantId === previous.tenantId;
-      if (!changed) this.contextError.set('auth.companySwitchFailed');
+      if (!changed) this.contextErrorState.set('auth.companySwitchFailed');
       return changed;
     } catch {
       if (generation === this.generation) {
         this.clearContext();
-        this.error.set('angularAuth.unavailable');
+        this.errorState.set('angularAuth.unavailable');
       }
       return false;
     } finally {
-      this.contextChanging.set(false);
-      this.pending.set(false);
+      this.contextChangingState.set(false);
+      this.pendingState.set(false);
       this.events.publish();
       this.drainContextCheck();
     }
@@ -175,9 +190,9 @@ export class AuthSession {
   async synchronizeContext(): Promise<boolean> {
     if (this.pending() || this.restoring() || this.destroyed) return false;
     this.drafts.cancel();
-    this.pending.set(true);
-    this.contextChanging.set(true);
-    this.contextError.set(null);
+    this.pendingState.set(true);
+    this.contextChangingState.set(true);
+    this.contextErrorState.set(null);
     const generation = ++this.generation;
     void this.localization.connect(null);
     this.transport.resetCsrf();
@@ -193,12 +208,12 @@ export class AuthSession {
     } catch {
       if (generation === this.generation) {
         this.clearContext();
-        this.error.set('angularAuth.unavailable');
+        this.errorState.set('angularAuth.unavailable');
       }
       return false;
     } finally {
-      this.contextChanging.set(false);
-      this.pending.set(false);
+      this.contextChangingState.set(false);
+      this.pendingState.set(false);
       this.drainContextCheck();
     }
   }
@@ -224,9 +239,9 @@ export class AuthSession {
       )
         return false;
     }
-    this.pending.set(true);
-    this.contextChanging.set(true);
-    this.contextError.set(null);
+    this.pendingState.set(true);
+    this.contextChangingState.set(true);
+    this.contextErrorState.set(null);
     const generation = ++this.generation;
     void this.localization.connect(null);
     try {
@@ -248,12 +263,12 @@ export class AuthSession {
     } catch {
       if (generation === this.generation) {
         this.clearContext();
-        this.error.set('angularAuth.unavailable');
+        this.errorState.set('angularAuth.unavailable');
       }
       return false;
     } finally {
-      this.contextChanging.set(false);
-      this.pending.set(false);
+      this.contextChangingState.set(false);
+      this.pendingState.set(false);
       this.events.publish();
       this.drainContextCheck();
     }
@@ -261,8 +276,8 @@ export class AuthSession {
 
   private clearContext(): void {
     this.drafts.invalidate();
-    this.user.set(null);
-    this.challenge.set(null);
+    this.userState.set(null);
+    this.challengeState.set(null);
     void this.localization.connect(null);
   }
   private drainContextCheck(): void {
@@ -287,7 +302,7 @@ export class AuthSession {
         : selection.companySelectionTokenExpiration;
     if (!Number.isFinite(Date.parse(expiration)) || Date.parse(expiration) <= Date.now()) {
       this.cancelSelection();
-      this.error.set('angularAuth.selectionExpired');
+      this.errorState.set('angularAuth.selectionExpired');
       return Promise.resolve(false);
     }
     if ('requiresTenantSelection' in selection) {
@@ -305,20 +320,20 @@ export class AuthSession {
   cancelSelection(): void {
     if (!this.pending()) {
       this.generation++;
-      this.challenge.set(null);
+      this.challengeState.set(null);
     }
   }
 
   private async perform(operation: () => Promise<LoginResult>): Promise<boolean> {
     if (this.pending()) return false;
-    this.pending.set(true);
-    this.error.set(null);
-    this.contextError.set(null);
+    this.pendingState.set(true);
+    this.errorState.set(null);
+    this.contextErrorState.set(null);
     try {
       await this.restoreTask;
       const generation = ++this.generation;
       void this.localization.connect(null);
-      this.user.set(null);
+      this.userState.set(null);
       const result = await operation();
       if (generation !== this.generation) return false;
       if (result.isAuthenticated) {
@@ -326,13 +341,13 @@ export class AuthSession {
         this.events.publish();
         return this.user() !== null;
       }
-      this.challenge.set(result);
+      this.challengeState.set(result);
       return false;
     } catch (error) {
-      this.error.set(this.message(error));
+      this.errorState.set(this.message(error));
       return false;
     } finally {
-      this.pending.set(false);
+      this.pendingState.set(false);
       this.drainContextCheck();
     }
   }
@@ -362,9 +377,9 @@ export class AuthSession {
         JSON.stringify([...previous.roles].sort()) !== JSON.stringify([...user.roles].sort()))
     )
       this.drafts.invalidate();
-    this.challenge.set(null);
-    this.error.set(null);
-    this.user.set(user);
+    this.challengeState.set(null);
+    this.errorState.set(null);
+    this.userState.set(user);
   }
 
   async logout(): Promise<boolean> {
@@ -381,22 +396,22 @@ export class AuthSession {
       )
         return false;
     }
-    this.pending.set(true);
-    this.error.set(null);
+    this.pendingState.set(true);
+    this.errorState.set(null);
     try {
       await this.transport.logout();
       return true;
     } catch {
-      this.error.set('angularAuth.logoutFailed');
+      this.errorState.set('angularAuth.logoutFailed');
       return false;
     } finally {
       ++this.generation;
       this.drafts.invalidate();
       void this.localization.connect(null);
-      this.user.set(null);
-      this.challenge.set(null);
+      this.userState.set(null);
+      this.challengeState.set(null);
       this.restoreTask = Promise.resolve();
-      this.pending.set(false);
+      this.pendingState.set(false);
       this.events.publish();
       this.drainContextCheck();
     }

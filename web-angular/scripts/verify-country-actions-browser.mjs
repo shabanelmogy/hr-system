@@ -316,6 +316,16 @@ try {
 
         const add = page.locator('erp-page-header .primary-action').getByRole('button'),
           form = () => page.getByRole('dialog', { name: country['countries.add'], exact: true });
+        const fieldLabel = (field) =>
+          field === 'nameAr' || field === 'nameEn'
+            ? text['general.' + field]
+            : country['countries.' + field];
+        const fieldInput = (dialog, field) =>
+          dialog.getByRole('textbox', { name: fieldLabel(field), exact: true });
+        const fieldHost = (dialog, field) =>
+          dialog
+            .locator('erp-text-field')
+            .filter({ has: page.getByRole('textbox', { name: fieldLabel(field), exact: true }) });
         const fill = async (dialog, name = 'New Country') => {
           for (const [field, value] of Object.entries({
             nameAr: 'دولة جديدة',
@@ -325,7 +335,7 @@ try {
             phoneCode: '+123',
             currencyCode: 'usd',
           }))
-            await dialog.locator(`input[name=${field}]`).fill(value);
+            await fieldInput(dialog, field).fill(value);
         };
         const save = (dialog) => dialog.locator('button[type=submit]'),
           cancel = (dialog) =>
@@ -368,13 +378,8 @@ try {
           phoneCode: 10,
           currencyCode: 3,
         })) {
-          await expect(form().locator(`input[name=${field}]`)).toHaveAttribute(
-            'maxlength',
-            String(maximum),
-          );
-          await expect(
-            form().locator(`erp-text-field:has(input[name=${field}]) .p-badge`),
-          ).toHaveText('0/' + maximum);
+          await expect(fieldInput(form(), field)).toHaveAttribute('maxlength', String(maximum));
+          await expect(fieldHost(form(), field).locator('.p-badge')).toHaveText('0/' + maximum);
         }
         await expect(save(form())).toBeInViewport();
         await expect(save(form())).toHaveText(country['countries.add']);
@@ -387,7 +392,7 @@ try {
           path: path.join(output, `${mode}-${language}-${width}-add-form-dialog.png`),
           animations: 'disabled',
         });
-        const alpha2 = form().locator('erp-text-field:has(input[name=alpha2Code])');
+        const alpha2 = fieldHost(form(), 'alpha2Code');
         await alpha2.locator('input').fill('AA');
         await expect(alpha2.locator('.p-badge')).toHaveText('2/2');
         await alpha2.getByRole('button', { name: text['general.clear'], exact: true }).click();
@@ -396,19 +401,17 @@ try {
           .getByRole('button', { name: country['countries.generateMockData'], exact: true })
           .click();
         for (const field of ['nameAr', 'nameEn'])
-          await expect(form().locator(`input[name=${field}]`)).not.toHaveValue('');
+          await expect(fieldInput(form(), field)).not.toHaveValue('');
         await expect(alpha2.locator('.p-badge')).toHaveText('2/2');
         await cancel(form()).click();
         await discard();
         await add.click();
         await save(form()).click();
         await expect(form().locator('[aria-invalid=true]')).toHaveCount(2);
-        await expect(form().locator('input[name=nameAr]')).toBeFocused();
+        await expect(fieldInput(form(), 'nameAr')).toBeFocused();
         assert.equal(writes.length, 0);
         await fill(form());
-        await expect(
-          form().locator('erp-text-field:has(input[name=alpha2Code]) .p-badge'),
-        ).toHaveText('2/2');
+        await expect(fieldHost(form(), 'alpha2Code').locator('.p-badge')).toHaveText('2/2');
         await cancel(form()).click();
         const consent = page.getByRole('dialog', {
           name: text['messages.unsavedChangesTitle'],
@@ -419,7 +422,7 @@ try {
           .locator('.dialog-actions')
           .getByRole('button', { name: text['actions.cancel'], exact: true })
           .click();
-        await expect(form().locator('input[name=nameEn]')).toHaveValue('New Country');
+        await expect(fieldInput(form(), 'nameEn')).toHaveValue('New Country');
         await cancel(form()).click();
         await discard();
         await expect(form()).not.toBeVisible();
@@ -430,7 +433,7 @@ try {
         await save(form()).click();
         await expect.poll(() => writes.length).toBe(1);
         await expect(save(form())).toBeDisabled();
-        await expect(form().locator('input[name=nameEn]')).toHaveAttribute('readonly', '');
+        await expect(fieldInput(form(), 'nameEn')).toHaveAttribute('readonly', '');
         release();
         hold = false;
         await expect(form()).not.toBeVisible();
@@ -456,8 +459,8 @@ try {
           .getByRole('button')
           .click();
         const edit = page.getByRole('dialog', { name: country['countries.edit'], exact: true });
-        await expect(edit.locator('input[name=nameEn]')).toHaveValue('New Country');
-        await edit.locator('input[name=nameEn]').fill('Updated Country');
+        await expect(fieldInput(edit, 'nameEn')).toHaveValue('New Country');
+        await fieldInput(edit, 'nameEn').fill('Updated Country');
         await save(edit).click();
         await expect(edit).not.toBeVisible();
         await expect(region).toContainText('Updated Country');
@@ -522,7 +525,7 @@ try {
           .locator('[data-row-action=edit][data-action-row="13"]')
           .getByRole('button')
           .click();
-        await expect(edit.locator('input[name=nameEn]')).toHaveValue('Updated Country');
+        await expect(fieldInput(edit, 'nameEn')).toHaveValue('Updated Country');
         await cancel(edit).click();
         await expect(edit).not.toBeVisible();
         await region
@@ -563,11 +566,11 @@ try {
           '',
           '',
         ]);
-        await expect(form().locator('input[name=nameEn]')).toBeFocused();
+        await expect(fieldInput(form(), 'nameEn')).toBeFocused();
         await expect(
           page.getByRole('dialog', { name: text['errorDialog.title'], exact: true }),
         ).toHaveCount(0);
-        await form().locator('input[name=nameEn]').fill('Another Country');
+        await fieldInput(form(), 'nameEn').fill('Another Country');
         writeMode = 'conflict';
         await save(form()).click();
         const error = page.getByRole('dialog', { name: text['errorDialog.title'], exact: true });
@@ -577,7 +580,7 @@ try {
           .locator('.dialog-actions')
           .getByRole('button', { name: text['actions.close'], exact: true })
           .click();
-        await expect(form().locator('input[name=nameEn]')).toHaveValue('Another Country');
+        await expect(fieldInput(form(), 'nameEn')).toHaveValue('Another Country');
         writeMode = 'lost';
         const beforeLost = writes.length;
         await save(form()).click();
@@ -819,6 +822,24 @@ try {
         console.log(`Countries actions passed ${mode}/${language}/${width}`);
       }
   fs.writeFileSync(path.join(output, 'edit-results.json'), JSON.stringify(results, null, 2));
+} catch (error) {
+  for (const context of browser.contexts())
+    for (const page of context.pages()) {
+      await page.screenshot({ path: path.join(output, 'failure.png'), fullPage: true });
+      console.error(
+        JSON.stringify(
+          await page.evaluate(() => ({
+            url: location.pathname,
+            dialogs: Array.from(document.querySelectorAll('[role=dialog]')).map((element) => ({
+              label: element.getAttribute('aria-label'),
+              text: element.textContent,
+            })),
+            tail: document.body.innerText.slice(-1200),
+          })),
+        ),
+      );
+    }
+  throw error;
 } finally {
   await browser.close();
 }

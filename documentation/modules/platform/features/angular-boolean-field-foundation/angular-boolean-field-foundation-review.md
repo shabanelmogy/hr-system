@@ -61,3 +61,6 @@ Phase06 Verified after341 entry checks and actual acceptance. Overall migration 
 Verified technical consumer guide after Phase06. Owner boolean meaning and consent/permissions independent; no business settings acceptance from neutral harness.
 
 Canonical closure2026-10-30:341 recipe/planning gates passed; S1-A9 Phase06 Verified/Closed.
+
+
+Maintenance 2026-11-04 — D07/D39: BooleanField supports native Signal Forms with a boolean model, native touched/errors/focus and shared readonly protection. The native dev harness retains false-as-data and explicit consent validation. Internal vendor FormControl does not own feature validation. API/Next/Mobile runtime and persistence are unchanged; migrations and cross-platform domain UI audit are N/A for this client-only maintenance. Current verification and limits: `documentation/modules/platform/features/angular-form-foundation/SIGNAL_FORMS_IMPLEMENTATION_REPORT.md`. Historical verification in section 11 refers to its dated increment.

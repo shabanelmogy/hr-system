@@ -13,7 +13,7 @@
       <ng-content select="[formHeader]" />
     </header>
   }
-  @if (summary().length) {
+  @if (validationIssues().length) {
     <erp-validation-summary [issues]="validationIssues()" (issueSelected)="focusError($event)" />
   }
   @if (feedback()) {

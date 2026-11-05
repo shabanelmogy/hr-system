@@ -1,0 +1,17 @@
+
+> erp-angular@0.0.0 pretype-check
+> npm run configure:license && npm run configure:api
+
+
+> erp-angular@0.0.0 configure:license
+> node --env-file-if-exists=.env.local scripts/configure-license.mjs
+
+PrimeUI local license configured (value omitted).
+
+> erp-angular@0.0.0 configure:api
+> node scripts/configure-api.mjs
+
+API target: host (https://shabanhrms.runasp.net)
+
+> erp-angular@0.0.0 type-check
+> tsc --noEmit -p tsconfig.app.json && tsc --noEmit -p tsconfig.spec.json

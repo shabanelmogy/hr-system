@@ -1,0 +1,20 @@
+:host {
+  display: flex;
+  align-items: center;
+  gap: var(--preferences-gap, 16px);
+  color: inherit;
+}
+erp-button {
+  --action-quiet-background: transparent;
+}
+:host(.quiet) {
+  flex: 1;
+  justify-content: space-between;
+  gap: 8px;
+}
+:host(.quiet) erp-button {
+  --action-font-size: 13px;
+  --action-padding-x: 8px;
+  --action-radius: 8px;
+  --action-border-width: 0px;
+}

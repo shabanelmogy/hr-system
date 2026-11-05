@@ -63,3 +63,6 @@ Technical consumer guide created after Verified. Real numeric consumers reuse Sh
 Canonical closure2026-10-30:Phase06 Verified/Closed with333 recipe/planning checks; S1-A9 boolean preparation follows.
 
 S1-A10 shared-source evolution2026-10-30: TextField now supports an optional plain-text PrimeNG textarea branch in the same template/lifecycle, rows1..20/default3 and locked clear guard. NumericField explicitly remains single input; DateField retains its own date-only input template. Existing defaults retained; current206unit and multiline/form/numeric/date/retained browser acceptance belongs to angular-multiline-field-foundation/IMPLEMENTATION_REPORT.md. No API/schema/native/resource change.
+
+
+Maintenance 2026-11-04 — D07/D39: NumericField supports native Signal Forms and validateNumericText schema rules; validation details preserve exact bounds/precision messages. No binary Number conversion. The dev numeric harness now exercises native forms. Legacy CVA support remains compatibility-only. API/Next/Mobile runtime and persistence are unchanged; migrations and cross-platform domain UI audit are N/A for this client-only maintenance. Current verification and limits: `documentation/modules/platform/features/angular-form-foundation/SIGNAL_FORMS_IMPLEMENTATION_REPORT.md`. Historical verification in section 11 refers to its dated increment.

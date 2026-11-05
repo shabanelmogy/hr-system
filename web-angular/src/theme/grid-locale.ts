@@ -1,11 +1,11 @@
 import { effect, inject, Injectable } from '@angular/core';
 import { PrimeNG } from 'primeng/config';
-import { LocalizationRuntime } from '../app/platform/localization/public-api';
+import { UI_LOCALIZATION } from '../app/shared/localization/public-api';
 
 /** Native Table filter menus use the same persisted SQL-backed captions as shared controls. */
 @Injectable({ providedIn: 'root' })
 export class GridLocale {
-  private readonly runtime = inject(LocalizationRuntime);
+  private readonly runtime = inject(UI_LOCALIZATION);
   private readonly prime = inject(PrimeNG);
   constructor() {
     effect(() => {

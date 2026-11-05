@@ -1,5 +1,5 @@
 import { Component, input, output } from '@angular/core';
-import { UiTextPipe } from '../../../../platform/localization/public-api';
+import { UiTextPipe } from '../../../localization/public-api';
 
 export interface ValidationIssue {
   readonly id: string;

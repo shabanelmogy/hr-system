@@ -32,10 +32,13 @@ export {
   applyServerFieldErrors,
   clearServerFieldError,
 } from './forms/public-api';
+export { mapServerFieldErrors } from './forms/public-api';
+export { validateDateOnly, validateNumericText } from './forms/public-api';
 export type { FieldMessages, ValidationIssue } from './forms/public-api';
 export { AppIcon } from './icons/app-icon/app-icon';
 export type { AppIconName } from './icons/app-icon/app-icon';
 export { OptionSelect } from './controls/option-select/option-select';
+export { AppearancePreferences } from './controls/appearance-preferences/appearance-preferences';
 export { SortDirectionButton } from './controls/sort-direction-button/sort-direction-button';
 export { ChoiceDialog } from './dialogs/choice-dialog/choice-dialog';
 export { DialogPanel } from './dialogs/dialog-panel/dialog-panel';

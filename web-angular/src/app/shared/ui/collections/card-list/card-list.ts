@@ -2,7 +2,7 @@ import { Component, contentChild, inject, input, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgTemplateOutlet } from '@angular/common';
 import { Checkbox } from 'primeng/checkbox';
-import { LocalizationRuntime, UiTextPipe } from '../../../../platform/localization/public-api';
+import { UI_LOCALIZATION, UiTextPipe } from '../../../localization/public-api';
 import { SurfaceCard } from '../../layout/surface-card/surface-card';
 import { ScrollViewport } from '../../layout/scroll-viewport/scroll-viewport';
 import { CollectionFrame } from '../collection-frame/collection-frame';
@@ -53,7 +53,7 @@ export class CardList<T> {
   readonly recordRequest = input<CollectionRecordRequest | null>(null);
   readonly layout = input<'auto' | 'responsive'>('auto');
   readonly appearance = input<'compact' | 'entity'>('compact');
-  private readonly locale = inject(LocalizationRuntime);
+  private readonly locale = inject(UI_LOCALIZATION);
   readonly source = input.required<CollectionSource<T>>();
   readonly label = input.required<string>();
   readonly rowId = input.required<(row: T) => CollectionId>();

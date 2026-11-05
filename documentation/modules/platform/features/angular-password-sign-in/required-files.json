@@ -640,6 +640,24 @@
       "layer": "web",
       "path": "web-angular/src/testing/fixture-item.ts",
       "purpose": "FOLLOW-022 current shared/feature contracts and enforceable Clean Code evidence"
+    },
+    {
+      "id": "signal-foundation-20261104-0",
+      "path": "web-angular/src/app/platform/auth/routes.public-api.ts",
+      "layer": "web",
+      "purpose": "D07/D39 current native forms and foundation maintenance source/evidence"
+    },
+    {
+      "id": "signal-foundation-20261104-1",
+      "path": "web-angular/src/app/shell/auth-layout.public-api.ts",
+      "layer": "web",
+      "purpose": "D07/D39 current native forms and foundation maintenance source/evidence"
+    },
+    {
+      "id": "signal-foundation-20261104-2",
+      "path": "web-angular/src/app/platform/auth/pages/password-request-page/password-request-page.spec.ts",
+      "layer": "web",
+      "purpose": "D07/D39 current native forms and foundation maintenance source/evidence"
     }
   ]
 }

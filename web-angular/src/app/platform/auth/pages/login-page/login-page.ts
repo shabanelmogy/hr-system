@@ -1,7 +1,7 @@
 import { afterNextRender, Component, computed, effect, inject, viewChild } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormField, submit } from '@angular/forms/signals';
 import { Router, RouterLink } from '@angular/router';
-import { AuthLayout } from '../../../../shell/auth-layout/auth-layout';
+import { AuthLayout } from '../../../../shell/auth-layout.public-api';
 import {
   ActionButton,
   AppIcon,
@@ -11,11 +11,11 @@ import {
 } from '../../../../shared/ui/public-api';
 import { LocalizationRuntime, UiTextPipe } from '../../../localization/public-api';
 import { AuthSession } from '../../state/auth-session';
-import { createLoginForm } from '../../validation/login-validation';
+import { createLoginForm, emptyLogin } from '../../validation/login-validation';
 
 @Component({
   imports: [
-    ReactiveFormsModule,
+    FormField,
     RouterLink,
     AuthLayout,
     ActionButton,
@@ -32,7 +32,9 @@ export class LoginPage {
   readonly locale = inject(LocalizationRuntime);
   readonly auth = inject(AuthSession);
   private readonly router = inject(Router);
-  readonly form = createLoginForm();
+  readonly form = createLoginForm({
+    submission: { ignoreValidators: 'none', action: () => this.authenticate() },
+  });
   readonly firstField = viewChild<TextField>('username');
   readonly messages = computed(() => ({
     required: this.locale.translate('validation.required'),
@@ -95,18 +97,21 @@ export class LoginPage {
     });
   }
   async login(): Promise<void> {
-    const values = this.form.getRawValue();
+    await submit(this.form);
+  }
+  private async authenticate(): Promise<void> {
+    const values = this.form().value();
     const accepted = await this.auth.login({
       userName: values.username.trim(),
       password: values.password.trim(),
     });
-    if (accepted) this.form.reset();
+    if (accepted) this.form().reset({ ...emptyLogin });
   }
   async demo(userName: string): Promise<void> {
-    this.form.setValue({ username: userName, password: 'P@ssword123' });
+    this.form().value.set({ username: userName, password: 'P@ssword123' });
     await this.login();
   }
   async select(id: string): Promise<void> {
-    if (await this.auth.select(id)) this.form.reset();
+    if (await this.auth.select(id)) this.form().reset({ ...emptyLogin });
   }
 }

@@ -12,15 +12,13 @@
     [submitFullWidth]="true"
     [pending]="auth.pending()"
     [feedback]="auth.error() ? (auth.error()! | uiText: 'platform-auth') : ''"
-    (validSubmit)="login()"
   >
     <erp-text-field
       #username
-      [formControl]="form.controls.username"
+      [formField]="form.username"
       [label]="'auth.userName' | uiText: 'platform-auth'"
       appearance="floating"
       [messages]="messages()"
-      [maxLength]="50"
       [showCounter]="true"
       autocomplete="username"
       class="username-field"
@@ -28,7 +26,7 @@
       <erp-icon fieldIcon name="user" class="input-icon" />
     </erp-text-field>
     <erp-text-field
-      [formControl]="form.controls.password"
+      [formField]="form.password"
       [label]="'auth.password' | uiText: 'platform-auth'"
       appearance="floating"
       [messages]="messages()"
@@ -77,7 +75,7 @@
     fullWidth
     [disabled]="auth.pending()"
     [title]="'angularAuth.providerUnavailable' | uiText: 'platform-auth'"
-    (activated)="auth.error.set('angularAuth.providerUnavailable')"
+    (activated)="auth.showProviderUnavailable()"
     ><erp-icon buttonIcon name="google"
   /></erp-button>
   <erp-choice-dialog
@@ -91,7 +89,7 @@
     [cancelLabel]="'actions.cancel' | uiText"
     [continueLabel]="selectionContinue() | uiText: 'platform-auth'"
     [closeLabel]="'actions.close' | uiText"
-    (cancelled)="auth.cancelSelection(); form.controls.password.reset()"
+    (cancelled)="auth.cancelSelection(); form.password().reset('')"
     (chosen)="select($event)"
   />
 </erp-auth-layout>

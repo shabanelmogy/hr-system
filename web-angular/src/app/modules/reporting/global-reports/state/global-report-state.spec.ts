@@ -174,4 +174,32 @@ describe('Global report lifetime and authorization', () => {
     expect(service.render).toHaveBeenCalledTimes(2);
     expect(service.render).toHaveBeenLastCalledWith(report, { nameAr: '', nameEn: '' }, 'en');
   });
+  it('awaits the submitted generation instead of accepting a replayed ready result', async () => {
+    const { state, subscriptions } = setup();
+    fixtureItem(subscriptions, 0).subject.next(document);
+    TestBed.tick();
+    let settled = false;
+    const request = state.submitSearch({ nameAr: '', nameEn: 'Submitted' });
+    void request.then(() => {
+      settled = true;
+    });
+    TestBed.tick();
+    await Promise.resolve();
+    expect(settled).toBe(false);
+    fixtureItem(subscriptions, 1).subject.error(
+      new GlobalReportFailure('validation', { nameEn: 'Server issue' }),
+    );
+    TestBed.tick();
+    expect(await request).toMatchObject({ kind: 'validation', fields: { nameEn: 'Server issue' } });
+  });
+  it('cancels submission acceptance when the report context is replaced', async () => {
+    const { state, subscriptions, language } = setup();
+    fixtureItem(subscriptions, 0).subject.next(document);
+    const request = state.submitSearch({ nameAr: '', nameEn: 'Submitted' });
+    TestBed.tick();
+    language.set('ar');
+    TestBed.tick();
+    expect(await request).toBeUndefined();
+    expect(fixtureItem(subscriptions, 1).cancelled).toBe(true);
+  });
 });

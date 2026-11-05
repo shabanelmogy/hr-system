@@ -281,7 +281,7 @@ policy and the user's scrollbar/width refinements.
 | PageHeader and shared list toolbar | ERP header/toolbar components over PrimeNG | Search/reset/actions/small-screen behavior preserved |
 | MyDataGrid | One shared ERP table over PrimeNG Table/Paginator | Server paging/sort/filter, selection, grid options, footer and record navigation |
 | Grid/Card composition | Shared view shell and card scaffold | Same feature fields/actions/permissions, paging and feedback |
-| MyForm / FormContainer / fields | Shared Angular form container and field adapters over typed Reactive Forms/PrimeNG | Dirty guard, pending, field errors, summary links, first-invalid focus |
+| MyForm / FormContainer / fields | Shared Angular form container and field adapters over native Signal Forms/PrimeNG | Dirty guard, pending, field errors, summary links, first-invalid focus |
 | Reference selectors / lookup inputs | Shared generic searchable selection plus owner-specific typed lookup adapters | Server search/paging, off-page selected value, dependency/scope reset, stale-response protection and keyboard behavior (ERP-02) |
 | SplitTreeView / diagrams | Shared Angular tree/workspace adapter, feature-owned nodes | Exact hierarchy/reparent rules, keyboard/direct Move action |
 | ContextBadge / ContextSwitcher | Shared header context controls | Tenant/company/fiscal-year order, compact/wide behavior, no clipping |
@@ -317,11 +317,14 @@ The requester explicitly reaffirmed database-persisted UI translation on 2026-10
 company/global runtime and save/reset/revision contract for Angular foundation
 and later Settings acceptance; no static-only replacement or key/catalog fork.
 
-Use typed Reactive Forms as proposed baseline, including FormArray builders for
-structured children. Test load-edit-save without loss, add/remove/reorder,
-conditional controls, pending validation, server errors and view mode. Connect
-asynchronous model/status changes to Zoneless notifications; Signals do not
-replace validators or duplicate the authoritative form state.
+Use Angular 22 Signal Forms with the lightweight shared-controls architecture
+approved under D07/D39 on 2026-11-04. Features own typed models, schemas,
+conditional/cross-field rules and submissions. Shared owns controls, exact-value
+helpers, errors/focus and presentation. Native field trees/arrays remain the single
+form authority; no metadata renderer or parallel dependency/validation store. Test
+load-edit-save without loss, add/remove/reorder, conditional fields, pending
+validation, server errors and view mode. Retain Reactive Forms only at explicit
+compatibility boundaries for technical fixtures and internal vendor adapters.
 
 Preserve scoped en/ar keys, lazy namespaces, fallback rules and authorized
 company/system overrides. Select the runtime translation adapter during S0/S1;
@@ -660,3 +663,10 @@ real remote/missed-change/lifecycle delivery. Test IDs7,8,9 verified archived.
 FOLLOW-021 Verified. Current only pilot blocker is hosted managed-report503
 PROD-028; complete Phase06 Not Verified/Phase07 not started/business route dev-only.
 Broader release gates and queued S1-A14 powers retain their own scopes.
+
+Maintenance 2026-11-04: requester-approved foundation hardening and Signal Forms Option B are recorded under D07/D39. This changes existing client implementation, not business scope or other-platform parity. Current verification is in angular-form-foundation/SIGNAL_FORMS_IMPLEMENTATION_REPORT.md; historical stage verification above retains its original date/scope.
+
+Maintenance 2026-11-04 — D40: requester scope is existing Angular structure and performance, with new functionality deferred. No next business slice is activated. Narrow public entries and HTTP-boundary schema separation reduce initial608.36→572.16kB; RISK-019 remains open. Current evidence: documentation/modules/platform/features/angular-localization-foundation/STRUCTURE_PERFORMANCE_REPORT.md.
+
+
+Maintenance 2026-11-04 — D41: requester approved the component-structure findings and recurring-pattern documentation. This reuses the approved existing-foundation maintenance scope; no next business slice is activated. Shared controlled preferences, internal collection presentation/options, domain-local Countries composition and external Report files follow ANGULAR_COMPONENT_COMPOSITION.md. Source and verification: documentation/modules/platform/features/angular-collection-foundation/COMPONENT_COMPOSITION_REPORT.md. Existing production/parity gates retain their scope.

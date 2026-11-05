@@ -21,6 +21,12 @@ Existing session/refresh/logout/localization transport only; exact HTTPS credent
 ## 7. Shared composition
 Reuse current action/icon/select/theme/locale; generic shared app frame/navigation, popover/avatar/context, palette picker, simple header/surface when no current match. Feature composes public APIs; no direct PrimeNG or shared internal bypass.
 
+
+D41 composition maintenance2026-11-04: Shared AppearancePreferences is reused by AuthLayout and MainShell, including compact/settings variants. It accepts typed language/mode and emits typed events. Shell/Auth retain preference persistence, settings dismissal and session/navigation authority. The component uses existing Shared localization and PrimeNG-backed controls; no business/root service is introduced.
+Reusable policy: documentation/guides/web/architecture/ANGULAR_COMPONENT_COMPOSITION.md. Current evidence: documentation/modules/platform/features/angular-collection-foundation/COMPONENT_COMPOSITION_REPORT.md. Earlier acceptance snapshots retain their original scope/date; no API/domain/schema/native behavior changes.
+
+D41 final acceptance: architecture16/full scan, strict app/spec,448 unit tests and production build passed;86 bounded fixture browser cases across Grid8/Countries8/actions8/Report8/login10/language20/Shell24. Production initial572.16kB; existing RISK-019500kB warning remains. Portable current evidence: angular-collection-foundation/verification/component-composition-summary.json. API/native/hosted/pixel acceptance retain their existing scope.
+
 ## 8. States and lifecycle
 Anonymous guard, actual restore/reload/logout and truthful errors. Responsive drawer closes on route/resize/logout, overlay focus returns to trigger, preferences update immediately/reload. No business dirty draft in this child.
 
@@ -48,3 +54,8 @@ Current contract owns exact S2-A1; final manifest grows only with existing runti
 Phase 06 Verified on 2026-10-29: Angular full check 14 files/59 tests and 6 architecture cases; strict templates/types, tokens/fonts/catalog and production build pass (427.54 kB initial / 114.90 kB transfer). Production artifact shell matrix passes 24 cases (two roles, EN/AR, light/dark, 390/900/1440). PrimeNG language selector passes 20 palette/mode/language cases including selected-row contrast >=4.5, closed foreground, keyboard selection/Escape/focus. Login browser acceptance passes 11 scenarios including 8 current Next visual pairs within 1px, real API/SQL login/reload/settings logout with Secure HttpOnly cookies, and scoped localization. Retained Mobile auth regression passes 2 tests. Actual Next desktop frame measures 64/280 sidebar and x=281,width=1159 expanded header at 1440; Angular matches. No API/native/schema or business-dashboard parity claim. Full historical API gate remains its own R2 evidence; hosted checks and FOLLOW-012/014/015 remain open.
 
 Canonical report: IMPLEMENTATION_REPORT.md. Customer education: documentation/plans/business/web-angular-migration/education/angular-application-shell.md.
+
+
+Maintenance 2026-11-04 — D07/D39: Architecture checks now enforce resolved owner/public-API imports and eager value cycles, including aliases and external feature templates. Public auth routes/layout are separate from session exports; Shared localization uses an injected presentation token. Auth identity changes remain owner-controlled. No business context moved into Shell. API/Next/Mobile runtime and persistence are unchanged; migrations and cross-platform domain UI audit are N/A for this client-only maintenance. Current verification and limits: `documentation/modules/platform/features/angular-form-foundation/SIGNAL_FORMS_IMPLEMENTATION_REPORT.md`. Historical verification in section 11 refers to its dated increment.
+
+Maintenance 2026-11-04 — D40: root composition imports unsaved state/navigation through shared/data/navigation.public-api.ts; application configuration uses the localization presentation entry. Feature read/collection/PDF and translation HTTP validation are excluded from bootstrap. Existing UI, providers, owner state and route behavior remain unchanged. Current source/production verification: documentation/modules/platform/features/angular-localization-foundation/STRUCTURE_PERFORMANCE_REPORT.md; RISK-020 remains open.

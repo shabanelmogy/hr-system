@@ -7,7 +7,7 @@ Platform technical client slice S1-A2; user authorized continuing Angular. Exist
 Reviewed Next MyForm/FormContainer/formErrorSummary/MyTextField and existing Angular action/theme/localization. No Angular field/form exists to extend. New generic primitives justified; no business screen/auth/dialog.
 
 ## 3. Domain and persistence
-No entity/schema/DB/API change, migration N/A. Reactive Form is sole value/validation authority; current SQL UI translation consumers remain intact.
+No entity/schema/DB/API change, migration N/A. Native Signal Forms model/FieldTree is sole feature value/validation authority (D07/D39); current SQL UI translation consumers remain intact.
 
 ## 4. Rules
 Save enabled when invalid; submission marks touched, renders specific errors/links/focus. CVA never echoes model writes, clear emits once, IME buffers; readonly/disabled/busy and async model changes explicit.
@@ -16,7 +16,7 @@ Save enabled when invalid; submission marks touched, renders specific errors/lin
 Web technical field/form harness Required. Web/Mobile business Grid/Table/Cards/Tree/Detail/Report/Import/Export/Chart Excluded here. Native unchanged. Dirty/dialog/select/date/repeater remain later Required contracts.
 
 ## 6. Contracts
-Typed Reactive Form caller supplies validators/messages; generic helpers map server exact nested paths and return unknown paths. No HttpClient/new DTO/mutation/auth. No React form-library assumptions in Angular.
+Typed native Signal Forms caller supplies schemas/messages/submission; generic helpers map server exact nested paths and return unknown paths. No HttpClient/new DTO/mutation/auth. No React form-library assumptions in Angular.
 
 ## 7. Composition
 API source/security/SQL/DTO contracts unchanged. No API/schema/migration in this client unit; caller parses API errors and supplies exact field paths. Shared code contains no API-specific envelope or mutation behavior.
