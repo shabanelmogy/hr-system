@@ -7,7 +7,7 @@ Platform technical client slice S1-A2; user authorized continuing Angular. Exist
 Reviewed Next MyForm/FormContainer/formErrorSummary/MyTextField and existing Angular action/theme/localization. No Angular field/form exists to extend. New generic primitives justified; no business screen/auth/dialog.
 
 ## 3. Domain and persistence
-No entity/schema/DB/API change, migration N/A. Reactive Form is sole value/validation authority; current SQL UI translation consumers remain intact.
+No entity/schema/DB/API change, migration N/A. Native Signal Forms model/FieldTree is sole feature value/validation authority (D07/D35); current SQL UI translation consumers remain intact.
 
 ## 4. Rules
 Save enabled when invalid; submission marks touched, renders specific errors/links/focus. CVA never echoes model writes, clear emits once, IME buffers; readonly/disabled/busy and async model changes explicit.
@@ -16,10 +16,10 @@ Save enabled when invalid; submission marks touched, renders specific errors/lin
 Web technical field/form harness Required. Web/Mobile business Grid/Table/Cards/Tree/Detail/Report/Import/Export/Chart Excluded here. Native unchanged. Dirty/dialog/select/date/repeater remain later Required contracts.
 
 ## 6. Contracts
-Typed Reactive Form caller supplies validators/messages; generic helpers map server exact nested paths and return unknown paths. No HttpClient/new DTO/mutation/auth. No React form-library assumptions in Angular.
+Typed native Signal Forms caller supplies schemas/messages/submission; generic helpers map server exact nested paths and return unknown paths. No HttpClient/new DTO/mutation/auth. No React form-library assumptions in Angular.
 
 ## 7. Composition
-Shared text/email/password CVA with PrimeNG InputText, shared form container/header/content/footer and public ActionButton. Existing public localization/theme, no new design values/catalog fork or mega-form engine.
+Shared text/email/password native FormValueControl (retained CVA compatibility) with PrimeNG InputText, shared form container/header/content/footer and public ActionButton. Existing public localization/theme, no new design values/catalog fork or mega-form engine.
 
 ## 8. States
 NoValidate, specific beneath-input errors and summary links, focus by registered IDs. Input null/reset/disabled/readonly, clear/password reveal, async patch/pending/errors under zoneless. No navigation/discard workflow in this unit.
@@ -48,3 +48,6 @@ Current source paths only, updated buttons/forms/fields and stable public API. R
 S1-A8 shared-source evolution2026-10-30: TextField HTML moved unchanged to fields/text-field.html and reused by NumericField; generic inputMode/textDirection hints added. FormFieldControl can notify validation summaries on constraint-only changes without emitting value events. Existing form/date behavior retained; current acceptance belongs to angular-numeric-field-foundation/IMPLEMENTATION_REPORT.md after verification. No API/domain/native change to this foundation.
 
 S1-A10 shared-source evolution2026-10-30: TextField now supports an optional plain-text PrimeNG textarea branch in the same template/lifecycle, rows1..20/default3 and locked clear guard. NumericField explicitly remains single input; DateField retains its own date-only input template. Existing defaults retained; current206unit and multiline/form/numeric/date/retained browser acceptance belongs to angular-multiline-field-foundation/IMPLEMENTATION_REPORT.md. No API/schema/native/resource change.
+
+
+Maintenance 2026-11-04 — D07/D35: Native Signal Forms models/schemas/submission now compose shared FormContainer and FormValueControl fields. Native focus reaches nested components; summary includes root errors; no Form Engine. New helpers map API errors with late-draft/array-order protection and preserve exact numeric/date-only values. Legacy CVA fixtures remain explicit compatibility coverage. API/Next/Mobile runtime and persistence are unchanged; migrations and cross-platform domain UI audit are N/A for this client-only maintenance. Current verification and limits: `documentation/modules/platform/features/angular-form-foundation/SIGNAL_FORMS_IMPLEMENTATION_REPORT.md`. Historical verification in section 11 refers to its dated increment.

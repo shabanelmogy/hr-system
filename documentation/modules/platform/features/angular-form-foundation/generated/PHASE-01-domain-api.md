@@ -78,15 +78,15 @@ existing-system review, implementation order, and Definition of Done.
 
 | Book | Section | SHA-256 |
 | --- | ---: | --- |
-| angular-form-foundation-master | 3 | `1c07ac405eb9a9da732bbc2cd5d3043d903b7d7fee12ac491660742dcf928262` |
+| angular-form-foundation-master | 3 | `cfe7b61be759495d1427fd581fec0408c394e1f04950fa502c2916fb250bd638` |
 | angular-form-foundation-master | 4 | `1b47dfc85b7c0c905a5cfc0e75f64cdc37b04cf1e47a64acd27ba7fb18fe99c9` |
-| angular-form-foundation-master | 6 | `4c846e1af1e4f8be32a79a58ff2f272759a316890b776c9960c0096a4661669a` |
+| angular-form-foundation-master | 6 | `526d5011c54604150902ed89223b55e5b5628a862ecdfd4af0e08bf66f2c27c5` |
 | angular-form-foundation-api | 1 | `3faf7c7e731326a9d26b46946abe7eb9059ff63cb8eec7a8ac2055308cf6fc84` |
 | angular-form-foundation-api | 2 | `f2251a944a00c8155b578e2ac7e59625798f5ab536762ef52fd00529ba0982d6` |
-| angular-form-foundation-api | 3 | `1c07ac405eb9a9da732bbc2cd5d3043d903b7d7fee12ac491660742dcf928262` |
+| angular-form-foundation-api | 3 | `cfe7b61be759495d1427fd581fec0408c394e1f04950fa502c2916fb250bd638` |
 | angular-form-foundation-api | 4 | `1b47dfc85b7c0c905a5cfc0e75f64cdc37b04cf1e47a64acd27ba7fb18fe99c9` |
 | angular-form-foundation-api | 5 | `c6d1c95cb6dfb29c3a4eb08fcf1592391d0d06246967c3fab9725067f8bc2687` |
-| angular-form-foundation-api | 6 | `4c846e1af1e4f8be32a79a58ff2f272759a316890b776c9960c0096a4661669a` |
+| angular-form-foundation-api | 6 | `526d5011c54604150902ed89223b55e5b5628a862ecdfd4af0e08bf66f2c27c5` |
 | angular-form-foundation-api | 7 | `8991a19064c7d81739fba17e6500f19e98224091570403ef290e474d8988ec4e` |
 | angular-form-foundation-api | 8 | `8e9a6c65ec70640c0b36054bd0f77faedfee71f12d1eb28d45398ddfb7365b67` |
 | angular-form-foundation-api | 9 | `9e69e079b4dcc5b2ca68cde1376645625bb85e1030a5da4e8083eb9453d322ee` |

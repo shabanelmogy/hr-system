@@ -1,0 +1,282 @@
+[
+  {
+    "palette": "green",
+    "mode": "light",
+    "language": "en",
+    "foreground": {
+      "host": "rgb(255, 255, 255)",
+      "selected": "rgb(255, 255, 255)"
+    },
+    "row": {
+      "color": "rgb(23, 32, 38)",
+      "background": "rgb(234, 244, 241)"
+    },
+    "passed": true
+  },
+  {
+    "palette": "green",
+    "mode": "light",
+    "language": "ar",
+    "foreground": {
+      "host": "rgb(255, 255, 255)",
+      "selected": "rgb(255, 255, 255)"
+    },
+    "row": {
+      "color": "rgb(23, 32, 38)",
+      "background": "rgb(234, 244, 241)"
+    },
+    "passed": true
+  },
+  {
+    "palette": "green",
+    "mode": "dark",
+    "language": "en",
+    "foreground": {
+      "host": "rgb(94, 234, 212)",
+      "selected": "rgb(94, 234, 212)"
+    },
+    "row": {
+      "color": "rgb(245, 247, 248)",
+      "background": "rgb(33, 48, 44)"
+    },
+    "passed": true
+  },
+  {
+    "palette": "green",
+    "mode": "dark",
+    "language": "ar",
+    "foreground": {
+      "host": "rgb(94, 234, 212)",
+      "selected": "rgb(94, 234, 212)"
+    },
+    "row": {
+      "color": "rgb(245, 247, 248)",
+      "background": "rgb(33, 48, 44)"
+    },
+    "passed": true
+  },
+  {
+    "palette": "orange",
+    "mode": "light",
+    "language": "en",
+    "foreground": {
+      "host": "rgb(255, 255, 255)",
+      "selected": "rgb(255, 255, 255)"
+    },
+    "row": {
+      "color": "rgb(23, 32, 38)",
+      "background": "rgb(252, 237, 227)"
+    },
+    "passed": true
+  },
+  {
+    "palette": "orange",
+    "mode": "light",
+    "language": "ar",
+    "foreground": {
+      "host": "rgb(255, 255, 255)",
+      "selected": "rgb(255, 255, 255)"
+    },
+    "row": {
+      "color": "rgb(23, 32, 38)",
+      "background": "rgb(252, 237, 227)"
+    },
+    "passed": true
+  },
+  {
+    "palette": "orange",
+    "mode": "dark",
+    "language": "en",
+    "foreground": {
+      "host": "rgb(253, 186, 116)",
+      "selected": "rgb(253, 186, 116)"
+    },
+    "row": {
+      "color": "rgb(245, 247, 248)",
+      "background": "rgb(50, 35, 26)"
+    },
+    "passed": true
+  },
+  {
+    "palette": "orange",
+    "mode": "dark",
+    "language": "ar",
+    "foreground": {
+      "host": "rgb(253, 186, 116)",
+      "selected": "rgb(253, 186, 116)"
+    },
+    "row": {
+      "color": "rgb(245, 247, 248)",
+      "background": "rgb(50, 35, 26)"
+    },
+    "passed": true
+  },
+  {
+    "palette": "blue",
+    "mode": "light",
+    "language": "en",
+    "foreground": {
+      "host": "rgb(255, 255, 255)",
+      "selected": "rgb(255, 255, 255)"
+    },
+    "row": {
+      "color": "rgb(23, 32, 38)",
+      "background": "rgb(232, 240, 250)"
+    },
+    "passed": true
+  },
+  {
+    "palette": "blue",
+    "mode": "light",
+    "language": "ar",
+    "foreground": {
+      "host": "rgb(255, 255, 255)",
+      "selected": "rgb(255, 255, 255)"
+    },
+    "row": {
+      "color": "rgb(23, 32, 38)",
+      "background": "rgb(232, 240, 250)"
+    },
+    "passed": true
+  },
+  {
+    "palette": "blue",
+    "mode": "dark",
+    "language": "en",
+    "foreground": {
+      "host": "rgb(147, 197, 253)",
+      "selected": "rgb(147, 197, 253)"
+    },
+    "row": {
+      "color": "rgb(245, 247, 248)",
+      "background": "rgb(32, 43, 59)"
+    },
+    "passed": true
+  },
+  {
+    "palette": "blue",
+    "mode": "dark",
+    "language": "ar",
+    "foreground": {
+      "host": "rgb(147, 197, 253)",
+      "selected": "rgb(147, 197, 253)"
+    },
+    "row": {
+      "color": "rgb(245, 247, 248)",
+      "background": "rgb(32, 43, 59)"
+    },
+    "passed": true
+  },
+  {
+    "palette": "navy",
+    "mode": "light",
+    "language": "en",
+    "foreground": {
+      "host": "rgb(255, 255, 255)",
+      "selected": "rgb(255, 255, 255)"
+    },
+    "row": {
+      "color": "rgb(15, 23, 42)",
+      "background": "rgb(230, 235, 244)"
+    },
+    "passed": true
+  },
+  {
+    "palette": "navy",
+    "mode": "light",
+    "language": "ar",
+    "foreground": {
+      "host": "rgb(255, 255, 255)",
+      "selected": "rgb(255, 255, 255)"
+    },
+    "row": {
+      "color": "rgb(15, 23, 42)",
+      "background": "rgb(230, 235, 244)"
+    },
+    "passed": true
+  },
+  {
+    "palette": "navy",
+    "mode": "dark",
+    "language": "en",
+    "foreground": {
+      "host": "rgb(165, 180, 252)",
+      "selected": "rgb(165, 180, 252)"
+    },
+    "row": {
+      "color": "rgb(241, 245, 249)",
+      "background": "rgb(28, 39, 64)"
+    },
+    "passed": true
+  },
+  {
+    "palette": "navy",
+    "mode": "dark",
+    "language": "ar",
+    "foreground": {
+      "host": "rgb(165, 180, 252)",
+      "selected": "rgb(165, 180, 252)"
+    },
+    "row": {
+      "color": "rgb(241, 245, 249)",
+      "background": "rgb(28, 39, 64)"
+    },
+    "passed": true
+  },
+  {
+    "palette": "monochrome",
+    "mode": "light",
+    "language": "en",
+    "foreground": {
+      "host": "rgb(255, 255, 255)",
+      "selected": "rgb(255, 255, 255)"
+    },
+    "row": {
+      "color": "rgb(17, 17, 17)",
+      "background": "rgb(236, 236, 236)"
+    },
+    "passed": true
+  },
+  {
+    "palette": "monochrome",
+    "mode": "light",
+    "language": "ar",
+    "foreground": {
+      "host": "rgb(255, 255, 255)",
+      "selected": "rgb(255, 255, 255)"
+    },
+    "row": {
+      "color": "rgb(17, 17, 17)",
+      "background": "rgb(236, 236, 236)"
+    },
+    "passed": true
+  },
+  {
+    "palette": "monochrome",
+    "mode": "dark",
+    "language": "en",
+    "foreground": {
+      "host": "rgb(250, 250, 250)",
+      "selected": "rgb(250, 250, 250)"
+    },
+    "row": {
+      "color": "rgb(250, 250, 250)",
+      "background": "rgb(38, 38, 38)"
+    },
+    "passed": true
+  },
+  {
+    "palette": "monochrome",
+    "mode": "dark",
+    "language": "ar",
+    "foreground": {
+      "host": "rgb(250, 250, 250)",
+      "selected": "rgb(250, 250, 250)"
+    },
+    "row": {
+      "color": "rgb(250, 250, 250)",
+      "background": "rgb(38, 38, 38)"
+    },
+    "passed": true
+  }
+]

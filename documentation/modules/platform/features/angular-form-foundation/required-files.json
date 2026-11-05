@@ -286,6 +286,48 @@
       "path": "web-angular/src/app/shared/ui/forms/fields/text-field.spec.ts",
       "layer": "web",
       "purpose": "Current inherited TextField mode/locks/template regression"
+    },
+    {
+      "id": "signal-foundation-20261104-0",
+      "path": "web-angular/src/app/shared/ui/forms/submission-errors.ts",
+      "layer": "web",
+      "purpose": "D07/D35 current native forms and foundation maintenance source/evidence"
+    },
+    {
+      "id": "signal-foundation-20261104-1",
+      "path": "web-angular/src/app/shared/ui/forms/submission-errors.spec.ts",
+      "layer": "web",
+      "purpose": "D07/D35 current native forms and foundation maintenance source/evidence"
+    },
+    {
+      "id": "signal-foundation-20261104-2",
+      "path": "web-angular/src/app/shared/ui/forms/field-rules.ts",
+      "layer": "web",
+      "purpose": "D07/D35 current native forms and foundation maintenance source/evidence"
+    },
+    {
+      "id": "signal-foundation-20261104-3",
+      "path": "web-angular/src/app/shared/ui/forms/signal-form.spec.ts",
+      "layer": "web",
+      "purpose": "D07/D35 current native forms and foundation maintenance source/evidence"
+    },
+    {
+      "id": "signal-foundation-20261104-4",
+      "path": "documentation/guides/web/architecture/ANGULAR_SIGNAL_FORMS.md",
+      "layer": "documentation",
+      "purpose": "D07/D35 current native forms and foundation maintenance source/evidence"
+    },
+    {
+      "id": "signal-foundation-20261104-5",
+      "path": "documentation/modules/platform/features/angular-form-foundation/SIGNAL_FORMS_IMPLEMENTATION_REPORT.md",
+      "layer": "documentation",
+      "purpose": "D07/D35 current native forms and foundation maintenance source/evidence"
+    },
+    {
+      "id": "signal-forms-verification-20261104",
+      "path": "documentation/modules/platform/features/angular-form-foundation/verification/signal-forms-summary.json",
+      "layer": "documentation",
+      "purpose": "Current native forms unit/browser evidence summary"
     }
   ]
 }

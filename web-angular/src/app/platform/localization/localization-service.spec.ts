@@ -69,4 +69,62 @@ describe('Existing persisted UI translation HTTP contract', () => {
     oldRequest.flush(response('Older SQL text')); expect(await older).toBe(false);
     expect(runtime.translate('general.mainTitle')).toBe('Newer SQL text');
   });
+
+  it('rejects malformed company responses before applying any override and recovers on refresh', async () => {
+    runtime.setLanguage(null);
+    const pending = service.connect(identity);
+    const response = {
+      tenantId: 't', companyId: 1, defaultLanguage: 'ar', revision: 1,
+      catalogVersion: uiCatalogVersion,
+      overrides: [{ namespace: 'core', key: 'general.mainTitle', language: 'en', value: 'Validated caption' }],
+    };
+    http.expectOne(req => req.url.endsWith('/runtime')).flush(response);
+    expect(await pending).toBe(true);
+    expect(runtime.language()).toBe('ar');
+
+    const invalid = service.refresh();
+    http.expectOne(req => req.url.endsWith('/runtime')).flush({
+      ...response, overrides: [...response.overrides, { namespace: 'core', key: 'actions.cancel', language: 'en', value: 42 }],
+    });
+    expect(await invalid).toBe(false);
+    expect(service.runtimeUnavailable()).toBe(true);
+    expect(runtime.language()).toBe('en');
+    expect(runtime.translate('general.mainTitle')).toBe('ERP System');
+
+    const recovered = service.refresh();
+    http.expectOne(req => req.url.endsWith('/runtime')).flush({ ...response, defaultLanguage: 'en' });
+    expect(await recovered).toBe(true);
+    expect(service.runtimeUnavailable()).toBe(false);
+    expect(runtime.translate('general.mainTitle')).toBe('Validated caption');
+  });
+
+  it.each([
+    { name: 'negative revision', invalid: { revision: -1 } },
+    { name: 'invalid company', invalid: { companyId: 0 } },
+    { name: 'unsupported language', invalid: { defaultLanguage: 'fr' } },
+    { name: 'too many overrides', invalid: { overrides: Array.from({ length: 5001 }, () => ({ namespace: 'core', key: 'general.mainTitle', language: 'en', value: 'Too many' })) } },
+    { name: 'oversized text', invalid: { overrides: [{ namespace: 'core', key: 'general.mainTitle', language: 'en', value: 'x'.repeat(4001) }] } },
+  ])('rejects $name without changing the fallback', async ({ invalid }) => {
+    const pending = service.connect(identity);
+    http.expectOne(req => req.url.endsWith('/runtime')).flush({
+      tenantId: 't', companyId: 1, defaultLanguage: 'en', revision: 1,
+      catalogVersion: uiCatalogVersion, overrides: [], ...invalid,
+    });
+    expect(await pending).toBe(false);
+    expect(service.runtimeUnavailable()).toBe(true);
+    expect(runtime.translate('general.mainTitle')).toBe('ERP System');
+  });
+
+  it('keeps the system response strict and accepts only its own wire shape', async () => {
+    const pending = service.connect({ ...identity, roles: ['super_admin'] });
+    const response = { catalogVersion: uiCatalogVersion, revision: 1, overrides: [] };
+    http.expectOne(req => req.url.endsWith('/system-ui-localizations/runtime')).flush({ ...response, companyId: 1 });
+    expect(await pending).toBe(false);
+    expect(service.runtimeUnavailable()).toBe(true);
+
+    const recovered = service.refresh();
+    http.expectOne(req => req.url.endsWith('/system-ui-localizations/runtime')).flush(response);
+    expect(await recovered).toBe(true);
+    expect(service.runtimeUnavailable()).toBe(false);
+  });
 });

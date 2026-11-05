@@ -1,11 +1,11 @@
 import { Component,inject,signal } from '@angular/core';
-import { FormControl,FormGroup,ReactiveFormsModule,Validators } from '@angular/forms';
+import { disabled,form,FormField,readonly as readOnly,required,submit } from '@angular/forms/signals';
 import { themePaletteOrder } from '@app/tokens';
 import { ThemeService } from '../../theme/public-api';
 import { LocalizationRuntime,UiTextPipe } from '../platform/localization/public-api';
-import { ActionButton,NumericField,FormContainer,PageHeader,applyServerFieldErrors } from '../shared/ui/public-api';
+import { ActionButton,NumericField,FormContainer,PageHeader,mapServerFieldErrors,validateNumericText } from '../shared/ui/public-api';
 
-@Component({imports:[ReactiveFormsModule,ActionButton,NumericField,FormContainer,PageHeader,UiTextPipe],template:`
+@Component({imports:[FormField,ActionButton,NumericField,FormContainer,PageHeader,UiTextPipe],template:`
  <main><erp-page-header [title]="'numericField.title'|uiText" />
   <div class="tools">
    @for(palette of palettes;track palette){<erp-button [label]="('menu.palettes.'+palette)|uiText" [attr.data-palette]="palette" (activated)="theme.setPalette(palette)" />}
@@ -18,21 +18,26 @@ import { ActionButton,NumericField,FormContainer,PageHeader,applyServerFieldErro
    <erp-button data-testid="server-error" [label]="'common.error'|uiText" (activated)="serverError()" />
    <erp-button data-testid="limit" [label]="'actions.gridOptions'|uiText" [pressed]="limited()" (activated)="limited.set(!limited())" />
   </div>
-  <erp-form data-testid="form" [form]="form" [title]="'numericField.title'|uiText" [submitLabel]="'actions.save'|uiText" (validSubmit)="save()">
-   <erp-numeric-field data-testid="decimal" [formControl]="form.controls.decimal" [label]="'numericField.decimal'|uiText" [help]="'numericField.help'|uiText" [readOnly]="readonly()" [maxFractionDigits]="limited()?2:null" required [messages]="messages()" />
-   <erp-numeric-field data-testid="integer" [formControl]="form.controls.integer" mode="integer" [label]="'numericField.integerLabel'|uiText" [help]="'numericField.help'|uiText" [min]="'0'" [max]="'9007199254740993'" [readOnly]="readonly()" [messages]="messages()" />
+  <erp-form data-testid="form" [form]="form" [title]="'numericField.title'|uiText" [submitLabel]="'actions.save'|uiText">
+   <erp-numeric-field data-testid="decimal" [formField]="form.decimal" [label]="'numericField.decimal'|uiText" [help]="'numericField.help'|uiText" [maxFractionDigits]="limited()?2:null" [messages]="messages()" />
+   <erp-numeric-field data-testid="integer" [formField]="form.integer" mode="integer" [label]="'numericField.integerLabel'|uiText" [help]="'numericField.help'|uiText" [messages]="messages()" />
   </erp-form>
-  <output data-testid="state" [attr.data-decimal]="form.controls.decimal.value" [attr.data-integer]="form.controls.integer.value" [attr.data-valid]="form.valid" [attr.data-saved]="saved()" [attr.data-snapshot]="snapshot()">{{form.controls.decimal.value}} · {{form.controls.integer.value}}</output>
+  <output data-testid="state" [attr.data-decimal]="form.decimal().value()" [attr.data-integer]="form.integer().value()" [attr.data-valid]="form().valid()" [attr.data-saved]="saved()" [attr.data-snapshot]="snapshot()">{{form.decimal().value()}} · {{form.integer().value()}}</output>
  </main>`,styles:`main{padding:24px;max-width:1050px;margin:auto}.tools{display:flex;flex-wrap:wrap;gap:8px;margin-block:16px}output{display:block;direction:ltr;overflow-wrap:anywhere;margin-block:16px;color:var(--muted-foreground)}@media(max-width:600px){main{padding:16px}}`})
 export class NumericPreview{
  readonly theme=inject(ThemeService);readonly locale=inject(LocalizationRuntime);readonly palettes=themePaletteOrder;
- readonly form=new FormGroup({decimal:new FormControl('0.10000000000000001',{nonNullable:true,validators:Validators.required}),integer:new FormControl('9007199254740993',{nonNullable:true})});
+ readonly disabledState=signal(false);
+ readonly form=form(signal({decimal:'0.10000000000000001',integer:'9007199254740993'}),path=>{
+  disabled(path,{when:()=>this.disabledState()});readOnly(path,{when:()=>this.readonly()});required(path.decimal);
+  validateNumericText(path.decimal,()=>({maxFractionDigits:this.limited()?2:null}));
+  validateNumericText(path.integer,()=>({mode:'integer',min:'0',max:'9007199254740993'}));
+ },{submission:{ignoreValidators:'none',action:async()=>this.save()}});
  readonly readonly=signal(false);readonly limited=signal(false);readonly saved=signal(0);readonly snapshot=signal('');
  constructor(){void this.locale.loadNamespace('core');}
  messages(){return{required:this.locale.translate('validation.required')};}
- reset(){this.form.reset({decimal:'',integer:''});this.limited.set(false);this.saved.set(0);this.snapshot.set('');}
- patch(){this.form.patchValue({decimal:'0.10000000000000001',integer:'9007199254740993'});}
- serverError(){applyServerFieldErrors(this.form,{decimal:this.locale.translate('numericField.invalid')});}
- toggleDisabled(){if(this.form.controls.decimal.disabled)this.form.enable();else this.form.disable();}
- save(){this.snapshot.set(JSON.stringify(this.form.getRawValue()));this.saved.update(n=>n+1);}
+ reset(){this.form().reset({decimal:'',integer:''});this.limited.set(false);this.saved.set(0);this.snapshot.set('');}
+ patch(){this.form().value.update(value=>({...value,decimal:'0.10000000000000001',integer:'9007199254740993'}));}
+ serverError(){void submit(this.form,{ignoreValidators:'all',action:async()=>mapServerFieldErrors(this.form,{decimal:this.locale.translate('numericField.invalid')},this.form().value())});}
+ toggleDisabled(){this.disabledState.update(value=>!value);}
+ save(){this.snapshot.set(JSON.stringify(this.form().value()));this.saved.update(n=>n+1);}
 }

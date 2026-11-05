@@ -1,0 +1,4 @@
+Planning checks passed with migration warnings:
+  - Business plan 'education-module' is version 2.0 or execution-ready but has no version 2.0 feature contract; create one before runtime implementation
+  - Business plan 'erp-platform-template' is version 2.0 or execution-ready but has no version 2.0 feature contract; create one before runtime implementation
+Planning checks passed: creation protocol, authority separation, UI Pattern Gate markers, one-active-step roadmap rule, plan structure, evidence/spec files, plan registry IDs, canonical note IDs, note indexes, and canonical paths are clean.

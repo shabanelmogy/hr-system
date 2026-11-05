@@ -1,0 +1,29 @@
+
+> erp-angular@0.0.0 check:architecture
+> node --test scripts/architecture-rules.test.mjs && node scripts/check-architecture.mjs
+
+✔ barrel cycles are rejected, while type-only and lazy edges are independent (37.4173ms)
+✔ configured aliases cannot bypass ownership rules (5.001ms)
+✔ owner dependencies cannot enter another owner internals or reverse layers (4.5362ms)
+✔ external feature forms obey the same shared field policy as inline forms (0.4878ms)
+✔ shared PrimeNG import and template are allowed (2.2046ms)
+✔ collection shells and external templates stay behind the shared public API (1.8726ms)
+✔ aliased, dynamic and re-exported feature bypasses are rejected (1.124ms)
+✔ only the theme owner can configure PrimeNG and templates cannot bypass shared adapters (0.7391ms)
+✔ AST distinguishes forbidden types and storage from innocent text and comments (3.3976ms)
+✔ feature templates must compose shared form and fields (1.2459ms)
+✔ features cannot depend on shared folder internals (0.9855ms)
+✔ chart capability uses its lazy public entry and keeps native engines inside Shared (0.9147ms)
+✔ composition can use the lightweight feedback public entry without importing native hosts (0.7725ms)
+✔ only application composition can inject a business context into generic Shell (0.6774ms)
+✔ module header and page must share the authenticated catalog provider (1.7466ms)
+✔ shared controls must enhance interactive widgets with PrimeNG (0.6223ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 744.775
+Angular foundation boundaries checked.

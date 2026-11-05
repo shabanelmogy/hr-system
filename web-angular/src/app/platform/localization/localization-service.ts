@@ -5,6 +5,7 @@ import { firstValueFrom, Subject, takeUntil, tap, timeout } from 'rxjs';
 import { ERP_API_ORIGIN } from '../../config/api-origin';
 import { uiCatalogVersion } from './catalog.generated';
 import { LocalizationRuntime } from './localization-runtime';
+import { companyRuntimeSchema, systemRuntimeSchema } from './localization.schemas';
 import type { LocalizationIdentity, LocalizationTarget, TextReset, TextWrite, UiLanguage } from './localization.types';
 
 @Injectable({ providedIn: 'root' })
@@ -51,7 +52,9 @@ export class LocalizationService {
         withCredentials: true, params: { client: 'web', catalogVersion: uiCatalogVersion },
       }).pipe(timeout(10_000), takeUntil(this.stop)));
       if (requestSequence !== this.refreshSequence || generation !== this.runtime.currentGeneration()) return false;
-      const applied = target === 'system' ? this.runtime.applySystem(value, generation) : this.runtime.applyCompany(value, generation);
+      const applied = target === 'system'
+        ? this.runtime.applySystem(systemRuntimeSchema.parse(value), generation)
+        : this.runtime.applyCompany(companyRuntimeSchema.parse(value), generation);
       if (generation === this.runtime.currentGeneration()) {
         this.failed.set(!applied);
         if (!applied) this.runtime.clearOverrides(generation);

@@ -1,9 +1,9 @@
-import { booleanAttribute,Component,computed,ElementRef,forwardRef,input,signal,viewChild } from '@angular/core';
+import { booleanAttribute,Component,computed,ElementRef,forwardRef,input,signal,viewChild,model } from '@angular/core';
 import { InputText } from 'primeng/inputtext';
 import { Textarea } from 'primeng/textarea';
 import { ButtonDirective } from 'primeng/button';
 import { Times } from '@primeicons/angular/times';
-import { UiTextPipe } from '../../../../platform/localization/public-api';
+import { UiTextPipe } from '../../../localization/public-api';
 import { FormFieldControl } from '../form-field-control';
 import { CharacterCountBadge } from './character-count-badge';
 
@@ -27,12 +27,12 @@ export class TextField extends FormFieldControl<string> {
   readonly showClear = input(true, { transform: booleanAttribute });
   readonly clearVisibility=input<'value'|'always'>('value');
   readonly appearance = input<'default' | 'floating'>('default');
-  readonly maxLength = input<number | null>(null);
+  readonly maxLength = input<number | null | undefined>(undefined);
   readonly showCounter = input(false);
   readonly counterAppearance=input<'inline'|'badge'>('inline');
-  readonly counterVisible=computed(()=>{const limit=this.maxLength();return this.showCounter()&&limit!==null&&Number.isSafeInteger(limit)&&limit>0;});
+  readonly counterVisible=computed(()=>{const limit=this.maxLength();return this.showCounter()&&limit!=null&&Number.isSafeInteger(limit)&&limit>0;});
   readonly revealOnlyWithValue = input(false);
-  readonly value = signal('');
+  readonly value = model('');
   readonly revealed = signal(false);
   readonly inputType = computed(() => this.type() === 'password' && this.revealed() ? 'text' : this.type());
   private readonly input = viewChild.required<ElementRef<HTMLInputElement | HTMLTextAreaElement>>('input');
@@ -46,11 +46,12 @@ export class TextField extends FormFieldControl<string> {
   }
 
   writeValue(value: unknown): void { this.value.set(typeof value === 'string' ? value : ''); this.revealed.set(false); }
+  reset(): void { this.revealed.set(false); this.composing = false; }
   focus(): void { this.input().nativeElement.focus(); }
   onInput(event: Event): void {
     if (!this.composing && (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement)) this.accept(event.target.value);
   }
   compositionEnd(event: CompositionEvent): void { this.composing = false; this.onInput(event); }
-  clear(): void { if(this.disabled()||this.readOnly())return;this.accept(''); this.blur(); this.focus(); }
+  clear(): void { if(this.isDisabled()||this.isReadOnly())return;this.accept(''); this.blur(); this.focus(); }
 
 }

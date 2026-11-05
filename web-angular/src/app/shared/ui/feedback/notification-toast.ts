@@ -1,13 +1,13 @@
 import { afterNextRender,Component,computed,effect,inject,Injector } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { Toast } from 'primeng/toast';
-import { LocalizationRuntime } from '../../../platform/localization/public-api';
-import { toastPreset } from '../../../../theme/prime-toast-preset';
+import { UI_LOCALIZATION } from '../../localization/public-api';
+import { toastPreset } from '../../../../theme/toast-public-api';
 import { FeedbackNotifications } from './feedback-notifications';
 
 @Component({selector:'erp-notification-toast',imports:[Toast],providers:[MessageService],template:`<p-toast key="erp-notifications" [position]="locale.direction()==='rtl'?'top-left':'top-right'" [baseZIndex]="10000" [preventOpenDuplicates]="true" [life]="5000" [breakpoints]="{'599px':{width:'calc(100vw - 24px)',left:'12px',right:'12px'}}" [pt]="attributes()" [dt]="tokens" />`})
 export class NotificationToast {
- readonly locale=inject(LocalizationRuntime);readonly tokens=toastPreset;
+ readonly locale=inject(UI_LOCALIZATION);readonly tokens=toastPreset;
  readonly attributes=computed(()=>({closeButton:{'aria-label':this.locale.translate('actions.close')}}));
  private readonly notices=inject(FeedbackNotifications);private readonly native=inject(MessageService);private readonly injector=inject(Injector);
  constructor(){effect(cleanup=>{

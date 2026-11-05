@@ -26,3 +26,10 @@ viewport or available toolbar is at most1199px. See the current
 ## Feature books
 
 Feature-specific books live with their module: `../../modules/<module>/features/<feature>/` (see [modules](../../modules/README.md)).
+
+
+## Angular implementation references
+
+- [Shared components](architecture/ANGULAR_SHARED_COMPONENTS.md).
+- [Signal Forms and lightweight form utilities](architecture/ANGULAR_SIGNAL_FORMS.md).
+- [Component composition and extraction rules](architecture/ANGULAR_COMPONENT_COMPOSITION.md).

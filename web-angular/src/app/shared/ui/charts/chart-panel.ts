@@ -1,5 +1,5 @@
 import { Component,computed,inject,input } from '@angular/core';
-import { LocalizationRuntime,UiTextPipe } from '../../../platform/localization/public-api';
+import { UI_LOCALIZATION,UiTextPipe } from '../../localization/public-api';
 import { SurfaceCard } from '../layout/surface-card';
 import { FeedbackState } from '../feedback/feedback-state';
 import { ChartRenderer } from './chart-renderer';
@@ -16,7 +16,7 @@ import { chartNumber } from './chart-presentation';
   }
  </erp-surface-card>`,styles:`:host{display:block;height:100%;min-width:0;min-height:280px}.plot{position:relative;width:100%;height:100%;min-height:180px}erp-feedback-state{display:flex;height:100%;align-items:center;justify-content:center}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}`})
 export class ChartPanel {
- readonly definition=input.required<ChartDefinition>();private readonly locale=inject(LocalizationRuntime);
+ readonly definition=input.required<ChartDefinition>();private readonly locale=inject(UI_LOCALIZATION);
  readonly valid=computed(()=>validChartDefinition(this.definition()));readonly hasData=computed(()=>chartHasData(this.definition()));
  number(value:number){return chartNumber(value,this.definition().numberLocale??this.locale.language());}
 }

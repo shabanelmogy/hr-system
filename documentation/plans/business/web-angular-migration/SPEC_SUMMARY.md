@@ -51,7 +51,7 @@ invalidation, realtime, cancellation and context reset need an explicit contract
 Requester-approved D06: Signals/computed for simple state; owner-scoped Signals
 services for simple sharing; SignalStore for complex workflows; consistent
 mechanisms for similar features; no mandatory traditional NgRx Store.
-Typed Reactive Forms proposed; Signals must not become a second form source of truth.
+Requester-approved 2026-11-04: Angular 22 Signal Forms with lightweight shared controls/helpers (Option B). Native model/FieldTree is authoritative; feature schemas/submissions stay typed and owner-local. No full Form Engine or JSON renderer. Reactive Forms remain only explicit technical/vendor compatibility adapters.
 
 ## Platform and commercial boundaries
 

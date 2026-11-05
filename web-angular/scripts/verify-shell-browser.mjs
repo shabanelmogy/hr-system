@@ -9,6 +9,7 @@ import { dashboardFixture } from '../src/app/platform/tenants/dashboard.fixture.
 const app=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const output=path.resolve(app,'../.codex-tmp/angular-shell');fs.mkdirSync(output,{recursive:true});
 const origin=process.env.ANGULAR_PREVIEW_ORIGIN??'https://localhost:4210';
+const api=process.env.ANGULAR_API_ORIGIN??'https://localhost:7037';
 const core=JSON.parse(fs.readFileSync(path.join(app,'src/locales/generated/core.json'),'utf8'));
 const version=fs.readFileSync(path.join(app,'src/app/platform/localization/catalog.generated.ts'),'utf8').match(/[a-f0-9]{64}/)[0];
 const browser=await chromium.launch({channel:'chrome'});const results=[];const errors=[];
@@ -16,7 +17,7 @@ const text=(language,key)=>core[language][key];
 async function configure(context,role){
   let authenticated=true;
   const user={...sessionFixture,roles:[role],firstName:'Fixture',lastName:'User',tenantName:'Verified tenant with a long descriptive name',companyNameEn:'Verified company with a long descriptive name',companyNameAr:'الشركة الموثوقة ذات الاسم الطويل'};
-  await context.route('https://localhost:7037/api/**',async route=>{
+  await context.route(api+'/api/**',async route=>{
     const request=route.request(),p=new URL(request.url()).pathname;let status=200,body;
     if(p.endsWith('/csrf'))body={requestToken:'synthetic-csrf'};
     else if(p.endsWith('/session')||p.endsWith('/refresh')){body={isAuthenticated:true,user};if(!authenticated)status=401;}
@@ -55,6 +56,10 @@ try{
       await expect.poll(()=>page.locator('body').evaluate(e=>getComputedStyle(e).overflow)).not.toBe('hidden');await page.setViewportSize({width,height:1000});
     }
     await settings.click();const panel=page.getByRole('dialog',{name:text(language,'menu.settings'),exact:true});await expect(panel).toBeVisible();
+    const preferences=panel.locator('erp-appearance-preferences');
+    await expect(preferences).toBeVisible();
+    assert.equal(await preferences.evaluate(element=>getComputedStyle(element).justifyContent),'space-between');
+    await expect(preferences.getByRole('combobox')).toBeVisible();
     await expect(panel.getByRole('radio')).toHaveCount(5);const blue=panel.getByRole('radio',{name:text(language,'menu.palettes.blue'),exact:true});await blue.check();
     await expect(page.locator('html')).toHaveAttribute('data-palette','blue');await expect(blue).toBeChecked();await blue.focus();await page.keyboard.press('ArrowRight');
     await expect.poll(()=>page.locator('html').getAttribute('data-palette')).not.toBe('blue');

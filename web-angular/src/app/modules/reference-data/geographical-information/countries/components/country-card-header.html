@@ -1,0 +1,7 @@
+<div class="card-heading"><div><h2 dir="auto">{{title()}}</h2><p dir="auto">{{subtitle()}}</p></div><erp-status-badge appearance="solid" [contrast]="quality().contrast" [label]="qualityLabel()" [accent]="quality().accent" /></div>
+          <div class="chips">
+            @if(country().alpha2Code; as code){<erp-status-badge [label]="code" accent="var(--primary)" />}
+            @if(country().alpha3Code; as code){<erp-status-badge [label]="code" />}
+            <erp-status-badge appearance="outline" [label]="('general.id'|uiText)+': '+country().id" />
+            @if(country().isDeleted){<erp-status-badge [label]="'countries.status.archived'|uiText:'reference-countries'" accent="var(--destructive)" />}
+          </div>

@@ -8,10 +8,10 @@ import { themePaletteOrder, type ThemePalette } from '@app/tokens';
 import { AuthSession } from '../../platform/auth/session.public-api';
 import { LocalizationRuntime, UiTextPipe } from '../../platform/localization/public-api';
 import { tenantWorkspaceAllowed } from '../../platform/modules/public-api';
-import { ActionButton, AppIcon, ApplicationFrame, ContextBadge, FeedbackState, IdentityAvatar, OptionSelect, PalettePicker, PopoverPanel, type NavigationEntry } from '../../shared/ui/public-api';
+import { ActionButton, AppearancePreferences, AppIcon, ApplicationFrame, ContextBadge, FeedbackState, IdentityAvatar, OptionSelect, PalettePicker, PopoverPanel, type NavigationEntry } from '../../shared/ui/public-api';
 import { ThemeService } from '../../../theme/public-api';
 
-@Component({ imports:[NgComponentOutlet,RouterOutlet,UiTextPipe,ApplicationFrame,ActionButton,AppIcon,ContextBadge,FeedbackState,IdentityAvatar,OptionSelect,PalettePicker,PopoverPanel],
+@Component({ imports:[NgComponentOutlet,RouterOutlet,UiTextPipe,ApplicationFrame,ActionButton,AppearancePreferences,AppIcon,ContextBadge,FeedbackState,IdentityAvatar,OptionSelect,PalettePicker,PopoverPanel],
   providers:[{provide:SHELL_DATA_NAVIGATION,useFactory:()=>inject(MainShell).dataNavigation}],
   templateUrl:'./main-shell.html',styleUrl:'./main-shell.scss' })
 export class MainShell {
@@ -36,7 +36,6 @@ export class MainShell {
     ...(tenantWorkspaceAllowed(this.auth.user())?[{id:'apps',label:this.locale.translate('modules.title'),icon:'apps' as const,selected:this.path().startsWith('/apps')}]:[]),
     {id:'preferences',label:this.locale.translate('menu.settings'),icon:'settings'},
   ]);
-  readonly languages=[{value:'en',label:'English'},{value:'ar',label:'العربية'}];
   readonly paletteLabels=computed(()=>Object.fromEntries(themePaletteOrder.map(p=>[p,this.locale.translate('menu.palettes.'+p)])) as Readonly<Record<ThemePalette,string>>);
   constructor(){
     effect(()=>{this.auth.readIdentity();this.dataOpened.set(false);});

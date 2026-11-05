@@ -532,6 +532,66 @@
       "path": "documentation/modules/platform/features/angular-date-field-foundation/IMPLEMENTATION_REPORT.md",
       "layer": "documentation",
       "purpose": "Date/calendar consumer of existing SQL-backed localization"
+    },
+    {
+      "id": "signal-foundation-20261104-0",
+      "path": "web-angular/src/app/shared/localization/localization.ts",
+      "layer": "web",
+      "purpose": "D07/D35 current native forms and foundation maintenance source/evidence"
+    },
+    {
+      "id": "signal-foundation-20261104-1",
+      "path": "web-angular/src/app/shared/localization/ui-text.pipe.ts",
+      "layer": "web",
+      "purpose": "D07/D35 current native forms and foundation maintenance source/evidence"
+    },
+    {
+      "id": "signal-foundation-20261104-2",
+      "path": "web-angular/src/app/shared/localization/public-api.ts",
+      "layer": "web",
+      "purpose": "D07/D35 current native forms and foundation maintenance source/evidence"
+    },
+    {
+      "id": "signal-foundation-20261104-3",
+      "path": "web-angular/src/app/platform/localization/provide-localization.ts",
+      "layer": "web",
+      "purpose": "D07/D35 current native forms and foundation maintenance source/evidence"
+    },
+    {
+      "id": "signal-foundation-20261104-4",
+      "path": "web-angular/src/test-setup.ts",
+      "layer": "web",
+      "purpose": "D07/D35 current native forms and foundation maintenance source/evidence"
+    },
+    {
+      "id": "maintenance-schema-boundary",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/localization/localization.schemas.ts",
+      "purpose": "Existing wire validation isolated at the HTTP boundary"
+    },
+    {
+      "id": "maintenance-presentation-entry",
+      "layer": "web",
+      "path": "web-angular/src/app/platform/localization/presentation.public-api.ts",
+      "purpose": "Bootstrap presentation entry without persistence imports"
+    },
+    {
+      "id": "maintenance-navigation-entry",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/data/navigation.public-api.ts",
+      "purpose": "Narrow bootstrap navigation lifetime entry"
+    },
+    {
+      "id": "maintenance-report",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-localization-foundation/STRUCTURE_PERFORMANCE_REPORT.md",
+      "purpose": "D36 structure, measurements, verification and limitations"
+    },
+    {
+      "id": "maintenance-verification",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-localization-foundation/verification/structure-performance-summary.json",
+      "purpose": "Scoped source fingerprints and actual production browser/build evidence"
     }
   ]
 }

@@ -45,8 +45,8 @@ realtime, notification, localization, report, or Import integration is reachable
 | --- | ---: | --- |
 | angular-form-foundation-master | 4 | `1b47dfc85b7c0c905a5cfc0e75f64cdc37b04cf1e47a64acd27ba7fb18fe99c9` |
 | angular-form-foundation-master | 5 | `c6d1c95cb6dfb29c3a4eb08fcf1592391d0d06246967c3fab9725067f8bc2687` |
-| angular-form-foundation-master | 6 | `4c846e1af1e4f8be32a79a58ff2f272759a316890b776c9960c0096a4661669a` |
-| angular-form-foundation-master | 7 | `e46cfce5be74e89543f3d8ad5ef40f3640578392f7f72abee376d81c0041bcf8` |
+| angular-form-foundation-master | 6 | `526d5011c54604150902ed89223b55e5b5628a862ecdfd4af0e08bf66f2c27c5` |
+| angular-form-foundation-master | 7 | `5fff6007c8a636036e1fc2db0c8a9776a8fe7ccce9f924b412799583b328161d` |
 | angular-form-foundation-master | 9 | `9e69e079b4dcc5b2ca68cde1376645625bb85e1030a5da4e8083eb9453d322ee` |
 | angular-form-foundation-api | 8 | `8e9a6c65ec70640c0b36054bd0f77faedfee71f12d1eb28d45398ddfb7365b67` |
 | angular-form-foundation-api | 9 | `9e69e079b4dcc5b2ca68cde1376645625bb85e1030a5da4e8083eb9453d322ee` |

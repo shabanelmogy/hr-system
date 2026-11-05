@@ -3,7 +3,7 @@ import { FormControl,ReactiveFormsModule,Validators } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TextField,NumericField,DateField } from '../forms/public-api';
 import { OptionSelect } from '../controls/option-select';
-import { LocalizationRuntime } from '../../../platform/localization/public-api';
+import { UI_LOCALIZATION } from '../../localization/public-api';
 import { filterValueValid,type GridColumnFilter } from './grid-filter.types';
 
 /** Native ColumnFilter owns its menu/rules; our fields own value validation and accessibility. */
@@ -17,7 +17,7 @@ import { filterValueValid,type GridColumnFilter } from './grid-filter.types';
 export class GridFilterInput {
  readonly definition=input.required<GridColumnFilter>();readonly label=input.required<string>();readonly value=input<unknown>(null);readonly changed=output<unknown>();
  readonly text=new FormControl('',{nonNullable:true});readonly booleanChoice=signal('all');private synchronizing=false;
- private readonly locale=inject(LocalizationRuntime);
+ private readonly locale=inject(UI_LOCALIZATION);
  readonly booleanOptions=computed(()=>[{value:'all',label:this.locale.translate('common.all')},{value:'true',label:this.locale.translate('collections.trueValue')},{value:'false',label:this.locale.translate('collections.falseValue')}]);
  readonly numericOptions=computed(()=>({mode:this.definition().numberMode??'decimal',min:this.definition().minimum===undefined?null:String(this.definition().minimum),max:this.definition().maximum===undefined?null:String(this.definition().maximum),maxIntegerDigits:null,maxFractionDigits:this.definition().numberMode==='integer'?0:null}));
  constructor(){

@@ -1,0 +1,98 @@
+<main [class.embedded]="embedded()">
+    @if(!embedded()){
+    <erp-page-header [title]="'reports.reportViewer' | uiText"
+      ><div class="actions">
+        <erp-button
+          data-testid="language"
+          [label]="(locale.language() === 'en' ? 'common.arabic' : 'common.english') | uiText"
+          (activated)="locale.setLanguage(locale.language() === 'en' ? 'ar' : 'en')"
+        />
+        <erp-button
+          data-testid="reload"
+          [label]="'actions.refresh' | uiText"
+          (activated)="state.reload()"
+        /></div
+    ></erp-page-header>}
+    @if (state.view().kind === 'forbidden') {
+      <erp-feedback-state kind="forbidden" [title]="'authorization.forbidden.title' | uiText" />
+    } @else {
+      <erp-report-workspace
+        [label]="'reports.reportViewer' | uiText"
+        [criteriaLabel]="'reports.searchOptions' | uiText"
+        [appearance]="embedded()?'reference':'default'"
+        [criteriaVisible]="showFilterBar() && state.catalog().kind === 'ready' && state.selected() !== null"
+      >
+        <div reportCriteria>
+          <erp-form
+            #criteriaForm
+            data-testid="criteria"
+            [form]="form"
+            [title]="'reports.searchOptions' | uiText"
+            [submitLabel]="'reports.searchUpper' | uiText"
+            [appearance]="embedded()?'sidebar':'card'" [hideHeader]="embedded()" [submitFullWidth]="embedded()"
+            [pending]="state.pending()"
+            [readOnly]="state.conflict()"
+
+          >
+            <erp-text-field
+              data-testid="nameAr"
+              [formField]="form.nameAr"
+              [label]="'general.nameAr' | uiText"
+              [messages]="messages()"
+            />
+            <erp-text-field
+              data-testid="nameEn"
+              [formField]="form.nameEn"
+              [label]="'general.nameEn' | uiText"
+              [messages]="messages()"
+            />
+            <erp-reference-field data-testid="report" [value]="state.selected()?.id??null" (valueChange)="state.select($event)" [source]="source()"
+              [label]="'reports.reportForms'|uiText" [searchable]="false" [clearable]="false" />
+            <erp-button
+              formActions
+              data-testid="reset"
+              [label]="'reports.clearFilters' | uiText"
+              variant="outlined" [fullWidth]="embedded()"
+              [disabled]="state.pending() || state.conflict()"
+              (activated)="reset()"
+            />
+          </erp-form>
+        </div>
+        <div reportDocument data-testid="document" [class.contained-document]="embedded()">
+          @switch (state.view().kind) {
+            @case ('loading') {
+              <erp-feedback-state kind="loading" [title]="'reports.generatingReport' | uiText" />
+            }
+            @case ('empty') {
+              <erp-feedback-state kind="empty" [title]="unavailableMessage() || ('reports.noResultsFound' | uiText)" [actionLabel]="'actions.retry'|uiText" (action)="state.reload()" />
+            }
+            @case ('conflict') {
+              <erp-feedback-state
+                kind="error"
+                [title]="'reports.sourceChanged' | uiText"
+                [actionLabel]="'actions.refresh' | uiText"
+                (action)="state.reload()"
+              />
+            }
+            @case ('error') {
+              <erp-feedback-state
+                kind="error"
+                [title]="errorCaption()"
+                [actionLabel]="'actions.retry' | uiText"
+                (action)="retry()"
+              />
+            }
+            @case ('ready') {
+              @if (document(); as pdf) {
+                <erp-pdf-viewer
+                  [document]="pdf"
+                  [title]="'reports.reportViewer' | uiText"
+                  [downloadName]="fileName()"
+                  [fill]="embedded()"
+                />
+              }
+            }
+          }</div
+      ></erp-report-workspace>
+    }
+  </main>

@@ -1,0 +1,520 @@
+{
+  "date": "2026-11-04",
+  "branch": "codex/angular-foundation-hardening",
+  "decision": "D36",
+  "scope": "Existing Angular structure and performance; new functionality deferred",
+  "baseline": {
+    "initialRawKbRounded": 608.36,
+    "estimatedTransferKbRounded": 156.67,
+    "source": "Same-session pre-change production build output"
+  },
+  "after": {
+    "initialRawBytes": 572157,
+    "initialRawKbRounded": 572.16,
+    "estimatedTransferKbRounded": 147.18,
+    "initialChunks": [
+      "main-FWQUAAOM.js",
+      "chunk-Ce-UXY0j.js",
+      "styles-N5T3ARHH.css",
+      "/fonts/ibm-plex-sans-arabic/ibm-plex-sans-arabic-arabic-400-normal.woff2",
+      "/fonts/ibm-plex-sans-arabic/ibm-plex-sans-arabic-latin-ext-400-normal.woff2",
+      "/fonts/ibm-plex-sans-arabic/ibm-plex-sans-arabic-latin-400-normal.woff2",
+      "/fonts/ibm-plex-sans-arabic/ibm-plex-sans-arabic-arabic-500-normal.woff2",
+      "/fonts/ibm-plex-sans-arabic/ibm-plex-sans-arabic-latin-ext-500-normal.woff2",
+      "/fonts/ibm-plex-sans-arabic/ibm-plex-sans-arabic-latin-500-normal.woff2",
+      "/fonts/ibm-plex-sans-arabic/ibm-plex-sans-arabic-arabic-600-normal.woff2",
+      "/fonts/ibm-plex-sans-arabic/ibm-plex-sans-arabic-latin-ext-600-normal.woff2",
+      "/fonts/ibm-plex-sans-arabic/ibm-plex-sans-arabic-latin-600-normal.woff2",
+      "/fonts/ibm-plex-sans-arabic/ibm-plex-sans-arabic-arabic-700-normal.woff2",
+      "/fonts/ibm-plex-sans-arabic/ibm-plex-sans-arabic-latin-ext-700-normal.woff2",
+      "/fonts/ibm-plex-sans-arabic/ibm-plex-sans-arabic-latin-700-normal.woff2"
+    ],
+    "absentFromInitialGraph": [
+      "Zod",
+      "LocalizationService",
+      "localization schemas",
+      "read/collection/PDF utilities",
+      "Angular Forms"
+    ],
+    "warningBudgetKb": 500,
+    "warningRemains": true
+  },
+  "checks": {
+    "unit": {
+      "files": 78,
+      "tests": 445,
+      "passed": true
+    },
+    "architecture": {
+      "tests": 16,
+      "fullSourceScan": true,
+      "passed": true
+    },
+    "strictAppTypes": true,
+    "strictSpecTypes": true,
+    "catalog": true,
+    "productionBuild": true
+  },
+  "browser": {
+    "artifact": "production",
+    "origin": "http://127.0.0.1:4290",
+    "api": "intercepted fixture transport",
+    "login": [
+      {
+        "kind": "visual",
+        "language": "en",
+        "width": 390,
+        "mode": "light",
+        "card": {
+          "x": 56,
+          "y": 132.40625,
+          "width": 278,
+          "height": 735.171875
+        },
+        "submit": {
+          "x": 76,
+          "y": 480.40625,
+          "width": 238,
+          "height": 42.046875
+        }
+      },
+      {
+        "kind": "visual",
+        "language": "en",
+        "width": 1440,
+        "mode": "light",
+        "card": {
+          "x": 318,
+          "y": 186.21875,
+          "width": 804,
+          "height": 667.546875
+        },
+        "submit": {
+          "x": 671.59375,
+          "y": 546.21875,
+          "width": 418.40625,
+          "height": 42.046875
+        }
+      },
+      {
+        "kind": "visual",
+        "language": "ar",
+        "width": 390,
+        "mode": "light",
+        "card": {
+          "x": 56,
+          "y": 139.40625,
+          "width": 278,
+          "height": 721.171875
+        },
+        "submit": {
+          "x": 76,
+          "y": 487.40625,
+          "width": 238,
+          "height": 42.046875
+        }
+      },
+      {
+        "kind": "visual",
+        "language": "ar",
+        "width": 1440,
+        "mode": "light",
+        "card": {
+          "x": 318,
+          "y": 191.78125,
+          "width": 804,
+          "height": 656.421875
+        },
+        "submit": {
+          "x": 350,
+          "y": 551.78125,
+          "width": 418.40625,
+          "height": 42.046875
+        }
+      },
+      {
+        "kind": "visual",
+        "language": "en",
+        "width": 390,
+        "mode": "dark",
+        "card": {
+          "x": 56,
+          "y": 132.40625,
+          "width": 278,
+          "height": 735.171875
+        },
+        "submit": {
+          "x": 76,
+          "y": 480.40625,
+          "width": 238,
+          "height": 42.046875
+        }
+      },
+      {
+        "kind": "visual",
+        "language": "en",
+        "width": 1440,
+        "mode": "dark",
+        "card": {
+          "x": 318,
+          "y": 186.21875,
+          "width": 804,
+          "height": 667.546875
+        },
+        "submit": {
+          "x": 671.59375,
+          "y": 546.21875,
+          "width": 418.40625,
+          "height": 42.046875
+        }
+      },
+      {
+        "kind": "visual",
+        "language": "ar",
+        "width": 390,
+        "mode": "dark",
+        "card": {
+          "x": 56,
+          "y": 139.40625,
+          "width": 278,
+          "height": 721.171875
+        },
+        "submit": {
+          "x": 76,
+          "y": 487.40625,
+          "width": 238,
+          "height": 42.046875
+        }
+      },
+      {
+        "kind": "visual",
+        "language": "ar",
+        "width": 1440,
+        "mode": "dark",
+        "card": {
+          "x": 318,
+          "y": 191.78125,
+          "width": 804,
+          "height": 656.421875
+        },
+        "submit": {
+          "x": 350,
+          "y": 551.78125,
+          "width": 418.40625,
+          "height": 42.046875
+        }
+      },
+      {
+        "kind": "workflow",
+        "language": "en",
+        "passed": true
+      },
+      {
+        "kind": "workflow",
+        "language": "ar",
+        "passed": true
+      }
+    ],
+    "language": [
+      {
+        "palette": "green",
+        "mode": "light",
+        "language": "en",
+        "foreground": {
+          "host": "rgb(255, 255, 255)",
+          "selected": "rgb(255, 255, 255)"
+        },
+        "row": {
+          "color": "rgb(23, 32, 38)",
+          "background": "rgb(234, 244, 241)"
+        },
+        "passed": true
+      },
+      {
+        "palette": "green",
+        "mode": "light",
+        "language": "ar",
+        "foreground": {
+          "host": "rgb(255, 255, 255)",
+          "selected": "rgb(255, 255, 255)"
+        },
+        "row": {
+          "color": "rgb(23, 32, 38)",
+          "background": "rgb(234, 244, 241)"
+        },
+        "passed": true
+      },
+      {
+        "palette": "green",
+        "mode": "dark",
+        "language": "en",
+        "foreground": {
+          "host": "rgb(94, 234, 212)",
+          "selected": "rgb(94, 234, 212)"
+        },
+        "row": {
+          "color": "rgb(245, 247, 248)",
+          "background": "rgb(33, 48, 44)"
+        },
+        "passed": true
+      },
+      {
+        "palette": "green",
+        "mode": "dark",
+        "language": "ar",
+        "foreground": {
+          "host": "rgb(94, 234, 212)",
+          "selected": "rgb(94, 234, 212)"
+        },
+        "row": {
+          "color": "rgb(245, 247, 248)",
+          "background": "rgb(33, 48, 44)"
+        },
+        "passed": true
+      },
+      {
+        "palette": "orange",
+        "mode": "light",
+        "language": "en",
+        "foreground": {
+          "host": "rgb(255, 255, 255)",
+          "selected": "rgb(255, 255, 255)"
+        },
+        "row": {
+          "color": "rgb(23, 32, 38)",
+          "background": "rgb(252, 237, 227)"
+        },
+        "passed": true
+      },
+      {
+        "palette": "orange",
+        "mode": "light",
+        "language": "ar",
+        "foreground": {
+          "host": "rgb(255, 255, 255)",
+          "selected": "rgb(255, 255, 255)"
+        },
+        "row": {
+          "color": "rgb(23, 32, 38)",
+          "background": "rgb(252, 237, 227)"
+        },
+        "passed": true
+      },
+      {
+        "palette": "orange",
+        "mode": "dark",
+        "language": "en",
+        "foreground": {
+          "host": "rgb(253, 186, 116)",
+          "selected": "rgb(253, 186, 116)"
+        },
+        "row": {
+          "color": "rgb(245, 247, 248)",
+          "background": "rgb(50, 35, 26)"
+        },
+        "passed": true
+      },
+      {
+        "palette": "orange",
+        "mode": "dark",
+        "language": "ar",
+        "foreground": {
+          "host": "rgb(253, 186, 116)",
+          "selected": "rgb(253, 186, 116)"
+        },
+        "row": {
+          "color": "rgb(245, 247, 248)",
+          "background": "rgb(50, 35, 26)"
+        },
+        "passed": true
+      },
+      {
+        "palette": "blue",
+        "mode": "light",
+        "language": "en",
+        "foreground": {
+          "host": "rgb(255, 255, 255)",
+          "selected": "rgb(255, 255, 255)"
+        },
+        "row": {
+          "color": "rgb(23, 32, 38)",
+          "background": "rgb(232, 240, 250)"
+        },
+        "passed": true
+      },
+      {
+        "palette": "blue",
+        "mode": "light",
+        "language": "ar",
+        "foreground": {
+          "host": "rgb(255, 255, 255)",
+          "selected": "rgb(255, 255, 255)"
+        },
+        "row": {
+          "color": "rgb(23, 32, 38)",
+          "background": "rgb(232, 240, 250)"
+        },
+        "passed": true
+      },
+      {
+        "palette": "blue",
+        "mode": "dark",
+        "language": "en",
+        "foreground": {
+          "host": "rgb(147, 197, 253)",
+          "selected": "rgb(147, 197, 253)"
+        },
+        "row": {
+          "color": "rgb(245, 247, 248)",
+          "background": "rgb(32, 43, 59)"
+        },
+        "passed": true
+      },
+      {
+        "palette": "blue",
+        "mode": "dark",
+        "language": "ar",
+        "foreground": {
+          "host": "rgb(147, 197, 253)",
+          "selected": "rgb(147, 197, 253)"
+        },
+        "row": {
+          "color": "rgb(245, 247, 248)",
+          "background": "rgb(32, 43, 59)"
+        },
+        "passed": true
+      },
+      {
+        "palette": "navy",
+        "mode": "light",
+        "language": "en",
+        "foreground": {
+          "host": "rgb(255, 255, 255)",
+          "selected": "rgb(255, 255, 255)"
+        },
+        "row": {
+          "color": "rgb(15, 23, 42)",
+          "background": "rgb(230, 235, 244)"
+        },
+        "passed": true
+      },
+      {
+        "palette": "navy",
+        "mode": "light",
+        "language": "ar",
+        "foreground": {
+          "host": "rgb(255, 255, 255)",
+          "selected": "rgb(255, 255, 255)"
+        },
+        "row": {
+          "color": "rgb(15, 23, 42)",
+          "background": "rgb(230, 235, 244)"
+        },
+        "passed": true
+      },
+      {
+        "palette": "navy",
+        "mode": "dark",
+        "language": "en",
+        "foreground": {
+          "host": "rgb(165, 180, 252)",
+          "selected": "rgb(165, 180, 252)"
+        },
+        "row": {
+          "color": "rgb(241, 245, 249)",
+          "background": "rgb(28, 39, 64)"
+        },
+        "passed": true
+      },
+      {
+        "palette": "navy",
+        "mode": "dark",
+        "language": "ar",
+        "foreground": {
+          "host": "rgb(165, 180, 252)",
+          "selected": "rgb(165, 180, 252)"
+        },
+        "row": {
+          "color": "rgb(241, 245, 249)",
+          "background": "rgb(28, 39, 64)"
+        },
+        "passed": true
+      },
+      {
+        "palette": "monochrome",
+        "mode": "light",
+        "language": "en",
+        "foreground": {
+          "host": "rgb(255, 255, 255)",
+          "selected": "rgb(255, 255, 255)"
+        },
+        "row": {
+          "color": "rgb(17, 17, 17)",
+          "background": "rgb(236, 236, 236)"
+        },
+        "passed": true
+      },
+      {
+        "palette": "monochrome",
+        "mode": "light",
+        "language": "ar",
+        "foreground": {
+          "host": "rgb(255, 255, 255)",
+          "selected": "rgb(255, 255, 255)"
+        },
+        "row": {
+          "color": "rgb(17, 17, 17)",
+          "background": "rgb(236, 236, 236)"
+        },
+        "passed": true
+      },
+      {
+        "palette": "monochrome",
+        "mode": "dark",
+        "language": "en",
+        "foreground": {
+          "host": "rgb(250, 250, 250)",
+          "selected": "rgb(250, 250, 250)"
+        },
+        "row": {
+          "color": "rgb(250, 250, 250)",
+          "background": "rgb(38, 38, 38)"
+        },
+        "passed": true
+      },
+      {
+        "palette": "monochrome",
+        "mode": "dark",
+        "language": "ar",
+        "foreground": {
+          "host": "rgb(250, 250, 250)",
+          "selected": "rgb(250, 250, 250)"
+        },
+        "row": {
+          "color": "rgb(250, 250, 250)",
+          "background": "rgb(38, 38, 38)"
+        },
+        "passed": true
+      }
+    ]
+  },
+  "sources": {
+    "web-angular/src/app/app.ts": "839b13bf01306e2b7157540ba26ebaf680a0754bf20305d4724e6a230bfbc4e8",
+    "web-angular/src/app/app.config.ts": "a43529846111aaf8d26940c4028256f8ac7a4047f12c1830425c22295a92dc8e",
+    "web-angular/src/app/app.routes.ts": "004e78e1433f0661f089cbff917882323827b902d92e6f2c3ecd21fef830b386",
+    "web-angular/src/app/shared/data/navigation.public-api.ts": "330305ec2dcc70c2515548e8021eb61504a63981baee25907ea8ae07552dd33a",
+    "web-angular/src/app/platform/localization/localization.schemas.ts": "f25d3a74fb1f3b17c90612cdb889e096197abcf9113577a98d0f8f8ba143a22d",
+    "web-angular/src/app/platform/localization/localization.types.ts": "54a19a6985c797ed1a53dbfec95a6cb3b806f4ee2cb577ecae0b875165b1ca8a",
+    "web-angular/src/app/platform/localization/localization-runtime.ts": "c255bf6ce51e0eb1fd854b2df85e03700ed1a33afab36b3248d0c7a2a2b040d5",
+    "web-angular/src/app/platform/localization/localization-runtime.spec.ts": "c661c3463dbab6d2b4f2a18e30ad8c45d209d63c1d2b1aa5ffcdf3c460cf626e",
+    "web-angular/src/app/platform/localization/localization-service.ts": "215ff2af386b4b73e69abf96391dc65c7aaf14883fc9405bfdc14a9c9e036c6d",
+    "web-angular/src/app/platform/localization/localization-service.spec.ts": "4bebdd0d4dfece3e9b676722358bdb7ed9a1ff602f4611446fee3acd82d203f8",
+    "web-angular/src/app/platform/localization/presentation.public-api.ts": "056bc1dc4de283b69e945d8541017cec22e0a624dba1670abf96e1c1d3bffa0e",
+    "web-angular/src/app/platform/localization/provide-localization.ts": "fc7b1c0de39a1400f7b2221e9aa4d1e1900f7389f91fbd90b25b8e5ce2d6721f"
+  },
+  "limits": [
+    "No live API/SQL writes",
+    "No production latency or total first-route byte comparison",
+    "RISK-019 remains open"
+  ]
+}

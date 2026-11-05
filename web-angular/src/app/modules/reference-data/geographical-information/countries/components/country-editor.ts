@@ -1,12 +1,12 @@
 import { Component,computed,inject,output,viewChild } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormField } from '@angular/forms/signals';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { LocalizationRuntime,UiTextPipe } from '../../../../../platform/localization/public-api';
 import { ActionButton,AppIcon,DialogPanel,FeedbackState,FormCloseGuard,FormContainer,TextField,type FieldMessages } from '../../../../../shared/ui/public-api';
 import { CountryEditorState,type CountrySaved } from '../state/country-editor-state';
 import { countryFieldLimits,countryMutationFields,type CountryMutationField } from '../validation/country-mutation';
 
-@Component({selector:'erp-country-editor',imports:[ReactiveFormsModule,ActionButton,AppIcon,DialogPanel,FeedbackState,FormCloseGuard,FormContainer,TextField,UiTextPipe],template:`
+@Component({selector:'erp-country-editor',imports:[FormField,ActionButton,AppIcon,DialogPanel,FeedbackState,FormCloseGuard,FormContainer,TextField,UiTextPipe],template:`
  <erp-dialog-panel [open]="state.active()" [title]="(state.mode()==='create'?'countries.add':'countries.edit')|uiText:'reference-countries'" [description]="(state.mode()==='create'?'countries.addSubtitle':'countries.editSubtitle')|uiText:'reference-countries'" [closeLabel]="'actions.close'|uiText" [icon]="state.mode()==='create'?'add':'edit'" [pending]="state.pending()" [showFooter]="false" (closeRequested)="closeGuard().requestClose()">
  @if(state.active()){
   @switch(state.phase()){
@@ -14,8 +14,8 @@ import { countryFieldLimits,countryMutationFields,type CountryMutationField } fr
    @case('error'){<erp-feedback-state kind="error" [title]="'countries.detailLoadError'|uiText:'reference-countries'" [actionLabel]="'actions.retry'|uiText" (action)="state.retry()" /><erp-button [label]="'actions.close'|uiText" variant="text" (activated)="closeGuard().requestClose()" />}
    @case('forbidden'){<erp-feedback-state kind="forbidden" [title]="'authorization.forbidden.title'|uiText" /><erp-button [label]="'actions.close'|uiText" variant="text" (activated)="closeGuard().requestClose()" />}
    @case('ready'){
-    <erp-form #entryForm [form]="state.form" appearance="dialog" [hideHeader]="true" [title]="(state.mode()==='create'?'countries.add':'countries.edit')|uiText:'reference-countries'" [submitLabel]="(state.mode()==='create'?'countries.add':'actions.save')|uiText:(state.mode()==='create'?'reference-countries':'core')" [pending]="state.pending()" [readOnly]="state.uncertain()" [feedback]="state.feedback()?locale.translate(state.feedback(),'reference-countries'):''" [feedbackKind]="state.feedbackKind()" (validSubmit)="state.save()">
-     @for(field of fields;track field){<erp-text-field [maxLength]="limits[field]" [showCounter]="true" counterAppearance="badge" [name]="field" [formControl]="state.form.controls[field]" [label]="label(field)" [required]="field==='nameAr'||field==='nameEn'" [readOnly]="state.locked()" [messages]="messages()[field]" [textDirection]="field==='nameAr'||field==='nameEn'?'auto':'ltr'" [inputMode]="field==='phoneCode'?'tel':'text'" />}
+    <erp-form #entryForm [form]="state.form" appearance="dialog" [hideHeader]="true" [title]="(state.mode()==='create'?'countries.add':'countries.edit')|uiText:'reference-countries'" [submitLabel]="(state.mode()==='create'?'countries.add':'actions.save')|uiText:(state.mode()==='create'?'reference-countries':'core')" [pending]="state.pending()" [readOnly]="state.uncertain()" [feedback]="state.feedback()?locale.translate(state.feedback(),'reference-countries'):''" [feedbackKind]="state.feedbackKind()">
+     @for(field of fields;track field){<erp-text-field [showCounter]="true" counterAppearance="badge" [formField]="state.form[field]" [label]="label(field)" [readOnly]="state.locked()" [messages]="messages()[field]" [textDirection]="field==='nameAr'||field==='nameEn'?'auto':'ltr'" [inputMode]="field==='phoneCode'?'tel':'text'" />}
      @if(state.development){<erp-button formTools [label]="'countries.generateMockData'|uiText:'reference-countries'" variant="text" [disabled]="state.locked()" (activated)="state.generate()"><erp-icon buttonIcon name="refresh" /></erp-button>}
      <erp-icon formSubmitIcon [name]="state.mode()==='create'?'add':'check'" />
      <erp-button formActions [label]="'actions.cancel'|uiText" variant="outlined" [disabled]="state.pending()" (activated)="closeGuard().requestClose()" />

@@ -346,6 +346,72 @@
       "path": "documentation/plans/business/web-angular-migration/education/angular-application-shell.md",
       "layer": "documentation",
       "purpose": "Current implementation or acceptance evidence"
+    },
+    {
+      "id": "signal-foundation-20261104-0",
+      "path": "web-angular/scripts/dependency-graph.mjs",
+      "layer": "web",
+      "purpose": "D07/D35 current native forms and foundation maintenance source/evidence"
+    },
+    {
+      "id": "signal-foundation-20261104-1",
+      "path": "web-angular/src/theme/toast-public-api.ts",
+      "layer": "web",
+      "purpose": "D07/D35 current native forms and foundation maintenance source/evidence"
+    },
+    {
+      "id": "maintenance-navigation-entry",
+      "layer": "web",
+      "path": "web-angular/src/app/shared/data/navigation.public-api.ts",
+      "purpose": "Root navigation lifetime without read/collection dependencies"
+    },
+    {
+      "id": "maintenance-startup-report",
+      "layer": "documentation",
+      "path": "documentation/modules/platform/features/angular-localization-foundation/STRUCTURE_PERFORMANCE_REPORT.md",
+      "purpose": "D36 bootstrap public-entry and production verification evidence"
+    },
+    {
+      "id": "composition-d37-0",
+      "path": "web-angular/src/app/shared/ui/controls/appearance-preferences.ts",
+      "layer": "web",
+      "purpose": "D37 component ownership, recurring rules and current verification evidence"
+    },
+    {
+      "id": "composition-d37-1",
+      "path": "web-angular/src/app/shared/ui/controls/appearance-preferences.html",
+      "layer": "web",
+      "purpose": "D37 component ownership, recurring rules and current verification evidence"
+    },
+    {
+      "id": "composition-d37-2",
+      "path": "web-angular/src/app/shared/ui/controls/appearance-preferences.scss",
+      "layer": "web",
+      "purpose": "D37 component ownership, recurring rules and current verification evidence"
+    },
+    {
+      "id": "composition-d37-3",
+      "path": "web-angular/src/app/shared/ui/controls/appearance-preferences.spec.ts",
+      "layer": "web",
+      "purpose": "D37 component ownership, recurring rules and current verification evidence"
+    },
+    {
+      "id": "composition-d37-4",
+      "path": "documentation/guides/web/architecture/ANGULAR_COMPONENT_COMPOSITION.md",
+      "layer": "documentation",
+      "purpose": "D37 component ownership, recurring rules and current verification evidence"
+    },
+    {
+      "id": "composition-d37-5",
+      "path": "documentation/modules/platform/features/angular-collection-foundation/COMPONENT_COMPOSITION_REPORT.md",
+      "layer": "documentation",
+      "purpose": "D37 component ownership, recurring rules and current verification evidence"
+    },
+    {
+      "id": "composition-d37-verification",
+      "path": "documentation/modules/platform/features/angular-collection-foundation/verification/component-composition-summary.json",
+      "layer": "documentation",
+      "purpose": "D37 final source hashes, executed checks and portable measurements"
     }
   ]
 }

@@ -1,5 +1,5 @@
 import { Component,inject,viewChild } from '@angular/core';
-import { LocalizationRuntime,UiTextPipe } from '../../../platform/localization/public-api';
+import { UI_LOCALIZATION,UiTextPipe } from '../../localization/public-api';
 import { ActionButton } from '../buttons/public-api';
 import { FeedbackNotifications } from '../feedback/feedback-notifications';
 import { DialogPanel } from './dialog-panel';
@@ -9,6 +9,6 @@ import { DialogPanel } from './dialog-panel';
   <erp-button #dismissAction dialogActions [label]="'actions.close'|uiText" (activated)="notices.dismissError()" />
  </erp-dialog-panel>`,styles:'.error-message{margin:0;line-height:1.7;color:var(--foreground);overflow-wrap:anywhere}'})
 export class ErrorModalHost {
- readonly notices=inject(FeedbackNotifications);readonly locale=inject(LocalizationRuntime);private readonly closeAction=viewChild<ActionButton>('dismissAction');
+ readonly notices=inject(FeedbackNotifications);readonly locale=inject(UI_LOCALIZATION);private readonly closeAction=viewChild<ActionButton>('dismissAction');
  focusClose():void{this.closeAction()?.focus();}
 }

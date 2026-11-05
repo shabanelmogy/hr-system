@@ -430,6 +430,36 @@
       "path": "documentation/modules/platform/features/angular-managed-reporting-adapter/verification/CHECK_RESULTS.md",
       "layer": "documentation",
       "purpose": "Final gates and exact verification/release limits"
+    },
+    {
+      "id": "composition-d37-0",
+      "path": "web-angular/src/app/modules/reporting/global-reports/components/global-report-view.html",
+      "layer": "web",
+      "purpose": "D37 component ownership, recurring rules and current verification evidence"
+    },
+    {
+      "id": "composition-d37-1",
+      "path": "web-angular/src/app/modules/reporting/global-reports/components/global-report-view.scss",
+      "layer": "web",
+      "purpose": "D37 component ownership, recurring rules and current verification evidence"
+    },
+    {
+      "id": "composition-d37-2",
+      "path": "documentation/guides/web/architecture/ANGULAR_COMPONENT_COMPOSITION.md",
+      "layer": "documentation",
+      "purpose": "D37 component ownership, recurring rules and current verification evidence"
+    },
+    {
+      "id": "composition-d37-3",
+      "path": "documentation/modules/platform/features/angular-collection-foundation/COMPONENT_COMPOSITION_REPORT.md",
+      "layer": "documentation",
+      "purpose": "D37 component ownership, recurring rules and current verification evidence"
+    },
+    {
+      "id": "composition-d37-verification",
+      "path": "documentation/modules/platform/features/angular-collection-foundation/verification/component-composition-summary.json",
+      "layer": "documentation",
+      "purpose": "D37 final source hashes, executed checks and portable measurements"
     }
   ],
   "finalizationChecklist": [

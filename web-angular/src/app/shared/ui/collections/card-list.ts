@@ -2,7 +2,7 @@ import { Component,contentChild,inject,input,output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgTemplateOutlet } from '@angular/common';
 import { Checkbox } from 'primeng/checkbox';
-import { LocalizationRuntime,UiTextPipe } from '../../../platform/localization/public-api';
+import { UI_LOCALIZATION,UiTextPipe } from '../../localization/public-api';
 import { SurfaceCard } from '../layout/surface-card';
 import { ScrollViewport } from '../layout/scroll-viewport';
 import { CollectionFrame } from './collection-frame';
@@ -34,7 +34,7 @@ export class CardList<T>{
  readonly searchMaxWidth=input<number|null>(null);
  readonly recordNavigation=input(false);readonly recordRequest=input<CollectionRecordRequest|null>(null);
  readonly layout=input<'auto'|'responsive'>('auto');readonly appearance=input<'compact'|'entity'>('compact');
- private readonly locale=inject(LocalizationRuntime);
+ private readonly locale=inject(UI_LOCALIZATION);
  readonly source=input.required<CollectionSource<T>>();readonly label=input.required<string>();readonly rowId=input.required<(row:T)=>CollectionId>();readonly rowLabel=input.required<(row:T)=>string>();readonly selectable=input<(row:T)=>boolean>(()=>true);readonly selectionEnabled=input(false);readonly search=input<CollectionSearch>();readonly pageSizes=input<readonly number[]>(collectionPageSizes);
  readonly pageChange=output<CollectionPageRequest>();readonly activeChange=output<CollectionId|null>();readonly selectionChange=output<readonly CollectionId[]>();readonly searchChange=output<CollectionSearchChange>();readonly retry=output<void>();readonly rowActivated=output<T>();
  readonly controller=createCollectionController(this.source,this.rowId,this.selectable,{page:request=>this.pageChange.emit(request),active:id=>this.activeChange.emit(id),selected:ids=>this.selectionChange.emit(ids)},undefined,this.recordRequest);

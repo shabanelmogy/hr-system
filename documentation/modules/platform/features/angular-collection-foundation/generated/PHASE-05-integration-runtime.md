@@ -46,7 +46,7 @@ realtime, notification, localization, report, or Import integration is reachable
 | angular-collection-foundation-master | 4 | `3846922f56bb2f0dd5bc8f55b5c64f733b425d1ea2943bd56ea4c708751fc849` |
 | angular-collection-foundation-master | 5 | `eb41e60b3ccb7bff3e9779fbd2fae7ffbb4abe217a04bb29cd5b42cbcf12b7f1` |
 | angular-collection-foundation-master | 6 | `983ed69fcd0a2160a70725c73120734deec395f8025415ca5e46661d4fec6f25` |
-| angular-collection-foundation-master | 7 | `5641f423c2c6f22020977d5980a19cea09f05fc56824c8f37a5db50819dfc9a1` |
+| angular-collection-foundation-master | 7 | `5246b86f18772ca8fd51315ddc1a5107c470c2bcc8d2e539de7639ef406a0a66` |
 | angular-collection-foundation-master | 9 | `72b4e325040d35ad3426bf2fc0686fa85b299e5f2e349735a570c0cd93a88e25` |
 | angular-collection-foundation-api | 8 | `c5930c59d67c5efccc1bda1aba04bdacb2ce11cb936ddfb4306e541ee2a782af` |
 | angular-collection-foundation-api | 9 | `72b4e325040d35ad3426bf2fc0686fa85b299e5f2e349735a570c0cd93a88e25` |

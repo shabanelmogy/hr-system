@@ -10,7 +10,7 @@ import type { CollectionRecordRequest } from './collection-record-feedback';
 import { collectionKeyTarget } from './collection-keyboard';
 import { ContextMenuPanel,type ContextMenuAction } from '../overlays/context-menu-panel';
 import { filterByCellValue } from './grid-cell-filter';
-import { LocalizationRuntime,UiTextPipe } from '../../../platform/localization/public-api';
+import { UI_LOCALIZATION,UiTextPipe } from '../../localization/public-api';
 import { GridLocale } from '../../../../theme/grid-public-api';
 import { GridFilterInput } from './grid-filter-input';
 import { FeedbackState } from '../feedback/feedback-state';
@@ -24,11 +24,11 @@ import { resolveGridHeaders,type GridHeaderDefinition } from './grid-header-grou
 import { ActionButton } from '../buttons/public-api';
 import { AppIcon } from '../icons/app-icon';
 import { createGridCsv,gridCsvFilename,type GridCsvOptions } from './grid-export';
-import { parseGridPresentation,type GridPresentation } from './grid-presentation';
+import { createGridPresentationState } from './grid-presentation-state';
 import { gridColumnWidths,gridColumnMinimum } from './grid-column-widths';
 import { createCollectionController } from './collection-controller';
 import { attachCollectionFocus,collectionRowInteraction } from './collection-focus';
-import { collectionPageSizes,collectionQueryKey,type CollectionColumn,type CollectionDensity,type CollectionId,type CollectionPageRequest,type CollectionSearch,type CollectionSearchChange,type CollectionSort,type CollectionSource,type CollectionToolbarLayout } from './collection.types';
+import { collectionPageSizes,collectionQueryKey,type CollectionColumn,type CollectionId,type CollectionPageRequest,type CollectionSearch,type CollectionSearchChange,type CollectionSort,type CollectionSource,type CollectionToolbarLayout } from './collection.types';
 
 /** Remote data only: the caller owns criteria, requests and committed paging. */
 @Component({selector:'erp-data-table',imports:[FormsModule,NgTemplateOutlet,TableModule,Checkbox,RadioButton,RowActions,ContextMenuPanel,CollectionFrame,CollectionFeedback,UiTextPipe,GridFilterInput,FeedbackState,ActionButton,AppIcon],templateUrl:'./my-data-grid.html',styleUrls:['./my-data-grid.scss','./collection-slots.scss','./collection-row-flash.scss']})
@@ -43,7 +43,7 @@ export class MyDataGrid<T>{
   addRule:{style:{padding:'8px 12px',minHeight:'36px'}}
  }};
  readonly filterAttributes:ColumnFilterPassThrough={filterButtonBar:{style:{gap:'12px',paddingTop:'8px'}}};
- private readonly gridLocale=inject(GridLocale);readonly locale=inject(LocalizationRuntime);
+ private readonly gridLocale=inject(GridLocale);readonly locale=inject(UI_LOCALIZATION);
  private readonly destroyRef=inject(DestroyRef);
  private pendingSort:{readonly value:CollectionSort;readonly source:CollectionSource<T>}|null=null;
  private sortScheduled=false;
@@ -85,21 +85,22 @@ export class MyDataGrid<T>{
  readonly csv=input<GridCsvOptions|null>(null);readonly csvExported=output<{readonly rows:number;readonly filename:string}>();
  readonly details=contentChild(CollectionRowDetails<T>);readonly expanded=signal<Readonly<Record<string,boolean>>>({});readonly detailToggle=output<{readonly row:T;readonly expanded:boolean}>();
  readonly dataKey=input('id');
- readonly order=signal<readonly string[]>([]);readonly widths=signal<Readonly<Record<string,number>>>({});
- readonly pins=signal<Readonly<Record<string,'start'|'end'>>>({});
+ private readonly presentationState=createGridPresentationState(this.columns,computed(()=>this.source().query.scopeKey),this.display,order=>this.columnOrderChange.emit(order),()=>this.filterInvalid.set(false));
+ readonly order=this.presentationState.order;readonly widths=this.presentationState.widths;
+ readonly pins=this.presentationState.pins;
  readonly filterDefinitions=computed<readonly GridColumnFilter[]>(()=>this.advancedFilters()?this.columns().flatMap(column=>column.filter?[column.filter]:[]):[]);
  readonly filterContractValid=computed(()=>{const definitions=this.filterDefinitions();try{parseGridFilters(this.filters(),definitions);return definitions.every(filterDefinitionValid);}catch{return false;}});
  readonly nativeFilters=computed(()=>this.filterContractValid()?toPrimeGridFilters(this.filters(),this.filterDefinitions()):{});
  readonly nativeSorts=computed(()=>{try{return parseGridSort(this.sorts(),this.columns().flatMap(column=>column.sortField?[column.sortField]:[])).map(item=>({field:item.field,order:item.direction==='asc'?1:-1}));}catch{return [];}});
  readonly pageChange=output<CollectionPageRequest>();readonly activeChange=output<CollectionId|null>();readonly selectionChange=output<readonly CollectionId[]>();readonly sortChange=output<CollectionSort>();readonly searchChange=output<CollectionSearchChange>();readonly retry=output<void>();readonly rowActivated=output<T>();
  readonly controller=createCollectionController(this.source,this.rowId,this.selectable,{page:request=>this.pageChange.emit(request),active:id=>this.activeChange.emit(id),selected:ids=>this.selectionChange.emit(ids)},this.selectionMode,this.recordRequest);
- readonly density=signal<CollectionDensity>('standard');readonly visibleKeys=signal<readonly string[]>([]);
+ readonly density=this.presentationState.density;readonly visibleKeys=this.presentationState.visibleKeys;
  private readonly viewport=viewChild<ElementRef<HTMLElement>>('viewport');private readonly availableWidth=signal(0);
  private readonly cells=contentChildren(CollectionCell<T>);readonly empty=contentChild(CollectionEmptyTemplate);
  private readonly columnHeaders=contentChildren(CollectionColumnHeader<T>);private readonly columnFooters=contentChildren(CollectionColumnFooter<T>);
  readonly hasFooters=computed(()=>this.controller.view().kind==='ready'&&this.displayColumns().some(column=>this.columnFooter(column)!==undefined));
- readonly optionColumns=computed(()=>[...this.columns()].sort((a,b)=>this.order().indexOf(a.key)-this.order().indexOf(b.key)));
- readonly displayColumns=computed(()=>{const rank=(column:CollectionColumn<T>)=>this.pins()[column.key]==='start'?0:this.pins()[column.key]==='end'?2:1;return this.columns().filter(column=>this.visibleKeys().includes(column.key)).sort((a,b)=>rank(a)-rank(b)||this.order().indexOf(a.key)-this.order().indexOf(b.key));});
+ readonly optionColumns=this.presentationState.optionColumns;
+ readonly displayColumns=this.presentationState.displayColumns;
  readonly rows=computed(()=>[...this.controller.view().rows]);readonly rowHeight=computed(()=>this.density()==='compact'?36:this.density()==='comfortable'?68:52);
  readonly reservedColumnCount=computed(()=>Number(this.selectionEnabled())+Number(!!this.details())+Number(!!this.contextActions()));
  readonly reservedWidth=computed(()=>(this.selectionEnabled()?50:0)+(this.details()?50:0)+(this.contextActions()?this.actionColumnWidth():0));
@@ -109,9 +110,7 @@ export class MyDataGrid<T>{
  readonly tableAttributes=computed(()=>({table:{role:'grid','aria-label':this.label(),'aria-rowcount':this.controller.view().total??-1},tableContainer:{class:'erp-native-scrollbar'}}));
  readonly tokens=computed(()=>({root:{borderColor:'var(--border)'},headerCell:{background:'var(--surface)',color:this.appearance()==='reference'?'var(--foreground)':'var(--muted-foreground)',borderColor:'var(--border)',padding:this.appearance()==='reference'?'0px 10px':'8px 16px'},bodyCell:{borderColor:'var(--border)',padding:this.appearance()==='reference'?'0px 10px':'4px 16px'},row:{background:'var(--surface)',color:'var(--foreground)'},sortIcon:{color:'var(--muted-foreground)',hoverColor:'var(--primary)'}}));
  constructor(){
-  effect(()=>{const key=JSON.stringify([this.source().query.scopeKey,this.columns().map(column=>[column.key,column.hideable])]);untracked(()=>{if(key!==this.displayContext){this.displayContext=key;this.resetDisplay();}});});
   effect(()=>{this.source();this.columns();this.filters();this.cellContextFilter();this.grouping();untracked(()=>{this.expanded.set({});this.context.set(null);this.rowMenu()?.hide(false);});});
-  effect(()=>{const pins=this.display().frozenColumns??{};this.pins.set({...pins});});
   afterRenderEffect(cleanup=>{const viewport=this.viewport()?.nativeElement;if(!viewport)return;
    const resize=new ResizeObserver(entries=>{const width=entries[0]?.contentRect.width??viewport.clientWidth;this.availableWidth.set(width);});resize.observe(viewport);this.availableWidth.set(viewport.clientWidth);cleanup(()=>resize.disconnect());
   });
@@ -128,12 +127,9 @@ export class MyDataGrid<T>{
   });
   attachCollectionFocus(this.controller);
  }
- private displayContext='';
- resetDisplay(){this.visibleKeys.set(this.columns().map(column=>column.key));this.order.set(this.columns().map(column=>column.key));this.widths.set({});this.pins.set({...this.display().frozenColumns});this.density.set('standard');this.filterInvalid.set(false);}
- presentation():GridPresentation{return parseGridPresentation({version:1,scope:this.source().query.scopeKey,order:this.order(),visible:this.visibleKeys(),widths:this.widths(),pinned:this.pins(),density:this.density()},this.source().query.scopeKey,this.columns());}
- restorePresentation(value:unknown):boolean{
-  try{const state=parseGridPresentation(value,this.source().query.scopeKey,this.columns());this.order.set(state.order);this.visibleKeys.set(state.visible);this.widths.set(state.widths);this.pins.set(state.pinned);this.density.set(state.density);return true;}catch{return false;}
- }
+ resetDisplay(){this.presentationState.reset();this.filterInvalid.set(false);}
+ presentation(){return this.presentationState.snapshot();}
+ restorePresentation(value:unknown):boolean{return this.presentationState.restore(value);}
  exportCsv():void{
   const options=this.csv();if(!options||this.controller.view().kind!=='ready')return;
   const rows=options.selectedOnly?this.controller.view().rows.filter(row=>this.controller.selectedIds().includes(this.rowId()(row))):this.controller.view().rows;
@@ -186,14 +182,8 @@ export class MyDataGrid<T>{
  columnStyleWidth(column:CollectionColumn<T>){return this.width(column);}
  minimum(column:CollectionColumn<T>){return gridColumnMinimum(column,this.headerMinimums()[column.key]);}
  pinned(column:CollectionColumn<T>){return this.pins()[column.key]??null;}
- moveColumn(change:{readonly key:string;readonly direction:-1|1}){
-  if(!this.display().columnManagement)return;const order=[...this.order()],index=order.indexOf(change.key),target=index+change.direction;if(index<0||target<0||target>=order.length)return;
-  [order[index],order[target]]=[order[target],order[index]];this.order.set(order);this.columnOrderChange.emit(order);
- }
- pinColumn(change:{readonly key:string;readonly side:'start'|'end'|null}){
-  if(!this.display().columnManagement||!this.columns().some(column=>column.key===change.key))return;
-  this.pins.update(value=>{const next={...value};if(change.side)next[change.key]=change.side;else delete next[change.key];return next;});
- }
+ moveColumn(change:{readonly key:string;readonly direction:-1|1}){this.presentationState.move(change);}
+ pinColumn(change:{readonly key:string;readonly side:'start'|'end'|null}){this.presentationState.pin(change);}
  pinSide(column:CollectionColumn<T>):'left'|'right'{return (this.pinned(column)==='start')===(this.locale.direction()==='ltr')?'left':'right';}
  filterModes(definition:GridColumnFilter){return (definition.modes??gridFilterModes[definition.type]).map(value=>({value,label:this.locale.translate('collections.'+value)}));}
  changeFilters(event:unknown){
@@ -216,7 +206,7 @@ export class MyDataGrid<T>{
   if(!this.display().reorderableColumns||typeof event!=='object'||event===null||!('columns'in event)||!Array.isArray(event.columns))return;
   const keys:string[]=[];for(const column of event.columns){if(typeof column!=='object'||column===null||!('key'in column)||typeof column.key!=='string'||!this.displayColumns().some(item=>item.key===column.key)||keys.includes(column.key))return;keys.push(column.key);}
   if(keys.length!==this.displayColumns().length)return;
-  const hidden=this.order().filter(key=>!keys.includes(key));this.order.set([...keys,...hidden]);this.columnOrderChange.emit(this.order());
+  this.presentationState.reorder(keys);
  }
  cell(column:CollectionColumn<T>){return this.cells().find(cell=>cell.erpCollectionCell().key===column.key)?.template;}
  columnHeader(column:CollectionColumn<T>){return this.columnHeaders().find(header=>header.erpCollectionColumnHeader().key===column.key)?.template;}

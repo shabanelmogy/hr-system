@@ -2644,6 +2644,78 @@
       "path": "documentation/modules/platform/features/angular-countries-read-workspace/verification/CURRENT_READ_CLOSURE.md",
       "layer": "documentation",
       "purpose": "Current bounded read verification and explicit remaining children/release boundary"
+    },
+    {
+      "id": "composition-d37-0",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-card-header.ts",
+      "layer": "web",
+      "purpose": "D37 component ownership, recurring rules and current verification evidence"
+    },
+    {
+      "id": "composition-d37-1",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-card-header.html",
+      "layer": "web",
+      "purpose": "D37 component ownership, recurring rules and current verification evidence"
+    },
+    {
+      "id": "composition-d37-2",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-card-header.scss",
+      "layer": "web",
+      "purpose": "D37 component ownership, recurring rules and current verification evidence"
+    },
+    {
+      "id": "composition-d37-3",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-card-content.ts",
+      "layer": "web",
+      "purpose": "D37 component ownership, recurring rules and current verification evidence"
+    },
+    {
+      "id": "composition-d37-4",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-card-content.html",
+      "layer": "web",
+      "purpose": "D37 component ownership, recurring rules and current verification evidence"
+    },
+    {
+      "id": "composition-d37-5",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-card-content.scss",
+      "layer": "web",
+      "purpose": "D37 component ownership, recurring rules and current verification evidence"
+    },
+    {
+      "id": "composition-d37-6",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-detail-dialog.ts",
+      "layer": "web",
+      "purpose": "D37 component ownership, recurring rules and current verification evidence"
+    },
+    {
+      "id": "composition-d37-7",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-detail-dialog.html",
+      "layer": "web",
+      "purpose": "D37 component ownership, recurring rules and current verification evidence"
+    },
+    {
+      "id": "composition-d37-8",
+      "path": "web-angular/src/app/modules/reference-data/geographical-information/countries/utils/country-presentation.ts",
+      "layer": "web",
+      "purpose": "D37 component ownership, recurring rules and current verification evidence"
+    },
+    {
+      "id": "composition-d37-9",
+      "path": "documentation/guides/web/architecture/ANGULAR_COMPONENT_COMPOSITION.md",
+      "layer": "documentation",
+      "purpose": "D37 component ownership, recurring rules and current verification evidence"
+    },
+    {
+      "id": "composition-d37-10",
+      "path": "documentation/modules/platform/features/angular-collection-foundation/COMPONENT_COMPOSITION_REPORT.md",
+      "layer": "documentation",
+      "purpose": "D37 component ownership, recurring rules and current verification evidence"
+    },
+    {
+      "id": "composition-d37-verification",
+      "path": "documentation/modules/platform/features/angular-collection-foundation/verification/component-composition-summary.json",
+      "layer": "documentation",
+      "purpose": "D37 final source hashes, executed checks and portable measurements"
     }
   ],
   "finalizationChecklist": [

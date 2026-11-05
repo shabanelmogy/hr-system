@@ -1,0 +1,28 @@
+<ng-template #ownerFilters><div class="filter-region"><ng-content select="[toolbarFilters]" /></div></ng-template>
+ <section class="collection-shell" [class.reference-shell]="appearance()==='reference'" [class.plain-shell]="appearance()==='plain'" [class.single-row-toolbar]="toolbarLayout()==='single-row'" [attr.aria-label]="label()">
+  @if(toolbarVisible()){
+  <header class="collection-toolbar erp-native-scrollbar">
+   @if(search();as criteria){<div class="search-controls">
+    @if(criteria.field;as field){<erp-option-select class="search-field" [controlHeight]="appearance()==='reference'?36:40" [label]="field.label" [value]="field.value" [options]="field.options" (valueChange)="searchChange.emit({field:$event})" />}
+    @if(criteria.operator;as operator){<erp-option-select class="search-operator" [controlHeight]="appearance()==='reference'?36:40" [label]="operator.label" [value]="operator.value" [options]="operator.options" (valueChange)="searchChange.emit({operator:$event})" />}
+    <erp-text-field labelVisibility="sr-only" [style.max-width.px]="searchMaxWidth()" [label]="'general.search'|uiText" [placeholder]="criteria.placeholder" [maxLength]="searchLimit()" [messages]="searchMessages()" [formControl]="searchControl" [clearVisibility]="appearance()==='reference'?'always':'value'">@if(appearance()==='reference'){<erp-icon fieldIcon name="search" />}</erp-text-field>
+   </div>}
+   @if(toolbarLayout()==='single-row'){<ng-container [ngTemplateOutlet]="ownerFilters" />}
+   <div class="toolbar-content"><ng-content select="[toolbarContent]" /></div>
+   @if(columns().length){<erp-button appearance="quiet" variant="text" [label]="'actions.gridOptions'|uiText" [expanded]="optionsOpen()" hasPopup="dialog" (activated)="optionsOpen.set(true)"><erp-icon buttonIcon name="settings" /></erp-button>}
+  </header>
+  @if(toolbarLayout()==='responsive'){<ng-container [ngTemplateOutlet]="ownerFilters" />}
+  }
+  @if(selectionEnabled()){
+   <div class="selection-bar">@if(pageSelection()){<p-checkbox [binary]="true" [ngModelOptions]="{standalone:true}" [ngModel]="controller().allSelected()" [indeterminate]="controller().partlySelected()" [ariaLabel]="'collections.selectPage'|uiText" [disabled]="controller().view().kind!=='ready'||!controller().eligibleIds().length" (ngModelChange)="controller().selectPage($event===true)" />}
+    <span aria-live="polite">{{'collections.selected'|uiText:'core':{count:controller().selectedIds().length} }}</span>
+    <erp-button [label]="'general.clear'|uiText" variant="text" [disabled]="!controller().selectedIds().length" (activated)="controller().clearSelection()" />
+   </div>
+  }
+  <ng-content select="[collectionBody]" />
+  @if(showFooter()){<erp-collection-footer [controller]="controller()" [pageSizes]="pageSizes()" [recordNavigation]="recordNavigation()" />}
+ </section>
+<erp-collection-options-dialog [open]="optionsOpen()" [columns]="columns()" [visibleColumns]="visibleColumns()" [density]="density()" [columnTools]="columnTools()" [pinnedColumns]="pinnedColumns()"
+  (closed)="optionsOpen.set(false)" (columnsChange)="columnsChange.emit($event)" (densityChange)="densityChange.emit($event)" (displayReset)="displayReset.emit()" (columnMove)="columnMove.emit($event)" (columnPin)="columnPin.emit($event)">
+  <ng-content select="[gridOptions]" />
+</erp-collection-options-dialog>

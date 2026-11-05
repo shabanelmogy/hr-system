@@ -527,6 +527,24 @@
       "path": "web-angular/src/app/shared/data/public-api.ts",
       "layer": "web",
       "purpose": "Current optional criteria/type alias evolution"
+    },
+    {
+      "id": "composition-d37-0",
+      "path": "documentation/guides/web/architecture/ANGULAR_COMPONENT_COMPOSITION.md",
+      "layer": "documentation",
+      "purpose": "D37 component ownership, recurring rules and current verification evidence"
+    },
+    {
+      "id": "composition-d37-1",
+      "path": "documentation/modules/platform/features/angular-collection-foundation/COMPONENT_COMPOSITION_REPORT.md",
+      "layer": "documentation",
+      "purpose": "D37 component ownership, recurring rules and current verification evidence"
+    },
+    {
+      "id": "composition-d37-verification",
+      "path": "documentation/modules/platform/features/angular-collection-foundation/verification/component-composition-summary.json",
+      "layer": "documentation",
+      "purpose": "D37 final source hashes, executed checks and portable measurements"
     }
   ],
   "finalizationChecklist": [

@@ -2,6 +2,7 @@ import { Component,signal,viewChild } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { CollectionFrame } from './collection-frame';
+import { CollectionOptionsDialog } from './collection-options-dialog';
 import { ContextMenuPanel } from '../overlays/context-menu-panel';
 import { CollectionFooter } from './collection-footer';
 import { createCollectionController } from './collection-controller';
@@ -55,10 +56,11 @@ describe('Real shared Table capability composition',()=>{
   const fixture=TestBed.createComponent(Fixture);await fixture.whenStable();const owner=fixture.componentInstance,grid=owner.grid(),source=owner.source();
   const frame=fixture.debugElement.query(By.directive(CollectionFrame)).componentInstance as CollectionFrame<Row>;
   const filters:GridFilters=[{field:'name',operator:'and',constraints:[{matchMode:'contains',value:'First'}]}];owner.filters.set(filters);
-  frame.changeDensity('compact');frame.toggleColumn('name',false);frame.pin('name','start');grid.moveColumn({key:'name',direction:-1});await fixture.whenStable();
+  const dialog=fixture.debugElement.query(By.directive(CollectionOptionsDialog)).componentInstance as CollectionOptionsDialog<Row>;
+  dialog.changeDensity('compact');dialog.toggleColumn('name',false);dialog.pin('name','start');grid.moveColumn({key:'name',direction:-1});await fixture.whenStable();
   expect(grid.rowHeight()).toBe(36);expect(grid.visibleKeys()).toEqual(['id']);expect(grid.pins()).toEqual({name:'start'});expect(frame.columns().map(column=>column.key)).toEqual(['name','id']);
-  frame.columnSearch.set('NAME');expect(frame.optionColumns().map(column=>column.key)).toEqual(['name']);
-  frame.resetOptions();await fixture.whenStable();expect(frame.columnSearch()).toBe('');expect(grid.rowHeight()).toBe(52);expect(grid.visibleKeys()).toEqual(['id','name']);expect(grid.pins()).toEqual({});expect(grid.order()).toEqual(['id','name']);
+  dialog.columnSearch.set('NAME');expect(dialog.optionColumns().map(column=>column.key)).toEqual(['name']);
+  dialog.resetOptions();await fixture.whenStable();expect(dialog.columnSearch()).toBe('');expect(grid.rowHeight()).toBe(52);expect(grid.visibleKeys()).toEqual(['id','name']);expect(grid.pins()).toEqual({});expect(grid.order()).toEqual(['id','name']);
   expect(owner.source()).toBe(source);expect(owner.filters()).toBe(filters);expect(owner.filterChanged).not.toHaveBeenCalled();
  });
  it('emits typed native AND/OR rules to the owner while preserving the supplied remote page and rejecting invalid conditions',async()=>{

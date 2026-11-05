@@ -1,11 +1,11 @@
 import { effect,inject,Injectable } from '@angular/core';
 import { PrimeNG } from 'primeng/config';
-import { LocalizationRuntime } from '../app/platform/localization/public-api';
+import { UI_LOCALIZATION } from '../app/shared/localization/public-api';
 
 /** Adopted calendar captions follow the same SQL-backed text revision as the form. */
 @Injectable({providedIn:'root'})
 export class CalendarLocale{
- private readonly locale=inject(LocalizationRuntime);private readonly prime=inject(PrimeNG);
+ private readonly locale=inject(UI_LOCALIZATION);private readonly prime=inject(PrimeNG);
  constructor(){effect(()=>{
   const text=(key:string)=>this.locale.translate(`dateField.${key}`);
   const days=Array.from({length:7},(_,i)=>text(`day${i}`)),months=Array.from({length:12},(_,i)=>text(`month${i+1}`));

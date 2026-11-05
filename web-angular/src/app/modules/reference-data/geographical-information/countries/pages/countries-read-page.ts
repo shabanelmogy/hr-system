@@ -3,12 +3,16 @@ import { NgTemplateOutlet } from '@angular/common';
 import { LocalizationRuntime, UiTextPipe } from '../../../../../platform/localization/public-api';
 import {
   ActionButton, AppIcon, CardList, CollectionCardTemplate, CollectionCardHeader, CollectionCardFooter, CollectionCell, CollectionEmptyTemplate,
-  CollectionRecordFeedback,ConfirmationDialog,DialogPanel, FeedbackNotifications,FeedbackState, MyDataGrid, OptionSelect, PageHeader, ProgressMeter, RowActions,StatusBadge,SortDirectionButton,
+  CollectionRecordFeedback, FeedbackNotifications,FeedbackState, MyDataGrid, OptionSelect, PageHeader, RowActions,StatusBadge,SortDirectionButton,
   type CollectionColumn, type CollectionSearch,type GridRowAction,type PageViewOption,
 } from '../../../../../shared/ui/public-api';
 import { CountryReadState } from '../state/country-read-state';
-import { countryQuality, countrySearchFields, countrySearchOperators, countrySortFields, type CountryListItem } from '../types/country';
-import { CountryReadDetails } from '../components/country-read-details';
+import { countryName, countryNumber, countryDate, countryPhone } from '../utils/country-presentation';
+import { countrySearchFields, countrySearchOperators, countrySortFields, type CountryListItem } from '../types/country';
+import { CountryCardHeader } from '../components/country-card-header';
+import { CountryCardContent } from '../components/country-card-content';
+import { CountryDetailDialog } from '../components/country-detail-dialog';
+import { CountryLifecycleConfirmation } from '../components/country-lifecycle-confirmation';
 import { CountryEditor } from '../components/country-editor';
 import { CountryEditorState,type CountrySaved } from '../state/country-editor-state';
 import { countryColumnFilterDefinitions } from '../state/country-column-filters';
@@ -21,7 +25,7 @@ import { GlobalReportView,globalReportAllowed } from '../../../../reporting/publ
 @Component({
   selector: 'erp-countries-read-page', providers: [CountryReadState,CountryEditorState,CountryLifecycleState,CollectionRecordFeedback],
   imports: [NgTemplateOutlet, ActionButton, AppIcon, CardList, CollectionCardTemplate, CollectionCardHeader, CollectionCardFooter, CollectionCell, CollectionEmptyTemplate,
-    ConfirmationDialog,DialogPanel, FeedbackState, MyDataGrid, OptionSelect, PageHeader, ProgressMeter, RowActions,StatusBadge,SortDirectionButton, CountryReadDetails,CountryEditor,CollectionChartView,GlobalReportView, UiTextPipe],
+    FeedbackState, MyDataGrid, OptionSelect, PageHeader, RowActions,StatusBadge,SortDirectionButton, CountryCardHeader,CountryCardContent,CountryDetailDialog,CountryLifecycleConfirmation,CountryEditor,CollectionChartView,GlobalReportView, UiTextPipe],
   templateUrl: './countries-read-page.html', styleUrl: './countries-read-page.scss',
 })
 export class CountriesReadPage {
@@ -58,21 +62,7 @@ export class CountriesReadPage {
     }
   }
   readonly id = (row: CountryListItem) => row.id;
-  readonly rowLabel = (row: CountryListItem) => this.locale.language() === 'ar' ? row.nameAr : row.nameEn;
-  readonly otherName = (row: CountryListItem) => this.locale.language() === 'ar' ? row.nameEn : row.nameAr;
-  readonly quality = countryQuality;
-  readonly qualityLevel = (row: CountryListItem) => {
-    const quality = countryQuality(row);
-    return this.text('general.' + (quality >= 90 ? 'excellent' : quality >= 75 ? 'good' : quality >= 60 ? 'average' : 'poor')).toLocaleUpperCase(this.locale.language());
-  };
-  readonly qualityContrast = (row: CountryListItem) => {
-    const quality = countryQuality(row);
-    return quality >= 90 ? 'var(--success-foreground)' : quality >= 75 ? 'var(--primary-foreground)' : quality >= 60 ? 'var(--warning-foreground)' : 'var(--destructive-foreground)';
-  };
-  readonly qualityAccent = (row: CountryListItem) => {
-    const quality = countryQuality(row);
-    return quality >= 90 ? 'var(--success)' : quality >= 75 ? 'var(--primary)' : quality >= 60 ? 'var(--warning)' : 'var(--destructive)';
-  };
+  readonly rowLabel = (row: CountryListItem) => countryName(row,this.locale.language());
   readonly sort = computed(() => ({ field: this.state.query().sortBy, direction: this.state.query().sortDirection }));
   readonly columns = computed<readonly CollectionColumn<CountryListItem>[]>(() => [
     { key: 'id', filter:countryColumnFilterDefinitions.find(filter=>filter.field==='id'), align:'center', flex:.5, header: this.text('general.id'), value: row => row.id },
@@ -94,7 +84,6 @@ export class CountriesReadPage {
   }));
   readonly statuses = computed(() => ['active', 'archived', 'all'].map(value => ({ value, label: this.countryText('countries.status.' + value) })));
   readonly sorts = computed(() => countrySortFields.map(value => ({ value, label: this.fieldLabel(value) })));
-  readonly detailCountry = computed(() => { const detail = this.state.detail(); return detail.kind === 'ready' ? detail.data : null; });
   readonly subtitle = computed(() => this.countryText('countries.total') + ': ' + this.number(this.state.total()));
 
   constructor() { void this.locale.loadNamespace('core'); void this.locale.loadNamespace('reference-countries');effect(()=>{if(this.view()==='report'&&!this.canReport())this.view.set('grid');}); }
@@ -103,9 +92,9 @@ export class CountriesReadPage {
   countryText(key: string): string { return this.locale.translate(key, 'reference-countries'); }
   fieldLabel(field: string): string { return ['nameAr', 'nameEn', 'createdOn'].includes(field) ? this.text('general.' + field) : this.countryText('countries.' + field); }
   status(row: CountryListItem): string { return this.countryText(row.isDeleted ? 'countries.status.archived' : 'countries.status.active'); }
-  number(value: number): string { return new Intl.NumberFormat(this.locale.language()).format(value); }
-  date(value: string | null): string { return value ? new Intl.DateTimeFormat(this.locale.language(), { dateStyle: 'medium' }).format(new Date(value)) : '—'; }
-  phone(value: string | null): string { return value ? '+' + value.replace(/^\+/, '') : '—'; }
+  number(value: number): string { return countryNumber(value,this.locale.language()); }
+  date(value: string | null): string { return countryDate(value,this.locale.language()); }
+  phone(value: string | null): string { return countryPhone(value); }
   chooseSort(field: string): void { this.state.changeSort({ field, direction: this.state.query().sortDirection }); }
   reverseSort(): void { this.state.changeSort({ field: this.state.query().sortBy, direction: this.state.query().sortDirection === 'asc' ? 'desc' : 'asc' }); }
 }

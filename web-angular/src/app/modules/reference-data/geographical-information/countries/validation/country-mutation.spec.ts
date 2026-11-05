@@ -1,3 +1,4 @@
+import { TestBed } from '@angular/core/testing';
 import { countryDraftKey,countryFieldError,createCountryForm,emptyCountryDraft,parseCountryMutation } from './country-mutation';
 describe('Country write validation and semantic drafts',()=>{
  const draft={...emptyCountryDraft,nameAr:' مصر ',nameEn:' Egypt ',alpha2Code:' eg ',phoneCode:' +20 '};
@@ -11,6 +12,6 @@ describe('Country write validation and semantic drafts',()=>{
   expect(countryFieldError('alpha2Code','USA')).not.toBeNull();expect(countryFieldError('currencyCode','12A')).not.toBeNull();expect(()=>parseCountryMutation({...draft,extra:'unowned'})).toThrow();
  });
  it('keeps an invalid form actionable and marks both names invalid at submission',()=>{
-  const form=createCountryForm();expect(form.enabled).toBe(true);form.markAllAsTouched();expect(form.controls.nameAr.errors).toEqual({required:true});expect(form.controls.nameEn.errors).toEqual({required:true});
+  const form=TestBed.runInInjectionContext(()=>createCountryForm());expect(!form().disabled()).toBe(true);form().markAsTouched();expect(form.nameAr().getError('required')).toBeDefined();expect(form.nameEn().getError('required')).toBeDefined();
  });
 });

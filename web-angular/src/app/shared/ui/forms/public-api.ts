@@ -11,6 +11,8 @@ export { FormContainer } from './form-container';
 export { ValidationSummary } from './validation-summary';
 export type { ValidationIssue } from './validation-summary';
 export { applyServerFieldErrors, clearServerFieldError } from './form-errors';
+export { mapServerFieldErrors } from './submission-errors';
+export { validateDateOnly, validateNumericText } from './field-rules';
 export type { FieldMessages } from './form-errors';
 export { FormCloseGuard } from './form-close-guard';
 export type { CloseConsent } from './local-close-controller';

@@ -54,7 +54,7 @@ describe('Managed report shared-form composition', () => {
   it('keeps Search enabled and uses the shared error badge, field message, and first-error focus', async () => {
     const { fixture, owner, root, service } = await setup();
     expect(root.querySelector('form')?.noValidate).toBe(true);
-    owner.form.controls.nameAr.setValue('ع'.repeat(201));
+    owner.form.nameAr().value.set('ع'.repeat(201));
     await fixture.whenStable();
     const submit = root.querySelector<HTMLButtonElement>('button[type=submit]')!;
     expect(submit.disabled).toBe(false);
@@ -67,7 +67,7 @@ describe('Managed report shared-form composition', () => {
   });
   it('keeps draft criteria separate when language rerenders the applied report', async () => {
     const { fixture, owner, service, locale } = await setup();
-    owner.form.controls.nameAr.setValue('مصر');
+    owner.form.nameAr().value.set('مصر');
     locale.setLanguage('ar');
     await fixture.whenStable();
     expect(service.render).toHaveBeenLastCalledWith(report, { nameAr: '', nameEn: '' }, 'ar');
@@ -76,7 +76,7 @@ describe('Managed report shared-form composition', () => {
     expect(service.render).toHaveBeenLastCalledWith(report, { nameAr: 'مصر', nameEn: '' }, 'ar');
     owner.reset();
     await fixture.whenStable();
-    expect(owner.form.getRawValue()).toEqual({ nameAr: '', nameEn: '' });
+    expect(owner.form().value()).toEqual({ nameAr: '', nameEn: '' });
     expect(service.render).toHaveBeenLastCalledWith(report, { nameAr: '', nameEn: '' }, 'ar');
   });
   it('renders owned server field errors beneath shared inputs and clears the old PDF', async () => {
@@ -84,7 +84,9 @@ describe('Managed report shared-form composition', () => {
     service.render.mockReturnValue(
       throwError(() => new GlobalReportFailure('validation', { nameEn: 'Server fixture' })),
     );
-    owner.search();
+    const search = owner.search();
+    await fixture.whenStable();
+    await search;
     await fixture.whenStable();
     expect(root.querySelector('[data-testid=nameEn] .error')?.textContent).toContain(
       'Server fixture',
@@ -95,11 +97,11 @@ describe('Managed report shared-form composition', () => {
     const{fixture,owner,root,service}=await setup();fixture.componentRef.setInput('embedded',true);await fixture.whenStable();
     expect(root.querySelector('erp-page-header')).toBeNull();expect(root.querySelector('form.sidebar-form')).not.toBeNull();
     const order=Array.from(root.querySelectorAll('.form-content > [data-testid]')).map(element=>element.getAttribute('data-testid'));expect(order).toEqual(['nameAr','nameEn','report']);
-    owner.form.controls.nameEn.setValue('Draft');const calls=service.render.mock.calls.length;
+    owner.form.nameEn().value.set('Draft');const calls=service.render.mock.calls.length;
     fixture.componentRef.setInput('showFilterBar',false);await fixture.whenStable();expect(root.querySelector('aside')).toBeNull();expect(root.querySelector('erp-pdf-viewer')).not.toBeNull();
-    fixture.componentRef.setInput('showFilterBar',true);await fixture.whenStable();expect(owner.form.controls.nameEn.value).toBe('Draft');expect(service.render.mock.calls.length).toBe(calls);
+    fixture.componentRef.setInput('showFilterBar',true);await fixture.whenStable();expect(owner.form.nameEn().value()).toBe('Draft');expect(service.render.mock.calls.length).toBe(calls);
   });
   it('clears actor-owned draft fields on context replacement',async()=>{
-    const{fixture,owner,identity}=await setup();owner.form.controls.nameEn.setValue('Private draft');identity.set({...identity(),companyId:42});await fixture.whenStable();expect(owner.form.getRawValue()).toEqual({nameAr:'',nameEn:''});
+    const{fixture,owner,identity}=await setup();owner.form.nameEn().value.set('Private draft');identity.set({...identity(),companyId:42});await fixture.whenStable();expect(owner.form().value()).toEqual({nameAr:'',nameEn:''});
   });
 });

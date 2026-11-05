@@ -70,3 +70,6 @@ summary or feature-local selector. API owns the generated schema3 catalog; deplo
 matching resource before SQL override acceptance. Native retained unchanged.
 Actual States + another owner adapter remain ERP-02/S3. Report and SHARED_REFERENCE_CONTRACT
 own implementation/differences/limits; ROADMAP/RESUME own next single Active step.
+
+
+Maintenance 2026-11-04 — D07/D35: ReferenceField supports native nullable reference models/state/touch/focus/reset while preserving scoped lookup and retained-selection rules. A native composition test verifies required validation, vendor updates, clear and focus. Internal vendor/search FormControls remain shared implementation details. API/Next/Mobile runtime and persistence are unchanged; migrations and cross-platform domain UI audit are N/A for this client-only maintenance. Current verification and limits: `documentation/modules/platform/features/angular-form-foundation/SIGNAL_FORMS_IMPLEMENTATION_REPORT.md`. Historical verification in section 11 refers to its dated increment.

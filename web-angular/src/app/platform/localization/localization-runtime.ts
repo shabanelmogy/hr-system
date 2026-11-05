@@ -5,7 +5,7 @@ import core from '../../../locales/generated/bootstrap.json';
 import { namespaceLoaders, uiCatalogVersion } from './catalog.generated';
 import { isCompanyUiText } from './text-scope.generated';
 import { isAuthorizedSystemUiText } from './system-access.generated';
-import { companyRuntimeSchema, systemRuntimeSchema, type LocalizationIdentity, type NamespaceResources, type UiLanguage, type UiOverride } from './localization.types';
+import type { CompanyRuntime, SystemRuntime, LocalizationIdentity, NamespaceResources, UiLanguage, UiOverride } from './localization.types';
 
 const unsafe = new Set(['__proto__', 'constructor', 'prototype']);
 const placeholders = (text: string) => JSON.stringify((text.match(/\{\{[^{}]+\}\}|\{\d+(?:[^{}]*)\}|<\/?\d+>/g) ?? []).sort());
@@ -62,17 +62,16 @@ export class LocalizationRuntime {
 
   currentGeneration(): number { return this.generation; }
 
-  applyCompany(value: unknown, generation: number): boolean {
+  /** The HTTP service validates the wire shape; this runtime enforces identity and text policy. */
+  applyCompany(bundle: CompanyRuntime, generation: number): boolean {
     if (generation !== this.generation || !this.identity || this.identity.roles.includes('super_admin')) return false;
-    const bundle = companyRuntimeSchema.parse(value);
     if (bundle.catalogVersion !== uiCatalogVersion || bundle.tenantId !== this.identity.tenantId || bundle.companyId !== this.identity.companyId) return false;
     this.company = bundle.overrides; this.defaultLanguage = bundle.defaultLanguage;
     this.refresh(); this.resolveLanguage(); return true;
   }
 
-  applySystem(value: unknown, generation: number): boolean {
+  applySystem(bundle: SystemRuntime, generation: number): boolean {
     if (generation !== this.generation || !this.identity?.roles.includes('super_admin')) return false;
-    const bundle = systemRuntimeSchema.parse(value);
     if (bundle.catalogVersion !== uiCatalogVersion) return false;
     this.system = bundle.overrides; this.refresh(); return true;
   }

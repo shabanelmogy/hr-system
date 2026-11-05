@@ -1,7 +1,7 @@
 import { isDevMode } from '@angular/core';
 import { Routes } from '@angular/router';
 import { applicationRoutes } from './app.routes.shared';
-import { unsavedNavigationGuard } from './shared/data/public-api';
+import { unsavedNavigationGuard } from './shared/data/navigation.public-api';
 import { sessionGuard } from './platform/auth/public-api';
 import { CriteriaPreviewGate,criteriaPreviewGuard } from './dev/criteria-preview-gate';
 

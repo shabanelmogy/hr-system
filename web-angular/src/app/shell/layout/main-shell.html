@@ -18,18 +18,14 @@
     </div>
     <div workspaceActions class="toolbar-actions" [attr.inert]="auth.contextChanging()?'':null">
       <div class="desktop-preferences">
-        <erp-option-select [label]="'general.lang' | uiText" [value]="locale.language()" [options]="languages" (valueChange)="language($event)" />
-        <erp-button appearance="icon" variant="text" [label]="(theme.mode()==='light'?'general.darkMode':'general.lightMode') | uiText"
-          (activated)="theme.setMode(theme.mode()==='light'?'dark':'light')"><erp-icon buttonIcon [name]="theme.mode()==='light'?'sun':'moon'" /></erp-button>
+        <erp-appearance-preferences appearance="icon" [language]="locale.language()" [mode]="theme.mode()" (languageChange)="language($event)" (modeChange)="theme.setMode($event)" />
       </div>
       <erp-popover-panel #settings [label]="'menu.settings' | uiText"><erp-icon popoverTrigger name="settings" />
         <section class="settings-content">
           <div class="settings-identity"><erp-identity-avatar [name]="name()" /><div><small>{{ 'dashboard.welcome' | uiText }}</small><strong>{{ name() }}</strong><span>{{ role() }}</span></div></div>
           <erp-palette-picker [label]="'menu.colorPalette' | uiText" [labels]="paletteLabels()" [value]="theme.palette()" [mode]="theme.mode()" (valueChange)="theme.setPalette($event)" />
           <div class="settings-preferences">
-            <erp-option-select [label]="'general.lang' | uiText" [value]="locale.language()" [options]="languages" (valueChange)="language($event)" />
-            <erp-button appearance="quiet" variant="text" [label]="(theme.mode()==='light'?'general.darkMode':'general.lightMode') | uiText"
-              (activated)="theme.setMode(theme.mode()==='light'?'dark':'light')"><erp-icon buttonIcon [name]="theme.mode()==='light'?'sun':'moon'" /></erp-button>
+            <erp-appearance-preferences appearance="quiet" [language]="locale.language()" [mode]="theme.mode()" (languageChange)="language($event)" (modeChange)="theme.setMode($event)" />
           </div>
           <div class="settings-logout"><erp-button appearance="quiet" variant="text" severity="danger" [label]="'auth.logout' | uiText" [description]="'menu.logoutDescription' | uiText"
             fullWidth [busy]="auth.pending()" (activated)="logout()"><erp-icon buttonIcon name="logout" /></erp-button></div>
@@ -37,7 +33,7 @@
       </erp-popover-panel>
     </div>
     @if(auth.contextChanging()){<erp-feedback-state kind="loading" [title]="'angularAuth.updatingContext' | uiText:'platform-auth'" />}
-    @if(auth.contextError();as error){<erp-feedback-state kind="error" layout="inline" [title]="error | uiText:'platform-auth'" [actionLabel]="'actions.close' | uiText" (action)="auth.contextError.set(null)" />}
+    @if(auth.contextError();as error){<erp-feedback-state kind="error" layout="inline" [title]="error | uiText:'platform-auth'" [actionLabel]="'actions.close' | uiText" (action)="auth.dismissContextError()" />}
     @if(extraFeedback();as feedback){<erp-feedback-state kind="error" layout="inline" [title]="feedback.title" [actionLabel]="feedback.dismiss?('actions.close' | uiText):''" (action)="feedback.dismiss?.()" />}
     <div class="scope-view" [hidden]="auth.contextChanging()" [attr.inert]="auth.contextChanging()?'':null"><router-outlet /></div>
   </erp-application-frame>

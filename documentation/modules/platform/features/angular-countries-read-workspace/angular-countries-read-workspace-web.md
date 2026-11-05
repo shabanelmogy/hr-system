@@ -34,6 +34,12 @@ Both super_admin and Countries:View are required for page/detail/UI callbacks; A
 
 The six source strings/codes and nullable metadata/timestamps/isDeleted/active-state counts retain server ownership. AND combines fields; each field explicitly combines its conditions with AND or OR. Conditions execute in EF before count/order/paging, including active-child counts, UTC calendar-day matching and documented nullable negative behavior. Zero and false remain typed values. No raw SQL or downloaded-page emulation. Detail remains a separate authorized ID read.
 
+
+D37 composition maintenance2026-11-04: CountriesReadPage composes feature-local CountryCardHeader/CountryCardContent and CountryDetailDialog over the existing Shared card/dialog contracts. Pure country-presentation helpers retain bilingual formatting and Countries quality thresholds. CountryReadState remains page-scoped; the detail component injects the existing instance without adding providers. Templates/styles move with the owning view fragment.
+Reusable policy: documentation/guides/web/architecture/ANGULAR_COMPONENT_COMPOSITION.md. Current evidence: documentation/modules/platform/features/angular-collection-foundation/COMPONENT_COMPOSITION_REPORT.md. Earlier acceptance snapshots retain their original scope/date; no API/domain/schema/native behavior changes.
+
+D37 final acceptance: architecture16/full scan, strict app/spec,448 unit tests and production build passed;86 bounded fixture browser cases across Grid8/Countries8/actions8/Report8/login10/language20/Shell24. Production initial572.16kB; existing RISK-019500kB warning remains. Portable current evidence: angular-collection-foundation/verification/component-composition-summary.json. API/native/hosted/pixel acceptance retain their existing scope.
+
 ## 8. Edge Cases and Validation Matrix
 
 Reject unknown/duplicate fields, modes or JSON members, wrong types, blank/overlong text, too many groups/rules, invalid dates and out-of-range numbers. Verify AND/OR, zero/false, null dates/strings, active-child counts, ordering/count/paging and SQL translation. Preserve existing malformed response, duplicate row, metadata,401/403/404,timeout,cancellation,scope/locale/detail/close/retry coverage. No entity/schema/transaction/editor mutation occurs in this read contract.

@@ -508,6 +508,24 @@
       "layer": "documentation",
       "path": "documentation/modules/platform/features/angular-localization-foundation/required-files.json",
       "purpose": "Current shared feedback bootstrap and inherited localization ownership"
+    },
+    {
+      "id": "signal-foundation-20261104-0",
+      "path": "web-angular/src/app/platform/auth/routes.public-api.ts",
+      "layer": "web",
+      "purpose": "D07/D35 current native forms and foundation maintenance source/evidence"
+    },
+    {
+      "id": "signal-foundation-20261104-1",
+      "path": "web-angular/src/app/shell/auth-layout.public-api.ts",
+      "layer": "web",
+      "purpose": "D07/D35 current native forms and foundation maintenance source/evidence"
+    },
+    {
+      "id": "signal-foundation-20261104-2",
+      "path": "web-angular/src/app/platform/auth/pages/password-request-page.spec.ts",
+      "layer": "web",
+      "purpose": "D07/D35 current native forms and foundation maintenance source/evidence"
     }
   ]
 }

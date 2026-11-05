@@ -59,13 +59,13 @@ invalidation, success test, and failure test. Use `N/A` only with a reason.
 | angular-countries-read-workspace-master | 3 | `900d99a68a5e3fb4b45f4d01d3278357a90c1bef05562b27edd672021635ebe6` |
 | angular-countries-read-workspace-master | 4 | `73f5a7101a9e9f4423d8539c612013ba7eb1541d388fb44669919a8f2779bc62` |
 | angular-countries-read-workspace-master | 6 | `4aa2e516e6ef412cfb58f2d8ccc71961358af0545fb78f9128ec63fdfa43b512` |
-| angular-countries-read-workspace-master | 7 | `20af956b014674166cbc688b3813fff95ab1ed9a22bc27580172876834718601` |
+| angular-countries-read-workspace-master | 7 | `5d8306cdd46d981b0f865e4bc482ff2036f122ab176e7c532b87a1295e9bedbc` |
 | angular-countries-read-workspace-master | 8 | `9c477e9921fce73d5b4db42fb8fd55aa1152683205584719fbec91024291702d` |
 | angular-countries-read-workspace-api | 6 | `4aa2e516e6ef412cfb58f2d8ccc71961358af0545fb78f9128ec63fdfa43b512` |
 | angular-countries-read-workspace-api | 7 | `20af956b014674166cbc688b3813fff95ab1ed9a22bc27580172876834718601` |
 | angular-countries-read-workspace-api | 8 | `9c477e9921fce73d5b4db42fb8fd55aa1152683205584719fbec91024291702d` |
 | angular-countries-read-workspace-web | 6 | `4aa2e516e6ef412cfb58f2d8ccc71961358af0545fb78f9128ec63fdfa43b512` |
-| angular-countries-read-workspace-web | 7 | `20af956b014674166cbc688b3813fff95ab1ed9a22bc27580172876834718601` |
+| angular-countries-read-workspace-web | 7 | `5d8306cdd46d981b0f865e4bc482ff2036f122ab176e7c532b87a1295e9bedbc` |
 | angular-countries-read-workspace-web | 8 | `9c477e9921fce73d5b4db42fb8fd55aa1152683205584719fbec91024291702d` |
 | angular-countries-read-workspace-web | 9 | `9956bd77de0553081068027e0cf412fb7f2ac7d411995786f17e1f2d5ddd6c6d` |
 | angular-countries-read-workspace-mobile | 9 | `9956bd77de0553081068027e0cf412fb7f2ac7d411995786f17e1f2d5ddd6c6d` |

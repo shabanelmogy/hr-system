@@ -1,7 +1,7 @@
 import { Component, computed, effect, inject, input, signal } from '@angular/core';
 import { DomSanitizer, type SafeResourceUrl } from '@angular/platform-browser';
 import { ButtonDirective } from 'primeng/button';
-import { UiTextPipe } from '../../../platform/localization/public-api';
+import { UiTextPipe } from '../../localization/public-api';
 import type { PdfDocument } from '../../data/public-api';
 @Component({
   selector: 'erp-pdf-viewer',

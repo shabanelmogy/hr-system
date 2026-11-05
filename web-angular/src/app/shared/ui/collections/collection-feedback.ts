@@ -1,6 +1,6 @@
 import { Component,input,output,TemplateRef } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
-import { UiTextPipe } from '../../../platform/localization/public-api';
+import { UiTextPipe } from '../../localization/public-api';
 import { FeedbackState } from '../feedback/feedback-state';
 @Component({selector:'erp-collection-feedback',imports:[NgTemplateOutlet,FeedbackState,UiTextPipe],template:`
  @if(kind()==='ready'&&emptyTemplate();as template){<ng-container *ngTemplateOutlet="template" />}

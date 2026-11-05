@@ -1,0 +1,170 @@
+[
+  {
+    "palette": "green",
+    "mode": "light",
+    "language": "en",
+    "width": 390,
+    "sourceFingerprint": "9172df5e8120df1a2d308932f8b29d0c2872de448df30cf91b06729c827918ab",
+    "bootstrapReloads": 0,
+    "interactions": true,
+    "geometry": {
+      "headerHeight": 91,
+      "titleFontSize": "16px",
+      "titleWeight": "600",
+      "columnHeight": 56,
+      "badgesTop": 60,
+      "controlsBottom": 56,
+      "documentWidth": 390,
+      "viewport": 390
+    },
+    "starts": 16,
+    "passed": true
+  },
+  {
+    "palette": "green",
+    "mode": "light",
+    "language": "en",
+    "width": 1440,
+    "sourceFingerprint": "9172df5e8120df1a2d308932f8b29d0c2872de448df30cf91b06729c827918ab",
+    "bootstrapReloads": 0,
+    "interactions": true,
+    "geometry": {
+      "headerHeight": 72,
+      "titleFontSize": "18px",
+      "titleWeight": "600",
+      "columnHeight": 56,
+      "badgesTop": 60.984375,
+      "controlsBottom": 78,
+      "documentWidth": 1440,
+      "viewport": 1440
+    },
+    "starts": 16,
+    "passed": true
+  },
+  {
+    "palette": "green",
+    "mode": "light",
+    "language": "ar",
+    "width": 390,
+    "sourceFingerprint": "9172df5e8120df1a2d308932f8b29d0c2872de448df30cf91b06729c827918ab",
+    "bootstrapReloads": 0,
+    "interactions": true,
+    "geometry": {
+      "headerHeight": 91,
+      "titleFontSize": "16px",
+      "titleWeight": "600",
+      "columnHeight": 56,
+      "badgesTop": 60,
+      "controlsBottom": 56,
+      "documentWidth": 390,
+      "viewport": 390
+    },
+    "starts": 16,
+    "passed": true
+  },
+  {
+    "palette": "green",
+    "mode": "light",
+    "language": "ar",
+    "width": 1440,
+    "sourceFingerprint": "9172df5e8120df1a2d308932f8b29d0c2872de448df30cf91b06729c827918ab",
+    "bootstrapReloads": 0,
+    "interactions": true,
+    "geometry": {
+      "headerHeight": 72,
+      "titleFontSize": "18px",
+      "titleWeight": "600",
+      "columnHeight": 56,
+      "badgesTop": 60.984375,
+      "controlsBottom": 78,
+      "documentWidth": 1440,
+      "viewport": 1440
+    },
+    "starts": 16,
+    "passed": true
+  },
+  {
+    "palette": "green",
+    "mode": "dark",
+    "language": "en",
+    "width": 390,
+    "sourceFingerprint": "9172df5e8120df1a2d308932f8b29d0c2872de448df30cf91b06729c827918ab",
+    "bootstrapReloads": 0,
+    "interactions": true,
+    "geometry": {
+      "headerHeight": 91,
+      "titleFontSize": "16px",
+      "titleWeight": "600",
+      "columnHeight": 56,
+      "badgesTop": 60,
+      "controlsBottom": 56,
+      "documentWidth": 390,
+      "viewport": 390
+    },
+    "starts": 16,
+    "passed": true
+  },
+  {
+    "palette": "green",
+    "mode": "dark",
+    "language": "en",
+    "width": 1440,
+    "sourceFingerprint": "9172df5e8120df1a2d308932f8b29d0c2872de448df30cf91b06729c827918ab",
+    "bootstrapReloads": 0,
+    "interactions": true,
+    "geometry": {
+      "headerHeight": 72,
+      "titleFontSize": "18px",
+      "titleWeight": "600",
+      "columnHeight": 56,
+      "badgesTop": 60.984375,
+      "controlsBottom": 78,
+      "documentWidth": 1440,
+      "viewport": 1440
+    },
+    "starts": 16,
+    "passed": true
+  },
+  {
+    "palette": "green",
+    "mode": "dark",
+    "language": "ar",
+    "width": 390,
+    "sourceFingerprint": "9172df5e8120df1a2d308932f8b29d0c2872de448df30cf91b06729c827918ab",
+    "bootstrapReloads": 0,
+    "interactions": true,
+    "geometry": {
+      "headerHeight": 91,
+      "titleFontSize": "16px",
+      "titleWeight": "600",
+      "columnHeight": 56,
+      "badgesTop": 60,
+      "controlsBottom": 56,
+      "documentWidth": 390,
+      "viewport": 390
+    },
+    "starts": 16,
+    "passed": true
+  },
+  {
+    "palette": "green",
+    "mode": "dark",
+    "language": "ar",
+    "width": 1440,
+    "sourceFingerprint": "9172df5e8120df1a2d308932f8b29d0c2872de448df30cf91b06729c827918ab",
+    "bootstrapReloads": 0,
+    "interactions": true,
+    "geometry": {
+      "headerHeight": 72,
+      "titleFontSize": "18px",
+      "titleWeight": "600",
+      "columnHeight": 56,
+      "badgesTop": 60.984375,
+      "controlsBottom": 78,
+      "documentWidth": 1440,
+      "viewport": 1440
+    },
+    "starts": 16,
+    "passed": true
+  }
+]

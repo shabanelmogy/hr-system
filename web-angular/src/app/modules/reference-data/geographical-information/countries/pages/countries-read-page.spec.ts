@@ -40,7 +40,7 @@ describe('Countries read composition', () => {
     owner.chooseView('report');await fixture.whenStable();expect(root.querySelectorAll('erp-page-header')).toHaveLength(1);
     expect(reports.catalog).toHaveBeenCalledOnce();expect(reports.render).toHaveBeenLastCalledWith(globalReportFixture,{nameAr:'',nameEn:''},'en');expect(owner.state.query()).toEqual(query);expect(service.page.mock.calls.length).toBe(reads);
     const report=fixture.debugElement.query(By.directive(GlobalReportView)).componentInstance as GlobalReportView;
-    report.form.controls.nameEn.setValue('Draft');owner.toolbarVisible.set(false);await fixture.whenStable();expect(root.querySelector('erp-report-workspace aside')).toBeNull();owner.toolbarVisible.set(true);await fixture.whenStable();expect(report.form.controls.nameEn.value).toBe('Draft');expect(reports.render).toHaveBeenCalledOnce();
+    report.form.nameEn().value.set('Draft');owner.toolbarVisible.set(false);await fixture.whenStable();expect(root.querySelector('erp-report-workspace aside')).toBeNull();owner.toolbarVisible.set(true);await fixture.whenStable();expect(report.form.nameEn().value()).toBe('Draft');expect(reports.render).toHaveBeenCalledOnce();
     owner.refreshCurrent();await fixture.whenStable();expect(reports.catalog).toHaveBeenCalledTimes(2);expect(reports.render).toHaveBeenCalledTimes(2);expect(service.page.mock.calls.length).toBe(reads);
     identity.set({...identity()!,permissions:['Countries:View']});await fixture.whenStable();expect(owner.view()).toBe('grid');expect(root.querySelector('erp-global-report-view')).toBeNull();expect(URL.revokeObjectURL).toHaveBeenCalled();
   },15_000);

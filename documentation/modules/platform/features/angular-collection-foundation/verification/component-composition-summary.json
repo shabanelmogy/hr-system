@@ -1,0 +1,166 @@
+{
+  "date": "2026-11-04",
+  "decision": "D37",
+  "branch": "codex/angular-foundation-hardening",
+  "scope": "Existing Angular component composition/structure and recurring guidance; new functionality deferred",
+  "verification": {
+    "unit": {
+      "files": 80,
+      "tests": 448,
+      "passed": true
+    },
+    "architecture": {
+      "ruleTests": 16,
+      "fullSourceScan": true,
+      "passed": true
+    },
+    "types": {
+      "app": true,
+      "spec": true
+    },
+    "config": {
+      "tests": 4,
+      "passed": true
+    },
+    "catalog": {
+      "namespaces": 20,
+      "passed": true
+    },
+    "tokens": true,
+    "fonts": {
+      "files": 14,
+      "passed": true
+    },
+    "productionBuild": {
+      "passed": true,
+      "initialRawKbRounded": 572.16,
+      "estimatedTransferKbRounded": 147.19,
+      "warningBudgetKb": 500,
+      "openNote": "RISK-019"
+    },
+    "browser": {
+      "grid": {
+        "cases": 8,
+        "passed": true,
+        "command": "node scripts/verify-grid-capabilities-browser.mjs",
+        "evidence": "component-composition/grid-results.json"
+      },
+      "countries": {
+        "cases": 8,
+        "passed": true,
+        "command": "node scripts/verify-countries-screen-browser.mjs --focused",
+        "evidence": "component-composition/countries-results.json"
+      },
+      "country-actions": {
+        "cases": 8,
+        "passed": true,
+        "command": "node scripts/verify-country-actions-browser.mjs",
+        "evidence": "component-composition/country-actions-results.json"
+      },
+      "country-report": {
+        "cases": 8,
+        "passed": true,
+        "command": "node scripts/verify-country-report-browser.mjs --focused",
+        "evidence": "component-composition/country-report-results.json"
+      },
+      "login": {
+        "cases": 10,
+        "passed": true,
+        "command": "node scripts/verify-login-browser.mjs",
+        "evidence": "component-composition/login-results.json"
+      },
+      "language": {
+        "cases": 20,
+        "passed": true,
+        "command": "node scripts/verify-language-select-browser.mjs",
+        "evidence": "component-composition/language-results.json"
+      },
+      "shell": {
+        "cases": 24,
+        "passed": true,
+        "command": "node scripts/verify-shell-browser.mjs",
+        "evidence": "component-composition/shell-results.json"
+      }
+    },
+    "documentation": {
+      "recipes": 437,
+      "passed": true,
+      "generatedFromCanonicalSources": true
+    },
+    "planning": {
+      "passed": true,
+      "inheritedWarnings": [
+        "education-module: missing version 2.0 feature contract",
+        "erp-platform-template: missing version 2.0 feature contract"
+      ]
+    },
+    "diffCheck": {
+      "passed": true
+    }
+  },
+  "primeng": {
+    "components": [
+      "tabs",
+      "selectbutton",
+      "checkbox",
+      "select",
+      "button"
+    ],
+    "result": "All component metadata valid after isolating Angular ngModelOptions in validation copy; raw Checkbox/SelectButton metadata reported that directive as unknown",
+    "limits": "ngModelOptions belongs to Angular NgModel, confirmed by installed @angular/forms declarations. Metadata is not runtime validation."
+  },
+  "limits": [
+    "Browser uses development fixtures and intercepted API calls; no live business writes",
+    "Grid/Countries/report focus matrix covers green palette; language selector covers all five palettes",
+    "No production-preview browser run for D37, no Next pixel comparison, hosted acceptance or latency benchmark",
+    "Unit suite preceded final formatting/CSS relocation; final compiler/build and Shell 24 runtime verify that final styling",
+    "Earlier D35/D36 evidence snapshots retain their historical scopes"
+  ],
+  "sources": {
+    "web-angular/scripts/verify-countries-screen-browser.mjs": "a43b66030951bca0305909341469cc6aa65ec912c72fc119d0346b677bee38a8",
+    "web-angular/scripts/verify-country-actions-browser.mjs": "9d1977bc8b4afa62f3ba6b9fee71e99b9249a376a0164146b5e98b7a40b80043",
+    "web-angular/scripts/verify-country-report-browser.mjs": "3f12b26f8f7faa8d206cc57de67af3d7b1826d183d1624275591921bcdda8956",
+    "web-angular/scripts/verify-grid-capabilities-browser.mjs": "b1a6be26498371b9b0ef584ef509d4961cb89361f6142706645a891c2e6f5023",
+    "web-angular/scripts/verify-language-select-browser.mjs": "0bfe059029e245c46cdc86b3f0b4292be55f1f34ec12d1e8776b36fbf9051296",
+    "web-angular/scripts/verify-login-browser.mjs": "b02204e7e89d975172c2bf972b7638e6dbff9b8da0b32b9a165bc93ba244579d",
+    "web-angular/scripts/verify-shell-browser.mjs": "5aab2c0e3a44f636a4001fe098a5b8abb0a472966493ef86f85f82964925d0d0",
+    "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-card-content.html": "43ac37d9536cfc66b21026547895aaec70d112e34958cfc7cb2bc35264776303",
+    "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-card-content.scss": "6d7bcfde66a67ab3cf6c0a6432e9e6c78ec78000cdc855657a6a315b410499ab",
+    "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-card-content.ts": "aa6495218699e9d1f12fc8652b5694f6c55af864dbbea71639d4cce80b5c2f53",
+    "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-card-header.html": "8eb2c7e0071cc32e3987d0f40a5284e0e6891267703e01c0c42c220dfea23971",
+    "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-card-header.scss": "804524b179bce66fc6e21d685453c581de9fa8f4fc7f1a247295614ab0507140",
+    "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-card-header.ts": "3f86a0dcd8278eba6d801d842fb269f26dee39bcbb36b99875204bb80efd89d5",
+    "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-detail-dialog.html": "7e815e2bc573b2dbb08b3c3d1537effe9ac02d7245ff13bc47c7f26e0cbc1953",
+    "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-detail-dialog.ts": "7d9ab84606b35dd4bcc230161318a6a4bfa93ab826c36fa5a8dfce4551646eda",
+    "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-lifecycle-confirmation.html": "9a73b32418f66863260163349925cdfa3336909b9653abb9e9dd81a0ddf65c7d",
+    "web-angular/src/app/modules/reference-data/geographical-information/countries/components/country-lifecycle-confirmation.ts": "ab6064fbe63780225bbba31426abf96d10f7e8e63810ce4dae97aadd455ef3d8",
+    "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page.html": "ab7979595e700ac5288c9f971b922a447c85adf0b534de0df3d2cda23218b237",
+    "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page.scss": "f8651a5ea3af68a6e0bedbfa62785712bb9b60c91b30732d30693af21fd114d3",
+    "web-angular/src/app/modules/reference-data/geographical-information/countries/pages/countries-read-page.ts": "05e75888af18f18794f063515a460e6ee60add55af24b59bef55d76f42b3ae92",
+    "web-angular/src/app/modules/reference-data/geographical-information/countries/utils/country-presentation.ts": "5c34b379a1c000f8ffcec37f7feacaae4d36334ddffed26492800eee3636b3e6",
+    "web-angular/src/app/modules/reporting/global-reports/components/global-report-view.html": "40156946864c7245540e480aefdba9cd472ac84eed16a6242b9acd8b63a953a7",
+    "web-angular/src/app/modules/reporting/global-reports/components/global-report-view.scss": "9015007b68e953961c0dec669aef8fb248f9eee4f735645440185c4d061d3675",
+    "web-angular/src/app/modules/reporting/global-reports/components/global-report-view.ts": "88c8a60096778f75be68ce6b8455e476a118f217be4fe8b0546de19e6481bad6",
+    "web-angular/src/app/shared/ui/collections/collection-frame.html": "2796fb56a82808107bd00fea088a819e39f43223bd981f46c0967aa28eb8d5ad",
+    "web-angular/src/app/shared/ui/collections/collection-frame.scss": "dd5f39ae464b30997bc1247f10b354b431a66625a83e88d348db89308786bb8d",
+    "web-angular/src/app/shared/ui/collections/collection-frame.ts": "e815c6a057f4bc170ca026b0a93f6d1fc8052c908a8e579774fe45d2b2950313",
+    "web-angular/src/app/shared/ui/collections/collection-options-dialog.html": "bd8f51b11435e438aee4c96e0b190c1e343b2b99a688b1702e46440c6bd51063",
+    "web-angular/src/app/shared/ui/collections/collection-options-dialog.scss": "e45b1024a9aec8b121b5b9d7d7f361c4683dfa8c7d3a2b26085d51f02caf55c3",
+    "web-angular/src/app/shared/ui/collections/collection-options-dialog.spec.ts": "82c57a9d1bcdd6021746efe4d2cc44cb1c7da9cdcf81e0a410881950c0e813f3",
+    "web-angular/src/app/shared/ui/collections/collection-options-dialog.ts": "41daee59eca2357528e8c48d093ebaa82b79f67dcc84e80f6718a232a9476259",
+    "web-angular/src/app/shared/ui/collections/grid-capabilities.spec.ts": "7c438fb0bd0aeb124c6185a09357ccb939ef9fb8bdcc54bb6592ea7483bd5acc",
+    "web-angular/src/app/shared/ui/collections/grid-presentation-state.ts": "0f2cb9256d331dd8d9faba986c60daf7ce1dbc45d183b040adebcbd13adf9e5b",
+    "web-angular/src/app/shared/ui/collections/my-data-grid.ts": "dc9b16c4f7356fc606a63d300b541797f00a24fa3a867dce272dd3aec513d947",
+    "web-angular/src/app/shared/ui/controls/appearance-preferences.html": "7e1466b3b1973d786f9d36a0813fc59abccca757ec85c0fc61603e063673abdf",
+    "web-angular/src/app/shared/ui/controls/appearance-preferences.scss": "b029b9df767e9b89e49defa9dec874c3f8ccc00140ace218850efdc37712e5a6",
+    "web-angular/src/app/shared/ui/controls/appearance-preferences.spec.ts": "87b53abc06e57323f4e86c6f57ec20c3b79b3adf2582d5c265a32fd6b39140ef",
+    "web-angular/src/app/shared/ui/controls/appearance-preferences.ts": "78c99b142906895061d2729efa396745f43635ffd338f948104aa38343d1267f",
+    "web-angular/src/app/shared/ui/public-api.ts": "6f3cde7507f10c9e8d672b67b208047e782dcb70f32b515b6b50b964d76beaba",
+    "web-angular/src/app/shell/auth-layout/auth-layout.html": "7a22378f66740ad35e102c41de08b586f36cae6830ca1414cd3c371c627b81c8",
+    "web-angular/src/app/shell/auth-layout/auth-layout.scss": "a4d03a5992873d12b8741097178c68a11e0bdc0f3b898484aca109cb2fab64c5",
+    "web-angular/src/app/shell/auth-layout/auth-layout.ts": "3caa01a5f0fb0afdae45049e84caf143cfe2c42ce7961b6518321cd7c6743868",
+    "web-angular/src/app/shell/layout/main-shell.html": "8b88551a2d2d273dbe9272a678dbc4e68d8634639e9c0a49aa6240c706c6a83e",
+    "web-angular/src/app/shell/layout/main-shell.scss": "9f21fb3937f83eb796d0d77954b58ddaf03d5c3a87db9ff13e7557c2074b3a68",
+    "web-angular/src/app/shell/layout/main-shell.ts": "472f8975eb46731dfd73262a58adfa394186bb78b416bf3a6a1b304b7d224a39"
+  }
+}

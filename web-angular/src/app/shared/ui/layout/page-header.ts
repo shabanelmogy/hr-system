@@ -4,7 +4,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { ThemeService } from '../../../../theme/public-api';
 import { ActionButton } from '../buttons/public-api';
 import { AppIcon,type AppIconName } from '../icons/app-icon';
-import { UiTextPipe } from '../../../platform/localization/public-api';
+import { UiTextPipe } from '../../localization/public-api';
 import { StatusBadge } from '../feedback/status-badge';
 import { PopoverPanel } from '../overlays/popover-panel';
 

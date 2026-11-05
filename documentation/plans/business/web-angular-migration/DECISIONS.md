@@ -8,7 +8,7 @@
 | D04 | Requester confirmed | No customers yet. | Reconfirm before external release. |
 | D05 | Proposed | web-angular folder; SPA/lazy routes. | Foundation/hosting review. |
 | D06 | Requester approved 2026-10-28 | Local Angular Signals/computed for simple state; scoped NgRx SignalStore for complex feature workflows; no mandatory traditional NgRx Store. Keep similar features consistent and server-cache/scope policy explicit. | State-complexity decision in each feature contract; scope/cancellation/realtime tests. |
-| D07 | Proposed | Typed Reactive Forms and generic shared error/focus/dirty behavior. | Zoneless edit/repeater/server-error tests. |
+| D07 | Requester approved 2026-11-04 | Angular 22 Signal Forms with Option B: shared controls, exact-value schema helpers, server-error mapping and shared accessibility; feature-owned typed schemas and submission. No full Form Engine or JSON renderer. | Native lifecycle, nested/array/conditional/cross-field, server clearing, pending/duplicate/context and browser regressions. |
 | D08 | Requester approved 2026-10-28; DEC-025 Closed | No BFF. Angular calls the existing .NET API directly; no new YARP/gateway/Redis/session-store requirement. Keep Next's existing handlers for Next only. | DEC-027 fixes the direct auth contract before implementation; no silent token-storage decision. |
 | D09 | Open: DEC-026 | Resolve duplicate P-008 meaning; register Angular references. | Before affected UI contracts. |
 | D10 | Open proof: RISK-017 | Select compatible licensed Angular adapters for each integration. | Specialist acceptance spikes. |
@@ -245,3 +245,27 @@ Header Refresh explicitly regenerates unchanged sources; immutable actor replace
 clears applied/draft/selection. Shared form/workspace/PDF extensions preserve defaults.
 Bounded behavior Verified; full five-view pixel/source/host acceptance remains S3-A8.
 No ActiveReports, API/schema/native runtime, package or translation key addition.
+
+## D35 — Foundation hardening and lightweight Signal Forms
+
+Requester approved applying the architecture review, Signal Forms and the lightweight abstraction on 2026-11-04. Scope is the existing Angular foundation, login/password request, Countries CRUD/read details and managed-report criteria. Angular owns the form tree, dependencies, validation and submission state. Shared owns PrimeNG integration, accessible errors/focus and presentation; owners retain business schemas, permissions, API conversion and outcome recovery. Reactive Forms remain an explicit compatibility boundary for retained technical fixtures and internal vendor adapters, never a second feature form model. No dynamic renderer, expression interpreter, CRUD base class, dependency registry or schema transport format is authorized.
+
+Static owner/public-API checks now resolve aliases and detect eager value cycles. Auth identity and transition signals are readonly to consumers. Shared translation depends on UI_LOCALIZATION; Platform supplies the existing runtime with useExisting. Narrow route/layout/notification public entry points preserve ownership. See documentation/guides/web/architecture/ANGULAR_SIGNAL_FORMS.md and angular-form-foundation/SIGNAL_FORMS_IMPLEMENTATION_REPORT.md. RISK-019 records measured startup bundle pressure; other existing production/parity gates remain open.
+
+## D36 — Structure and performance maintenance; new functionality deferred
+
+Requester2026-11-04 narrowed the next maintenance to structure, then explicitly
+included performance and deferred new functionality. Keep existing approved
+ownership and behavior. Validate untrusted localization responses in the HTTP
+service; keep runtime/type contracts separate from wire schemas. Use narrow public
+presentation and unsaved-navigation entries at bootstrap. Existing broad feature
+entries remain compatible. No engine, screen, API/domain/persistence change,
+dependency installation or CI expansion. Production bootstrap falls from608.36kB
+to572.16kB; unchanged500kB warning still applies. RISK-019 remains open for remaining
+startup/first-route review. Evidence and precise limits:
+angular-localization-foundation/STRUCTURE_PERFORMANCE_REPORT.md.
+
+
+## D37 — Component composition and recurring implementation rules
+
+Requester2026-11-04 approved the component-extraction findings and asked to document recurring patterns. Scope remains existing structure/performance with new functionality deferred. Extract shared controlled appearance preferences; internal collection options dialog and per-grid presentation factory; feature-owned Countries card header/content/read-detail/lifecycle composition; external Reporting template/styles. Keep shared public contracts and page-scoped authority/state ownership. No storage, domain/API/schema/native/package or engine change. Canonical repeated-development guide: documentation/guides/web/architecture/ANGULAR_COMPONENT_COMPOSITION.md. Current scoped verification and its limits: angular-collection-foundation/COMPONENT_COMPOSITION_REPORT.md. Existing release notes, including RISK-019, remain applicable.

@@ -1,0 +1,7 @@
+<dl>
+            @if(country().phoneCode){<div><dt>{{'countries.phoneCode'|uiText:'reference-countries'}}</dt><dd><bdi>{{phone()}}</bdi></dd></div>}
+            @if(country().currencyCode){<div><dt>{{'countries.currencyCode'|uiText:'reference-countries'}}</dt><dd><bdi>{{country().currencyCode}}</bdi></dd></div>}
+            <div><dt><erp-icon name="globe" />{{'countries.states'|uiText:'reference-countries'}}</dt><dd><erp-status-badge appearance="outline" [label]="statesCount()" [accent]="country().statesCount>0?'var(--success)':'var(--muted-foreground)'" /></dd></div>
+          </dl>
+          <erp-progress-meter appearance="inline" [label]="'general.dataQuality'|uiText" [description]="qualityLevel()" [used]="quality().quality" [limit]="100" [accent]="quality().accent" />
+          <p class="created"><erp-icon name="calendar" />{{createdOn()}}</p>
